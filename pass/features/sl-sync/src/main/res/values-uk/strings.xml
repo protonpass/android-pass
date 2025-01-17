@@ -18,62 +18,62 @@
   -->
 <resources>
   <!-- Management screen -->
-  <string name="simple_login_sync_management_title">Alias management</string>
+  <string name="simple_login_sync_management_title">Керування псевдонімом</string>
   <string name="simple_login_sync_management_domain_label">Домен</string>
   <string name="simple_login_sync_management_domain_title">Типовий домен для псевдоніма</string>
   <string name="simple_login_sync_management_domain_option_blank">Не вибрано</string>
   <string name="simple_login_sync_management_mailboxes_label">Поштові скриньки</string>
-  <string name="simple_login_sync_management_mailboxes_description">Mailbox is where emails sent to an alias are forwarded to. It\'s your usual mailbox, e.g. Gmail, Outlook, Proton Mail, etc.</string>
+  <string name="simple_login_sync_management_mailboxes_description">Поштова скринька - це місце, куди пересилаються листи, надіслані на псевдонім. Це ваша звичайна поштова скринька, наприклад, Gmail, Outlook, Proton Mail тощо.</string>
   <string name="simple_login_sync_management_mailbox_default">За замовчуванням</string>
-  <string name="simple_login_sync_management_mailbox_unverified">Unverified mailbox</string>
-  <string name="simple_login_sync_management_vault_title">SimpleLogin sync</string>
-  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">There was an error fetching SL alias details</string>
+  <string name="simple_login_sync_management_mailbox_unverified">Непідтверджена поштова скринька</string>
+  <string name="simple_login_sync_management_vault_title">Синхронізація SimpleLogin</string>
+  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Виникла помилка при отриманні даних про псевдонім SL</string>
   <string name="simple_login_sync_management_mailboxes_title">Типова поштова скринька для псевдоніма</string>
   <string name="simple_login_sync_management_dialog_title_domains">Типовий домен для псевдоніма</string>
   <string name="simple_login_sync_management_dialog_title_mailboxes">Типова поштова скринька для псевдоніма</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Синхронізувати псевдоніми</string>
-  <string name="simple_login_sync_enable_snackbar_error">There was an error enabling SimpleLogin aliases sync</string>
-  <string name="simple_login_sync_enable_snackbar_success">SimpleLogin aliases sync successfully enabled</string>
+  <string name="simple_login_sync_enable_snackbar_error">Виникла помилка увімкнення синхронізації псевдонімів SimpleLogin</string>
+  <string name="simple_login_sync_enable_snackbar_success">Синхронізацію псевдонімів SimpleLogin успішно ввімкнено</string>
   <!-- Mailbox create screen -->
-  <string name="simple_login_sync_mailbox_create_title">Add mailbox</string>
-  <string name="simple_login_sync_mailbox_create_message_error">There was an error adding the mailbox</string>
+  <string name="simple_login_sync_mailbox_create_title">Додати поштову скриньку</string>
+  <string name="simple_login_sync_mailbox_create_message_error">Помилка при додаванні поштової скриньки</string>
   <!-- Mailbox verify screen -->
-  <string name="simple_login_sync_mailbox_verify_title">Confirm your mailbox</string>
+  <string name="simple_login_sync_mailbox_verify_title">Підтвердьте Вашу поштову скриньку</string>
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Ми відправили код підтвердження на %s. Введіть його нижче:</string>
-  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">your email address</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Invalid mailbox verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">Invalid mailbox verification code limit reached, mailbox was deleted</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_error">There was an error verifying the mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_success">Mailbox successfully verified</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">There was an error sending verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Verification code successfully sent</string>
+  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">ваша адреса електронної пошти</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Невірний код підтвердження поштової скриньки</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">Досягнуто ліміт невірного коду перевірки поштової скриньки, скриньку видалено</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_error">Виникла помилка при перевірці поштової скриньки</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_success">Поштову скриньку успішно перевірено</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">Виникла помилка при надсиланні коду підтвердження</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Код підтвердження успішно відправлено</string>
   <!-- Mailbox delete screen -->
-  <string name="simple_login_sync_mailbox_delete_title">Delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_subtitle">All aliases using the mailbox %s will be also deleted. To keep receiving emails transfer these aliases to a different mailbox:</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Transfer aliases</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">To mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete">Delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Transfer and delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_error">There was an error deleting mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_success">Mailbox successfully deleted</string>
-  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Transfer aliases to</string>
-  <string name="simple_login_sync_mailbox_delete_warning">Please note that once deleted, aliases can\'t be restored</string>
+  <string name="simple_login_sync_mailbox_delete_title">Видалити поштову скриньку</string>
+  <string name="simple_login_sync_mailbox_delete_subtitle">Усі псевдоніми, що використовують поштову скриньку %s, також буде видалено. Щоб продовжувати отримувати листи, перенесіть ці псевдоніми на іншу поштову скриньку:</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Перенести псевдоніми</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">До поштової скриньки</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete">Видалити поштову скриньку</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Перенести та видалити поштову скриньку</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_error">Виникла помилка при видаленні поштової скриньки</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_success">Поштову скриньку успішно видалено</string>
+  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Перенести псевдоніми до</string>
+  <string name="simple_login_sync_mailbox_delete_warning">Зверніть увагу, що після видалення псевдоніми не можна відновити</string>
   <!-- Domain select screen -->
-  <string name="simple_login_sync_domain_select_title">Default domain</string>
+  <string name="simple_login_sync_domain_select_title">Домен за замовчуванням</string>
   <string name="simple_login_sync_domain_select_title_none">нічого</string>
-  <string name="simple_login_sync_domain_select_description_none">No domain</string>
+  <string name="simple_login_sync_domain_select_description_none">Домен відсутній</string>
   <string name="simple_login_sync_domain_select_description_custom">Ваш домен</string>
-  <string name="simple_login_sync_domain_select_description_free">Public domain</string>
-  <string name="simple_login_sync_domain_select_description_premium">Premium domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">There was an error fetching SL alias domains</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">There was an error updating SL alias domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SL alias domain successfully updated</string>
+  <string name="simple_login_sync_domain_select_description_free">Публічний домен</string>
+  <string name="simple_login_sync_domain_select_description_premium">Преміум домен</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">Виникла помилка при отриманні псевдонімів SL доменів</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">Помилка при оновленні домену SL псевдоніма</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">Псевдонімний домен SL успішно оновлено</string>
   <!-- Mailbox options screen -->
-  <string name="simple_login_sync_mailbox_options_snackbar_options_error">Cannot display mailbox options</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_error">There was an error updating default mailbox</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Default mailbox successfully updated</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_options_error">Не вдається показати параметри поштової скриньки</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_error">Виникла помилка при оновленні поштової скриньки за замовчуванням</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Поштову скриньку за замовчуванням успішно оновлено</string>
   <!-- Shared -->
-  <string name="simple_login_sync_shared_default_vault_title">Default SL vault</string>
-  <string name="simple_login_sync_shared_default_vault_description">SimpleLogin aliases will be imported into this vault.</string>
+  <string name="simple_login_sync_shared_default_vault_title">SL сховище за замовчуванням</string>
+  <string name="simple_login_sync_shared_default_vault_description">Псевдоніми SimpleLogin буде імпортовано до цього сховища.</string>
 </resources>

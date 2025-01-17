@@ -39,7 +39,7 @@
   <string name="login_item_monitor_widget_weak_pass_subtitle">Esta cuenta es vulnerable. Visite el servicio y cambie la contraseña.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d otro inicio de sesión usa la misma contraseña.</item>
-    <item quantity="other">Otros %d inicios de sesión usan la misma contraseña.</item>
+    <item quantity="other">%d otros inicios de sesión usan la misma contraseña.</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Configure la 2FA para más seguridad</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Este servicio ofrece 2FA. Actívelo para añadir seguridad a la cuenta.</string>
@@ -93,7 +93,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Solo tiene permitido editar elementos en sus bóvedas antiguas. Mejore el plan actual para editar este elemento.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">No puede editar este elemento porque está en la papelera. Muévalo de la papelera antes de editarlo.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">No puede compartir</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">No tiene los permisos suficientes para compartir esta bóveda.</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">No tiene suficientes permisos para realizar esta acción.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Ha alcanzado el límite de bóvedas compartidas. Mejore el plan actual para compartir más bóvedas.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">No puede compartir este elemento porque está en la papelera. Muévalo de la papelera antes de compartirlo.</string>
   <string name="password_score_vulnerable">Vulnerable</string>
@@ -122,4 +122,5 @@
     <item quantity="other">%1$s bloqueos</item>
   </plurals>
   <string name="open_with">Abrir con:</string>
+  <string name="open_attachments_error">Error al abrir el archivo adjunto</string>
 </resources>

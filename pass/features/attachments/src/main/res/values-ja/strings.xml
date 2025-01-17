@@ -25,6 +25,14 @@
   <string name="file_picker_open_error">ファイルピッカーを開くことができませんでした</string>
   <string name="media_picker_open_error">メディアピッカーを開くことができませんでした</string>
   <string name="camera_open_error">カメラを開くことができませんでした</string>
-  <string name="camera_permission_explanation">この機能を利用するにはカメラの許可が必要。</string>
+  <string name="camera_permission_explanation">この機能を利用するにはカメラへのアクセス許可が必要です。</string>
   <string name="camera_permission_open_settings">設定を開く</string>
+  <string name="delete_all_attachments_title">すべての添付ファイルを削除しますか？</string>
+  <string name="delete_all_attachments_subtitle">この操作は取り消しできません</string>
+  <string name="delete_all_attachments_confirm">すべて削除</string>
+  <string name="rename_attachment_dialog_title">ファイル名の変更</string>
+  <string name="storage_full_title">ストレージがもうすぐいっぱいです。</string>
+  <string name="storage_full_body">アップグレードすると、ストレージ容量が増えます。</string>
+  <string name="storage_full_upgrade">アップグレード</string>
+  <string name="storage_full_amount" comment="This will show 20MB of 100MB">%2$s の中の%1$s</string>
 </resources>

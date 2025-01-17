@@ -81,4 +81,6 @@
   <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Πρέπει να μεταβείτε στον %1$s για να τον διαχειριστείτε</string>
   <string name="account_switch_confirmation_title">Διαχείριση λογαριασμού</string>
   <string name="account_switch_confirmation_confirm">Εναλλαγή και διαχείριση</string>
+  <string name="profile_storage_data_title">Αποθηκευτικός χώρος</string>
+  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s από %2$s</string>
 </resources>

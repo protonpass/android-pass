@@ -4,6 +4,8 @@
   <string name="autofill_notification_channel_name">Аўтазапаўненне</string>
   <string name="autofill_notification_copy_to_clipboard_title">Код TOTP</string>
   <string name="autofill_notification_copy_to_clipboard_body">TOTP скапіяваны ў буфер абмену</string>
-  <string name="updates_new_invite_received_title">Вы атрымалі запрашэнне</string>
-  <string name="updates_new_invite_received_message">Вы былі запрошаны ў сховішча. Адкрыйце праграму, каб убачыць запрашэнне і прыняць яго.</string>
+  <string name="new_item_invite_notification_title">Атрымана запрашэнне на новы элемент</string>
+  <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s хоча абагуліць элемент з вамі.</string>
+  <string name="new_vault_invite_notification_title">Атрымана запрашэнне на новае сховішча</string>
+  <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s хоча абагуліць сховішча з вамі.</string>
 </resources>

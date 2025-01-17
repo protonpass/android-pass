@@ -34,6 +34,7 @@
   <string name="bottomsheet_copy_item_note">Copier la note</string>
   <string name="bottomsheet_delete_permanently">Supprimer définitivement</string>
   <string name="bottomsheet_restore">Restaurer</string>
+  <string name="bottomsheet_leave">Quitter</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Ouvrir le menu d\'action de l\'élément</string>
   <string name="action_upgrade_now">Changer d\'abonnement</string>
@@ -282,4 +283,7 @@
   <string name="attachment_title">Pièces jointes</string>
   <string name="attachment_no_files">Importer des fichiers depuis votre ordinateur</string>
   <string name="attachment_add_file">Joindre un fichier</string>
+  <string name="attachment_row_upload_failed">L\'importation n\'a pas abouti.</string>
+  <string name="attachment_row_retry">Essayer à nouveau</string>
+  <string name="options_menu_content_description">Menu des options</string>
 </resources>

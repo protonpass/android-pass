@@ -4,6 +4,8 @@
   <string name="autofill_notification_channel_name">Isi otomatis</string>
   <string name="autofill_notification_copy_to_clipboard_title">Kode TOTP</string>
   <string name="autofill_notification_copy_to_clipboard_body">Kode TOTP disalin ke papan klip</string>
-  <string name="updates_new_invite_received_title">Anda telah menerima undangan</string>
-  <string name="updates_new_invite_received_message">Anda telah diundang ke brankas. Buka aplikasi untuk melihat dan menerima undangan.</string>
+  <string name="new_item_invite_notification_title">Undangan item baru diterima</string>
+  <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s ingin membagikan item dengan Anda.</string>
+  <string name="new_vault_invite_notification_title">Undangan brankas baru diterima</string>
+  <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s ingin membagikan brankas dengan Anda.</string>
 </resources>

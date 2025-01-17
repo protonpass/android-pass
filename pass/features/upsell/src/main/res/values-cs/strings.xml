@@ -21,6 +21,7 @@
   <string name="upsell_dark_web_monitoring_subtitle">Sledování Dark webu je k dispozici s placeným tarifem. Navyšte tarif pro okamžitý přístup.</string>
   <string name="upsell_missing_2fa_subtitle">Zobrazte si seznam webů, kde můžete přidat druhý faktor ověření pro ochranu své online přítomnosti. Navyšte tarif a získejte okamžitý přístup.</string>
   <string name="upsell_sentinel_subtitle">Odemkněte pokročilé funkce zabezpečení a podrobné logy, abyste zabezpečili svou online přítomnost.</string>
+  <string name="upsell_paid_feature_file_attachments">Přiložené soubory</string>
   <string name="upsell_paid_feature_dark_web_monitoring">Sledování Dark webu</string>
   <string name="upsell_paid_feature_sentinel">Proton Sentinel</string>
   <string name="upsell_paid_feature_authenticator">Integrované ověřování 2FA</string>
@@ -34,6 +35,7 @@
   <string name="upsell_paid_feature_advance_alias_management_subtitle">Pokročilá správa aliasů je k dispozici s placeným tarifem. Navyšte tarif pro okamžitý přístup.</string>
   <string name="upsell_paid_feature_item_sharing_title">Rychlé sdílení položky</string>
   <string name="upsell_paid_feature_item_sharing_subtitle">Navyšte tarif ještě dnes, abyste mohli sdílet položku s jakýmkoli uživatelem Pass. A využívejte další prémiové funkce:</string>
+  <string name="upsell_paid_feature_file_attachments_title">Přiložené soubory</string>
   <string name="upsell_button_upgrade">Získejte Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Získejte Pass Business</string>
 </resources>

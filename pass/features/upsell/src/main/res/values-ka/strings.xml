@@ -21,6 +21,7 @@
   <string name="upsell_dark_web_monitoring_subtitle">Dark Web Monitoring ფასიან ვერსიაშია ხელმისაწვდომი. ასწიეთ ტარიფი წვდომის დაუყოვნებლივ მისაღებად.</string>
   <string name="upsell_missing_2fa_subtitle">იხილეთ სია საიტებისა,რომელზეც გნებავთ, 2FA დაამატოთ თქვენი ინტერნეტში მუშაობის დასაცავად. ასწიეთ სატარიფო გეგმა დაუყოვნებლივი წვდომისთვის.</string>
   <string name="upsell_sentinel_subtitle">განბლოკეთ დამატებითი უსაფრთხოების ფუნქციები და დეტალური ჟურნალი, რომ დაიცვათ თქვენი კვალი ინტერნეტში.</string>
+  <string name="upsell_paid_feature_file_attachments">მიმაგრებული ფაილები</string>
   <string name="upsell_paid_feature_dark_web_monitoring">Dark Web Monitoring</string>
   <string name="upsell_paid_feature_sentinel">Proton Sentinel</string>
   <string name="upsell_paid_feature_authenticator">ჩაშენებული 2FA ავთენტიკატორი</string>
@@ -34,6 +35,7 @@
   <string name="upsell_paid_feature_advance_alias_management_subtitle">დამატებითი ფსევდონიმების მართვა ფასიანი სატარიფო გეგმით. ასწიეთ სატარიფო გეგმა მასთან წვდომისთვის.</string>
   <string name="upsell_paid_feature_item_sharing_title">სწრაფად გააზიარეთ ელემენტი</string>
   <string name="upsell_paid_feature_item_sharing_subtitle">ასწიეთ ტარიფი დღეს, რომ შეძლოთ, გააზიაროთ ელემენტი ნებისმიერ Pass-ის მომხმარებელთან. ასევე ისიამოვნეთ სხვა ფასიანი თვისებებით:</string>
+  <string name="upsell_paid_feature_file_attachments_title">მიმაგრებული ფაილები</string>
   <string name="upsell_button_upgrade">მიიღეთ Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">მიიღეთ Pass Business</string>
 </resources>

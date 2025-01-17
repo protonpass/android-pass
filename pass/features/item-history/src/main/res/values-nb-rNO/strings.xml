@@ -28,4 +28,10 @@
   <string name="item_history_timeline_node_leaf_title">Opprettet</string>
   <string name="item_history_timeline_node_root_title">Gjeldende versjon</string>
   <string name="item_history_timeline_snackbar_message_error">Det oppstod en feil under henting av elementendringer</string>
+  <string name="reset_history_bottomsheet_option">Tilbakestill historikk</string>
+  <string name="reset_history_dialog_title">Tilbakestille historikken for dette elementet?</string>
+  <string name="reset_history_dialog_body">Tilbakestilling av historikk vil slette alle tidligere versjoner permanent og kan ikke angres.</string>
+  <string name="reset_history_action">Tilbakestill</string>
+  <string name="reset_history_dialog_snackbar_message_error">Det oppstod en feil ved tilbakestilling</string>
+  <string name="reset_history_dialog_snackbar_message_success">Elementhistorikk tilbakestilt</string>
 </resources>

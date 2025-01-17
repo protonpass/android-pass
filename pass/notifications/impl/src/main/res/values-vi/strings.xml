@@ -4,6 +4,8 @@
   <string name="autofill_notification_channel_name">Tự động điền</string>
   <string name="autofill_notification_copy_to_clipboard_title">Mã TOTP</string>
   <string name="autofill_notification_copy_to_clipboard_body">Đã sao chép mã TOTP vào bộ nhớ tạm</string>
-  <string name="updates_new_invite_received_title">Bạn đã nhận được một lời mời</string>
-  <string name="updates_new_invite_received_message">Bạn đã nhận được lời mời vào một kho lưu trữ. Mở ứng dụng để xem lời mời và chấp nhận nó.</string>
+  <string name="new_item_invite_notification_title">New item invite received</string>
+  <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s wants to share an item with you.</string>
+  <string name="new_vault_invite_notification_title">New vault invite received</string>
+  <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s wants to share a vault with you.</string>
 </resources>

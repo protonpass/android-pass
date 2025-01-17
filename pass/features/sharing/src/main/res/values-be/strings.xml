@@ -52,7 +52,7 @@
   <string name="sharing_item_invitation_title">Запрашэнне да абагуленага элемента</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s хоча абагуліць элемент з вамі.</string>
   <string name="sharing_item_invitation_accept">Прыняць і паглядзець элемент</string>
-  <string name="sharing_invite_more">Запрасіць боль…</string>
+  <string name="sharing_invite_more">Запрасіць больш…</string>
   <string name="sharing_snackbar_invite_accepted">Запрашэнне прынята</string>
   <string name="sharing_snackbar_invite_accept_error">Памылка прымання запрашэння</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Немагчыма прыняць запрашэнне па той прычыне, што вы дасягнулі абмежавання ў сховішчы</string>
@@ -135,16 +135,12 @@
   <string name="share_with_suggestions_title">Прапановы</string>
   <string name="share_with_recents_title">Нядаўнія</string>
   <string name="share_with_remove_email_content_description">Выдаліць электронную пошту</string>
-  <string name="share_with_user_title">Абагуліць з</string>
-  <string name="share_with_user_description">Абагуліць гэты элемент з іншымі карыстальнікамі Proton.</string>
   <string name="share_with_secure_link_title">Праз бяспечную спасылку</string>
   <string name="share_with_secure_link_description">Згенерыраваць бяспечную спасылку для гэтага элемента.</string>
-  <string name="share_with_vault_title">Усё сховішча</string>
-  <string name="share_with_vault_description">Абагуліць гэта сховішча і яго змесціва.</string>
   <string name="share_with_user_shared_title">З іншымі карыстальнікамі Proton Pass</string>
   <string name="share_with_user_shared_description">Карысна для пастаяннага абагульвання.</string>
   <string name="share_with_manage_shared_item_title">Кіраваць доступам</string>
-  <string name="share_with_manage_shared_item_description">Паглядзець удзельніка і агляд дазволаў.</string>
+  <string name="share_with_manage_shared_item_description">Паглядзець удзельніка і дазволы.</string>
   <string name="share_with_secure_link_shared_title">Праз бяспечную спасылку</string>
   <string name="share_with_secure_link_shared_description">Для аднаразовага абагульвання.</string>
   <string name="share_with_manage_shared_vault_title">Кіраванне доступам да сховішча</string>

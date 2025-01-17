@@ -33,6 +33,7 @@
   <string name="bottomsheet_copy_item_note">메모 복사</string>
   <string name="bottomsheet_delete_permanently">영구적으로 삭제</string>
   <string name="bottomsheet_restore">복원</string>
+  <string name="bottomsheet_leave">떠나기</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">항목을 액션 매뉴서 열기</string>
   <string name="action_upgrade_now">지금 업그레이드</string>
@@ -270,4 +271,7 @@
   <string name="attachment_title">첨부파일</string>
   <string name="attachment_no_files">회원님의 장치에서 파일을 업로드하세요</string>
   <string name="attachment_add_file">파일 첨부</string>
+  <string name="attachment_row_upload_failed">업로드 실패</string>
+  <string name="attachment_row_retry">다시 시도</string>
+  <string name="options_menu_content_description">옵션 메뉴</string>
 </resources>

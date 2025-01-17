@@ -26,6 +26,11 @@
   <string name="item_details_forbidden_actions_edit_upgrade">Solo tiene permitido editar elementos en sus bóvedas antiguas. Mejore el plan actual para editar este elemento.</string>
   <string name="item_details_forbidden_actions_share_title">No puede compartir</string>
   <string name="item_details_forbidden_actions_share_limit">Ha alcanzado el límite de bóvedas compartidas. Mejore el plan actual para compartir más bóvedas.</string>
-  <string name="item_details_forbidden_actions_share_permission">No tiene los permisos suficientes para compartir esta bóveda.</string>
+  <string name="item_details_forbidden_actions_sharing_permission">No tiene suficientes permisos para realizar esta acción.</string>
   <string name="item_details_forbidden_actions_share_trash">No puede compartir este elemento porque está en la papelera. Muévalo de la papelera antes de compartirlo.</string>
+  <!-- Item details leave item -->
+  <string name="item_details_leave_dialog_title">¿Desea abandonar este elemento?</string>
+  <string name="item_details_leave_dialog_message">Perderá el acceso a este elemento y a sus detalles. ¿Desea continuar?</string>
+  <string name="item_details_leave_item_message_error">Ocurrió un error al abandonar el elemento.</string>
+  <string name="item_details_leave_item_message_success">Se abandonó el elemento</string>
 </resources>

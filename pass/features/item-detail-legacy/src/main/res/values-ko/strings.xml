@@ -92,7 +92,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">사용자의 이전 금고의 항목 편집만 허용됩니다. 이 항목을 수정하려면 플랜을 업그레이드 하세요.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">휴지통에 있어 항목 수정이 불가합니다. 수정 전 휴지통에서 일반 함으로 다시 복구하십시오.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">공유할 수 없음.</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">이 금고를 공유할 권한이 없습니다.</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">이 작업을 수행할 권한이 없습니다.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">금고 공유 수 제한에 도달했습니다. 금고를 더 공유하려면 현재 플랜에서 업그레이드 하세요.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">휴지통에 있어 항목 공유가 불가합니다. 수정 전 휴지통에서 일반 함으로 다시 복구하십시오.</string>
   <string name="password_score_vulnerable">취약</string>
@@ -118,4 +118,5 @@
     <item quantity="other">%1$s개 차단</item>
   </plurals>
   <string name="open_with">열기:</string>
+  <string name="open_attachments_error">첨부파일을 열 수 없습니다</string>
 </resources>

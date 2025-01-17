@@ -28,4 +28,10 @@
   <string name="item_history_timeline_node_leaf_title">შექმნილია</string>
   <string name="item_history_timeline_node_root_title">მიმდინარე ვერსია</string>
   <string name="item_history_timeline_snackbar_message_error">შეცდომა ელემენტის რევიზიების გამოთხოვისას</string>
+  <string name="reset_history_bottomsheet_option">ისტორიის ჩამოყრა</string>
+  <string name="reset_history_dialog_title">ჩამოვყარო ისტორია ამ ელემენტისთვის?</string>
+  <string name="reset_history_dialog_body">ისტორიის ჩამოყრა სამუდამოდ წაშლის ყველა ძველ ვერსიას და ეს ქმედება შეუქცევადია.</string>
+  <string name="reset_history_action">ჩამოყრა</string>
+  <string name="reset_history_dialog_snackbar_message_error">ჩამოყრის შეცდომა</string>
+  <string name="reset_history_dialog_snackbar_message_success">ელემენტის ისტორიის ჩამოყრა</string>
 </resources>

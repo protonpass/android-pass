@@ -10,7 +10,7 @@
   <string name="item_list_header_all_search_results">全部</string>
   <string name="item_list_header_pinned_search_results">已釘選</string>
   <string name="item_list_header_logins_type">登入</string>
-  <string name="item_list_header_logins_totp_type">Logins with TOTP</string>
+  <string name="item_list_header_logins_totp_type">使用 TOTP 登入</string>
   <string name="item_list_header_aliases_type">別名</string>
   <string name="item_list_header_notes_type">備註</string>
   <string name="item_list_header_credit_cards_type">信用卡</string>
@@ -18,8 +18,8 @@
     <item quantity="other">結果</item>
   </plurals>
   <string name="item_list_header_identities_type">身份</string>
-  <string name="item_list_header_shared_with_me">Shared with me</string>
-  <string name="item_list_header_shared_by_me">Shared by me</string>
+  <string name="item_list_header_shared_with_me">與我共享</string>
+  <string name="item_list_header_shared_by_me">共享的項目</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">確認</string>
   <string name="bottomsheet_cancel_button">取消</string>
@@ -33,6 +33,7 @@
   <string name="bottomsheet_copy_item_note">複製備註</string>
   <string name="bottomsheet_delete_permanently">永久刪除</string>
   <string name="bottomsheet_restore">還原</string>
+  <string name="bottomsheet_leave">退出</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">開啟項目行為清單</string>
   <string name="action_upgrade_now">立即升級</string>
@@ -265,9 +266,12 @@
   <string name="field_display_name_title">顯示名稱</string>
   <!-- Attachments -->
   <plurals name="attachment_file_amount">
-    <item quantity="other">%1$s files</item>
+    <item quantity="other">%1$s 個檔案</item>
   </plurals>
   <string name="attachment_title">Attachments</string>
-  <string name="attachment_no_files">Upload files from your device</string>
-  <string name="attachment_add_file">Attach a file</string>
+  <string name="attachment_no_files">從你的裝置上傳檔案</string>
+  <string name="attachment_add_file">附加檔案</string>
+  <string name="attachment_row_upload_failed">上傳失敗</string>
+  <string name="attachment_row_retry">再試一次</string>
+  <string name="options_menu_content_description">Options menu</string>
 </resources>

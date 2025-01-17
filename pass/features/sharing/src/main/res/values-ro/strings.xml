@@ -34,9 +34,9 @@
     <item quantity="other">%d de membri</item>
   </plurals>
   <string name="sharing_member_count_header">Membri</string>
-  <string name="shared_via_title">Shared via</string>
-  <string name="shared_via_item_member_count_header">Item sharing</string>
-  <string name="shared_via_vault_member_count_header">Vault sharing</string>
+  <string name="shared_via_title">Partajat prin</string>
+  <string name="shared_via_item_member_count_header">Partajare nouă</string>
+  <string name="shared_via_vault_member_count_header">Partajare seif</string>
   <string name="share_with_title">Partajare cu</string>
   <string name="share_with_email_hint">Adresa de e-mail</string>
   <string name="share_with_email_error">Adresă de e-mail nevalidă.</string>
@@ -50,7 +50,7 @@
   <string name="sharing_item_invitation_title">Invitație articol partajat</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s doreşte să vă partajeze un articol.</string>
   <string name="sharing_item_invitation_accept">Acceptare și vizualizare articol</string>
-  <string name="sharing_invite_more">Invite more…</string>
+  <string name="sharing_invite_more">Invitare mai mulți...</string>
   <string name="sharing_snackbar_invite_accepted">Invitație acceptată</string>
   <string name="sharing_snackbar_invite_accept_error">Eroare la acceptarea invitației.</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Nu s-a putut deschide invitația deoarece v-ați atins limita seifului.</string>
@@ -130,18 +130,14 @@
   <string name="share_with_suggestions_title">Sugestii</string>
   <string name="share_with_recents_title">Recente</string>
   <string name="share_with_remove_email_content_description">Eliminare e-mail</string>
-  <string name="share_with_user_title">Partajare cu</string>
-  <string name="share_with_user_description">Partajare acest articol cu alți utilizatori Proton.</string>
   <string name="share_with_secure_link_title">Prin legătură web securizată</string>
   <string name="share_with_secure_link_description">Generează o legătură web sigură pentru acest articol.</string>
-  <string name="share_with_vault_title">Entire vault</string>
-  <string name="share_with_vault_description">Share this vault and its content.</string>
-  <string name="share_with_user_shared_title">With other Proton Pass users</string>
-  <string name="share_with_user_shared_description">Useful for permanent sharing.</string>
-  <string name="share_with_manage_shared_item_title">Manage access</string>
-  <string name="share_with_manage_shared_item_description">See member and permission overview.</string>
-  <string name="share_with_secure_link_shared_title">Via a secure link</string>
-  <string name="share_with_secure_link_shared_description">For one-off sharing.</string>
+  <string name="share_with_user_shared_title">Cu alți utilizatori Proton Pass</string>
+  <string name="share_with_user_shared_description">Util pentru partajarea permanentă.</string>
+  <string name="share_with_manage_shared_item_title">Gestionare acces</string>
+  <string name="share_with_manage_shared_item_description">Vedeți prezentarea generală a membrilor și a permisiunilor.</string>
+  <string name="share_with_secure_link_shared_title">Printr-o legătură web securizată</string>
+  <string name="share_with_secure_link_shared_description">Pentru partajare unică.</string>
   <string name="share_with_manage_shared_vault_title">Gestionare acces la seif</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="one">Articolele seifului sunt partajate cu %d utilizator.</item>

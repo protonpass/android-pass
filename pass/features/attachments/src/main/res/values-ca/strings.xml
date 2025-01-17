@@ -27,4 +27,12 @@
   <string name="camera_open_error">No s\'ha pogut obrir la càmera.</string>
   <string name="camera_permission_explanation">El permís de càmera és necessari perquè aquesta característica estigui disponible.</string>
   <string name="camera_permission_open_settings">Obre les preferències</string>
+  <string name="delete_all_attachments_title">Voleu eliminar tots els fitxers adjunts?</string>
+  <string name="delete_all_attachments_subtitle">Aquesta acció no es pot desfer.</string>
+  <string name="delete_all_attachments_confirm">Elimina-ho tot</string>
+  <string name="rename_attachment_dialog_title">Canvia el nom del fitxer</string>
+  <string name="storage_full_title">El vostre emmagatzematge és gairebé ple.</string>
+  <string name="storage_full_body">Actualitzeu per augmentar l\'emmagatzematge.</string>
+  <string name="storage_full_upgrade">Millora</string>
+  <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s de %2$s</string>
 </resources>

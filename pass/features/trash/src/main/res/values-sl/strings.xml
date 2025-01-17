@@ -19,5 +19,5 @@
   </plurals>
   <string name="bulk_delete_alias_subtitle">Please note once deleted, the aliases can\'t be restored</string>
   <string name="bulk_delete_alias_confirm">Understood, I will never need them</string>
-  <string name="delete_alias_disable">Disable alias</string>
+  <string name="delete_alias_disable">Onemogoči vzdevek</string>
 </resources>

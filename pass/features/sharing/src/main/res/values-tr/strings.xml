@@ -125,12 +125,8 @@
   <string name="share_with_suggestions_title">Öneriler</string>
   <string name="share_with_recents_title">Son kullanılan</string>
   <string name="share_with_remove_email_content_description">E-postayı kaldır</string>
-  <string name="share_with_user_title">Şu kişiyle paylaş</string>
-  <string name="share_with_user_description">Bu ögeyi diğer Proton kullanıcıları ile paylaşın.</string>
   <string name="share_with_secure_link_title">Güvenli bağlantı ile</string>
   <string name="share_with_secure_link_description">Bu öge için güvenli bir bağlantı oluştur.</string>
-  <string name="share_with_vault_title">Tüm kasa</string>
-  <string name="share_with_vault_description">Bu kasayı ve içeriklerini paylaşın.</string>
   <string name="share_with_user_shared_title">Diğer Proton Pass kullanıcıları ile</string>
   <string name="share_with_user_shared_description">Kalıcı paylaşım için uygundur.</string>
   <string name="share_with_manage_shared_item_title">Erişim yönetimi</string>

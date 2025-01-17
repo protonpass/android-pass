@@ -32,9 +32,9 @@
     <item quantity="other">%d jäsentä</item>
   </plurals>
   <string name="sharing_member_count_header">Jäsentä</string>
-  <string name="shared_via_title">Shared via</string>
-  <string name="shared_via_item_member_count_header">Item sharing</string>
-  <string name="shared_via_vault_member_count_header">Vault sharing</string>
+  <string name="shared_via_title">Jaettu käyttäen</string>
+  <string name="shared_via_item_member_count_header">Kohteen jakaminen</string>
+  <string name="shared_via_vault_member_count_header">Holvin jakaminen</string>
   <string name="share_with_title">Jaa henkilöille</string>
   <string name="share_with_email_hint">Sähköpostiosoite</string>
   <string name="share_with_email_error">Virheellinen sähköpostiosoite</string>
@@ -48,7 +48,7 @@
   <string name="sharing_item_invitation_title">Kutsu jaettuun kohteeseen</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s haluaa jakaa kohteen kanssasi.</string>
   <string name="sharing_item_invitation_accept">Hyväksy ja tarkastele kohdetta</string>
-  <string name="sharing_invite_more">Invite more…</string>
+  <string name="sharing_invite_more">Kutsu lisää…</string>
   <string name="sharing_snackbar_invite_accepted">Kutsu hyväksytty</string>
   <string name="sharing_snackbar_invite_accept_error">Virhe hyväksyttäessä kutsua</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Kutsua ei voitu hyväksyä, koska olet saavuttanut holvien enimmäismäärän</string>
@@ -125,18 +125,14 @@
   <string name="share_with_suggestions_title">Ehdotukset</string>
   <string name="share_with_recents_title">Viimeisin</string>
   <string name="share_with_remove_email_content_description">Poista sähköpostiosoite</string>
-  <string name="share_with_user_title">Jaa:</string>
-  <string name="share_with_user_description">Jaa tämä kohde muille Protonin käyttäjille.</string>
   <string name="share_with_secure_link_title">Suojatun linkin välityksellä</string>
   <string name="share_with_secure_link_description">Luo suojattu linkki tähän kohteeseen.</string>
-  <string name="share_with_vault_title">Entire vault</string>
-  <string name="share_with_vault_description">Share this vault and its content.</string>
-  <string name="share_with_user_shared_title">With other Proton Pass users</string>
-  <string name="share_with_user_shared_description">Useful for permanent sharing.</string>
-  <string name="share_with_manage_shared_item_title">Manage access</string>
-  <string name="share_with_manage_shared_item_description">See member and permission overview.</string>
-  <string name="share_with_secure_link_shared_title">Via a secure link</string>
-  <string name="share_with_secure_link_shared_description">For one-off sharing.</string>
+  <string name="share_with_user_shared_title">Muiden Proton Pass -käyttäjien kanssa</string>
+  <string name="share_with_user_shared_description">Hyödyllinen pysyvään jakamiseen.</string>
+  <string name="share_with_manage_shared_item_title">Hallitse käyttöoikeuksia</string>
+  <string name="share_with_manage_shared_item_description">Näytä jäsenten ja käyttöoikeuksien yleiskatsaus.</string>
+  <string name="share_with_secure_link_shared_title">Suojatun linkin välityksellä</string>
+  <string name="share_with_secure_link_shared_description">Kertaluonteista jakamista varten.</string>
   <string name="share_with_manage_shared_vault_title">Hallitse holvin käyttöoikeuksia</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="one">Kohteen holvi on tällä hetkellä jaettu %d käyttäjän kanssa.</item>

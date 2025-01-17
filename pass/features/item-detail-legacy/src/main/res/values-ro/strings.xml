@@ -94,7 +94,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Aveți voie să editați doar articole din cele seifurile vechi. Pentru a edita acest articol, modificați-vă planul actual.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Nu puteți edita acest articol deoarece este în coșul de gunoi. Scoateți-l din coșul de gunoi înainte de a-l edita.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nu se poate partaja</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nu aveți permisiuni suficiente pentru a participa acest seif.</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">Nu aveți suficiente permisiuni pentru a efectua această acțiune.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Ați atins limita de partajare a seifului. Pentru a partaja mai multe seifuri, alegeți alt plan cu plată.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Nu puteți partaja acest articol deoarece este în coșul de gunoi. Scoateți-l din coșul de gunoi înainte de a-l partaja.</string>
   <string name="password_score_vulnerable">Vulnerabilă</string>
@@ -126,4 +126,5 @@
     <item quantity="other">Blocări: %1$s</item>
   </plurals>
   <string name="open_with">Deschideți cu:</string>
+  <string name="open_attachments_error">Atașamentul nu a putut fi deschis.</string>
 </resources>

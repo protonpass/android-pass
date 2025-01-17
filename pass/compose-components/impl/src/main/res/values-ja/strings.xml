@@ -18,7 +18,7 @@
     <item quantity="other">結果</item>
   </plurals>
   <string name="item_list_header_identities_type">ユーザー情報</string>
-  <string name="item_list_header_shared_with_me">私と共有済み</string>
+  <string name="item_list_header_shared_with_me">私と共有中</string>
   <string name="item_list_header_shared_by_me">自分が共有</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">確認</string>
@@ -33,8 +33,9 @@
   <string name="bottomsheet_copy_item_note">メモをコピー</string>
   <string name="bottomsheet_delete_permanently">完全に削除する</string>
   <string name="bottomsheet_restore">復元</string>
+  <string name="bottomsheet_leave">退出</string>
   <!-- Actions -->
-  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">アイテムアクションメニューを開く</string>
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">アイテム操作メニューを開く</string>
   <string name="action_upgrade_now">今すぐアップグレード</string>
   <string name="action_not_now">今ではない</string>
   <string name="action_learn_more">詳細</string>
@@ -69,13 +70,13 @@
   <string name="indicator_no_network">オフライン</string>
   <!-- Icon content description -->
   <string name="missing_app_icon_content_description">アプリのアイコンが見つかりませんでした</string>
-  <string name="add_item_icon_content_description">項目のアイコンを追加</string>
+  <string name="add_item_icon_content_description">アイテムアイコンを追加</string>
   <string name="navigate_back_icon_content_description">戻るアイコン</string>
   <!-- Vault selector -->
   <string name="vault_selector_title">保管庫</string>
   <!-- Bottom bar -->
-  <string name="bottom_bar_list_items_icon_content_description">リスト項目</string>
-  <string name="bottom_bar_add_item_icon_content_description">項目を追加</string>
+  <string name="bottom_bar_list_items_icon_content_description">リストアイテム</string>
+  <string name="bottom_bar_add_item_icon_content_description">アイテムを追加</string>
   <string name="bottom_bar_profile_icon_content_description">プロファイル</string>
   <string name="bottom_bar_security_center_icon_content_description">セキュリティセンター</string>
   <!-- List group by most recents -->
@@ -92,7 +93,7 @@
   <string name="search_topbar_icon_content_description">検索アイコン</string>
   <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
-    <item quantity="other">%d 項目</item>
+    <item quantity="other">%d個のアイテム</item>
   </plurals>
   <!-- Confirm close dialog -->
   <string name="confirm_close_dialog_title">変更を破棄しますか?</string>
@@ -150,7 +151,7 @@
   <string name="item_details_login_section_websites_title">ウェブサイト</string>
   <string name="item_details_identity_section_personal_title">個人情報の詳細</string>
   <string name="item_details_identity_section_personal_first_name_title">名</string>
-  <string name="item_details_identity_section_personal_middle_name_title">中間名</string>
+  <string name="item_details_identity_section_personal_middle_name_title">ミドルネーム</string>
   <string name="item_details_identity_section_personal_last_name_title">姓</string>
   <string name="item_details_identity_section_personal_full_name_title">フルネーム</string>
   <string name="item_details_identity_section_personal_email_title">メールアドレス</string>
@@ -165,14 +166,14 @@
   <string name="item_details_identity_section_address_zip_or_postal_code_title">郵便番号</string>
   <string name="item_details_identity_section_address_state_or_province_title">都道府県</string>
   <string name="item_details_identity_section_address_county_title">国名</string>
-  <string name="item_details_identity_section_address_country_or_region_title">国・地域・都道府県</string>
+  <string name="item_details_identity_section_address_country_or_region_title">国・地域</string>
   <string name="item_details_identity_section_contact_title">連絡先の詳細</string>
   <string name="item_details_identity_section_contact_social_security_number_title">社会保障番号</string>
   <string name="item_details_identity_section_contact_passport_number_title">パスポート番号</string>
   <string name="item_details_identity_section_contact_license_number_title">免許証番号</string>
   <string name="item_details_identity_section_contact_website_title">ウェブサイト</string>
   <string name="item_details_identity_section_contact_x_handle_title">X-Handle</string>
-  <string name="item_details_identity_section_contact_secondary_phone_number_title">二次の電話番号</string>
+  <string name="item_details_identity_section_contact_secondary_phone_number_title">二つ目の電話番号</string>
   <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
   <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
   <string name="item_details_identity_section_contact_facebook_title">Facebook</string>
@@ -187,7 +188,7 @@
   <string name="item_details_shared_section_note_title">メモ</string>
   <string name="item_details_shared_section_item_history_last_autofill_title">最後の自動入力</string>
   <string name="item_details_shared_section_item_history_created_title">作成した</string>
-  <string name="item_details_shared_section_item_history_modified_times_title">%dが変更されました</string>
+  <string name="item_details_shared_section_item_history_modified_times_title">修正済み (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">アイテムの履歴を表示</string>
   <string name="item_details_shared_section_more_info_header_title">詳細はこちら</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">アイテム情報アイコン</string>
@@ -197,13 +198,13 @@
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">パスキー</string>
   <!-- Upgrade -->
-  <string name="dialog_upgrade_plan_title">プランをダウングレードですか?</string>
+  <string name="dialog_upgrade_plan_title">プランをアップグレード?</string>
   <string name="dialog_upgrade_plan_message">この機能は無料プランのユーザーにはご利用いただけません。他の便利な機能とともにこの機能を楽しみたい場合は、プランをアップグレードしてお試しください。</string>
   <string name="dialog_upgrade_plan_action_confirm">アップグレード</string>
   <string name="dialog_upgrade_plan_action_cancel">後で</string>
   <!-- Words -->
   <string name="email_address">メールアドレス</string>
-  <string name="email_address_invalid">メールアドレスが無効です</string>
+  <string name="email_address_invalid">無効なメールアドレスです</string>
   <string name="password">パスワード</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">このツールヒントを閉じて再度表示しないようにするボタン</string>
@@ -234,21 +235,21 @@
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">メモをコピーしました</string>
-  <string name="snack_bar_message_item_migration_error">アイテムを移行できませんでした</string>
+  <string name="snack_bar_message_item_migration_error">アイテム移行中にエラーが発生しました</string>
   <string name="snack_bar_message_item_monitor_excluded_success">アイテムを監視から除外しました</string>
   <string name="snack_bar_message_item_monitor_excluded_error">監視からアイテムを除外する際にエラーが発生しました</string>
-  <string name="snack_bar_message_item_monitor_included_success">アイテムを監視対象にしました</string>
+  <string name="snack_bar_message_item_monitor_included_success">アイテムが監視対象に正常に追加されました</string>
   <string name="snack_bar_message_item_monitor_included_error">監視中のアイテムにエラーが発生しました</string>
   <string name="snack_bar_message_item_pinned_success">アイテムが正常にピン留めされました</string>
   <string name="snack_bar_message_item_pinned_error">このアイテムをピン留めする際にエラーが発生しました</string>
   <string name="snack_bar_message_item_unpinned_success">アイテムのピン留めが解除されました</string>
   <string name="snack_bar_message_item_unpinned_error">このアイテムのピン留めを解除する際にエラーが発生しました</string>
   <string name="snack_bar_message_item_trashed_success">ゴミ箱に移動しました</string>
-  <string name="snack_bar_message_item_trashed_error">アイテムをゴミ箱へ移動できませんでした</string>
+  <string name="snack_bar_message_item_trashed_error">アイテムをゴミ箱へ移動中にエラーが発生しました</string>
   <string name="snack_bar_message_item_restore_success">アイテムを復元しました</string>
-  <string name="snack_bar_message_item_restore_error">アイテムを復元できませんでした</string>
+  <string name="snack_bar_message_item_restore_error">アイテムを復元する際にエラーが発生しました</string>
   <string name="snack_bar_message_item_delete_success">削除しました</string>
-  <string name="snack_bar_message_item_delete_error">アイテムを削除できませんでした</string>
+  <string name="snack_bar_message_item_delete_error">アイテムを削除中にエラーが発生しました</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">SimpleLogin 同期を有効にする</string>
   <plurals name="simple_login_widget_pending_aliases_message">
@@ -270,4 +271,7 @@
   <string name="attachment_title">添付ファイル</string>
   <string name="attachment_no_files">デバイスからファイルをアップロード</string>
   <string name="attachment_add_file">ファイルを添付</string>
+  <string name="attachment_row_upload_failed">アップロードに失敗しました</string>
+  <string name="attachment_row_retry">再試行</string>
+  <string name="options_menu_content_description">オプションメニュー</string>
 </resources>

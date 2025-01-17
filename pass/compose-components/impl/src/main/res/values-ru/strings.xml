@@ -36,6 +36,7 @@
   <string name="bottomsheet_copy_item_note">Скопировать заметку</string>
   <string name="bottomsheet_delete_permanently">Удалить безвозвратно</string>
   <string name="bottomsheet_restore">Восстановить</string>
+  <string name="bottomsheet_leave">Leave</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Открыть меню действий с элементом</string>
   <string name="action_upgrade_now">Улучшить сейчас</string>
@@ -306,4 +307,7 @@
   <string name="attachment_title">Вложения</string>
   <string name="attachment_no_files">Загрузить файлы с устройства</string>
   <string name="attachment_add_file">Вложить файл</string>
+  <string name="attachment_row_upload_failed">Загрузка не удалась</string>
+  <string name="attachment_row_retry">Повторить</string>
+  <string name="options_menu_content_description">Options menu</string>
 </resources>

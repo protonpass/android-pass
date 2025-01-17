@@ -27,4 +27,12 @@
   <string name="camera_open_error">Kunne ikke åpne kameraet</string>
   <string name="camera_permission_explanation">Kameratillatelse kreves for at denne funksjonen skal være tilgjengelig.</string>
   <string name="camera_permission_open_settings">Åpne innstillinger</string>
+  <string name="delete_all_attachments_title">Slette alle vedlegg?</string>
+  <string name="delete_all_attachments_subtitle">Denne handlingen kan ikke angres</string>
+  <string name="delete_all_attachments_confirm">Slett alle</string>
+  <string name="rename_attachment_dialog_title">Gi nytt navn til fil</string>
+  <string name="storage_full_title">Lagringsplassen din er nesten full.</string>
+  <string name="storage_full_body">Oppgrader for å øke lagringskapasiteten.</string>
+  <string name="storage_full_upgrade">Oppgrader</string>
+  <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s av %2$s</string>
 </resources>

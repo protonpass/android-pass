@@ -4,6 +4,8 @@
   <string name="autofill_notification_channel_name">Autorellenado</string>
   <string name="autofill_notification_copy_to_clipboard_title">Código TOTP</string>
   <string name="autofill_notification_copy_to_clipboard_body">El código TOTP ha sido copiado al portapapeles.</string>
-  <string name="updates_new_invite_received_title">Has recibido una invitación</string>
-  <string name="updates_new_invite_received_message">Has sido invitado a una caja fuerte. Abre la app para ver la invitación y aceptarla.</string>
+  <string name="new_item_invite_notification_title">Nueva invitación a un elemento</string>
+  <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s desea compartir un elemento contigo.</string>
+  <string name="new_vault_invite_notification_title">Nueva invitación a una caja fuerte</string>
+  <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s desea compartir una caja fuerte contigo.</string>
 </resources>

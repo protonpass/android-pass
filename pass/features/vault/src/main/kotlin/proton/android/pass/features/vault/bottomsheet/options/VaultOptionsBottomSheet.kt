@@ -35,6 +35,26 @@ fun VaultOptionsBottomSheet(
     viewModel: VaultOptionsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(uiState.event) {
+        when (val event = uiState.event) {
+            VaultOptionsEvent.Idle -> Unit
+            is VaultOptionsEvent.OnMigrateVaultItems -> {
+                VaultNavigation.VaultMigrate(
+                    shareId = event.shareId
+                ).also(onNavigate)
+            }
+
+            is VaultOptionsEvent.OnMigrateVaultItemsSharedWarning -> {
+                VaultNavigation.VaultMigrateSharedWarning(
+                    shareId = event.shareId
+                ).also(onNavigate)
+            }
+        }
+
+        viewModel.onEventConsumed(uiState.event)
+    }
+
     when (val state = uiState) {
         is VaultOptionsUiState.Success -> VaultOptionsBottomSheetContents(
             modifier = modifier,
@@ -50,7 +70,7 @@ fun VaultOptionsBottomSheet(
                     }
 
                     VaultOptionsUserEvent.OnMigrate -> {
-                        onNavigate(VaultNavigation.VaultMigrate(state.shareId))
+                        viewModel.onMigrateVault()
                     }
 
                     VaultOptionsUserEvent.OnRemove -> {
@@ -74,9 +94,7 @@ fun VaultOptionsBottomSheet(
         )
 
         VaultOptionsUiState.Loading,
-        VaultOptionsUiState.Uninitialised -> {
-            // no-op
-        }
+        VaultOptionsUiState.Uninitialised -> Unit
 
         VaultOptionsUiState.Error -> {
             LaunchedEffect(Unit) {

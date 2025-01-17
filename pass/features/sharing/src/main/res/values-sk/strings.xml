@@ -68,8 +68,7 @@
   <string name="sharing_snackbar_fetch_member_error">Pri načítaní členov došlo k chybe</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Pri načítavaní čakajúcich pozvánok došlo k chybe</string>
   <string name="share_summary_title">Skontrolovať a zdieľať</string>
-  <string name="share_summary_vault">%s trezor</string>
-  <string name="share_summary_share_vault">Zdielať trezor</string>
+    <string name="share_summary_share_vault">Zdielať trezor</string>
   <string name="share_summary_share_item">Zdieľať položku</string>
   <string name="share_summary_vault_title">Trezor</string>
   <string name="share_summary_item_title">Položka</string>

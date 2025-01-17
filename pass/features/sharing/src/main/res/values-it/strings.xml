@@ -64,8 +64,7 @@
   <string name="sharing_snackbar_fetch_member_error">Si è verificato un errore nel caricamento dei membri</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Si è verificato un errore durante il caricamento degli inviti in sospeso</string>
   <string name="share_summary_title">Controlla e condividi</string>
-  <string name="share_summary_vault">%s</string>
-  <string name="share_summary_share_vault">Condividi la cassaforte</string>
+    <string name="share_summary_share_vault">Condividi la cassaforte</string>
   <string name="share_summary_share_item">Condividi elemento</string>
   <string name="share_summary_vault_title">Cassaforte</string>
   <string name="share_summary_item_title">Elemento</string>

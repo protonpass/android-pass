@@ -62,8 +62,7 @@
   <string name="sharing_snackbar_fetch_member_error">멤버들을 불러오는 도중 오류가 발생했습니다</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">대기중인 초대를 불러오는 도중 오류가 발생했습니다</string>
   <string name="share_summary_title">검토 및 공유</string>
-  <string name="share_summary_vault">%s개 금고</string>
-  <string name="share_summary_share_vault">금고 공유</string>
+    <string name="share_summary_share_vault">금고 공유</string>
   <string name="share_summary_share_item">항목 공유</string>
   <string name="share_summary_vault_title">금고</string>
   <string name="share_summary_item_title">항목</string>

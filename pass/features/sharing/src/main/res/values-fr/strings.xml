@@ -64,8 +64,7 @@
   <string name="sharing_snackbar_fetch_member_error">Une erreur s\'est produite lors de la récupération des membres.</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Une erreur s\'est produite lors de la récupération des invitations en attente.</string>
   <string name="share_summary_title">Vérifier et partager</string>
-  <string name="share_summary_vault">coffre-fort %s</string>
-  <string name="share_summary_share_vault">Partager le coffre-fort</string>
+    <string name="share_summary_share_vault">Partager le coffre-fort</string>
   <string name="share_summary_share_item">Partager l\'élément</string>
   <string name="share_summary_vault_title">Coffre-fort</string>
   <string name="share_summary_item_title">Élément</string>

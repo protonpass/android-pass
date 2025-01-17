@@ -64,8 +64,7 @@
   <string name="sharing_snackbar_fetch_member_error">Üyeler alınırken sorun çıktı</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Bekleyen davetler alınırken sorun çıktı</string>
   <string name="share_summary_title">Gözden geçirip paylaş</string>
-  <string name="share_summary_vault">%s kasa</string>
-  <string name="share_summary_share_vault">Kasayı paylaş</string>
+    <string name="share_summary_share_vault">Kasayı paylaş</string>
   <string name="share_summary_share_item">Ögeyi paylaş</string>
   <string name="share_summary_vault_title">Kasa</string>
   <string name="share_summary_item_title">Öge</string>

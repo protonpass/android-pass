@@ -34,12 +34,14 @@ fun AppLockTypeBottomsheet(
     modifier: Modifier = Modifier,
     enterPinSuccess: Boolean,
     onNavigateEvent: (ProfileNavigation) -> Unit,
+    onClearPinSuccess: () -> Unit,
     viewModel: AppLockTypeViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    if (enterPinSuccess) {
-        LaunchedEffect(Unit) {
+    LaunchedEffect(enterPinSuccess) {
+        if (enterPinSuccess) {
+            onClearPinSuccess()
             viewModel.onPinSuccessfullyEntered(context.toClassHolder())
         }
     }

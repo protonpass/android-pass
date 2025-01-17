@@ -39,58 +39,64 @@ import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.features.vault.R
 import me.proton.core.presentation.R as CoreR
 
-@ExperimentalMaterialApi
-@Composable
-fun VaultOptionsBottomSheetContents(
+@[Composable ExperimentalMaterialApi]
+internal fun VaultOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     state: VaultOptionsUiState.Success,
     onEvent: (VaultOptionsUserEvent) -> Unit
 ) {
-    val items = mutableListOf<BottomSheetItem>()
-    if (state.showEdit) {
-        items += editVault {
-            onEvent(VaultOptionsUserEvent.OnEdit)
+    buildList {
+        if (state.showEdit) {
+            editVault {
+                onEvent(VaultOptionsUserEvent.OnEdit)
+            }.also(::add)
         }
-    }
-    if (state.showMigrate) {
-        items += migrateVault {
-            onEvent(VaultOptionsUserEvent.OnMigrate)
-        }
-    }
-    if (state.showShare) {
-        items += shareVault {
-            onEvent(VaultOptionsUserEvent.OnShare)
-        }
-    }
-    if (state.showManageAccess) {
-        items += manageAccess {
-            onEvent(VaultOptionsUserEvent.OnVaultAccess)
-        }
-    }
-    if (state.showViewMembers) {
-        items += viewMembers {
-            onEvent(VaultOptionsUserEvent.OnVaultAccess)
-        }
-    }
-    if (state.showDelete) {
-        items += removeVault {
-            onEvent(VaultOptionsUserEvent.OnRemove)
-        }
-    }
-    if (state.showLeave) {
-        items += leaveVault {
-            onEvent(VaultOptionsUserEvent.OnLeave)
-        }
-    }
 
-    Column(modifier.bottomSheet()) {
-        BottomSheetItemList(
-            items = if (items.size > 1) {
-                items.withDividers()
-            } else {
-                items
-            }.toPersistentList()
-        )
+        if (state.showMigrate) {
+            migrateVault {
+                onEvent(VaultOptionsUserEvent.OnMigrate)
+            }.also(::add)
+        }
+
+        if (state.showShare) {
+            shareVault {
+                onEvent(VaultOptionsUserEvent.OnShare)
+            }.also(::add)
+        }
+
+        if (state.showManageAccess) {
+            manageAccess {
+                onEvent(VaultOptionsUserEvent.OnVaultAccess)
+            }.also(::add)
+        }
+
+        if (state.showViewMembers) {
+            viewMembers {
+                onEvent(VaultOptionsUserEvent.OnVaultAccess)
+            }.also(::add)
+        }
+
+        if (state.showDelete) {
+            removeVault {
+                onEvent(VaultOptionsUserEvent.OnRemove)
+            }.also(::add)
+        }
+
+        if (state.showLeave) {
+            leaveVault {
+                onEvent(VaultOptionsUserEvent.OnLeave)
+            }.also(::add)
+        }
+    }.let { items ->
+        Column(modifier.bottomSheet()) {
+            BottomSheetItemList(
+                items = if (items.size > 1) {
+                    items.withDividers()
+                } else {
+                    items
+                }.toPersistentList()
+            )
+        }
     }
 }
 
@@ -233,7 +239,7 @@ private fun manageAccess(onClick: () -> Unit): BottomSheetItem = object : Bottom
 }
 
 
-class ThemeVaultOptionsInput :
+internal class ThemeVaultOptionsInput :
     ThemePairPreviewProvider<VaultOptionsUiState.Success>(
         VaultOptionsBottomSheetContentsPreviewProvider()
     )
@@ -241,7 +247,7 @@ class ThemeVaultOptionsInput :
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
-fun VaultOptionsBottomSheetContentsPreview(
+internal fun VaultOptionsBottomSheetContentsPreview(
     @PreviewParameter(ThemeVaultOptionsInput::class) input: Pair<Boolean, VaultOptionsUiState.Success>
 ) {
     PassTheme(isDark = input.first) {

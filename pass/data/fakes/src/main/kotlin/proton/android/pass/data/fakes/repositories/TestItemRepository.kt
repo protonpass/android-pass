@@ -180,6 +180,8 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         "Item cannot be null, did you forget to invoke setItem()?"
     )
 
+    override suspend fun getByIds(shareId: ShareId, itemIds: List<ItemId>): List<Item> = emptyList()
+
     override suspend fun trashItems(userId: UserId, items: Map<ShareId, List<ItemId>>) {
         TODO("Not yet implemented")
     }

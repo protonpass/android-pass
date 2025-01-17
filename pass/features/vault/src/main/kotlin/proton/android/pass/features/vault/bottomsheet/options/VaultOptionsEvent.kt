@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -18,24 +18,16 @@
 
 package proton.android.pass.features.vault.bottomsheet.options
 
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import proton.android.pass.domain.ShareId
 
-internal class VaultOptionsBottomSheetContentsPreviewProvider :
-    PreviewParameterProvider<VaultOptionsUiState.Success> {
+internal sealed interface VaultOptionsEvent {
 
-    override val values: Sequence<VaultOptionsUiState.Success> = sequenceOf(
-        VaultOptionsUiState.Success(
-            shareId = ShareId(""),
-            showEdit = true,
-            showMigrate = true,
-            showDelete = true,
-            showShare = true,
-            showLeave = true,
-            showManageAccess = true,
-            showViewMembers = true,
-            event = VaultOptionsEvent.Idle
-        )
-    )
+    data object Idle : VaultOptionsEvent
+
+    @JvmInline
+    value class OnMigrateVaultItems(internal val shareId: ShareId) : VaultOptionsEvent
+
+    @JvmInline
+    value class OnMigrateVaultItemsSharedWarning(internal val shareId: ShareId) : VaultOptionsEvent
 
 }

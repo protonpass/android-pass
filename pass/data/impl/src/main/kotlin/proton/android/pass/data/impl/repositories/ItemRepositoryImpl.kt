@@ -480,6 +480,15 @@ class ItemRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getByIds(shareId: ShareId, itemIds: List<ItemId>): List<Item> {
+        return localItemDataSource.getByIdList(shareId, itemIds)
+            .let { itemEntities ->
+                encryptionContextProvider.withEncryptionContextSuspendable {
+                    itemEntities.map { itemEntity -> itemEntity.toDomain(this) }
+                }
+            }
+    }
+
     override suspend fun trashItems(userId: UserId, items: Map<ShareId, List<ItemId>>) {
         coroutineScope {
             val results = items.map { entry ->

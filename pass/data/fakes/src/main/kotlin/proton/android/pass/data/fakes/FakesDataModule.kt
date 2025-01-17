@@ -162,6 +162,7 @@ import proton.android.pass.data.api.usecases.invites.InviteToItem
 import proton.android.pass.data.api.usecases.invites.ObserveInvite
 import proton.android.pass.data.api.usecases.items.GetItemCategory
 import proton.android.pass.data.api.usecases.items.GetItemOptions
+import proton.android.pass.data.api.usecases.items.GetMigrationItemsSelection
 import proton.android.pass.data.api.usecases.items.ObserveEncryptedSharedItems
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
@@ -360,6 +361,7 @@ import proton.android.pass.data.fakes.usecases.invites.FakeInviteToItem
 import proton.android.pass.data.fakes.usecases.invites.FakeObserveInvite
 import proton.android.pass.data.fakes.usecases.items.FakeGetItemCategory
 import proton.android.pass.data.fakes.usecases.items.FakeGetItemOptions
+import proton.android.pass.data.fakes.usecases.items.FakeGetMigrationItemsSelection
 import proton.android.pass.data.fakes.usecases.items.FakeObserveItemRevisions
 import proton.android.pass.data.fakes.usecases.items.FakeObserveMonitoredItems
 import proton.android.pass.data.fakes.usecases.items.FakeOpenItemRevision
@@ -1020,5 +1022,8 @@ abstract class FakesDataModule {
     abstract fun bindPendingAttachmentLinkRepository(
         impl: FakePendingAttachmentLinkRepository
     ): PendingAttachmentLinkRepository
+
+    @Binds
+    abstract fun bindGetMigrationItemsSelection(impl: FakeGetMigrationItemsSelection): GetMigrationItemsSelection
 
 }

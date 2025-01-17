@@ -58,8 +58,7 @@
   <string name="sharing_snackbar_remove_member_success">Medlem fjernet fra hvelvet</string>
   <string name="sharing_snackbar_remove_member_error">Kunne ikke fjerne fra hvelvet</string>
   <string name="share_summary_title">Se over og del</string>
-  <string name="share_summary_vault">%s hvelv</string>
-  <string name="share_summary_share_vault">Del hvelv</string>
+    <string name="share_summary_share_vault">Del hvelv</string>
   <string name="share_summary_email_title">Del med</string>
   <string name="share_summary_vault_title">Hvelv</string>
   <string name="share_summary_permissions_title">Tilgangsnivå</string>

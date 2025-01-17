@@ -64,8 +64,7 @@
   <string name="sharing_snackbar_fetch_member_error">წევრების გამოთხოვის შეცდომა</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">შეცდომა დარჩენილი მოსაწვევების გამოთხოვნისას</string>
   <string name="share_summary_title">მიმოხილვა და გაზიარება</string>
-  <string name="share_summary_vault">%s საცავი</string>
-  <string name="share_summary_share_vault">საცავის გაზიარება</string>
+    <string name="share_summary_share_vault">საცავის გაზიარება</string>
   <string name="share_summary_share_item">ელემენტის გაზიარება</string>
   <string name="share_summary_vault_title">საცავი</string>
   <string name="share_summary_item_title">ელემენტი</string>

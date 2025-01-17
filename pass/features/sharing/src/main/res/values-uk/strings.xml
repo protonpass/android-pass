@@ -68,8 +68,7 @@
   <string name="sharing_snackbar_fetch_member_error">Виникла помилка при отриманні учасників</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Виникла помилка при отриманні відкладених запрошень</string>
   <string name="share_summary_title">Перегляд і спільний доступ</string>
-  <string name="share_summary_vault">Сховище %s</string>
-  <string name="share_summary_share_vault">Поділитися сховищем</string>
+    <string name="share_summary_share_vault">Поділитися сховищем</string>
   <string name="share_summary_share_item">Спільний доступ до елемента</string>
   <string name="share_summary_vault_title">Сховище</string>
   <string name="share_summary_item_title">Елемент</string>

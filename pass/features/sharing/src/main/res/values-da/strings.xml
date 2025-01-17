@@ -64,8 +64,7 @@
   <string name="sharing_snackbar_fetch_member_error">Der opstod en fejl ved indhentning af medlemmer</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Der opstod en fejl ved indhentning af afventende invitationer</string>
   <string name="share_summary_title">Gennemgå og del</string>
-  <string name="share_summary_vault">%s boks</string>
-  <string name="share_summary_share_vault">Del boks</string>
+    <string name="share_summary_share_vault">Del boks</string>
   <string name="share_summary_share_item">Del element</string>
   <string name="share_summary_vault_title">Boks</string>
   <string name="share_summary_item_title">Element</string>

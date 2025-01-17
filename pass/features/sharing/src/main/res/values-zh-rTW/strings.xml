@@ -62,8 +62,7 @@
   <string name="sharing_snackbar_fetch_member_error">There was an error fetching members</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">There was an error fetching pending invites</string>
   <string name="share_summary_title">審閱並分享</string>
-  <string name="share_summary_vault">%s保管庫</string>
-  <string name="share_summary_share_vault">分享保險庫</string>
+    <string name="share_summary_share_vault">分享保險庫</string>
   <string name="share_summary_share_item">Share item</string>
   <string name="share_summary_vault_title">保管庫</string>
   <string name="share_summary_item_title">Item</string>

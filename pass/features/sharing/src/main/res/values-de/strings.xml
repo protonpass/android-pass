@@ -64,8 +64,7 @@
   <string name="sharing_snackbar_fetch_member_error">Fehler beim Abrufen der Mitglieder.</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Fehler beim Abrufen der ausstehenden Einladungen.</string>
   <string name="share_summary_title">Überprüfen und teilen</string>
-  <string name="share_summary_vault">%s Tresor</string>
-  <string name="share_summary_share_vault">Tresor teilen</string>
+    <string name="share_summary_share_vault">Tresor teilen</string>
   <string name="share_summary_share_item">Element teilen</string>
   <string name="share_summary_vault_title">Tresor</string>
   <string name="share_summary_item_title">Element</string>

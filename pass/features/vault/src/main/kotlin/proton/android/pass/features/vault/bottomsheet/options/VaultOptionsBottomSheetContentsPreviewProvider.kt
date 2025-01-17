@@ -21,19 +21,21 @@ package proton.android.pass.features.vault.bottomsheet.options
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import proton.android.pass.domain.ShareId
 
-class VaultOptionsBottomSheetContentsPreviewProvider :
+internal class VaultOptionsBottomSheetContentsPreviewProvider :
     PreviewParameterProvider<VaultOptionsUiState.Success> {
-    override val values: Sequence<VaultOptionsUiState.Success>
-        get() = sequenceOf(
-            VaultOptionsUiState.Success(
-                shareId = ShareId(""),
-                showEdit = true,
-                showMigrate = true,
-                showDelete = true,
-                showShare = true,
-                showLeave = true,
-                showManageAccess = true,
-                showViewMembers = true
-            )
+
+    override val values: Sequence<VaultOptionsUiState.Success> = sequenceOf(
+        VaultOptionsUiState.Success(
+            shareId = ShareId(""),
+            showEdit = true,
+            showMigrate = true,
+            showDelete = true,
+            showShare = true,
+            showLeave = true,
+            showManageAccess = true,
+            showViewMembers = true,
+            event = VaultOptionsEvent.Idle
         )
+    )
+
 }

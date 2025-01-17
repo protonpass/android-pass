@@ -32,6 +32,7 @@ import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.api.usecases.capabilities.VaultAccessData
+import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
 import proton.android.pass.data.fakes.usecases.TestCanManageVaultAccess
 import proton.android.pass.data.fakes.usecases.TestCanMigrateVault
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
@@ -67,6 +68,9 @@ class VaultOptionsBottomSheetTest {
     @Inject
     lateinit var savedStateHandle: TestSavedStateHandleProvider
 
+    @Inject
+    lateinit var observeEncryptedItems: FakeObserveEncryptedItems
+
     @Before
     fun setup() {
         hiltRule.inject()
@@ -87,6 +91,7 @@ class VaultOptionsBottomSheetTest {
     fun canClickMigrate() {
         setVault(owned = true, shared = false)
         migrateVault.setResult(true)
+        observeEncryptedItems.emitValue(emptyList())
         runTest(R.string.bottomsheet_migrate) { event, checker ->
             if (event is VaultNavigation.VaultMigrate) {
                 checker.call(event.shareId)

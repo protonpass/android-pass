@@ -135,7 +135,11 @@ fun HomeScreen(
                 onNavigateEvent(HomeNavigation.UpgradeDialog)
             }
 
-            HomeNavEvent.Unknown -> {}
+            HomeNavEvent.Unknown -> Unit
+
+            HomeNavEvent.OnBulkMigrationSharedWarning -> {
+                onNavigateEvent(HomeNavigation.ItemsMigrationSharedWarning)
+            }
         }
 
         homeViewModel.onNavEventConsumed(homeUiState.navEvent)

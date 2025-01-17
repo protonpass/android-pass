@@ -38,7 +38,7 @@
   <string name="login_item_monitor_widget_weak_pass_title">Mật khẩu yếu</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Tài khoản này không an toàn, hãy tới dịch vụ và thay đổi mật khẩu.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
-    <item quantity="other">%d lần đăng nhập khác sử dụng cùng mật khẩu</item>
+    <item quantity="other">%d other logins use the same password</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Thiết lập 2FA để an toàn hơn</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Dịch vụ này hỗ trợ mã bí mật 2FA. Hãy khởi tạo nó để tăng cường bảo mật cho tài khoản của bạn.</string>
@@ -73,8 +73,8 @@
   <string name="move_to_trash_item_detail_bottom_sheet">Chuyển vào thùng rác</string>
   <string name="migrate_item_detail_bottom_sheet">Chuyển đến kho lưu trữ khác</string>
   <!-- More info -->
-  <string name="date_today">Hôm nay %s</string>
-  <string name="date_yesterday">Hôm qua %s</string>
+  <string name="date_today">Today %s</string>
+  <string name="date_yesterday">Yesterday %s</string>
   <!--
     Pattern used when displaying a date in the same year as we are.
     It would translate to
@@ -92,7 +92,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Bạn chỉ có thể chỉnh sửa nội dung trong các kho lưu trữ cũ nhất của mình. Để chỉnh sửa nội dung này, vui lòng nâng cấp gói của bạn.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Bạn không thể chỉnh sửa nội dung này vì nó nằm trong thùng rác. Hãy chuyển nó ra trước khi chỉnh sửa.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Không thể chia sẽ</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Bạn không có đủ quyền để chia sẻ kho lưu trữ này.</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">You don\'t have enough permissions to perform this action.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Bạn đã đạt đến giới hạn chia sẻ kho. Để chia sẻ nhiều kho hơn, vui lòng nâng cấp gói hiện tại của bạn.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Bạn không thể chỉnh sửa nội dung này vì nó nằm trong thùng rác. Hãy chuyển nó ra trước khi chỉnh sửa.</string>
   <string name="password_score_vulnerable">Dễ bị bẻ khóa</string>
@@ -109,13 +109,14 @@
   <string name="field_detail_display_name_title">Tên hiển thị</string>
   <string name="display_name_section_description">Tên hiển thị khi gửi email từ bí danh này.</string>
   <plurals name="alias_forwards_count">
-    <item quantity="other">%1$s chuyển tiếp</item>
+    <item quantity="other">%1$s forwards</item>
   </plurals>
   <plurals name="alias_replies_count">
-    <item quantity="other">%1$s phản hồi</item>
+    <item quantity="other">%1$s replies</item>
   </plurals>
   <plurals name="alias_blocks_count">
-    <item quantity="other">%1$s khối</item>
+    <item quantity="other">%1$s blocks</item>
   </plurals>
   <string name="open_with">Mở bằng:</string>
+  <string name="open_attachments_error">Could not open attachment</string>
 </resources>

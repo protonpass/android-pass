@@ -31,7 +31,7 @@
   <string name="sync_dialog_title_error">Synkroniseringen mislyktes</string>
   <string name="sync_dialog_title_success">Synkronisering fullført</string>
   <string name="sync_dialog_subtitle">Vi laster ned og dekrypterer elementene dine. Dette kan ta noen minutter.</string>
-  <string name="sync_dialog_subtitle_error">Det oppstod en feil under nedlasting og dekryptering av elementene. Vennligst prøv på nytt.</string>
+  <string name="sync_dialog_subtitle_error">Det oppstod en feil under nedlasting og dekryptering av elementene. Prøv på nytt.</string>
   <string name="sync_dialog_subtitle_success">Elementene dine ble lastet ned og dekryptert.</string>
   <string name="sync_item_not_started">Ikke påbegynt</string>
   <string name="sync_item_failed">Synkroniseringen mislyktes</string>

@@ -28,4 +28,10 @@
   <string name="item_history_timeline_node_leaf_title">Oprettet</string>
   <string name="item_history_timeline_node_root_title">Aktuel version</string>
   <string name="item_history_timeline_snackbar_message_error">Der opstod en fejl ved hentning af elementrevision</string>
+  <string name="reset_history_bottomsheet_option">Nulstil historik</string>
+  <string name="reset_history_dialog_title">Nulstil historik for dette element?</string>
+  <string name="reset_history_dialog_body">Nulstilling af historik sletter alle tidligere versioner permanent og kan ikke fortrydes.</string>
+  <string name="reset_history_action">Nulstil</string>
+  <string name="reset_history_dialog_snackbar_message_error">Der opstod en fejl ved nulstilling</string>
+  <string name="reset_history_dialog_snackbar_message_success">Nulstilling af elementhistorik</string>
 </resources>

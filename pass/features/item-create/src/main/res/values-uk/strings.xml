@@ -39,8 +39,9 @@
   <string name="create_login_item_update_error">Не вдалося оновити запис входу</string>
   <string name="create_login_init_error">Проблема з отриманням даних для входу</string>
   <string name="create_login_invalid_totp">Неприпустимі дані для двоетапної перевірки (2FA)</string>
-  <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
-  <string name="login_link_attachments_error">Could not add attachments to login</string>
+  <string name="update_login_attachments_init_error">Проблема з отриманням вкладень для входу в систему</string>
+  <string name="login_link_attachments_error">Failed to link or unlink attachments to the login</string>
+  <string name="login_rename_attachments_error">Failed to rename login attachments</string>
   <string name="login_created">Запис входу створено</string>
   <string name="bottomsheet_modify_alias_title">Змінити псевдонім</string>
   <string name="bottomsheet_custom_field_type_text">Текст</string>
@@ -65,8 +66,9 @@
   <string name="create_note_item_creation_error">Не вдається створити нотатку</string>
   <string name="create_note_item_update_error">Не вдалося оновити нотатку</string>
   <string name="create_note_init_error">Проблема з отриманням деталей нотатки</string>
-  <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
-  <string name="note_link_attachments_error">Could not add attachments to note</string>
+  <string name="update_note_attachments_init_error">Проблема з отриманням вкладень до нотаток</string>
+  <string name="note_link_attachments_error">Failed to link or unlink attachments to the note</string>
+  <string name="note_rename_attachments_error">Failed to rename note attachments</string>
   <string name="note_created">Нотатку створено</string>
   <!-- Create Alias -->
   <string name="field_alias_title">Адреса псевдоніма</string>
@@ -83,8 +85,9 @@
   <string name="alias_rate_limited">Забагато псевдонімів створено останнім часом</string>
   <string name="create_alias_item_update_error">Не вдалося оновити псевдонім</string>
   <string name="create_alias_init_error">Проблема з отриманням деталей псевдоніма</string>
-  <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
-  <string name="alias_link_attachments_error">Could not add attachments to alias</string>
+  <string name="update_alias_attachments_init_error">Проблема з отриманням псевдонімів прикріплених файлів</string>
+  <string name="alias_link_attachments_error">Failed to link or unlink attachments to the alias</string>
+  <string name="alias_rename_attachments_error">Failed to rename alias attachments</string>
   <string name="alias_created">Псевдонім створено</string>
   <string name="cannot_retrieve_alias_options">Неможливо отримати параметри псевдоніму</string>
   <string name="alias_mailbox_dialog_title">Переслати</string>
@@ -92,7 +95,7 @@
   <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">У Pass примітка до елемента шифрується за допомогою ключа шифрування елемента, і тільки користувачі, які мають доступ до елемента, можуть переглянути примітку.</string>
   <string name="sl_note_info_message_part2">Його не бачать ні Proton, ні SimpleLogin.</string>
   <string name="sl_note_info_message_part3">Нотатки SimpleLogin зберігаються в одному місці з псевдоадресою, і хоча вони захищені шифруванням у стані спокою, вони не зашифровані E2E, що означає, що будь-хто, хто має доступ до бази даних SimpleLogin, може їх прочитати.</string>
-  <string name="sl_note_info_content_description">Show SL note information dialog</string>
+  <string name="sl_note_info_content_description">Показати діалогове вікно інформації про нотатку SL</string>
   <!-- Create note -->
   <string name="note_hint">Нотатка</string>
   <!-- Create Credit Card -->
@@ -110,8 +113,9 @@
   <string name="create_credit_card_item_creation_error">Не вдалося створити кредитну картку</string>
   <string name="create_credit_card_item_creation_success">Кредитну картку створено</string>
   <string name="credit_card_init_error">Проблема з отриманням даних кредитної картки</string>
-  <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
-  <string name="credit_card_link_attachments_error">Could not add attachments to credit card</string>
+  <string name="update_credit_card_attachments_init_error">Проблема з отриманням вкладень до кредитної картки</string>
+  <string name="credit_card_link_attachments_error">Failed to link or unlink attachments to the credit card</string>
+  <string name="credit_card_rename_attachments_error">Failed to rename credit card attachments</string>
   <string name="credit_card_item_update_error">Не вдалося оновити кредитну картку</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Повне ім\'я</string>
@@ -141,7 +145,7 @@
   <string name="identity_field_reddit_title">Ім\'я користувача Reddit</string>
   <string name="identity_field_facebook_title">URL-адреса Facebook</string>
   <string name="identity_field_yahoo_title">Ім\'я користувача Yahoo</string>
-  <string name="identity_field_instagram_title">Instagram username</string>
+  <string name="identity_field_instagram_title">Instagram обробник</string>
   <string name="identity_field_personal_website_title">URL-адреса персонального вебсайту</string>
   <string name="identity_field_work_phone_number_title">Номер робочого телефону</string>
   <string name="identity_field_work_email_title">Робоча адреса електронної пошти</string>
@@ -156,7 +160,7 @@
   <string name="identity_add_field_reddit">Ім\'я користувача Reddit</string>
   <string name="identity_add_field_facebook">URL-адреса Facebook</string>
   <string name="identity_add_field_yahoo">Ім\'я користувача Yahoo</string>
-  <string name="identity_add_field_instagram">Instagram username</string>
+  <string name="identity_add_field_instagram">Instagram обробник</string>
   <string name="identity_add_field_personal_website">URL-адреса персонального вебсайту</string>
   <string name="identity_add_field_work_phone_number">Номер робочого телефону</string>
   <string name="identity_add_field_work_email_address">Робоча адреса електронної пошти</string>
@@ -168,8 +172,9 @@
   <string name="identity_add_more_fields">Додати інше поле</string>
   <string name="identity_bottomsheet_add_field">Додати поле</string>
   <string name="create_identity_init_error">Проблема з отриманням ідентифікаційних даних</string>
-  <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
-  <string name="identity_link_attachments_error">Could not add attachments to identity</string>
+  <string name="update_identity_attachments_init_error">Проблема з отриманням вкладень до особистих даних</string>
+  <string name="identity_link_attachments_error">Failed to link or unlink attachments to the identity</string>
+  <string name="identity_rename_attachments_error">Failed to rename identity attachments</string>
   <string name="create_identity_item_creation_error">Не вдалося створити ідентичність</string>
   <string name="create_identity_item_creation_success">Ідентичність створено</string>
   <string name="update_identity_item_creation_success">Ідентичність оновлено</string>
@@ -199,6 +204,8 @@
   <string name="add_a_custom_section">Додати власний розділ</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Вкладення</string>
-  <string name="banner_body_attachments">You can attach files to items for a better organization</string>
+  <string name="banner_body_attachments">Ви можете прикріплювати файли до елементів для кращої організації</string>
   <string name="open_with">Відкрити з:</string>
+  <string name="open_attachments_error">Не вдалося відкрити файл</string>
+  <string name="upload_attachments_error">Не вдалося завантажити файл</string>
 </resources>

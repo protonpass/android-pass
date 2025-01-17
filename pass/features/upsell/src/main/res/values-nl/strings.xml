@@ -21,6 +21,7 @@
   <string name="upsell_dark_web_monitoring_subtitle">Dark Web Monitoring is beschikbaar met een betaald abonnement. Upgrade voor directe toegang.</string>
   <string name="upsell_missing_2fa_subtitle">Bekijk een lijst van sites waar u tweede factor authenticatie kunt toevoegen om uw online aanwezigheid te beschermen. Upgrade voor instant toegang.</string>
   <string name="upsell_sentinel_subtitle">Ontgrendel geavanceerde beveiligingsfuncties en gedetailleerde logs om uw online aanwezigheid te beschermen.</string>
+  <string name="upsell_paid_feature_file_attachments">Bestandsbijlagen</string>
   <string name="upsell_paid_feature_dark_web_monitoring">Dark Web Monitoring</string>
   <string name="upsell_paid_feature_sentinel">Proton Sentinel</string>
   <string name="upsell_paid_feature_authenticator">Geïntegreerde tweestapsverificatie</string>
@@ -34,6 +35,7 @@
   <string name="upsell_paid_feature_advance_alias_management_subtitle">Geavanceerd alias beheer is beschikbaar met een betaald abonnement. Upgrade voor directe toegang.</string>
   <string name="upsell_paid_feature_item_sharing_title">Deel snel een item</string>
   <string name="upsell_paid_feature_item_sharing_subtitle">Upgrade vandaag zodat u een item kunt delen met elke Pass gebruiker. En geniet van andere premium-functies:</string>
+  <string name="upsell_paid_feature_file_attachments_title">Bestandsbijlagen</string>
   <string name="upsell_button_upgrade">Neem Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Kies Pass Business</string>
 </resources>

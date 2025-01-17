@@ -32,9 +32,9 @@
     <item quantity="other">%d წევრი</item>
   </plurals>
   <string name="sharing_member_count_header">წევრები</string>
-  <string name="shared_via_title">Shared via</string>
-  <string name="shared_via_item_member_count_header">Item sharing</string>
-  <string name="shared_via_vault_member_count_header">Vault sharing</string>
+  <string name="shared_via_title">გაზიარება როგორც</string>
+  <string name="shared_via_item_member_count_header">ელემენტის გაზიარება</string>
+  <string name="shared_via_vault_member_count_header">საცავის გაზიარება</string>
   <string name="share_with_title">გაზიარება</string>
   <string name="share_with_email_hint">ელფოსტის მისამართი</string>
   <string name="share_with_email_error">არასწორი ელფოსტის მისამართი</string>
@@ -48,7 +48,7 @@
   <string name="sharing_item_invitation_title">გაზიარებული ელემენტის მოსაწვევი</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s უნდა, ელემენტი გაგიზიაროთ.</string>
   <string name="sharing_item_invitation_accept">მიღება და ელემენტის ნახვა</string>
-  <string name="sharing_invite_more">Invite more…</string>
+  <string name="sharing_invite_more">მეტის მოწვევა…</string>
   <string name="sharing_snackbar_invite_accepted">მოწვევა მიღებულია</string>
   <string name="sharing_snackbar_invite_accept_error">მოსაწვევის დათანხმების შეცდომა</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">მოსაწვევს ვერ დავეთნახმე, რადგან საცავების ზღვარს მიაღწიეთ</string>
@@ -125,18 +125,14 @@
   <string name="share_with_suggestions_title">შეთავაზებები</string>
   <string name="share_with_recents_title">უახლესი</string>
   <string name="share_with_remove_email_content_description">ელფოსტის წაშლა</string>
-  <string name="share_with_user_title">გაზიარება</string>
-  <string name="share_with_user_description">გააზიარეთ ეს ელემენტი სხვა Proton-ის მომხმარებლებთან.</string>
   <string name="share_with_secure_link_title">დაცული ბმულით</string>
   <string name="share_with_secure_link_description">დაცული ბმულის შექმნა ამ ელემენტისთვის.</string>
-  <string name="share_with_vault_title">Entire vault</string>
-  <string name="share_with_vault_description">Share this vault and its content.</string>
-  <string name="share_with_user_shared_title">With other Proton Pass users</string>
-  <string name="share_with_user_shared_description">Useful for permanent sharing.</string>
-  <string name="share_with_manage_shared_item_title">Manage access</string>
-  <string name="share_with_manage_shared_item_description">See member and permission overview.</string>
-  <string name="share_with_secure_link_shared_title">Via a secure link</string>
-  <string name="share_with_secure_link_shared_description">For one-off sharing.</string>
+  <string name="share_with_user_shared_title">სხვა Proton Pass-ის მომხმარებლებთან</string>
+  <string name="share_with_user_shared_description">სასარგებლოა მუდმივი გაზიარებისთვის.</string>
+  <string name="share_with_manage_shared_item_title">წვდომის მართვა</string>
+  <string name="share_with_manage_shared_item_description">წევრებისა და წვდომების გადახედვა.</string>
+  <string name="share_with_secure_link_shared_title">დაცული ბმულით</string>
+  <string name="share_with_secure_link_shared_description">ერთჯერადი გაზიარებისთვის</string>
   <string name="share_with_manage_shared_vault_title">საცავის წვდომის მართვა</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="one">ელემენტის საცავი ამჟამად %d მომხმარებელთანაა გაზიარებული.</item>

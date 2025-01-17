@@ -34,6 +34,7 @@
   <string name="bottomsheet_copy_item_note">Copia la nota</string>
   <string name="bottomsheet_delete_permanently">Elimina de manera permanent</string>
   <string name="bottomsheet_restore">Restaura</string>
+  <string name="bottomsheet_leave">Deixa</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Obre el menú d\'acció de l\'element</string>
   <string name="action_upgrade_now">Millora ara</string>
@@ -282,4 +283,7 @@
   <string name="attachment_title">Fitxers adjunts</string>
   <string name="attachment_no_files">Carregueu fitxers des del vostre dispositiu</string>
   <string name="attachment_add_file">Adjunta un fitxer</string>
+  <string name="attachment_row_upload_failed">No s\'ha pogut carregar.</string>
+  <string name="attachment_row_retry">Torna-ho a provar</string>
+  <string name="options_menu_content_description">Menú d\'opcions</string>
 </resources>

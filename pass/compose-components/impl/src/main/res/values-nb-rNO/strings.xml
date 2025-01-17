@@ -34,6 +34,7 @@
   <string name="bottomsheet_copy_item_note">Kopier notat</string>
   <string name="bottomsheet_delete_permanently">Slett permanent</string>
   <string name="bottomsheet_restore">Gjenopprett</string>
+  <string name="bottomsheet_leave">Forlat</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Åpne elementhandlingsmenyen</string>
   <string name="action_upgrade_now">Oppgrader nå</string>
@@ -282,4 +283,7 @@
   <string name="attachment_title">Vedlegg</string>
   <string name="attachment_no_files">Last opp filer fra enheten din</string>
   <string name="attachment_add_file">Legg ved en fil</string>
+  <string name="attachment_row_upload_failed">Opplasting mislyktes</string>
+  <string name="attachment_row_retry">Prøv igjen</string>
+  <string name="options_menu_content_description">Alternativermeny</string>
 </resources>

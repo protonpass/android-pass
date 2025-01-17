@@ -4,6 +4,8 @@
   <string name="autofill_notification_channel_name">Autom. aanvullen</string>
   <string name="autofill_notification_copy_to_clipboard_title">TOTP-code</string>
   <string name="autofill_notification_copy_to_clipboard_body">De TOTP-code is naar het klembord gekopieerd.</string>
-  <string name="updates_new_invite_received_title">U heeft een uitnodiging ontvangen</string>
-  <string name="updates_new_invite_received_message">U bent uitgenodigd tot een kluis. Open de app om de uitnodiging te zien en te accepteren.</string>
+  <string name="new_item_invite_notification_title">Nieuwe uitnodiging ontvangen</string>
+  <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s wil een kluis delen met u.</string>
+  <string name="new_vault_invite_notification_title">Nieuwe kluis uitnodiging ontvangen</string>
+  <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s wil een kluis delen met u.</string>
 </resources>

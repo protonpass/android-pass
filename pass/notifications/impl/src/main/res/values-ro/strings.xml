@@ -4,6 +4,8 @@
   <string name="autofill_notification_channel_name">Autocompletare</string>
   <string name="autofill_notification_copy_to_clipboard_title">Cod TOTP</string>
   <string name="autofill_notification_copy_to_clipboard_body">Codul TOTP a fost copiat în memorie.</string>
-  <string name="updates_new_invite_received_title">Ați primit o invitație</string>
-  <string name="updates_new_invite_received_message">Ați primit o invitație la un seif. Deschideți aplicația pentru a vedea invitația și a o accepta.</string>
+  <string name="new_item_invite_notification_title">A sosit o invitație la un articol nou</string>
+  <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s doreşte să vă partajeze un articol.</string>
+  <string name="new_vault_invite_notification_title">A sosit o invitație nouă la un seif</string>
+  <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s doreşte să vă partajeze un seif.</string>
 </resources>

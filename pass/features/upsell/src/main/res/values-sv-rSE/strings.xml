@@ -21,6 +21,7 @@
   <string name="upsell_dark_web_monitoring_subtitle">Övervakning av mörka webben är tillgängligt med ett betalt paket. Uppgradera för omedelbar åtkomst.</string>
   <string name="upsell_missing_2fa_subtitle">Visa en lista över webbplatser där du kan lägga till en andra autentiseringsfaktor för att skydda din närvaro online. Uppgradera för omedelbar åtkomst.</string>
   <string name="upsell_sentinel_subtitle">Lås upp avancerade säkerhetsfunktioner och detaljerade loggar för att skydda din närvaro online.</string>
+  <string name="upsell_paid_feature_file_attachments">Filbilagor</string>
   <string name="upsell_paid_feature_dark_web_monitoring">Övervakning av mörka webben</string>
   <string name="upsell_paid_feature_sentinel">Proton Sentinel</string>
   <string name="upsell_paid_feature_authenticator">Integrerad 2FA-autentisering</string>
@@ -34,6 +35,7 @@
   <string name="upsell_paid_feature_advance_alias_management_subtitle">Avancerad hantering av alias är tillgängligt med ett betalt paket. Uppgradera för omedelbar åtkomst.</string>
   <string name="upsell_paid_feature_item_sharing_title">Dela snabbt ett objekt</string>
   <string name="upsell_paid_feature_item_sharing_subtitle">Uppgradera idag så att du kan dela ett objekt med vilken Pass-användare som helst. Och njut av andra premiumfunktioner:</string>
+  <string name="upsell_paid_feature_file_attachments_title">Filbilagor</string>
   <string name="upsell_button_upgrade">Skaffa Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Skaffa Pass Business</string>
 </resources>

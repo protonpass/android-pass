@@ -44,9 +44,9 @@
   <string name="security_center_sentinel_button_enable">Aktiver Proton Sentinel</string>
   <string name="security_center_sentinel_button_disable">Deaktiver Proton Sentinel</string>
   <string name="security_center_sentinel_snackbar_message_enable_canceled">Aktivering av Proton Sentinel-beskyttelse er kansellert</string>
-  <string name="security_center_sentinel_snackbar_message_enable_error">Det oppstod en feil under aktivering av Proton Sentinel-beskyttelse. Vennligst prøv på nytt.</string>
+  <string name="security_center_sentinel_snackbar_message_enable_error">Det oppstod en feil under aktivering av beskyttelse med Proton Sentinel. Prøv på nytt.</string>
   <string name="security_center_sentinel_snackbar_message_disable_canceled">Deaktivering av Proton Sentinel-beskyttelse er kansellert</string>
-  <string name="security_center_sentinel_snackbar_message_disable_error">Det oppstod en feil under deaktivering av Proton Sentinel-beskyttelse. Vennligst prøv på nytt.</string>
+  <string name="security_center_sentinel_snackbar_message_disable_error">Det oppstod en feil under deaktivering av beskyttelse med Proton Sentinel. Prøv på nytt.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Svake passord</string>
   <string name="security_center_weak_pass_top_bar_subtitle">Svake passord er lettere å gjette. Generer sterke passord for å holde kontoene dine trygge.</string>
@@ -91,8 +91,8 @@
   <string name="security_center_dark_web_monitor_see_all">Se alle</string>
   <string name="security_center_dark_web_monitor_no_proton_addresses">Ingen Proton-adresser</string>
   <string name="security_center_dark_web_monitor_no_aliases">Ingen aliaser</string>
-  <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Det oppstod en feil ved sending av verifiseringskoden. Vennligst prøv igjen senere.</string>
-  <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Det oppstod en feil ved fjerning av e-posten. Vennligst prøv igjen senere.</string>
+  <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Det oppstod en feil ved sending av verifiseringskoden. Prøv igjen senere.</string>
+  <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Det oppstod en feil ved fjerning av e-posten. Prøv igjen senere.</string>
   <!-- Add custom email monitoring -->
   <string name="security_center_custom_email_top_bar_title">Overvåking av tilpasset e-post</string>
   <string name="security_center_custom_email_email_address_placeholder">E-postadresse</string>
@@ -102,9 +102,9 @@
   <string name="security_center_custom_email_error_adding">Feil ved å legge til e-postadressen</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_email_title">Bekreft e-posten din</string>
-  <string name="security_center_verify_email_subtitle">Vi har sendt en verifiseringskode til %s. Vennligst angi den nedenfor:</string>
-  <string name="security_center_verify_email_snackbar_message_resend_code_success">En ny verifisering er sendt, vennligst sjekk innboksen din.</string>
-  <string name="security_center_verify_email_snackbar_message_resend_code_error">Det oppstod en feil ved sending av verifiseringskoden. Vennligst prøv igjen senere.</string>
+  <string name="security_center_verify_email_subtitle">Vi har sendt en verifiseringskode til %s. Skriv den inn nedenfor:</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_success">En ny verifisering er sendt, sjekk innboksen din.</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_error">Det oppstod en feil under sending av verifiseringskoden. Prøv igjen senere.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">For mange ugyldige verifikasjoner. Fjerner tilpasset e-post.</string>
   <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Ugyldig verifiseringskode</string>
   <string name="security_center_verify_email_snackbar_message_verification_error">Det oppstod en feil ved verifisering av e-posten. Prøv igjen senere.</string>
@@ -157,7 +157,7 @@
   <string name="security_center_alias_list_error">Kunne ikke laste inn adresser</string>
   <string name="security_center_alias_list_included_in_monitoring">Aktiver overvåking for å bli varslet hvis Hide-my-email-aliasene dine ble lekket.</string>
   <string name="security_center_alias_list_monitored">Overvåket</string>
-  <string name="security_center_alias_list_custom_email_message">Aliaser med egendefinerte domener overvåkes ikke, vennligst legg dem til som en tilpasset e-post for overvåking.</string>
+  <string name="security_center_alias_list_custom_email_message">Aliaser med egendefinerte domener overvåkes ikke, legg dem til som en tilpasset e-post for overvåking.</string>
   <string name="security_center_alias_list_options_menu">Alternativmeny for aliasskjerm</string>
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Datasikkerhet</string>

@@ -93,7 +93,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Du har bare lov til å redigere elementer i de eldste hvelvene dine. For å redigere dette elementet, oppgrader din nåværende plan.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Du kan ikke redigere dette elementet fordi det er i papirkurven. Flytt det ut av papirkurven før du redigerer det.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Kan ikke dele</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Du har ikke nok tillatelser til å dele dette hvelvet.</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">Du har ikke nok tillatelser til å utføre denne handlingen.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Du har nådd delingsgrensen for hvelv. For å dele flere hvelv, oppgrader din nåværende plan.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Du kan ikke dele dette elementet fordi det er i papirkurven. Flytt det ut av papirkurven før du deler det.</string>
   <string name="password_score_vulnerable">Sårbar</string>
@@ -122,4 +122,5 @@
     <item quantity="other">%1$s blokkeringer</item>
   </plurals>
   <string name="open_with">Åpne med:</string>
+  <string name="open_attachments_error">Kunne ikke åpne vedlegg</string>
 </resources>

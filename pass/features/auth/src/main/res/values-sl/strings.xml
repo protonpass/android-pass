@@ -23,7 +23,7 @@
     <item quantity="one">Napačen PIN. Še %d poskus.</item>
     <item quantity="two">Napačen PIN. Še %d poskusa.</item>
     <item quantity="few">Napačna koda PIN, preostajajo %d poskusi.</item>
-    <item quantity="other">Napačna koda PIN, preostajajo %d poskusi.</item>
+    <item quantity="other">Napačna koda PIN, preostaja %d poskusov.</item>
   </plurals>
   <string name="auth_unlock_app_title">Odkleni Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Vnesite glavno geslo za %s</string>
@@ -45,13 +45,13 @@
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Napačno geslo. Še %d poskus</item>
     <item quantity="two">Napačno geslo. Še %d poskusa</item>
-    <item quantity="few">Napačno geslo. Še %d poskusov</item>
+    <item quantity="few">Napačno geslo. Še %d poskusi</item>
     <item quantity="other">Napačno geslo. Še %d poskusov</item>
   </plurals>
   <plurals name="auth_attempts_remaining">
     <item quantity="one">Še %d poskus</item>
     <item quantity="two">Še %d poskusa</item>
-    <item quantity="few">%d preostalih poskusov</item>
+    <item quantity="few">%d preostali poskusi</item>
     <item quantity="other">%d preostalih poskusov</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Too many failed pin attempts. All your users are being logged out.</string>

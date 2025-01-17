@@ -78,4 +78,6 @@
   <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Anda perlu beralih ke %1$s untuk mengelola</string>
   <string name="account_switch_confirmation_title">Kelola akun</string>
   <string name="account_switch_confirmation_confirm">Alihkan dan kelola</string>
+  <string name="profile_storage_data_title">Penyimpanan</string>
+  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s dari %2$s</string>
 </resources>

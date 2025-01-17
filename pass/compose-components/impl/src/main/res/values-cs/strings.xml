@@ -36,6 +36,7 @@
   <string name="bottomsheet_copy_item_note">Kopírovat poznámku</string>
   <string name="bottomsheet_delete_permanently">Trvale smazat</string>
   <string name="bottomsheet_restore">Obnovit</string>
+  <string name="bottomsheet_leave">Opustit</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Otevřít nabídku akcí položky</string>
   <string name="action_upgrade_now">Navýšit nyní</string>
@@ -306,4 +307,7 @@
   <string name="attachment_title">Přílohy</string>
   <string name="attachment_no_files">Nahrajte soubory z vašeho zařízení</string>
   <string name="attachment_add_file">Připojit soubor</string>
+  <string name="attachment_row_upload_failed">Nahrávání selhalo</string>
+  <string name="attachment_row_retry">Zkusit znovu</string>
+  <string name="options_menu_content_description">Nabídka možností</string>
 </resources>

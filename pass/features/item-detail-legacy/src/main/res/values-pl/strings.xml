@@ -95,7 +95,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Możesz edytować tylko najstarsze sejfy. Ulepsz do płatnego planu, aby edytować ten element.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Nie można edytować elementu znajdującego się w Koszu. Przenieś element z Kosza, aby go edytować.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nie można udostępnić</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nie masz wystarczających uprawnień do udostępnienia sejfu.</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">You don\'t have enough permissions to perform this action.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Osiągnięto maksymalną liczbę udostępnionych sejfów. Ulepsz plan, aby udostępnić więcej sejfów.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Nie można udostępniać elementu znajdującego się w Koszu. Przenieś element z Kosza, aby go udostępnić.</string>
   <string name="password_score_vulnerable">Bardzo słabe</string>
@@ -112,22 +112,23 @@
   <string name="field_detail_display_name_title">Nazwa wyświetlana</string>
   <string name="display_name_section_description">Nazwa wyświetlana podczas wysyłania wiadomości z tego aliasu.</string>
   <plurals name="alias_forwards_count">
-    <item quantity="one">%1$s przekierowanie</item>
-    <item quantity="few">%1$s przekierowania</item>
-    <item quantity="many">%1$s przekierowań</item>
-    <item quantity="other">%1$s przekierowań</item>
+    <item quantity="one">%1$s forward</item>
+    <item quantity="few">%1$s forwards</item>
+    <item quantity="many">%1$s forwards</item>
+    <item quantity="other">%1$s forwards</item>
   </plurals>
   <plurals name="alias_replies_count">
-    <item quantity="one">%1$s odpowiedź</item>
-    <item quantity="few">%1$s odpowiedzi</item>
-    <item quantity="many">%1$s odpowiedzi</item>
-    <item quantity="other">%1$s odpowiedzi</item>
+    <item quantity="one">%1$s reply</item>
+    <item quantity="few">%1$s replies</item>
+    <item quantity="many">%1$s replies</item>
+    <item quantity="other">%1$s replies</item>
   </plurals>
   <plurals name="alias_blocks_count">
-    <item quantity="one">%1$s zablokowanie</item>
-    <item quantity="few">%1$s zablokowania</item>
-    <item quantity="many">%1$s zablokowań</item>
-    <item quantity="other">%1$s zablokowań</item>
+    <item quantity="one">%1$s block</item>
+    <item quantity="few">%1$s blocks</item>
+    <item quantity="many">%1$s blocks</item>
+    <item quantity="other">%1$s blocks</item>
   </plurals>
   <string name="open_with">Otwórz za pomocą:</string>
+  <string name="open_attachments_error">Nie można otworzyć załącznika</string>
 </resources>

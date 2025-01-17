@@ -34,6 +34,7 @@
   <string name="bottomsheet_copy_item_note">Copiar la nota</string>
   <string name="bottomsheet_delete_permanently">Eliminar permanentemente</string>
   <string name="bottomsheet_restore">Restaurar</string>
+  <string name="bottomsheet_leave">Abandonar</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Abrir el menú de acciones del elemento</string>
   <string name="action_upgrade_now">Mejorar ahora</string>
@@ -282,4 +283,7 @@
   <string name="attachment_title">Archivos adjuntos</string>
   <string name="attachment_no_files">Cargar archivos desde el dispositivo</string>
   <string name="attachment_add_file">Adjuntar un archivo</string>
+  <string name="attachment_row_upload_failed">Error de carga</string>
+  <string name="attachment_row_retry">Reintentar</string>
+  <string name="options_menu_content_description">Menú de opciones</string>
 </resources>

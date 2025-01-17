@@ -26,6 +26,11 @@
   <string name="item_details_forbidden_actions_edit_upgrade">Puoi modificare solamente gli elementi nelle tue casseforti più vecchie. Effettua l\'upgrade per modificare questo elemento.</string>
   <string name="item_details_forbidden_actions_share_title">Impossibile condividere</string>
   <string name="item_details_forbidden_actions_share_limit">Hai raggiunto il limite di condivisione delle casseforti. Effettua l\'upgrade per condividere più casseforti.</string>
-  <string name="item_details_forbidden_actions_share_permission">Non disponi delle autorizzazioni necessarie per condividere questa cassaforte.</string>
+  <string name="item_details_forbidden_actions_sharing_permission">Non disponi di autorizzazioni sufficienti per eseguire questa azione.</string>
   <string name="item_details_forbidden_actions_share_trash">Non puoi condividere questo elemento perché è stato spostato nel cestino. Spostalo fuori dal cestino per poterlo modificare.</string>
+  <!-- Item details leave item -->
+  <string name="item_details_leave_dialog_title">Lasciare questo elemento?</string>
+  <string name="item_details_leave_dialog_message">Perderai l\'accesso a questo elemento e ai suoi dettagli. Vuoi continuare?</string>
+  <string name="item_details_leave_item_message_error">Si è verificato un errore durante l\'abbandono dell\'elemento</string>
+  <string name="item_details_leave_item_message_success">Elemento lasciato con successo</string>
 </resources>

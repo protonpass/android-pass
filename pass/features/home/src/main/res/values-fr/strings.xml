@@ -42,6 +42,7 @@
   <string name="home_trial_banner_title">Notre cadeau de bienvenue</string>
   <string name="home_trial_banner_text">7 jours pour essayer gratuitement les fonctionnalités premium, lors de votre première semaine d\'utilisation de Proton Pass.</string>
   <string name="home_trial_banner_settings">En savoir plus ›</string>
+  <string name="home_drawer_all_items">Tous les éléments</string>
   <string name="sl_sync_banner_title">Synchronisez vos alias depuis SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">Vous avez %d alias dans SimpleLogin mais absent de Proton Pass. Souhaitez-vous le synchroniser ?</item>
@@ -91,6 +92,7 @@
   <string name="snackbar_delete_vault_success">Le coffre-fort a été supprimé.</string>
   <string name="snackbar_delete_vault_error">Le coffre-fort n\'a pas été supprimé.</string>
   <!-- Search top bar -->
+  <string name="search_topbar_placeholder_all_items">Rechercher dans tous les éléments…</string>
   <string name="search_topbar_placeholder_all_vaults">Rechercher dans tous les coffres-forts…</string>
   <string name="search_topbar_placeholder_vault">Rechercher dans %s…</string>
   <string name="search_topbar_placeholder_trash">Rechercher dans la corbeille…</string>
@@ -149,6 +151,10 @@
   <plurals name="alert_confirm_delete_items_message">
     <item quantity="one">Voulez-vous vraiment supprimer l\'élément ? Cette action est irréversible.</item>
     <item quantity="other">Voulez-vous vraiment supprimer les %d éléments ? Cette action est irréversible.</item>
+  </plurals>
+  <plurals name="alert_shared_delete_items_message">
+    <item quantity="one">1 élément est actuellement partagé. Son déplacement vers la corbeille retirera également son accès aux autres utilisateurs.</item>
+    <item quantity="other">%d éléments sont actuellement partagés. Leur déplacement vers la corbeille retirera également leur accès aux autres utilisateurs.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Recherches récentes</string>

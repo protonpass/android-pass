@@ -34,6 +34,7 @@
   <string name="bottomsheet_copy_item_note">Notu kopyala</string>
   <string name="bottomsheet_delete_permanently">Kalıcı olarak sil</string>
   <string name="bottomsheet_restore">Geri yükle</string>
+  <string name="bottomsheet_leave">Ayrıl</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Öge işlem menüsünü aç</string>
   <string name="action_upgrade_now">Şimdi yükselt</string>
@@ -282,4 +283,7 @@
   <string name="attachment_title">Ek dosyalar</string>
   <string name="attachment_no_files">Aygıtınızdaki dosyaları yükleyin</string>
   <string name="attachment_add_file">Bir dosya ekle</string>
+  <string name="attachment_row_upload_failed">Yüklenemedi</string>
+  <string name="attachment_row_retry">Yeniden dene</string>
+  <string name="options_menu_content_description">Seçenekler menüsü</string>
 </resources>

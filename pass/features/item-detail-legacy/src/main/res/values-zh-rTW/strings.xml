@@ -73,8 +73,8 @@
   <string name="move_to_trash_item_detail_bottom_sheet">移至垃圾桶</string>
   <string name="migrate_item_detail_bottom_sheet">移動到另一個保管庫</string>
   <!-- More info -->
-  <string name="date_today">今天%s</string>
-  <string name="date_yesterday">昨天%s</string>
+  <string name="date_today">Today %s</string>
+  <string name="date_yesterday">Yesterday %s</string>
   <!--
     Pattern used when displaying a date in the same year as we are.
     It would translate to
@@ -92,7 +92,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">You are only allowed to edit items in your oldest vaults. In order to edit this item, please upgrade your current plan.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">You cannot edit this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">無法分享</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">You don\'t have enough permissions to share this vault.</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">You don\'t have enough permissions to perform this action.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">You cannot share this item because it\'s in the trash. Please move it out of the trash before sharing it.</string>
   <string name="password_score_vulnerable">具有風險</string>
@@ -118,4 +118,5 @@
     <item quantity="other">%1$s blocks</item>
   </plurals>
   <string name="open_with">Open with:</string>
+  <string name="open_attachments_error">Could not open attachment</string>
 </resources>

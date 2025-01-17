@@ -81,4 +81,6 @@
   <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Vous devez basculer vers %1$s pour le gérer.</string>
   <string name="account_switch_confirmation_title">Gérer le compte</string>
   <string name="account_switch_confirmation_confirm">Changer de compte et le gérer</string>
+  <string name="profile_storage_data_title">Espace de stockage</string>
+  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s sur %2$s</string>
 </resources>

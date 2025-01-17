@@ -72,7 +72,7 @@
   <string name="share_summary_share_vault">Skupni trezor</string>
   <string name="share_summary_share_item">Share item</string>
   <string name="share_summary_vault_title">Trezor</string>
-  <string name="share_summary_item_title">Item</string>
+  <string name="share_summary_item_title">Predmet</string>
   <string name="share_manage_vault_share_with_more_people">Delite z več ljudmi</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d ostane povabilo</item>
@@ -99,9 +99,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Prenos lastništva</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Svojega zadnjega trezorja ne morete prenesti.</string>
   <string name="sharing_bottomsheet_remove_access">Odvzemi dostop</string>
-  <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit this item.</string>
-  <string name="sharing_bottomsheet_item_viewer_subtitle">Can view this item.</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Lahko odobri in prekliče dostop do tega predmeta.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Lahko ureja ta predmet.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Lahko si ogleda ta predmet.</string>
   <string name="sharing_bottomsheet_resend_invite">Ponovno pošlji povabilo</string>
   <string name="sharing_bottomsheet_cancel_invite">Prekliči povabilo</string>
   <string name="sharing_transfer_ownership_confirm_title">Prenos lastništva</string>
@@ -133,20 +133,16 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">Nadgradite, da ustvarite več trezorjev</string>
   <string name="sharing_from_item_vault_limit_reached">Dosegli ste omejitev trezorja</string>
   <string name="share_with_suggestions_title">Predlogi</string>
-  <string name="share_with_recents_title">Recent</string>
+  <string name="share_with_recents_title">Nedavno</string>
   <string name="share_with_remove_email_content_description">Odstrani e-pošto</string>
-  <string name="share_with_user_title">Share with</string>
-  <string name="share_with_user_description">Share this item with other Proton users.</string>
-  <string name="share_with_secure_link_title">Via secure link</string>
+  <string name="share_with_secure_link_title">Preko varne povezave</string>
   <string name="share_with_secure_link_description">Generate a secure link to this item.</string>
-  <string name="share_with_vault_title">Entire vault</string>
-  <string name="share_with_vault_description">Share this vault and its content.</string>
-  <string name="share_with_user_shared_title">With other Proton Pass users</string>
-  <string name="share_with_user_shared_description">Useful for permanent sharing.</string>
-  <string name="share_with_manage_shared_item_title">Manage access</string>
-  <string name="share_with_manage_shared_item_description">See member and permission overview.</string>
-  <string name="share_with_secure_link_shared_title">Via a secure link</string>
-  <string name="share_with_secure_link_shared_description">For one-off sharing.</string>
+  <string name="share_with_user_shared_title">Z drugimi uporabniki Proton Pass</string>
+  <string name="share_with_user_shared_description">Uporabno za trajno skupno rabo.</string>
+  <string name="share_with_manage_shared_item_title">Upravljanje dostopa</string>
+  <string name="share_with_manage_shared_item_description">Ogled članov in njihovih dovoljenj.</string>
+  <string name="share_with_secure_link_shared_title">Preko varne povezave</string>
+  <string name="share_with_secure_link_shared_description">Za enkratno deljenje.</string>
   <string name="share_with_manage_shared_vault_title">Upravljajte dostop do trezorja</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="one">Trezor predmeta je trenutno v skupni rabi z uporabnikom %d.</item>

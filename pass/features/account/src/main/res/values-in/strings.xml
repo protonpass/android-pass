@@ -15,7 +15,7 @@
   <string name="account_get_user_info_error">Informasi pengguna tidak dapat diperoleh</string>
   <string name="manage_subscription_icon_content_description">Tombol kelola langganan</string>
   <string name="account_settings_list_item_password_header">Ubah kata sandi</string>
-  <string name="account_settings_list_item_recovery_header">Pemulihan surel</string>
+  <string name="account_settings_list_item_recovery_header">Alamat email pemulihan</string>
   <string name="account_settings_list_item_security_keys">Kunci keamanan</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Belum ditentukan</string>
   <string name="account_settings_list_item_password_hint_grace">Pengaturan ulang kata sandi ditunda</string>

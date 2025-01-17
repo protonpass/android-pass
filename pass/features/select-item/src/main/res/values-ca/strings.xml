@@ -21,7 +21,7 @@
   <string name="error_credentials_not_found">No s\'han trobat les credencials coincidents.</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">Suggeriments per a %s</string>
-  <string name="error_loading_items">No s\'ha pogut carregar els elements.</string>
+  <string name="error_loading_items">No s\'han pogut carregar els elements.</string>
   <string name="topbar_search_query">Cerca en totes les caixes fortes…</string>
   <string name="topbar_search_pinned_items">Cerca als elements fixats…</string>
   <string name="topbar_search_query_oldest_vaults">Cerca a les teves cambres més antigues…</string>

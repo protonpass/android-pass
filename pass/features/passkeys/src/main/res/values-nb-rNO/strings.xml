@@ -19,7 +19,7 @@
 <resources>
   <string name="select_passkey_action_title" comment="Title of the action to select a passkey. Will appear in the system passkey selector">Velg en annen tilgangsnøkkel</string>
   <string name="select_passkey_action_subtitle" comment="Subtitle of the action to select a passkey. Will appear in the system passkey selector">Velg en tilgangsnøkkel fra Proton Pass</string>
-  <string name="passkeys_user_logged_out">Du er logget av. Vennligst logg på igjen ved å åpne appen.</string>
+  <string name="passkeys_user_logged_out">Du er logget av. Logg på igjen ved å åpne appen.</string>
   <string name="passkey_confirm_item_title" comment="Title of the dialog for confirming the generation of a passkey for an item">Generer tilgangsnøkkel</string>
   <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Er du sikker på at du vil generere en tilgangsnøkkel for elementet \'%s\'?</string>
   <string name="passkey_error_generating_passkey">Kunne ikke generere tilgangsnøkkel</string>

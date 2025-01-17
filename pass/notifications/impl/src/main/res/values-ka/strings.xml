@@ -4,6 +4,8 @@
   <string name="autofill_notification_channel_name">ავტომატური შევსება</string>
   <string name="autofill_notification_copy_to_clipboard_title">TOTP კოდი</string>
   <string name="autofill_notification_copy_to_clipboard_body">TOTP-ი დაკოპირდა გაცვლის ბუფერში</string>
-  <string name="updates_new_invite_received_title">მიიღეთ მოსაწვევი</string>
-  <string name="updates_new_invite_received_message">თქვენ მიგიწვიეს საცავში. მოწვევის მისაღებად და მასზე დასათანხმებლად გახსენით აპი.</string>
+  <string name="new_item_invite_notification_title">მიღებულია ახალი ელემენტზე მოსაწვევი</string>
+  <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s უნდა, ელემენტი გაგიზიაროთ.</string>
+  <string name="new_vault_invite_notification_title">მიღებულია ახალი საცავის მოსაწვევი</string>
+  <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s-ის უნდა, საცავი გაგიზიაროთ.</string>
 </resources>

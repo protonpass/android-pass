@@ -39,8 +39,9 @@
   <string name="create_login_item_update_error">Oturum açma kaydı güncellenemedi</string>
   <string name="create_login_init_error">Oturum açma bilgileri alınırken sorun çıktı</string>
   <string name="create_login_invalid_totp">İki adımlı doğrulama içerikleri geçersiz</string>
-  <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
-  <string name="login_link_attachments_error">Could not add attachments to login</string>
+  <string name="update_login_attachments_init_error">Oturum açma kaydının ek dosyaları alınırken sorun çıktı</string>
+  <string name="login_link_attachments_error">Oturum açma kaydına ek dosya bağlantısı eklenemedi ya da kaldırılamadı</string>
+  <string name="login_rename_attachments_error">Oturum açma kaydının ek dosyaları yeniden adlandırılamadı</string>
   <string name="login_created">Oturum açma kaydı oluşturuldu</string>
   <string name="bottomsheet_modify_alias_title">Takma adı düzenle</string>
   <string name="bottomsheet_custom_field_type_text">Metin</string>
@@ -65,8 +66,9 @@
   <string name="create_note_item_creation_error">Not oluşturulamadı</string>
   <string name="create_note_item_update_error">Not güncellenemedi</string>
   <string name="create_note_init_error">Not bilgileri alınırken sorun çıktı</string>
-  <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
-  <string name="note_link_attachments_error">Could not add attachments to note</string>
+  <string name="update_note_attachments_init_error">Not ek dosyaları alınırken sorun çıktı</string>
+  <string name="note_link_attachments_error">Nota ek dosya bağlantısı eklenemedi ya da kaldırılamadı</string>
+  <string name="note_rename_attachments_error">Notun ek dosyaları yeniden adlandırılamadı</string>
   <string name="note_created">Not oluşturuldu</string>
   <!-- Create Alias -->
   <string name="field_alias_title">Takma ad adresi</string>
@@ -83,8 +85,9 @@
   <string name="alias_rate_limited">Kısa sürede çok fazla sayıda takma ad oluşturuldu</string>
   <string name="create_alias_item_update_error">Takma ad güncellenemedi</string>
   <string name="create_alias_init_error">Takma ad bilgileri alınırken sorun çıktı</string>
-  <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
-  <string name="alias_link_attachments_error">Could not add attachments to alias</string>
+  <string name="update_alias_attachments_init_error">Takma ad ek dosyaları alınırken sorun çıktı</string>
+  <string name="alias_link_attachments_error">Takma ada ek dosya bağlantısı eklenemedi ya da kaldırılamadı</string>
+  <string name="alias_rename_attachments_error">Takma adın ek dosyaları yeniden adlandırılamadı</string>
   <string name="alias_created">Takma ad oluşturuldu</string>
   <string name="cannot_retrieve_alias_options">Takma ad seçenekleri alınamadı</string>
   <string name="alias_mailbox_dialog_title">Şuraya ilet</string>
@@ -110,8 +113,9 @@
   <string name="create_credit_card_item_creation_error">Kredi kartı oluşturulamadı</string>
   <string name="create_credit_card_item_creation_success">Kredi kartı oluşturuldu</string>
   <string name="credit_card_init_error">Kredi kartı bilgileri alınırken sorun çıktı</string>
-  <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
-  <string name="credit_card_link_attachments_error">Could not add attachments to credit card</string>
+  <string name="update_credit_card_attachments_init_error">Kredi kartı ek dosyaları alınırken sorun çıktı</string>
+  <string name="credit_card_link_attachments_error">Kredi kartına ek dosya bağlantısı eklenemedi ya da kaldırılamadı</string>
+  <string name="credit_card_rename_attachments_error">Kredi kartının ek dosyaları yeniden adlandırılamadı</string>
   <string name="credit_card_item_update_error">Kredi kartı güncellenemedi</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Tam ad</string>
@@ -168,8 +172,9 @@
   <string name="identity_add_more_fields">Başka bir alan ekle</string>
   <string name="identity_bottomsheet_add_field">Alan ekle</string>
   <string name="create_identity_init_error">Kimlik bilgileri alınırken sorun çıktı</string>
-  <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
-  <string name="identity_link_attachments_error">Could not add attachments to identity</string>
+  <string name="update_identity_attachments_init_error">Kimlik ek dosyaları alınırken sorun çıktı</string>
+  <string name="identity_link_attachments_error">Kimliğe ek dosya bağlantısı eklenemedi ya da kaldırılamadı</string>
+  <string name="identity_rename_attachments_error">Kimliğin ek dosyaları yeniden adlandırılamadı</string>
   <string name="create_identity_item_creation_error">Kimlik oluşturulamadı</string>
   <string name="create_identity_item_creation_success">Kimlik oluşturuldu</string>
   <string name="update_identity_item_creation_success">Kimlik güncellendi</string>
@@ -201,4 +206,6 @@
   <string name="banner_title_attachments">Ek dosyalar</string>
   <string name="banner_body_attachments">Daha iyi bir düzen için ögelere dosyalar ekleyebilirsiniz</string>
   <string name="open_with">Şununla aç:</string>
+  <string name="open_attachments_error">Ek dosya açılamadı</string>
+  <string name="upload_attachments_error">Ek dosya yüklenemedi</string>
 </resources>

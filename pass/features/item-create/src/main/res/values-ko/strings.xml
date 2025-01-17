@@ -39,8 +39,9 @@
   <string name="create_login_item_update_error">로그인 업데이트 실패</string>
   <string name="create_login_init_error">로그인 정보를 검색하는 데 문제가 있습니다.</string>
   <string name="create_login_invalid_totp">2단계 인증값이 유효하지 않습니다</string>
-  <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
-  <string name="login_link_attachments_error">Could not add attachments to login</string>
+  <string name="update_login_attachments_init_error">로그인 첨부 파일을 검색하는데 문제가 있습니다.</string>
+  <string name="login_link_attachments_error">로그인에 첨부파일 연결 또는 해제 실패</string>
+  <string name="login_rename_attachments_error">로그인 첨부파일 이름 변경 실패</string>
   <string name="login_created">로그인 생성됨</string>
   <string name="bottomsheet_modify_alias_title">별칭 수정</string>
   <string name="bottomsheet_custom_field_type_text">텍스트</string>
@@ -65,8 +66,9 @@
   <string name="create_note_item_creation_error">메모 생성 오류</string>
   <string name="create_note_item_update_error">메모 업데이트 오류</string>
   <string name="create_note_init_error">메모 정보를 검색하는 데 문제가 있습니다.</string>
-  <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
-  <string name="note_link_attachments_error">Could not add attachments to note</string>
+  <string name="update_note_attachments_init_error">노트 첨부 파일을 불러오는데 문제가 발생했습니다</string>
+  <string name="note_link_attachments_error">메모에 첨부파일 연결 혹은 해제 실패</string>
+  <string name="note_rename_attachments_error">메모 첨부파일 이름 변경 실패</string>
   <string name="note_created">메모 생성됨</string>
   <!-- Create Alias -->
   <string name="field_alias_title">별칭 주소</string>
@@ -83,8 +85,9 @@
   <string name="alias_rate_limited">최근에 만든 별칭이 너무 많습니다.</string>
   <string name="create_alias_item_update_error">별칭을 업데이트할 수 없습니다.</string>
   <string name="create_alias_init_error">별칭 정보를 검색하는 데 문제가 있습니다.</string>
-  <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
-  <string name="alias_link_attachments_error">Could not add attachments to alias</string>
+  <string name="update_alias_attachments_init_error">별칭 첨부 파일 검색에 문제가 있습니다.</string>
+  <string name="alias_link_attachments_error">별명에 첨부파일 연결 혹은 해제 실패</string>
+  <string name="alias_rename_attachments_error">별명 첨부파일 이름 변경 실패</string>
   <string name="alias_created">별칭을 생성했습니다.</string>
   <string name="cannot_retrieve_alias_options">별칭 옵션을 수신할 수 없음</string>
   <string name="alias_mailbox_dialog_title">다음으로 전달:</string>
@@ -110,8 +113,9 @@
   <string name="create_credit_card_item_creation_error">신용 카드를 생성할 수 없습니다.</string>
   <string name="create_credit_card_item_creation_success">신용 카드 생성됨.</string>
   <string name="credit_card_init_error">신용 카드 정보를 검색하는 데 문제가 있습니다.</string>
-  <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
-  <string name="credit_card_link_attachments_error">Could not add attachments to credit card</string>
+  <string name="update_credit_card_attachments_init_error">신용 카드 첨부 파일을 검색하는데 문제가 있습니다.</string>
+  <string name="credit_card_link_attachments_error">신용카드에 첨부파일 연결 혹은 해제 실패</string>
+  <string name="credit_card_rename_attachments_error">신용카드 첨부파일 이름 변경 실패</string>
   <string name="credit_card_item_update_error">신용 카드를 업데이트할 수 없습니다.</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">이름</string>
@@ -168,8 +172,9 @@
   <string name="identity_add_more_fields">기타 항목 추가</string>
   <string name="identity_bottomsheet_add_field">필드 추가</string>
   <string name="create_identity_init_error">신원 정보 검색하는데 실패했습니다.</string>
-  <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
-  <string name="identity_link_attachments_error">Could not add attachments to identity</string>
+  <string name="update_identity_attachments_init_error">신원 정보 첨부 파일을 불러오는데 문제가 발생했습니다</string>
+  <string name="identity_link_attachments_error">신원에 첨부파일 연결 혹은 해제 실패</string>
+  <string name="identity_rename_attachments_error">신원 첨부파일 이름 변경 실패</string>
   <string name="create_identity_item_creation_error">신원을 만들 수 없습니다</string>
   <string name="create_identity_item_creation_success">신원을 만들었습니다</string>
   <string name="update_identity_item_creation_success">신원 업데이트됨</string>
@@ -201,4 +206,6 @@
   <string name="banner_title_attachments">첨부파일</string>
   <string name="banner_body_attachments">더 나은 조직을 위해 항목에 파일 첨부가 가능합니다.</string>
   <string name="open_with">열기:</string>
+  <string name="open_attachments_error">첨부파일을 열 수 없습니다</string>
+  <string name="upload_attachments_error">첨부 파일을 업로드할 수 없습니다</string>
 </resources>

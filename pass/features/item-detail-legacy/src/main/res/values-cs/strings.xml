@@ -95,7 +95,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Upravovat můžete pouze položky v nejstarších trezorech. Chcete-li tuto položku upravit, navyšte svůj aktuální tarif.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Tuto položku nemůžete upravit, protože je v koši. Před úpravou ji prosím přesuňte z koše.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nelze sdílet</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nemáte dostatečná oprávnění pro sdílení tohoto trezoru.</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">K provedení této akce nemáte dostatečná oprávnění.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Dosáhli jste limitu pro sdílení trezoru. Chcete-li sdílet více trezorů, navyšte svůj stávající tarif.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Tuto položku nemůžete sdílet, protože je v koši. Před sdílením ji prosím přesuňte z koše.</string>
   <string name="password_score_vulnerable">Zranitelný</string>
@@ -130,4 +130,5 @@
     <item quantity="other">%1$s blokování</item>
   </plurals>
   <string name="open_with">Otevřít pomocí:</string>
+  <string name="open_attachments_error">Nepodařilo se otevřít přílohu</string>
 </resources>

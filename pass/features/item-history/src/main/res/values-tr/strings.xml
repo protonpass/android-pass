@@ -28,4 +28,10 @@
   <string name="item_history_timeline_node_leaf_title">Oluşturulma</string>
   <string name="item_history_timeline_node_root_title">Güncel sürüm</string>
   <string name="item_history_timeline_snackbar_message_error">Öge sürümleri alınırken bir sorun çıktı</string>
+  <string name="reset_history_bottomsheet_option">Geçmişi sıfırla</string>
+  <string name="reset_history_dialog_title">Bu ögenin geçmişini sıfırlamak istiyor musunuz?</string>
+  <string name="reset_history_dialog_body">Geçmişi sıfırlamak tüm önceki sürümleri kalıcı olarak siler ve bu işlem geri alınamaz.</string>
+  <string name="reset_history_action">Sıfırla</string>
+  <string name="reset_history_dialog_snackbar_message_error">Geçmiş sıfırlanırken bir sorun çıktı</string>
+  <string name="reset_history_dialog_snackbar_message_success">Öge geçmişi sıfırlandı</string>
 </resources>

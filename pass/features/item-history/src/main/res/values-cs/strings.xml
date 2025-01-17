@@ -28,4 +28,10 @@
   <string name="item_history_timeline_node_leaf_title">Vytvořeno</string>
   <string name="item_history_timeline_node_root_title">Aktuální verze</string>
   <string name="item_history_timeline_snackbar_message_error">Při získávání revizí položky došlo k chybě</string>
+  <string name="reset_history_bottomsheet_option">Resetovat historii</string>
+  <string name="reset_history_dialog_title">Resetovat historii této položky?</string>
+  <string name="reset_history_dialog_body">Resetování historie trvale smaže všechny předchozí verze a nelze to vrátit zpět.</string>
+  <string name="reset_history_action">Resetovat</string>
+  <string name="reset_history_dialog_snackbar_message_error">Při resetování došlo k chybě</string>
+  <string name="reset_history_dialog_snackbar_message_success">Historie položky resetována</string>
 </resources>

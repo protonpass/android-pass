@@ -21,17 +21,17 @@
   <string name="configure_extra_password_title">Встановити додатковий пароль</string>
   <string name="configure_extra_password_enter_extra_password">Додатковий пароль</string>
   <string name="configure_extra_password_repeat_extra_password">Повторіть пароль</string>
-  <string name="configure_extra_password_description">You will be asked for this password during login and when switching from another Proton app to Proton Pass on web.</string>
+  <string name="configure_extra_password_description">Цей пароль буде запитано під час входу в систему та при переході з іншого додатку Proton до Proton Pass на сайті.</string>
   <string name="configure_extra_password_warning">Увага: Ви не зможете отримати доступ до свого облікового запису Pass, якщо втратите цей пароль.</string>
   <string name="configure_extra_password_mismatch">Паролі відрізняються</string>
   <string name="extra_password_options_remove">Вилучити</string>
   <string name="info_extra_password_title">Додатковий пароль</string>
   <string name="info_extra_password_body">Захистіть Proton Pass додатковим паролем.</string>
   <string name="info_extra_password_button">Встановити додатковий пароль</string>
-  <string name="configure_extra_password_cannot_be_blank">Password cannot be blank</string>
+  <string name="configure_extra_password_cannot_be_blank">Пароль не може бути порожнім</string>
   <string name="configure_extra_password_password_too_short">Додатковий пароль повинен містити не менше 8 символів</string>
   <string name="confirm_extra_password_title">Встановити додатковий пароль</string>
-  <string name="confirm_extra_password_body">You will be logged out and will have to log in again on all of your other devices.</string>
-  <string name="confirm_extra_password_error">Could not set extra password</string>
+  <string name="confirm_extra_password_body">Ви вийдете з системи, і вам доведеться увійти знову на всіх інших пристроях.</string>
+  <string name="confirm_extra_password_error">Не вдалося встановити додатковий пароль</string>
   <string name="confirm_extra_password_success">Додатковий пароль встановлено</string>
 </resources>

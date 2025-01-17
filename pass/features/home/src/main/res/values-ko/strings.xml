@@ -42,6 +42,7 @@
   <string name="home_trial_banner_title">당신께 드리는 웰컴 기프트</string>
   <string name="home_trial_banner_text">7일 동안 프리미엄 기능을 무료로 사용하실 수 있습니다. Proton Pass 첫 주 사용에 한합니다.</string>
   <string name="home_trial_banner_settings">더 알아보기 ›</string>
+  <string name="home_drawer_all_items">모든 항목</string>
   <string name="sl_sync_banner_title">SimpleLogin에서 별칭 동기화</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="other">SimpleLogin에 %d개의 별칭이 존재하지만 Proton Pass에는 누락된 별칭이 있음이 발견되었어요. 해당 별명을 불러오시겠어요?</item>
@@ -89,12 +90,13 @@
   <string name="snackbar_delete_vault_success">금고를 지웠습니다</string>
   <string name="snackbar_delete_vault_error">금고가 지워지지 않았습니다</string>
   <!-- Search top bar -->
+  <string name="search_topbar_placeholder_all_items">전체 금고내에서 검색...</string>
   <string name="search_topbar_placeholder_all_vaults">모든 금고를 검색...</string>
   <string name="search_topbar_placeholder_vault">%s에서 검색…</string>
   <string name="search_topbar_placeholder_trash">휴지통 검색...</string>
   <string name="search_topbar_placeholder_pinning">고정 내에서 검색…</string>
-  <string name="search_topbar_placeholder_shared_by_me">Search in Shared by me…</string>
-  <string name="search_topbar_placeholder_shared_with_me">Search in Shared with me…</string>
+  <string name="search_topbar_placeholder_shared_by_me">내가 공유한 항목 검색…</string>
+  <string name="search_topbar_placeholder_shared_with_me">나와 공유된 항목 검색…</string>
   <string name="item_type_filter_list_icon_content_description">항목의 아이콘 유형</string>
   <string name="item_type_filter_all">전체</string>
   <string name="item_type_filter_login">로그인</string>
@@ -141,6 +143,9 @@
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
     <item quantity="other">%d개 항목을 정말 삭제할까요? 이 동작은 되돌릴 수 없습니다.</item>
+  </plurals>
+  <plurals name="alert_shared_delete_items_message">
+    <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">최근 검색</string>

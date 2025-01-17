@@ -9,7 +9,7 @@
   <string name="alias_dialog_move_to_trash_confirm">Bestätigen</string>
   <string name="delete_alias_confirm">Lösche es, ich werde es nie brauchen</string>
   <string name="delete_alias_title">%s löschen</string>
-  <string name="delete_alias_enabled_subtitle">"Please note once deleted, the alias can't be restored. Maybe you want to disable the alias instead? "</string>
+  <string name="delete_alias_enabled_subtitle">"Bitte beachte, dass der Alias nach dem Löschen nicht wiederhergestellt werden kann. Vielleicht möchtest du stattdessen den Alias deaktivieren? "</string>
   <string name="delete_alias_disabled_subtitle">Bitte beachte, dass der Alias nach dem Löschen nicht wiederhergestellt werden kann. Der Alias ist bereits deaktiviert und kann keine E-Mails an dein Postfach weiterleiten.</string>
   <plurals name="bulk_delete_alias_title">
     <item quantity="one">Du bist dabei, %d Alias dauerhaft zu löschen.</item>

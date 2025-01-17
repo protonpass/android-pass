@@ -43,10 +43,10 @@
   <string name="security_center_sentinel_subtitle">Proton Sentinel - це передова програма захисту облікових записів, що працює на основі складних систем штучного інтелекту та спеціалістів, які цілодобово захищають вас від зловмисників та загроз безпеці.</string>
   <string name="security_center_sentinel_button_enable">Увімкнути Proton Sentinel</string>
   <string name="security_center_sentinel_button_disable">Вимкнути Proton Sentinel</string>
-  <string name="security_center_sentinel_snackbar_message_enable_canceled">Proton Sentinel protection activation has been canceled</string>
-  <string name="security_center_sentinel_snackbar_message_enable_error">There was an error enabling Proton Sentinel protection. Please try again.</string>
-  <string name="security_center_sentinel_snackbar_message_disable_canceled">Proton Sentinel protection deactivation has been canceled</string>
-  <string name="security_center_sentinel_snackbar_message_disable_error">There was an error disabling Proton Sentinel protection. Please try again.</string>
+  <string name="security_center_sentinel_snackbar_message_enable_canceled">Активацію захисту Proton Sentinel скасовано</string>
+  <string name="security_center_sentinel_snackbar_message_enable_error">Виникла помилка під час увімкнення захисту Proton Sentinel. Будь ласка, спробуйте ще раз.</string>
+  <string name="security_center_sentinel_snackbar_message_disable_canceled">Деактивацію захисту Proton Sentinel скасовано</string>
+  <string name="security_center_sentinel_snackbar_message_disable_error">Виникла помилка при вимкненні захисту Proton Sentinel. Будь ласка, спробуйте ще раз.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Слабкі паролі</string>
   <string name="security_center_weak_pass_top_bar_subtitle">Слабкі паролі легше вгадати. Створюйте надійні паролі, щоб захистити свої облікові записи.</string>
@@ -61,10 +61,10 @@
   <string name="security_center_excluded_items_top_bar_title">Виключені елементи</string>
   <!-- Dark web monitor -->
   <string name="security_center_dark_web_monitor_top_bar_title">Моніторинг Темного Вебу</string>
-  <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Last check: %s</string>
+  <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Остання перевірка: %s</string>
   <string name="security_center_dark_web_monitor_custom_emails_title">Власні адреси е-пошти</string>
-  <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Not verified</string>
-  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Add new custom email address</string>
+  <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Не підтверджено</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Додати нову власну адресу електронної пошти</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">Додати</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
     <item quantity="one">Використано в %d записі входу</item>
@@ -73,13 +73,13 @@
     <item quantity="other">Використано в %d записах входу</item>
   </plurals>
   <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
-    <item quantity="one">%d breach detected</item>
-    <item quantity="few">%d breaches detected</item>
-    <item quantity="many">%d breaches detected</item>
-    <item quantity="other">%d breaches detected</item>
+    <item quantity="one">Виявлено %d витік</item>
+    <item quantity="few">Виявлено %d витоки</item>
+    <item quantity="many">Виявлено %d витоків</item>
+    <item quantity="other">Виявлено %d витоки</item>
   </plurals>
-  <string name="security_center_dark_web_monitor_custom_emails_loading_error">Error loading custom email addresses</string>
-  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Could not get email addresses</string>
+  <string name="security_center_dark_web_monitor_custom_emails_loading_error">Помилка завантаження користувацьких адрес електронної пошти</string>
+  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Не вдалося отримати адреси електронної пошти</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Вилучити</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">Останній витік %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
@@ -93,27 +93,27 @@
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Псевдоніми Hide-my-email</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving Proton addresses</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Error retrieving Hide-my-email aliases</string>
-  <string name="security_center_dark_web_monitor_monitoring_disabled">Not monitored</string>
+  <string name="security_center_dark_web_monitor_monitoring_disabled">Не підлягає моніторингу</string>
   <string name="security_center_dark_web_monitor_see_all">Переглянути все</string>
-  <string name="security_center_dark_web_monitor_no_proton_addresses">No Proton addresses</string>
+  <string name="security_center_dark_web_monitor_no_proton_addresses">Немає адрес Proton</string>
   <string name="security_center_dark_web_monitor_no_aliases">Немає псевдонімів</string>
-  <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">There was an error sending the verification code. Please try again later.</string>
-  <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">There was an error removing the email. Please try again later.</string>
+  <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Виникла помилка під час надсилання коду підтвердження. Будь ласка, повторіть спробу пізніше.</string>
+  <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Виникла помилка при вилученні листа. Будь ласка, спробуйте ще раз пізніше.</string>
   <!-- Add custom email monitoring -->
   <string name="security_center_custom_email_top_bar_title">Користувацький моніторинг електронної пошти</string>
   <string name="security_center_custom_email_email_address_placeholder">Адреса електронної пошти</string>
   <string name="security_center_custom_email_invalid_address">Недійсна адреса електронної пошти</string>
   <string name="security_center_custom_email_continue">Продовжити</string>
   <string name="security_center_custom_email_already_verified">Пошта вже підтверджена</string>
-  <string name="security_center_custom_email_error_adding">Error adding the email address</string>
+  <string name="security_center_custom_email_error_adding">Помилка додавання адреси електронної пошти</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_email_title">Підтвердьте вашу пошту</string>
-  <string name="security_center_verify_email_subtitle">We\'ve sent a verification code to %s. Please enter it below:</string>
-  <string name="security_center_verify_email_snackbar_message_resend_code_success">A new verification has been sent, please check your inbox.</string>
-  <string name="security_center_verify_email_snackbar_message_resend_code_error">There was an error sending the verification code. Please try again later.</string>
-  <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Too many invalid verifications. Removing custom email.</string>
+  <string name="security_center_verify_email_subtitle">Ми надіслали код підтвердження на %s. Будь ласка, введіть його нижче:</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_success">Надіслано нове підтвердження, будь ласка, перевірте свою поштову скриньку.</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_error">Виникла помилка під час надсилання коду підтвердження. Будь ласка, повторіть спробу пізніше.</string>
+  <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Занадто багато недійсних підтверджень. Вилучення користувацької пошти.</string>
   <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Недійсний код підтвердження</string>
-  <string name="security_center_verify_email_snackbar_message_verification_error">There was an error verifying the email. Please try again later.</string>
+  <string name="security_center_verify_email_snackbar_message_verification_error">Виникла помилка при перевірці електронної пошти. Будь ласка, спробуйте ще раз пізніше.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Порушення виявлено для</string>
   <string name="security_center_verify_report_title_none">Не виявлено витоків для</string>
@@ -122,10 +122,10 @@
   <string name="security_center_email_report_breaches_header">Витоки</string>
   <string name="security_center_email_report_resolved_breaches_header">Вирішені витоки</string>
   <string name="security_center_email_report_mark_as_resolved">Позначити як вирішене</string>
-  <string name="security_center_email_report_snackbar_marked_as_resolved_success">Breach has been marked as resolved</string>
-  <string name="security_center_email_report_snackbar_marked_as_resolved_error">Could not mark as resolved</string>
+  <string name="security_center_email_report_snackbar_marked_as_resolved_success">Порушення позначено як вирішене</string>
+  <string name="security_center_email_report_snackbar_marked_as_resolved_error">Не вдалося позначити як вирішене</string>
   <string name="security_center_email_report_snackbar_get_breaches_error">Не вдалося завантажити порушення</string>
-  <string name="security_center_email_report_options_menu">Breach report options menu</string>
+  <string name="security_center_email_report_options_menu">Меню параметрів звіту про порушення</string>
   <!-- Breach report detail-->
   <string name="security_center_report_detail_your_exposed_information">Ваша викрита інформація</string>
   <string name="security_center_report_detail_subtitle">Ваша інформація була виявлена і знайдена на __DATE__.</string>
@@ -133,42 +133,42 @@
   <string name="security_center_report_detail_email_address">Адреса електронної пошти</string>
   <string name="security_center_report_detail_password">Пароль</string>
   <string name="security_center_report_detail_recommended_actions">Рекомендовані дії</string>
-  <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">The exposed information was leaked from %s. Your Proton Account information remains secure and encrypted.</string>
+  <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">Витік інформації стався з %s. Інформація вашого облікового запису Proton залишається захищеною та зашифрованою.</string>
   <string name="security_center_report_detail_learn_more">Докладніше</string>
-  <string name="security_center_report_detail_snackbar_error">Could not load breach details</string>
+  <string name="security_center_report_detail_snackbar_error">Не вдалося завантажити інформацію про порушення</string>
   <string name="security_center_report_detail_excluded_from_monitoring">Виключено з моніторингу</string>
-  <string name="security_center_report_resolve_confirmation_dialog_title">Resolve all breaches?</string>
+  <string name="security_center_report_resolve_confirmation_dialog_title">Усунути всі порушення?</string>
   <string name="security_center_report_resolve_confirmation_dialog_message">Всі поточні витоки будуть позначені як вирішені. У разі майбутніх витоків даних ви будете повідомлені.</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Адреси Proton</string>
   <string name="security_center_proton_list_no_breaches_detected">Порушень не виявлено</string>
   <string name="security_center_proton_list_excluded_from_monitoring">Виключено з моніторингу</string>
-  <string name="security_center_proton_list_error">Could not load addresses</string>
+  <string name="security_center_proton_list_error">Не вдалося завантажити адреси</string>
   <string name="security_center_proton_list_included_in_monitoring">Увімкніть моніторинг, щоб отримувати сповіщення про витік ваших адрес Proton.</string>
-  <string name="security_center_proton_list_options_menu">Proton screen options menu</string>
-  <string name="security_center_proton_list_not_monitored">Not monitored</string>
+  <string name="security_center_proton_list_options_menu">Меню параметрів екрану Proton</string>
+  <string name="security_center_proton_list_not_monitored">Не підлягає моніторингу</string>
   <!-- Address Bottomsheet options -->
   <string name="security_center_address_bottomsheet_disable_monitoring">Призупинити відстеження</string>
   <string name="security_center_address_bottomsheet_enable_monitoring">Відновити відстеження</string>
-  <string name="security_center_address_bottomsheet_remove_custom_email">Remove custom email</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">There was an error pausing monitoring</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">There was an error resuming monitoring</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">Could not remove custom email</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">Monitoring successfully resumed</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">Monitoring successfully paused</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">Custom email removed</string>
+  <string name="security_center_address_bottomsheet_remove_custom_email">Вилучити власну адресу електронної пошти</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">Виникла помилка призупинення моніторингу</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">Виникла помилка при відновленні моніторингу</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">Не вдалося вилучити користувацьку електронну пошту</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">Моніторинг успішно відновлено</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">Моніторинг успішно призупинено</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">Вилучено власну електронну пошту</string>
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Псевдоніми Hide-my-email</string>
   <string name="security_center_alias_list_excluded_from_monitoring">Виключено з моніторингу</string>
-  <string name="security_center_alias_list_error">Could not load addresses</string>
+  <string name="security_center_alias_list_error">Не вдалося завантажити адреси</string>
   <string name="security_center_alias_list_included_in_monitoring">Enable monitoring to get notified if your Hide-my-email aliases were leaked.</string>
   <string name="security_center_alias_list_monitored">Відстежується</string>
   <string name="security_center_alias_list_custom_email_message">Псевдоніми з власними доменами не відстежуються, будь ласка, додайте їх як власну пошту для відстеження.</string>
-  <string name="security_center_alias_list_options_menu">Alias screen options menu</string>
+  <string name="security_center_alias_list_options_menu">Меню параметрів екрана псевдоніма</string>
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Безпека даних</string>
   <string name="dark_web_help_dialog_subtitle">Proton ніколи не передає вашу інформацію третім особам. Всі дані отримані з пошуків появи доменів Proton в dark web.</string>
   <!-- Cannot add custom emails -->
-  <string name="dark_web_cannot_add_custom_emails_dialog_title">Cannot add custom email</string>
-  <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">You have reached the limit of custom emails.</string>
+  <string name="dark_web_cannot_add_custom_emails_dialog_title">Не вдається додати власну електронну пошту</string>
+  <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Ви досягли ліміту користувацьких електронних листів.</string>
 </resources>

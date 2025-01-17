@@ -32,9 +32,9 @@
   <string name="bottomsheet_delete_vault">Izbriši trezor</string>
   <string name="bottomsheet_share_vault">Deli</string>
   <string name="bottomsheet_leave_vault">Zapusti trezor</string>
-  <string name="bottomsheet_view_members">Prikaži članov</string>
+  <string name="bottomsheet_view_members">Poglej člane</string>
   <string name="bottomsheet_manage_access">Upravljanje dostopa</string>
-  <string name="bottomsheet_select_vault_read_only">You can only view</string>
+  <string name="bottomsheet_select_vault_read_only">Lahko samo berete</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">Predmete lahko ustvarite le v svojih starejših trezorjih
 ​</string>
   <string name="vault_title">Trezor</string>

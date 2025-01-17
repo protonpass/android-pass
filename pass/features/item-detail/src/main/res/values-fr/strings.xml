@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="action_open">Ouvrir</string>
+  <string name="action_copy">Copier</string>
+  <!-- Detail -->
+  <string name="detail_init_error">Problème de récupération des informations de l\'élément</string>
+  <string name="top_bar_edit_button_text">Modifier</string>
+  <!-- Alias details -->
+  <string name="field_alias_title">Adresse de l\'alias</string>
+  <string name="field_alias_disabled_title">Adresse de l\'alias (désactivée)</string>
+  <string name="alias_copied_to_clipboard">L\'alias a été copié.</string>
+  <string name="alias_detail_field_mailboxes_title">Transfert vers</string>
+  <string name="alias_create_login_from_alias">Créer un identifiant</string>
+  <!-- Note details -->
+  <string name="field_detail_note_title">Note</string>
+  <string name="note_detail_copy_note_to_clipboard">Copier la note</string>
+  <string name="note_copied_to_clipboard">La note a été copiée dans le presse-papiers.</string>
+  <!-- Login details -->
+  <string name="email_copied_to_clipboard">L\'adresse e-mail a été copiée.</string>
+  <string name="username_copied_to_clipboard">Le nom d\'utilisateur a été copié.</string>
+  <string name="password_copied_to_clipboard">Le mot de passe a été copié.</string>
+  <string name="website_copied_to_clipboard">Le site internet a été copié.</string>
+  <string name="totp_copied_to_clipboard">Le mot de passe à usage unique basé sur le temps (TOTP) a été copié.</string>
+  <string name="field_copied_to_clipboard">Le champ a été copié.</string>
+  <string name="move_item_to_trash_message">L\'élément a été déplacé dans la corbeille.</string>
+  <string name="error_move_item_to_trash_message">Une erreur s\'est produite pendant le déplacement vers la corbeille.</string>
+  <string name="item_permanently_deleted_message">L\'élément a été définitivement supprimé.</string>
+  <string name="item_permanently_deleted_message_error">Une erreur s\'est produite pendant la suppression de l\'élément.</string>
+  <string name="item_restored_message">L\'élément a été restauré.</string>
+  <string name="item_restored_message_error">Une erreur s\'est produite pendant la restauration de l\'élément.</string>
+  <string name="item_monitor_exclude_message">L\'élément a été exclu de la surveillance.</string>
+  <string name="item_monitor_exclude_message_error">Une erreur s\'est produite lors du retrait d\'un élément de la surveillance.</string>
+  <string name="item_monitor_include_message">L\'élément a été inclus dans la surveillance.</string>
+  <string name="item_monitor_include_message_error">Une erreur s\'est produite lors de l\'ajout d\'un élément à la surveillance.</string>
+  <string name="alias_change_status_error">Une erreur s\'est produite lors de la modification du statut de l\'alias.</string>
+  <string name="login_item_generate_totp_error">Une erreur s\'est produite pendant la génération du code A2F.</string>
+  <string name="login_item_view_alias_button">Afficher l\'alias</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Mot de passe faible</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Ce compte est vulnérable. Rendez-vous sur le service et changez votre mot de passe.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d autre identifiant utilise le même mot de passe.</item>
+    <item quantity="other">%d autres identifiants utilisent le même mot de passe.</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Configurez l\'A2F pour plus de sécurité</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Ce service propose l\'A2F. Activez-la pour améliorer votre sécurité.</string>
+  <string name="login_item_reused_passwords_subtitle">Éléments de vos coffres-forts qui utilisent ce mot de passe.</string>
+  <string name="field_email">Adresse e-mail</string>
+  <string name="field_username">Nom d\'utilisateur</string>
+  <string name="field_username_or_email">Nom d\'utilisateur ou adresse e-mail</string>
+  <string name="field_password">Mot de passe</string>
+  <string name="websites_section_title">Sites internet</string>
+  <string name="totp_section_title">Jeton A2F (TOTP/mot de passe à usage unique basé sur le temps)</string>
+  <string name="action_reveal_password">Afficher le mot de passe</string>
+  <string name="action_conceal_password">Masquer le mot de passe</string>
+  <string name="action_reveal_number">Afficher le numéro</string>
+  <string name="action_conceal_number">Masquer le numéro</string>
+  <string name="share_button_content_description">Ouvrir le bouton de partage</string>
+  <string name="open_menu_icon_content_description">Bouton d\'ouverture du menu</string>
+  <string name="mfa_limit_reached">La limite de l\'A2F est atteinte.</string>
+  <string name="mfa_icon_content_description">Icône A2F</string>
+  <string name="custom_field_text_icon_description">Champ de texte personnalisé</string>
+  <string name="custom_field_hidden_icon_description">Champ personnalisé masqué</string>
+  <string name="custom_field_totp_icon_description">Champ personnalisé A2F</string>
+  <!-- Credit card details -->
+  <string name="credit_card_cardholder_field_name">Nom sur la carte</string>
+  <string name="credit_card_number_field_name">Numéro de la carte</string>
+  <string name="credit_card_cvv_field_name">Code de sécurité</string>
+  <string name="credit_card_pin_field_name">Code PIN</string>
+  <string name="credit_card_expiration_date_field_name">Date d\'expiration</string>
+  <string name="credit_card_cardholder_copied_to_clipboard">Le titulaire de la carte a été copié dans le presse-papiers.</string>
+  <string name="credit_card_number_copied_to_clipboard">Le numéro de la carte a été copié dans le presse-papiers.</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Le code de sécurité a été copié dans le presse-papiers.</string>
+  <!-- Bottomsheet -->
+  <string name="move_to_trash_item_detail_bottom_sheet">Déplacer dans la corbeille</string>
+  <string name="migrate_item_detail_bottom_sheet">Déplacer vers un autre coffre-fort</string>
+  <!-- More info -->
+  <string name="date_today">Aujourd\'hui %s</string>
+  <string name="date_yesterday">Hier %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <string name="item_detail_cannot_perform_action_edit_title">Modification impossible</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Vous n\'avez pas les autorisations nécessaires pour modifier cet élément.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Vous pouvez modifier uniquement les éléments de vos coffres-forts les plus anciens. Pour modifier cet élément, vous devez mettre à jour votre abonnement actuel.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Vous ne pouvez pas modifier cet élément parce qu\'il se trouve dans la corbeille. Retirez-le de la corbeille avant de le modifier.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Partage impossible</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Vous n\'avez pas les autorisations nécessaires pour partager ce coffre-fort.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Vous avez atteint la limite de partage de coffres-forts. Pour en partager davantage, vous devez passer à un abonnement supérieur.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Vous ne pouvez pas partager cet élément parce qu\'il se trouve dans la corbeille. Retirez-le de la corbeille avant de le partager.</string>
+  <string name="password_score_vulnerable">Vulnérable</string>
+  <string name="password_score_weak">Faible</string>
+  <string name="password_score_strong">Fort</string>
+  <string name="passkey_detail_bottomsheet_title">Clé d\'accès</string>
+  <string name="passkey_detail_bottomsheet_username">Nom d\'utilisateur</string>
+  <string name="passkey_detail_bottomsheet_domain">Domaine</string>
+  <string name="passkey_detail_bottomsheet_key">Clé</string>
+  <string name="passkey_detail_bottomsheet_created">Créé le</string>
+  <string name="activity_in_last_two_weeks">Activité au cours des 14 derniers jours</string>
+  <string name="contacts">Contacts</string>
+  <string name="contacts_section_description">Pour masquer votre adresse e-mail personnelle, vous pouvez créer un alias qui la dissimule.</string>
+  <string name="field_detail_display_name_title">Nom d\'affichage</string>
+  <string name="display_name_section_description">Il s\'agit du nom d\'affichage lors de l\'envoi d\'un message depuis cet alias.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s transfert</item>
+    <item quantity="other">%1$s transferts</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s réponse</item>
+    <item quantity="other">%1$s réponses</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s bloqué</item>
+    <item quantity="other">%1$s bloqués</item>
+  </plurals>
+  <string name="open_with">Ouvrir avec :</string>
+  <string name="open_attachments_error">La pièce jointe n\'a pu être ouverte.</string>
+</resources>

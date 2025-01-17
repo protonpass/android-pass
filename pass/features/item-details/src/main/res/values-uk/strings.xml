@@ -17,8 +17,8 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="item_details_toolbar_content_description_menu_button">Button for displaying menu options</string>
-  <string name="item_details_toolbar_content_description_share_button">Button for sharing an item</string>
+  <string name="item_details_toolbar_content_description_menu_button">Кнопка для показу пунктів меню</string>
+  <string name="item_details_toolbar_content_description_share_button">Кнопка для обміну елементом</string>
   <!-- Item details forbidden actions -->
   <string name="item_details_forbidden_actions_edit_title">Не може редагувати</string>
   <string name="item_details_forbidden_actions_edit_permission">Ви не можете редагувати цей елемент, оскільки у вас недостатньо прав для цього.</string>
@@ -26,6 +26,11 @@
   <string name="item_details_forbidden_actions_edit_upgrade">Ви можете редагувати елементи лише в найстаріших сховищах. Щоб редагувати цей пункт, будь ласка, поновіть свій поточний тарифний план.</string>
   <string name="item_details_forbidden_actions_share_title">Не може поширювати</string>
   <string name="item_details_forbidden_actions_share_limit">Ви досягли ліміту спільного доступу до сховища. Щоб отримати доступ до більшої кількості сховищ, будь ласка, оновіть свій поточний тарифний план.</string>
-  <string name="item_details_forbidden_actions_share_permission">У вас недостатньо прав для надання спільного доступу до цього сховища.</string>
-  <string name="item_details_forbidden_actions_share_trash">You cannot share this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
+  <string name="item_details_forbidden_actions_sharing_permission">You don\'t have enough permissions to perform this action.</string>
+  <string name="item_details_forbidden_actions_share_trash">Ви не можете поділитися цим елементом, тому що він знаходиться в кошику. Будь ласка, перемістіть його зі смітника, перш ніж редагувати.</string>
+  <!-- Item details leave item -->
+  <string name="item_details_leave_dialog_title">Залишити цей елемент?</string>
+  <string name="item_details_leave_dialog_message">Ви втратите доступ до цього елемент та його подробиць. Ви точно хочете продовжити?</string>
+  <string name="item_details_leave_item_message_error">Помилка при виході з елемента</string>
+  <string name="item_details_leave_item_message_success">Елемент успішно вийшов</string>
 </resources>

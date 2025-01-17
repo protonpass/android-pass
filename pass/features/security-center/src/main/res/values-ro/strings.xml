@@ -21,7 +21,7 @@
   <string name="security_center_home_top_bar_title">Pass Monitor</string>
   <string name="security_center_home_dark_web_monitoring_title">Monitorizare pe internetul ascuns</string>
   <string name="security_center_home_widget_breaches_title">Compromitere detectată</string>
-  <string name="security_center_home_widget_breaches_subtitle">Adresa de e-mail v-a fost divulgată în cel puțin o compromitere a datelor.</string>
+  <string name="security_center_home_widget_breaches_subtitle">Adresa de e-mail a fost divulgată în cel puțin o compromitere a datelor.</string>
   <string name="security_center_home_widget_no_breaches_subtitle">Primiți notificări dacă adresele de e-mail, parolele sau alte date personale au fost divulgate.</string>
   <string name="security_center_home_row_no_data_breaches_subtitle">Nu există divulgări</string>
   <string name="security_center_home_row_data_breaches_title">Alertă din internetul ascuns</string>
@@ -82,8 +82,8 @@
   <string name="security_center_dark_web_monitor_latest_breach_on">Ultima divulgare: %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
     <item quantity="one">Găsită în %s divulgare</item>
-    <item quantity="few">Găsite în %s divulgări</item>
-    <item quantity="other">Găsite în %s de divulgări</item>
+    <item quantity="few">Găsită în %s divulgări</item>
+    <item quantity="other">Găsită în %s de divulgări</item>
   </plurals>
   <string name="security_center_dark_web_monitor_found_in_breaches">Nu există divulgări</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Adrese Proton</string>

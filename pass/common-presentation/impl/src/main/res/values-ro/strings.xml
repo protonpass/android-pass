@@ -54,4 +54,5 @@
   <string name="item_details_snackbar_message_yahoo_copied">Adresa Yahoo s-a copiat.</string>
   <string name="item_details_snackbar_message_zip_or_postal_code_copied">Codul poștal s-a copiat.</string>
   <string name="open_with">Deschideți cu:</string>
+  <string name="open_attachments_error">Atașamentul nu a putut fi deschis.</string>
 </resources>

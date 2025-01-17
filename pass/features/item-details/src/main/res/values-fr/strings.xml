@@ -26,6 +26,11 @@
   <string name="item_details_forbidden_actions_edit_upgrade">Vous pouvez modifier uniquement les éléments de vos coffres-forts les plus anciens. Pour modifier cet élément, vous devez améliorer votre abonnement actuel.</string>
   <string name="item_details_forbidden_actions_share_title">Partage impossible</string>
   <string name="item_details_forbidden_actions_share_limit">Vous avez atteint la limite de partage de coffres-forts. Pour en partager davantage, vous devez passer à un abonnement supérieur.</string>
-  <string name="item_details_forbidden_actions_share_permission">Vous n\'avez pas les autorisations nécessaires pour partager ce coffre-fort.</string>
+  <string name="item_details_forbidden_actions_sharing_permission">Vous n\'avez pas les autorisations nécessaires pour partager ce coffre-fort.</string>
   <string name="item_details_forbidden_actions_share_trash">Vous ne pouvez pas partager cet élément car il se trouve dans la corbeille. Veuillez le retirer de la corbeille avant de le modifier.</string>
+  <!-- Item details leave item -->
+  <string name="item_details_leave_dialog_title">Voulez-vous quitter cet élément ?</string>
+  <string name="item_details_leave_dialog_message">Vous n\'aurez plus accès à cet élément et à ses informations. Voulez-vous continuer ?</string>
+  <string name="item_details_leave_item_message_error">Une erreur s\'est produite lors de la tentative pour quitter cet élément.</string>
+  <string name="item_details_leave_item_message_success">L\'élément a été quitté.</string>
 </resources>

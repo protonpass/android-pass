@@ -28,4 +28,10 @@
   <string name="item_history_timeline_node_leaf_title">Création</string>
   <string name="item_history_timeline_node_root_title">Version actuelle</string>
   <string name="item_history_timeline_snackbar_message_error">Une erreur s\'est produite lors de la récupération des révisions de l\'élément.</string>
+  <string name="reset_history_bottomsheet_option">Réinitialiser l\'historique</string>
+  <string name="reset_history_dialog_title">Voulez-vous réinitialiser l\'historique de cet élément ?</string>
+  <string name="reset_history_dialog_body">La réinitialisation de l\'historique supprimera définitivement toutes les versions précédentes et ne peut pas être annulée.</string>
+  <string name="reset_history_action">Réinitialiser</string>
+  <string name="reset_history_dialog_snackbar_message_error">Une erreur est survenue lors de la réinitialisation.</string>
+  <string name="reset_history_dialog_snackbar_message_success">L\'historique de l\'élément a été réinitialisé.</string>
 </resources>

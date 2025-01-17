@@ -26,6 +26,11 @@
   <string name="item_details_forbidden_actions_edit_upgrade">Du kan kun ændre elementer i dine ældste bokse. Opgrader dit abonnement for at kunne ændre dette element.</string>
   <string name="item_details_forbidden_actions_share_title">Kan ikke dele</string>
   <string name="item_details_forbidden_actions_share_limit">Du har nået delingsgrænsen for bokse. Opgrader dit abonnement for at kunne dele flere bokse.</string>
-  <string name="item_details_forbidden_actions_share_permission">Du har ikke de fornødne tilladelser til at dele denne boks.</string>
+  <string name="item_details_forbidden_actions_sharing_permission">Du har ikke nok tilladelser til at udføre denne handling.</string>
   <string name="item_details_forbidden_actions_share_trash">Du kan ikke dele dette element, for det ligger i papirkurven. Flyt det fra papirkurven, inden du ændrer det.</string>
+  <!-- Item details leave item -->
+  <string name="item_details_leave_dialog_title">Forlad dette element?</string>
+  <string name="item_details_leave_dialog_message">Du vil miste adgang til dette element og dets detaljer. Ønsker du at fortsætte?</string>
+  <string name="item_details_leave_item_message_error">Der opstod en fejl med at forlade elementet</string>
+  <string name="item_details_leave_item_message_success">Element forladt</string>
 </resources>

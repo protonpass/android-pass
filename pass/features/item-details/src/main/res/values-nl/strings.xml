@@ -26,6 +26,11 @@
   <string name="item_details_forbidden_actions_edit_upgrade">U kunt enkel items wijzigen in uw oudste kluizen. Upgrade uw huidige abonnement om dit item te wijzigen.</string>
   <string name="item_details_forbidden_actions_share_title">Kan niet delen</string>
   <string name="item_details_forbidden_actions_share_limit">U heeft de limiet van het delen van kluis bereikt. Upgrade uw huidige abonnement om meer kluizen te delen.</string>
-  <string name="item_details_forbidden_actions_share_permission">U heeft onvoldoende machtigingen om deze kluis te delen.</string>
+  <string name="item_details_forbidden_actions_sharing_permission">U heeft geen rechten om deze actie uit te voeren.</string>
   <string name="item_details_forbidden_actions_share_trash">U kunt dit item niet delen omdat het in de prullenbak zit. Verplaats het uit de prullenbak voordat u het wijzigt.</string>
+  <!-- Item details leave item -->
+  <string name="item_details_leave_dialog_title">Dit item verlaten?</string>
+  <string name="item_details_leave_dialog_message">U zult toegang tot dit item en de bijbehorende gegevens verliezen. Wilt u doorgaan?</string>
+  <string name="item_details_leave_item_message_error">Er is een fout opgetreden bij het verlaten van dit item</string>
+  <string name="item_details_leave_item_message_success">Item succesvol verlaten</string>
 </resources>

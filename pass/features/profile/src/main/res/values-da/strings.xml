@@ -30,7 +30,7 @@
   <string name="app_lock_four_hours">Efter 4 timer</string>
   <string name="profile_account_plan_name_trial">Pass Plus prøveversion</string>
   <string name="app_lock_config_none">Ingen</string>
-  <string name="app_lock_config_biometric">Biometrisk</string>
+  <string name="app_lock_config_biometric">Biometri</string>
   <string name="app_lock_config_pin_code">Pinkode</string>
   <string name="app_lock_config_app_lock_time">Automatisk lås</string>
   <string name="app_lock_config_password">Adgangskode</string>
@@ -81,4 +81,6 @@
   <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Du skal skifte til %1$s for at kunne administrere den</string>
   <string name="account_switch_confirmation_title">Administrér konto</string>
   <string name="account_switch_confirmation_confirm">Skift og administrer</string>
+  <string name="profile_storage_data_title">Lagerplads</string>
+  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s af %2$s</string>
 </resources>

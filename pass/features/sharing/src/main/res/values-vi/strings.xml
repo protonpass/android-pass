@@ -30,9 +30,9 @@
     <item quantity="other">%d thành viên</item>
   </plurals>
   <string name="sharing_member_count_header">Thành viên</string>
-  <string name="shared_via_title">Shared via</string>
-  <string name="shared_via_item_member_count_header">Item sharing</string>
-  <string name="shared_via_vault_member_count_header">Vault sharing</string>
+  <string name="shared_via_title">Chia sẻ qua</string>
+  <string name="shared_via_item_member_count_header">Chia sẻ mục</string>
+  <string name="shared_via_vault_member_count_header">Chia sẻ kho</string>
   <string name="share_with_title">Chia sẻ với</string>
   <string name="share_with_email_hint">Địa chỉ email</string>
   <string name="share_with_email_error">Địa chỉ email không hợp lệ</string>
@@ -46,7 +46,7 @@
   <string name="sharing_item_invitation_title">Lời mời chia sẻ mục</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s muốn chia sẻ một mục với bạn.</string>
   <string name="sharing_item_invitation_accept">Chấp nhận và xem mục</string>
-  <string name="sharing_invite_more">Invite more…</string>
+  <string name="sharing_invite_more">Mời thêm...</string>
   <string name="sharing_snackbar_invite_accepted">Đã chấp nhận lời mời</string>
   <string name="sharing_snackbar_invite_accept_error">Lỗi khi chấp nhận lời mời</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Không thể chấp nhận lời mời vì bạn đã đạt đến số lượng kho lưu trữ tối đa</string>
@@ -120,18 +120,14 @@
   <string name="share_with_suggestions_title">Các gợi ý</string>
   <string name="share_with_recents_title">Gần đây</string>
   <string name="share_with_remove_email_content_description">Xoá email</string>
-  <string name="share_with_user_title">Chia sẻ với</string>
-  <string name="share_with_user_description">Chia sẻ mục này với các người dùng Proton khác.</string>
   <string name="share_with_secure_link_title">Thông qua liên kết an toàn</string>
   <string name="share_with_secure_link_description">Tạo một liên kết an toàn tới nội dung này.</string>
-  <string name="share_with_vault_title">Entire vault</string>
-  <string name="share_with_vault_description">Share this vault and its content.</string>
-  <string name="share_with_user_shared_title">With other Proton Pass users</string>
-  <string name="share_with_user_shared_description">Useful for permanent sharing.</string>
-  <string name="share_with_manage_shared_item_title">Manage access</string>
-  <string name="share_with_manage_shared_item_description">See member and permission overview.</string>
-  <string name="share_with_secure_link_shared_title">Via a secure link</string>
-  <string name="share_with_secure_link_shared_description">For one-off sharing.</string>
+  <string name="share_with_user_shared_title">Với những người dùng Proton Pass khác</string>
+  <string name="share_with_user_shared_description">Hữu ích cho việc chia sẻ lâu dài.</string>
+  <string name="share_with_manage_shared_item_title">Quản lý truy cập</string>
+  <string name="share_with_manage_shared_item_description">Xem tổng quan thành viên và quyền</string>
+  <string name="share_with_secure_link_shared_title">Thông qua một liên kết an toàn</string>
+  <string name="share_with_secure_link_shared_description">Để chia sẻ một lần.</string>
   <string name="share_with_manage_shared_vault_title">Quản lý quyền truy cập vault</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="other">Kho được chia sẻ với %d người dùng.</item>

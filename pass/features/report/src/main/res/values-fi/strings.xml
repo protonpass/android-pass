@@ -35,7 +35,7 @@
   <string name="report_reason_other">Muu</string>
   <string name="tips_title">Pikaratkaisuja: %1$s</string>
   <string name="tips_subtitle">Nämä vinkit voivat auttaa ratkaisemaan ongelman nopeammin.</string>
-  <string name="autofill_tip_restart">Kokeile poistaa automaattitäyttö-palvelu käytöstä ja ottaa se käyttöön uudelleen.</string>
+  <string name="autofill_tip_restart">Kokeile poistaa automaattitäytön palvelu käytöstä ja ottaa se käyttöön uudelleen.</string>
   <string name="autofill_tip_browser">Kokeile toista selainta.</string>
   <string name="sharing_tip_vault_sharing_guide">Onko sinulla ongelmia holvin jakamisen kanssa? Tutustu oppaaseemme.</string>
   <string name="sharing_tip_secure_links_guide">Onko sinulla ongelmia suojattujen linkkien kanssa? Tutustu oppaaseemme.</string>

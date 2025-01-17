@@ -4,6 +4,8 @@
   <string name="autofill_notification_channel_name">AutoFill</string>
   <string name="autofill_notification_copy_to_clipboard_title">TOTP-Code</string>
   <string name="autofill_notification_copy_to_clipboard_body">TOTP-Code wurde in die Zwischenablage kopiert.</string>
-  <string name="updates_new_invite_received_title">Du hast eine Einladung erhalten</string>
-  <string name="updates_new_invite_received_message">Du wurdest zu einem Tresor eingeladen. Öffne die App, um die Einladung anzusehen und sie anzunehmen.</string>
+  <string name="new_item_invite_notification_title">New item invite received</string>
+  <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s möchte etwas mit dir teilen.</string>
+  <string name="new_vault_invite_notification_title">New vault invite received</string>
+  <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s möchte einen Tresor mit dir teilen.</string>
 </resources>

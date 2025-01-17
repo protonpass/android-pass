@@ -39,8 +39,9 @@
   <string name="create_login_item_update_error">Aggiornamento del login non riuscito</string>
   <string name="create_login_init_error">Caricamento dei dettagli del login non riuscito</string>
   <string name="create_login_invalid_totp">Chiave segreta 2FA non valida</string>
-  <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
-  <string name="login_link_attachments_error">Could not add attachments to login</string>
+  <string name="update_login_attachments_init_error">Problema nel recupero degli allegati di accesso</string>
+  <string name="login_link_attachments_error">Impossibile collegare o scollegare gli allegati all\'accesso</string>
+  <string name="login_rename_attachments_error">Impossibile rinominare gli allegati di accesso</string>
   <string name="login_created">Login creato</string>
   <string name="bottomsheet_modify_alias_title">Modifica l\'alias</string>
   <string name="bottomsheet_custom_field_type_text">Testo</string>
@@ -65,8 +66,9 @@
   <string name="create_note_item_creation_error">Creazione della nota non riuscita</string>
   <string name="create_note_item_update_error">Aggiornamento della nota non riuscito</string>
   <string name="create_note_init_error">Caricamento dei dettagli della nota non riuscito</string>
-  <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
-  <string name="note_link_attachments_error">Could not add attachments to note</string>
+  <string name="update_note_attachments_init_error">Problema durante il recupero degli allegati alle note</string>
+  <string name="note_link_attachments_error">Impossibile collegare o scollegare gli allegati alla nota</string>
+  <string name="note_rename_attachments_error">Impossibile rinominare gli allegati delle note</string>
   <string name="note_created">Nota creata</string>
   <!-- Create Alias -->
   <string name="field_alias_title">Indirizzo alias</string>
@@ -83,8 +85,9 @@
   <string name="alias_rate_limited">Troppi alias creati recentemente</string>
   <string name="create_alias_item_update_error">Aggiornamento dell\'alias non riuscito</string>
   <string name="create_alias_init_error">Caricamento dei dettagli dell\'alias non riuscito</string>
-  <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
-  <string name="alias_link_attachments_error">Could not add attachments to alias</string>
+  <string name="update_alias_attachments_init_error">Problema durante il recupero degli allegati alias</string>
+  <string name="alias_link_attachments_error">Impossibile collegare o scollegare gli allegati all\'alias</string>
+  <string name="alias_rename_attachments_error">Impossibile rinominare gli allegati alias</string>
   <string name="alias_created">Alias creato</string>
   <string name="cannot_retrieve_alias_options">Caricamento delle opzioni per l\'alias non riuscito</string>
   <string name="alias_mailbox_dialog_title">Inoltra a</string>
@@ -110,8 +113,9 @@
   <string name="create_credit_card_item_creation_error">Creazione della carta non riuscita</string>
   <string name="create_credit_card_item_creation_success">Carta creata</string>
   <string name="credit_card_init_error">Caricamento dei dettagli della carta non riuscito</string>
-  <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
-  <string name="credit_card_link_attachments_error">Could not add attachments to credit card</string>
+  <string name="update_credit_card_attachments_init_error">Problema nel recupero degli allegati della carta di credito</string>
+  <string name="credit_card_link_attachments_error">Impossibile collegare o scollegare gli allegati alla carta di credito</string>
+  <string name="credit_card_rename_attachments_error">Impossibile rinominare gli allegati della carta di credito</string>
   <string name="credit_card_item_update_error">Aggiornamento della carta non riuscito</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Nome completo</string>
@@ -168,8 +172,9 @@
   <string name="identity_add_more_fields">Aggiungi un altro campo</string>
   <string name="identity_bottomsheet_add_field">Aggiungi un campo</string>
   <string name="create_identity_init_error">Caricamento dei dettagli dell\'identità non riuscito</string>
-  <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
-  <string name="identity_link_attachments_error">Could not add attachments to identity</string>
+  <string name="update_identity_attachments_init_error">Problema nel recupero degli allegati di identità</string>
+  <string name="identity_link_attachments_error">Impossibile collegare o scollegare gli allegati all\'identità</string>
+  <string name="identity_rename_attachments_error">Impossibile rinominare gli allegati di identità</string>
   <string name="create_identity_item_creation_error">Creazione dell\'identità non riuscita</string>
   <string name="create_identity_item_creation_success">Identità creata</string>
   <string name="update_identity_item_creation_success">Identità aggiornata</string>
@@ -201,4 +206,6 @@
   <string name="banner_title_attachments">Allegati</string>
   <string name="banner_body_attachments">Puoi allegare file agli elementi per una migliore organizzazione</string>
   <string name="open_with">Apri con:</string>
+  <string name="open_attachments_error">Impossibile aprire l\'allegato</string>
+  <string name="upload_attachments_error">Impossibile caricare l\'allegato</string>
 </resources>

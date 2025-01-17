@@ -32,9 +32,9 @@
     <item quantity="other">%d medlemmer</item>
   </plurals>
   <string name="sharing_member_count_header">Medlemmer</string>
-  <string name="shared_via_title">Shared via</string>
-  <string name="shared_via_item_member_count_header">Item sharing</string>
-  <string name="shared_via_vault_member_count_header">Vault sharing</string>
+  <string name="shared_via_title">Delt via</string>
+  <string name="shared_via_item_member_count_header">Elementdeling</string>
+  <string name="shared_via_vault_member_count_header">Hvelvdeling</string>
   <string name="share_with_title">Del med</string>
   <string name="share_with_email_hint">E-postadresse</string>
   <string name="share_with_email_error">Ugyldig e-postadresse</string>
@@ -48,7 +48,7 @@
   <string name="sharing_item_invitation_title">Delt elementinvitasjon</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s ønsker å dele et element med deg.</string>
   <string name="sharing_item_invitation_accept">Aksepter og se elementet</string>
-  <string name="sharing_invite_more">Invite more…</string>
+  <string name="sharing_invite_more">Inviter flere...</string>
   <string name="sharing_snackbar_invite_accepted">Invitasjon godtatt</string>
   <string name="sharing_snackbar_invite_accept_error">Feil under godkjenning av invitasjonen</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Kunne ikke godta invitasjonen da du har nådd hvelvgrensen.</string>
@@ -125,18 +125,14 @@
   <string name="share_with_suggestions_title">Forslag</string>
   <string name="share_with_recents_title">Nylig</string>
   <string name="share_with_remove_email_content_description">Fjern e-postadresse</string>
-  <string name="share_with_user_title">Del med</string>
-  <string name="share_with_user_description">Del dette elementet med andre Proton-brukere.</string>
   <string name="share_with_secure_link_title">Via sikker kobling</string>
   <string name="share_with_secure_link_description">Generer en sikker kobling til dette elementet.</string>
-  <string name="share_with_vault_title">Entire vault</string>
-  <string name="share_with_vault_description">Share this vault and its content.</string>
-  <string name="share_with_user_shared_title">With other Proton Pass users</string>
-  <string name="share_with_user_shared_description">Useful for permanent sharing.</string>
-  <string name="share_with_manage_shared_item_title">Manage access</string>
-  <string name="share_with_manage_shared_item_description">See member and permission overview.</string>
-  <string name="share_with_secure_link_shared_title">Via a secure link</string>
-  <string name="share_with_secure_link_shared_description">For one-off sharing.</string>
+  <string name="share_with_user_shared_title">Med andre brukere av Proton Pass</string>
+  <string name="share_with_user_shared_description">Nyttig for permanent deling.</string>
+  <string name="share_with_manage_shared_item_title">Administrer tilgang</string>
+  <string name="share_with_manage_shared_item_description">Se oversikt over medlemmer og tillatelser.</string>
+  <string name="share_with_secure_link_shared_title">Via en sikker kobling</string>
+  <string name="share_with_secure_link_shared_description">For engangsdeling.</string>
   <string name="share_with_manage_shared_vault_title">Administrer hvelvtilgang</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="one">Elementets hvelv er for øyeblikket delt med %d bruker.</item>

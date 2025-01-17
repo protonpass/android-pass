@@ -22,8 +22,8 @@
   <string name="item_options_alias_trash_dialog_checkbox_text">Більше не нагадувати</string>
   <string name="item_options_alias_trash_dialog_button_text_disable">Натомість вимкнути</string>
   <string name="item_options_alias_trash_dialog_button_text_trash">Перемістити до смітника</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">There was an error disabling the alias</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">Виникла помилка при відключенні псевдоніма</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">Псевдонім вимкнено</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">There was an error moving the alias to trash</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">Виникла помилка при переміщенні псевдоніма до смітника</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">Псевдонім переміщено до смітника</string>
 </resources>

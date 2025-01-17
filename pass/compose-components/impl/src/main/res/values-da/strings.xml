@@ -34,6 +34,7 @@
   <string name="bottomsheet_copy_item_note">Kopiér note</string>
   <string name="bottomsheet_delete_permanently">Slet permanent</string>
   <string name="bottomsheet_restore">Gendan</string>
+  <string name="bottomsheet_leave">Forlad</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Åbn handlingsmenu for element</string>
   <string name="action_upgrade_now">Opgradér nu</string>
@@ -282,4 +283,7 @@
   <string name="attachment_title">Vedhæftninger</string>
   <string name="attachment_no_files">Upload filer fra din enhed</string>
   <string name="attachment_add_file">Vedhæft en fil</string>
+  <string name="attachment_row_upload_failed">Upload mislykkedes</string>
+  <string name="attachment_row_retry">Prøv igen</string>
+  <string name="options_menu_content_description">Indstillingsmenu</string>
 </resources>

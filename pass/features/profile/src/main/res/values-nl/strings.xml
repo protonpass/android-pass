@@ -81,4 +81,6 @@
   <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">U moet overschakelen naar %1$s om het te beheren</string>
   <string name="account_switch_confirmation_title">Account beheren</string>
   <string name="account_switch_confirmation_confirm">Wisselen en beheren</string>
+  <string name="profile_storage_data_title">Opslag</string>
+  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s van %2$s</string>
 </resources>

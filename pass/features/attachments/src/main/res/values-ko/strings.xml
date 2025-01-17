@@ -27,4 +27,12 @@
   <string name="camera_open_error">카메라 열 수 없음</string>
   <string name="camera_permission_explanation">이 기능을 사용하기 위해 카메라 권한이 필요합니다.</string>
   <string name="camera_permission_open_settings">설정 열기</string>
+  <string name="delete_all_attachments_title">모든 첨부 파일을 삭제하시겠어요?</string>
+  <string name="delete_all_attachments_subtitle">이 작업은 취소할 수 없습니다</string>
+  <string name="delete_all_attachments_confirm">전체 삭제</string>
+  <string name="rename_attachment_dialog_title">파일 이름 변경</string>
+  <string name="storage_full_title">저장공간이 거의 다 찼습니다.</string>
+  <string name="storage_full_body">저장 공간을 늘리려면 업그레이드 하세요.</string>
+  <string name="storage_full_upgrade">업그레이드</string>
+  <string name="storage_full_amount" comment="This will show 20MB of 100MB">%2$s 중 %1$s</string>
 </resources>

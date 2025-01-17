@@ -39,8 +39,9 @@
   <string name="create_login_item_update_error">Немагчыма абнавіць запіс уваходу</string>
   <string name="create_login_init_error">Праблема пры атрыманні падрабязнасцяў запісу ўваходу</string>
   <string name="create_login_invalid_totp">Недапушчальнае змесціва для 2ФА</string>
-  <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
-  <string name="login_link_attachments_error">Could not add attachments to login</string>
+  <string name="update_login_attachments_init_error">Праблема атрымання далучэнняў уваходу</string>
+  <string name="login_link_attachments_error">Не ўдалося звязаць або адвязаць далучэнні ў запісе ўваходу</string>
+  <string name="login_rename_attachments_error">Не ўдалося перайменаваць далучэнні запісу ўваходу</string>
   <string name="login_created">Запіс уваходу створаны</string>
   <string name="bottomsheet_modify_alias_title">Змяніць псеўданім</string>
   <string name="bottomsheet_custom_field_type_text">Тэкст</string>
@@ -65,8 +66,9 @@
   <string name="create_note_item_creation_error">Не атрымалася стварыць нататку</string>
   <string name="create_note_item_update_error">Не атрымалася абнавіць нататку</string>
   <string name="create_note_init_error">Праблема з аднаўленнем падрабязнасцяў нататкі</string>
-  <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
-  <string name="note_link_attachments_error">Could not add attachments to note</string>
+  <string name="update_note_attachments_init_error">Праблема атрымання далучэнняў нататкі</string>
+  <string name="note_link_attachments_error">Не ўдалося звязаць або адвязаць далучэнні ў нататцы</string>
+  <string name="note_rename_attachments_error">Не ўдалося перайменаваць далучэнні нататкі</string>
   <string name="note_created">Нататка створана</string>
   <!-- Create Alias -->
   <string name="field_alias_title">Адрас псеўданіма</string>
@@ -83,8 +85,9 @@
   <string name="alias_rate_limited">Занадта шмат псеўданімаў было нядаўна створана</string>
   <string name="create_alias_item_update_error">Не атрымалася абнавіць псеўданім</string>
   <string name="create_alias_init_error">Праблема пры атрыманні падрабязнасцяў псеўданіма</string>
-  <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
-  <string name="alias_link_attachments_error">Could not add attachments to alias</string>
+  <string name="update_alias_attachments_init_error">Праблема атрымання далучэнняў псеўданіма</string>
+  <string name="alias_link_attachments_error">Не ўдалося звязаць або адвязаць далучэнні ў псеўданіме</string>
+  <string name="alias_rename_attachments_error">Не ўдалося перайменаваць далучэнні псеўданіма</string>
   <string name="alias_created">Псеўданім створаны</string>
   <string name="cannot_retrieve_alias_options">Немагчыма атрымаць параметры псеўданіма!</string>
   <string name="alias_mailbox_dialog_title">Перасылаць на</string>
@@ -110,8 +113,9 @@
   <string name="create_credit_card_item_creation_error">Немагчыма стварыць крэдытную картку</string>
   <string name="create_credit_card_item_creation_success">Крэдытная картка створана</string>
   <string name="credit_card_init_error">Праблема пры атрыманні падрабязнасцяў крэдытнай карткі</string>
-  <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
-  <string name="credit_card_link_attachments_error">Could not add attachments to credit card</string>
+  <string name="update_credit_card_attachments_init_error">Праблема атрымання далучэнняў крэдытнай карткі</string>
+  <string name="credit_card_link_attachments_error">Не ўдалося звязаць або адвязаць далучэнні ў крэдытнай картцы</string>
+  <string name="credit_card_rename_attachments_error">Не ўдалося перайменаваць далучэнні крэдытнай карткі</string>
   <string name="credit_card_item_update_error">Немагчыма абнавіць крэдытную картку</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Поўнае імя</string>
@@ -168,8 +172,9 @@
   <string name="identity_add_more_fields">Дадаць яшчэ адно поле</string>
   <string name="identity_bottomsheet_add_field">Дадаць поле</string>
   <string name="create_identity_init_error">Праблема пры атрыманні падрабязнасцяў ідэнтычнасці</string>
-  <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
-  <string name="identity_link_attachments_error">Could not add attachments to identity</string>
+  <string name="update_identity_attachments_init_error">Праблема атрымання далучэнняў ідэнтычнасці</string>
+  <string name="identity_link_attachments_error">Не ўдалося звязаць або адвязаць далучэнні ў ідэнтычнасці</string>
+  <string name="identity_rename_attachments_error">Не ўдалося перайменаваць далучэнні ідэнтычнасці</string>
   <string name="create_identity_item_creation_error">Не атрымалася стварыць ідэнтычнасць:</string>
   <string name="create_identity_item_creation_success">Ідэнтычнасць створана</string>
   <string name="update_identity_item_creation_success">Ідэнтычнасць абноўлена</string>
@@ -201,4 +206,6 @@
   <string name="banner_title_attachments">Далучэнні</string>
   <string name="banner_body_attachments">Вы можаце далучыць файлы да элементаў для лепшай арганізацыі</string>
   <string name="open_with">Адкрыць праз:</string>
+  <string name="open_attachments_error">Немагчыма адкрыць далучэнне</string>
+  <string name="upload_attachments_error">Немагчыма запампаваць далучэнне</string>
 </resources>

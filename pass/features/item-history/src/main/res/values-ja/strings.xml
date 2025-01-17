@@ -18,14 +18,20 @@
   -->
 <resources>
   <string name="item_history_restore_action">復元</string>
-  <string name="item_history_restore_confirmation_dialog_title">このバージョンを復元?</string>
+  <string name="item_history_restore_confirmation_dialog_title">このバージョンを復元しますか？</string>
   <string name="item_history_restore_confirmation_dialog_message" comment="The item will be reverted to a version from an specific date, for instance: Your current item will revert to the version from 19 February 2024 at 09:30">現在のアイテムは %1$s のバージョンに戻ります</string>
   <string name="item_history_restore_snackbar_message_error">アイテムのリビジョンを復元中にエラーが発生しました</string>
   <string name="item_history_restore_snackbar_message_success">アイテムのリビジョンが正常に復元されました</string>
   <string name="item_history_restore_tab_title_current">現在</string>
   <string name="item_history_timeline_title">履歴</string>
   <string name="item_history_timeline_node_child_title">修正済み</string>
-  <string name="item_history_timeline_node_leaf_title">作成した</string>
+  <string name="item_history_timeline_node_leaf_title">作成済み</string>
   <string name="item_history_timeline_node_root_title">現在のバージョン</string>
   <string name="item_history_timeline_snackbar_message_error">アイテムのリビジョンの取得中にエラーが発生しました</string>
+  <string name="reset_history_bottomsheet_option">履歴をリセット</string>
+  <string name="reset_history_dialog_title">このアイテムの履歴をリセットしますか？</string>
+  <string name="reset_history_dialog_body">履歴をリセットすると過去のバージョンが完全に削除され、元に戻すことはできません。</string>
+  <string name="reset_history_action">リセット</string>
+  <string name="reset_history_dialog_snackbar_message_error">リセット中にエラーが発生しました</string>
+  <string name="reset_history_dialog_snackbar_message_success">アイテムの履歴をリセット</string>
 </resources>

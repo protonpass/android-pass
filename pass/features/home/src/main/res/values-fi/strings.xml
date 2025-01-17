@@ -4,13 +4,13 @@
   <string name="home_empty_vault_title">Holvisi on tyhjä</string>
   <string name="home_empty_vault_subtitle">Aloita luomalla ensimmäinen kohteesi.</string>
   <string name="home_empty_vault_login_title">Kirjautumistietoja ei löytynyt</string>
-  <string name="home_empty_vault_login_subtitle">Aloita luomalla ensimmäinen kirjautumiskohteesi.</string>
+  <string name="home_empty_vault_login_subtitle">Aloita luomalla ensimmäinen kirjautumistietosi.</string>
   <string name="home_empty_vault_aliases_title">Aliaksia ei löytynyt</string>
   <string name="home_empty_vault_aliases_subtitle">Aloita luomalla ensimmäinen aliaksesi.</string>
   <string name="home_empty_vault_notes_title">Muistiinpanoja ei löytynyt</string>
   <string name="home_empty_vault_notes_subtitle">Aloita luomalla ensimmäinen muistiinpanosi.</string>
   <string name="home_empty_vault_logins_mfa_title">TOTP-kirjautumistietoja ei löytynyt</string>
-  <string name="home_empty_vault_logins_mfa_subtitle">Aloita luomalla ensimmäinen TOTP-kirjautumiskohteesi.</string>
+  <string name="home_empty_vault_logins_mfa_subtitle">Aloita luomalla ensimmäinen TOTP-kirjautumistietosi.</string>
   <string name="home_empty_vault_identity_title">Identiteettejä ei löytynyt</string>
   <string name="home_empty_vault_identity_subtitle">Aloita luomalla ensimmäinen identiteettisi.</string>
   <string name="home_empty_vault_cc_title">Maksukortteja ei löytynyt</string>
@@ -42,6 +42,7 @@
   <string name="home_trial_banner_title">Tervetuliaislahjamme sinulle</string>
   <string name="home_trial_banner_text">7 päivää aikaa kokeilla premium-ominaisuuksia ilmaiseksi. Voimassa vain ensimmäisen Proton Pass -viikkosi ajan.</string>
   <string name="home_trial_banner_settings">Lue lisää ›</string>
+  <string name="home_drawer_all_items">Kaikki kohteet</string>
   <string name="sl_sync_banner_title">Synkronoi aliaksesi SimpleLoginista</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">Sinulla on SimpleLoginissa %d Proton Passista puuttuva alias. Haluatko synkronoida sen?</item>
@@ -91,12 +92,13 @@
   <string name="snackbar_delete_vault_success">Holvi poistettiin</string>
   <string name="snackbar_delete_vault_error">Holvia ei poistettu</string>
   <!-- Search top bar -->
+  <string name="search_topbar_placeholder_all_items">Etsi kaikista kohteista…</string>
   <string name="search_topbar_placeholder_all_vaults">Etsi kaikista holveista…</string>
   <string name="search_topbar_placeholder_vault">Etsi holvista %s…</string>
   <string name="search_topbar_placeholder_trash">Etsi roskakorista…</string>
   <string name="search_topbar_placeholder_pinning">Etsi kiinnitetyistä…</string>
-  <string name="search_topbar_placeholder_shared_by_me">Search in Shared by me…</string>
-  <string name="search_topbar_placeholder_shared_with_me">Search in Shared with me…</string>
+  <string name="search_topbar_placeholder_shared_by_me">Hae minun jakamistani…</string>
+  <string name="search_topbar_placeholder_shared_with_me">Hae minulle jaetuista…</string>
   <string name="item_type_filter_list_icon_content_description">Kohdetyypin kuvake</string>
   <string name="item_type_filter_all">Kaikki</string>
   <string name="item_type_filter_login">Kirjautumistieto</string>
@@ -149,6 +151,10 @@
   <plurals name="alert_confirm_delete_items_message">
     <item quantity="one">Haluatko varmasti poistaa kohteen? Tätä ei ole mahdollista kumota.</item>
     <item quantity="other">Haluatko varmasti poistaa %d kohdetta? Tätä ei ole mahdollista kumota.</item>
+  </plurals>
+  <plurals name="alert_shared_delete_items_message">
+    <item quantity="one">1 item is currently shared. Moving it to trash will remove access for all other users.</item>
+    <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Viimeisimmät haut</string>

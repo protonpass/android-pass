@@ -64,8 +64,7 @@
   <string name="sharing_snackbar_fetch_member_error">Er is een fout opgetreden bij het ophalen van de leden</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Er is een fout opgetreden bij het ophalen van opstaande uitnodigingen</string>
   <string name="share_summary_title">Beoordelen en delen</string>
-  <string name="share_summary_vault">%s kluis</string>
-  <string name="share_summary_share_vault">Kluis delen</string>
+    <string name="share_summary_share_vault">Kluis delen</string>
   <string name="share_summary_share_item">Deel item</string>
   <string name="share_summary_vault_title">Kluis</string>
   <string name="share_summary_item_title">Item</string>

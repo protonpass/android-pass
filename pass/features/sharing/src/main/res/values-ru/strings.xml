@@ -68,8 +68,7 @@
   <string name="sharing_snackbar_fetch_member_error">There was an error fetching members</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">There was an error fetching pending invites</string>
   <string name="share_summary_title">Проверить и поделиться</string>
-  <string name="share_summary_vault">%s хранилище</string>
-  <string name="share_summary_share_vault">Поделиться хранилищем</string>
+    <string name="share_summary_share_vault">Поделиться хранилищем</string>
   <string name="share_summary_share_item">Share item</string>
   <string name="share_summary_vault_title">Хранилище</string>
   <string name="share_summary_item_title">Элемент</string>

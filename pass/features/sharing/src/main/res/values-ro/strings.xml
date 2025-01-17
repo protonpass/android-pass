@@ -66,8 +66,7 @@
   <string name="sharing_snackbar_fetch_member_error">A apărut o eroare la preluarea membrilor.</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">A apărut o eroare la preluarea invitațiilor în așteptare.</string>
   <string name="share_summary_title">Revizuire și partajare</string>
-  <string name="share_summary_vault">seiful %s</string>
-  <string name="share_summary_share_vault">Partajare seif</string>
+    <string name="share_summary_share_vault">Partajare seif</string>
   <string name="share_summary_share_item">Partajare articol</string>
   <string name="share_summary_vault_title">Seif</string>
   <string name="share_summary_item_title">Articol</string>

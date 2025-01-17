@@ -68,6 +68,8 @@ internal sealed interface HomeNavEvent {
 
     data object UpgradeDialog : HomeNavEvent
 
+    data object OnBulkMigrationSharedWarning : HomeNavEvent
+
 }
 
 @Immutable

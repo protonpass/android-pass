@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.migrate.confirmvault
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -40,7 +41,6 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
-import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.repositories.BulkMoveToVaultEvent
@@ -62,34 +62,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MigrateConfirmVaultViewModel @Inject constructor(
-    savedStateHandleProvider: SavedStateHandleProvider,
-    getVaultById: GetVaultWithItemCountById,
+    private val savedStateHandle: SavedStateHandle,
     private val migrateItems: MigrateItems,
     private val migrateVault: MigrateVault,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
-    private val observeHasAssociatedSecureLinks: ObserveHasAssociatedSecureLinks
+    private val observeHasAssociatedSecureLinks: ObserveHasAssociatedSecureLinks,
+    getVaultById: GetVaultWithItemCountById
 ) : ViewModel() {
 
-    private val migrateMode: MigrateModeValue = savedStateHandleProvider.get()
-        .require(MigrateModeArg.key)
-
-    private val destShareId: ShareId = savedStateHandleProvider.get()
-        .require<String>(DestinationShareNavArgId.key)
-        .let(::ShareId)
-
-    private val mode = when (migrateMode) {
-        MigrateModeValue.AllVaultItems -> Mode.MigrateAllItems(
-            destShareId = destShareId,
-            sourceShareId = savedStateHandleProvider.get()
-                .require<String>(CommonNavArgId.ShareId.key)
-                .let(::ShareId)
-        )
-
-        MigrateModeValue.SelectedItems -> Mode.MigrateSelectedItems(
-            destShareId = destShareId
-        )
-    }
+    private val mode = getMode()
 
     private val isLoadingFlow: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
@@ -249,6 +231,20 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         eventFlow.update { ConfirmMigrateEvent.Close.toOption() }
     }
 
+    private fun getMode(): Mode {
+        val destShareId = ShareId(savedStateHandle.require(DestinationShareNavArgId.key))
+        return when (getNavMode()) {
+            MigrateModeValue.SelectedItems -> Mode.MigrateSelectedItems(
+                destShareId = destShareId
+            )
+
+            MigrateModeValue.AllVaultItems -> Mode.MigrateAllItems(
+                sourceShareId = ShareId(savedStateHandle.require(CommonNavArgId.ShareId.key)),
+                destShareId = destShareId
+            )
+        }
+    }
+
     internal sealed interface Mode {
         val destShareId: ShareId
 
@@ -269,6 +265,10 @@ class MigrateConfirmVaultViewModel @Inject constructor(
             is MigrateAllItems -> MigrateMode.MigrateAll
         }
     }
+
+    private fun getNavMode(): MigrateModeValue = MigrateModeValue.valueOf(
+        savedStateHandle.require(MigrateModeArg.key)
+    )
 
     private companion object {
 

@@ -25,12 +25,19 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
+import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.ObserveEncryptedItems
+import proton.android.pass.data.api.usecases.items.GetMigrationItemsSelection
+import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareSelection
 import proton.android.pass.features.migrate.MigrateModeArg
 import proton.android.pass.features.migrate.MigrateModeValue
 import proton.android.pass.features.migrate.MigrateVaultFilter
@@ -41,7 +48,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MigrateSharedWarningViewModel @Inject constructor(
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
+    bulkMoveToVaultRepository: BulkMoveToVaultRepository,
+    observeEncryptedItems: ObserveEncryptedItems,
+    getMigrationItemsSelection: GetMigrationItemsSelection
 ) : ViewModel() {
 
     private val migrateModeValue: MigrateModeValue = savedStateHandleProvider.get()
@@ -70,9 +80,25 @@ class MigrateSharedWarningViewModel @Inject constructor(
         value = IsLoadingState.NotLoading
     )
 
+    private val itemsMigrationSelectionFlow = when (mode) {
+        is Mode.MigrateAllItems -> observeEncryptedItems(
+            selection = ShareSelection.Share(mode.shareId),
+            itemState = ItemState.Active,
+            filter = ItemTypeFilter.All
+        ).mapLatest { encryptedItems ->
+            mapOf(mode.shareId to encryptedItems.map { it.id })
+        }
+
+        is Mode.MigrateSelectedItems -> bulkMoveToVaultRepository.observe()
+            .mapLatest { selectedItemsOption ->
+                selectedItemsOption.value().orEmpty()
+            }
+    }.mapLatest(getMigrationItemsSelection::invoke)
+
     internal val stateFlow: StateFlow<MigrateSharedWarningState> = combine(
         eventFlow,
         isLoadingStateFlow,
+        itemsMigrationSelectionFlow,
         ::MigrateSharedWarningState
     ).stateIn(
         scope = viewModelScope,

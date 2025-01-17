@@ -39,6 +39,9 @@ sealed interface VaultNavigation {
     value class VaultMigrate(val shareId: ShareId) : VaultNavigation
 
     @JvmInline
+    value class VaultMigrateSharedWarning(val shareId: ShareId) : VaultNavigation
+
+    @JvmInline
     value class VaultEdit(val shareId: ShareId) : VaultNavigation
 
     @JvmInline

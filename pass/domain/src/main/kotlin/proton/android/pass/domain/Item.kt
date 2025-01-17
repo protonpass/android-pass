@@ -88,4 +88,8 @@ data class ItemEncrypted(
     val flags: Flags,
     val shareCount: Int,
     val isOwner: Boolean
-)
+) {
+
+    val isShared: Boolean = shareCount > 0
+
+}

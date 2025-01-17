@@ -20,6 +20,7 @@ package proton.android.pass.features.migrate.warningshared.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmWithLoadingDialog
 import proton.android.pass.composecomponents.impl.text.Text
@@ -38,7 +39,11 @@ internal fun MigrateSharedWarningContent(
         show = true,
         isLoading = isLoading,
         isConfirmActionDestructive = false,
-        title = stringResource(id = R.string.migrate_shared_warning_title),
+        title = pluralStringResource(
+            id = R.plurals.migrate_items_shared_warning_title,
+            count = totalItemsCount,
+            totalItemsCount
+        ),
         confirmText = stringResource(id = CompR.string.action_continue),
         cancelText = stringResource(id = CompR.string.action_cancel),
         onDismiss = {
@@ -52,7 +57,15 @@ internal fun MigrateSharedWarningContent(
         },
         content = {
             Text.Body1Regular(
-                text = stringResource(id = R.string.migrate_shared_warning_message)
+                text = if (isSingleSharedItem) {
+                    stringResource(R.string.migrate_item_shared_warning_message)
+                } else {
+                    pluralStringResource(
+                        id = R.plurals.migrate_items_shared_warning_message,
+                        count = sharedItemsCount,
+                        sharedItemsCount
+                    )
+                }
             )
         }
     )

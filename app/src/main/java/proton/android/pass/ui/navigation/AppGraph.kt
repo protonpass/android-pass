@@ -586,6 +586,14 @@ fun NavGraphBuilder.appGraph(
                     )
                 )
 
+                is VaultNavigation.VaultMigrateSharedWarning -> appNavigator.navigate(
+                    destination = MigrateSharedWarningNavItem,
+                    route = MigrateSharedWarningNavItem.createNavRoute(
+                        migrateMode = MigrateModeValue.AllVaultItems,
+                        shareId = it.shareId
+                    )
+                )
+
                 is VaultNavigation.VaultRemove -> dismissBottomSheet {
                     appNavigator.navigate(
                         destination = DeleteVaultDialog,

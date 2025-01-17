@@ -33,6 +33,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.migrate.MigrateModeArg
 import proton.android.pass.features.migrate.MigrateModeValue
+import proton.android.pass.features.migrate.MigrateVaultFilter
 import proton.android.pass.features.migrate.MigrateVaultFilterArg
 import proton.android.pass.features.migrate.selectvault.MigrateSelectVaultViewModel.Mode
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -44,12 +45,14 @@ class MigrateSharedWarningViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val migrateModeValue: MigrateModeValue = savedStateHandleProvider.get()
-        .require(MigrateModeArg.key)
+        .require<String>(MigrateModeArg.key)
+        .let(MigrateModeValue::valueOf)
 
     private val mode: Mode = when (migrateModeValue) {
         MigrateModeValue.SelectedItems -> Mode.MigrateSelectedItems(
             filter = savedStateHandleProvider.get()
-                .require(MigrateVaultFilterArg.key)
+                .require<String>(MigrateVaultFilterArg.key)
+                .let(MigrateVaultFilter::valueOf)
         )
 
         MigrateModeValue.AllVaultItems -> Mode.MigrateAllItems(
@@ -83,13 +86,11 @@ class MigrateSharedWarningViewModel @Inject constructor(
 
     internal fun onMigrate() {
         when (mode) {
-            is Mode.MigrateAllItems -> MigrateSharedWarningEvent.OnMigrated(
-                migrateModeValue = migrateModeValue,
+            is Mode.MigrateAllItems -> MigrateSharedWarningEvent.OnMigrateVault(
                 shareId = mode.shareId
             )
 
-            is Mode.MigrateSelectedItems -> MigrateSharedWarningEvent.OnMigrated(
-                migrateModeValue = migrateModeValue,
+            is Mode.MigrateSelectedItems -> MigrateSharedWarningEvent.OnMigrateItems(
                 filter = mode.filter
             )
         }.also { event ->

@@ -22,26 +22,39 @@ import androidx.compose.runtime.Stable
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
-sealed interface DeleteVaultEvent {
+internal sealed interface DeleteVaultEvent {
+
     data object Unknown : DeleteVaultEvent
+
     data object Deleted : DeleteVaultEvent
+
 }
 
 @Stable
-data class DeleteVaultUiState(
-    val vaultName: String,
-    val vaultText: String,
-    val event: DeleteVaultEvent,
-    val isButtonEnabled: IsButtonEnabled,
-    val isLoadingState: IsLoadingState
+internal data class DeleteVaultUiState(
+    internal val vaultName: String,
+    internal val vaultText: String,
+    internal val event: DeleteVaultEvent,
+    internal val isButtonEnabled: IsButtonEnabled,
+    internal val sharedItemsCount: Int,
+    private val isLoadingState: IsLoadingState
 ) {
-    companion object {
-        val Initial = DeleteVaultUiState(
+
+    internal val isLoading: Boolean = isLoadingState.value()
+
+    internal val showSharedItemsWarning: Boolean = sharedItemsCount > 0
+
+    internal companion object {
+
+        internal val Initial = DeleteVaultUiState(
             vaultName = "",
             vaultText = "",
             event = DeleteVaultEvent.Unknown,
             isButtonEnabled = IsButtonEnabled.Disabled,
-            isLoadingState = IsLoadingState.NotLoading
+            isLoadingState = IsLoadingState.NotLoading,
+            sharedItemsCount = 0
         )
+
     }
+
 }

@@ -19,17 +19,22 @@
 package proton.android.pass.di
 
 import android.content.Context
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
+import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.SessionManager
+import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.DefaultUserCheck
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.extension.hasSubscription
+import me.proton.core.user.domain.extension.isCredentialLess
+import proton.android.pass.PassActivityOrchestrator
 import proton.android.pass.R
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordListener
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordResult
-import proton.android.pass.PassActivityOrchestrator
 import proton.android.pass.log.api.PassLogger
 
 class PassScopeUserCheck(
@@ -38,12 +43,16 @@ class PassScopeUserCheck(
     private val authWithExtraPasswordListener: AuthWithExtraPasswordListener,
     private val passActivityOrchestrator: PassActivityOrchestrator,
     private val context: Context,
-    userManager: UserManager
+    private val userManager: UserManager
 ) : DefaultUserCheck(context, accountManager, userManager) {
     override suspend fun invoke(user: User): PostLoginAccountSetup.UserCheckResult =
         when (val superResult = super.invoke(user)) {
-            is PostLoginAccountSetup.UserCheckResult.Success ->
-                checkPassScope(user, authWithExtraPasswordListener)
+            is PostLoginAccountSetup.UserCheckResult.Success -> {
+                when (val passScopeResult = checkPassScope(user, authWithExtraPasswordListener)) {
+                    is PostLoginAccountSetup.UserCheckResult.Success -> performAdditionalChecks()
+                    else -> passScopeResult
+                }
+            }
 
             else -> superResult
         }
@@ -84,6 +93,26 @@ class PassScopeUserCheck(
             }
         }
     }
+
+    private suspend fun performAdditionalChecks(): PostLoginAccountSetup.UserCheckResult = when {
+        currentFreeUserCount() >= 1 -> PostLoginAccountSetup.UserCheckResult.Error(
+            context.getString(R.string.auth_only_1_proton_account_failed)
+        )
+        else -> PostLoginAccountSetup.UserCheckResult.Success
+    }
+
+    private suspend fun currentFreeUserCount(): Int = accountManager.getAccounts(AccountState.Ready).first()
+        .map { userManager.getUser(it.userId) }
+        .filterNot { it.isCredentialLess() }
+        .fold(0) { acc, user ->
+            val hasPassLifeTime = user.flags["pass-lifetime"] ?: false
+            val isPassFromSL = user.flags["pass-from-sl"] ?: false
+            if (!user.hasSubscription() && !hasPassLifeTime && !isPassFromSL) {
+                acc + 1
+            } else {
+                acc
+            }
+        }
 
     companion object {
         private const val TAG = "PassScopeUserCheck"

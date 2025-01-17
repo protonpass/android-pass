@@ -79,8 +79,8 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Lời mời</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Thành viên</string>
   <string name="share_manage_vault_current_user_indicator">Bạn</string>
-  <string name="share_role_can_view">Có thể xem</string>
-  <string name="share_role_can_edit">Cho phép chỉnh sửa</string>
+  <string name="share_role_viewer">Có thể xem</string>
+  <string name="share_role_editor">Cho phép chỉnh sửa</string>
   <string name="share_role_admin">Quản trị viên</string>
   <string name="share_role_owner">Chủ sở hữu</string>
   <string name="sharing_bottomsheet_transfer_ownership">Chuyển quyền sở hữu</string>

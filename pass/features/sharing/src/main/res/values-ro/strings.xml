@@ -87,8 +87,8 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Invitații</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Membri</string>
   <string name="share_manage_vault_current_user_indicator">Dvs.</string>
-  <string name="share_role_can_view">Poate vedea</string>
-  <string name="share_role_can_edit">Poate edita</string>
+  <string name="share_role_viewer">Poate vedea</string>
+  <string name="share_role_editor">Poate edita</string>
   <string name="share_role_admin">Administrator</string>
   <string name="share_role_owner">Proprietar</string>
   <string name="sharing_bottomsheet_transfer_ownership">Schimbare proprietar</string>

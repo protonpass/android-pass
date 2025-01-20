@@ -1729,6 +1729,8 @@ fun NavGraphBuilder.appGraph(
     migrateGraph(
         navigation = {
             when (it) {
+                MigrateNavigation.Close -> appNavigator.navigateBack()
+
                 is MigrateNavigation.VaultSelectedForMigrateItem -> dismissBottomSheet {
                     appNavigator.navigate(
                         destination = MigrateConfirmVault,

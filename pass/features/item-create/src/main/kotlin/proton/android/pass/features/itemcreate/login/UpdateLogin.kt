@@ -58,6 +58,7 @@ internal fun UpdateLogin(
     draftAlias: AliasItemFormState? = null,
     navTotpUri: String? = null,
     navTotpIndex: Int? = null,
+    canUseAttachments: Boolean,
     onNavigate: (BaseLoginNavigation) -> Unit,
     viewModel: UpdateLoginViewModel = hiltViewModel()
 ) {
@@ -120,6 +121,7 @@ internal fun UpdateLogin(
             selectedShareId = uiState.selectedShareId,
             topBarActionName = stringResource(id = R.string.action_save),
             showCreateAliasButton = true,
+            canUseAttachments = canUseAttachments,
             isUpdate = true,
             onEvent = {
                 when (it) {

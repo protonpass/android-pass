@@ -45,6 +45,7 @@ internal fun LoginContent(
     selectedShareId: ShareId?,
     topBarActionName: String,
     showCreateAliasButton: Boolean,
+    canUseAttachments: Boolean,
     isUpdate: Boolean,
     onEvent: (LoginContentEvent) -> Unit
 ) {
@@ -99,7 +100,7 @@ internal fun LoginContent(
             hasReachedAliasLimit = uiState.hasReachedAliasLimit,
             isUsernameSplitTooltipEnabled = uiState.isUsernameSplitTooltipEnabled,
             displayFileAttachmentsOnboarding = uiState.displayFileAttachmentsOnboarding,
-            isFileAttachmentsEnabled = uiState.isFileAttachmentsEnabled,
+            isFileAttachmentsEnabled = uiState.isFileAttachmentsEnabled && canUseAttachments,
             attachmentsState = uiState.attachmentsState,
             onEvent = onEvent
         )

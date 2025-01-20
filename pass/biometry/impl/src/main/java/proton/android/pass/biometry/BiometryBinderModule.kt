@@ -50,4 +50,7 @@ abstract class BiometryBinderModule {
 
     @Binds
     abstract fun bindStoreAuthOnStop(impl: ExtendAuthTimeImpl): ExtendAuthTime
+
+    @Binds
+    abstract fun bindAuthOverrideState(impl: AuthOverrideStateImpl): AuthOverrideState
 }

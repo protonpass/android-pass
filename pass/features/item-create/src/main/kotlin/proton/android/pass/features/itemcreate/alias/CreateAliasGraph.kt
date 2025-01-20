@@ -114,7 +114,7 @@ sealed interface CreateAliasNavigation {
     data class SelectVault(val shareId: ShareId) : CreateAliasNavigation
 }
 
-fun NavGraphBuilder.createAliasGraph(onNavigate: (CreateAliasNavigation) -> Unit) {
+fun NavGraphBuilder.createAliasGraph(canUseAttachments: Boolean, onNavigate: (CreateAliasNavigation) -> Unit) {
     composable(CreateAlias) { navBackStack ->
         val selectVault by navBackStack.savedStateHandle
             .getStateFlow<String?>(KEY_VAULT_SELECTED, null)
@@ -122,6 +122,7 @@ fun NavGraphBuilder.createAliasGraph(onNavigate: (CreateAliasNavigation) -> Unit
 
         CreateAliasScreen(
             selectVault = selectVault.toOption().map { ShareId(it) }.value(),
+            canUseAttachments = canUseAttachments,
             onNavigate = onNavigate
         )
     }

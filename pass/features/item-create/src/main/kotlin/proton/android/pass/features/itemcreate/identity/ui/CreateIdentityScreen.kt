@@ -62,6 +62,7 @@ import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardH
 fun CreateIdentityScreen(
     modifier: Modifier = Modifier,
     selectVault: ShareId?,
+    canUseAttachments: Boolean,
     viewModel: CreateIdentityViewModel = hiltViewModel(),
     onNavigate: (BaseIdentityNavigation) -> Unit
 ) {
@@ -93,6 +94,7 @@ fun CreateIdentityScreen(
         IdentityContent(
             identityItemFormState = viewModel.getFormState(),
             identityUiState = state,
+            canUseAttachments = canUseAttachments,
             topBarActionName = stringResource(id = R.string.title_create),
             onEvent = {
                 when (it) {

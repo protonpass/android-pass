@@ -69,6 +69,7 @@ fun IdentityItemForm(
     modifier: Modifier,
     identityItemFormState: IdentityItemFormState,
     identityUiState: IdentityUiState,
+    canUseAttachments: Boolean,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     val isGroupCollapsed = rememberSaveable(saver = isCollapsedSaver()) {
@@ -211,7 +212,7 @@ fun IdentityItemForm(
             )
         }
 
-        if (identityUiState.showFileAttachments()) {
+        if (identityUiState.showFileAttachments() && canUseAttachments) {
             AttachmentSection(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
                 attachmentsState = identityUiState.getAttachmentsState(),

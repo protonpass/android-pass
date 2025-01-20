@@ -55,6 +55,7 @@ import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardH
 fun CreateAliasScreen(
     modifier: Modifier = Modifier,
     selectVault: ShareId?,
+    canUseAttachments: Boolean,
     onNavigate: (CreateAliasNavigation) -> Unit,
     viewModel: CreateAliasViewModel = hiltViewModel()
 ) {
@@ -119,6 +120,7 @@ fun CreateAliasScreen(
             topBarActionName = stringResource(id = R.string.title_create),
             isCreateMode = true,
             isAliasCreatedByUser = true,
+            canUseAttachments = canUseAttachments,
             isEditAllowed = uiState.baseAliasUiState.isLoadingState == IsLoadingState.NotLoading,
             onEvent = { event ->
                 when (event) {

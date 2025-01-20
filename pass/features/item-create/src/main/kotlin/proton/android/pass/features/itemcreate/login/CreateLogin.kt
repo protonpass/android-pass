@@ -60,6 +60,7 @@ fun CreateLoginScreen(
     showCreateAliasButton: Boolean = true,
     clearAlias: Boolean,
     selectVault: ShareId?,
+    canUseAttachments: Boolean,
     onNavigate: (BaseLoginNavigation) -> Unit,
     viewModel: CreateLoginViewModel = hiltViewModel()
 ) {
@@ -126,6 +127,7 @@ fun CreateLoginScreen(
             selectedShareId = selectedVault?.vault?.shareId,
             topBarActionName = stringResource(id = R.string.title_create),
             showCreateAliasButton = showCreateAliasButton,
+            canUseAttachments = canUseAttachments,
             isUpdate = false,
             onEvent = {
                 when (it) {

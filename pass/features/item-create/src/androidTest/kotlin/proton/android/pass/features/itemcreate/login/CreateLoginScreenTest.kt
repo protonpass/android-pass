@@ -178,15 +178,16 @@ class CreateLoginScreenTest {
             setContent {
                 PassTheme(isDark = true) {
                     CreateLoginScreen(
-                        selectVault = null,
                         clearAlias = false,
+                        selectVault = null,
                         onNavigate = {
                             if (it is BaseLoginNavigation.OnCreateLoginEvent &&
                                 it.event is CreateLoginNavigation.LoginCreated
                             ) {
                                 checker.call()
                             }
-                        }
+                        },
+                        canUseAttachments = canUseAttachments
                     )
                 }
             }
@@ -305,15 +306,16 @@ class CreateLoginScreenTest {
             setContent {
                 PassTheme(isDark = true) {
                     CreateLoginScreen(
-                        selectVault = null,
                         clearAlias = false,
+                        selectVault = null,
                         onNavigate = {
                             if (it is BaseLoginNavigation.OnCreateLoginEvent &&
                                 it.event is CreateLoginNavigation.LoginCreated
                             ) {
                                 checker.call()
                             }
-                        }
+                        },
+                        canUseAttachments = canUseAttachments
                     )
                 }
             }
@@ -383,7 +385,8 @@ class CreateLoginScreenTest {
                             if (it is BaseLoginNavigation.CreateAlias) {
                                 checker.call()
                             }
-                        }
+                        },
+                        canUseAttachments = canUseAttachments
                     )
                 }
             }
@@ -410,7 +413,8 @@ class CreateLoginScreenTest {
                     CreateLoginScreen(
                         clearAlias = false,
                         selectVault = null,
-                        onNavigate = {}
+                        onNavigate = {},
+                        canUseAttachments = canUseAttachments
                     )
                 }
             }
@@ -438,7 +442,8 @@ class CreateLoginScreenTest {
                     CreateLoginScreen(
                         clearAlias = false,
                         selectVault = null,
-                        onNavigate = {}
+                        onNavigate = {},
+                        canUseAttachments = canUseAttachments
                     )
                 }
             }
@@ -467,7 +472,8 @@ class CreateLoginScreenTest {
                             if (it == BaseLoginNavigation.CloseScreen) {
                                 checker.call()
                             }
-                        }
+                        },
+                        canUseAttachments = canUseAttachments
                     )
                 }
             }
@@ -497,7 +503,8 @@ class CreateLoginScreenTest {
                             if (it == BaseLoginNavigation.Upgrade) {
                                 checker.call()
                             }
-                        }
+                        },
+                        canUseAttachments = canUseAttachments
                     )
                 }
             }
@@ -525,7 +532,8 @@ class CreateLoginScreenTest {
                             if (it == BaseLoginNavigation.AddCustomField) {
                                 checker.call()
                             }
-                        }
+                        },
+                        canUseAttachments = canUseAttachments
                     )
                 }
             }
@@ -564,15 +572,16 @@ class CreateLoginScreenTest {
             setContent {
                 PassTheme(isDark = true) {
                     CreateLoginScreen(
-                        selectVault = null,
                         clearAlias = false,
+                        selectVault = null,
                         onNavigate = {
                             if (it is BaseLoginNavigation.OnCreateLoginEvent &&
                                 it.event is CreateLoginNavigation.LoginCreated
                             ) {
                                 checker.call()
                             }
-                        }
+                        },
+                        canUseAttachments = canUseAttachments
                     )
                 }
             }

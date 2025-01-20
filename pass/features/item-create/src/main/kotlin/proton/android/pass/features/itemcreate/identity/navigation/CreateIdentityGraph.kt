@@ -68,7 +68,7 @@ sealed interface CreateIdentityNavigation : BaseIdentityNavigation {
     value class SelectVault(val shareId: ShareId) : CreateIdentityNavigation
 }
 
-fun NavGraphBuilder.createIdentityGraph(onNavigate: (BaseIdentityNavigation) -> Unit) {
+fun NavGraphBuilder.createIdentityGraph(canUseAttachments: Boolean, onNavigate: (BaseIdentityNavigation) -> Unit) {
     navigation(
         route = CREATE_IDENTITY_GRAPH,
         startDestination = CreateIdentity.route
@@ -80,6 +80,7 @@ fun NavGraphBuilder.createIdentityGraph(onNavigate: (BaseIdentityNavigation) -> 
 
             CreateIdentityScreen(
                 selectVault = selectVault.toOption().map { ShareId(it) }.value(),
+                canUseAttachments = canUseAttachments,
                 onNavigate = onNavigate
             )
         }

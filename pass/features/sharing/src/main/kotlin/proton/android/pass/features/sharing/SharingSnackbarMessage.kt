@@ -38,8 +38,14 @@ enum class SharingSnackbarMessage(
     InviteSentSuccess(R.string.sharing_snackbar_invite_sent_success, SnackbarType.SUCCESS),
     InviteSentError(R.string.sharing_snackbar_invite_sent_error, SnackbarType.ERROR),
     GetMembersInfoError(R.string.sharing_snackbar_get_vault_members_error, SnackbarType.ERROR),
-    ChangeMemberPermissionSuccess(R.string.sharing_snackbar_change_permission_success, SnackbarType.NORM),
-    ChangeMemberPermissionError(R.string.sharing_snackbar_change_permission_error, SnackbarType.ERROR),
+    ChangeMemberPermissionSuccess(
+        R.string.sharing_snackbar_change_permission_success,
+        SnackbarType.NORM
+    ),
+    ChangeMemberPermissionError(
+        R.string.sharing_snackbar_change_permission_error,
+        SnackbarType.ERROR
+    ),
     RemoveMemberSuccess(R.string.sharing_snackbar_remove_member_success, SnackbarType.NORM),
     RemoveMemberError(R.string.sharing_snackbar_remove_member_error, SnackbarType.ERROR),
 
@@ -52,7 +58,10 @@ enum class SharingSnackbarMessage(
     ConfirmInviteSuccess(R.string.sharing_snackbar_confirm_invite_success, SnackbarType.NORM),
     ConfirmInviteError(R.string.sharing_snackbar_confirm_invite_error, SnackbarType.ERROR),
 
-    TransferOwnershipSuccess(R.string.sharing_snackbar_transfer_ownership_success, SnackbarType.NORM),
+    TransferOwnershipSuccess(
+        R.string.sharing_snackbar_transfer_ownership_success,
+        SnackbarType.NORM
+    ),
     TransferOwnershipError(R.string.sharing_snackbar_transfer_ownership_error, SnackbarType.ERROR),
 
     FetchMembersError(
@@ -61,6 +70,10 @@ enum class SharingSnackbarMessage(
     ),
     FetchPendingInvitesError(
         id = R.string.sharing_snackbar_fetch_pending_invites_error,
+        type = SnackbarType.ERROR
+    ),
+    NewUsersInviteError(
+        id = R.string.sharing_snackbar_invite_new_users_error,
         type = SnackbarType.ERROR
     )
 }

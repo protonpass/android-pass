@@ -128,12 +128,14 @@ private fun ItemTopBarActions(
         )
 
         if (isItemSharingEnabled) {
-            PassSharingShareIcon(
-                shareSharedCount = shareSharedCount,
-                itemCategory = itemCategory,
-                isEnabled = actions.canShare.value,
-                onClick = onShareClick
-            )
+            if (itemCategory != ItemCategory.Alias) {
+                PassSharingShareIcon(
+                    shareSharedCount = shareSharedCount,
+                    itemCategory = itemCategory,
+                    isEnabled = actions.canShare.value,
+                    onClick = onShareClick
+                )
+            }
         } else {
             ItemDetailShareButton(
                 isEnabled = actions.canShare.value,

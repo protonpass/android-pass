@@ -139,7 +139,7 @@ class UpdateIdentityViewModel @Inject constructor(
     }
 
     override fun onCleared() {
-        identityActionsProvider.onClose()
+        identityActionsProvider.clearDraftData()
         super.onCleared()
     }
 

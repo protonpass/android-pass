@@ -414,7 +414,7 @@ class CreateLoginScreenTest {
                         clearAlias = false,
                         selectVault = null,
                         canUseAttachments = true,
-                        onNavigate = {},
+                        onNavigate = {}
                     )
                 }
             }

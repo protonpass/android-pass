@@ -46,7 +46,9 @@ internal fun HomeDrawerList(
     vaultSharesItemsCount: ImmutableMap<ShareId, ShareItemCount>,
     vaultSelectionOption: VaultSelectionOption,
     allItemsCount: Int,
+    hasSharedWithMeItems: Boolean,
     sharedWithMeItemsCount: Int,
+    hasSharedByMeItems: Boolean,
     sharedByMeItemsCount: Int,
     trashedItemsCount: Int,
     onUiEvent: (HomeDrawerUiEvent) -> Unit
@@ -110,44 +112,48 @@ internal fun HomeDrawerList(
             )
         }
 
-        item {
-            HomeDrawerRow(
-                shareIconRes = CoreR.drawable.ic_proton_user_arrow_left,
-                iconColor = PassTheme.colors.interactionNormMajor2,
-                iconBackgroundColor = PassTheme.colors.interactionNormMinor1,
-                name = stringResource(id = R.string.item_type_filter_items_shared_with_me),
-                itemsCount = sharedWithMeItemsCount,
-                isSelected = vaultSelectionOption is VaultSelectionOption.SharedWithMe,
-                onClick = {
-                    onUiEvent(HomeDrawerUiEvent.OnSharedWithMeClick)
-                }
-            )
+        if (hasSharedWithMeItems) {
+            item {
+                HomeDrawerRow(
+                    shareIconRes = CoreR.drawable.ic_proton_user_arrow_left,
+                    iconColor = PassTheme.colors.interactionNormMajor2,
+                    iconBackgroundColor = PassTheme.colors.interactionNormMinor1,
+                    name = stringResource(id = R.string.item_type_filter_items_shared_with_me),
+                    itemsCount = sharedWithMeItemsCount,
+                    isSelected = vaultSelectionOption is VaultSelectionOption.SharedWithMe,
+                    onClick = {
+                        onUiEvent(HomeDrawerUiEvent.OnSharedWithMeClick)
+                    }
+                )
+            }
+
+            item {
+                PassDivider(
+                    modifier = Modifier.padding(horizontal = Spacing.medium)
+                )
+            }
         }
 
-        item {
-            PassDivider(
-                modifier = Modifier.padding(horizontal = Spacing.medium)
-            )
-        }
+        if (hasSharedByMeItems) {
+            item {
+                HomeDrawerRow(
+                    shareIconRes = CoreR.drawable.ic_proton_user_arrow_right,
+                    iconColor = PassTheme.colors.interactionNormMajor2,
+                    iconBackgroundColor = PassTheme.colors.interactionNormMinor1,
+                    name = stringResource(id = R.string.item_type_filter_items_shared_by_me),
+                    itemsCount = sharedByMeItemsCount,
+                    isSelected = vaultSelectionOption is VaultSelectionOption.SharedByMe,
+                    onClick = {
+                        onUiEvent(HomeDrawerUiEvent.OnSharedByMeClick)
+                    }
+                )
+            }
 
-        item {
-            HomeDrawerRow(
-                shareIconRes = CoreR.drawable.ic_proton_user_arrow_right,
-                iconColor = PassTheme.colors.interactionNormMajor2,
-                iconBackgroundColor = PassTheme.colors.interactionNormMinor1,
-                name = stringResource(id = R.string.item_type_filter_items_shared_by_me),
-                itemsCount = sharedByMeItemsCount,
-                isSelected = vaultSelectionOption is VaultSelectionOption.SharedByMe,
-                onClick = {
-                    onUiEvent(HomeDrawerUiEvent.OnSharedByMeClick)
-                }
-            )
-        }
-
-        item {
-            PassDivider(
-                modifier = Modifier.padding(horizontal = Spacing.medium)
-            )
+            item {
+                PassDivider(
+                    modifier = Modifier.padding(horizontal = Spacing.medium)
+                )
+            }
         }
 
         item {

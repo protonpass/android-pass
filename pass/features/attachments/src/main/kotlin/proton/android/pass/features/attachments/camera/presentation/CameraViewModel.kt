@@ -69,16 +69,16 @@ class CameraViewModel @Inject constructor(
             val fileMetadata = metadataResolver.extractMetadata(uri) ?: FileMetadata.unknown(uri)
             val draftAttachment = DraftAttachment.Loading(fileMetadata)
             draftAttachmentRepository.add(draftAttachment)
+            eventFlow.update { CameraEvent.Close }
         }
-        eventFlow.update { CameraEvent.Close }
     }
 
     fun onCloseCamera(message: CameraSnackbarMessage? = null) {
         authOverrideState.setAuthOverride(false)
         viewModelScope.launch {
             message?.let { snackbarDispatcher(it) }
+            eventFlow.update { CameraEvent.Close }
         }
-        eventFlow.update { CameraEvent.Close }
     }
 
     fun onConsumeEvent(event: CameraEvent) {

@@ -25,9 +25,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.attachments.filepicker.navigation.FilePickerNavigation
+import proton.android.pass.features.attachments.filepicker.presentation.FilePickerEvent
 import proton.android.pass.features.attachments.filepicker.presentation.FilePickerSnackbarMessage.CouldNotOpenFilePicker
 import proton.android.pass.features.attachments.filepicker.presentation.FilePickerViewModel
 import proton.android.pass.log.api.PassLogger
@@ -40,19 +43,28 @@ fun FilePickerScreen(
 ) {
     val pickFile = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) {
         val uri: Uri = it ?: return@rememberLauncherForActivityResult run {
-            onNavigate(FilePickerNavigation.Close)
+            viewmodel.onCloseFilePicker()
         }
         viewmodel.onFilePicked(uri)
-        onNavigate(FilePickerNavigation.Close)
     }
+    val state by viewmodel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(state) {
+        when (state) {
+            FilePickerEvent.Close -> onNavigate(FilePickerNavigation.Close)
+            FilePickerEvent.Idle -> {}
+        }
+        viewmodel.onConsumeEvent(state)
+    }
+
     LaunchedEffect(Unit) {
         runCatching {
+            viewmodel.onOpenFilePicker()
             pickFile.launch("*/*")
         }.onFailure {
             PassLogger.w(TAG, it)
             PassLogger.w(TAG, "Error launching picker")
-            viewmodel.onFilePickerError(CouldNotOpenFilePicker)
-            onNavigate(FilePickerNavigation.Close)
+            viewmodel.onCloseFilePicker(CouldNotOpenFilePicker)
         }
     }
     Box(modifier.fillMaxSize()) // workaround to avoid size animation

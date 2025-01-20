@@ -170,13 +170,15 @@ private fun ItemDetailShareButton(
     isItemSharingEnabled: Boolean
 ) {
     if (isItemSharingEnabled) {
-        PassSharingShareIcon(
-            modifier = modifier,
-            itemCategory = itemCategory,
-            shareSharedCount = shareSharedCount,
-            isEnabled = isEnabled,
-            onClick = onShareClick
-        )
+        if (itemCategory != ItemCategory.Alias) {
+            PassSharingShareIcon(
+                modifier = modifier,
+                itemCategory = itemCategory,
+                shareSharedCount = shareSharedCount,
+                isEnabled = isEnabled,
+                onClick = onShareClick
+            )
+        }
     } else {
         CircleIconButton(
             modifier = modifier,

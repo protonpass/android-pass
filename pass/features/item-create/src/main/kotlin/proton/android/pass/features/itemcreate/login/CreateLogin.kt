@@ -92,7 +92,7 @@ fun CreateLoginScreen(
         if (uiState.baseLoginUiState.hasUserEditedContent) {
             showConfirmDialog = !showConfirmDialog
         } else {
-            viewModel.onClose()
+            viewModel.clearDraftData()
             actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.CloseScreen) }
         }
     }
@@ -286,7 +286,7 @@ fun CreateLoginScreen(
             },
             onConfirm = {
                 showConfirmDialog = false
-                viewModel.onClose()
+                viewModel.clearDraftData()
                 actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.CloseScreen) }
             }
         )
@@ -296,10 +296,12 @@ fun CreateLoginScreen(
         isItemSaved = uiState.baseLoginUiState.isItemSaved,
         selectedShareId = selectedVault?.vault?.shareId,
         onSuccess = { _, _, model ->
+            viewModel.clearDraftData()
             val event = CreateLoginNavigation.LoginCreated(model)
             actionAfterKeyboardHide = { onNavigate(OnCreateLoginEvent(event)) }
         },
         onPasskeyResponse = { response ->
+            viewModel.clearDraftData()
             val event = CreateLoginNavigation.LoginCreatedWithPasskey(response)
             actionAfterKeyboardHide = { onNavigate(OnCreateLoginEvent(event)) }
         }

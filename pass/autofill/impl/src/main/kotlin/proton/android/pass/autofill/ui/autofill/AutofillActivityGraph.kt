@@ -164,6 +164,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                     CreateItemBottomsheetNavItem,
                     CreateItemBottomsheetNavItem.createNavRoute(mode)
                 )
+
                 SelectItemNavigation.Cancel -> onNavigate(AutofillNavigation.Cancel)
                 is SelectItemNavigation.ItemSelected -> {
                     onEvent(AutofillEvent.AutofillItemSelected(it.item.toAutoFillItem()))
@@ -219,6 +220,8 @@ fun NavGraphBuilder.autofillActivityGraph(
                 .takeIf { !it.packageName.isBrowser() }
                 ?.let { PackageInfoUi(it) }
         ),
+        showCreateAliasButton = true,
+        canUseAttachments = false,
         onNavigate = {
             when (it) {
                 BaseLoginNavigation.CloseScreen -> appNavigator.navigateBack()
@@ -357,6 +360,7 @@ fun NavGraphBuilder.autofillActivityGraph(
         }
     )
     createAliasGraph(
+        canUseAttachments = false,
         onNavigate = {
             when (it) {
                 CreateAliasNavigation.CloseScreen -> appNavigator.navigateBack()
@@ -384,31 +388,35 @@ fun NavGraphBuilder.autofillActivityGraph(
             }
         }
     )
-    createCreditCardGraph {
-        when (it) {
-            BaseCreditCardNavigation.CloseScreen -> appNavigator.navigateBack()
-            is CreateCreditCardNavigation -> when (it) {
-                is CreateCreditCardNavigation.ItemCreated ->
-                    onEvent(AutofillEvent.AutofillItemSelected(it.itemUiModel.toAutoFillItem()))
+    createCreditCardGraph(
+        canUseAttachments = false,
+        onNavigate = {
+            when (it) {
+                BaseCreditCardNavigation.CloseScreen -> appNavigator.navigateBack()
+                is CreateCreditCardNavigation -> when (it) {
+                    is CreateCreditCardNavigation.ItemCreated ->
+                        onEvent(AutofillEvent.AutofillItemSelected(it.itemUiModel.toAutoFillItem()))
 
-                is CreateCreditCardNavigation.SelectVault -> appNavigator.navigate(
-                    destination = SelectVaultBottomsheet,
-                    route = SelectVaultBottomsheet.createNavRoute(it.shareId)
-                )
+                    is CreateCreditCardNavigation.SelectVault -> appNavigator.navigate(
+                        destination = SelectVaultBottomsheet,
+                        route = SelectVaultBottomsheet.createNavRoute(it.shareId)
+                    )
+                }
+
+                BaseCreditCardNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
+                is UpdateCreditCardNavigation -> {}
+
+                is BaseCreditCardNavigation.OpenAttachmentOptions,
+                is BaseCreditCardNavigation.OpenDraftAttachmentOptions,
+                is BaseCreditCardNavigation.DeleteAllAttachments,
+                is BaseCreditCardNavigation.UpsellAttachments,
+                BaseCreditCardNavigation.AddAttachment ->
+                    throw IllegalStateException("Cannot use attachment from autofill")
             }
-
-            BaseCreditCardNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
-            is UpdateCreditCardNavigation -> {}
-
-            is BaseCreditCardNavigation.OpenAttachmentOptions,
-            is BaseCreditCardNavigation.OpenDraftAttachmentOptions,
-            is BaseCreditCardNavigation.DeleteAllAttachments,
-            is BaseCreditCardNavigation.UpsellAttachments,
-            BaseCreditCardNavigation.AddAttachment ->
-                throw IllegalStateException("Cannot use attachment from autofill")
         }
-    }
+    )
     createIdentityGraph(
+        canUseAttachments = false,
         onNavigate = {
             when (it) {
                 BaseIdentityNavigation.CloseScreen -> appNavigator.navigateBack()

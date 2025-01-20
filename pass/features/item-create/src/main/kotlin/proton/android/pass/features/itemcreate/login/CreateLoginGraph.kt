@@ -76,7 +76,8 @@ object CreateLogin : NavItem(
 @Suppress("LongMethod")
 fun NavGraphBuilder.createLoginGraph(
     initialCreateLoginUiState: InitialCreateLoginUiState = InitialCreateLoginUiState(),
-    showCreateAliasButton: Boolean = true,
+    showCreateAliasButton: Boolean,
+    canUseAttachments: Boolean,
     onNavigate: (BaseLoginNavigation) -> Unit
 ) {
     navigation(
@@ -122,6 +123,7 @@ fun NavGraphBuilder.createLoginGraph(
                 clearAlias = clearAlias,
                 selectVault = selectVault.toOption().map { ShareId(it) }.value(),
                 showCreateAliasButton = showCreateAliasButton,
+                canUseAttachments = canUseAttachments,
                 onNavigate = onNavigate
             )
         }

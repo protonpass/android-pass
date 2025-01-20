@@ -54,6 +54,7 @@ internal fun AliasContent(
     isCreateMode: Boolean,
     isEditAllowed: Boolean,
     isAliasCreatedByUser: Boolean,
+    canUseAttachments: Boolean,
     onEvent: (AliasContentUiEvent) -> Unit
 ) {
     val scope = rememberCoroutineScope()
@@ -109,7 +110,7 @@ internal fun AliasContent(
             },
             onEvent = onEvent,
             isAliasManagementEnabled = uiState.isAliasManagementEnabled,
-            isFileAttachmentsEnabled = uiState.isFileAttachmentEnabled,
+            isFileAttachmentsEnabled = uiState.isFileAttachmentEnabled && canUseAttachments,
             displayFileAttachmentsOnboarding = uiState.displayFileAttachmentsOnboarding,
             attachmentsState = uiState.attachmentsState
         )

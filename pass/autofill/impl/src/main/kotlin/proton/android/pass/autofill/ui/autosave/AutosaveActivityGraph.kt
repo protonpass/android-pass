@@ -82,6 +82,7 @@ fun NavGraphBuilder.autosaveActivityGraph(
     createUpdateLoginGraph(
         initialCreateLoginUiState = getInitialState(arguments),
         showCreateAliasButton = false,
+        canUseAttachments = false,
         onNavigate = {
             when (it) {
                 BaseLoginNavigation.CloseScreen -> onNavigate(AutosaveNavigation.Cancel)

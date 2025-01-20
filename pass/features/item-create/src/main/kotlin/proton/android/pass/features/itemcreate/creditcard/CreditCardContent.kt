@@ -24,6 +24,7 @@ fun CreditCardContent(
     selectedShareId: ShareId?,
     selectedVault: Vault?,
     showVaultSelector: Boolean,
+    canUseAttachments: Boolean,
     onEvent: (CreditCardContentEvent) -> Unit
 ) {
     Scaffold(
@@ -56,7 +57,7 @@ fun CreditCardContent(
             creditCardItemFormState = creditCardItemFormState,
             enabled = !state.isLoading,
             validationErrors = state.validationErrors,
-            isFileAttachmentsEnabled = state.isFileAttachmentsEnabled,
+            isFileAttachmentsEnabled = state.isFileAttachmentsEnabled && canUseAttachments,
             displayFileAttachmentsOnboarding = state.displayFileAttachmentsOnboarding,
             attachmentsState = state.attachmentsState,
             onEvent = onEvent

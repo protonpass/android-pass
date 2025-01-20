@@ -27,8 +27,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.toPersistentList
+import me.proton.core.util.kotlin.toInt
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
@@ -103,21 +104,25 @@ internal fun FilterBottomSheetContents(
         ).also(::add)
 
         if (isItemSharingAvailable) {
-            filterRow(
-                titleResId = R.string.item_type_filter_shared_with_me,
-                startIconResId = CoreR.drawable.ic_proton_user_arrow_left,
-                itemCount = summary.sharedWithMe,
-                isSelected = filterType == SearchFilterType.SharedWithMe,
-                onClick = { onSortingTypeSelected(SearchFilterType.SharedWithMe) }
-            ).also(::add)
+            if (summary.hasSharedWithMeItems) {
+                filterRow(
+                    titleResId = R.string.item_type_filter_shared_with_me,
+                    startIconResId = CoreR.drawable.ic_proton_user_arrow_left,
+                    itemCount = summary.sharedWithMe,
+                    isSelected = filterType == SearchFilterType.SharedWithMe,
+                    onClick = { onSortingTypeSelected(SearchFilterType.SharedWithMe) }
+                ).also(::add)
+            }
 
-            filterRow(
-                titleResId = R.string.item_type_filter_shared_by_me,
-                startIconResId = CoreR.drawable.ic_proton_user_arrow_right,
-                itemCount = summary.sharedByMe,
-                isSelected = filterType == SearchFilterType.SharedByMe,
-                onClick = { onSortingTypeSelected(SearchFilterType.SharedByMe) }
-            ).also(::add)
+            if (summary.hasSharedByMeItems) {
+                filterRow(
+                    titleResId = R.string.item_type_filter_shared_by_me,
+                    startIconResId = CoreR.drawable.ic_proton_user_arrow_right,
+                    itemCount = summary.sharedByMe,
+                    isSelected = filterType == SearchFilterType.SharedByMe,
+                    onClick = { onSortingTypeSelected(SearchFilterType.SharedByMe) }
+                ).also(::add)
+            }
         }
     }.let { items ->
         BottomSheetItemList(
@@ -172,7 +177,13 @@ private fun filterRow(
 }
 
 @[Preview Composable]
-internal fun FilterBottomSheetContentsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun FilterBottomSheetContentsPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    val (isDark, showSharedItems) = input
+
+    val sharedItemsCount = showSharedItems.toInt().toLong()
+
     PassTheme(isDark = isDark) {
         Surface {
             FilterBottomSheetContents(
@@ -186,8 +197,8 @@ internal fun FilterBottomSheetContentsPreview(@PreviewParameter(ThemePreviewProv
                         alias = 0,
                         creditCard = 0,
                         identities = 0,
-                        sharedWithMe = 0,
-                        sharedByMe = 0
+                        sharedWithMe = sharedItemsCount,
+                        sharedByMe = sharedItemsCount
                     ),
                     isItemSharingAvailable = true
                 ),

@@ -30,6 +30,10 @@ data class ItemCountSummary(
     val sharedByMe: Long
 ) {
 
+    val hasSharedWithMeItems: Boolean = sharedWithMe > 0
+
+    val hasSharedByMeItems: Boolean = sharedByMe > 0
+
     companion object {
 
         val Initial = ItemCountSummary(

@@ -27,6 +27,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.common.api.transpose
+import proton.android.pass.data.api.errors.NewUsersInviteError
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AddressPermission
 import proton.android.pass.data.api.repositories.ShareRepository
@@ -84,19 +85,28 @@ class InviteToItemImpl @Inject constructor(
         userId: UserId,
         inviteAddresses: List<AddressPermission>
     ): List<AddressPermission> = coroutineScope {
-        val addressPermissionToInviteMode: List<Pair<AddressPermission, InviteUserMode>> =
+        val inviteModeToInviteAddresses: Map<InviteUserMode, List<AddressPermission>> =
             inviteAddresses.map { addressPermission ->
                 async {
                     getInviteUserMode(userId, addressPermission.address).map { inviteUserMode ->
                         addressPermission to inviteUserMode
                     }
                 }
-            }.awaitAll().transpose().getOrThrow()
+            }
+                .awaitAll()
+                .transpose()
+                .getOrThrow()
+                .groupBy { (_, inviteUserMode) -> inviteUserMode }
+                .mapValues {
+                    it.value.map { (addressPermission, _) -> addressPermission }
+                }
 
         // NewUserInvites are not allowed for item invites
-        addressPermissionToInviteMode.mapNotNull { (addressPermission, inviteUserMode) ->
-            addressPermission.takeIf { inviteUserMode == InviteUserMode.ExistingUser }
+        inviteModeToInviteAddresses[InviteUserMode.NewUser]?.let { newUserAddresses ->
+            throw NewUsersInviteError(newUserAddresses)
         }
+
+        inviteModeToInviteAddresses[InviteUserMode.ExistingUser].orEmpty()
     }
 
     private suspend fun createExistingUserInvites(

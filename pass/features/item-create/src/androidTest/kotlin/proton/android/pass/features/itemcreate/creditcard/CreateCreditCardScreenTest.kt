@@ -147,7 +147,8 @@ class CreateCreditCardScreenTest {
                             if (it is CreateCreditCardNavigation.ItemCreated) {
                                 checker.call()
                             }
-                        }
+                        },
+                        canUseAttachments = canUseAttachments
                     )
                 }
             }
@@ -225,7 +226,8 @@ class CreateCreditCardScreenTest {
                 PassTheme(isDark = true) {
                     CreateCreditCardScreen(
                         selectVault = null,
-                        onNavigate = {}
+                        onNavigate = {},
+                        canUseAttachments = canUseAttachments
                     )
                 }
             }
@@ -248,7 +250,8 @@ class CreateCreditCardScreenTest {
                 PassTheme(isDark = true) {
                     CreateCreditCardScreen(
                         selectVault = null,
-                        onNavigate = {}
+                        onNavigate = {},
+                        canUseAttachments = canUseAttachments
                     )
                 }
             }
@@ -278,7 +281,8 @@ class CreateCreditCardScreenTest {
                 PassTheme(isDark = true) {
                     CreateCreditCardScreen(
                         selectVault = null,
-                        onNavigate = {}
+                        onNavigate = {},
+                        canUseAttachments = canUseAttachments
                     )
                 }
             }
@@ -312,7 +316,8 @@ class CreateCreditCardScreenTest {
                             if (it == BaseCreditCardNavigation.CloseScreen) {
                                 checker.call()
                             }
-                        }
+                        },
+                        canUseAttachments = canUseAttachments
                     )
                 }
             }
@@ -340,7 +345,8 @@ class CreateCreditCardScreenTest {
                             if (it == BaseCreditCardNavigation.Upgrade) {
                                 checker.call()
                             }
-                        }
+                        },
+                        canUseAttachments = canUseAttachments
                     )
                 }
             }

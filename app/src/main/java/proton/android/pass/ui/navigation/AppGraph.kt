@@ -782,6 +782,8 @@ fun NavGraphBuilder.appGraph(
         }
     )
     createUpdateLoginGraph(
+        showCreateAliasButton = true,
+        canUseAttachments = true,
         onNavigate = {
             val backDestination = when {
                 appNavigator.hasDestinationInStack(CreateLogin) -> CreateLogin
@@ -1022,49 +1024,52 @@ fun NavGraphBuilder.appGraph(
             }
         }
     )
-    createCreditCardGraph {
-        when (it) {
-            BaseCreditCardNavigation.CloseScreen -> appNavigator.navigateBack()
-            is CreateCreditCardNavigation -> when (it) {
-                is CreateCreditCardNavigation.ItemCreated -> appNavigator.navigateBack()
-                is CreateCreditCardNavigation.SelectVault -> appNavigator.navigate(
-                    destination = SelectVaultBottomsheet,
-                    route = SelectVaultBottomsheet.createNavRoute(it.shareId)
-                )
-            }
-
-            BaseCreditCardNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
-            is UpdateCreditCardNavigation -> {}
-            BaseCreditCardNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
-            is BaseCreditCardNavigation.OpenAttachmentOptions ->
-                appNavigator.navigate(
-                    destination = AttachmentOptionsNavItem,
-                    route = AttachmentOptionsNavItem.createNavRoute(
-                        shareId = it.shareId,
-                        itemId = it.itemId,
-                        attachmentId = it.attachmentId
+    createCreditCardGraph(
+        canUseAttachments = true,
+        onNavigate = {
+            when (it) {
+                BaseCreditCardNavigation.CloseScreen -> appNavigator.navigateBack()
+                is CreateCreditCardNavigation -> when (it) {
+                    is CreateCreditCardNavigation.ItemCreated -> appNavigator.navigateBack()
+                    is CreateCreditCardNavigation.SelectVault -> appNavigator.navigate(
+                        destination = SelectVaultBottomsheet,
+                        route = SelectVaultBottomsheet.createNavRoute(it.shareId)
                     )
-                )
+                }
 
-            is BaseCreditCardNavigation.OpenDraftAttachmentOptions ->
-                appNavigator.navigate(
-                    destination = AttachmentOptionsNavItem,
-                    route = AttachmentOptionsNavItem.createNavRoute(it.uri)
-                )
+                BaseCreditCardNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+                is UpdateCreditCardNavigation -> {}
+                BaseCreditCardNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
+                is BaseCreditCardNavigation.OpenAttachmentOptions ->
+                    appNavigator.navigate(
+                        destination = AttachmentOptionsNavItem,
+                        route = AttachmentOptionsNavItem.createNavRoute(
+                            shareId = it.shareId,
+                            itemId = it.itemId,
+                            attachmentId = it.attachmentId
+                        )
+                    )
 
-            is BaseCreditCardNavigation.DeleteAllAttachments ->
-                appNavigator.navigate(
-                    destination = DeleteAllAttachmentsDialogNavItem,
-                    route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
-                )
+                is BaseCreditCardNavigation.OpenDraftAttachmentOptions ->
+                    appNavigator.navigate(
+                        destination = AttachmentOptionsNavItem,
+                        route = AttachmentOptionsNavItem.createNavRoute(it.uri)
+                    )
 
-            BaseCreditCardNavigation.UpsellAttachments ->
-                appNavigator.navigate(
-                    destination = UpsellNavItem,
-                    route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
-                )
+                is BaseCreditCardNavigation.DeleteAllAttachments ->
+                    appNavigator.navigate(
+                        destination = DeleteAllAttachmentsDialogNavItem,
+                        route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
+                    )
+
+                BaseCreditCardNavigation.UpsellAttachments ->
+                    appNavigator.navigate(
+                        destination = UpsellNavItem,
+                        route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
+                    )
+            }
         }
-    }
+    )
     updateCreditCardGraph {
         when (it) {
             BaseCreditCardNavigation.CloseScreen -> appNavigator.navigateBack()
@@ -1147,7 +1152,8 @@ fun NavGraphBuilder.appGraph(
                         route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
                     )
             }
-        }
+        },
+        canUseAttachments = false
     )
     updateAliasGraph(
         onNavigate = {

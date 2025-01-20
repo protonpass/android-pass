@@ -99,6 +99,7 @@ fun UpdateAlias(
             topBarActionName = stringResource(id = R.string.action_save),
             isCreateMode = false,
             isAliasCreatedByUser = uiState.canModify,
+            canUseAttachments = true,
             isEditAllowed = uiState.baseAliasUiState.isLoadingState == IsLoadingState.NotLoading,
             onEvent = {
                 when (it) {

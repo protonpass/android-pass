@@ -38,6 +38,7 @@ fun IdentityContent(
     identityItemFormState: IdentityItemFormState,
     topBarActionName: String,
     identityUiState: IdentityUiState,
+    canUseAttachments: Boolean,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     Scaffold(
@@ -72,6 +73,7 @@ fun IdentityContent(
             modifier = Modifier.padding(padding),
             identityItemFormState = identityItemFormState,
             identityUiState = identityUiState,
+            canUseAttachments = canUseAttachments,
             onEvent = onEvent
         )
     }

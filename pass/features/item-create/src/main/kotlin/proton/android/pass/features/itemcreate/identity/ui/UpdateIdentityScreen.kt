@@ -81,8 +81,9 @@ fun UpdateIdentityScreen(
     Box(modifier = modifier.fillMaxSize()) {
         IdentityContent(
             identityItemFormState = viewModel.getFormState(),
-            identityUiState = state,
             topBarActionName = stringResource(id = R.string.action_save),
+            identityUiState = state,
+            canUseAttachments = true,
             onEvent = {
                 when (it) {
                     is IdentityContentEvent.OnVaultSelect ->

@@ -38,7 +38,7 @@ sealed interface CreateCreditCardNavigation : BaseCreditCardNavigation {
     value class SelectVault(val shareId: ShareId) : CreateCreditCardNavigation
 }
 
-fun NavGraphBuilder.createCreditCardGraph(onNavigate: (BaseCreditCardNavigation) -> Unit) {
+fun NavGraphBuilder.createCreditCardGraph(canUseAttachments: Boolean, onNavigate: (BaseCreditCardNavigation) -> Unit) {
     composable(CreateCreditCard) { navBackStack ->
         val selectVault by navBackStack.savedStateHandle
             .getStateFlow<String?>(KEY_VAULT_SELECTED, null)
@@ -46,6 +46,7 @@ fun NavGraphBuilder.createCreditCardGraph(onNavigate: (BaseCreditCardNavigation)
 
         CreateCreditCardScreen(
             selectVault = selectVault.toOption().map { ShareId(it) }.value(),
+            canUseAttachments = canUseAttachments,
             onNavigate = onNavigate
         )
     }

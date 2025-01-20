@@ -75,6 +75,7 @@ fun UpdateCreditCardScreen(
                     selectedVault = null,
                     showVaultSelector = false,
                     selectedShareId = uiState.selectedShareId,
+                    canUseAttachments = true,
                     onEvent = {
                         when (it) {
                             is CreditCardContentEvent.OnCVVChange ->

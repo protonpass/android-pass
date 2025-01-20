@@ -46,6 +46,8 @@ internal data class HomeDrawerState(
                 .toInt()
     }
 
+    internal val hasSharedWithMeItems: Boolean = sharedWithMeItemsCount > 0
+
     internal val sharedByMeItemsCount: Int = when (itemCountSummaryOption) {
         None -> 0
         is Some ->
@@ -54,6 +56,8 @@ internal data class HomeDrawerState(
                 .sharedByMe
                 .toInt()
     }
+
+    internal val hasSharedByMeItems: Boolean = sharedByMeItemsCount > 0
 
     internal val allItemsCount: Int = vaultSharesItemsCounter
         .values

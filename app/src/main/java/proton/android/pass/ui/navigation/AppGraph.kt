@@ -1116,6 +1116,7 @@ fun NavGraphBuilder.appGraph(
         }
     }
     createAliasGraph(
+        canUseAttachments = true,
         onNavigate = {
             when (it) {
                 CreateAliasNavigation.CloseScreen -> appNavigator.navigateBack()
@@ -1152,8 +1153,7 @@ fun NavGraphBuilder.appGraph(
                         route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
                     )
             }
-        },
-        canUseAttachments = false
+        }
     )
     updateAliasGraph(
         onNavigate = {

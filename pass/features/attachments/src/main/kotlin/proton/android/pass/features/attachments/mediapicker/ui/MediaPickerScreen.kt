@@ -26,9 +26,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.attachments.mediapicker.navigation.MediaPickerNavigation
+import proton.android.pass.features.attachments.mediapicker.presentation.MediaPickerEvent
 import proton.android.pass.features.attachments.mediapicker.presentation.MediaPickerSnackbarMessage.CouldNotOpenMediaPicker
 import proton.android.pass.features.attachments.mediapicker.presentation.MediaPickerViewModel
 import proton.android.pass.log.api.PassLogger
@@ -41,19 +44,26 @@ fun MediaPickerScreen(
 ) {
     val pickMedia = rememberLauncherForActivityResult(PickVisualMedia()) {
         val uri: Uri = it ?: return@rememberLauncherForActivityResult run {
-            onNavigate(MediaPickerNavigation.Close)
+            viewmodel.onCloseMediaPicker()
         }
         viewmodel.onMediaPicked(uri)
-        onNavigate(MediaPickerNavigation.Close)
+    }
+    val state by viewmodel.state.collectAsStateWithLifecycle()
+    LaunchedEffect(state) {
+        when (state) {
+            MediaPickerEvent.Close -> onNavigate(MediaPickerNavigation.Close)
+            MediaPickerEvent.Idle -> {}
+        }
+        viewmodel.onConsumeEvent(state)
     }
     LaunchedEffect(Unit) {
         runCatching {
+            viewmodel.onOpenMediaPicker()
             pickMedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageAndVideo))
         }.onFailure {
             PassLogger.w(TAG, it)
             PassLogger.w(TAG, "Error launching picker")
-            viewmodel.onMediaPickerError(CouldNotOpenMediaPicker)
-            onNavigate(MediaPickerNavigation.Close)
+            viewmodel.onCloseMediaPicker(CouldNotOpenMediaPicker)
         }
     }
     Box(modifier.fillMaxSize()) // workaround to avoid size animation

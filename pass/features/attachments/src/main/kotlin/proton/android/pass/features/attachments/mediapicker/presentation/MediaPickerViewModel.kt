@@ -22,7 +22,12 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.biometry.AuthOverrideState
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.domain.attachments.DraftAttachment
@@ -35,17 +40,41 @@ import javax.inject.Inject
 class MediaPickerViewModel @Inject constructor(
     private val draftAttachmentRepository: DraftAttachmentRepository,
     private val metadataResolver: MetadataResolver,
-    private val snackbarDispatcher: SnackbarDispatcher
+    private val snackbarDispatcher: SnackbarDispatcher,
+    private val authOverrideState: AuthOverrideState
 ) : ViewModel() {
 
-    fun onMediaPicked(contentUri: Uri) = viewModelScope.launch {
-        val uri = URI.create(contentUri.toString())
-        val fileMetadata = metadataResolver.extractMetadata(uri) ?: FileMetadata.unknown(uri)
-        val draftAttachment = DraftAttachment.Loading(fileMetadata)
-        draftAttachmentRepository.add(draftAttachment)
+    private val eventFlow = MutableStateFlow<MediaPickerEvent>(MediaPickerEvent.Idle)
+    val state = eventFlow.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = MediaPickerEvent.Idle
+    )
+
+    fun onMediaPicked(contentUri: Uri) {
+        authOverrideState.setAuthOverride(false)
+        viewModelScope.launch {
+            val uri = URI.create(contentUri.toString())
+            val fileMetadata = metadataResolver.extractMetadata(uri) ?: FileMetadata.unknown(uri)
+            val draftAttachment = DraftAttachment.Loading(fileMetadata)
+            draftAttachmentRepository.add(draftAttachment)
+            eventFlow.update { MediaPickerEvent.Close }
+        }
     }
 
-    fun onMediaPickerError(message: MediaPickerSnackbarMessage) = viewModelScope.launch {
-        snackbarDispatcher(message)
+    fun onCloseMediaPicker(message: MediaPickerSnackbarMessage? = null) {
+        authOverrideState.setAuthOverride(false)
+        viewModelScope.launch {
+            message?.let { snackbarDispatcher(it) }
+            eventFlow.update { MediaPickerEvent.Close }
+        }
+    }
+
+    fun onConsumeEvent(event: MediaPickerEvent) {
+        eventFlow.compareAndSet(event, MediaPickerEvent.Idle)
+    }
+
+    fun onOpenMediaPicker() {
+        authOverrideState.setAuthOverride(true)
     }
 }

@@ -60,7 +60,7 @@ interface IdentityFormActions {
     fun onRenameCustomField(value: CustomFieldIndexTitle, customExtraField: CustomExtraField)
     fun getFormState(): IdentityItemFormState
     fun isFormStateValid(): Boolean
-    fun onClose()
+    fun clearDraftData()
     fun onCustomFieldFocusChange(
         index: Int,
         focused: Boolean,

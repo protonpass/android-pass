@@ -84,7 +84,7 @@ fun CreateIdentityScreen(
         if (state.hasUserEdited) {
             showConfirmDialog = !showConfirmDialog
         } else {
-            viewModel.onClose()
+            viewModel.clearDraftData()
             actionAfterKeyboardHide = { onNavigate(BaseIdentityNavigation.CloseScreen) }
         }
     }
@@ -215,6 +215,7 @@ fun CreateIdentityScreen(
         isItemSaved = state.getItemSavedState(),
         selectedShareId = state.getSelectedVault().value()?.shareId,
         onSuccess = { _, _, model ->
+            viewModel.clearDraftData()
             actionAfterKeyboardHide =
                 { onNavigate(CreateIdentityNavigation.ItemCreated(model)) }
         }

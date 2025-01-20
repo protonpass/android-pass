@@ -22,7 +22,12 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.biometry.AuthOverrideState
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.domain.attachments.DraftAttachment
@@ -38,24 +43,45 @@ class CameraViewModel @Inject constructor(
     private val fileUriGenerator: FileUriGenerator,
     private val metadataResolver: MetadataResolver,
     private val draftAttachmentRepository: DraftAttachmentRepository,
-    private val snackbarDispatcher: SnackbarDispatcher
+    private val snackbarDispatcher: SnackbarDispatcher,
+    private val authOverrideState: AuthOverrideState
 ) : ViewModel() {
 
+    private val eventFlow = MutableStateFlow<CameraEvent>(CameraEvent.Idle)
+    val state = eventFlow.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = CameraEvent.Idle
+    )
+
     fun createTempUri(onUriGenerated: (Uri) -> Unit) {
+        authOverrideState.setAuthOverride(true)
         viewModelScope.launch {
             val uri = fileUriGenerator.generate(FileType.CameraCache)
             onUriGenerated(Uri.parse(uri.toString()))
         }
     }
 
-    fun onPhotoTaken(contentUri: Uri) = viewModelScope.launch {
-        val uri = URI.create(contentUri.toString())
-        val fileMetadata = metadataResolver.extractMetadata(uri) ?: FileMetadata.unknown(uri)
-        val draftAttachment = DraftAttachment.Loading(fileMetadata)
-        draftAttachmentRepository.add(draftAttachment)
+    fun onPhotoTaken(contentUri: Uri) {
+        authOverrideState.setAuthOverride(false)
+        viewModelScope.launch {
+            val uri = URI.create(contentUri.toString())
+            val fileMetadata = metadataResolver.extractMetadata(uri) ?: FileMetadata.unknown(uri)
+            val draftAttachment = DraftAttachment.Loading(fileMetadata)
+            draftAttachmentRepository.add(draftAttachment)
+        }
+        eventFlow.update { CameraEvent.Close }
     }
 
-    fun onCameraError(message: CameraSnackbarMessage) = viewModelScope.launch {
-        snackbarDispatcher(message)
+    fun onCloseCamera(message: CameraSnackbarMessage? = null) {
+        authOverrideState.setAuthOverride(false)
+        viewModelScope.launch {
+            message?.let { snackbarDispatcher(it) }
+        }
+        eventFlow.update { CameraEvent.Close }
+    }
+
+    fun onConsumeEvent(event: CameraEvent) {
+        eventFlow.compareAndSet(event, CameraEvent.Idle)
     }
 }

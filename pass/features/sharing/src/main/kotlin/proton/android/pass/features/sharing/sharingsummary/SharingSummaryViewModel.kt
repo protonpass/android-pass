@@ -42,6 +42,7 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.errors.NewUsersInviteError
 import proton.android.pass.data.api.repositories.AddressPermission
 import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -152,7 +153,14 @@ class SharingSummaryViewModel @Inject constructor(
             }.onFailure { error ->
                 PassLogger.w(TAG, "Error sending item invite")
                 PassLogger.w(TAG, error)
-                snackbarDispatcher(SharingSnackbarMessage.InviteSentError)
+
+                if (error is NewUsersInviteError) {
+                    SharingSnackbarMessage.NewUsersInviteError
+                } else {
+                    SharingSnackbarMessage.InviteSentError
+                }.also { snackbarErrorMessage ->
+                    snackbarDispatcher(snackbarErrorMessage)
+                }
             }.onSuccess {
                 bulkInviteRepository.clear()
                 snackbarDispatcher(SharingSnackbarMessage.InviteSentSuccess)

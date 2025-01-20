@@ -76,7 +76,7 @@ internal fun UpdateLogin(
         if (uiState.baseLoginUiState.hasUserEditedContent) {
             showConfirmDialog = !showConfirmDialog
         } else {
-            viewModel.onClose()
+            viewModel.clearDraftData()
             actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.CloseScreen) }
         }
     }
@@ -283,7 +283,7 @@ internal fun UpdateLogin(
             },
             onConfirm = {
                 showConfirmDialog = false
-                viewModel.onClose()
+                viewModel.clearDraftData()
                 actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.CloseScreen) }
             }
         )
@@ -305,6 +305,7 @@ internal fun UpdateLogin(
         isItemSaved = uiState.baseLoginUiState.isItemSaved,
         selectedShareId = uiState.selectedShareId,
         onSuccess = { shareId, itemId, _ ->
+            viewModel.clearDraftData()
             val event = UpdateLoginNavigation.LoginUpdated(shareId, itemId)
             actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.OnUpdateLoginEvent(event)) }
         }

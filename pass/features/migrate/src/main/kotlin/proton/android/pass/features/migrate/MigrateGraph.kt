@@ -38,6 +38,8 @@ import proton.android.pass.navigation.api.toPath
 
 sealed interface MigrateNavigation {
 
+    data object Close : MigrateNavigation
+
     data class VaultSelectedForMigrateItem(
         val destShareId: ShareId
     ) : MigrateNavigation

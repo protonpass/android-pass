@@ -397,7 +397,7 @@ abstract class BaseLoginViewModel(
         }
     }
 
-    internal fun onClose() {
+    internal fun clearDraftData() {
         draftRepository.delete<AliasItemFormState>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
         draftRepository.delete<CustomFieldContent>(DRAFT_CUSTOM_FIELD_KEY)
         attachmentsHandler.onClearAttachments()

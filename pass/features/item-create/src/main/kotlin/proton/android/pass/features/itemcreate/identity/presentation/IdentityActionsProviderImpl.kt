@@ -515,7 +515,7 @@ class IdentityActionsProviderImpl @Inject constructor(
         return true
     }
 
-    override fun onClose() {
+    override fun clearDraftData() {
         identityFieldDraftRepository.clearAddedFields()
         attachmentsHandler.onClearAttachments()
     }

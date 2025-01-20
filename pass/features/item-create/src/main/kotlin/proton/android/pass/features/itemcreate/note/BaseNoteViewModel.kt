@@ -151,7 +151,7 @@ abstract class BaseNoteViewModel(
         }
     }
 
-    internal fun onClose() {
+    internal fun clearDraftData() {
         attachmentsHandler.onClearAttachments()
     }
 

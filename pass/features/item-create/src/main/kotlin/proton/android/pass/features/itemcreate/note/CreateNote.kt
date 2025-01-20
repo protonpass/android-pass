@@ -78,7 +78,7 @@ fun CreateNoteScreen(
         if (uiState.baseNoteUiState.hasUserEditedContent) {
             showConfirmDialog = !showConfirmDialog
         } else {
-            viewModel.onClose()
+            viewModel.clearDraftData()
             actionAfterKeyboardHide = { onNavigate(CreateNoteNavigation.CloseScreen) }
         }
     }
@@ -180,6 +180,7 @@ fun CreateNoteScreen(
         isItemSaved = uiState.baseNoteUiState.itemSavedState,
         selectedShareId = selectedVault?.vault?.shareId,
         onSuccess = { _, _, _ ->
+            viewModel.clearDraftData()
             actionAfterKeyboardHide = { onNavigate(CreateNoteNavigation.NoteCreated) }
         }
     )

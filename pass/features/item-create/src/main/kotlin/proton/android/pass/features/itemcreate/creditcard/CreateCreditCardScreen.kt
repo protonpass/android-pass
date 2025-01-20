@@ -70,7 +70,7 @@ fun CreateCreditCardScreen(
                 if (uiState.baseState.hasUserEditedContent) {
                     showConfirmDialog = !showConfirmDialog
                 } else {
-                    viewModel.onClose()
+                    viewModel.clearDraftData()
                     actionAfterKeyboardHide = { onNavigate(CloseScreen) }
                 }
             }
@@ -195,6 +195,7 @@ fun CreateCreditCardScreen(
                 isItemSaved = uiState.baseState.isItemSaved,
                 selectedShareId = selectedVault?.vault?.shareId,
                 onSuccess = { _, _, model ->
+                    viewModel.clearDraftData()
                     actionAfterKeyboardHide =
                         { onNavigate(CreateCreditCardNavigation.ItemCreated(model)) }
                 }

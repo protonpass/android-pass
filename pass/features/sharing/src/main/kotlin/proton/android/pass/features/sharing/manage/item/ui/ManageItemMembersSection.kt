@@ -51,7 +51,7 @@ internal fun ManageItemMembersSection(
     ) {
         Text.Body3Regular(
             modifier = Modifier.padding(bottom = Spacing.small),
-            text = "$sectionTitle (${members.size})",
+            text = sectionTitle,
             color = PassTheme.colors.textWeak
         )
 

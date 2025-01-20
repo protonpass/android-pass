@@ -295,4 +295,14 @@
         <item quantity="one">%d shared item</item>
         <item quantity="other">%d shared items</item>
     </plurals>
+
+    <plurals name="users_count">
+        <item quantity="one">%d user</item>
+        <item quantity="other">%d users</item>
+    </plurals>
+
+    <plurals name="members_count">
+        <item quantity="one">%d member</item>
+        <item quantity="other">%d members</item>
+    </plurals>
 </resources>

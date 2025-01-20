@@ -148,7 +148,7 @@ class CreateCreditCardScreenTest {
                                 checker.call()
                             }
                         },
-                        canUseAttachments = canUseAttachments
+                        canUseAttachments = true
                     )
                 }
             }
@@ -227,7 +227,7 @@ class CreateCreditCardScreenTest {
                     CreateCreditCardScreen(
                         selectVault = null,
                         onNavigate = {},
-                        canUseAttachments = canUseAttachments
+                        canUseAttachments = true
                     )
                 }
             }
@@ -251,7 +251,7 @@ class CreateCreditCardScreenTest {
                     CreateCreditCardScreen(
                         selectVault = null,
                         onNavigate = {},
-                        canUseAttachments = canUseAttachments
+                        canUseAttachments = true
                     )
                 }
             }
@@ -281,8 +281,8 @@ class CreateCreditCardScreenTest {
                 PassTheme(isDark = true) {
                     CreateCreditCardScreen(
                         selectVault = null,
-                        onNavigate = {},
-                        canUseAttachments = canUseAttachments
+                        canUseAttachments = true,
+                        onNavigate = {}
                     )
                 }
             }
@@ -317,7 +317,7 @@ class CreateCreditCardScreenTest {
                                 checker.call()
                             }
                         },
-                        canUseAttachments = canUseAttachments
+                        canUseAttachments = true
                     )
                 }
             }
@@ -346,7 +346,7 @@ class CreateCreditCardScreenTest {
                                 checker.call()
                             }
                         },
-                        canUseAttachments = canUseAttachments
+                        canUseAttachments = true
                     )
                 }
             }

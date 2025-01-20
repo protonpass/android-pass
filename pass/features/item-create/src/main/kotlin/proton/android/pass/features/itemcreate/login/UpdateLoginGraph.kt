@@ -49,7 +49,7 @@ object EditLogin : NavItem(
 }
 
 @Suppress("LongParameterList", "LongMethod")
-fun NavGraphBuilder.updateLoginGraph(onNavigate: (BaseLoginNavigation) -> Unit) {
+fun NavGraphBuilder.updateLoginGraph(canUseAttachments: Boolean, onNavigate: (BaseLoginNavigation) -> Unit) {
     navigation(
         route = EDIT_LOGIN_GRAPH,
         startDestination = EditLogin.route
@@ -83,6 +83,7 @@ fun NavGraphBuilder.updateLoginGraph(onNavigate: (BaseLoginNavigation) -> Unit) 
                 clearAlias = clearAlias,
                 navTotpUri = navTotpUri,
                 navTotpIndex = navTotpIndex,
+                canUseAttachments = canUseAttachments,
                 onNavigate = onNavigate
             )
         }

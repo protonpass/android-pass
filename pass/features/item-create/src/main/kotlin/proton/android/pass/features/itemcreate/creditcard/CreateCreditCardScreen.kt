@@ -38,6 +38,7 @@ import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardH
 fun CreateCreditCardScreen(
     modifier: Modifier = Modifier,
     selectVault: ShareId?,
+    canUseAttachments: Boolean,
     viewModel: CreateCreditCardViewModel = hiltViewModel(),
     onNavigate: (BaseCreditCardNavigation) -> Unit
 ) {
@@ -97,6 +98,7 @@ fun CreateCreditCardScreen(
                     selectedVault = selectedVault?.vault,
                     showVaultSelector = showVaultSelector,
                     selectedShareId = selectedVault?.vault?.shareId,
+                    canUseAttachments = canUseAttachments,
                     topBarActionName = stringResource(id = R.string.title_create),
                     onEvent = {
                         when (it) {

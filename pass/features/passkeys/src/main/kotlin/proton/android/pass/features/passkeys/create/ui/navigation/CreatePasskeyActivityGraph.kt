@@ -144,6 +144,8 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
 
     createUpdateLoginGraph(
         initialCreateLoginUiState = navState.createLoginUiState,
+        showCreateAliasButton = true,
+        canUseAttachments = false,
         onNavigate = {
             when (it) {
                 BaseLoginNavigation.CloseScreen -> appNavigator.navigateBack()
@@ -284,6 +286,7 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
     )
 
     createAliasGraph(
+        canUseAttachments = false,
         onNavigate = {
             when (it) {
                 CreateAliasNavigation.CloseScreen -> appNavigator.navigateBack()

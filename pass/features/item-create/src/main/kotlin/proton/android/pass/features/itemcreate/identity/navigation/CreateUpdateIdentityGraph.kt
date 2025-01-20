@@ -21,6 +21,9 @@ package proton.android.pass.features.itemcreate.identity.navigation
 import androidx.navigation.NavGraphBuilder
 
 fun NavGraphBuilder.createUpdateIdentityGraph(onNavigate: (BaseIdentityNavigation) -> Unit) {
-    createIdentityGraph(onNavigate)
+    createIdentityGraph(
+        canUseAttachments = true,
+        onNavigate = onNavigate
+    )
     updateIdentityGraph(onNavigate)
 }

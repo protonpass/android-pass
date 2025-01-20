@@ -149,7 +149,8 @@ class CreateAliasScreenTest {
                             if (it is CreateAliasNavigation.Created) {
                                 checker.call()
                             }
-                        }
+                        },
+                        canUseAttachments = canUseAttachments
                     )
                 }
             }
@@ -204,7 +205,8 @@ class CreateAliasScreenTest {
                 PassTheme(isDark = true) {
                     CreateAliasScreen(
                         selectVault = null,
-                        onNavigate = {}
+                        onNavigate = {},
+                        canUseAttachments = canUseAttachments
                     )
                 }
             }
@@ -232,7 +234,8 @@ class CreateAliasScreenTest {
                             if (it == CreateAliasNavigation.CloseScreen) {
                                 checker.call()
                             }
-                        }
+                        },
+                        canUseAttachments = canUseAttachments
                     )
                 }
             }

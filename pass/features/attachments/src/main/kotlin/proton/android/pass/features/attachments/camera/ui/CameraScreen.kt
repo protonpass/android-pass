@@ -19,7 +19,6 @@
 package proton.android.pass.features.attachments.camera.ui
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
@@ -44,6 +43,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
@@ -55,6 +55,7 @@ import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.attachments.R
 import proton.android.pass.features.attachments.camera.navigation.CameraNavigation
+import proton.android.pass.features.attachments.camera.presentation.CameraEvent
 import proton.android.pass.features.attachments.camera.presentation.CameraSnackbarMessage.CouldNotOpenCamera
 import proton.android.pass.features.attachments.camera.presentation.CameraViewModel
 import proton.android.pass.log.api.PassLogger
@@ -66,7 +67,7 @@ fun CameraScreen(
     onNavigate: (CameraNavigation) -> Unit,
     viewmodel: CameraViewModel = hiltViewModel()
 ) {
-    val activity = LocalContext.current as Activity
+    val context = LocalContext.current
     var openCameraLauncher by remember { mutableStateOf(false) }
     var showRationale by remember { mutableStateOf(false) }
     val cameraPermissionState: PermissionState = rememberPermissionState(Manifest.permission.CAMERA)
@@ -76,8 +77,17 @@ fun CameraScreen(
         if (isGranted) {
             openCameraLauncher = true
         } else {
-            onNavigate(CameraNavigation.Close)
+            viewmodel.onCloseCamera()
         }
+    }
+    val state by viewmodel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(state) {
+        when (state) {
+            CameraEvent.Close -> onNavigate(CameraNavigation.Close)
+            CameraEvent.Idle -> {}
+        }
+        viewmodel.onConsumeEvent(state)
     }
 
     LaunchedEffect(cameraPermissionState) {
@@ -94,12 +104,11 @@ fun CameraScreen(
             if (hasImage) {
                 val safeUri = imageUri ?: return@rememberLauncherForActivityResult run {
                     PassLogger.w(TAG, "Image uri is null")
-                    onNavigate(CameraNavigation.Close)
+                    viewmodel.onCloseCamera()
                 }
                 viewmodel.onPhotoTaken(safeUri)
-                onNavigate(CameraNavigation.Close)
             } else {
-                onNavigate(CameraNavigation.Close)
+                viewmodel.onCloseCamera()
             }
         }
         LaunchedEffect(Unit) {
@@ -111,15 +120,14 @@ fun CameraScreen(
             }.onFailure {
                 PassLogger.w(TAG, "Error launching camera")
                 PassLogger.w(TAG, it)
-                viewmodel.onCameraError(CouldNotOpenCamera)
-                onNavigate(CameraNavigation.Close)
+                viewmodel.onCloseCamera(CouldNotOpenCamera)
             }
         }
     }
     if (showRationale) {
         Box(modifier = modifier.fillMaxSize()) {
             SmallCrossIconButton(modifier = Modifier.align(Alignment.TopEnd)) {
-                onNavigate(CameraNavigation.Close)
+                viewmodel.onCloseCamera()
             }
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -136,10 +144,10 @@ fun CameraScreen(
                     color = PassTheme.colors.loginInteractionNormMajor1,
                     onClick = {
                         runCatching {
-                            activity.startActivity(
+                            context.startActivity(
                                 Intent(
                                     Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                                    Uri.fromParts("package", activity.packageName, null)
+                                    Uri.fromParts("package", context.packageName, null)
                                 )
                             )
                         }.onFailure {

@@ -28,12 +28,14 @@ class ExtendAuthTimeImpl @Inject constructor(
     private val biometryAuthTimeHolder: BiometryAuthTimeHolder,
     private val bootCountRetriever: BootCountRetriever,
     private val elapsedTimeProvider: ElapsedTimeProvider,
-    private val userPreferencesRepository: UserPreferencesRepository
+    private val userPreferencesRepository: UserPreferencesRepository,
+    private val authOverrideState: AuthOverrideState
 ) : ExtendAuthTime {
     override suspend fun invoke() {
         val isAuthenticated = userPreferencesRepository.getHasAuthenticated()
             .first() is HasAuthenticated.Authenticated
-        if (isAuthenticated) {
+        val isAuthOverrideEnabled = authOverrideState.isAuthOverrideEnabled.first()
+        if (isAuthenticated && !isAuthOverrideEnabled) {
             userPreferencesRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
             biometryAuthTimeHolder.storeBiometryAuthData(
                 AuthData(

@@ -22,7 +22,12 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.biometry.AuthOverrideState
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.domain.attachments.DraftAttachment
@@ -35,17 +40,41 @@ import javax.inject.Inject
 class FilePickerViewModel @Inject constructor(
     private val draftAttachmentRepository: DraftAttachmentRepository,
     private val metadataResolver: MetadataResolver,
-    private val snackbarDispatcher: SnackbarDispatcher
+    private val snackbarDispatcher: SnackbarDispatcher,
+    private val authOverrideState: AuthOverrideState
 ) : ViewModel() {
 
-    fun onFilePicked(contentUri: Uri) = viewModelScope.launch {
-        val uri = URI.create(contentUri.toString())
-        val fileMetadata = metadataResolver.extractMetadata(uri) ?: FileMetadata.unknown(uri)
-        val draftAttachment = DraftAttachment.Loading(fileMetadata)
-        draftAttachmentRepository.add(draftAttachment)
+    private val eventFlow = MutableStateFlow<FilePickerEvent>(FilePickerEvent.Idle)
+    val state = eventFlow.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = FilePickerEvent.Idle
+    )
+
+    fun onFilePicked(contentUri: Uri) {
+        authOverrideState.setAuthOverride(false)
+        viewModelScope.launch {
+            val uri = URI.create(contentUri.toString())
+            val fileMetadata = metadataResolver.extractMetadata(uri) ?: FileMetadata.unknown(uri)
+            val draftAttachment = DraftAttachment.Loading(fileMetadata)
+            draftAttachmentRepository.add(draftAttachment)
+            eventFlow.update { FilePickerEvent.Close }
+        }
     }
 
-    fun onFilePickerError(message: FilePickerSnackbarMessage) = viewModelScope.launch {
-        snackbarDispatcher(message)
+    fun onCloseFilePicker(message: FilePickerSnackbarMessage? = null) {
+        authOverrideState.setAuthOverride(false)
+        viewModelScope.launch {
+            message?.let { snackbarDispatcher(it) }
+            eventFlow.update { FilePickerEvent.Close }
+        }
+    }
+
+    fun onConsumeEvent(event: FilePickerEvent) {
+        eventFlow.compareAndSet(event, FilePickerEvent.Idle)
+    }
+
+    fun onOpenFilePicker() {
+        authOverrideState.setAuthOverride(true)
     }
 }

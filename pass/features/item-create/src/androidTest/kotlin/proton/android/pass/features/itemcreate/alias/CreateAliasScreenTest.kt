@@ -150,7 +150,7 @@ class CreateAliasScreenTest {
                                 checker.call()
                             }
                         },
-                        canUseAttachments = canUseAttachments
+                        canUseAttachments = true
                     )
                 }
             }
@@ -206,7 +206,7 @@ class CreateAliasScreenTest {
                     CreateAliasScreen(
                         selectVault = null,
                         onNavigate = {},
-                        canUseAttachments = canUseAttachments
+                        canUseAttachments = true
                     )
                 }
             }
@@ -235,7 +235,7 @@ class CreateAliasScreenTest {
                                 checker.call()
                             }
                         },
-                        canUseAttachments = canUseAttachments
+                        canUseAttachments = true
                     )
                 }
             }

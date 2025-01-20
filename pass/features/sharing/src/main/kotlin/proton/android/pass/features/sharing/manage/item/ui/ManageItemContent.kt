@@ -26,6 +26,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.PassTopBarBackButtonType
@@ -35,6 +36,7 @@ import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.crypto.api.extensions.toVault
 import proton.android.pass.features.sharing.R
 import proton.android.pass.features.sharing.manage.item.presentation.ManageItemState
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun ManageItemContent(
@@ -83,7 +85,14 @@ internal fun ManageItemContent(
 
                     if (state.hasItemMembers) {
                         ManageItemMembersSection(
-                            sectionTitle = stringResource(R.string.shared_via_item_member_count_header),
+                            sectionTitle = stringResource(
+                                id = R.string.shared_via_item_section_title,
+                                pluralStringResource(
+                                    id = CompR.plurals.users_count,
+                                    count = state.itemMembers.size,
+                                    state.itemMembers.size
+                                )
+                            ),
                             isItemSection = true,
                             isShareAdmin = state.share.isAdmin,
                             vaultOption = None,
@@ -106,7 +115,14 @@ internal fun ManageItemContent(
 
                     if (state.hasVaultMembers) {
                         ManageItemMembersSection(
-                            sectionTitle = stringResource(R.string.shared_via_vault_member_count_header),
+                            sectionTitle = stringResource(
+                                id = R.string.shared_via_vault_section_title,
+                                pluralStringResource(
+                                    id = CompR.plurals.members_count,
+                                    count = state.vaultMembers.size,
+                                    state.vaultMembers.size
+                                )
+                            ),
                             isItemSection = false,
                             isShareAdmin = state.share.isAdmin,
                             vaultOption = state.share.toVault(),

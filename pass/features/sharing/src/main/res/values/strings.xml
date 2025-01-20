@@ -35,8 +35,8 @@
 
 
     <string name="shared_via_title">Shared via</string>
-    <string name="shared_via_item_member_count_header">Item sharing</string>
-    <string name="shared_via_vault_member_count_header">Vault sharing</string>
+    <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Item sharing: %s</string>
+    <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Vault sharing: %s</string>
 
     <string name="share_with_title">Share with</string>
     <string name="share_with_email_hint">Email address</string>

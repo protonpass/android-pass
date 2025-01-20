@@ -52,7 +52,9 @@ internal fun HomeDrawerContent(
             vaultSharesItemsCount = vaultSharesItemsCounter.toPersistentMap(),
             vaultSelectionOption = vaultSelectionOption,
             allItemsCount = allItemsCount,
+            hasSharedWithMeItems = hasSharedWithMeItems,
             sharedWithMeItemsCount = sharedWithMeItemsCount,
+            hasSharedByMeItems = hasSharedByMeItems,
             sharedByMeItemsCount = sharedByMeItemsCount,
             trashedItemsCount = trashedItemsCount,
             onUiEvent = onUiEvent

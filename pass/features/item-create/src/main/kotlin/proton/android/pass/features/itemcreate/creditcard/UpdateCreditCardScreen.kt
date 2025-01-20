@@ -61,7 +61,7 @@ fun UpdateCreditCardScreen(
                 if (uiState.baseState.hasUserEditedContent) {
                     showConfirmDialog = !showConfirmDialog
                 } else {
-                    viewModel.onClose()
+                    viewModel.clearDraftData()
                     actionAfterKeyboardHide = { onNavigate(CloseScreen) }
                 }
             }
@@ -174,6 +174,7 @@ fun UpdateCreditCardScreen(
                 isItemSaved = uiState.baseState.isItemSaved,
                 selectedShareId = uiState.selectedShareId,
                 onSuccess = { shareId, itemId, _ ->
+                    viewModel.clearDraftData()
                     actionAfterKeyboardHide =
                         { onNavigate(UpdateCreditCardNavigation.ItemUpdated(shareId, itemId)) }
                 }

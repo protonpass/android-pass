@@ -67,7 +67,7 @@ fun UpdateNote(
         if (noteUiState.baseNoteUiState.hasUserEditedContent) {
             showConfirmDialog = !showConfirmDialog
         } else {
-            viewModel.onClose()
+            viewModel.clearDraftData()
             actionAfterKeyboardHide = { onNavigate(UpdateNoteNavigation.CloseScreen) }
         }
     }
@@ -158,6 +158,7 @@ fun UpdateNote(
         isItemSaved = noteUiState.baseNoteUiState.itemSavedState,
         selectedShareId = noteUiState.selectedShareId,
         onSuccess = { shareId, itemId, _ ->
+            viewModel.clearDraftData()
             actionAfterKeyboardHide =
                 { onNavigate(UpdateNoteNavigation.NoteUpdated(shareId, itemId)) }
         }

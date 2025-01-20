@@ -73,7 +73,7 @@ fun UpdateAlias(
         if (uiState.baseAliasUiState.hasUserEditedContent) {
             showConfirmDialog = !showConfirmDialog
         } else {
-            viewModel.onClose()
+            viewModel.clearDraftData()
             actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.CloseScreen) }
         }
     }
@@ -189,6 +189,7 @@ fun UpdateAlias(
         isItemSaved = uiState.baseAliasUiState.itemSavedState,
         selectedShareId = uiState.selectedShareId,
         onSuccess = { shareId, itemId, _ ->
+            viewModel.clearDraftData()
             actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.Updated(shareId, itemId)) }
         }
     )

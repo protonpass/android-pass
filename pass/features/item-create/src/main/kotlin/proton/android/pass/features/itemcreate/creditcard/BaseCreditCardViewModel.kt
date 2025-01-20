@@ -233,7 +233,7 @@ abstract class BaseCreditCardViewModel(
         }
     }
 
-    internal fun onClose() {
+    internal fun clearDraftData() {
         attachmentsHandler.onClearAttachments()
     }
 

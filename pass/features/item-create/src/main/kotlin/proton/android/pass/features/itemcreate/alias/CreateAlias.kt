@@ -78,7 +78,7 @@ fun CreateAliasScreen(
         if (uiState.baseAliasUiState.hasUserEditedContent) {
             showConfirmDialog = !showConfirmDialog
         } else {
-            viewModel.onClose()
+            viewModel.clearDraftData()
             actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.CloseScreen) }
         }
     }
@@ -188,6 +188,7 @@ fun CreateAliasScreen(
         isItemSaved = uiState.baseAliasUiState.itemSavedState,
         selectedShareId = selectedVault?.vault?.shareId,
         onSuccess = { shareId, itemId, model ->
+            viewModel.clearDraftData()
             val aliasEmail = (model.contents as ItemContents.Alias).aliasEmail
             val event = CreateAliasNavigation.Created(shareId, itemId, aliasEmail)
             actionAfterKeyboardHide = { onNavigate(event) }

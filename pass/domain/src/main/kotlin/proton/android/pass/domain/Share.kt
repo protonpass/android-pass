@@ -81,6 +81,8 @@ sealed class Share {
 
         override val shareType: ShareType = ShareType.Item
 
+        val canBeShared: Boolean = isOwner || isAdmin || isEditor
+
     }
 
     data class Vault(
@@ -132,6 +134,9 @@ sealed class Share {
         get() = shareRole.toPermissions().canUpdate()
 
     val isAdmin: Boolean
-        get() = permission.hasFlag(SharePermissionFlag.Admin)
+        get() = shareRole == ShareRole.Admin
+
+    val isEditor: Boolean
+        get() = shareRole == ShareRole.Write
 
 }

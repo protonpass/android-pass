@@ -19,11 +19,12 @@
 package proton.android.pass.data.api.usecases.shares
 
 import kotlinx.coroutines.flow.Flow
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.shares.SharePendingInvite
 
 interface ObserveSharePendingInvites {
 
-    operator fun invoke(shareId: ShareId): Flow<List<SharePendingInvite>>
+    operator fun invoke(shareId: ShareId, itemId: ItemId? = null): Flow<List<SharePendingInvite>>
 
 }

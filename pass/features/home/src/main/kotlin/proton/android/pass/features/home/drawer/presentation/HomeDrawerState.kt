@@ -65,10 +65,10 @@ internal data class HomeDrawerState(
         .plus(sharedWithMeItemsCount)
         .toInt()
 
-    internal val trashedItemsCount: Int = vaultSharesItemsCounter
-        .values
-        .sumOf { shareItemCount -> shareItemCount.trashedItems }
-        .toInt()
+    internal val trashedItemsCount: Int = itemCountSummaryOption.value()
+        ?.trashed
+        ?.toInt()
+        ?: 0
 
     internal companion object {
 

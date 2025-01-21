@@ -380,11 +380,17 @@ class HomeViewModel @Inject constructor(
                 }
 
                 VaultSelectionOption.SharedByMe -> {
-                    observeEncryptedSharedItems(itemSharedType = ItemSharedType.SharedByMe)
+                    observeEncryptedSharedItems(
+                        itemSharedType = ItemSharedType.SharedByMe,
+                        itemState = ItemState.Active
+                    )
                 }
 
                 VaultSelectionOption.SharedWithMe -> {
-                    observeEncryptedSharedItems(itemSharedType = ItemSharedType.SharedWithMe)
+                    observeEncryptedSharedItems(
+                        itemSharedType = ItemSharedType.SharedWithMe,
+                        itemState = ItemState.Active
+                    )
                 }
             }.asResultWithoutLoading()
                 .map { itemResult ->

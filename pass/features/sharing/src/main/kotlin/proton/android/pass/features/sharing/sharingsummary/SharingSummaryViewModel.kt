@@ -155,6 +155,9 @@ class SharingSummaryViewModel @Inject constructor(
                 PassLogger.w(TAG, error)
 
                 if (error is NewUsersInviteError) {
+                    val invalidAddresses = error.newUsersAddresses.map { it.address }
+                    bulkInviteRepository.updateInvalidAddresses(invalidAddresses)
+                    eventFlow.update { SharingSummaryEvent.OnSharingItemNewUsersError }
                     SharingSnackbarMessage.NewUsersInviteError
                 } else {
                     SharingSnackbarMessage.InviteSentError

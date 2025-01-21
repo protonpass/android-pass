@@ -18,13 +18,9 @@
 
 package proton.android.pass.data.impl.usecases.breach
 
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.withContext
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
@@ -55,13 +51,13 @@ class SendUserMonitorCredentialsReportImpl @Inject constructor(
     private val dispatchers: AppDispatchers
 ) : SendUserMonitorCredentialsReport {
     override suspend fun invoke() {
-        val businessUserSecurityAnalysis = accountManager.getAccounts(AccountState.Ready)
-            .flatMapLatest(List<Account>::asFlow)
+        val accounts = accountManager.getAccounts(AccountState.Ready).firstOrNull().orEmpty()
+        val reports = accounts
             .map { account: Account ->
                 account.userId to getUserPlan(account.userId).first()
             }
             .filter { (_, plan) -> plan.isBusinessPlan }
-            .map { (userId, _) ->
+            .associate { (userId, _) ->
                 val monitoredItems = observeItems(
                     userId = userId,
                     selection = ShareSelection.AllShares,
@@ -76,19 +72,18 @@ class SendUserMonitorCredentialsReportImpl @Inject constructor(
                     itemState = ItemState.Active,
                     itemFlags = mapOf(ItemFlag.SkipHealthCheck to true)
                 ).first()
-                val report = Report(
-                    reusedPasswords = repeatedPasswordChecker(monitoredItems).repeatedPasswordsCount,
-                    inactive2FA = missing2faChecker(monitoredItems).missing2faCount,
-                    excludedItems = excludedItems.count(),
-                    weakPasswords = insecurePasswordChecker(monitoredItems).insecurePasswordsCount
-                )
+                val report = withContext(dispatchers.default) {
+                    Report(
+                        reusedPasswords = repeatedPasswordChecker(monitoredItems).repeatedPasswordsCount,
+                        inactive2FA = missing2faChecker(monitoredItems).missing2faCount,
+                        excludedItems = excludedItems.count(),
+                        weakPasswords = insecurePasswordChecker(monitoredItems).insecurePasswordsCount
+                    )
+                }
                 userId to report
             }
-            .flowOn(dispatchers.default)
-            .toList()
-
         runConcurrently(
-            items = businessUserSecurityAnalysis,
+            items = reports.entries,
             block = { (userId, report) ->
                 remoteOrganizationReportDataSource.request(
                     userId = userId,

@@ -95,10 +95,15 @@ class LocalItemDataSourceImpl @Inject constructor(
         )
     }
 
-    override fun observeSharedItems(userId: UserId, itemSharedType: ItemSharedType): Flow<List<ItemEntity>> =
-        database.itemsDao().observeSharedItems(
+    override fun observeSharedItems(
+        userId: UserId,
+        itemSharedType: ItemSharedType,
+        itemState: ItemState?
+    ): Flow<List<ItemEntity>> = database.itemsDao()
+        .observeSharedItems(
             userId = userId.id,
-            itemSharedType = itemSharedType.value
+            itemSharedType = itemSharedType.value,
+            itemState = itemState?.value
         )
 
     override fun observePinnedItems(userId: UserId, filter: ItemTypeFilter): Flow<List<ItemEntity>> =

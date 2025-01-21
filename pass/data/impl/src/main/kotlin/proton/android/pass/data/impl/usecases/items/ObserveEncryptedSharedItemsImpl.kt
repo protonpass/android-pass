@@ -24,6 +24,7 @@ import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.items.ObserveEncryptedSharedItems
 import proton.android.pass.domain.ItemEncrypted
+import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.items.ItemSharedType
 import javax.inject.Inject
 
@@ -32,9 +33,13 @@ class ObserveEncryptedSharedItemsImpl @Inject constructor(
     private val itemRepository: ItemRepository
 ) : ObserveEncryptedSharedItems {
 
-    override fun invoke(itemSharedType: ItemSharedType): Flow<List<ItemEncrypted>> = observeCurrentUser()
-        .flatMapLatest { user ->
-            itemRepository.observeSharedEncryptedItems(user.userId, itemSharedType)
+    override fun invoke(itemSharedType: ItemSharedType, itemState: ItemState?): Flow<List<ItemEncrypted>> =
+        observeCurrentUser().flatMapLatest { user ->
+            itemRepository.observeSharedEncryptedItems(
+                userId = user.userId,
+                itemSharedType = itemSharedType,
+                itemState = itemState
+            )
         }
 
 }

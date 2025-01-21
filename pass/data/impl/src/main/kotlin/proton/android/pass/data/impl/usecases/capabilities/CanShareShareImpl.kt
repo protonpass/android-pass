@@ -48,11 +48,7 @@ class CanShareShareImpl @Inject constructor(
     }
 
     private fun getItemCanShareStatus(itemShare: Share.Item) = when {
-        itemShare.isOwner -> {
-            CanShareShareStatus.CanShare(invitesRemaining = itemShare.remainingInvites)
-        }
-
-        itemShare.isAdmin -> {
+        itemShare.canBeShared -> {
             CanShareShareStatus.CanShare(invitesRemaining = itemShare.remainingInvites)
         }
 

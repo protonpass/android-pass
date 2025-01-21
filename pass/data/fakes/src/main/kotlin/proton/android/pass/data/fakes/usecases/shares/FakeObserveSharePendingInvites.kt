@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.usecases.shares.ObserveSharePendingInvites
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.shares.SharePendingInvite
 import javax.inject.Inject
@@ -36,6 +37,6 @@ class FakeObserveSharePendingInvites @Inject constructor() : ObserveSharePending
         sharePendingInvitesFlow.tryEmit(value)
     }
 
-    override fun invoke(shareId: ShareId): Flow<List<SharePendingInvite>> = sharePendingInvitesFlow
+    override fun invoke(shareId: ShareId, itemId: ItemId?): Flow<List<SharePendingInvite>> = sharePendingInvitesFlow
 
 }

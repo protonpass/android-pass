@@ -53,9 +53,11 @@ class PeriodicReportWorker @AssistedInject constructor(
         const val WORKER_UNIQUE_NAME = "periodic_report_worker"
         private const val TAG = "PeriodicReportWorker"
         private const val REPEAT_DAYS = 1L
+        private const val INITIAL_DELAY_MINUTES = 5L // due to item sync
 
         fun getRequestFor(): PeriodicWorkRequest =
             PeriodicWorkRequestBuilder<PeriodicReportWorker>(REPEAT_DAYS, TimeUnit.DAYS)
+                .setInitialDelay(INITIAL_DELAY_MINUTES, TimeUnit.MINUTES)
                 .setConstraints(
                     Constraints.Builder()
                         .setRequiredNetworkType(NetworkType.CONNECTED)

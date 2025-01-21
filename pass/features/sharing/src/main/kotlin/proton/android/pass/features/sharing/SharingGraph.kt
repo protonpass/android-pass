@@ -181,6 +181,8 @@ sealed interface SharingNavigation {
 
     data class ShareItemLink(val shareId: ShareId, val itemId: ItemId) : SharingNavigation
 
+    data object ShareItemNewUsersError : SharingNavigation
+
     data class ManageItem(val shareId: ShareId, val itemId: ItemId) : SharingNavigation
 
     data class ManageItemMemberOptions(

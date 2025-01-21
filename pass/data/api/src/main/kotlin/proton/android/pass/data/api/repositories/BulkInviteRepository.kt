@@ -28,12 +28,22 @@ data class AddressPermission(
 
 interface BulkInviteRepository {
 
-    suspend fun storeAddresses(addresses: List<String>)
-    suspend fun setPermission(address: String, permission: ShareRole)
-    suspend fun setAllPermissions(permission: ShareRole)
-    suspend fun removeAddress(address: String)
+    fun storeAddresses(addresses: List<String>)
+
+    fun setPermission(address: String, permission: ShareRole)
+
+    fun setAllPermissions(permission: ShareRole)
+
+    fun removeAddress(address: String)
 
     fun observeAddresses(): Flow<List<AddressPermission>>
 
-    suspend fun clear()
+    fun updateInvalidAddresses(addresses: List<String>)
+
+    fun observeInvalidAddresses(): Flow<Set<String>>
+
+    fun clearInvalidAddresses()
+
+    fun clear()
+
 }

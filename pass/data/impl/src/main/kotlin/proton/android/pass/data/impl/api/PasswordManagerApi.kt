@@ -41,6 +41,7 @@ import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.ExtraPasswordSendSrpDataRequest
 import proton.android.pass.data.impl.requests.ItemReadRequest
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
+import proton.android.pass.data.impl.requests.SendUserMonitorCredentialsRequest
 import proton.android.pass.data.impl.requests.SetupExtraPasswordRequest
 import proton.android.pass.data.impl.requests.SimpleLoginCreateAliasMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginCreatePendingAliasesRequest
@@ -435,6 +436,9 @@ interface PasswordManagerApi : BaseRetrofitApi {
     // Organization
     @GET("$PREFIX/organization")
     suspend fun getOrganization(): OrganizationGetResponse
+
+    @POST("$PREFIX/organization/report/client_data")
+    suspend fun sendUserMonitorCredentialsReport(@Body request: SendUserMonitorCredentialsRequest): CodeOnlyResponse
 
     // Breach
     @GET("$PREFIX/breach")

@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.usecases.items.ObserveEncryptedSharedItems
 import proton.android.pass.domain.ItemEncrypted
+import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.items.ItemSharedType
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -36,6 +37,7 @@ class FakeObserveEncryptedSharedItems @Inject constructor() : ObserveEncryptedSh
         sharedItemsFlow.tryEmit(value)
     }
 
-    override fun invoke(itemSharedType: ItemSharedType): Flow<List<ItemEncrypted>> = sharedItemsFlow
+    override fun invoke(itemSharedType: ItemSharedType, itemState: ItemState?): Flow<List<ItemEncrypted>> =
+        sharedItemsFlow
 
 }

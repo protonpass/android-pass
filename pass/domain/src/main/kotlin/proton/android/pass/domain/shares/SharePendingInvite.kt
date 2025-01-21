@@ -29,9 +29,12 @@ sealed interface SharePendingInvite {
 
     val isForNewUser: Boolean
 
+    val targetId: String
+
     data class ExistingUser(
         override val email: String,
-        override val inviteId: InviteId
+        override val inviteId: InviteId,
+        override val targetId: String
     ) : SharePendingInvite {
 
         override val isForNewUser: Boolean = false
@@ -41,6 +44,7 @@ sealed interface SharePendingInvite {
     data class NewUser(
         override val email: String,
         override val inviteId: InviteId,
+        override val targetId: String,
         val inviteState: InviteState,
         val role: ShareRole
     ) : SharePendingInvite {

@@ -51,6 +51,8 @@ internal sealed interface SharingSummaryEvent {
     @JvmInline
     value class OnSharingVaultSuccess(internal val shareId: ShareId) : SharingSummaryEvent
 
+    data object OnSharingItemNewUsersError : SharingSummaryEvent
+
 }
 
 @Stable

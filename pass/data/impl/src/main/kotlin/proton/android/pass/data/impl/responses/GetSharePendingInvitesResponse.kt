@@ -42,7 +42,7 @@ data class SharePendingInvite(
     @SerialName("TargetType")
     val targetType: Int,
     @SerialName("TargetID")
-    val targetID: String,
+    val targetId: String,
     @SerialName("RemindersSent")
     val remindersSent: Int,
     @SerialName("CreateTime")

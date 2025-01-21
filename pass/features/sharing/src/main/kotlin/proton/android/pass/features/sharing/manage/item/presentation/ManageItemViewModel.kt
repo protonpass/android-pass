@@ -82,7 +82,7 @@ class ManageItemViewModel @Inject constructor(
     private val sharePendingInvitesFlow = shareFlow
         .flatMapLatest { share ->
             if (share.isAdmin) {
-                observeSharePendingInvites(shareId)
+                observeSharePendingInvites(shareId, itemId)
             } else {
                 flowOf(emptyList())
             }

@@ -150,6 +150,7 @@ import proton.android.pass.data.api.usecases.breach.ObserveBreachesForProtonEmai
 import proton.android.pass.data.api.usecases.breach.ObserveCustomEmailSuggestions
 import proton.android.pass.data.api.usecases.breach.RemoveCustomEmail
 import proton.android.pass.data.api.usecases.breach.ResendVerificationCode
+import proton.android.pass.data.api.usecases.breach.SendUserMonitorCredentialsReport
 import proton.android.pass.data.api.usecases.breach.UpdateGlobalAliasAddressesMonitorState
 import proton.android.pass.data.api.usecases.breach.UpdateGlobalProtonAddressesMonitorState
 import proton.android.pass.data.api.usecases.breach.UpdateProtonAddressMonitorState
@@ -368,6 +369,7 @@ import proton.android.pass.data.impl.usecases.breach.ObserveBreachesForProtonEma
 import proton.android.pass.data.impl.usecases.breach.ObserveCustomEmailSuggestionsImpl
 import proton.android.pass.data.impl.usecases.breach.RemoveCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.ResendVerificationCodeImpl
+import proton.android.pass.data.impl.usecases.breach.SendUserMonitorCredentialsReportImpl
 import proton.android.pass.data.impl.usecases.breach.UpdateGlobalAliasAddressesMonitorStateImpl
 import proton.android.pass.data.impl.usecases.breach.UpdateGlobalProtonAddressesMonitorStateImpl
 import proton.android.pass.data.impl.usecases.breach.UpdateProtonAddressMonitorStateImpl
@@ -1143,5 +1145,10 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindGetMigrationItemsSelection(impl: GetMigrationItemsSelectionImpl): GetMigrationItemsSelection
+
+    @[Binds Singleton]
+    abstract fun bindSendUserMonitorCredentialsReport(
+        impl: SendUserMonitorCredentialsReportImpl
+    ): SendUserMonitorCredentialsReport
 
 }

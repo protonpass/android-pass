@@ -49,6 +49,10 @@ fun SharingSummaryScreen(
             is SharingSummaryEvent.OnSharingVaultSuccess -> SharingNavigation.ManageVault(
                 shareId = event.shareId
             ).also(onNavigateEvent)
+
+            SharingSummaryEvent.OnSharingItemNewUsersError -> onNavigateEvent(
+                SharingNavigation.ShareItemNewUsersError
+            )
         }
 
         onConsumeEvent(state.event)

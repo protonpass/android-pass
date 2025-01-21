@@ -179,8 +179,9 @@ class LocalItemDataSourceImpl @Inject constructor(
             combine(
                 database.itemsDao().itemSummary(userId.id, shareIdValues, itemState?.value),
                 database.itemsDao().countAllItemsWithTotp(userId.id),
-                database.itemsDao().countSharedItems(userId.id, shareIdValues)
-            ) { values: List<SummaryRow>, totpCount: Int, sharedItemsCount ->
+                database.itemsDao().countSharedItems(userId.id, shareIdValues, itemState?.value),
+                database.itemsDao().countTrashedItems(userId.id)
+            ) { values: List<SummaryRow>, totpCount: Int, sharedItemsCount, trashedItemsCount ->
                 val logins =
                     values.firstOrNull { it.itemKind == ItemCategory.Login.value }?.itemCount ?: 0
                 val aliases =
@@ -203,7 +204,8 @@ class LocalItemDataSourceImpl @Inject constructor(
                     creditCard = creditCards,
                     identities = identities,
                     sharedWithMe = sharedItemsCount.sharedWithMe,
-                    sharedByMe = sharedItemsCount.sharedByMe
+                    sharedByMe = sharedItemsCount.sharedByMe,
+                    trashed = trashedItemsCount.toLong()
                 )
             }
         }

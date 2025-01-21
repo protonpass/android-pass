@@ -33,6 +33,7 @@ import proton.android.pass.data.impl.work.PeriodicAssetLinkWorker
 import proton.android.pass.data.impl.work.PeriodicCleanupWorker
 import proton.android.pass.data.impl.work.PeriodicFeatureDiscoveryWorker
 import proton.android.pass.data.impl.work.PeriodicIgnoredAssetLinkWorker
+import proton.android.pass.data.impl.work.PeriodicReportWorker
 import proton.android.pass.data.impl.work.UserAccessWorker
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
@@ -51,6 +52,7 @@ class InitialWorkerLauncherImpl @Inject constructor(
         launchUserAccessWorker()
         launchCleanupWorker()
         launchFeatureDiscoveryWorker()
+        launchReportWorker()
         val isDAL = runBlocking {
             featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.DIGITAL_ASSET_LINKS).first()
         }
@@ -112,6 +114,14 @@ class InitialWorkerLauncherImpl @Inject constructor(
         )
     }
 
+    private fun launchReportWorker() {
+        workManager.enqueueUniquePeriodicWork(
+            PeriodicReportWorker.WORKER_UNIQUE_NAME,
+            ExistingPeriodicWorkPolicy.KEEP,
+            PeriodicReportWorker.getRequestFor()
+        )
+    }
+
     override fun cancel() {
         PassLogger.i(TAG, "Cancelling periodic workers")
         workManager.cancelUniqueWork(UserAccessWorker.WORKER_UNIQUE_NAME)
@@ -119,6 +129,7 @@ class InitialWorkerLauncherImpl @Inject constructor(
         workManager.cancelUniqueWork(PeriodicAssetLinkWorker.WORKER_UNIQUE_NAME)
         workManager.cancelUniqueWork(PeriodicIgnoredAssetLinkWorker.WORKER_UNIQUE_NAME)
         workManager.cancelUniqueWork(PeriodicFeatureDiscoveryWorker.WORKER_UNIQUE_NAME)
+        workManager.cancelUniqueWork(PeriodicReportWorker.WORKER_UNIQUE_NAME)
     }
 
     companion object {

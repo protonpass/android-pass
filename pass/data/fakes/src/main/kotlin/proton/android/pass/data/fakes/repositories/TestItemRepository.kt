@@ -163,7 +163,8 @@ class TestItemRepository @Inject constructor() : ItemRepository {
 
     override fun observeSharedEncryptedItems(
         userId: UserId,
-        itemSharedType: ItemSharedType
+        itemSharedType: ItemSharedType,
+        itemState: ItemState?
     ): Flow<List<ItemEncrypted>> = encryptedSharedItemsFlow
 
     override fun observePinnedItems(

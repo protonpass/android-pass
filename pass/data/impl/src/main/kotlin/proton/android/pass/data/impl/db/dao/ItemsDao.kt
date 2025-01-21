@@ -90,6 +90,7 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         SELECT * FROM ${ItemEntity.TABLE} 
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND ${ItemEntity.Columns.SHARE_COUNT} > 0
+          AND (${ItemEntity.Columns.STATE} = :itemState OR :itemState IS NULL)
           AND CASE 
             WHEN :itemSharedType = $ITEM_SHARED_TYPE_ALL THEN 1 
             WHEN :itemSharedType = $ITEM_SHARED_TYPE_SHARED_BY_ME THEN ${ItemEntity.Columns.KEY} IS NOT NULL
@@ -99,7 +100,11 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         ORDER BY ${ItemEntity.Columns.CREATE_TIME} DESC
     """
     )
-    abstract fun observeSharedItems(userId: String, itemSharedType: Int): Flow<List<ItemEntity>>
+    abstract fun observeSharedItems(
+        userId: String,
+        itemSharedType: Int,
+        itemState: Int?
+    ): Flow<List<ItemEntity>>
 
     @Query(
         """

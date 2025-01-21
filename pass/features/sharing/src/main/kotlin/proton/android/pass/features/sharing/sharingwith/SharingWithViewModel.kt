@@ -91,7 +91,6 @@ class SharingWithViewModel @Inject constructor(
     private val showEditVault: Boolean = savedStateHandleProvider.get()
         .require(ShowEditVaultArgId.key)
 
-    private val continueEnabledFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val scrollToBottomFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
@@ -99,6 +98,17 @@ class SharingWithViewModel @Inject constructor(
         MutableStateFlow(SharingWithEvents.Idle)
     private val enteredEmailsState: MutableStateFlow<List<EnteredEmailState>> =
         MutableStateFlow(emptyList())
+
+    private val inviteEmailsState = combine(
+        bulkInviteRepository.observeInvalidAddresses(),
+        enteredEmailsState
+    ) { invalidAddresses, enteredEmails ->
+        enteredEmails.map { enteredEmail ->
+            if (invalidAddresses.contains(enteredEmail.email)) enteredEmail.copy(isError = true)
+            else enteredEmail
+        }
+    }
+
     private val selectedEmailIndexFlow: MutableStateFlow<Option<Int>> = MutableStateFlow(None)
     private val organizationSettingsFlow: Flow<LoadingResult<Option<OrganizationSettings>>> =
         observeOrganizationSettings().asLoadingResult().distinctUntilChanged()
@@ -151,11 +161,22 @@ class SharingWithViewModel @Inject constructor(
         }
     }
 
+    private val continueEnabledFlow = combine(
+        inviteEmailsState,
+        editingEmailStateFlow
+    ) { inviteEmails, editingEmail ->
+        if (inviteEmails.any { it.isError }) {
+            false
+        } else {
+            inviteEmails.isNotEmpty() || editingEmail.isNotBlank()
+        }
+    }
+
     internal val editingEmail: String
         get() = editingEmailState
 
     internal val stateFlow: StateFlow<SharingWithUIState> = combineN(
-        enteredEmailsState,
+        inviteEmailsState,
         observeShare(shareId = shareId),
         isLoadingState,
         eventState,
@@ -206,7 +227,6 @@ class SharingWithViewModel @Inject constructor(
         editingEmailStateFlow.update { sanitised }
         errorMessageFlow.update { ErrorMessage.None }
         selectedEmailIndexFlow.update { None }
-        onChange()
     }
 
     internal fun onEmailSubmit() {
@@ -223,8 +243,6 @@ class SharingWithViewModel @Inject constructor(
                     it
                 }
             }
-
-            onChange()
         } else {
             errorMessageFlow.update { ErrorMessage.EmailNotValid }
         }
@@ -247,7 +265,6 @@ class SharingWithViewModel @Inject constructor(
                 }
             }
             selectedEmailIndexFlow.update { None }
-            onChange()
         } else {
             selectedEmailIndexFlow.update { index.some() }
         }
@@ -305,7 +322,6 @@ class SharingWithViewModel @Inject constructor(
             checkedEmails - email
         }
         checkedEmailFlow.update { checkedEmails }
-        onChange()
     }
 
     internal fun onScrolledToBottom() {
@@ -330,11 +346,12 @@ class SharingWithViewModel @Inject constructor(
         return false
     }
 
-    private suspend fun handleCanInviteResult(canInviteResult: CanAddressesBeInvitedResult) {
+    private fun handleCanInviteResult(canInviteResult: CanAddressesBeInvitedResult) {
         when (canInviteResult) {
             // If all can be invited, proceed
             is CanAddressesBeInvitedResult.All -> {
                 bulkInviteRepository.storeAddresses(canInviteResult.addresses)
+                bulkInviteRepository.clearInvalidAddresses()
                 eventState.update { SharingWithEvents.NavigateToPermissions(shareId, itemIdOption) }
             }
 
@@ -382,12 +399,6 @@ class SharingWithViewModel @Inject constructor(
 
                 errorMessageFlow.update { ErrorMessage.SomeAddressesCannotBeInvited }
             }
-        }
-    }
-
-    private fun onChange() {
-        continueEnabledFlow.update {
-            enteredEmailsState.value.isNotEmpty() || editingEmailState.isNotBlank()
         }
     }
 

@@ -443,9 +443,14 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
             AND ${ItemEntity.Columns.SHARE_COUNT} > 0
             AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
+            AND (${ItemEntity.Columns.STATE} = :itemState OR :itemState IS NULL)
         """
     )
-    abstract fun countSharedItems(userId: String, shareIds: List<String>): Flow<SharedItemsCountRow>
+    abstract fun countSharedItems(
+        userId: String,
+        shareIds: List<String>,
+        itemState: Int?
+    ): Flow<SharedItemsCountRow>
 
     @Query(
         """
@@ -458,4 +463,14 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         """
     )
     abstract suspend fun checkIfItemExists(shareId: String, itemId: String): Boolean
+
+    @Query(
+        """
+        SELECT COUNT(*) FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.STATE} = ${ItemStateValues.TRASHED}
+        """
+    )
+    abstract fun countTrashedItems(userId: String): Flow<Int>
+
 }

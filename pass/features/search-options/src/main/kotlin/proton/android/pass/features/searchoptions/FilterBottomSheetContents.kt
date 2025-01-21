@@ -198,7 +198,8 @@ internal fun FilterBottomSheetContentsPreview(
                         creditCard = 0,
                         identities = 0,
                         sharedWithMe = sharedItemsCount,
-                        sharedByMe = sharedItemsCount
+                        sharedByMe = sharedItemsCount,
+                        trashed = 0
                     ),
                     isItemSharingAvailable = true
                 ),

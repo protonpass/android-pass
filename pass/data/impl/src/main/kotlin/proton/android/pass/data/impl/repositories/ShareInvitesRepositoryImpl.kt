@@ -48,7 +48,8 @@ class ShareInvitesRepositoryImpl @Inject constructor(
                         .map { actualUserPendingInvite ->
                             SharePendingInvite.ExistingUser(
                                 email = actualUserPendingInvite.invitedEmail,
-                                inviteId = InviteId(actualUserPendingInvite.inviteId)
+                                inviteId = InviteId(actualUserPendingInvite.inviteId),
+                                targetId = actualUserPendingInvite.targetId
                             )
                         }
                         .also(::addAll)
@@ -58,6 +59,7 @@ class ShareInvitesRepositoryImpl @Inject constructor(
                             SharePendingInvite.NewUser(
                                 email = newUserPendingInvite.invitedEmail,
                                 inviteId = InviteId(newUserPendingInvite.newUserInviteId),
+                                targetId = newUserPendingInvite.targetId,
                                 role = ShareRole.fromValue(newUserPendingInvite.shareRoleId),
                                 inviteState = SharePendingInvite.NewUser.InviteState.fromValue(
                                     value = newUserPendingInvite.state

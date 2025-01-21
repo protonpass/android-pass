@@ -396,8 +396,9 @@ class ItemRepositoryImpl @Inject constructor(
 
     override fun observeSharedEncryptedItems(
         userId: UserId,
-        itemSharedType: ItemSharedType
-    ): Flow<List<ItemEncrypted>> = localItemDataSource.observeSharedItems(userId, itemSharedType)
+        itemSharedType: ItemSharedType,
+        itemState: ItemState?
+    ): Flow<List<ItemEncrypted>> = localItemDataSource.observeSharedItems(userId, itemSharedType, itemState)
         .map { sharedItems ->
             sharedItems.map(ItemEntity::toEncryptedDomain)
         }

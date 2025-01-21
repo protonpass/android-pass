@@ -20,10 +20,11 @@ package proton.android.pass.data.api.usecases.items
 
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.domain.ItemEncrypted
+import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.items.ItemSharedType
 
 interface ObserveEncryptedSharedItems {
 
-    operator fun invoke(itemSharedType: ItemSharedType): Flow<List<ItemEncrypted>>
+    operator fun invoke(itemSharedType: ItemSharedType, itemState: ItemState?): Flow<List<ItemEncrypted>>
 
 }

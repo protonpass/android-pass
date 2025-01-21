@@ -60,7 +60,11 @@ interface LocalItemDataSource {
         clearFlags: Int? = null
     ): Flow<List<ItemEntity>>
 
-    fun observeSharedItems(userId: UserId, itemSharedType: ItemSharedType): Flow<List<ItemEntity>>
+    fun observeSharedItems(
+        userId: UserId,
+        itemSharedType: ItemSharedType,
+        itemState: ItemState?
+    ): Flow<List<ItemEntity>>
 
     fun observePinnedItems(userId: UserId, filter: ItemTypeFilter): Flow<List<ItemEntity>>
 

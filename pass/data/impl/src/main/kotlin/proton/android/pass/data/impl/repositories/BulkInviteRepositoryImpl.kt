@@ -33,14 +33,16 @@ class BulkInviteRepositoryImpl @Inject constructor() : BulkInviteRepository {
     private val addressesFlow: MutableStateFlow<List<AddressPermission>> =
         MutableStateFlow(emptyList())
 
-    override suspend fun storeAddresses(addresses: List<String>) {
+    private val invalidAddressesFlow = MutableStateFlow<Set<String>>(emptySet())
+
+    override fun storeAddresses(addresses: List<String>) {
         val uniqueAddresses = addresses.distinct()
         addressesFlow.update {
             uniqueAddresses.map { AddressPermission(it, ShareRole.Read) }
         }
     }
 
-    override suspend fun setPermission(address: String, permission: ShareRole) {
+    override fun setPermission(address: String, permission: ShareRole) {
         addressesFlow.update { state ->
             val newList = state.toMutableList()
             val index = newList.indexOfFirst { it.address == address }
@@ -49,13 +51,13 @@ class BulkInviteRepositoryImpl @Inject constructor() : BulkInviteRepository {
         }
     }
 
-    override suspend fun setAllPermissions(permission: ShareRole) {
+    override fun setAllPermissions(permission: ShareRole) {
         addressesFlow.update { state ->
             state.map { it.copy(shareRole = permission) }
         }
     }
 
-    override suspend fun removeAddress(address: String) {
+    override fun removeAddress(address: String) {
         addressesFlow.update { state ->
             val newList = state.toMutableList()
             newList.removeIf { it.address == address }
@@ -65,7 +67,18 @@ class BulkInviteRepositoryImpl @Inject constructor() : BulkInviteRepository {
 
     override fun observeAddresses(): Flow<List<AddressPermission>> = addressesFlow
 
-    override suspend fun clear() {
+    override fun updateInvalidAddresses(addresses: List<String>) {
+        invalidAddressesFlow.update { addresses.toSet() }
+    }
+
+    override fun observeInvalidAddresses(): Flow<Set<String>> = invalidAddressesFlow
+
+    override fun clearInvalidAddresses() {
+        invalidAddressesFlow.update { emptySet() }
+    }
+
+    override fun clear() {
         addressesFlow.update { emptyList() }
     }
+
 }

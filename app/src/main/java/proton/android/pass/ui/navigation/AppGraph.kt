@@ -2293,6 +2293,10 @@ fun NavGraphBuilder.appGraph(
                     backDestination = HomeNavItem
                 )
             }
+
+            SharingNavigation.ShareItemNewUsersError -> appNavigator.popUpTo(
+                destination = SharingWith
+            )
         }
     }
 

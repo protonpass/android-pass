@@ -48,7 +48,7 @@ class PassScopeUserCheck(
         when (val superResult = super.invoke(user)) {
             is PostLoginAccountSetup.UserCheckResult.Success -> {
                 when (val passScopeResult = checkPassScope(user, authWithExtraPasswordListener)) {
-                    is PostLoginAccountSetup.UserCheckResult.Success -> performAdditionalChecks()
+                    is PostLoginAccountSetup.UserCheckResult.Success -> performAdditionalChecks(user)
                     else -> passScopeResult
                 }
             }
@@ -93,8 +93,8 @@ class PassScopeUserCheck(
         }
     }
 
-    private suspend fun performAdditionalChecks(): PostLoginAccountSetup.UserCheckResult = when {
-        currentFreeUserCount() >= 1 -> PostLoginAccountSetup.UserCheckResult.Error(
+    private suspend fun performAdditionalChecks(user: User): PostLoginAccountSetup.UserCheckResult = when {
+        currentFreeUserCount() >= 1 && user.isFreeUser() -> PostLoginAccountSetup.UserCheckResult.Error(
             context.getString(R.string.auth_only_1_proton_account_failed)
         )
         else -> PostLoginAccountSetup.UserCheckResult.Success
@@ -103,15 +103,18 @@ class PassScopeUserCheck(
     private suspend fun currentFreeUserCount(): Int = accountManager.getAccounts(AccountState.Ready).first()
         .map { userManager.getUser(it.userId) }
         .fold(0) { acc, user ->
-            val flags = user.flags
-            val hasPassLifetime = flags.hasFlag(UserFlag.PASS_LIFETIME)
-            val isPassFromSL = flags.hasFlag(UserFlag.PASS_FROM_SL)
-            if (!user.hasSubscription() && !hasPassLifetime && !isPassFromSL) {
+            if (user.isFreeUser()) {
                 acc + 1
             } else {
                 acc
             }
         }
+
+    private fun User.isFreeUser(): Boolean {
+        val hasPassLifetime = this.flags.hasFlag(UserFlag.PASS_LIFETIME)
+        val isPassFromSL = this.flags.hasFlag(UserFlag.PASS_FROM_SL)
+        return !this.hasSubscription() && !hasPassLifetime && !isPassFromSL
+    }
 
     private fun Map<String, Boolean>.hasFlag(flag: UserFlag): Boolean = this[flag.key] ?: false
 

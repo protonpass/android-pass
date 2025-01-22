@@ -111,4 +111,6 @@ interface UserPreferencesRepository {
     fun observeDisplayFileAttachmentsOnboarding(): Flow<DisplayFileAttachmentsBanner>
     fun setDisplayFileAttachmentsOnboarding(value: DisplayFileAttachmentsBanner): Result<Unit>
 
+    fun setUseDigitalAssetLinksPreference(preference: UseDigitalAssetLinksPreference): Result<Unit>
+    fun observeUseDigitalAssetLinksPreference(): Flow<UseDigitalAssetLinksPreference>
 }

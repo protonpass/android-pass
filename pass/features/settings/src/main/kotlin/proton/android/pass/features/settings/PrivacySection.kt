@@ -42,6 +42,7 @@ import proton.android.pass.composecomponents.impl.setting.SettingToggle
 internal fun PrivacySection(
     modifier: Modifier = Modifier,
     useFavicons: Boolean,
+    isDigitalAssetLinkEnabled: Boolean,
     useDigitalAssetLinks: Boolean,
     allowScreenshots: Boolean,
     onEvent: (SettingsContentEvent) -> Unit
@@ -61,12 +62,14 @@ internal fun PrivacySection(
                 isChecked = useFavicons,
                 onClick = { onEvent(SettingsContentEvent.UseFaviconsChange(it)) }
             )
-            PassDivider()
-            SettingToggle(
-                text = stringResource(R.string.settings_use_digital_asset_link_preference_title),
-                isChecked = useDigitalAssetLinks,
-                onClick = { onEvent(SettingsContentEvent.UseDigitalAssetLinksChange(it)) }
-            )
+            if (isDigitalAssetLinkEnabled) {
+                PassDivider()
+                SettingToggle(
+                    text = stringResource(R.string.settings_use_digital_asset_link_preference_title),
+                    isChecked = useDigitalAssetLinks,
+                    onClick = { onEvent(SettingsContentEvent.UseDigitalAssetLinksChange(it)) }
+                )
+            }
         }
 
         Text(
@@ -98,6 +101,7 @@ internal fun UseFaviconsSectionPreview(
         Surface {
             PrivacySection(
                 useFavicons = input.second,
+                isDigitalAssetLinkEnabled = true,
                 useDigitalAssetLinks = input.second,
                 allowScreenshots = input.second,
                 onEvent = {}

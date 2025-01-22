@@ -71,12 +71,9 @@ internal data class ItemDetailsMenuState(
         }
     }
 
-    internal val canTrashItem: Boolean = when {
-        isItemShare -> false
-        else -> when (itemActionsOption) {
-            None -> false
-            is Some -> itemActionsOption.value.canMoveToTrash
-        }
+    internal val canTrashItem: Boolean = when (itemActionsOption) {
+        None -> false
+        is Some -> itemActionsOption.value.canMoveToTrash
     }
 
     internal val isItemExcludedFromMonitoring: Boolean by lazy {

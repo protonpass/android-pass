@@ -59,6 +59,10 @@ sealed class Share {
 
     abstract val canAutofill: Boolean
 
+    abstract val canBeDeleted: Boolean
+
+    abstract val canBeTrashed: Boolean
+
     protected abstract val permission: SharePermission
 
     data class Item(
@@ -80,6 +84,10 @@ sealed class Share {
     ) : Share() {
 
         override val shareType: ShareType = ShareType.Item
+
+        override val canBeDeleted: Boolean = isOwner || isAdmin || isEditor
+
+        override val canBeTrashed: Boolean = isOwner || isAdmin || isEditor
 
         val canBeShared: Boolean = isOwner || isAdmin || isEditor
 
@@ -108,6 +116,12 @@ sealed class Share {
 
         override val shareType: ShareType = ShareType.Vault
 
+        override val canBeDeleted: Boolean
+            get() = shareRole.toPermissions().canDelete()
+
+        override val canBeTrashed: Boolean
+            get() = shareRole.toPermissions().canTrash()
+
     }
 
     private val totalMembers: Int
@@ -123,12 +137,6 @@ sealed class Share {
 
     val canBeCreated: Boolean
         get() = shareRole.toPermissions().canCreate()
-
-    val canBeDeleted: Boolean
-        get() = shareRole.toPermissions().canDelete()
-
-    val canBeTrashed: Boolean
-        get() = shareRole.toPermissions().canTrash()
 
     val canBeUpdated: Boolean
         get() = shareRole.toPermissions().canUpdate()

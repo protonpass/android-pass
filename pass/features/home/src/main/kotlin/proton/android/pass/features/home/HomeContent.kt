@@ -55,7 +55,6 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.TestTags.HOME_EMPTY_TAG
 import proton.android.pass.commonui.api.TestTags.HOME_ITEM_LIST_TAG
-import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.AllVaultsIcon
@@ -71,6 +70,7 @@ import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.ArrowBackIconButton
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 import proton.android.pass.features.home.HomeContentTestTag.DRAWER_ICON_TEST_TAG
 import proton.android.pass.searchoptions.api.SearchFilterType
 import proton.android.pass.searchoptions.api.VaultSelectionOption
@@ -133,7 +133,7 @@ internal fun HomeContent(
 
                             is VaultSelectionOption.Vault -> stringResource(
                                 R.string.search_topbar_placeholder_vault,
-                                uiState.homeListUiState.selectedShare.value()?.name.orEmpty()
+                                uiState.homeListUiState.selectedVaultName
                             )
 
                             VaultSelectionOption.SharedByMe -> {
@@ -151,7 +151,7 @@ internal fun HomeContent(
                     drawerIcon = {
                         HomeDrawerIcon(
                             modifier = Modifier.testTag(DRAWER_ICON_TEST_TAG),
-                            selectedShare = uiState.homeListUiState.selectedShare,
+                            selectedVaultOption = uiState.homeListUiState.selectedVaultOption,
                             homeVaultSelection = uiState.homeListUiState.homeVaultSelection,
                             isSeeAllPinsMode = uiState.pinningUiState.inPinningMode,
                             isSearchMode = uiState.searchUiState.inSearchMode,
@@ -336,7 +336,7 @@ internal fun HomeContent(
 @Composable
 private fun HomeDrawerIcon(
     modifier: Modifier = Modifier,
-    selectedShare: Option<ShareUiModel>,
+    selectedVaultOption: Option<Vault>,
     homeVaultSelection: VaultSelectionOption,
     isSeeAllPinsMode: Boolean,
     isSearchMode: Boolean,
@@ -344,7 +344,7 @@ private fun HomeDrawerIcon(
     onEvent: (HomeUiEvent) -> Unit
 ) {
     if (!isSeeAllPinsMode && !isSearchMode) {
-        when (selectedShare) {
+        when (selectedVaultOption) {
             None -> {
                 when (homeVaultSelection) {
                     VaultSelectionOption.AllVaults -> {
@@ -392,9 +392,9 @@ private fun HomeDrawerIcon(
             is Some -> {
                 VaultIcon(
                     modifier = modifier.size(48.dp),
-                    backgroundColor = selectedShare.value.color.toColor(true),
-                    iconColor = selectedShare.value.color.toColor(),
-                    icon = selectedShare.value.icon.toResource(),
+                    backgroundColor = selectedVaultOption.value.color.toColor(true),
+                    iconColor = selectedVaultOption.value.color.toColor(),
+                    icon = selectedVaultOption.value.icon.toResource(),
                     onClick = { onEvent(HomeUiEvent.DrawerIconClick) }
                 )
             }

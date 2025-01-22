@@ -63,8 +63,8 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.combineN
@@ -89,7 +89,6 @@ import proton.android.pass.commonui.api.ItemSorter.sortMostRecent
 import proton.android.pass.commonui.api.ItemUiFilter.filterByQuery
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -106,12 +105,12 @@ import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveEncryptedItems
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObservePinnedItems
-import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.PinItems
@@ -129,9 +128,9 @@ import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry.Sear
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
-import proton.android.pass.domain.Vault
 import proton.android.pass.domain.items.ItemSharedType
 import proton.android.pass.features.home.HomeSnackbarMessage.AliasItemsDisabledError
 import proton.android.pass.features.home.HomeSnackbarMessage.AliasItemsEnabledError
@@ -204,7 +203,7 @@ class HomeViewModel @Inject constructor(
     private val unpinItems: UnpinItems,
     private val changeAliasStatus: ChangeAliasStatus,
     private val observeCurrentUser: ObserveCurrentUser,
-    observeVaults: ObserveVaults,
+    observeAllShares: ObserveAllShares,
     clock: Clock,
     observeEncryptedItems: ObserveEncryptedItems,
     observeEncryptedSharedItems: ObserveEncryptedSharedItems,
@@ -285,39 +284,39 @@ class HomeViewModel @Inject constructor(
 
     private val shareListWrapperFlow: Flow<ShareListWrapper> = combine(
         searchOptionsFlow,
-        observeVaults().asLoadingResult(),
+        observeAllShares().asLoadingResult(),
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1)
-    ) { searchOptions, vaultsResult, isItemSharingEnabled ->
-        val vaults: List<Vault> = vaultsResult.getOrNull().orEmpty()
-        val selectedShare: Option<ShareUiModel> = searchOptions.vaultSelectionOption
+    ) { searchOptions, sharesResult, isItemSharingEnabled ->
+        val shares: List<Share> = sharesResult.getOrNull().orEmpty()
+        val selectedShare: Option<Share> = searchOptions.vaultSelectionOption
             .let { it as? VaultSelectionOption.Vault }
-            ?.let { vault -> vaults.firstOrNull { it.shareId == vault.shareId } }
-            ?.let(ShareUiModel.Companion::fromVault)
+            ?.let { vaultSelectionOption -> shares.firstOrNull { it.id == vaultSelectionOption.shareId } }
             .toOption()
 
         val isVaultSelected = searchOptions.vaultSelectionOption is VaultSelectionOption.Vault
         if (isVaultSelected) {
-            autoSelectAllVaultsIfCannotFindVault(selectedShare, vaults, searchOptions.userId)
+            autoSelectAllVaultsIfCannotFindVault(selectedShare, shares, searchOptions.userId)
         }
 
         if (!isItemSharingEnabled) {
             autoSelectVaultIfSingle(
-                vaults = vaults,
+                shares = shares,
                 vaultSelection = searchOptions.vaultSelectionOption,
                 userId = searchOptions.userId
             )
         }
 
         ShareListWrapper(
-            shares = vaults.associate { it.shareId to ShareUiModel.fromVault(it) }
+            shares = shares
+                .associateBy { share -> share.id }
                 .toPersistentMap(),
             selectedShare = selectedShare
         )
     }.distinctUntilChanged()
 
     private data class ShareListWrapper(
-        val shares: ImmutableMap<ShareId, ShareUiModel>,
-        val selectedShare: Option<ShareUiModel>
+        val shares: ImmutableMap<ShareId, Share>,
+        val selectedShare: Option<Share>
     )
 
     private val searchEntryState: StateFlow<List<SearchEntry>> =
@@ -1162,25 +1161,43 @@ class HomeViewModel @Inject constructor(
         }
 
     private suspend fun autoSelectAllVaultsIfCannotFindVault(
-        selectedShare: Option<ShareUiModel>,
-        vaultList: List<Vault>,
+        selectedShare: Option<Share>,
+        shares: List<Share>,
         userId: UserId?
     ) {
-        userId ?: return
-        val doAllVaultsBelongToUser = vaultList.all { it.userId == userId }
-        if (selectedShare is None && vaultList.isNotEmpty() && doAllVaultsBelongToUser) {
-            homeSearchOptionsRepository.setVaultSelectionOption(VaultSelectionOption.AllVaults)
+        when {
+            userId == null -> return
+            selectedShare is Some -> return
+            else ->
+                shares
+                    .filterIsInstance<Share.Vault>()
+                    .also { vaultShares ->
+                        if (vaultShares.isNotEmpty() && vaultShares.all { it.userId == userId }) {
+                            homeSearchOptionsRepository.setVaultSelectionOption(
+                                vaultSelectionOption = VaultSelectionOption.AllVaults
+                            )
+                        }
+                    }
         }
     }
 
     private suspend fun autoSelectVaultIfSingle(
-        vaults: List<Vault>,
+        shares: List<Share>,
         vaultSelection: VaultSelectionOption,
         userId: UserId?
     ) {
-        if (vaults.size == 1 && vaultSelection is VaultSelectionOption.AllVaults && userId != null) {
-            val selection = VaultSelectionOption.Vault(vaults.first().shareId)
-            homeSearchOptionsRepository.setVaultSelectionOption(selection)
+        when {
+            userId == null -> return
+            vaultSelection !is VaultSelectionOption.AllVaults -> return
+            else ->
+                shares
+                    .filterIsInstance<Share.Vault>()
+                    .let { vaultShares ->
+                        if (vaultShares.size != 1) return
+
+                        val vaultSelectionOption = VaultSelectionOption.Vault(shareId = vaultShares.first().id)
+                        homeSearchOptionsRepository.setVaultSelectionOption(vaultSelectionOption)
+                    }
         }
     }
 

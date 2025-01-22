@@ -18,12 +18,11 @@
 
 package proton.android.pass.preferences
 
-sealed interface UseDigitalAssetLinksPreference {
-    data object Enabled : UseDigitalAssetLinksPreference
-    data object Disabled : UseDigitalAssetLinksPreference
-
+enum class UseDigitalAssetLinksPreference {
+    Enabled,
+    Disabled;
     companion object {
-        fun from(value: Boolean): UseDigitalAssetLinksPreference = if (value) { Enabled } else { Disabled }
+        fun from(value: Boolean): UseDigitalAssetLinksPreference = if (value) Enabled else Disabled
     }
 }
 

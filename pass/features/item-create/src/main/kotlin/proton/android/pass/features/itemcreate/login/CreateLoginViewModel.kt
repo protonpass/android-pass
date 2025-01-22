@@ -33,7 +33,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
@@ -97,7 +96,6 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.passkeys.api.GeneratePasskey
-import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
@@ -506,8 +504,7 @@ class CreateLoginViewModel @Inject constructor(
     }
 
     private suspend fun launchUpdateAssetLinksWorker(websites: Set<String>) {
-        val isDAL = featureFlagsRepository.get<Boolean>(FeatureFlag.DIGITAL_ASSET_LINKS).first()
-        if (isDAL) {
+        if (isDALEnabled()) {
             workerLauncher.launch(WorkerItem.SingleItemAssetLink(websites))
         }
     }

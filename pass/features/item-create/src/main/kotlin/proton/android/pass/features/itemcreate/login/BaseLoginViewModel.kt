@@ -1001,6 +1001,21 @@ abstract class BaseLoginViewModel(
         }
     }
 
+    suspend fun isDALEnabled(): Boolean {
+        val isFeatureFlagEnabled = featureFlagsRepository
+            .get<Boolean>(FeatureFlag.DIGITAL_ASSET_LINKS)
+            .firstOrNull()
+            ?: false
+
+        val isUserPreferenceEnabled = userPreferencesRepository
+            .observeUseDigitalAssetLinksPreference()
+            .firstOrNull()
+            ?.value()
+            ?: false
+
+        return isFeatureFlagEnabled && isUserPreferenceEnabled
+    }
+
     private companion object {
 
         private const val TAG = "BaseLoginViewModel"

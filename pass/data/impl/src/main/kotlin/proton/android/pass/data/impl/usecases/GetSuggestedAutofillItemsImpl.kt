@@ -39,17 +39,17 @@ import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemData
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
-import proton.android.pass.data.api.usecases.ObserveUsableVaults
 import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
 import proton.android.pass.data.api.usecases.Suggestion
+import proton.android.pass.data.api.usecases.shares.ObserveAutofillShares
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionSorter
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Plan
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
-import proton.android.pass.domain.Vault
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
@@ -62,7 +62,7 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
     private val observeItems: ObserveItems,
     private val suggestionItemFilter: SuggestionItemFilterer,
     private val suggestionSorter: SuggestionSorter,
-    private val observeUsableVaults: ObserveUsableVaults,
+    private val observeAutofillShares: ObserveAutofillShares,
     private val getUserPlan: GetUserPlan,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val assetLinkRepository: AssetLinkRepository,
@@ -124,7 +124,7 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
     }
 
     private suspend fun processAllowedItemsFlows(
-        array: Array<Pair<List<Vault>, List<ItemData.SuggestedItem>>>
+        array: Array<Pair<List<Share>, List<ItemData.SuggestedItem>>>
     ): SuggestedAutofillItemsResult {
         val filteredItems = ItemFilterProcessor.removeDuplicates(array)
         val sortedItems = sortSuggestions(filteredItems)
@@ -132,7 +132,7 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
     }
 
     private suspend fun processCreditCardFlows(
-        array: Array<Triple<List<Vault>, List<ItemData.SuggestedItem>, Plan>>
+        array: Array<Triple<List<Share>, List<ItemData.SuggestedItem>, Plan>>
     ): SuggestedAutofillItemsResult {
         val filteredItems =
             ItemFilterProcessor.removeDuplicates(array.map { it.first to it.second }.toTypedArray())
@@ -146,9 +146,9 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
             plans.any { it.hasPlanWithAccess } -> {
                 if (plans.any { it.isFreePlan }) {
                     val freePlanIndex = array.indexOfFirst { it.third.isFreePlan }
-                    val vaultsToRemove = array[freePlanIndex].first
+                    val sharesToRemove = array[freePlanIndex].first
                     val filteredItemsWithAccess = sortedItems.filter { suggestedItem ->
-                        vaultsToRemove.none { it.shareId == suggestedItem.item.shareId }
+                        sharesToRemove.none { it.id == suggestedItem.item.shareId }
                     }
                     SuggestedAutofillItemsResult.Items(filteredItemsWithAccess)
                 } else {
@@ -171,13 +171,13 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
         userId: UserId,
         itemTypeFilter: ItemTypeFilter,
         suggestion: Suggestion
-    ): Flow<Pair<List<Vault>, List<ItemData.SuggestedItem>>> = observeUsableVaults(userId)
-        .flatMapLatest { usableVaults ->
+    ): Flow<Pair<List<Share>, List<ItemData.SuggestedItem>>> = observeAutofillShares(userId)
+        .flatMapLatest { autofillShares ->
             combine(
                 observeItems(
                     userId = userId,
                     filter = itemTypeFilter,
-                    selection = ShareSelection.Shares(usableVaults.map(Vault::shareId)),
+                    selection = ShareSelection.Shares(autofillShares.map(Share::id)),
                     itemState = ItemState.Active
                 ),
                 getUrlFromPackageNameFlow(suggestion),
@@ -199,7 +199,7 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
                     val pair = item.item.shareId to item.item.id
                     uniqueItems.add(pair)
                 }
-                usableVaults to deduplicatedItems
+                autofillShares to deduplicatedItems
             }
         }
 

@@ -28,18 +28,17 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
+import proton.android.pass.crypto.api.extensions.toVault
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.ShareRole
-import proton.android.pass.domain.canUpdate
-import proton.android.pass.domain.toPermissions
+import proton.android.pass.domain.Vault
 import proton.android.pass.preferences.AliasTrashDialogStatusPreference
 import proton.android.pass.searchoptions.api.SearchFilterType
 import proton.android.pass.searchoptions.api.SearchSortingType
@@ -98,7 +97,8 @@ internal data class HomeUiState(
         is VaultSelectionOption.Vault ->
             homeListUiState
                 .shares[selection.shareId]
-                ?.role == ShareRole.Read
+                ?.isViewer
+                ?: false
 
         VaultSelectionOption.AllVaults,
         VaultSelectionOption.SharedByMe,
@@ -211,8 +211,8 @@ internal data class HomeListUiState(
     val canLoadExternalImages: Boolean,
     val actionState: ActionState = ActionState.Unknown,
     val items: ImmutableList<GroupedItemList>,
-    val selectedShare: Option<ShareUiModel> = None,
-    val shares: ImmutableMap<ShareId, ShareUiModel>,
+    val selectedShare: Option<Share> = None,
+    val shares: ImmutableMap<ShareId, Share>,
     val homeVaultSelection: VaultSelectionOption = VaultSelectionOption.AllVaults,
     val searchFilterType: SearchFilterType = SearchFilterType.All,
     val sortingType: SearchSortingType = SearchSortingType.MostRecent,
@@ -220,7 +220,15 @@ internal data class HomeListUiState(
     val showNeedsUpdate: Boolean
 ) {
 
-    fun checkCanUpdate(shareId: ShareId): Boolean = shares[shareId]?.role?.toPermissions()?.canUpdate() ?: false
+    internal val selectedVaultOption: Option<Vault> = selectedShare.flatMap { share ->
+        share.toVault()
+    }
+
+    internal val selectedVaultName: String = selectedVaultOption.value()
+        ?.name
+        .orEmpty()
+
+    fun checkCanUpdate(shareId: ShareId): Boolean = shares[shareId]?.canBeUpdated ?: false
 
     internal companion object {
 

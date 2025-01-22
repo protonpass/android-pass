@@ -24,6 +24,7 @@ import proton.android.pass.data.api.repositories.SyncState
 import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.ThemePreference
+import proton.android.pass.preferences.UseDigitalAssetLinksPreference
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.preferences.settings.SettingsDisplayAutofillPinningPreference
 import proton.android.pass.preferences.settings.SettingsDisplayUsernameFieldPreference
@@ -52,6 +53,7 @@ internal data class SettingsUiState(
     val themePreference: ThemePreference,
     val copyTotpToClipboard: CopyTotpToClipboard,
     val useFavicons: UseFaviconsPreference,
+    val useDigitalAssetLinks: UseDigitalAssetLinksPreference,
     val allowScreenshots: AllowScreenshotsPreference,
     val telemetryStatus: TelemetryStatus,
     val event: SettingsEvent,
@@ -76,6 +78,7 @@ internal data class SettingsUiState(
             copyTotpToClipboard = CopyTotpToClipboard.NotEnabled,
             syncStateLoadingResult = LoadingResult.Loading,
             useFavicons = UseFaviconsPreference.Enabled,
+            useDigitalAssetLinks = UseDigitalAssetLinksPreference.Enabled,
             allowScreenshots = AllowScreenshotsPreference.Disabled,
             telemetryStatus = TelemetryStatus.Hide,
             event = SettingsEvent.Unknown,

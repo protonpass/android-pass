@@ -34,6 +34,8 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryBannerPreference
+import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryFeature
 import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import proton.android.pass.preferences.sentinel.SentinelStatusPreference
 import proton.android.pass.preferences.settings.SettingsDisplayAutofillPinningPreference
@@ -329,6 +331,26 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 default = true
             )
         )
+    }
+
+    override fun setDisplayFeatureDiscoverBanner(
+        feature: FeatureDiscoveryFeature,
+        preference: FeatureDiscoveryBannerPreference
+    ): Result<Unit> = setPreference {
+        it.putFeatureDiscoveryBanners(feature.id, preference.value.toBooleanPrefProto())
+    }
+
+    override fun observeDisplayFeatureDiscoverBanner(
+        feature: FeatureDiscoveryFeature
+    ): Flow<FeatureDiscoveryBannerPreference> = getPreference {
+        val booleanPref = it.featureDiscoveryBannersMap[feature.id]
+            ?: BooleanPrefProto.BOOLEAN_PREFERENCE_UNSPECIFIED
+        when (booleanPref) {
+            BooleanPrefProto.BOOLEAN_PREFERENCE_TRUE -> FeatureDiscoveryBannerPreference.Display
+            BooleanPrefProto.BOOLEAN_PREFERENCE_FALSE -> FeatureDiscoveryBannerPreference.NotDisplay
+            BooleanPrefProto.BOOLEAN_PREFERENCE_UNSPECIFIED,
+            BooleanPrefProto.UNRECOGNIZED -> FeatureDiscoveryBannerPreference.Unknown
+        }
     }
 
     private fun setPreference(mapper: suspend (UserPreferences.Builder) -> UserPreferences.Builder): Result<Unit> =

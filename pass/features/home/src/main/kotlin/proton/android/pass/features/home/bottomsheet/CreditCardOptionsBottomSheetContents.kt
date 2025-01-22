@@ -37,12 +37,13 @@ import proton.android.pass.features.home.R
 
 @ExperimentalMaterialApi
 @Composable
-fun CreditCardOptionsBottomSheetContents(
+internal fun CreditCardOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
     isRecentSearch: Boolean = false,
     isFreePlan: Boolean,
     canUpdate: Boolean,
+    canViewHistory: Boolean,
     onCopyNumber: (String) -> Unit,
     onCopyCvv: (EncryptedString) -> Unit,
     action: BottomSheetItemAction,
@@ -66,17 +67,24 @@ fun CreditCardOptionsBottomSheetContents(
             leftIcon = { CreditCardIcon() }
         )
 
-        val bottomSheetItems = mutableListOf(
-            copyNumber { onCopyNumber(contents.number) },
-            copyCvv { onCopyCvv(contents.cvv.encrypted) }
-        ).apply {
+        buildList {
+            if (contents.number.isNotBlank()) {
+                add(copyNumber { onCopyNumber(contents.number) })
+            }
+
+            if (contents.cvv.encrypted.isNotBlank()) {
+                add(copyCvv { onCopyCvv(contents.cvv.encrypted) })
+            }
+
             if (itemUiModel.isPinned) {
                 add(unpin(action) { onUnpinned(itemUiModel.shareId, itemUiModel.id) })
             } else {
                 add(pin(action) { onPinned(itemUiModel.shareId, itemUiModel.id) })
             }
 
-            add(viewHistory(isFreePlan) { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
+            if (canViewHistory) {
+                add(viewHistory(isFreePlan) { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
+            }
 
             if (canUpdate) {
                 add(edit(itemUiModel, onEdit))
@@ -86,11 +94,13 @@ fun CreditCardOptionsBottomSheetContents(
             if (isRecentSearch) {
                 add(removeFromRecentSearch(itemUiModel, onRemoveFromRecentSearch))
             }
+        }.also { bottomSheetItems ->
+            BottomSheetItemList(
+                items = bottomSheetItems
+                    .withDividers()
+                    .toPersistentList()
+            )
         }
-
-        BottomSheetItemList(
-            items = bottomSheetItems.withDividers().toPersistentList()
-        )
     }
 }
 
@@ -124,7 +134,7 @@ private fun copyItem(text: String, onClick: () -> Unit): BottomSheetItem = objec
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
-fun CreditCardOptionsBottomSheetContentsPreview(
+internal fun CreditCardOptionsBottomSheetContentsPreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
     PassTheme(isDark = input.first) {
@@ -165,7 +175,8 @@ fun CreditCardOptionsBottomSheetContentsPreview(
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },
                 isFreePlan = input.second,
-                canUpdate = true
+                canUpdate = true,
+                canViewHistory = true
             )
         }
     }

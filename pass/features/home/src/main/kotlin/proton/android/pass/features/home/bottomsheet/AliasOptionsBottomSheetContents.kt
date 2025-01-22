@@ -53,11 +53,12 @@ import proton.android.pass.features.home.R
 
 @ExperimentalMaterialApi
 @Composable
-fun AliasOptionsBottomSheetContents(
+internal fun AliasOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
     isRecentSearch: Boolean = false,
     canUpdate: Boolean,
+    canViewHistory: Boolean,
     onCopyAlias: (String) -> Unit,
     action: BottomSheetItemAction,
     onPinned: (ShareId, ItemId) -> Unit,
@@ -85,14 +86,18 @@ fun AliasOptionsBottomSheetContents(
             }
         )
 
-        val bottomSheetItems = mutableListOf(copyAlias(contents.aliasEmail, onCopyAlias)).apply {
+        buildList {
+            add(copyAlias(contents.aliasEmail, onCopyAlias))
+
             if (itemUiModel.isPinned) {
                 add(unpin(action) { onUnpinned(itemUiModel.shareId, itemUiModel.id) })
             } else {
                 add(pin(action) { onPinned(itemUiModel.shareId, itemUiModel.id) })
             }
 
-            add(viewHistory(isFreePlan) { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
+            if (canViewHistory) {
+                add(viewHistory(isFreePlan) { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
+            }
 
             if (canUpdate) {
                 add(edit(itemUiModel, onEdit))
@@ -102,11 +107,13 @@ fun AliasOptionsBottomSheetContents(
             if (isRecentSearch) {
                 add(removeFromRecentSearch(itemUiModel, onRemoveFromRecentSearch))
             }
+        }.also { bottomSheetItems ->
+            BottomSheetItemList(
+                items = bottomSheetItems
+                    .withDividers()
+                    .toPersistentList()
+            )
         }
-
-        BottomSheetItemList(
-            items = bottomSheetItems.withDividers().toPersistentList()
-        )
     }
 }
 
@@ -127,7 +134,7 @@ private fun copyAlias(aliasEmail: String, onCopyAlias: (String) -> Unit): Bottom
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
-fun AliasOptionsBottomSheetContentsPreview(
+internal fun AliasOptionsBottomSheetContentsPreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
     PassTheme(isDark = input.first) {
@@ -162,7 +169,8 @@ fun AliasOptionsBottomSheetContentsPreview(
                 onEdit = { _, _ -> },
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },
-                isFreePlan = input.second
+                isFreePlan = input.second,
+                canViewHistory = true
             )
         }
     }

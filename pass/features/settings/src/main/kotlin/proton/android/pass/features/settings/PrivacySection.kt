@@ -35,7 +35,6 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
-import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.setting.SettingToggle
 
 @Composable
@@ -62,20 +61,25 @@ internal fun PrivacySection(
                 isChecked = useFavicons,
                 onClick = { onEvent(SettingsContentEvent.UseFaviconsChange(it)) }
             )
-            if (isDigitalAssetLinkEnabled) {
-                PassDivider()
+        }
+        Text(
+            text = stringResource(R.string.settings_use_favicons_preference_subtitle),
+            style = ProtonTheme.typography.captionWeak.copy(PassTheme.colors.textWeak)
+        )
+        if (isDigitalAssetLinkEnabled) {
+            Column(modifier = Modifier.roundedContainerNorm()) {
                 SettingToggle(
                     text = stringResource(R.string.settings_use_digital_asset_link_preference_title),
                     isChecked = useDigitalAssetLinks,
                     onClick = { onEvent(SettingsContentEvent.UseDigitalAssetLinksChange(it)) }
                 )
             }
-        }
 
-        Text(
-            text = stringResource(R.string.settings_use_favicons_preference_subtitle),
-            style = ProtonTheme.typography.captionWeak.copy(PassTheme.colors.textWeak)
-        )
+            Text(
+                text = stringResource(R.string.settings_use_digital_asset_link_preference_subtitle),
+                style = ProtonTheme.typography.captionWeak.copy(PassTheme.colors.textWeak)
+            )
+        }
 
         Box(modifier = Modifier.roundedContainerNorm()) {
             SettingToggle(

@@ -95,6 +95,7 @@ fun AliasDetailContent(
         AliasSection(
             alias = contents.aliasEmail,
             isAliasEnabled = contents.isEnabled,
+            isAliasCreatedByUser = isAliasCreatedByUser,
             isAliasSyncEnabled = isAliasSyncEnabled,
             isAliasStateToggling = isAliasStateToggling,
             mailboxes = mailboxes,

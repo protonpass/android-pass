@@ -78,6 +78,8 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
             wordsIncludeNumbers = false
         )
     )
+    private val useUseDigitalAssetLinksPreference =
+        MutableStateFlow<UseDigitalAssetLinksPreference>(UseDigitalAssetLinksPreference.Disabled)
 
     private val sentinelStatusPreference = MutableStateFlow(SentinelStatusPreference.Disabled)
 
@@ -272,5 +274,13 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
         displayFileAttachmentsBanner.tryEmit(value)
         return Result.success(Unit)
     }
+
+    override fun setUseDigitalAssetLinksPreference(preference: UseDigitalAssetLinksPreference): Result<Unit> {
+        useUseDigitalAssetLinksPreference.tryEmit(preference)
+        return Result.success(Unit)
+    }
+
+    override fun observeUseDigitalAssetLinksPreference(): Flow<UseDigitalAssetLinksPreference> =
+        useUseDigitalAssetLinksPreference
 
 }

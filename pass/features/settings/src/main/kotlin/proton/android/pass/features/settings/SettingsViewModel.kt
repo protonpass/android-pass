@@ -34,7 +34,9 @@ import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
+import proton.android.pass.data.api.usecases.InitialWorkerLauncher
 import proton.android.pass.data.api.usecases.RefreshContent
+import proton.android.pass.data.api.usecases.WorkerFeature
 import proton.android.pass.image.api.ClearIconCache
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -57,6 +59,7 @@ class SettingsViewModel @Inject constructor(
     private val clearIconCache: ClearIconCache,
     private val deviceSettingsRepository: DeviceSettingsRepository,
     private val canConfigureTelemetry: CanConfigureTelemetry,
+    private val initialWorkerLauncher: InitialWorkerLauncher,
     syncStatusRepository: ItemSyncStatusRepository
 ) : ViewModel() {
 
@@ -165,6 +168,9 @@ class SettingsViewModel @Inject constructor(
         preferencesRepository.setUseDigitalAssetLinksPreference(
             preference = UseDigitalAssetLinksPreference.from(useDigitalAssetLinks)
         )
+        if (!useDigitalAssetLinks) {
+            initialWorkerLauncher.cancelFeature(WorkerFeature.ASSET_LINKS)
+        }
     }
 
     internal fun onAllowScreenshotsChange(allowScreenshots: Boolean) {

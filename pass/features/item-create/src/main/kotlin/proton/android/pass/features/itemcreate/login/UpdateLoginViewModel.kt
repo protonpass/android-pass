@@ -89,7 +89,6 @@ import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.Updat
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
@@ -460,8 +459,7 @@ class UpdateLoginViewModel @Inject constructor(
     }
 
     private suspend fun launchUpdateAssetLinksWorker(websites: Set<String>) {
-        val isDAL = featureFlagsRepository.get<Boolean>(FeatureFlag.DIGITAL_ASSET_LINKS).first()
-        if (isDAL) {
+        if (isDALEnabled()) {
             workerLauncher.launch(WorkerItem.SingleItemAssetLink(websites))
         }
     }

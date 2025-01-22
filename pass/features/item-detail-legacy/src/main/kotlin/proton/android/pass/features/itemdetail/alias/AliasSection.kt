@@ -37,6 +37,7 @@ fun AliasSection(
     modifier: Modifier = Modifier,
     alias: String,
     isAliasEnabled: Boolean,
+    isAliasCreatedByUser: Boolean,
     isAliasSyncEnabled: Boolean,
     isAliasStateToggling: Boolean,
     mailboxes: PersistentList<AliasMailbox>,
@@ -51,6 +52,7 @@ fun AliasSection(
         AliasAddressRow(
             alias = alias,
             isAliasEnabled = isAliasEnabled,
+            isAliasCreatedByUser = isAliasCreatedByUser,
             isAliasSyncEnabled = isAliasSyncEnabled,
             isAliasStateToggling = isAliasStateToggling,
             onCopyAlias = { onCopyAlias(it) },
@@ -81,6 +83,7 @@ internal fun AliasSectionPreview(
             AliasSection(
                 alias = "myalias@myalias.com",
                 isAliasEnabled = false,
+                isAliasCreatedByUser = false,
                 isAliasSyncEnabled = false,
                 isAliasStateToggling = false,
                 mailboxes = mailboxes.toPersistentList(),

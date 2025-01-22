@@ -21,4 +21,13 @@ package proton.android.pass.data.api.usecases
 interface InitialWorkerLauncher {
     fun start()
     fun cancel()
+    fun cancelFeature(feature: WorkerFeature)
+}
+
+enum class WorkerFeature {
+    USER_ACCESS,
+    CLEANUP,
+    FEATURE_DISCOVERY,
+    REPORT,
+    ASSET_LINKS
 }

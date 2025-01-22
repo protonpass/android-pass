@@ -70,6 +70,7 @@ import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.data.api.usecases.GetVaultMembers
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
+import proton.android.pass.data.api.usecases.InitialWorkerLauncher
 import proton.android.pass.data.api.usecases.InviteToVault
 import proton.android.pass.data.api.usecases.LeaveShare
 import proton.android.pass.data.api.usecases.MigrateItems
@@ -229,6 +230,7 @@ import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.data.fakes.repositories.TestUserAccessDataRepository
 import proton.android.pass.data.fakes.usecases.FakeChangeAliasStatus
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
+import proton.android.pass.data.fakes.usecases.FakeInitialWorkerLauncher
 import proton.android.pass.data.fakes.usecases.FakeObserveAddressesByUserId
 import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
 import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
@@ -1025,5 +1027,8 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindGetMigrationItemsSelection(impl: FakeGetMigrationItemsSelection): GetMigrationItemsSelection
+
+    @Binds
+    abstract fun bindInitialWorkerLauncher(impl: FakeInitialWorkerLauncher): InitialWorkerLauncher
 
 }

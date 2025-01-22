@@ -35,12 +35,14 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.setting.SettingToggle
 
 @Composable
 internal fun PrivacySection(
     modifier: Modifier = Modifier,
     useFavicons: Boolean,
+    useDigitalAssetLinks: Boolean,
     allowScreenshots: Boolean,
     onEvent: (SettingsContentEvent) -> Unit
 ) {
@@ -53,11 +55,17 @@ internal fun PrivacySection(
             style = ProtonTheme.typography.defaultSmallWeak
         )
 
-        Box(modifier = Modifier.roundedContainerNorm()) {
+        Column(modifier = Modifier.roundedContainerNorm()) {
             SettingToggle(
                 text = stringResource(R.string.settings_use_favicons_preference_title),
                 isChecked = useFavicons,
                 onClick = { onEvent(SettingsContentEvent.UseFaviconsChange(it)) }
+            )
+            PassDivider()
+            SettingToggle(
+                text = stringResource(R.string.settings_use_digital_asset_link_preference_title),
+                isChecked = useDigitalAssetLinks,
+                onClick = { onEvent(SettingsContentEvent.UseDigitalAssetLinksChange(it)) }
             )
         }
 
@@ -90,6 +98,7 @@ internal fun UseFaviconsSectionPreview(
         Surface {
             PrivacySection(
                 useFavicons = input.second,
+                useDigitalAssetLinks = input.second,
                 allowScreenshots = input.second,
                 onEvent = {}
             )

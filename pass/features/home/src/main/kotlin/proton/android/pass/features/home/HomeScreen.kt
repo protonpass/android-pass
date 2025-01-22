@@ -279,6 +279,7 @@ fun HomeScreen(
                     LoginOptionsBottomSheetContents(
                         itemUiModel = item,
                         canUpdate = homeUiState.homeListUiState.checkCanUpdate(item.shareId),
+                        canViewHistory = homeUiState.homeListUiState.canViewHistory(item.shareId),
                         isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
                         canLoadExternalImages = homeUiState.homeListUiState.canLoadExternalImages,
                         action = homeUiState.action,
@@ -353,6 +354,7 @@ fun HomeScreen(
                     AliasOptionsBottomSheetContents(
                         itemUiModel = item,
                         canUpdate = homeUiState.homeListUiState.checkCanUpdate(item.shareId),
+                        canViewHistory = homeUiState.homeListUiState.canViewHistory(item.shareId),
                         isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
                         action = homeUiState.action,
                         onCopyAlias = remember {
@@ -423,6 +425,7 @@ fun HomeScreen(
                     NoteOptionsBottomSheetContents(
                         itemUiModel = item,
                         canUpdate = homeUiState.homeListUiState.checkCanUpdate(item.shareId),
+                        canViewHistory = homeUiState.homeListUiState.canViewHistory(item.shareId),
                         isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
                         action = homeUiState.action,
                         onCopyNote = remember {
@@ -484,6 +487,7 @@ fun HomeScreen(
                     CreditCardOptionsBottomSheetContents(
                         itemUiModel = item,
                         canUpdate = homeUiState.homeListUiState.checkCanUpdate(item.shareId),
+                        canViewHistory = homeUiState.homeListUiState.canViewHistory(item.shareId),
                         isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
                         action = homeUiState.action,
                         onCopyNumber = remember {
@@ -554,6 +558,7 @@ fun HomeScreen(
                     IdentityOptionsBottomSheetContents(
                         itemUiModel = item,
                         canUpdate = homeUiState.homeListUiState.checkCanUpdate(item.shareId),
+                        canViewHistory = homeUiState.homeListUiState.canViewHistory(item.shareId),
                         isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
                         action = homeUiState.action,
                         isFreePlan = homeUiState.isFreePlan,

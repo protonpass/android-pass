@@ -56,11 +56,12 @@ import proton.android.pass.features.home.R
 
 @ExperimentalMaterialApi
 @Composable
-fun IdentityOptionsBottomSheetContents(
+internal fun IdentityOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
     isFreePlan: Boolean,
     canUpdate: Boolean,
+    canViewHistory: Boolean,
     action: BottomSheetItemAction,
     isRecentSearch: Boolean = false,
     onCopyFullName: (String) -> Unit,
@@ -84,16 +85,20 @@ fun IdentityOptionsBottomSheetContents(
             leftIcon = { IdentityIcon() }
         )
 
-        val bottomSheetItems = mutableListOf(
-            copyFullName(contents.personalDetailsContent.fullName, onCopyFullName)
-        ).apply {
+        buildList {
+            if (contents.personalDetailsContent.hasFullName) {
+                add(copyFullName(contents.personalDetailsContent.fullName, onCopyFullName))
+            }
+
             if (itemUiModel.isPinned) {
                 add(unpin(action) { onUnpinned(itemUiModel.shareId, itemUiModel.id) })
             } else {
                 add(pin(action) { onPinned(itemUiModel.shareId, itemUiModel.id) })
             }
 
-            add(viewHistory(isFreePlan) { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
+            if (canViewHistory) {
+                add(viewHistory(isFreePlan) { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
+            }
 
             if (canUpdate) {
                 add(edit(itemUiModel, onEdit))
@@ -103,11 +108,13 @@ fun IdentityOptionsBottomSheetContents(
             if (isRecentSearch) {
                 add(removeFromRecentSearch(itemUiModel, onRemoveFromRecentSearch))
             }
+        }.also { bottomSheetItems ->
+            BottomSheetItemList(
+                items = bottomSheetItems
+                    .withDividers()
+                    .toPersistentList()
+            )
         }
-
-        BottomSheetItemList(
-            items = bottomSheetItems.withDividers().toPersistentList()
-        )
     }
 }
 
@@ -166,7 +173,8 @@ internal fun IdentityOptionsBSContentsPreview(
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },
                 isFreePlan = input.second,
-                canUpdate = true
+                canUpdate = true,
+                canViewHistory = true
             )
         }
     }

@@ -22,6 +22,8 @@ internal sealed interface SettingsContentEvent {
 
     data class UseFaviconsChange(val value: Boolean) : SettingsContentEvent
 
+    data class UseDigitalAssetLinksChange(val value: Boolean) : SettingsContentEvent
+
     data class AllowScreenshotsChange(val value: Boolean) : SettingsContentEvent
 
     data class TelemetryChange(val value: Boolean) : SettingsContentEvent

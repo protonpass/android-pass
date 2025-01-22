@@ -55,6 +55,8 @@ fun SettingsScreen(
         onEvent = {
             when (it) {
                 is SettingsContentEvent.UseFaviconsChange -> viewModel.onUseFaviconsChange(it.value)
+                is SettingsContentEvent.UseDigitalAssetLinksChange ->
+                    viewModel.onUseDigitalAssetLinksChange(it.value)
                 is SettingsContentEvent.AllowScreenshotsChange ->
                     viewModel.onAllowScreenshotsChange(it.value)
                 is SettingsContentEvent.TelemetryChange -> viewModel.onTelemetryChange(it.value)

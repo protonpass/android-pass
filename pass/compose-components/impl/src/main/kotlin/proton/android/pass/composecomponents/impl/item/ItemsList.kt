@@ -68,10 +68,10 @@ import proton.android.pass.commonui.api.DateFormatUtils.Format.Yesterday
 import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.GroupingKeys
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.TestTags.HOME_LOADING_TAG
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.extension.toSmallResource
 import proton.android.pass.composecomponents.impl.loading.Loading
@@ -79,9 +79,8 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.canCreate
-import proton.android.pass.domain.toPermissions
 
 private const val PLACEHOLDER_ELEMENTS = 40
 
@@ -90,7 +89,7 @@ private const val PLACEHOLDER_ELEMENTS = 40
 fun ItemsList(
     modifier: Modifier = Modifier,
     items: ImmutableList<GroupedItemList>,
-    shares: ImmutableMap<ShareId, ShareUiModel>,
+    shares: ImmutableMap<ShareId, Share>,
     isShareSelected: Boolean = false,
     scrollableState: LazyListState = rememberLazyListState(),
     shouldScrollToTop: Boolean,
@@ -153,9 +152,9 @@ fun ItemsList(
                         key = { it.key }
                     ) { item ->
                         val share = shares[item.shareId]
-                        val permissions = share?.role?.toPermissions()
-                        val isSelectable = permissions?.canCreate() ?: false
-                        val icon = share?.takeIf { !isShareSelected }?.icon
+                        val isSelectable = share?.canBeSelected ?: false
+
+                        val icon = (share as? Share.Vault)?.takeIf { isShareSelected }?.icon
                         val selection = remember(isInSelectionMode, selectedItemIds) {
                             val isSelected = item.shareId to item.id in selectedItemIds
                             ItemSelectionModeState.fromValues(
@@ -208,7 +207,7 @@ fun ItemsList(
 
 @Suppress("ComplexMethod")
 @OptIn(ExperimentalFoundationApi::class)
-fun LazyListScope.stickyItemListHeader(key: GroupingKeys) {
+internal fun LazyListScope.stickyItemListHeader(key: GroupingKeys) {
     when (key) {
         is GroupingKeys.AlphabeticalKey ->
             stickyHeader { ListHeader(title = key.character.toString()) }
@@ -231,7 +230,7 @@ fun LazyListScope.stickyItemListHeader(key: GroupingKeys) {
             }.apply { ListHeader(title = this@apply) }
         }
 
-        GroupingKeys.NoGrouping -> {}
+        GroupingKeys.NoGrouping -> Unit
     }
 }
 
@@ -244,7 +243,10 @@ fun ListHeader(
 ) {
     Text(
         modifier = modifier
-            .padding(16.dp, 0.dp)
+            .padding(
+                horizontal = Spacing.medium,
+                vertical = Spacing.none
+            )
             .fillMaxWidth()
             .background(PassTheme.colors.backgroundNorm),
         text = title,

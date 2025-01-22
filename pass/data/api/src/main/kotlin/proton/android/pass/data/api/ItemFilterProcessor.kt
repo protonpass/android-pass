@@ -19,24 +19,35 @@
 package proton.android.pass.data.api
 
 import proton.android.pass.data.api.usecases.ItemData
-import proton.android.pass.domain.Vault
+import proton.android.pass.domain.Share
 
 data object ItemFilterProcessor {
 
-    fun <T : ItemData> removeDuplicates(array: Array<Pair<List<Vault>, List<T>>>): List<T> {
-        val distinctVaults = getDistinctVaults(array.map { it.first }.flatten())
-        return filterItemsByVaults(array.map { it.second }.flatten(), distinctVaults)
+    fun <T : ItemData> removeDuplicates(array: Array<Pair<List<Share>, List<T>>>): List<T> {
+        val shares = array.map { (share, _) -> share }.flatten()
+        val items = array.map { (_, item) -> item }.flatten()
+
+        return filterItemsByShares(
+            items = items,
+            shares = getDistinctShares(shares)
+        )
     }
 
-    private fun getDistinctVaults(vaultsList: List<Vault>): List<Vault> = vaultsList.groupBy { it.vaultId }
-        .mapValues { (_, vaults) ->
-            vaults.sortedWith(compareBy({ !it.isOwned }, Vault::role)).first()
+    private fun getDistinctShares(sharesList: List<Share>): List<Share> = sharesList
+        .groupBy { share -> share.vaultId }
+        .mapValues { (_, shares) ->
+            compareBy({ share -> !share.isOwner }, Share::shareRole)
+                .let(shares::sortedWith)
+                .first()
         }
         .values
         .toList()
 
-    private fun <T : ItemData> filterItemsByVaults(items: List<T>, vaults: List<Vault>): List<T> {
-        val vaultShareIds = vaults.map { it.shareId }.toSet()
-        return items.filter { it.item.shareId in vaultShareIds }
-    }
+    private fun <T : ItemData> filterItemsByShares(shares: List<Share>, items: List<T>): List<T> = shares
+        .map { share -> share.id }
+        .toSet()
+        .let { shareIds ->
+            items.filter { item -> item.item.shareId in shareIds }
+        }
+
 }

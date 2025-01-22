@@ -22,6 +22,8 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.domain.ShareId
+import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryBannerPreference
+import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryFeature
 import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import proton.android.pass.preferences.sentinel.SentinelStatusPreference
 import proton.android.pass.preferences.settings.SettingsDisplayAutofillPinningPreference
@@ -113,4 +115,10 @@ interface UserPreferencesRepository {
 
     fun setUseDigitalAssetLinksPreference(preference: UseDigitalAssetLinksPreference): Result<Unit>
     fun observeUseDigitalAssetLinksPreference(): Flow<UseDigitalAssetLinksPreference>
+
+    fun observeDisplayFeatureDiscoverBanner(feature: FeatureDiscoveryFeature): Flow<FeatureDiscoveryBannerPreference>
+    fun setDisplayFeatureDiscoverBanner(
+        feature: FeatureDiscoveryFeature,
+        preference: FeatureDiscoveryBannerPreference
+    ): Result<Unit>
 }

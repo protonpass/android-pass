@@ -57,8 +57,7 @@ fun ContactRow(
     modifier: Modifier = Modifier,
     contact: Contact,
     isBlockLoading: Boolean,
-    onEvent: (DetailAliasContactUIEvent) -> Unit,
-    canSendEmail: Boolean
+    onEvent: (DetailAliasContactUIEvent) -> Unit
 ) {
     Column(
         modifier = modifier.roundedContainerNorm()
@@ -73,11 +72,7 @@ fun ContactRow(
             if (!contact.blocked) {
                 IconButton(
                     onClick = {
-                        if (canSendEmail) {
-                            onEvent(DetailAliasContactUIEvent.SendEmail(contact.reverseAlias))
-                        } else {
-                            onEvent(DetailAliasContactUIEvent.Upgrade)
-                        }
+                        onEvent(DetailAliasContactUIEvent.SendEmail(contact.reverseAlias))
                     }
                 ) {
                     Icon.Default(
@@ -199,7 +194,6 @@ fun ContactRowPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) inp
                     blockedEmails = null
                 ),
                 isBlockLoading = false,
-                canSendEmail = true,
                 onEvent = {}
             )
         }

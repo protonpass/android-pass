@@ -54,11 +54,12 @@ import proton.android.pass.features.home.R
 
 @ExperimentalMaterialApi
 @Composable
-fun LoginOptionsBottomSheetContents(
+internal fun LoginOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
     isFreePlan: Boolean,
     canUpdate: Boolean,
+    canViewHistory: Boolean,
     action: BottomSheetItemAction,
     isRecentSearch: Boolean = false,
     canLoadExternalImages: Boolean,
@@ -111,7 +112,9 @@ fun LoginOptionsBottomSheetContents(
                 add(pin(action) { onPinned(itemUiModel.shareId, itemUiModel.id) })
             }
 
-            add(viewHistory(isFreePlan) { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
+            if (canViewHistory) {
+                add(viewHistory(isFreePlan) { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
+            }
 
             if (canUpdate) {
                 add(edit(itemUiModel, onEdit))
@@ -220,7 +223,8 @@ internal fun LoginOptionsBottomSheetContentsPreview(
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },
                 isFreePlan = input.second,
-                canUpdate = true
+                canUpdate = true,
+                canViewHistory = true
             )
         }
     }

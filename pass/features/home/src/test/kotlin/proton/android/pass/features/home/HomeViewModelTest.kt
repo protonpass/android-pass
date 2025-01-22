@@ -49,12 +49,12 @@ import proton.android.pass.data.fakes.usecases.TestDeleteAllSearchEntry
 import proton.android.pass.data.fakes.usecases.TestDeleteItems
 import proton.android.pass.data.fakes.usecases.TestDeleteSearchEntry
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
+import proton.android.pass.data.fakes.usecases.TestObserveAllShares
 import proton.android.pass.data.fakes.usecases.TestObserveAppNeedsUpdate
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveItemCount
 import proton.android.pass.data.fakes.usecases.TestObservePinnedItems
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
-import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.fakes.usecases.TestPerformSync
 import proton.android.pass.data.fakes.usecases.TestPinItems
 import proton.android.pass.data.fakes.usecases.TestRestoreAllItems
@@ -74,8 +74,8 @@ import proton.android.pass.searchoptions.fakes.TestHomeSearchOptionsRepository
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.FixedClock
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.domain.TestShare
 import proton.android.pass.test.domain.TestUser
-import proton.android.pass.test.domain.TestVault
 
 internal class HomeViewModelTest {
 
@@ -99,7 +99,7 @@ internal class HomeViewModelTest {
     private lateinit var observeSearchEntry: TestObserveSearchEntry
     private lateinit var telemetryManager: TestTelemetryManager
     private lateinit var searchOptionsRepository: TestHomeSearchOptionsRepository
-    private lateinit var observeVaults: TestObserveVaults
+    private lateinit var observeAllShares: TestObserveAllShares
     private lateinit var clock: FixedClock
     private lateinit var observeEncryptedItems: FakeObserveEncryptedItems
     private lateinit var observePinnedItems: TestObservePinnedItems
@@ -126,7 +126,7 @@ internal class HomeViewModelTest {
         observeSearchEntry = TestObserveSearchEntry()
         telemetryManager = TestTelemetryManager()
         searchOptionsRepository = TestHomeSearchOptionsRepository()
-        observeVaults = TestObserveVaults()
+        observeAllShares = TestObserveAllShares()
         clock = FixedClock(Clock.System.now())
         observeEncryptedItems = FakeObserveEncryptedItems()
         preferencesRepository = TestPreferenceRepository()
@@ -199,10 +199,10 @@ internal class HomeViewModelTest {
 
         preferencesRepository.setUseFaviconsPreference(UseFaviconsPreference.Disabled)
 
-        val vaults = items
+        val vaultShares = items
             .map { it.shareId }
             .distinct()
-            .map(TestVault::create)
+            .map { shareId -> TestShare.Vault.create(id = shareId.id) }
 
         val searchEntries = items.map {
             SearchEntry(
@@ -212,8 +212,7 @@ internal class HomeViewModelTest {
                 createTime = Clock.System.now().toJavaInstant().epochSecond
             )
         }
-
-        observeVaults.sendResult(Result.success(vaults))
+        observeAllShares.sendResult(Result.success(vaultShares))
         observeEncryptedItems.emitValue(items)
         observeSearchEntry.emit(searchEntries)
 
@@ -244,7 +243,7 @@ internal class HomeViewModelTest {
             observeSearchEntry = observeSearchEntry,
             telemetryManager = telemetryManager,
             homeSearchOptionsRepository = searchOptionsRepository,
-            observeVaults = observeVaults,
+            observeAllShares = observeAllShares,
             clock = clock,
             observeEncryptedItems = observeEncryptedItems,
             observePinnedItems = observePinnedItems,

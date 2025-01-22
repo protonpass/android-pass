@@ -61,6 +61,8 @@ sealed class Share {
 
     abstract val canBeDeleted: Boolean
 
+    abstract val canBeHistoryViewed: Boolean
+
     abstract val canBeSelected: Boolean
 
     abstract val canBeTrashed: Boolean
@@ -90,6 +92,8 @@ sealed class Share {
         override val shareType: ShareType = ShareType.Item
 
         override val canBeDeleted: Boolean = isOwner || isAdmin || isEditor
+
+        override val canBeHistoryViewed: Boolean = isOwner || isAdmin || isEditor
 
         override val canBeSelected: Boolean = isOwner || isAdmin || isEditor
 
@@ -126,6 +130,8 @@ sealed class Share {
 
         override val canBeDeleted: Boolean
             get() = shareRole.toPermissions().canDelete()
+
+        override val canBeHistoryViewed: Boolean = false
 
         override val canBeSelected: Boolean
             get() = shareRole.toPermissions().canCreate()

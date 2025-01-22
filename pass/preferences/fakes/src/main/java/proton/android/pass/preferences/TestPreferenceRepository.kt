@@ -20,11 +20,15 @@ package proton.android.pass.preferences
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.ShareId
+import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryBannerPreference
+import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryFeature
 import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import proton.android.pass.preferences.sentinel.SentinelStatusPreference
 import proton.android.pass.preferences.settings.SettingsDisplayAutofillPinningPreference
@@ -79,22 +83,29 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
         )
     )
     private val useUseDigitalAssetLinksPreference =
-        MutableStateFlow<UseDigitalAssetLinksPreference>(UseDigitalAssetLinksPreference.Disabled)
+        MutableStateFlow(UseDigitalAssetLinksPreference.Disabled)
 
     private val sentinelStatusPreference = MutableStateFlow(SentinelStatusPreference.Disabled)
 
     private val monitorStatusPreference = MutableStateFlow(MonitorStatusPreference.NoIssues)
 
-    private val simpleLoginSyncStatusPreference = MutableStateFlow(SimpleLoginSyncStatusPreference.Disabled)
+    private val simpleLoginSyncStatusPreference =
+        MutableStateFlow(SimpleLoginSyncStatusPreference.Disabled)
 
-    private val aliasTrashDialogStatusPreference = MutableStateFlow(AliasTrashDialogStatusPreference.Disabled)
+    private val aliasTrashDialogStatusPreference =
+        MutableStateFlow(AliasTrashDialogStatusPreference.Disabled)
 
-    private val displayUsernameFieldPreference = MutableStateFlow(SettingsDisplayUsernameFieldPreference.Disabled)
+    private val displayUsernameFieldPreference =
+        MutableStateFlow(SettingsDisplayUsernameFieldPreference.Disabled)
 
-    private val displayAutofillPinningPreference = MutableStateFlow(SettingsDisplayAutofillPinningPreference.Disabled)
+    private val displayAutofillPinningPreference =
+        MutableStateFlow(SettingsDisplayAutofillPinningPreference.Disabled)
 
     private val displayFileAttachmentsBanner: MutableStateFlow<DisplayFileAttachmentsBanner> =
         MutableStateFlow(DisplayFileAttachmentsBanner.Unknown)
+
+    private val featureDiscoveryBannerPreferenceMap =
+        MutableStateFlow<Map<FeatureDiscoveryFeature, FeatureDiscoveryBannerPreference>>(emptyMap())
 
     override fun setAppLockState(state: AppLockState): Result<Unit> {
         appLockState.tryEmit(state)
@@ -282,5 +293,21 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
 
     override fun observeUseDigitalAssetLinksPreference(): Flow<UseDigitalAssetLinksPreference> =
         useUseDigitalAssetLinksPreference
+
+    override fun observeDisplayFeatureDiscoverBanner(
+        feature: FeatureDiscoveryFeature
+    ): Flow<FeatureDiscoveryBannerPreference> = featureDiscoveryBannerPreferenceMap.map {
+        it[feature] ?: FeatureDiscoveryBannerPreference.Unknown
+    }
+
+    override fun setDisplayFeatureDiscoverBanner(
+        feature: FeatureDiscoveryFeature,
+        preference: FeatureDiscoveryBannerPreference
+    ): Result<Unit> {
+        featureDiscoveryBannerPreferenceMap.update { currentMap ->
+            currentMap + (feature to preference)
+        }
+        return Result.success(Unit)
+    }
 
 }

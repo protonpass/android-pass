@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.image.api.ClearIconCache
@@ -40,6 +41,7 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.ThemePreference
+import proton.android.pass.preferences.UseDigitalAssetLinksPreference
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.settings.SettingsDisplayAutofillPinningPreference
@@ -72,6 +74,11 @@ class SettingsViewModel @Inject constructor(
             .getUseFaviconsPreference()
             .distinctUntilChanged()
 
+    private val useDigitalAssetLinksState: Flow<UseDigitalAssetLinksPreference> =
+        preferencesRepository
+            .observeUseDigitalAssetLinksPreference()
+            .distinctUntilChanged()
+
     private val allowScreenshotsState: Flow<AllowScreenshotsPreference> =
         preferencesRepository
             .getAllowScreenshotsPreference()
@@ -89,14 +96,16 @@ class SettingsViewModel @Inject constructor(
         val theme: ThemePreference,
         val copyTotpToClipboard: CopyTotpToClipboard,
         val useFavicons: UseFaviconsPreference,
+        val useDigitalAssetLinks: UseDigitalAssetLinksPreference,
         val displayUsernameFieldPreference: SettingsDisplayUsernameFieldPreference,
         val displayAutofillPinningPreference: SettingsDisplayAutofillPinningPreference
     )
 
-    private val preferencesState: Flow<PreferencesState> = combine(
+    private val preferencesState: Flow<PreferencesState> = combineN(
         themeState,
         copyTotpToClipboardState,
         useFaviconsState,
+        useDigitalAssetLinksState,
         displayUsernameFieldPreferenceFlow,
         preferencesRepository.observeDisplayAutofillPinningPreference(),
         ::PreferencesState
@@ -123,6 +132,7 @@ class SettingsViewModel @Inject constructor(
             copyTotpToClipboard = preferences.copyTotpToClipboard,
             syncStateLoadingResult = syncStateLoadingResult,
             useFavicons = preferences.useFavicons,
+            useDigitalAssetLinks = preferences.useDigitalAssetLinks,
             allowScreenshots = allowScreenshots,
             telemetryStatus = telemetryStatus,
             event = event,
@@ -149,6 +159,12 @@ class SettingsViewModel @Inject constructor(
                     snackbarDispatcher(SettingsSnackbarMessage.ClearIconCacheError)
                 }
         }
+    }
+
+    internal fun onUseDigitalAssetLinksChange(useDigitalAssetLinks: Boolean) {
+        preferencesRepository.setUseDigitalAssetLinksPreference(
+            preference = UseDigitalAssetLinksPreference.from(useDigitalAssetLinks)
+        )
     }
 
     internal fun onAllowScreenshotsChange(allowScreenshots: Boolean) {

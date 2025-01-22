@@ -42,6 +42,8 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.preferences.CopyTotpToClipboard
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UseDigitalAssetLinksPreference
 import proton.android.pass.preferences.UseFaviconsPreference
@@ -60,6 +62,7 @@ class SettingsViewModel @Inject constructor(
     private val deviceSettingsRepository: DeviceSettingsRepository,
     private val canConfigureTelemetry: CanConfigureTelemetry,
     private val initialWorkerLauncher: InitialWorkerLauncher,
+    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     syncStatusRepository: ItemSyncStatusRepository
 ) : ViewModel() {
 
@@ -99,6 +102,7 @@ class SettingsViewModel @Inject constructor(
         val theme: ThemePreference,
         val copyTotpToClipboard: CopyTotpToClipboard,
         val useFavicons: UseFaviconsPreference,
+        val isDigitalAssetLinkEnabled: Boolean,
         val useDigitalAssetLinks: UseDigitalAssetLinksPreference,
         val displayUsernameFieldPreference: SettingsDisplayUsernameFieldPreference,
         val displayAutofillPinningPreference: SettingsDisplayAutofillPinningPreference
@@ -108,6 +112,7 @@ class SettingsViewModel @Inject constructor(
         themeState,
         copyTotpToClipboardState,
         useFaviconsState,
+        featureFlagsRepository[FeatureFlag.DIGITAL_ASSET_LINKS],
         useDigitalAssetLinksState,
         displayUsernameFieldPreferenceFlow,
         preferencesRepository.observeDisplayAutofillPinningPreference(),
@@ -135,6 +140,7 @@ class SettingsViewModel @Inject constructor(
             copyTotpToClipboard = preferences.copyTotpToClipboard,
             syncStateLoadingResult = syncStateLoadingResult,
             useFavicons = preferences.useFavicons,
+            isDigitalAssetLinkEnabled = preferences.isDigitalAssetLinkEnabled,
             useDigitalAssetLinks = preferences.useDigitalAssetLinks,
             allowScreenshots = allowScreenshots,
             telemetryStatus = telemetryStatus,

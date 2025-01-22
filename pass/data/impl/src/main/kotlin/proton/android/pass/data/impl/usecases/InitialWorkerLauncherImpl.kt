@@ -25,9 +25,11 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.launch
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.data.api.usecases.InitialWorkerLauncher
 import proton.android.pass.data.api.usecases.WorkerFeature
 import proton.android.pass.data.impl.work.PeriodicAssetLinkWorker
@@ -48,7 +50,8 @@ class InitialWorkerLauncherImpl @Inject constructor(
     private val workManager: WorkManager,
     private val eventWorkerManager: EventWorkerManager,
     private val userPreferencesRepository: UserPreferencesRepository,
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
+    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
+    private val appDispatchers: AppDispatchers
 ) : InitialWorkerLauncher {
 
     private val featureLaunchActions: Map<WorkerFeature, () -> Unit> = mapOf(
@@ -77,14 +80,16 @@ class InitialWorkerLauncherImpl @Inject constructor(
         launchFeature(WorkerFeature.FEATURE_DISCOVERY)
         launchFeature(WorkerFeature.REPORT)
 
-        if (isDALEnabled()) {
-            launchFeature(WorkerFeature.ASSET_LINKS)
-        } else {
-            cancelFeature(WorkerFeature.ASSET_LINKS)
+        CoroutineScope(appDispatchers.io).launch {
+            if (isDALEnabled()) {
+                launchFeature(WorkerFeature.ASSET_LINKS)
+            } else {
+                cancelFeature(WorkerFeature.ASSET_LINKS)
+            }
         }
     }
 
-    private fun isDALEnabled() = runBlocking {
+    private suspend fun isDALEnabled(): Boolean {
         val isFeatureFlagEnabled = featureFlagsPreferencesRepository
             .get<Boolean>(FeatureFlag.DIGITAL_ASSET_LINKS)
             .firstOrNull()
@@ -96,7 +101,7 @@ class InitialWorkerLauncherImpl @Inject constructor(
             ?.value()
             ?: false
 
-        isFeatureFlagEnabled && isUserPreferenceEnabled
+        return isFeatureFlagEnabled && isUserPreferenceEnabled
     }
 
     private fun launchFeature(feature: WorkerFeature) {

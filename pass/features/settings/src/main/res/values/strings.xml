@@ -53,5 +53,5 @@
     <string name="clipboard_option_clear_clipboard_never">Never</string>
     <string name="clipboard_option_clear_clipboard_after_60_seconds">After 1 minute</string>
     <string name="clipboard_option_clear_clipboard_after_180_seconds">After 3 minutes</string>
-    <string name="settings_use_digital_asset_link_preference_title">Use Digital Asset Links</string>
+    <string name="settings_use_digital_asset_link_preference_title">Enable Digital Asset Links</string>
 </resources>

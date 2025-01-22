@@ -76,7 +76,7 @@ internal sealed interface LoginDetailUiState {
 
         internal val canMigrate: Boolean = isVaultShare && itemActions.canMoveToOtherVault.value()
 
-        internal val canMoveToTrash: Boolean = isVaultShare && itemActions.canMoveToTrash
+        internal val canMoveToTrash: Boolean = itemActions.canMoveToTrash
 
         internal val canLeaveItem: Boolean = !isVaultShare
 

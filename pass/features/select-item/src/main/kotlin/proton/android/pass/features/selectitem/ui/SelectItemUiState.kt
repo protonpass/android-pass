@@ -29,10 +29,10 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.searchoptions.api.SearchSortingType
 
@@ -84,7 +84,7 @@ data class SelectItemListUiState(
     val isRefreshing: IsRefreshingState,
     val itemClickedEvent: AutofillItemClickedEvent,
     val items: SelectItemListItems,
-    val shares: PersistentMap<ShareId, ShareUiModel>,
+    val shares: PersistentMap<ShareId, Share>,
     val sortingType: SearchSortingType,
     val shouldScrollToTop: Boolean,
     val canLoadExternalImages: Boolean,

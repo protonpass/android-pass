@@ -319,6 +319,18 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 .let(userPreferencesBuilder::setDisplayFileAttachmentsOnboarding)
         }
 
+    override fun setUseDigitalAssetLinksPreference(preference: UseDigitalAssetLinksPreference): Result<Unit> =
+        setPreference { it.setUseDigitalAssetLinks(preference.value().toBooleanPrefProto()) }
+
+    override fun observeUseDigitalAssetLinksPreference(): Flow<UseDigitalAssetLinksPreference> = getPreference {
+        UseDigitalAssetLinksPreference.from(
+            fromBooleanPrefProto(
+                pref = it.useDigitalAssetLinks,
+                default = true
+            )
+        )
+    }
+
     private fun setPreference(mapper: suspend (UserPreferences.Builder) -> UserPreferences.Builder): Result<Unit> =
         runBlocking {
             setPreferenceSuspend(mapper)

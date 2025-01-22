@@ -29,11 +29,13 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.firstOrNull
+import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner
-import proton.android.pass.preferences.DisplayFileAttachmentsBanner.Display
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryBannerPreference
+import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryFeature
 import java.util.concurrent.TimeUnit
 
 @HiltWorker
@@ -46,7 +48,10 @@ class PeriodicFeatureDiscoveryWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result = runCatching {
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
-        processFileAttachmentsBannerDisplayLogic()
+        val summary = observeItemCount().firstOrNull()
+            ?: ItemCountSummary.Initial
+        processFileAttachmentsBannerDisplayLogic(summary.total)
+        processAliasManagementBannerDisplayLogic(summary.alias)
     }.onSuccess {
         PassLogger.i(TAG, "Finished $TAG")
     }.onFailure {
@@ -54,13 +59,36 @@ class PeriodicFeatureDiscoveryWorker @AssistedInject constructor(
         PassLogger.w(TAG, it)
     }.toWorkerResult()
 
-    private suspend fun processFileAttachmentsBannerDisplayLogic() {
-        val total = observeItemCount().firstOrNull()?.total ?: 0
+    private suspend fun processFileAttachmentsBannerDisplayLogic(total: Long) {
         val preference = userPreferencesRepository.observeDisplayFileAttachmentsOnboarding()
             .firstOrNull()
             ?: DisplayFileAttachmentsBanner.NotDisplay
-        if (preference == DisplayFileAttachmentsBanner.Unknown && total > ITEM_AMOUNT_THRESHOLD) {
-            userPreferencesRepository.setDisplayFileAttachmentsOnboarding(Display)
+        if (preference == DisplayFileAttachmentsBanner.Unknown && total > FILE_ATTACHMENTS_ITEM_AMOUNT_THRESHOLD) {
+            userPreferencesRepository.setDisplayFileAttachmentsOnboarding(
+                DisplayFileAttachmentsBanner.Display
+            )
+        }
+    }
+
+    private suspend fun processAliasManagementBannerDisplayLogic(alias: Long) {
+        if (alias <= ALIAS_MANAGEMENT_ALIAS_AMOUNT_THRESHOLD) return
+
+        checkAndSetBannerDisplay(FeatureDiscoveryFeature.AliasManagementContacts)
+        checkAndSetBannerDisplay(FeatureDiscoveryFeature.AliasManagementMailbox)
+        checkAndSetBannerDisplay(FeatureDiscoveryFeature.AliasManagementCustomDomain)
+        checkAndSetBannerDisplay(FeatureDiscoveryFeature.AliasManagementOptions)
+    }
+
+    private suspend fun checkAndSetBannerDisplay(feature: FeatureDiscoveryFeature) {
+        val bannerPreference = userPreferencesRepository.observeDisplayFeatureDiscoverBanner(feature)
+            .firstOrNull()
+            ?: FeatureDiscoveryBannerPreference.NotDisplay
+
+        if (bannerPreference == FeatureDiscoveryBannerPreference.Unknown) {
+            userPreferencesRepository.setDisplayFeatureDiscoverBanner(
+                feature,
+                FeatureDiscoveryBannerPreference.Display
+            )
         }
     }
 
@@ -69,7 +97,8 @@ class PeriodicFeatureDiscoveryWorker @AssistedInject constructor(
         private const val TAG = "PeriodicFeatureDiscoveryWorker"
         private const val REPEAT_DAYS = 1L
         private const val INITIAL_DELAY_DAYS = 1L
-        private const val ITEM_AMOUNT_THRESHOLD = 10
+        private const val FILE_ATTACHMENTS_ITEM_AMOUNT_THRESHOLD = 10
+        private const val ALIAS_MANAGEMENT_ALIAS_AMOUNT_THRESHOLD = 2
 
         fun getRequestFor(): PeriodicWorkRequest =
             PeriodicWorkRequestBuilder<PeriodicFeatureDiscoveryWorker>(REPEAT_DAYS, TimeUnit.DAYS)

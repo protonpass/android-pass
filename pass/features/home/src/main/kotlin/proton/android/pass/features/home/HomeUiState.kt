@@ -230,6 +230,8 @@ internal data class HomeListUiState(
 
     fun checkCanUpdate(shareId: ShareId): Boolean = shares[shareId]?.canBeUpdated ?: false
 
+    fun canViewHistory(shareId: ShareId): Boolean = shares[shareId]?.canBeHistoryViewed ?: false
+
     internal companion object {
 
         internal val Loading = HomeListUiState(

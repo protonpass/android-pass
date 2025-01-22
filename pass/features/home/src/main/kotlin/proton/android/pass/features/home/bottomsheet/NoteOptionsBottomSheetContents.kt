@@ -52,12 +52,13 @@ import proton.android.pass.features.home.R
 
 @ExperimentalMaterialApi
 @Composable
-fun NoteOptionsBottomSheetContents(
+internal fun NoteOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
     isRecentSearch: Boolean = false,
     isFreePlan: Boolean,
     canUpdate: Boolean,
+    canViewHistory: Boolean,
     onCopyNote: (String) -> Unit,
     action: BottomSheetItemAction,
     onPinned: (ShareId, ItemId) -> Unit,
@@ -84,14 +85,20 @@ fun NoteOptionsBottomSheetContents(
             leftIcon = { NoteIcon() }
         )
 
-        val bottomSheetItems = mutableListOf(copyNote(contents.note, onCopyNote)).apply {
+        buildList {
+            if (contents.note.isNotEmpty()) {
+                add(copyNote(contents.title, onCopyNote))
+            }
+
             if (itemUiModel.isPinned) {
                 add(unpin(action) { onUnpinned(itemUiModel.shareId, itemUiModel.id) })
             } else {
                 add(pin(action) { onPinned(itemUiModel.shareId, itemUiModel.id) })
             }
 
-            add(viewHistory(isFreePlan) { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
+            if (canViewHistory) {
+                add(viewHistory(isFreePlan) { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
+            }
 
             if (canUpdate) {
                 add(edit(itemUiModel, onEdit))
@@ -101,11 +108,13 @@ fun NoteOptionsBottomSheetContents(
             if (isRecentSearch) {
                 add(removeFromRecentSearch(itemUiModel, onRemoveFromRecentSearch))
             }
+        }.also { bottomSheetItems ->
+            BottomSheetItemList(
+                items = bottomSheetItems
+                    .withDividers()
+                    .toPersistentList()
+            )
         }
-
-        BottomSheetItemList(
-            items = bottomSheetItems.withDividers().toPersistentList()
-        )
     }
 }
 
@@ -126,7 +135,7 @@ private fun copyNote(text: String, onCopyNote: (String) -> Unit): BottomSheetIte
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
-fun NoteOptionsBottomSheetContentsPreview(
+internal fun NoteOptionsBottomSheetContentsPreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
     PassTheme(isDark = input.first) {
@@ -159,7 +168,8 @@ fun NoteOptionsBottomSheetContentsPreview(
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },
                 isFreePlan = input.second,
-                canUpdate = true
+                canUpdate = true,
+                canViewHistory = true
             )
         }
     }

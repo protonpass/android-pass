@@ -207,6 +207,7 @@ import proton.android.pass.data.api.usecases.securelink.ObserveInactiveSecureLin
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
+import proton.android.pass.data.api.usecases.shares.ObserveAutofillShares
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.data.api.usecases.shares.ObserveShareItemMembers
 import proton.android.pass.data.api.usecases.shares.ObserveShareItemsCount
@@ -425,6 +426,7 @@ import proton.android.pass.data.impl.usecases.securelink.ObserveInactiveSecureLi
 import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinkImpl
 import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinksCountImpl
 import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinksImpl
+import proton.android.pass.data.impl.usecases.shares.ObserveAutofillSharesImpl
 import proton.android.pass.data.impl.usecases.shares.ObserveShareImpl
 import proton.android.pass.data.impl.usecases.shares.ObserveShareItemMembersImpl
 import proton.android.pass.data.impl.usecases.shares.ObserveShareItemsCountImpl
@@ -1150,5 +1152,8 @@ abstract class DataUseCaseModule {
     abstract fun bindSendUserMonitorCredentialsReport(
         impl: SendUserMonitorCredentialsReportImpl
     ): SendUserMonitorCredentialsReport
+
+    @[Binds Singleton]
+    abstract fun bindObserveAutofillShares(impl: ObserveAutofillSharesImpl): ObserveAutofillShares
 
 }

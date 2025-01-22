@@ -37,4 +37,5 @@ message UserPreferences {
   BooleanPrefProto has_dismissed_sl_sync_banner = 23;
   BooleanPrefProto display_autofill_pinning = 24;
   BooleanPrefProto display_file_attachments_onboarding = 25;
+  BooleanPrefProto use_digital_asset_links = 26;
 }

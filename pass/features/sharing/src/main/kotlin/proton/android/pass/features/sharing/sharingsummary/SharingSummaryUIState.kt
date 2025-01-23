@@ -29,6 +29,7 @@ import proton.android.pass.data.api.repositories.AddressPermission
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.domain.items.ItemCategory
@@ -62,6 +63,8 @@ internal sealed class SharingSummaryState {
 
     internal abstract val addressPermissions: List<AddressPermission>
 
+    internal abstract val shareType: ShareType
+
     protected abstract val isLoadingState: IsLoadingState
 
     internal val addresses: ImmutableList<AddressPermissionUiState>
@@ -80,6 +83,8 @@ internal sealed class SharingSummaryState {
 
         override val event: SharingSummaryEvent = SharingSummaryEvent.Idle
 
+        override val shareType: ShareType = ShareType.Vault
+
     }
 
     data class ShareItem(
@@ -89,6 +94,8 @@ internal sealed class SharingSummaryState {
         private val itemUiModel: ItemUiModel,
         private val useFaviconsPreference: UseFaviconsPreference
     ) : SharingSummaryState() {
+
+        override val shareType: ShareType = ShareType.Item
 
         internal val itemId: ItemId = itemUiModel.id
 
@@ -134,6 +141,8 @@ internal sealed class SharingSummaryState {
         override val isLoadingState: IsLoadingState,
         private val vaultWithItemCount: VaultWithItemCount
     ) : SharingSummaryState() {
+
+        override val shareType: ShareType = ShareType.Vault
 
         internal val vault: Vault = vaultWithItemCount.vault
 

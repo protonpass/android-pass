@@ -38,7 +38,8 @@ import me.proton.core.presentation.R as CoreR
 internal fun ShareFromItemOptions(
     modifier: Modifier = Modifier,
     canUsePaidFeatures: Boolean,
-    isItemShared: Boolean,
+    canShareViaSecureLink: Boolean,
+    canManageAccess: Boolean,
     onEvent: (ShareFromItemEvent) -> Unit
 ) {
     Column(
@@ -55,74 +56,45 @@ internal fun ShareFromItemOptions(
             textAlign = TextAlign.Center
         )
 
-        if (isItemShared) {
-            SharedItemOptions(
-                onEvent = onEvent
+        ShareItemSecureLinkRow(
+            iconResId = CoreR.drawable.ic_proton_user_plus,
+            title = stringResource(id = R.string.share_with_user_shared_title),
+            description = stringResource(id = R.string.share_with_user_shared_description),
+            shouldShowPlusIcon = !canUsePaidFeatures,
+            onClick = {
+                if (canUsePaidFeatures) {
+                    ShareFromItemEvent.ShareItem
+                } else {
+                    ShareFromItemEvent.UpsellItemSharing
+                }.also(onEvent)
+            }
+        )
+
+        if (canShareViaSecureLink) {
+            ShareItemSecureLinkRow(
+                iconResId = CoreR.drawable.ic_proton_link,
+                title = stringResource(id = R.string.share_with_secure_link_shared_title),
+                description = stringResource(id = R.string.share_with_secure_link_shared_description),
+                shouldShowPlusIcon = !canUsePaidFeatures,
+                onClick = {
+                    if (canUsePaidFeatures) {
+                        ShareFromItemEvent.ShareSecureLink
+                    } else {
+                        ShareFromItemEvent.UpsellSecureLink
+                    }.also(onEvent)
+                }
             )
-        } else {
-            NotSharedItemOptions(
-                canUsePaidFeatures = canUsePaidFeatures,
-                onEvent = onEvent
+        }
+
+        if (canManageAccess) {
+            ShareItemSecureLinkRow(
+                iconResId = CoreR.drawable.ic_proton_users,
+                title = stringResource(id = R.string.share_with_manage_shared_item_title),
+                description = stringResource(id = R.string.share_with_manage_shared_item_description),
+                shouldShowPlusIcon = false,
+                backgroundColor = PassTheme.colors.backgroundWeak,
+                onClick = { onEvent(ShareFromItemEvent.ManageSharedItem) }
             )
         }
     }
-}
-
-@Composable
-private fun SharedItemOptions(onEvent: (ShareFromItemEvent) -> Unit) {
-    ShareItemSecureLinkRow(
-        iconResId = CoreR.drawable.ic_proton_user_plus,
-        title = stringResource(id = R.string.share_with_user_shared_title),
-        description = stringResource(id = R.string.share_with_user_shared_description),
-        shouldShowPlusIcon = false,
-        onClick = { onEvent(ShareFromItemEvent.ShareItem) }
-    )
-
-    ShareItemSecureLinkRow(
-        iconResId = CoreR.drawable.ic_proton_link,
-        title = stringResource(id = R.string.share_with_secure_link_shared_title),
-        description = stringResource(id = R.string.share_with_secure_link_shared_description),
-        shouldShowPlusIcon = false,
-        onClick = { onEvent(ShareFromItemEvent.ShareSecureLink) }
-    )
-
-    ShareItemSecureLinkRow(
-        iconResId = CoreR.drawable.ic_proton_users,
-        title = stringResource(id = R.string.share_with_manage_shared_item_title),
-        description = stringResource(id = R.string.share_with_manage_shared_item_description),
-        shouldShowPlusIcon = false,
-        backgroundColor = PassTheme.colors.backgroundWeak,
-        onClick = { onEvent(ShareFromItemEvent.ManageSharedItem) }
-    )
-}
-
-@Composable
-private fun NotSharedItemOptions(canUsePaidFeatures: Boolean, onEvent: (ShareFromItemEvent) -> Unit) {
-    ShareItemSecureLinkRow(
-        iconResId = CoreR.drawable.ic_proton_user_plus,
-        title = stringResource(id = R.string.share_with_user_shared_title),
-        description = stringResource(id = R.string.share_with_user_shared_description),
-        shouldShowPlusIcon = !canUsePaidFeatures,
-        onClick = {
-            if (canUsePaidFeatures) {
-                ShareFromItemEvent.ShareItem
-            } else {
-                ShareFromItemEvent.UpsellItemSharing
-            }.also(onEvent)
-        }
-    )
-
-    ShareItemSecureLinkRow(
-        iconResId = CoreR.drawable.ic_proton_link,
-        title = stringResource(id = R.string.share_with_secure_link_shared_title),
-        description = stringResource(id = R.string.share_with_secure_link_shared_description),
-        shouldShowPlusIcon = !canUsePaidFeatures,
-        onClick = {
-            if (canUsePaidFeatures) {
-                ShareFromItemEvent.ShareSecureLink
-            } else {
-                ShareFromItemEvent.UpsellSecureLink
-            }.also(onEvent)
-        }
-    )
 }

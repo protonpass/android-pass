@@ -32,7 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.domain.ShareType
@@ -40,7 +40,6 @@ import proton.android.pass.features.sharing.R
 
 @Composable
 internal fun SharingSummaryAccessLevelSection(modifier: Modifier = Modifier, shareType: ShareType) {
-
     val rowsResIds = remember(shareType) {
         when (shareType) {
             ShareType.Vault -> listOf(
@@ -104,11 +103,15 @@ private fun SharingSummaryAccessLevelRow(
 }
 
 @[Preview Composable]
-internal fun SharingSummaryAccessLevelSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun SharingSummaryAccessLevelSectionPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    val (isDark, isItemShare) = input
+
     PassTheme(isDark = isDark) {
         Surface {
             SharingSummaryAccessLevelSection(
-                shareType = ShareType.Item
+                shareType = if (isItemShare) ShareType.Item else ShareType.Vault
             )
         }
     }

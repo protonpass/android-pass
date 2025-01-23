@@ -65,6 +65,7 @@ internal sealed interface AliasDetailUiState {
         val event: ItemDetailEvent,
         val itemFeatures: AliasItemFeatures,
         val hasMoreThanOneVault: Boolean,
+        val displayContactsBanner: Boolean,
         val attachmentsState: AttachmentsState
     ) : AliasDetailUiState {
 

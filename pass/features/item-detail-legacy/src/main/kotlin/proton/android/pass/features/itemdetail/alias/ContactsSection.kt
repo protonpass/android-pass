@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.itemdetail.alias
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
@@ -37,13 +38,16 @@ import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.row.CounterRow
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.itemdetail.R
+import proton.android.pass.features.itemdetail.alias.banner.AliasContactsBanner
 import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun ContactsSection(
     modifier: Modifier = Modifier,
     counter: Int,
-    onClick: () -> Unit
+    displayContactsBanner: Boolean,
+    onClick: () -> Unit,
+    onDismissContactsBanner: () -> Unit
 ) {
     Column(
         modifier = modifier,
@@ -73,7 +77,9 @@ internal fun ContactsSection(
                 }
             } else null
         )
-
+        AnimatedVisibility(displayContactsBanner) {
+            AliasContactsBanner { onDismissContactsBanner() }
+        }
         Text.CaptionWeak(text = stringResource(R.string.contacts_section_description))
     }
 }
@@ -82,7 +88,12 @@ internal fun ContactsSection(
 internal fun ContactsSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            ContactsSection(counter = 3, onClick = {})
+            ContactsSection(
+                counter = 3,
+                displayContactsBanner = false,
+                onClick = {},
+                onDismissContactsBanner = {}
+            )
         }
     }
 }

@@ -68,12 +68,14 @@ fun AliasDetailContent(
     isItemSharingEnabled: Boolean,
     attachmentsState: AttachmentsState,
     hasMoreThanOneVaultShare: Boolean,
+    displayContactsBanner: Boolean,
     onCopyAlias: (String) -> Unit,
     onCreateLoginFromAlias: (String) -> Unit,
     onToggleAliasState: (Boolean) -> Unit,
     onShareClick: () -> Unit,
     onViewItemHistoryClicked: () -> Unit,
     onContactsClicked: () -> Unit,
+    onDismissContactsBanner: () -> Unit,
     onAttachmentEvent: (AttachmentContentEvent) -> Unit
 ) {
     val contents = itemUiModel.contents as ItemContents.Alias
@@ -133,8 +135,10 @@ fun AliasDetailContent(
 
                 ContactsSection(
                     modifier = Modifier.padding(bottom = Spacing.small),
+                    displayContactsBanner = displayContactsBanner,
                     counter = contactsCount,
-                    onClick = onContactsClicked
+                    onClick = onContactsClicked,
+                    onDismissContactsBanner = onDismissContactsBanner
                 )
             }
 

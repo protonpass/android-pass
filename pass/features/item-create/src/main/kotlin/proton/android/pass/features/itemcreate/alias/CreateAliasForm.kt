@@ -49,6 +49,7 @@ import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.alias.AliasContentUiEvent.OnAttachmentEvent
+import proton.android.pass.features.itemcreate.alias.banner.AliasAdvancedOptionsBanner
 import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -67,6 +68,7 @@ internal fun CreateAliasForm(
     isAliasCreatedByUser: Boolean,
     showUpgrade: Boolean,
     displayFileAttachmentsOnboarding: Boolean,
+    displayAdvancedOptionsBanner: Boolean,
     isFileAttachmentsEnabled: Boolean,
     attachmentsState: AttachmentsState,
     onSuffixClick: () -> Unit,
@@ -117,6 +119,7 @@ internal fun CreateAliasForm(
                 onSuffixClick = onSuffixClick,
                 canEdit = isEditAllowed,
                 canSelectSuffix = aliasItemFormState.aliasOptions.suffixes.size > 1,
+                onAdvancedOptionsClicked = { onEvent(AliasContentUiEvent.DismissAdvancedOptionsBanner) },
                 onAliasRequiredError = onAliasRequiredError,
                 onInvalidAliasError = onInvalidAliasError
             )
@@ -125,6 +128,11 @@ internal fun CreateAliasForm(
                 state = aliasItemFormState,
                 isLoading = isLoading
             )
+        }
+        AnimatedVisibility(displayAdvancedOptionsBanner) {
+            AliasAdvancedOptionsBanner {
+                onEvent(AliasContentUiEvent.DismissAdvancedOptionsBanner)
+            }
         }
 
         MailboxSection(

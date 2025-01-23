@@ -39,11 +39,11 @@ fun AliasAdvancedOptions(
     suffix: AliasSuffixUiModel?,
     isError: Boolean,
     canSelectSuffix: Boolean,
-    showAdvancedOptionsInitially: Boolean = false,
+    onAdvancedOptionsClicked: () -> Unit,
     onPrefixChanged: (String) -> Unit,
     onSuffixClicked: () -> Unit
 ) {
-    var showAdvancedOptions by rememberSaveable { mutableStateOf(showAdvancedOptionsInitially) }
+    var showAdvancedOptions by rememberSaveable { mutableStateOf(false) }
     Column(modifier = modifier) {
         Box(
             modifier = Modifier
@@ -52,7 +52,10 @@ fun AliasAdvancedOptions(
         ) {
             ShowAdvancedOptionsButton(
                 currentValue = showAdvancedOptions,
-                onClick = { showAdvancedOptions = !showAdvancedOptions }
+                onClick = {
+                    showAdvancedOptions = !showAdvancedOptions
+                    onAdvancedOptionsClicked()
+                }
             )
         }
 

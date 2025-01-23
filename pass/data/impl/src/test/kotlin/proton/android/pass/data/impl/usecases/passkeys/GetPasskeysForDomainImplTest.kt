@@ -28,7 +28,7 @@ import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.usecases.passkeys.PasskeySelection
 import proton.android.pass.data.fakes.usecases.TestObserveItemsWithPasskeys
-import proton.android.pass.data.fakes.usecases.TestObserveUsableVaults
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveAutofillShares
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.PasskeyId
@@ -50,7 +50,7 @@ class GetPasskeysForDomainImplTest {
 
         instance = GetPasskeysForDomainImpl(
             observeItemsWithPasskeys = observeItemsWithPasskeys,
-            observeUsableVaults = TestObserveUsableVaults(),
+            observeAutofillShares = FakeObserveAutofillShares(),
             encryptionContextProvider = encryptionContextProvider
         )
     }

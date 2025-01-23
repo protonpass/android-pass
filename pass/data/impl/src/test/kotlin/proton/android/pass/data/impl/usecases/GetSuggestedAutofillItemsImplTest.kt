@@ -41,7 +41,7 @@ import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.fakes.repositories.FakeAssetLinkRepository
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveItems
-import proton.android.pass.data.fakes.usecases.TestObserveUsableVaults
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveAutofillShares
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionSorter
 import proton.android.pass.domain.Item
@@ -59,7 +59,7 @@ import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestVault
+import proton.android.pass.test.domain.TestShare
 
 private typealias Filter = (Item) -> Boolean
 
@@ -93,7 +93,7 @@ class GetSuggestedAutofillItemsImplTest {
     private lateinit var getUserPlan: TestGetUserPlan
     private lateinit var filter: FakeSuggestionItemFilterer
     private lateinit var getSuggestedAutofillItems: GetSuggestedAutofillItems
-    private lateinit var observeVaults: TestObserveUsableVaults
+    private lateinit var observeAutofillShares: FakeObserveAutofillShares
     private lateinit var internalSettingsRepository: TestInternalSettingsRepository
     private lateinit var assetLinkRepository: FakeAssetLinkRepository
     private lateinit var featureFlagsPreferencesRepository: TestFeatureFlagsPreferenceRepository
@@ -105,14 +105,14 @@ class GetSuggestedAutofillItemsImplTest {
         observeItems = TestObserveItems()
         getUserPlan = TestGetUserPlan()
         filter = FakeSuggestionItemFilterer()
-        observeVaults = TestObserveUsableVaults()
+        observeAutofillShares = FakeObserveAutofillShares()
         internalSettingsRepository = TestInternalSettingsRepository()
         assetLinkRepository = FakeAssetLinkRepository()
         featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
         userPreferencesRepository = TestPreferenceRepository()
         getSuggestedAutofillItems = GetSuggestedAutofillItemsImpl(
             accountManager = accountManager,
-            observeUsableVaults = observeVaults,
+            observeAutofillShares = observeAutofillShares,
             observeItems = observeItems,
             suggestionItemFilter = filter,
             suggestionSorter = FakeSuggestionSorter(),
@@ -131,9 +131,9 @@ class GetSuggestedAutofillItemsImplTest {
         val userId = UserId("test-user-id")
         val item1 = TestItem.create(shareId = shareId, title = fixedTitle)
         val item2 = TestItem.create()
-        val vault = TestVault.create(shareId = shareId, userId = userId)
+        val vaultShare = TestShare.Vault.create(userId = userId.id, id = shareId.id)
         accountManager.setAccounts(listOf(TestAccountManager.DEFAULT_ACCOUNT.copy(userId = userId)))
-        observeVaults.emit(Result.success(listOf(vault)), userId = userId)
+        observeAutofillShares.setValue(listOf(vaultShare), userId = userId)
         observeItems.emitValue(listOf(item1, item2))
         filter.setFilter { TestKeyStoreCrypto.decrypt(it.title) == fixedTitle }
 
@@ -149,7 +149,7 @@ class GetSuggestedAutofillItemsImplTest {
     @Test
     fun `error is propagated`() = runTest {
         val message = "test exception"
-        observeVaults.emit(Result.success(emptyList()))
+        observeAutofillShares.setValue(emptyList())
         filter.setFilter { true }
         observeItems.sendException(Exception(message))
 
@@ -174,27 +174,28 @@ class GetSuggestedAutofillItemsImplTest {
     fun `only suggestions from the usable vaults`() = runTest {
         // GIVEN
         val firstShareId = ShareId("123")
-        val vaults = listOf(
-            TestVault.create(
-                shareId = firstShareId,
-                role = ShareRole.Admin,
+        val vaultShares = listOf(
+            TestShare.Vault.create(
+                id = firstShareId.id,
+                shareRole = ShareRole.Admin,
                 name = "default"
             ),
-            TestVault.create(
-                shareId = ShareId("789"),
-                role = ShareRole.Read,
+            TestShare.Vault.create(
+                id = ShareId("789").id,
+                shareRole = ShareRole.Read,
                 name = "another"
             )
         )
         val userId = UserId("test-user-id")
         accountManager.setAccounts(listOf(TestAccountManager.DEFAULT_ACCOUNT.copy(userId = userId)))
-        observeVaults.emit(Result.success(vaults), userId)
+        observeAutofillShares.setValue(vaultShares, userId)
 
         filter.setFilter { true }
 
         val items = listOf(TestItem.create(shareId = firstShareId))
         observeItems.emitValue(items)
-        val expected: List<ItemData.SuggestedItem> = items.map { ItemData.SuggestedItem(it, DEFAULT_SUGGESTION) }
+        val expected: List<ItemData.SuggestedItem> =
+            items.map { ItemData.SuggestedItem(it, DEFAULT_SUGGESTION) }
 
         // WHEN
         getSuggestedAutofillItems(itemTypeFilter = ItemTypeFilter.Logins, DEFAULT_SUGGESTION).test {
@@ -208,14 +209,18 @@ class GetSuggestedAutofillItemsImplTest {
     fun `when plan is free and credit cards, then show upgrade`() = runTest {
         val shareId = ShareId("test-share-id")
         val userId = UserId("test-user-id")
+        val vaultShare = TestShare.Vault.create(userId = userId.id, id = shareId.id)
         accountManager.setAccounts(listOf(TestAccountManager.DEFAULT_ACCOUNT.copy(userId = userId)))
         getUserPlan.setResult(Result.success(buildPlan(PlanType.Free("", ""))), userId)
         observeItems.emitValue(listOf(TestObserveItems.createCreditCard(shareId = shareId)))
-        observeVaults.emit(Result.success(listOf(TestVault.create(shareId = shareId))), userId)
+        observeAutofillShares.setValue(listOf(vaultShare), userId)
 
         filter.setFilter { true }
 
-        getSuggestedAutofillItems(itemTypeFilter = ItemTypeFilter.CreditCards, DEFAULT_SUGGESTION).test {
+        getSuggestedAutofillItems(
+            itemTypeFilter = ItemTypeFilter.CreditCards,
+            DEFAULT_SUGGESTION
+        ).test {
             assertThat(awaitItem()).isInstanceOf(SuggestedAutofillItemsResult.ShowUpgrade::class.java)
         }
     }
@@ -226,7 +231,10 @@ class GetSuggestedAutofillItemsImplTest {
         observeItems.emitValue(emptyList())
         filter.setFilter { true }
 
-        val result = getSuggestedAutofillItems(itemTypeFilter = ItemTypeFilter.CreditCards, DEFAULT_SUGGESTION).first()
+        val result = getSuggestedAutofillItems(
+            itemTypeFilter = ItemTypeFilter.CreditCards,
+            DEFAULT_SUGGESTION
+        ).first()
         assertThat(result).isInstanceOf(SuggestedAutofillItemsResult.Items::class.java)
 
         val items = (result as SuggestedAutofillItemsResult.Items).suggestedItems
@@ -275,34 +283,32 @@ class GetSuggestedAutofillItemsImplTest {
             ),
             listOf(paidCCItem)
         )
-        observeVaults.emit(
-            Result.success(
-                listOf(
-                    TestVault.create(
-                        userId = freeUserId,
-                        shareId = freeShareId,
-                        vaultId = VaultId("free-vault-id")
+
+        observeAutofillShares.setValues(
+            values = mapOf(
+                freeUserId to listOf(
+                    TestShare.Vault.create(
+                        userId = freeUserId.id,
+                        id = freeShareId.id,
+                        vaultId = VaultId("free-vault-id").id
+                    )
+                ),
+                paidUserId to listOf(
+                    TestShare.Vault.create(
+                        userId = paidUserId.id,
+                        id = paidShareId.id,
+                        vaultId = VaultId("paid-vault-id").id
                     )
                 )
-            ),
-            userId = freeUserId
-        )
-        observeVaults.emit(
-            Result.success(
-                listOf(
-                    TestVault.create(
-                        userId = paidUserId,
-                        shareId = paidShareId,
-                        vaultId = VaultId("paid-vault-id")
-                    )
-                )
-            ),
-            userId = paidUserId
+            )
         )
 
         filter.setFilter { true }
 
-        getSuggestedAutofillItems(itemTypeFilter = ItemTypeFilter.CreditCards, DEFAULT_SUGGESTION).test {
+        getSuggestedAutofillItems(
+            itemTypeFilter = ItemTypeFilter.CreditCards,
+            DEFAULT_SUGGESTION
+        ).test {
             val result = awaitItem()
             assertThat(result).isInstanceOf(SuggestedAutofillItemsResult.Items::class.java)
 

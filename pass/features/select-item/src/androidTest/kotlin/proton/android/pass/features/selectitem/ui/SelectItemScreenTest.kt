@@ -48,7 +48,7 @@ import proton.android.pass.data.fakes.usecases.TestGetSuggestedAutofillItems
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
-import proton.android.pass.data.fakes.usecases.TestObserveUsableVaults
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveAutofillShares
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -56,9 +56,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
-import proton.android.pass.domain.VaultId
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.entity.AppName
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.entity.PackageName
@@ -69,8 +67,8 @@ import proton.android.pass.searchoptions.impl.SearchOptionsModule
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.TestConstants
+import proton.android.pass.test.domain.TestShare
 import proton.android.pass.test.waitUntilExists
-import java.util.Date
 import javax.inject.Inject
 
 @HiltAndroidTest
@@ -87,7 +85,7 @@ class SelectItemScreenTest {
     lateinit var getSuggestedLoginItems: TestGetSuggestedAutofillItems
 
     @Inject
-    lateinit var observeUsableVaults: TestObserveUsableVaults
+    lateinit var observeAutofillShares: FakeObserveAutofillShares
 
     @Inject
     lateinit var getUserPlan: TestGetUserPlan
@@ -113,7 +111,7 @@ class SelectItemScreenTest {
     @Test
     fun canSelectSuggestionWithNoOtherItems() {
         performSetup(
-            vaults = 1,
+            sharesCount = 1,
             suggestions = 3,
             otherItems = 0,
             planType = PlanType.Paid.Plus("", "")
@@ -124,7 +122,7 @@ class SelectItemScreenTest {
     @Test
     fun canSelectSuggestionWithOtherItems() {
         performSetup(
-            vaults = 1,
+            sharesCount = 1,
             suggestions = 3,
             otherItems = 2,
             planType = PlanType.Paid.Plus("", "")
@@ -135,7 +133,7 @@ class SelectItemScreenTest {
     @Test
     fun canSelectOtherItemWithNoSuggestions() {
         performSetup(
-            vaults = 1,
+            sharesCount = 1,
             suggestions = 0,
             otherItems = 2,
             planType = PlanType.Paid.Plus("", "")
@@ -147,7 +145,7 @@ class SelectItemScreenTest {
     @Test
     fun canSelectOtherItemWithSuggestions() {
         performSetup(
-            vaults = 1,
+            sharesCount = 1,
             suggestions = 3,
             otherItems = 2,
             planType = PlanType.Paid.Plus("", "")
@@ -201,7 +199,7 @@ class SelectItemScreenTest {
     @Test
     fun showsUpgradeScreenWhenNoSuggestionsAndNoOtherItems() {
         performSetup(
-            vaults = 2,
+            sharesCount = 2,
             suggestions = 0,
             otherItems = 0,
             planType = TestConstants.FreePlanType
@@ -213,7 +211,7 @@ class SelectItemScreenTest {
     @Test
     fun showsUpgradeScreenWhenYesSuggestionsAndNoOtherItems() {
         performSetup(
-            vaults = 2,
+            sharesCount = 2,
             suggestions = 2,
             otherItems = 0,
             planType = TestConstants.FreePlanType
@@ -225,7 +223,7 @@ class SelectItemScreenTest {
     @Test
     fun showsUpgradeScreenWhenNoSuggestionsAndYesOtherItems() {
         performSetup(
-            vaults = 2,
+            sharesCount = 2,
             suggestions = 0,
             otherItems = 2,
             planType = TestConstants.FreePlanType
@@ -237,7 +235,7 @@ class SelectItemScreenTest {
     @Test
     fun showsUpgradeScreenWhenYesSuggestionsAndYesOtherItems() {
         performSetup(
-            vaults = 2,
+            sharesCount = 2,
             suggestions = 2,
             otherItems = 2,
             planType = TestConstants.FreePlanType
@@ -279,7 +277,7 @@ class SelectItemScreenTest {
     @Test
     fun canSearchForSuggestion() {
         performSetup(
-            vaults = 1,
+            sharesCount = 1,
             suggestions = 3,
             otherItems = 0,
             planType = PlanType.Paid.Plus("", "")
@@ -291,7 +289,7 @@ class SelectItemScreenTest {
     @Test
     fun canSearchForItem() {
         performSetup(
-            vaults = 1,
+            sharesCount = 1,
             suggestions = 1,
             otherItems = 2,
             planType = PlanType.Paid.Plus("", "")
@@ -336,7 +334,7 @@ class SelectItemScreenTest {
     }
 
     private fun performSetup(
-        vaults: Int,
+        sharesCount: Int,
         suggestions: Int,
         otherItems: Int,
         planType: PlanType
@@ -344,19 +342,18 @@ class SelectItemScreenTest {
         val userId = UserId("test-user-id")
         accountManager.setAccounts(listOf(TestAccountManager.DEFAULT_ACCOUNT.copy(userId = userId)))
         userManager.setUser(FakeUserManager.DEFAULT_USER.copy(userId = userId))
-        val vaultList = (0 until vaults).map {
-            val shareId = ShareId("shareid-test-$it")
-            Vault(
-                userId = userId,
-                shareId = shareId,
-                vaultId = VaultId("vaultid-test-$it"),
-                name = "testVault-$it",
-                createTime = Date()
+        val vaultShares = (0 until sharesCount).map {
+            TestShare.Vault.create(
+                userId = userId.id,
+                id = "shareid-test-$it",
+                vaultId = "vaultid-test-$it",
+                name = "testVault-$it"
             )
         }
-        observeUsableVaults.emit(Result.success(vaultList), userId)
 
-        val shareId = vaultList.first().shareId
+        observeAutofillShares.setValue(vaultShares, userId)
+
+        val shareId = vaultShares.first().id
         val suggestionsList = (0 until suggestions).map {
             val item = TestObserveItems.createItem(
                 shareId = shareId,
@@ -427,7 +424,7 @@ class SelectItemScreenTest {
             )
         )
 
-        return SetupData(vaultList, suggestionsList, otherItemsList)
+        return SetupData(vaultShares, suggestionsList, otherItemsList)
     }
 
     private fun fakeAutofillState() = SelectItemState.Autofill.Login(
@@ -436,7 +433,7 @@ class SelectItemScreenTest {
     )
 
     data class SetupData(
-        val vaults: List<Vault>,
+        val shares: List<Share>,
         val suggestions: List<ItemData.SuggestedItem>,
         val otherItems: List<Item>
     )

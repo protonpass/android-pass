@@ -35,6 +35,7 @@ internal fun CreateAliasSection(
     canSelectSuffix: Boolean,
     onAliasRequiredError: Boolean,
     onInvalidAliasError: Boolean,
+    onAdvancedOptionsClicked: () -> Unit,
     onChange: (String) -> Unit,
     onSuffixClick: () -> Unit
 ) {
@@ -49,6 +50,7 @@ internal fun CreateAliasSection(
             prefix = state.prefix,
             suffix = state.selectedSuffix,
             isError = onAliasRequiredError || onInvalidAliasError,
+            onAdvancedOptionsClicked = onAdvancedOptionsClicked,
             canSelectSuffix = canSelectSuffix,
             onPrefixChanged = onChange,
             onSuffixClicked = onSuffixClick
@@ -74,6 +76,7 @@ fun CreateAliasSectionPreview(
                 canSelectSuffix = true,
                 onAliasRequiredError = param.onAliasRequiredError,
                 onInvalidAliasError = param.onInvalidAliasError,
+                onAdvancedOptionsClicked = {},
                 onChange = {},
                 onSuffixClick = {}
             )

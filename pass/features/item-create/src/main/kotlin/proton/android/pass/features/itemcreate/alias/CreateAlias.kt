@@ -170,6 +170,9 @@ fun CreateAliasScreen(
 
                     AliasContentUiEvent.DismissAttachmentBanner ->
                         viewModel.dismissFileAttachmentsOnboardingBanner()
+
+                    AliasContentUiEvent.DismissAdvancedOptionsBanner ->
+                        viewModel.dismissAdvancedOptionsBanner()
                 }
             }
         )

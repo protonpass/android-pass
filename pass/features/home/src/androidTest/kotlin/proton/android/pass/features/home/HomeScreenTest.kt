@@ -48,8 +48,8 @@ import proton.android.pass.data.api.SearchEntry
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
 import proton.android.pass.data.fakes.usecases.TestItemSyncStatusRepository
+import proton.android.pass.data.fakes.usecases.TestObserveAllShares
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
-import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.TestTrashItems
 import proton.android.pass.domain.ItemEncrypted
@@ -67,6 +67,7 @@ import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import proton.android.pass.test.domain.TestShare
 import proton.android.pass.test.waitUntilExists
 import java.util.Date
 import javax.inject.Inject
@@ -89,7 +90,7 @@ class HomeScreenTest {
     lateinit var observeEncryptedItems: FakeObserveEncryptedItems
 
     @Inject
-    lateinit var observeVaults: TestObserveVaults
+    lateinit var observeAllShares: TestObserveAllShares
 
     @Inject
     lateinit var observeVaultsWithItemCount: TestObserveVaultsWithItemCount
@@ -276,18 +277,17 @@ class HomeScreenTest {
         preferencesRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.Dismissed)
         preferencesRepository.setUseFaviconsPreference(UseFaviconsPreference.Disabled)
 
-        val vaults = items
+        val vaultShares = items
             .map { it.shareId }
             .distinct()
             .map { shareId ->
-                Vault(
-                    userId = UserId(""),
-                    shareId = shareId,
-                    vaultId = VaultId("vaultId"),
+                TestShare.Vault.create(
+                    userId = "",
+                    id = shareId.id,
+                    vaultId = "vaultId",
                     name = "Vault ${shareId.id}",
                     color = ShareColor.Color1,
-                    icon = ShareIcon.Icon1,
-                    createTime = Date()
+                    icon = ShareIcon.Icon1
                 )
             }
 
@@ -301,7 +301,7 @@ class HomeScreenTest {
         }
 
         itemSyncStatusRepository.tryEmit(ItemSyncStatus.SyncSuccess)
-        observeVaults.sendResult(Result.success(vaults))
+        observeAllShares.sendResult(Result.success(vaultShares))
         observeEncryptedItems.emitValue(items)
         observeSearchEntry.emit(searchEntries)
 

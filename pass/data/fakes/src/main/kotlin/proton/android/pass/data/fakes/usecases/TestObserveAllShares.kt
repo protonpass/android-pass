@@ -25,7 +25,9 @@ import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.domain.Share
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestObserveAllShares @Inject constructor() : ObserveAllShares {
 
     private val observeAllSharesFlow = testFlow<Result<List<Share>>>()

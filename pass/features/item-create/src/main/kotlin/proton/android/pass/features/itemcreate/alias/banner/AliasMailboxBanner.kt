@@ -58,11 +58,13 @@ fun AliasMailboxBanner(
                     body = stringResource(R.string.banner_mailbox_subtitle)
                 )
                 Button.Circular(
-                    modifier = Modifier.padding(end = Spacing.medium),
+                    modifier = Modifier
+                        .padding(end = Spacing.medium)
+                        .padding(vertical = Spacing.large),
                     color = Color.White,
                     onClick = onClick
                 ) {
-                    Text.Body1Bold(
+                    Text.CaptionMedium(
                         text = stringResource(R.string.banner_mailbox_button),
                         color = PassPalette.EerieBlack
                     )

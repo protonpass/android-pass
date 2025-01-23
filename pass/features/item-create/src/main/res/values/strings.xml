@@ -240,5 +240,13 @@
     <string name="open_with">Open with:</string>
     <string name="open_attachments_error">Could not open attachment</string>
     <string name="upload_attachments_error">Could not upload attachment</string>
+    <string name="banner_advanced_options_title">Did you know?</string>
+    <string name="banner_advanced_options_subtitle">Tap the gear icon to customize the alias the way you want.</string>
+    <string name="banner_custom_domain_title">Did you know?</string>
+    <string name="banner_custom_domain_subtitle">By adding your domain, you can create aliases like hi@my-domain.com.</string>
+    <string name="banner_custom_domain_button">Add domain</string>
+    <string name="banner_mailbox_title">Did you know?</string>
+    <string name="banner_mailbox_subtitle">Share aliases with others by adding their inbox as an additional mailbox.</string>
+    <string name="banner_mailbox_button">Add mailbox</string>
 
 </resources>

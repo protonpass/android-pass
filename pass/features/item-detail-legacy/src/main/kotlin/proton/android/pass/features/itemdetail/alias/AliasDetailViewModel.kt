@@ -100,6 +100,8 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryBannerPreference
+import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryFeature.AliasManagementContacts
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
@@ -120,9 +122,9 @@ class AliasDetailViewModel @Inject constructor(
     private val changeAliasStatus: ChangeAliasStatus,
     private val downloadAttachment: DownloadAttachment,
     private val fileHandler: FileHandler,
+    private val userPreferencesRepository: UserPreferencesRepository,
     observeAliasContacts: ObserveAliasContacts,
     observeItemAttachments: ObserveDetailItemAttachments,
-    userPreferencesRepository: UserPreferencesRepository,
     canPerformPaidAction: CanPerformPaidAction,
     observeItemByIdWithVault: ObserveItemByIdWithVault,
     observeAliasDetails: ObserveAliasDetails,
@@ -141,7 +143,8 @@ class AliasDetailViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
 
-    private val allLoadingStates = MutableStateFlow<Map<LoadingStateKey, IsLoadingState>>(emptyMap())
+    private val allLoadingStates =
+        MutableStateFlow<Map<LoadingStateKey, IsLoadingState>>(emptyMap())
     private val isItemSentToTrashState: MutableStateFlow<IsSentToTrashState> =
         MutableStateFlow(IsSentToTrashState.NotSent)
     private val isPermanentlyDeletedState: MutableStateFlow<IsPermanentlyDeletedState> =
@@ -233,7 +236,8 @@ class AliasDetailViewModel @Inject constructor(
         shareActionFlow,
         oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult(),
         eventState,
-        itemFeaturesFlow
+        itemFeaturesFlow,
+        userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementContacts)
     ) { itemLoadingResult,
         (aliasDetailsResult, aliasContactsResult),
         (allLoadingStates, loadingAttachments),
@@ -243,7 +247,8 @@ class AliasDetailViewModel @Inject constructor(
         shareAction,
         itemActions,
         event,
-        itemFeatures ->
+        itemFeatures,
+        displayContactsBanner ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
                 if (!isPermanentlyDeleted.value()) {
@@ -287,7 +292,8 @@ class AliasDetailViewModel @Inject constructor(
                         loadingAttachments = loadingAttachments,
                         needsUpgrade = None
                     ),
-                    hasMoreThanOneVault = details.hasMoreThanOneVault
+                    hasMoreThanOneVault = details.hasMoreThanOneVault,
+                    displayContactsBanner = displayContactsBanner.value
                 )
             }
         }
@@ -437,6 +443,15 @@ class AliasDetailViewModel @Inject constructor(
                 snackbarDispatcher(DetailSnackbarMessages.OpenAttachmentsError)
             }
             loadingAttachmentsState.update { it - attachment.id }
+        }
+    }
+
+    fun dismissContactsBanner() {
+        viewModelScope.launch {
+            userPreferencesRepository.setDisplayFeatureDiscoverBanner(
+                AliasManagementContacts,
+                FeatureDiscoveryBannerPreference.NotDisplay
+            )
         }
     }
 

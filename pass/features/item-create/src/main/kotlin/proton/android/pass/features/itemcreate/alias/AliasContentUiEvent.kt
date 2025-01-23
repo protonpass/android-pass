@@ -60,4 +60,6 @@ sealed interface AliasContentUiEvent {
     value class OnAttachmentEvent(val event: AttachmentContentEvent) : AliasContentUiEvent
 
     data object DismissAttachmentBanner : AliasContentUiEvent
+
+    data object DismissAdvancedOptionsBanner : AliasContentUiEvent
 }

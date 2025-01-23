@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,9 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.attachments.banner
+package proton.android.pass.features.itemdetail.alias.banner
 
-import androidx.compose.foundation.layout.Row
+
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -35,29 +36,29 @@ import proton.android.pass.composecomponents.impl.banner.FeatureDiscoveryBanner
 import proton.android.pass.composecomponents.impl.banner.FeatureDiscoveryText
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.image.Image
-import proton.android.pass.features.itemcreate.R
+import proton.android.pass.features.itemdetail.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun AttachmentBanner(modifier: Modifier = Modifier, onClose: () -> Unit) {
+fun AliasContactsBanner(modifier: Modifier = Modifier, onClose: () -> Unit) {
     FeatureDiscoveryBanner(
         modifier = modifier,
         content = {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Box {
                 FeatureDiscoveryText(
-                    modifier = Modifier
-                        .padding(Spacing.medium)
-                        .weight(1f, fill = false),
-                    title = stringResource(R.string.banner_title_attachments),
-                    body = stringResource(R.string.banner_body_attachments)
+                    modifier = Modifier.padding(Spacing.medium),
+                    title = stringResource(R.string.banner_contacts_title),
+                    body = stringResource(R.string.banner_contacts_subtitle)
                 )
-                Image.Default(R.drawable.attachments_file)
+                Image.Default(
+                    modifier = Modifier.align(Alignment.TopEnd),
+                    id = R.drawable.banner_stamp
+                )
             }
         },
         closeIcon = {
             Icon.Default(
-                id = CoreR.drawable.ic_proton_cross_circle_filled,
-                tint = PassPalette.StormyNight70
+                id = CoreR.drawable.ic_proton_cross_small, tint = PassPalette.MistyGray
             )
         },
         onClose = onClose
@@ -66,10 +67,10 @@ fun AttachmentBanner(modifier: Modifier = Modifier, onClose: () -> Unit) {
 
 @Preview
 @Composable
-fun AttachmentBannerPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+fun AliasContactsBannerPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            AttachmentBanner(
+            AliasContactsBanner(
                 onClose = {}
             )
         }

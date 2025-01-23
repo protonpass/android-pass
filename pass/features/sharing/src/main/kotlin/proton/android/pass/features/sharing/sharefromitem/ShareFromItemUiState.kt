@@ -76,6 +76,11 @@ internal data class ShareFromItemUiState(
         is Some -> vault.value.vault.shared
     }
 
+    private val isSharedItem: Boolean = when (itemOption) {
+        None -> false
+        is Some -> itemOption.value.shareCount > 0
+    }
+
     internal val isSingleSharingAvailable: Boolean = when (itemOption) {
         None -> false
         is Some -> when (itemOption.value.itemType) {
@@ -102,10 +107,12 @@ internal data class ShareFromItemUiState(
         }
     }
 
-    internal val isItemShared: Boolean = when (itemOption) {
+    internal val canShareViaSecureLink: Boolean = when (itemOption) {
         None -> false
-        is Some -> itemOption.value.shareCount > 0
+        is Some -> itemOption.value.isOwner
     }
+
+    internal val canManageAccess: Boolean = canManageSharedVault || isSharedItem
 
     internal companion object {
 

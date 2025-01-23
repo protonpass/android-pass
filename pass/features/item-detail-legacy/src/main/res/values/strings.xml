@@ -126,5 +126,7 @@
 
     <string name="open_with">Open with:</string>
     <string name="open_attachments_error">Could not open attachment</string>
+    <string name="banner_contacts_title">Did you know?</string>
+    <string name="banner_contacts_subtitle">Every time your alias receives an email from someone, a new contact is automatically created.</string>
 
 </resources>

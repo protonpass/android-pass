@@ -160,6 +160,15 @@ internal fun SharingSummaryContent(
                     address = address
                 )
             }
+
+            if (state.addresses.isNotEmpty()) {
+                item {
+                    SharingSummaryAccessLevelSection(
+                        modifier = Modifier.padding(top = Spacing.medium),
+                        shareType = state.shareType
+                    )
+                }
+            }
         }
     }
 }

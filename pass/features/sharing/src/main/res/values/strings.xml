@@ -77,6 +77,7 @@
     <string name="share_summary_share_item">Share item</string>
     <string name="share_summary_vault_title">Vault</string>
     <string name="share_summary_item_title">Item</string>
+    <string name="share_summary_access_level_title">Access level</string>
 
     <string name="share_manage_vault_share_with_more_people">Share with more people</string>
     <plurals
@@ -124,7 +125,7 @@
     <string name="sharing_bottomsheet_remove_access">Revoke access</string>
 
     <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
-    <string name="sharing_bottomsheet_item_editor_subtitle">Can edit this item.</string>
+    <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
     <string name="sharing_bottomsheet_item_viewer_subtitle">Can view this item.</string>
 
     <string name="sharing_bottomsheet_resend_invite">Resend invitation</string>

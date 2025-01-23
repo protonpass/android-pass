@@ -148,7 +148,7 @@ internal fun IdentityOptionsBSContentsPreview(
                     contents = ItemContents.Identity(
                         title = "My Identity",
                         note = "Note content",
-                        personalDetailsContent = PersonalDetailsContent.EMPTY,
+                        personalDetailsContent = PersonalDetailsContent.EMPTY.copy(fullName = "full name"),
                         addressDetailsContent = AddressDetailsContent.EMPTY,
                         contactDetailsContent = ContactDetailsContent.EMPTY,
                         workDetailsContent = WorkDetailsContent.EMPTY,

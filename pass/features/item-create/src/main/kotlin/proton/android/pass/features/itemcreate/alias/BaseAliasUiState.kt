@@ -41,7 +41,8 @@ data class BaseAliasUiState(
     val isAliasManagementEnabled: Boolean,
     val isFileAttachmentEnabled: Boolean,
     val displayFileAttachmentsOnboarding: Boolean,
-    val attachmentsState: AttachmentsState
+    val attachmentsState: AttachmentsState,
+    val displayAdvancedOptionsBanner: Boolean
 ) {
     companion object {
         val Initial = BaseAliasUiState(
@@ -58,6 +59,7 @@ data class BaseAliasUiState(
             isAliasManagementEnabled = false,
             isFileAttachmentEnabled = false,
             displayFileAttachmentsOnboarding = false,
+            displayAdvancedOptionsBanner = false,
             attachmentsState = AttachmentsState.Initial
         )
     }

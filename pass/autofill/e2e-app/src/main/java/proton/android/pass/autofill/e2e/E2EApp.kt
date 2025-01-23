@@ -34,7 +34,7 @@ import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedAutofillItems
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveItems
-import proton.android.pass.data.fakes.usecases.TestObserveUsableVaults
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveAutofillShares
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Plan
@@ -42,8 +42,8 @@ import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.test.domain.TestShare
 import proton.android.pass.test.domain.TestUser
-import proton.android.pass.test.domain.TestVault
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -63,7 +63,7 @@ class E2EApp : Application() {
     lateinit var observeItems: TestObserveItems
 
     @Inject
-    lateinit var usableVaults: TestObserveUsableVaults
+    lateinit var observeAutofillShares: FakeObserveAutofillShares
 
     @Inject
     lateinit var getItemById: FakeGetItemById
@@ -80,11 +80,12 @@ class E2EApp : Application() {
     }
 
     private fun setupVault() {
-        val vault = TestVault.create(
-            shareId = VAULT_SHARE_ID,
-            userId = PRIMARY_USER_ID
+        val vaultShare = TestShare.Vault.create(
+            id = VAULT_SHARE_ID.id,
+            userId = PRIMARY_USER_ID.id
         )
-        usableVaults.emit(Result.success(listOf(vault)), userId = PRIMARY_USER_ID)
+
+        observeAutofillShares.setValue(listOf(vaultShare), userId = PRIMARY_USER_ID)
     }
 
     private fun setupItems() {

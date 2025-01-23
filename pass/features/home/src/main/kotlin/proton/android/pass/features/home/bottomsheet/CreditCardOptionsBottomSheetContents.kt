@@ -150,7 +150,7 @@ internal fun CreditCardOptionsBottomSheetContentsPreview(
                         cardHolder = "Card holder",
                         type = CreditCardType.Visa,
                         number = "1234123412341234",
-                        cvv = HiddenState.Concealed(""),
+                        cvv = HiddenState.Concealed("123"),
                         pin = HiddenState.Concealed(""),
                         expirationDate = "2030-01"
 

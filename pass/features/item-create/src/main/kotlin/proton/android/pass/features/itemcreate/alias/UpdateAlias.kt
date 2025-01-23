@@ -171,6 +171,9 @@ fun UpdateAlias(
 
                     AliasContentUiEvent.DismissAttachmentBanner ->
                         viewModel.dismissFileAttachmentsOnboardingBanner()
+
+                    AliasContentUiEvent.DismissAdvancedOptionsBanner ->
+                        viewModel.dismissAdvancedOptionsBanner()
                 }
             }
         )

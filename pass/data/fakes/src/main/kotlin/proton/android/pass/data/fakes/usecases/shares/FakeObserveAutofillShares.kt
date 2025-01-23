@@ -19,9 +19,10 @@
 package proton.android.pass.data.fakes.usecases.shares
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.usecases.shares.ObserveAutofillShares
 import proton.android.pass.domain.Share
 import javax.inject.Inject
@@ -30,12 +31,19 @@ import javax.inject.Singleton
 @Singleton
 class FakeObserveAutofillShares @Inject constructor() : ObserveAutofillShares {
 
-    private val autofillSharesFlow: MutableSharedFlow<List<Share>> = testFlow()
+    private val autofillSharesFlow: MutableStateFlow<Map<UserId?, List<Share>>> = MutableStateFlow(
+        value = emptyMap()
+    )
 
-    fun emitValue(value: List<Share>) {
-        autofillSharesFlow.tryEmit(value)
+    fun setValue(value: List<Share>, userId: UserId? = null) {
+        autofillSharesFlow.update { mapOf(userId to value) }
+    }
+
+    fun setValues(values: Map<UserId?, List<Share>>) {
+        autofillSharesFlow.update { values }
     }
 
     override fun invoke(userId: UserId?): Flow<List<Share>> = autofillSharesFlow
+        .map { it[userId].orEmpty() }
 
 }

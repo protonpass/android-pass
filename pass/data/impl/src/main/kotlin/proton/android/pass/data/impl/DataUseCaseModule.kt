@@ -87,7 +87,6 @@ import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
-import proton.android.pass.data.api.usecases.ObserveUsableVaults
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
 import proton.android.pass.data.api.usecases.ObserveUserEmail
 import proton.android.pass.data.api.usecases.ObserveVaultCount
@@ -303,7 +302,6 @@ import proton.android.pass.data.impl.usecases.ObserveItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveMFACountImpl
 import proton.android.pass.data.impl.usecases.ObservePinnedItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveUpgradeInfoImpl
-import proton.android.pass.data.impl.usecases.ObserveUsableVaultsImpl
 import proton.android.pass.data.impl.usecases.ObserveUserAccessDataImpl
 import proton.android.pass.data.impl.usecases.ObserveUserEmailImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultCountImpl
@@ -798,9 +796,6 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindGetPasskeysForDomain(impl: GetPasskeysForDomainImpl): GetPasskeysForDomain
-
-    @Binds
-    abstract fun bindObserveUsableVaults(impl: ObserveUsableVaultsImpl): ObserveUsableVaults
 
     @[Binds Singleton]
     abstract fun bindObserveBreach(impl: ObserveAllBreachByUserIdImpl): ObserveAllBreachByUserId

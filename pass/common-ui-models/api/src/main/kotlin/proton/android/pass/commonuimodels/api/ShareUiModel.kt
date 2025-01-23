@@ -19,35 +19,9 @@
 package proton.android.pass.commonuimodels.api
 
 import androidx.compose.runtime.Stable
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.ShareRole
-import proton.android.pass.domain.Vault
-
-@Stable
-data class ShareUiModel(
-    val id: ShareId,
-    val userId: UserId,
-    val name: String,
-    val color: ShareColor,
-    val icon: ShareIcon,
-    val isShared: Boolean,
-    val role: ShareRole
-) {
-    companion object {
-        fun fromVault(vault: Vault) = ShareUiModel(
-            id = vault.shareId,
-            userId = vault.userId,
-            name = vault.name,
-            color = vault.color,
-            icon = vault.icon,
-            isShared = vault.shared,
-            role = vault.role
-        )
-    }
-}
 
 @Stable
 data class ShareUiModelWithItemCount(

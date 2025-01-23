@@ -94,7 +94,6 @@ import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
-import proton.android.pass.data.api.usecases.ObserveUsableVaults
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
 import proton.android.pass.data.api.usecases.ObserveUserEmail
 import proton.android.pass.data.api.usecases.ObserveVaultWithItemCountById
@@ -302,7 +301,6 @@ import proton.android.pass.data.fakes.usecases.TestObserveOrganizationSettings
 import proton.android.pass.data.fakes.usecases.TestObservePinnedItems
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
-import proton.android.pass.data.fakes.usecases.TestObserveUsableVaults
 import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
 import proton.android.pass.data.fakes.usecases.TestObserveUserEmail
 import proton.android.pass.data.fakes.usecases.TestObserveVaultWithItemCountById
@@ -717,9 +715,6 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindCheckCanAddressesBeInvited(impl: TestCheckAddressesCanBeInvited): CheckCanAddressesBeInvited
-
-    @Binds
-    abstract fun bindObserveUsableVaults(impl: TestObserveUsableVaults): ObserveUsableVaults
 
     @Binds
     abstract fun bindObserveItemsWithPasskeys(impl: TestObserveItemsWithPasskeys): ObserveItemsWithPasskeys

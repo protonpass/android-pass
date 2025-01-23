@@ -241,6 +241,7 @@ fun AliasDetail(
                         isAliasManagementEnabled = state.itemFeatures.isAliasManagementEnabled,
                         isFileAttachmentsEnabled = state.itemFeatures.isFileAttachmentsEnabled,
                         isItemSharingEnabled = state.itemFeatures.isItemSharingEnabled,
+                        displayContactsBanner = state.displayContactsBanner,
                         attachmentsState = state.attachmentsState,
                         hasMoreThanOneVaultShare = state.hasMoreThanOneVault,
                         onCopyAlias = { viewModel.onCopyAlias(it) },
@@ -285,6 +286,9 @@ fun AliasDetail(
                                     itemId = state.itemUiModel.id
                                 )
                             )
+                        },
+                        onDismissContactsBanner = {
+                            viewModel.dismissContactsBanner()
                         },
                         onAttachmentEvent = {
                             when (it) {

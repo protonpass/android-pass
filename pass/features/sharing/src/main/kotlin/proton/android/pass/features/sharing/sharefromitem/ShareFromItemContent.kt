@@ -47,7 +47,8 @@ internal fun ShareFromItemContent(
     if (state.isSingleSharingAvailable && state.isItemSharingAvailable) {
         ShareFromItemOptions(
             canUsePaidFeatures = state.canUsePaidFeatures,
-            isItemShared = state.isItemShared,
+            canShareViaSecureLink = state.canShareViaSecureLink,
+            canManageAccess = state.canManageAccess,
             onEvent = onEvent
         )
 

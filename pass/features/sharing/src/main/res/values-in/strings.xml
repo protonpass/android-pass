@@ -31,8 +31,8 @@
   </plurals>
   <string name="sharing_member_count_header">Anggota</string>
   <string name="shared_via_title">Dibagikan lewat</string>
-  <string name="shared_via_item_member_count_header">Pembagian item</string>
-  <string name="shared_via_vault_member_count_header">Pembagian brankas</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Item sharing: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Vault sharing: %s</string>
   <string name="share_with_title">Bagikan dengan</string>
   <string name="share_with_email_hint">Alamat email</string>
   <string name="share_with_email_error">Alamat email tidak valid</string>
@@ -54,6 +54,7 @@
   <string name="sharing_snackbar_invite_reject_error">Terjadi kesalahan menolak undangan</string>
   <string name="sharing_snackbar_invite_sent_success">Undangan dikirim</string>
   <string name="sharing_snackbar_invite_sent_error">Tidak dapat mengirim undangan</string>
+  <string name="sharing_snackbar_invite_new_users_error">Cannot send invites to new users</string>
   <string name="sharing_snackbar_get_vault_members_error">Tidak dapat mendapatkan anggota brankas</string>
   <string name="sharing_snackbar_change_permission_success">Izin diubah</string>
   <string name="sharing_snackbar_change_permission_error">Tidak dapat mengubah izin</string>
@@ -62,10 +63,11 @@
   <string name="sharing_snackbar_fetch_member_error">Terdapat masalah dalam memperoleh anggota</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Terdapat masalah dalam memperoleh undangan yang menunggu untuk dijawab</string>
   <string name="share_summary_title">Kaji dan bagikan</string>
-    <string name="share_summary_share_vault">Bagikan brankas</string>
+  <string name="share_summary_share_vault">Bagikan brankas</string>
   <string name="share_summary_share_item">Bagikan item</string>
   <string name="share_summary_vault_title">Brankas</string>
   <string name="share_summary_item_title">Item</string>
+  <string name="share_summary_access_level_title">Access level</string>
   <string name="share_manage_vault_share_with_more_people">Bagikan dengan lebih banyak orang</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="other">%d undangan tersisa</item>
@@ -79,15 +81,15 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Undangan</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Anggota</string>
   <string name="share_manage_vault_current_user_indicator">Anda</string>
-  <string name="share_role_viewer">Dapat melihat</string>
-  <string name="share_role_editor">Dapat menyunting</string>
+  <string name="share_role_viewer">Pengamat</string>
+  <string name="share_role_editor">Penyunting</string>
   <string name="share_role_admin">Admin</string>
   <string name="share_role_owner">Pemilik</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transfer kepemilikan</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Anda tidak dapat mentransfer brankas terakhir yang Anda miliki.</string>
   <string name="sharing_bottomsheet_remove_access">Cabut akses</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Dapat memberikan dan mencabut izin akses ke item ini.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Dapat menyunting item ini.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Dapat melihat item ini.</string>
   <string name="sharing_bottomsheet_resend_invite">Kirim ulang undangan</string>
   <string name="sharing_bottomsheet_cancel_invite">Batalkan undangan</string>

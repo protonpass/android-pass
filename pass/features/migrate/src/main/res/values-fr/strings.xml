@@ -16,4 +16,13 @@
   <string name="migrate_init_error_snackbar">Impossible de préparer l\'écran de transfert</string>
   <string name="migrate_disabled_vault_reason_no_permission">Vous ne pouvez pas créer d\'éléments dans ce coffre-fort.</string>
   <string name="migrate_disabled_vault_reason_same_vault">Vous ne pouvez pas déplacer un élément vers le même coffre-fort.</string>
+  <plurals name="migrate_items_shared_warning_title">
+    <item quantity="one">Déplacer cet élément vers un autre coffre-fort ?</item>
+    <item quantity="other">Déplacer %d éléments vers un autre coffre-fort ?</item>
+  </plurals>
+  <string name="migrate_item_shared_warning_message">L\'élément est actuellement partagé. Son déplacement vers un autre coffre-fort retirera également son accès aux autres utilisateurs.</string>
+  <plurals name="migrate_items_shared_warning_message">
+    <item quantity="one">%d élément est actuellement partagé. Son déplacement vers un autre coffre-fort retirera également son accès aux autres utilisateurs.</item>
+    <item quantity="other">%d éléments sont actuellement partagés. Leur déplacement vers un autre coffre-fort retirera également leur accès aux autres utilisateurs.</item>
+  </plurals>
 </resources>

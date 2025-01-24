@@ -15,4 +15,11 @@
   <string name="migrate_init_error_snackbar">移行画面を準備できませんでした</string>
   <string name="migrate_disabled_vault_reason_no_permission">この保管庫にはアイテムを作成できません</string>
   <string name="migrate_disabled_vault_reason_same_vault">同じ保管庫にアイテムを移動することはできません</string>
+  <plurals name="migrate_items_shared_warning_title">
+    <item quantity="other">%d個のアイテムを別の保管庫に移動しますか？</item>
+  </plurals>
+  <string name="migrate_item_shared_warning_message">このアイテムは現在共有されています。他の保管庫に移動すると、他のすべてのユーザーのアクセス権が削除されます。</string>
+  <plurals name="migrate_items_shared_warning_message">
+    <item quantity="other">現在%d個のアイテムが共有されています。他の保管庫に移動すると、他のすべてのユーザーのアクセス権が削除されます。</item>
+  </plurals>
 </resources>

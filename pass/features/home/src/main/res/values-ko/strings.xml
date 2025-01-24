@@ -90,7 +90,7 @@
   <string name="snackbar_delete_vault_success">금고를 지웠습니다</string>
   <string name="snackbar_delete_vault_error">금고가 지워지지 않았습니다</string>
   <!-- Search top bar -->
-  <string name="search_topbar_placeholder_all_items">전체 금고내에서 검색...</string>
+  <string name="search_topbar_placeholder_all_items">전체 금고 내에서 검색...</string>
   <string name="search_topbar_placeholder_all_vaults">모든 금고를 검색...</string>
   <string name="search_topbar_placeholder_vault">%s에서 검색…</string>
   <string name="search_topbar_placeholder_trash">휴지통 검색...</string>
@@ -145,7 +145,7 @@
     <item quantity="other">%d개 항목을 정말 삭제할까요? 이 동작은 되돌릴 수 없습니다.</item>
   </plurals>
   <plurals name="alert_shared_delete_items_message">
-    <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
+    <item quantity="other">%d개 항목이 현재 공유 중입니다. 휴지통에 항목을 이동하면 다른 사용자들과의 접근 권한도 상실됩니다.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">최근 검색</string>

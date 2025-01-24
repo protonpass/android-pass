@@ -16,4 +16,13 @@
   <string name="migrate_init_error_snackbar">Kunne ikke forberede migreringsskærm</string>
   <string name="migrate_disabled_vault_reason_no_permission">Du kan ikke oprette elementer i denne boks</string>
   <string name="migrate_disabled_vault_reason_same_vault">Du kan ikke flytte et element til den samme boks</string>
+  <plurals name="migrate_items_shared_warning_title">
+    <item quantity="one">Flyt elementet til en anden boks?</item>
+    <item quantity="other">Flyt %d elementer til en anden boks?</item>
+  </plurals>
+  <string name="migrate_item_shared_warning_message">Dette element er i øjeblikket delt. Hvis du flytter det til en anden boks, fjernes adgangen for alle andre brugere.</string>
+  <plurals name="migrate_items_shared_warning_message">
+    <item quantity="one">%d element er i øjeblikket delt. Hvis du flytter det til en anden boks, fjernes adgangen for alle andre brugere.</item>
+    <item quantity="other">%d elementer er i øjeblikket delt. Hvis du flytter dem til en anden boks, fjernes adgangen for alle andre brugere.</item>
+  </plurals>
 </resources>

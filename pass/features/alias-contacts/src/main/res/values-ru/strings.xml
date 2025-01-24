@@ -61,7 +61,7 @@
   <string name="snackbar_delete_contact_error">Could not delete contact</string>
   <string name="snackbar_email_copied_success">Эл. почта скопирована в буфер обмена</string>
   <string name="contact_option_send_email">Отправить электронное письмо</string>
-  <string name="contact_option_copy_address">Копировать адрес</string>
+  <string name="contact_option_copy_address">Copy forwarding address</string>
   <string name="contact_option_block_contact">Заблокировать контакт</string>
   <string name="contact_option_unblock_contact">Разблокировать контакт</string>
   <string name="contact_option_delete">Удалить</string>

@@ -31,8 +31,8 @@
   </plurals>
   <string name="sharing_member_count_header">구성원</string>
   <string name="shared_via_title">다음으로 공유</string>
-  <string name="shared_via_item_member_count_header">항목 공유</string>
-  <string name="shared_via_vault_member_count_header">보관함 공유</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">항목 공유: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">금고 공유: %s</string>
   <string name="share_with_title">공유 대상:</string>
   <string name="share_with_email_hint">이메일 주소</string>
   <string name="share_with_email_error">유효하지 않은 이메일 주소입니다.</string>
@@ -54,6 +54,7 @@
   <string name="sharing_snackbar_invite_reject_error">초대 거부 중 오류</string>
   <string name="sharing_snackbar_invite_sent_success">초대장을 보냈습니다</string>
   <string name="sharing_snackbar_invite_sent_error">초대를 전송할 수 없습니다</string>
+  <string name="sharing_snackbar_invite_new_users_error">새 사용자로 초대 전송할 수 없음</string>
   <string name="sharing_snackbar_get_vault_members_error">금고 사용자를 불러올 수 없습니다</string>
   <string name="sharing_snackbar_change_permission_success">권한 변경됨</string>
   <string name="sharing_snackbar_change_permission_error">권한을 변경할 수 없습니다.</string>
@@ -62,10 +63,11 @@
   <string name="sharing_snackbar_fetch_member_error">멤버들을 불러오는 도중 오류가 발생했습니다</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">대기중인 초대를 불러오는 도중 오류가 발생했습니다</string>
   <string name="share_summary_title">검토 및 공유</string>
-    <string name="share_summary_share_vault">금고 공유</string>
+  <string name="share_summary_share_vault">금고 공유</string>
   <string name="share_summary_share_item">항목 공유</string>
   <string name="share_summary_vault_title">금고</string>
   <string name="share_summary_item_title">항목</string>
+  <string name="share_summary_access_level_title">Access level</string>
   <string name="share_manage_vault_share_with_more_people">더 많은 사람과 공유</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="other">%d개 초대 남음</item>
@@ -79,15 +81,15 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">초대</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">구성원</string>
   <string name="share_manage_vault_current_user_indicator">나</string>
-  <string name="share_role_viewer">보기 가능</string>
-  <string name="share_role_editor">편집 가능</string>
+  <string name="share_role_viewer">뷰어</string>
+  <string name="share_role_editor">편집자</string>
   <string name="share_role_admin">관리자</string>
   <string name="share_role_owner">소유자</string>
   <string name="sharing_bottomsheet_transfer_ownership">소유권 이전</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">마지막에 소유했던 금고를 이전할 수 없습니다.</string>
   <string name="sharing_bottomsheet_remove_access">접근 권한 회수</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">이 항목에 접근 권한을 부여하고 회수할 수 있습니다.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">이 항목을 수정할 수 있습니다.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">이 항목을 볼 수 있습니다.</string>
   <string name="sharing_bottomsheet_resend_invite">초대장 재전송</string>
   <string name="sharing_bottomsheet_cancel_invite">초대 취소</string>

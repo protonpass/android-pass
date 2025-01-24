@@ -37,8 +37,8 @@
   </plurals>
   <string name="sharing_member_count_header">Členovia</string>
   <string name="shared_via_title">Zdieľané cez</string>
-  <string name="shared_via_item_member_count_header">Zdieľanie položky</string>
-  <string name="shared_via_vault_member_count_header">Zdieľanie trezora</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Zdieľanie položky: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Zdieľanie trezora: %s</string>
   <string name="share_with_title">Zdieľať s</string>
   <string name="share_with_email_hint">Emailová adresa</string>
   <string name="share_with_email_error">Neplatná emailová adresa</string>
@@ -52,7 +52,7 @@
   <string name="sharing_item_invitation_title">Pozvánka ku zdieľanej položke</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s chce s vami zdieľať položku.</string>
   <string name="sharing_item_invitation_accept">Prijať a zobraziť novú položku</string>
-  <string name="sharing_invite_more">Pozvite ďalších...</string>
+  <string name="sharing_invite_more">Pozvať ďalších…</string>
   <string name="sharing_snackbar_invite_accepted">Pozvánka prijatá</string>
   <string name="sharing_snackbar_invite_accept_error">Chyba pri prijatí pozvánky</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Pozvánku nebolo možné prijať, keďže ste dosiahli limit trezoru</string>
@@ -60,6 +60,7 @@
   <string name="sharing_snackbar_invite_reject_error">Chyba pri odmietnutí pozvánky</string>
   <string name="sharing_snackbar_invite_sent_success">Pozvánka odoslaná</string>
   <string name="sharing_snackbar_invite_sent_error">Nepodarilo sa odoslať pozvánku</string>
+  <string name="sharing_snackbar_invite_new_users_error">Nie je možné poslať pozvánky novým používateľom</string>
   <string name="sharing_snackbar_get_vault_members_error">Nepodarilo sa získať členov trezoru</string>
   <string name="sharing_snackbar_change_permission_success">Oprávnenia zmenené</string>
   <string name="sharing_snackbar_change_permission_error">Oprávnenia sa nepodarilo zmeniť</string>
@@ -68,10 +69,11 @@
   <string name="sharing_snackbar_fetch_member_error">Pri načítaní členov došlo k chybe</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Pri načítavaní čakajúcich pozvánok došlo k chybe</string>
   <string name="share_summary_title">Skontrolovať a zdieľať</string>
-    <string name="share_summary_share_vault">Zdielať trezor</string>
+  <string name="share_summary_share_vault">Zdielať trezor</string>
   <string name="share_summary_share_item">Zdieľať položku</string>
   <string name="share_summary_vault_title">Trezor</string>
   <string name="share_summary_item_title">Položka</string>
+  <string name="share_summary_access_level_title">Access level</string>
   <string name="share_manage_vault_share_with_more_people">Zdieľať s viacerými ľudmi</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d zostávajúca pozvánka</item>
@@ -91,15 +93,15 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Pozvánky</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Členovia</string>
   <string name="share_manage_vault_current_user_indicator">Vy</string>
-  <string name="share_role_viewer">Môže prezerať</string>
-  <string name="share_role_editor">Môže upravovať</string>
+  <string name="share_role_viewer">Čitateľ</string>
+  <string name="share_role_editor">Redaktor</string>
   <string name="share_role_admin">Admin</string>
   <string name="share_role_owner">Vlastník</string>
   <string name="sharing_bottomsheet_transfer_ownership">Previesť vlastníctvo</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Nemôžete preniesť svoj naposledy vlastnený trezor.</string>
   <string name="sharing_bottomsheet_remove_access">Zrušiť prístup</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Môže udeliť alebo zrušiť prístup k tejto položke.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Môže upravovať túto položku.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Môže zobraziť túto položku.</string>
   <string name="sharing_bottomsheet_resend_invite">Znovu poslať pozvánku</string>
   <string name="sharing_bottomsheet_cancel_invite">Zrušiť pozvánku</string>
@@ -138,8 +140,8 @@
   <string name="share_with_secure_link_description">Vygenerovať bezpečný odkaz na túto položku.</string>
   <string name="share_with_user_shared_title">S ostatnými používateľmi Proton Pass</string>
   <string name="share_with_user_shared_description">Užitočné na trvalé zdieľanie.</string>
-  <string name="share_with_manage_shared_item_title">Spravujte prístup</string>
-  <string name="share_with_manage_shared_item_description">Pozrite si prehľad členov a povolení.</string>
+  <string name="share_with_manage_shared_item_title">Spravovať prístup</string>
+  <string name="share_with_manage_shared_item_description">Prehľad členov a oprávnení.</string>
   <string name="share_with_secure_link_shared_title">Cez bezpečný odkaz</string>
   <string name="share_with_secure_link_shared_description">Na jednorazové zdieľanie.</string>
   <string name="share_with_manage_shared_vault_title">Spravovať prístup k trezoru</string>

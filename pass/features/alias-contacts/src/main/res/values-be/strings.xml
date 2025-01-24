@@ -61,7 +61,7 @@
   <string name="snackbar_delete_contact_error">Немагчыма выдаліць кантакт</string>
   <string name="snackbar_email_copied_success">Электронная пошта скапіявана ў буфер абмену</string>
   <string name="contact_option_send_email">Адправіць ліст</string>
-  <string name="contact_option_copy_address">Скапіяваць адрас</string>
+  <string name="contact_option_copy_address">Copy forwarding address</string>
   <string name="contact_option_block_contact">Заблакіраваць кантакт</string>
   <string name="contact_option_unblock_contact">Разблакіраваць кантакт</string>
   <string name="contact_option_delete">Выдаліць</string>

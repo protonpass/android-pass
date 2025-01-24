@@ -16,4 +16,13 @@
   <string name="migrate_init_error_snackbar">მიგრაციის ეკრანის მომზადება შეუძლებელია</string>
   <string name="migrate_disabled_vault_reason_no_permission">ამ საცავში ელემენტების შექმნა არ შეგიძლიათ</string>
   <string name="migrate_disabled_vault_reason_same_vault">ელემენტს იგივე საცავში ვერ გადაიტანთ</string>
+  <plurals name="migrate_items_shared_warning_title">
+    <item quantity="one">გადავიტანო ელემენტი სხვა საცავში?</item>
+    <item quantity="other">გადავიტანო %d ელემენტი სხვა საცავში?</item>
+  </plurals>
+  <string name="migrate_item_shared_warning_message">ეს ელემენტი ამჟამად გაზიარებულია. მისი სხვა საცავში გადატანა სხვა მომხმარებლებს მასზე წვდომას დაუკავრავს.</string>
+  <plurals name="migrate_items_shared_warning_message">
+    <item quantity="one">ამჟამად გაზიარებულია %d ელემენტი. მისი სხვა საცავში გადატანა სხვა მომხმარებლებს მასზე წვდომას დაუკავრავს.</item>
+    <item quantity="other">ამჟამად გაზიარებულია %d ელემენტი. მისი სხვა საცავში გადატანა სხვა მომხმარებლებს მასზე წვდომას დაუკავრავს.</item>
+  </plurals>
 </resources>

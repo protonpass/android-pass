@@ -33,8 +33,8 @@
   </plurals>
   <string name="sharing_member_count_header">Medlemmer</string>
   <string name="shared_via_title">Del via</string>
-  <string name="shared_via_item_member_count_header">Elementdeling</string>
-  <string name="shared_via_vault_member_count_header">Boksdeling</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Element-deling: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Boks-deling: %s</string>
   <string name="share_with_title">Del med</string>
   <string name="share_with_email_hint">E-mailadresse</string>
   <string name="share_with_email_error">Ugyldig e-mailadresse</string>
@@ -56,6 +56,7 @@
   <string name="sharing_snackbar_invite_reject_error">Fejl ved afvisning af invitationen</string>
   <string name="sharing_snackbar_invite_sent_success">Invitation sendt</string>
   <string name="sharing_snackbar_invite_sent_error">Kunne ikke sende invitation</string>
+  <string name="sharing_snackbar_invite_new_users_error">Kan ikke sende invitationer til nye brugere</string>
   <string name="sharing_snackbar_get_vault_members_error">Kunne ikke hente boksmedlemmer</string>
   <string name="sharing_snackbar_change_permission_success">Tilladelser ændret</string>
   <string name="sharing_snackbar_change_permission_error">Kunne ikke ændre tilladelserne</string>
@@ -64,10 +65,11 @@
   <string name="sharing_snackbar_fetch_member_error">Der opstod en fejl ved indhentning af medlemmer</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Der opstod en fejl ved indhentning af afventende invitationer</string>
   <string name="share_summary_title">Gennemgå og del</string>
-    <string name="share_summary_share_vault">Del boks</string>
+  <string name="share_summary_share_vault">Del boks</string>
   <string name="share_summary_share_item">Del element</string>
   <string name="share_summary_vault_title">Boks</string>
   <string name="share_summary_item_title">Element</string>
+  <string name="share_summary_access_level_title">Access level</string>
   <string name="share_manage_vault_share_with_more_people">Del med flere personer</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d invitation tilbage</item>
@@ -83,15 +85,15 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Invitationer</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Medlemmer</string>
   <string name="share_manage_vault_current_user_indicator">Dig</string>
-  <string name="share_role_viewer">Kan se</string>
-  <string name="share_role_editor">Kan redigere</string>
+  <string name="share_role_viewer">Seer</string>
+  <string name="share_role_editor">Redaktør</string>
   <string name="share_role_admin">Admin</string>
   <string name="share_role_owner">Ejer</string>
   <string name="sharing_bottomsheet_transfer_ownership">Overfør ejerskab</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Du kan ikke overføre den sidste boks, du ejer.</string>
   <string name="sharing_bottomsheet_remove_access">Tilbagekald adgang</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Kan give og tilbagekalde adgang til dette element.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Kan redigere dette element.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Kan se dette element.</string>
   <string name="sharing_bottomsheet_resend_invite">Gensend invitation</string>
   <string name="sharing_bottomsheet_cancel_invite">Annullér invitation</string>

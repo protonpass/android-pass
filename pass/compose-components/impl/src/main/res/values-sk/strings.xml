@@ -310,4 +310,23 @@
   <string name="attachment_row_upload_failed">Nahrávanie zlyhalo</string>
   <string name="attachment_row_retry">Znova</string>
   <string name="options_menu_content_description">Ponuka možností</string>
+  <!-- Items -->
+  <plurals name="shared_items_count">
+    <item quantity="one">%d zdieľaná položka</item>
+    <item quantity="few">%d zdieľané položky</item>
+    <item quantity="many">%d zdieľaných položiek</item>
+    <item quantity="other">%d zdieľaných položiek</item>
+  </plurals>
+  <plurals name="users_count">
+    <item quantity="one">%d používateľ</item>
+    <item quantity="few">%d používatelia</item>
+    <item quantity="many">%d používateľov</item>
+    <item quantity="other">%d používateľov</item>
+  </plurals>
+  <plurals name="members_count">
+    <item quantity="one">%d člen</item>
+    <item quantity="few">%d členovia</item>
+    <item quantity="many">%d členov</item>
+    <item quantity="other">%d členov</item>
+  </plurals>
 </resources>

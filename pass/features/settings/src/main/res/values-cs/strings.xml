@@ -42,4 +42,6 @@
   <string name="clipboard_option_clear_clipboard_never">Nikdy</string>
   <string name="clipboard_option_clear_clipboard_after_60_seconds">Po 1 minutě</string>
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Po 3 minutách</string>
+  <string name="settings_use_digital_asset_link_preference_title">Povolit odkazy digitálních aktiv</string>
+  <string name="settings_use_digital_asset_link_preference_subtitle">Umožňuje ověřit vlastnictví webové stránky mezi aplikací pro Android a webovou stránkou.</string>
 </resources>

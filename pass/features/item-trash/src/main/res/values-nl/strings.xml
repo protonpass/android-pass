@@ -21,8 +21,8 @@
   <string name="item_trash_delete_dialog_title">Permanent verwijderen?</string>
   <string name="item_trash_delete_dialog_message">Deze actie is onomkeerbaar.</string>
   <!-- Shared warning dialog -->
-  <string name="item_trash_warning_shared_dialog_title">Move item to trash?</string>
-  <string name="item_trash_warning_shared_dialog_message">This item is currently shared. Moving it to trash will remove access for all other users.</string>
-  <string name="item_trash_warning_shared_snackbar_trash_error">Error moving item to trash</string>
-  <string name="item_trash_warning_shared_snackbar_trash_success">Item moved to trash</string>
+  <string name="item_trash_warning_shared_dialog_title">Item naar prullenbak verplaatsen?</string>
+  <string name="item_trash_warning_shared_dialog_message">Dit item wordt momenteel gedeeld. Als u het naar prullenbak verplaatst, wordt de toegang voor alle andere gebruikers uitgeschakeld.</string>
+  <string name="item_trash_warning_shared_snackbar_trash_error">Fout bij verplaatsen van item naar prullenbak</string>
+  <string name="item_trash_warning_shared_snackbar_trash_success">Item verplaatst naar prullenbak</string>
 </resources>

@@ -32,7 +32,7 @@
   <string name="sync_dialog_title_success">Sincronização completa</string>
   <string name="sync_dialog_subtitle">Estamos baixando e descriptografando seus itens. Isso pode demorar alguns minutos.</string>
   <string name="sync_dialog_subtitle_error">Ocorreu um erro ao baixar e descriptografar seus itens. Tente novamente.</string>
-  <string name="sync_dialog_subtitle_success">Seus itens foram baixados e descriptografados com sucesso.</string>
+  <string name="sync_dialog_subtitle_success">Seus itens foram baixados e descriptografados.</string>
   <string name="sync_item_not_started">Não iniciado</string>
   <string name="sync_item_failed">Falha na sincronização</string>
   <string name="sync_dialog_title_inserting">Inserindo itens…</string>

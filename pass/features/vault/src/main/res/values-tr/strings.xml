@@ -17,6 +17,7 @@
   <string name="vault_delete_dialog_placeholder">Kasa adı</string>
   <string name="vault_delete_dialog_cancel_action">İptal</string>
   <string name="vault_delete_dialog_delete_action">Sil</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Bu kasada %1$s bulunuyor. Kasayı silerseniz diğer kullanıcıların erişimi kaldırılacak.</string>
   <string name="vault_leave_dialog_title">Kasayı bırak</string>
   <string name="vault_leave_dialog_body">Bu işlem __VAULT_NAME__ kasasını ve tüm içeriklerini bırakmanızı sağlar. Kasayı bırakmak istediğinize emin misiniz?</string>
   <string name="vault_leave_dialog_cancel_action">İptal</string>

@@ -33,8 +33,8 @@
   </plurals>
   <string name="sharing_member_count_header">Membros</string>
   <string name="shared_via_title">Compartilhar via</string>
-  <string name="shared_via_item_member_count_header">Itens compartilhados</string>
-  <string name="shared_via_vault_member_count_header">Compartilhamento de cofre</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Compartilhamento de itens: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Compartilhamento de cofres: %s</string>
   <string name="share_with_title">Compartilhar com</string>
   <string name="share_with_email_hint">Endereço de e-mail</string>
   <string name="share_with_email_error">O endereço de e-mail não é válido.</string>
@@ -56,6 +56,7 @@
   <string name="sharing_snackbar_invite_reject_error">Erro ao rejeitar o convite.</string>
   <string name="sharing_snackbar_invite_sent_success">Convite enviado</string>
   <string name="sharing_snackbar_invite_sent_error">Não foi possível enviar o convite.</string>
+  <string name="sharing_snackbar_invite_new_users_error">Não é possível enviar convites para novos usuários.</string>
   <string name="sharing_snackbar_get_vault_members_error">Não foi possível obter os membros do cofre.</string>
   <string name="sharing_snackbar_change_permission_success">As permissões foram alteradas.</string>
   <string name="sharing_snackbar_change_permission_error">Não foi possível mudar as permissões</string>
@@ -64,10 +65,11 @@
   <string name="sharing_snackbar_fetch_member_error">Houve um erro ao obter estes membros</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Ocorreu um erro ao obter convites pendentes.</string>
   <string name="share_summary_title">Revisar e compartilhar</string>
-    <string name="share_summary_share_vault">Compartilhar cofre</string>
+  <string name="share_summary_share_vault">Compartilhar cofre</string>
   <string name="share_summary_share_item">Compartilhar item</string>
   <string name="share_summary_vault_title">Cofre</string>
   <string name="share_summary_item_title">Item</string>
+  <string name="share_summary_access_level_title">Nível de acesso</string>
   <string name="share_manage_vault_share_with_more_people">Compartilhar com mais pessoas</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d convite restante</item>
@@ -83,15 +85,15 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Convites</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Membros</string>
   <string name="share_manage_vault_current_user_indicator">Você</string>
-  <string name="share_role_viewer">Pode ver</string>
-  <string name="share_role_editor">Pode editar</string>
+  <string name="share_role_viewer">Visualizador</string>
+  <string name="share_role_editor">Editor</string>
   <string name="share_role_admin">Administrador</string>
   <string name="share_role_owner">Proprietário</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transferir a propriedade</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Você não pode transferir o seu último cofre possuído.</string>
   <string name="sharing_bottomsheet_remove_access">Revogar acesso</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Pode conceder ou revogar acesso para esse item.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Pode editar esse item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Pode editar e excluir este item.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Pode vere esse item.</string>
   <string name="sharing_bottomsheet_resend_invite">Reenviar convite</string>
   <string name="sharing_bottomsheet_cancel_invite">Cancelar convite</string>
@@ -129,7 +131,7 @@
   <string name="share_with_user_shared_title">Com outros usuários do Proton Pass</string>
   <string name="share_with_user_shared_description">Útil para compartilhar permanentemente.</string>
   <string name="share_with_manage_shared_item_title">Gerenciar acesso</string>
-  <string name="share_with_manage_shared_item_description">See member and permission overview.</string>
+  <string name="share_with_manage_shared_item_description">Veja a visão geral de membros e permissões.</string>
   <string name="share_with_secure_link_shared_title">Via um link seguro</string>
   <string name="share_with_secure_link_shared_description">Para uso único.</string>
   <string name="share_with_manage_shared_vault_title">Gerenciar acesso ao cofre</string>

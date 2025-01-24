@@ -17,6 +17,7 @@
   <string name="vault_delete_dialog_placeholder">Nom de la caixa forta</string>
   <string name="vault_delete_dialog_cancel_action">Cancel·la</string>
   <string name="vault_delete_dialog_delete_action">Elimina</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Aquesta caixa forta conté %1$s. En suprimir-la, se suprimirà l\'accés a la resta d\'usuaris.</string>
   <string name="vault_leave_dialog_title">Deixa la caixa forta</string>
   <string name="vault_leave_dialog_body">Això esborrarà el vostre accés de la caixa forta __VAULT_NAME__ i tot el seu contingut. Esteu segur que voleu deixar-la?</string>
   <string name="vault_leave_dialog_cancel_action">Cancel·la</string>

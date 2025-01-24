@@ -33,8 +33,8 @@
   </plurals>
   <string name="sharing_member_count_header">Leden</string>
   <string name="shared_via_title">Gedeeld via</string>
-  <string name="shared_via_item_member_count_header">Item delen</string>
-  <string name="shared_via_vault_member_count_header">Kluis delen</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Item delen: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Kluis delen: %s</string>
   <string name="share_with_title">Deel met</string>
   <string name="share_with_email_hint">E-mailadres</string>
   <string name="share_with_email_error">Ongeldig e-mailadres</string>
@@ -56,6 +56,7 @@
   <string name="sharing_snackbar_invite_reject_error">Fout bij het weigeren van de uitnodiging</string>
   <string name="sharing_snackbar_invite_sent_success">Uitnodiging verzonden</string>
   <string name="sharing_snackbar_invite_sent_error">Kan de uitnodiging niet verzenden</string>
+  <string name="sharing_snackbar_invite_new_users_error">Kan geen uitnodigingen versturen naar nieuwe gebruikers</string>
   <string name="sharing_snackbar_get_vault_members_error">Kon geen kluisleden krijgen</string>
   <string name="sharing_snackbar_change_permission_success">Machtigingen gewijzigd</string>
   <string name="sharing_snackbar_change_permission_error">Kon machtigingen niet wijzigen</string>
@@ -64,10 +65,11 @@
   <string name="sharing_snackbar_fetch_member_error">Er is een fout opgetreden bij het ophalen van de leden</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Er is een fout opgetreden bij het ophalen van opstaande uitnodigingen</string>
   <string name="share_summary_title">Beoordelen en delen</string>
-    <string name="share_summary_share_vault">Kluis delen</string>
+  <string name="share_summary_share_vault">Kluis delen</string>
   <string name="share_summary_share_item">Deel item</string>
   <string name="share_summary_vault_title">Kluis</string>
   <string name="share_summary_item_title">Item</string>
+  <string name="share_summary_access_level_title">Toegangsniveau</string>
   <string name="share_manage_vault_share_with_more_people">Deel met meer mensen</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d uitnodiging over</item>
@@ -83,15 +85,15 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Uitnodigingen</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Leden</string>
   <string name="share_manage_vault_current_user_indicator">U</string>
-  <string name="share_role_viewer">Kan bekijken</string>
-  <string name="share_role_editor">Kan bewerken</string>
+  <string name="share_role_viewer">Lezer</string>
+  <string name="share_role_editor">Bewerker</string>
   <string name="share_role_admin">Beheerder</string>
   <string name="share_role_owner">Eigenaar</string>
   <string name="sharing_bottomsheet_transfer_ownership">Eigendom overdragen</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">U mag uw laatste eigen kluis niet overdragen.</string>
   <string name="sharing_bottomsheet_remove_access">Toegang ontzeggen</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Kan toegang tot dit item verlenen en intrekken.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Kan dit item wijzigen</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Dit item kan worden bewerkt en verwijderd.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Kan dit item bekijken</string>
   <string name="sharing_bottomsheet_resend_invite">Uitnodiging opnieuw verzenden</string>
   <string name="sharing_bottomsheet_cancel_invite">Uitnodiging annuleren</string>

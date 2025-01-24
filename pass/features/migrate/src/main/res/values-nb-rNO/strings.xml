@@ -16,4 +16,13 @@
   <string name="migrate_init_error_snackbar">Kunne ikke klargjøre overføringsskjermen</string>
   <string name="migrate_disabled_vault_reason_no_permission">Du kan ikke opprette elementer i dette hvelvet</string>
   <string name="migrate_disabled_vault_reason_same_vault">Du kan ikke flytte et element til det samme hvelvet</string>
+  <plurals name="migrate_items_shared_warning_title">
+    <item quantity="one">Flytte elementet til et annet hvelv?</item>
+    <item quantity="other">Flytte %d elementer til et annet hvelv?</item>
+  </plurals>
+  <string name="migrate_item_shared_warning_message">Dette elementet er for øyeblikket delt. Hvis du flytter det til et annet hvelv, fjernes tilgangen for alle andre brukere.</string>
+  <plurals name="migrate_items_shared_warning_message">
+    <item quantity="one">%d element er for øyeblikket delt. Hvis du flytter det til et annet hvelv, fjernes tilgangen for alle andre brukere.</item>
+    <item quantity="other">%d elementer er for øyeblikket delt. Hvis du flytter dem til et annet hvelv, fjernes tilgangen for alle andre brukere.</item>
+  </plurals>
 </resources>

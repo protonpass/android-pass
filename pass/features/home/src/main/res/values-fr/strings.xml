@@ -153,7 +153,7 @@
     <item quantity="other">Voulez-vous vraiment supprimer les %d éléments ? Cette action est irréversible.</item>
   </plurals>
   <plurals name="alert_shared_delete_items_message">
-    <item quantity="one">1 élément est actuellement partagé. Son déplacement vers la corbeille retirera également son accès aux autres utilisateurs.</item>
+    <item quantity="one">%d élément est actuellement partagé. Son déplacement vers la corbeille retirera également son accès aux autres utilisateurs.</item>
     <item quantity="other">%d éléments sont actuellement partagés. Leur déplacement vers la corbeille retirera également leur accès aux autres utilisateurs.</item>
   </plurals>
   <!-- Recent search -->

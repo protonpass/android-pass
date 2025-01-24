@@ -17,6 +17,7 @@
   <string name="vault_delete_dialog_placeholder">保管庫名</string>
   <string name="vault_delete_dialog_cancel_action">キャンセル</string>
   <string name="vault_delete_dialog_delete_action">削除</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">この保管庫は %1$sを保持しています。削除すると他のすべてのユーザーのアクセス権が削除されます。</string>
   <string name="vault_leave_dialog_title">保管庫を退出</string>
   <string name="vault_leave_dialog_body">この操作により、保管庫 __VAULT_NAME__ とすべてのコンテンツへのアクセスを失います。退出してよろしいですか？</string>
   <string name="vault_leave_dialog_cancel_action">キャンセル</string>

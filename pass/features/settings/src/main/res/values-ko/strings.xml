@@ -42,4 +42,6 @@
   <string name="clipboard_option_clear_clipboard_never">안 함</string>
   <string name="clipboard_option_clear_clipboard_after_60_seconds">1분 후</string>
   <string name="clipboard_option_clear_clipboard_after_180_seconds">3분 후</string>
+  <string name="settings_use_digital_asset_link_preference_title">디지털 자산 링크 활성화</string>
+  <string name="settings_use_digital_asset_link_preference_subtitle">Android 앱과 웹사이트 사이에 웹사이트 소유권 확인을 설정합니다.</string>
 </resources>

@@ -52,7 +52,7 @@
   <string name="snackbar_delete_contact_error">연락처를 삭제하지 못했습니다</string>
   <string name="snackbar_email_copied_success">이메일이 클립보드에 복사되었습니다</string>
   <string name="contact_option_send_email">이메일 전송</string>
-  <string name="contact_option_copy_address">주소 복사</string>
+  <string name="contact_option_copy_address">포워딩 주소 복사</string>
   <string name="contact_option_block_contact">연락처 차단</string>
   <string name="contact_option_unblock_contact">연락처 차단 해제</string>
   <string name="contact_option_delete">삭제</string>

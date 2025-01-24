@@ -153,8 +153,8 @@
     <item quantity="other">Haluatko varmasti poistaa %d kohdetta? Tätä ei ole mahdollista kumota.</item>
   </plurals>
   <plurals name="alert_shared_delete_items_message">
-    <item quantity="one">1 item is currently shared. Moving it to trash will remove access for all other users.</item>
-    <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
+    <item quantity="one">%d kohde on tällä hetkellä jaettuna. Sen siirtäminen roskakoriin poistaa pääsyn kaikilta muilta käyttäjiltä.</item>
+    <item quantity="other">%d kohdetta on tällä hetkellä jaettuna. Niiden siirtäminen roskakoriin poistaa pääsyn kaikilta muilta käyttäjiltä.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Viimeisimmät haut</string>

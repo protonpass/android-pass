@@ -17,6 +17,7 @@
   <string name="vault_delete_dialog_placeholder">Hvelvnavn</string>
   <string name="vault_delete_dialog_cancel_action">Avbryt</string>
   <string name="vault_delete_dialog_delete_action">Slett</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Dette hvelvet inneholder %1$s. Hvis du sletter det, fjernes tilgangen for alle andre brukere.</string>
   <string name="vault_leave_dialog_title">Forlat hvelv</string>
   <string name="vault_leave_dialog_body">Dette vil fjerne tilgangen din fra hvelvet __VAULT_NAME__ og alt innholdet. Er du sikker på at du vil forlate det?</string>
   <string name="vault_leave_dialog_cancel_action">Avbryt</string>

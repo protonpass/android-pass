@@ -16,4 +16,13 @@
   <string name="migrate_init_error_snackbar">Kan migratiescherm niet voorbereiden</string>
   <string name="migrate_disabled_vault_reason_no_permission">U kunt geen items aanmaken in deze kluis</string>
   <string name="migrate_disabled_vault_reason_same_vault">U kunt een item niet naar dezelfde kluis verplaatsen</string>
+  <plurals name="migrate_items_shared_warning_title">
+    <item quantity="one">Verplaats het item naar een andere kluis?</item>
+    <item quantity="other">Verplaats %d items naar een andere kluis?</item>
+  </plurals>
+  <string name="migrate_item_shared_warning_message">Dit item wordt momenteel gedeeld. Als u het naar een andere kluis verplaatst, wordt de toegang voor alle andere gebruikers verwijderd.</string>
+  <plurals name="migrate_items_shared_warning_message">
+    <item quantity="one">%d item wordt momenteel gedeeld. Als u het naar de prullenbak verplaatst, wordt de toegang voor alle andere gebruikers verwijderd.</item>
+    <item quantity="other">%d items worden momenteel gedeeld. Als u deze naar de prullenbak verplaatst, wordt de toegang voor alle andere gebruikers verwijderd.</item>
+  </plurals>
 </resources>

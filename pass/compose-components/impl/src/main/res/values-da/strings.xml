@@ -286,4 +286,17 @@
   <string name="attachment_row_upload_failed">Upload mislykkedes</string>
   <string name="attachment_row_retry">Prøv igen</string>
   <string name="options_menu_content_description">Indstillingsmenu</string>
+  <!-- Items -->
+  <plurals name="shared_items_count">
+    <item quantity="one">%d delt element</item>
+    <item quantity="other">%d delte elementer</item>
+  </plurals>
+  <plurals name="users_count">
+    <item quantity="one">%d bruger</item>
+    <item quantity="other">%d brugere</item>
+  </plurals>
+  <plurals name="members_count">
+    <item quantity="one">%d medlem</item>
+    <item quantity="other">%d medlemmer</item>
+  </plurals>
 </resources>

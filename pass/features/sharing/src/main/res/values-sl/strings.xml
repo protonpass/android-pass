@@ -36,9 +36,9 @@
     <item quantity="other">%d članov</item>
   </plurals>
   <string name="sharing_member_count_header">Člani</string>
-  <string name="shared_via_title">Shared via</string>
-  <string name="shared_via_item_member_count_header">Item sharing</string>
-  <string name="shared_via_vault_member_count_header">Vault sharing</string>
+  <string name="shared_via_title">Deljeno preko</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Item sharing: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Vault sharing: %s</string>
   <string name="share_with_title">Deli z</string>
   <string name="share_with_email_hint">E-poštni naslov</string>
   <string name="share_with_email_error">Neveljaven e-poštni naslov</string>
@@ -60,6 +60,7 @@
   <string name="sharing_snackbar_invite_reject_error">Napaka pri zavrnitvi povabila</string>
   <string name="sharing_snackbar_invite_sent_success">Povabilo poslano.</string>
   <string name="sharing_snackbar_invite_sent_error">Povabila ni bilo mogoče poslati</string>
+  <string name="sharing_snackbar_invite_new_users_error">Cannot send invites to new users</string>
   <string name="sharing_snackbar_get_vault_members_error">Ni bilo mogoče pridobiti članov trezorja</string>
   <string name="sharing_snackbar_change_permission_success">Spremenjena dovoljenja</string>
   <string name="sharing_snackbar_change_permission_error">Dovoljenj ni bilo mogoče spremeniti</string>
@@ -68,10 +69,11 @@
   <string name="sharing_snackbar_fetch_member_error">There was an error fetching members</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">There was an error fetching pending invites</string>
   <string name="share_summary_title">Preglejte in delite</string>
-    <string name="share_summary_share_vault">Skupni trezor</string>
+  <string name="share_summary_share_vault">Skupni trezor</string>
   <string name="share_summary_share_item">Share item</string>
   <string name="share_summary_vault_title">Trezor</string>
   <string name="share_summary_item_title">Predmet</string>
+  <string name="share_summary_access_level_title">Access level</string>
   <string name="share_manage_vault_share_with_more_people">Delite z več ljudmi</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d ostane povabilo</item>
@@ -91,15 +93,15 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Vabila</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Člani</string>
   <string name="share_manage_vault_current_user_indicator">Vi</string>
-  <string name="share_role_viewer">Lahko si ogledate</string>
-  <string name="share_role_editor">Lahko ureja</string>
+  <string name="share_role_viewer">Preglednik</string>
+  <string name="share_role_editor">Urejevalnik</string>
   <string name="share_role_admin">Administrator</string>
   <string name="share_role_owner">Lastnik</string>
   <string name="sharing_bottomsheet_transfer_ownership">Prenos lastništva</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Svojega zadnjega trezorja ne morete prenesti.</string>
   <string name="sharing_bottomsheet_remove_access">Odvzemi dostop</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Lahko odobri in prekliče dostop do tega predmeta.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Lahko ureja ta predmet.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Lahko si ogleda ta predmet.</string>
   <string name="sharing_bottomsheet_resend_invite">Ponovno pošlji povabilo</string>
   <string name="sharing_bottomsheet_cancel_invite">Prekliči povabilo</string>

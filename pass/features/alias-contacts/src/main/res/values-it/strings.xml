@@ -55,7 +55,7 @@
   <string name="snackbar_delete_contact_error">Impossibile eliminare il contatto</string>
   <string name="snackbar_email_copied_success">Email copiata negli appunti</string>
   <string name="contact_option_send_email">Invia email</string>
-  <string name="contact_option_copy_address">Copia l\'indirizzo</string>
+  <string name="contact_option_copy_address">Copia l\'indirizzo d\'inoltro</string>
   <string name="contact_option_block_contact">Blocca contatto</string>
   <string name="contact_option_unblock_contact">Sblocca contatto</string>
   <string name="contact_option_delete">Elimina</string>

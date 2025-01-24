@@ -16,4 +16,13 @@
   <string name="migrate_init_error_snackbar">No s\'ha pogut preparar la pantalla de migració</string>
   <string name="migrate_disabled_vault_reason_no_permission">No podeu crear elements en aquesta caixa forta</string>
   <string name="migrate_disabled_vault_reason_same_vault">No podeu moure un element a la mateixa caixa forta</string>
+  <plurals name="migrate_items_shared_warning_title">
+    <item quantity="one">Mou l\'element a una altra caixa forta?</item>
+    <item quantity="other">Mou %d elements a una altra caixa forta?</item>
+  </plurals>
+  <string name="migrate_item_shared_warning_message">Aquest element està compartit actualment. Moure-ho a una altra caixa forta suposarà la supressió de l\'accés per a la resta d\'usuaris.</string>
+  <plurals name="migrate_items_shared_warning_message">
+    <item quantity="one">%d element està compartit actualment. Moure-ho a una altra caixa forta suposarà la supressió de l\'accés per a la resta d\'usuaris.</item>
+    <item quantity="other">%d elements estan compartits actualment. Moure\'ls a una altra caixa forta suposarà la supressió de l\'accés per a la resta d\'usuaris.\"</item>
+  </plurals>
 </resources>

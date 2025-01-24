@@ -286,4 +286,17 @@
   <string name="attachment_row_upload_failed">Opladen mislukt</string>
   <string name="attachment_row_retry">Probeer opnieuw</string>
   <string name="options_menu_content_description">Opties-menu</string>
+  <!-- Items -->
+  <plurals name="shared_items_count">
+    <item quantity="one">%d gedeeld item</item>
+    <item quantity="other">%d gedeelde items</item>
+  </plurals>
+  <plurals name="users_count">
+    <item quantity="one">%d gebruiker</item>
+    <item quantity="other">%d gebruikers</item>
+  </plurals>
+  <plurals name="members_count">
+    <item quantity="one">%d lid</item>
+    <item quantity="other">%d leden</item>
+  </plurals>
 </resources>

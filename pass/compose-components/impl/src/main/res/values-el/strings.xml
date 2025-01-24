@@ -286,4 +286,17 @@
   <string name="attachment_row_upload_failed">Αποτυχία μεταφόρτωσης</string>
   <string name="attachment_row_retry">Επανάληψη</string>
   <string name="options_menu_content_description">Μενού επιλογών</string>
+  <!-- Items -->
+  <plurals name="shared_items_count">
+    <item quantity="one">%d κοινοποιημένο στοιχείο</item>
+    <item quantity="other">%d κοινοποιημένα στοιχεία</item>
+  </plurals>
+  <plurals name="users_count">
+    <item quantity="one">%d χρήστης</item>
+    <item quantity="other">%d χρήστες</item>
+  </plurals>
+  <plurals name="members_count">
+    <item quantity="one">%d μέλος</item>
+    <item quantity="other">%d μέλη</item>
+  </plurals>
 </resources>

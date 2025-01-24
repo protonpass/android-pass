@@ -145,7 +145,7 @@
     <item quantity="other">%d 個のアイテムを削除してもよろしいですか? この操作は元に戻せません</item>
   </plurals>
   <plurals name="alert_shared_delete_items_message">
-    <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
+    <item quantity="other">現在%d個のアイテムが共有されています。ごみ箱に移動すると、他のすべてのユーザーのアクセスが削除されます。</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">最近の検索</string>

@@ -169,7 +169,7 @@
     <item quantity="other">Вы уверены, что хотите удалить %d элементов? Это действие необратимо</item>
   </plurals>
   <plurals name="alert_shared_delete_items_message">
-    <item quantity="one">1 item is currently shared. Moving it to trash will remove access for all other users.</item>
+    <item quantity="one">%d item is currently shared. Moving it to trash will remove access for all other users.</item>
     <item quantity="few">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
     <item quantity="many">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
     <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>

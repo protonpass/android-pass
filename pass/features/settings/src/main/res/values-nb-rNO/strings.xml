@@ -42,4 +42,6 @@
   <string name="clipboard_option_clear_clipboard_never">Aldri</string>
   <string name="clipboard_option_clear_clipboard_after_60_seconds">Etter 1 minutt</string>
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Etter 3 minutter</string>
+  <string name="settings_use_digital_asset_link_preference_title">Aktiver digitale aktivakoblinger</string>
+  <string name="settings_use_digital_asset_link_preference_subtitle">Etablerer bekreftelse av eierskap av nettsted mellom en Android-app og et nettsted.</string>
 </resources>

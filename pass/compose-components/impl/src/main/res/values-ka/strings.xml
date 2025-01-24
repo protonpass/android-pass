@@ -286,4 +286,17 @@
   <string name="attachment_row_upload_failed">ატვირთვა ჩავარდა</string>
   <string name="attachment_row_retry">თავიდან</string>
   <string name="options_menu_content_description">პარამეტრების მენიუ</string>
+  <!-- Items -->
+  <plurals name="shared_items_count">
+    <item quantity="one">%d გაზიარებული ელემენტი</item>
+    <item quantity="other">%d გაზიარებული ელემენტი</item>
+  </plurals>
+  <plurals name="users_count">
+    <item quantity="one">%d მომხმარებელი</item>
+    <item quantity="other">%d მომხმარებელი</item>
+  </plurals>
+  <plurals name="members_count">
+    <item quantity="one">%d წევრი</item>
+    <item quantity="other">%d წევრი</item>
+  </plurals>
 </resources>

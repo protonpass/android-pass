@@ -42,4 +42,6 @@
   <string name="clipboard_option_clear_clipboard_never">Mai</string>
   <string name="clipboard_option_clear_clipboard_after_60_seconds">1 minuto</string>
   <string name="clipboard_option_clear_clipboard_after_180_seconds">3 minuti</string>
+  <string name="settings_use_digital_asset_link_preference_title">Abilita i link degli asset digitali</string>
+  <string name="settings_use_digital_asset_link_preference_subtitle">Stabilisce la verifica della proprietà del sito web tra un\'app Android e un sito web.</string>
 </resources>

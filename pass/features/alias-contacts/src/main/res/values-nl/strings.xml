@@ -55,7 +55,7 @@
   <string name="snackbar_delete_contact_error">Kan contact niet verwijderen</string>
   <string name="snackbar_email_copied_success">E-mail gekopieerd naar klembord</string>
   <string name="contact_option_send_email">E-mail verzenden</string>
-  <string name="contact_option_copy_address">Adres kopiëren</string>
+  <string name="contact_option_copy_address">Kopieer doorschakeladres</string>
   <string name="contact_option_block_contact">Contact blokkeren</string>
   <string name="contact_option_unblock_contact">Contact deblokkeren</string>
   <string name="contact_option_delete">Verwijderen</string>

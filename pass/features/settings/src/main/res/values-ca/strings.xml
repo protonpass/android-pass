@@ -42,4 +42,6 @@
   <string name="clipboard_option_clear_clipboard_never">Mai</string>
   <string name="clipboard_option_clear_clipboard_after_60_seconds">Després d\'1 minut</string>
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Després de 3 minuts</string>
+  <string name="settings_use_digital_asset_link_preference_title">Activa els enllaços d\'actius digitals</string>
+  <string name="settings_use_digital_asset_link_preference_subtitle">Estableix la verificació de la propietat del lloc web entre una aplicació Android i un lloc web.</string>
 </resources>

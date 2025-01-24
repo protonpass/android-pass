@@ -286,4 +286,17 @@
   <string name="attachment_row_upload_failed">No s\'ha pogut carregar.</string>
   <string name="attachment_row_retry">Torna-ho a provar</string>
   <string name="options_menu_content_description">Menú d\'opcions</string>
+  <!-- Items -->
+  <plurals name="shared_items_count">
+    <item quantity="one">%d element compartit</item>
+    <item quantity="other">%d elements compartits</item>
+  </plurals>
+  <plurals name="users_count">
+    <item quantity="one">%d usuari</item>
+    <item quantity="other">%d usuaris</item>
+  </plurals>
+  <plurals name="members_count">
+    <item quantity="one">%d membre</item>
+    <item quantity="other">%d membres</item>
+  </plurals>
 </resources>

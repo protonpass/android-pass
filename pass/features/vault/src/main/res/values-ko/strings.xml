@@ -17,6 +17,7 @@
   <string name="vault_delete_dialog_placeholder">금고 이름</string>
   <string name="vault_delete_dialog_cancel_action">취소</string>
   <string name="vault_delete_dialog_delete_action">삭제</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">이 금고는 %1$s이 존재합니다. 삭제시 다른 사용자들의 접근 권한도 상실됩니다.</string>
   <string name="vault_leave_dialog_title">금고 떠나기</string>
   <string name="vault_leave_dialog_body">이는 __VAULT_NAME__ 금고에 접근할 권한과 콘텐츠를 모두 삭제합니다. 정말 떠나시겠어요?</string>
   <string name="vault_leave_dialog_cancel_action">취소</string>

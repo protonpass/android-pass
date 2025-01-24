@@ -16,4 +16,13 @@
   <string name="migrate_init_error_snackbar">Não foi possível preparar a tela de migração</string>
   <string name="migrate_disabled_vault_reason_no_permission">Você não pode criar itens neste cofre</string>
   <string name="migrate_disabled_vault_reason_same_vault">Você não pode mover um item para o mesmo cofre</string>
+  <plurals name="migrate_items_shared_warning_title">
+    <item quantity="one">Mover o item para outro cofre?</item>
+    <item quantity="other">Mover %d itens para outro cofre?</item>
+  </plurals>
+  <string name="migrate_item_shared_warning_message">Este item está compartilhado no momento. Movê-lo para outro cofre removerá o acesso de todos os outros usuários.</string>
+  <plurals name="migrate_items_shared_warning_message">
+    <item quantity="one">%d item está atualmente compartilhado. Movê-lo para outro cofre removerá o acesso de todos os outros usuários.</item>
+    <item quantity="other">%d itens são atualmente compartilhados. Movê-los para outro cofre removerá o acesso de todos os outros usuários.</item>
+  </plurals>
 </resources>

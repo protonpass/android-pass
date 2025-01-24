@@ -26,11 +26,11 @@
   <string name="item_details_forbidden_actions_edit_upgrade">Você só tem permissão para editar itens nos cofres mais antigos. Para editar este item, atualize seu plano atual.</string>
   <string name="item_details_forbidden_actions_share_title">Não pode compartilhar</string>
   <string name="item_details_forbidden_actions_share_limit">Você atingiu o limite de compartilhamento do cofre. Para compartilhar mais cofres, atualize seu plano atual.</string>
-  <string name="item_details_forbidden_actions_sharing_permission">You don\'t have enough permissions to perform this action.</string>
+  <string name="item_details_forbidden_actions_sharing_permission">Você não tem permissões suficientes para executar esta ação.</string>
   <string name="item_details_forbidden_actions_share_trash">Você não pode compartilhar este item porque ele está na lixeira. Retire-o da lixeira antes de editá-lo.</string>
   <!-- Item details leave item -->
   <string name="item_details_leave_dialog_title">Deixar este item?</string>
   <string name="item_details_leave_dialog_message">Você perderá o acesso para esse item e os seus detalhes. Você deseja continuar?</string>
-  <string name="item_details_leave_item_message_error">There was an error leaving the item</string>
-  <string name="item_details_leave_item_message_success">Item successfully left</string>
+  <string name="item_details_leave_item_message_error">Ocorreu um erro ao deixar o item</string>
+  <string name="item_details_leave_item_message_success">O item foi deixado.</string>
 </resources>

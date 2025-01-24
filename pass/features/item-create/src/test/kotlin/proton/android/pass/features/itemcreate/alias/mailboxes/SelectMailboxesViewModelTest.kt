@@ -29,16 +29,16 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class SelectMailboxesDialogViewModelTest {
+class SelectMailboxesViewModelTest {
 
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
-    private lateinit var viewModel: SelectMailboxesDialogViewModel
+    private lateinit var viewModel: SelectMailboxesViewModel
 
     @Before
     fun setup() {
-        viewModel = SelectMailboxesDialogViewModel()
+        viewModel = SelectMailboxesViewModel()
     }
 
     @Test

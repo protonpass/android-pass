@@ -30,6 +30,8 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.features.itemcreate.alias.bottomsheet.CreateAliasBottomSheet
+import proton.android.pass.features.itemcreate.alias.mailboxes.SelectMailboxesBottomsheet
+import proton.android.pass.features.itemcreate.alias.suffixes.SelectSuffixBottomsheet
 import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -91,6 +93,16 @@ object CreateAliasBottomSheet : NavItem(
     }
 }
 
+data object AliasSelectSuffixBottomSheetNavItem : NavItem(
+    baseRoute = "alias/select/suffix/bottomsheet",
+    navItemType = NavItemType.Bottomsheet
+)
+
+data object AliasSelectMailboxBottomSheetNavItem : NavItem(
+    baseRoute = "alias/select/mailbox/bottomsheet",
+    navItemType = NavItemType.Bottomsheet
+)
+
 sealed interface CreateAliasNavigation {
     data class CreatedFromBottomsheet(val alias: String) : CreateAliasNavigation
     data class Created(
@@ -104,6 +116,8 @@ sealed interface CreateAliasNavigation {
     data object CloseBottomsheet : CreateAliasNavigation
     data object AddAttachment : CreateAliasNavigation
     data object UpsellAttachments : CreateAliasNavigation
+    data object SelectSuffix : CreateAliasNavigation
+    data object SelectMailbox : CreateAliasNavigation
 
     @JvmInline
     value class DeleteAllAttachments(val attachmentIds: Set<AttachmentId>) : CreateAliasNavigation
@@ -133,5 +147,12 @@ fun NavGraphBuilder.createAliasGraph(canUseAttachments: Boolean, onNavigate: (Cr
             itemTitle = itemTitle,
             onNavigate = onNavigate
         )
+    }
+
+    bottomSheet(AliasSelectSuffixBottomSheetNavItem) {
+        SelectSuffixBottomsheet()
+    }
+    bottomSheet(AliasSelectMailboxBottomSheetNavItem) {
+        SelectMailboxesBottomsheet()
     }
 }

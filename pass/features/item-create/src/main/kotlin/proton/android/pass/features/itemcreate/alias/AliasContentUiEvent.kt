@@ -40,12 +40,6 @@ sealed interface AliasContentUiEvent {
     @JvmInline
     value class OnPrefixChange(val prefix: String) : AliasContentUiEvent
 
-    @JvmInline
-    value class OnMailBoxChanged(val list: List<SelectedAliasMailboxUiModel>) : AliasContentUiEvent
-
-    @JvmInline
-    value class OnSuffixChanged(val suffix: AliasSuffixUiModel) : AliasContentUiEvent
-
     data object OnUpgrade : AliasContentUiEvent
 
     @JvmInline
@@ -62,4 +56,8 @@ sealed interface AliasContentUiEvent {
     data object DismissAttachmentBanner : AliasContentUiEvent
 
     data object DismissAdvancedOptionsBanner : AliasContentUiEvent
+
+    data object OnSuffixSelect : AliasContentUiEvent
+
+    data object OnMailboxSelect : AliasContentUiEvent
 }

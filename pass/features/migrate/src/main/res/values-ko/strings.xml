@@ -15,4 +15,11 @@
   <string name="migrate_init_error_snackbar">마이그레이션 창을 준비할 수 없습니다.</string>
   <string name="migrate_disabled_vault_reason_no_permission">이 금고 내에서 항목 생성이 불가합니다.</string>
   <string name="migrate_disabled_vault_reason_same_vault">같은 금고 내에서는 항목 이동이 불가합니다.</string>
+  <plurals name="migrate_items_shared_warning_title">
+    <item quantity="other">%d개 항목을 다른 금고로 이동하시겠어요?</item>
+  </plurals>
+  <string name="migrate_item_shared_warning_message">이 항목은 현재 공유되는 중 입니다. 다른 금고로 이동하면 모든 다른 사용자의 접근 권한이 없어집니다.</string>
+  <plurals name="migrate_items_shared_warning_message">
+    <item quantity="other">%d개 항목이 현재 공유 중입니다. 다른 금고로 이동하면 다른 사용자들과의 접근 권한도 상실됩니다.</item>
+  </plurals>
 </resources>

@@ -16,4 +16,13 @@
   <string name="migrate_init_error_snackbar">Δεν ήταν δυνατή η προετοιμασία της οθόνης μετεγκατάστασης</string>
   <string name="migrate_disabled_vault_reason_no_permission">Δεν μπορείτε να δημιουργήσετε στοιχεία σε αυτήν την κρύπτη</string>
   <string name="migrate_disabled_vault_reason_same_vault">Δεν μπορείτε να μετακινήσετε ένα στοιχείο στην ίδια κρύπτη</string>
+  <plurals name="migrate_items_shared_warning_title">
+    <item quantity="one">Μετακίνηση στοιχείου σε άλλη κρύπτη;</item>
+    <item quantity="other">Μετακίνηση %d στοιχείων σε άλλη κρύπτη;</item>
+  </plurals>
+  <string name="migrate_item_shared_warning_message">Αυτό το στοιχείο είναι κοινόχρηστο. Αν μεταφερθεί σε άλλη κρύπτη, όλοι οι υπόλοιποι χρήστες θα χάσουν την πρόσβασή τους σε αυτό.</string>
+  <plurals name="migrate_items_shared_warning_message">
+    <item quantity="one">%d στοιχείο είναι κοινόχρηστο. Αν μεταφερθεί σε άλλη κρύπτη, όλοι οι υπόλοιποι χρήστες θα χάσουν την πρόσβασή τους σε αυτό.</item>
+    <item quantity="other">%d στοιχεία είναι κοινόχρηστα. Αν μεταφερθούν σε άλλη κρύπτη, όλοι οι υπόλοιποι χρήστες θα χάσουν την πρόσβασή τους σε αυτά.</item>
+  </plurals>
 </resources>

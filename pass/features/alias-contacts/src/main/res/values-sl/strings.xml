@@ -22,7 +22,7 @@
   <string name="snackbar_contact_create_success">Contact created successfully</string>
   <string name="snackbar_contact_create_error">Failed to create contact</string>
   <string name="create_contact_title">Ustvari stik</string>
-  <string name="detail_contact_title">Contacts</string>
+  <string name="detail_contact_title">Stiki</string>
   <string name="email_input_error">Neveljaven e-poštni naslov</string>
   <string name="detail_contact_display_name" comment="sender email address">A contact is created for every email address that sends emails to or receives emails from %1$s</string>
   <string name="empty_alias_contacts_title">Alias contacts</string>
@@ -61,7 +61,7 @@
   <string name="snackbar_delete_contact_error">Could not delete contact</string>
   <string name="snackbar_email_copied_success">Email copied to clipboard</string>
   <string name="contact_option_send_email">Pošlji sporočilo</string>
-  <string name="contact_option_copy_address">Copy address</string>
+  <string name="contact_option_copy_address">Copy forwarding address</string>
   <string name="contact_option_block_contact">Block contact</string>
   <string name="contact_option_unblock_contact">Unblock contact</string>
   <string name="contact_option_delete">Izbriši</string>

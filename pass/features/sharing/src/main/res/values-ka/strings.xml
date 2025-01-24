@@ -33,8 +33,8 @@
   </plurals>
   <string name="sharing_member_count_header">წევრები</string>
   <string name="shared_via_title">გაზიარება როგორც</string>
-  <string name="shared_via_item_member_count_header">ელემენტის გაზიარება</string>
-  <string name="shared_via_vault_member_count_header">საცავის გაზიარება</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">ელემენტების გაზიარება: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">საცავის გაზიარება: %s</string>
   <string name="share_with_title">გაზიარება</string>
   <string name="share_with_email_hint">ელფოსტის მისამართი</string>
   <string name="share_with_email_error">არასწორი ელფოსტის მისამართი</string>
@@ -56,6 +56,7 @@
   <string name="sharing_snackbar_invite_reject_error">მოსაწვევის უარყოფის შეცდომა</string>
   <string name="sharing_snackbar_invite_sent_success">მოსაწვევი გაგზავნილია</string>
   <string name="sharing_snackbar_invite_sent_error">მოსაწვევის გაგზავნის შეცდომა</string>
+  <string name="sharing_snackbar_invite_new_users_error">ახალ ი მომხმარებლებისთვის მოსაწვევების გაგზავნა შეუძლებელია</string>
   <string name="sharing_snackbar_get_vault_members_error">საცავის წევრების მიღება შეუძლებელია</string>
   <string name="sharing_snackbar_change_permission_success">წვდომები შეიცვალა</string>
   <string name="sharing_snackbar_change_permission_error">წვდომების შეცვლა შეუძლებელია</string>
@@ -64,10 +65,11 @@
   <string name="sharing_snackbar_fetch_member_error">წევრების გამოთხოვის შეცდომა</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">შეცდომა დარჩენილი მოსაწვევების გამოთხოვნისას</string>
   <string name="share_summary_title">მიმოხილვა და გაზიარება</string>
-    <string name="share_summary_share_vault">საცავის გაზიარება</string>
+  <string name="share_summary_share_vault">საცავის გაზიარება</string>
   <string name="share_summary_share_item">ელემენტის გაზიარება</string>
   <string name="share_summary_vault_title">საცავი</string>
   <string name="share_summary_item_title">ელემენტი</string>
+  <string name="share_summary_access_level_title">Access level</string>
   <string name="share_manage_vault_share_with_more_people">გაუზიარეთ მეტს</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">დარჩენილია %d მოწვევა</item>
@@ -83,15 +85,15 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">მოწვევები</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">წევრები</string>
   <string name="share_manage_vault_current_user_indicator">თქვენ</string>
-  <string name="share_role_viewer">შეუძლია, ნახოს</string>
-  <string name="share_role_editor">შეუძლია, ჩაასწოროს</string>
+  <string name="share_role_viewer">მთვალიერებელი</string>
+  <string name="share_role_editor">რედაქტორი</string>
   <string name="share_role_admin">ადმინისტრატორი</string>
   <string name="share_role_owner">მფლობელი</string>
   <string name="sharing_bottomsheet_transfer_ownership">მფლობელობის გადაცემა</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">თქვენი უკანასკნელი საკუთარი საცავის გადატანა შეუძლებელია.</string>
   <string name="sharing_bottomsheet_remove_access">წვდომის გაუქმება</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">შეუძლია ამ ელემენტზე წვდომების მინიჭება და ჩამორთმევა.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">შეუძლია ამ ელემენტის ჩასწორება</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">შეუძლია ან ელემენტის დათვალიერება</string>
   <string name="sharing_bottomsheet_resend_invite">მოსაწვევის თავიდან გაგზავნა</string>
   <string name="sharing_bottomsheet_cancel_invite">Cancel invitation</string>

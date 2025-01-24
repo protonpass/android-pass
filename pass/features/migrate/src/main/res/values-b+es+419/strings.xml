@@ -16,4 +16,13 @@
   <string name="migrate_init_error_snackbar">No se pudo preparar la pantalla de migración</string>
   <string name="migrate_disabled_vault_reason_no_permission">No puede crear elementos en esta bóveda</string>
   <string name="migrate_disabled_vault_reason_same_vault">No puede mover un elemento a la misma bóveda</string>
+  <plurals name="migrate_items_shared_warning_title">
+    <item quantity="one">¿Mover el elemento a otra bóveda?</item>
+    <item quantity="other">¿Mover %d elementos a otra bóveda?</item>
+  </plurals>
+  <string name="migrate_item_shared_warning_message">Este elemento está compartido actualmente. Si lo mueve a otra bóveda, se eliminará el acceso para todos los demás usuarios.</string>
+  <plurals name="migrate_items_shared_warning_message">
+    <item quantity="one">%d elemento está compartido actualmente. Si lo mueve a otra bóveda, se eliminará el acceso para todos los demás usuarios.</item>
+    <item quantity="other">%d elementos están compartidos actualmente. Si los mueve a otra bóveda, se eliminará el acceso para todos los demás usuarios.</item>
+  </plurals>
 </resources>

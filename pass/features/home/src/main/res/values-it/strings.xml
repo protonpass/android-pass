@@ -153,8 +153,8 @@
     <item quantity="other">Sei sicuro di voler eliminare definitivamente %d elementi?</item>
   </plurals>
   <plurals name="alert_shared_delete_items_message">
-    <item quantity="one">1 item is currently shared. Moving it to trash will remove access for all other users.</item>
-    <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
+    <item quantity="one">L\'elemento %d è attualmente condiviso. Lo spostamento nel cestino rimuoverà l\'accesso per tutti gli altri utenti.</item>
+    <item quantity="other">Gli elementi %d sono attualmente condivisi. Lo spostamento nel cestino rimuoverà l\'accesso per tutti gli altri utenti.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Ricerche recenti</string>

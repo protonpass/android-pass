@@ -34,7 +34,7 @@
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Sincronizar alias</string>
   <string name="simple_login_sync_enable_snackbar_error">Ocorreu um erro ao ativar a sincronização de alias com SimpleLogin</string>
-  <string name="simple_login_sync_enable_snackbar_success">A sincronização de aliases do SimpleLogin foram ativados com sucesso</string>
+  <string name="simple_login_sync_enable_snackbar_success">A sincronização de aliases do SimpleLogin foi ativada.</string>
   <!-- Mailbox create screen -->
   <string name="simple_login_sync_mailbox_create_title">Adicionar caixa de correio</string>
   <string name="simple_login_sync_mailbox_create_message_error">Houve um erro ao adicionar a caixa de correio</string>
@@ -45,9 +45,9 @@
   <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Código de verificação de caixa de correio inválido</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">Limite de código de verificação de caixa de correio inválido atingido, caixa de correio foi excluída</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_error">Houve um erro ao verificar a caixa de correio</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_success">Caixa de correio verificada com sucesso</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_success">A caixa de correio foi verificada.</string>
   <string name="simple_login_sync_mailbox_verify_message_resend_code_error">Houve um erro ao enviar o código de verificação</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Código de verificação enviado com sucesso</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">O código de verificação foi enviado.</string>
   <!-- Mailbox delete screen -->
   <string name="simple_login_sync_mailbox_delete_title">Excluir caixa de correio</string>
   <string name="simple_login_sync_mailbox_delete_subtitle">Todos os alíases que usam a caixa de correio %s também serão excluídos. Para você continuar recebendo e-mails, transfira esses alíases para uma caixa de correio diferente:</string>
@@ -56,9 +56,9 @@
   <string name="simple_login_sync_mailbox_delete_action_delete">Excluir caixa de correio</string>
   <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Transferir e excluir a caixa de correio</string>
   <string name="simple_login_sync_mailbox_delete_message_delete_error">Houve um erro ao excluir a caixa de correio</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_success">Caixa de correio excluída com sucesso</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_success">A caixa de correio foi excluída.</string>
   <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Transferir aliases para</string>
-  <string name="simple_login_sync_mailbox_delete_warning">Por favor, note que, uma vez excluídos, os aliases não podem ser restaurados</string>
+  <string name="simple_login_sync_mailbox_delete_warning">Uma vez excluídos, os aliases não podem ser restaurados.</string>
   <!-- Domain select screen -->
   <string name="simple_login_sync_domain_select_title">Domínio padrão</string>
   <string name="simple_login_sync_domain_select_title_none">nenhuma</string>
@@ -68,11 +68,11 @@
   <string name="simple_login_sync_domain_select_description_premium">Domínio premium</string>
   <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">Houve um erro ao buscar os domínios do alias do SL</string>
   <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">Ocorreu um erro ao atualizar o domínio de alias do SL</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">Domínio de alias SL atualizado com sucesso</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">O domínio de alias SL foi atualizado.</string>
   <!-- Mailbox options screen -->
   <string name="simple_login_sync_mailbox_options_snackbar_options_error">Não é possível exibir as opções da caixa de correio</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_error">Houve um erro ao atualizar a caixa de correio padrão</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Caixa de correio padrão atualizada com sucesso</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_success">A caixa de correio padrão foi atualizada.</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Cofre padrão SL</string>
   <string name="simple_login_sync_shared_default_vault_description">Os aliases do SimpleLogin serão importados para esse cofre.</string>

@@ -58,7 +58,7 @@
   <string name="snackbar_delete_contact_error">Nu s-a putut șterge contactul.</string>
   <string name="snackbar_email_copied_success">Adresa de e-mail s-a copiat în memorie.</string>
   <string name="contact_option_send_email">Trimitere mesaj</string>
-  <string name="contact_option_copy_address">Copiere adresă</string>
+  <string name="contact_option_copy_address">Copy forwarding address</string>
   <string name="contact_option_block_contact">Blocare contact</string>
   <string name="contact_option_unblock_contact">Deblocare contact</string>
   <string name="contact_option_delete">Ștergere</string>

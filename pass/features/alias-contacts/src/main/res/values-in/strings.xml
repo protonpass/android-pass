@@ -52,7 +52,7 @@
   <string name="snackbar_delete_contact_error">Tidak dapat menghapus kontak</string>
   <string name="snackbar_email_copied_success">Email disalin ke papan klip</string>
   <string name="contact_option_send_email">Kirim email</string>
-  <string name="contact_option_copy_address">Salin alamat</string>
+  <string name="contact_option_copy_address">Salin alamat penerusan</string>
   <string name="contact_option_block_contact">Blokir kontak</string>
   <string name="contact_option_unblock_contact">Buka blokir kontak</string>
   <string name="contact_option_delete">Hapus</string>

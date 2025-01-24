@@ -17,6 +17,7 @@
   <string name="vault_delete_dialog_placeholder">Nome cassaforte</string>
   <string name="vault_delete_dialog_cancel_action">Annulla</string>
   <string name="vault_delete_dialog_delete_action">Elimina</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Questa cassaforte contiene %1$s. Eliminarla rimuoverà l\'accesso per tutti gli altri utenti.</string>
   <string name="vault_leave_dialog_title">Abbandona la cassaforte</string>
   <string name="vault_leave_dialog_body">Questo rimuoverà il tuo accesso alla cassaforte __VAULT_NAME__ e a tutti i suoi contenuti. Sei sicuro di volerla abbandonare?</string>
   <string name="vault_leave_dialog_cancel_action">Annulla</string>

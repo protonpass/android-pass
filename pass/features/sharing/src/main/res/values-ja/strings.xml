@@ -31,8 +31,8 @@
   </plurals>
   <string name="sharing_member_count_header">メンバー</string>
   <string name="shared_via_title">共有されました</string>
-  <string name="shared_via_item_member_count_header">アイテム共有</string>
-  <string name="shared_via_vault_member_count_header">保管庫共有</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">アイテム共有中: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">保管庫共有中: %s</string>
   <string name="share_with_title">と共有</string>
   <string name="share_with_email_hint">メールアドレス</string>
   <string name="share_with_email_error">無効なメールアドレスです</string>
@@ -54,6 +54,7 @@
   <string name="sharing_snackbar_invite_reject_error">招待の拒否エラー</string>
   <string name="sharing_snackbar_invite_sent_success">招待の送信</string>
   <string name="sharing_snackbar_invite_sent_error">招待を送信できませんでした</string>
+  <string name="sharing_snackbar_invite_new_users_error">新しいユーザーに招待を送信することはできません</string>
   <string name="sharing_snackbar_get_vault_members_error">保管庫メンバーを取得できませんでした</string>
   <string name="sharing_snackbar_change_permission_success">権限の変更</string>
   <string name="sharing_snackbar_change_permission_error">権限を変更できませんでした</string>
@@ -62,10 +63,11 @@
   <string name="sharing_snackbar_fetch_member_error">メンバーの取得にエラーが発生しました</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">保留中の招待の取得中にエラーが発生しました</string>
   <string name="share_summary_title">レビューして共有</string>
-    <string name="share_summary_share_vault">保管庫を共有する</string>
+  <string name="share_summary_share_vault">保管庫を共有する</string>
   <string name="share_summary_share_item">アイテムを共有</string>
   <string name="share_summary_vault_title">保管庫</string>
   <string name="share_summary_item_title">アイテム</string>
+  <string name="share_summary_access_level_title">Access level</string>
   <string name="share_manage_vault_share_with_more_people">より多くの人たちと共有する</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="other">%d 件の招待が残っています</item>
@@ -79,15 +81,15 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">招待</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">メンバー</string>
   <string name="share_manage_vault_current_user_indicator">あなた</string>
-  <string name="share_role_viewer">閲覧可能</string>
-  <string name="share_role_editor">編集可能</string>
+  <string name="share_role_viewer">閲覧者</string>
+  <string name="share_role_editor">編集者</string>
   <string name="share_role_admin">管理者</string>
   <string name="share_role_owner">所有者</string>
   <string name="sharing_bottomsheet_transfer_ownership">所有権の移転</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">最後に所有していた保管庫を譲渡することはできません。</string>
   <string name="sharing_bottomsheet_remove_access">アクセスの失効</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">このアイテムへのアクセス権を付与したり、取り消したりすることができます。</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">このアイテムを編集できます。</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">このアイテムを閲覧できます。</string>
   <string name="sharing_bottomsheet_resend_invite">招待の再送</string>
   <string name="sharing_bottomsheet_cancel_invite">招待のキャンセル</string>

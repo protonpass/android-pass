@@ -19,7 +19,7 @@
 <resources>
   <string name="create_contact_button">Criar contato</string>
   <string name="save_contact_alias">Salvar</string>
-  <string name="snackbar_contact_create_success">Contato criado com sucesso</string>
+  <string name="snackbar_contact_create_success">O contato foi criado.</string>
   <string name="snackbar_contact_create_error">Não foi possível criar o contato.</string>
   <string name="create_contact_title">Criar contato</string>
   <string name="detail_contact_title">Contatos</string>
@@ -55,7 +55,7 @@
   <string name="snackbar_delete_contact_error">Não foi possível excluir o contato</string>
   <string name="snackbar_email_copied_success">E-mail copiado para a área de transferência</string>
   <string name="contact_option_send_email">Enviar e-mail</string>
-  <string name="contact_option_copy_address">Copiar endereço</string>
+  <string name="contact_option_copy_address">Copiar o endereço de encaminhamento</string>
   <string name="contact_option_block_contact">Bloquear contato</string>
   <string name="contact_option_unblock_contact">Desbloquear contato</string>
   <string name="contact_option_delete">Excluir</string>

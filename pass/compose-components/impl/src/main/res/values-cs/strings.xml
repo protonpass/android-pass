@@ -310,4 +310,23 @@
   <string name="attachment_row_upload_failed">Nahrávání selhalo</string>
   <string name="attachment_row_retry">Zkusit znovu</string>
   <string name="options_menu_content_description">Nabídka možností</string>
+  <!-- Items -->
+  <plurals name="shared_items_count">
+    <item quantity="one">%d sdílená položka</item>
+    <item quantity="few">%d sdílené položky</item>
+    <item quantity="many">%d sdílených položek</item>
+    <item quantity="other">%d sdílených položek</item>
+  </plurals>
+  <plurals name="users_count">
+    <item quantity="one">%d uživatel</item>
+    <item quantity="few">%d uživatelé</item>
+    <item quantity="many">%d uživatelů</item>
+    <item quantity="other">%d uživatelů</item>
+  </plurals>
+  <plurals name="members_count">
+    <item quantity="one">%d člen</item>
+    <item quantity="few">%d členové</item>
+    <item quantity="many">%d členů</item>
+    <item quantity="other">%d členů</item>
+  </plurals>
 </resources>

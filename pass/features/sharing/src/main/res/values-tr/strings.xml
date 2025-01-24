@@ -33,8 +33,8 @@
   </plurals>
   <string name="sharing_member_count_header">Üyeler</string>
   <string name="shared_via_title">Şununla paylaşıldı</string>
-  <string name="shared_via_item_member_count_header">Öge paylaşma</string>
-  <string name="shared_via_vault_member_count_header">Kasa paylaşma</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Öge paylaşımı: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Kasa paylaşımı: %s</string>
   <string name="share_with_title">Şununla paylaş</string>
   <string name="share_with_email_hint">E-posta adresi</string>
   <string name="share_with_email_error">E-posta adresi geçersiz</string>
@@ -56,6 +56,7 @@
   <string name="sharing_snackbar_invite_reject_error">Davet reddedilirken sorun çıktı</string>
   <string name="sharing_snackbar_invite_sent_success">Davet gönderildi</string>
   <string name="sharing_snackbar_invite_sent_error">Davet gönderilemedi</string>
+  <string name="sharing_snackbar_invite_new_users_error">Yeni kullanıcılara davet gönderilemedi</string>
   <string name="sharing_snackbar_get_vault_members_error">Kasa üyeleri alınamadı</string>
   <string name="sharing_snackbar_change_permission_success">İzinler değiştirildi</string>
   <string name="sharing_snackbar_change_permission_error">İzinler değiştirilemedi</string>
@@ -64,10 +65,11 @@
   <string name="sharing_snackbar_fetch_member_error">Üyeler alınırken sorun çıktı</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Bekleyen davetler alınırken sorun çıktı</string>
   <string name="share_summary_title">Gözden geçirip paylaş</string>
-    <string name="share_summary_share_vault">Kasayı paylaş</string>
+  <string name="share_summary_share_vault">Kasayı paylaş</string>
   <string name="share_summary_share_item">Ögeyi paylaş</string>
   <string name="share_summary_vault_title">Kasa</string>
   <string name="share_summary_item_title">Öge</string>
+  <string name="share_summary_access_level_title">Access level</string>
   <string name="share_manage_vault_share_with_more_people">Başkalarıyla paylaş</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d davet kaldı</item>
@@ -83,15 +85,15 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Davetler</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Üyeler</string>
   <string name="share_manage_vault_current_user_indicator">Siz</string>
-  <string name="share_role_viewer">Görüntüleyebilir</string>
-  <string name="share_role_editor">Düzenleyebilir</string>
+  <string name="share_role_viewer">Görüntüleyici</string>
+  <string name="share_role_editor">Düzenleyici</string>
   <string name="share_role_admin">Yönetici</string>
   <string name="share_role_owner">Sahibi</string>
   <string name="sharing_bottomsheet_transfer_ownership">Sahipliği aktar</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Sahibi olduğunuz son kasanın sahipliğini aktaramazsınız.</string>
   <string name="sharing_bottomsheet_remove_access">Erişme iznini geri al</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Bu ögeye erişme izni verebilir ya da geri alabilir.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Bu ögeyi düzenleyebilir.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Bu ögeyi görüntüleyebilir.</string>
   <string name="sharing_bottomsheet_resend_invite">Daveti yeniden gönder</string>
   <string name="sharing_bottomsheet_cancel_invite">Daveti iptal et</string>

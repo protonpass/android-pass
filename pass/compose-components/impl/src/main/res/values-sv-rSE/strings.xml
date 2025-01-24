@@ -286,4 +286,17 @@
   <string name="attachment_row_upload_failed">Uppladdning misslyckades</string>
   <string name="attachment_row_retry">Försök igen</string>
   <string name="options_menu_content_description">Alternativmeny</string>
+  <!-- Items -->
+  <plurals name="shared_items_count">
+    <item quantity="one">%d delat objekt</item>
+    <item quantity="other">%d delade objekt</item>
+  </plurals>
+  <plurals name="users_count">
+    <item quantity="one">%d användare</item>
+    <item quantity="other">%d användare</item>
+  </plurals>
+  <plurals name="members_count">
+    <item quantity="one">%d medlem</item>
+    <item quantity="other">%d medlemmar</item>
+  </plurals>
 </resources>

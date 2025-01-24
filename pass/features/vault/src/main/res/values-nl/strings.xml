@@ -17,6 +17,7 @@
   <string name="vault_delete_dialog_placeholder">Kluisnaam</string>
   <string name="vault_delete_dialog_cancel_action">Annuleren</string>
   <string name="vault_delete_dialog_delete_action">Verwijderen</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Deze kluis bevat %1$s. Als u het verwijdert, wordt de toegang voor alle andere gebruikers verwijderd.</string>
   <string name="vault_leave_dialog_title">Verlaat kluis</string>
   <string name="vault_leave_dialog_body">Dit verwijdert uw toegang tot de kluis __VAULT_NAME__ en al zijn inhoud. Weet u zeker dat u de kluis wil verlaten?</string>
   <string name="vault_leave_dialog_cancel_action">Annuleren</string>

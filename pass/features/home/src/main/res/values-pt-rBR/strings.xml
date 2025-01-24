@@ -153,24 +153,24 @@
     <item quantity="other">Tem certeza de que deseja excluir os %d itens? Esta ação é irreversível</item>
   </plurals>
   <plurals name="alert_shared_delete_items_message">
-    <item quantity="one">1 item is currently shared. Moving it to trash will remove access for all other users.</item>
-    <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
+    <item quantity="one">%d item está compartilhado no momento. Movê-lo para a lixeira removerá o acesso de todos os outros usuários.</item>
+    <item quantity="other">%d itens estão compartilhados no momento. Movê-los para a lixeira removerá o acesso de todos os outros usuários.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Pesquisas recentes</string>
   <string name="recent_search_clear">Limpar</string>
   <string name="recent_search_remove_item">Remover das pesquisas recentes</string>
   <!-- Pinning -->
-  <string name="home_snackbar_items_pinned_success">Itens fixados com sucesso!</string>
+  <string name="home_snackbar_items_pinned_success">Os itens foram fixados.</string>
   <string name="home_snackbar_items_pinned_partial_success">Erro ao fixar alguns dos itens</string>
   <string name="home_snackbar_items_pinned_error">Erro ao fixar os itens</string>
-  <string name="home_snackbar_items_unpinned_success">Itens desafixados com sucesso!</string>
+  <string name="home_snackbar_items_unpinned_success">Os itens foram desafixados.</string>
   <string name="home_snackbar_items_unpinned_partial_success">Erro ao desafixar alguns dos itens</string>
   <string name="home_snackbar_items_unpinned_error">Erro ao desafixar os itens</string>
-  <string name="home_snackbar_items_alias_enabled_success">Alias ativado com sucesso</string>
+  <string name="home_snackbar_items_alias_enabled_success">O alias foi ativado.</string>
   <string name="home_snackbar_items_alias_enabled_partial_success">Erro ao ativar alguns dos alíases</string>
   <string name="home_snackbar_items_alias_enabled_error">Erro na ativação dos alíases</string>
-  <string name="home_snackbar_items_alias_disabled_success">Alias desativado com sucesso</string>
+  <string name="home_snackbar_items_alias_disabled_success">O alias foi desativado.</string>
   <string name="home_snackbar_items_alias_disabled_partial_success">Erro ao desativar alguns dos alíases</string>
   <string name="home_snackbar_items_alias_disabled_error">Erro ao desativar os alíases</string>
   <string name="bulk_action_unpin">Desafixar</string>

@@ -17,6 +17,7 @@
   <string name="vault_delete_dialog_placeholder">საცავის სახელი</string>
   <string name="vault_delete_dialog_cancel_action">გაუქმება</string>
   <string name="vault_delete_dialog_delete_action">წაშლა</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">ეს საცავი შეიცავს %1$s-ს. მიწი წაშლა ყველა სხვა მომხმარებლის წვდომასაც წაშლის.</string>
   <string name="vault_leave_dialog_title">საცავის დატოვება</string>
   <string name="vault_leave_dialog_body">ეს საცავიდან __VAULT_NAME__ და მისი შემცველობისგან თქვენს წვდომებს წაშლის. მართლა გნებავთ, გახვიდეთ?</string>
   <string name="vault_leave_dialog_cancel_action">გაუქმება</string>

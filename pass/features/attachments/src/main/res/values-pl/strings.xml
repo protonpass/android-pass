@@ -28,11 +28,11 @@
   <string name="camera_permission_explanation">Ta funkcja potrzebuje uprawnienia do aparatu.</string>
   <string name="camera_permission_open_settings">Otwórz ustawienia</string>
   <string name="delete_all_attachments_title">Usunąć wszystkie załączniki?</string>
-  <string name="delete_all_attachments_subtitle">This action cannot be undone</string>
+  <string name="delete_all_attachments_subtitle">Tej czynności nie można cofnąć</string>
   <string name="delete_all_attachments_confirm">Usuń wszystko</string>
   <string name="rename_attachment_dialog_title">Zmień nazwę pliku</string>
-  <string name="storage_full_title">Your storage is almost full.</string>
+  <string name="storage_full_title">Przestrzeń dyskowa jest prawie pełna.</string>
   <string name="storage_full_body">Upgrade to increase your storage capacity.</string>
-  <string name="storage_full_upgrade">Upgrade</string>
-  <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s of %2$s</string>
+  <string name="storage_full_upgrade">Ulepsz</string>
+  <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s z %2$s</string>
 </resources>

@@ -153,8 +153,8 @@
     <item quantity="other">Er du sikker på at du vil slette de %d elementene? Denne handlingen er irreversibel.</item>
   </plurals>
   <plurals name="alert_shared_delete_items_message">
-    <item quantity="one">1 item is currently shared. Moving it to trash will remove access for all other users.</item>
-    <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
+    <item quantity="one">%d element er for øyeblikket delt. Hvis du flytter det til papirkurven, fjernes tilgangen for alle andre brukere.</item>
+    <item quantity="other">%d elementer er for øyeblikket delt. Hvis du flytter dem til papirkurven, fjernes tilgangen for alle andre brukere.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Nylige søk</string>
@@ -165,15 +165,15 @@
   <string name="home_snackbar_items_pinned_partial_success">Feil ved festing av noen av elementene</string>
   <string name="home_snackbar_items_pinned_error">Feil ved festing av elementene</string>
   <string name="home_snackbar_items_unpinned_success">Elementer løsnet</string>
-  <string name="home_snackbar_items_unpinned_partial_success">Feil ved løsing av noen av elementene</string>
-  <string name="home_snackbar_items_unpinned_error">Feil ved løsing av elementene</string>
+  <string name="home_snackbar_items_unpinned_partial_success">Feil ved å løsne noen av elementene</string>
+  <string name="home_snackbar_items_unpinned_error">Feil ved å løsne elementene</string>
   <string name="home_snackbar_items_alias_enabled_success">Alias aktivert</string>
   <string name="home_snackbar_items_alias_enabled_partial_success">Feil ved aktivering av noen av aliasene</string>
   <string name="home_snackbar_items_alias_enabled_error">Feil ved aktivering av aliaser</string>
   <string name="home_snackbar_items_alias_disabled_success">Alias deaktivert</string>
   <string name="home_snackbar_items_alias_disabled_partial_success">Feil ved deaktivering av noen av aliasene</string>
   <string name="home_snackbar_items_alias_disabled_error">Feil ved deaktivering av aliaser</string>
-  <string name="bulk_action_unpin">Løs</string>
+  <string name="bulk_action_unpin">Løsne</string>
   <string name="bulk_action_pin">Fest</string>
   <string name="bulk_action_enable_alias">Aktiver alias</string>
   <string name="bulk_action_disable_alias">Deaktiver alias</string>

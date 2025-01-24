@@ -42,4 +42,6 @@
   <string name="clipboard_option_clear_clipboard_never">Asla</string>
   <string name="clipboard_option_clear_clipboard_after_60_seconds">1 dakika sonra</string>
   <string name="clipboard_option_clear_clipboard_after_180_seconds">3 dakika sonra</string>
+  <string name="settings_use_digital_asset_link_preference_title">Dijital varlık bağlantılarını aç</string>
+  <string name="settings_use_digital_asset_link_preference_subtitle">Bir Android uygulaması ile bir site arasında sitenin sahipliğini doğrular.</string>
 </resources>

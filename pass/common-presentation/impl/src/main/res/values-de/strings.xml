@@ -54,5 +54,5 @@
   <string name="item_details_snackbar_message_yahoo_copied">Yahoo kopiert</string>
   <string name="item_details_snackbar_message_zip_or_postal_code_copied">Postleitzahl kopiert</string>
   <string name="open_with">Öffnen mit:</string>
-  <string name="open_attachments_error">Could not open attachment</string>
+  <string name="open_attachments_error">Der Anhang konnte nicht geöffnet werden</string>
 </resources>

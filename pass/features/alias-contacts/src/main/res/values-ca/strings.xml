@@ -55,7 +55,7 @@
   <string name="snackbar_delete_contact_error">No s\'ha pogut eliminar el contacte.</string>
   <string name="snackbar_email_copied_success">S\'ha copiat el correu electrònic al porta-retalls.</string>
   <string name="contact_option_send_email">Envia un correu electrònic</string>
-  <string name="contact_option_copy_address">Copia l\'adreça</string>
+  <string name="contact_option_copy_address">Copia l\'adreça de reenviament</string>
   <string name="contact_option_block_contact">Bloqueja el contacte</string>
   <string name="contact_option_unblock_contact">Desbloqueja el contacte</string>
   <string name="contact_option_delete">Elimina</string>

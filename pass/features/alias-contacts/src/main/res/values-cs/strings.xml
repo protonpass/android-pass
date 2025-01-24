@@ -61,7 +61,7 @@
   <string name="snackbar_delete_contact_error">Kontakt se nepodařilo smazat</string>
   <string name="snackbar_email_copied_success">E-mail zkopírován do schránky</string>
   <string name="contact_option_send_email">Poslat e-mail</string>
-  <string name="contact_option_copy_address">Kopírovat adresu</string>
+  <string name="contact_option_copy_address">Kopírovat adresu přeposílání</string>
   <string name="contact_option_block_contact">Blokovat kontakt</string>
   <string name="contact_option_unblock_contact">Odblokovat kontakt</string>
   <string name="contact_option_delete">Smazat</string>

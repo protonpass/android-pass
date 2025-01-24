@@ -55,7 +55,7 @@
   <string name="snackbar_delete_contact_error">Kunne ikke slette kontakt</string>
   <string name="snackbar_email_copied_success">E-post kopiert til utklippstavlen</string>
   <string name="contact_option_send_email">Send e-post</string>
-  <string name="contact_option_copy_address">Kopier adresse</string>
+  <string name="contact_option_copy_address">Kopier videresendingsadresse</string>
   <string name="contact_option_block_contact">Blokkèr kontakt</string>
   <string name="contact_option_unblock_contact">Fjern blokkering av kontakt</string>
   <string name="contact_option_delete">Slett</string>

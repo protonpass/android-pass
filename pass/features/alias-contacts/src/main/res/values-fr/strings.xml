@@ -55,7 +55,7 @@
   <string name="snackbar_delete_contact_error">Le contact n\'a pas été supprimé.</string>
   <string name="snackbar_email_copied_success">L\'e-mail a été copié dans le presse-papiers.</string>
   <string name="contact_option_send_email">Envoyer un message</string>
-  <string name="contact_option_copy_address">Copier l\'adresse</string>
+  <string name="contact_option_copy_address">Copier l\'adresse de transfert</string>
   <string name="contact_option_block_contact">Bloquer le contact</string>
   <string name="contact_option_unblock_contact">Débloquer le contact</string>
   <string name="contact_option_delete">Supprimer</string>

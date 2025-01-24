@@ -286,4 +286,17 @@
   <string name="attachment_row_upload_failed">L\'importation n\'a pas abouti.</string>
   <string name="attachment_row_retry">Essayer à nouveau</string>
   <string name="options_menu_content_description">Menu des options</string>
+  <!-- Items -->
+  <plurals name="shared_items_count">
+    <item quantity="one">%d élément partagé</item>
+    <item quantity="other">%d éléments partagés</item>
+  </plurals>
+  <plurals name="users_count">
+    <item quantity="one">%d utilisateur</item>
+    <item quantity="other">%d utilisateurs</item>
+  </plurals>
+  <plurals name="members_count">
+    <item quantity="one">%d membre</item>
+    <item quantity="other">%d membres</item>
+  </plurals>
 </resources>

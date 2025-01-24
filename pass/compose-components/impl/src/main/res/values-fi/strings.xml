@@ -285,5 +285,18 @@
   <string name="attachment_add_file">Liitä tiedosto</string>
   <string name="attachment_row_upload_failed">Lähetys epäonnistui</string>
   <string name="attachment_row_retry">Yritä uudelleen</string>
-  <string name="options_menu_content_description">Options menu</string>
+  <string name="options_menu_content_description">Asetusvalikko</string>
+  <!-- Items -->
+  <plurals name="shared_items_count">
+    <item quantity="one">%d jaettu kohde</item>
+    <item quantity="other">%d jaettua kohdetta</item>
+  </plurals>
+  <plurals name="users_count">
+    <item quantity="one">%d käyttäjä</item>
+    <item quantity="other">%d käyttäjää</item>
+  </plurals>
+  <plurals name="members_count">
+    <item quantity="one">%d jäsen</item>
+    <item quantity="other">%d jäsentä</item>
+  </plurals>
 </resources>

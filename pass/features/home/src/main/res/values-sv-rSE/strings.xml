@@ -153,8 +153,8 @@
     <item quantity="other">Är du säker på att du vill ta bort %d objekt? Denna åtgärd är oåterkallelig</item>
   </plurals>
   <plurals name="alert_shared_delete_items_message">
-    <item quantity="one">1 item is currently shared. Moving it to trash will remove access for all other users.</item>
-    <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
+    <item quantity="one">%d objekt delas för närvarande. Att flytta det till papperskorgen kommer ta bort åtkomst för alla andra användare.</item>
+    <item quantity="other">%d objekt delas för närvarande. Att flytta dem till papperskorgen kommer ta bort åtkomst för alla andra användare.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Senaste sökningar</string>

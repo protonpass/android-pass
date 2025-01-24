@@ -52,7 +52,7 @@
   <string name="snackbar_delete_contact_error">Không thể xóa liên hệ</string>
   <string name="snackbar_email_copied_success">Email đã được sao chép vào bộ nhớ tạm</string>
   <string name="contact_option_send_email">Gửi email</string>
-  <string name="contact_option_copy_address">Sao chép địa chỉ</string>
+  <string name="contact_option_copy_address">Copy forwarding address</string>
   <string name="contact_option_block_contact">Chặn liên hệ</string>
   <string name="contact_option_unblock_contact">Bỏ chặn liên hệ</string>
   <string name="contact_option_delete">Xóa</string>

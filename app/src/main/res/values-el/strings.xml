@@ -9,4 +9,5 @@
   <string name="no_account_found">Δεν βρέθηκε λογαριασμός</string>
   <string name="no_session_found">Δεν βρέθηκε συνεδρία</string>
   <string name="auth_with_extra_password_failed">Ο έλεγχος ταυτότητας με επιπλέον κωδικό πρόσβασης απέτυχε</string>
+  <string name="auth_only_1_proton_account_failed">Επιτρέπεται μόνο 1 δωρεάν λογαριασμός Proton.</string>
 </resources>

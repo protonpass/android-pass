@@ -9,4 +9,5 @@
   <string name="no_account_found">Nenašiel sa žiadny účet</string>
   <string name="no_session_found">Nenašla sa žiadna relácia</string>
   <string name="auth_with_extra_password_failed">Autorizácia pomocou dodatočného hesla zlyhala</string>
+  <string name="auth_only_1_proton_account_failed">Je povolený iba 1 bezplatný účet Proton.</string>
 </resources>

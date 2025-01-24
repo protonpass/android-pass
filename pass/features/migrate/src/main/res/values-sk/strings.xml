@@ -18,4 +18,17 @@
   <string name="migrate_init_error_snackbar">Nepodarilo sa pripraviť obrazovku migrácie</string>
   <string name="migrate_disabled_vault_reason_no_permission">V tomto trezore nemôžete vytvárať položky</string>
   <string name="migrate_disabled_vault_reason_same_vault">Nemôžete presunúť položku do rovnakého trezora</string>
+  <plurals name="migrate_items_shared_warning_title">
+    <item quantity="one">Presunúť položku do iného trezora?</item>
+    <item quantity="few">Presunúť %d položky do iného trezora?</item>
+    <item quantity="many">Presunúť %d položiek do iného trezora?</item>
+    <item quantity="other">Presunúť %d položiek do iného trezora?</item>
+  </plurals>
+  <string name="migrate_item_shared_warning_message">Táto položka je v súčasnosti zdieľaná. Jej presunutím do iného trezora sa zruší prístup pre všetkých ostatných používateľov.</string>
+  <plurals name="migrate_items_shared_warning_message">
+    <item quantity="one">%d položka je v súčasnosti zdieľaná. Jej presunutím do iného trezora sa zruší prístup pre všetkých ostatných používateľov.</item>
+    <item quantity="few">%d položky sú v súčasnosti zdieľané. Ich presunutím do iného trezora sa zruší prístup pre všetkých ostatných používateľov.</item>
+    <item quantity="many">%d položky sú v súčasnosti zdieľané. Ich presunutím do iného trezora sa zruší prístup pre všetkých ostatných používateľov.</item>
+    <item quantity="other">%d položiek je v súčasnosti zdieľaných. Ich presunutím do iného trezora sa zruší prístup pre všetkých ostatných používateľov.</item>
+  </plurals>
 </resources>

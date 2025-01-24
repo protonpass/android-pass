@@ -33,8 +33,8 @@
   </plurals>
   <string name="sharing_member_count_header">Μέλη</string>
   <string name="shared_via_title">Κοινή χρήση μέσω</string>
-  <string name="shared_via_item_member_count_header">Κοινοποίησης στοιχείου</string>
-  <string name="shared_via_vault_member_count_header">Κοινή χρήση κρύπτης</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Κοινή χρήση στοιχείων: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Κοινή χρήση κρυπτών: %s</string>
   <string name="share_with_title">Κοινοποίηση με</string>
   <string name="share_with_email_hint">Διεύθυνση ηλεκτρονικού ταχυδρομείου</string>
   <string name="share_with_email_error">Μη έγκυρη διεύθυνση email</string>
@@ -56,6 +56,7 @@
   <string name="sharing_snackbar_invite_reject_error">Σφάλμα κατά την απόρριψη της πρόσκλησης</string>
   <string name="sharing_snackbar_invite_sent_success">Η πρόσκληση στάλθηκε</string>
   <string name="sharing_snackbar_invite_sent_error">Δεν ήταν δυνατή η αποστολή πρόσκλησης</string>
+  <string name="sharing_snackbar_invite_new_users_error">Δεν είναι δυνατή η αποστολή προσκλήσεων σε νέους χρήστες</string>
   <string name="sharing_snackbar_get_vault_members_error">Δεν ήταν δυνατή η λήψη μελών της κρύπτης</string>
   <string name="sharing_snackbar_change_permission_success">Τα δικαιώματα άλλαξαν</string>
   <string name="sharing_snackbar_change_permission_error">Δεν ήταν δυνατή η αλλαγή των δικαιωμάτων</string>
@@ -64,10 +65,11 @@
   <string name="sharing_snackbar_fetch_member_error">Συνέβη κάποιο σφάλμα κατά τη λήψη μελών</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Συνέβη κάποιο σφάλμα κατά τη λήψη εκκρεμών προσκλήσεων</string>
   <string name="share_summary_title">Επανεξέταση και κοινή χρήση</string>
-    <string name="share_summary_share_vault">Κοινή χρήση κρύπτης</string>
+  <string name="share_summary_share_vault">Κοινή χρήση κρύπτης</string>
   <string name="share_summary_share_item">Κοινοποίηση στοιχείου</string>
   <string name="share_summary_vault_title">Κρύπτη</string>
   <string name="share_summary_item_title">Στοιχείο</string>
+  <string name="share_summary_access_level_title">Access level</string>
   <string name="share_manage_vault_share_with_more_people">Κοινοποίηση με περισσότερα άτομα</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d πρόσκληση απομένει</item>
@@ -83,15 +85,15 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Προσκλήσεις</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Μέλη</string>
   <string name="share_manage_vault_current_user_indicator">Εσείς</string>
-  <string name="share_role_viewer">Δυνατότητα προβολής</string>
-  <string name="share_role_editor">Δυνατότητα επεξεργασίας</string>
+  <string name="share_role_viewer">Πρόγραμμα προβολής</string>
+  <string name="share_role_editor">Επεξεργαστής</string>
   <string name="share_role_admin">Διαχειριστής</string>
   <string name="share_role_owner">Ιδιοκτήτης</string>
   <string name="sharing_bottomsheet_transfer_ownership">Μεταβίβαση κυριότητας</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Δεν μπορείτε να μεταφέρετε την τελευταία κρύπτη που κατέχετε.</string>
   <string name="sharing_bottomsheet_remove_access">Ανάκληση πρόσβασης</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Μπορεί να παραχωρήσει και να ανακαλέσει την πρόσβαση σε αυτό το στοιχείο.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Μπορεί να τροποποιήσει αυτό το στοιχείο.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Μπορεί να προβάλλει αυτό το στοιχείο.</string>
   <string name="sharing_bottomsheet_resend_invite">Επανάληψη αποστολής πρόσκλησης</string>
   <string name="sharing_bottomsheet_cancel_invite">Ακύρωση πρόσκλησης</string>

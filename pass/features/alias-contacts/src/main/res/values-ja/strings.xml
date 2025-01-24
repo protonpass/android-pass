@@ -52,7 +52,7 @@
   <string name="snackbar_delete_contact_error">連絡先を削除できませんでした</string>
   <string name="snackbar_email_copied_success">メールはクリップボードにコピーされました</string>
   <string name="contact_option_send_email">メール送信</string>
-  <string name="contact_option_copy_address">アドレスをコピー</string>
+  <string name="contact_option_copy_address">転送先のアドレスをコピー</string>
   <string name="contact_option_block_contact">連絡先をブロック</string>
   <string name="contact_option_unblock_contact">連絡先のブロックを解除</string>
   <string name="contact_option_delete">削除</string>

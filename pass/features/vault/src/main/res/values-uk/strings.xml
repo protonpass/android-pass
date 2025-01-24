@@ -17,6 +17,7 @@
   <string name="vault_delete_dialog_placeholder">Назва сховища</string>
   <string name="vault_delete_dialog_cancel_action">Скасувати</string>
   <string name="vault_delete_dialog_delete_action">Видалити</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">This vault holds %1$s. Deleting it will remove access for all other users.</string>
   <string name="vault_leave_dialog_title">Покинути сховище</string>
   <string name="vault_leave_dialog_body">Це призведе до вилучення вашого доступу до сховища __VAULT_NAME__ та його вмісту. Ви впевнені, що хочете покинути сховище?</string>
   <string name="vault_leave_dialog_cancel_action">Скасувати</string>

@@ -17,6 +17,7 @@
   <string name="vault_delete_dialog_placeholder">Nom du coffre-fort</string>
   <string name="vault_delete_dialog_cancel_action">Annuler</string>
   <string name="vault_delete_dialog_delete_action">Supprimer</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Ce coffre-fort contient %1$s. Sa suppression en retirera l\'accès aux autres utilisateurs.</string>
   <string name="vault_leave_dialog_title">Quitter le coffre-fort</string>
   <string name="vault_leave_dialog_body">Cela retirera votre accès au coffre-fort __VAULT_NAME__ et à son contenu. Voulez-vous vraiment le quitter ?</string>
   <string name="vault_leave_dialog_cancel_action">Annuler</string>

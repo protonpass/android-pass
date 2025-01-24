@@ -29,8 +29,8 @@
   <string name="item_details_forbidden_actions_sharing_permission">Bu işlemi gerçekleştirmek için yeterli izniniz yok.</string>
   <string name="item_details_forbidden_actions_share_trash">Bu öge çöp kutusunda olduğundan paylaşamazsınız. Lütfen düzenlemeden önce çöp kutusundan çıkarın.</string>
   <!-- Item details leave item -->
-  <string name="item_details_leave_dialog_title">Bu ögeden ayrılmak istiyor musunuz?</string>
+  <string name="item_details_leave_dialog_title">Bu ögeyi bırakmak istiyor musunuz?</string>
   <string name="item_details_leave_dialog_message">Bu ögeye ve ayrıntılarına erişiminizi kaybedeceksiniz. İlerlemek istiyor musunuz?</string>
-  <string name="item_details_leave_item_message_error">Ögeden ayrılırken bir sorun çıktı</string>
-  <string name="item_details_leave_item_message_success">Ögeden ayrıldınız</string>
+  <string name="item_details_leave_item_message_error">Öge bırakılırken bir sorun çıktı</string>
+  <string name="item_details_leave_item_message_success">Ögeyi bıraktınız</string>
 </resources>

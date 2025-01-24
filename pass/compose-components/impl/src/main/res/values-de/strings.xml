@@ -285,5 +285,18 @@
   <string name="attachment_add_file">Datei anhängen</string>
   <string name="attachment_row_upload_failed">Hochladen fehlgeschlagen</string>
   <string name="attachment_row_retry">Wiederholen</string>
-  <string name="options_menu_content_description">Options menu</string>
+  <string name="options_menu_content_description">Optionsmenü</string>
+  <!-- Items -->
+  <plurals name="shared_items_count">
+    <item quantity="one">%d shared item</item>
+    <item quantity="other">%d shared items</item>
+  </plurals>
+  <plurals name="users_count">
+    <item quantity="one">%d Benutzer</item>
+    <item quantity="other">%d Benutzer</item>
+  </plurals>
+  <plurals name="members_count">
+    <item quantity="one">%d Mitglied</item>
+    <item quantity="other">%d Mitglieder</item>
+  </plurals>
 </resources>

@@ -17,6 +17,7 @@
   <string name="vault_delete_dialog_placeholder">Όνομα κρύπτης</string>
   <string name="vault_delete_dialog_cancel_action">Ακύρωση</string>
   <string name="vault_delete_dialog_delete_action">Διαγραφή</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Αυτή η κρύπτη περιέχει %1$s. Η διαγραφή της θα καταργήσει την πρόσβαση για όλους τους άλλους χρήστες.</string>
   <string name="vault_leave_dialog_title">Αποχώρηση από την κρύπτη</string>
   <string name="vault_leave_dialog_body">Αυτό θα καταργήσει την πρόσβασή σας από την κρύπτη __VAULT_NAME__ και όλα τα περιεχόμενά της. Είστε σίγουροι ότι θέλετε να φύγετε;</string>
   <string name="vault_leave_dialog_cancel_action">Ακύρωση</string>

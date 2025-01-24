@@ -122,5 +122,5 @@
     <item quantity="other">%1$s blocks</item>
   </plurals>
   <string name="open_with">Öffnen mit:</string>
-  <string name="open_attachments_error">Could not open attachment</string>
+  <string name="open_attachments_error">Der Anhang konnte nicht geöffnet werden</string>
 </resources>

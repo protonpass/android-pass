@@ -21,8 +21,8 @@
   <string name="item_trash_delete_dialog_title">Hapus secara permanen?</string>
   <string name="item_trash_delete_dialog_message">Tindakan ini tidak dapat diurungkan.</string>
   <!-- Shared warning dialog -->
-  <string name="item_trash_warning_shared_dialog_title">Move item to trash?</string>
-  <string name="item_trash_warning_shared_dialog_message">This item is currently shared. Moving it to trash will remove access for all other users.</string>
-  <string name="item_trash_warning_shared_snackbar_trash_error">Error moving item to trash</string>
-  <string name="item_trash_warning_shared_snackbar_trash_success">Item moved to trash</string>
+  <string name="item_trash_warning_shared_dialog_title">Pindahkan item ke sampah?</string>
+  <string name="item_trash_warning_shared_dialog_message">Item ini saat ini dibagikan. Memindahkannya ke sampah akan menghilangkan akses untuk semua pengguna lain.</string>
+  <string name="item_trash_warning_shared_snackbar_trash_error">Terdapat kesalahan memindahkan item ke sampah</string>
+  <string name="item_trash_warning_shared_snackbar_trash_success">Item dipindahkan ke sampah</string>
 </resources>

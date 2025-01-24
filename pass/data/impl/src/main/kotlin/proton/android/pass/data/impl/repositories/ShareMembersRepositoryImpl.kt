@@ -25,6 +25,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ShareMembersRepository
 import proton.android.pass.data.impl.local.shares.LocalShareMembersDataSource
 import proton.android.pass.data.impl.remote.shares.RemoteShareMembersDataSource
+import proton.android.pass.data.impl.responses.ShareMemberResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
@@ -38,6 +39,15 @@ class ShareMembersRepositoryImpl @Inject constructor(
     private val localDataSource: LocalShareMembersDataSource
 ) : ShareMembersRepository {
 
+    override suspend fun getShareMembers(
+        userId: UserId,
+        shareId: ShareId,
+        userEmail: String?
+    ): List<ShareMember> = remoteDataSource.getShareMembers(userId, shareId)
+        .map { shareMemberResponse ->
+            shareMemberResponse.toDomain(userEmail)
+        }
+
     override fun observeShareItemMembers(
         userId: UserId,
         shareId: ShareId,
@@ -46,17 +56,7 @@ class ShareMembersRepositoryImpl @Inject constructor(
     ): Flow<List<ShareMember>> = flow {
         remoteDataSource.getShareItemMembers(userId, shareId, itemId)
             .map { shareMemberResponse ->
-                ShareMember(
-                    email = shareMemberResponse.userEmail,
-                    shareId = ShareId(shareMemberResponse.shareId),
-                    username = shareMemberResponse.userName,
-                    isCurrentUser = shareMemberResponse.userEmail == userEmail,
-                    isOwner = shareMemberResponse.owner ?: false,
-                    role = shareMemberResponse.shareRoleId
-                        ?.let(ShareRole::fromValue)
-                        ?: ShareRole.fromValue(ShareRole.SHARE_ROLE_READ),
-                    shareType = ShareType.from(shareMemberResponse.targetType)
-                )
+                shareMemberResponse.toDomain(userEmail)
             }
             .also { shareMembers ->
                 localDataSource.upsertShareMembers(userId, shareId, shareMembers)
@@ -112,3 +112,15 @@ class ShareMembersRepositoryImpl @Inject constructor(
     }
 
 }
+
+private fun ShareMemberResponse.toDomain(currentUserEmail: String?): ShareMember = ShareMember(
+    email = userEmail,
+    shareId = ShareId(shareId),
+    username = userName,
+    isCurrentUser = userEmail == currentUserEmail,
+    isOwner = owner ?: false,
+    role = shareRoleId
+        ?.let(ShareRole::fromValue)
+        ?: ShareRole.fromValue(ShareRole.SHARE_ROLE_READ),
+    shareType = ShareType.from(targetType)
+)

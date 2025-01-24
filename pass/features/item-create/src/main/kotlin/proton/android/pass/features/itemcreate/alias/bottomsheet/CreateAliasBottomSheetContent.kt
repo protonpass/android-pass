@@ -40,7 +40,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
@@ -68,8 +67,6 @@ import proton.android.pass.features.itemcreate.alias.CloseScreenEvent
 import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation
 import proton.android.pass.features.itemcreate.alias.MailboxSection
 import proton.android.pass.features.itemcreate.alias.SelectedAliasMailboxUiModel
-import proton.android.pass.features.itemcreate.alias.mailboxes.SelectMailboxesDialog
-import proton.android.pass.features.itemcreate.alias.suffixes.SelectSuffixDialog
 
 @Composable
 fun CreateAliasBottomSheetContent(
@@ -79,8 +76,6 @@ fun CreateAliasBottomSheetContent(
     onCancel: () -> Unit,
     onConfirm: () -> Unit,
     onPrefixChanged: (String) -> Unit,
-    onSuffixChanged: (AliasSuffixUiModel) -> Unit,
-    onMailboxesChanged: (List<SelectedAliasMailboxUiModel>) -> Unit,
     onNavigate: (CreateAliasNavigation) -> Unit,
     showAdvancedOptionsInitially: Boolean = false
 ) {
@@ -89,8 +84,6 @@ fun CreateAliasBottomSheetContent(
         state.errorList.contains(AliasItemValidationErrors.InvalidAliasContent)
 
     var showAdvancedOptions by rememberSaveable { mutableStateOf(showAdvancedOptionsInitially) }
-    var showMailboxesDialog by rememberSaveable { mutableStateOf(false) }
-    var showSuffixDialog by rememberSaveable { mutableStateOf(false) }
     val visibilityState = rememberAnimatedVisibilityState(initialState = true)
 
     Column(
@@ -119,7 +112,7 @@ fun CreateAliasBottomSheetContent(
                 isError = isBlankAliasError || isInvalidAliasError,
                 canSelectSuffix = aliasItemFormState.aliasOptions.suffixes.size > 1,
                 onPrefixChanged = onPrefixChanged,
-                onSuffixClicked = { showSuffixDialog = true }
+                onSuffixClicked = { onNavigate(CreateAliasNavigation.SelectSuffix) }
             )
         }
         AnimatedVisibilityWithOnComplete(
@@ -142,7 +135,7 @@ fun CreateAliasBottomSheetContent(
             isCreateMode = false,
             isEditAllowed = aliasItemFormState.mailboxes.size > 1,
             isLoading = state.isLoadingState.value(),
-            onMailboxClick = { showMailboxesDialog = true }
+            onMailboxClick = { onNavigate(CreateAliasNavigation.SelectMailbox) }
         )
         AnimatedVisibility(visible = state.hasReachedAliasLimit) {
             InfoBanner(
@@ -158,32 +151,6 @@ fun CreateAliasBottomSheetContent(
             onCancel = onCancel,
             onConfirm = onConfirm,
             onUpgradeClick = { onNavigate(CreateAliasNavigation.Upgrade) }
-        )
-
-        if (showMailboxesDialog && aliasItemFormState.mailboxes.isNotEmpty()) {
-            SelectMailboxesDialog(
-                mailboxes = aliasItemFormState.mailboxes.toPersistentList(),
-                color = PassTheme.colors.loginInteractionNorm,
-                canUpgrade = state.canUpgrade,
-                onMailboxesChanged = {
-                    onMailboxesChanged(it)
-                    showMailboxesDialog = false
-                },
-                onDismiss = { showMailboxesDialog = false }
-            )
-        }
-        SelectSuffixDialog(
-            show = showSuffixDialog,
-            canUpgrade = false,
-            suffixes = aliasItemFormState.aliasOptions.suffixes.toImmutableList(),
-            selectedSuffix = aliasItemFormState.selectedSuffix,
-            color = PassTheme.colors.loginInteractionNorm,
-            onSuffixChanged = {
-                onSuffixChanged(it)
-                showSuffixDialog = false
-            },
-            onDismiss = { showSuffixDialog = false },
-            onUpgrade = { onNavigate(CreateAliasNavigation.Upgrade) }
         )
     }
 }
@@ -258,8 +225,6 @@ fun CreateAliasBottomSheetContentPreview(@PreviewParameter(ThemePreviewProvider:
                 onCancel = {},
                 onConfirm = {},
                 onPrefixChanged = {},
-                onSuffixChanged = {},
-                onMailboxesChanged = {},
                 onNavigate = {}
             )
         }

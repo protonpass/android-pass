@@ -86,6 +86,8 @@ import proton.android.pass.features.item.trash.shared.navigation.ItemTrashNavDes
 import proton.android.pass.features.item.trash.shared.navigation.itemTrashNavGraph
 import proton.android.pass.features.item.trash.trashdelete.navigation.ItemTrashDeleteNavItem
 import proton.android.pass.features.item.trash.trashmenu.navigation.ItemTrashMenuNavItem
+import proton.android.pass.features.itemcreate.alias.AliasSelectMailboxBottomSheetNavItem
+import proton.android.pass.features.itemcreate.alias.AliasSelectSuffixBottomSheetNavItem
 import proton.android.pass.features.itemcreate.alias.CreateAlias
 import proton.android.pass.features.itemcreate.alias.CreateAliasBottomSheet
 import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation
@@ -1143,6 +1145,11 @@ fun NavGraphBuilder.appGraph(
                         destination = UpsellNavItem,
                         route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
                     )
+
+                CreateAliasNavigation.SelectMailbox ->
+                    appNavigator.navigate(AliasSelectMailboxBottomSheetNavItem)
+                CreateAliasNavigation.SelectSuffix ->
+                    appNavigator.navigate(AliasSelectSuffixBottomSheetNavItem)
             }
         }
     )
@@ -1157,6 +1164,8 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 UpdateAliasNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+                UpdateAliasNavigation.SelectMailbox ->
+                    appNavigator.navigate(AliasSelectMailboxBottomSheetNavItem)
                 UpdateAliasNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
                 is UpdateAliasNavigation.OpenAttachmentOptions ->
                     appNavigator.navigate(

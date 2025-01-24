@@ -29,7 +29,7 @@ import kotlinx.coroutines.flow.update
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.features.itemcreate.alias.SelectedAliasMailboxUiModel
 
-class SelectMailboxesDialogViewModel : ViewModel() {
+class SelectMailboxesViewModel : ViewModel() {
 
     private val canUpgradeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val mailboxesState: MutableStateFlow<List<SelectedAliasMailboxUiModel>> =

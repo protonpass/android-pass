@@ -21,24 +21,14 @@ package proton.android.pass.features.itemcreate.alias
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import kotlinx.collections.immutable.toImmutableList
-import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.features.itemcreate.alias.AliasItemValidationErrors.BlankPrefix
 import proton.android.pass.features.itemcreate.alias.AliasItemValidationErrors.BlankTitle
 import proton.android.pass.features.itemcreate.alias.AliasItemValidationErrors.InvalidAliasContent
-import proton.android.pass.features.itemcreate.alias.mailboxes.SelectMailboxesDialog
-import proton.android.pass.features.itemcreate.alias.suffixes.SelectSuffixDialog
 import proton.android.pass.features.itemcreate.common.CreateUpdateTopBar
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -57,11 +47,6 @@ internal fun AliasContent(
     canUseAttachments: Boolean,
     onEvent: (AliasContentUiEvent) -> Unit
 ) {
-    val scope = rememberCoroutineScope()
-
-    var showMailboxDialog by rememberSaveable { mutableStateOf(false) }
-    var showSuffixDialog by rememberSaveable { mutableStateOf(false) }
-
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -98,16 +83,8 @@ internal fun AliasContent(
             onTitleRequiredError = uiState.errorList.contains(BlankTitle),
             onAliasRequiredError = uiState.errorList.contains(BlankPrefix),
             onInvalidAliasError = uiState.errorList.contains(InvalidAliasContent),
-            onSuffixClick = {
-                scope.launch {
-                    showSuffixDialog = true
-                }
-            },
-            onMailboxClick = {
-                scope.launch {
-                    showMailboxDialog = true
-                }
-            },
+            onSuffixClick = { onEvent(AliasContentUiEvent.OnSuffixSelect) },
+            onMailboxClick = { onEvent(AliasContentUiEvent.OnMailboxSelect) },
             onEvent = onEvent,
             isAliasManagementEnabled = uiState.isAliasManagementEnabled,
             isFileAttachmentsEnabled = uiState.isFileAttachmentEnabled && canUseAttachments,
@@ -115,38 +92,5 @@ internal fun AliasContent(
             displayFileAttachmentsOnboarding = uiState.displayFileAttachmentsOnboarding,
             attachmentsState = uiState.attachmentsState
         )
-
-        SelectSuffixDialog(
-            show = showSuffixDialog,
-            canUpgrade = false,
-            suffixes = aliasItemFormState.aliasOptions.suffixes.toImmutableList(),
-            selectedSuffix = aliasItemFormState.selectedSuffix,
-            color = PassTheme.colors.aliasInteractionNorm,
-            onSuffixChanged = { suffix ->
-                scope.launch {
-                    showSuffixDialog = false
-                    onEvent(AliasContentUiEvent.OnSuffixChanged(suffix))
-                }
-            },
-            onDismiss = {
-                scope.launch {
-                    showSuffixDialog = false
-                }
-            },
-            onUpgrade = { onEvent(AliasContentUiEvent.OnUpgrade) }
-        )
-
-        if (showMailboxDialog && aliasItemFormState.mailboxes.isNotEmpty()) {
-            SelectMailboxesDialog(
-                mailboxes = aliasItemFormState.mailboxes.toPersistentList(),
-                color = PassTheme.colors.aliasInteractionNorm,
-                canUpgrade = uiState.canUpgrade,
-                onMailboxesChanged = {
-                    showMailboxDialog = false
-                    onEvent(AliasContentUiEvent.OnMailBoxChanged(it))
-                },
-                onDismiss = { showMailboxDialog = false }
-            )
-        }
     }
 }

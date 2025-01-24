@@ -6,6 +6,22 @@
 
 ### Other
 
+## 1.29.0 (2025-01-24)
+
+### Features :tada:
+
+- Add reset history option.
+
+### Fixes :bug:
+
+- Allow adding multiple Pass lifetime accounts.
+
+### Other
+
+- Add toggle to disable improved autofill.
+- Updated translations.
+- Updated core libraries.
+
 ## 1.28.6 (2024-12-19)
 
 ### Fixes :bug:

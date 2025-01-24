@@ -27,19 +27,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
-import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
+import proton.android.pass.domain.AliasSuffix
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.alias.banner.AliasCustomDomainBanner
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun SelectSuffixContent(
@@ -55,20 +60,31 @@ internal fun SelectSuffixContent(
         )
 
         val list = state.suffixList.map { suffix ->
+            val isSelected = suffix == state.selectedSuffix.value()
             object : BottomSheetItem {
                 override val title: @Composable () -> Unit
                     get() = {
                         BottomSheetItemTitle(
-                            text = suffix,
-                            color = ProtonTheme.colors.textNorm
+                            text = suffix.domain
                         )
                     }
-                override val subtitle: @Composable (() -> Unit)? = null
+                override val subtitle: @Composable () -> Unit
+                    get() = {
+                        BottomSheetItemSubtitle(
+                            text = stringResource(R.string.suffix_subtitle_public_domain)
+                        )
+                    }
                 override val leftIcon: @Composable (() -> Unit)? = null
-                override val endIcon: @Composable (() -> Unit)? = null
-                override val onClick: () -> Unit = {
-                    onEvent(SelectSuffixEvent.SelectSuffix(suffix))
-                }
+                override val endIcon: @Composable (() -> Unit)? = if (isSelected) {
+                    {
+                        BottomSheetItemIcon(
+                            iconId = CoreR.drawable.ic_proton_checkmark,
+                            tint = PassTheme.colors.interactionNorm
+                        )
+                    }
+                } else null
+                override val onClick: () -> Unit =
+                    { onEvent(SelectSuffixEvent.SelectSuffix(suffix)) }
                 override val isDivider: Boolean = false
             }
         }
@@ -92,10 +108,29 @@ internal fun SelectSuffixContent(
 @Preview
 @Composable
 fun SelectSuffixContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    val suffixList = persistentListOf(
+        AliasSuffix(
+            suffix = "first",
+            signedSuffix = "",
+            isCustom = false,
+            domain = "proton.me"
+        ),
+        AliasSuffix(
+            suffix = "second",
+            signedSuffix = "",
+            isCustom = false,
+            domain = "proton.me"
+        )
+    )
     PassTheme(isDark = isDark) {
         Surface {
             SelectSuffixContent(
-                state = SelectSuffixUiState.Initial,
+                state = SelectSuffixUiState(
+                    suffixList = suffixList,
+                    selectedSuffix = suffixList.firstOrNull().toOption(),
+                    shouldDisplayFeatureDiscoveryBanner = false
+
+                ),
                 onEvent = {}
             )
         }

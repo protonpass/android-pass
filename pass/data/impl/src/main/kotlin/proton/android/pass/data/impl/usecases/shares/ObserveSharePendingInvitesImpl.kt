@@ -20,9 +20,11 @@ package proton.android.pass.data.impl.usecases.shares
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.mapLatest
 import proton.android.pass.data.api.repositories.ShareInvitesRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.data.api.usecases.shares.ObserveSharePendingInvites
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -31,17 +33,24 @@ import javax.inject.Inject
 
 class ObserveSharePendingInvitesImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
+    private val observeShare: ObserveShare,
     private val shareInvitesRepository: ShareInvitesRepository
 ) : ObserveSharePendingInvites {
 
-    override fun invoke(shareId: ShareId, itemId: ItemId?): Flow<List<SharePendingInvite>> = observeCurrentUser()
-        .flatMapLatest { user ->
-            shareInvitesRepository.observeSharePendingInvites(user.userId, shareId)
-        }
-        .mapLatest { sharePendingInvites ->
-            sharePendingInvites.filter { sharePendingInvite ->
-                if (itemId == null) true
-                else sharePendingInvite.targetId == itemId.id
+    override fun invoke(shareId: ShareId, itemId: ItemId?): Flow<List<SharePendingInvite>> =
+        observeShare(shareId).flatMapLatest { share ->
+            if (share.isAdmin) {
+                observeCurrentUser().flatMapLatest { user ->
+                    shareInvitesRepository.observeSharePendingInvites(user.userId, shareId)
+                        .mapLatest { sharePendingInvites ->
+                            sharePendingInvites.filter { sharePendingInvite ->
+                                if (itemId == null) true
+                                else sharePendingInvite.targetId == itemId.id
+                            }
+                        }
+                }
+            } else {
+                flowOf(emptyList())
             }
         }
 

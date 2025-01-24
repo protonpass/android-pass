@@ -18,4 +18,17 @@
   <string name="migrate_init_error_snackbar">Не вдалося підготувати екран перенесення</string>
   <string name="migrate_disabled_vault_reason_no_permission">Ви не можете створювати предмети в цьому сховищі</string>
   <string name="migrate_disabled_vault_reason_same_vault">Ви не можете перемістити предмет до того самого сховища</string>
+  <plurals name="migrate_items_shared_warning_title">
+    <item quantity="one">Move the item to another vault?</item>
+    <item quantity="few">Move %d items to another vault?</item>
+    <item quantity="many">Move %d items to another vault?</item>
+    <item quantity="other">Move %d items to another vault?</item>
+  </plurals>
+  <string name="migrate_item_shared_warning_message">This item is currently shared. Moving it to another vault will remove access for all other users.</string>
+  <plurals name="migrate_items_shared_warning_message">
+    <item quantity="one">%d item is currently shared. Moving it to another vault will remove access for all other users.</item>
+    <item quantity="few">%d items are currently shared. Moving them to another vault will remove access for all other users.</item>
+    <item quantity="many">%d items are currently shared. Moving them to another vault will remove access for all other users.</item>
+    <item quantity="other">%d items are currently shared. Moving them to another vault will remove access for all other users.</item>
+  </plurals>
 </resources>

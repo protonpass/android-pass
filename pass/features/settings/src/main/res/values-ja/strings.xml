@@ -42,4 +42,6 @@
   <string name="clipboard_option_clear_clipboard_never">しない</string>
   <string name="clipboard_option_clear_clipboard_after_60_seconds">1分後</string>
   <string name="clipboard_option_clear_clipboard_after_180_seconds">3分後</string>
+  <string name="settings_use_digital_asset_link_preference_title">デジタル資産リンクを有効化</string>
+  <string name="settings_use_digital_asset_link_preference_subtitle">Androidアプリとウェブサイト間でウェブサイトの所有権確認を行います。</string>
 </resources>

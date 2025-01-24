@@ -17,6 +17,7 @@
   <string name="vault_delete_dialog_placeholder">Название хранилища</string>
   <string name="vault_delete_dialog_cancel_action">Отменить</string>
   <string name="vault_delete_dialog_delete_action">Удалить</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">This vault holds %1$s. Deleting it will remove access for all other users.</string>
   <string name="vault_leave_dialog_title">Покинуть хранилище</string>
   <string name="vault_leave_dialog_body">Это приведет к закрытию доступа к хранилищу __VAULT_NAME__ и всему его содержимому. Вы уверены, что хотите уйти?</string>
   <string name="vault_leave_dialog_cancel_action">Отменить</string>

@@ -16,4 +16,13 @@
   <string name="migrate_init_error_snackbar">Aktarım arayüzü hazırlanamadı</string>
   <string name="migrate_disabled_vault_reason_no_permission">Bu kasaya ögeler ekleyemezsiniz</string>
   <string name="migrate_disabled_vault_reason_same_vault">Bir ögeyi aynı kasaya taşıyamazsınız</string>
+  <plurals name="migrate_items_shared_warning_title">
+    <item quantity="one">Ögeyi başka bir kasaya taşımak ister misiniz?</item>
+    <item quantity="other">%d ögeyi başka bir kasaya taşımak ister misiniz?</item>
+  </plurals>
+  <string name="migrate_item_shared_warning_message">Bu öge şu anda paylaşılıyor. Başka bir kasaya taşırsanız diğer kullanıcıların erişimi kaldırılacak.</string>
+  <plurals name="migrate_items_shared_warning_message">
+    <item quantity="one">%d öge şu anda paylaşılıyor. Başka bir kasaya taşırsanız diğer kullanıcıların erişimi kaldırılacak.</item>
+    <item quantity="other">%d öge şu anda paylaşılıyor. Başka bir kasaya taşırsanız diğer kullanıcıların erişimi kaldırılacak.</item>
+  </plurals>
 </resources>

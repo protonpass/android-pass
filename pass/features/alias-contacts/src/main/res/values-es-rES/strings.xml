@@ -55,7 +55,7 @@
   <string name="snackbar_delete_contact_error">No se ha eliminado el contacto.</string>
   <string name="snackbar_email_copied_success">Se ha copiado el correo electrónico al portapapeles.</string>
   <string name="contact_option_send_email">Enviar un correo electrónico</string>
-  <string name="contact_option_copy_address">Copiar la dirección</string>
+  <string name="contact_option_copy_address">Copiar la dirección de reenvío</string>
   <string name="contact_option_block_contact">Bloquear el contacto</string>
   <string name="contact_option_unblock_contact">Desbloquear el contacto</string>
   <string name="contact_option_delete">Eliminar</string>

@@ -286,4 +286,17 @@
   <string name="attachment_row_upload_failed">Caricamento non riuscito</string>
   <string name="attachment_row_retry">Riprova</string>
   <string name="options_menu_content_description">Menu opzioni</string>
+  <!-- Items -->
+  <plurals name="shared_items_count">
+    <item quantity="one">%d elemento condiviso</item>
+    <item quantity="other">%d elementi condivisi</item>
+  </plurals>
+  <plurals name="users_count">
+    <item quantity="one">%d utente</item>
+    <item quantity="other">%d utenti</item>
+  </plurals>
+  <plurals name="members_count">
+    <item quantity="one">%d membro</item>
+    <item quantity="other">%d membri</item>
+  </plurals>
 </resources>

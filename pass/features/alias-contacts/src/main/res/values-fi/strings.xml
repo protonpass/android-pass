@@ -55,7 +55,7 @@
   <string name="snackbar_delete_contact_error">Yhteystietoa ei voitu poistaa</string>
   <string name="snackbar_email_copied_success">Sähköpostiosoite kopioitiin leikepöydälle</string>
   <string name="contact_option_send_email">Lähetä sähköposti</string>
-  <string name="contact_option_copy_address">Kopioi osoite</string>
+  <string name="contact_option_copy_address">Copy forwarding address</string>
   <string name="contact_option_block_contact">Estä yhteystieto</string>
   <string name="contact_option_unblock_contact">Salli yhteystieto</string>
   <string name="contact_option_delete">Poista</string>

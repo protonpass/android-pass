@@ -153,8 +153,8 @@
     <item quantity="other">Weet u zeker dat u %d items wilt verwijderen? Deze actie is onomkeerbaar</item>
   </plurals>
   <plurals name="alert_shared_delete_items_message">
-    <item quantity="one">1 item is currently shared. Moving it to trash will remove access for all other users.</item>
-    <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
+    <item quantity="one">%d item wordt momenteel gedeeld. Als u het naar de prullenbak verplaatst, wordt de toegang voor alle andere gebruikers uitgeschakeld.</item>
+    <item quantity="other">%d items worden momenteel gedeeld. Als u ze naar prullenbak verplaatst, wordt de toegang voor alle andere gebruikers geblokkeerd.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Recente zoekopdrachten</string>

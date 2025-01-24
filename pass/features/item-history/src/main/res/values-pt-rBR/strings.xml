@@ -21,7 +21,7 @@
   <string name="item_history_restore_confirmation_dialog_title">Restaurar essa versão?</string>
   <string name="item_history_restore_confirmation_dialog_message" comment="The item will be reverted to a version from an specific date, for instance: Your current item will revert to the version from 19 February 2024 at 09:30">Seu item atual será revertido para a versão de %1$s</string>
   <string name="item_history_restore_snackbar_message_error">Houve um erro ao recurar a revisão do item</string>
-  <string name="item_history_restore_snackbar_message_success">A revisão do item foi restaurada com sucesso</string>
+  <string name="item_history_restore_snackbar_message_success">A revisão do item foi restaurada.</string>
   <string name="item_history_restore_tab_title_current">Atual</string>
   <string name="item_history_timeline_title">Histórico</string>
   <string name="item_history_timeline_node_child_title">Modificado</string>
@@ -30,8 +30,8 @@
   <string name="item_history_timeline_snackbar_message_error">Houve um erro ao obter as revisões do item</string>
   <string name="reset_history_bottomsheet_option">Redefinir histórico</string>
   <string name="reset_history_dialog_title">Redefinir histórico para esse item?</string>
-  <string name="reset_history_dialog_body">Resetting history will permanently delete all past versions and cannot be undone.</string>
+  <string name="reset_history_dialog_body">Redefinir o histórico excluirá permanentemente todas as versões anteriores e não poderá ser desfeito.</string>
   <string name="reset_history_action">Redefinir</string>
-  <string name="reset_history_dialog_snackbar_message_error">There was an error resetting</string>
-  <string name="reset_history_dialog_snackbar_message_success">Item history reset</string>
+  <string name="reset_history_dialog_snackbar_message_error">Ocorreu um erro ao redefinir</string>
+  <string name="reset_history_dialog_snackbar_message_success">Redefinição do histórico do item</string>
 </resources>

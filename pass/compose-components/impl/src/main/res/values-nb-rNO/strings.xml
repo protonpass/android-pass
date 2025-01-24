@@ -26,7 +26,7 @@
   <string name="bottomsheet_cancel_button">Avbryt</string>
   <string name="bottomsheet_move_to_trash">Flytt til papirkurven</string>
   <string name="bottomsheet_pin_item">Fest</string>
-  <string name="bottomsheet_unpin_item">Løs</string>
+  <string name="bottomsheet_unpin_item">Løsne</string>
   <string name="bottomsheet_view_item_history">Vis historikk</string>
   <string name="bottomsheet_monitor_exclude">Ekskluder fra overvåking</string>
   <string name="bottomsheet_monitor_include">Inkluder i overvåking</string>
@@ -194,8 +194,8 @@
   <string name="item_details_shared_section_item_history_button_view">Vis elementhistorikk</string>
   <string name="item_details_shared_section_more_info_header_title">Mer informasjon</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">Ikon for mer elementinformasjon</string>
-  <string name="item_details_shared_section_more_info_item_id">Element ID</string>
-  <string name="item_details_shared_section_more_info_share_id">Hvelv ID</string>
+  <string name="item_details_shared_section_more_info_item_id">Element-ID</string>
+  <string name="item_details_shared_section_more_info_share_id">Hvelv-ID</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Appversjonen støttes ikke lenger, oppdater appen din.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Tilgangsnøkkel</string>
@@ -253,7 +253,7 @@
   <string name="snack_bar_message_item_pinned_success">Element festet</string>
   <string name="snack_bar_message_item_pinned_error">Feil ved festing av dette elementet</string>
   <string name="snack_bar_message_item_unpinned_success">Element løsnet</string>
-  <string name="snack_bar_message_item_unpinned_error">Feil ved løsing av dette elementet</string>
+  <string name="snack_bar_message_item_unpinned_error">Det oppstod en feil ved å løsne dette elementet</string>
   <string name="snack_bar_message_item_trashed_success">Elementet ble sendt i papirkurven</string>
   <string name="snack_bar_message_item_trashed_error">Det oppstod en feil under sletting av dette elementet</string>
   <string name="snack_bar_message_item_restore_success">Element vellykket gjenopprettet</string>
@@ -261,7 +261,7 @@
   <string name="snack_bar_message_item_delete_success">Element vellykket slettet</string>
   <string name="snack_bar_message_item_delete_error">Det oppstod en feil under sletting av dette elementet</string>
   <!-- Simple Login -->
-  <string name="simple_login_widget_title">Aktiver SimpleLogin synkronisering</string>
+  <string name="simple_login_widget_title">Aktiver SimpleLogin-synkronisering</string>
   <plurals name="simple_login_widget_pending_aliases_message">
     <item quantity="one">Vi oppdaget at du har %d alias som er til stede i SimpleLogin, men mangler i Proton Pass. Vil du importere det?</item>
     <item quantity="other">Vi oppdaget at du har %d aliaser som er til stede i SimpleLogin, men mangler i Proton Pass. Vil du importere dem?</item>
@@ -286,4 +286,17 @@
   <string name="attachment_row_upload_failed">Opplasting mislyktes</string>
   <string name="attachment_row_retry">Prøv igjen</string>
   <string name="options_menu_content_description">Alternativermeny</string>
+  <!-- Items -->
+  <plurals name="shared_items_count">
+    <item quantity="one">%d delt element</item>
+    <item quantity="other">%d delte elementer</item>
+  </plurals>
+  <plurals name="users_count">
+    <item quantity="one">%d bruker</item>
+    <item quantity="other">%d brukere</item>
+  </plurals>
+  <plurals name="members_count">
+    <item quantity="one">%d medlem</item>
+    <item quantity="other">%d medlemmer</item>
+  </plurals>
 </resources>

@@ -26,7 +26,7 @@
   <string name="item_details_forbidden_actions_edit_upgrade">Voit muokata vain vanhimpien holviesi kohteita. Muokkaa kohdetta päivittämällä nykyinen tilauksesi.</string>
   <string name="item_details_forbidden_actions_share_title">Jakaminen ei ole mahdollista</string>
   <string name="item_details_forbidden_actions_share_limit">Olet saavuttanut holvien jakamisrajan. Jos haluat jakaa lisää holveja, päivitä nykyinen tilauksesi.</string>
-  <string name="item_details_forbidden_actions_sharing_permission">You don\'t have enough permissions to perform this action.</string>
+  <string name="item_details_forbidden_actions_sharing_permission">Sinulla ei ole oikeuksia tämän toiminnon suorittamiseen.</string>
   <string name="item_details_forbidden_actions_share_trash">Et voi muokata kohdetta, koska se on roskakorissa. Siirrä se ensin pois roskakorista.</string>
   <!-- Item details leave item -->
   <string name="item_details_leave_dialog_title">Poistutaanko tästä kohteesta?</string>

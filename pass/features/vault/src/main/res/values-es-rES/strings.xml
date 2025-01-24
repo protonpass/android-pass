@@ -17,6 +17,7 @@
   <string name="vault_delete_dialog_placeholder">Nombre de la caja fuerte</string>
   <string name="vault_delete_dialog_cancel_action">Cancelar</string>
   <string name="vault_delete_dialog_delete_action">Eliminar</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Esta caja fuerte contiene %1$s. Si la eliminas, se eliminará el acceso a todos los demás usuarios.</string>
   <string name="vault_leave_dialog_title">Abandonar la caja fuerte</string>
   <string name="vault_leave_dialog_body">Esto borrará tu acceso a la caja fuerte __VAULT_NAME__ y todo su contenido. ¿Estás seguro de que quieres abandonarla?</string>
   <string name="vault_leave_dialog_cancel_action">Cancelar</string>

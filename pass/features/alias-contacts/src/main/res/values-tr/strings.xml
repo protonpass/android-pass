@@ -55,7 +55,7 @@
   <string name="snackbar_delete_contact_error">Kişi silinemedi</string>
   <string name="snackbar_email_copied_success">E-posta adresi panoya kopyalandı</string>
   <string name="contact_option_send_email">E-posta gönder</string>
-  <string name="contact_option_copy_address">Adresi kopyala</string>
+  <string name="contact_option_copy_address">İletme adresini kopyala</string>
   <string name="contact_option_block_contact">Kişiyi engelle</string>
   <string name="contact_option_unblock_contact">Kişinin engellemesini kaldır</string>
   <string name="contact_option_delete">Sil</string>

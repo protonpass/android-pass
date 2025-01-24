@@ -55,7 +55,7 @@
   <string name="snackbar_delete_contact_error">Αδυναμία διαγραφής επαφής</string>
   <string name="snackbar_email_copied_success">Το email αντιγράφτηκε στο πρόχειρο</string>
   <string name="contact_option_send_email">Αποστολή μηνύματος</string>
-  <string name="contact_option_copy_address">Αντιγραφή διεύθυνσης</string>
+  <string name="contact_option_copy_address">Αντιγραφή διεύθυνσης προώθησης</string>
   <string name="contact_option_block_contact">Αποκλεισμός επαφής</string>
   <string name="contact_option_unblock_contact">Άρση αποκλεισμού επαφής</string>
   <string name="contact_option_delete">Διαγραφή</string>

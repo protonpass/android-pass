@@ -161,9 +161,9 @@
     <item quantity="other">Sigur doriți să ștergeți %d de articole? Această acțiune nu e reversibilă.</item>
   </plurals>
   <plurals name="alert_shared_delete_items_message">
-    <item quantity="one">1 item is currently shared. Moving it to trash will remove access for all other users.</item>
-    <item quantity="few">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
-    <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
+    <item quantity="one">În acest moment este partajat %d articol. Dacă îl mutați în gunoi, ceilalți utilizatori nu-l vor mai putea accesa.</item>
+    <item quantity="few">În acest moment sunt partajate %d articole. Dacă le mutați în gunoi, ceilalți utilizatori nu le vor mai putea accesa.</item>
+    <item quantity="other">În acest moment sunt partajate %d de articole. Dacă le mutați în gunoi, ceilalți utilizatori nu le vor mai putea accesa.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Căutări recente</string>

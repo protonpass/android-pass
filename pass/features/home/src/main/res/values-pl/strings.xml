@@ -96,7 +96,7 @@
   <string name="snackbar_delete_vault_success">Sejf został usunięty</string>
   <string name="snackbar_delete_vault_error">Sejf nie został usunięty</string>
   <!-- Search top bar -->
-  <string name="search_topbar_placeholder_all_items">Search in all items…</string>
+  <string name="search_topbar_placeholder_all_items">Przeszukaj wszystkie elementy…</string>
   <string name="search_topbar_placeholder_all_vaults">Przeszukaj wszystkie sejfy…</string>
   <string name="search_topbar_placeholder_vault">Przeszukaj sejf %s…</string>
   <string name="search_topbar_placeholder_trash">Przeszukaj Kosz…</string>
@@ -169,7 +169,7 @@
     <item quantity="other">Czy na pewno chcesz usunąć %d elementów? Ta akcja jest nieodwracalna.</item>
   </plurals>
   <plurals name="alert_shared_delete_items_message">
-    <item quantity="one">1 item is currently shared. Moving it to trash will remove access for all other users.</item>
+    <item quantity="one">%d item is currently shared. Moving it to trash will remove access for all other users.</item>
     <item quantity="few">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
     <item quantity="many">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
     <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>

@@ -96,7 +96,7 @@
   <string name="snackbar_delete_vault_success">Сховище видалено</string>
   <string name="snackbar_delete_vault_error">Сховище не видалено</string>
   <!-- Search top bar -->
-  <string name="search_topbar_placeholder_all_items">Search in all items…</string>
+  <string name="search_topbar_placeholder_all_items">Шукати у всіх елементах…</string>
   <string name="search_topbar_placeholder_all_vaults">Пошук у всіх сховищах…</string>
   <string name="search_topbar_placeholder_vault">Пошук у %s…</string>
   <string name="search_topbar_placeholder_trash">Пошук у смітнику…</string>
@@ -169,7 +169,7 @@
     <item quantity="other">Ви впевнені, що хочете видалити дані %d позиції? Не підлягає відновленню</item>
   </plurals>
   <plurals name="alert_shared_delete_items_message">
-    <item quantity="one">1 item is currently shared. Moving it to trash will remove access for all other users.</item>
+    <item quantity="one">%d item is currently shared. Moving it to trash will remove access for all other users.</item>
     <item quantity="few">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
     <item quantity="many">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
     <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>

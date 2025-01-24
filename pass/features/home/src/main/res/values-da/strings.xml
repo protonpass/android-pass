@@ -153,8 +153,8 @@
     <item quantity="other">Er du sikker på, at du vil slette de %d elementer? Denne handling er uigenkaldelig.</item>
   </plurals>
   <plurals name="alert_shared_delete_items_message">
-    <item quantity="one">1 item is currently shared. Moving it to trash will remove access for all other users.</item>
-    <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
+    <item quantity="one">%d element er i øjeblikket delt. Hvis du flytter det til papirkurven, fjernes adgangen for alle andre brugere.</item>
+    <item quantity="other">%d elementer er i øjeblikket delt. Hvis du flytter dem til papirkurven, fjernes adgangen for alle andre brugere.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Seneste søgninger</string>

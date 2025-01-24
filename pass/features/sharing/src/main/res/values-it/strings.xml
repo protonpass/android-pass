@@ -33,8 +33,8 @@
   </plurals>
   <string name="sharing_member_count_header">Membri</string>
   <string name="shared_via_title">Condiviso tramite</string>
-  <string name="shared_via_item_member_count_header">Condivisione degli elementi</string>
-  <string name="shared_via_vault_member_count_header">Condivisione delle casseforti</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Condivisione degli elementi: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Condivisione delle casseforti: %s</string>
   <string name="share_with_title">Membri della condivisione</string>
   <string name="share_with_email_hint">Indirizzo email</string>
   <string name="share_with_email_error">Indirizzo email non valido</string>
@@ -56,6 +56,7 @@
   <string name="sharing_snackbar_invite_reject_error">Rifiuto dell\'invito non riuscito</string>
   <string name="sharing_snackbar_invite_sent_success">Invito spedito</string>
   <string name="sharing_snackbar_invite_sent_error">Spedizione dell\'invito non riuscita</string>
+  <string name="sharing_snackbar_invite_new_users_error">Non è possibile inviare inviti a nuovi utenti.</string>
   <string name="sharing_snackbar_get_vault_members_error">Caricamento dei membri non riuscito</string>
   <string name="sharing_snackbar_change_permission_success">Autorizzazioni cambiate</string>
   <string name="sharing_snackbar_change_permission_error">Cambio delle autorizzazioni non riuscito</string>
@@ -64,10 +65,11 @@
   <string name="sharing_snackbar_fetch_member_error">Si è verificato un errore nel caricamento dei membri</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Si è verificato un errore durante il caricamento degli inviti in sospeso</string>
   <string name="share_summary_title">Controlla e condividi</string>
-    <string name="share_summary_share_vault">Condividi la cassaforte</string>
+  <string name="share_summary_share_vault">Condividi la cassaforte</string>
   <string name="share_summary_share_item">Condividi elemento</string>
   <string name="share_summary_vault_title">Cassaforte</string>
   <string name="share_summary_item_title">Elemento</string>
+  <string name="share_summary_access_level_title">Livello di accesso</string>
   <string name="share_manage_vault_share_with_more_people">Condividi con altre persone</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d invito rimasto</item>
@@ -83,15 +85,15 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Inviti</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Membri</string>
   <string name="share_manage_vault_current_user_indicator">Tu</string>
-  <string name="share_role_viewer">Visualizzatore</string>
-  <string name="share_role_editor">Editor</string>
+  <string name="share_role_viewer">Sola lettura</string>
+  <string name="share_role_editor">Editore</string>
   <string name="share_role_admin">Amministratore</string>
   <string name="share_role_owner">Proprietario</string>
   <string name="sharing_bottomsheet_transfer_ownership">Trasferisci la proprietà</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Non puoi trasferire la tua unica cassaforte.</string>
   <string name="sharing_bottomsheet_remove_access">Revoca l\'accesso</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Può concedere e revocare l\'accesso a questo elemento.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Può modificare questo elemento.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Può modificare ed eliminare questo elemento.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Può visualizzare questo elemento.</string>
   <string name="sharing_bottomsheet_resend_invite">Spedisci nuovamente l\'invito</string>
   <string name="sharing_bottomsheet_cancel_invite">Annulla l\'invito</string>

@@ -34,7 +34,7 @@
   <string name="bottomsheet_copy_item_note">Notu kopyala</string>
   <string name="bottomsheet_delete_permanently">Kalıcı olarak sil</string>
   <string name="bottomsheet_restore">Geri yükle</string>
-  <string name="bottomsheet_leave">Ayrıl</string>
+  <string name="bottomsheet_leave">Bırak</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Öge işlem menüsünü aç</string>
   <string name="action_upgrade_now">Şimdi yükselt</string>
@@ -286,4 +286,17 @@
   <string name="attachment_row_upload_failed">Yüklenemedi</string>
   <string name="attachment_row_retry">Yeniden dene</string>
   <string name="options_menu_content_description">Seçenekler menüsü</string>
+  <!-- Items -->
+  <plurals name="shared_items_count">
+    <item quantity="one">%d öge paylaşılmış</item>
+    <item quantity="other">%d öge paylaşılmış</item>
+  </plurals>
+  <plurals name="users_count">
+    <item quantity="one">%d kullanıcı</item>
+    <item quantity="other">%d kullanıcı</item>
+  </plurals>
+  <plurals name="members_count">
+    <item quantity="one">%d üye</item>
+    <item quantity="other">%d üye</item>
+  </plurals>
 </resources>

@@ -33,8 +33,8 @@
   </plurals>
   <string name="sharing_member_count_header">Medlemmar</string>
   <string name="shared_via_title">Delad via</string>
-  <string name="shared_via_item_member_count_header">Objektdelning</string>
-  <string name="shared_via_vault_member_count_header">Valvdelning</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Objektdelning: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Valvdelning: %s</string>
   <string name="share_with_title">Dela med</string>
   <string name="share_with_email_hint">E-postadress</string>
   <string name="share_with_email_error">Ogiltig e-postadress</string>
@@ -56,6 +56,7 @@
   <string name="sharing_snackbar_invite_reject_error">Det gick inte avvisa inbjudan</string>
   <string name="sharing_snackbar_invite_sent_success">Inbjudan skickad</string>
   <string name="sharing_snackbar_invite_sent_error">Kunde inte skicka inbjudan</string>
+  <string name="sharing_snackbar_invite_new_users_error">Kan inte skicka inbjudningar till nya användare</string>
   <string name="sharing_snackbar_get_vault_members_error">Kunde inte hämta valvmedlemmar</string>
   <string name="sharing_snackbar_change_permission_success">Behörigheter ändrade</string>
   <string name="sharing_snackbar_change_permission_error">Kunde inte ändra behörigheter</string>
@@ -64,10 +65,11 @@
   <string name="sharing_snackbar_fetch_member_error">Det gick inte hämta medlemmar</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Det gick inte hämta väntade inbjudningar</string>
   <string name="share_summary_title">Granska och dela</string>
-    <string name="share_summary_share_vault">Dela valv</string>
+  <string name="share_summary_share_vault">Dela valv</string>
   <string name="share_summary_share_item">Dela objekt</string>
   <string name="share_summary_vault_title">Valv</string>
   <string name="share_summary_item_title">Objekt</string>
+  <string name="share_summary_access_level_title">Access level</string>
   <string name="share_manage_vault_share_with_more_people">Dela med fler personer</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d inbjudan kvar</item>
@@ -83,15 +85,15 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Inbjudningar</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Medlemmar</string>
   <string name="share_manage_vault_current_user_indicator">Du</string>
-  <string name="share_role_viewer">Kan visa</string>
-  <string name="share_role_editor">Kan redigera</string>
+  <string name="share_role_viewer">Läsare</string>
+  <string name="share_role_editor">Redigerare</string>
   <string name="share_role_admin">Admin</string>
   <string name="share_role_owner">Ägare</string>
   <string name="sharing_bottomsheet_transfer_ownership">Överför ägarskap</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Du kan inte överföra ditt sista ägda valv.</string>
   <string name="sharing_bottomsheet_remove_access">Återkalla åtkomst</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Kan bevilja och återkalla åtkomst till detta objekt.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Kan redigera detta objekt.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Kan visa detta objekt.</string>
   <string name="sharing_bottomsheet_resend_invite">Skicka inbjudan igen</string>
   <string name="sharing_bottomsheet_cancel_invite">Avbryt inbjudan</string>

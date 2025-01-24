@@ -42,4 +42,6 @@
   <string name="clipboard_option_clear_clipboard_never">Ποτέ</string>
   <string name="clipboard_option_clear_clipboard_after_60_seconds">Μετά από 1 λεπτό</string>
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Μετά από 3 λεπτά</string>
+  <string name="settings_use_digital_asset_link_preference_title">Ενεργοποίηση Συνδέσεων Ψηφιακών Στοιχείων</string>
+  <string name="settings_use_digital_asset_link_preference_subtitle">Καθιερώνει την επαλήθευση ιδιοκτησίας ιστότοπου μεταξύ μιας εφαρμογής Android και ενός ιστότοπου.</string>
 </resources>

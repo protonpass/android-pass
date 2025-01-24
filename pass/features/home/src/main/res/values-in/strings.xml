@@ -145,7 +145,7 @@
     <item quantity="other">Apakah Anda yakin ingin menghapus %d item ini? Tindakan ini tidak dapat diurungkan</item>
   </plurals>
   <plurals name="alert_shared_delete_items_message">
-    <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
+    <item quantity="other">%d item saat ini sedang dibagikan. Dengan memindahkan item ini ke sampah, izin akses bagi seluruh pengguna lainnya akan dihapus.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Pencarian terkini</string>

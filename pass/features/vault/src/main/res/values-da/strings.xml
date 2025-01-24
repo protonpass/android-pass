@@ -17,6 +17,7 @@
   <string name="vault_delete_dialog_placeholder">Boksnavn</string>
   <string name="vault_delete_dialog_cancel_action">Annullér</string>
   <string name="vault_delete_dialog_delete_action">Slet</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Denne boks indeholder %1$s. Hvis du sletter den, fjernes adgangen for alle andre brugere.</string>
   <string name="vault_leave_dialog_title">Forlad boks</string>
   <string name="vault_leave_dialog_body">Dette vil fjerne din adgang fra boksen __VAULT_NAME__ og al dens indhold. Er du sikker på, at du vil forlade den?</string>
   <string name="vault_leave_dialog_cancel_action">Annullér</string>

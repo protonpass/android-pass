@@ -21,8 +21,8 @@
   <string name="item_trash_delete_dialog_title">Elimina definitivamente l\'elemento</string>
   <string name="item_trash_delete_dialog_message">Sei sicuro di voler eliminare definitivamente questo elemento?</string>
   <!-- Shared warning dialog -->
-  <string name="item_trash_warning_shared_dialog_title">Move item to trash?</string>
-  <string name="item_trash_warning_shared_dialog_message">This item is currently shared. Moving it to trash will remove access for all other users.</string>
-  <string name="item_trash_warning_shared_snackbar_trash_error">Error moving item to trash</string>
-  <string name="item_trash_warning_shared_snackbar_trash_success">Item moved to trash</string>
+  <string name="item_trash_warning_shared_dialog_title">Spostare l\'elemento nel cestino?</string>
+  <string name="item_trash_warning_shared_dialog_message">Questo elemento è attualmente condiviso. Lo spostamento nel cestino rimuoverà l\'accesso per tutti gli altri utenti.</string>
+  <string name="item_trash_warning_shared_snackbar_trash_error">Errore nello spostamento dell\'elemento nel cestino</string>
+  <string name="item_trash_warning_shared_snackbar_trash_success">Elemento spostato nel cestino</string>
 </resources>

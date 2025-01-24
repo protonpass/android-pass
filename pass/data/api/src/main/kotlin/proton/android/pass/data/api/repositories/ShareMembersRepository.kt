@@ -27,6 +27,12 @@ import proton.android.pass.domain.shares.ShareMember
 
 interface ShareMembersRepository {
 
+    suspend fun getShareMembers(
+        userId: UserId,
+        shareId: ShareId,
+        userEmail: String?
+    ): List<ShareMember>
+
     fun observeShareItemMembers(
         userId: UserId,
         shareId: ShareId,

@@ -53,8 +53,8 @@ internal fun ManageItemMemberRow(
         member.isItemMember || hasVaultAccess
     }
 
-    val showMemberOptions = remember(canAdmin, member.isOwner, member.isCurrentUser, member.isOwner) {
-        canAdmin && !member.isOwner && !member.isCurrentUser && member.isItemMember
+    val showMemberOptions = remember(canAdmin, member.isOwner, member.isCurrentUser) {
+        canAdmin && !member.isOwner && !member.isCurrentUser
     }
 
     Row(

@@ -18,127 +18,80 @@
 
 package proton.android.pass.features.itemcreate.alias.suffixes
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import me.proton.core.compose.component.ProtonDialogTitle
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
-import proton.android.pass.composecomponents.impl.dialogs.DialogCancelConfirmSection
+import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.bottomSheet
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
+import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.alias.AliasSuffixUiModel
-import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun SelectSuffixContent(
     modifier: Modifier = Modifier,
     suffixes: ImmutableList<AliasSuffixUiModel>,
-    canUpgrade: Boolean,
-    selectedSuffix: AliasSuffixUiModel?,
-    color: Color,
-    onSuffixChanged: (AliasSuffixUiModel) -> Unit,
-    onUpgrade: () -> Unit,
-    onDismiss: () -> Unit
+    selectedSuffix: AliasSuffixUiModel?
 ) {
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier.bottomSheet()
+    ) {
         ProtonDialogTitle(
             modifier = Modifier.padding(16.dp),
             title = stringResource(R.string.alias_bottomsheet_suffix_title)
         )
-        var suffixState by remember { mutableStateOf(selectedSuffix ?: suffixes.firstOrNull()) }
+        BottomSheetTitle(
+            title = stringResource(id = R.string.alias_bottomsheet_suffix_title)
+        )
 
-        Box {
-            LazyColumn {
-                items(items = suffixes, key = { it.suffix }) { item ->
-                    SelectSuffixItemRow(
-                        suffix = item.suffix,
-                        isSelected = suffixState?.suffix == item.suffix,
-                        color = color,
-                        onSelect = {
-                            suffixState = item
-                        }
-                    )
-                }
-
-                if (canUpgrade) {
-                    item {
-                        Column {
-                            Divider(color = PassTheme.colors.inputBorderNorm)
-                            Row(
-                                modifier = Modifier
-                                    .clickable(onClick = onUpgrade)
-                                    .fillMaxWidth()
-                                    .padding(16.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
-                            ) {
-                                Text(
-                                    text = stringResource(R.string.select_suffix_upgrade_for_custom_domains),
-                                    style = ProtonTheme.typography.defaultNorm,
-                                    color = PassTheme.colors.interactionNormMajor2
-                                )
-                                Icon(
-                                    modifier = Modifier.size(16.dp),
-                                    painter = painterResource(CoreR.drawable.ic_proton_arrow_out_square),
-                                    contentDescription = null,
-                                    tint = PassTheme.colors.interactionNormMajor2
-                                )
-                            }
-                            Divider(color = PassTheme.colors.inputBorderNorm)
-                        }
+        val list = suffixes.map { suffix ->
+            object : BottomSheetItem {
+                override val title: @Composable () -> Unit
+                    get() = {
+                        BottomSheetItemTitle(
+                            text = suffix.suffix,
+                            color = ProtonTheme.colors.textNorm
+                        )
                     }
-                }
-                item {
-                    DialogCancelConfirmSection(
-                        color = color,
-                        onDismiss = onDismiss,
-                        onConfirm = { suffixState?.let { onSuffixChanged(it) } }
-                    )
-                }
+                override val subtitle: @Composable (() -> Unit)? = null
+                override val leftIcon: @Composable (() -> Unit)? = null
+                override val endIcon: @Composable (() -> Unit)? = null
+                override val onClick: (() -> Unit)? = null
+                override val isDivider: Boolean = false
             }
         }
+        BottomSheetItemList(
+            items = list.withDividers().toPersistentList()
+        )
     }
-
 }
 
 @Preview
 @Composable
-fun SelectSuffixContentPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
+fun SelectSuffixContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     val selected = AliasSuffixUiModel(
         suffix = ".some@suffix.test",
         signedSuffix = "",
         isCustom = false,
         domain = ""
     )
-    PassTheme(isDark = input.first) {
+    PassTheme(isDark = isDark) {
         Surface {
             SelectSuffixContent(
                 suffixes = persistentListOf(
@@ -150,12 +103,7 @@ fun SelectSuffixContentPreview(@PreviewParameter(ThemedBooleanPreviewProvider::c
                         domain = ""
                     )
                 ),
-                canUpgrade = input.second,
-                selectedSuffix = selected,
-                color = PassTheme.colors.loginInteractionNorm,
-                onSuffixChanged = {},
-                onUpgrade = {},
-                onDismiss = {}
+                selectedSuffix = selected
             )
         }
     }

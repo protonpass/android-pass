@@ -38,6 +38,8 @@ import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.features.auth.AuthNavigation
 import proton.android.pass.features.auth.EnterPin
 import proton.android.pass.features.auth.authGraph
+import proton.android.pass.features.itemcreate.alias.AliasSelectMailboxBottomSheetNavItem
+import proton.android.pass.features.itemcreate.alias.AliasSelectSuffixBottomSheetNavItem
 import proton.android.pass.features.itemcreate.alias.CreateAlias
 import proton.android.pass.features.itemcreate.alias.CreateAliasBottomSheet
 import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation
@@ -379,6 +381,11 @@ fun NavGraphBuilder.autofillActivityGraph(
                         route = SelectVaultBottomsheet.createNavRoute(it.shareId)
                     )
                 }
+
+                CreateAliasNavigation.SelectMailbox ->
+                    appNavigator.navigate(AliasSelectMailboxBottomSheetNavItem)
+                CreateAliasNavigation.SelectSuffix ->
+                    appNavigator.navigate(AliasSelectSuffixBottomSheetNavItem)
 
                 CreateAliasNavigation.AddAttachment,
                 CreateAliasNavigation.UpsellAttachments,

@@ -26,7 +26,8 @@ import proton.android.pass.features.itemcreate.alias.SelectedAliasMailboxUiModel
 internal data class SelectMailboxesUiState(
     val mailboxes: List<SelectedAliasMailboxUiModel>,
     val canApply: IsButtonEnabled,
-    val canUpgrade: Boolean
+    val canUpgrade: Boolean,
+    val shouldDisplayFeatureDiscoveryBanner: Boolean
 ) {
 
     internal companion object {
@@ -34,7 +35,8 @@ internal data class SelectMailboxesUiState(
         internal val Initial = SelectMailboxesUiState(
             mailboxes = emptyList(),
             canApply = IsButtonEnabled.Disabled,
-            canUpgrade = false
+            canUpgrade = false,
+            shouldDisplayFeatureDiscoveryBanner = false
         )
 
     }

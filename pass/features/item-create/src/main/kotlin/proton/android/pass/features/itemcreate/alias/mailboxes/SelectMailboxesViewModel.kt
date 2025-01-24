@@ -20,16 +20,25 @@ package proton.android.pass.features.itemcreate.alias.mailboxes
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.features.itemcreate.alias.SelectedAliasMailboxUiModel
+import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryBannerPreference
+import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryFeature.AliasManagementMailbox
+import javax.inject.Inject
 
-class SelectMailboxesViewModel : ViewModel() {
+@HiltViewModel
+class SelectMailboxesViewModel @Inject constructor(
+    private val userPreferencesRepository: UserPreferencesRepository
+) : ViewModel() {
 
     private val canUpgradeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val mailboxesState: MutableStateFlow<List<SelectedAliasMailboxUiModel>> =
@@ -37,13 +46,15 @@ class SelectMailboxesViewModel : ViewModel() {
 
     internal val uiState: StateFlow<SelectMailboxesUiState> = combine(
         mailboxesState,
-        canUpgradeState
-    ) { mailboxes, canUpgrade ->
+        canUpgradeState,
+        userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementMailbox)
+    ) { mailboxes, canUpgrade, featureDiscoveryPreference ->
         val canApply = mailboxes.any { it.selected }
         SelectMailboxesUiState(
             mailboxes = mailboxes,
             canApply = IsButtonEnabled.from(canApply),
-            canUpgrade = canUpgrade
+            canUpgrade = canUpgrade,
+            shouldDisplayFeatureDiscoveryBanner = featureDiscoveryPreference.value
         )
     }.stateIn(
         scope = viewModelScope,
@@ -53,10 +64,6 @@ class SelectMailboxesViewModel : ViewModel() {
 
     internal fun setMailboxes(mailboxes: List<SelectedAliasMailboxUiModel>) {
         mailboxesState.update { mailboxes }
-    }
-
-    internal fun setCanUpgrade(canUpgrade: Boolean) {
-        canUpgradeState.update { canUpgrade }
     }
 
     internal fun onMailboxChanged(newMailbox: SelectedAliasMailboxUiModel) = mailboxesState.value
@@ -70,5 +77,14 @@ class SelectMailboxesViewModel : ViewModel() {
         .let { mailboxes ->
             mailboxesState.update { mailboxes }
         }
+
+    fun dismissFeatureDiscoveryBanner() {
+        viewModelScope.launch {
+            userPreferencesRepository.setDisplayFeatureDiscoverBanner(
+                AliasManagementMailbox,
+                FeatureDiscoveryBannerPreference.NotDisplay
+            )
+        }
+    }
 
 }

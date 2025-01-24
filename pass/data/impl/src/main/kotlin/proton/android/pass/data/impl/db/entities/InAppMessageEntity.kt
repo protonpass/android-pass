@@ -25,7 +25,7 @@ import me.proton.core.user.data.entity.UserEntity
 
 @Entity(
     tableName = InAppMessageEntity.TABLE,
-    primaryKeys = [InAppMessageEntity.Columns.ID],
+    primaryKeys = [InAppMessageEntity.Columns.USER_ID, InAppMessageEntity.Columns.ID],
     foreignKeys = [
         ForeignKey(
             entity = UserEntity::class,

@@ -45,7 +45,8 @@ internal class SelectMailboxesUiStatePreviewProvider :
                 )
             ),
             canApply = IsButtonEnabled.from(false),
-            canUpgrade = false
+            canUpgrade = false,
+            shouldDisplayFeatureDiscoveryBanner = false
         ),
         SelectMailboxesUiState(
             mailboxes = listOf(
@@ -65,7 +66,8 @@ internal class SelectMailboxesUiStatePreviewProvider :
                 )
             ),
             canApply = IsButtonEnabled.from(true),
-            canUpgrade = false
+            canUpgrade = false,
+            shouldDisplayFeatureDiscoveryBanner = false
         ),
         SelectMailboxesUiState(
             mailboxes = listOf(
@@ -85,7 +87,8 @@ internal class SelectMailboxesUiStatePreviewProvider :
                 )
             ),
             canApply = IsButtonEnabled.from(false),
-            canUpgrade = true
+            canUpgrade = true,
+            shouldDisplayFeatureDiscoveryBanner = false
         )
     )
 }

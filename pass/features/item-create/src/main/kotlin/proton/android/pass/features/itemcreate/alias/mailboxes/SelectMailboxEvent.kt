@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -18,27 +18,10 @@
 
 package proton.android.pass.features.itemcreate.alias.mailboxes
 
-import androidx.compose.runtime.Stable
-import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
-import proton.android.pass.features.itemcreate.alias.SelectedAliasMailboxUiModel
+sealed interface SelectMailboxEvent {
+    data object DismissFeatureDiscoveryBanner : SelectMailboxEvent
+    data object AddMailbox : SelectMailboxEvent
 
-@Stable
-internal data class SelectMailboxesUiState(
-    val mailboxes: List<SelectedAliasMailboxUiModel>,
-    val canApply: IsButtonEnabled,
-    val canUpgrade: Boolean,
-    val shouldDisplayFeatureDiscoveryBanner: Boolean
-) {
-
-    internal companion object {
-
-        internal val Initial = SelectMailboxesUiState(
-            mailboxes = emptyList(),
-            canApply = IsButtonEnabled.Disabled,
-            canUpgrade = false,
-            shouldDisplayFeatureDiscoveryBanner = false
-        )
-
-    }
-
+    @JvmInline
+    value class SelectMailbox(val suffix: String) : SelectMailboxEvent
 }

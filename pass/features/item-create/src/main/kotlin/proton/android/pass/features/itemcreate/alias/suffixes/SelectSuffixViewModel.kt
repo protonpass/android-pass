@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.alias.mailboxes
+package proton.android.pass.features.itemcreate.alias.suffixes
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -26,65 +26,44 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
-import proton.android.pass.features.itemcreate.alias.SelectedAliasMailboxUiModel
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryBannerPreference
-import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryFeature.AliasManagementMailbox
+import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryFeature.AliasManagementCustomDomain
 import javax.inject.Inject
 
 @HiltViewModel
-class SelectMailboxesViewModel @Inject constructor(
+class SelectSuffixViewModel @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
-    private val canUpgradeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    private val mailboxesState: MutableStateFlow<List<SelectedAliasMailboxUiModel>> =
+    private val mailboxesState: MutableStateFlow<List<String>> =
         MutableStateFlow(emptyList())
 
-    internal val uiState: StateFlow<SelectMailboxesUiState> = combine(
+    internal val uiState: StateFlow<SelectSuffixUiState> = combine(
         mailboxesState,
-        canUpgradeState,
-        userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementMailbox)
-    ) { mailboxes, canUpgrade, featureDiscoveryPreference ->
-        val canApply = mailboxes.any { it.selected }
-        SelectMailboxesUiState(
-            mailboxes = mailboxes,
-            canApply = IsButtonEnabled.from(canApply),
-            canUpgrade = canUpgrade,
+        userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementCustomDomain)
+    ) { mailboxes, featureDiscoveryPreference ->
+        SelectSuffixUiState(
+            suffixList = mailboxes,
             shouldDisplayFeatureDiscoveryBanner = featureDiscoveryPreference.value
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = SelectMailboxesUiState.Initial
+        initialValue = SelectSuffixUiState.Initial
     )
 
-    internal fun setMailboxes(mailboxes: List<SelectedAliasMailboxUiModel>) {
-        mailboxesState.update { mailboxes }
+    fun selectSuffix(suffix: String) {
+        // To implement
     }
-
-    internal fun onMailboxChanged(newMailbox: SelectedAliasMailboxUiModel) = mailboxesState.value
-        .map { mailbox ->
-            if (mailbox.model.id == newMailbox.model.id) {
-                mailbox.copy(selected = !newMailbox.selected)
-            } else {
-                mailbox
-            }
-        }
-        .let { mailboxes ->
-            mailboxesState.update { mailboxes }
-        }
 
     fun dismissFeatureDiscoveryBanner() {
         viewModelScope.launch {
             userPreferencesRepository.setDisplayFeatureDiscoverBanner(
-                AliasManagementMailbox,
+                AliasManagementCustomDomain,
                 FeatureDiscoveryBannerPreference.NotDisplay
             )
         }
     }
-
 }

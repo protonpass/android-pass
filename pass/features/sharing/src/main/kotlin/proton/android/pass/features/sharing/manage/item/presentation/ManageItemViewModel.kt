@@ -26,7 +26,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -79,14 +78,7 @@ class ManageItemViewModel @Inject constructor(
             emit(emptyList())
         }
 
-    private val sharePendingInvitesFlow = shareFlow
-        .flatMapLatest { share ->
-            if (share.isAdmin) {
-                observeSharePendingInvites(shareId, itemId)
-            } else {
-                flowOf(emptyList())
-            }
-        }
+    private val sharePendingInvitesFlow = observeSharePendingInvites(shareId, itemId)
         .catch { error ->
             PassLogger.w(TAG, "There was an error observing share pending invites")
             PassLogger.w(TAG, error)

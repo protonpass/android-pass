@@ -16,24 +16,19 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.alias.suffixes
+package proton.android.pass.features.itemcreate.alias.mailboxes
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
-import me.proton.core.compose.component.ProtonDialogTitle
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
@@ -41,31 +36,22 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTit
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.features.itemcreate.R
-import proton.android.pass.features.itemcreate.alias.AliasSuffixUiModel
 
 @Composable
-fun SelectSuffixContent(
-    modifier: Modifier = Modifier,
-    suffixes: ImmutableList<AliasSuffixUiModel>,
-    selectedSuffix: AliasSuffixUiModel?
-) {
+internal fun SelectMailboxesContent(modifier: Modifier = Modifier, state: SelectMailboxesUiState) {
     Column(
         modifier = modifier.bottomSheet()
     ) {
-        ProtonDialogTitle(
-            modifier = Modifier.padding(16.dp),
-            title = stringResource(R.string.alias_bottomsheet_suffix_title)
-        )
         BottomSheetTitle(
-            title = stringResource(id = R.string.alias_bottomsheet_suffix_title)
+            title = stringResource(id = R.string.alias_mailbox_dialog_title)
         )
 
-        val list = suffixes.map { suffix ->
+        val list = state.mailboxes.map { mailbox ->
             object : BottomSheetItem {
                 override val title: @Composable () -> Unit
                     get() = {
                         BottomSheetItemTitle(
-                            text = suffix.suffix,
+                            text = mailbox.model.email,
                             color = ProtonTheme.colors.textNorm
                         )
                     }
@@ -82,28 +68,18 @@ fun SelectSuffixContent(
     }
 }
 
+internal class ThemedSelectMailboxesPreviewProvider :
+    ThemePairPreviewProvider<SelectMailboxesUiState>(SelectMailboxesUiStatePreviewProvider())
+
 @Preview
 @Composable
-fun SelectSuffixContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
-    val selected = AliasSuffixUiModel(
-        suffix = ".some@suffix.test",
-        signedSuffix = "",
-        isCustom = false,
-        domain = ""
-    )
-    PassTheme(isDark = isDark) {
+internal fun SelectMailboxesDialogContentPreview(
+    @PreviewParameter(ThemedSelectMailboxesPreviewProvider::class) input: Pair<Boolean, SelectMailboxesUiState>
+) {
+    PassTheme(isDark = input.first) {
         Surface {
-            SelectSuffixContent(
-                suffixes = persistentListOf(
-                    selected,
-                    AliasSuffixUiModel(
-                        suffix = ".other@random.suffix",
-                        signedSuffix = "",
-                        isCustom = false,
-                        domain = ""
-                    )
-                ),
-                selectedSuffix = selected
+            SelectMailboxesContent(
+                state = input.second
             )
         }
     }

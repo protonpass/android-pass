@@ -32,6 +32,16 @@ internal fun SelectMailboxesBottomsheet(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     SelectMailboxesContent(
         modifier = modifier,
-        state = uiState
+        state = uiState,
+        onEvent = {
+            when (it) {
+                SelectMailboxEvent.AddMailbox -> {
+                    viewModel.dismissFeatureDiscoveryBanner()
+                }
+                SelectMailboxEvent.DismissFeatureDiscoveryBanner ->
+                    viewModel.dismissFeatureDiscoveryBanner()
+                is SelectMailboxEvent.SelectMailbox -> TODO()
+            }
+        }
     )
 }

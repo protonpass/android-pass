@@ -16,26 +16,20 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.alias.mailboxes
+package proton.android.pass.features.itemcreate.alias.suffixes
 
 import androidx.compose.runtime.Stable
-import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
-import proton.android.pass.features.itemcreate.alias.SelectedAliasMailboxUiModel
 
 @Stable
-internal data class SelectMailboxesUiState(
-    val mailboxes: List<SelectedAliasMailboxUiModel>,
-    val canApply: IsButtonEnabled,
-    val canUpgrade: Boolean,
+internal data class SelectSuffixUiState(
+    val suffixList: List<String>,
     val shouldDisplayFeatureDiscoveryBanner: Boolean
 ) {
 
     internal companion object {
 
-        internal val Initial = SelectMailboxesUiState(
-            mailboxes = emptyList(),
-            canApply = IsButtonEnabled.Disabled,
-            canUpgrade = false,
+        internal val Initial = SelectSuffixUiState(
+            suffixList = emptyList(),
             shouldDisplayFeatureDiscoveryBanner = false
         )
 

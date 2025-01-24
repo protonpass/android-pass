@@ -19,15 +19,35 @@
 package proton.android.pass.features.itemcreate.alias.suffixes
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import kotlinx.collections.immutable.persistentListOf
+import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 
-@Suppress("UnusedPrivateMember")
 @Composable
-fun SelectSuffixBottomsheet(modifier: Modifier = Modifier) {
+fun SelectSuffixBottomsheet(modifier: Modifier = Modifier, viewModel: SelectSuffixViewModel = hiltViewModel()) {
+    val context = LocalContext.current
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
     SelectSuffixContent(
         modifier = modifier,
-        suffixes = persistentListOf(),
-        selectedSuffix = null
+        state = state,
+        onEvent = {
+            when (it) {
+                SelectSuffixEvent.AddCustomDomain -> {
+                    viewModel.dismissFeatureDiscoveryBanner()
+                    openWebsite(context, CUSTOM_DOMAIN_URL)
+                }
+
+                SelectSuffixEvent.DismissFeatureDiscoveryBanner ->
+                    viewModel.dismissFeatureDiscoveryBanner()
+
+                is SelectSuffixEvent.SelectSuffix ->
+                    viewModel.selectSuffix(it.suffix)
+            }
+        }
     )
 }
+
+private const val CUSTOM_DOMAIN_URL = "https://pass.proton.me/settings#aliases"

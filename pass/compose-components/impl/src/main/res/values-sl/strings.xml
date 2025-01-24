@@ -222,7 +222,7 @@
     <item quantity="other">%d years</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="one">%d month</item>
+    <item quantity="one">%d mesec</item>
     <item quantity="two">%d months</item>
     <item quantity="few">%d months</item>
     <item quantity="other">%d months</item>
@@ -310,4 +310,23 @@
   <string name="attachment_row_upload_failed">Upload failed</string>
   <string name="attachment_row_retry">Poskusi znova</string>
   <string name="options_menu_content_description">Options menu</string>
+  <!-- Items -->
+  <plurals name="shared_items_count">
+    <item quantity="one">%d shared item</item>
+    <item quantity="two">%d shared items</item>
+    <item quantity="few">%d shared items</item>
+    <item quantity="other">%d shared items</item>
+  </plurals>
+  <plurals name="users_count">
+    <item quantity="one">%d user</item>
+    <item quantity="two">%d users</item>
+    <item quantity="few">%d users</item>
+    <item quantity="other">%d users</item>
+  </plurals>
+  <plurals name="members_count">
+    <item quantity="one">%d member</item>
+    <item quantity="two">%d members</item>
+    <item quantity="few">%d members</item>
+    <item quantity="other">%d members</item>
+  </plurals>
 </resources>

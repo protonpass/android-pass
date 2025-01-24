@@ -274,4 +274,14 @@
   <string name="attachment_row_upload_failed">업로드 실패</string>
   <string name="attachment_row_retry">다시 시도</string>
   <string name="options_menu_content_description">옵션 메뉴</string>
+  <!-- Items -->
+  <plurals name="shared_items_count">
+    <item quantity="other">공유된 항목 %d개</item>
+  </plurals>
+  <plurals name="users_count">
+    <item quantity="other">사용자 %d 명</item>
+  </plurals>
+  <plurals name="members_count">
+    <item quantity="other">%d명 구성원</item>
+  </plurals>
 </resources>

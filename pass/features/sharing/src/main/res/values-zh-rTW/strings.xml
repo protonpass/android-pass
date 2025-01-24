@@ -31,8 +31,8 @@
   </plurals>
   <string name="sharing_member_count_header">Members</string>
   <string name="shared_via_title">Shared via</string>
-  <string name="shared_via_item_member_count_header">Item sharing</string>
-  <string name="shared_via_vault_member_count_header">Vault sharing</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Item sharing: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Vault sharing: %s</string>
   <string name="share_with_title">與分享</string>
   <string name="share_with_email_hint">電子郵件位址</string>
   <string name="share_with_email_error">無效的電子郵件位址</string>
@@ -54,6 +54,7 @@
   <string name="sharing_snackbar_invite_reject_error">婉拒邀請時發生錯誤</string>
   <string name="sharing_snackbar_invite_sent_success">邀請函已寄送</string>
   <string name="sharing_snackbar_invite_sent_error">無法發送邀請</string>
+  <string name="sharing_snackbar_invite_new_users_error">Cannot send invites to new users</string>
   <string name="sharing_snackbar_get_vault_members_error">無法取得保管庫成員</string>
   <string name="sharing_snackbar_change_permission_success">權限變更</string>
   <string name="sharing_snackbar_change_permission_error">無法更新存取權限設定</string>
@@ -62,10 +63,11 @@
   <string name="sharing_snackbar_fetch_member_error">There was an error fetching members</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">There was an error fetching pending invites</string>
   <string name="share_summary_title">審閱並分享</string>
-    <string name="share_summary_share_vault">分享保險庫</string>
+  <string name="share_summary_share_vault">分享保險庫</string>
   <string name="share_summary_share_item">Share item</string>
   <string name="share_summary_vault_title">保管庫</string>
   <string name="share_summary_item_title">Item</string>
+  <string name="share_summary_access_level_title">Access level</string>
   <string name="share_manage_vault_share_with_more_people">分享給更多人</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="other">剩下邀請%d</item>
@@ -79,15 +81,15 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">邀請</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">成員</string>
   <string name="share_manage_vault_current_user_indicator">您</string>
-  <string name="share_role_viewer">可以查看</string>
-  <string name="share_role_editor">可以編輯</string>
+  <string name="share_role_viewer">Viewer</string>
+  <string name="share_role_editor">Editor</string>
   <string name="share_role_admin">管理員</string>
   <string name="share_role_owner">擁有者</string>
   <string name="sharing_bottomsheet_transfer_ownership">轉移所有權</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">您無法移轉最後擁有的保管庫。</string>
   <string name="sharing_bottomsheet_remove_access">撤銷存取權</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Can view this item.</string>
   <string name="sharing_bottomsheet_resend_invite">重新發送邀請</string>
   <string name="sharing_bottomsheet_cancel_invite">取消邀請</string>

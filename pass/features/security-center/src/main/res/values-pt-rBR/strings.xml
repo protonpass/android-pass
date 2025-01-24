@@ -64,7 +64,7 @@
   <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Última verificação: %s</string>
   <string name="security_center_dark_web_monitor_custom_emails_title">Endereços de e-mail personalizados</string>
   <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Não verificada</string>
-  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Adicionar endereço de e-mail personalizado</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Adicionar um endereço de e-mail personalizado</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">Adicionar</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
     <item quantity="one">Usado em %d início de sessão</item>
@@ -157,7 +157,7 @@
   <string name="security_center_alias_list_error">Não foi possível carregar os endereços.</string>
   <string name="security_center_alias_list_included_in_monitoring">Ative o monitoramento para ser notificado se seus aliases do Hide-my-email forem vazados.</string>
   <string name="security_center_alias_list_monitored">Monitorado</string>
-  <string name="security_center_alias_list_custom_email_message">Os e-mails aliases com domínios personalizados não são monitorados, por favor adicione-os como um e-mail personalizado para monitoramento.</string>
+  <string name="security_center_alias_list_custom_email_message">Os e-mails aliases com domínios personalizados não são monitorados, adicione-os como um e-mail personalizado para monitoramento.</string>
   <string name="security_center_alias_list_options_menu">Menu de opções de tela de alias</string>
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Segurança de dados</string>

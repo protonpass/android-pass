@@ -310,4 +310,23 @@
   <string name="attachment_row_upload_failed">Przesyłanie nie powiodło się</string>
   <string name="attachment_row_retry">Spróbuj ponownie</string>
   <string name="options_menu_content_description">Menu opcji</string>
+  <!-- Items -->
+  <plurals name="shared_items_count">
+    <item quantity="one">%d shared item</item>
+    <item quantity="few">%d shared items</item>
+    <item quantity="many">%d shared items</item>
+    <item quantity="other">%d shared items</item>
+  </plurals>
+  <plurals name="users_count">
+    <item quantity="one">%d user</item>
+    <item quantity="few">%d users</item>
+    <item quantity="many">%d users</item>
+    <item quantity="other">%d users</item>
+  </plurals>
+  <plurals name="members_count">
+    <item quantity="one">%d member</item>
+    <item quantity="few">%d members</item>
+    <item quantity="many">%d members</item>
+    <item quantity="other">%d members</item>
+  </plurals>
 </resources>

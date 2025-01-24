@@ -16,4 +16,13 @@
   <string name="migrate_init_error_snackbar">Caricamento della schermata di spostamento non riuscito</string>
   <string name="migrate_disabled_vault_reason_no_permission">Non puoi creare elementi in questa cassaforte</string>
   <string name="migrate_disabled_vault_reason_same_vault">Cassaforte attuale</string>
+  <plurals name="migrate_items_shared_warning_title">
+    <item quantity="one">Sposta l\'elemento in un\'altra cassaforte?</item>
+    <item quantity="other">Sposta %d elementi in un\'altra cassaforte?</item>
+  </plurals>
+  <string name="migrate_item_shared_warning_message">Questo elemento è attualmente condiviso. Lo spostamento in un altro deposito rimuoverà l\'accesso per tutti gli altri utenti.</string>
+  <plurals name="migrate_items_shared_warning_message">
+    <item quantity="one">%d elemento è attualmente condiviso. Lo spostamento in un altro deposito rimuoverà l\'accesso per tutti gli altri utenti.</item>
+    <item quantity="other">Gli elementi %d sono attualmente condivisi. Lo spostamento in un\'altra cassaforte rimuoverà l\'accesso per tutti gli altri utenti.</item>
+  </plurals>
 </resources>

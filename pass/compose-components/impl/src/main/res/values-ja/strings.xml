@@ -274,4 +274,14 @@
   <string name="attachment_row_upload_failed">アップロードに失敗しました</string>
   <string name="attachment_row_retry">再試行</string>
   <string name="options_menu_content_description">オプションメニュー</string>
+  <!-- Items -->
+  <plurals name="shared_items_count">
+    <item quantity="other">%d個の共有アイテム</item>
+  </plurals>
+  <plurals name="users_count">
+    <item quantity="other">%d 人のユーザー</item>
+  </plurals>
+  <plurals name="members_count">
+    <item quantity="other">%d人のメンバー</item>
+  </plurals>
 </resources>

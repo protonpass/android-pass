@@ -55,7 +55,7 @@
   <string name="snackbar_delete_contact_error">Fehler beim Löschen des Kontakts.</string>
   <string name="snackbar_email_copied_success">E-Mail-Adresse in Zwischenablage kopiert</string>
   <string name="contact_option_send_email">E-Mail senden</string>
-  <string name="contact_option_copy_address">Adresse kopieren</string>
+  <string name="contact_option_copy_address">Copy forwarding address</string>
   <string name="contact_option_block_contact">Kontakt blockieren</string>
   <string name="contact_option_unblock_contact">Kontakt entsperren</string>
   <string name="contact_option_delete">Löschen</string>

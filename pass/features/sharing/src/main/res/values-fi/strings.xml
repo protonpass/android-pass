@@ -33,8 +33,8 @@
   </plurals>
   <string name="sharing_member_count_header">Jäsentä</string>
   <string name="shared_via_title">Jaettu käyttäen</string>
-  <string name="shared_via_item_member_count_header">Kohteen jakaminen</string>
-  <string name="shared_via_vault_member_count_header">Holvin jakaminen</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Item sharing: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Vault sharing: %s</string>
   <string name="share_with_title">Jaa henkilöille</string>
   <string name="share_with_email_hint">Sähköpostiosoite</string>
   <string name="share_with_email_error">Virheellinen sähköpostiosoite</string>
@@ -56,6 +56,7 @@
   <string name="sharing_snackbar_invite_reject_error">Virhe kieltäydyttäessä</string>
   <string name="sharing_snackbar_invite_sent_success">Kutsu lähetetty</string>
   <string name="sharing_snackbar_invite_sent_error">Kutsua ei voitu lähettää</string>
+  <string name="sharing_snackbar_invite_new_users_error">Kutsuja ei voi lähettää uusille käyttäjille</string>
   <string name="sharing_snackbar_get_vault_members_error">Holvin jäsentietojen nouto ei onnistunut</string>
   <string name="sharing_snackbar_change_permission_success">Käyttöoikeudet muutettu</string>
   <string name="sharing_snackbar_change_permission_error">Käyttöoikeuksia ei voitu muuttaa</string>
@@ -64,10 +65,11 @@
   <string name="sharing_snackbar_fetch_member_error">Virhe noudettaessa jäseniä</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Virhe noudettaessa odottavia kutsuja</string>
   <string name="share_summary_title">Tarkista ja jaa</string>
-    <string name="share_summary_share_vault">Jaa holvi</string>
+  <string name="share_summary_share_vault">Jaa holvi</string>
   <string name="share_summary_share_item">Jaa kohde</string>
   <string name="share_summary_vault_title">Holvi</string>
   <string name="share_summary_item_title">Kohde</string>
+  <string name="share_summary_access_level_title">Access level</string>
   <string name="share_manage_vault_share_with_more_people">Jaa useammalle henkilölle</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d kutsu jäljellä</item>
@@ -83,15 +85,15 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Kutsut</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Jäsenet</string>
   <string name="share_manage_vault_current_user_indicator">Sinä</string>
-  <string name="share_role_viewer">Voi tarkastella</string>
-  <string name="share_role_editor">Voi muokata</string>
+  <string name="share_role_viewer">Tarkastelija</string>
+  <string name="share_role_editor">Muokkaaja</string>
   <string name="share_role_admin">Ylläpito</string>
   <string name="share_role_owner">Omistaja</string>
   <string name="sharing_bottomsheet_transfer_ownership">Siirrä omistajuus</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Et voi siirtää viimeisen omistamasi holvin omistajuutta.</string>
   <string name="sharing_bottomsheet_remove_access">Mitätöi käyttöoikeus</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Voi myöntää ja mitätöidä tämän kohteen käyttöoikeuksia.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Voi muokata tätä kohdetta.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Voi tarkastella tätä kohdetta.</string>
   <string name="sharing_bottomsheet_resend_invite">Lähetä kutsu uudelleen</string>
   <string name="sharing_bottomsheet_cancel_invite">Peru kutsu</string>

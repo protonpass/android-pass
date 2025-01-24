@@ -42,4 +42,6 @@
   <string name="clipboard_option_clear_clipboard_never">Aldrig</string>
   <string name="clipboard_option_clear_clipboard_after_60_seconds">Efter 1 minut</string>
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Efter 3 minutter</string>
+  <string name="settings_use_digital_asset_link_preference_title">Enable Digital Asset Links</string>
+  <string name="settings_use_digital_asset_link_preference_subtitle">Establishes website ownership verification between an Android app and a website.</string>
 </resources>

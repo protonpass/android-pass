@@ -9,4 +9,5 @@
   <string name="no_account_found">Aucun compte n\'a été trouvé.</string>
   <string name="no_session_found">Aucune session n\'a été trouvée.</string>
   <string name="auth_with_extra_password_failed">L\'authentification avec un mot de passe supplémentaire n\'a pas abouti.</string>
+  <string name="auth_only_1_proton_account_failed">Un seul compte Proton gratuit est autorisé.</string>
 </resources>

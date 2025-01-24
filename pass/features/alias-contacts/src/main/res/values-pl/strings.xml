@@ -61,7 +61,7 @@
   <string name="snackbar_delete_contact_error">Nie można usunąć kontaktu</string>
   <string name="snackbar_email_copied_success">Adres został skopiowany do schowka</string>
   <string name="contact_option_send_email">Wyślij wiadomość</string>
-  <string name="contact_option_copy_address">Kopiuj adres</string>
+  <string name="contact_option_copy_address">Copy forwarding address</string>
   <string name="contact_option_block_contact">Zablokuj kontakt</string>
   <string name="contact_option_unblock_contact">Odblokuj kontakt</string>
   <string name="contact_option_delete">Usuń</string>

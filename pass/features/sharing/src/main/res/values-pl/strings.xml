@@ -37,8 +37,8 @@
   </plurals>
   <string name="sharing_member_count_header">Użytkownicy</string>
   <string name="shared_via_title">Udostępniono przez</string>
-  <string name="shared_via_item_member_count_header">Udostępnianie elementu</string>
-  <string name="shared_via_vault_member_count_header">Udostępnianie sejfu</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Item sharing: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Vault sharing: %s</string>
   <string name="share_with_title">Udostępnij</string>
   <string name="share_with_email_hint">Adres e-mail</string>
   <string name="share_with_email_error">Adres e-mail jest nieprawidłowy</string>
@@ -60,6 +60,7 @@
   <string name="sharing_snackbar_invite_reject_error">Wystąpił błąd podczas odrzucania zaproszenia</string>
   <string name="sharing_snackbar_invite_sent_success">Zaproszenie zostało wysłane</string>
   <string name="sharing_snackbar_invite_sent_error">Nie można wysłać zaproszenia</string>
+  <string name="sharing_snackbar_invite_new_users_error">Cannot send invites to new users</string>
   <string name="sharing_snackbar_get_vault_members_error">Nie można pobrać użytkowników sejfu</string>
   <string name="sharing_snackbar_change_permission_success">Uprawnienia zostały zmienione</string>
   <string name="sharing_snackbar_change_permission_error">Nie można zmienić uprawnień</string>
@@ -68,10 +69,11 @@
   <string name="sharing_snackbar_fetch_member_error">Wystąpił błąd podczas pobierania użytkowników</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Wystąpił błąd podczas pobierania oczekujących zaproszeń</string>
   <string name="share_summary_title">Przejrzyj i udostępnij</string>
-    <string name="share_summary_share_vault">Udostępnij sejf</string>
+  <string name="share_summary_share_vault">Udostępnij sejf</string>
   <string name="share_summary_share_item">Udostępnij element</string>
   <string name="share_summary_vault_title">Sejf</string>
   <string name="share_summary_item_title">Element</string>
+  <string name="share_summary_access_level_title">Access level</string>
   <string name="share_manage_vault_share_with_more_people">Udostępnij innym</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">Pozostało %d zaproszenie</item>
@@ -91,15 +93,15 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Zaproszenia</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Użytkownicy</string>
   <string name="share_manage_vault_current_user_indicator">Ty</string>
-  <string name="share_role_viewer">Odczyt</string>
-  <string name="share_role_editor">Edycja</string>
+  <string name="share_role_viewer">Viewer</string>
+  <string name="share_role_editor">Editor</string>
   <string name="share_role_admin">Administrator</string>
   <string name="share_role_owner">Właściciel</string>
   <string name="sharing_bottomsheet_transfer_ownership">Zmień właściciela</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Nie możesz zmienić właściciela swojego jedynego sejfu.</string>
   <string name="sharing_bottomsheet_remove_access">Unieważnij dostęp</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Zarządza dostępem do elementu.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Edycja elementu.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Odczyt elementu.</string>
   <string name="sharing_bottomsheet_resend_invite">Wyślij ponownie zaproszenie</string>
   <string name="sharing_bottomsheet_cancel_invite">Anuluj zaproszenie</string>

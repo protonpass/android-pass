@@ -9,4 +9,5 @@
   <string name="no_account_found">계정을 찾을 수 없습니다.</string>
   <string name="no_session_found">다음 세션을 찾을 수 없음</string>
   <string name="auth_with_extra_password_failed">추가 비밀번호 인증 실패</string>
+  <string name="auth_only_1_proton_account_failed">하나의 무료 Proton 계정만 사용할 수 있습니다.</string>
 </resources>

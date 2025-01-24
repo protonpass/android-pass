@@ -17,6 +17,7 @@
   <string name="vault_delete_dialog_placeholder">Název trezoru</string>
   <string name="vault_delete_dialog_cancel_action">Zrušit</string>
   <string name="vault_delete_dialog_delete_action">Smazat</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Tento trezor obsahuje %1$s. Jeho smazáním se zruší přístup pro všechny ostatní uživatele.</string>
   <string name="vault_leave_dialog_title">Opustit trezor</string>
   <string name="vault_leave_dialog_body">Toto odebere váš přístup k trezoru __VAULT_NAME__ a veškerému jeho obsahu. Opravdu ho chcete opustit?</string>
   <string name="vault_leave_dialog_cancel_action">Zpět</string>

@@ -31,8 +31,8 @@
   </plurals>
   <string name="sharing_member_count_header">Thành viên</string>
   <string name="shared_via_title">Chia sẻ qua</string>
-  <string name="shared_via_item_member_count_header">Chia sẻ mục</string>
-  <string name="shared_via_vault_member_count_header">Chia sẻ kho</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Item sharing: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Vault sharing: %s</string>
   <string name="share_with_title">Chia sẻ với</string>
   <string name="share_with_email_hint">Địa chỉ email</string>
   <string name="share_with_email_error">Địa chỉ email không hợp lệ</string>
@@ -54,6 +54,7 @@
   <string name="sharing_snackbar_invite_reject_error">Lỗi khi từ chối lời mời</string>
   <string name="sharing_snackbar_invite_sent_success">Đã gửi lời mời</string>
   <string name="sharing_snackbar_invite_sent_error">Không thể gửi lời mời</string>
+  <string name="sharing_snackbar_invite_new_users_error">Cannot send invites to new users</string>
   <string name="sharing_snackbar_get_vault_members_error">Không thể lấy thành viên kho lưu trữ</string>
   <string name="sharing_snackbar_change_permission_success">Đã thay đổi quyền</string>
   <string name="sharing_snackbar_change_permission_error">Không thể thay đổi quyền</string>
@@ -62,10 +63,11 @@
   <string name="sharing_snackbar_fetch_member_error">Đã xảy ra lỗi khi truy xuất thành viên</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Đã xảy ra lỗi khi truy xuất lời mời đang chờ</string>
   <string name="share_summary_title">Xem lại và chia sẻ</string>
-    <string name="share_summary_share_vault">Chia sẽ kho lưu trữ</string>
+  <string name="share_summary_share_vault">Chia sẽ kho lưu trữ</string>
   <string name="share_summary_share_item">Chia sẻ mục</string>
   <string name="share_summary_vault_title">Kho lưu trữ</string>
   <string name="share_summary_item_title">Mục</string>
+  <string name="share_summary_access_level_title">Access level</string>
   <string name="share_manage_vault_share_with_more_people">Chia sẽ với nhiều người hơn</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="other">%d lời mời còn lại</item>
@@ -79,15 +81,15 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Lời mời</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Thành viên</string>
   <string name="share_manage_vault_current_user_indicator">Bạn</string>
-  <string name="share_role_viewer">Có thể xem</string>
-  <string name="share_role_editor">Cho phép chỉnh sửa</string>
+  <string name="share_role_viewer">Viewer</string>
+  <string name="share_role_editor">Editor</string>
   <string name="share_role_admin">Quản trị viên</string>
   <string name="share_role_owner">Chủ sở hữu</string>
   <string name="sharing_bottomsheet_transfer_ownership">Chuyển quyền sở hữu</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Bạn không thể chuyển quyền sở hữu kho lưu trữ cuối cùng của mình.</string>
   <string name="sharing_bottomsheet_remove_access">Thu hồi quyền truy cập</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Có thể cấp và thu hồi quyền truy cập vào mục này.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Có thể chỉnh sửa mục này.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Có thể xem mục này.</string>
   <string name="sharing_bottomsheet_resend_invite">Gửi lại lời mời</string>
   <string name="sharing_bottomsheet_cancel_invite">Hủy lời mời</string>

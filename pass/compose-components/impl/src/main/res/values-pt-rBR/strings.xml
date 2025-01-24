@@ -246,19 +246,19 @@
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Nota copiada</string>
   <string name="snack_bar_message_item_migration_error">Houve um erro ao migrar este item</string>
-  <string name="snack_bar_message_item_monitor_excluded_success">Item excluído com sucesso do monitoramento.</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">O item foi excluído do monitoramento.</string>
   <string name="snack_bar_message_item_monitor_excluded_error">Ocorreu um erro ao excluir o item do monitoramento</string>
-  <string name="snack_bar_message_item_monitor_included_success">Elemento incluído com sucesso no monitoramento</string>
+  <string name="snack_bar_message_item_monitor_included_success">O item foi incluído no monitoramento.</string>
   <string name="snack_bar_message_item_monitor_included_error">Ocorreu um erro ao incluir o item no monitoramento</string>
-  <string name="snack_bar_message_item_pinned_success">Item fixado com sucesso</string>
+  <string name="snack_bar_message_item_pinned_success">O item foi fixado.</string>
   <string name="snack_bar_message_item_pinned_error">Houve um erro ao fixar este item</string>
-  <string name="snack_bar_message_item_unpinned_success">Item desafixado com sucesso</string>
+  <string name="snack_bar_message_item_unpinned_success">O item foi desafixado.</string>
   <string name="snack_bar_message_item_unpinned_error">Houve um erro ao desafixar este item</string>
-  <string name="snack_bar_message_item_trashed_success">Item excluído com sucesso</string>
+  <string name="snack_bar_message_item_trashed_success">O item foi excluído.</string>
   <string name="snack_bar_message_item_trashed_error">Houve um erro ao excluir este item</string>
-  <string name="snack_bar_message_item_restore_success">Item restaurado com sucesso</string>
+  <string name="snack_bar_message_item_restore_success">O item foi restaurado.</string>
   <string name="snack_bar_message_item_restore_error">Houve um erro ao restaurar este item</string>
-  <string name="snack_bar_message_item_delete_success">Item excluído com sucesso</string>
+  <string name="snack_bar_message_item_delete_success">O item foi excluído.</string>
   <string name="snack_bar_message_item_delete_error">Houve um erro ao excluir este item</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Ativar sincronização com SimpleLogin</string>
@@ -269,8 +269,8 @@
   <string name="simple_login_widget_action">Sincronizar alias</string>
   <!-- Verification codes -->
   <string name="verification_code_not_received">Não recebeu o código?</string>
-  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Por favor, verifique na sua pasta de Spam um e-mail chamado “%s“</string>
-  <string name="verification_code_suggestion_subject_new_email_address">Por favor, confirme seu endereço de e-mail para o Proton Pass</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Verifique na sua pasta de Spam um e-mail chamado “%s“</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Confirme seu endereço de e-mail para o Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Confirme sua caixa de correio</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Se você não encontrar o e-mail, você pode %s</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">solicitar um novo código</string>
@@ -286,4 +286,17 @@
   <string name="attachment_row_upload_failed">Falha no envio</string>
   <string name="attachment_row_retry">Tentar novamente</string>
   <string name="options_menu_content_description">Menu de opções</string>
+  <!-- Items -->
+  <plurals name="shared_items_count">
+    <item quantity="one">%d item compartilhado</item>
+    <item quantity="other">%d itens compartilhados</item>
+  </plurals>
+  <plurals name="users_count">
+    <item quantity="one">%d usuário</item>
+    <item quantity="other">%d usuários</item>
+  </plurals>
+  <plurals name="members_count">
+    <item quantity="one">%d membro</item>
+    <item quantity="other">%d membros</item>
+  </plurals>
 </resources>

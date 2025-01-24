@@ -21,8 +21,8 @@
   <string name="item_trash_delete_dialog_title">영구적으로 삭제하시겠습니까?</string>
   <string name="item_trash_delete_dialog_message">이 작업은 되돌릴 수 없습니다.</string>
   <!-- Shared warning dialog -->
-  <string name="item_trash_warning_shared_dialog_title">Move item to trash?</string>
-  <string name="item_trash_warning_shared_dialog_message">This item is currently shared. Moving it to trash will remove access for all other users.</string>
-  <string name="item_trash_warning_shared_snackbar_trash_error">Error moving item to trash</string>
-  <string name="item_trash_warning_shared_snackbar_trash_success">Item moved to trash</string>
+  <string name="item_trash_warning_shared_dialog_title">항목을 휴지통으로 이동시킬까요?</string>
+  <string name="item_trash_warning_shared_dialog_message">이 항목은 현재 공유되는 중 입니다. 이를 휴지통으로 이동시키면 다른 모두가 접근 권한을 잃게 됩니다 .</string>
+  <string name="item_trash_warning_shared_snackbar_trash_error">항목을 휴지통으로 이동하는 도중 오류 발생</string>
+  <string name="item_trash_warning_shared_snackbar_trash_success">항목이 휴지통으로 이동됨</string>
 </resources>

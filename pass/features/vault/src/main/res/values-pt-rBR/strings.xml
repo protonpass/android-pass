@@ -17,6 +17,7 @@
   <string name="vault_delete_dialog_placeholder">Nome do cofre</string>
   <string name="vault_delete_dialog_cancel_action">Cancelar</string>
   <string name="vault_delete_dialog_delete_action">Excluir</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Este cofre contém %1$s. Eliminá-la irá remover o acesso para todos os outros usuários.</string>
   <string name="vault_leave_dialog_title">Deixar cofre</string>
   <string name="vault_leave_dialog_body">Isso removerá seu acesso do cofre __VAULT_NAME__ e todo o seu conteúdo. Você tem certeza que deseja deixá-lo?</string>
   <string name="vault_leave_dialog_cancel_action">Cancelar</string>

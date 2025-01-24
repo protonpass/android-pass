@@ -21,6 +21,7 @@ package proton.android.pass.features.itemcreate.alias.mailboxes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -28,8 +29,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
-import proton.android.pass.features.itemcreate.alias.SelectedAliasMailboxUiModel
+import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryBannerPreference
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryFeature.AliasManagementMailbox
@@ -40,20 +40,16 @@ class SelectMailboxesViewModel @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
-    private val canUpgradeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    private val mailboxesState: MutableStateFlow<List<SelectedAliasMailboxUiModel>> =
+    private val mailboxesState: MutableStateFlow<List<AliasMailbox>> =
         MutableStateFlow(emptyList())
 
     internal val uiState: StateFlow<SelectMailboxesUiState> = combine(
         mailboxesState,
-        canUpgradeState,
         userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementMailbox)
-    ) { mailboxes, canUpgrade, featureDiscoveryPreference ->
-        val canApply = mailboxes.any { it.selected }
+    ) { mailboxes, featureDiscoveryPreference ->
         SelectMailboxesUiState(
             mailboxes = mailboxes,
-            canApply = IsButtonEnabled.from(canApply),
-            canUpgrade = canUpgrade,
+            selectedMailboxes = persistentListOf(),
             shouldDisplayFeatureDiscoveryBanner = featureDiscoveryPreference.value
         )
     }.stateIn(
@@ -62,21 +58,9 @@ class SelectMailboxesViewModel @Inject constructor(
         initialValue = SelectMailboxesUiState.Initial
     )
 
-    internal fun setMailboxes(mailboxes: List<SelectedAliasMailboxUiModel>) {
+    internal fun setMailboxes(mailboxes: List<AliasMailbox>) {
         mailboxesState.update { mailboxes }
     }
-
-    internal fun onMailboxChanged(newMailbox: SelectedAliasMailboxUiModel) = mailboxesState.value
-        .map { mailbox ->
-            if (mailbox.model.id == newMailbox.model.id) {
-                mailbox.copy(selected = !newMailbox.selected)
-            } else {
-                mailbox
-            }
-        }
-        .let { mailboxes ->
-            mailboxesState.update { mailboxes }
-        }
 
     fun dismissFeatureDiscoveryBanner() {
         viewModelScope.launch {
@@ -86,5 +70,4 @@ class SelectMailboxesViewModel @Inject constructor(
             )
         }
     }
-
 }

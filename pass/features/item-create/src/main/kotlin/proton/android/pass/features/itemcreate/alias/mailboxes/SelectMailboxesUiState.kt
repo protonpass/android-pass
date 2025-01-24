@@ -19,14 +19,12 @@
 package proton.android.pass.features.itemcreate.alias.mailboxes
 
 import androidx.compose.runtime.Stable
-import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
-import proton.android.pass.features.itemcreate.alias.SelectedAliasMailboxUiModel
+import proton.android.pass.domain.AliasMailbox
 
 @Stable
 internal data class SelectMailboxesUiState(
-    val mailboxes: List<SelectedAliasMailboxUiModel>,
-    val canApply: IsButtonEnabled,
-    val canUpgrade: Boolean,
+    val mailboxes: List<AliasMailbox>,
+    val selectedMailboxes: List<AliasMailbox>,
     val shouldDisplayFeatureDiscoveryBanner: Boolean
 ) {
 
@@ -34,8 +32,7 @@ internal data class SelectMailboxesUiState(
 
         internal val Initial = SelectMailboxesUiState(
             mailboxes = emptyList(),
-            canApply = IsButtonEnabled.Disabled,
-            canUpgrade = false,
+            selectedMailboxes = emptyList(),
             shouldDisplayFeatureDiscoveryBanner = false
         )
 

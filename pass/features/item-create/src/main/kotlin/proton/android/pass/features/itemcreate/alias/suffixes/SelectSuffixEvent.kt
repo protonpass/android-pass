@@ -18,10 +18,12 @@
 
 package proton.android.pass.features.itemcreate.alias.suffixes
 
+import proton.android.pass.domain.AliasSuffix
+
 sealed interface SelectSuffixEvent {
     data object DismissFeatureDiscoveryBanner : SelectSuffixEvent
     data object AddCustomDomain : SelectSuffixEvent
 
     @JvmInline
-    value class SelectSuffix(val suffix: String) : SelectSuffixEvent
+    value class SelectSuffix(val suffix: AliasSuffix) : SelectSuffixEvent
 }

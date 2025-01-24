@@ -57,6 +57,7 @@ sealed interface UpdateAliasNavigation {
     data object CloseScreen : UpdateAliasNavigation
     data object AddAttachment : UpdateAliasNavigation
     data object UpsellAttachments : UpdateAliasNavigation
+    data object SelectMailbox : UpdateAliasNavigation
 
     data class OpenAttachmentOptions(
         val shareId: ShareId,

@@ -133,8 +133,6 @@ fun CreateAliasScreen(
                             { onNavigate(CreateAliasNavigation.SelectVault(event.shareId)) }
 
                     is AliasContentUiEvent.OnPrefixChange -> viewModel.onPrefixChange(event.prefix)
-                    is AliasContentUiEvent.OnMailBoxChanged -> viewModel.onMailboxesChanged(event.list)
-                    is AliasContentUiEvent.OnSuffixChanged -> viewModel.onSuffixChange(event.suffix)
                     is AliasContentUiEvent.OnUpgrade ->
                         actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.Upgrade) }
                     is AliasContentUiEvent.OnSLNoteChange -> viewModel.onSLNoteChange(event.newSLNote)
@@ -173,6 +171,11 @@ fun CreateAliasScreen(
 
                     AliasContentUiEvent.DismissAdvancedOptionsBanner ->
                         viewModel.dismissAdvancedOptionsBanner()
+
+                    AliasContentUiEvent.OnMailboxSelect ->
+                        onNavigate(CreateAliasNavigation.SelectMailbox)
+                    AliasContentUiEvent.OnSuffixSelect ->
+                        onNavigate(CreateAliasNavigation.SelectSuffix)
                 }
             }
         )

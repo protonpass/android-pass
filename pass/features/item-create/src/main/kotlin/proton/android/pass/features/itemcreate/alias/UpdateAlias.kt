@@ -104,7 +104,6 @@ fun UpdateAlias(
             onEvent = {
                 when (it) {
                     AliasContentUiEvent.Back -> onExit()
-                    is AliasContentUiEvent.OnMailBoxChanged -> viewModel.onMailboxesChanged(it.list)
                     is AliasContentUiEvent.OnNoteChange -> viewModel.onNoteChange(it.note)
                     is AliasContentUiEvent.OnSLNoteChange -> viewModel.onSLNoteChange(it.newSLNote)
                     is AliasContentUiEvent.OnSenderNameChange ->
@@ -116,7 +115,7 @@ fun UpdateAlias(
 
                     is AliasContentUiEvent.Submit -> viewModel.updateAlias()
                     is AliasContentUiEvent.OnPrefixChange,
-                    is AliasContentUiEvent.OnSuffixChanged,
+                    is AliasContentUiEvent.OnSuffixSelect,
                     is AliasContentUiEvent.OnVaultSelect -> {
                         // Only on create
                     }
@@ -174,6 +173,9 @@ fun UpdateAlias(
 
                     AliasContentUiEvent.DismissAdvancedOptionsBanner ->
                         viewModel.dismissAdvancedOptionsBanner()
+
+                    AliasContentUiEvent.OnMailboxSelect ->
+                        onNavigate(UpdateAliasNavigation.SelectMailbox)
                 }
             }
         )

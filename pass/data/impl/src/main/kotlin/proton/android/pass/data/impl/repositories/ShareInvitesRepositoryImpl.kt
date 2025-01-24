@@ -61,6 +61,7 @@ class ShareInvitesRepositoryImpl @Inject constructor(
                                 inviteId = InviteId(newUserPendingInvite.newUserInviteId),
                                 targetId = newUserPendingInvite.targetId,
                                 role = ShareRole.fromValue(newUserPendingInvite.shareRoleId),
+                                signature = newUserPendingInvite.signature,
                                 inviteState = SharePendingInvite.NewUser.InviteState.fromValue(
                                     value = newUserPendingInvite.state
                                 )

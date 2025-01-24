@@ -46,7 +46,8 @@ sealed interface SharePendingInvite {
         override val inviteId: InviteId,
         override val targetId: String,
         val inviteState: InviteState,
-        val role: ShareRole
+        val role: ShareRole,
+        val signature: String
     ) : SharePendingInvite {
 
         override val isForNewUser: Boolean = true

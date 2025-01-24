@@ -1,0 +1,17 @@
+# ownership: loose
+*	@pass 
+/.github/	@pass 
+/.idea/	@pass 
+/app/	@pass 
+/appmacrobenchmark/	@pass 
+/build-logic/	@pass 
+/ci/	@pass 
+/docs/	@pass 
+/fastlane/	@pass 
+/gradle/	@pass 
+/maestro/	@pass 
+/metadata/	@pass 
+/pass/	@pass 
+/profile/	@pass 
+/scripts/	@pass 
+/tools/	@pass 

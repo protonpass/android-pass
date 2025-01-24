@@ -34,6 +34,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
@@ -55,17 +56,30 @@ internal fun SelectMailboxesContent(
         )
 
         val list = state.mailboxes.map { mailbox ->
+            val isSelected = mailbox in state.selectedMailboxes
+            val color = if (isSelected) {
+                PassTheme.colors.aliasInteractionNormMajor2
+            } else {
+                ProtonTheme.colors.textNorm
+            }
             object : BottomSheetItem {
                 override val title: @Composable () -> Unit
                     get() = {
                         BottomSheetItemTitle(
-                            text = mailbox.model.email,
-                            color = ProtonTheme.colors.textNorm
+                            text = mailbox.email,
+                            color = color
                         )
                     }
                 override val subtitle: @Composable (() -> Unit)? = null
                 override val leftIcon: @Composable (() -> Unit)? = null
-                override val endIcon: @Composable (() -> Unit)? = null
+                override val endIcon: @Composable (() -> Unit)? = if (isSelected) {
+                    {
+                        BottomSheetItemIcon(
+                            iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark,
+                            tint = color
+                        )
+                    }
+                } else null
                 override val onClick: (() -> Unit)? = null
                 override val isDivider: Boolean = false
             }

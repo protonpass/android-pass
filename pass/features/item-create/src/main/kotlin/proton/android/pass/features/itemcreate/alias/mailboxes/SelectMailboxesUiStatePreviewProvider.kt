@@ -19,76 +19,28 @@
 package proton.android.pass.features.itemcreate.alias.mailboxes
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
-import proton.android.pass.features.itemcreate.alias.AliasMailboxUiModel
-import proton.android.pass.features.itemcreate.alias.SelectedAliasMailboxUiModel
+import proton.android.pass.domain.AliasMailbox
 
 internal class SelectMailboxesUiStatePreviewProvider :
     PreviewParameterProvider<SelectMailboxesUiState> {
-
-    override val values: Sequence<SelectMailboxesUiState> = sequenceOf(
-        SelectMailboxesUiState(
-            mailboxes = listOf(
-                SelectedAliasMailboxUiModel(
-                    selected = false,
-                    model = AliasMailboxUiModel(
-                        id = 1,
-                        email = "eric.norbert@proton.me"
-                    )
-                ),
-                SelectedAliasMailboxUiModel(
-                    selected = false,
-                    model = AliasMailboxUiModel(
-                        id = 2,
-                        email = "eric.work@proton.me"
-                    )
-                )
-            ),
-            canApply = IsButtonEnabled.from(false),
-            canUpgrade = false,
-            shouldDisplayFeatureDiscoveryBanner = false
+    val list = listOf(
+        AliasMailbox(
+            id = 1,
+            email = "eric.norbert@proton.me"
         ),
-        SelectMailboxesUiState(
-            mailboxes = listOf(
-                SelectedAliasMailboxUiModel(
-                    selected = true,
-                    model = AliasMailboxUiModel(
-                        id = 1,
-                        email = "eric.norbert@proton.me"
-                    )
-                ),
-                SelectedAliasMailboxUiModel(
-                    selected = true,
-                    model = AliasMailboxUiModel(
-                        id = 2,
-                        email = "eric.work@proton.me"
-                    )
-                )
-            ),
-            canApply = IsButtonEnabled.from(true),
-            canUpgrade = false,
-            shouldDisplayFeatureDiscoveryBanner = false
-        ),
-        SelectMailboxesUiState(
-            mailboxes = listOf(
-                SelectedAliasMailboxUiModel(
-                    selected = false,
-                    model = AliasMailboxUiModel(
-                        id = 1,
-                        email = "eric.norbert@proton.me"
-                    )
-                ),
-                SelectedAliasMailboxUiModel(
-                    selected = false,
-                    model = AliasMailboxUiModel(
-                        id = 2,
-                        email = "eric.work@proton.me"
-                    )
-                )
-            ),
-            canApply = IsButtonEnabled.from(false),
-            canUpgrade = true,
-            shouldDisplayFeatureDiscoveryBanner = false
+        AliasMailbox(
+            id = 2,
+            email = "eric.work@proton.me"
         )
     )
+
+    override val values: Sequence<SelectMailboxesUiState> =
+        sequenceOf(
+            SelectMailboxesUiState(
+                mailboxes = list,
+                selectedMailboxes = listOf(list.first()),
+                shouldDisplayFeatureDiscoveryBanner = false
+            )
+        )
+
 }

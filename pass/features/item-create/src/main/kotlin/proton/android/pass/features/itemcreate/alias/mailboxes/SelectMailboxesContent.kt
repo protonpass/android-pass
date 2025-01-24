@@ -18,7 +18,9 @@
 
 package proton.android.pass.features.itemcreate.alias.mailboxes
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,6 +30,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.toPersistentList
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
@@ -36,9 +39,14 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTit
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.features.itemcreate.R
+import proton.android.pass.features.itemcreate.alias.banner.AliasCustomDomainBanner
 
 @Composable
-internal fun SelectMailboxesContent(modifier: Modifier = Modifier, state: SelectMailboxesUiState) {
+internal fun SelectMailboxesContent(
+    modifier: Modifier = Modifier,
+    state: SelectMailboxesUiState,
+    onEvent: (SelectMailboxEvent) -> Unit
+) {
     Column(
         modifier = modifier.bottomSheet()
     ) {
@@ -65,6 +73,17 @@ internal fun SelectMailboxesContent(modifier: Modifier = Modifier, state: Select
         BottomSheetItemList(
             items = list.withDividers().toPersistentList()
         )
+        AnimatedVisibility(state.shouldDisplayFeatureDiscoveryBanner) {
+            AliasCustomDomainBanner(
+                modifier = Modifier.padding(horizontal = Spacing.medium),
+                onClick = {
+                    onEvent(SelectMailboxEvent.AddMailbox)
+                },
+                onClose = {
+                    onEvent(SelectMailboxEvent.DismissFeatureDiscoveryBanner)
+                }
+            )
+        }
     }
 }
 
@@ -79,7 +98,8 @@ internal fun SelectMailboxesDialogContentPreview(
     PassTheme(isDark = input.first) {
         Surface {
             SelectMailboxesContent(
-                state = input.second
+                state = input.second,
+                onEvent = {}
             )
         }
     }

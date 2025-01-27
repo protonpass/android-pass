@@ -44,5 +44,5 @@ internal fun onBottomSheetDismissed(
     }
 }
 
-private const val DELAY = 100L
+private const val DELAY = 10L
 private const val TAG = "OnBottomSheetDismissed"

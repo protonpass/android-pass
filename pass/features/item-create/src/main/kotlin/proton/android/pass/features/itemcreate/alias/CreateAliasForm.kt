@@ -137,9 +137,9 @@ internal fun CreateAliasForm(
 
         MailboxSection(
             isBottomSheet = false,
-            mailboxes = aliasItemFormState.mailboxes.toPersistentList(),
+            selectedMailboxes = aliasItemFormState.selectedMailboxes.toPersistentList(),
             isCreateMode = isCreateMode,
-            isEditAllowed = isEditAllowed && aliasItemFormState.mailboxes.size > 1,
+            isEditAllowed = isEditAllowed && aliasItemFormState.aliasOptions.mailboxes.size > 1,
             isLoading = isLoading,
             onMailboxClick = onMailboxClick
         )

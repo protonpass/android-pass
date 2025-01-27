@@ -284,6 +284,7 @@ fun CreditCardDetail(
                 ConfirmDeleteItemDialog(
                     isLoading = state.isLoading,
                     show = shouldShowDeleteItemDialog,
+                    isSharedItem = state.itemContent.model.isShared,
                     onConfirm = {
                         shouldShowDeleteItemDialog = false
                         viewModel.onPermanentlyDelete(itemUiModel)

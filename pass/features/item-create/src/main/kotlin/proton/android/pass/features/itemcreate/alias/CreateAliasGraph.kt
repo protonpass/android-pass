@@ -30,8 +30,8 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.features.itemcreate.alias.bottomsheet.CreateAliasBottomSheet
-import proton.android.pass.features.itemcreate.alias.mailboxes.SelectMailboxesBottomsheet
-import proton.android.pass.features.itemcreate.alias.suffixes.SelectSuffixBottomsheet
+import proton.android.pass.features.itemcreate.alias.mailboxes.ui.SelectMailboxesBottomsheet
+import proton.android.pass.features.itemcreate.alias.suffixes.ui.SelectSuffixBottomsheet
 import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -150,7 +150,9 @@ fun NavGraphBuilder.createAliasGraph(canUseAttachments: Boolean, onNavigate: (Cr
     }
 
     bottomSheet(AliasSelectSuffixBottomSheetNavItem) {
-        SelectSuffixBottomsheet()
+        SelectSuffixBottomsheet(
+            onNavigate = onNavigate
+        )
     }
     bottomSheet(AliasSelectMailboxBottomSheetNavItem) {
         SelectMailboxesBottomsheet()

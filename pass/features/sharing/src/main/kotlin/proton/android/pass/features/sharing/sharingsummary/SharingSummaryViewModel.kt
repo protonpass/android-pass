@@ -44,6 +44,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.FreeUserInviteError
 import proton.android.pass.data.api.errors.NewUsersInviteError
+import proton.android.pass.data.api.errors.UserAlreadyInviteError
 import proton.android.pass.data.api.repositories.AddressPermission
 import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -193,17 +194,24 @@ class SharingSummaryViewModel @Inject constructor(
                 PassLogger.i(TAG, "Vault invite successfully sent")
                 eventFlow.update { SharingSummaryEvent.OnSharingVaultSuccess(shareId) }
             }.onFailure { error ->
-                isLoadingStateFlow.update { IsLoadingState.NotLoading }
+                PassLogger.w(TAG, "Error sending vault invite")
+                PassLogger.w(TAG, error)
 
                 if (getUserPlan().firstOrNull()?.isBusinessPlan == true) {
                     eventFlow.update { SharingSummaryEvent.OnSharingVaultError }
-                } else {
-                    snackbarDispatcher(SharingSnackbarMessage.InviteSentError)
+                    return@onFailure
                 }
 
-                PassLogger.w(TAG, "Error sending vault invite")
-                PassLogger.w(TAG, error)
+                if (error is UserAlreadyInviteError) {
+                    SharingSnackbarMessage.UserAlreadyInviteError
+                } else {
+                    SharingSnackbarMessage.InviteSentError
+                }.also { snackbarErrorMessage ->
+                    snackbarDispatcher(snackbarErrorMessage)
+                }
             }
+
+            isLoadingStateFlow.update { IsLoadingState.NotLoading }
         }
     }
 

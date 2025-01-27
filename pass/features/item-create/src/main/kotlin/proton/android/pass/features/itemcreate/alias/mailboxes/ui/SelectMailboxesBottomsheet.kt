@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,38 +16,34 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.alias.suffixes
+package proton.android.pass.features.itemcreate.alias.mailboxes.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.commonui.api.BrowserUtils.openWebsite
+import proton.android.pass.features.itemcreate.alias.mailboxes.presentation.SelectMailboxesViewModel
 
 @Composable
-fun SelectSuffixBottomsheet(modifier: Modifier = Modifier, viewModel: SelectSuffixViewModel = hiltViewModel()) {
-    val context = LocalContext.current
-    val state by viewModel.uiState.collectAsStateWithLifecycle()
-    SelectSuffixContent(
+internal fun SelectMailboxesBottomsheet(
+    modifier: Modifier = Modifier,
+    viewModel: SelectMailboxesViewModel = hiltViewModel()
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    SelectMailboxesContent(
         modifier = modifier,
-        state = state,
+        state = uiState,
         onEvent = {
             when (it) {
-                SelectSuffixEvent.AddCustomDomain -> {
+                SelectMailboxEvent.AddMailbox -> {
                     viewModel.dismissFeatureDiscoveryBanner()
-                    openWebsite(context, CUSTOM_DOMAIN_URL)
                 }
-
-                SelectSuffixEvent.DismissFeatureDiscoveryBanner ->
+                SelectMailboxEvent.DismissFeatureDiscoveryBanner ->
                     viewModel.dismissFeatureDiscoveryBanner()
-
-                is SelectSuffixEvent.SelectSuffix ->
-                    viewModel.selectSuffix(it.suffix)
+                is SelectMailboxEvent.SelectMailbox ->
+                    viewModel.toggleMailbox(it.aliasMailbox)
             }
         }
     )
 }
-
-private const val CUSTOM_DOMAIN_URL = "https://pass.proton.me/settings#aliases"

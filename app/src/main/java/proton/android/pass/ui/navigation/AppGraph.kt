@@ -86,7 +86,6 @@ import proton.android.pass.features.item.trash.shared.navigation.ItemTrashNavDes
 import proton.android.pass.features.item.trash.shared.navigation.itemTrashNavGraph
 import proton.android.pass.features.item.trash.trashdelete.navigation.ItemTrashDeleteNavItem
 import proton.android.pass.features.item.trash.trashmenu.navigation.ItemTrashMenuNavItem
-import proton.android.pass.features.item.trash.trashwarningshared.navigation.ItemTrashWarningSharedNavItem
 import proton.android.pass.features.itemcreate.alias.CreateAlias
 import proton.android.pass.features.itemcreate.alias.CreateAliasBottomSheet
 import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation
@@ -456,14 +455,6 @@ fun NavGraphBuilder.appGraph(
                 is HomeNavigation.ManageVault -> appNavigator.navigate(
                     destination = ManageVault,
                     route = ManageVault.createRoute(shareId = it.shareId)
-                )
-
-                is HomeNavigation.TrashSharedWarning -> appNavigator.navigate(
-                    destination = ItemTrashWarningSharedNavItem,
-                    route = ItemTrashWarningSharedNavItem.createNavRoute(
-                        shareId = it.shareId,
-                        itemId = it.itemId
-                    )
                 )
 
                 HomeNavigation.ItemsMigrationSharedWarning -> appNavigator.navigate(
@@ -1498,14 +1489,6 @@ fun NavGraphBuilder.appGraph(
                         )
                     )
                 }
-
-                is ItemDetailNavigation.TrashSharedWarning -> appNavigator.navigate(
-                    destination = ItemTrashWarningSharedNavItem,
-                    route = ItemTrashWarningSharedNavItem.createNavRoute(
-                        shareId = it.shareId,
-                        itemId = it.itemId
-                    )
-                )
             }
         }
     )
@@ -1638,16 +1621,6 @@ fun NavGraphBuilder.appGraph(
                         destination = ItemDetailsLeaveNavItem,
                         route = ItemDetailsLeaveNavItem.createNavRoute(
                             shareId = itemDetailsNavDestination.shareId
-                        )
-                    )
-                }
-
-                is ItemDetailsNavDestination.ItemTrashSharedWarning -> dismissBottomSheet {
-                    appNavigator.navigate(
-                        destination = ItemTrashWarningSharedNavItem,
-                        route = ItemTrashWarningSharedNavItem.createNavRoute(
-                            shareId = itemDetailsNavDestination.shareId,
-                            itemId = itemDetailsNavDestination.itemId
                         )
                     )
                 }

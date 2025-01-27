@@ -86,7 +86,8 @@ fun NavGraphBuilder.createIdentityGraph(canUseAttachments: Boolean, onNavigate: 
         }
         identityFieldsGraph {
             when (it) {
-                IdentityFieldsNavigation.DismissBottomsheet -> onNavigate(BaseIdentityNavigation.CloseScreen)
+                IdentityFieldsNavigation.DismissBottomsheet ->
+                    onNavigate(BaseIdentityNavigation.DismissBottomsheet)
                 IdentityFieldsNavigation.AddCustomField ->
                     onNavigate(BaseIdentityNavigation.OpenCustomFieldBottomSheet)
             }

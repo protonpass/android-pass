@@ -65,6 +65,7 @@
     <string name="sharing_snackbar_invite_sent_error">Could not send invite</string>
     <string name="sharing_snackbar_invite_new_users_error">Cannot send invites to new users</string>
     <string name="sharing_snackbar_invite_free_user_error">Item invites are only allowed to be sent to paid users</string>
+    <string name="sharing_snackbar_invite_user_already_invited_error">Address has already been invited</string>
     <string name="sharing_snackbar_get_vault_members_error">Could not get vault members</string>
     <string name="sharing_snackbar_change_permission_success">Permissions changed</string>
     <string name="sharing_snackbar_change_permission_error">Could not change the permissions</string>

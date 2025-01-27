@@ -23,16 +23,16 @@ import proton.android.pass.domain.AliasMailbox
 
 @Stable
 internal data class SelectMailboxesUiState(
-    val mailboxes: List<AliasMailbox>,
-    val selectedMailboxes: List<AliasMailbox>,
+    val mailboxes: Set<AliasMailbox>,
+    val selectedMailboxes: Set<AliasMailbox>,
     val shouldDisplayFeatureDiscoveryBanner: Boolean
 ) {
 
     internal companion object {
 
         internal val Initial = SelectMailboxesUiState(
-            mailboxes = emptyList(),
-            selectedMailboxes = emptyList(),
+            mailboxes = emptySet(),
+            selectedMailboxes = emptySet(),
             shouldDisplayFeatureDiscoveryBanner = false
         )
 

@@ -44,6 +44,8 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
+import proton.android.pass.features.itemcreate.alias.draftrepositories.MailboxDraftRepository
+import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDraftRepository
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -57,6 +59,8 @@ import proton.android.pass.preferences.value
 import java.net.URI
 
 abstract class BaseAliasViewModel(
+    private val mailboxDraftRepository: MailboxDraftRepository,
+    private val suffixDraftRepository: SuffixDraftRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val attachmentsHandler: AttachmentsHandler,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
@@ -105,8 +109,6 @@ abstract class BaseAliasViewModel(
         MutableStateFlow(IsButtonEnabled.Disabled)
     protected val mutableCloseScreenEventFlow: MutableStateFlow<CloseScreenEvent> =
         MutableStateFlow(CloseScreenEvent.NotClose)
-    protected val selectedMailboxListState: MutableStateFlow<List<Int>> =
-        MutableStateFlow(emptyList())
 
     private val eventWrapperState = combine(
         isItemSavedState,
@@ -178,26 +180,6 @@ abstract class BaseAliasViewModel(
         aliasItemFormMutableState = aliasItemFormMutableState.copy(senderName = value)
     }
 
-    open fun onMailboxesChanged(mailboxes: List<SelectedAliasMailboxUiModel>) {
-        onUserEditedContent()
-        val atLeastOneSelected = mailboxes.any { it.selected }
-        if (!atLeastOneSelected) return
-        selectedMailboxListState.update { mailboxes.filter { it.selected }.map { it.model.id } }
-    }
-
-    protected fun getMailboxTitle(mailboxes: List<SelectedAliasMailboxUiModel>): String {
-        val allSelectedMailboxes = mailboxes.filter { it.selected }
-        if (allSelectedMailboxes.isEmpty()) return ""
-        val mailboxTitle = buildString {
-            allSelectedMailboxes.forEachIndexed { idx, mailbox ->
-                if (idx > 0) append(",\n")
-                append(mailbox.model.email)
-            }
-        }
-
-        return mailboxTitle
-    }
-
     protected fun getAliasToBeCreated(alias: String, suffix: AliasSuffixUiModel?): String? {
         if (suffix != null && alias.isNotBlank()) {
             return "$alias${suffix.suffix}"
@@ -221,6 +203,8 @@ abstract class BaseAliasViewModel(
 
     internal fun clearDraftData() {
         attachmentsHandler.onClearAttachments()
+        mailboxDraftRepository.clearMailboxes()
+        suffixDraftRepository.clearSuffixes()
     }
 
     fun openDraftAttachment(

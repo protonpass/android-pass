@@ -23,7 +23,7 @@ import proton.android.pass.domain.AliasMailbox
 
 internal class SelectMailboxesUiStatePreviewProvider :
     PreviewParameterProvider<SelectMailboxesUiState> {
-    val list = listOf(
+    val list = setOf(
         AliasMailbox(
             id = 1,
             email = "eric.norbert@proton.me"
@@ -38,7 +38,7 @@ internal class SelectMailboxesUiStatePreviewProvider :
         sequenceOf(
             SelectMailboxesUiState(
                 mailboxes = list,
-                selectedMailboxes = listOf(list.first()),
+                selectedMailboxes = setOf(list.first()),
                 shouldDisplayFeatureDiscoveryBanner = false
             )
         )

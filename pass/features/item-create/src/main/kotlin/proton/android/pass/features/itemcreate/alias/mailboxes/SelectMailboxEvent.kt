@@ -18,10 +18,12 @@
 
 package proton.android.pass.features.itemcreate.alias.mailboxes
 
+import proton.android.pass.domain.AliasMailbox
+
 sealed interface SelectMailboxEvent {
     data object DismissFeatureDiscoveryBanner : SelectMailboxEvent
     data object AddMailbox : SelectMailboxEvent
 
     @JvmInline
-    value class SelectMailbox(val suffix: String) : SelectMailboxEvent
+    value class SelectMailbox(val aliasMailbox: AliasMailbox) : SelectMailboxEvent
 }

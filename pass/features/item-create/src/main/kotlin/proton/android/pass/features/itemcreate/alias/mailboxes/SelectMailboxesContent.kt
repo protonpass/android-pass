@@ -41,6 +41,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.alias.banner.AliasCustomDomainBanner
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun SelectMailboxesContent(
@@ -66,6 +67,7 @@ internal fun SelectMailboxesContent(
                 override val title: @Composable () -> Unit
                     get() = {
                         BottomSheetItemTitle(
+                            modifier = Modifier.padding(vertical = Spacing.small),
                             text = mailbox.email,
                             color = color
                         )
@@ -75,12 +77,14 @@ internal fun SelectMailboxesContent(
                 override val endIcon: @Composable (() -> Unit)? = if (isSelected) {
                     {
                         BottomSheetItemIcon(
-                            iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark,
+                            iconId = CoreR.drawable.ic_proton_checkmark,
                             tint = color
                         )
                     }
                 } else null
-                override val onClick: (() -> Unit)? = null
+                override val onClick: () -> Unit = {
+                    onEvent(SelectMailboxEvent.SelectMailbox(mailbox))
+                }
                 override val isDivider: Boolean = false
             }
         }

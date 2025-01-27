@@ -20,10 +20,14 @@ package proton.android.pass.data.api.errors
 
 object ErrorCodes {
 
+    const val FREE_USER_INVITED = 2011
+
     const val INVALID_VERIFICATION_CODE = 2001
 
     const val INVALID_VERIFICATION_CODE_LIMIT = 2011
 
     const val RESEND_SHARE_INVITE_LIMIT = 2001
+
+    const val USER_ALREADY_INVITED = 2001
 
 }

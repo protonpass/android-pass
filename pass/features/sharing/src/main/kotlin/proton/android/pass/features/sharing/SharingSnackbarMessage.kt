@@ -75,5 +75,9 @@ enum class SharingSnackbarMessage(
     NewUsersInviteError(
         id = R.string.sharing_snackbar_invite_new_users_error,
         type = SnackbarType.ERROR
+    ),
+    FreeUserInviteError(
+        id = R.string.sharing_snackbar_invite_free_user_error,
+        type = SnackbarType.ERROR
     )
 }

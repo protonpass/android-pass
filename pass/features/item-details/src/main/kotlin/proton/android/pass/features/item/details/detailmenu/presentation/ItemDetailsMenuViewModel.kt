@@ -241,11 +241,6 @@ class ItemDetailsMenuViewModel @Inject constructor(
     }
 
     internal fun onTrashItem() {
-        if (state.value.isItemShared) {
-            eventFlow.update { ItemDetailsMenuEvent.OnItemSharedTrashed(shareId, itemId) }
-            return
-        }
-
         viewModelScope.launch {
             actionFlow.update { BottomSheetItemAction.Trash }
 

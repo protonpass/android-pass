@@ -23,8 +23,6 @@ import proton.android.pass.features.item.trash.trashdelete.navigation.ItemTrashD
 import proton.android.pass.features.item.trash.trashdelete.ui.ItemTrashDeleteDialog
 import proton.android.pass.features.item.trash.trashmenu.navigation.ItemTrashMenuNavItem
 import proton.android.pass.features.item.trash.trashmenu.ui.ItemTrashMenuBottomSheet
-import proton.android.pass.features.item.trash.trashwarningshared.navigation.ItemTrashWarningSharedNavItem
-import proton.android.pass.features.item.trash.trashwarningshared.ui.ItemTrashWarningSharedDialog
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.dialog
 
@@ -36,10 +34,6 @@ fun NavGraphBuilder.itemTrashNavGraph(onNavigated: (ItemTrashNavDestination) -> 
 
     dialog(navItem = ItemTrashDeleteNavItem) {
         ItemTrashDeleteDialog(onNavigated = onNavigated)
-    }
-
-    dialog(navItem = ItemTrashWarningSharedNavItem) {
-        ItemTrashWarningSharedDialog(onNavigated = onNavigated)
     }
 
 }

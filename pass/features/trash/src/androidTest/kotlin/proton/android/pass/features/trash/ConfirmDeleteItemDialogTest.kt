@@ -24,7 +24,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import org.junit.Rule
 import org.junit.Test
-import me.proton.core.presentation.R as CoreR
+import proton.android.pass.composecomponents.impl.R as CompR
 
 class ConfirmDeleteItemDialogTest {
 
@@ -46,7 +46,7 @@ class ConfirmDeleteItemDialogTest {
             )
         }
         composeTestRule
-            .onNodeWithText(composeTestRule.activity.getString(CoreR.string.presentation_alert_ok))
+            .onNodeWithText(composeTestRule.activity.getString(CompR.string.action_continue))
             .performClick()
         assert(isCalled)
     }

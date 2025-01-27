@@ -26,11 +26,15 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiResult
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
+import proton.android.pass.data.api.errors.ErrorCodes
+import proton.android.pass.data.api.errors.FreeUserInviteError
+import proton.android.pass.data.api.errors.UserAlreadyInviteError
+import proton.android.pass.data.api.errors.getProtonErrorCode
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.AcceptInviteRequest
-import proton.android.pass.data.impl.responses.InviteRecommendationResponse
 import proton.android.pass.data.impl.requests.CreateInvitesRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest
+import proton.android.pass.data.impl.responses.InviteRecommendationResponse
 import proton.android.pass.data.impl.responses.PendingInviteResponse
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.domain.InviteToken
@@ -42,6 +46,7 @@ class RemoteInviteDataSourceImpl @Inject constructor(
     private val apiProvider: ApiProvider
 ) : RemoteInviteDataSource {
 
+    @Suppress("TooGenericExceptionCaught")
     override suspend fun sendInvites(
         userId: UserId,
         shareId: ShareId,
@@ -52,8 +57,21 @@ class RemoteInviteDataSourceImpl @Inject constructor(
 
         val existingUsers = async {
             if (existingUserRequests.invites.isNotEmpty()) {
-                val res = api.invoke { inviteUsers(shareId.id, existingUserRequests) }
-                res.exceptionOrNull?.let { Result.failure(it) } ?: Result.success(Unit)
+                try {
+                    api.invoke {
+                        inviteUsers(shareId.id, existingUserRequests)
+                    }.valueOrThrow
+
+                    Result.success(Unit)
+                } catch (error: Throwable) {
+                    val reason = when (error.getProtonErrorCode()) {
+                        ErrorCodes.FREE_USER_INVITED -> FreeUserInviteError(error.message)
+                        ErrorCodes.USER_ALREADY_INVITED -> UserAlreadyInviteError(error.message)
+                        else -> error
+                    }
+
+                    Result.failure(reason)
+                }
             } else {
                 Result.success(Unit)
             }

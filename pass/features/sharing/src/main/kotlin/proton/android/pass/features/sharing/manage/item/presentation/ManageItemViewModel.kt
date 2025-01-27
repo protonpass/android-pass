@@ -78,9 +78,19 @@ class ManageItemViewModel @Inject constructor(
             emit(emptyList())
         }
 
-    private val sharePendingInvitesFlow = observeSharePendingInvites(shareId, itemId)
+    private val itemSharePendingInvitesFlow = observeSharePendingInvites(shareId, itemId)
         .catch { error ->
-            PassLogger.w(TAG, "There was an error observing share pending invites")
+            PassLogger.w(TAG, "There was an error observing item share pending invites")
+            PassLogger.w(TAG, error)
+
+            snackbarDispatcher(SharingSnackbarMessage.FetchPendingInvitesError)
+            eventFlow.update { ManageItemEvent.OnShareManagementError }
+            emit(emptyList())
+        }
+
+    private val vaultSharePendingInvitesFlow = observeSharePendingInvites(shareId)
+        .catch { error ->
+            PassLogger.w(TAG, "There was an error observing vault share pending invites")
             PassLogger.w(TAG, error)
 
             snackbarDispatcher(SharingSnackbarMessage.FetchPendingInvitesError)
@@ -94,7 +104,8 @@ class ManageItemViewModel @Inject constructor(
         eventFlow,
         flowOf(itemId),
         shareFlow,
-        sharePendingInvitesFlow,
+        itemSharePendingInvitesFlow,
+        vaultSharePendingInvitesFlow,
         observeShareItemsCount(shareId),
         shareItemMembersFlow,
         isLoadingStateFlow,

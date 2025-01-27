@@ -32,6 +32,7 @@ import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.shares.ShareMember
+import proton.android.pass.domain.shares.SharePendingInvite
 
 @Composable
 internal fun ManageItemMembersSection(
@@ -41,8 +42,10 @@ internal fun ManageItemMembersSection(
     isShareAdmin: Boolean,
     vaultOption: Option<Vault>,
     shareItemsCount: Int,
+    pendingInvites: List<SharePendingInvite>,
     members: List<ShareMember>,
-    onMenuOptionsClick: (ShareMember) -> Unit,
+    onPendingInviteMenuOptionsClick: (SharePendingInvite) -> Unit,
+    onMemberMenuOptionsClick: (ShareMember) -> Unit,
     onInviteMoreClick: () -> Unit
 ) {
     Column(
@@ -83,12 +86,21 @@ internal fun ManageItemMembersSection(
                 PassDivider()
             }
 
+            pendingInvites.forEach { pendingInvite ->
+                ManageItemPendingInviteRow(
+                    pendingInvite = pendingInvite,
+                    onMenuOptionsClick = onPendingInviteMenuOptionsClick
+                )
+
+                PassDivider()
+            }
+
             members.forEachIndexed { index, member ->
                 ManageItemMemberRow(
                     member = member,
                     canAdmin = isShareAdmin,
                     hasVaultAccess = vaultOption is Some,
-                    onMenuOptionsClick = onMenuOptionsClick
+                    onMenuOptionsClick = onMemberMenuOptionsClick
                 )
 
                 if (index < members.lastIndex) {

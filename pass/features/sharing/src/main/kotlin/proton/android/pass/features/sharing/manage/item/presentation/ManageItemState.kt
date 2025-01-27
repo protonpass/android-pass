@@ -42,7 +42,8 @@ internal sealed interface ManageItemState {
         override val event: ManageItemEvent = ManageItemEvent.Idle,
         internal val itemId: ItemId,
         internal val share: Share,
-        internal val pendingInvites: List<SharePendingInvite>,
+        internal val itemPendingInvites: List<SharePendingInvite>,
+        internal val vaultPendingInvites: List<SharePendingInvite>,
         internal val itemsCount: Int,
         private val members: List<ShareMember>,
         private val isLoadingState: IsLoadingState
@@ -56,7 +57,9 @@ internal sealed interface ManageItemState {
 
         internal val hasVaultMembers: Boolean = vaultMembers.isNotEmpty()
 
-        internal val hasPendingInvites = pendingInvites.isNotEmpty()
+        internal val hasItemPendingInvites = itemPendingInvites.isNotEmpty()
+
+        internal val hasVaultPendingInvites = vaultPendingInvites.isNotEmpty()
 
         internal val isLoading: Boolean = isLoadingState.value()
 

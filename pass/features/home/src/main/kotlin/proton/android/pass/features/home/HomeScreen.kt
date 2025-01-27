@@ -326,15 +326,7 @@ fun HomeScreen(
                         onMoveToTrash = remember {
                             {
                                 scope.launch { bottomSheetState.hide() }
-
-                                if (it.isShared) {
-                                    HomeNavigation.TrashSharedWarning(
-                                        shareId = it.shareId,
-                                        itemId = it.id
-                                    ).also(onNavigateEvent)
-                                } else {
-                                    homeViewModel.sendItemsToTrash(listOf(it))
-                                }
+                                homeViewModel.sendItemsToTrash(listOf(it))
                             }
                         },
                         onRemoveFromRecentSearch = remember {
@@ -460,14 +452,7 @@ fun HomeScreen(
                             {
                                 scope.launch { bottomSheetState.hide() }
 
-                                if (it.isShared) {
-                                    HomeNavigation.TrashSharedWarning(
-                                        shareId = it.shareId,
-                                        itemId = it.id
-                                    ).also(onNavigateEvent)
-                                } else {
-                                    homeViewModel.sendItemsToTrash(listOf(it))
-                                }
+                                homeViewModel.sendItemsToTrash(listOf(it))
                             }
                         },
                         onRemoveFromRecentSearch = remember {
@@ -531,14 +516,7 @@ fun HomeScreen(
                             {
                                 scope.launch { bottomSheetState.hide() }
 
-                                if (it.isShared) {
-                                    HomeNavigation.TrashSharedWarning(
-                                        shareId = it.shareId,
-                                        itemId = it.id
-                                    ).also(onNavigateEvent)
-                                } else {
-                                    homeViewModel.sendItemsToTrash(listOf(it))
-                                }
+                                homeViewModel.sendItemsToTrash(listOf(it))
                             }
                         },
                         onRemoveFromRecentSearch = remember {
@@ -585,14 +563,7 @@ fun HomeScreen(
                         onMoveToTrash = {
                             scope.launch { bottomSheetState.hide() }
 
-                            if (it.isShared) {
-                                HomeNavigation.TrashSharedWarning(
-                                    shareId = it.shareId,
-                                    itemId = it.id
-                                ).also(onNavigateEvent)
-                            } else {
-                                homeViewModel.sendItemsToTrash(listOf(it))
-                            }
+                            homeViewModel.sendItemsToTrash(listOf(it))
                         },
                         onRemoveFromRecentSearch = { shareId, itemId ->
                             scope.launch { bottomSheetState.hide() }
@@ -1064,8 +1035,6 @@ fun HomeScreen(
                 show = shouldShowMoveToTrashItemsDialog,
                 isLoading = actionState is ActionState.Loading,
                 amount = homeUiState.homeListUiState.selectionState.selectedItems.size,
-                hasSelectedSharedItems = homeUiState.homeListUiState.selectionState.hasSelectedSharedItems,
-                sharedSelectedItemsCount = homeUiState.homeListUiState.selectionState.selectedSharedItemsCount,
                 onConfirm = {
                     homeViewModel.sendItemsToTrash(
                         homeUiState.homeListUiState.selectionState.selectedItems

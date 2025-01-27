@@ -97,7 +97,6 @@ sealed interface ItemDetailNavigation {
     @JvmInline
     value class LeaveItemShare(val shareId: ShareId) : ItemDetailNavigation
 
-    data class TrashSharedWarning(val shareId: ShareId, val itemId: ItemId) : ItemDetailNavigation
 }
 
 enum class ItemDetailCannotPerformActionType {

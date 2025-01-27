@@ -132,7 +132,7 @@ fun CreateAliasBottomSheetContent(
             isBottomSheet = true,
             selectedMailboxes = aliasItemFormState.selectedMailboxes.toImmutableList(),
             isCreateMode = false,
-            isEditAllowed = aliasItemFormState.selectedMailboxes.size > 1,
+            isEditAllowed = aliasItemFormState.aliasOptions.mailboxes.size > 1,
             isLoading = state.isLoadingState.value(),
             onMailboxClick = { onNavigate(CreateAliasNavigation.SelectMailbox) }
         )

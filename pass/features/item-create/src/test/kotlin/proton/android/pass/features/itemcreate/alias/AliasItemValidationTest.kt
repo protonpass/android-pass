@@ -66,25 +66,17 @@ class AliasItemValidationTest {
         assertThat(res.first()).isEqualTo(AliasItemValidationErrors.InvalidAliasContent)
     }
 
-    private fun itemWithContents(
-        title: String = "sometitle",
-        prefix: String = "somealias",
-        mailboxes: List<SelectedAliasMailboxUiModel>? = null
-    ): AliasItemFormState {
-        return AliasItemFormState(
+    private fun itemWithContents(title: String = "sometitle", prefix: String = "somealias"): AliasItemFormState =
+        AliasItemFormState(
             title = title,
             prefix = prefix,
-            mailboxes = mailboxes ?: listOf(
-                SelectedAliasMailboxUiModel(
-                    AliasMailboxUiModel(
-                        1,
-                        "email"
-                    ),
-                    true
+            selectedMailboxes = setOf(
+                AliasMailboxUiModel(
+                    1,
+                    "email"
                 )
             )
         )
-    }
 
     companion object {
         private val successValidator = TestAliasPrefixValidator()

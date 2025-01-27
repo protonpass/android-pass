@@ -1026,6 +1026,7 @@ fun HomeScreen(
             ConfirmDeleteItemDialog(
                 isLoading = actionState is ActionState.Loading,
                 show = shouldShowDeleteItemDialog,
+                isSharedItem = selectedItem?.isShared ?: false,
                 onConfirm = {
                     selectedItem?.let {
                         homeViewModel.deleteItems(listOf(it))

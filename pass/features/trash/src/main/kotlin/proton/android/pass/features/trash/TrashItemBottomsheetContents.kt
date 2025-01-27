@@ -21,7 +21,6 @@ package proton.android.pass.features.trash
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Divider
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -49,7 +48,6 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import me.proton.core.presentation.R as CoreR
 
-@ExperimentalMaterialApi
 @Composable
 fun TrashItemBottomSheetContents(
     modifier: Modifier = Modifier,
@@ -74,7 +72,9 @@ fun TrashItemBottomSheetContents(
                 icon()
             }
         )
+
         Divider(modifier = Modifier.fillMaxWidth())
+
         BottomSheetItemList(
             items = persistentListOf(
                 restoreItem(itemUiModel, onRestoreItem),
@@ -125,10 +125,8 @@ private fun deleteItem(item: ItemUiModel, onDeleteItem: (ItemUiModel) -> Unit): 
         override val isDivider = false
     }
 
-@OptIn(ExperimentalMaterialApi::class)
-@Preview
-@Composable
-fun TrashItemBottomSheetContentsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+@[Preview Composable]
+internal fun TrashItemBottomSheetContentsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             TrashItemBottomSheetContents(

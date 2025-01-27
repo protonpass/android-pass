@@ -254,6 +254,7 @@ fun NoteDetail(
                 ConfirmDeleteItemDialog(
                     isLoading = state.isLoading,
                     show = shouldShowDeleteItemDialog,
+                    isSharedItem = state.itemUiModel.isShared,
                     onConfirm = {
                         shouldShowDeleteItemDialog = false
                         viewModel.onPermanentlyDelete(state.itemUiModel)

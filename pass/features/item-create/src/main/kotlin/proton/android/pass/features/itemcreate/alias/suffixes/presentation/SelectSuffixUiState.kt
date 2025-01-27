@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.alias.suffixes
+package proton.android.pass.features.itemcreate.alias.suffixes.presentation
 
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.PersistentSet
@@ -29,7 +29,8 @@ import proton.android.pass.domain.AliasSuffix
 internal data class SelectSuffixUiState(
     val suffixList: PersistentSet<AliasSuffix>,
     val selectedSuffix: Option<AliasSuffix>,
-    val shouldDisplayFeatureDiscoveryBanner: Boolean
+    val shouldDisplayFeatureDiscoveryBanner: Boolean,
+    val event: SelectSuffixEvent
 ) {
 
     internal companion object {
@@ -37,7 +38,8 @@ internal data class SelectSuffixUiState(
         internal val Initial = SelectSuffixUiState(
             suffixList = persistentSetOf(),
             selectedSuffix = None,
-            shouldDisplayFeatureDiscoveryBanner = false
+            shouldDisplayFeatureDiscoveryBanner = false,
+            event = SelectSuffixEvent.Idle
         )
 
     }

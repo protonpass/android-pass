@@ -71,19 +71,7 @@ internal fun ManageItemContent(
                         ),
                     verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
                 ) {
-                    if (state.hasPendingInvites) {
-                        ManageItemPendingInvitesSection(
-                            pendingInvites = state.pendingInvites,
-                            onMenuOptionsClick = { pendingInvite ->
-                                ManageItemUiEvent.OnPendingInviteOptionsClick(
-                                    shareId = state.share.id,
-                                    pendingInvite = pendingInvite
-                                ).also(onUiEvent)
-                            }
-                        )
-                    }
-
-                    if (state.hasItemMembers) {
+                    if (state.hasItemMembers || state.hasItemPendingInvites) {
                         ManageItemMembersSection(
                             sectionTitle = stringResource(
                                 id = R.string.shared_via_item_section_title,
@@ -97,8 +85,15 @@ internal fun ManageItemContent(
                             isShareAdmin = state.share.isAdmin,
                             vaultOption = None,
                             shareItemsCount = state.itemsCount,
+                            pendingInvites = state.itemPendingInvites,
                             members = state.itemMembers,
-                            onMenuOptionsClick = { member ->
+                            onPendingInviteMenuOptionsClick = { pendingInvite ->
+                                ManageItemUiEvent.OnPendingInviteOptionsClick(
+                                    shareId = state.share.id,
+                                    pendingInvite = pendingInvite
+                                ).also(onUiEvent)
+                            },
+                            onMemberMenuOptionsClick = { member ->
                                 ManageItemUiEvent.OnMemberOptionsClick(
                                     shareId = state.share.id,
                                     member = member
@@ -113,7 +108,7 @@ internal fun ManageItemContent(
                         )
                     }
 
-                    if (state.hasVaultMembers) {
+                    if (state.hasVaultMembers || state.hasVaultPendingInvites) {
                         ManageItemMembersSection(
                             sectionTitle = stringResource(
                                 id = R.string.shared_via_vault_section_title,
@@ -127,8 +122,15 @@ internal fun ManageItemContent(
                             isShareAdmin = state.share.isAdmin,
                             vaultOption = state.share.toVault(),
                             shareItemsCount = state.itemsCount,
+                            pendingInvites = state.vaultPendingInvites,
                             members = state.vaultMembers,
-                            onMenuOptionsClick = { member ->
+                            onPendingInviteMenuOptionsClick = { pendingInvite ->
+                                ManageItemUiEvent.OnPendingInviteOptionsClick(
+                                    shareId = state.share.id,
+                                    pendingInvite = pendingInvite
+                                ).also(onUiEvent)
+                            },
+                            onMemberMenuOptionsClick = { member ->
                                 ManageItemUiEvent.OnMemberOptionsClick(
                                     shareId = state.share.id,
                                     member = member

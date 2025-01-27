@@ -44,8 +44,9 @@ class ObserveSharePendingInvitesImpl @Inject constructor(
                     shareInvitesRepository.observeSharePendingInvites(user.userId, shareId)
                         .mapLatest { sharePendingInvites ->
                             sharePendingInvites.filter { sharePendingInvite ->
-                                if (itemId == null) true
-                                else sharePendingInvite.targetId == itemId.id
+                                (itemId?.id ?: share.targetId).let { targetId ->
+                                    sharePendingInvite.targetId == targetId
+                                }
                             }
                         }
                 }

@@ -29,13 +29,17 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
@@ -73,6 +77,7 @@ fun EnterExtraPasswordApp(
 
     val scaffoldState = rememberScaffoldState()
     val passSnackbarHostState = rememberPassSnackbarHostState(scaffoldState.snackbarHostState)
+    val bottomSheetJob: MutableState<Job?> = remember { mutableStateOf(null) }
 
     SnackBarLaunchedEffect(
         snackBarMessage = appUiState.snackbarMessage.value(),
@@ -115,6 +120,7 @@ fun EnterExtraPasswordApp(
                                 onBottomSheetDismissed(
                                     coroutineScope = coroutineScope,
                                     modalBottomSheetState = bottomSheetState,
+                                    jobState = bottomSheetJob,
                                     block = block
                                 )
                             }

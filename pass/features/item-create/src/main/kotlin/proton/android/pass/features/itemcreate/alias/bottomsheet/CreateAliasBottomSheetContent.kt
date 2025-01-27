@@ -66,7 +66,6 @@ import proton.android.pass.features.itemcreate.alias.BaseAliasUiState
 import proton.android.pass.features.itemcreate.alias.CloseScreenEvent
 import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation
 import proton.android.pass.features.itemcreate.alias.MailboxSection
-import proton.android.pass.features.itemcreate.alias.SelectedAliasMailboxUiModel
 
 @Composable
 fun CreateAliasBottomSheetContent(
@@ -131,9 +130,9 @@ fun CreateAliasBottomSheetContent(
         }
         MailboxSection(
             isBottomSheet = true,
-            mailboxes = aliasItemFormState.mailboxes.toImmutableList(),
+            selectedMailboxes = aliasItemFormState.selectedMailboxes.toImmutableList(),
             isCreateMode = false,
-            isEditAllowed = aliasItemFormState.mailboxes.size > 1,
+            isEditAllowed = aliasItemFormState.selectedMailboxes.size > 1,
             isLoading = state.isLoadingState.value(),
             onMailboxClick = { onNavigate(CreateAliasNavigation.SelectMailbox) }
         )
@@ -195,6 +194,10 @@ fun CreateAliasBottomSheetContentPreview(@PreviewParameter(ThemePreviewProvider:
                             AliasMailboxUiModel(
                                 id = 1,
                                 email = "some.mailbox@test.local"
+                            ),
+                            AliasMailboxUiModel(
+                                id = 2,
+                                email = "other.mailbox@test.local"
                             )
                         )
                     ),
@@ -204,20 +207,10 @@ fun CreateAliasBottomSheetContentPreview(@PreviewParameter(ThemePreviewProvider:
                         isCustom = false,
                         domain = ""
                     ),
-                    mailboxes = listOf(
-                        SelectedAliasMailboxUiModel(
-                            model = AliasMailboxUiModel(
-                                id = 1,
-                                email = "some.mailbox@test.local"
-                            ),
-                            selected = true
-                        ),
-                        SelectedAliasMailboxUiModel(
-                            model = AliasMailboxUiModel(
-                                id = 2,
-                                email = "other.mailbox@test.local"
-                            ),
-                            selected = false
+                    selectedMailboxes = setOf(
+                        AliasMailboxUiModel(
+                            id = 1,
+                            email = "some.mailbox@test.local"
                         )
                     )
                 ),

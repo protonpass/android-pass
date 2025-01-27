@@ -18,28 +18,54 @@
 
 package proton.android.pass.features.trash
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.container.PassInfoWarningBanner
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmWithLoadingDialog
-import me.proton.core.presentation.R as CoreR
+import proton.android.pass.composecomponents.impl.text.Text
 
 @Composable
 fun ConfirmDeleteItemDialog(
+    modifier: Modifier = Modifier,
     show: Boolean,
     isLoading: Boolean,
+    isSharedItem: Boolean,
     onDismiss: () -> Unit,
     onConfirm: () -> Unit
 ) {
     ConfirmWithLoadingDialog(
+        modifier = modifier,
         show = show,
         isLoading = isLoading,
         isConfirmActionDestructive = true,
-        title = stringResource(R.string.alert_confirm_delete_item_dialog_title),
-        message = stringResource(R.string.alert_confirm_delete_item_dialog_message),
-        confirmText = stringResource(id = CoreR.string.presentation_alert_ok),
-        cancelText = stringResource(id = CoreR.string.presentation_alert_cancel),
+        title = stringResource(id = R.string.alert_confirm_delete_item_dialog_title),
+        confirmText = stringResource(id = proton.android.pass.composecomponents.impl.R.string.action_continue),
+        cancelText = stringResource(id = proton.android.pass.composecomponents.impl.R.string.action_cancel),
         onDismiss = onDismiss,
         onConfirm = onConfirm,
-        onCancel = onDismiss
+        onCancel = onDismiss,
+        content = {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
+            ) {
+                Text.Body1Regular(
+                    text = stringResource(id = R.string.alert_confirm_delete_item_dialog_message)
+                )
+
+                if (isSharedItem) {
+                    PassInfoWarningBanner(
+                        text = stringResource(id = R.string.alert_confirm_delete_item_dialog_shared_warning_message),
+                        backgroundColor = PassTheme.colors.interactionNormMinor2
+                    )
+                }
+            }
+        }
     )
 }

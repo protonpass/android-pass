@@ -1078,6 +1078,8 @@ fun HomeScreen(
                 show = shouldShowDeleteItemsDialog,
                 isLoading = actionState is ActionState.Loading,
                 amount = homeUiState.homeListUiState.selectionState.selectedItems.size,
+                hasSelectedSharedItems = homeUiState.homeListUiState.selectionState.hasSelectedSharedItems,
+                sharedSelectedItemsCount = homeUiState.homeListUiState.selectionState.selectedSharedItemsCount,
                 onConfirm = {
                     homeViewModel.deleteItems(
                         homeUiState.homeListUiState.selectionState.selectedItems

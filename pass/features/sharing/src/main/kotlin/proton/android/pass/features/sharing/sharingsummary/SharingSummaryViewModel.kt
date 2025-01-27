@@ -42,6 +42,7 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.errors.FreeUserInviteError
 import proton.android.pass.data.api.errors.NewUsersInviteError
 import proton.android.pass.data.api.repositories.AddressPermission
 import proton.android.pass.data.api.repositories.BulkInviteRepository
@@ -154,13 +155,17 @@ class SharingSummaryViewModel @Inject constructor(
                 PassLogger.w(TAG, "Error sending item invite")
                 PassLogger.w(TAG, error)
 
-                if (error is NewUsersInviteError) {
-                    val invalidAddresses = error.newUsersAddresses.map { it.address }
-                    bulkInviteRepository.updateInvalidAddresses(invalidAddresses)
-                    eventFlow.update { SharingSummaryEvent.OnSharingItemNewUsersError }
-                    SharingSnackbarMessage.NewUsersInviteError
-                } else {
-                    SharingSnackbarMessage.InviteSentError
+                when (error) {
+                    is NewUsersInviteError -> {
+                        val invalidAddresses = error.newUsersAddresses.map { it.address }
+                        bulkInviteRepository.updateInvalidAddresses(invalidAddresses)
+                        eventFlow.update { SharingSummaryEvent.OnSharingItemNewUsersError }
+                        SharingSnackbarMessage.NewUsersInviteError
+                    }
+
+                    is FreeUserInviteError -> SharingSnackbarMessage.FreeUserInviteError
+
+                    else -> SharingSnackbarMessage.InviteSentError
                 }.also { snackbarErrorMessage ->
                     snackbarDispatcher(snackbarErrorMessage)
                 }

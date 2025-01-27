@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -18,16 +18,4 @@
 
 package proton.android.pass.data.api.errors
 
-object ErrorCodes {
-
-    const val FREE_USER_INVITED = 2011
-
-    const val INVALID_VERIFICATION_CODE = 2001
-
-    const val INVALID_VERIFICATION_CODE_LIMIT = 2011
-
-    const val RESEND_SHARE_INVITE_LIMIT = 2001
-
-    const val USER_ALREADY_INVITED = 2001
-
-}
+class UserAlreadyInviteError(message: String?) : Throwable(message)

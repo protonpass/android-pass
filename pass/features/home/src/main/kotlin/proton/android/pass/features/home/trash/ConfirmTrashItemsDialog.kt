@@ -28,8 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
-import proton.android.pass.composecomponents.impl.container.PassInfoWarningBanner
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmWithLoadingDialog
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.home.R
@@ -40,8 +39,6 @@ internal fun ConfirmTrashItemsDialog(
     show: Boolean,
     isLoading: Boolean,
     amount: Int,
-    hasSelectedSharedItems: Boolean,
-    sharedSelectedItemsCount: Int,
     onDismiss: () -> Unit,
     onConfirm: () -> Unit
 ) {
@@ -66,36 +63,19 @@ internal fun ConfirmTrashItemsDialog(
                         amount
                     )
                 )
-
-                if (hasSelectedSharedItems) {
-                    PassInfoWarningBanner(
-                        text = pluralStringResource(
-                            id = R.plurals.alert_shared_delete_items_message,
-                            count = sharedSelectedItemsCount,
-                            sharedSelectedItemsCount
-                        ),
-                        backgroundColor = PassTheme.colors.interactionNormMinor2
-                    )
-                }
             }
         }
     )
 }
 
 @[Preview Composable]
-internal fun ConfirmTrashItemsDialogPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
-    val (isDark, hasSelectedSharedItems) = input
-
+internal fun ConfirmTrashItemsDialogPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ConfirmTrashItemsDialog(
                 show = true,
                 isLoading = false,
                 amount = 1,
-                hasSelectedSharedItems = hasSelectedSharedItems,
-                sharedSelectedItemsCount = 1,
                 onDismiss = {},
                 onConfirm = {}
             )

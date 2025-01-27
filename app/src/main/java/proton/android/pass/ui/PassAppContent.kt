@@ -41,6 +41,7 @@ import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -55,6 +56,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.R
@@ -192,6 +194,7 @@ fun PassAppContent(
         determineBottomBarSelection(appNavigator.currentRoute)
     }
     val shouldShowBottomBar = !needsAuth && bottomBarSelected != BottomBarSelection.None
+    val bottomSheetJob: MutableState<Job?> = remember { mutableStateOf(null) }
     Scaffold(
         modifier = modifier,
         scaffoldState = scaffoldState,
@@ -210,7 +213,8 @@ fun PassAppContent(
                             appNavigator = appNavigator,
                             coroutineScope = coroutineScope,
                             bottomSheetState = bottomSheetState,
-                            currentRoute = appNavigator.currentRoute
+                            currentRoute = appNavigator.currentRoute,
+                            bottomSheetJob = bottomSheetJob
                         )
                     }
                 )
@@ -273,6 +277,7 @@ fun PassAppContent(
                                                 onBottomSheetDismissed(
                                                     coroutineScope = coroutineScope,
                                                     modalBottomSheetState = unAuthBottomSheetState,
+                                                    jobState = bottomSheetJob,
                                                     block = block
                                                 )
                                             }
@@ -295,6 +300,7 @@ fun PassAppContent(
                                                 onBottomSheetDismissed(
                                                     coroutineScope = coroutineScope,
                                                     modalBottomSheetState = bottomSheetState,
+                                                    jobState = bottomSheetJob,
                                                     block = block
                                                 )
                                             }
@@ -360,12 +366,14 @@ private fun determineBottomBarSelection(route: String?): BottomBarSelection = wh
     else -> BottomBarSelection.None
 }
 
+@Suppress("LongParameterList")
 private fun handleBottomBarEvent(
     event: HomeBottomBarEvent,
     appNavigator: AppNavigator,
     coroutineScope: CoroutineScope,
     bottomSheetState: ModalBottomSheetState,
-    currentRoute: String?
+    currentRoute: String?,
+    bottomSheetJob: MutableState<Job?>
 ) {
     val (destination, route) = when (event) {
         HomeBottomBarEvent.OnHomeSelected -> HomeNavItem to null
@@ -384,7 +392,8 @@ private fun handleBottomBarEvent(
         route = route,
         appNavigator = appNavigator,
         coroutineScope = coroutineScope,
-        bottomSheetState = bottomSheetState
+        bottomSheetState = bottomSheetState,
+        bottomSheetJob = bottomSheetJob
     )
 }
 
@@ -394,11 +403,13 @@ private fun navigateWithDismiss(
     route: String?,
     appNavigator: AppNavigator,
     coroutineScope: CoroutineScope,
-    bottomSheetState: ModalBottomSheetState
+    bottomSheetState: ModalBottomSheetState,
+    bottomSheetJob: MutableState<Job?>
 ) {
     onBottomSheetDismissed(
         coroutineScope = coroutineScope,
-        modalBottomSheetState = bottomSheetState
+        modalBottomSheetState = bottomSheetState,
+        jobState = bottomSheetJob
     ) {
         val backDestination = if (destination == CreateItemBottomsheetNavItem) {
             appNavigator.findCloserDestination(HomeNavItem, ProfileNavItem, SecurityCenterHomeNavItem)

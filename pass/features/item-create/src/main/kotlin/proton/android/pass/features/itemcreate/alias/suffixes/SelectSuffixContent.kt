@@ -27,7 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
@@ -37,7 +37,6 @@ import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
-import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
@@ -68,12 +67,7 @@ internal fun SelectSuffixContent(
                             text = suffix.domain
                         )
                     }
-                override val subtitle: @Composable () -> Unit
-                    get() = {
-                        BottomSheetItemSubtitle(
-                            text = stringResource(R.string.suffix_subtitle_public_domain)
-                        )
-                    }
+                override val subtitle: @Composable (() -> Unit)? = null
                 override val leftIcon: @Composable (() -> Unit)? = null
                 override val endIcon: @Composable (() -> Unit)? = if (isSelected) {
                     {
@@ -108,7 +102,7 @@ internal fun SelectSuffixContent(
 @Preview
 @Composable
 fun SelectSuffixContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
-    val suffixList = persistentListOf(
+    val suffixList = persistentSetOf(
         AliasSuffix(
             suffix = "first",
             signedSuffix = "",

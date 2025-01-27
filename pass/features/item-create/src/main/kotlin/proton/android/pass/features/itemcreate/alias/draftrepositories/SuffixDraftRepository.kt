@@ -22,13 +22,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.AliasSuffix
 import javax.inject.Inject
 
 interface SuffixDraftRepository {
     fun addSuffixes(suffixes: Set<AliasSuffix>)
     fun selectSuffixById(id: String)
-    fun getSelectedSuffixFlow(): Flow<AliasSuffix?>
+    fun getSelectedSuffixFlow(): Flow<Option<AliasSuffix>>
     fun getAllSuffixesFlow(): Flow<Set<AliasSuffix>>
     fun clearSuffixes()
 }
@@ -46,11 +48,11 @@ class SuffixDraftRepositoryImpl @Inject constructor() : SuffixDraftRepository {
         selectedSuffixId.update { id }
     }
 
-    override fun getSelectedSuffixFlow(): Flow<AliasSuffix?> =
+    override fun getSelectedSuffixFlow(): Flow<Option<AliasSuffix>> =
         combine(suffixes, selectedSuffixId) { currentSuffixes, currentSelectedId ->
             currentSelectedId?.let { id ->
                 currentSuffixes.find { it.suffix == id }
-            }
+            }.toOption()
         }
 
     override fun getAllSuffixesFlow(): Flow<Set<AliasSuffix>> = suffixes

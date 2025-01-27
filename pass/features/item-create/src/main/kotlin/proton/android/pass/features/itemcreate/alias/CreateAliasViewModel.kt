@@ -26,7 +26,6 @@ import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -72,6 +71,8 @@ import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.AliasCreated
 import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.ItemCreationError
 import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.ItemLinkAttachmentsError
+import proton.android.pass.features.itemcreate.alias.draftrepositories.MailboxDraftRepository
+import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDraftRepository
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
@@ -98,6 +99,8 @@ open class CreateAliasViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val aliasPrefixValidator: AliasPrefixValidator,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
+    private val mailboxDraftRepository: MailboxDraftRepository,
+    private val suffixDraftRepository: SuffixDraftRepository,
     userPreferencesRepository: UserPreferencesRepository,
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaultsWithItemCount,
@@ -107,6 +110,8 @@ open class CreateAliasViewModel @Inject constructor(
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseAliasViewModel(
+    mailboxDraftRepository = mailboxDraftRepository,
+    suffixDraftRepository = suffixDraftRepository,
     userPreferencesRepository = userPreferencesRepository,
     attachmentsHandler = attachmentsHandler,
     snackbarDispatcher = snackbarDispatcher,
@@ -122,9 +127,6 @@ open class CreateAliasViewModel @Inject constructor(
         savedStateHandleProvider.get().get<String>(CommonOptionalNavArgId.ShareId.key)
             .toOption()
             .map { ShareId(it) }
-
-    private val selectedSuffixState: MutableStateFlow<Option<AliasSuffixUiModel>> =
-        MutableStateFlow(None)
 
     @OptIn(SavedStateHandleSaveableApi::class)
     private var selectedShareIdMutableState: Option<ShareId> by savedStateHandleProvider.get()
@@ -157,6 +159,18 @@ open class CreateAliasViewModel @Inject constructor(
                 ShareUiState.Loading -> flowOf(LoadingResult.Loading)
                 ShareUiState.NotInitialised -> flowOf(LoadingResult.Loading)
                 is ShareUiState.Success -> observeAliasOptions(state.currentVault.vault.shareId)
+                    .distinctUntilChanged()
+                    .onEach {
+                        mailboxDraftRepository.clearMailboxes()
+                        mailboxDraftRepository.addMailboxes(it.mailboxes.toSet())
+                        it.mailboxes.firstOrNull()?.let { mailbox ->
+                            mailboxDraftRepository.toggleMailboxById(mailbox.id)
+                        }
+                        suffixDraftRepository.addSuffixes(it.suffixes.toSet())
+                        it.suffixes.firstOrNull()?.let { suffix ->
+                            suffixDraftRepository.selectSuffixById(suffix.suffix)
+                        }
+                    }
                     .map(::AliasOptionsUiModel)
                     .asLoadingResult()
             }
@@ -184,8 +198,8 @@ open class CreateAliasViewModel @Inject constructor(
         baseAliasUiState,
         shareUiState,
         aliasOptionsState,
-        selectedMailboxListState,
-        selectedSuffixState,
+        mailboxDraftRepository.getSelectedMailboxFlow(),
+        suffixDraftRepository.getSelectedSuffixFlow(),
         observeUpgradeInfo().asLoadingResult()
     ) { aliasUiState, shareUiState, aliasOptionsResult, selectedMailboxes,
         selectedSuffix, upgradeInfoResult ->
@@ -196,40 +210,17 @@ open class CreateAliasViewModel @Inject constructor(
             is LoadingResult.Error -> aliasItemFormState
             LoadingResult.Loading -> aliasItemFormState
             is LoadingResult.Success -> {
-                val aliasOptions = aliasOptionsResult.data
-
-                val mailboxes = aliasOptions.mailboxes
-                    .map { model ->
-                        SelectedAliasMailboxUiModel(
-                            model = model,
-                            selected = selectedMailboxes.contains(model.id)
-                        )
-                    }
-                    .toMutableList()
-                if (mailboxes.none { it.selected } && mailboxes.isNotEmpty()) {
-                    val mailbox = mailboxes.removeAt(0)
-                    mailboxes.add(0, mailbox.copy(selected = true))
-                        .also { selectedMailboxListState.update { listOf(mailbox.model.id) } }
-                }
-
-                val suffix = if (
-                    selectedSuffix is Some &&
-                    aliasOptions.suffixes.contains(selectedSuffix.value)
-                ) {
-                    selectedSuffix.value
-                } else {
-                    aliasOptions.suffixes.first()
-                        .also { selectedSuffixState.update { it } }
-                }
+                val suffixUiModel = selectedSuffix.map(::AliasSuffixUiModel)
+                val mailboxes = selectedMailboxes.map(::AliasMailboxUiModel).toSet()
                 val aliasToBeCreated = if (aliasItemFormState.prefix.isNotBlank()) {
-                    getAliasToBeCreated(aliasItemFormState.prefix, suffix)
+                    getAliasToBeCreated(aliasItemFormState.prefix, suffixUiModel.value())
                 } else {
                     aliasItemFormState.aliasToBeCreated
                 }
                 aliasItemFormState.copy(
-                    aliasOptions = aliasOptions,
-                    selectedSuffix = suffix,
-                    mailboxes = mailboxes,
+                    aliasOptions = aliasOptionsResult.data,
+                    selectedSuffix = suffixUiModel.value(),
+                    selectedMailboxes = mailboxes,
                     aliasToBeCreated = aliasToBeCreated
                 )
             }
@@ -266,7 +257,7 @@ open class CreateAliasViewModel @Inject constructor(
             prefix = prefix,
             aliasToBeCreated = getAliasToBeCreated(
                 alias = prefix,
-                suffix = selectedSuffixState.value.value()
+                suffix = aliasItemFormMutableState.selectedSuffix
             )
         )
 
@@ -303,11 +294,6 @@ open class CreateAliasViewModel @Inject constructor(
         titlePrefixInSync = false
     }
 
-    fun onSuffixChange(suffix: AliasSuffixUiModel) {
-        onUserEditedContent()
-        selectedSuffixState.update { suffix.toOption() }
-    }
-
     fun createAlias(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
         val aliasItem = aliasItemFormState
         if (aliasItem.selectedSuffix == null) {
@@ -315,7 +301,6 @@ open class CreateAliasViewModel @Inject constructor(
             return@launch
         }
 
-        val mailboxes = aliasItem.mailboxes.filter { it.selected }.map { it.model }
         val aliasItemValidationErrors = aliasItem.validate(
             allowEmptyTitle = isDraft,
             aliasPrefixValidator = aliasPrefixValidator
@@ -336,7 +321,7 @@ open class CreateAliasViewModel @Inject constructor(
         } else {
             PassLogger.d(TAG, "Performing create alias")
             isLoadingState.update { IsLoadingState.Loading }
-            performCreateAlias(shareId, aliasItem, aliasItem.selectedSuffix, mailboxes)
+            performCreateAlias(shareId, aliasItem, aliasItem.selectedSuffix, aliasItem.selectedMailboxes)
             isLoadingState.update { IsLoadingState.NotLoading }
         }
     }
@@ -345,7 +330,7 @@ open class CreateAliasViewModel @Inject constructor(
         shareId: ShareId,
         aliasItemFormState: AliasItemFormState,
         aliasSuffix: AliasSuffixUiModel,
-        mailboxes: List<AliasMailboxUiModel>
+        mailboxes: Set<AliasMailboxUiModel>
     ) {
         val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
         if (userId != null) {

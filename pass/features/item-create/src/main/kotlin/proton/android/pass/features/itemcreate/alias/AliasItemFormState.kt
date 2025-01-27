@@ -37,7 +37,7 @@ data class AliasItemFormState(
     val mailboxTitle: String = "",
     val aliasOptions: AliasOptionsUiModel = AliasOptionsUiModel(emptyList(), emptyList()),
     val selectedSuffix: AliasSuffixUiModel? = null,
-    val mailboxes: List<SelectedAliasMailboxUiModel> = emptyList(),
+    val selectedMailboxes: Set<AliasMailboxUiModel> = emptySet(),
     val aliasToBeCreated: String? = null,
     val slNote: String? = null,
     val senderName: String? = null
@@ -59,7 +59,7 @@ data class AliasItemFormState(
             }
         }
 
-        if (mailboxes.count { it.selected } == 0) mutableSet.add(AliasItemValidationErrors.NoMailboxes)
+        if (selectedMailboxes.isEmpty()) mutableSet.add(AliasItemValidationErrors.NoMailboxes)
 
         return mutableSet.toSet()
     }

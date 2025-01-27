@@ -21,15 +21,14 @@ package proton.android.pass.features.itemcreate.alias.suffixes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import proton.android.pass.common.api.None
 import proton.android.pass.domain.AliasSuffix
+import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDraftRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryBannerPreference
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryFeature.AliasManagementCustomDomain
@@ -37,19 +36,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SelectSuffixViewModel @Inject constructor(
+    private val suffixDraftRepository: SuffixDraftRepository,
     private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
-    private val aliasSuffixState: MutableStateFlow<List<AliasSuffix>> =
-        MutableStateFlow(emptyList())
-
     internal val uiState: StateFlow<SelectSuffixUiState> = combine(
-        aliasSuffixState,
+        suffixDraftRepository.getAllSuffixesFlow(),
+        suffixDraftRepository.getSelectedSuffixFlow(),
         userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementCustomDomain)
-    ) { mailboxes, featureDiscoveryPreference ->
+    ) { suffixes, selectedSuffix, featureDiscoveryPreference ->
         SelectSuffixUiState(
-            suffixList = mailboxes.toPersistentList(),
-            selectedSuffix = None,
+            suffixList = suffixes.toPersistentSet(),
+            selectedSuffix = selectedSuffix,
             shouldDisplayFeatureDiscoveryBanner = featureDiscoveryPreference.value
         )
     }.stateIn(
@@ -58,8 +56,8 @@ class SelectSuffixViewModel @Inject constructor(
         initialValue = SelectSuffixUiState.Initial
     )
 
-    fun selectSuffix(suffix: AliasSuffix) {
-        // To implement
+    fun selectSuffix(aliasSuffix: AliasSuffix) {
+        suffixDraftRepository.selectSuffixById(aliasSuffix.suffix)
     }
 
     fun dismissFeatureDiscoveryBanner() {

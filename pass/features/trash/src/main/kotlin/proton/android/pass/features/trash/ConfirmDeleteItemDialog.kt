@@ -29,6 +29,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.container.PassInfoWarningBanner
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmWithLoadingDialog
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 fun ConfirmDeleteItemDialog(
@@ -45,8 +46,8 @@ fun ConfirmDeleteItemDialog(
         isLoading = isLoading,
         isConfirmActionDestructive = true,
         title = stringResource(id = R.string.alert_confirm_delete_item_dialog_title),
-        confirmText = stringResource(id = proton.android.pass.composecomponents.impl.R.string.action_continue),
-        cancelText = stringResource(id = proton.android.pass.composecomponents.impl.R.string.action_cancel),
+        confirmText = stringResource(id = CompR.string.action_continue),
+        cancelText = stringResource(id = CompR.string.action_cancel),
         onDismiss = onDismiss,
         onConfirm = onConfirm,
         onCancel = onDismiss,

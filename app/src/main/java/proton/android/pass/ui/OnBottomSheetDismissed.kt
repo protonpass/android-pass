@@ -19,8 +19,10 @@
 package proton.android.pass.ui
 
 import androidx.compose.material.ModalBottomSheetState
+import androidx.compose.runtime.MutableState
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -29,18 +31,26 @@ import proton.android.pass.log.api.PassLogger
 internal fun onBottomSheetDismissed(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
+    jobState: MutableState<Job?>,
     block: () -> Unit
 ) {
-    coroutineScope.launch {
-        while (isActive && modalBottomSheetState.isVisible) {
-            try {
-                modalBottomSheetState.hide()
-            } catch (e: CancellationException) {
-                PassLogger.d(TAG, e, "Bottom sheet hidden animation interrupted")
+    if (jobState.value?.isActive == true) {
+        return
+    }
+    jobState.value = coroutineScope.launch {
+        try {
+            while (isActive && modalBottomSheetState.isVisible) {
+                try {
+                    modalBottomSheetState.hide()
+                } catch (e: CancellationException) {
+                    PassLogger.d(TAG, e, "Bottom sheet hidden animation interrupted")
+                }
+                delay(DELAY)
             }
-            delay(DELAY)
+            block()
+        } finally {
+            jobState.value = null
         }
-        block()
     }
 }
 

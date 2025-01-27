@@ -32,10 +32,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
@@ -49,14 +49,13 @@ import proton.android.pass.features.itemcreate.R
 @Composable
 fun MailboxSection(
     modifier: Modifier = Modifier,
-    mailboxes: ImmutableList<SelectedAliasMailboxUiModel>,
+    selectedMailboxes: ImmutableList<AliasMailboxUiModel>,
     isCreateMode: Boolean,
     isEditAllowed: Boolean,
     isLoading: Boolean,
     isBottomSheet: Boolean,
     onMailboxClick: () -> Unit
 ) {
-    val selectedMailboxes = mailboxes.filter { it.selected }
     val labelText = if (isCreateMode) {
         stringResource(R.string.field_mailboxes_creation_title)
     } else {
@@ -71,9 +70,9 @@ fun MailboxSection(
                 ifFalse = { roundedContainerNorm() }
             )
             .clickable(enabled = isEditAllowed, onClick = onMailboxClick)
-            .padding(16.dp),
+            .padding(Spacing.medium),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
         ForwardIcon(tint = PassTheme.colors.textWeak)
         Column(
@@ -81,10 +80,15 @@ fun MailboxSection(
         ) {
             ProtonTextFieldLabel(text = labelText)
             if (isLoading) {
-                Text(modifier = Modifier.fillMaxWidth().placeholder(), text = "")
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .placeholder(),
+                    text = ""
+                )
             } else {
                 selectedMailboxes.forEach { mailbox ->
-                    Text(text = mailbox.model.email)
+                    Text(text = mailbox.email)
                 }
             }
 
@@ -103,13 +107,10 @@ fun MailboxSectionPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class)
             MailboxSection(
                 isLoading = false,
                 isBottomSheet = false,
-                mailboxes = persistentListOf(
-                    SelectedAliasMailboxUiModel(
-                        model = AliasMailboxUiModel(
-                            id = 1,
-                            email = "prefix@suffix.test"
-                        ),
-                        selected = true
+                selectedMailboxes = persistentListOf(
+                    AliasMailboxUiModel(
+                        id = 1,
+                        email = "prefix@suffix.test"
                     )
                 ),
                 isCreateMode = true,
@@ -130,13 +131,10 @@ fun MailboxSectionBottomSheetPreview(
             MailboxSection(
                 isBottomSheet = input.second,
                 isLoading = false,
-                mailboxes = persistentListOf(
-                    SelectedAliasMailboxUiModel(
-                        model = AliasMailboxUiModel(
-                            id = 1,
-                            email = "prefix@suffix.test"
-                        ),
-                        selected = true
+                selectedMailboxes = persistentListOf(
+                    AliasMailboxUiModel(
+                        id = 1,
+                        email = "prefix@suffix.test"
                     )
                 ),
                 isEditAllowed = true,

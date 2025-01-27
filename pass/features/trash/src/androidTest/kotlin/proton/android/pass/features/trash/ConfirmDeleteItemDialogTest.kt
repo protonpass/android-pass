@@ -38,6 +38,7 @@ class ConfirmDeleteItemDialogTest {
             ConfirmDeleteItemDialog(
                 show = true,
                 isLoading = false,
+                isSharedItem = false,
                 onDismiss = {},
                 onConfirm = {
                     isCalled = true

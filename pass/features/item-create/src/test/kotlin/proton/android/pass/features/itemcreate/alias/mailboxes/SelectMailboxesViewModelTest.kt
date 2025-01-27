@@ -28,6 +28,8 @@ import proton.android.pass.test.MainDispatcherRule
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.features.itemcreate.alias.mailboxes.presentation.SelectMailboxesUiState
+import proton.android.pass.features.itemcreate.alias.mailboxes.presentation.SelectMailboxesViewModel
 
 class SelectMailboxesViewModelTest {
 

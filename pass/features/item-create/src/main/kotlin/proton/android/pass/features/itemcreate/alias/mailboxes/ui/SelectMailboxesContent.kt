@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.alias.suffixes
+package proton.android.pass.features.itemcreate.alias.mailboxes.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
@@ -27,12 +27,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.collections.immutable.toPersistentList
-import proton.android.pass.common.api.toOption
+import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
@@ -40,31 +39,39 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemLis
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
-import proton.android.pass.domain.AliasSuffix
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.alias.banner.AliasCustomDomainBanner
+import proton.android.pass.features.itemcreate.alias.mailboxes.presentation.SelectMailboxesUiState
+import proton.android.pass.features.itemcreate.alias.mailboxes.presentation.SelectMailboxesUiStatePreviewProvider
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-internal fun SelectSuffixContent(
+internal fun SelectMailboxesContent(
     modifier: Modifier = Modifier,
-    state: SelectSuffixUiState,
-    onEvent: (SelectSuffixEvent) -> Unit
+    state: SelectMailboxesUiState,
+    onEvent: (SelectMailboxEvent) -> Unit
 ) {
     Column(
         modifier = modifier.bottomSheet()
     ) {
         BottomSheetTitle(
-            title = stringResource(id = R.string.alias_bottomsheet_suffix_title)
+            title = stringResource(id = R.string.alias_mailbox_dialog_title)
         )
 
-        val list = state.suffixList.map { suffix ->
-            val isSelected = suffix == state.selectedSuffix.value()
+        val list = state.mailboxes.map { mailbox ->
+            val isSelected = mailbox in state.selectedMailboxes
+            val color = if (isSelected) {
+                PassTheme.colors.aliasInteractionNormMajor2
+            } else {
+                ProtonTheme.colors.textNorm
+            }
             object : BottomSheetItem {
                 override val title: @Composable () -> Unit
                     get() = {
                         BottomSheetItemTitle(
-                            text = suffix.domain
+                            modifier = Modifier.padding(vertical = Spacing.small),
+                            text = mailbox.email,
+                            color = color
                         )
                     }
                 override val subtitle: @Composable (() -> Unit)? = null
@@ -73,12 +80,13 @@ internal fun SelectSuffixContent(
                     {
                         BottomSheetItemIcon(
                             iconId = CoreR.drawable.ic_proton_checkmark,
-                            tint = PassTheme.colors.interactionNorm
+                            tint = color
                         )
                     }
                 } else null
-                override val onClick: () -> Unit =
-                    { onEvent(SelectSuffixEvent.SelectSuffix(suffix)) }
+                override val onClick: () -> Unit = {
+                    onEvent(SelectMailboxEvent.SelectMailbox(mailbox))
+                }
                 override val isDivider: Boolean = false
             }
         }
@@ -89,42 +97,28 @@ internal fun SelectSuffixContent(
             AliasCustomDomainBanner(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
                 onClick = {
-                    onEvent(SelectSuffixEvent.AddCustomDomain)
+                    onEvent(SelectMailboxEvent.AddMailbox)
                 },
                 onClose = {
-                    onEvent(SelectSuffixEvent.DismissFeatureDiscoveryBanner)
+                    onEvent(SelectMailboxEvent.DismissFeatureDiscoveryBanner)
                 }
             )
         }
     }
 }
 
+internal class ThemedSelectMailboxesPreviewProvider :
+    ThemePairPreviewProvider<SelectMailboxesUiState>(SelectMailboxesUiStatePreviewProvider())
+
 @Preview
 @Composable
-fun SelectSuffixContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
-    val suffixList = persistentSetOf(
-        AliasSuffix(
-            suffix = "first",
-            signedSuffix = "",
-            isCustom = false,
-            domain = "proton.me"
-        ),
-        AliasSuffix(
-            suffix = "second",
-            signedSuffix = "",
-            isCustom = false,
-            domain = "proton.me"
-        )
-    )
-    PassTheme(isDark = isDark) {
+internal fun SelectMailboxesDialogContentPreview(
+    @PreviewParameter(ThemedSelectMailboxesPreviewProvider::class) input: Pair<Boolean, SelectMailboxesUiState>
+) {
+    PassTheme(isDark = input.first) {
         Surface {
-            SelectSuffixContent(
-                state = SelectSuffixUiState(
-                    suffixList = suffixList,
-                    selectedSuffix = suffixList.firstOrNull().toOption(),
-                    shouldDisplayFeatureDiscoveryBanner = false
-
-                ),
+            SelectMailboxesContent(
+                state = input.second,
                 onEvent = {}
             )
         }

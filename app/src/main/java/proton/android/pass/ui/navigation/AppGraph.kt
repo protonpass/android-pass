@@ -2327,9 +2327,12 @@ fun NavGraphBuilder.appGraph(
 
                 SecureLinksNavDestination.DismissBottomSheet -> dismissBottomSheet {}
 
-                SecureLinksNavDestination.Profile -> appNavigator.navigate(
-                    destination = ProfileNavItem
-                )
+                SecureLinksNavDestination.Profile ->
+                    if (appNavigator.hasDestinationInStack(ProfileNavItem)) {
+                        appNavigator.popUpTo(ProfileNavItem)
+                    } else {
+                        appNavigator.popUpTo(HomeNavItem)
+                    }
 
                 is SecureLinksNavDestination.SecureLinkOverview -> when (destination.scope) {
                     SecureLinksOverviewNavScope.SecureLinksGeneration -> appNavigator.navigate(

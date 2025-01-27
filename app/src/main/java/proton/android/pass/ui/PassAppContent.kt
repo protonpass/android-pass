@@ -31,7 +31,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
@@ -74,9 +73,9 @@ import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffec
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageKey
 import proton.android.pass.domain.inappmessages.InAppMessageMode
-import proton.android.pass.features.home.HomeNavItem
 import proton.android.pass.features.auth.AuthOrigin
 import proton.android.pass.features.featureflags.FeatureFlagRoute
+import proton.android.pass.features.home.HomeNavItem
 import proton.android.pass.features.inappmessages.banner.ui.InAppMessageBanner
 import proton.android.pass.features.inappmessages.bottomsheet.navigation.InAppMessageModalNavItem
 import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomSheetMode
@@ -100,12 +99,8 @@ import proton.android.pass.ui.internal.rememberInternalDrawerState
 import proton.android.pass.ui.navigation.UN_AUTH_GRAPH
 import proton.android.pass.ui.navigation.appGraph
 import proton.android.pass.ui.navigation.unAuthGraph
-import kotlin.coroutines.cancellation.CancellationException
 
-@OptIn(
-    ExperimentalMaterialNavigationApi::class,
-    ExperimentalMaterialApi::class
-)
+@OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable
 fun PassAppContent(
     modifier: Modifier = Modifier,
@@ -365,7 +360,6 @@ private fun determineBottomBarSelection(route: String?): BottomBarSelection = wh
     else -> BottomBarSelection.None
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 private fun handleBottomBarEvent(
     event: HomeBottomBarEvent,
     appNavigator: AppNavigator,
@@ -395,7 +389,6 @@ private fun handleBottomBarEvent(
 }
 
 @Suppress("LongParameterList")
-@OptIn(ExperimentalMaterialApi::class)
 private fun navigateWithDismiss(
     destination: NavItem,
     route: String?,
@@ -403,14 +396,10 @@ private fun navigateWithDismiss(
     coroutineScope: CoroutineScope,
     bottomSheetState: ModalBottomSheetState
 ) {
-    coroutineScope.launch {
-        if (bottomSheetState.isVisible) {
-            try {
-                bottomSheetState.hide()
-            } catch (e: CancellationException) {
-                PassLogger.d(TAG, e, "Bottom sheet hidden animation interrupted")
-            }
-        }
+    onBottomSheetDismissed(
+        coroutineScope = coroutineScope,
+        modalBottomSheetState = bottomSheetState
+    ) {
         val backDestination = if (destination == CreateItemBottomsheetNavItem) {
             appNavigator.findCloserDestination(HomeNavItem, ProfileNavItem, SecurityCenterHomeNavItem)
         } else null

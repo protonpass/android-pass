@@ -45,6 +45,8 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.ItemSavedState
+import proton.android.pass.features.itemcreate.alias.draftrepositories.MailboxDraftRepositoryImpl
+import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.attachments.FakeAttachmentHandler
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
@@ -99,7 +101,6 @@ class CreateAliasViewModelTest {
         viewModel = createAliasViewModel()
         setupAliasOptions()
         val titleInput = "Title changed"
-        viewModel.onSuffixChange(suffix)
         viewModel.onTitleChange(titleInput)
         viewModel.createAliasUiState.test {
             assertThat(viewModel.aliasItemFormState.title).isEqualTo(titleInput)
@@ -258,7 +259,9 @@ class CreateAliasViewModelTest {
         featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
         linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
         attachmentsHandler = FakeAttachmentHandler(),
-        userPreferencesRepository = TestPreferenceRepository()
+        userPreferencesRepository = TestPreferenceRepository(),
+        mailboxDraftRepository = MailboxDraftRepositoryImpl(),
+        suffixDraftRepository = SuffixDraftRepositoryImpl()
     ).apply {
         setDraftStatus(isDraft)
     }
@@ -266,15 +269,6 @@ class CreateAliasViewModelTest {
     private fun setupContentsForCreation() {
         viewModel.onTitleChange(TEST_ALIAS_TITLE)
         viewModel.onPrefixChange(TEST_ALIAS_PREFIX)
-        viewModel.onSuffixChange(suffix)
-        viewModel.onMailboxesChanged(
-            listOf(
-                SelectedAliasMailboxUiModel(
-                    model = mailbox,
-                    selected = true
-                )
-            )
-        )
     }
 
     private fun setupVaults() {

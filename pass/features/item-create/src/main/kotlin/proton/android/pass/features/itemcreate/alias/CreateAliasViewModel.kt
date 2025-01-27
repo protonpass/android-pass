@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
@@ -63,6 +64,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.domain.AliasOptions
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.domain.entity.NewAlias
@@ -153,26 +155,27 @@ open class CreateAliasViewModel @Inject constructor(
     )
 
     private val aliasOptionsState: Flow<LoadingResult<AliasOptionsUiModel>> = shareUiState
-        .flatMapLatest { state ->
+        .map { state ->
+            when (state) {
+                is ShareUiState.Success -> state.currentVault.vault.shareId to state
+                else -> null to state
+            }
+        }
+        .distinctUntilChangedBy { it.first }
+        .flatMapLatest { (shareId, state) ->
             when (state) {
                 is ShareUiState.Error -> flowOf(LoadingResult.Error(RuntimeException()))
-                ShareUiState.Loading -> flowOf(LoadingResult.Loading)
-                ShareUiState.NotInitialised -> flowOf(LoadingResult.Loading)
-                is ShareUiState.Success -> observeAliasOptions(state.currentVault.vault.shareId)
-                    .distinctUntilChanged()
-                    .onEach {
-                        mailboxDraftRepository.clearMailboxes()
-                        mailboxDraftRepository.addMailboxes(it.mailboxes.toSet())
-                        it.mailboxes.firstOrNull()?.let { mailbox ->
-                            mailboxDraftRepository.toggleMailboxById(mailbox.id)
-                        }
-                        suffixDraftRepository.addSuffixes(it.suffixes.toSet())
-                        it.suffixes.firstOrNull()?.let { suffix ->
-                            suffixDraftRepository.selectSuffixById(suffix.suffix)
-                        }
+                ShareUiState.Loading, ShareUiState.NotInitialised -> flowOf(LoadingResult.Loading)
+                is ShareUiState.Success ->
+                    if (shareId == null) {
+                        flowOf(LoadingResult.Loading)
+                    } else {
+                        observeAliasOptions(shareId)
+                            .distinctUntilChanged()
+                            .onEach(::setupMailboxesAndSuffixes)
+                            .map(::AliasOptionsUiModel)
+                            .asLoadingResult()
                     }
-                    .map(::AliasOptionsUiModel)
-                    .asLoadingResult()
             }
         }
         .onEach {
@@ -321,7 +324,12 @@ open class CreateAliasViewModel @Inject constructor(
         } else {
             PassLogger.d(TAG, "Performing create alias")
             isLoadingState.update { IsLoadingState.Loading }
-            performCreateAlias(shareId, aliasItem, aliasItem.selectedSuffix, aliasItem.selectedMailboxes)
+            performCreateAlias(
+                shareId,
+                aliasItem,
+                aliasItem.selectedSuffix,
+                aliasItem.selectedMailboxes
+            )
             isLoadingState.update { IsLoadingState.NotLoading }
         }
     }
@@ -396,6 +404,18 @@ open class CreateAliasViewModel @Inject constructor(
         onUserEditedContent()
         isLoadingState.update { IsLoadingState.Loading }
         selectedShareIdMutableState = Some(shareId)
+    }
+
+    private fun setupMailboxesAndSuffixes(aliasOptions: AliasOptions) {
+        mailboxDraftRepository.clearMailboxes()
+        mailboxDraftRepository.addMailboxes(aliasOptions.mailboxes.toSet())
+        aliasOptions.mailboxes.firstOrNull()?.let { mailbox ->
+            mailboxDraftRepository.toggleMailboxById(mailbox.id)
+        }
+        suffixDraftRepository.addSuffixes(aliasOptions.suffixes.toSet())
+        aliasOptions.suffixes.firstOrNull()?.let { suffix ->
+            suffixDraftRepository.selectSuffixById(suffix.suffix)
+        }
     }
 
     companion object {

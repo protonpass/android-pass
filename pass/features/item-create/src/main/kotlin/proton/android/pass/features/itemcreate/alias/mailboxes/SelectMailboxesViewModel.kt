@@ -21,15 +21,13 @@ package proton.android.pass.features.itemcreate.alias.mailboxes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.persistentListOf
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.domain.AliasMailbox
+import proton.android.pass.features.itemcreate.alias.draftrepositories.MailboxDraftRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryBannerPreference
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryFeature.AliasManagementMailbox
@@ -37,19 +35,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SelectMailboxesViewModel @Inject constructor(
-    private val userPreferencesRepository: UserPreferencesRepository
+    private val userPreferencesRepository: UserPreferencesRepository,
+    private val mailboxDraftRepository: MailboxDraftRepository
 ) : ViewModel() {
 
-    private val mailboxesState: MutableStateFlow<List<AliasMailbox>> =
-        MutableStateFlow(emptyList())
-
     internal val uiState: StateFlow<SelectMailboxesUiState> = combine(
-        mailboxesState,
+        mailboxDraftRepository.getAllMailboxesFlow(),
+        mailboxDraftRepository.getSelectedMailboxFlow(),
         userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementMailbox)
-    ) { mailboxes, featureDiscoveryPreference ->
+    ) { mailboxes, selectedMailboxes, featureDiscoveryPreference ->
         SelectMailboxesUiState(
             mailboxes = mailboxes,
-            selectedMailboxes = persistentListOf(),
+            selectedMailboxes = selectedMailboxes,
             shouldDisplayFeatureDiscoveryBanner = featureDiscoveryPreference.value
         )
     }.stateIn(
@@ -58,8 +55,8 @@ class SelectMailboxesViewModel @Inject constructor(
         initialValue = SelectMailboxesUiState.Initial
     )
 
-    internal fun setMailboxes(mailboxes: List<AliasMailbox>) {
-        mailboxesState.update { mailboxes }
+    fun toggleMailbox(mailbox: AliasMailbox) {
+        mailboxDraftRepository.toggleMailboxById(mailbox.id)
     }
 
     fun dismissFeatureDiscoveryBanner() {

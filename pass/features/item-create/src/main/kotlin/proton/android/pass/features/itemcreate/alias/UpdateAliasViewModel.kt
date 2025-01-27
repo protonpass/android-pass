@@ -25,9 +25,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
@@ -67,6 +72,8 @@ import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.ItemLi
 import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.ItemRenameAttachmentsError
 import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.ItemUpdateError
 import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.UpdateAppToUpdateItemError
+import proton.android.pass.features.itemcreate.alias.draftrepositories.MailboxDraftRepository
+import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDraftRepository
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -77,6 +84,7 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
+@Suppress("LongParameterList")
 @HiltViewModel
 class UpdateAliasViewModel @Inject constructor(
     private val accountManager: AccountManager,
@@ -89,11 +97,15 @@ class UpdateAliasViewModel @Inject constructor(
     private val observeAliasDetails: ObserveAliasDetails,
     private val renameAttachments: RenameAttachments,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
+    private val mailboxDraftRepository: MailboxDraftRepository,
+    suffixDraftRepository: SuffixDraftRepository,
     userPreferencesRepository: UserPreferencesRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     attachmentsHandler: AttachmentsHandler,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseAliasViewModel(
+    mailboxDraftRepository = mailboxDraftRepository,
+    suffixDraftRepository = suffixDraftRepository,
     userPreferencesRepository = userPreferencesRepository,
     attachmentsHandler = attachmentsHandler,
     snackbarDispatcher = snackbarDispatcher,
@@ -152,18 +164,25 @@ class UpdateAliasViewModel @Inject constructor(
 
             isLoadingState.update { IsLoadingState.NotLoading }
         }
+
+        mailboxDraftRepository.getSelectedMailboxFlow()
+            .drop(1) // drop initial setup
+            .take(1) // we don't need to listen for more
+            .onEach {
+                isApplyButtonEnabledState.update { IsButtonEnabled.Enabled }
+                mailboxesChanged = true
+            }
+            .launchIn(viewModelScope)
     }
 
     internal val updateAliasUiState: StateFlow<UpdateAliasUiState> = combine(
         flowOf(shareId),
         baseAliasUiState,
-        selectedMailboxListState,
+        mailboxDraftRepository.getSelectedMailboxFlow().map { it.map(::AliasMailboxUiModel).toSet() },
         canModifyAliasStateFlow
-    ) { shareId, aliasUiState, mailboxList, canModify ->
+    ) { shareId, aliasUiState, selectedMailboxes, canModify ->
         aliasItemFormMutableState = aliasItemFormState.copy(
-            mailboxes = aliasItemFormState.mailboxes.map {
-                it.copy(selected = mailboxList.contains(it.model.id))
-            }
+            selectedMailboxes = selectedMailboxes
         )
 
         UpdateAliasUiState(
@@ -176,12 +195,6 @@ class UpdateAliasViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = UpdateAliasUiState.Initial
     )
-
-    override fun onMailboxesChanged(mailboxes: List<SelectedAliasMailboxUiModel>) {
-        super.onMailboxesChanged(mailboxes)
-        isApplyButtonEnabledState.update { IsButtonEnabled.Enabled }
-        mailboxesChanged = true
-    }
 
     override fun onNoteChange(value: String) {
         super.onNoteChange(value)
@@ -213,37 +226,24 @@ class UpdateAliasViewModel @Inject constructor(
     }
 
     private fun onAliasDetails(aliasDetails: AliasDetails, item: Item) {
+        mailboxDraftRepository.addMailboxes(aliasDetails.availableMailboxes.toSet())
+        aliasDetails.mailboxes.forEach {
+            mailboxDraftRepository.toggleMailboxById(it.id)
+        }
         AliasDetailsUiModel(aliasDetails).also { details ->
             val alias = item.itemType as ItemType.Alias
             val email = alias.aliasEmail
             val (prefix, suffix) = AliasUtils.extractPrefixSuffix(email)
 
-            val mailboxes = details.availableMailboxes
-                .map { mailbox ->
-                    SelectedAliasMailboxUiModel(
-                        model = mailbox,
-                        selected = details.mailboxes.any { it.id == mailbox.id }
-                    )
-                }
-                .toMutableList()
-            if (mailboxes.none { it.selected } && mailboxes.isNotEmpty()) {
-                val mailbox = mailboxes.removeAt(0)
-                mailboxes.add(0, mailbox.copy(selected = true))
-                    .also { selectedMailboxListState.update { listOf(mailbox.model.id) } }
-            } else {
-                selectedMailboxListState.update {
-                    mailboxes.filter { it.selected }.map { it.model.id }
-                }
-            }
             if (aliasDetails.canModify) {
                 canModifyAliasStateFlow.update { true }
             }
             if (aliasItemFormState.title.isNotBlank() || aliasItemFormState.note.isNotBlank()) {
                 aliasItemFormMutableState = aliasItemFormState.copy(
                     prefix = prefix,
-                    aliasOptions = AliasOptionsUiModel(emptyList(), details.mailboxes),
+                    aliasOptions = AliasOptionsUiModel(emptyList(), details.availableMailboxes),
                     selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, ""),
-                    mailboxes = mailboxes,
+                    selectedMailboxes = details.mailboxes.toSet(),
                     aliasToBeCreated = email,
                     slNote = aliasDetails.slNote.takeIfNotBlank(),
                     senderName = aliasDetails.name?.takeIfNotBlank()
@@ -254,9 +254,9 @@ class UpdateAliasViewModel @Inject constructor(
                         title = decrypt(item.title),
                         note = decrypt(item.note),
                         prefix = prefix,
-                        aliasOptions = AliasOptionsUiModel(emptyList(), details.mailboxes),
+                        aliasOptions = AliasOptionsUiModel(emptyList(), details.availableMailboxes),
                         selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, ""),
-                        mailboxes = mailboxes,
+                        selectedMailboxes = details.mailboxes.toSet(),
                         aliasToBeCreated = email,
                         slNote = aliasDetails.slNote.takeIfNotBlank(),
                         senderName = aliasDetails.name?.takeIfNotBlank()
@@ -374,9 +374,8 @@ class UpdateAliasViewModel @Inject constructor(
     private fun createUpdateAliasBody(): UpdateAliasContent {
         val mailboxes = if (mailboxesChanged) {
             val selectedMailboxes = aliasItemFormState
-                .mailboxes
-                .filter { it.selected }
-                .map { it.model.toDomain() }
+                .selectedMailboxes
+                .map { it.toDomain() }
             Some(selectedMailboxes)
         } else None
 

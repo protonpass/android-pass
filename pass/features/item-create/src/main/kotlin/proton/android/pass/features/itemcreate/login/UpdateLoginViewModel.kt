@@ -336,9 +336,7 @@ class UpdateLoginViewModel @Inject constructor(
                     prefix = aliasItemFormState.prefix,
                     suffix = aliasItemFormState.selectedSuffix.toDomain(),
                     aliasName = aliasItemFormState.senderName,
-                    mailboxes = aliasItemFormState.mailboxes
-                        .filter { it.selected }
-                        .map { it.model }
+                    mailboxes = aliasItemFormState.selectedMailboxes
                         .map(AliasMailboxUiModel::toDomain)
                 )
             )

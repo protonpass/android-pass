@@ -19,15 +19,15 @@
 package proton.android.pass.features.itemcreate.alias.suffixes
 
 import androidx.compose.runtime.Stable
-import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.PersistentSet
+import kotlinx.collections.immutable.persistentSetOf
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.domain.AliasSuffix
 
 @Stable
 internal data class SelectSuffixUiState(
-    val suffixList: PersistentList<AliasSuffix>,
+    val suffixList: PersistentSet<AliasSuffix>,
     val selectedSuffix: Option<AliasSuffix>,
     val shouldDisplayFeatureDiscoveryBanner: Boolean
 ) {
@@ -35,7 +35,7 @@ internal data class SelectSuffixUiState(
     internal companion object {
 
         internal val Initial = SelectSuffixUiState(
-            suffixList = persistentListOf(),
+            suffixList = persistentSetOf(),
             selectedSuffix = None,
             shouldDisplayFeatureDiscoveryBanner = false
         )

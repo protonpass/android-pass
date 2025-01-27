@@ -40,7 +40,8 @@ internal fun SelectMailboxesBottomsheet(
                 }
                 SelectMailboxEvent.DismissFeatureDiscoveryBanner ->
                     viewModel.dismissFeatureDiscoveryBanner()
-                is SelectMailboxEvent.SelectMailbox -> TODO()
+                is SelectMailboxEvent.SelectMailbox ->
+                    viewModel.toggleMailbox(it.aliasMailbox)
             }
         }
     )

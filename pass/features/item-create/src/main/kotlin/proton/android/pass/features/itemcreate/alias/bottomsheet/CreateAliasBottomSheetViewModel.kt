@@ -39,6 +39,8 @@ import proton.android.pass.features.itemcreate.alias.AliasDraftSavedState
 import proton.android.pass.features.itemcreate.alias.AliasItemFormState
 import proton.android.pass.features.itemcreate.alias.CreateAliasViewModel
 import proton.android.pass.features.itemcreate.alias.IsEditAliasNavArg
+import proton.android.pass.features.itemcreate.alias.draftrepositories.MailboxDraftRepository
+import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDraftRepository
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -65,6 +67,8 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     observeDefaultVault: ObserveDefaultVault,
     attachmentsHandler: AttachmentsHandler,
     linkAttachmentsToItem: LinkAttachmentsToItem,
+    mailboxDraftRepository: MailboxDraftRepository,
+    suffixDraftRepository: SuffixDraftRepository,
     userPreferencesRepository: UserPreferencesRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository
 ) : CreateAliasViewModel(
@@ -83,6 +87,8 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     observeDefaultVault = observeDefaultVault,
     attachmentsHandler = attachmentsHandler,
     linkAttachmentsToItem = linkAttachmentsToItem,
+    mailboxDraftRepository = mailboxDraftRepository,
+    suffixDraftRepository = suffixDraftRepository,
     userPreferencesRepository = userPreferencesRepository,
     featureFlagsRepository = featureFlagsRepository
 ) {

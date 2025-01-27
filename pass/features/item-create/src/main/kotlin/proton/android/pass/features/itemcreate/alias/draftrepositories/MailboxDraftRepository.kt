@@ -28,10 +28,9 @@ import javax.inject.Inject
 
 interface MailboxDraftRepository {
     fun addMailboxes(mailboxes: Set<AliasMailbox>)
-    fun selectMailboxById(id: Int)
+    fun toggleMailboxById(id: Int)
     fun getSelectedMailboxFlow(): Flow<Set<AliasMailbox>>
     fun getAllMailboxesFlow(): Flow<Set<AliasMailbox>>
-    fun deselectMailboxById(id: Int)
     fun clearMailboxes()
 }
 
@@ -43,13 +42,15 @@ class MailboxDraftRepositoryImpl @Inject constructor() : MailboxDraftRepository 
         this.mailboxes.update { current -> current + mailboxes }
     }
 
-    override fun selectMailboxById(id: Int) {
+    override fun toggleMailboxById(id: Int) {
         require(mailboxes.value.any { it.id == id }) { "Mailbox with id $id not found." }
-        selectedMailboxIds.update { current -> current + id }
-    }
-
-    override fun deselectMailboxById(id: Int) {
-        selectedMailboxIds.update { current -> current - id }
+        selectedMailboxIds.update { current ->
+            when {
+                !current.contains(id) -> current + id
+                current.size > 1 -> current - id
+                else -> current
+            }
+        }
     }
 
     override fun clearMailboxes() {

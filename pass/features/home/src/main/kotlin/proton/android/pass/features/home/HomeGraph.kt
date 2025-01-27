@@ -150,8 +150,6 @@ sealed interface HomeNavigation {
     @JvmInline
     value class ManageVault(val shareId: ShareId) : HomeNavigation
 
-    data class TrashSharedWarning(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
-
     data object ItemsMigrationSharedWarning : HomeNavigation
 
 }

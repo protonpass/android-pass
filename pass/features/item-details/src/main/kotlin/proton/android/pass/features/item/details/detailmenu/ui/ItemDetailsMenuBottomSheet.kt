@@ -57,13 +57,6 @@ fun ItemDetailsMenuBottomSheet(
                 ).also(onNavigated)
             }
 
-            is ItemDetailsMenuEvent.OnItemSharedTrashed -> {
-                ItemDetailsNavDestination.ItemTrashSharedWarning(
-                    shareId = event.shareId,
-                    itemId = event.itemId
-                ).also(onNavigated)
-            }
-
             ItemDetailsMenuEvent.OnItemNoteCopied,
             ItemDetailsMenuEvent.OnItemMigrationError,
             ItemDetailsMenuEvent.OnItemMonitorExcluded,

@@ -16,14 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.alias.mailboxes
+package proton.android.pass.features.itemcreate.alias.suffixes.ui
 
-import proton.android.pass.domain.AliasMailbox
+import proton.android.pass.domain.AliasSuffix
 
-sealed interface SelectMailboxEvent {
-    data object DismissFeatureDiscoveryBanner : SelectMailboxEvent
-    data object AddMailbox : SelectMailboxEvent
+sealed interface SelectSuffixUiEvent {
+    data object DismissFeatureDiscoveryBanner : SelectSuffixUiEvent
+    data object AddCustomDomain : SelectSuffixUiEvent
 
     @JvmInline
-    value class SelectMailbox(val aliasMailbox: AliasMailbox) : SelectMailboxEvent
+    value class SelectSuffixUi(val suffix: AliasSuffix) : SelectSuffixUiEvent
 }

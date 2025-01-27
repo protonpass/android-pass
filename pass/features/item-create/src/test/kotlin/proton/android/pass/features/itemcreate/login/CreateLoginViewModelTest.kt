@@ -61,7 +61,6 @@ import proton.android.pass.features.itemcreate.alias.AliasItemFormState
 import proton.android.pass.features.itemcreate.alias.AliasMailboxUiModel
 import proton.android.pass.features.itemcreate.alias.AliasOptionsUiModel
 import proton.android.pass.features.itemcreate.alias.AliasSuffixUiModel
-import proton.android.pass.features.itemcreate.alias.SelectedAliasMailboxUiModel
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
@@ -331,7 +330,7 @@ internal class CreateLoginViewModelTest {
                 mailboxes = listOf(mailbox)
             ),
             selectedSuffix = suffix,
-            mailboxes = listOf(SelectedAliasMailboxUiModel(mailbox, true)),
+            selectedMailboxes = setOf(mailbox),
             aliasToBeCreated = TestUtils.randomString()
         )
         instance.onAliasCreated(aliasItemFormState)

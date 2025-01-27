@@ -39,7 +39,6 @@ package proton.android.pass.navigation.api
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.runtime.Composable
@@ -67,12 +66,12 @@ import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
+import proton.android.pass.log.api.PassLogger
 import kotlin.reflect.full.callSuspend
 import kotlin.reflect.full.declaredMemberFunctions
 import kotlin.reflect.jvm.isAccessible
 
 @ExperimentalMaterialNavigationApi
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 @Suppress("MagicNumber", "SwallowedException")
 internal fun SheetContentHost(
@@ -150,7 +149,12 @@ internal fun SheetContentHost(
             onDispose {
                 scope.launch {
                     hideCalled = true
-                    sheetState.internalHide()
+                    try {
+                        sheetState.internalHide()
+                    } catch (e: CancellationException) {
+                        PassLogger.w(TAG, "Sheet hide cancelled")
+                        PassLogger.w(TAG, e)
+                    }
                 }
             }
         }
@@ -165,6 +169,8 @@ internal fun SheetContentHost(
         EmptySheet()
     }
 }
+
+private const val TAG = "SheetContentHost"
 
 @Composable
 private fun EmptySheet() {
@@ -188,12 +194,10 @@ private suspend fun awaitFrame() = withFrameNanos(onFrame = {})
 private const val AWAIT_FRAMES_BEFORE_SHOW = 3
 
 // We have the same issue when we are hiding the sheet, but snapTo works better
-@OptIn(ExperimentalMaterialApi::class)
 private suspend fun ModalBottomSheetState.internalHide() {
     this.callPrivateSuspendFunc("snapTo", ModalBottomSheetValue.Hidden)
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 private val ModalBottomSheetState.willBeVisible: Boolean
     get() = targetValue == ModalBottomSheetValue.HalfExpanded || targetValue == ModalBottomSheetValue.Expanded
 

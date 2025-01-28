@@ -80,7 +80,7 @@ class ItemDetailsLeaveViewModel @Inject constructor(
                     snackbarDispatcher(ItemDetailsLeaveMessage.LeaveItemError)
                 }
                 .onSuccess {
-                    eventFlow.update { ItemDetailsLeaveEvent.OnLeaveShareError }
+                    eventFlow.update { ItemDetailsLeaveEvent.OnLeaveShareSuccess }
                     snackbarDispatcher(ItemDetailsLeaveMessage.LeaveItemSuccess)
                 }
 

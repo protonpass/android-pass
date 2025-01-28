@@ -219,6 +219,8 @@ class LoginDetailViewModel @Inject constructor(
     private val eventState: MutableStateFlow<ItemDetailEvent> =
         MutableStateFlow(ItemDetailEvent.Unknown)
 
+    private val isSharedWithMeItemFlow = MutableStateFlow(false)
+
     sealed interface DetailFields {
         data object Password : DetailFields
     }
@@ -443,11 +445,19 @@ class LoginDetailViewModel @Inject constructor(
         itemFeatures ->
         when (itemDetails) {
             is LoadingResult.Error -> {
-                if (!isPermanentlyDeleted.value()) {
-                    snackbarDispatcher(InitError)
-                    LoginDetailUiState.Error
-                } else {
-                    LoginDetailUiState.Pending
+                when {
+                    isSharedWithMeItemFlow.value -> {
+                        LoginDetailUiState.NotInitialised
+                    }
+
+                    !isPermanentlyDeleted.value() -> {
+                        snackbarDispatcher(InitError)
+                        LoginDetailUiState.Error
+                    }
+
+                    else -> {
+                        LoginDetailUiState.Pending
+                    }
                 }
             }
 
@@ -460,6 +470,8 @@ class LoginDetailViewModel @Inject constructor(
                 val customFieldsList = if (!isPaid) emptyList() else customFields
 
                 val passkeys = details.itemContents.passkeys.map { UIPasskeyContent.from(it) }
+
+                isSharedWithMeItemFlow.update { details.itemUiModel.isSharedWithMe }
 
                 LoginDetailUiState.Success(
                     itemUiModel = details.itemUiModel,

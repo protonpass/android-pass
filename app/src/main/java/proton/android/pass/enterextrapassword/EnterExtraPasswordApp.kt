@@ -120,7 +120,7 @@ fun EnterExtraPasswordApp(
                                 onBottomSheetDismissed(
                                     coroutineScope = coroutineScope,
                                     modalBottomSheetState = bottomSheetState,
-                                    jobState = bottomSheetJob,
+                                    dismissJob = bottomSheetJob,
                                     block = block
                                 )
                             }

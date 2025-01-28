@@ -277,7 +277,7 @@ fun PassAppContent(
                                                 onBottomSheetDismissed(
                                                     coroutineScope = coroutineScope,
                                                     modalBottomSheetState = unAuthBottomSheetState,
-                                                    jobState = bottomSheetJob,
+                                                    dismissJob = bottomSheetJob,
                                                     block = block
                                                 )
                                             }
@@ -300,7 +300,7 @@ fun PassAppContent(
                                                 onBottomSheetDismissed(
                                                     coroutineScope = coroutineScope,
                                                     modalBottomSheetState = bottomSheetState,
-                                                    jobState = bottomSheetJob,
+                                                    dismissJob = bottomSheetJob,
                                                     block = block
                                                 )
                                             }
@@ -409,7 +409,7 @@ private fun navigateWithDismiss(
     onBottomSheetDismissed(
         coroutineScope = coroutineScope,
         modalBottomSheetState = bottomSheetState,
-        jobState = bottomSheetJob
+        dismissJob = bottomSheetJob
     ) {
         val backDestination = if (destination == CreateItemBottomsheetNavItem) {
             appNavigator.findCloserDestination(HomeNavItem, ProfileNavItem, SecurityCenterHomeNavItem)

@@ -248,4 +248,8 @@
     <string name="banner_mailbox_subtitle">Share aliases with others by adding their inbox as an additional mailbox.</string>
     <string name="banner_mailbox_button">Add mailbox</string>
 
+    <!-- Suffix -->
+    <string name="suffix_subtitle_premium_domain">Premium domain</string>
+    <string name="suffix_subtitle_public_domain">Public domain</string>
+    <string name="suffix_subtitle_private_domain">Your domain</string>
 </resources>

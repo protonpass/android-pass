@@ -22,5 +22,6 @@ data class AliasSuffix(
     val suffix: String,
     val signedSuffix: String,
     val isCustom: Boolean,
+    val isPremium: Boolean,
     val domain: String
 )

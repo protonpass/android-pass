@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.data.api.usecases.ObserveUserAccessData
 import proton.android.pass.domain.AliasSuffix
 import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDraftRepository
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -39,7 +40,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SelectSuffixViewModel @Inject constructor(
     private val suffixDraftRepository: SuffixDraftRepository,
-    private val userPreferencesRepository: UserPreferencesRepository
+    private val userPreferencesRepository: UserPreferencesRepository,
+    observeUserAccessData: ObserveUserAccessData
 ) : ViewModel() {
 
     private val eventFlow = MutableStateFlow<SelectSuffixEvent>(SelectSuffixEvent.Idle)
@@ -48,12 +50,14 @@ class SelectSuffixViewModel @Inject constructor(
         suffixDraftRepository.getAllSuffixesFlow(),
         suffixDraftRepository.getSelectedSuffixFlow(),
         userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementCustomDomain),
+        observeUserAccessData(),
         eventFlow
-    ) { suffixes, selectedSuffix, featureDiscoveryPreference, event ->
+    ) { suffixes, selectedSuffix, featureDiscoveryPreference, plan, event ->
         SelectSuffixUiState(
-            suffixList = suffixes.toPersistentSet(),
+            suffixes = suffixes.toPersistentSet(),
             selectedSuffix = selectedSuffix,
             shouldDisplayFeatureDiscoveryBanner = featureDiscoveryPreference.value,
+            canUpgrade = plan?.canManageSimpleLoginAliases ?: false,
             event = event
         )
     }.stateIn(

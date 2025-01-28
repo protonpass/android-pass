@@ -23,6 +23,7 @@ import proton.android.pass.domain.AliasSuffix
 sealed interface SelectSuffixUiEvent {
     data object DismissFeatureDiscoveryBanner : SelectSuffixUiEvent
     data object AddCustomDomain : SelectSuffixUiEvent
+    data object Upgrade : SelectSuffixUiEvent
 
     @JvmInline
     value class SelectSuffixUi(val suffix: AliasSuffix) : SelectSuffixUiEvent

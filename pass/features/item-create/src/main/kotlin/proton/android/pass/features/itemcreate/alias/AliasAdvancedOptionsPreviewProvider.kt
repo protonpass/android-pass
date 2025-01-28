@@ -35,6 +35,7 @@ class AliasAdvancedOptionsPreviewProvider : PreviewParameterProvider<AliasAdvanc
                                     suffix = ".some@suffix.test",
                                     signedSuffix = "",
                                     isCustom = false,
+                                    isPremium = false,
                                     domain = "suffix.test"
                                 )
                             )

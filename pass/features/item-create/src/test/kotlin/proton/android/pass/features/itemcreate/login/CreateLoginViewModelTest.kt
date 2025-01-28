@@ -318,6 +318,7 @@ internal class CreateLoginViewModelTest {
             suffix = TestUtils.randomString(),
             signedSuffix = TestUtils.randomString(),
             isCustom = false,
+            isPremium = false,
             domain = TestUtils.randomString()
         )
         val mailbox = AliasMailboxUiModel(id = 1, email = TestUtils.randomString())

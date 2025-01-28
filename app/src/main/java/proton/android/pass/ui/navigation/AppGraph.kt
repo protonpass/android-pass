@@ -1110,6 +1110,7 @@ fun NavGraphBuilder.appGraph(
     }
     createAliasGraph(
         canUseAttachments = true,
+        canAddMailbox = true,
         onNavigate = {
             when (it) {
                 CreateAliasNavigation.CloseScreen -> appNavigator.navigateBack()
@@ -1150,6 +1151,9 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(AliasSelectMailboxBottomSheetNavItem)
                 CreateAliasNavigation.SelectSuffix ->
                     appNavigator.navigate(AliasSelectSuffixBottomSheetNavItem)
+
+                CreateAliasNavigation.AddMailbox ->
+                    appNavigator.navigate(SimpleLoginSyncMailboxCreateNavItem)
             }
         }
     )
@@ -2354,9 +2358,14 @@ fun NavGraphBuilder.appGraph(
     simpleLoginSyncNavGraph(
         onNavigated = { destination ->
             when (destination) {
-                SimpleLoginSyncNavDestination.AliasManagement -> appNavigator.popUpTo(
-                    destination = SimpleLoginSyncManagementNavItem
-                )
+                SimpleLoginSyncNavDestination.BackToOrigin -> when {
+                    appNavigator.hasDestinationInStack(SimpleLoginSyncManagementNavItem) ->
+                        appNavigator.popUpTo(SimpleLoginSyncManagementNavItem)
+                    appNavigator.hasDestinationInStack(CreateAlias) ->
+                        appNavigator.popUpTo(CreateAlias)
+                    appNavigator.hasDestinationInStack(EditAlias) ->
+                        appNavigator.popUpTo(EditAlias)
+                }
 
                 is SimpleLoginSyncNavDestination.CloseScreen -> appNavigator.navigateBack(
                     force = destination.force

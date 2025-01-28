@@ -39,7 +39,8 @@ internal class SelectMailboxesUiStatePreviewProvider :
             SelectMailboxesUiState(
                 mailboxes = list,
                 selectedMailboxes = setOf(list.first()),
-                shouldDisplayFeatureDiscoveryBanner = false
+                shouldDisplayFeatureDiscoveryBanner = false,
+                event = SelectMailboxesEvent.Idle
             )
         )
 

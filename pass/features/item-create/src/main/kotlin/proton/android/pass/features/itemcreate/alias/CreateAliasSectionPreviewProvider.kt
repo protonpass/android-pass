@@ -69,6 +69,7 @@ class CreateAliasSectionPreviewProvider :
             suffix = "@random.suffix",
             signedSuffix = "",
             isCustom = false,
+            isPremium = false,
             domain = "random.suffix"
         ),
         aliasToBeCreated = "$alias@random.suffix"

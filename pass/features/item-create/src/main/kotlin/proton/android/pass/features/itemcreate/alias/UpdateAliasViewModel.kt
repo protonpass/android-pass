@@ -234,7 +234,7 @@ class UpdateAliasViewModel @Inject constructor(
             val alias = item.itemType as ItemType.Alias
             val email = alias.aliasEmail
             val (prefix, suffix) = AliasUtils.extractPrefixSuffix(email)
-
+            val selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, false, "")
             if (aliasDetails.canModify) {
                 canModifyAliasStateFlow.update { true }
             }
@@ -242,7 +242,7 @@ class UpdateAliasViewModel @Inject constructor(
                 aliasItemFormMutableState = aliasItemFormState.copy(
                     prefix = prefix,
                     aliasOptions = AliasOptionsUiModel(emptyList(), details.availableMailboxes),
-                    selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, ""),
+                    selectedSuffix = selectedSuffix,
                     selectedMailboxes = details.mailboxes.toSet(),
                     aliasToBeCreated = email,
                     slNote = aliasDetails.slNote.takeIfNotBlank(),
@@ -255,7 +255,7 @@ class UpdateAliasViewModel @Inject constructor(
                         note = decrypt(item.note),
                         prefix = prefix,
                         aliasOptions = AliasOptionsUiModel(emptyList(), details.availableMailboxes),
-                        selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, ""),
+                        selectedSuffix = selectedSuffix,
                         selectedMailboxes = details.mailboxes.toSet(),
                         aliasToBeCreated = email,
                         slNote = aliasDetails.slNote.takeIfNotBlank(),

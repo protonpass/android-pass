@@ -45,6 +45,8 @@ data class AliasSuffixResponse(
     val signedSuffix: String,
     @SerialName("IsCustom")
     val isCustom: Boolean,
+    @SerialName("IsPremium")
+    val isPremium: Boolean,
     @SerialName("Domain")
     val domain: String
 )

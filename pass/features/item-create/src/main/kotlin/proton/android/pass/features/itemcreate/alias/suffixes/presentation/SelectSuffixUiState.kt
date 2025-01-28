@@ -27,18 +27,20 @@ import proton.android.pass.domain.AliasSuffix
 
 @Stable
 internal data class SelectSuffixUiState(
-    val suffixList: PersistentSet<AliasSuffix>,
+    val suffixes: PersistentSet<AliasSuffix>,
     val selectedSuffix: Option<AliasSuffix>,
     val shouldDisplayFeatureDiscoveryBanner: Boolean,
+    val canUpgrade: Boolean,
     val event: SelectSuffixEvent
 ) {
 
     internal companion object {
 
         internal val Initial = SelectSuffixUiState(
-            suffixList = persistentSetOf(),
+            suffixes = persistentSetOf(),
             selectedSuffix = None,
             shouldDisplayFeatureDiscoveryBanner = false,
+            canUpgrade = false,
             event = SelectSuffixEvent.Idle
         )
 

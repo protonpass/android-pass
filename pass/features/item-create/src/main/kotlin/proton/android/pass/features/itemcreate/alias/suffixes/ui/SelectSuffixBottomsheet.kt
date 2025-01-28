@@ -63,6 +63,10 @@ fun SelectSuffixBottomsheet(
 
                 is SelectSuffixUiEvent.SelectSuffixUi ->
                     viewModel.selectSuffix(it.suffix)
+
+                SelectSuffixUiEvent.Upgrade -> {
+                    // To implement
+                }
             }
         }
     )

@@ -172,6 +172,7 @@ fun AliasAdvancedOptionsSectionBottomSheetPreview(
                     suffix = ".some@suffix.test",
                     signedSuffix = "",
                     isCustom = false,
+                    isPremium = false,
                     domain = "suffix.test"
                 ),
                 isError = false,

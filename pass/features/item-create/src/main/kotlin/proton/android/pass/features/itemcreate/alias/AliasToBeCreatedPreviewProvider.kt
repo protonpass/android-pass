@@ -37,6 +37,7 @@ class AliasToBeCreatedPreviewProvider : PreviewParameterProvider<AliasToBeCreate
         suffix = suffix,
         signedSuffix = "",
         isCustom = false,
+        isPremium = false,
         domain = ""
     )
 }

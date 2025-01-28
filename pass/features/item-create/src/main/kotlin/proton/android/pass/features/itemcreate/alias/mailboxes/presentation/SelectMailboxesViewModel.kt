@@ -21,10 +21,12 @@ package proton.android.pass.features.itemcreate.alias.mailboxes.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.features.itemcreate.alias.draftrepositories.MailboxDraftRepository
@@ -39,15 +41,19 @@ class SelectMailboxesViewModel @Inject constructor(
     private val mailboxDraftRepository: MailboxDraftRepository
 ) : ViewModel() {
 
+    private val eventFlow = MutableStateFlow<SelectMailboxesEvent>(SelectMailboxesEvent.Idle)
+
     internal val uiState: StateFlow<SelectMailboxesUiState> = combine(
         mailboxDraftRepository.getAllMailboxesFlow(),
         mailboxDraftRepository.getSelectedMailboxFlow(),
-        userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementMailbox)
-    ) { mailboxes, selectedMailboxes, featureDiscoveryPreference ->
+        userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementMailbox),
+        eventFlow
+    ) { mailboxes, selectedMailboxes, featureDiscoveryPreference, event ->
         SelectMailboxesUiState(
             mailboxes = mailboxes,
             selectedMailboxes = selectedMailboxes,
-            shouldDisplayFeatureDiscoveryBanner = featureDiscoveryPreference.value
+            shouldDisplayFeatureDiscoveryBanner = featureDiscoveryPreference.value,
+            event = event
         )
     }.stateIn(
         scope = viewModelScope,
@@ -59,12 +65,24 @@ class SelectMailboxesViewModel @Inject constructor(
         mailboxDraftRepository.toggleMailboxById(mailbox.id)
     }
 
-    fun dismissFeatureDiscoveryBanner() {
+    fun dismissFeatureDiscoveryBanner(addMailbox: Boolean = false) {
         viewModelScope.launch {
             userPreferencesRepository.setDisplayFeatureDiscoverBanner(
                 AliasManagementMailbox,
                 FeatureDiscoveryBannerPreference.NotDisplay
             )
+            if (addMailbox) {
+                eventFlow.update { SelectMailboxesEvent.AddMailbox }
+            }
         }
     }
+
+    fun onConsumeEvent(event: SelectMailboxesEvent) {
+        eventFlow.compareAndSet(event, SelectMailboxesEvent.Idle)
+    }
+}
+
+sealed interface SelectMailboxesEvent {
+    data object Idle : SelectMailboxesEvent
+    data object AddMailbox : SelectMailboxesEvent
 }

@@ -25,7 +25,8 @@ import proton.android.pass.domain.AliasMailbox
 internal data class SelectMailboxesUiState(
     val mailboxes: Set<AliasMailbox>,
     val selectedMailboxes: Set<AliasMailbox>,
-    val shouldDisplayFeatureDiscoveryBanner: Boolean
+    val shouldDisplayFeatureDiscoveryBanner: Boolean,
+    val event: SelectMailboxesEvent
 ) {
 
     internal companion object {
@@ -33,7 +34,8 @@ internal data class SelectMailboxesUiState(
         internal val Initial = SelectMailboxesUiState(
             mailboxes = emptySet(),
             selectedMailboxes = emptySet(),
-            shouldDisplayFeatureDiscoveryBanner = false
+            shouldDisplayFeatureDiscoveryBanner = false,
+            event = SelectMailboxesEvent.Idle
         )
 
     }

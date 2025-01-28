@@ -95,9 +95,11 @@ open class FetchShareItemsWorker @AssistedInject constructor(
                         }
                     }
                 )
+                itemRevisions.size
             }
         }.fold(
             onSuccess = {
+                fetchShareItemsStatusRepository.emit(shareId, FetchShareItemsStatus.Done(it))
                 PassLogger.i(TAG, "$TAG finished successfully")
                 Result.success()
             },

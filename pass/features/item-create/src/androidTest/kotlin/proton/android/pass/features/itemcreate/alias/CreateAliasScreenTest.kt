@@ -278,7 +278,7 @@ class CreateAliasScreenTest {
         private const val USER_EMAIL = "a@b.c"
 
         private val DEFAULT_SUFFIX =
-            proton.android.pass.domain.AliasSuffix(".test@test.test", "Test", false, "test")
+            proton.android.pass.domain.AliasSuffix(".test@test.test", "Test", false, false, "test")
         private val DEFAULT_MAILBOX = AliasMailbox(1, "test@test.test")
     }
 

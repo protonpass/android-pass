@@ -42,6 +42,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.onBottomSheetDismissed
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
@@ -56,7 +57,6 @@ import proton.android.pass.ui.AppNavigation
 import proton.android.pass.ui.PassNavHost
 import proton.android.pass.ui.navigation.UN_AUTH_GRAPH
 import proton.android.pass.ui.navigation.unAuthGraph
-import proton.android.pass.ui.onBottomSheetDismissed
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.ui
+package proton.android.pass.commonui.api
 
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.MutableState
@@ -28,15 +28,13 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import proton.android.pass.log.api.PassLogger
 
-internal fun onBottomSheetDismissed(
+fun onBottomSheetDismissed(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
     dismissJob: MutableState<Job?>,
     block: () -> Unit
 ) {
-    if (dismissJob.value?.isActive == true) {
-        return
-    }
+    if (dismissJob.value?.isActive == true) return
     dismissJob.value = coroutineScope.launch {
         try {
             while (isActive && modalBottomSheetState.isVisible) {

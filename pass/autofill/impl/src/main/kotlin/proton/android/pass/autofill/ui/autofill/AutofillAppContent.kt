@@ -24,6 +24,7 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,12 +37,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Job
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.ui.autofill.common.AutofillConfirmMode
 import proton.android.pass.autofill.ui.autofill.common.ConfirmAutofillDialog
 import proton.android.pass.autofill.ui.autofill.select.AssociateAutofillItemDialog
+import proton.android.pass.commonui.api.onBottomSheetDismissed
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.features.auth.AUTH_GRAPH
@@ -107,6 +109,7 @@ fun AutofillAppContent(
     val appNavigator = rememberAppNavigator(
         bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
     )
+    val bottomSheetJob: MutableState<Job?> = remember { mutableStateOf(null) }
 
     PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {
         NavHost(
@@ -142,11 +145,13 @@ fun AutofillAppContent(
                         }
                     }
                 },
-                dismissBottomSheet = { callback ->
-                    coroutineScope.launch {
-                        bottomSheetState.hide()
-                        callback()
-                    }
+                dismissBottomSheet = { block ->
+                    onBottomSheetDismissed(
+                        coroutineScope = coroutineScope,
+                        modalBottomSheetState = bottomSheetState,
+                        dismissJob = bottomSheetJob,
+                        block = block
+                    )
                 }
             )
         }

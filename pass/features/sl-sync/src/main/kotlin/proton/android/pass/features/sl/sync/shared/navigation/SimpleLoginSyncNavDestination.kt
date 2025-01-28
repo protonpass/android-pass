@@ -22,7 +22,7 @@ import proton.android.pass.domain.ShareId
 
 sealed interface SimpleLoginSyncNavDestination {
 
-    data object AliasManagement : SimpleLoginSyncNavDestination
+    data object BackToOrigin : SimpleLoginSyncNavDestination
 
     @JvmInline
     value class CloseScreen(val force: Boolean = false) : SimpleLoginSyncNavDestination

@@ -363,6 +363,7 @@ fun NavGraphBuilder.autofillActivityGraph(
     )
     createAliasGraph(
         canUseAttachments = false,
+        canAddMailbox = false,
         onNavigate = {
             when (it) {
                 CreateAliasNavigation.CloseScreen -> appNavigator.navigateBack()
@@ -392,6 +393,9 @@ fun NavGraphBuilder.autofillActivityGraph(
                 is CreateAliasNavigation.DeleteAllAttachments,
                 is CreateAliasNavigation.OpenDraftAttachmentOptions ->
                     throw IllegalStateException("Cannot use attachments from autofill")
+
+                CreateAliasNavigation.AddMailbox ->
+                    throw IllegalStateException("Cannot add mailbox from autofill")
             }
         }
     )

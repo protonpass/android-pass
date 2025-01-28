@@ -39,7 +39,7 @@ fun SimpleLoginSyncMailboxCreateScreen(
             SimpleLoginSyncMailboxCreateEvent.Idle -> Unit
             is SimpleLoginSyncMailboxCreateEvent.OnMailboxCreated -> {
                 if (event.isVerified) {
-                    SimpleLoginSyncNavDestination.AliasManagement
+                    SimpleLoginSyncNavDestination.BackToOrigin
                 } else {
                     SimpleLoginSyncNavDestination.VerifyMailbox(mailboxId = event.mailboxId)
                 }.also(onNavigated)

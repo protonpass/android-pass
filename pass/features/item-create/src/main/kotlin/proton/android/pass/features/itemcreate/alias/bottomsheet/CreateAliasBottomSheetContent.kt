@@ -187,6 +187,7 @@ fun CreateAliasBottomSheetContentPreview(@PreviewParameter(ThemePreviewProvider:
                                 suffix = ".some@suffix.test",
                                 signedSuffix = "",
                                 isCustom = false,
+                                isPremium = false,
                                 domain = ""
                             )
                         ),
@@ -205,6 +206,7 @@ fun CreateAliasBottomSheetContentPreview(@PreviewParameter(ThemePreviewProvider:
                         suffix = ".some@suffix.test",
                         signedSuffix = "",
                         isCustom = false,
+                        isPremium = false,
                         domain = ""
                     ),
                     selectedMailboxes = setOf(

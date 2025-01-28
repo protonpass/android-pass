@@ -190,6 +190,8 @@ class NoteDetailViewModel @Inject constructor(
         )
     }
 
+    private val isSharedWithMeItemFlow = MutableStateFlow(false)
+
     internal val state: StateFlow<NoteDetailUiState> = combineN(
         noteItemDetailsResultFlow,
         isLoadingState,
@@ -213,11 +215,19 @@ class NoteDetailViewModel @Inject constructor(
         itemFeatures ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
-                if (!isPermanentlyDeleted.value()) {
-                    snackbarDispatcher(InitError)
-                    NoteDetailUiState.Error
-                } else {
-                    NoteDetailUiState.Pending
+                when {
+                    isSharedWithMeItemFlow.value -> {
+                        NoteDetailUiState.NotInitialised
+                    }
+
+                    !isPermanentlyDeleted.value() -> {
+                        snackbarDispatcher(InitError)
+                        NoteDetailUiState.Error
+                    }
+
+                    else -> {
+                        NoteDetailUiState.Pending
+                    }
                 }
             }
 
@@ -225,6 +235,8 @@ class NoteDetailViewModel @Inject constructor(
             is LoadingResult.Success -> {
                 val (details, attachments, share) = itemLoadingResult.data
                 val actions = itemActions.getOrNull() ?: ItemActions.Disabled
+
+                isSharedWithMeItemFlow.update { !details.item.isOwner && details.item.isShared }
 
                 NoteDetailUiState.Success(
                     itemUiModel = encryptionContextProvider.withEncryptionContext {

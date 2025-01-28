@@ -156,6 +156,9 @@ class CreditCardDetailViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
+
+    private val isSharedWithMeItemFlow = MutableStateFlow(false)
+
     private data class FieldVisibility(
         val cardNumber: Boolean = false,
         val cvv: Boolean = false,
@@ -272,11 +275,19 @@ class CreditCardDetailViewModel @Inject constructor(
         itemFeatures ->
         when (itemDetails) {
             is LoadingResult.Error -> {
-                if (!isPermanentlyDeleted.value()) {
-                    snackbarDispatcher(DetailSnackbarMessages.InitError)
-                    CreditCardDetailUiState.Error
-                } else {
-                    CreditCardDetailUiState.Pending
+                when {
+                    isSharedWithMeItemFlow.value -> {
+                        CreditCardDetailUiState.NotInitialised
+                    }
+
+                    !isPermanentlyDeleted.value() -> {
+                        snackbarDispatcher(DetailSnackbarMessages.InitError)
+                        CreditCardDetailUiState.Error
+                    }
+
+                    else -> {
+                        CreditCardDetailUiState.Pending
+                    }
                 }
             }
 
@@ -285,6 +296,8 @@ class CreditCardDetailViewModel @Inject constructor(
                 val details = itemDetails.data
                 val isPaid = canPerformPaidActionResult.getOrNull() == true
                 val actions = itemActions.getOrNull() ?: ItemActions.Disabled
+
+                isSharedWithMeItemFlow.update { details.itemUiModel.isSharedWithMe }
 
                 CreditCardDetailUiState.Success(
                     itemContent = CreditCardDetailUiState.ItemContent(

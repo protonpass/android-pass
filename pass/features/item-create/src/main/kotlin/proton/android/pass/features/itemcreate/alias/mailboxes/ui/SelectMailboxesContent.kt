@@ -40,7 +40,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTit
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.features.itemcreate.R
-import proton.android.pass.features.itemcreate.alias.banner.AliasCustomDomainBanner
+import proton.android.pass.features.itemcreate.alias.banner.AliasMailboxBanner
 import proton.android.pass.features.itemcreate.alias.mailboxes.presentation.SelectMailboxesUiState
 import proton.android.pass.features.itemcreate.alias.mailboxes.presentation.SelectMailboxesUiStatePreviewProvider
 import me.proton.core.presentation.R as CoreR
@@ -49,7 +49,8 @@ import me.proton.core.presentation.R as CoreR
 internal fun SelectMailboxesContent(
     modifier: Modifier = Modifier,
     state: SelectMailboxesUiState,
-    onEvent: (SelectMailboxEvent) -> Unit
+    canAddMailbox: Boolean,
+    onEvent: (SelectMailboxUiEvent) -> Unit
 ) {
     Column(
         modifier = modifier.bottomSheet()
@@ -85,7 +86,7 @@ internal fun SelectMailboxesContent(
                     }
                 } else null
                 override val onClick: () -> Unit = {
-                    onEvent(SelectMailboxEvent.SelectMailbox(mailbox))
+                    onEvent(SelectMailboxUiEvent.SelectMailbox(mailbox))
                 }
                 override val isDivider: Boolean = false
             }
@@ -93,16 +94,18 @@ internal fun SelectMailboxesContent(
         BottomSheetItemList(
             items = list.withDividers().toPersistentList()
         )
-        AnimatedVisibility(state.shouldDisplayFeatureDiscoveryBanner) {
-            AliasCustomDomainBanner(
-                modifier = Modifier.padding(horizontal = Spacing.medium),
-                onClick = {
-                    onEvent(SelectMailboxEvent.AddMailbox)
-                },
-                onClose = {
-                    onEvent(SelectMailboxEvent.DismissFeatureDiscoveryBanner)
-                }
-            )
+        if (canAddMailbox) {
+            AnimatedVisibility(state.shouldDisplayFeatureDiscoveryBanner) {
+                AliasMailboxBanner(
+                    modifier = Modifier.padding(horizontal = Spacing.medium),
+                    onClick = {
+                        onEvent(SelectMailboxUiEvent.AddMailbox)
+                    },
+                    onClose = {
+                        onEvent(SelectMailboxUiEvent.DismissFeatureDiscoveryBanner)
+                    }
+                )
+            }
         }
     }
 }
@@ -119,6 +122,7 @@ internal fun SelectMailboxesDialogContentPreview(
         Surface {
             SelectMailboxesContent(
                 state = input.second,
+                canAddMailbox = false,
                 onEvent = {}
             )
         }

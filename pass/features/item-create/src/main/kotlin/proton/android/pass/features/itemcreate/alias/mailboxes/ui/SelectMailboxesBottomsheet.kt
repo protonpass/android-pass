@@ -19,29 +19,46 @@
 package proton.android.pass.features.itemcreate.alias.mailboxes.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation
+import proton.android.pass.features.itemcreate.alias.mailboxes.presentation.SelectMailboxesEvent
 import proton.android.pass.features.itemcreate.alias.mailboxes.presentation.SelectMailboxesViewModel
 
 @Composable
 internal fun SelectMailboxesBottomsheet(
     modifier: Modifier = Modifier,
-    viewModel: SelectMailboxesViewModel = hiltViewModel()
+    viewModel: SelectMailboxesViewModel = hiltViewModel(),
+    canAddMailbox: Boolean,
+    onNavigate: (CreateAliasNavigation) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(uiState.event) {
+        when (uiState.event) {
+            SelectMailboxesEvent.AddMailbox ->
+                onNavigate(CreateAliasNavigation.AddMailbox)
+
+            SelectMailboxesEvent.Idle -> {}
+        }
+        viewModel.onConsumeEvent(uiState.event)
+    }
     SelectMailboxesContent(
         modifier = modifier,
         state = uiState,
+        canAddMailbox = canAddMailbox,
         onEvent = {
             when (it) {
-                SelectMailboxEvent.AddMailbox -> {
+                SelectMailboxUiEvent.AddMailbox ->
+                    viewModel.dismissFeatureDiscoveryBanner(addMailbox = true)
+
+                SelectMailboxUiEvent.DismissFeatureDiscoveryBanner ->
                     viewModel.dismissFeatureDiscoveryBanner()
-                }
-                SelectMailboxEvent.DismissFeatureDiscoveryBanner ->
-                    viewModel.dismissFeatureDiscoveryBanner()
-                is SelectMailboxEvent.SelectMailbox ->
+
+                is SelectMailboxUiEvent.SelectMailbox ->
                     viewModel.toggleMailbox(it.aliasMailbox)
             }
         }

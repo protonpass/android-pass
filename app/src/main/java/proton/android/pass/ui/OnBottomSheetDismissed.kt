@@ -31,13 +31,13 @@ import proton.android.pass.log.api.PassLogger
 internal fun onBottomSheetDismissed(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
-    jobState: MutableState<Job?>,
+    dismissJob: MutableState<Job?>,
     block: () -> Unit
 ) {
-    if (jobState.value?.isActive == true) {
+    if (dismissJob.value?.isActive == true) {
         return
     }
-    jobState.value = coroutineScope.launch {
+    dismissJob.value = coroutineScope.launch {
         try {
             while (isActive && modalBottomSheetState.isVisible) {
                 try {
@@ -49,7 +49,7 @@ internal fun onBottomSheetDismissed(
             }
             block()
         } finally {
-            jobState.value = null
+            dismissJob.value = null
         }
     }
 }

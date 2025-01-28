@@ -27,6 +27,7 @@ data class AliasSuffixUiModel(
     val suffix: String,
     val signedSuffix: String,
     val isCustom: Boolean,
+    val isPremium: Boolean,
     val domain: String
 ) : Parcelable {
 
@@ -34,6 +35,7 @@ data class AliasSuffixUiModel(
         suffix = aliasSuffix.suffix,
         signedSuffix = aliasSuffix.signedSuffix,
         isCustom = aliasSuffix.isCustom,
+        isPremium = aliasSuffix.isPremium,
         domain = aliasSuffix.domain
     )
 
@@ -41,6 +43,7 @@ data class AliasSuffixUiModel(
         suffix = suffix,
         signedSuffix = signedSuffix,
         isCustom = isCustom,
+        isPremium = isPremium,
         domain = domain
     )
 }

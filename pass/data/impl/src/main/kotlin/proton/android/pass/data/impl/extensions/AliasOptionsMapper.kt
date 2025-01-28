@@ -34,6 +34,7 @@ fun AliasSuffixResponse.toDomain(): AliasSuffix = AliasSuffix(
     suffix = suffix,
     signedSuffix = signedSuffix,
     isCustom = isCustom,
+    isPremium = isPremium,
     domain = domain
 )
 

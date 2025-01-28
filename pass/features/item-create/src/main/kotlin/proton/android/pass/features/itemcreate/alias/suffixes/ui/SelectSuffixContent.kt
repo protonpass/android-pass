@@ -37,15 +37,16 @@ import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
+import proton.android.pass.composecomponents.impl.icon.PassPlusIcon
 import proton.android.pass.domain.AliasSuffix
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.alias.banner.AliasCustomDomainBanner
 import proton.android.pass.features.itemcreate.alias.suffixes.presentation.SelectSuffixEvent
 import proton.android.pass.features.itemcreate.alias.suffixes.presentation.SelectSuffixUiState
-import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun SelectSuffixContent(
@@ -60,7 +61,10 @@ internal fun SelectSuffixContent(
             title = stringResource(id = R.string.alias_bottomsheet_suffix_title)
         )
 
-        val list = state.suffixList.map { suffix ->
+        val list = state.suffixes.sortedWith(
+            compareBy<AliasSuffix> { !it.isCustom }
+                .thenBy { it.isPremium }
+        ).map { suffix ->
             val isSelected = suffix == state.selectedSuffix.value()
             object : BottomSheetItem {
                 override val title: @Composable () -> Unit
@@ -69,18 +73,39 @@ internal fun SelectSuffixContent(
                             text = suffix.domain
                         )
                     }
-                override val subtitle: @Composable (() -> Unit)? = null
-                override val leftIcon: @Composable (() -> Unit)? = null
-                override val endIcon: @Composable (() -> Unit)? = if (isSelected) {
-                    {
-                        BottomSheetItemIcon(
-                            iconId = CoreR.drawable.ic_proton_checkmark,
-                            tint = PassTheme.colors.interactionNorm
-                        )
+                override val subtitle: @Composable () -> Unit = {
+                    val subtitle = when {
+                        suffix.isCustom -> stringResource(R.string.suffix_subtitle_private_domain)
+                        suffix.isPremium -> stringResource(R.string.suffix_subtitle_premium_domain)
+                        else -> stringResource(R.string.suffix_subtitle_public_domain)
                     }
-                } else null
+                    BottomSheetItemSubtitle(text = subtitle)
+                }
+                override val leftIcon: @Composable (() -> Unit)? = null
+                override val endIcon: @Composable (() -> Unit)? = when {
+                    state.canUpgrade && suffix.isPremium -> {
+                        { PassPlusIcon() }
+                    }
+
+                    else -> {
+                        if (isSelected) {
+                            {
+                                BottomSheetItemIcon(
+                                    iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark,
+                                    tint = PassTheme.colors.interactionNorm
+                                )
+                            }
+                        } else null
+                    }
+                }
                 override val onClick: () -> Unit =
-                    { onEvent(SelectSuffixUiEvent.SelectSuffixUi(suffix)) }
+                    {
+                        if (state.canUpgrade && suffix.isPremium) {
+                            onEvent(SelectSuffixUiEvent.Upgrade)
+                        } else {
+                            onEvent(SelectSuffixUiEvent.SelectSuffixUi(suffix))
+                        }
+                    }
                 override val isDivider: Boolean = false
             }
         }
@@ -109,22 +134,32 @@ fun SelectSuffixContentPreview(@PreviewParameter(ThemePreviewProvider::class) is
             suffix = "first",
             signedSuffix = "",
             isCustom = false,
-            domain = "proton.me"
+            isPremium = false,
+            domain = "public.proton.me"
         ),
         AliasSuffix(
             suffix = "second",
             signedSuffix = "",
             isCustom = false,
-            domain = "proton.me"
+            isPremium = true,
+            domain = "premium.proton.me"
+        ),
+        AliasSuffix(
+            suffix = "third",
+            signedSuffix = "",
+            isCustom = true,
+            isPremium = false,
+            domain = "private.proton.me"
         )
     )
     PassTheme(isDark = isDark) {
         Surface {
             SelectSuffixContent(
                 state = SelectSuffixUiState(
-                    suffixList = suffixList,
+                    suffixes = suffixList,
                     selectedSuffix = suffixList.firstOrNull().toOption(),
                     shouldDisplayFeatureDiscoveryBanner = false,
+                    canUpgrade = true,
                     event = SelectSuffixEvent.Idle
                 ),
                 onEvent = {}

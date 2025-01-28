@@ -52,12 +52,12 @@ class SelectSuffixViewModel @Inject constructor(
         userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementCustomDomain),
         observeUserAccessData(),
         eventFlow
-    ) { suffixes, selectedSuffix, featureDiscoveryPreference, plan, event ->
+    ) { suffixes, selectedSuffix, featureDiscoveryPreference, userAccessData, event ->
         SelectSuffixUiState(
             suffixes = suffixes.toPersistentSet(),
             selectedSuffix = selectedSuffix,
             shouldDisplayFeatureDiscoveryBanner = featureDiscoveryPreference.value,
-            canUpgrade = plan?.canManageSimpleLoginAliases ?: false,
+            canUpgrade = !(userAccessData?.canManageSimpleLoginAliases ?: false),
             event = event
         )
     }.stateIn(

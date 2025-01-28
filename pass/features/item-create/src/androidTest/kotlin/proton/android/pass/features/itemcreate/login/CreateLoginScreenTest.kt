@@ -560,6 +560,7 @@ class CreateLoginScreenTest {
                     suffix = "some.suffix@test.random",
                     signedSuffix = "",
                     isCustom = false,
+                    isPremium = false,
                     domain = "test.random"
                 )
             )

@@ -289,6 +289,7 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
 
     createAliasGraph(
         canUseAttachments = false,
+        canAddMailbox = false,
         onNavigate = {
             when (it) {
                 CreateAliasNavigation.CloseScreen -> appNavigator.navigateBack()
@@ -319,6 +320,9 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                 is CreateAliasNavigation.DeleteAllAttachments -> {
                     throw IllegalStateException("Cannot use attachments from CreatePasskey")
                 }
+
+                CreateAliasNavigation.AddMailbox ->
+                    throw IllegalStateException("Cannot add mailbox from CreatePasskey")
             }
         }
     )

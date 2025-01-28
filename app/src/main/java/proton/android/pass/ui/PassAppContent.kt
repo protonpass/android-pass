@@ -66,6 +66,7 @@ import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarEvent
 import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.onBottomSheetDismissed
 import proton.android.pass.composecomponents.impl.bottombar.PassHomeBottomBar
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.messages.OfflineIndicator

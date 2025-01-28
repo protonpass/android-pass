@@ -24,6 +24,7 @@ object TestAliasSuffixUiModel {
         suffix = "@test-suffix",
         signedSuffix = "test-signedSuffix",
         isCustom = false,
+        isPremium = false,
         domain = "test-domain"
     )
 }

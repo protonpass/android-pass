@@ -38,7 +38,7 @@ fun SimpleLoginSyncMailboxVerifyScreen(
         when (state.event) {
             SimpleLoginSyncMailboxVerifyEvent.Idle -> Unit
             SimpleLoginSyncMailboxVerifyEvent.OnVerifyAliasMailboxCompleted -> {
-                onNavigated(SimpleLoginSyncNavDestination.AliasManagement)
+                onNavigated(SimpleLoginSyncNavDestination.BackToOrigin)
             }
         }
 
@@ -51,7 +51,7 @@ fun SimpleLoginSyncMailboxVerifyScreen(
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SimpleLoginSyncMailboxVerifyUiEvent.OnCloseClicked -> {
-                    onNavigated(SimpleLoginSyncNavDestination.AliasManagement)
+                    onNavigated(SimpleLoginSyncNavDestination.BackToOrigin)
                 }
 
                 SimpleLoginSyncMailboxVerifyUiEvent.OnVerifyClicked -> {

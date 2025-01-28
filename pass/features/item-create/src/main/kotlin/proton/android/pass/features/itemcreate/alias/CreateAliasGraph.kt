@@ -118,6 +118,7 @@ sealed interface CreateAliasNavigation {
     data object UpsellAttachments : CreateAliasNavigation
     data object SelectSuffix : CreateAliasNavigation
     data object SelectMailbox : CreateAliasNavigation
+    data object AddMailbox : CreateAliasNavigation
 
     @JvmInline
     value class DeleteAllAttachments(val attachmentIds: Set<AttachmentId>) : CreateAliasNavigation
@@ -128,7 +129,11 @@ sealed interface CreateAliasNavigation {
     data class SelectVault(val shareId: ShareId) : CreateAliasNavigation
 }
 
-fun NavGraphBuilder.createAliasGraph(canUseAttachments: Boolean, onNavigate: (CreateAliasNavigation) -> Unit) {
+fun NavGraphBuilder.createAliasGraph(
+    canUseAttachments: Boolean,
+    canAddMailbox: Boolean,
+    onNavigate: (CreateAliasNavigation) -> Unit
+) {
     composable(CreateAlias) { navBackStack ->
         val selectVault by navBackStack.savedStateHandle
             .getStateFlow<String?>(KEY_VAULT_SELECTED, null)
@@ -155,6 +160,9 @@ fun NavGraphBuilder.createAliasGraph(canUseAttachments: Boolean, onNavigate: (Cr
         )
     }
     bottomSheet(AliasSelectMailboxBottomSheetNavItem) {
-        SelectMailboxesBottomsheet()
+        SelectMailboxesBottomsheet(
+            canAddMailbox = canAddMailbox,
+            onNavigate = onNavigate
+        )
     }
 }

@@ -87,11 +87,6 @@ internal data class ShareFromItemUiState(
             }
         }
 
-    internal val canShareViaSecureLink: Boolean = when (itemOption) {
-        None -> false
-        is Some -> itemOption.value.isOwner
-    }
-
     internal val canManageAccess: Boolean = isItemSharingAvailable && (isSharedItem || isSharedShare)
 
     internal companion object {

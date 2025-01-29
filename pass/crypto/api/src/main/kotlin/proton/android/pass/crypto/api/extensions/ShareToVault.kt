@@ -23,21 +23,23 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.Vault
 
+fun Share.Vault.toVault(): Vault = Vault(
+    shareId = id,
+    userId = userId,
+    vaultId = vaultId,
+    name = name,
+    color = color,
+    icon = icon,
+    members = memberCount,
+    isOwned = isOwner,
+    role = shareRole,
+    shared = shared,
+    maxMembers = maxMembers,
+    canAutofill = canAutofill,
+    createTime = createTime
+)
+
 fun Share.toVault(): Option<Vault> = when (this) {
     is Share.Item -> null
-    is Share.Vault -> Vault(
-        shareId = id,
-        userId = userId,
-        vaultId = vaultId,
-        name = name,
-        color = color,
-        icon = icon,
-        members = memberCount,
-        isOwned = isOwner,
-        role = shareRole,
-        shared = shared,
-        maxMembers = maxMembers,
-        canAutofill = canAutofill,
-        createTime = createTime
-    )
+    is Share.Vault -> this.toVault()
 }.toOption()

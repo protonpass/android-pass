@@ -187,26 +187,13 @@ class LocalItemDataSourceImpl @Inject constructor(
                 database.itemsDao().countSharedItems(userId.id, shareIdValues, itemState?.value),
                 database.itemsDao().countTrashedItems(userId.id)
             ) { values: List<SummaryRow>, totpCount: Int, sharedItemsCount, trashedItemsCount ->
-                val logins =
-                    values.firstOrNull { it.itemKind == ItemCategory.Login.value }?.itemCount ?: 0
-                val aliases =
-                    values.firstOrNull { it.itemKind == ItemCategory.Alias.value }?.itemCount ?: 0
-                val notes =
-                    values.firstOrNull { it.itemKind == ItemCategory.Note.value }?.itemCount ?: 0
-                val creditCards =
-                    values.firstOrNull { it.itemKind == ItemCategory.CreditCard.value }?.itemCount
-                        ?: 0
-                val identities =
-                    values.firstOrNull { it.itemKind == ItemCategory.Identity.value }?.itemCount
-                        ?: 0
-
                 ItemCountSummary(
-                    login = logins,
+                    login = values.getCount(ItemCategory.Login),
                     loginWithMFA = totpCount.toLong(),
-                    alias = aliases,
-                    note = notes,
-                    creditCard = creditCards,
-                    identities = identities,
+                    note = values.getCount(ItemCategory.Note),
+                    alias = values.getCount(ItemCategory.Alias),
+                    creditCard = values.getCount(ItemCategory.CreditCard),
+                    identities = values.getCount(ItemCategory.Identity),
                     sharedWithMe = sharedItemsCount.sharedWithMe,
                     sharedByMe = sharedItemsCount.sharedByMe,
                     trashed = trashedItemsCount.toLong()
@@ -219,19 +206,19 @@ class LocalItemDataSourceImpl @Inject constructor(
         itemSharedType: ItemSharedType,
         itemState: ItemState?
     ): Flow<ItemCountSummary> = combine(
-        database.itemsDao().observeSharedItemsSummary(userId.id, itemSharedType, itemState?.value),
-        database.itemsDao().observeSharedTrashedItemsCount(userId.id, itemSharedType),
+        database.itemsDao().observeSharedItemsSummary(userId.id, itemSharedType.value, itemState?.value),
+        database.itemsDao().countSharedItems(userId.id, emptyList(), itemState?.value),
         database.itemsDao().observeSharedTrashedItemsCount(userId.id, itemSharedType)
-    ) { sharedSummary, tfaItemsCount, trashedItemsCount ->
+    ) { sharedSummary, sharedItemsCount, trashedItemsCount ->
         ItemCountSummary(
             login = sharedSummary.getCount(ItemCategory.Login),
-            loginWithMFA = tfaItemsCount.toLong(),
+            loginWithMFA = 0,
             note = sharedSummary.getCount(ItemCategory.Note),
             alias = sharedSummary.getCount(ItemCategory.Alias),
             creditCard = sharedSummary.getCount(ItemCategory.CreditCard),
             identities = sharedSummary.getCount(ItemCategory.Identity),
-            sharedWithMe = 0,
-            sharedByMe = 0,
+            sharedWithMe = sharedItemsCount.sharedWithMe,
+            sharedByMe = sharedItemsCount.sharedByMe,
             trashed = trashedItemsCount.toLong()
         )
     }

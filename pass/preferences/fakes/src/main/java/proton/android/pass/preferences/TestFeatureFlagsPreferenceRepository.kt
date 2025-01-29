@@ -30,6 +30,7 @@ import proton.android.pass.preferences.FeatureFlag.EXTRA_LOGGING
 import proton.android.pass.preferences.FeatureFlag.FILE_ATTACHMENTS_V1
 import proton.android.pass.preferences.FeatureFlag.IN_APP_MESSAGES_V1
 import proton.android.pass.preferences.FeatureFlag.ITEM_SHARING_V1
+import proton.android.pass.preferences.FeatureFlag.SECURE_LINK_NEW_CRYPTO_V1
 import proton.android.pass.preferences.FeatureFlag.SL_ALIASES_SYNC
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -52,6 +53,7 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
             IN_APP_MESSAGES_V1 -> it.getOrDefault(IN_APP_MESSAGES_V1, false) as T
             EXTRA_LOGGING -> it.getOrDefault(EXTRA_LOGGING, false) as T
             FILE_ATTACHMENTS_V1 -> it.getOrDefault(FILE_ATTACHMENTS_V1, false) as T
+            SECURE_LINK_NEW_CRYPTO_V1 -> it.getOrDefault(SECURE_LINK_NEW_CRYPTO_V1, false) as T
         }
     }
 

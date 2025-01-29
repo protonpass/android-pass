@@ -22,7 +22,8 @@ import proton.android.pass.domain.Vault
 
 data class VaultAccessData(
     val canManageAccess: Boolean,
-    val canViewMembers: Boolean
+    val canViewMembers: Boolean,
+    val canCreateSecureLink: Boolean
 )
 
 interface CanManageVaultAccess {

@@ -333,7 +333,7 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
     )
     abstract fun observeSharedItemsSummary(
         userId: String,
-        itemSharedType: ItemSharedType,
+        itemSharedType: Int,
         itemState: Int?
     ): Flow<List<SummaryRow>>
 

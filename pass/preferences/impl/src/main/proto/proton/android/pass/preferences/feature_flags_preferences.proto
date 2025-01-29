@@ -28,4 +28,5 @@ message FeatureFlagsPreferences {
   BoolFlagPrefProto extra_logging_enabled = 20;
   BoolFlagPrefProto in_app_messages_v1_enabled = 21;
   BoolFlagPrefProto file_attachments_v1_enabled = 22;
+  BoolFlagPrefProto secure_link_new_crypto_v1_enabled = 23;
 }

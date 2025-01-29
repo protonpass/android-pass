@@ -34,5 +34,7 @@ data class CreateSecureLinkRequest(
     @SerialName("EncryptedLinkKey")
     val encryptedLinkKey: String,
     @SerialName("LinkKeyShareKeyRotation")
-    val linkKeyShareKeyRotation: Long
+    val linkKeyShareKeyRotation: Long,
+    @SerialName("LinkKeyEncryptedWithItemKey")
+    val linkKeyEncryptedWithItemKey: Boolean
 )

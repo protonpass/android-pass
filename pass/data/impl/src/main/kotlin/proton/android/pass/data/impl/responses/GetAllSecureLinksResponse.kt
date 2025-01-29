@@ -49,6 +49,8 @@ data class GetSecureLinkResponse(
     val encryptedLinkKey: String,
     @SerialName("LinkKeyShareKeyRotation")
     val linkKeyShareKeyRotation: Long,
+    @SerialName("LinkKeyEncryptedWithItemKey")
+    val linkKeyEncryptedWithItemKey: Boolean,
     @SerialName("Active")
     val isActive: Boolean
 )

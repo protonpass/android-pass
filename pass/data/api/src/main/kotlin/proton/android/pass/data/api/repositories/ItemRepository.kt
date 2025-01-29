@@ -181,6 +181,12 @@ interface ItemRepository {
         itemState: ItemState?
     ): Flow<ItemCountSummary>
 
+    fun observeSharedItemsCountSummary(
+        userId: UserId,
+        itemSharedType: ItemSharedType,
+        itemState: ItemState?
+    ): Flow<ItemCountSummary>
+
     fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>>
 
     suspend fun updateItemLastUsed(vaultId: VaultId, itemId: ItemId)

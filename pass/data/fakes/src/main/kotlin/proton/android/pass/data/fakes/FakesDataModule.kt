@@ -166,6 +166,7 @@ import proton.android.pass.data.api.usecases.items.GetMigrationItemsSelection
 import proton.android.pass.data.api.usecases.items.ObserveEncryptedSharedItems
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
+import proton.android.pass.data.api.usecases.items.ObserveSharedItemCountSummary
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.api.usecases.items.UpdateItemFlag
 import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEnforcedLock
@@ -365,6 +366,7 @@ import proton.android.pass.data.fakes.usecases.items.FakeGetItemOptions
 import proton.android.pass.data.fakes.usecases.items.FakeGetMigrationItemsSelection
 import proton.android.pass.data.fakes.usecases.items.FakeObserveItemRevisions
 import proton.android.pass.data.fakes.usecases.items.FakeObserveMonitoredItems
+import proton.android.pass.data.fakes.usecases.items.FakeObserveSharedItemCountSummary
 import proton.android.pass.data.fakes.usecases.items.FakeOpenItemRevision
 import proton.android.pass.data.fakes.usecases.items.FakeUpdateItemFlag
 import proton.android.pass.data.fakes.usecases.passwords.FakeObservePasswordConfig
@@ -1030,5 +1032,10 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveAutofillShares(impl: FakeObserveAutofillShares): ObserveAutofillShares
+
+    @Binds
+    abstract fun bindObserveSharedItemCountSummary(
+        impl: FakeObserveSharedItemCountSummary
+    ): ObserveSharedItemCountSummary
 
 }

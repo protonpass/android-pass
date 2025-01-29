@@ -201,7 +201,6 @@ class LocalItemDataSourceImpl @Inject constructor(
                         ?: 0
 
                 ItemCountSummary(
-                    total = logins + aliases + notes + creditCards,
                     login = logins,
                     loginWithMFA = totpCount.toLong(),
                     alias = aliases,
@@ -214,6 +213,32 @@ class LocalItemDataSourceImpl @Inject constructor(
                 )
             }
         }
+
+    override fun observeSharedItemsCountSummary(
+        userId: UserId,
+        itemSharedType: ItemSharedType,
+        itemState: ItemState?
+    ): Flow<ItemCountSummary> = combine(
+        database.itemsDao().observeSharedItemsSummary(userId.id, itemSharedType, itemState?.value),
+        database.itemsDao().observeSharedTrashedItemsCount(userId.id, itemSharedType),
+        database.itemsDao().observeSharedTrashedItemsCount(userId.id, itemSharedType)
+    ) { sharedSummary, tfaItemsCount, trashedItemsCount ->
+        ItemCountSummary(
+            login = sharedSummary.getCount(ItemCategory.Login),
+            loginWithMFA = tfaItemsCount.toLong(),
+            note = sharedSummary.getCount(ItemCategory.Note),
+            alias = sharedSummary.getCount(ItemCategory.Alias),
+            creditCard = sharedSummary.getCount(ItemCategory.CreditCard),
+            identities = sharedSummary.getCount(ItemCategory.Identity),
+            sharedWithMe = 0,
+            sharedByMe = 0,
+            trashed = trashedItemsCount.toLong()
+        )
+    }
+
+    private fun List<SummaryRow>.getCount(itemCategory: ItemCategory): Long = firstOrNull {
+        it.itemKind == itemCategory.value
+    }?.itemCount ?: 0
 
     override suspend fun updateLastUsedTime(
         shareId: ShareId,

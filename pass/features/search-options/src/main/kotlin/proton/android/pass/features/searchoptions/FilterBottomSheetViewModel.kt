@@ -30,7 +30,9 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.zip
 import proton.android.pass.data.api.usecases.ObserveItemCount
+import proton.android.pass.data.api.usecases.items.ObserveSharedItemCountSummary
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.items.ItemSharedType
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.searchoptions.api.FilterOption
@@ -42,6 +44,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FilterBottomSheetViewModel @Inject constructor(
     observeItemCount: ObserveItemCount,
+    observeSharedItemCountSummary: ObserveSharedItemCountSummary,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val homeSearchOptionsRepository: HomeSearchOptionsRepository
 ) : ViewModel() {
@@ -50,9 +53,17 @@ class FilterBottomSheetViewModel @Inject constructor(
     private val summaryAndOptionsFlow = homeSearchOptionsRepository.observeSearchOptions()
         .flatMapLatest {
             when (val vault = it.vaultSelectionOption) {
-                VaultSelectionOption.AllVaults,
-                VaultSelectionOption.SharedByMe,
-                VaultSelectionOption.SharedWithMe -> observeItemCount()
+                VaultSelectionOption.AllVaults -> observeItemCount()
+
+                VaultSelectionOption.SharedByMe -> observeSharedItemCountSummary(
+                    itemSharedType = ItemSharedType.SharedByMe,
+                    itemState = ItemState.Active
+                )
+
+                VaultSelectionOption.SharedWithMe -> observeSharedItemCountSummary(
+                    itemSharedType = ItemSharedType.SharedWithMe,
+                    itemState = ItemState.Active
+                )
 
                 VaultSelectionOption.Trash -> observeItemCount(
                     itemState = ItemState.Trashed

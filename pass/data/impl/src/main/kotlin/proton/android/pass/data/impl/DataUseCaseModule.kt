@@ -178,6 +178,7 @@ import proton.android.pass.data.api.usecases.items.GetMigrationItemsSelection
 import proton.android.pass.data.api.usecases.items.ObserveEncryptedSharedItems
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
+import proton.android.pass.data.api.usecases.items.ObserveSharedItemCountSummary
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.api.usecases.items.ResetItemHistory
 import proton.android.pass.data.api.usecases.items.RestoreItemRevision
@@ -396,6 +397,7 @@ import proton.android.pass.data.impl.usecases.items.GetMigrationItemsSelectionIm
 import proton.android.pass.data.impl.usecases.items.ObserveEncryptedSharedItemsImpl
 import proton.android.pass.data.impl.usecases.items.ObserveItemRevisionsImpl
 import proton.android.pass.data.impl.usecases.items.ObserveMonitoredItemsImpl
+import proton.android.pass.data.impl.usecases.items.ObserveSharedItemCountSummaryImpl
 import proton.android.pass.data.impl.usecases.items.OpenItemRevisionImpl
 import proton.android.pass.data.impl.usecases.items.ResetItemHistoryImpl
 import proton.android.pass.data.impl.usecases.items.RestoreItemRevisionImpl
@@ -1150,5 +1152,10 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindObserveAutofillShares(impl: ObserveAutofillSharesImpl): ObserveAutofillShares
+
+    @[Binds Singleton]
+    abstract fun bindObserveSharedItemCountSummary(
+        impl: ObserveSharedItemCountSummaryImpl
+    ): ObserveSharedItemCountSummary
 
 }

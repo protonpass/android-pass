@@ -19,7 +19,6 @@
 package proton.android.pass.data.api
 
 data class ItemCountSummary(
-    val total: Long,
     val login: Long,
     val loginWithMFA: Long,
     val note: Long,
@@ -31,6 +30,12 @@ data class ItemCountSummary(
     val trashed: Long
 ) {
 
+    val total: Long = login
+        .plus(note)
+        .plus(alias)
+        .plus(creditCard)
+        .plus(identities)
+
     val hasSharedWithMeItems: Boolean = sharedWithMe > 0
 
     val hasSharedByMeItems: Boolean = sharedByMe > 0
@@ -38,7 +43,6 @@ data class ItemCountSummary(
     companion object {
 
         val Initial = ItemCountSummary(
-            total = 0,
             login = 0,
             loginWithMFA = 0,
             note = 0,

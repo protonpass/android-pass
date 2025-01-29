@@ -34,7 +34,9 @@ import kotlinx.coroutines.flow.zip
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.ObserveItemCount
+import proton.android.pass.data.api.usecases.items.ObserveSharedItemCountSummary
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.items.ItemSharedType
 import proton.android.pass.searchoptions.api.FilterOption
 import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.searchoptions.api.SearchFilterType
@@ -47,6 +49,7 @@ import javax.inject.Inject
 class SearchOptionsBottomSheetViewModel @Inject constructor(
     private val homeSearchOptionsRepository: HomeSearchOptionsRepository,
     observeItemCount: ObserveItemCount,
+    observeSharedItemCountSummary: ObserveSharedItemCountSummary,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -60,9 +63,17 @@ class SearchOptionsBottomSheetViewModel @Inject constructor(
     private val itemCountAndSearchOptionsFlow = homeSearchOptionsRepository.observeSearchOptions()
         .flatMapLatest {
             when (val vault = it.vaultSelectionOption) {
-                VaultSelectionOption.AllVaults,
-                VaultSelectionOption.SharedByMe,
-                VaultSelectionOption.SharedWithMe -> observeItemCount()
+                VaultSelectionOption.AllVaults -> observeItemCount()
+
+                VaultSelectionOption.SharedByMe -> observeSharedItemCountSummary(
+                    itemSharedType = ItemSharedType.SharedByMe,
+                    itemState = ItemState.Active
+                )
+
+                VaultSelectionOption.SharedWithMe -> observeSharedItemCountSummary(
+                    itemSharedType = ItemSharedType.SharedWithMe,
+                    itemState = ItemState.Active
+                )
 
                 VaultSelectionOption.Trash -> observeItemCount(
                     itemState = ItemState.Trashed
@@ -127,7 +138,8 @@ data class SearchOptionsUIState(
     val showBulkActionsOption: Boolean,
     val event: SearchOptionsEvent = SearchOptionsEvent.Idle
 ) {
-    val showResetAction = filterType != SearchFilterType.All || sortingType != SearchSortingType.MostRecent
+    val showResetAction =
+        filterType != SearchFilterType.All || sortingType != SearchSortingType.MostRecent
 
     companion object {
         val Empty = SearchOptionsUIState(

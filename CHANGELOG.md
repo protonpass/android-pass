@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.29.1 (2025-01-20)
+
+### Fixes :bug:
+
+- Infinite loading on accepting empty vault invite
+
 ## 1.29.0 (2025-01-24)
 
 ### Features :tada:

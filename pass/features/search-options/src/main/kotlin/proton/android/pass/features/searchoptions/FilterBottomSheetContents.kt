@@ -190,7 +190,6 @@ internal fun FilterBottomSheetContentsPreview(
                 state = FilterOptionsState.Success(
                     filterType = SearchFilterType.All,
                     summary = ItemCountSummary(
-                        total = 0,
                         login = 0,
                         loginWithMFA = 0,
                         note = 0,

@@ -164,6 +164,12 @@ class TestLocalItemDataSource : LocalItemDataSource {
         itemState: ItemState?
     ): Flow<ItemCountSummary> = summary
 
+    override fun observeSharedItemsCountSummary(
+        userId: UserId,
+        itemSharedType: ItemSharedType,
+        itemState: ItemState?
+    ): Flow<ItemCountSummary> = summary
+
     override suspend fun updateLastUsedTime(
         shareId: ShareId,
         itemId: ItemId,

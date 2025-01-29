@@ -876,6 +876,12 @@ class ItemRepositoryImpl @Inject constructor(
         itemState: ItemState?
     ): Flow<ItemCountSummary> = localItemDataSource.observeItemCountSummary(userId, shareIds, itemState)
 
+    override fun observeSharedItemsCountSummary(
+        userId: UserId,
+        itemSharedType: ItemSharedType,
+        itemState: ItemState?
+    ): Flow<ItemCountSummary> = localItemDataSource.observeSharedItemsCountSummary(userId, itemSharedType, itemState)
+
     override suspend fun updateItemLastUsed(vaultId: VaultId, itemId: ItemId) {
         val readyUsers = accountManager.getAccounts(AccountState.Ready).firstOrNull() ?: emptyList()
         PassLogger.i(TAG, "Updating last used time [vaultId=$vaultId][itemId=$itemId]")

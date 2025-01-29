@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
+import me.proton.core.util.kotlin.takeIfNotEmpty
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.ItemCountSummary
@@ -183,7 +184,7 @@ class LocalItemDataSourceImpl @Inject constructor(
         .let { shareIdValues ->
             combine(
                 database.itemsDao().itemSummary(userId.id, shareIdValues, itemState?.value),
-                database.itemsDao().countAllItemsWithTotp(userId.id),
+                database.itemsDao().countItemsWithTotp(userId.id, shareIdValues.takeIfNotEmpty()),
                 database.itemsDao().countSharedItems(userId.id, shareIdValues, itemState?.value),
                 database.itemsDao().countTrashedItems(userId.id)
             ) { values: List<SummaryRow>, totpCount: Int, sharedItemsCount, trashedItemsCount ->
@@ -207,12 +208,13 @@ class LocalItemDataSourceImpl @Inject constructor(
         itemState: ItemState?
     ): Flow<ItemCountSummary> = combine(
         database.itemsDao().observeSharedItemsSummary(userId.id, itemSharedType.value, itemState?.value),
+        database.itemsDao().observeSharedItemsWithTotpCount(userId.id, itemSharedType.value),
         database.itemsDao().countSharedItems(userId.id, emptyList(), itemState?.value),
         database.itemsDao().observeSharedTrashedItemsCount(userId.id, itemSharedType)
-    ) { sharedSummary, sharedItemsCount, trashedItemsCount ->
+    ) { sharedSummary, mfaItemsCount, sharedItemsCount, trashedItemsCount ->
         ItemCountSummary(
             login = sharedSummary.getCount(ItemCategory.Login),
-            loginWithMFA = 0,
+            loginWithMFA = mfaItemsCount.toLong(),
             note = sharedSummary.getCount(ItemCategory.Note),
             alias = sharedSummary.getCount(ItemCategory.Alias),
             creditCard = sharedSummary.getCount(ItemCategory.CreditCard),
@@ -265,7 +267,7 @@ class LocalItemDataSourceImpl @Inject constructor(
         .map { items -> items.map { it.toItemWithTotp() } }
 
     override fun countAllItemsWithTotp(userId: UserId): Flow<Int> = database.itemsDao()
-        .countAllItemsWithTotp(userId.id)
+        .countItemsWithTotp(userId.id)
 
     override fun observeItemsWithTotpForShare(userId: UserId, shareId: ShareId): Flow<List<ItemWithTotp>> =
         database.itemsDao()
@@ -316,7 +318,10 @@ class LocalItemDataSourceImpl @Inject constructor(
         ItemTypeFilter.All -> throw IllegalStateException("Cannot call value to ItemTypeFilter.All")
     }
 
-    companion object {
+    private companion object {
+
         private const val TAG = "LocalItemDataSourceImpl"
+
     }
+
 }

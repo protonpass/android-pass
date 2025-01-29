@@ -294,25 +294,6 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         itemState: Int?
     ): Flow<List<SummaryRow>>
 
-//    @Query(
-//        """
-//        SELECT
-//            ${ItemEntity.Columns.ITEM_TYPE} as itemKind,
-//            COUNT(${ItemEntity.Columns.ITEM_TYPE}) as itemCount
-//        FROM ${ItemEntity.TABLE}
-//        WHERE ${ItemEntity.Columns.USER_ID} = :userId
-//          AND ${ItemEntity.Columns.SHARE_COUNT} > 0
-//          AND (${ItemEntity.Columns.STATE} = :itemState OR :itemState IS NULL)
-//          AND CASE
-//            WHEN :itemSharedType = $ITEM_SHARED_TYPE_ALL THEN 1
-//            WHEN :itemSharedType = $ITEM_SHARED_TYPE_SHARED_BY_ME THEN ${ItemEntity.Columns.KEY} IS NOT NULL
-//            WHEN :itemSharedType = $ITEM_SHARED_TYPE_SHARED_WITH_ME THEN ${ItemEntity.Columns.KEY} IS NULL
-//            ELSE 0
-//          END
-//        GROUP BY ${ItemEntity.Columns.ITEM_TYPE}
-//    """
-//    )
-
     @Query(
         """
         SELECT
@@ -418,9 +399,26 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         SELECT COUNT(*) FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND ${ItemEntity.Columns.HAS_TOTP} = 1
+          AND (:shareIds IS NULL OR ${ItemEntity.Columns.SHARE_ID} IN (:shareIds))
         """
     )
-    abstract fun countAllItemsWithTotp(userId: String): Flow<Int>
+    abstract fun countItemsWithTotp(userId: String, shareIds: List<String>? = null): Flow<Int>
+
+    @Query(
+        """
+        SELECT COUNT(*) FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.HAS_TOTP} = 1
+          AND ${ItemEntity.Columns.SHARE_COUNT} > 0
+          AND CASE 
+            WHEN :itemSharedType = $ITEM_SHARED_TYPE_ALL THEN 1 
+            WHEN :itemSharedType = $ITEM_SHARED_TYPE_SHARED_BY_ME THEN ${ItemEntity.Columns.KEY} IS NOT NULL
+            WHEN :itemSharedType = $ITEM_SHARED_TYPE_SHARED_WITH_ME THEN ${ItemEntity.Columns.KEY} IS NULL
+            ELSE 0 
+          END
+        """
+    )
+    abstract fun observeSharedItemsWithTotpCount(userId: String, itemSharedType: Int): Flow<Int>
 
     @Query(
         """

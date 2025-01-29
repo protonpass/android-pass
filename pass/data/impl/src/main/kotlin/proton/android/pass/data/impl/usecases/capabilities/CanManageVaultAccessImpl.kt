@@ -31,7 +31,8 @@ class CanManageVaultAccessImpl @Inject constructor() : CanManageVaultAccess {
         val isAdmin = vault.role.toPermissions().hasFlag(SharePermissionFlag.Admin)
         return VaultAccessData(
             canManageAccess = isAdmin,
-            canViewMembers = !isAdmin
+            canViewMembers = !isAdmin,
+            canCreateSecureLink = isAdmin
         )
     }
 }

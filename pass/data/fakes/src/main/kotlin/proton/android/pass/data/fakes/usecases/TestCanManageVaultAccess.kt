@@ -29,7 +29,8 @@ class TestCanManageVaultAccess @Inject constructor() : CanManageVaultAccess {
 
     private var result: VaultAccessData = VaultAccessData(
         canManageAccess = true,
-        canViewMembers = true
+        canViewMembers = true,
+        canCreateSecureLink = true
     )
 
     fun setResult(value: VaultAccessData) {

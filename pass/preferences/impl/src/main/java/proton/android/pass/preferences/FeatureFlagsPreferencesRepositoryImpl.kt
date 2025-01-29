@@ -40,6 +40,7 @@ import proton.android.pass.preferences.FeatureFlag.EXTRA_LOGGING
 import proton.android.pass.preferences.FeatureFlag.FILE_ATTACHMENTS_V1
 import proton.android.pass.preferences.FeatureFlag.IN_APP_MESSAGES_V1
 import proton.android.pass.preferences.FeatureFlag.ITEM_SHARING_V1
+import proton.android.pass.preferences.FeatureFlag.SECURE_LINK_NEW_CRYPTO_V1
 import proton.android.pass.preferences.FeatureFlag.SL_ALIASES_SYNC
 import java.io.IOException
 import javax.inject.Inject
@@ -93,6 +94,11 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { fileAttachmentsV1Enabled.value }
+
+        SECURE_LINK_NEW_CRYPTO_V1 -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault
+        ) { secureLinkNewCryptoV1Enabled.value }
     }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> = when (featureFlag) {
@@ -126,6 +132,10 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         FILE_ATTACHMENTS_V1 -> setFeatureFlag {
             fileAttachmentsV1Enabled = boolFlagPrefProto(value)
+        }
+
+        SECURE_LINK_NEW_CRYPTO_V1 -> setFeatureFlag {
+            secureLinkNewCryptoV1Enabled = boolFlagPrefProto(value)
         }
     }
 
@@ -225,6 +235,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             IN_APP_MESSAGES_V1 -> inAppMessagesV1Enabled
             EXTRA_LOGGING -> extraLoggingEnabled
             FILE_ATTACHMENTS_V1 -> fileAttachmentsV1Enabled
+            SECURE_LINK_NEW_CRYPTO_V1 -> secureLinkNewCryptoV1Enabled
         }.value
     }
 }

@@ -71,5 +71,11 @@ enum class FeatureFlag(
         description = "Enable file attachments",
         key = "PassFileAttachmentsV1",
         isEnabledDefault = false
+    ),
+    SECURE_LINK_NEW_CRYPTO_V1(
+        title = "Secure link new crypto (v1)",
+        description = "Enable secure link new crypto",
+        key = "PassSecureLinkCryptoChangeV1",
+        isEnabledDefault = false
     )
 }

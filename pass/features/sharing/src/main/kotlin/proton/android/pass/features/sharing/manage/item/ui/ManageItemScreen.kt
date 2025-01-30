@@ -31,10 +31,17 @@ import proton.android.pass.features.sharing.manage.item.presentation.ManageItemV
 @Composable
 internal fun ManageItemScreen(
     modifier: Modifier = Modifier,
+    refreshShareMembers: Boolean,
     onNavigateEvent: (SharingNavigation) -> Unit,
     viewModel: ManageItemViewModel = hiltViewModel()
 ) = with(viewModel) {
     val state by stateFlow.collectAsStateWithLifecycle()
+
+    LaunchedEffect(refreshShareMembers) {
+        if (refreshShareMembers) {
+            onRefreshShareMembers()
+        }
+    }
 
     LaunchedEffect(state.event) {
         when (state.event) {
@@ -74,12 +81,21 @@ internal fun ManageItemScreen(
                     ).also(onNavigateEvent)
                 }
 
-                is ManageItemUiEvent.OnMemberOptionsClick -> {
+                is ManageItemUiEvent.OnItemMemberOptionsClick -> {
                     SharingNavigation.ManageItemMemberOptions(
                         shareId = uiEvent.shareId,
                         memberShareId = uiEvent.member.shareId,
                         memberRole = uiEvent.member.role,
                         memberEmail = uiEvent.member.email
+                    ).also(onNavigateEvent)
+                }
+
+                is ManageItemUiEvent.OnVaultMemberOptionsClick -> {
+                    SharingNavigation.MemberOptions(
+                        shareId = uiEvent.shareId,
+                        destShareId = uiEvent.member.shareId,
+                        memberRole = uiEvent.member.role,
+                        destEmail = uiEvent.member.email
                     ).also(onNavigateEvent)
                 }
             }

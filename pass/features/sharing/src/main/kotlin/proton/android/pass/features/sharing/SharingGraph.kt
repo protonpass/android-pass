@@ -169,6 +169,9 @@ sealed interface SharingNavigation {
     @JvmInline
     value class CloseBottomSheet(val refresh: Boolean) : SharingNavigation
 
+    @JvmInline
+    value class CloseDialog(val refresh: Boolean) : SharingNavigation
+
     data class Permissions(val shareId: ShareId, val itemIdOption: Option<ItemId>) :
         SharingNavigation
 
@@ -240,7 +243,8 @@ sealed interface SharingNavigation {
     ) : SharingNavigation
 
     @JvmInline
-    value class InviteToShareEditAllPermissions(val itemIdOption: Option<ItemId>) : SharingNavigation
+    value class InviteToShareEditAllPermissions(val itemIdOption: Option<ItemId>) :
+        SharingNavigation
 
     data object InviteError : SharingNavigation
 
@@ -290,7 +294,14 @@ fun NavGraphBuilder.sharingGraph(onNavigateEvent: (SharingNavigation) -> Unit) {
     }
 
     composable(navItem = ManageItemNavItem) {
-        ManageItemScreen(onNavigateEvent = onNavigateEvent)
+        val refreshShareMembers by it.savedStateHandle
+            .getStateFlow(REFRESH_MEMBER_LIST_FLAG, false)
+            .collectAsStateWithLifecycle()
+
+        ManageItemScreen(
+            refreshShareMembers = refreshShareMembers,
+            onNavigateEvent = onNavigateEvent
+        )
     }
 
     bottomSheet(navItem = ManageItemMemberOptionsNavItem) {

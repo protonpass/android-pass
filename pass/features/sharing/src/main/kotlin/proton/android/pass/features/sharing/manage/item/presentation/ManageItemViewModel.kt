@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -68,15 +69,21 @@ class ManageItemViewModel @Inject constructor(
 
     private val shareFlow = oneShot { observeShare(shareId).first() }
 
-    private val shareItemMembersFlow = observeShareItemMembers(shareId, itemId)
-        .catch { error ->
-            PassLogger.w(TAG, "There was an error observing share members")
-            PassLogger.w(TAG, error)
+    private val refreshShareItemMembersFlow = MutableStateFlow(value = false)
 
-            snackbarDispatcher(SharingSnackbarMessage.FetchMembersError)
-            eventFlow.update { ManageItemEvent.OnShareManagementError }
-            emit(emptyList())
+    private val shareItemMembersFlow = refreshShareItemMembersFlow
+        .flatMapLatest {
+            observeShareItemMembers(shareId, itemId)
+                .catch { error ->
+                    PassLogger.w(TAG, "There was an error observing share members")
+                    PassLogger.w(TAG, error)
+
+                    snackbarDispatcher(SharingSnackbarMessage.FetchMembersError)
+                    eventFlow.update { ManageItemEvent.OnShareManagementError }
+                    emit(emptyList())
+                }
         }
+
 
     private val itemSharePendingInvitesFlow = observeSharePendingInvites(shareId, itemId)
         .catch { error ->
@@ -118,6 +125,10 @@ class ManageItemViewModel @Inject constructor(
 
     internal fun onConsumeEvent(event: ManageItemEvent) {
         eventFlow.compareAndSet(event, ManageItemEvent.Idle)
+    }
+
+    internal fun onRefreshShareMembers() {
+        refreshShareItemMembersFlow.update { true }
     }
 
     private companion object {

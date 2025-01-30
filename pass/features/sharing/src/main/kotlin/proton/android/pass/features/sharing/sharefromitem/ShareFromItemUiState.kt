@@ -22,12 +22,10 @@ import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.data.api.usecases.capabilities.VaultAccessData
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.VaultWithItemCount
 
 @Stable
 internal sealed interface ShareFromItemNavEvent {
@@ -41,40 +39,14 @@ internal sealed interface ShareFromItemNavEvent {
 }
 
 @Stable
-internal sealed interface CreateNewVaultState {
-
-    @Stable
-    data object Allow : CreateNewVaultState
-
-    @Stable
-    data object Upgrade : CreateNewVaultState
-
-    @Stable
-    data object VaultLimitReached : CreateNewVaultState
-
-    @Stable
-    data object Hide : CreateNewVaultState
-
-}
-
-@Stable
 internal data class ShareFromItemUiState(
     val shareId: ShareId,
     val itemId: ItemId,
-    val vault: Option<VaultWithItemCount>,
-    val showMoveToSharedVault: Boolean,
-    val showCreateVault: CreateNewVaultState,
     val event: ShareFromItemNavEvent,
     val canUsePaidFeatures: Boolean,
     val isItemSharingAvailable: Boolean,
-    private val vaultAccessData: VaultAccessData,
     private val itemOption: Option<Item>
 ) {
-
-    private val isSharedVault: Boolean = when (vault) {
-        None -> false
-        is Some -> vault.value.vault.shared
-    }
 
     private val isSharedItem: Boolean = when (itemOption) {
         None -> false
@@ -95,40 +67,23 @@ internal data class ShareFromItemUiState(
         }
     }
 
-    internal val canManageSharedVault: Boolean = isSharedVault && vaultAccessData.canManageAccess
-
-    internal val canViewSharedVaultMembers: Boolean =
-        isSharedVault && vaultAccessData.canViewMembers
-
-    internal val sharedVaultMembersCount: Int by lazy {
-        when (vault) {
-            None -> 0
-            is Some -> vault.value.vault.members
-        }
-    }
+    internal val canShareViaItemSharing: Boolean = isItemSharingAvailable
 
     internal val canShareViaSecureLink: Boolean = when (itemOption) {
         None -> false
         is Some -> itemOption.value.isOwner
     }
 
-    internal val canManageAccess: Boolean = canManageSharedVault || isSharedItem
+    internal val canManageAccess: Boolean = isItemSharingAvailable && isSharedItem
 
     internal companion object {
 
         fun initial(shareId: ShareId, itemId: ItemId) = ShareFromItemUiState(
             shareId = shareId,
             itemId = itemId,
-            vault = None,
-            showMoveToSharedVault = false,
-            showCreateVault = CreateNewVaultState.Hide,
             event = ShareFromItemNavEvent.Unknown,
             canUsePaidFeatures = false,
             isItemSharingAvailable = false,
-            vaultAccessData = VaultAccessData(
-                canManageAccess = false,
-                canViewMembers = false
-            ),
             itemOption = None
         )
 

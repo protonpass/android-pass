@@ -50,6 +50,11 @@ internal data class ShareFromItemUiState(
     private val shareOption: Option<Share>
 ) {
 
+    private val isSharedItem: Boolean = when (itemOption) {
+        None -> false
+        is Some -> itemOption.value.shareCount > 0
+    }
+
     private val isSharedShare: Boolean = when (shareOption) {
         None -> false
         is Some -> shareOption.value.shared
@@ -87,7 +92,7 @@ internal data class ShareFromItemUiState(
         is Some -> itemOption.value.isOwner
     }
 
-    internal val canManageAccess: Boolean = isItemSharingAvailable && isSharedShare
+    internal val canManageAccess: Boolean = isItemSharingAvailable && (isSharedItem || isSharedShare)
 
     internal companion object {
 

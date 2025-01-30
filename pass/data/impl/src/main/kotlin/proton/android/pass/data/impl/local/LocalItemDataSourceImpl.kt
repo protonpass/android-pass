@@ -181,12 +181,13 @@ class LocalItemDataSourceImpl @Inject constructor(
         shareIds: List<ShareId>,
         itemState: ItemState?
     ): Flow<ItemCountSummary> = shareIds.map { shareId -> shareId.id }
+        .takeIfNotEmpty()
         .let { shareIdValues ->
             combine(
                 database.itemsDao().itemSummary(userId.id, shareIdValues, itemState?.value),
-                database.itemsDao().countItemsWithTotp(userId.id, shareIdValues.takeIfNotEmpty()),
+                database.itemsDao().countItemsWithTotp(userId.id, shareIdValues),
                 database.itemsDao().countSharedItems(userId.id, shareIdValues, itemState?.value),
-                database.itemsDao().countTrashedItems(userId.id)
+                database.itemsDao().countTrashedItems(userId.id, shareIdValues)
             ) { values: List<SummaryRow>, totpCount: Int, sharedItemsCount, trashedItemsCount ->
                 ItemCountSummary(
                     login = values.getCount(ItemCategory.Login),
@@ -210,7 +211,7 @@ class LocalItemDataSourceImpl @Inject constructor(
         database.itemsDao().observeSharedItemsSummary(userId.id, itemSharedType.value, itemState?.value),
         database.itemsDao().observeSharedItemsWithTotpCount(userId.id, itemSharedType.value),
         database.itemsDao().countSharedItems(userId.id, emptyList(), itemState?.value),
-        database.itemsDao().observeSharedTrashedItemsCount(userId.id, itemSharedType)
+        database.itemsDao().observeSharedTrashedItemsCount(userId.id, itemSharedType.value)
     ) { sharedSummary, mfaItemsCount, sharedItemsCount, trashedItemsCount ->
         ItemCountSummary(
             login = sharedSummary.getCount(ItemCategory.Login),

@@ -25,7 +25,6 @@ import me.proton.core.data.room.db.BaseDao
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.domain.ItemStateValues
-import proton.android.pass.domain.items.ItemSharedType
 
 data class SummaryRow(
     val itemKind: Int,
@@ -283,14 +282,14 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
             COUNT(${ItemEntity.Columns.ITEM_TYPE}) as itemCount
         FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
+          AND (:shareIds IS NULL OR ${ItemEntity.Columns.SHARE_ID} IN (:shareIds))
           AND (${ItemEntity.Columns.STATE} = :itemState OR :itemState IS NULL)
         GROUP BY ${ItemEntity.Columns.ITEM_TYPE}
         """
     )
     abstract fun itemSummary(
         userId: String,
-        shareIds: List<String>,
+        shareIds: List<String>?,
         itemState: Int?
     ): Flow<List<SummaryRow>>
 
@@ -331,7 +330,7 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
           END
         """
     )
-    abstract fun observeSharedTrashedItemsCount(userId: String, itemSharedType: ItemSharedType): Flow<Int>
+    abstract fun observeSharedTrashedItemsCount(userId: String, itemSharedType: Int): Flow<Int>
 
     @Query(
         """
@@ -504,13 +503,13 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
             AND ${ItemEntity.Columns.SHARE_COUNT} > 0
-            AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
+          AND (:shareIds IS NULL OR ${ItemEntity.Columns.SHARE_ID} IN (:shareIds))
             AND (${ItemEntity.Columns.STATE} = :itemState OR :itemState IS NULL)
         """
     )
     abstract fun countSharedItems(
         userId: String,
-        shareIds: List<String>,
+        shareIds: List<String>?,
         itemState: Int?
     ): Flow<SharedItemsCountRow>
 
@@ -531,8 +530,9 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         SELECT COUNT(*) FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND ${ItemEntity.Columns.STATE} = ${ItemStateValues.TRASHED}
+          AND (:shareIds IS NULL OR ${ItemEntity.Columns.SHARE_ID} IN (:shareIds))
         """
     )
-    abstract fun countTrashedItems(userId: String): Flow<Int>
+    abstract fun countTrashedItems(userId: String, shareIds: List<String>?): Flow<Int>
 
 }

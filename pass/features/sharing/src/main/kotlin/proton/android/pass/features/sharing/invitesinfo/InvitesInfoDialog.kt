@@ -59,7 +59,7 @@ fun InvitesInfoDialog(
         Column {
             when (val content = state) {
                 is LoadingResult.Error -> {
-                    onNavigateEvent(SharingNavigation.CloseBottomSheet(false))
+                    onNavigateEvent(SharingNavigation.CloseDialog(false))
                 }
 
                 LoadingResult.Loading -> {
@@ -99,7 +99,7 @@ fun InvitesInfoDialog(
                         color = PassTheme.colors.loginInteractionNormMajor1,
                         cancelText = "",
                         onDismiss = {},
-                        onConfirm = { onNavigateEvent(SharingNavigation.CloseBottomSheet(false)) }
+                        onConfirm = { onNavigateEvent(SharingNavigation.CloseDialog(false)) }
                     )
                 }
             }

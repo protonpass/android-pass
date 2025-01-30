@@ -36,10 +36,10 @@ fun TransferOwnershipDialog(
     LaunchedEffect(state.event) {
         when (state.event) {
             TransferOwnershipEvent.OwnershipTransferred -> {
-                onNavigate(SharingNavigation.CloseBottomSheet(refresh = true))
+                onNavigate(SharingNavigation.CloseDialog(refresh = true))
                 viewModel.clearEvent()
             }
-            TransferOwnershipEvent.Unknown -> {}
+            TransferOwnershipEvent.Unknown -> Unit
         }
     }
 
@@ -47,6 +47,6 @@ fun TransferOwnershipDialog(
         modifier = modifier,
         state = state,
         onConfirm = viewModel::transferOwnership,
-        onCancel = { onNavigate(SharingNavigation.CloseBottomSheet(refresh = false)) }
+        onCancel = { onNavigate(SharingNavigation.CloseDialog(refresh = false)) }
     )
 }

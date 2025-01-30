@@ -25,7 +25,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
@@ -34,6 +33,8 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -42,6 +43,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -101,7 +103,7 @@ internal fun WelcomeContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         LineIndicator(
-            modifier = Modifier.padding(vertical = Spacing.medium),
+            modifier = Modifier.padding(top = Spacing.medium),
             pagerState = pagerState
         )
         val coroutineScope = rememberCoroutineScope()
@@ -126,11 +128,13 @@ internal fun WelcomeContent(
                 }
         ) {
             HorizontalPager(
-                modifier = Modifier.fillMaxHeight(),
+                modifier = Modifier.fillMaxSize(),
                 state = pagerState
             ) { page ->
                 val (titleRes, subtitleRes, imageRes) = onboardingSlides[page]
                 Column(
+                    modifier = Modifier.fillMaxWidth()
+                        .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.spacedBy(Spacing.small),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -148,8 +152,8 @@ internal fun WelcomeContent(
                     )
                     Spacer(Modifier.weight(1f))
                     Image.Default(
-                        modifier = Modifier,
-                        id = imageRes
+                        id = imageRes,
+                        contentScale = ContentScale.FillWidth
                     )
                 }
             }

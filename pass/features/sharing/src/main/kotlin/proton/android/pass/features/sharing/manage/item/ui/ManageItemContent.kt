@@ -94,7 +94,7 @@ internal fun ManageItemContent(
                                 ).also(onUiEvent)
                             },
                             onMemberMenuOptionsClick = { member ->
-                                ManageItemUiEvent.OnMemberOptionsClick(
+                                ManageItemUiEvent.OnItemMemberOptionsClick(
                                     shareId = state.share.id,
                                     member = member
                                 ).also(onUiEvent)
@@ -131,7 +131,7 @@ internal fun ManageItemContent(
                                 ).also(onUiEvent)
                             },
                             onMemberMenuOptionsClick = { member ->
-                                ManageItemUiEvent.OnMemberOptionsClick(
+                                ManageItemUiEvent.OnVaultMemberOptionsClick(
                                     shareId = state.share.id,
                                     member = member
                                 ).also(onUiEvent)

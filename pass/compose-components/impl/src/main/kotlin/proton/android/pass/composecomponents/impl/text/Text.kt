@@ -35,7 +35,6 @@ import me.proton.core.compose.theme.defaultSmallWeak
 import me.proton.core.compose.theme.defaultWeak
 import me.proton.core.compose.theme.headlineNorm
 import me.proton.core.compose.theme.overlineNorm
-import me.proton.core.compose.theme.subheadlineNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.commonui.api.body3Medium
@@ -76,12 +75,14 @@ object Text {
     fun Subheadline(
         text: String,
         modifier: Modifier = Modifier,
-        color: Color = ProtonTheme.colors.textNorm
+        color: Color = ProtonTheme.colors.textNorm,
+        textAlign: TextAlign = TextAlign.Start
     ) {
         Text(
             text = text,
-            style = ProtonTheme.typography.subheadlineNorm.copy(color = color),
-            modifier = modifier
+            style = ProtonTheme.typography.subheadline.copy(color = color),
+            modifier = modifier,
+            textAlign = textAlign
         )
     }
 

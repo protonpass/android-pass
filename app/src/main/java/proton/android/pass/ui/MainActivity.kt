@@ -101,10 +101,16 @@ class MainActivity : FragmentActivity() {
                 PassLogger.w(TAG, "Error setting splash screen keep on screen condition")
                 PassLogger.w(TAG, it)
             }
+            val abTest = true
             DisposableEffect(state) {
                 PassLogger.i(TAG, "Account state: $state")
                 when (state.accountState) {
-                    AccountNeeded -> launcherViewModel.onAccountNeeded()
+                    AccountNeeded -> {
+                        if (!abTest) {
+                            launcherViewModel.onAccountNeeded()
+                        }
+                    }
+
                     PrimaryExist -> launcherViewModel.onPrimaryExist(updateResultLauncher)
                     Processing,
                     StepNeeded -> Unit
@@ -121,14 +127,20 @@ class MainActivity : FragmentActivity() {
 
             val isDark = isDark(state.themePreference)
             SystemUIDisposableEffect(isDark)
+            PassTheme(isDark = isDark) {
+                when (state.accountState) {
+                    Processing,
+                    StepNeeded -> ProtonCenteredProgress(Modifier.fillMaxSize())
 
-            when (state.accountState) {
-                Processing,
-                AccountNeeded,
-                StepNeeded -> ProtonCenteredProgress(Modifier.fillMaxSize())
+                    AccountNeeded -> {
+                        if (abTest) {
+                            WelcomeScreen()
+                        } else {
+                            ProtonCenteredProgress(Modifier.fillMaxSize())
+                        }
+                    }
 
-                PrimaryExist ->
-                    PassTheme(isDark = isDark) {
+                    PrimaryExist ->
                         PassApp(
                             onNavigate = {
                                 when (it) {
@@ -151,7 +163,7 @@ class MainActivity : FragmentActivity() {
                                 }
                             }
                         )
-                    }
+                }
             }
         }
     }

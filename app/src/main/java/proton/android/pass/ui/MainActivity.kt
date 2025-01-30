@@ -134,7 +134,10 @@ class MainActivity : FragmentActivity() {
 
                     AccountNeeded -> {
                         if (abTest) {
-                            WelcomeScreen()
+                            WelcomeScreen(
+                                onCreateAccount = { launcherViewModel.createAccount() },
+                                onSignIn = { launcherViewModel.signIn() }
+                            )
                         } else {
                             ProtonCenteredProgress(Modifier.fillMaxSize())
                         }

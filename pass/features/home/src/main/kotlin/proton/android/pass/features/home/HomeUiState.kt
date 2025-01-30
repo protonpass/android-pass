@@ -84,6 +84,16 @@ internal data class HomeUiState(
     val isItemSharingEnabled: Boolean,
     private val aliasTrashDialogStatusPreference: AliasTrashDialogStatusPreference
 ) {
+
+    internal val sharedTrashedItemsCount: Int = homeListUiState.items
+        .sumOf { groupedItemList ->
+            groupedItemList.items
+                .filter { item -> item.isInTrash() && item.isShared }
+                .size
+        }
+
+    internal val hasSharedTrashedItems: Boolean = sharedTrashedItemsCount > 0
+
     internal fun shouldShowRecentSearchHeader() =
         homeListUiState.items.isNotEmpty() && searchUiState.inSearchMode && searchUiState.isInSuggestionsMode
 

@@ -31,6 +31,20 @@ object Gradients {
             PassPalette.IndigoViolet
         )
     )
+    val RadialOnboarding = Brush.radialGradient(
+        center = Offset(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY),
+        radius = 1800f,
+        colors = listOf(
+            Color(0xFFE4BB98),
+            Color(0xFFD2AAA8),
+            Color(0xFFC9A2AB),
+            Color(0xFFBB95B1),
+            Color(0xFF9A75A3),
+            Color(0xFF724C91),
+            Color(0xFF312255),
+            Color(0xFF1B1340)
+        )
+    )
     val VerticalApricot = Brush.verticalGradient(
         colors = listOf(
             PassPalette.PaleApricot,

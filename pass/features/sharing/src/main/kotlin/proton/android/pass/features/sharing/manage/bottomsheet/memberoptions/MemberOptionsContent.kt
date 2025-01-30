@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.sharing.manage.bottomsheet.memberoptions
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
@@ -36,10 +37,10 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIco
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
-import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
+import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.features.sharing.R
 import proton.android.pass.domain.ShareRole
+import proton.android.pass.features.sharing.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -70,8 +71,7 @@ fun MemberOptionsContent(
             checked = state.memberRole == ShareRole.Read
         ) {
             onEvent(MemberOptionsUiEvent.SetPermission(MemberPermissionLevel.Read))
-        },
-        bottomSheetDivider()
+        }
     )
 
     when (state.transferOwnership) {
@@ -81,14 +81,12 @@ fun MemberOptionsContent(
                 enabled = false,
                 subtitle = stringResource(id = R.string.sharing_bottomsheet_transfer_ownership_disabled_subtitle)
             )
-            itemList += bottomSheetDivider()
         }
 
         TransferOwnershipState.Enabled -> {
             itemList += transferOwnership(enabled = enabled) {
                 onEvent(MemberOptionsUiEvent.TransferOwnership)
             }
-            itemList += bottomSheetDivider()
         }
     }
 
@@ -101,10 +99,13 @@ fun MemberOptionsContent(
 
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
-        items = itemList.toPersistentList()
+        items = itemList
+            .withDividers()
+            .toPersistentList()
     )
 }
 
+@Composable
 private fun setAdminPermission(
     enabled: Boolean,
     checked: Boolean,
@@ -113,12 +114,14 @@ private fun setAdminPermission(
 ): BottomSheetItem = permissionRow(
     title = R.string.sharing_can_manage,
     subtitle = R.string.sharing_can_manage_description,
+    icon = CoreR.drawable.ic_proton_key,
     enabled = enabled,
     checked = checked,
     loading = loading,
     onClick = onClick
 )
 
+@Composable
 private fun setWritePermission(
     enabled: Boolean,
     checked: Boolean,
@@ -127,12 +130,14 @@ private fun setWritePermission(
 ): BottomSheetItem = permissionRow(
     title = R.string.sharing_can_edit,
     subtitle = R.string.sharing_can_edit_description,
+    icon = CoreR.drawable.ic_proton_pencil,
     enabled = enabled,
     checked = checked,
     loading = loading,
     onClick = onClick
 )
 
+@Composable
 private fun setReadPermission(
     enabled: Boolean,
     checked: Boolean,
@@ -141,6 +146,7 @@ private fun setReadPermission(
 ): BottomSheetItem = permissionRow(
     title = R.string.sharing_can_view,
     subtitle = R.string.sharing_can_view_description,
+    icon = CoreR.drawable.ic_proton_eye,
     enabled = enabled,
     checked = checked,
     loading = loading,
@@ -148,40 +154,57 @@ private fun setReadPermission(
 )
 
 @Suppress("LongParameterList")
+@Composable
 private fun permissionRow(
     @StringRes title: Int,
     @StringRes subtitle: Int,
+    @DrawableRes icon: Int,
     enabled: Boolean,
     checked: Boolean,
     loading: Boolean,
     onClick: () -> Unit
 ): BottomSheetItem = object : BottomSheetItem {
+    val color = if (enabled) {
+        PassTheme.colors.textNorm
+    } else {
+        PassTheme.colors.textWeak
+    }
+
     override val title: @Composable () -> Unit
         get() = {
-            val color = if (enabled) {
-                PassTheme.colors.textNorm
-            } else {
-                PassTheme.colors.textWeak
-            }
             BottomSheetItemTitle(
                 text = stringResource(id = title),
                 color = color
             )
         }
+
     override val subtitle: (@Composable () -> Unit)
         get() = {
             BottomSheetItemSubtitle(
                 text = stringResource(id = subtitle),
-                maxLines = 1
+                color = PassTheme.colors.textWeak,
+                maxLines = 2
             )
         }
-    override val leftIcon: (@Composable () -> Unit)?
-        get() = null
+
+
+    override val leftIcon: @Composable () -> Unit = {
+        BottomSheetItemIcon(
+            iconId = icon,
+            tint = color
+        )
+    }
+
     override val endIcon: (@Composable () -> Unit)?
         get() = if (loading) {
             { CircularProgressIndicator(modifier = Modifier.size(24.dp)) }
         } else if (checked) {
-            { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_checkmark) }
+            {
+                BottomSheetItemIcon(
+                    iconId = CoreR.drawable.ic_proton_checkmark,
+                    tint = PassTheme.colors.interactionNormMajor2
+                )
+            }
         } else {
             null
         }

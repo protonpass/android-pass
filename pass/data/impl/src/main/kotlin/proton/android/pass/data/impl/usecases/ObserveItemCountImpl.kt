@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.domain.ItemState
@@ -31,31 +30,15 @@ import javax.inject.Inject
 
 class ObserveItemCountImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
-    private val observeAllShares: ObserveAllShares,
     private val itemRepository: ItemRepository
 ) : ObserveItemCount {
 
-    override fun invoke(itemState: ItemState?, selectedShareId: ShareId?): Flow<ItemCountSummary> =
-        if (selectedShareId != null) {
-            observeCurrentUser()
-                .flatMapLatest { user ->
-                    itemRepository.observeItemCountSummary(
-                        userId = user.userId,
-                        shareIds = listOf(selectedShareId),
-                        itemState = itemState
-                    )
-                }
-        } else {
-            observeAllShares()
-                .flatMapLatest { shares ->
-                    observeCurrentUser()
-                        .flatMapLatest { user ->
-                            itemRepository.observeItemCountSummary(
-                                userId = user.userId,
-                                shareIds = shares.map { it.id },
-                                itemState = itemState
-                            )
-                        }
-                }
+    override fun invoke(itemState: ItemState?, selectedShareId: ShareId?): Flow<ItemCountSummary> = observeCurrentUser()
+        .flatMapLatest { user ->
+            itemRepository.observeItemCountSummary(
+                userId = user.userId,
+                shareIds = listOfNotNull(selectedShareId),
+                itemState = itemState
+            )
         }
 }

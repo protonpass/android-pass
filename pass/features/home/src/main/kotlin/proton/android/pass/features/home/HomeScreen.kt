@@ -985,6 +985,8 @@ fun HomeScreen(
 
             ConfirmClearTrashDialog(
                 show = shouldShowClearTrashDialog,
+                hasSharedTrashedItems = homeUiState.hasSharedTrashedItems,
+                sharedTrashedItemsCount = homeUiState.sharedTrashedItemsCount,
                 isLoading = actionState is ActionState.Loading,
                 onDismiss = {
                     shouldShowClearTrashDialog = false

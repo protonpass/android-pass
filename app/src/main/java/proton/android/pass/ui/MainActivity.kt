@@ -57,6 +57,7 @@ import proton.android.pass.ui.launcher.AccountState.PrimaryExist
 import proton.android.pass.ui.launcher.AccountState.Processing
 import proton.android.pass.ui.launcher.AccountState.StepNeeded
 import proton.android.pass.ui.launcher.LauncherViewModel
+import proton.android.pass.features.welcome.WelcomeScreen
 import javax.inject.Inject
 
 @AndroidEntryPoint

@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.ui
+package proton.android.pass.features.welcome
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween

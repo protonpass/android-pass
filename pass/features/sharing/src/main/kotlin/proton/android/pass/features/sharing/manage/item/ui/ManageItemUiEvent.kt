@@ -40,7 +40,12 @@ internal sealed interface ManageItemUiEvent {
         internal val pendingInvite: SharePendingInvite
     ) : ManageItemUiEvent
 
-    data class OnMemberOptionsClick(
+    data class OnItemMemberOptionsClick(
+        internal val shareId: ShareId,
+        internal val member: ShareMember
+    ) : ManageItemUiEvent
+
+    data class OnVaultMemberOptionsClick(
         internal val shareId: ShareId,
         internal val member: ShareMember
     ) : ManageItemUiEvent

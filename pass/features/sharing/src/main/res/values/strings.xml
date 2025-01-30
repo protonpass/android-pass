@@ -162,10 +162,6 @@
         comment="Title for the Share from item bottomsheet"
     >Share</string>
     <string
-        name="sharing_from_item_description"
-        comment="Description for the Share from item bottomsheet"
-    >Use vaults to share items with others</string>
-    <string
         name="sharing_from_item_share_this_vault_action"
         comment="Button for sharing this vault"
     >Share this vault</string>
@@ -173,14 +169,6 @@
         name="sharing_from_item_move_to_shared_vault_action"
         comment="Button for moving an item to a shared vault"
     >Move to a shared vault</string>
-    <string
-        name="sharing_from_item_create_vault_to_share_action"
-        comment="Button for creating a new vault and sharing it"
-    >Create a new vault to share</string>
-    <string
-        name="sharing_from_item_create_vault_to_share_subtitle"
-        comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button"
-    >This item will be moved to the new vault.</string>
     <string name="sharing_from_item_vault_limit_reached_upgrade">Upgrade to create more vaults</string>
     <string name="sharing_from_item_vault_limit_reached">You have reached the vault limit</string>
 
@@ -188,22 +176,12 @@
     <string name="share_with_recents_title">Recent</string>
     <string name="share_with_remove_email_content_description">Remove email</string>
 
-    <string name="share_with_secure_link_title">Via secure link</string>
-    <string name="share_with_secure_link_description">Generate a secure link to this item.</string>
-
     <string name="share_with_user_shared_title">With other Proton Pass users</string>
     <string name="share_with_user_shared_description">Useful for permanent sharing.</string>
     <string name="share_with_manage_shared_item_title">Manage access</string>
     <string name="share_with_manage_shared_item_description">See member and permission overview.</string>
     <string name="share_with_secure_link_shared_title">Via a secure link</string>
     <string name="share_with_secure_link_shared_description">For one-off sharing.</string>
-
-    <string name="share_with_manage_shared_vault_title">Manage vault access</string>
-    <plurals name="share_with_manage_shared_vault_description">
-        <item quantity="one">The item\'s vault is currently shared with %d user.</item>
-        <item quantity="other">The item\'s vault is currently shared with %d users.</item>
-    </plurals>
-    <string name="share_with_view_shared_vault_members_title">View vault members</string>
 
     <string name="sharing_edit_permissions_set_access_level_all_members">Set access level for all members</string>
     <string name="sharing_edit_permissions_set_access_level_single_member">Set access level for %s</string>

@@ -25,6 +25,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 
 @Stable
@@ -44,8 +45,9 @@ internal data class ShareFromItemUiState(
     val itemId: ItemId,
     val event: ShareFromItemNavEvent,
     val canUsePaidFeatures: Boolean,
-    val isItemSharingAvailable: Boolean,
-    private val itemOption: Option<Item>
+    private val isItemSharingAvailable: Boolean,
+    private val itemOption: Option<Item>,
+    private val itemShareOption: Option<Share.Item>
 ) {
 
     private val isSharedItem: Boolean = when (itemOption) {
@@ -67,7 +69,15 @@ internal data class ShareFromItemUiState(
         }
     }
 
-    internal val canShareViaItemSharing: Boolean = isItemSharingAvailable
+    internal val canShareViaItemSharing: Boolean
+        get() {
+            if (!isItemSharingAvailable) return false
+
+            return when (itemShareOption) {
+                None -> false
+                is Some -> itemShareOption.value.canBeShared
+            }
+        }
 
     internal val canShareViaSecureLink: Boolean = when (itemOption) {
         None -> false
@@ -84,7 +94,8 @@ internal data class ShareFromItemUiState(
             event = ShareFromItemNavEvent.Unknown,
             canUsePaidFeatures = false,
             isItemSharingAvailable = false,
-            itemOption = None
+            itemOption = None,
+            itemShareOption = None
         )
 
     }

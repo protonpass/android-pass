@@ -59,7 +59,7 @@ class CanShareShareImpl @Inject constructor(
             )
         }
 
-        itemShare.canBeShared -> {
+        itemShare.isSharingAvailable -> {
             CanShareShareStatus.CanShare(invitesRemaining = itemShare.remainingInvites)
         }
 

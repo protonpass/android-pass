@@ -38,6 +38,7 @@ import me.proton.core.presentation.R as CoreR
 internal fun ShareFromItemOptions(
     modifier: Modifier = Modifier,
     canUsePaidFeatures: Boolean,
+    canShareViaItemSharing: Boolean,
     canShareViaSecureLink: Boolean,
     canManageAccess: Boolean,
     onEvent: (ShareFromItemEvent) -> Unit
@@ -56,19 +57,21 @@ internal fun ShareFromItemOptions(
             textAlign = TextAlign.Center
         )
 
-        ShareItemSecureLinkRow(
-            iconResId = CoreR.drawable.ic_proton_user_plus,
-            title = stringResource(id = R.string.share_with_user_shared_title),
-            description = stringResource(id = R.string.share_with_user_shared_description),
-            shouldShowPlusIcon = !canUsePaidFeatures,
-            onClick = {
-                if (canUsePaidFeatures) {
-                    ShareFromItemEvent.ShareItem
-                } else {
-                    ShareFromItemEvent.UpsellItemSharing
-                }.also(onEvent)
-            }
-        )
+        if (canShareViaItemSharing) {
+            ShareItemSecureLinkRow(
+                iconResId = CoreR.drawable.ic_proton_user_plus,
+                title = stringResource(id = R.string.share_with_user_shared_title),
+                description = stringResource(id = R.string.share_with_user_shared_description),
+                shouldShowPlusIcon = !canUsePaidFeatures,
+                onClick = {
+                    if (canUsePaidFeatures) {
+                        ShareFromItemEvent.ShareItem
+                    } else {
+                        ShareFromItemEvent.UpsellItemSharing
+                    }.also(onEvent)
+                }
+            )
+        }
 
         if (canShareViaSecureLink) {
             ShareItemSecureLinkRow(

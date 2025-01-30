@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.ui
+package proton.android.pass.features.welcome
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -49,7 +49,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import proton.android.pass.R
 import proton.android.pass.commonui.api.Gradients
 import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
@@ -57,6 +56,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.Button
 import proton.android.pass.composecomponents.impl.image.Image
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.features.onboarding.R
 
 val onboardingSlides = listOf(
     Triple(

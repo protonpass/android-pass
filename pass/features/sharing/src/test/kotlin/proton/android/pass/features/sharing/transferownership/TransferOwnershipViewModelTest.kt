@@ -27,13 +27,14 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.fakes.usecases.TestTransferVaultOwnership
+import proton.android.pass.domain.ShareId
 import proton.android.pass.features.sharing.SharingSnackbarMessage
 import proton.android.pass.features.sharing.manage.bottomsheet.MemberEmailArg
 import proton.android.pass.features.sharing.manage.bottomsheet.MemberShareIdArg
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.domain.ShareId
 
 class TransferOwnershipViewModelTest {
 
@@ -63,7 +64,9 @@ class TransferOwnershipViewModelTest {
     @Test
     fun `emit initial state`() = runTest {
         instance.state.test {
-            assertThat(awaitItem()).isEqualTo(TransferOwnershipState.initial(MEMBER_EMAIL))
+            val expectedEmail = NavParamEncoder.decode(MEMBER_EMAIL)
+
+            assertThat(awaitItem()).isEqualTo(TransferOwnershipState.initial(expectedEmail))
         }
     }
 
@@ -102,6 +105,6 @@ class TransferOwnershipViewModelTest {
     companion object {
         private const val SHARE_ID = "TransferOwnershipViewModelTest-SHARE_ID"
         private const val MEMBER_SHARE_ID = "TransferOwnershipViewModelTest-MEMBER_SHARE_ID"
-        private const val MEMBER_EMAIL = "TransferOwnershipViewModelTest-MEMBER_EMAIL"
+        private val MEMBER_EMAIL = NavParamEncoder.encode("TransferOwnershipViewModelTest-MEMBER_EMAIL")
     }
 }

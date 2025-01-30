@@ -39,6 +39,7 @@ import proton.android.pass.features.sharing.manage.bottomsheet.MemberEmailArg
 import proton.android.pass.features.sharing.manage.bottomsheet.MemberShareIdArg
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
@@ -51,7 +52,9 @@ class TransferOwnershipViewModel @Inject constructor(
 
     private val shareId = ShareId(savedState.get().require(CommonNavArgId.ShareId.key))
     private val memberShareId = ShareId(savedState.get().require(MemberShareIdArg.key))
-    private val memberEmail = savedState.get().require<String>(MemberEmailArg.key)
+    private val memberEmail = savedState.get()
+        .require<String>(MemberEmailArg.key)
+        .let(NavParamEncoder::decode)
 
     private val loadingFlow: MutableStateFlow<IsLoadingState> = MutableStateFlow(IsLoadingState.NotLoading)
     private val eventFlow: MutableStateFlow<TransferOwnershipEvent> = MutableStateFlow(TransferOwnershipEvent.Unknown)

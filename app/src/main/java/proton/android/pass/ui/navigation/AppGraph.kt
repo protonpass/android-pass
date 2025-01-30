@@ -2069,6 +2069,16 @@ fun NavGraphBuilder.appGraph(
                 }
             }
 
+            is SharingNavigation.CloseDialog -> {
+                appNavigator.navigateBack()
+
+                if (it.refresh) {
+                    appNavigator.setResult(
+                        mapOf(REFRESH_MEMBER_LIST_FLAG to true)
+                    )
+                }
+            }
+
             is SharingNavigation.Permissions -> appNavigator.navigate(
                 destination = SharingPermissions,
                 route = SharingPermissions.createRoute(

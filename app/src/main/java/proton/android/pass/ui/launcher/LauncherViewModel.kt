@@ -161,6 +161,10 @@ class LauncherViewModel @Inject constructor(
         authOrchestrator.startAddAccountWorkflow()
     }
 
+    internal fun createAccount() = viewModelScope.launch {
+        authOrchestrator.startSignupWorkflow()
+    }
+
     internal fun signIn(userId: UserId? = null) = viewModelScope.launch {
         val account = userId?.let { getAccountOrNull(it) }
         PassLogger.i(TAG, "Signing in: $userId")

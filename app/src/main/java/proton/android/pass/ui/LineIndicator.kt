@@ -18,6 +18,8 @@
 
 package proton.android.pass.ui
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,6 +30,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
@@ -43,16 +46,16 @@ fun LineIndicator(modifier: Modifier = Modifier, pagerState: PagerState) {
         horizontalArrangement = Arrangement.Start
     ) {
         repeat(pagerState.pageCount) { iteration ->
-            val color = if (pagerState.currentPage == iteration) {
-                PassPalette.White100
-            } else {
-                PassPalette.White10
-            }
+            val isSelected = pagerState.currentPage == iteration
+            val animatedColor by animateColorAsState(
+                targetValue = if (isSelected) PassPalette.White100 else PassPalette.White10,
+                animationSpec = tween(durationMillis = 300)
+            )
             Box(
                 modifier = Modifier
                     .padding(Spacing.extraSmall)
                     .clip(RoundedCornerShape(2.dp))
-                    .background(color)
+                    .background(animatedColor)
                     .weight(1f)
                     .height(6.dp)
             )

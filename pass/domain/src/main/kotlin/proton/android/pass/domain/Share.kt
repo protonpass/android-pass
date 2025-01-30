@@ -101,7 +101,9 @@ sealed class Share {
 
         override val canBeUpdated: Boolean = isOwner || isAdmin || isEditor
 
-        val canBeShared: Boolean = isOwner || isAdmin || isEditor
+        val isSharingAvailable: Boolean = isOwner || isAdmin || isEditor
+
+        val canBeShared: Boolean = isOwner || isAdmin
 
     }
 

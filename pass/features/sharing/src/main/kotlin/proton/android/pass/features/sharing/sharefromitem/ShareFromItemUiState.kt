@@ -47,12 +47,12 @@ internal data class ShareFromItemUiState(
     val canUsePaidFeatures: Boolean,
     private val isItemSharingAvailable: Boolean,
     private val itemOption: Option<Item>,
-    private val itemShareOption: Option<Share.Item>
+    private val shareOption: Option<Share>
 ) {
 
-    private val isSharedItem: Boolean = when (itemOption) {
+    private val isSharedShare: Boolean = when (shareOption) {
         None -> false
-        is Some -> itemOption.value.shareCount > 0
+        is Some -> shareOption.value.shared
     }
 
     internal val isSingleSharingAvailable: Boolean = when (itemOption) {
@@ -73,9 +73,12 @@ internal data class ShareFromItemUiState(
         get() {
             if (!isItemSharingAvailable) return false
 
-            return when (itemShareOption) {
+            return when (shareOption) {
                 None -> false
-                is Some -> itemShareOption.value.canBeShared
+                is Some -> when (val share = shareOption.value) {
+                    is Share.Item -> share.canBeShared
+                    is Share.Vault -> share.isOwner || share.isAdmin
+                }
             }
         }
 
@@ -84,7 +87,7 @@ internal data class ShareFromItemUiState(
         is Some -> itemOption.value.isOwner
     }
 
-    internal val canManageAccess: Boolean = isItemSharingAvailable && isSharedItem
+    internal val canManageAccess: Boolean = isItemSharingAvailable && isSharedShare
 
     internal companion object {
 
@@ -95,7 +98,7 @@ internal data class ShareFromItemUiState(
             canUsePaidFeatures = false,
             isItemSharingAvailable = false,
             itemOption = None,
-            itemShareOption = None
+            shareOption = None
         )
 
     }

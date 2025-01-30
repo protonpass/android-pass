@@ -26,12 +26,10 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.FlowUtils.oneShot
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -41,7 +39,6 @@ import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PlanType
-import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.preferences.FeatureFlag
@@ -80,21 +77,13 @@ class ShareFromItemViewModel @Inject constructor(
             }
         }
 
-    private val itemShareOptionFlow = observeShare(shareId)
-        .mapLatest { share ->
-            when (share) {
-                is Share.Item -> share.some()
-                is Share.Vault -> None
-            }
-        }
-
     internal val stateFlow: StateFlow<ShareFromItemUiState> = combine(
         navEventState,
         canUsePaidFeaturesFlow,
         featureFlagsRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1),
         oneShot { getItemById(shareId, itemId) },
-        itemShareOptionFlow
-    ) { event, canUsePaidFeatures, isItemSharingAvailable, item, itemShareOption ->
+        observeShare(shareId)
+    ) { event, canUsePaidFeatures, isItemSharingAvailable, item, share ->
         ShareFromItemUiState(
             shareId = shareId,
             itemId = itemId,
@@ -102,7 +91,7 @@ class ShareFromItemViewModel @Inject constructor(
             canUsePaidFeatures = canUsePaidFeatures,
             isItemSharingAvailable = isItemSharingAvailable,
             itemOption = item.some(),
-            itemShareOption = itemShareOption
+            shareOption = share.some()
         )
     }.stateIn(
         scope = viewModelScope,

@@ -26,11 +26,14 @@ import proton.android.pass.data.api.usecases.capabilities.CanShareShareStatus
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 class CanShareShareImpl @Inject constructor(
     private val getShareById: GetShareById,
-    private val getUserPlan: GetUserPlan
+    private val getUserPlan: GetUserPlan,
+    private val featureFlagsRepository: FeatureFlagsPreferencesRepository
 ) : CanShareShare {
 
     override suspend fun invoke(shareId: ShareId): CanShareShareStatus {
@@ -47,7 +50,15 @@ class CanShareShareImpl @Inject constructor(
         }
     }
 
-    private fun getItemCanShareStatus(itemShare: Share.Item) = when {
+    private suspend fun getItemCanShareStatus(itemShare: Share.Item) = when {
+        // If a user with FF disabled is invited to an item, it can still accept the invite and view the item,
+        // but sharing is not allowed despite the permissions.
+        !featureFlagsRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1).first() -> {
+            CanShareShareStatus.CannotShare(
+                reason = CanShareShareStatus.CannotShareReason.Unknown
+            )
+        }
+
         itemShare.canBeShared -> {
             CanShareShareStatus.CanShare(invitesRemaining = itemShare.remainingInvites)
         }

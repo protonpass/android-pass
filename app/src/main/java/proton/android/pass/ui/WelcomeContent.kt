@@ -85,7 +85,9 @@ internal fun WelcomeContent(
     pagerState: PagerState = rememberPagerState(
         initialPage = 0,
         pageCount = { onboardingSlides.size }
-    )
+    ),
+    onCreateAccount: () -> Unit,
+    onSignIn: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -161,7 +163,7 @@ internal fun WelcomeContent(
                         .padding(horizontal = Spacing.medium),
                     color = PassPalette.Indigo,
                     elevation = ButtonDefaults.elevation(0.dp),
-                    onClick = {}
+                    onClick = onCreateAccount
                 ) {
                     Text.Body1Medium(
                         modifier = Modifier.padding(Spacing.small),
@@ -176,7 +178,7 @@ internal fun WelcomeContent(
                     borderStroke = BorderStroke(1.dp, PassPalette.White100),
                     color = Color.Transparent,
                     elevation = ButtonDefaults.elevation(0.dp),
-                    onClick = {}
+                    onClick = onSignIn
                 ) {
                     Text.Body1Medium(
                         modifier = Modifier.padding(Spacing.small),
@@ -202,7 +204,9 @@ fun WelcomeContentSlide0Preview() {
                 pagerState = rememberPagerState(
                     initialPage = 0,
                     pageCount = { onboardingSlides.size }
-                )
+                ),
+                onCreateAccount = {},
+                onSignIn = {}
             )
         }
     }
@@ -217,7 +221,9 @@ fun WelcomeContentSlide1Preview() {
                 pagerState = rememberPagerState(
                     initialPage = 1,
                     pageCount = { onboardingSlides.size }
-                )
+                ),
+                onCreateAccount = {},
+                onSignIn = {}
             )
         }
     }
@@ -232,7 +238,9 @@ fun WelcomeContentSlide2Preview() {
                 pagerState = rememberPagerState(
                     initialPage = 2,
                     pageCount = { onboardingSlides.size }
-                )
+                ),
+                onCreateAccount = {},
+                onSignIn = {}
             )
         }
     }
@@ -247,7 +255,9 @@ fun WelcomeContentSlide3Preview() {
                 pagerState = rememberPagerState(
                     initialPage = 3,
                     pageCount = { onboardingSlides.size }
-                )
+                ),
+                onCreateAccount = {},
+                onSignIn = {}
             )
         }
     }

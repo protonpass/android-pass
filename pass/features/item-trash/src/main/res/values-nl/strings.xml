@@ -20,9 +20,4 @@
   <!-- Delete dialog -->
   <string name="item_trash_delete_dialog_title">Permanent verwijderen?</string>
   <string name="item_trash_delete_dialog_message">Deze actie is onomkeerbaar.</string>
-  <!-- Shared warning dialog -->
-  <string name="item_trash_warning_shared_dialog_title">Item naar prullenbak verplaatsen?</string>
-  <string name="item_trash_warning_shared_dialog_message">Dit item wordt momenteel gedeeld. Als u het naar prullenbak verplaatst, wordt de toegang voor alle andere gebruikers uitgeschakeld.</string>
-  <string name="item_trash_warning_shared_snackbar_trash_error">Fout bij verplaatsen van item naar prullenbak</string>
-  <string name="item_trash_warning_shared_snackbar_trash_success">Item verplaatst naar prullenbak</string>
 </resources>

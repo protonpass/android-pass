@@ -4,6 +4,7 @@
   <string name="bottomsheet_delete_permanently">Odstrániť natrvalo</string>
   <string name="alert_confirm_delete_item_dialog_title">Odstrániť natrvalo?</string>
   <string name="alert_confirm_delete_item_dialog_message">Táto akcia je nezvratná.</string>
+  <string name="alert_confirm_delete_item_dialog_shared_warning_message">Táto položka je v súčasnosti zdieľaná. Jej odstránením sa zruší prístup pre všetkých ostatných používateľov.</string>
   <string name="alias_dialog_move_to_trash_title">Presunúť do koša?</string>
   <string name="alias_dialog_move_to_trash_content">Presunutím aliasu do koša sa prestanú preposielať emaily do vašej poštovej schránky.</string>
   <string name="alias_dialog_move_to_trash_confirm">Potvrdiť</string>

@@ -61,6 +61,8 @@
   <string name="sharing_snackbar_invite_sent_success">Запрашэнне адпраўлена</string>
   <string name="sharing_snackbar_invite_sent_error">Немагчыма адправіць запрашэнне</string>
   <string name="sharing_snackbar_invite_new_users_error">Cannot send invites to new users</string>
+  <string name="sharing_snackbar_invite_free_user_error">Item invites are only allowed to be sent to paid users</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">Address has already been invited</string>
   <string name="sharing_snackbar_get_vault_members_error">Немагчыма атрымаць удзельнікаў сховішча</string>
   <string name="sharing_snackbar_change_permission_success">Дазволы зменены</string>
   <string name="sharing_snackbar_change_permission_error">Немагчыма змяніць дазволы</string>
@@ -126,32 +128,19 @@
   <string name="sharing_limit_reached">Для гэтага сховішча дасягнута абмежаванне па колькасці ўдзельнікаў і запрашэнняў.</string>
   <string name="sharing_invites_info_upgrade_text">Палепшыце, каб запрасіць больш удзельнікаў.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Абагуліць</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Выкарыстанне сховішчаў для абагулення элементаў з іншымі</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Абагуліць гэта сховішча</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Перамясціць абагуленае сховішча</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Стварыць новае сховішча для абагулення</string>
-  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Гэты элемент будзе перамешчаны ў новае сховішча.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Палепшыць, каб стварыць больш сховішчаў</string>
   <string name="sharing_from_item_vault_limit_reached">Вы дасягнулі максімальнай колькасці сховішчаў</string>
   <string name="share_with_suggestions_title">Прапановы</string>
   <string name="share_with_recents_title">Нядаўнія</string>
   <string name="share_with_remove_email_content_description">Выдаліць электронную пошту</string>
-  <string name="share_with_secure_link_title">Праз бяспечную спасылку</string>
-  <string name="share_with_secure_link_description">Згенерыраваць бяспечную спасылку для гэтага элемента.</string>
   <string name="share_with_user_shared_title">З іншымі карыстальнікамі Proton Pass</string>
   <string name="share_with_user_shared_description">Карысна для пастаяннага абагульвання.</string>
   <string name="share_with_manage_shared_item_title">Кіраваць доступам</string>
   <string name="share_with_manage_shared_item_description">Паглядзець удзельніка і дазволы.</string>
   <string name="share_with_secure_link_shared_title">Праз бяспечную спасылку</string>
   <string name="share_with_secure_link_shared_description">Для аднаразовага абагульвання.</string>
-  <string name="share_with_manage_shared_vault_title">Кіраванне доступам да сховішча</string>
-  <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="one">Сховішча элемента ў цяперашні час абагулена з %d карыстальнікам.</item>
-    <item quantity="few">Сховішча элемента ў цяперашні час абагулена з %d карыстальнікамі.</item>
-    <item quantity="many">Сховішча элемента ў цяперашні час абагулена з %d карыстальнікамі.</item>
-    <item quantity="other">Сховішча элемента ў цяперашні час абагулена з %d карыстальнікамі.</item>
-  </plurals>
-  <string name="share_with_view_shared_vault_members_title">Паглядзець удзельнікаў сховішча</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Прызначэнне ўзроўню доступу для ўсіх удзельнікаў</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Прызначыць узровень доступу для %s</string>
   <string name="sharing_edit_permissions_remove_user">Выдаліць карыстальніка</string>

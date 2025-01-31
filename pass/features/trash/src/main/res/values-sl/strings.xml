@@ -4,6 +4,7 @@
   <string name="bottomsheet_delete_permanently">Trajno izbriši</string>
   <string name="alert_confirm_delete_item_dialog_title">Trajno izbriši?</string>
   <string name="alert_confirm_delete_item_dialog_message">To dejanje je nepreklicno</string>
+  <string name="alert_confirm_delete_item_dialog_shared_warning_message">This item is currently shared. Deleting it to will remove access for all other users.</string>
   <string name="alias_dialog_move_to_trash_title">Premakni v smetnjak?</string>
   <string name="alias_dialog_move_to_trash_content">Če vzdevek premaknete v smetnjak, bo prenehal posredovati e-pošto v vaš nabiralnik.</string>
   <string name="alias_dialog_move_to_trash_confirm">Potrdi</string>

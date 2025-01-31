@@ -20,9 +20,4 @@
   <!-- Delete dialog -->
   <string name="item_trash_delete_dialog_title">完全に削除しますか？</string>
   <string name="item_trash_delete_dialog_message">この操作は元に戻せません。</string>
-  <!-- Shared warning dialog -->
-  <string name="item_trash_warning_shared_dialog_title">アイテムをごみ箱に移動しますか？</string>
-  <string name="item_trash_warning_shared_dialog_message">このアイテムは現在共有されています。ごみ箱に移動すると、他のすべてのユーザーのアクセスが削除されます。</string>
-  <string name="item_trash_warning_shared_snackbar_trash_error">アイテムをゴミ箱に移動中にエラー</string>
-  <string name="item_trash_warning_shared_snackbar_trash_success">アイテムをゴミ箱に移動しました</string>
 </resources>

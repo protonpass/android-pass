@@ -24,7 +24,7 @@
   <string name="home_empty_vault_create_alias">Tạo bí danh hide-my-email</string>
   <string name="home_empty_vault_create_note">Tạo ghi chú</string>
   <string name="home_empty_vault_create_credit_card">Tạo thẻ</string>
-  <string name="home_empty_vault_create_identity">Create an identity</string>
+  <string name="home_empty_vault_create_identity">Tạo một danh tính</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Lỗi khi tải nội dung</string>
   <string name="error_refreshing">Lỗi tải lại</string>
   <string name="home_snackbar_login_moved_to_trash">Đăng nhập đã được chuyển vào thùng rác</string>
@@ -144,8 +144,8 @@
   <plurals name="alert_confirm_delete_items_message">
     <item quantity="other">Bạn có muốn xóa %d nội dung này không? Hành động này không thể đảo ngược</item>
   </plurals>
-  <plurals name="alert_shared_delete_items_message">
-    <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
+  <plurals name="alert_confirm_delete_items_shared_warning_message">
+    <item quantity="other">%d items are currently shared. Deleting them will remove access for all other users.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Tìm kiếm gần đây</string>
@@ -159,10 +159,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Lỗi khi gỡ ghim một số nội dung</string>
   <string name="home_snackbar_items_unpinned_error">Lỗi khi gỡ ghim nội dung</string>
   <string name="home_snackbar_items_alias_enabled_success">Đã bật bí danh thành công</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Lỗi khi kích hoạt một số bí danh</string>
   <string name="home_snackbar_items_alias_enabled_error">Lỗi khi bật bí danh</string>
   <string name="home_snackbar_items_alias_disabled_success">Đã tắt bí danh thành công</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Lỗi khi vô hiệu hóa một số bí danh</string>
   <string name="home_snackbar_items_alias_disabled_error">Lỗi khi tắt bí danh</string>
   <string name="bulk_action_unpin">Bỏ ghim</string>
   <string name="bulk_action_pin">Ghim</string>

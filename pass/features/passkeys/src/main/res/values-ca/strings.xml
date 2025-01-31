@@ -19,7 +19,7 @@
 <resources>
   <string name="select_passkey_action_title" comment="Title of the action to select a passkey. Will appear in the system passkey selector">Seleccioneu una altra clau d\'accés</string>
   <string name="select_passkey_action_subtitle" comment="Subtitle of the action to select a passkey. Will appear in the system passkey selector">Seleccioneu una clau d\'accés del Proton Pass</string>
-  <string name="passkeys_user_logged_out">Heu tancat la sessió. Torneu a iniciar sessió obrint l\'aplicació.</string>
+  <string name="passkeys_user_logged_out">Se us ha tancat la sessió. Torneu a iniciar-la obrint l\'aplicació.</string>
   <string name="passkey_confirm_item_title" comment="Title of the dialog for confirming the generation of a passkey for an item">Genera una clau d\'accés</string>
   <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Segur que voleu generar una clau d\'accés per a l\'element «%s»?</string>
   <string name="passkey_error_generating_passkey">No s\'ha pogut generar la clau d\'accés.</string>

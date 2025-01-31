@@ -31,7 +31,7 @@
   <string name="auth_action_reveal_password">マスターパスワードを表示</string>
   <string name="auth_action_conceal_password">マスターパスワードを非表示</string>
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">代わりにPINを入力</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Use fingerprint instead</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">代わりに指紋認証を入力</string>
   <string name="auth_unlock_button">ロック解除</string>
   <string name="auth_error_empty_password">パスワードは空にできません</string>
   <string name="auth_error_pin_cannot_be_empty">PIN コードを空にすることはできません</string>
@@ -46,5 +46,5 @@
     <item quantity="other">残りの試行回数%d</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">試行回数が多すぎます。すべてのユーザーがログアウトされます。</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
+  <string name="auth_pin_too_many_attempts_dismiss">PINの試行が多すぎます。</string>
 </resources>

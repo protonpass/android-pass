@@ -55,7 +55,7 @@
   <string name="snackbar_delete_contact_error">Kunde inte ta bort kontakt</string>
   <string name="snackbar_email_copied_success">E-post kopierat till urklipp</string>
   <string name="contact_option_send_email">Skicka e-post</string>
-  <string name="contact_option_copy_address">Copy forwarding address</string>
+  <string name="contact_option_copy_address">Kopiera vidarebefordringsadress</string>
   <string name="contact_option_block_contact">Blockera kontakt</string>
   <string name="contact_option_unblock_contact">Avblockera kontakt</string>
   <string name="contact_option_delete">Ta bort</string>

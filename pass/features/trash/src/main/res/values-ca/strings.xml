@@ -4,6 +4,7 @@
   <string name="bottomsheet_delete_permanently">Elimina de manera permanent</string>
   <string name="alert_confirm_delete_item_dialog_title">Voleu eliminar permanentment?</string>
   <string name="alert_confirm_delete_item_dialog_message">Aquesta acció és irreversible</string>
+  <string name="alert_confirm_delete_item_dialog_shared_warning_message">Aquest element està compartit actualment. Eliminar-ho eliminarà l\'accés per a tots els altres usuaris.</string>
   <string name="alias_dialog_move_to_trash_title">Voleu moure a la paperera?</string>
   <string name="alias_dialog_move_to_trash_content">Si moveu un àlies a la paperera, deixarà de reenviar correus electrònics a la vostra bústia.</string>
   <string name="alias_dialog_move_to_trash_confirm">Confirma</string>

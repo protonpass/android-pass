@@ -20,9 +20,4 @@
   <!-- Delete dialog -->
   <string name="item_trash_delete_dialog_title">Excluir permanentemente?</string>
   <string name="item_trash_delete_dialog_message">Esta ação é irreversível.</string>
-  <!-- Shared warning dialog -->
-  <string name="item_trash_warning_shared_dialog_title">Mover item para a lixeira?</string>
-  <string name="item_trash_warning_shared_dialog_message">Este item está compartilhado no momento. Movê-lo para a lixeira removerá o acesso de todos os outros usuários.</string>
-  <string name="item_trash_warning_shared_snackbar_trash_error">Erro ao mover item para a lixeira</string>
-  <string name="item_trash_warning_shared_snackbar_trash_success">Item movido para a lixeira</string>
 </resources>

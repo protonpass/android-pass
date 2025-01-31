@@ -24,12 +24,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.FlowUtils.oneShot
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -77,19 +77,21 @@ class ShareFromItemViewModel @Inject constructor(
             }
         }
 
-    internal val stateFlow: StateFlow<ShareFromItemUiState> = combine(
+    internal val stateFlow: StateFlow<ShareFromItemUiState> = combineN(
         navEventState,
         canUsePaidFeaturesFlow,
         featureFlagsRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1),
         oneShot { getItemById(shareId, itemId) },
-        observeShare(shareId)
-    ) { event, canUsePaidFeatures, isItemSharingAvailable, item, share ->
+        observeShare(shareId),
+        featureFlagsRepository.get<Boolean>(FeatureFlag.SECURE_LINK_NEW_CRYPTO_V1)
+    ) { event, canUsePaidFeatures, isItemSharingAvailable, item, share, isNewCryptoEnabled ->
         ShareFromItemUiState(
             shareId = shareId,
             itemId = itemId,
             event = event,
             canUsePaidFeatures = canUsePaidFeatures,
             isItemSharingAvailable = isItemSharingAvailable,
+            isNewCryptoEnabled = isNewCryptoEnabled,
             itemOption = item.some(),
             shareOption = share.some()
         )

@@ -45,6 +45,7 @@ internal data class ShareFromItemUiState(
     val itemId: ItemId,
     val event: ShareFromItemNavEvent,
     val canUsePaidFeatures: Boolean,
+    private val isNewCryptoEnabled: Boolean,
     private val isItemSharingAvailable: Boolean,
     private val itemOption: Option<Item>,
     private val shareOption: Option<Share>
@@ -86,6 +87,13 @@ internal data class ShareFromItemUiState(
                 }
             }
         }
+    internal val canShareViaSecureLink: Boolean = when (shareOption) {
+        None -> false
+        is Some -> when (val share = shareOption.value) {
+            is Share.Item -> isNewCryptoEnabled && share.isAdmin
+            is Share.Vault -> share.isAdmin
+        }
+    }
 
     internal val canManageAccess: Boolean = isItemSharingAvailable && (isSharedItem || isSharedShare)
 
@@ -97,6 +105,7 @@ internal data class ShareFromItemUiState(
             event = ShareFromItemNavEvent.Unknown,
             canUsePaidFeatures = false,
             isItemSharingAvailable = false,
+            isNewCryptoEnabled = false,
             itemOption = None,
             shareOption = None
         )

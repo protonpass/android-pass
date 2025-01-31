@@ -111,8 +111,7 @@ class VaultOptionsViewModelTest {
         canManageVaultAccess.setResult(
             VaultAccessData(
                 canManageAccess = true,
-                canViewMembers = false,
-                canCreateSecureLink = false
+                canViewMembers = false
             )
         )
         instance.state.test {
@@ -130,8 +129,7 @@ class VaultOptionsViewModelTest {
         canManageVaultAccess.setResult(
             VaultAccessData(
                 canManageAccess = true,
-                canViewMembers = false,
-                canCreateSecureLink = false
+                canViewMembers = false
             )
         )
         instance.state.test {
@@ -149,8 +147,7 @@ class VaultOptionsViewModelTest {
         canManageVaultAccess.setResult(
             VaultAccessData(
                 canManageAccess = false,
-                canViewMembers = false,
-                canCreateSecureLink = false
+                canViewMembers = false
             )
         )
         instance.state.test {
@@ -168,8 +165,7 @@ class VaultOptionsViewModelTest {
         canManageVaultAccess.setResult(
             VaultAccessData(
                 canManageAccess = false,
-                canViewMembers = false,
-                canCreateSecureLink = false
+                canViewMembers = false
             )
         )
         instance.state.test {
@@ -188,8 +184,7 @@ class VaultOptionsViewModelTest {
         canManageVaultAccess.setResult(
             VaultAccessData(
                 canManageAccess = false,
-                canViewMembers = true,
-                canCreateSecureLink = false
+                canViewMembers = true
             )
         )
         instance.state.test {
@@ -207,8 +202,7 @@ class VaultOptionsViewModelTest {
         canManageVaultAccess.setResult(
             VaultAccessData(
                 canManageAccess = false,
-                canViewMembers = true,
-                canCreateSecureLink = false
+                canViewMembers = true
             )
         )
         instance.state.test {
@@ -226,8 +220,7 @@ class VaultOptionsViewModelTest {
         canManageVaultAccess.setResult(
             VaultAccessData(
                 canManageAccess = false,
-                canViewMembers = false,
-                canCreateSecureLink = false
+                canViewMembers = false
             )
         )
         instance.state.test {
@@ -245,8 +238,7 @@ class VaultOptionsViewModelTest {
         canManageVaultAccess.setResult(
             VaultAccessData(
                 canManageAccess = false,
-                canViewMembers = false,
-                canCreateSecureLink = false
+                canViewMembers = false
             )
         )
         instance.state.test {

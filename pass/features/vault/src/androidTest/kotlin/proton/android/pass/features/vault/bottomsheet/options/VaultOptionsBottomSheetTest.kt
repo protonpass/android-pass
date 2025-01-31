@@ -142,7 +142,7 @@ class VaultOptionsBottomSheetTest {
     @Test
     fun canClickViewMembers() {
         setVault(owned = false, shared = true)
-        setVaultAccess(canManage = false, canViewMembers = true, canCreateSecureLink = false)
+        setVaultAccess(canManage = false, canViewMembers = true)
         runTest(R.string.bottomsheet_view_members) { event, checker ->
             if (event is VaultNavigation.VaultAccess) {
                 checker.call(event.shareId)
@@ -153,7 +153,7 @@ class VaultOptionsBottomSheetTest {
     @Test
     fun canClickManageAccess() {
         setVault(owned = true, shared = true)
-        setVaultAccess(canManage = true, canViewMembers = false, canCreateSecureLink = false)
+        setVaultAccess(canManage = true, canViewMembers = false)
         runTest(R.string.bottomsheet_manage_access) { event, checker ->
             if (event is VaultNavigation.VaultAccess) {
                 checker.call(event.shareId)
@@ -200,14 +200,12 @@ class VaultOptionsBottomSheetTest {
 
     private fun setVaultAccess(
         canManage: Boolean,
-        canViewMembers: Boolean,
-        canCreateSecureLink: Boolean
+        canViewMembers: Boolean
     ) {
         vaultAccess.setResult(
             VaultAccessData(
                 canManageAccess = canManage,
-                canViewMembers = canViewMembers,
-                canCreateSecureLink = canCreateSecureLink
+                canViewMembers = canViewMembers
             )
         )
     }

@@ -55,7 +55,7 @@
   <string name="snackbar_delete_contact_error">Kunne ikke slette kontakt</string>
   <string name="snackbar_email_copied_success">E-mail kopieret til udklipsholder</string>
   <string name="contact_option_send_email">Send e-mail</string>
-  <string name="contact_option_copy_address">Copy forwarding address</string>
+  <string name="contact_option_copy_address">Kopier videresendelsesadresse</string>
   <string name="contact_option_block_contact">Bloker kontakt</string>
   <string name="contact_option_unblock_contact">Ophæv blokering af kontakt</string>
   <string name="contact_option_delete">Slet</string>

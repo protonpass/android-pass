@@ -4,6 +4,7 @@
   <string name="bottomsheet_delete_permanently">Hapus secara permanen</string>
   <string name="alert_confirm_delete_item_dialog_title">Hapus secara permanen?</string>
   <string name="alert_confirm_delete_item_dialog_message">Tindakan ini tidak dapat diurungkan.</string>
+  <string name="alert_confirm_delete_item_dialog_shared_warning_message">Item ini sedang dibagikan. Dengan menghapus item ini, izin akses bagi seluruh pengguna lainnya akan dihapus.</string>
   <string name="alias_dialog_move_to_trash_title">Pindahkan ke sampah?</string>
   <string name="alias_dialog_move_to_trash_content">Apabila Anda memindahkan alias ke sampah, alias yang bersangkutan tidak akan lagi meneruskan email ke kotak surat Anda.</string>
   <string name="alias_dialog_move_to_trash_confirm">Konfirmasi</string>

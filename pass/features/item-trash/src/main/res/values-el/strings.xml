@@ -20,9 +20,4 @@
   <!-- Delete dialog -->
   <string name="item_trash_delete_dialog_title">Οριστική διαγραφή;</string>
   <string name="item_trash_delete_dialog_message">Αυτή η ενέργεια είναι μην αναστρέψιμη.</string>
-  <!-- Shared warning dialog -->
-  <string name="item_trash_warning_shared_dialog_title">Μετακίνηση του στοιχείου στα Διαγραμμένα;</string>
-  <string name="item_trash_warning_shared_dialog_message">Αυτό το στοιχείο είναι κοινόχρηστο. Αν μεταφερθεί στα διαγραμμένα, όλοι οι υπόλοιποι χρήστες θα χάσουν την πρόσβασή τους σε αυτό.</string>
-  <string name="item_trash_warning_shared_snackbar_trash_error">Σφάλμα κατά τη μετακίνηση του στοιχείου στα Διαγραμμένα</string>
-  <string name="item_trash_warning_shared_snackbar_trash_success">Το στοιχείο μετακινήθηκε στα Διαγραμμένα</string>
 </resources>

@@ -145,7 +145,7 @@
   <string name="identity_field_reddit_title">Redditユーザーネーム</string>
   <string name="identity_field_facebook_title">Facebook URL</string>
   <string name="identity_field_yahoo_title">Yahooユーザーネーム</string>
-  <string name="identity_field_instagram_title">Instagram username</string>
+  <string name="identity_field_instagram_title">Instagram ユーザー名</string>
   <string name="identity_field_personal_website_title">個人のWebサイトURL</string>
   <string name="identity_field_work_phone_number_title">職場の電話番号</string>
   <string name="identity_field_work_email_title">仕事用メールアドレス</string>
@@ -160,7 +160,7 @@
   <string name="identity_add_field_reddit">Redditユーザーネーム</string>
   <string name="identity_add_field_facebook">Facebook URL</string>
   <string name="identity_add_field_yahoo">Yahooユーザーネーム</string>
-  <string name="identity_add_field_instagram">Instagram username</string>
+  <string name="identity_add_field_instagram">Instagram ユーザー名</string>
   <string name="identity_add_field_personal_website">個人のWebサイトURL</string>
   <string name="identity_add_field_work_phone_number">職場の電話番号</string>
   <string name="identity_add_field_work_email_address">仕事用メールアドレス</string>

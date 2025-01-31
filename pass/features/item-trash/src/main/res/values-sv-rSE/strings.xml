@@ -20,9 +20,4 @@
   <!-- Delete dialog -->
   <string name="item_trash_delete_dialog_title">Ta bort permanent?</string>
   <string name="item_trash_delete_dialog_message">Denna åtgärd är oåterkallelig.</string>
-  <!-- Shared warning dialog -->
-  <string name="item_trash_warning_shared_dialog_title">Flytta objekt till papperskorg?</string>
-  <string name="item_trash_warning_shared_dialog_message">Detta objekt delas för närvarande. Att flytta det till papperskorgen kommer ta bort åtkomst för alla andra användare.</string>
-  <string name="item_trash_warning_shared_snackbar_trash_error">Fel när objekt flyttades till papperskorg</string>
-  <string name="item_trash_warning_shared_snackbar_trash_success">Objekt flyttat till papperskorg</string>
 </resources>

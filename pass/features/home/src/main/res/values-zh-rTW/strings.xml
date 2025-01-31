@@ -144,8 +144,8 @@
   <plurals name="alert_confirm_delete_items_message">
     <item quantity="other">您確定要將 %d 項目全數刪除嗎？請注意，此動作進行後無法復原。</item>
   </plurals>
-  <plurals name="alert_shared_delete_items_message">
-    <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
+  <plurals name="alert_confirm_delete_items_shared_warning_message">
+    <item quantity="other">%d items are currently shared. Deleting them will remove access for all other users.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">最近搜尋</string>
@@ -164,7 +164,7 @@
   <string name="home_snackbar_items_alias_disabled_success">Alias disabled successfully</string>
   <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
   <string name="home_snackbar_items_alias_disabled_error">Error disabling aliases</string>
-  <string name="bulk_action_unpin">Unpin</string>
+  <string name="bulk_action_unpin">移除釘選</string>
   <string name="bulk_action_pin">Pin</string>
   <string name="bulk_action_enable_alias">Enable alias</string>
   <string name="bulk_action_disable_alias">Disable alias</string>

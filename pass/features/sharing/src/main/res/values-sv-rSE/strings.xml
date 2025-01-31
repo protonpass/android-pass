@@ -57,6 +57,8 @@
   <string name="sharing_snackbar_invite_sent_success">Inbjudan skickad</string>
   <string name="sharing_snackbar_invite_sent_error">Kunde inte skicka inbjudan</string>
   <string name="sharing_snackbar_invite_new_users_error">Kan inte skicka inbjudningar till nya användare</string>
+  <string name="sharing_snackbar_invite_free_user_error">Objektinbjudningar är endast tillåtna att skickas till betalande användare</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">Adress har redan blivit inbjuden</string>
   <string name="sharing_snackbar_get_vault_members_error">Kunde inte hämta valvmedlemmar</string>
   <string name="sharing_snackbar_change_permission_success">Behörigheter ändrade</string>
   <string name="sharing_snackbar_change_permission_error">Kunde inte ändra behörigheter</string>
@@ -69,7 +71,7 @@
   <string name="share_summary_share_item">Dela objekt</string>
   <string name="share_summary_vault_title">Valv</string>
   <string name="share_summary_item_title">Objekt</string>
-  <string name="share_summary_access_level_title">Access level</string>
+  <string name="share_summary_access_level_title">Åtkomstnivå</string>
   <string name="share_manage_vault_share_with_more_people">Dela med fler personer</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d inbjudan kvar</item>
@@ -93,7 +95,7 @@
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Du kan inte överföra ditt sista ägda valv.</string>
   <string name="sharing_bottomsheet_remove_access">Återkalla åtkomst</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Kan bevilja och återkalla åtkomst till detta objekt.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Kan redigera och ta bort detta objekt.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Kan visa detta objekt.</string>
   <string name="sharing_bottomsheet_resend_invite">Skicka inbjudan igen</string>
   <string name="sharing_bottomsheet_cancel_invite">Avbryt inbjudan</string>
@@ -116,30 +118,19 @@
   <string name="sharing_limit_reached">Detta valv har nått gränsen för medlemmar och inbjudningar.</string>
   <string name="sharing_invites_info_upgrade_text">Uppgradera nu för att bjuda in fler.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Dela</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Använd valv för att dela objekt med andra</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Dela detta valv</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Flytta till ett delat valv</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Skapa ett nytt valv att dela</string>
-  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Detta objekt kommer att flyttas till det nya valvet.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Uppgradera för att skapa fler valv</string>
   <string name="sharing_from_item_vault_limit_reached">Du har nått valvgränsen</string>
   <string name="share_with_suggestions_title">Förslag</string>
   <string name="share_with_recents_title">Senaste</string>
   <string name="share_with_remove_email_content_description">Ta bort e-post</string>
-  <string name="share_with_secure_link_title">Via säker länk</string>
-  <string name="share_with_secure_link_description">Generera en säker länk till detta objekt.</string>
   <string name="share_with_user_shared_title">Med andra Proton Pass-användare</string>
   <string name="share_with_user_shared_description">Användbart för permanent delning.</string>
   <string name="share_with_manage_shared_item_title">Hantera åtkomst</string>
   <string name="share_with_manage_shared_item_description">Visa medlems- och rättighetsöversikt</string>
   <string name="share_with_secure_link_shared_title">Via en säker länk</string>
   <string name="share_with_secure_link_shared_description">För engångsdelning.</string>
-  <string name="share_with_manage_shared_vault_title">Hantera valvåtkomst</string>
-  <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="one">Objektets valv delas för närvarande med %d användare.</item>
-    <item quantity="other">Objektets valv delas för närvarande med %d användare.</item>
-  </plurals>
-  <string name="share_with_view_shared_vault_members_title">Visa valvmedlemmar</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Ställ in åtkomstnivå för alla medlemmar</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Ställ in åtkomstnivå för %s</string>
   <string name="sharing_edit_permissions_remove_user">Ta bort användare</string>

@@ -20,9 +20,4 @@
   <!-- Delete dialog -->
   <string name="item_trash_delete_dialog_title">Kalıcı olarak silinsin mi?</string>
   <string name="item_trash_delete_dialog_message">Bu işlem geri alınamaz.</string>
-  <!-- Shared warning dialog -->
-  <string name="item_trash_warning_shared_dialog_title">Öge çöpe atılsın mı?</string>
-  <string name="item_trash_warning_shared_dialog_message">Bu öge şu anda paylaşılıyor. Çöpe atmak diğer tüm kullanıcıların ögeye erişimini kaldıracak.</string>
-  <string name="item_trash_warning_shared_snackbar_trash_error">Öge çöpe atılırken bir sorun çıktı</string>
-  <string name="item_trash_warning_shared_snackbar_trash_success">Öge çöpe atıldı</string>
 </resources>

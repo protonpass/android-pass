@@ -24,7 +24,7 @@
   <string name="home_empty_vault_create_alias">Maak een hide-my-email-alias</string>
   <string name="home_empty_vault_create_note">Notitie aanmaken</string>
   <string name="home_empty_vault_create_credit_card">Kredietkaart aanmaken</string>
-  <string name="home_empty_vault_create_identity">Identiteit aanmaken</string>
+  <string name="home_empty_vault_create_identity">Create an identity</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Fout bij het laden van items</string>
   <string name="error_refreshing">Fout bij vernieuwen</string>
   <string name="home_snackbar_login_moved_to_trash">Login verplaatst naar prullenbak</string>
@@ -152,7 +152,7 @@
     <item quantity="one">Weet u zeker dat u dit item wilt verwijderen? Deze actie is onomkeerbaar</item>
     <item quantity="other">Weet u zeker dat u %d items wilt verwijderen? Deze actie is onomkeerbaar</item>
   </plurals>
-  <plurals name="alert_shared_delete_items_message">
+  <plurals name="alert_confirm_delete_items_shared_warning_message">
     <item quantity="one">%d item wordt momenteel gedeeld. Als u het naar de prullenbak verplaatst, wordt de toegang voor alle andere gebruikers uitgeschakeld.</item>
     <item quantity="other">%d items worden momenteel gedeeld. Als u ze naar prullenbak verplaatst, wordt de toegang voor alle andere gebruikers geblokkeerd.</item>
   </plurals>

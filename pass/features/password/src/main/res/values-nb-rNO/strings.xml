@@ -28,5 +28,5 @@
   <string name="password_mode_memorable">Minneverdig passord</string>
   <string name="password_mode_random">Tilfeldig passord</string>
   <string name="password_mode_icon">Ikon for passordmodus</string>
-  <string name="password_words_separator_icon">Skilletegn for passord ord</string>
+  <string name="password_words_separator_icon">Ordskiller for passord</string>
 </resources>

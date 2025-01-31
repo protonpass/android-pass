@@ -32,7 +32,7 @@
   <string name="auth_action_reveal_password">Ana parolayı göster</string>
   <string name="auth_action_conceal_password">Ana parolayı gizle</string>
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Bunun yerine PIN kodunu yazın</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Use fingerprint instead</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Bunun yerine parmak izi kullanın</string>
   <string name="auth_unlock_button">Kilidi aç</string>
   <string name="auth_error_empty_password">Parola boş olamaz</string>
   <string name="auth_error_pin_cannot_be_empty">PIN kodu boş olamaz</string>

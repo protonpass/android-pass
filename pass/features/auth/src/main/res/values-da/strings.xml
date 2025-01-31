@@ -32,7 +32,7 @@
   <string name="auth_action_reveal_password">Afslør hovedadgangskode</string>
   <string name="auth_action_conceal_password">Skjul hovedadgangskode</string>
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Indtast pinkode i stedet</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Use fingerprint instead</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Brug fingeraftryk i stedet</string>
   <string name="auth_unlock_button">Lås op</string>
   <string name="auth_error_empty_password">Adgangskode må ikke være tom</string>
   <string name="auth_error_pin_cannot_be_empty">Pinkode må ikke være tom</string>
@@ -49,5 +49,5 @@
     <item quantity="other">%d forsøg tilbage</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">For mange mislykkede pin-forsøg. Alle dine brugere bliver logget ud.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
+  <string name="auth_pin_too_many_attempts_dismiss">For mange mislykkede pinkode-forsøg.</string>
 </resources>

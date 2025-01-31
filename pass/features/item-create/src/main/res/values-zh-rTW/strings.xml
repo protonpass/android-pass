@@ -108,7 +108,7 @@
   <string name="field_card_pin_title">PIN碼</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">到期日</string>
-  <string name="field_card_expiration_date_hint">MM/YY</string>
+  <string name="field_card_expiration_date_hint">月份/年分</string>
   <string name="field_card_expiration_date_error">輸入標準日期 月份/年份 格式</string>
   <string name="create_credit_card_item_creation_error">無法創建信用卡</string>
   <string name="create_credit_card_item_creation_success">信用卡已創建</string>
@@ -145,7 +145,7 @@
   <string name="identity_field_reddit_title">Reddit使用者名稱</string>
   <string name="identity_field_facebook_title">Facebook 網址</string>
   <string name="identity_field_yahoo_title">Yahoo 使用者名稱</string>
-  <string name="identity_field_instagram_title">Instagram username</string>
+  <string name="identity_field_instagram_title">Instagram handle</string>
   <string name="identity_field_personal_website_title">個人網站網址</string>
   <string name="identity_field_work_phone_number_title">工作電話號碼</string>
   <string name="identity_field_work_email_title">工作電子郵件</string>
@@ -160,7 +160,7 @@
   <string name="identity_add_field_reddit">Reddit使用者名稱</string>
   <string name="identity_add_field_facebook">Facebook 網址</string>
   <string name="identity_add_field_yahoo">Yahoo 使用者名稱</string>
-  <string name="identity_add_field_instagram">Instagram username</string>
+  <string name="identity_add_field_instagram">Instagram handle</string>
   <string name="identity_add_field_personal_website">個人網站網址</string>
   <string name="identity_add_field_work_phone_number">工作電話號碼</string>
   <string name="identity_add_field_work_email_address">工作電子郵件</string>

@@ -55,6 +55,8 @@
   <string name="sharing_snackbar_invite_sent_success">Đã gửi lời mời</string>
   <string name="sharing_snackbar_invite_sent_error">Không thể gửi lời mời</string>
   <string name="sharing_snackbar_invite_new_users_error">Cannot send invites to new users</string>
+  <string name="sharing_snackbar_invite_free_user_error">Item invites are only allowed to be sent to paid users</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">Address has already been invited</string>
   <string name="sharing_snackbar_get_vault_members_error">Không thể lấy thành viên kho lưu trữ</string>
   <string name="sharing_snackbar_change_permission_success">Đã thay đổi quyền</string>
   <string name="sharing_snackbar_change_permission_error">Không thể thay đổi quyền</string>
@@ -111,29 +113,19 @@
   <string name="sharing_limit_reached">Kho lưu trữ này đã đạt đến giới hạn thành viên và lời mời.</string>
   <string name="sharing_invites_info_upgrade_text">Nâng cấp ngay để mời thêm.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Chia sẻ</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Dùng kho lưu trữ để chia sẻ nội dung với những người khác</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Chia sẽ kho lưu trữ này</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Chuyển đến một kho lưu trữ được chia sẻ</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Tạo một kho lưu trữ mới để chia sẻ</string>
-  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Nội dung này sẽ được chuyển đến kho lưu trữ mới.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Nâng cấp để tạo thêm kho lưu trữ</string>
   <string name="sharing_from_item_vault_limit_reached">Bạn đã đạt đến giới hạn kho lưu trữ</string>
   <string name="share_with_suggestions_title">Các gợi ý</string>
   <string name="share_with_recents_title">Gần đây</string>
   <string name="share_with_remove_email_content_description">Xoá email</string>
-  <string name="share_with_secure_link_title">Thông qua liên kết an toàn</string>
-  <string name="share_with_secure_link_description">Tạo một liên kết an toàn tới nội dung này.</string>
   <string name="share_with_user_shared_title">Với những người dùng Proton Pass khác</string>
   <string name="share_with_user_shared_description">Hữu ích cho việc chia sẻ lâu dài.</string>
   <string name="share_with_manage_shared_item_title">Quản lý truy cập</string>
   <string name="share_with_manage_shared_item_description">Xem tổng quan thành viên và quyền</string>
   <string name="share_with_secure_link_shared_title">Thông qua một liên kết an toàn</string>
   <string name="share_with_secure_link_shared_description">Để chia sẻ một lần.</string>
-  <string name="share_with_manage_shared_vault_title">Quản lý quyền truy cập vault</string>
-  <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="other">Kho được chia sẻ với %d người dùng.</item>
-  </plurals>
-  <string name="share_with_view_shared_vault_members_title">Xem tất cả thành viên</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Thiết lập quyền truy cập cho tất cả mọi thành viên</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Đặt cấp độ truy cập cho %s</string>
   <string name="sharing_edit_permissions_remove_user">Xóa người dùng</string>

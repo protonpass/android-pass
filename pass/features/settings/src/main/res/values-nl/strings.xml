@@ -43,5 +43,5 @@
   <string name="clipboard_option_clear_clipboard_after_60_seconds">Na 1 minuut</string>
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Na 3 minuten</string>
   <string name="settings_use_digital_asset_link_preference_title">Digital Asset Links Inschakelen</string>
-  <string name="settings_use_digital_asset_link_preference_subtitle">Bepaalt de eigendomsverificatie van website tussen een Android app en een website.</string>
+  <string name="settings_use_digital_asset_link_preference_subtitle">Bepaalt de eigendomsverificatie van website tussen een Android-app en een website.</string>
 </resources>

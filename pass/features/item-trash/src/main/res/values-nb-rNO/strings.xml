@@ -20,9 +20,4 @@
   <!-- Delete dialog -->
   <string name="item_trash_delete_dialog_title">Slette permanent?</string>
   <string name="item_trash_delete_dialog_message">Denne handlingen er irreversibel.</string>
-  <!-- Shared warning dialog -->
-  <string name="item_trash_warning_shared_dialog_title">Flytte element til papirkurven?</string>
-  <string name="item_trash_warning_shared_dialog_message">Dette elementet er for øyeblikket delt. Hvis du flytter det til papirkurven, fjernes tilgangen for alle andre brukere.</string>
-  <string name="item_trash_warning_shared_snackbar_trash_error">Feil ved flytting av element til papirkurven</string>
-  <string name="item_trash_warning_shared_snackbar_trash_success">Element flyttet til papirkurven</string>
 </resources>

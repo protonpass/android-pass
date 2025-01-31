@@ -82,7 +82,7 @@
   <string name="security_center_dark_web_monitor_found_in_breaches">Không có vụ rò rỉ dữ liệu nào</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Các địa chỉ Proton</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Bí danh Hide-my-email</string>
-  <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving Proton addresses</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving proton addresses</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Lỗi tải Hide-my-email alias</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Không được giám sát</string>
   <string name="security_center_dark_web_monitor_see_all">Xem tất cả</string>

@@ -17,7 +17,7 @@
   <string name="vault_delete_dialog_placeholder">Valvnamn</string>
   <string name="vault_delete_dialog_cancel_action">Avbryt</string>
   <string name="vault_delete_dialog_delete_action">Ta bort</string>
-  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">This vault holds %1$s. Deleting it will remove access for all other users.</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Detta valv innehåller %1$s. Att ta bort det kommer ta bort åtkomst för alla andra användare.</string>
   <string name="vault_leave_dialog_title">Lämna valv</string>
   <string name="vault_leave_dialog_body">Detta kommer ta bort din åtkomst från valvet __VAULT_NAME__ och hela dess innehåll. Är du säker på att du vill lämna?</string>
   <string name="vault_leave_dialog_cancel_action">Avbryt</string>

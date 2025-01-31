@@ -42,6 +42,6 @@
   <string name="clipboard_option_clear_clipboard_never">Tidak pernah</string>
   <string name="clipboard_option_clear_clipboard_after_60_seconds">Setelah 1 menit</string>
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Setelah 3 menit</string>
-  <string name="settings_use_digital_asset_link_preference_title">Enable Digital Asset Links</string>
-  <string name="settings_use_digital_asset_link_preference_subtitle">Establishes website ownership verification between an Android app and a website.</string>
+  <string name="settings_use_digital_asset_link_preference_title">Aktifkan Tautan Aset Digital</string>
+  <string name="settings_use_digital_asset_link_preference_subtitle">Mengukuhkan verifikasi kepemilikan situs antara aplikasi Android dan situs web.</string>
 </resources>

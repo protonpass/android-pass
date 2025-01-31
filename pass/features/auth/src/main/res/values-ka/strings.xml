@@ -32,7 +32,7 @@
   <string name="auth_action_reveal_password">მთავარი პაროლის გამოჩენა</string>
   <string name="auth_action_conceal_password">მთავარი პაროლის დამალვა</string>
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">უმჯობესია შეიყვანოთ PIN-კოდი</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Use fingerprint instead</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">ანაბეჭდის შეყვანა</string>
   <string name="auth_unlock_button">განბლოკვა</string>
   <string name="auth_error_empty_password">პაროლი ცარიელი ვერ იქნება</string>
   <string name="auth_error_pin_cannot_be_empty">PIN-კოდი ცარიელი ვერ იქნება</string>

@@ -168,11 +168,11 @@
     <item quantity="many">Naozaj chcete odstrániť %d položiek? Táto akcia je nezvratná</item>
     <item quantity="other">Naozaj chcete odstrániť %d položiek? Táto akcia je nezvratná</item>
   </plurals>
-  <plurals name="alert_shared_delete_items_message">
-    <item quantity="one">%d položka je v súčasnosti zdieľaná. Jej presunutím do koša sa zruší prístup pre všetkých ostatných používateľov.</item>
-    <item quantity="few">%d položky sú v súčasnosti zdieľané. Ich presunutím do koša sa zruší prístup pre všetkých ostatných používateľov.</item>
-    <item quantity="many">%d položiek je v súčasnosti zdieľaných. Ich presunutím do koša sa zruší prístup pre všetkých ostatných používateľov.</item>
-    <item quantity="other">%d položiek je v súčasnosti zdieľaných. Ich presunutím do koša sa zruší prístup pre všetkých ostatných používateľov.</item>
+  <plurals name="alert_confirm_delete_items_shared_warning_message">
+    <item quantity="one">%d položka je v súčasnosti zdieľaná. Jej odstránením sa zruší prístup pre všetkých ostatných používateľov.</item>
+    <item quantity="few">%d položky sú v súčasnosti zdieľané. Ich odstránením sa zruší prístup pre všetkých ostatných používateľov.</item>
+    <item quantity="many">%d položiek je v súčasnosti zdieľaných. Ich odstránením sa zruší prístup pre všetkých ostatných používateľov.</item>
+    <item quantity="other">%d položiek je v súčasnosti zdieľaných. Ich odstránením sa zruší prístup pre všetkých ostatných používateľov.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Nedávne vyhľadávania</string>

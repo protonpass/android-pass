@@ -55,7 +55,7 @@
   <string name="snackbar_delete_contact_error">კონტაქტის წაშლა შეუძლეელია</string>
   <string name="snackbar_email_copied_success">ელფოსტა დაკოპირდა გაცვლის ბუფერში</string>
   <string name="contact_option_send_email">ელფოსტის გაგზავნა</string>
-  <string name="contact_option_copy_address">Copy forwarding address</string>
+  <string name="contact_option_copy_address">გადაგზავნის მისამართის კოპირება</string>
   <string name="contact_option_block_contact">კონტაქტის დაბლოკვა</string>
   <string name="contact_option_unblock_contact">კონტაქტის განბლოკვა</string>
   <string name="contact_option_delete">წაშლა</string>

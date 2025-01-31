@@ -24,7 +24,7 @@
   <string name="home_empty_vault_create_alias">Стварыць псеўданім Hide-my-email</string>
   <string name="home_empty_vault_create_note">Стварыць нататку</string>
   <string name="home_empty_vault_create_credit_card">Стварыць крэдытную картку</string>
-  <string name="home_empty_vault_create_identity">Стварэнне ідэнтычнасці</string>
+  <string name="home_empty_vault_create_identity">Create an identity</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Памылка загрузкі элементаў</string>
   <string name="error_refreshing">Памылка падчас абнаўлення</string>
   <string name="home_snackbar_login_moved_to_trash">Запіс уваходу перамешчаны ў сметніцу</string>
@@ -168,11 +168,11 @@
     <item quantity="many">Вы сапраўды хочаце выдаліць %d элементаў? Гэта дзеянне з\'яўляецца незваротным</item>
     <item quantity="other">Вы сапраўды хочаце выдаліць %d элементаў? Гэта дзеянне з\'яўляецца незваротным</item>
   </plurals>
-  <plurals name="alert_shared_delete_items_message">
-    <item quantity="one">%d item is currently shared. Moving it to trash will remove access for all other users.</item>
-    <item quantity="few">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
-    <item quantity="many">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
-    <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
+  <plurals name="alert_confirm_delete_items_shared_warning_message">
+    <item quantity="one">%d item is currently shared. Deleting it will remove access for all other users.</item>
+    <item quantity="few">%d items are currently shared. Deleting them will remove access for all other users.</item>
+    <item quantity="many">%d items are currently shared. Deleting them will remove access for all other users.</item>
+    <item quantity="other">%d items are currently shared. Deleting them will remove access for all other users.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Нядаўнія пошукі</string>
@@ -186,10 +186,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Памылка адмацавання некаторых элементаў</string>
   <string name="home_snackbar_items_unpinned_error">Памылка адмацавання элементаў</string>
   <string name="home_snackbar_items_alias_enabled_success">Псеўданім паспяхова ўключаны</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Памылка пры ўключэнні некаторых псеўданімаў</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
   <string name="home_snackbar_items_alias_enabled_error">Памылка пры ўключэнні псеўданімаў</string>
   <string name="home_snackbar_items_alias_disabled_success">Псеўданім паспяхова адключаны</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Памылка пры адключэнні некаторых псеўданімаў</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
   <string name="home_snackbar_items_alias_disabled_error">Памылка пры адключэнні псеўданімаў</string>
   <string name="bulk_action_unpin">Адмацаваць</string>
   <string name="bulk_action_pin">Замацаваць</string>

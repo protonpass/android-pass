@@ -55,6 +55,8 @@
   <string name="sharing_snackbar_invite_sent_success">招待の送信</string>
   <string name="sharing_snackbar_invite_sent_error">招待を送信できませんでした</string>
   <string name="sharing_snackbar_invite_new_users_error">新しいユーザーに招待を送信することはできません</string>
+  <string name="sharing_snackbar_invite_free_user_error">アイテムの招待は有料ユーザーにのみ送信することができます</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">アドレスは既に招待されています</string>
   <string name="sharing_snackbar_get_vault_members_error">保管庫メンバーを取得できませんでした</string>
   <string name="sharing_snackbar_change_permission_success">権限の変更</string>
   <string name="sharing_snackbar_change_permission_error">権限を変更できませんでした</string>
@@ -67,7 +69,7 @@
   <string name="share_summary_share_item">アイテムを共有</string>
   <string name="share_summary_vault_title">保管庫</string>
   <string name="share_summary_item_title">アイテム</string>
-  <string name="share_summary_access_level_title">Access level</string>
+  <string name="share_summary_access_level_title">アクセス権限</string>
   <string name="share_manage_vault_share_with_more_people">より多くの人たちと共有する</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="other">%d 件の招待が残っています</item>
@@ -89,7 +91,7 @@
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">最後に所有していた保管庫を譲渡することはできません。</string>
   <string name="sharing_bottomsheet_remove_access">アクセスの失効</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">このアイテムへのアクセス権を付与したり、取り消したりすることができます。</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">このアイテムを編集、削除できます。</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">このアイテムを閲覧できます。</string>
   <string name="sharing_bottomsheet_resend_invite">招待の再送</string>
   <string name="sharing_bottomsheet_cancel_invite">招待のキャンセル</string>
@@ -111,29 +113,19 @@
   <string name="sharing_limit_reached">この保管庫は、メンバーおよび招待の制限に達しました。</string>
   <string name="sharing_invites_info_upgrade_text">今すぐアップグレードして、さらに招待しよう。</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">共有</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">保管庫を使って他の人とアイテムを共有する</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">この保管庫を共有する</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">共有保管庫に移動する</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">新しい保管庫を作成して共有する</string>
-  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">このアイテムは新しい保管庫に移動されます</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">アップグレードして保管庫をさらに作成します</string>
   <string name="sharing_from_item_vault_limit_reached">保管庫の制限に達しました</string>
   <string name="share_with_suggestions_title">候補</string>
   <string name="share_with_recents_title">最近</string>
   <string name="share_with_remove_email_content_description">メールを削除</string>
-  <string name="share_with_secure_link_title">セキュアリンク経由</string>
-  <string name="share_with_secure_link_description">このアイテムへのセキュアリンクを生成</string>
   <string name="share_with_user_shared_title">他のProton Passユーザーと</string>
   <string name="share_with_user_shared_description">永続的な共有に便利です。</string>
   <string name="share_with_manage_shared_item_title">アクセスを管理</string>
   <string name="share_with_manage_shared_item_description">メンバーと権限の概要を表示します。</string>
   <string name="share_with_secure_link_shared_title">安全なリンク経由</string>
   <string name="share_with_secure_link_shared_description">一度限りの共有のために。</string>
-  <string name="share_with_manage_shared_vault_title">保管庫のアクセス権を管理</string>
-  <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="other">このアイテムの保管庫は現在%d人のユーザーに共有されています。</item>
-  </plurals>
-  <string name="share_with_view_shared_vault_members_title">保管庫のメンバーを閲覧</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">すべてのメンバーのアクセスレベルを設定する</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">%s のアクセスレベルを設定します</string>
   <string name="sharing_edit_permissions_remove_user">ユーザーを削除する</string>

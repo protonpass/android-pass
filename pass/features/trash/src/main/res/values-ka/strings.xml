@@ -4,6 +4,7 @@
   <string name="bottomsheet_delete_permanently">სამუდამოდ წაშლა</string>
   <string name="alert_confirm_delete_item_dialog_title">წავშალო სამუდამოდ?</string>
   <string name="alert_confirm_delete_item_dialog_message">ეს ქმედება შეუქცევადია.</string>
+  <string name="alert_confirm_delete_item_dialog_shared_warning_message">ეს ელემენტი ამჟამად გაზიარებულია. მისი წაშლა სხვა მომხმარებლებს მასზე წვდომას დაუკავრავს.</string>
   <string name="alias_dialog_move_to_trash_title">გადავიტანო ნაგვის ყუთში?</string>
   <string name="alias_dialog_move_to_trash_content">თუ ფსევდონიმს ნაგვის ყუთში გადაიტანს, ის შეწყვეტს ელფოსტების გადამისამართებას თქვენს საფოსტო ყუთში</string>
   <string name="alias_dialog_move_to_trash_confirm">დასტური</string>

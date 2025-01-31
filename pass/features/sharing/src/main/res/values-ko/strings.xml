@@ -55,6 +55,8 @@
   <string name="sharing_snackbar_invite_sent_success">초대장을 보냈습니다</string>
   <string name="sharing_snackbar_invite_sent_error">초대를 전송할 수 없습니다</string>
   <string name="sharing_snackbar_invite_new_users_error">새 사용자로 초대 전송할 수 없음</string>
+  <string name="sharing_snackbar_invite_free_user_error">항목 초대는 유료 회원에게만 보낼 수 있습니다</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">주소가 이미 초대되었습니다</string>
   <string name="sharing_snackbar_get_vault_members_error">금고 사용자를 불러올 수 없습니다</string>
   <string name="sharing_snackbar_change_permission_success">권한 변경됨</string>
   <string name="sharing_snackbar_change_permission_error">권한을 변경할 수 없습니다.</string>
@@ -67,7 +69,7 @@
   <string name="share_summary_share_item">항목 공유</string>
   <string name="share_summary_vault_title">금고</string>
   <string name="share_summary_item_title">항목</string>
-  <string name="share_summary_access_level_title">Access level</string>
+  <string name="share_summary_access_level_title">접근 권한</string>
   <string name="share_manage_vault_share_with_more_people">더 많은 사람과 공유</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="other">%d개 초대 남음</item>
@@ -89,7 +91,7 @@
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">마지막에 소유했던 금고를 이전할 수 없습니다.</string>
   <string name="sharing_bottomsheet_remove_access">접근 권한 회수</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">이 항목에 접근 권한을 부여하고 회수할 수 있습니다.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">이 항목을 편집하거나 삭제할 수 있습니다.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">이 항목을 볼 수 있습니다.</string>
   <string name="sharing_bottomsheet_resend_invite">초대장 재전송</string>
   <string name="sharing_bottomsheet_cancel_invite">초대 취소</string>
@@ -111,29 +113,19 @@
   <string name="sharing_limit_reached">이 금고는 회원 및 초대 제한에 도달했습니다.</string>
   <string name="sharing_invites_info_upgrade_text">더 많은 사람을 초대하려면 지금 바로 업그레이드 하세요.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">공유</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">다른 사람과 이 항목을 공유하려면 금고를 사용하세요</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">이 금고 공유</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">공유된 금고로 이동</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">공유할 새 금고 생성</string>
-  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">이 항목이 새 금고로 이동됩니다.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">금고를 더 추가하려면 업그레이드</string>
   <string name="sharing_from_item_vault_limit_reached">금고 제한에 도달하였습니다.</string>
   <string name="share_with_suggestions_title">제안</string>
   <string name="share_with_recents_title">최근</string>
   <string name="share_with_remove_email_content_description">이메일 제거</string>
-  <string name="share_with_secure_link_title">안전한 링크를 통해 공유</string>
-  <string name="share_with_secure_link_description">이 항목으로의 안전한 링크를 만듭니다.</string>
   <string name="share_with_user_shared_title">다른 Proton Pass 사용자들과 함께</string>
   <string name="share_with_user_shared_description">기간 제한 없이 공유할 때 유용합니다.</string>
   <string name="share_with_manage_shared_item_title">접근 관리</string>
   <string name="share_with_manage_shared_item_description">구성원과 부여된 권한을 확인해보세요.</string>
   <string name="share_with_secure_link_shared_title">안전한 링크를 통해 공유</string>
   <string name="share_with_secure_link_shared_description">일회성 공유에 유용합니다.</string>
-  <string name="share_with_manage_shared_vault_title">금고 접근 관리</string>
-  <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="other">이 금고의 항목이 %d명 사용자와 공유 중입니다.</item>
-  </plurals>
-  <string name="share_with_view_shared_vault_members_title">금고 구성원 보기</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">전체 구성원의 접근 수준을 설정하세요.</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">%s님에게 접근 권한 설정</string>
   <string name="sharing_edit_permissions_remove_user">사용자 제거</string>

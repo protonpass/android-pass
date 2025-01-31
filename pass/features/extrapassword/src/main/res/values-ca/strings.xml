@@ -31,7 +31,7 @@
   <string name="configure_extra_password_cannot_be_blank">La contrasenya no pot estar en blanc</string>
   <string name="configure_extra_password_password_too_short">La contrasenya addicional ha de tenir com a mínim 8 caràcters.</string>
   <string name="confirm_extra_password_title">Estableixi la contrasenya addicional</string>
-  <string name="confirm_extra_password_body">Se us tancarà la sessió i haureu de tornar a iniciar sessió en tots els vostres altres dispositius.</string>
+  <string name="confirm_extra_password_body">Se us tancarà la sessió i haureu de tornar a iniciar-la en tots els altres dispositius.</string>
   <string name="confirm_extra_password_error">No s\'ha pogut establir la contrasenya addicional.</string>
   <string name="confirm_extra_password_success">S\'ha establert la contrasenya addicional.</string>
 </resources>

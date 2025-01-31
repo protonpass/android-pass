@@ -50,7 +50,7 @@
   <string name="profile_option_change_pin_code">變更 Pin 碼</string>
   <string name="profile_passkey_support_section_title">密碼金鑰</string>
   <string name="profile_passkey_support_subtitle_supported">密碼金鑰是支援服務</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your Android version does not support passkeys.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your android version does not support passkeys</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">你的設備不支持密碼金鑰</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Could not check support for passkeys</string>
   <plurals name="profile_after_days">

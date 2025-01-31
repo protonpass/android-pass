@@ -57,6 +57,8 @@
   <string name="sharing_snackbar_invite_sent_success">Invitación enviada</string>
   <string name="sharing_snackbar_invite_sent_error">No se pudo enviar la invitación</string>
   <string name="sharing_snackbar_invite_new_users_error">No se pueden enviar invitaciones a usuarios nuevos</string>
+  <string name="sharing_snackbar_invite_free_user_error">Las invitaciones a elementos solo se pueden enviar a usuarios de pago</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">Ya se ha invitado la dirección</string>
   <string name="sharing_snackbar_get_vault_members_error">No se pudieron obtener los miembros de la bóveda</string>
   <string name="sharing_snackbar_change_permission_success">Los permisos han cambiado.</string>
   <string name="sharing_snackbar_change_permission_error">Error al cambiar los permisos</string>
@@ -116,30 +118,19 @@
   <string name="sharing_limit_reached">Esta bóveda ha alcanzado el límite de miembros e invitaciones.</string>
   <string name="sharing_invites_info_upgrade_text">Mejore ahora para invitar a más personas.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Compartir</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Use las bóvedas para compartir elementos con otras personas.</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Compartir esta bóveda</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Mover a una bóveda compartida</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Crear una bóveda para compartir</string>
-  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Este elemento se moverá a la bóveda nueva.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Mejore para crear más bóvedas</string>
   <string name="sharing_from_item_vault_limit_reached">Ha alcanzado el límite de bóvedas.</string>
   <string name="share_with_suggestions_title">Sugerencias</string>
   <string name="share_with_recents_title">Recientes</string>
   <string name="share_with_remove_email_content_description">Quitar correo</string>
-  <string name="share_with_secure_link_title">Vía enlace seguro</string>
-  <string name="share_with_secure_link_description">Genera un enlace seguro para este elemento.</string>
   <string name="share_with_user_shared_title">Con otros usuarios de Proton Pass</string>
   <string name="share_with_user_shared_description">Útil para compartir permanentemente.</string>
   <string name="share_with_manage_shared_item_title">Gestionar el acceso</string>
   <string name="share_with_manage_shared_item_description">Consulte todos los miembros y permisos.</string>
   <string name="share_with_secure_link_shared_title">Vía un enlace seguro</string>
   <string name="share_with_secure_link_shared_description">Para un uso único.</string>
-  <string name="share_with_manage_shared_vault_title">Gestionar el acceso a la bóveda</string>
-  <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="one">La bóveda del elemento se comparte con %d usuario.</item>
-    <item quantity="other">La bóveda del elemento se comparte con %d usuarios.</item>
-  </plurals>
-  <string name="share_with_view_shared_vault_members_title">Ver los miembros de la bóveda</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Configurar nivel de acceso para todos los miembros</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Configurar nivel de acceso para %s</string>
   <string name="sharing_edit_permissions_remove_user">Quitar usuario</string>

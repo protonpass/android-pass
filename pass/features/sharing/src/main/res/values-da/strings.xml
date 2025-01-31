@@ -57,6 +57,8 @@
   <string name="sharing_snackbar_invite_sent_success">Invitation sendt</string>
   <string name="sharing_snackbar_invite_sent_error">Kunne ikke sende invitation</string>
   <string name="sharing_snackbar_invite_new_users_error">Kan ikke sende invitationer til nye brugere</string>
+  <string name="sharing_snackbar_invite_free_user_error">Element-invitationer kan kun sendes til betalende brugere</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">Adresse er allerede blevet inviteret</string>
   <string name="sharing_snackbar_get_vault_members_error">Kunne ikke hente boksmedlemmer</string>
   <string name="sharing_snackbar_change_permission_success">Tilladelser ændret</string>
   <string name="sharing_snackbar_change_permission_error">Kunne ikke ændre tilladelserne</string>
@@ -69,7 +71,7 @@
   <string name="share_summary_share_item">Del element</string>
   <string name="share_summary_vault_title">Boks</string>
   <string name="share_summary_item_title">Element</string>
-  <string name="share_summary_access_level_title">Access level</string>
+  <string name="share_summary_access_level_title">Adgangsniveau</string>
   <string name="share_manage_vault_share_with_more_people">Del med flere personer</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d invitation tilbage</item>
@@ -93,7 +95,7 @@
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Du kan ikke overføre den sidste boks, du ejer.</string>
   <string name="sharing_bottomsheet_remove_access">Tilbagekald adgang</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Kan give og tilbagekalde adgang til dette element.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Kan redigere og slette dette element.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Kan se dette element.</string>
   <string name="sharing_bottomsheet_resend_invite">Gensend invitation</string>
   <string name="sharing_bottomsheet_cancel_invite">Annullér invitation</string>
@@ -116,30 +118,19 @@
   <string name="sharing_limit_reached">Denne boks har nået grænsen for medlemmer og invitationer.</string>
   <string name="sharing_invites_info_upgrade_text">Opgradér nu for at invitere flere.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Del</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Brug bokse til at dele elementer med andre</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Del denne boks</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Flyt til en delt boks</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Opret en ny boks til deling</string>
-  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Dette element vil blive flyttet til den nye boks.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Opgradér for at oprette flere bokse</string>
   <string name="sharing_from_item_vault_limit_reached">Du har nået boksens grænsen</string>
   <string name="share_with_suggestions_title">Forslag</string>
   <string name="share_with_recents_title">Seneste</string>
   <string name="share_with_remove_email_content_description">Fjern e-mail</string>
-  <string name="share_with_secure_link_title">Via sikkert link</string>
-  <string name="share_with_secure_link_description">Generer et sikkert link til dette element.</string>
   <string name="share_with_user_shared_title">Med andre Proton Pass-brugere</string>
   <string name="share_with_user_shared_description">Nyttigt til permanent deling.</string>
   <string name="share_with_manage_shared_item_title">Administrer adgang</string>
   <string name="share_with_manage_shared_item_description">Se oversigt over medlemmer og tilladelser.</string>
   <string name="share_with_secure_link_shared_title">Via sikkert link</string>
   <string name="share_with_secure_link_shared_description">Til engangsdeling.</string>
-  <string name="share_with_manage_shared_vault_title">Håndter adgang til boks</string>
-  <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="one">Elementets boks er i øjeblikket delt med %d bruger.</item>
-    <item quantity="other">Elementets boks er i øjeblikket delt med %d brugere.</item>
-  </plurals>
-  <string name="share_with_view_shared_vault_members_title">Vis medlemmer af boksen</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Indstil adgangsniveau for alle medlemmer</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Indstil adgangsniveau for %s</string>
   <string name="sharing_edit_permissions_remove_user">Fjern bruger</string>

@@ -57,6 +57,8 @@
   <string name="sharing_snackbar_invite_sent_success">Uitnodiging verzonden</string>
   <string name="sharing_snackbar_invite_sent_error">Kan de uitnodiging niet verzenden</string>
   <string name="sharing_snackbar_invite_new_users_error">Kan geen uitnodigingen versturen naar nieuwe gebruikers</string>
+  <string name="sharing_snackbar_invite_free_user_error">Item uitnodigingen mogen alleen verzonden worden naar betaalde gebruikers</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">Adres is al uitgenodigd</string>
   <string name="sharing_snackbar_get_vault_members_error">Kon geen kluisleden krijgen</string>
   <string name="sharing_snackbar_change_permission_success">Machtigingen gewijzigd</string>
   <string name="sharing_snackbar_change_permission_error">Kon machtigingen niet wijzigen</string>
@@ -116,30 +118,19 @@
   <string name="sharing_limit_reached">Deze kluis heeft de limiet van aantal leden en uitnodigingen bereikt.</string>
   <string name="sharing_invites_info_upgrade_text">Nu upgraden om meer uit te nodigen.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Delen</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Gebruik kluizen om items met anderen te delen</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Deel deze kluis</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Verplaatsen naar een gedeelde kluis</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Maak een nieuwe kluis aan om te delen</string>
-  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Dit item zal worden verplaatst naar de nieuwe kluis.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Upgrade om meer kluizen aan te maken</string>
   <string name="sharing_from_item_vault_limit_reached">U heeft de kluislimiet bereikt.</string>
   <string name="share_with_suggestions_title">Suggesties</string>
   <string name="share_with_recents_title">Recent</string>
   <string name="share_with_remove_email_content_description">E-mailadres verwijderen</string>
-  <string name="share_with_secure_link_title">Via beveiligde link</string>
-  <string name="share_with_secure_link_description">Genereer een beveiligde link naar dit item.</string>
   <string name="share_with_user_shared_title">Met andere Proton Pass gebruikers</string>
   <string name="share_with_user_shared_description">Nuttig voor permanent delen</string>
   <string name="share_with_manage_shared_item_title">Beheer toegang</string>
   <string name="share_with_manage_shared_item_description">Zie leden en overzicht toelatingen.</string>
   <string name="share_with_secure_link_shared_title">Via een veilige link</string>
   <string name="share_with_secure_link_shared_description">Voor eenmalige delen.</string>
-  <string name="share_with_manage_shared_vault_title">Toegang kluis beheren</string>
-  <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="one">De kluis van het item wordt momenteel gedeeld met %d gebruiker.</item>
-    <item quantity="other">De kluis van het item wordt momenteel gedeeld met %d gebruikers.</item>
-  </plurals>
-  <string name="share_with_view_shared_vault_members_title">Bekijk kluisleden</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Stel toegangsniveau in voor alle leden</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Stel toegangsniveau in voor %s</string>
   <string name="sharing_edit_permissions_remove_user">Gebruiker verwijderen</string>

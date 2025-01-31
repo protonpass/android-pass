@@ -24,7 +24,7 @@
   <string name="home_empty_vault_create_alias">Opret et Hide-my-email alias</string>
   <string name="home_empty_vault_create_note">Opret en note</string>
   <string name="home_empty_vault_create_credit_card">Opret et betalingskort</string>
-  <string name="home_empty_vault_create_identity">Opret en identitet</string>
+  <string name="home_empty_vault_create_identity">Create an identity</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Fejl ved indlæsning af elementer</string>
   <string name="error_refreshing">Fejl ved genindlæsning</string>
   <string name="home_snackbar_login_moved_to_trash">Login flyttet til papirkurv</string>
@@ -152,9 +152,9 @@
     <item quantity="one">Er du sikker på, at du vil slette elementet? Denne handling er uigenkaldelig.</item>
     <item quantity="other">Er du sikker på, at du vil slette de %d elementer? Denne handling er uigenkaldelig.</item>
   </plurals>
-  <plurals name="alert_shared_delete_items_message">
-    <item quantity="one">%d element er i øjeblikket delt. Hvis du flytter det til papirkurven, fjernes adgangen for alle andre brugere.</item>
-    <item quantity="other">%d elementer er i øjeblikket delt. Hvis du flytter dem til papirkurven, fjernes adgangen for alle andre brugere.</item>
+  <plurals name="alert_confirm_delete_items_shared_warning_message">
+    <item quantity="one">%d element er i øjeblikket delt. Hvis du sletter det, fjernes adgangen for alle andre brugere.</item>
+    <item quantity="other">%d elementer er i øjeblikket delt. Hvis du sletter dem, fjernes adgangen for alle andre brugere.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Seneste søgninger</string>
@@ -168,10 +168,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Fejl ved frigørelse af nogle af elementerne</string>
   <string name="home_snackbar_items_unpinned_error">Fejl ved frigørelse af elementer</string>
   <string name="home_snackbar_items_alias_enabled_success">Alias aktiveret</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Fejl ved aktivering af visse aliasser</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
   <string name="home_snackbar_items_alias_enabled_error">Fejl ved aktivering af aliasser</string>
   <string name="home_snackbar_items_alias_disabled_success">Alias deaktiveret</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Fejl ved deaktivering af visse aliasser</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
   <string name="home_snackbar_items_alias_disabled_error">Fejl ved deaktivering af aliasser</string>
   <string name="bulk_action_unpin">Frigør</string>
   <string name="bulk_action_pin">Fastgør</string>

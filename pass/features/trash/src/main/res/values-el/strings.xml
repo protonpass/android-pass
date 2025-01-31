@@ -4,6 +4,7 @@
   <string name="bottomsheet_delete_permanently">Οριστική διαγραφή</string>
   <string name="alert_confirm_delete_item_dialog_title">Οριστική διαγραφή;</string>
   <string name="alert_confirm_delete_item_dialog_message">Αυτή η ενέργεια είναι μην αναστρέψιμη.</string>
+  <string name="alert_confirm_delete_item_dialog_shared_warning_message">Αυτό το στοιχείο είναι κοινόχρηστο. Αν διαγραφεί, όλοι οι υπόλοιποι χρήστες θα χάσουν την πρόσβασή τους σε αυτό.</string>
   <string name="alias_dialog_move_to_trash_title">Μετακίνηση στα Διαγραμμένα;</string>
   <string name="alias_dialog_move_to_trash_content">Εάν μετακινήσετε ένα ψευδώνυμο στα διαγραμμένα, θα σταματήσει να προωθεί μηνύματα ηλεκτρονικού ταχυδρομείου στο γραμματοκιβώτιό σας.</string>
   <string name="alias_dialog_move_to_trash_confirm">Επιβεβαίωση</string>

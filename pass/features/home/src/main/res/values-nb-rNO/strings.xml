@@ -70,7 +70,7 @@
   <string name="alias_copied_to_clipboard">Alias kopiert</string>
   <string name="note_copied_to_clipboard">Notat kopiert</string>
   <string name="full_name_copied_to_clipboard">Fullt navn kopiert</string>
-  <string name="email_copied_to_clipboard">E-postadressen er kopiert</string>
+  <string name="email_copied_to_clipboard">E-postadresse kopiert</string>
   <string name="username_copied_to_clipboard">Brukernavn kopiert</string>
   <string name="password_copied_to_clipboard">Passord kopiert</string>
   <string name="credit_card_number_copied_to_clipboard">Kredittkortnummer kopiert</string>
@@ -152,9 +152,9 @@
     <item quantity="one">Er du sikker på at du vil slette elementet? Denne handlingen er irreversibel.</item>
     <item quantity="other">Er du sikker på at du vil slette de %d elementene? Denne handlingen er irreversibel.</item>
   </plurals>
-  <plurals name="alert_shared_delete_items_message">
-    <item quantity="one">%d element er for øyeblikket delt. Hvis du flytter det til papirkurven, fjernes tilgangen for alle andre brukere.</item>
-    <item quantity="other">%d elementer er for øyeblikket delt. Hvis du flytter dem til papirkurven, fjernes tilgangen for alle andre brukere.</item>
+  <plurals name="alert_confirm_delete_items_shared_warning_message">
+    <item quantity="one">%d element er for øyeblikket delt. Hvis du sletter det, fjernes tilgangen for alle andre brukere.</item>
+    <item quantity="other">%d elementer er for øyeblikket delt. Hvis du sletter dem, fjernes tilgangen for alle andre brukere.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Nylige søk</string>

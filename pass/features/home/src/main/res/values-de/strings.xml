@@ -24,7 +24,7 @@
   <string name="home_empty_vault_create_alias">Einen Hide-my-email-Alias erstellen</string>
   <string name="home_empty_vault_create_note">Notiz erstellen</string>
   <string name="home_empty_vault_create_credit_card">Kreditkarte erfassen</string>
-  <string name="home_empty_vault_create_identity">Identität erstellen</string>
+  <string name="home_empty_vault_create_identity">Create an identity</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Fehler beim Laden der Einträge.</string>
   <string name="error_refreshing">Fehler beim Aktualisieren</string>
   <string name="home_snackbar_login_moved_to_trash">Login in den Papierkorb verschoben</string>
@@ -152,9 +152,9 @@
     <item quantity="one">Soll dieses Element wirklich gelöscht werden? Diese Aktion kann nicht rückgängig gemacht werden.</item>
     <item quantity="other">Sollen diese %d Elemente wirklich gelöscht werden? Diese Aktion kann nicht rückgängig gemacht werden.</item>
   </plurals>
-  <plurals name="alert_shared_delete_items_message">
-    <item quantity="one">%d item is currently shared. Moving it to trash will remove access for all other users.</item>
-    <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
+  <plurals name="alert_confirm_delete_items_shared_warning_message">
+    <item quantity="one">%d item is currently shared. Deleting it will remove access for all other users.</item>
+    <item quantity="other">%d items are currently shared. Deleting them will remove access for all other users.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Letzte Suchanfragen</string>
@@ -168,10 +168,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Fehler beim Loslösen einiger Einträge.</string>
   <string name="home_snackbar_items_unpinned_error">Fehler beim Loslösen der Einträge.</string>
   <string name="home_snackbar_items_alias_enabled_success">Alias erfolgreich aktiviert.</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Fehler beim Aktivieren einiger Aliasse.</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
   <string name="home_snackbar_items_alias_enabled_error">Fehler beim Aktivieren der Aliasse.</string>
   <string name="home_snackbar_items_alias_disabled_success">Alias erfolgreich deaktiviert.</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Fehler beim Deaktivieren einiger Aliasse.</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
   <string name="home_snackbar_items_alias_disabled_error">Fehler beim Deaktivieren der Aliasse.</string>
   <string name="bulk_action_unpin">Loslösen</string>
   <string name="bulk_action_pin">Anheften</string>

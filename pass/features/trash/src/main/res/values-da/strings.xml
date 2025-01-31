@@ -4,6 +4,7 @@
   <string name="bottomsheet_delete_permanently">Slet permanent</string>
   <string name="alert_confirm_delete_item_dialog_title">Slet permanent?</string>
   <string name="alert_confirm_delete_item_dialog_message">Denne handling kan ikke fortrydes.</string>
+  <string name="alert_confirm_delete_item_dialog_shared_warning_message">Dette element er i øjeblikket delt. Hvis du sletter det, fjernes adgangen for alle andre brugere.</string>
   <string name="alias_dialog_move_to_trash_title">Flyt til papirkurv?</string>
   <string name="alias_dialog_move_to_trash_content">Hvis du flytter et alias til papirkurven, vil det stoppe med at videresende e-mails til din postkasse.</string>
   <string name="alias_dialog_move_to_trash_confirm">Bekræft</string>

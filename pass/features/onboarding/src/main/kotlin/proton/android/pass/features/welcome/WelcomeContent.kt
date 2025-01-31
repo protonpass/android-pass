@@ -88,7 +88,7 @@ internal fun WelcomeContent(
         initialPage = 0,
         pageCount = { onboardingSlides.size }
     ),
-    onCreateAccount: () -> Unit,
+    onSignUp: () -> Unit,
     onSignIn: () -> Unit
 ) {
     Column(
@@ -167,7 +167,7 @@ internal fun WelcomeContent(
                         .padding(horizontal = Spacing.medium),
                     color = PassPalette.Indigo,
                     elevation = ButtonDefaults.elevation(0.dp),
-                    onClick = onCreateAccount
+                    onClick = onSignUp
                 ) {
                     Text.Body1Medium(
                         modifier = Modifier.padding(Spacing.small),
@@ -209,7 +209,7 @@ fun WelcomeContentSlide0Preview() {
                     initialPage = 0,
                     pageCount = { onboardingSlides.size }
                 ),
-                onCreateAccount = {},
+                onSignUp = {},
                 onSignIn = {}
             )
         }
@@ -226,7 +226,7 @@ fun WelcomeContentSlide1Preview() {
                     initialPage = 1,
                     pageCount = { onboardingSlides.size }
                 ),
-                onCreateAccount = {},
+                onSignUp = {},
                 onSignIn = {}
             )
         }
@@ -243,7 +243,7 @@ fun WelcomeContentSlide2Preview() {
                     initialPage = 2,
                     pageCount = { onboardingSlides.size }
                 ),
-                onCreateAccount = {},
+                onSignUp = {},
                 onSignIn = {}
             )
         }
@@ -260,7 +260,7 @@ fun WelcomeContentSlide3Preview() {
                     initialPage = 3,
                     pageCount = { onboardingSlides.size }
                 ),
-                onCreateAccount = {},
+                onSignUp = {},
                 onSignIn = {}
             )
         }

@@ -50,6 +50,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.setSecureMode
 import proton.android.pass.composecomponents.impl.theme.SystemUIDisposableEffect
 import proton.android.pass.composecomponents.impl.theme.isDark
+import proton.android.pass.features.welcome.WelcomeScreen
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.ui.launcher.AccountState.AccountNeeded
@@ -57,7 +58,6 @@ import proton.android.pass.ui.launcher.AccountState.PrimaryExist
 import proton.android.pass.ui.launcher.AccountState.Processing
 import proton.android.pass.ui.launcher.AccountState.StepNeeded
 import proton.android.pass.ui.launcher.LauncherViewModel
-import proton.android.pass.features.welcome.WelcomeScreen
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -102,14 +102,12 @@ class MainActivity : FragmentActivity() {
                 PassLogger.w(TAG, "Error setting splash screen keep on screen condition")
                 PassLogger.w(TAG, it)
             }
-            val abTest = true
+            val abTest = false // false until it's decided how to run it.
             DisposableEffect(state) {
                 PassLogger.i(TAG, "Account state: $state")
                 when (state.accountState) {
                     AccountNeeded -> {
-                        if (!abTest) {
-                            launcherViewModel.onAccountNeeded()
-                        }
+                        if (!abTest) launcherViewModel.onAccountNeeded()
                     }
 
                     PrimaryExist -> launcherViewModel.onPrimaryExist(updateResultLauncher)
@@ -136,7 +134,7 @@ class MainActivity : FragmentActivity() {
                     AccountNeeded -> {
                         if (abTest) {
                             WelcomeScreen(
-                                onCreateAccount = { launcherViewModel.createAccount() },
+                                onSignUp = { launcherViewModel.signUp() },
                                 onSignIn = { launcherViewModel.signIn() }
                             )
                         } else {

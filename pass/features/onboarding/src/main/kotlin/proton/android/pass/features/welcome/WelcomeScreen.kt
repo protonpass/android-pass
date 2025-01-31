@@ -24,12 +24,12 @@ import androidx.compose.ui.Modifier
 @Composable
 fun WelcomeScreen(
     modifier: Modifier = Modifier,
-    onCreateAccount: () -> Unit,
+    onSignUp: () -> Unit,
     onSignIn: () -> Unit
 ) {
     WelcomeContent(
         modifier = modifier,
-        onCreateAccount = onCreateAccount,
+        onSignUp = onSignUp,
         onSignIn = onSignIn
     )
 }

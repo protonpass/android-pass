@@ -17,7 +17,7 @@
   <string name="vault_delete_dialog_placeholder">Nama brankas</string>
   <string name="vault_delete_dialog_cancel_action">Batal</string>
   <string name="vault_delete_dialog_delete_action">Hapus</string>
-  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">This vault holds %1$s. Deleting it will remove access for all other users.</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Brankas ini mengandung %1$s. Dengan menghapus brankas ini, izin akses bagi seluruh pengguna lainnya akan dihapus.</string>
   <string name="vault_leave_dialog_title">Tinggalkan brankas</string>
   <string name="vault_leave_dialog_body">Tindakan ini akan menutup akses Anda ke brankas __VAULT_NAME__ beserta seluruh isinya. Apakah Anda yakin untuk meninggalkan brankas ini?</string>
   <string name="vault_leave_dialog_cancel_action">Batalkan</string>

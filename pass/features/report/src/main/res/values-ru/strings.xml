@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="description_field_label">В чем ваша проблема?</string>
-  <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
+  <string name="description_field_hint">Describe the issue the more detailed possible, if it\'s there any error let us know what it says.</string>
   <string name="email_field_label">Электронная почта</string>
   <string name="email_field_hint">электронная почта</string>
   <string name="attach_image_button">Прикрепить изображение</string>
@@ -44,7 +44,7 @@
   <string name="report_sending_success">Отчет успешно отправлен</string>
   <string name="report_sending_error">Не удалось отправить отчет.</string>
   <string name="tips_passkey_check_guide">Если у вас возникли проблемы, посмотрите наше руководство пользователя.</string>
-  <string name="tips_passkey_android_not_supported">Your Android version is too low. Try upgrading your device.</string>
+  <string name="tips_passkey_android_not_supported">Your android version is too low. Try upgrading your device.</string>
   <string name="tips_passkeys_credential_manager_not_supported">Производитель устройства не предоставляет менеджер учетных данных.</string>
   <string name="tips_passkey_supported">Ключи доступа поддерживаются</string>
   <string name="tips_passkey_not_supported">Ключи доступа не поддерживаются</string>

@@ -168,11 +168,11 @@
     <item quantity="many">Czy na pewno chcesz usunąć %d elementów? Ta akcja jest nieodwracalna.</item>
     <item quantity="other">Czy na pewno chcesz usunąć %d elementów? Ta akcja jest nieodwracalna.</item>
   </plurals>
-  <plurals name="alert_shared_delete_items_message">
-    <item quantity="one">%d item is currently shared. Moving it to trash will remove access for all other users.</item>
-    <item quantity="few">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
-    <item quantity="many">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
-    <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
+  <plurals name="alert_confirm_delete_items_shared_warning_message">
+    <item quantity="one">%d item is currently shared. Deleting it will remove access for all other users.</item>
+    <item quantity="few">%d items are currently shared. Deleting them will remove access for all other users.</item>
+    <item quantity="many">%d items are currently shared. Deleting them will remove access for all other users.</item>
+    <item quantity="other">%d items are currently shared. Deleting them will remove access for all other users.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Ostatnie wyszukiwania</string>

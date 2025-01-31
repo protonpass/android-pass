@@ -20,9 +20,4 @@
   <!-- Delete dialog -->
   <string name="item_trash_delete_dialog_title">Vymazať natrvalo?</string>
   <string name="item_trash_delete_dialog_message">Táto akcia je nezvratná.</string>
-  <!-- Shared warning dialog -->
-  <string name="item_trash_warning_shared_dialog_title">Presunúť položku do koša?</string>
-  <string name="item_trash_warning_shared_dialog_message">Táto položka je v súčasnosti zdieľaná. Jej presunutím do koša sa zruší prístup pre všetkých ostatných používateľov.</string>
-  <string name="item_trash_warning_shared_snackbar_trash_error">Chyba pri presúvaní položky do koša</string>
-  <string name="item_trash_warning_shared_snackbar_trash_success">Položka bola presunutá do koša</string>
 </resources>

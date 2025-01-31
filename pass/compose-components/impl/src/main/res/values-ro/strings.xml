@@ -300,9 +300,9 @@
   <string name="options_menu_content_description">Meniu opțiuni</string>
   <!-- Items -->
   <plurals name="shared_items_count">
-    <item quantity="one">%d shared item</item>
+    <item quantity="one">%d articol partajat</item>
     <item quantity="few">%d shared items</item>
-    <item quantity="other">%d shared items</item>
+    <item quantity="other">%d articole partajate</item>
   </plurals>
   <plurals name="users_count">
     <item quantity="one">%d user</item>

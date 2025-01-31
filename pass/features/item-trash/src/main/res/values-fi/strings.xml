@@ -20,9 +20,4 @@
   <!-- Delete dialog -->
   <string name="item_trash_delete_dialog_title">Poistetaanko pysyvästi?</string>
   <string name="item_trash_delete_dialog_message">Toimintoa ei ole mahdollista kumota.</string>
-  <!-- Shared warning dialog -->
-  <string name="item_trash_warning_shared_dialog_title">Siirretäänkö kohde roskakoriin?</string>
-  <string name="item_trash_warning_shared_dialog_message">Tämä kohde on tällä hetkellä jaettuna. Sen siirtäminen roskakoriin poistaa pääsyn kaikilta muilta käyttäjiltä.</string>
-  <string name="item_trash_warning_shared_snackbar_trash_error">Virhe siirrettäessä kohdetta roskakoriin</string>
-  <string name="item_trash_warning_shared_snackbar_trash_success">Kohde siirrettiin roskakoriin</string>
 </resources>

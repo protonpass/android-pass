@@ -57,6 +57,8 @@
   <string name="sharing_snackbar_invite_sent_success">Η πρόσκληση στάλθηκε</string>
   <string name="sharing_snackbar_invite_sent_error">Δεν ήταν δυνατή η αποστολή πρόσκλησης</string>
   <string name="sharing_snackbar_invite_new_users_error">Δεν είναι δυνατή η αποστολή προσκλήσεων σε νέους χρήστες</string>
+  <string name="sharing_snackbar_invite_free_user_error">Οι προσκλήσεις στοιχείων επιτρέπεται να αποστέλλονται μόνο σε χρήστες επί πληρωμή</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">Η διεύθυνση έχει ήδη προσκληθεί</string>
   <string name="sharing_snackbar_get_vault_members_error">Δεν ήταν δυνατή η λήψη μελών της κρύπτης</string>
   <string name="sharing_snackbar_change_permission_success">Τα δικαιώματα άλλαξαν</string>
   <string name="sharing_snackbar_change_permission_error">Δεν ήταν δυνατή η αλλαγή των δικαιωμάτων</string>
@@ -69,7 +71,7 @@
   <string name="share_summary_share_item">Κοινοποίηση στοιχείου</string>
   <string name="share_summary_vault_title">Κρύπτη</string>
   <string name="share_summary_item_title">Στοιχείο</string>
-  <string name="share_summary_access_level_title">Access level</string>
+  <string name="share_summary_access_level_title">Επίπεδο πρόσβασης</string>
   <string name="share_manage_vault_share_with_more_people">Κοινοποίηση με περισσότερα άτομα</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d πρόσκληση απομένει</item>
@@ -93,7 +95,7 @@
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Δεν μπορείτε να μεταφέρετε την τελευταία κρύπτη που κατέχετε.</string>
   <string name="sharing_bottomsheet_remove_access">Ανάκληση πρόσβασης</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Μπορεί να παραχωρήσει και να ανακαλέσει την πρόσβαση σε αυτό το στοιχείο.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Μπορεί να επεξεργαστεί και να διαγράψει αυτό το στοιχείο.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Μπορεί να προβάλλει αυτό το στοιχείο.</string>
   <string name="sharing_bottomsheet_resend_invite">Επανάληψη αποστολής πρόσκλησης</string>
   <string name="sharing_bottomsheet_cancel_invite">Ακύρωση πρόσκλησης</string>
@@ -116,30 +118,19 @@
   <string name="sharing_limit_reached">Αυτή η κρύπτη έχει φτάσει στο όριο μελών και προσκλήσεων.</string>
   <string name="sharing_invites_info_upgrade_text">Αναβαθμίστε τώρα για να προσκαλέσετε περισσότερους.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Κοινοποίηση</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Χρησιμοποιήστε κρύπτες για να μοιραστείτε στοιχεία με άλλους</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Κοινή χρήση αυτής της κρύπτης</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Μετακίνηση σε κοινόχρηστη κρύπτη</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Δημιουργία νέας κρύπτης για κοινή χρήση</string>
-  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Αυτό το στοιχείο θα μετακινηθεί στη νέα κρύπτη.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Αναβαθμίστε για να δημιουργήσετε περισσότερες κρύπτες</string>
   <string name="sharing_from_item_vault_limit_reached">Έχετε φτάσει το όριο της κρύπτης</string>
   <string name="share_with_suggestions_title">Προτάσεις</string>
   <string name="share_with_recents_title">Πρόσφατα</string>
   <string name="share_with_remove_email_content_description">Αφαίρεση email</string>
-  <string name="share_with_secure_link_title">Μέσω ασφαλούς συνδέσμου</string>
-  <string name="share_with_secure_link_description">Δημιουργία ασφαλούς σύνδεσης προς αυτό το στοιχείο.</string>
   <string name="share_with_user_shared_title">Με άλλους χρήστες του Proton Pass</string>
   <string name="share_with_user_shared_description">Χρήσιμο για μόνιμη κοινή χρήση.</string>
   <string name="share_with_manage_shared_item_title">Διαχείριση πρόσβασης</string>
   <string name="share_with_manage_shared_item_description">Δείτε την επισκόπηση μελών και δικαιωμάτων.</string>
   <string name="share_with_secure_link_shared_title">Μέσω ασφαλούς συνδέσμου</string>
   <string name="share_with_secure_link_shared_description">Για εφάπαξ κοινή χρήση.</string>
-  <string name="share_with_manage_shared_vault_title">Διαχείριση πρόσβασης κρύπτης</string>
-  <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="one">Η κρύπτη του στοιχείου είναι προς το παρόν κοινόχρηστη με %d χρήστη.</item>
-    <item quantity="other">Η κρύπτη του στοιχείου είναι προς το παρόν κοινόχρηστη με %d χρήστες.</item>
-  </plurals>
-  <string name="share_with_view_shared_vault_members_title">Προβολή μελών κρύπτης</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Ορισμός επιπέδου πρόσβασης για όλα τα μέλη</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Ορισμός επιπέδου πρόσβασης για %s</string>
   <string name="sharing_edit_permissions_remove_user">Αφαίρεση χρήστη</string>

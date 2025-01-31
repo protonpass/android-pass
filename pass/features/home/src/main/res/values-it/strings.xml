@@ -24,7 +24,7 @@
   <string name="home_empty_vault_create_alias">Crea un alias Hide-my-email</string>
   <string name="home_empty_vault_create_note">Crea una nota</string>
   <string name="home_empty_vault_create_credit_card">Crea una carta</string>
-  <string name="home_empty_vault_create_identity">Crea un\'identità</string>
+  <string name="home_empty_vault_create_identity">Create an identity</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Caricamento degli elementi non riuscito</string>
   <string name="error_refreshing">Aggiornamento non riuscito</string>
   <string name="home_snackbar_login_moved_to_trash">Login spostato nel cestino</string>
@@ -152,9 +152,9 @@
     <item quantity="one">Sei sicuro di voler eliminare definitivamente 1 elemento?</item>
     <item quantity="other">Sei sicuro di voler eliminare definitivamente %d elementi?</item>
   </plurals>
-  <plurals name="alert_shared_delete_items_message">
-    <item quantity="one">L\'elemento %d è attualmente condiviso. Lo spostamento nel cestino rimuoverà l\'accesso per tutti gli altri utenti.</item>
-    <item quantity="other">Gli elementi %d sono attualmente condivisi. Lo spostamento nel cestino rimuoverà l\'accesso per tutti gli altri utenti.</item>
+  <plurals name="alert_confirm_delete_items_shared_warning_message">
+    <item quantity="one">L\'elemento %d è attualmente condiviso. L\'eliminazione rimuoverà l\'accesso per tutti gli altri utenti.</item>
+    <item quantity="other">Gli elementi %d sono attualmente condivisi. Eliminarli rimuoverà l\'accesso per tutti gli altri utenti.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Ricerche recenti</string>
@@ -168,10 +168,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Annullamento del fissaggio di alcuni elementi non riuscito</string>
   <string name="home_snackbar_items_unpinned_error">Annullamento del fissaggio degli elementi non riuscito</string>
   <string name="home_snackbar_items_alias_enabled_success">Alias ​​abilitato</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Abilitazione di alcuni alias non riuscita</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
   <string name="home_snackbar_items_alias_enabled_error">Abilitazione degli alias non riuscita</string>
   <string name="home_snackbar_items_alias_disabled_success">Alias ​​disabilitato</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Disabilitazione di alcuni alias non riuscita</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
   <string name="home_snackbar_items_alias_disabled_error">Disabilitazione degli alias non riuscita</string>
   <string name="bulk_action_unpin">Non fissare</string>
   <string name="bulk_action_pin">Fissa</string>

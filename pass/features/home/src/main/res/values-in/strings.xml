@@ -24,7 +24,7 @@
   <string name="home_empty_vault_create_alias">Buat alias Hide-my-email</string>
   <string name="home_empty_vault_create_note">Buat catatan</string>
   <string name="home_empty_vault_create_credit_card">Buat kartu kredit</string>
-  <string name="home_empty_vault_create_identity">Buat identitas</string>
+  <string name="home_empty_vault_create_identity">Create an identity</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Terdapat kesalahan dalam memuat item</string>
   <string name="error_refreshing">Terjadi kesalahan dalam memuat ulang</string>
   <string name="home_snackbar_login_moved_to_trash">Entri masuk dipindahkan ke sampah</string>
@@ -144,8 +144,8 @@
   <plurals name="alert_confirm_delete_items_message">
     <item quantity="other">Apakah Anda yakin ingin menghapus %d item ini? Tindakan ini tidak dapat diurungkan</item>
   </plurals>
-  <plurals name="alert_shared_delete_items_message">
-    <item quantity="other">%d item saat ini sedang dibagikan. Dengan memindahkan item ini ke sampah, izin akses bagi seluruh pengguna lainnya akan dihapus.</item>
+  <plurals name="alert_confirm_delete_items_shared_warning_message">
+    <item quantity="other">%d item sedang dibagikan. Dengan menghapus item ini, izin akses bagi seluruh pengguna lainnya akan dihapus.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Pencarian terkini</string>
@@ -159,10 +159,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Terdapat kesalahan dalam melepas sematan sebagian item</string>
   <string name="home_snackbar_items_unpinned_error">Terdapat kesalahan dalam melepas sematan item</string>
   <string name="home_snackbar_items_alias_enabled_success">Alias berhasil diaktifkan</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Terdapat kesalahan dalam mengaktifkan sebagian alias</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
   <string name="home_snackbar_items_alias_enabled_error">Terdapat kesalahan dalam mengaktifkan alias</string>
   <string name="home_snackbar_items_alias_disabled_success">Alias berhasil dinonaktifkan</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Terdapat kesalahan dalam menonaktifkan sebagian alias</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
   <string name="home_snackbar_items_alias_disabled_error">Terdapat kesalahan dalam menonaktifkan alias</string>
   <string name="bulk_action_unpin">Lepas sematan</string>
   <string name="bulk_action_pin">Sematkan</string>

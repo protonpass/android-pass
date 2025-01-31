@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="description_field_label">Vấn đề của bạn là gì?</string>
-  <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
+  <string name="description_field_hint">Describe the issue the more detailed possible, if it\'s there any error let us know what it says.</string>
   <string name="email_field_label">Email</string>
   <string name="email_field_hint">email</string>
   <string name="attach_image_button">Đính kèm hình ảnh</string>
@@ -44,7 +44,7 @@
   <string name="report_sending_success">Báo cáo đã được gửi thành công.</string>
   <string name="report_sending_error">Không thể gửi báo cáo.</string>
   <string name="tips_passkey_check_guide">Nếu bạn gặp bất kỳ vấn đề nào, hãy kiểm tra hướng dẫn của chúng tôi.</string>
-  <string name="tips_passkey_android_not_supported">Your Android version is too low. Try upgrading your device.</string>
+  <string name="tips_passkey_android_not_supported">Your android version is too low. Try upgrading your device.</string>
   <string name="tips_passkeys_credential_manager_not_supported">Nhà sản xuất thiết bị không cung cấp trình quản lý thông tin xác thực.</string>
   <string name="tips_passkey_supported">Mã khóa được hỗ trợ</string>
   <string name="tips_passkey_not_supported">Mã khóa không được hỗ trợ</string>

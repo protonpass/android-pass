@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="description_field_label">Wat is uw probleem?</string>
-  <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
+  <string name="description_field_hint">Beschrijf het probleem zo gedetailleerder mogelijk, als er een fout is, laat het ons weten wat er staat.</string>
   <string name="email_field_label">E-mail</string>
   <string name="email_field_hint">e-mail</string>
   <string name="attach_image_button">Afbeelding toevoegen</string>

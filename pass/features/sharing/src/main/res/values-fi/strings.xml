@@ -57,6 +57,8 @@
   <string name="sharing_snackbar_invite_sent_success">Kutsu lähetetty</string>
   <string name="sharing_snackbar_invite_sent_error">Kutsua ei voitu lähettää</string>
   <string name="sharing_snackbar_invite_new_users_error">Kutsuja ei voi lähettää uusille käyttäjille</string>
+  <string name="sharing_snackbar_invite_free_user_error">Item invites are only allowed to be sent to paid users</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">Address has already been invited</string>
   <string name="sharing_snackbar_get_vault_members_error">Holvin jäsentietojen nouto ei onnistunut</string>
   <string name="sharing_snackbar_change_permission_success">Käyttöoikeudet muutettu</string>
   <string name="sharing_snackbar_change_permission_error">Käyttöoikeuksia ei voitu muuttaa</string>
@@ -69,7 +71,7 @@
   <string name="share_summary_share_item">Jaa kohde</string>
   <string name="share_summary_vault_title">Holvi</string>
   <string name="share_summary_item_title">Kohde</string>
-  <string name="share_summary_access_level_title">Access level</string>
+  <string name="share_summary_access_level_title">Käyttöoikeustaso</string>
   <string name="share_manage_vault_share_with_more_people">Jaa useammalle henkilölle</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d kutsu jäljellä</item>
@@ -93,7 +95,7 @@
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Et voi siirtää viimeisen omistamasi holvin omistajuutta.</string>
   <string name="sharing_bottomsheet_remove_access">Mitätöi käyttöoikeus</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Voi myöntää ja mitätöidä tämän kohteen käyttöoikeuksia.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Voi muokata ja poistaa tämän kohteen.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Voi tarkastella tätä kohdetta.</string>
   <string name="sharing_bottomsheet_resend_invite">Lähetä kutsu uudelleen</string>
   <string name="sharing_bottomsheet_cancel_invite">Peru kutsu</string>
@@ -116,30 +118,19 @@
   <string name="sharing_limit_reached">Holvin jäsenien ja kutsujen enimmäismäärä on saavutettu.</string>
   <string name="sharing_invites_info_upgrade_text">Kutsu lisää päivittämällä tilauksesi</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Jaa</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Jaa kohteita muille holvien avulla</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Jaa tämä holvi</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Siirrä jaettuun holviin</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Luo uusi jaettu holvi</string>
-  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Tämä kohde siirretään luotavaan holviin.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Luo lisää holveja päivittämällä tilauksesi</string>
   <string name="sharing_from_item_vault_limit_reached">Holvien enimmäismäärä on saavutettu</string>
   <string name="share_with_suggestions_title">Ehdotukset</string>
   <string name="share_with_recents_title">Viimeisin</string>
   <string name="share_with_remove_email_content_description">Poista sähköpostiosoite</string>
-  <string name="share_with_secure_link_title">Suojatun linkin välityksellä</string>
-  <string name="share_with_secure_link_description">Luo suojattu linkki tähän kohteeseen.</string>
   <string name="share_with_user_shared_title">Muiden Proton Pass -käyttäjien kanssa</string>
   <string name="share_with_user_shared_description">Hyödyllinen pysyvään jakamiseen.</string>
   <string name="share_with_manage_shared_item_title">Hallitse käyttöoikeuksia</string>
   <string name="share_with_manage_shared_item_description">Näytä jäsenten ja käyttöoikeuksien yleiskatsaus.</string>
   <string name="share_with_secure_link_shared_title">Suojatun linkin välityksellä</string>
   <string name="share_with_secure_link_shared_description">Kertaluonteista jakamista varten.</string>
-  <string name="share_with_manage_shared_vault_title">Hallitse holvin käyttöoikeuksia</string>
-  <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="one">Kohteen holvi on tällä hetkellä jaettu %d käyttäjän kanssa.</item>
-    <item quantity="other">Kohteen holvi on tällä hetkellä jaettu %d käyttäjän kanssa.</item>
-  </plurals>
-  <string name="share_with_view_shared_vault_members_title">Näytä holvin jäsenet</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Aseta käyttöoikeustaso kaikille jäsenille</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Aseta käyttöoikeustaso jäsenelle %s</string>
   <string name="sharing_edit_permissions_remove_user">Poista käyttäjä</string>

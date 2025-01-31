@@ -144,7 +144,7 @@
   <plurals name="alert_confirm_delete_items_message">
     <item quantity="other">%d개 항목을 정말 삭제할까요? 이 동작은 되돌릴 수 없습니다.</item>
   </plurals>
-  <plurals name="alert_shared_delete_items_message">
+  <plurals name="alert_confirm_delete_items_shared_warning_message">
     <item quantity="other">%d개 항목이 현재 공유 중입니다. 휴지통에 항목을 이동하면 다른 사용자들과의 접근 권한도 상실됩니다.</item>
   </plurals>
   <!-- Recent search -->
@@ -159,7 +159,7 @@
   <string name="home_snackbar_items_unpinned_partial_success">일부 항목을 고정 해제하는데 실패했습니다.</string>
   <string name="home_snackbar_items_unpinned_error">항목을 고정 해제하는데 실패했습니다.</string>
   <string name="home_snackbar_items_alias_enabled_success">별칭을 성공적으로 활성화했습니다.</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">일부 별칭 활성화 오류</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">일부 별칭을 활성화하는데 오류가 발생했습니다.</string>
   <string name="home_snackbar_items_alias_enabled_error">별칭 활성화 오류</string>
   <string name="home_snackbar_items_alias_disabled_success">별칭을 성공적으로 비활성화했습니다.</string>
   <string name="home_snackbar_items_alias_disabled_partial_success">일부 별칭을 비활성화하는데 오류가 발생했습니다.</string>

@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="description_field_label">Sorununuz nedir?</string>
-  <string name="description_field_hint">Sorununuzu olabildiğince ayrıntılı olarak anlatın. Bir hata iletisi görüyorsanız ne dendiğini bize aktarın.</string>
+  <string name="description_field_hint">Sorununuzu olabildiğince ayrıntılı olarak anlatın. Bir hata iletisi gördüyseniz bize ne yazdığını da iletin.</string>
   <string name="email_field_label">E-posta adresi</string>
   <string name="email_field_hint">E-posta adresi</string>
   <string name="attach_image_button">Görsel ekle</string>

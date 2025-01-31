@@ -35,7 +35,7 @@
   <string name="bottomsheet_leave_vault">Покинуть хранилище</string>
   <string name="bottomsheet_view_members">Просмотреть участников</string>
   <string name="bottomsheet_manage_access">Управление доступом</string>
-  <string name="bottomsheet_select_vault_read_only">You can only view</string>
+  <string name="bottomsheet_select_vault_read_only">You can only read</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">Вы можете создавать элементы только в самых старых хранилищах.</string>
   <string name="vault_title">Хранилище</string>
 </resources>

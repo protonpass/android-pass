@@ -57,6 +57,8 @@
   <string name="sharing_snackbar_invite_sent_success">Davet gönderildi</string>
   <string name="sharing_snackbar_invite_sent_error">Davet gönderilemedi</string>
   <string name="sharing_snackbar_invite_new_users_error">Yeni kullanıcılara davet gönderilemedi</string>
+  <string name="sharing_snackbar_invite_free_user_error">Öge davetleri yalnızca ücretli tarife üyelerine gönderilebilir</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">Adres zaten davet edilmiş</string>
   <string name="sharing_snackbar_get_vault_members_error">Kasa üyeleri alınamadı</string>
   <string name="sharing_snackbar_change_permission_success">İzinler değiştirildi</string>
   <string name="sharing_snackbar_change_permission_error">İzinler değiştirilemedi</string>
@@ -69,7 +71,7 @@
   <string name="share_summary_share_item">Ögeyi paylaş</string>
   <string name="share_summary_vault_title">Kasa</string>
   <string name="share_summary_item_title">Öge</string>
-  <string name="share_summary_access_level_title">Access level</string>
+  <string name="share_summary_access_level_title">Erişim düzeyi</string>
   <string name="share_manage_vault_share_with_more_people">Başkalarıyla paylaş</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d davet kaldı</item>
@@ -93,7 +95,7 @@
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Sahibi olduğunuz son kasanın sahipliğini aktaramazsınız.</string>
   <string name="sharing_bottomsheet_remove_access">Erişme iznini geri al</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Bu ögeye erişme izni verebilir ya da geri alabilir.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Bu ögeyi düzenleyebilir ve silebilir.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Bu ögeyi görüntüleyebilir.</string>
   <string name="sharing_bottomsheet_resend_invite">Daveti yeniden gönder</string>
   <string name="sharing_bottomsheet_cancel_invite">Daveti iptal et</string>
@@ -116,30 +118,19 @@
   <string name="sharing_limit_reached">Bu kasa için üye ve davet sayısı sınırına ulaşıldı.</string>
   <string name="sharing_invites_info_upgrade_text">Daha fazla davet gönderebilmek için tarifenizi yükseltin.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Paylaş</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Ögeleri başkaları ile paylaşmak için kasaları kullanın</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Bu kasayı paylaş</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Paylaşılan bir kasaya taşı</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Paylaşılacak yeni bir kasa oluştur</string>
-  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Öge yeni kasaya taşınacak.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Daha fazla kasa oluşturabilmek için tarifenizi yükseltin</string>
   <string name="sharing_from_item_vault_limit_reached">Kasa sayısı sınırına ulaştınız</string>
   <string name="share_with_suggestions_title">Öneriler</string>
   <string name="share_with_recents_title">Son kullanılan</string>
   <string name="share_with_remove_email_content_description">E-postayı kaldır</string>
-  <string name="share_with_secure_link_title">Güvenli bağlantı ile</string>
-  <string name="share_with_secure_link_description">Bu öge için güvenli bir bağlantı oluştur.</string>
   <string name="share_with_user_shared_title">Diğer Proton Pass kullanıcıları ile</string>
   <string name="share_with_user_shared_description">Kalıcı paylaşım için uygundur.</string>
   <string name="share_with_manage_shared_item_title">Erişim yönetimi</string>
   <string name="share_with_manage_shared_item_description">Üye ve izin özetini görüntüleyin.</string>
   <string name="share_with_secure_link_shared_title">Güvenli bir bağlantı ile</string>
   <string name="share_with_secure_link_shared_description">Bir kerelik paylaşım için.</string>
-  <string name="share_with_manage_shared_vault_title">Kasa erişimi yönetimi</string>
-  <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="one">Ögenin bulunduğu kasa %d kullanıcı ile paylaşılıyor.</item>
-    <item quantity="other">Ögenin bulunduğu kasa %d kullanıcı ile paylaşılıyor.</item>
-  </plurals>
-  <string name="share_with_view_shared_vault_members_title">Kasa üyelerini görüntüle</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Tüm üyelerin erişim düzeyini ayarla</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">%s erişim düzeyini ayarla</string>
   <string name="sharing_edit_permissions_remove_user">Kullanıcıyı kaldır</string>

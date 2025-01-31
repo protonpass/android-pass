@@ -161,7 +161,7 @@ class LauncherViewModel @Inject constructor(
         authOrchestrator.startAddAccountWorkflow()
     }
 
-    internal fun createAccount() = viewModelScope.launch {
+    internal fun signUp() = viewModelScope.launch {
         authOrchestrator.startSignupWorkflow()
     }
 

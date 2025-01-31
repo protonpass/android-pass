@@ -152,9 +152,9 @@
     <item quantity="one">¿Estás seguro de que quieres eliminar el elemento? Esta acción es irreversible.</item>
     <item quantity="other">¿Estás seguro de que quieres eliminar los %d elementos? Esta acción es irreversible.</item>
   </plurals>
-  <plurals name="alert_shared_delete_items_message">
-    <item quantity="one">%d elemento está compartido actualmente. Si lo mueves a la papelera, se eliminará el acceso para todos los demás usuarios.</item>
-    <item quantity="other">%d elementos están compartidos actualmente. Si los mueves a la papelera, se eliminará el acceso para todos los demás usuarios.</item>
+  <plurals name="alert_confirm_delete_items_shared_warning_message">
+    <item quantity="one">%d elemento está compartido actualmente. Si lo eliminas, se eliminará el acceso para todos los demás usuarios.</item>
+    <item quantity="other">%d elementos están compartidos actualmente. Si los eliminas, se eliminará el acceso para todos los demás usuarios.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Búsquedas recientes</string>

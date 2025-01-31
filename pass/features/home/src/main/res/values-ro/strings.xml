@@ -160,10 +160,10 @@
     <item quantity="few">Sigur doriți să ștergeți %d articole? Această acțiune nu e reversibilă.</item>
     <item quantity="other">Sigur doriți să ștergeți %d de articole? Această acțiune nu e reversibilă.</item>
   </plurals>
-  <plurals name="alert_shared_delete_items_message">
-    <item quantity="one">În acest moment este partajat %d articol. Dacă îl mutați în gunoi, ceilalți utilizatori nu-l vor mai putea accesa.</item>
-    <item quantity="few">În acest moment sunt partajate %d articole. Dacă le mutați în gunoi, ceilalți utilizatori nu le vor mai putea accesa.</item>
-    <item quantity="other">În acest moment sunt partajate %d de articole. Dacă le mutați în gunoi, ceilalți utilizatori nu le vor mai putea accesa.</item>
+  <plurals name="alert_confirm_delete_items_shared_warning_message">
+    <item quantity="one">%d item is currently shared. Deleting it will remove access for all other users.</item>
+    <item quantity="few">%d items are currently shared. Deleting them will remove access for all other users.</item>
+    <item quantity="other">%d items are currently shared. Deleting them will remove access for all other users.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Căutări recente</string>
@@ -177,10 +177,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Eroare la anularea fixării unor articole.</string>
   <string name="home_snackbar_items_unpinned_error">Eroare la anularea fixării articolelor.</string>
   <string name="home_snackbar_items_alias_enabled_success">Aliasul s-a activat</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Eroare la activarea unor aliasuri</string>
   <string name="home_snackbar_items_alias_enabled_error">Eroare activare aliasuri</string>
   <string name="home_snackbar_items_alias_disabled_success">Aliasul s-a dezactivat</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Eroare la dezactivarea unor aliasuri</string>
   <string name="home_snackbar_items_alias_disabled_error">Eroare dezactivare aliasuri</string>
   <string name="bulk_action_unpin">Anulare fixare</string>
   <string name="bulk_action_pin">Fixare</string>

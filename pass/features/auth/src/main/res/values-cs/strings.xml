@@ -34,7 +34,7 @@
   <string name="auth_action_reveal_password">Zobrazit hlavní heslo</string>
   <string name="auth_action_conceal_password">Skrýt hlavní heslo</string>
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Použít raději PIN</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Use fingerprint instead</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Použít raději otisk prstu</string>
   <string name="auth_unlock_button">Odemknout</string>
   <string name="auth_error_empty_password">Heslo nemůže být prázdné</string>
   <string name="auth_error_pin_cannot_be_empty">PIN kód nemůže být prázdný</string>
@@ -55,5 +55,5 @@
     <item quantity="other">Zbývá %d pokusů</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Příliš mnoho chybných pokusů PIN. Všichni vaši uživatelé jsou odhlašováni.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Příliš mnoho neúspěšných pokusů o zadání PINu</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Příliš mnoho neúspěšných pokusů o zadání PIN.</string>
 </resources>

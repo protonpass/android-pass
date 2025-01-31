@@ -61,6 +61,8 @@
   <string name="sharing_snackbar_invite_sent_success">Приглашение отправлено</string>
   <string name="sharing_snackbar_invite_sent_error">Не могу отправить приглашение</string>
   <string name="sharing_snackbar_invite_new_users_error">Cannot send invites to new users</string>
+  <string name="sharing_snackbar_invite_free_user_error">Item invites are only allowed to be sent to paid users</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">Address has already been invited</string>
   <string name="sharing_snackbar_get_vault_members_error">Не могу получить участников хранилища</string>
   <string name="sharing_snackbar_change_permission_success">Разрешения изменены</string>
   <string name="sharing_snackbar_change_permission_error">Не могу изменить разрешения</string>
@@ -126,32 +128,19 @@
   <string name="sharing_limit_reached">Это хранилище достигло предела количества участников и приглашений.</string>
   <string name="sharing_invites_info_upgrade_text">Улучшите сейчас, чтобы пригласить больше.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Поделиться</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Используйте хранилища, чтобы делиться элементами с другими людьми</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Поделиться этим хранилищем</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Переместить в общее хранилище</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Создать новое хранилище для того, чтобы делиться</string>
-  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Этот элемент будет перенесен в новое хранилище.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Улучшите для создания дополнительных хранилищ</string>
   <string name="sharing_from_item_vault_limit_reached">You have reached the vault limit</string>
   <string name="share_with_suggestions_title">Рекомендации</string>
   <string name="share_with_recents_title">Недавние</string>
   <string name="share_with_remove_email_content_description">Удалить адрес эл. почты</string>
-  <string name="share_with_secure_link_title">Через защищенную ссылку</string>
-  <string name="share_with_secure_link_description">Сгенерировать защищенную ссылку на этот элемент.</string>
   <string name="share_with_user_shared_title">With other Proton Pass users</string>
   <string name="share_with_user_shared_description">Useful for permanent sharing.</string>
   <string name="share_with_manage_shared_item_title">Manage access</string>
   <string name="share_with_manage_shared_item_description">See member and permission overview.</string>
   <string name="share_with_secure_link_shared_title">Via a secure link</string>
   <string name="share_with_secure_link_shared_description">For one-off sharing.</string>
-  <string name="share_with_manage_shared_vault_title">Управление доступом к хранилищу</string>
-  <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="one">В настоящее время хранилище элемента находится в общем доступе для %d пользователя.</item>
-    <item quantity="few">В настоящее время хранилище элемента находится в общем доступе для %d пользователей.</item>
-    <item quantity="many">В настоящее время хранилище элемента находится в общем доступе для %d пользователей.</item>
-    <item quantity="other">В настоящее время хранилище элемента находится в общем доступе для %d пользователей.</item>
-  </plurals>
-  <string name="share_with_view_shared_vault_members_title">Просмотреть участников хранилища</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Установить уровень доступа для всех участников</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Установить уровень доступа для %s</string>
   <string name="sharing_edit_permissions_remove_user">Удалить пользователя</string>

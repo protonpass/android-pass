@@ -19,7 +19,7 @@
   <string name="email_copied_to_clipboard">Đã sao chép địa chỉ email</string>
   <string name="username_copied_to_clipboard">Đã sao chép tên đăng nhập</string>
   <string name="password_copied_to_clipboard">Đã sao chép mật khẩu</string>
-  <string name="website_copied_to_clipboard">Web address copied</string>
+  <string name="website_copied_to_clipboard">Website copied</string>
   <string name="totp_copied_to_clipboard">Đã sao chép mã TOTP</string>
   <string name="field_copied_to_clipboard">Đã sao chép trường</string>
   <string name="move_item_to_trash_message">Đã chuyển nội dung vào thùng rác</string>

@@ -108,7 +108,7 @@
   <string name="field_card_pin_title">Mã PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Ngày hết hạn</string>
-  <string name="field_card_expiration_date_hint">MM/YY</string>
+  <string name="field_card_expiration_date_hint">MM / YY</string>
   <string name="field_card_expiration_date_error">Nhập một ngày hợp lệ ở dạng Tháng / Năm</string>
   <string name="create_credit_card_item_creation_error">Không thể tạo thẻ</string>
   <string name="create_credit_card_item_creation_success">Đã tạo thẻ</string>
@@ -145,7 +145,7 @@
   <string name="identity_field_reddit_title">Tài khoản Reddit</string>
   <string name="identity_field_facebook_title">Trang Facebook</string>
   <string name="identity_field_yahoo_title">Tài khoản Yahoo</string>
-  <string name="identity_field_instagram_title">Instagram username</string>
+  <string name="identity_field_instagram_title">Instagram handle</string>
   <string name="identity_field_personal_website_title">Trang web cá nhân</string>
   <string name="identity_field_work_phone_number_title">Số điện thoại công việc</string>
   <string name="identity_field_work_email_title">Địa chỉ email công việc</string>
@@ -160,7 +160,7 @@
   <string name="identity_add_field_reddit">Tài khoản Reddit</string>
   <string name="identity_add_field_facebook">Trang Facebook</string>
   <string name="identity_add_field_yahoo">Tài khoản Yahoo</string>
-  <string name="identity_add_field_instagram">Instagram username</string>
+  <string name="identity_add_field_instagram">Instagram handle</string>
   <string name="identity_add_field_personal_website">Trang web cá nhân</string>
   <string name="identity_add_field_work_phone_number">Số điện thoại công việc</string>
   <string name="identity_add_field_work_email_address">Địa chỉ email công việc</string>

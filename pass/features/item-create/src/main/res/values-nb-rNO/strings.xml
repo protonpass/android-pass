@@ -169,7 +169,7 @@
   <string name="identity_section_address_details">Adressedetaljer</string>
   <string name="identity_section_contact_details">Kontaktdetaljer</string>
   <string name="identity_section_work_details">Arbeidsdetaljer</string>
-  <string name="identity_add_more_fields">Legge til et annet felt</string>
+  <string name="identity_add_more_fields">Legg til et annet felt</string>
   <string name="identity_bottomsheet_add_field">Legg til felt</string>
   <string name="create_identity_init_error">Problem med å hente identitetsdetaljer</string>
   <string name="update_identity_attachments_init_error">Problemer med å hente identitetsvedlegg</string>

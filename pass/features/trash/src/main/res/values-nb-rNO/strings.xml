@@ -4,6 +4,7 @@
   <string name="bottomsheet_delete_permanently">Slett permanent</string>
   <string name="alert_confirm_delete_item_dialog_title">Slett permanent?</string>
   <string name="alert_confirm_delete_item_dialog_message">Denne handlingen er irreversibel.</string>
+  <string name="alert_confirm_delete_item_dialog_shared_warning_message">Dette elementet er for øyeblikket delt. Hvis du sletter det, fjernes tilgangen for alle andre brukere.</string>
   <string name="alias_dialog_move_to_trash_title">Flytt til papirkurv?</string>
   <string name="alias_dialog_move_to_trash_content">Hvis du flytter et alias til papirkurven, vil det slutte å videresende e-postmeldinger til postboksen din.</string>
   <string name="alias_dialog_move_to_trash_confirm">Bekreft</string>

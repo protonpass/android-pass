@@ -51,7 +51,7 @@
   <string name="action_delete">刪除</string>
   <string name="action_make_default">Make default</string>
   <string name="action_verify">Verify</string>
-  <string name="action_close">Close</string>
+  <string name="action_close">關閉</string>
   <string name="action_update">Update</string>
   <!-- Empty list -->
   <string name="empty_list_title">加入您的第一個項目</string>
@@ -257,7 +257,7 @@
   </plurals>
   <string name="simple_login_widget_action">Sync aliases</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_not_received">Haven\'t receive the code?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Please check in your Spam for an email called “%s“</string>
   <string name="verification_code_suggestion_subject_new_email_address">Please confirm your email address for Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Please confirm your mailbox</string>

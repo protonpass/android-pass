@@ -57,6 +57,8 @@
   <string name="sharing_snackbar_invite_sent_success">Convite enviado</string>
   <string name="sharing_snackbar_invite_sent_error">Não foi possível enviar o convite.</string>
   <string name="sharing_snackbar_invite_new_users_error">Não é possível enviar convites para novos usuários.</string>
+  <string name="sharing_snackbar_invite_free_user_error">Item invites are only allowed to be sent to paid users</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">Address has already been invited</string>
   <string name="sharing_snackbar_get_vault_members_error">Não foi possível obter os membros do cofre.</string>
   <string name="sharing_snackbar_change_permission_success">As permissões foram alteradas.</string>
   <string name="sharing_snackbar_change_permission_error">Não foi possível mudar as permissões</string>
@@ -116,30 +118,19 @@
   <string name="sharing_limit_reached">Este cofre atingiu o limite de membros e convites.</string>
   <string name="sharing_invites_info_upgrade_text">Faça upgrade agora para convidar mais pessoas.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Compartilhar</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Use cofres para compartilhar itens com outras pessoas</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Compartilhar esse cofre</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Mover para cofre compartilhado</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Criar um cofre para compartilhar</string>
-  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">O item será movido para o novo cofre.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Faça upgrade para criar mais cofres</string>
   <string name="sharing_from_item_vault_limit_reached">Você atingiu o limite de cofre</string>
   <string name="share_with_suggestions_title">Sugestões</string>
   <string name="share_with_recents_title">Recente</string>
   <string name="share_with_remove_email_content_description">Remover e-mail</string>
-  <string name="share_with_secure_link_title">Via link seguro</string>
-  <string name="share_with_secure_link_description">Gerar um link seguro para este item.</string>
   <string name="share_with_user_shared_title">Com outros usuários do Proton Pass</string>
   <string name="share_with_user_shared_description">Útil para compartilhar permanentemente.</string>
   <string name="share_with_manage_shared_item_title">Gerenciar acesso</string>
   <string name="share_with_manage_shared_item_description">Veja a visão geral de membros e permissões.</string>
   <string name="share_with_secure_link_shared_title">Via um link seguro</string>
   <string name="share_with_secure_link_shared_description">Para uso único.</string>
-  <string name="share_with_manage_shared_vault_title">Gerenciar acesso ao cofre</string>
-  <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="one">O item do cofre está atualmente compartilhado com %d usuário.</item>
-    <item quantity="other">O item do cofre está atualmente compartilhado com %d usuários</item>
-  </plurals>
-  <string name="share_with_view_shared_vault_members_title">Ver todos os membros do cofre</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Definir o nível de acesso para todos os membros</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Definir nível de acesso para %s</string>
   <string name="sharing_edit_permissions_remove_user">Remover usuário</string>

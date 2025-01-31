@@ -19,7 +19,7 @@
   <string name="email_copied_to_clipboard">Dirección de correo electrónico copiada</string>
   <string name="username_copied_to_clipboard">Nombre de usuario copiado</string>
   <string name="password_copied_to_clipboard">Contraseña copiada</string>
-  <string name="website_copied_to_clipboard">Se copió el sitio web.</string>
+  <string name="website_copied_to_clipboard">Sitio web copiado</string>
   <string name="totp_copied_to_clipboard">TOTP copiado</string>
   <string name="field_copied_to_clipboard">Campo copiado</string>
   <string name="move_item_to_trash_message">Elemento movido a la papelera</string>

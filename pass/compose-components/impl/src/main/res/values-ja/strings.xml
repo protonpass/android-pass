@@ -257,7 +257,7 @@
   </plurals>
   <string name="simple_login_widget_action">エイリアスを同期する</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_not_received">Haven\'t receive the code?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">スパムフォルダに\"%s\"という件名のメールがないか確認してください</string>
   <string name="verification_code_suggestion_subject_new_email_address">Proton Passのメールアドレスを確認してください</string>
   <string name="verification_code_suggestion_subject_new_mailbox">受信箱を確認してください</string>

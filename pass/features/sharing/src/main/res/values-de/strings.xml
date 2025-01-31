@@ -57,6 +57,8 @@
   <string name="sharing_snackbar_invite_sent_success">Einladung gesendet</string>
   <string name="sharing_snackbar_invite_sent_error">Fehler beim Senden der Einladung.</string>
   <string name="sharing_snackbar_invite_new_users_error">Cannot send invites to new users</string>
+  <string name="sharing_snackbar_invite_free_user_error">Item invites are only allowed to be sent to paid users</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">Address has already been invited</string>
   <string name="sharing_snackbar_get_vault_members_error">Fehler beim Abrufen der Tresormitglieder.</string>
   <string name="sharing_snackbar_change_permission_success">Berechtigungen geändert.</string>
   <string name="sharing_snackbar_change_permission_error">Fehler beim Ändern der Berechtigungen.</string>
@@ -116,30 +118,19 @@
   <string name="sharing_limit_reached">Dieser Tresor hat das Mitglieder- und Einladungslimit erreicht.</string>
   <string name="sharing_invites_info_upgrade_text">Upgrade jetzt, um weitere einzuladen.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Teilen</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Verwende Tresore, um Einträge mit anderen zu teilen.</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Diesen Tresor teilen</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">In einen geteilten Tresor verschieben</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Erstelle einen neuen geteilten Tresor</string>
-  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Dieser Eintrag wird in den neuen Tresor verschoben.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Upgrade um weitere Tresore zu erstellen.</string>
   <string name="sharing_from_item_vault_limit_reached">Du hast das Tresor-Limit erreicht</string>
   <string name="share_with_suggestions_title">Vorschläge</string>
   <string name="share_with_recents_title">Kürzlich</string>
   <string name="share_with_remove_email_content_description">E-Mail entfernen</string>
-  <string name="share_with_secure_link_title">Über sicheren Link</string>
-  <string name="share_with_secure_link_description">Einen sicheren Link zu diesem Eintrag generieren.</string>
   <string name="share_with_user_shared_title">Mit anderen Proton Pass-Benutzern</string>
   <string name="share_with_user_shared_description">Nützlich für permanentes Teilen.</string>
   <string name="share_with_manage_shared_item_title">Zugriff verwalten</string>
   <string name="share_with_manage_shared_item_description">Übersicht über Mitglieder und Berechtigungen anzeigen.</string>
   <string name="share_with_secure_link_shared_title">Über einen sicheren Link</string>
   <string name="share_with_secure_link_shared_description">Für einmaliges Teilen.</string>
-  <string name="share_with_manage_shared_vault_title">Tresorzugriff verwalten</string>
-  <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="one">Der Tresor dieses Eintrags ist derzeit mit %d Benutzer geteilt.</item>
-    <item quantity="other">Der Tresor dieses Eintrags ist derzeit mit %d Benutzern geteilt.</item>
-  </plurals>
-  <string name="share_with_view_shared_vault_members_title">Tresormitglieder anzeigen</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Zugriffsstufe für alle Mitglieder festlegen</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Zugriffsstufe für %s festlegen</string>
   <string name="sharing_edit_permissions_remove_user">Benutzer entfernen</string>

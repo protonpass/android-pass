@@ -4,6 +4,7 @@
   <string name="bottomsheet_delete_permanently">完全に削除する</string>
   <string name="alert_confirm_delete_item_dialog_title">完全に削除しますか？</string>
   <string name="alert_confirm_delete_item_dialog_message">この操作は元に戻せません。</string>
+  <string name="alert_confirm_delete_item_dialog_shared_warning_message">このアイテムは現在共有されています。削除すると、どのユーザーもアクセスできなくなります。</string>
   <string name="alias_dialog_move_to_trash_title">ごみ箱に移動しますか?</string>
   <string name="alias_dialog_move_to_trash_content">エイリアスをごみ箱に移動すると、メールボックスへのメール転送が停止します。</string>
   <string name="alias_dialog_move_to_trash_confirm">確認</string>

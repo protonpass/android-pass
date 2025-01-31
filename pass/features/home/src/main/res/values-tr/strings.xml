@@ -152,9 +152,9 @@
     <item quantity="one">Ögeyi silmek istediğinize emin misiniz? Bu işlem geri alınamaz.</item>
     <item quantity="other">%d ögeyi silmek istediğinize emin misiniz? Bu işlem geri alınamaz.</item>
   </plurals>
-  <plurals name="alert_shared_delete_items_message">
-    <item quantity="one">Şu anda %d öge paylaşılıyor. Çöpe atmak diğer tüm kullanıcıların erişimini kaldıracak.</item>
-    <item quantity="other">Şu anda %d öge paylaşılıyor. Çöpe atmak diğer tüm kullanıcıların erişimini kaldıracak.</item>
+  <plurals name="alert_confirm_delete_items_shared_warning_message">
+    <item quantity="one">Şu anda %d öge paylaşılıyor. Bunları silerseniz diğer tüm kullanıcıların erişimi kaldırılacak.</item>
+    <item quantity="other">Şu anda %d öge paylaşılıyor. Bunları silerseniz diğer tüm kullanıcıların erişimi kaldırılacak.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Son aramalar</string>

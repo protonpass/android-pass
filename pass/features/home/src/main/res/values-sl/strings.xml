@@ -168,11 +168,11 @@
     <item quantity="few">Ali ste prepričani, da želite izbrisati %d predmete? Predmeti bodo izbrisani za vedno.</item>
     <item quantity="other">Ali ste prepričani, da želite izbrisati %d predmetov? Predmeti bodo izbrisani za vedno.</item>
   </plurals>
-  <plurals name="alert_shared_delete_items_message">
-    <item quantity="one">%d item is currently shared. Moving it to trash will remove access for all other users.</item>
-    <item quantity="two">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
-    <item quantity="few">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
-    <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
+  <plurals name="alert_confirm_delete_items_shared_warning_message">
+    <item quantity="one">%d item is currently shared. Deleting it will remove access for all other users.</item>
+    <item quantity="two">%d items are currently shared. Deleting them will remove access for all other users.</item>
+    <item quantity="few">%d items are currently shared. Deleting them will remove access for all other users.</item>
+    <item quantity="other">%d items are currently shared. Deleting them will remove access for all other users.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Nedavna iskanja</string>
@@ -186,10 +186,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Napaka pri odpenjanju nekaterih predmetov</string>
   <string name="home_snackbar_items_unpinned_error">Napaka pri odpenjanju predmetov</string>
   <string name="home_snackbar_items_alias_enabled_success">Alias enabled successfully</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Napaka pri omogočanju nekaterih aliasov</string>
   <string name="home_snackbar_items_alias_enabled_error">Error enabling aliases</string>
   <string name="home_snackbar_items_alias_disabled_success">Alias disabled successfully</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Napaka pri onemogočanju nekaterih aliasov</string>
   <string name="home_snackbar_items_alias_disabled_error">Error disabling aliases</string>
   <string name="bulk_action_unpin">Odpni</string>
   <string name="bulk_action_pin">Pripni</string>

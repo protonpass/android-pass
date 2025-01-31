@@ -16,7 +16,7 @@
   <string name="note_detail_copy_note_to_clipboard">Kopier notat</string>
   <string name="note_copied_to_clipboard">Notat kopiert til utklippstavlen</string>
   <!-- Login details -->
-  <string name="email_copied_to_clipboard">E-postadressen er kopiert</string>
+  <string name="email_copied_to_clipboard">E-postadresse kopiert</string>
   <string name="username_copied_to_clipboard">Brukernavn kopiert</string>
   <string name="password_copied_to_clipboard">Passord kopiert</string>
   <string name="website_copied_to_clipboard">Nettsted kopiert</string>
@@ -52,8 +52,8 @@
   <string name="totp_section_title">2FA-token (TOTP)</string>
   <string name="action_reveal_password">Avslør passord</string>
   <string name="action_conceal_password">Skjul passord</string>
-  <string name="action_reveal_number">Avslør tall</string>
-  <string name="action_conceal_number">Skjul tall</string>
+  <string name="action_reveal_number">Avslør nummer</string>
+  <string name="action_conceal_number">Skjul nummer</string>
   <string name="share_button_content_description">Åpne delingsknapp</string>
   <string name="open_menu_icon_content_description">Åpne menyknapp</string>
   <string name="mfa_limit_reached">2FA-grensen nådd</string>

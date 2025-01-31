@@ -4,7 +4,7 @@
   <string name="action_save">Desa</string>
   <string name="action_remove">Esborra</string>
   <!-- Create item bottomsheet -->
-  <string name="action_login">Inicia la sessió</string>
+  <string name="action_login">Inici de sessió</string>
   <string name="action_alias">Àlies</string>
   <string name="action_note">Nota</string>
   <string name="action_credit_card">Targeta de crèdit</string>

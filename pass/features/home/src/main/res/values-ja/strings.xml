@@ -24,7 +24,7 @@
   <string name="home_empty_vault_create_alias">Hide-my-emailエイリアスを作成</string>
   <string name="home_empty_vault_create_note">メモを作成</string>
   <string name="home_empty_vault_create_credit_card">クレジットカード情報を作成</string>
-  <string name="home_empty_vault_create_identity">ユーザー情報を作成</string>
+  <string name="home_empty_vault_create_identity">Create an identity</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">アイテム読み込みエラー</string>
   <string name="error_refreshing">更新実行中のエラー</string>
   <string name="home_snackbar_login_moved_to_trash">ログイン情報がごみ箱に移動されました</string>
@@ -144,8 +144,8 @@
   <plurals name="alert_confirm_delete_items_message">
     <item quantity="other">%d 個のアイテムを削除してもよろしいですか? この操作は元に戻せません</item>
   </plurals>
-  <plurals name="alert_shared_delete_items_message">
-    <item quantity="other">現在%d個のアイテムが共有されています。ごみ箱に移動すると、他のすべてのユーザーのアクセスが削除されます。</item>
+  <plurals name="alert_confirm_delete_items_shared_warning_message">
+    <item quantity="other">%d個のアイテムが現在共有されています。削除すると、他のすべてのユーザーのアクセス権が削除されます。</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">最近の検索</string>

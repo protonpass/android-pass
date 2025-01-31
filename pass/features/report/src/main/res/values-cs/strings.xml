@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="description_field_label">Jaký máte problém?</string>
-  <string name="description_field_hint">Popište problém co nejpodrobněji. Pokud se objevila chyba, dejte nám vědět, co to říká.</string>
+  <string name="description_field_hint">Popište problém co nejpodrobněji. Pokud se objevila chyba, dejte nám vědět, co říká.</string>
   <string name="email_field_label">E-mail</string>
   <string name="email_field_hint">e-mail</string>
   <string name="attach_image_button">Připojit obrázek</string>

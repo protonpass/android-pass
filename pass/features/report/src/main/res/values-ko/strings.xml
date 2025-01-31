@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="description_field_label">문제가 무엇인가요?</string>
-  <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
+  <string name="description_field_hint">문제를 가능한 한 자세하게 설명해주시고, 오류 발생시 어떻게 표시되는지 알려주세요.</string>
   <string name="email_field_label">이메일</string>
   <string name="email_field_hint">이메일</string>
   <string name="attach_image_button">이미지 첨부</string>

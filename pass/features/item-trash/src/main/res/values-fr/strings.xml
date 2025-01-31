@@ -20,9 +20,4 @@
   <!-- Delete dialog -->
   <string name="item_trash_delete_dialog_title">Supprimer définitivement ?</string>
   <string name="item_trash_delete_dialog_message">Cette action est irréversible.</string>
-  <!-- Shared warning dialog -->
-  <string name="item_trash_warning_shared_dialog_title">Voulez-vous mettre l\'élément à la corbeille ?</string>
-  <string name="item_trash_warning_shared_dialog_message">Cet élément est actuellement partagé. Son déplacement vers la corbeille retirera également son accès aux autres utilisateurs.</string>
-  <string name="item_trash_warning_shared_snackbar_trash_error">Une erreur s\'est produite pendant le déplacement de l\'élément vers la corbeille.</string>
-  <string name="item_trash_warning_shared_snackbar_trash_success">L\'élément a été déplacé dans la corbeille.</string>
 </resources>

@@ -57,6 +57,8 @@
   <string name="sharing_snackbar_invite_sent_success">L\'invitation a été envoyée.</string>
   <string name="sharing_snackbar_invite_sent_error">L’invitation n’a pas pu être envoyée.</string>
   <string name="sharing_snackbar_invite_new_users_error">Les invitations aux nouveaux utilisateurs n\'ont pas pu être envoyées.</string>
+  <string name="sharing_snackbar_invite_free_user_error">Les invitations pour les éléments ne peuvent être envoyées qu\'aux utilisateurs payants.</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">L\'adresse a déjà été invitée.</string>
   <string name="sharing_snackbar_get_vault_members_error">Impossible d\'obtenir les membres du coffre-fort.</string>
   <string name="sharing_snackbar_change_permission_success">Les autorisations ont été modifiées.</string>
   <string name="sharing_snackbar_change_permission_error">Impossible de modifier les autorisations</string>
@@ -116,30 +118,19 @@
   <string name="sharing_limit_reached">Ce coffre-fort a atteint le nombre maximum de membres et d\'invitations.</string>
   <string name="sharing_invites_info_upgrade_text">Changez d\'abonnement dès maintenant pour inviter d\'autres personnes.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Partage</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Utilisez les coffres-forts pour partager des éléments avec d\'autres personnes.</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Partager ce coffre-fort</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Déplacer vers un coffre-fort partagé</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Créer un nouveau coffre-fort à partager</string>
-  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Cet élément sera transféré dans le nouveau coffre-fort.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Changez d\'abonnement pour créer plus de coffres-forts.</string>
   <string name="sharing_from_item_vault_limit_reached">Vous avez atteint le nombre maximum de coffres-forts.</string>
   <string name="share_with_suggestions_title">Suggestions</string>
   <string name="share_with_recents_title">Récents</string>
   <string name="share_with_remove_email_content_description">Retirer cette adresse e-mail</string>
-  <string name="share_with_secure_link_title">Par lien sécurisé</string>
-  <string name="share_with_secure_link_description">Générez un lien sécurisé vers cet élément.</string>
   <string name="share_with_user_shared_title">Avec d\'autres utilisateurs de Proton Pass</string>
   <string name="share_with_user_shared_description">Utile pour un partage permanent.</string>
   <string name="share_with_manage_shared_item_title">Gérer l\'accès</string>
   <string name="share_with_manage_shared_item_description">Affichez l\'ensemble des membres et des autorisations.</string>
   <string name="share_with_secure_link_shared_title">Par un lien sécurisé</string>
   <string name="share_with_secure_link_shared_description">Pour un partage unique.</string>
-  <string name="share_with_manage_shared_vault_title">Gérer l\'accès au coffre-fort</string>
-  <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="one">Le coffre-fort de l\'élément est partagé avec %d utilisateur.</item>
-    <item quantity="other">Le coffre-fort de l\'élément est partagé avec %d utilisateurs.</item>
-  </plurals>
-  <string name="share_with_view_shared_vault_members_title">Afficher les membres du coffre-fort</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Définir le niveau d\'accès pour tous les membres</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Définir le niveau d\'accès pour %s</string>
   <string name="sharing_edit_permissions_remove_user">Retirer l\'utilisateur </string>

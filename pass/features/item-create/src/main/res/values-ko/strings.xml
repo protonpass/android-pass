@@ -108,7 +108,7 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">만료 일자</string>
-  <string name="field_card_expiration_date_hint">MM/YY (월/년)</string>
+  <string name="field_card_expiration_date_hint">MM / YY (월/년)</string>
   <string name="field_card_expiration_date_error">MM/YY (월/년) 형식으로 유효한 날짜를 입력하십시오.</string>
   <string name="create_credit_card_item_creation_error">신용 카드를 생성할 수 없습니다.</string>
   <string name="create_credit_card_item_creation_success">신용 카드 생성됨.</string>

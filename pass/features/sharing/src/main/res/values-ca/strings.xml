@@ -57,6 +57,8 @@
   <string name="sharing_snackbar_invite_sent_success">S\'ha enviat la invitació.</string>
   <string name="sharing_snackbar_invite_sent_error">No s’ha pogut enviar la invitació.</string>
   <string name="sharing_snackbar_invite_new_users_error">No es poden enviar invitacions a nous usuaris.</string>
+  <string name="sharing_snackbar_invite_free_user_error">Les invitacions d\'elements només es poden enviar a usuaris de pagament.</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">L\'adreça ja ha estat convidada.</string>
   <string name="sharing_snackbar_get_vault_members_error">No s\'han pogut obtenir els membres de la caixa forta</string>
   <string name="sharing_snackbar_change_permission_success">S\'han canviat els permisos.</string>
   <string name="sharing_snackbar_change_permission_error">No s\'ha pogut canviar els permisos.</string>
@@ -116,30 +118,19 @@
   <string name="sharing_limit_reached">Aquesta caixa forta ha arribat al límit de membres i invitacions.</string>
   <string name="sharing_invites_info_upgrade_text">Milloreu ara per a convidar-ne més.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Comparteix</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Utilitzeu les caixes fortes per compartir elements amb altres persones</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Comparteix aquesta caixa forta</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Mou a una caixa forta compartida</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Crea una caixa forta per compartir</string>
-  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Aquest element es mourà a la caixa forta nova.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Milloreu per crear més caixes fortes</string>
   <string name="sharing_from_item_vault_limit_reached">Heu arribat al límit de caixes fortes.</string>
   <string name="share_with_suggestions_title">Suggeriments</string>
   <string name="share_with_recents_title">Recents</string>
   <string name="share_with_remove_email_content_description">Esborra el correu electrònic</string>
-  <string name="share_with_secure_link_title">Mitjançant un enllaç segur</string>
-  <string name="share_with_secure_link_description">Generar un enllaç segur a aquest element.</string>
   <string name="share_with_user_shared_title">Amb altres usuaris de Proton Pass</string>
   <string name="share_with_user_shared_description">Útil per compartir permanentment.</string>
   <string name="share_with_manage_shared_item_title">Gestiona l\'accés</string>
   <string name="share_with_manage_shared_item_description">Consulteu tots els membres i els permisos.</string>
   <string name="share_with_secure_link_shared_title">Mitjançant un enllaç segur</string>
   <string name="share_with_secure_link_shared_description">Per a un ús únic.</string>
-  <string name="share_with_manage_shared_vault_title">Gestiona l\'accés a la caixa forta</string>
-  <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="one">La caixa forta de l\'element es comparteix actualment amb %d usuari.</item>
-    <item quantity="other">La caixa forta de l\'element es comparteix actualment amb %d usuaris.</item>
-  </plurals>
-  <string name="share_with_view_shared_vault_members_title">Mostra els membres de la caixa forta</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Estableix el nivell d`accés per a tots els membres</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Defineix el nivell d\'accés per %s</string>
   <string name="sharing_edit_permissions_remove_user">Esborra l\'usuari</string>

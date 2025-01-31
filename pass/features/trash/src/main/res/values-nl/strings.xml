@@ -4,6 +4,7 @@
   <string name="bottomsheet_delete_permanently">Permanent verwijderen</string>
   <string name="alert_confirm_delete_item_dialog_title">Permanent verwijderen?</string>
   <string name="alert_confirm_delete_item_dialog_message">Deze actie is onomkeerbaar.</string>
+  <string name="alert_confirm_delete_item_dialog_shared_warning_message">Dit item wordt momenteel gedeeld. Als u het verwijdert, wordt de toegang voor alle andere gebruikers uitgeschakeld.</string>
   <string name="alias_dialog_move_to_trash_title">Verplaats naar prullenbak?</string>
   <string name="alias_dialog_move_to_trash_content">Als u een alias naar de prullenbak verplaatst, worden e-mails niet meer doorgestuurd naar uw mailbox.</string>
   <string name="alias_dialog_move_to_trash_confirm">Bevestigen</string>

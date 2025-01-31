@@ -82,7 +82,7 @@
   <string name="security_center_dark_web_monitor_found_in_breaches">侵害は検出されませんでした</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Proton アドレス</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email エイリアス</string>
-  <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving Proton addresses</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Protonアドレスの取得エラー</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">メール非表示ide-my-emailエイリアスの復元エラー</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">監視されていません</string>
   <string name="security_center_dark_web_monitor_see_all">すべてを見る</string>

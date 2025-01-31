@@ -4,6 +4,7 @@
   <string name="bottomsheet_delete_permanently">Ta bort permanent</string>
   <string name="alert_confirm_delete_item_dialog_title">Ta bort permanent?</string>
   <string name="alert_confirm_delete_item_dialog_message">Denna åtgärd är oåterkallelig.</string>
+  <string name="alert_confirm_delete_item_dialog_shared_warning_message">Detta objekt delas för närvarande. Att ta bort det kommer ta bort åtkomst för alla andra användare.</string>
   <string name="alias_dialog_move_to_trash_title">Flytta till papperskorg?</string>
   <string name="alias_dialog_move_to_trash_content">Om du flyttar ett alias till papperskorgen kommer det att sluta vidarebefordra e-post till din brevlåda.</string>
   <string name="alias_dialog_move_to_trash_confirm">Bekräfta</string>

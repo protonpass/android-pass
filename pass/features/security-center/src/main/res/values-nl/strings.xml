@@ -85,7 +85,7 @@
   <string name="security_center_dark_web_monitor_found_in_breaches">Geen inbreuken gedetecteerd</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Proton adressen</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email-aliassen</string>
-  <string name="security_center_dark_web_monitor_proton_addresses_error">Fout bij het ophalen van Proton adressen</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Fout bij het ophalen van Proton-adressen</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Fout bij ophalen van Hide-my-email aliassen</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Niet gemonitord</string>
   <string name="security_center_dark_web_monitor_see_all">Alles weergeven</string>

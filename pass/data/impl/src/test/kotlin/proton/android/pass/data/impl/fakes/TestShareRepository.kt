@@ -62,6 +62,10 @@ class TestShareRepository : ShareRepository {
     private val deleteVaultMemory: MutableList<ShareId> = mutableListOf()
     private val refreshShareMemory: MutableList<RefreshSharePayload> = mutableListOf()
 
+    private val observeSharedWithMeIds = testFlow<Result<List<ShareId>>>()
+
+    private val observeSharedByMeIds = testFlow<Result<List<ShareId>>>()
+
     fun deleteVaultMemory(): List<ShareId> = deleteVaultMemory
     fun refreshShareMemory(): List<RefreshSharePayload> = refreshShareMemory
 
@@ -160,6 +164,12 @@ class TestShareRepository : ShareRepository {
 
     override suspend fun getAddressForShareId(userId: UserId, shareId: ShareId): UserAddress =
         getAddressForShareIdResult.getOrThrow()
+
+    override fun observeSharedWithMeIds(userId: UserId): Flow<List<ShareId>> = observeSharedWithMeIds
+        .map { it.getOrThrow() }
+
+    override fun observeSharedByMeIds(userId: UserId): Flow<List<ShareId>> = observeSharedByMeIds
+        .map { it.getOrThrow() }
 
     data class RefreshSharePayload(
         val userId: UserId,

@@ -1199,7 +1199,8 @@ class HomeViewModel @Inject constructor(
                     .let { vaultShares ->
                         if (vaultShares.size != 1) return
 
-                        val vaultSelectionOption = VaultSelectionOption.Vault(shareId = vaultShares.first().id)
+                        val vaultSelectionOption =
+                            VaultSelectionOption.Vault(shareId = vaultShares.first().id)
                         homeSearchOptionsRepository.setVaultSelectionOption(vaultSelectionOption)
                     }
         }

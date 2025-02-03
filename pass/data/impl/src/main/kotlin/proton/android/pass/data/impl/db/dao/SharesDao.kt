@@ -128,7 +128,7 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
         SELECT * FROM ${ShareEntity.TABLE} 
         WHERE ${ShareEntity.Columns.USER_ID} = :userId
           AND ${ShareEntity.Columns.SHARE_TYPE} = :shareType
-          AND CASE WHEN :isActive IS NULL THEN 1 ELSE ${ShareEntity.Columns.IS_ACTIVE} END = :isActive 
+          AND (:isActive IS NULL OR ${ShareEntity.Columns.IS_ACTIVE} = :isActive)
         """
     )
     abstract fun observeByType(
@@ -136,6 +136,22 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
         shareType: Int,
         isActive: Boolean?
     ): Flow<List<ShareEntity>>
+
+    @Query(
+        """
+        SELECT ${ShareEntity.Columns.ID} FROM ${ShareEntity.TABLE} 
+        WHERE ${ShareEntity.Columns.USER_ID} = :userId
+          AND (:shareType IS NULL OR ${ShareEntity.Columns.SHARE_TYPE} = :shareType)
+          AND (:shareRole IS NULL OR ${ShareEntity.Columns.SHARE_ROLE_ID} = :shareRole)
+          AND (:isActive IS NULL OR ${ShareEntity.Columns.IS_ACTIVE} = :isActive)
+    """
+    )
+    abstract fun observeSharedIds(
+        userId: String,
+        shareType: Int?,
+        shareRole: String?,
+        isActive: Boolean?
+    ): Flow<List<String>>
 
     @Transaction
     open suspend fun evictAndUpsertShares(userId: UserId, vararg entities: ShareEntity) {

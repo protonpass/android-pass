@@ -16,18 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases.simplelogin
+package proton.android.pass.data.impl.requests
 
-import proton.android.pass.data.api.repositories.SimpleLoginRepository
-import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasMailbox
-import javax.inject.Inject
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-class UpdateSimpleLoginAliasMailboxImpl @Inject constructor(
-    private val repository: SimpleLoginRepository
-) : UpdateSimpleLoginAliasMailbox {
-
-    override suspend fun invoke(mailboxId: Long) {
-        repository.updateAliasDefaultMailbox(mailboxId)
-    }
-
-}
+@Serializable
+data class SimpleLoginChangeMailboxRequest(
+    @SerialName("Email")
+    val email: String
+)

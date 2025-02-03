@@ -226,6 +226,13 @@ internal class HomeViewModelTest {
         assertThat(toastManager.stringResourceMessage).isEqualTo(R.string.home_toast_items_selected_read_only)
     }
 
+    @Test
+    internal fun `WHEN item shared with me is selected THEN show toast message`() {
+        instance.onSharedWithMeItemSelected()
+
+        assertThat(toastManager.stringResourceMessage).isEqualTo(R.string.home_toast_items_selected_shared_with_me)
+    }
+
     private fun createViewModel() {
         instance = HomeViewModel(
             trashItems = trashItems,

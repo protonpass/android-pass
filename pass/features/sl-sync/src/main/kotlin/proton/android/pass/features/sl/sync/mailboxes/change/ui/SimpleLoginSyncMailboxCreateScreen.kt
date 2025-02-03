@@ -38,10 +38,10 @@ fun SimpleLoginSyncMailboxChangeScreen(
         when (val event = state.event) {
             SimpleLoginSyncMailboxChangeEvent.Idle -> Unit
             is SimpleLoginSyncMailboxChangeEvent.OnMailboxChanged -> {
-                if (event.isVerified) {
-                    SimpleLoginSyncNavDestination.BackToOrigin
-                } else {
+                if (event.hasPendingEmail) {
                     SimpleLoginSyncNavDestination.VerifyMailbox(mailboxId = event.mailboxId)
+                } else {
+                    SimpleLoginSyncNavDestination.BackToOrigin
                 }.also(onNavigated)
             }
         }

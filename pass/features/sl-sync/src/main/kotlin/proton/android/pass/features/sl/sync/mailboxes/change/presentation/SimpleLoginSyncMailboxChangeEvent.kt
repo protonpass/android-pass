@@ -24,7 +24,7 @@ internal sealed interface SimpleLoginSyncMailboxChangeEvent {
 
     data class OnMailboxChanged(
         internal val mailboxId: Long,
-        internal val isVerified: Boolean
+        internal val hasPendingEmail: Boolean
     ) : SimpleLoginSyncMailboxChangeEvent
 
 }

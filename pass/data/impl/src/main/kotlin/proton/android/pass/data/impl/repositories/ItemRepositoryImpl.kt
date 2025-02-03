@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import me.proton.core.account.domain.entity.AccountState
@@ -394,14 +395,35 @@ class ItemRepositoryImpl @Inject constructor(
         items.map(ItemEntity::toEncryptedDomain)
     }
 
-    override fun observeSharedEncryptedItems(
-        userId: UserId,
-        itemSharedType: ItemSharedType,
-        itemState: ItemState?
-    ): Flow<List<ItemEncrypted>> = localItemDataSource.observeSharedItems(userId, itemSharedType, itemState)
-        .map { sharedItems ->
-            sharedItems.map(ItemEntity::toEncryptedDomain)
-        }
+    override fun observeSharedByMeEncryptedItems(userId: UserId, itemState: ItemState?): Flow<List<ItemEncrypted>> =
+        shareRepository.observeSharedByMeIds(userId)
+            .flatMapLatest { shareIds ->
+                localItemDataSource.observeItemsForShares(
+                    userId,
+                    shareIds,
+                    itemState,
+                    ItemTypeFilter.All
+                )
+            }
+            .map { itemEntities ->
+                itemEntities
+                    .filter { it.shareCount > 0 }
+                    .map(ItemEntity::toEncryptedDomain)
+            }
+
+    override fun observeSharedWithMeEncryptedItems(userId: UserId, itemState: ItemState?): Flow<List<ItemEncrypted>> =
+        shareRepository.observeSharedWithMeIds(userId)
+            .flatMapLatest { shareIds ->
+                localItemDataSource.observeItemsForShares(
+                    userId,
+                    shareIds,
+                    itemState,
+                    ItemTypeFilter.All
+                )
+            }
+            .map { itemEntities ->
+                itemEntities.map(ItemEntity::toEncryptedDomain)
+            }
 
     private fun innerObserveItems(
         shareSelection: ShareSelection,

@@ -19,7 +19,6 @@
 package proton.android.pass.domain.items
 
 enum class ItemSharedType(val value: Int) {
-    All(value = 0),
     SharedByMe(value = 1),
     SharedWithMe(value = 2)
 }

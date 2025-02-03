@@ -119,12 +119,6 @@ interface ItemRepository {
         clearFlags: Int? = null
     ): Flow<List<ItemEncrypted>>
 
-    fun observeSharedEncryptedItems(
-        userId: UserId,
-        itemSharedType: ItemSharedType,
-        itemState: ItemState?
-    ): Flow<List<ItemEncrypted>>
-
     fun observePinnedItems(
         userId: UserId,
         shareSelection: ShareSelection,
@@ -228,6 +222,10 @@ interface ItemRepository {
         shareId: ShareId,
         itemId: ItemId
     )
+
+    fun observeSharedByMeEncryptedItems(userId: UserId, itemState: ItemState?): Flow<List<ItemEncrypted>>
+
+    fun observeSharedWithMeEncryptedItems(userId: UserId, itemState: ItemState?): Flow<List<ItemEncrypted>>
 }
 
 data class VaultProgress(

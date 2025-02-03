@@ -35,11 +35,17 @@ class ObserveEncryptedSharedItemsImpl @Inject constructor(
 
     override fun invoke(itemSharedType: ItemSharedType, itemState: ItemState?): Flow<List<ItemEncrypted>> =
         observeCurrentUser().flatMapLatest { user ->
-            itemRepository.observeSharedEncryptedItems(
-                userId = user.userId,
-                itemSharedType = itemSharedType,
-                itemState = itemState
-            )
+            when (itemSharedType) {
+                ItemSharedType.SharedByMe -> itemRepository.observeSharedByMeEncryptedItems(
+                    userId = user.userId,
+                    itemState = itemState
+                )
+
+                ItemSharedType.SharedWithMe -> itemRepository.observeSharedWithMeEncryptedItems(
+                    userId = user.userId,
+                    itemState = itemState
+                )
+            }
         }
 
 }

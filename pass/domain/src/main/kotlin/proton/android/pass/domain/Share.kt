@@ -95,7 +95,7 @@ sealed class Share {
 
         override val canBeHistoryViewed: Boolean = isOwner || isAdmin || isEditor
 
-        override val canBeSelected: Boolean = isOwner || isAdmin || isEditor
+        override val canBeSelected: Boolean = false
 
         override val canBeTrashed: Boolean = isOwner || isAdmin || isEditor
 

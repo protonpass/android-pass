@@ -48,6 +48,10 @@ class TestLocalShareDataSource : LocalShareDataSource {
 
     private val observeSharesByTypeFlow = testFlow<Result<List<ShareEntity>>>()
 
+    private val observeSharedWithMeIds = testFlow<Result<List<String>>>()
+
+    private val observeSharedByMeIds = testFlow<Result<List<String>>>()
+
     private var deleteMemory: MutableList<Set<ShareId>> = mutableListOf()
     private var upsertMemory: MutableList<List<ShareEntity>> = mutableListOf()
 
@@ -126,5 +130,11 @@ class TestLocalShareDataSource : LocalShareDataSource {
         shareType: ShareType,
         isActive: Boolean?
     ): Flow<List<ShareEntity>> = observeSharesByTypeFlow.map { it.getOrThrow() }
+
+    override fun observeSharedWithMeIds(userId: UserId): Flow<List<String>> = observeSharedWithMeIds
+        .map { it.getOrThrow() }
+
+    override fun observeSharedByMeIds(userId: UserId): Flow<List<String>> = observeSharedByMeIds
+        .map { it.getOrThrow() }
 
 }

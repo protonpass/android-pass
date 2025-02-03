@@ -897,11 +897,17 @@ fun HomeScreen(
                         }
 
                         is HomeUiEvent.SelectItem -> {
-                            if (homeUiState.homeListUiState.checkCanUpdate(homeUiEvent.item.shareId)) {
+                            if (homeUiState.homeListUiState.isItemSelectable(homeUiEvent.item)) {
                                 homeViewModel.onItemSelected(homeUiEvent.item)
-                            } else {
-                                homeViewModel.onReadOnlyItemSelected()
+                                return@HomeContent
                             }
+
+                            if (homeUiEvent.item.isSharedWithMe) {
+                                homeViewModel.onSharedWithMeItemSelected()
+                                return@HomeContent
+                            }
+
+                            homeViewModel.onReadOnlyItemSelected()
                         }
 
                         HomeUiEvent.MoveToTrashItemsActionClick -> {

@@ -238,6 +238,10 @@ internal data class HomeListUiState(
         ?.name
         .orEmpty()
 
+    internal fun isItemSelectable(item: ItemUiModel): Boolean = shares[item.shareId]
+        ?.canBeSelected
+        ?: false
+
     fun checkCanUpdate(shareId: ShareId): Boolean = shares[shareId]?.canBeUpdated ?: false
 
     fun canViewHistory(shareId: ShareId): Boolean = shares[shareId]?.canBeHistoryViewed ?: false

@@ -33,6 +33,8 @@ data class SimpleLoginAliasMailboxData(
     val mailboxId: Long,
     @SerialName("Email")
     val email: String,
+    @SerialName("PendingEmail")
+    val pendingEmail: String?,
     @SerialName("IsDefault")
     val isDefault: Boolean,
     @SerialName("Verified")

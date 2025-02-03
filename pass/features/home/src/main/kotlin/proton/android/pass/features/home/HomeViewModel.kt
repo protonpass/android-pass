@@ -996,6 +996,10 @@ class HomeViewModel @Inject constructor(
         toastManager.showToast(R.string.home_toast_items_selected_read_only)
     }
 
+    internal fun onSharedWithMeItemSelected() {
+        toastManager.showToast(R.string.home_toast_items_selected_shared_with_me)
+    }
+
     fun clearSelection() {
         selectionState.update { SelectionState.Initial }
     }

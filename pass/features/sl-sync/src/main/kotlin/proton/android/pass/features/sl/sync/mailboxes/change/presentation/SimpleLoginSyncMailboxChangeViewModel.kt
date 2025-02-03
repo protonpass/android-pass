@@ -105,7 +105,7 @@ class SimpleLoginSyncMailboxChangeViewModel @Inject constructor(
                     eventFlow.update {
                         SimpleLoginSyncMailboxChangeEvent.OnMailboxChanged(
                             mailboxId = changedAliasMailbox.id,
-                            isVerified = changedAliasMailbox.isVerified
+                            hasPendingEmail = !changedAliasMailbox.pendingEmail.isNullOrBlank()
                         )
                     }
                 }

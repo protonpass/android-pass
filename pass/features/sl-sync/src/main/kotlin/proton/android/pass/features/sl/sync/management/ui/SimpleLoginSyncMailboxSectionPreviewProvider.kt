@@ -35,6 +35,7 @@ internal class SimpleLoginSyncMailboxSectionPreviewProvider :
                 SimpleLoginAliasMailbox(
                     id = 1L,
                     email = "user_default@email.com",
+                    pendingEmail = null,
                     isDefault = true,
                     isVerified = true,
                     aliasCount = 5
@@ -42,6 +43,7 @@ internal class SimpleLoginSyncMailboxSectionPreviewProvider :
                 SimpleLoginAliasMailbox(
                     id = 1L,
                     email = "user_verified@email.com",
+                    pendingEmail = null,
                     isDefault = false,
                     isVerified = true,
                     aliasCount = 1
@@ -49,6 +51,7 @@ internal class SimpleLoginSyncMailboxSectionPreviewProvider :
                 SimpleLoginAliasMailbox(
                     id = 1L,
                     email = "user_unverified@email.com",
+                    pendingEmail = null,
                     isDefault = false,
                     isVerified = false,
                     aliasCount = 0

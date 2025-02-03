@@ -168,13 +168,11 @@ private fun SimpleLoginSyncManagementMailboxes(
                     }
                 }
 
-                if (!aliasMailbox.isDefault) {
-                    ThreeDotsMenuButton(
-                        onClick = {
-                            onMenuClick(aliasMailbox)
-                        }
-                    )
-                }
+                ThreeDotsMenuButton(
+                    onClick = {
+                        onMenuClick(aliasMailbox)
+                    }
+                )
             }
 
             if (index < aliasMailboxes.lastIndex) {

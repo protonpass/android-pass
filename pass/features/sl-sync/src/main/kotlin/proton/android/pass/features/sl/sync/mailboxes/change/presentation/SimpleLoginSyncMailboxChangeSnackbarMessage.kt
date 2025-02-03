@@ -16,16 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.mailboxes.options.ui
+package proton.android.pass.features.sl.sync.mailboxes.change.presentation
 
-internal sealed interface SimpleLoginSyncMailboxOptionsUiEvent {
+import androidx.annotation.StringRes
+import proton.android.pass.features.sl.sync.R
+import proton.android.pass.notifications.api.SnackbarMessage
+import proton.android.pass.notifications.api.SnackbarType
 
-    data object OnDeleteClicked : SimpleLoginSyncMailboxOptionsUiEvent
+internal enum class SimpleLoginSyncMailboxChangeSnackbarMessage(
+    @StringRes
+    override val id: Int,
+    override val type: SnackbarType,
+    override val isClipboard: Boolean = false
+) : SnackbarMessage {
 
-    data object OnSetAsDefaultClicked : SimpleLoginSyncMailboxOptionsUiEvent
-
-    data object OnVerifyClicked : SimpleLoginSyncMailboxOptionsUiEvent
-
-    data object OnChangeEmailClicked : SimpleLoginSyncMailboxOptionsUiEvent
+    ChangeMailboxError(
+        id = R.string.simple_login_sync_mailbox_change_message_error,
+        type = SnackbarType.ERROR
+    )
 
 }

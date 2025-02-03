@@ -91,6 +91,7 @@ fun SLSyncMailboxOptionsContentPreview(@PreviewParameter(ThemePreviewProvider::c
                     aliasMailboxOption = SimpleLoginAliasMailbox(
                         id = 0,
                         email = "myemail@proton.me",
+                        pendingEmail = null,
                         isDefault = false,
                         isVerified = true,
                         aliasCount = 0

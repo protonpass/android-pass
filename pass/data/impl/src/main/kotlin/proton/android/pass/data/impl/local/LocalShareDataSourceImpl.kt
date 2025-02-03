@@ -25,6 +25,7 @@ import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.ShareType
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -88,6 +89,22 @@ class LocalShareDataSourceImpl @Inject constructor(
             userId = userId.id,
             shareType = shareType.value,
             isActive = isActive
+        )
+
+    override fun observeSharedWithMeIds(userId: UserId): Flow<List<String>> = database.sharesDao()
+        .observeSharedIds(
+            userId = userId.id,
+            shareType = ShareType.Item.value,
+            shareRole = null,
+            isActive = true
+        )
+
+    override fun observeSharedByMeIds(userId: UserId): Flow<List<String>> = database.sharesDao()
+        .observeSharedIds(
+            userId = userId.id,
+            shareType = null,
+            shareRole = ShareRole.SHARE_ROLE_ADMIN,
+            isActive = true
         )
 
     private companion object {

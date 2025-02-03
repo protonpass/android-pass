@@ -215,6 +215,7 @@ import proton.android.pass.data.api.usecases.shares.ObserveSharePendingInvites
 import proton.android.pass.data.api.usecases.shares.ObserveSharesByType
 import proton.android.pass.data.api.usecases.shares.ObserveSharesItemsCount
 import proton.android.pass.data.api.usecases.shares.UpdateShareMemberRole
+import proton.android.pass.data.api.usecases.simplelogin.ChangeSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.simplelogin.CreateSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.simplelogin.DeleteSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.simplelogin.DisableSimpleLoginSyncPreference
@@ -434,6 +435,7 @@ import proton.android.pass.data.impl.usecases.shares.ObserveSharePendingInvitesI
 import proton.android.pass.data.impl.usecases.shares.ObserveSharesByTypeImpl
 import proton.android.pass.data.impl.usecases.shares.ObserveSharesItemsCountImpl
 import proton.android.pass.data.impl.usecases.shares.UpdateShareMemberRoleImpl
+import proton.android.pass.data.impl.usecases.simplelogin.ChangeSimpleLoginAliasMailboxImpl
 import proton.android.pass.data.impl.usecases.simplelogin.CreateSimpleLoginAliasMailboxImpl
 import proton.android.pass.data.impl.usecases.simplelogin.DeleteSimpleLoginAliasMailboxImpl
 import proton.android.pass.data.impl.usecases.simplelogin.DisableSimpleLoginSyncPreferenceImpl
@@ -1015,6 +1017,11 @@ abstract class DataUseCaseModule {
     abstract fun bindVerifySimpleLoginAliasMailbox(
         impl: VerifySimpleLoginAliasMailboxImpl
     ): VerifySimpleLoginAliasMailbox
+
+    @[Binds Singleton]
+    abstract fun bindChangeSimpleLoginAliasMailbox(
+        impl: ChangeSimpleLoginAliasMailboxImpl
+    ): ChangeSimpleLoginAliasMailbox
 
     @[Binds Singleton]
     abstract fun bindResendSimpleLoginMailboxVerifyCode(

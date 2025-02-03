@@ -16,16 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.mailboxes.options.ui
+package proton.android.pass.features.sl.sync.mailboxes.change.navigation
 
-internal sealed interface SimpleLoginSyncMailboxOptionsUiEvent {
+import proton.android.pass.features.sl.sync.shared.navigation.mailboxes.SimpleLoginSyncMailboxIdNavArgId
+import proton.android.pass.navigation.api.NavItem
 
-    data object OnDeleteClicked : SimpleLoginSyncMailboxOptionsUiEvent
+object SimpleLoginSyncMailboxChangeNavItem : NavItem(
+    baseRoute = "sl/sync/mailboxes/change",
+    navArgIds = listOf(SimpleLoginSyncMailboxIdNavArgId)
+) {
 
-    data object OnSetAsDefaultClicked : SimpleLoginSyncMailboxOptionsUiEvent
-
-    data object OnVerifyClicked : SimpleLoginSyncMailboxOptionsUiEvent
-
-    data object OnChangeEmailClicked : SimpleLoginSyncMailboxOptionsUiEvent
+    fun buildRoute(mailboxId: Long) = "$baseRoute/$mailboxId"
 
 }

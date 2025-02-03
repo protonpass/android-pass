@@ -40,7 +40,6 @@ import proton.android.pass.features.home.R
 internal fun EmptySharedItems(modifier: Modifier = Modifier, itemSharedType: ItemSharedType) {
     val subtitleResId = remember(itemSharedType) {
         when (itemSharedType) {
-            ItemSharedType.All -> R.string.home_empty_shared_items_title
             ItemSharedType.SharedByMe -> R.string.home_empty_shared_items_by_me_subtitle
             ItemSharedType.SharedWithMe -> R.string.home_empty_shared_items_with_me_subtitle
         }

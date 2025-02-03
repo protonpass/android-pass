@@ -227,7 +227,7 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun changeAliasMailboxEmail(mailboxId: Long, email: String) {
+    override suspend fun changeAliasMailboxEmail(mailboxId: Long, email: String): SimpleLoginAliasMailbox =
         withUserId { userId ->
             remoteSimpleLoginDataSource.changeSimpleLoginAliasMailbox(
                 userId = userId,
@@ -237,7 +237,6 @@ class SimpleLoginRepositoryImpl @Inject constructor(
                 .mailbox
                 .toDomain()
         }
-    }
 
     override suspend fun resendAliasMailboxVerificationCode(mailboxId: Long) {
         withUserId { userId ->

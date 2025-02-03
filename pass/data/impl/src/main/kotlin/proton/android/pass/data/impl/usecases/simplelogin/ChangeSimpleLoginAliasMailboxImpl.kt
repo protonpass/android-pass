@@ -20,14 +20,14 @@ package proton.android.pass.data.impl.usecases.simplelogin
 
 import proton.android.pass.data.api.repositories.SimpleLoginRepository
 import proton.android.pass.data.api.usecases.simplelogin.ChangeSimpleLoginAliasMailbox
+import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 import javax.inject.Inject
 
 class ChangeSimpleLoginAliasMailboxImpl @Inject constructor(
     private val repository: SimpleLoginRepository
 ) : ChangeSimpleLoginAliasMailbox {
 
-    override suspend fun invoke(mailboxId: Long, email: String) {
+    override suspend fun invoke(mailboxId: Long, email: String): SimpleLoginAliasMailbox =
         repository.changeAliasMailboxEmail(mailboxId, email)
-    }
 
 }

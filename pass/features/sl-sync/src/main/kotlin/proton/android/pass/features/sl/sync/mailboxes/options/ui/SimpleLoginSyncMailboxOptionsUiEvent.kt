@@ -26,4 +26,6 @@ internal sealed interface SimpleLoginSyncMailboxOptionsUiEvent {
 
     data object OnVerifyClicked : SimpleLoginSyncMailboxOptionsUiEvent
 
+    data object OnChangeEmailClicked : SimpleLoginSyncMailboxOptionsUiEvent
+
 }

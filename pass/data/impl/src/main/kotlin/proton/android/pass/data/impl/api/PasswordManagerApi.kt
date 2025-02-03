@@ -43,12 +43,13 @@ import proton.android.pass.data.impl.requests.ItemReadRequest
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
 import proton.android.pass.data.impl.requests.SendUserMonitorCredentialsRequest
 import proton.android.pass.data.impl.requests.SetupExtraPasswordRequest
+import proton.android.pass.data.impl.requests.SimpleLoginChangeMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginCreateAliasMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginCreatePendingAliasesRequest
 import proton.android.pass.data.impl.requests.SimpleLoginDeleteAliasMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginEnableSyncRequest
+import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasDefaultMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasDomainRequest
-import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginVerifyAliasMailboxRequest
 import proton.android.pass.data.impl.requests.TelemetryRequest
 import proton.android.pass.data.impl.requests.TransferVaultOwnershipRequest
@@ -561,6 +562,12 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("mailboxId") mailboxId: Long
     ): SimpleLoginAliasMailboxResponse
 
+    @PUT("$PREFIX/user/alias/mailbox/{mailboxId}/email")
+    suspend fun changeSimpleLoginAliasMailboxEmail(
+        @Path("mailboxId") mailboxId: Long,
+        @Body request: SimpleLoginChangeMailboxRequest
+    ): SimpleLoginAliasMailboxResponse
+
     @HTTP(method = "DELETE", path = "$PREFIX/user/alias/mailbox/{mailboxId}", hasBody = true)
     suspend fun deleteSimpleLoginAliasMailbox(
         @Path("mailboxId") mailboxId: Long,
@@ -568,8 +575,8 @@ interface PasswordManagerApi : BaseRetrofitApi {
     ): CodeOnlyResponse
 
     @PUT("$PREFIX/user/alias/settings/default_mailbox_id")
-    suspend fun updateSimpleLoginAliasMailbox(
-        @Body request: SimpleLoginUpdateAliasMailboxRequest
+    suspend fun updateSimpleLoginAliasDefaultMailbox(
+        @Body request: SimpleLoginUpdateAliasDefaultMailboxRequest
     ): SimpleLoginAliasSettingsResponse
 
     @GET("$PREFIX/user/alias/settings")

@@ -21,12 +21,13 @@ package proton.android.pass.data.impl.remote.simplelogin
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.requests.SimpleLoginChangeMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginCreateAliasMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginCreatePendingAliasesRequest
 import proton.android.pass.data.impl.requests.SimpleLoginDeleteAliasMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginEnableSyncRequest
+import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasDefaultMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasDomainRequest
-import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginVerifyAliasMailboxRequest
 import proton.android.pass.data.impl.responses.CodeOnlyResponse
 import proton.android.pass.data.impl.responses.GetItemsResponse
@@ -74,12 +75,12 @@ class RemoteSimpleLoginDataSourceImpl @Inject constructor(
         .invoke { getSimpleLoginAliasMailboxes() }
         .valueOrThrow
 
-    override suspend fun updateSimpleLoginAliasMailbox(
+    override suspend fun updateSimpleLoginAliasDefaultMailbox(
         userId: UserId,
-        request: SimpleLoginUpdateAliasMailboxRequest
+        request: SimpleLoginUpdateAliasDefaultMailboxRequest
     ): SimpleLoginAliasSettingsResponse = apiProvider
         .get<PasswordManagerApi>(userId)
-        .invoke { updateSimpleLoginAliasMailbox(request) }
+        .invoke { updateSimpleLoginAliasDefaultMailbox(request) }
         .valueOrThrow
 
     override suspend fun getSimpleLoginAliasSettings(userId: UserId): SimpleLoginAliasSettingsResponse = apiProvider
@@ -116,6 +117,15 @@ class RemoteSimpleLoginDataSourceImpl @Inject constructor(
     ): SimpleLoginAliasMailboxResponse = apiProvider
         .get<PasswordManagerApi>(userId)
         .invoke { verifySimpleLoginAliasMailbox(mailboxId = mailboxId, request = request) }
+        .valueOrThrow
+
+    override suspend fun changeSimpleLoginAliasMailbox(
+        userId: UserId,
+        mailboxId: Long,
+        request: SimpleLoginChangeMailboxRequest
+    ): SimpleLoginAliasMailboxResponse = apiProvider
+        .get<PasswordManagerApi>(userId)
+        .invoke { changeSimpleLoginAliasMailboxEmail(mailboxId = mailboxId, request = request) }
         .valueOrThrow
 
     override suspend fun resendSimpleLoginAliasMailboxVerifyCode(

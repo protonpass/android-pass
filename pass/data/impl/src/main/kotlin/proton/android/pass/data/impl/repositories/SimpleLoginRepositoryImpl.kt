@@ -47,13 +47,14 @@ import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.data.impl.extensions.toRequest
 import proton.android.pass.data.impl.local.simplelogin.LocalSimpleLoginDataSource
 import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSource
+import proton.android.pass.data.impl.requests.SimpleLoginChangeMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginCreateAliasMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginCreatePendingAliasesData
 import proton.android.pass.data.impl.requests.SimpleLoginCreatePendingAliasesRequest
 import proton.android.pass.data.impl.requests.SimpleLoginDeleteAliasMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginEnableSyncRequest
+import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasDefaultMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasDomainRequest
-import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginVerifyAliasMailboxRequest
 import proton.android.pass.data.impl.responses.SimpleLoginAliasDomainData
 import proton.android.pass.data.impl.responses.SimpleLoginAliasMailboxData
@@ -71,6 +72,7 @@ import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
+@Suppress("TooManyFunctions")
 class SimpleLoginRepositoryImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val userAccessDataRepository: UserAccessDataRepository,
@@ -225,6 +227,18 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun changeAliasMailboxEmail(mailboxId: Long, email: String) {
+        withUserId { userId ->
+            remoteSimpleLoginDataSource.changeSimpleLoginAliasMailbox(
+                userId = userId,
+                mailboxId = mailboxId,
+                request = SimpleLoginChangeMailboxRequest(email = email)
+            )
+                .mailbox
+                .toDomain()
+        }
+    }
+
     override suspend fun resendAliasMailboxVerificationCode(mailboxId: Long) {
         withUserId { userId ->
             remoteSimpleLoginDataSource.resendSimpleLoginAliasMailboxVerifyCode(
@@ -234,11 +248,11 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateAliasMailbox(mailboxId: Long) {
+    override suspend fun updateAliasDefaultMailbox(mailboxId: Long) {
         withUserId { userId ->
-            remoteSimpleLoginDataSource.updateSimpleLoginAliasMailbox(
+            remoteSimpleLoginDataSource.updateSimpleLoginAliasDefaultMailbox(
                 userId = userId,
-                request = SimpleLoginUpdateAliasMailboxRequest(
+                request = SimpleLoginUpdateAliasDefaultMailboxRequest(
                     defaultMailboxID = mailboxId
                 )
             )

@@ -22,7 +22,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SimpleLoginUpdateAliasMailboxRequest(
+data class SimpleLoginUpdateAliasDefaultMailboxRequest(
     @SerialName("DefaultMailboxID")
     val defaultMailboxID: Long
 )

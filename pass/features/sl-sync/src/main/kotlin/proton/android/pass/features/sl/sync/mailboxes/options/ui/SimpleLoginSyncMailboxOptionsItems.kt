@@ -28,6 +28,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import proton.android.pass.features.sl.sync.R
 import proton.android.pass.features.sl.sync.mailboxes.options.presentation.SimpleLoginSyncMailboxOptionsAction
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -107,6 +108,29 @@ internal fun verify(onClick: () -> Unit) = object : BottomSheetItem {
 
     override val leftIcon: @Composable (() -> Unit) = {
         BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_checkmark_circle)
+    }
+
+    override val endIcon: @Composable (() -> Unit)? = null
+
+    override val onClick: (() -> Unit) = onClick
+
+    override val isDivider: Boolean = false
+
+}
+
+internal fun changeEmail(onClick: () -> Unit) = object : BottomSheetItem {
+
+    override val title: @Composable () -> Unit = {
+        BottomSheetItemTitle(
+            text = stringResource(id = R.string.simple_login_sync_mailbox_change_email_option),
+            color = PassTheme.colors.textNorm
+        )
+    }
+
+    override val subtitle: @Composable (() -> Unit)? = null
+
+    override val leftIcon: @Composable (() -> Unit) = {
+        BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_pencil)
     }
 
     override val endIcon: @Composable (() -> Unit)? = null

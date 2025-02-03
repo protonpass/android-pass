@@ -49,6 +49,12 @@ fun SimpleLoginSyncMailboxOptionsBottomSheet(
                 ).also(onNavigated)
             }
 
+            is SimpleLoginSyncMailboxOptionsEvent.OnChangeMailboxEmail -> {
+                SimpleLoginSyncNavDestination.ChangeMailboxEmail(
+                    mailboxId = event.mailboxId
+                ).also(onNavigated)
+            }
+
             SimpleLoginSyncMailboxOptionsEvent.OnMailboxDeleteError,
             SimpleLoginSyncMailboxOptionsEvent.OnMailboxDeleteSuccess,
             SimpleLoginSyncMailboxOptionsEvent.OnMailboxOptionsError,
@@ -73,6 +79,10 @@ fun SimpleLoginSyncMailboxOptionsBottomSheet(
 
                 SimpleLoginSyncMailboxOptionsUiEvent.OnVerifyClicked -> {
                     onVerifyMailbox()
+                }
+
+                SimpleLoginSyncMailboxOptionsUiEvent.OnChangeEmailClicked -> {
+                    onChangeMailboxEmail()
                 }
             }
         }

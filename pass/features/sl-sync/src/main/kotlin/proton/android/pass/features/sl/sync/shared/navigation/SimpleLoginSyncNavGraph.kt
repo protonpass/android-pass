@@ -27,6 +27,8 @@ import proton.android.pass.features.sl.sync.details.navigation.SimpleLoginSyncDe
 import proton.android.pass.features.sl.sync.details.ui.SimpleLoginSyncDetailsScreen
 import proton.android.pass.features.sl.sync.domains.select.navigation.SimpleLoginSyncDomainSelectNavItem
 import proton.android.pass.features.sl.sync.domains.select.ui.SimpleLoginSyncDomainSelectBottomSheet
+import proton.android.pass.features.sl.sync.mailboxes.change.navigation.SimpleLoginSyncMailboxChangeNavItem
+import proton.android.pass.features.sl.sync.mailboxes.change.ui.SimpleLoginSyncMailboxChangeScreen
 import proton.android.pass.features.sl.sync.mailboxes.create.navigation.SimpleLoginSyncMailboxCreateNavItem
 import proton.android.pass.features.sl.sync.mailboxes.create.ui.SimpleLoginSyncMailboxCreateScreen
 import proton.android.pass.features.sl.sync.mailboxes.delete.navigation.SimpleLoginSyncMailboxDeleteNavItem
@@ -67,6 +69,10 @@ fun NavGraphBuilder.simpleLoginSyncNavGraph(onNavigated: (SimpleLoginSyncNavDest
 
     composable(navItem = SimpleLoginSyncMailboxCreateNavItem) {
         SimpleLoginSyncMailboxCreateScreen(onNavigated = onNavigated)
+    }
+
+    composable(navItem = SimpleLoginSyncMailboxChangeNavItem) {
+        SimpleLoginSyncMailboxChangeScreen(onNavigated = onNavigated)
     }
 
     composable(navItem = SimpleLoginSyncMailboxVerifyNavItem) {

@@ -16,18 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases.simplelogin
+package proton.android.pass.data.api.usecases.simplelogin
 
-import proton.android.pass.data.api.repositories.SimpleLoginRepository
-import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasMailbox
-import javax.inject.Inject
+interface ChangeSimpleLoginAliasMailbox {
 
-class UpdateSimpleLoginAliasMailboxImpl @Inject constructor(
-    private val repository: SimpleLoginRepository
-) : UpdateSimpleLoginAliasMailbox {
-
-    override suspend fun invoke(mailboxId: Long) {
-        repository.updateAliasDefaultMailbox(mailboxId)
-    }
+    suspend operator fun invoke(mailboxId: Long, email: String)
 
 }

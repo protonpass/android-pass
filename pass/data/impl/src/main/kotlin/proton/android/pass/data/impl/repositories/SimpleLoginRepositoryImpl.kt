@@ -221,6 +221,7 @@ class SimpleLoginRepositoryImpl @Inject constructor(
                         localSimpleLoginDataSource.deleteAliasMailbox(userId, mailboxId)
                         throw InvalidVerificationCodeLimitError
                     }
+
                     else -> throw error
                 }
             }
@@ -396,6 +397,7 @@ class SimpleLoginRepositoryImpl @Inject constructor(
     private fun SimpleLoginAliasMailboxData.toDomain() = SimpleLoginAliasMailbox(
         id = mailboxId,
         email = email,
+        pendingEmail = pendingEmail,
         isDefault = isDefault,
         isVerified = verified,
         aliasCount = aliasCount

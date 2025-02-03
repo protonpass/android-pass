@@ -21,6 +21,7 @@ package proton.android.pass.domain.simplelogin
 data class SimpleLoginAliasMailbox(
     val id: Long,
     val email: String,
+    val pendingEmail: String?,
     val isDefault: Boolean,
     val isVerified: Boolean,
     val aliasCount: Int

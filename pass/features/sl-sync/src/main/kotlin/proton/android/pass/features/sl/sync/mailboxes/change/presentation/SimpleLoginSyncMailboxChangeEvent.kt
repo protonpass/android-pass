@@ -16,16 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.mailboxes.options.ui
+package proton.android.pass.features.sl.sync.mailboxes.change.presentation
 
-internal sealed interface SimpleLoginSyncMailboxOptionsUiEvent {
+internal sealed interface SimpleLoginSyncMailboxChangeEvent {
 
-    data object OnDeleteClicked : SimpleLoginSyncMailboxOptionsUiEvent
+    data object Idle : SimpleLoginSyncMailboxChangeEvent
 
-    data object OnSetAsDefaultClicked : SimpleLoginSyncMailboxOptionsUiEvent
-
-    data object OnVerifyClicked : SimpleLoginSyncMailboxOptionsUiEvent
-
-    data object OnChangeEmailClicked : SimpleLoginSyncMailboxOptionsUiEvent
+    data class OnMailboxChanged(
+        internal val mailboxId: Long,
+        internal val isVerified: Boolean
+    ) : SimpleLoginSyncMailboxChangeEvent
 
 }

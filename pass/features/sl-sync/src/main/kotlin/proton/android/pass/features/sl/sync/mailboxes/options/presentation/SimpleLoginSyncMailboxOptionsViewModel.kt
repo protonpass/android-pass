@@ -118,6 +118,10 @@ class SimpleLoginSyncMailboxOptionsViewModel @Inject constructor(
         eventFlow.update { SimpleLoginSyncMailboxOptionsEvent.OnVerifyMailbox(mailboxId) }
     }
 
+    internal fun onChangeMailboxEmail() {
+        eventFlow.update { SimpleLoginSyncMailboxOptionsEvent.OnChangeMailboxEmail(mailboxId) }
+    }
+
     internal fun onDeleteMailbox() {
         if (stateFlow.value.canTransferAliases) {
             eventFlow.update { SimpleLoginSyncMailboxOptionsEvent.OnDeleteMailbox(mailboxId) }

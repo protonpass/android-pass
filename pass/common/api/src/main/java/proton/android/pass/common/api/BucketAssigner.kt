@@ -23,7 +23,7 @@ import java.security.MessageDigest
 import java.util.UUID
 import kotlin.math.abs
 
-object ABBucketAssigner {
+object BucketAssigner {
     fun getBucket(numBuckets: Int, uuid: UUID): Int {
         val hash = murmurHash(uuid)
         return abs(hash) % numBuckets

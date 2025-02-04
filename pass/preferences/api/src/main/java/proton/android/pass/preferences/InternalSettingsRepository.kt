@@ -21,6 +21,7 @@ package proton.android.pass.preferences
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
+import java.util.UUID
 
 @Suppress("TooManyFunctions", "ComplexInterface")
 interface InternalSettingsRepository {
@@ -79,6 +80,8 @@ interface InternalSettingsRepository {
 
     fun setLastTimeUserHasSeenIAM(value: LastTimeUserHasSeenIAMPreference): Result<Unit>
     fun getLastTimeUserHasSeenIAM(userId: UserId): Flow<Option<LastTimeUserHasSeenIAMPreference>>
+
+    fun getPersistentUUID(): Flow<UUID>
 
     fun clearSettings(): Result<Unit>
 }

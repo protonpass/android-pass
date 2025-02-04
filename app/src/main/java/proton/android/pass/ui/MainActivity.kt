@@ -102,12 +102,11 @@ class MainActivity : FragmentActivity() {
                 PassLogger.w(TAG, "Error setting splash screen keep on screen condition")
                 PassLogger.w(TAG, it)
             }
-            val abTest = false // false until it's decided how to run it.
             DisposableEffect(state) {
                 PassLogger.i(TAG, "Account state: $state")
                 when (state.accountState) {
                     AccountNeeded -> {
-                        if (!abTest) launcherViewModel.onAccountNeeded()
+                        if (!state.isNewLoginFlowEnabled) launcherViewModel.onAccountNeeded()
                     }
 
                     PrimaryExist -> launcherViewModel.onPrimaryExist(updateResultLauncher)
@@ -132,7 +131,7 @@ class MainActivity : FragmentActivity() {
                     StepNeeded -> ProtonCenteredProgress(Modifier.fillMaxSize())
 
                     AccountNeeded -> {
-                        if (abTest) {
+                        if (state.isNewLoginFlowEnabled) {
                             WelcomeScreen(
                                 onSignUp = { launcherViewModel.signUp() },
                                 onSignIn = { launcherViewModel.signIn() }

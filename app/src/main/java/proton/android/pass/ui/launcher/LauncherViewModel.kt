@@ -48,6 +48,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -75,12 +76,16 @@ import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.plan.presentation.onUpgradeResult
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
 import proton.android.pass.biometry.ResetAuthPreferences
+import proton.android.pass.common.api.ABBucketAssigner
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
 import proton.android.pass.data.api.usecases.InitialWorkerLauncher
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.inappupdates.api.InAppUpdatesManager
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -97,7 +102,9 @@ class LauncherViewModel @Inject constructor(
     private val inAppUpdatesManager: InAppUpdatesManager,
     private val resetUserPreferences: ResetAuthPreferences,
     private val snackbarDispatcher: SnackbarDispatcher,
+    internalSettingsRepository: InternalSettingsRepository,
     userPreferencesRepository: UserPreferencesRepository,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     commonLibraryVersionChecker: CommonLibraryVersionChecker
 ) : ViewModel() {
 
@@ -114,13 +121,21 @@ class LauncherViewModel @Inject constructor(
     internal val state: StateFlow<LauncherState> = combine(
         accountManager.getAccounts().map { accounts -> getState(accounts) },
         userPreferencesRepository.getThemePreference(),
+        featureFlagsPreferencesRepository[FeatureFlag.NEW_LOGIN_FLOW],
         ::LauncherState
     ).stateIn(
         scope = viewModelScope,
         started = SharingStarted.Lazily,
         initialValue = runBlocking {
-            val themePreference = userPreferencesRepository.getThemePreference().firstOrNull() ?: ThemePreference.System
-            LauncherState(AccountState.Processing, themePreference)
+            val themePreference = userPreferencesRepository.getThemePreference().firstOrNull()
+                ?: ThemePreference.System
+            val isNewLoginFlowFeatureFlagEnabled =
+                featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.NEW_LOGIN_FLOW)
+                    .first()
+            val persistentUUID = internalSettingsRepository.getPersistentUUID().first()
+            val isBucketB = ABBucketAssigner.getBucket(2, persistentUUID) == 1
+            val isNewFlowEnabled = isNewLoginFlowFeatureFlagEnabled || isBucketB
+            LauncherState(AccountState.Processing, themePreference, isNewFlowEnabled)
         }
     )
 
@@ -299,5 +314,6 @@ class LauncherViewModel @Inject constructor(
 
 internal data class LauncherState(
     val accountState: AccountState,
-    val themePreference: ThemePreference
+    val themePreference: ThemePreference,
+    val isNewLoginFlowEnabled: Boolean
 )

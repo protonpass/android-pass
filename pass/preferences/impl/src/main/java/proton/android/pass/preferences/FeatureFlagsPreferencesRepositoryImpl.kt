@@ -40,6 +40,7 @@ import proton.android.pass.preferences.FeatureFlag.EXTRA_LOGGING
 import proton.android.pass.preferences.FeatureFlag.FILE_ATTACHMENTS_V1
 import proton.android.pass.preferences.FeatureFlag.IN_APP_MESSAGES_V1
 import proton.android.pass.preferences.FeatureFlag.ITEM_SHARING_V1
+import proton.android.pass.preferences.FeatureFlag.NEW_LOGIN_FLOW
 import proton.android.pass.preferences.FeatureFlag.SECURE_LINK_NEW_CRYPTO_V1
 import proton.android.pass.preferences.FeatureFlag.SL_ALIASES_SYNC
 import java.io.IOException
@@ -99,6 +100,11 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { secureLinkNewCryptoV1Enabled.value }
+
+        NEW_LOGIN_FLOW -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault
+        ) { newLoginFlowEnabled.value }
     }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> = when (featureFlag) {
@@ -136,6 +142,10 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         SECURE_LINK_NEW_CRYPTO_V1 -> setFeatureFlag {
             secureLinkNewCryptoV1Enabled = boolFlagPrefProto(value)
+        }
+
+        NEW_LOGIN_FLOW -> setFeatureFlag {
+            newLoginFlowEnabled = boolFlagPrefProto(value)
         }
     }
 
@@ -236,6 +246,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             EXTRA_LOGGING -> extraLoggingEnabled
             FILE_ATTACHMENTS_V1 -> fileAttachmentsV1Enabled
             SECURE_LINK_NEW_CRYPTO_V1 -> secureLinkNewCryptoV1Enabled
+            NEW_LOGIN_FLOW -> newLoginFlowEnabled
         }.value
     }
 }

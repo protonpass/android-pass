@@ -29,6 +29,7 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -44,6 +45,10 @@ import me.proton.core.accountmanager.presentation.compose.SignOutDialogActivity
 import me.proton.core.compose.component.ProtonCenteredProgress
 import me.proton.core.notification.presentation.deeplink.DeeplinkManager
 import me.proton.core.notification.presentation.deeplink.onActivityCreate
+import me.proton.core.telemetry.domain.TelemetryManager
+import me.proton.core.telemetry.presentation.ProductMetricsDelegate
+import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
+import me.proton.core.telemetry.presentation.compose.LocalProductMetricsDelegateOwner
 import proton.android.pass.PassActivityOrchestrator
 import proton.android.pass.autofill.di.UserPreferenceEntryPoint
 import proton.android.pass.commonui.api.PassTheme
@@ -61,13 +66,16 @@ import proton.android.pass.ui.launcher.LauncherViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : FragmentActivity() {
+class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
 
     @Inject
     lateinit var deeplinkManager: DeeplinkManager
 
     @Inject
     lateinit var passActivityOrchestrator: PassActivityOrchestrator
+
+    @Inject
+    lateinit var telemetryManager: TelemetryManager
 
     private val launcherViewModel: LauncherViewModel by viewModels()
 
@@ -78,6 +86,12 @@ class MainActivity : FragmentActivity() {
                 else -> {}
             }
         }
+
+    override val productMetricsDelegate = object : ProductMetricsDelegate {
+        override val telemetryManager: TelemetryManager get() = this@MainActivity.telemetryManager
+        override val productGroup: String = "account.any.signup"
+        override val productFlow: String = "pass_new_login"
+    }
 
     @Suppress("LongMethod")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -132,10 +146,12 @@ class MainActivity : FragmentActivity() {
 
                     AccountNeeded -> {
                         if (state.isNewLoginFlowEnabled) {
-                            WelcomeScreen(
-                                onSignUp = { launcherViewModel.signUp() },
-                                onSignIn = { launcherViewModel.signIn() }
-                            )
+                            CompositionLocalProvider(LocalProductMetricsDelegateOwner provides this@MainActivity) {
+                                WelcomeScreen(
+                                    onSignUp = { launcherViewModel.signUp() },
+                                    onSignIn = { launcherViewModel.signIn() }
+                                )
+                            }
                         } else {
                             ProtonCenteredProgress(Modifier.fillMaxSize())
                         }

@@ -188,8 +188,8 @@ class LocalItemDataSourceImpl @Inject constructor(
             combine(
                 database.itemsDao().itemSummary(userId.id, shareIdValues, itemState?.value),
                 database.itemsDao().countItemsWithTotp(userId.id, shareIdValues),
-                observeSharedWithMeItemCount(userId),
-                observeSharedByMeItemCount(userId, itemState),
+                observeSharedWithMeItemCount(userId, shareIdValues, itemState),
+                observeSharedByMeItemCount(userId, shareIdValues, itemState),
                 database.itemsDao().countTrashedItems(userId.id, shareIdValues)
             ) { values: List<SummaryRow>,
                 totpCount: Int,
@@ -210,16 +210,22 @@ class LocalItemDataSourceImpl @Inject constructor(
             }
         }
 
-    private fun observeSharedWithMeItemCount(userId: UserId) = localShareDataSource
-        .observeSharedWithMeIds(userId)
-        .map { shareIds -> shareIds.size }
+    private fun observeSharedWithMeItemCount(
+        userId: UserId,
+        shareIds: List<String>?,
+        itemState: ItemState?
+    ) = localShareDataSource.observeSharedWithMeIds(userId, itemState, shareIds?.map(::ShareId))
+        .map { sharedWithMeShareIds -> sharedWithMeShareIds.size }
 
-    private fun observeSharedByMeItemCount(userId: UserId, itemState: ItemState?) = localShareDataSource
-        .observeSharedByMeIds(userId)
-        .flatMapLatest { shareIds ->
+    private fun observeSharedByMeItemCount(
+        userId: UserId,
+        shareIds: List<String>?,
+        itemState: ItemState?
+    ) = localShareDataSource.observeSharedByMeIds(userId, itemState, shareIds?.map(::ShareId))
+        .flatMapLatest { sharedByMeShareIds ->
             database.itemsDao().countSharedItems(
                 userId = userId.id,
-                shareIds = shareIds,
+                shareIds = sharedByMeShareIds,
                 itemState = itemState?.value
             )
         }

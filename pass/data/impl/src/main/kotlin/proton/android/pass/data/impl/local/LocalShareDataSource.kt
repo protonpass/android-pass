@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.impl.db.entities.ShareEntity
+import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
 
@@ -48,8 +49,16 @@ interface LocalShareDataSource {
         isActive: Boolean?
     ): Flow<List<ShareEntity>>
 
-    fun observeSharedWithMeIds(userId: UserId): Flow<List<String>>
+    fun observeSharedWithMeIds(
+        userId: UserId,
+        itemState: ItemState?,
+        shareIds: List<ShareId>?
+    ): Flow<List<String>>
 
-    fun observeSharedByMeIds(userId: UserId): Flow<List<String>>
+    fun observeSharedByMeIds(
+        userId: UserId,
+        itemState: ItemState?,
+        shareIds: List<ShareId>?
+    ): Flow<List<String>>
 
 }

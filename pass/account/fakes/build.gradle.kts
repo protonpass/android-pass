@@ -36,6 +36,7 @@ dependencies {
     implementation(libs.core.payment.domain)
     implementation(libs.core.authFidoDomain)
     implementation(libs.core.userSettings.domain)
+    implementation(libs.core.telemetry.domain)
 
     implementation(libs.androidx.activity)
 

@@ -27,12 +27,14 @@ internal object SimpleLoginAliasMailboxMother {
     internal fun create(
         id: Long = Random.nextLong(),
         email: String = randomString(),
+        pendingEmail: String = randomString(),
         isDefault: Boolean = Random.nextBoolean(),
         isVerified: Boolean = Random.nextBoolean(),
         aliasCount: Int = Random.nextInt()
     ): SimpleLoginAliasMailbox = SimpleLoginAliasMailbox(
         id = id,
         email = email,
+        pendingEmail = pendingEmail,
         isDefault = isDefault,
         isVerified = isVerified,
         aliasCount = aliasCount

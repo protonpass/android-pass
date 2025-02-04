@@ -27,6 +27,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
+import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -57,6 +58,7 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     private val lastTimeUserHasSeenIAMPreferenceFlow: MutableStateFlow<Option<LastTimeUserHasSeenIAMPreference>> =
         MutableStateFlow(None)
     private val hasShownAliasContactsOnboardingFlow = MutableStateFlow(false)
+    private val persistentUUIDFlow = MutableStateFlow(UUID.randomUUID())
 
     override fun setLastUnlockedTime(time: Long): Result<Unit> {
         lastUnlockedTimeFlow.update { Some(time) }
@@ -187,6 +189,8 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
 
     override fun getLastTimeUserHasSeenIAM(userId: UserId): Flow<Option<LastTimeUserHasSeenIAMPreference>> =
         lastTimeUserHasSeenIAMPreferenceFlow
+
+    override fun getPersistentUUID(): Flow<UUID> = persistentUUIDFlow
 
     override fun clearSettings(): Result<Unit> = Result.success(Unit)
 }

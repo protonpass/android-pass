@@ -37,6 +37,7 @@ import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.log.api.PassLogger
 import java.io.IOException
+import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -239,6 +240,17 @@ class InternalSettingsRepositoryImpl @Inject constructor(
                 }.toOption()
             } else {
                 None
+            }
+        }
+
+    override fun getPersistentUUID(): Flow<UUID> = getPreference { it.persistentUuid }
+        .map { preferenceUuid ->
+            if (preferenceUuid.isNullOrBlank()) {
+                val uuid = UUID.randomUUID()
+                setPreference { it.setPersistentUuid(uuid.toString()) }
+                uuid
+            } else {
+                UUID.fromString(preferenceUuid)
             }
         }
 

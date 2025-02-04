@@ -277,6 +277,16 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
 
     @Query(
         """
+        SELECT COUNT(*)
+        FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
+        """
+    )
+    abstract suspend fun countItems(userId: String, shareIds: List<String>): Int
+
+    @Query(
+        """
         SELECT 
             ${ItemEntity.Columns.ITEM_TYPE} as itemKind,
             COUNT(${ItemEntity.Columns.ITEM_TYPE}) as itemCount
@@ -497,21 +507,18 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
 
     @Query(
         """
-        SELECT 
-            SUM(CASE WHEN ${ItemEntity.Columns.KEY} IS NULL THEN 1 ELSE 0 END) as sharedWithMe,
-            SUM(CASE WHEN ${ItemEntity.Columns.KEY} IS NOT NULL THEN 1 ELSE 0 END) as sharedByMe
-        FROM ${ItemEntity.TABLE}
+        SELECT COUNT(*) FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
-            AND ${ItemEntity.Columns.SHARE_COUNT} > 0
-          AND (:shareIds IS NULL OR ${ItemEntity.Columns.SHARE_ID} IN (:shareIds))
-            AND (${ItemEntity.Columns.STATE} = :itemState OR :itemState IS NULL)
+          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
+          AND ${ItemEntity.Columns.SHARE_COUNT} > 0
+          AND ${ItemEntity.Columns.STATE} = :itemState OR :itemState IS NULL
         """
     )
     abstract fun countSharedItems(
         userId: String,
-        shareIds: List<String>?,
+        shareIds: List<String>,
         itemState: Int?
-    ): Flow<SharedItemsCountRow>
+    ): Flow<Int>
 
     @Query(
         """

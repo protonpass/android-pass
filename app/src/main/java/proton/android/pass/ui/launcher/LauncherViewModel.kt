@@ -76,7 +76,7 @@ import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.plan.presentation.onUpgradeResult
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
 import proton.android.pass.biometry.ResetAuthPreferences
-import proton.android.pass.common.api.ABBucketAssigner
+import proton.android.pass.common.api.BucketAssigner
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
 import proton.android.pass.data.api.usecases.InitialWorkerLauncher
 import proton.android.pass.data.api.usecases.RefreshPlan
@@ -133,7 +133,7 @@ class LauncherViewModel @Inject constructor(
                 featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.NEW_LOGIN_FLOW)
                     .first()
             val persistentUUID = internalSettingsRepository.getPersistentUUID().first()
-            val isBucketB = ABBucketAssigner.getBucket(2, persistentUUID) == 1
+            val isBucketB = BucketAssigner.getBucket(2, persistentUUID) == 1
             val isNewFlowEnabled = isNewLoginFlowFeatureFlagEnabled || isBucketB
             LauncherState(AccountState.Processing, themePreference, isNewFlowEnabled)
         }

@@ -77,5 +77,11 @@ enum class FeatureFlag(
         description = "Enable secure link new crypto",
         key = "PassSecureLinkCryptoChangeV1",
         isEnabledDefault = false
+    ),
+    NEW_LOGIN_FLOW(
+        title = "New login flow",
+        description = "Enable new login flow",
+        key = null,
+        isEnabledDefault = false
     )
 }

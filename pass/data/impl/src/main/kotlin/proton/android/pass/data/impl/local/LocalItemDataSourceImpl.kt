@@ -20,6 +20,7 @@ package proton.android.pass.data.impl.local
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
@@ -43,7 +44,8 @@ import javax.inject.Inject
 
 @Suppress("TooManyFunctions")
 class LocalItemDataSourceImpl @Inject constructor(
-    private val database: PassDatabase
+    private val database: PassDatabase,
+    private val localShareDataSource: LocalShareDataSource
 ) : LocalItemDataSource {
 
     override suspend fun upsertItem(item: ItemEntity) = upsertItems(listOf(item))
@@ -186,9 +188,14 @@ class LocalItemDataSourceImpl @Inject constructor(
             combine(
                 database.itemsDao().itemSummary(userId.id, shareIdValues, itemState?.value),
                 database.itemsDao().countItemsWithTotp(userId.id, shareIdValues),
-                database.itemsDao().countSharedItems(userId.id, shareIdValues, itemState?.value),
+                observeSharedWithMeItemCount(userId),
+                observeSharedByMeItemCount(userId, itemState),
                 database.itemsDao().countTrashedItems(userId.id, shareIdValues)
-            ) { values: List<SummaryRow>, totpCount: Int, sharedItemsCount, trashedItemsCount ->
+            ) { values: List<SummaryRow>,
+                totpCount: Int,
+                sharedWithMeItemCount: Int,
+                sharedByMeItemCount: Int,
+                trashedItemsCount ->
                 ItemCountSummary(
                     login = values.getCount(ItemCategory.Login),
                     loginWithMFA = totpCount.toLong(),
@@ -196,11 +203,25 @@ class LocalItemDataSourceImpl @Inject constructor(
                     alias = values.getCount(ItemCategory.Alias),
                     creditCard = values.getCount(ItemCategory.CreditCard),
                     identities = values.getCount(ItemCategory.Identity),
-                    sharedWithMe = sharedItemsCount.sharedWithMe,
-                    sharedByMe = sharedItemsCount.sharedByMe,
+                    sharedWithMe = sharedWithMeItemCount.toLong(),
+                    sharedByMe = sharedByMeItemCount.toLong(),
                     trashed = trashedItemsCount.toLong()
                 )
             }
+        }
+
+    private fun observeSharedWithMeItemCount(userId: UserId) = localShareDataSource
+        .observeSharedWithMeIds(userId)
+        .map { shareIds -> shareIds.size }
+
+    private fun observeSharedByMeItemCount(userId: UserId, itemState: ItemState?) = localShareDataSource
+        .observeSharedByMeIds(userId)
+        .flatMapLatest { shareIds ->
+            database.itemsDao().countSharedItems(
+                userId = userId.id,
+                shareIds = shareIds,
+                itemState = itemState?.value
+            )
         }
 
     override fun observeSharedItemsCountSummary(
@@ -208,7 +229,8 @@ class LocalItemDataSourceImpl @Inject constructor(
         itemSharedType: ItemSharedType,
         itemState: ItemState?
     ): Flow<ItemCountSummary> = combine(
-        database.itemsDao().observeSharedItemsSummary(userId.id, itemSharedType.value, itemState?.value),
+        database.itemsDao()
+            .observeSharedItemsSummary(userId.id, itemSharedType.value, itemState?.value),
         database.itemsDao().observeSharedItemsWithTotpCount(userId.id, itemSharedType.value),
         database.itemsDao().countSharedItems(userId.id, emptyList(), itemState?.value),
         database.itemsDao().observeSharedTrashedItemsCount(userId.id, itemSharedType.value)
@@ -220,8 +242,8 @@ class LocalItemDataSourceImpl @Inject constructor(
             alias = sharedSummary.getCount(ItemCategory.Alias),
             creditCard = sharedSummary.getCount(ItemCategory.CreditCard),
             identities = sharedSummary.getCount(ItemCategory.Identity),
-            sharedWithMe = sharedItemsCount.sharedWithMe,
-            sharedByMe = sharedItemsCount.sharedByMe,
+            sharedWithMe = sharedItemsCount.toLong(),
+            sharedByMe = sharedItemsCount.toLong(),
             trashed = trashedItemsCount.toLong()
         )
     }

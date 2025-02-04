@@ -4,15 +4,15 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import java.util.UUID
 
-class ABBucketAssignerTest {
+class BucketAssignerTest {
 
     @Test
     fun `same UUID should always return the same bucket`() {
         val numBuckets = 2
         val uuid = UUID.fromString("123e4567-e89b-12d3-a456-426614174000")
 
-        val bucket1 = ABBucketAssigner.getBucket(numBuckets, uuid)
-        val bucket2 = ABBucketAssigner.getBucket(numBuckets, uuid)
+        val bucket1 = BucketAssigner.getBucket(numBuckets, uuid)
+        val bucket2 = BucketAssigner.getBucket(numBuckets, uuid)
 
         assertThat(bucket1).isEqualTo(bucket2)
     }
@@ -25,7 +25,7 @@ class ABBucketAssignerTest {
 
         repeat(iterations) {
             val uuid = UUID.randomUUID()
-            seenBuckets.add(ABBucketAssigner.getBucket(numBuckets, uuid))
+            seenBuckets.add(BucketAssigner.getBucket(numBuckets, uuid))
         }
 
         assertThat(seenBuckets.size).isGreaterThan(1)
@@ -37,7 +37,7 @@ class ABBucketAssignerTest {
 
         repeat(100) {
             val uuid = UUID.randomUUID()
-            val bucket = ABBucketAssigner.getBucket(numBuckets, uuid)
+            val bucket = BucketAssigner.getBucket(numBuckets, uuid)
             assertThat(bucket).isAtLeast(0)
             assertThat(bucket).isLessThan(numBuckets)
         }
@@ -47,7 +47,7 @@ class ABBucketAssignerTest {
     fun `should handle single bucket case correctly`() {
         val uuid = UUID.randomUUID()
 
-        val bucket = ABBucketAssigner.getBucket(1, uuid)
+        val bucket = BucketAssigner.getBucket(1, uuid)
 
         assertThat(bucket).isEqualTo(0)
     }
@@ -58,7 +58,7 @@ class ABBucketAssignerTest {
 
         repeat(100) {
             val uuid = UUID.randomUUID()
-            val bucket = ABBucketAssigner.getBucket(numBuckets, uuid)
+            val bucket = BucketAssigner.getBucket(numBuckets, uuid)
             assertThat(bucket).isAtLeast(0)
             assertThat(bucket).isLessThan(numBuckets)
         }

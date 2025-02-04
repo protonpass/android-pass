@@ -20,6 +20,10 @@ package proton.android.pass.features.welcome
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import me.proton.core.telemetry.domain.entity.TelemetryPriority.Immediate
+import me.proton.core.telemetry.presentation.compose.MeasureOnScreenClosed
+import me.proton.core.telemetry.presentation.compose.MeasureOnScreenDisplayed
+import me.proton.core.telemetry.presentation.compose.rememberClickedMeasureOperation
 
 @Composable
 fun WelcomeScreen(
@@ -27,9 +31,30 @@ fun WelcomeScreen(
     onSignUp: () -> Unit,
     onSignIn: () -> Unit
 ) {
+    MeasureOnScreenDisplayed("fe.add_account.displayed", priority = Immediate)
+    MeasureOnScreenClosed("user.add_account.closed", priority = Immediate)
+
+    val clickSignUp = rememberClickedMeasureOperation(
+        event = "user.add_account.clicked",
+        item = "sign_up",
+        priority = Immediate
+    )
+
+    val clickSignIn = rememberClickedMeasureOperation(
+        event = "user.add_account.clicked",
+        item = "sign_in",
+        priority = Immediate
+    )
+
     WelcomeContent(
         modifier = modifier,
-        onSignUp = onSignUp,
-        onSignIn = onSignIn
+        onSignUp = {
+            clickSignUp.measure()
+            onSignUp()
+        },
+        onSignIn = {
+            clickSignIn.measure()
+            onSignIn()
+        }
     )
 }

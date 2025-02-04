@@ -34,6 +34,8 @@ import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 import me.proton.core.usersettings.domain.usecase.ObserveRegisteredSecurityKeys
 import me.proton.core.usersettings.domain.usecase.ObserveUserSettings
+import me.proton.core.util.kotlin.CoroutineScopeProvider
+import me.proton.core.util.kotlin.DispatcherProvider
 import proton.android.pass.account.api.AccountOrchestrators
 
 @Module
@@ -69,6 +71,12 @@ abstract class FakesAccountModule {
 
     @Binds
     abstract fun bindIsFido2Enabled(impl: FakeIsFido2Enabled): IsFido2Enabled
+
+    @Binds
+    abstract fun bindDispatcherProvider(impl: FakeDispatcherProvider): DispatcherProvider
+
+    @Binds
+    abstract fun bindCoroutineScopeProvider(impl: FakeCoroutineScopeProvider): CoroutineScopeProvider
 }
 
 @Module

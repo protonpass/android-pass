@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
+    implementation(libs.core.telemetry.presentation)
     implementation(libs.kotlinx.collections)
 
     debugImplementation(libs.showkase)

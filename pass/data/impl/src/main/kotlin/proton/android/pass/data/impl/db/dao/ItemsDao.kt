@@ -28,7 +28,8 @@ import proton.android.pass.domain.ItemStateValues
 
 data class SummaryRow(
     val itemKind: Int,
-    val itemCount: Long
+    val itemCount: Long,
+    val shareId: String
 )
 
 data class ShareItemCountRow(
@@ -283,19 +284,20 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
     @Query(
         """
         SELECT 
+            ${ItemEntity.Columns.SHARE_ID} as shareId,
             ${ItemEntity.Columns.ITEM_TYPE} as itemKind,
             COUNT(${ItemEntity.Columns.ITEM_TYPE}) as itemCount
         FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
-          AND ${ItemEntity.Columns.STATE} = :itemState
-        GROUP BY ${ItemEntity.Columns.ITEM_TYPE}
+          AND (:itemState IS NULL OR ${ItemEntity.Columns.STATE} = :itemState)
+          AND (:onlyShared = 0 OR ${ItemEntity.Columns.SHARE_COUNT} > 0) 
+        GROUP BY ${ItemEntity.Columns.SHARE_ID}, ${ItemEntity.Columns.ITEM_TYPE}
         """
     )
     abstract fun itemSummary(
         userId: String,
-        shareIds: List<String>?,
-        itemState: Int?
+        itemState: Int?,
+        onlyShared: Boolean
     ): Flow<List<SummaryRow>>
 
     @Query(

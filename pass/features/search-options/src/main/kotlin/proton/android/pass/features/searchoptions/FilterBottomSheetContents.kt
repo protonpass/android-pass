@@ -37,7 +37,12 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemLis
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.data.api.ItemCountSummary
+import proton.android.pass.searchoptions.api.FilterOption
 import proton.android.pass.searchoptions.api.SearchFilterType
+import proton.android.pass.searchoptions.api.SearchOptions
+import proton.android.pass.searchoptions.api.SearchSortingType
+import proton.android.pass.searchoptions.api.SortingOption
+import proton.android.pass.searchoptions.api.VaultSelectionOption
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -103,35 +108,33 @@ internal fun FilterBottomSheetContents(
             onClick = { onSortingTypeSelected(SearchFilterType.LoginMFA) }
         ).also(::add)
 
-        if (isItemSharingAvailable) {
-            if (summary.hasSharedWithMeItems) {
-                filterRow(
-                    titleResId = R.string.item_type_filter_shared_with_me,
-                    startIconResId = CoreR.drawable.ic_proton_user_arrow_left,
-                    itemCount = summary.sharedWithMe,
-                    isSelected = filterType == SearchFilterType.SharedWithMe,
-                    onClick = { onSortingTypeSelected(SearchFilterType.SharedWithMe) }
-                ).also(::add)
-            }
-
-            if (summary.hasSharedByMeItems) {
-                filterRow(
-                    titleResId = R.string.item_type_filter_shared_by_me,
-                    startIconResId = CoreR.drawable.ic_proton_user_arrow_right,
-                    itemCount = summary.sharedByMe,
-                    isSelected = filterType == SearchFilterType.SharedByMe,
-                    onClick = { onSortingTypeSelected(SearchFilterType.SharedByMe) }
-                ).also(::add)
-            }
+        if (isSharedWithMeFilterAvailable) {
+            filterRow(
+                titleResId = R.string.item_type_filter_shared_with_me,
+                startIconResId = CoreR.drawable.ic_proton_user_arrow_left,
+                itemCount = summary.sharedWithMe,
+                isSelected = filterType == SearchFilterType.SharedWithMe,
+                onClick = { onSortingTypeSelected(SearchFilterType.SharedWithMe) }
+            ).also(::add)
         }
-    }.let { items ->
-        BottomSheetItemList(
-            modifier = modifier.bottomSheet(),
-            items = items
-                .withDividers()
-                .toPersistentList()
-        )
+
+        if (isSharedByMeFilterAvailable) {
+            filterRow(
+                titleResId = R.string.item_type_filter_shared_by_me,
+                startIconResId = CoreR.drawable.ic_proton_user_arrow_right,
+                itemCount = summary.sharedByMe,
+                isSelected = filterType == SearchFilterType.SharedByMe,
+                onClick = { onSortingTypeSelected(SearchFilterType.SharedByMe) }
+            ).also(::add)
+        }
     }
+}.let { items ->
+    BottomSheetItemList(
+        modifier = modifier.bottomSheet(),
+        items = items
+            .withDividers()
+            .toPersistentList()
+    )
 }
 
 @Composable
@@ -188,7 +191,12 @@ internal fun FilterBottomSheetContentsPreview(
         Surface {
             FilterBottomSheetContents(
                 state = FilterOptionsState.Success(
-                    filterType = SearchFilterType.All,
+                    searchOptions = SearchOptions(
+                        filterOption = FilterOption(SearchFilterType.All),
+                        sortingOption = SortingOption(SearchSortingType.MostRecent),
+                        vaultSelectionOption = VaultSelectionOption.AllVaults,
+                        userId = null
+                    ),
                     summary = ItemCountSummary(
                         login = 0,
                         loginWithMFA = 0,

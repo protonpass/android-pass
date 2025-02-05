@@ -68,17 +68,9 @@ interface ShareRepository {
     suspend fun applyPendingShareEventKeys(userId: UserId, event: UpdateShareEvent)
     suspend fun getAddressForShareId(userId: UserId, shareId: ShareId): UserAddress
 
-    fun observeSharedWithMeIds(
-        userId: UserId,
-        itemState: ItemState?,
-        shareIds: List<ShareId>?
-    ): Flow<List<ShareId>>
+    fun observeSharedWithMeIds(userId: UserId, itemState: ItemState?): Flow<List<ShareId>>
 
-    fun observeSharedByMeIds(
-        userId: UserId,
-        itemState: ItemState?,
-        shareIds: List<ShareId>?
-    ): Flow<List<ShareId>>
+    fun observeSharedByMeIds(userId: UserId, itemState: ItemState?): Flow<List<ShareId>>
 
 }
 

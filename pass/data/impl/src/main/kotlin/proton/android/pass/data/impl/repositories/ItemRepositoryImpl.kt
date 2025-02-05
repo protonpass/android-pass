@@ -395,7 +395,7 @@ class ItemRepositoryImpl @Inject constructor(
     }
 
     override fun observeSharedByMeEncryptedItems(userId: UserId, itemState: ItemState?): Flow<List<ItemEncrypted>> =
-        shareRepository.observeSharedByMeIds(userId, itemState, null)
+        shareRepository.observeSharedByMeIds(userId, itemState)
             .flatMapLatest { shareIds ->
                 localItemDataSource.observeItemsForShares(
                     userId,
@@ -411,7 +411,7 @@ class ItemRepositoryImpl @Inject constructor(
             }
 
     override fun observeSharedWithMeEncryptedItems(userId: UserId, itemState: ItemState?): Flow<List<ItemEncrypted>> =
-        shareRepository.observeSharedWithMeIds(userId, itemState, null)
+        shareRepository.observeSharedWithMeIds(userId, itemState)
             .flatMapLatest { shareIds ->
                 localItemDataSource.observeItemsForShares(
                     userId,

@@ -180,7 +180,7 @@ class LocalItemDataSourceImpl @Inject constructor(
                 observeItemsWithTotpCount(userId, itemState, shareIdValues),
                 observeSharedWithMeItemCount(userId, shareIdValues, itemState),
                 observeSharedByMeItemCount(userId, shareIdValues, itemState),
-                database.itemsDao().countTrashedItems(userId.id, shareIdValues)
+                observeTrashedItemsCount(userId, shareIdValues)
             ) { values: List<SummaryRow>,
                 totpCount,
                 sharedWithMeItemCount,
@@ -212,6 +212,10 @@ class LocalItemDataSourceImpl @Inject constructor(
             if (shareIds == null) summaryRows
             else summaryRows.filter { it.shareId in shareIds }
         }
+
+    private fun List<SummaryRow>.getCount(itemCategory: ItemCategory): Long = filter {
+        it.itemKind == itemCategory.value
+    }.sumOf { it.itemCount }
 
     private fun observeItemsWithTotpCount(
         userId: UserId,
@@ -258,9 +262,16 @@ class LocalItemDataSourceImpl @Inject constructor(
             )
         }
 
-    private fun List<SummaryRow>.getCount(itemCategory: ItemCategory): Long = filter {
-        it.itemKind == itemCategory.value
-    }.sumOf { it.itemCount }
+    private fun observeTrashedItemsCount(userId: UserId, shareIds: List<String>?) = database.itemsDao()
+        .countTrashedItems(userId.id)
+        .map { rows ->
+            rows.filter {
+                if (shareIds == null) true
+                else it.shareId in shareIds
+            }.sumOf {
+                it.itemCount
+            }
+        }
 
     override suspend fun updateLastUsedTime(
         shareId: ShareId,

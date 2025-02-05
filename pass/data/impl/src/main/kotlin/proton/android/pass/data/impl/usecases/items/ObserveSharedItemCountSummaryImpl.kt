@@ -49,8 +49,7 @@ class ObserveSharedItemCountSummaryImpl @Inject constructor(
 
                     ItemSharedType.SharedWithMe -> shareRepository.observeSharedWithMeIds(
                         userId = user.userId,
-                        itemState = itemState,
-                        shareIds = null
+                        itemState = itemState
                     )
                 }.flatMapLatest { sharedShareIds ->
                     itemRepository.observeItemCountSummary(

@@ -49,16 +49,8 @@ interface LocalShareDataSource {
         isActive: Boolean?
     ): Flow<List<ShareEntity>>
 
-    fun observeSharedWithMeIds(
-        userId: UserId,
-        itemState: ItemState?,
-        shareIds: List<ShareId>?
-    ): Flow<List<String>>
+    fun observeSharedWithMeIds(userId: UserId, itemState: ItemState?): Flow<List<String>>
 
-    fun observeSharedByMeIds(
-        userId: UserId,
-        itemState: ItemState?,
-        shareIds: List<ShareId>?
-    ): Flow<List<String>>
+    fun observeSharedByMeIds(userId: UserId, itemState: ItemState?): Flow<List<String>>
 
 }

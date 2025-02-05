@@ -144,15 +144,13 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
           AND (:shareType IS NULL OR ${ShareEntity.Columns.SHARE_TYPE} = :shareType)
           AND (:shareRole IS NULL OR ${ShareEntity.Columns.SHARE_ROLE_ID} = :shareRole)
           AND (:isActive IS NULL OR ${ShareEntity.Columns.IS_ACTIVE} = :isActive)
-          AND (:shareIds IS NULL OR ${ShareEntity.Columns.ID} IN (:shareIds))
     """
     )
     abstract fun observeSharedIds(
         userId: String,
         shareType: Int?,
         shareRole: String?,
-        isActive: Boolean?,
-        shareIds: List<String>?
+        isActive: Boolean?
     ): Flow<List<String>>
 
     @Transaction

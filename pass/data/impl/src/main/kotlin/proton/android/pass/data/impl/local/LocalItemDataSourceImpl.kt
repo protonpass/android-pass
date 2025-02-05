@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
 import me.proton.core.util.kotlin.takeIfNotEmpty
@@ -228,14 +229,25 @@ class LocalItemDataSourceImpl @Inject constructor(
         userId: UserId,
         shareIds: List<String>?,
         itemState: ItemState?
-    ) = localShareDataSource.observeSharedWithMeIds(userId, itemState, shareIds?.map(::ShareId))
-        .map { sharedWithMeShareIds -> sharedWithMeShareIds.size }
+    ) = localShareDataSource.observeSharedWithMeIds(userId, itemState)
+        .map { sharedWithMeShareIds ->
+            sharedWithMeShareIds.filter { sharedWithMeShareId ->
+                if (shareIds == null) true
+                else sharedWithMeShareId in shareIds
+            }.size
+        }
 
     private fun observeSharedByMeItemCount(
         userId: UserId,
         shareIds: List<String>?,
         itemState: ItemState?
-    ) = localShareDataSource.observeSharedByMeIds(userId, itemState, shareIds?.map(::ShareId))
+    ) = localShareDataSource.observeSharedByMeIds(userId, itemState)
+        .mapLatest { sharedByMeShareIds ->
+            sharedByMeShareIds.filter { sharedByMeShareId ->
+                if (shareIds == null) true
+                else sharedByMeShareId in shareIds
+            }
+        }
         .flatMapLatest { sharedByMeShareIds ->
             database.itemsDao().countSharedItems(
                 userId = userId.id,

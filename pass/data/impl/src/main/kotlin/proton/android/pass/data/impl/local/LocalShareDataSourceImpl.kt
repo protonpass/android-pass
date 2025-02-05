@@ -92,30 +92,21 @@ class LocalShareDataSourceImpl @Inject constructor(
             isActive = isActive
         )
 
-    override fun observeSharedWithMeIds(
-        userId: UserId,
-        itemState: ItemState?,
-        shareIds: List<ShareId>?
-    ): Flow<List<String>> = database.sharesDao()
-        .observeSharedIds(
-            userId = userId.id,
-            shareType = ShareType.Item.value,
-            shareRole = null,
-            isActive = itemState == ItemState.Active,
-            shareIds = shareIds?.map { it.id }
-        )
+    override fun observeSharedWithMeIds(userId: UserId, itemState: ItemState?): Flow<List<String>> =
+        database.sharesDao()
+            .observeSharedIds(
+                userId = userId.id,
+                shareType = ShareType.Item.value,
+                shareRole = null,
+                isActive = itemState == ItemState.Active
+            )
 
-    override fun observeSharedByMeIds(
-        userId: UserId,
-        itemState: ItemState?,
-        shareIds: List<ShareId>?
-    ): Flow<List<String>> = database.sharesDao()
+    override fun observeSharedByMeIds(userId: UserId, itemState: ItemState?): Flow<List<String>> = database.sharesDao()
         .observeSharedIds(
             userId = userId.id,
             shareType = null,
             shareRole = ShareRole.SHARE_ROLE_ADMIN,
-            isActive = itemState == ItemState.Active,
-            shareIds = shareIds?.map { it.id }
+            isActive = itemState == ItemState.Active
         )
 
     private companion object {

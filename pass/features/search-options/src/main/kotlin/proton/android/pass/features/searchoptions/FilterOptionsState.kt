@@ -21,6 +21,8 @@ package proton.android.pass.features.searchoptions
 import androidx.compose.runtime.Stable
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.searchoptions.api.SearchFilterType
+import proton.android.pass.searchoptions.api.SearchOptions
+import proton.android.pass.searchoptions.api.VaultSelectionOption
 
 @Stable
 internal sealed interface FilterOptionsState {
@@ -30,9 +32,30 @@ internal sealed interface FilterOptionsState {
 
     @Stable
     data class Success(
-        internal val filterType: SearchFilterType,
         internal val summary: ItemCountSummary,
-        internal val isItemSharingAvailable: Boolean
-    ) : FilterOptionsState
+        private val isItemSharingAvailable: Boolean,
+        private val searchOptions: SearchOptions
+    ) : FilterOptionsState {
+
+        internal val filterType: SearchFilterType = searchOptions.filterOption.searchFilterType
+
+        private val isShareByOrWithMeFilterAvailable: Boolean =
+            when (searchOptions.vaultSelectionOption) {
+                VaultSelectionOption.AllVaults,
+                VaultSelectionOption.Trash,
+                is VaultSelectionOption.Vault -> true
+
+                VaultSelectionOption.SharedByMe,
+                VaultSelectionOption.SharedWithMe -> false
+            }.and(isItemSharingAvailable)
+
+
+        internal val isSharedByMeFilterAvailable: Boolean = summary.hasSharedByMeItems
+            .and(isShareByOrWithMeFilterAvailable)
+
+        internal val isSharedWithMeFilterAvailable: Boolean = summary.hasSharedWithMeItems
+            .and(isShareByOrWithMeFilterAvailable)
+
+    }
 
 }

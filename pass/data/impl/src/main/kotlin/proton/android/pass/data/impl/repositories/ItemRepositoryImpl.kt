@@ -101,7 +101,6 @@ import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.domain.entity.PackageInfo
-import proton.android.pass.domain.items.ItemSharedType
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.log.api.PassLogger
 import proton_pass_item_v1.ItemV1
@@ -898,12 +897,6 @@ class ItemRepositoryImpl @Inject constructor(
         itemState: ItemState?
     ): Flow<ItemCountSummary> = localItemDataSource.observeItemCountSummary(userId, shareIds, itemState)
 
-    override fun observeSharedItemsCountSummary(
-        userId: UserId,
-        itemSharedType: ItemSharedType,
-        itemState: ItemState?
-    ): Flow<ItemCountSummary> = localItemDataSource.observeSharedItemsCountSummary(userId, itemSharedType, itemState)
-
     override suspend fun updateItemLastUsed(vaultId: VaultId, itemId: ItemId) {
         val readyUsers = accountManager.getAccounts(AccountState.Ready).firstOrNull() ?: emptyList()
         PassLogger.i(TAG, "Updating last used time [vaultId=$vaultId][itemId=$itemId]")
@@ -1551,9 +1544,6 @@ class ItemRepositoryImpl @Inject constructor(
     companion object {
         const val MAX_BATCH_ITEMS_PER_REQUEST = 50
         const val TAG = "ItemRepositoryImpl"
-
-        // Max history item revisions supported in BE is 50, so, 49 previous revisions + current revision = 50
-        const val ITEM_HISTORY_MAX_PREVIOUS_REVISIONS = 49
 
         // Max items to insert per transaction
         const val MAX_ITEMS_PER_TRANSACTION = 100

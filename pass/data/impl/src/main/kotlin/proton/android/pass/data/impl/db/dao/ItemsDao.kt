@@ -37,11 +37,6 @@ data class ShareItemCountRow(
     val trashedItemCount: Long
 )
 
-data class SharedItemsCountRow(
-    val sharedWithMe: Long,
-    val sharedByMe: Long
-)
-
 private const val ITEM_SHARED_TYPE_ALL = 0
 private const val ITEM_SHARED_TYPE_SHARED_BY_ME = 1
 private const val ITEM_SHARED_TYPE_SHARED_WITH_ME = 2
@@ -292,8 +287,8 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
             COUNT(${ItemEntity.Columns.ITEM_TYPE}) as itemCount
         FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND (:shareIds IS NULL OR ${ItemEntity.Columns.SHARE_ID} IN (:shareIds))
-          AND (${ItemEntity.Columns.STATE} = :itemState OR :itemState IS NULL)
+          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
+          AND ${ItemEntity.Columns.STATE} = :itemState
         GROUP BY ${ItemEntity.Columns.ITEM_TYPE}
         """
     )
@@ -302,45 +297,6 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         shareIds: List<String>?,
         itemState: Int?
     ): Flow<List<SummaryRow>>
-
-    @Query(
-        """
-        SELECT
-          ${ItemEntity.Columns.ITEM_TYPE} as itemKind,
-          COUNT(${ItemEntity.Columns.ITEM_TYPE}) as itemCount
-        FROM ${ItemEntity.TABLE}
-        WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND ${ItemEntity.Columns.SHARE_COUNT} > 0
-          AND ${ItemEntity.Columns.STATE} = :itemState OR :itemState IS NULL
-          AND CASE
-            WHEN :itemSharedType = $ITEM_SHARED_TYPE_ALL THEN 1
-            WHEN :itemSharedType = $ITEM_SHARED_TYPE_SHARED_BY_ME THEN ${ItemEntity.Columns.KEY} IS NOT NULL
-            WHEN :itemSharedType = $ITEM_SHARED_TYPE_SHARED_WITH_ME THEN ${ItemEntity.Columns.KEY} IS NULL
-            ELSE 0
-          END
-        GROUP BY ${ItemEntity.Columns.ITEM_TYPE}
-    """
-    )
-    abstract fun observeSharedItemsSummary(
-        userId: String,
-        itemSharedType: Int,
-        itemState: Int?
-    ): Flow<List<SummaryRow>>
-
-    @Query(
-        """
-        SELECT COUNT(*) FROM ${ItemEntity.TABLE}
-        WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND ${ItemEntity.Columns.STATE} = ${ItemStateValues.TRASHED}
-          AND CASE 
-            WHEN :itemSharedType = $ITEM_SHARED_TYPE_ALL THEN 1 
-            WHEN :itemSharedType = $ITEM_SHARED_TYPE_SHARED_BY_ME THEN ${ItemEntity.Columns.KEY} IS NOT NULL
-            WHEN :itemSharedType = $ITEM_SHARED_TYPE_SHARED_WITH_ME THEN ${ItemEntity.Columns.KEY} IS NULL
-            ELSE 0 
-          END
-        """
-    )
-    abstract fun observeSharedTrashedItemsCount(userId: String, itemSharedType: Int): Flow<Int>
 
     @Query(
         """

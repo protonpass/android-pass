@@ -377,20 +377,13 @@ class ShareRepositoryImpl @Inject constructor(
         return address
     }
 
-    override fun observeSharedWithMeIds(
-        userId: UserId,
-        itemState: ItemState?,
-        shareIds: List<ShareId>?
-    ): Flow<List<ShareId>> = localShareDataSource
-        .observeSharedWithMeIds(userId, itemState, shareIds)
-        .map { shares -> shares.map(::ShareId) }
+    override fun observeSharedWithMeIds(userId: UserId, itemState: ItemState?): Flow<List<ShareId>> =
+        localShareDataSource
+            .observeSharedWithMeIds(userId, itemState)
+            .map { shares -> shares.map(::ShareId) }
 
-    override fun observeSharedByMeIds(
-        userId: UserId,
-        itemState: ItemState?,
-        shareIds: List<ShareId>?
-    ): Flow<List<ShareId>> = localShareDataSource
-        .observeSharedByMeIds(userId, itemState, shareIds)
+    override fun observeSharedByMeIds(userId: UserId, itemState: ItemState?): Flow<List<ShareId>> = localShareDataSource
+        .observeSharedByMeIds(userId, itemState)
         .map { shares -> shares.map(::ShareId) }
 
     private suspend fun onShareResponseEntity(

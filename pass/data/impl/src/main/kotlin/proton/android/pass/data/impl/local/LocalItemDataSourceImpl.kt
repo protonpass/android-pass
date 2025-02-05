@@ -39,7 +39,6 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.items.ItemCategory
-import proton.android.pass.domain.items.ItemSharedType
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
@@ -98,17 +97,6 @@ class LocalItemDataSourceImpl @Inject constructor(
             clearFlags = clearFlags
         )
     }
-
-    override fun observeSharedItems(
-        userId: UserId,
-        itemSharedType: ItemSharedType,
-        itemState: ItemState?
-    ): Flow<List<ItemEntity>> = database.itemsDao()
-        .observeSharedItems(
-            userId = userId.id,
-            itemSharedType = itemSharedType.value,
-            itemState = itemState?.value
-        )
 
     override fun observePinnedItems(userId: UserId, filter: ItemTypeFilter): Flow<List<ItemEntity>> =
         if (filter == ItemTypeFilter.All) {

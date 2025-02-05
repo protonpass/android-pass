@@ -54,6 +54,8 @@ import proton.android.pass.data.impl.db.AppDatabase
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.local.LocalItemDataSourceImpl
+import proton.android.pass.data.impl.local.LocalShareDataSource
+import proton.android.pass.data.impl.local.LocalShareDataSourceImpl
 import proton.android.pass.data.impl.repositories.fakes.TestRemoteItemDataSource
 import proton.android.pass.data.impl.repositories.fakes.TestShareKeyRepository
 import proton.android.pass.data.impl.repositories.fakes.TestShareRepository
@@ -78,6 +80,7 @@ class ItemRepositoryImplTest {
     )
 
     private lateinit var database: PassDatabase
+    private lateinit var localShareDataSource: LocalShareDataSource
     private lateinit var shareRepository: TestShareRepository
     private lateinit var instance: ItemRepositoryImpl
 
@@ -95,6 +98,8 @@ class ItemRepositoryImplTest {
         }
 
         database = runBlocking { setupDatabase() }
+        localShareDataSource = LocalShareDataSourceImpl(database)
+
         instance = ItemRepositoryImpl(
             database = database,
             accountManager = TestAccountManager(),
@@ -104,7 +109,7 @@ class ItemRepositoryImplTest {
             shareRepository = shareRepository,
             createItem = TestCreateItem(),
             updateItem = TestUpdateItem(),
-            localItemDataSource = LocalItemDataSourceImpl(database),
+            localItemDataSource = LocalItemDataSourceImpl(database, localShareDataSource),
             remoteItemDataSource = TestRemoteItemDataSource(),
             shareKeyRepository = TestShareKeyRepository().apply {
                 emitGetShareKeys(listOf(TestShareKey.createPrivate()))

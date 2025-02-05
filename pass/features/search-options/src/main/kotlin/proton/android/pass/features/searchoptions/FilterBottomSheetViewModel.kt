@@ -82,7 +82,7 @@ class FilterBottomSheetViewModel @Inject constructor(
         featureFlagsRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1)
     ) { (summary, options), isItemSharingAvailable ->
         FilterOptionsState.Success(
-            filterType = options.filterOption.searchFilterType,
+            searchOptions = options,
             summary = summary,
             isItemSharingAvailable = isItemSharingAvailable
         )

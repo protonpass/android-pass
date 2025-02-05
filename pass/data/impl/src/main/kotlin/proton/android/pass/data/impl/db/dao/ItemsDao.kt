@@ -38,6 +38,11 @@ data class ShareItemCountRow(
     val trashedItemCount: Long
 )
 
+data class ShareIdCountRow(
+    val itemCount: Int,
+    val shareId: String
+)
+
 @Dao
 @Suppress("TooManyFunctions")
 abstract class ItemsDao : BaseDao<ItemEntity>() {
@@ -338,13 +343,17 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
 
     @Query(
         """
-        SELECT COUNT(*) FROM ${ItemEntity.TABLE}
+        SELECT 
+          ${ItemEntity.Columns.SHARE_ID} as shareId,
+          COUNT(${ItemEntity.Columns.ITEM_TYPE}) as itemCount
+        FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND ${ItemEntity.Columns.HAS_TOTP} = 1
-          AND (:shareIds IS NULL OR ${ItemEntity.Columns.SHARE_ID} IN (:shareIds))
+          AND (:itemState IS NULL OR ${ItemEntity.Columns.STATE} = :itemState)
+        GROUP BY ${ItemEntity.Columns.SHARE_ID}
         """
     )
-    abstract fun countItemsWithTotp(userId: String, shareIds: List<String>? = null): Flow<Int>
+    abstract fun countItemsWithTotp(userId: String, itemState: Int?): Flow<List<ShareIdCountRow>>
 
     @Query(
         """

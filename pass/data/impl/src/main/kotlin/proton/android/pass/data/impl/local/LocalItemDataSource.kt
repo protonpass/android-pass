@@ -30,7 +30,6 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultId
-import proton.android.pass.domain.items.ItemSharedType
 
 data class ItemWithTotp(
     val shareId: ShareId,
@@ -58,12 +57,6 @@ interface LocalItemDataSource {
         filter: ItemTypeFilter,
         setFlags: Int? = null,
         clearFlags: Int? = null
-    ): Flow<List<ItemEntity>>
-
-    fun observeSharedItems(
-        userId: UserId,
-        itemSharedType: ItemSharedType,
-        itemState: ItemState?
     ): Flow<List<ItemEntity>>
 
     fun observePinnedItems(userId: UserId, filter: ItemTypeFilter): Flow<List<ItemEntity>>

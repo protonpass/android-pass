@@ -48,7 +48,6 @@ import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.domain.entity.PackageInfo
-import proton.android.pass.domain.items.ItemSharedType
 import javax.inject.Inject
 
 @Suppress("NotImplementedDeclaration", "TooManyFunctions")
@@ -249,15 +248,8 @@ class TestItemRepository @Inject constructor() : ItemRepository {
     override fun observeItemCountSummary(
         userId: UserId,
         shareIds: List<ShareId>,
-        itemState: ItemState?
-    ): Flow<ItemCountSummary> {
-        TODO("Not yet implemented")
-    }
-
-    override fun observeSharedItemsCountSummary(
-        userId: UserId,
-        itemSharedType: ItemSharedType,
-        itemState: ItemState?
+        itemState: ItemState?,
+        onlyShared: Boolean
     ): Flow<ItemCountSummary> = testFlow()
 
     override fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>> {

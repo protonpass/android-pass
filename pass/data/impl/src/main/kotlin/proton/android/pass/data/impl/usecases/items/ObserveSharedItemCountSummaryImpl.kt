@@ -56,7 +56,8 @@ class ObserveSharedItemCountSummaryImpl @Inject constructor(
                     itemRepository.observeItemCountSummary(
                         userId = user.userId,
                         shareIds = sharedShareIds,
-                        itemState = itemState
+                        itemState = itemState,
+                        onlyShared = true
                     )
                 }
             }

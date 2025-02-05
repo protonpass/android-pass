@@ -100,12 +100,6 @@ interface LocalItemDataSource {
         itemState: ItemState?
     ): Flow<ItemCountSummary>
 
-    fun observeSharedItemsCountSummary(
-        userId: UserId,
-        itemSharedType: ItemSharedType,
-        itemState: ItemState?
-    ): Flow<ItemCountSummary>
-
     suspend fun updateLastUsedTime(
         shareId: ShareId,
         itemId: ItemId,

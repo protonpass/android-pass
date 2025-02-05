@@ -181,12 +181,13 @@ class LocalItemDataSourceImpl @Inject constructor(
     override fun observeItemCountSummary(
         userId: UserId,
         shareIds: List<ShareId>,
-        itemState: ItemState?
+        itemState: ItemState?,
+        onlyShared: Boolean
     ): Flow<ItemCountSummary> = shareIds.map { shareId -> shareId.id }
         .takeIfNotEmpty()
         .let { shareIdValues ->
             combine(
-                database.itemsDao().itemSummary(userId.id, shareIdValues, itemState?.value),
+                observeItemSummary(userId, itemState, shareIdValues, onlyShared),
                 database.itemsDao().countItemsWithTotp(userId.id, shareIdValues),
                 observeSharedWithMeItemCount(userId, shareIdValues, itemState),
                 observeSharedByMeItemCount(userId, shareIdValues, itemState),
@@ -196,6 +197,7 @@ class LocalItemDataSourceImpl @Inject constructor(
                 sharedWithMeItemCount,
                 sharedByMeItemCount,
                 trashedItemsCount ->
+
                 ItemCountSummary(
                     login = values.getCount(ItemCategory.Login),
                     loginWithMFA = totpCount.toLong(),
@@ -208,6 +210,18 @@ class LocalItemDataSourceImpl @Inject constructor(
                     trashed = trashedItemsCount.toLong()
                 )
             }
+        }
+
+    private fun observeItemSummary(
+        userId: UserId,
+        itemState: ItemState?,
+        shareIds: List<String>?,
+        onlyShared: Boolean
+    ): Flow<List<SummaryRow>> = database.itemsDao()
+        .itemSummary(userId.id, itemState?.value, onlyShared)
+        .map { summaryRows ->
+            if (shareIds == null) summaryRows
+            else summaryRows.filter { it.shareId in shareIds }
         }
 
     private fun observeSharedWithMeItemCount(
@@ -230,9 +244,9 @@ class LocalItemDataSourceImpl @Inject constructor(
             )
         }
 
-    private fun List<SummaryRow>.getCount(itemCategory: ItemCategory): Long = firstOrNull {
+    private fun List<SummaryRow>.getCount(itemCategory: ItemCategory): Long = filter {
         it.itemKind == itemCategory.value
-    }?.itemCount ?: 0
+    }.sumOf { it.itemCount }
 
     override suspend fun updateLastUsedTime(
         shareId: ShareId,

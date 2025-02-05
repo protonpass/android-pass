@@ -177,7 +177,7 @@ class LocalItemDataSourceImpl @Inject constructor(
         .let { shareIdValues ->
             combine(
                 observeItemSummary(userId, itemState, shareIdValues, onlyShared),
-                database.itemsDao().countItemsWithTotp(userId.id, shareIdValues),
+                observeItemsWithTotpCount(userId, itemState, shareIdValues),
                 observeSharedWithMeItemCount(userId, shareIdValues, itemState),
                 observeSharedByMeItemCount(userId, shareIdValues, itemState),
                 database.itemsDao().countTrashedItems(userId.id, shareIdValues)
@@ -211,6 +211,20 @@ class LocalItemDataSourceImpl @Inject constructor(
         .map { summaryRows ->
             if (shareIds == null) summaryRows
             else summaryRows.filter { it.shareId in shareIds }
+        }
+
+    private fun observeItemsWithTotpCount(
+        userId: UserId,
+        itemState: ItemState?,
+        shareIds: List<String>?
+    ) = database.itemsDao().countItemsWithTotp(userId.id, itemState?.value)
+        .map { rows ->
+            rows.filter {
+                if (shareIds == null) true
+                else it.shareId in shareIds
+            }.sumOf {
+                it.itemCount
+            }
         }
 
     private fun observeSharedWithMeItemCount(
@@ -285,8 +299,11 @@ class LocalItemDataSourceImpl @Inject constructor(
         .observeAllItemsWithTotp(userId.id)
         .map { items -> items.map { it.toItemWithTotp() } }
 
-    override fun countAllItemsWithTotp(userId: UserId): Flow<Int> = database.itemsDao()
-        .countItemsWithTotp(userId.id)
+    override fun countAllItemsWithTotp(userId: UserId): Flow<Int> = observeItemsWithTotpCount(
+        userId = userId,
+        itemState = null,
+        shareIds = null
+    )
 
     override fun observeItemsWithTotpForShare(userId: UserId, shareId: ShareId): Flow<List<ItemWithTotp>> =
         database.itemsDao()

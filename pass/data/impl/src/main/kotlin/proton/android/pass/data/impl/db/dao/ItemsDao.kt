@@ -38,10 +38,6 @@ data class ShareItemCountRow(
     val trashedItemCount: Long
 )
 
-private const val ITEM_SHARED_TYPE_ALL = 0
-private const val ITEM_SHARED_TYPE_SHARED_BY_ME = 1
-private const val ITEM_SHARED_TYPE_SHARED_WITH_ME = 2
-
 @Dao
 @Suppress("TooManyFunctions")
 abstract class ItemsDao : BaseDao<ItemEntity>() {
@@ -79,27 +75,6 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         itemType: Int,
         setFlags: Int?,
         clearFlags: Int?
-    ): Flow<List<ItemEntity>>
-
-    @Query(
-        """
-        SELECT * FROM ${ItemEntity.TABLE} 
-        WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND ${ItemEntity.Columns.SHARE_COUNT} > 0
-          AND (${ItemEntity.Columns.STATE} = :itemState OR :itemState IS NULL)
-          AND CASE 
-            WHEN :itemSharedType = $ITEM_SHARED_TYPE_ALL THEN 1 
-            WHEN :itemSharedType = $ITEM_SHARED_TYPE_SHARED_BY_ME THEN ${ItemEntity.Columns.KEY} IS NOT NULL
-            WHEN :itemSharedType = $ITEM_SHARED_TYPE_SHARED_WITH_ME THEN ${ItemEntity.Columns.KEY} IS NULL
-            ELSE 0 
-          END
-        ORDER BY ${ItemEntity.Columns.CREATE_TIME} DESC
-    """
-    )
-    abstract fun observeSharedItems(
-        userId: String,
-        itemSharedType: Int,
-        itemState: Int?
     ): Flow<List<ItemEntity>>
 
     @Query(
@@ -370,22 +345,6 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         """
     )
     abstract fun countItemsWithTotp(userId: String, shareIds: List<String>? = null): Flow<Int>
-
-    @Query(
-        """
-        SELECT COUNT(*) FROM ${ItemEntity.TABLE}
-        WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND ${ItemEntity.Columns.HAS_TOTP} = 1
-          AND ${ItemEntity.Columns.SHARE_COUNT} > 0
-          AND CASE 
-            WHEN :itemSharedType = $ITEM_SHARED_TYPE_ALL THEN 1 
-            WHEN :itemSharedType = $ITEM_SHARED_TYPE_SHARED_BY_ME THEN ${ItemEntity.Columns.KEY} IS NOT NULL
-            WHEN :itemSharedType = $ITEM_SHARED_TYPE_SHARED_WITH_ME THEN ${ItemEntity.Columns.KEY} IS NULL
-            ELSE 0 
-          END
-        """
-    )
-    abstract fun observeSharedItemsWithTotpCount(userId: String, itemSharedType: Int): Flow<Int>
 
     @Query(
         """

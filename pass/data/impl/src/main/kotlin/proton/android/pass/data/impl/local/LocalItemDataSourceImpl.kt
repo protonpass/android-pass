@@ -192,9 +192,9 @@ class LocalItemDataSourceImpl @Inject constructor(
                 observeSharedByMeItemCount(userId, shareIdValues, itemState),
                 database.itemsDao().countTrashedItems(userId.id, shareIdValues)
             ) { values: List<SummaryRow>,
-                totpCount: Int,
-                sharedWithMeItemCount: Int,
-                sharedByMeItemCount: Int,
+                totpCount,
+                sharedWithMeItemCount,
+                sharedByMeItemCount,
                 trashedItemsCount ->
                 ItemCountSummary(
                     login = values.getCount(ItemCategory.Login),
@@ -229,30 +229,6 @@ class LocalItemDataSourceImpl @Inject constructor(
                 itemState = itemState?.value
             )
         }
-
-    override fun observeSharedItemsCountSummary(
-        userId: UserId,
-        itemSharedType: ItemSharedType,
-        itemState: ItemState?
-    ): Flow<ItemCountSummary> = combine(
-        database.itemsDao()
-            .observeSharedItemsSummary(userId.id, itemSharedType.value, itemState?.value),
-        database.itemsDao().observeSharedItemsWithTotpCount(userId.id, itemSharedType.value),
-        database.itemsDao().countSharedItems(userId.id, emptyList(), itemState?.value),
-        database.itemsDao().observeSharedTrashedItemsCount(userId.id, itemSharedType.value)
-    ) { sharedSummary, mfaItemsCount, sharedItemsCount, trashedItemsCount ->
-        ItemCountSummary(
-            login = sharedSummary.getCount(ItemCategory.Login),
-            loginWithMFA = mfaItemsCount.toLong(),
-            note = sharedSummary.getCount(ItemCategory.Note),
-            alias = sharedSummary.getCount(ItemCategory.Alias),
-            creditCard = sharedSummary.getCount(ItemCategory.CreditCard),
-            identities = sharedSummary.getCount(ItemCategory.Identity),
-            sharedWithMe = sharedItemsCount.toLong(),
-            sharedByMe = sharedItemsCount.toLong(),
-            trashed = trashedItemsCount.toLong()
-        )
-    }
 
     private fun List<SummaryRow>.getCount(itemCategory: ItemCategory): Long = firstOrNull {
         it.itemKind == itemCategory.value

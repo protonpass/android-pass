@@ -460,12 +460,15 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
 
     @Query(
         """
-        SELECT COUNT(*) FROM ${ItemEntity.TABLE}
+        SELECT 
+          ${ItemEntity.Columns.SHARE_ID} as shareId,
+          COUNT(${ItemEntity.Columns.ITEM_TYPE}) as itemCount
+        FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND ${ItemEntity.Columns.STATE} = ${ItemStateValues.TRASHED}
-          AND (:shareIds IS NULL OR ${ItemEntity.Columns.SHARE_ID} IN (:shareIds))
+        GROUP BY ${ItemEntity.Columns.SHARE_ID}
         """
     )
-    abstract fun countTrashedItems(userId: String, shareIds: List<String>?): Flow<Int>
+    abstract fun countTrashedItems(userId: String): Flow<List<ShareIdCountRow>>
 
 }

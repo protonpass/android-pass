@@ -35,7 +35,6 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultId
-import proton.android.pass.domain.items.ItemSharedType
 
 class TestLocalItemDataSource : LocalItemDataSource {
 
@@ -98,12 +97,6 @@ class TestLocalItemDataSource : LocalItemDataSource {
         throw IllegalStateException("Not yet implemented")
     }
 
-    override fun observeSharedItems(
-        userId: UserId,
-        itemSharedType: ItemSharedType,
-        itemState: ItemState?
-    ): Flow<List<ItemEntity>> = sharedItemsFlow
-
     override fun observePinnedItems(userId: UserId, filter: ItemTypeFilter): Flow<List<ItemEntity>> {
         throw IllegalStateException("Not yet implemented")
     }
@@ -157,18 +150,6 @@ class TestLocalItemDataSource : LocalItemDataSource {
     override suspend fun hasItemsForShare(userId: UserId, shareId: ShareId): Boolean {
         throw IllegalStateException("Not yet implemented")
     }
-
-    override fun observeItemCountSummary(
-        userId: UserId,
-        shareIds: List<ShareId>,
-        itemState: ItemState?
-    ): Flow<ItemCountSummary> = summary
-
-    override fun observeSharedItemsCountSummary(
-        userId: UserId,
-        itemSharedType: ItemSharedType,
-        itemState: ItemState?
-    ): Flow<ItemCountSummary> = summary
 
     override suspend fun updateLastUsedTime(
         shareId: ShareId,
@@ -227,4 +208,12 @@ class TestLocalItemDataSource : LocalItemDataSource {
     override fun observeAllItemsWithPasskeys(userId: UserId): Flow<List<ItemEntity>> {
         throw IllegalStateException("Not yet implemented")
     }
+
+    override fun observeItemCountSummary(
+        userId: UserId,
+        shareIds: List<ShareId>,
+        itemState: ItemState?,
+        onlyShared: Boolean
+    ): Flow<ItemCountSummary> = summary
+
 }

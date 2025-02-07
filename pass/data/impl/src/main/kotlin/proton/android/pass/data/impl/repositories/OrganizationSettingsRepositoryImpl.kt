@@ -30,6 +30,8 @@ import proton.android.pass.domain.ForceLockSeconds
 import proton.android.pass.domain.OrganizationSettings
 import proton.android.pass.domain.OrganizationShareMode
 import proton.android.pass.domain.organizations.OrganizationPasswordPolicy
+import proton.android.pass.domain.organizations.OrganizationVaultCreateMode
+import proton.android.pass.domain.organizations.OrganizationVaultsPolicy
 import javax.inject.Inject
 
 class OrganizationSettingsRepositoryImpl @Inject constructor(
@@ -63,7 +65,8 @@ class OrganizationSettingsRepositoryImpl @Inject constructor(
             memorablePasswordMinWords = settings?.passwordPolicy?.memorablePasswordMinWords,
             memorablePasswordMaxWords = settings?.passwordPolicy?.memorablePasswordMaxWords,
             memorablePasswordCapitalize = settings?.passwordPolicy?.memorablePasswordMustCapitalize,
-            memorablePasswordIncludeNumbers = settings?.passwordPolicy?.memorablePasswordMustIncludeNumbers
+            memorablePasswordIncludeNumbers = settings?.passwordPolicy?.memorablePasswordMustIncludeNumbers,
+            vaultCreateMode = settings?.vaultCreateMode
         )
     }
 
@@ -84,6 +87,9 @@ class OrganizationSettingsRepositoryImpl @Inject constructor(
                 memorablePasswordMaxWords = memorablePasswordMaxWords,
                 memorablePasswordCapitalize = memorablePasswordCapitalize,
                 memorablePasswordIncludeNumbers = memorablePasswordIncludeNumbers
+            ),
+            vaultsPolicy = OrganizationVaultsPolicy(
+                vaultCreateMode = OrganizationVaultCreateMode.fromValue(vaultCreateMode)
             )
         )
     } else {

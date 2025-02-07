@@ -28,6 +28,8 @@ import proton.android.pass.domain.ForceLockSeconds
 import proton.android.pass.domain.OrganizationSettings
 import proton.android.pass.domain.OrganizationShareMode
 import proton.android.pass.domain.organizations.OrganizationPasswordPolicy
+import proton.android.pass.domain.organizations.OrganizationVaultCreateMode
+import proton.android.pass.domain.organizations.OrganizationVaultsPolicy
 import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTimePreference
 import proton.android.pass.preferences.HasAuthenticated
@@ -167,7 +169,10 @@ class NeedsAuthCheckerTest {
             canUpdate = true,
             shareMode = OrganizationShareMode.Unrestricted,
             forceLockSeconds = ForceLockSeconds.Enforced(600), // 10 minutes,
-            passwordPolicy = OrganizationPasswordPolicy()
+            passwordPolicy = OrganizationPasswordPolicy(),
+            vaultsPolicy = OrganizationVaultsPolicy(
+                vaultCreateMode = OrganizationVaultCreateMode.AllUsers
+            )
         )
         val now = Clock.System.now()
         val elevenMinutesAgo = now.minus(11.minutes)
@@ -192,7 +197,10 @@ class NeedsAuthCheckerTest {
             canUpdate = true,
             shareMode = OrganizationShareMode.Unrestricted,
             forceLockSeconds = ForceLockSeconds.NotEnforced,
-            passwordPolicy = OrganizationPasswordPolicy()
+            passwordPolicy = OrganizationPasswordPolicy(),
+            vaultsPolicy = OrganizationVaultsPolicy(
+                vaultCreateMode = OrganizationVaultCreateMode.AllUsers
+            )
         )
 
         val result = NeedsAuthChecker.needsAuth(

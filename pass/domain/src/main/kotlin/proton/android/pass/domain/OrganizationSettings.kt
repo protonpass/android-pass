@@ -19,6 +19,7 @@
 package proton.android.pass.domain
 
 import proton.android.pass.domain.organizations.OrganizationPasswordPolicy
+import proton.android.pass.domain.organizations.OrganizationVaultsPolicy
 
 enum class OrganizationShareMode(val value: Int) {
     Unrestricted(0),
@@ -48,7 +49,8 @@ sealed interface OrganizationSettings {
         val canUpdate: Boolean,
         val shareMode: OrganizationShareMode,
         val forceLockSeconds: ForceLockSeconds,
-        val passwordPolicy: OrganizationPasswordPolicy
+        val passwordPolicy: OrganizationPasswordPolicy,
+        val vaultsPolicy: OrganizationVaultsPolicy
     ) : OrganizationSettings
 
     fun isEnforced(): Boolean = when (this) {

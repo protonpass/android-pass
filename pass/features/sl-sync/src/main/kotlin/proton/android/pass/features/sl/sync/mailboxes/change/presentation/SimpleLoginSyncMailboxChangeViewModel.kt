@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -101,11 +102,11 @@ class SimpleLoginSyncMailboxChangeViewModel @Inject constructor(
                     snackbarDispatcher(ChangeMailboxError)
                 }
                 .onSuccess { changedAliasMailbox ->
-                    PassLogger.i(TAG, "Mailbox changed successfully")
+                    PassLogger.i(TAG, "Request to change mailbox success")
                     eventFlow.update {
                         SimpleLoginSyncMailboxChangeEvent.OnMailboxChanged(
                             mailboxId = changedAliasMailbox.id,
-                            hasPendingEmail = !changedAliasMailbox.pendingEmail.isNullOrBlank()
+                            pendingEmail = changedAliasMailbox.pendingEmail.toOption()
                         )
                     }
                 }

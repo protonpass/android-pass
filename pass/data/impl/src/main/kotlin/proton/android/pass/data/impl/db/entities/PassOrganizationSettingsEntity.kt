@@ -84,7 +84,10 @@ data class PassOrganizationSettingsEntity(
     val memorablePasswordCapitalize: Boolean?,
 
     @ColumnInfo(name = Columns.MEMORABLE_PASSWORD_INCLUDE_NUMBERS)
-    val memorablePasswordIncludeNumbers: Boolean?
+    val memorablePasswordIncludeNumbers: Boolean?,
+
+    @ColumnInfo(name = Columns.VAULT_CREATE_MODE)
+    val vaultCreateMode: Int?
 ) {
     object Columns {
         const val USER_ID = "user_id"
@@ -103,6 +106,7 @@ data class PassOrganizationSettingsEntity(
         const val MEMORABLE_PASSWORD_MAX_WORDS = "memorable_password_max_words"
         const val MEMORABLE_PASSWORD_INCLUDE_NUMBERS = "memorable_password_include_numbers"
         const val MEMORABLE_PASSWORD_CAPITALIZED = "memorable_password_capitalized"
+        const val VAULT_CREATE_MODE = "vault_create_mode"
     }
 
     companion object {
@@ -124,7 +128,8 @@ data class PassOrganizationSettingsEntity(
             memorablePasswordMinWords = null,
             memorablePasswordMaxWords = null,
             memorablePasswordCapitalize = null,
-            memorablePasswordIncludeNumbers = null
+            memorablePasswordIncludeNumbers = null,
+            vaultCreateMode = null
         )
     }
 }

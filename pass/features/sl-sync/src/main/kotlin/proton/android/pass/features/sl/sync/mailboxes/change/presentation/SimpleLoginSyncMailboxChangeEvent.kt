@@ -18,13 +18,15 @@
 
 package proton.android.pass.features.sl.sync.mailboxes.change.presentation
 
+import proton.android.pass.common.api.Option
+
 internal sealed interface SimpleLoginSyncMailboxChangeEvent {
 
     data object Idle : SimpleLoginSyncMailboxChangeEvent
 
     data class OnMailboxChanged(
         internal val mailboxId: Long,
-        internal val hasPendingEmail: Boolean
+        internal val pendingEmail: Option<String>
     ) : SimpleLoginSyncMailboxChangeEvent
 
 }

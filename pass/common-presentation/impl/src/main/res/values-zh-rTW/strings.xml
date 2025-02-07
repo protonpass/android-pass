@@ -41,7 +41,7 @@
   <string name="item_details_snackbar_message_organization_copied">已複製組織機構</string>
   <string name="item_details_snackbar_message_passport_number_copied">已複製護照號碼</string>
   <string name="item_details_snackbar_message_password_copied">已複製密碼</string>
-  <string name="item_details_snackbar_message_phone_number_copied"> 已複製 Reddit</string>
+  <string name="item_details_snackbar_message_phone_number_copied"> 已複製電話號碼</string>
   <string name="item_details_snackbar_message_pin_copied">已複製 PIN 碼</string>
   <string name="item_details_snackbar_message_reddit_copied">已複製 Reddit</string>
   <string name="item_details_snackbar_message_social_security_number_copied">已複製社會安全號碼</string>

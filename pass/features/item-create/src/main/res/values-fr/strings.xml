@@ -196,7 +196,6 @@
   <string name="mfa_limit_reached">La limite de l\'A2F est atteinte.</string>
   <string name="upgrade">Changer d\'abonnement</string>
   <string name="mfa_icon_content_description">Icône A2F</string>
-  <string name="select_suffix_upgrade_for_custom_domains">Changez d\'abonnement pour les domaines personnalisés</string>
   <string name="create_alias_content_limit_banner">Vous avez atteint le nombre maximum d\'alias que vous pouvez créer. Changez d\'abonnement pour créer un nombre illimité d\'alias.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">L\'application doit être mise à jour pour modifier cet élément.</string>
   <string name="remove_passkey_dialog_title">Supprimer cette clé d\'accès ?</string>
@@ -208,4 +207,16 @@
   <string name="open_with">Ouvrir avec :</string>
   <string name="open_attachments_error">La pièce jointe n\'a pu être ouverte.</string>
   <string name="upload_attachments_error">La pièce jointe n\'a pas pu être importée dans le message.</string>
+  <string name="banner_advanced_options_title">Le saviez-vous ?</string>
+  <string name="banner_advanced_options_subtitle">Appuyez sur l’icône en forme d\'engrenage pour personnaliser l’alias comme vous le souhaitez.</string>
+  <string name="banner_custom_domain_title">Le saviez-vous ?</string>
+  <string name="banner_custom_domain_subtitle">En ajoutant votre domaine, vous pouvez créer des alias comme bonjour@mon-domaine.fr.</string>
+  <string name="banner_custom_domain_button">Ajouter un domaine</string>
+  <string name="banner_mailbox_title">Le saviez-vous ?</string>
+  <string name="banner_mailbox_subtitle">Partagez des alias avec d\'autres personnes en ajoutant leur boîte de réception comme messagerie supplémentaire.</string>
+  <string name="banner_mailbox_button">Ajouter une messagerie</string>
+  <!-- Suffix -->
+  <string name="suffix_subtitle_premium_domain">Domaines premium</string>
+  <string name="suffix_subtitle_public_domain">Domaine public</string>
+  <string name="suffix_subtitle_private_domain">Votre domaine</string>
 </resources>

@@ -290,7 +290,7 @@
   </plurals>
   <string name="simple_login_widget_action">Synchronizuj aliasy</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Nie otrzymano kodu?</string>
+  <string name="verification_code_not_received">Haven\'t received the code?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Sprawdź folder Spam w poszukiwaniu wiadomości \"%s\"</string>
   <string name="verification_code_suggestion_subject_new_email_address">Potwierdź adres e-mail Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Potwierdź skrzynkę pocztową</string>

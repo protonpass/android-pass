@@ -24,7 +24,7 @@
   <string name="configure_extra_password_description">Se te pedirá esta contraseña durante el inicio de sesión y cuando cambies de una aplicación de Proton a Proton Pass en la web.</string>
   <string name="configure_extra_password_warning">Precaución: No podrás acceder a tu cuenta de Pass si pierdes esta contraseña.</string>
   <string name="configure_extra_password_mismatch">Las contraseñas no coinciden.</string>
-  <string name="extra_password_options_remove">Borrar</string>
+  <string name="extra_password_options_remove">Eliminar</string>
   <string name="info_extra_password_title">Contraseña adicional</string>
   <string name="info_extra_password_body">Protege Proton Pass con una contraseña adicional.</string>
   <string name="info_extra_password_button">Establece la contraseña adicional</string>

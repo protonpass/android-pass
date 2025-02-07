@@ -63,7 +63,7 @@
   <string name="simple_login_sync_domain_select_title">Oletusverkkotunnus</string>
   <string name="simple_login_sync_domain_select_title_none">ei mitään</string>
   <string name="simple_login_sync_domain_select_description_none">Verkkotunnusta ei ole</string>
-  <string name="simple_login_sync_domain_select_description_custom">Verkkotunnuksesi</string>
+  <string name="simple_login_sync_domain_select_description_custom">Sinun verkkotunnuksesi</string>
   <string name="simple_login_sync_domain_select_description_free">Julkinen verkkotunnus</string>
   <string name="simple_login_sync_domain_select_description_premium">Premium-verkkotunnus</string>
   <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">Virhe noutaessa SL-aliasverkkotunnuksia</string>

@@ -19,7 +19,7 @@
   <string name="email_copied_to_clipboard">E-postadresse kopiert</string>
   <string name="username_copied_to_clipboard">Brukernavn kopiert</string>
   <string name="password_copied_to_clipboard">Passord kopiert</string>
-  <string name="website_copied_to_clipboard">Nettsted kopiert</string>
+  <string name="website_copied_to_clipboard">Nettstedadresse kopiert</string>
   <string name="totp_copied_to_clipboard">TOTP-kopiert</string>
   <string name="field_copied_to_clipboard">Felt kopiert</string>
   <string name="move_item_to_trash_message">Element flyttet til papirkurven</string>
@@ -123,4 +123,6 @@
   </plurals>
   <string name="open_with">Åpne med:</string>
   <string name="open_attachments_error">Kunne ikke åpne vedlegg</string>
+  <string name="banner_contacts_title">Visste du at?</string>
+  <string name="banner_contacts_subtitle">Hver gang aliaset ditt mottar en e-post fra noen, opprettes det automatisk en ny kontakt.</string>
 </resources>

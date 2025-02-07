@@ -18,4 +18,14 @@
   <string name="error_biometry_failed_to_authenticate">Ověření selhalo</string>
   <string name="settings_fingerprint_lock_enabled">Zamykání otiskem prstu povoleno</string>
   <string name="error_performing_operation">Chyba při provádění operace</string>
+  <string name="onboarding_slide_1_title">Všechna vaše hesla.</string>
+  <string name="onboarding_slide_2_title">Chraňte svou doručenou poštu.</string>
+  <string name="onboarding_slide_3_title">Buďte v obraze.</string>
+  <string name="onboarding_slide_4_title">Bezpečné sdílení.</string>
+  <string name="onboarding_slide_1_subtitle">Bezpečně na jednom místě a pod ochranou nejdůvěryhodnější značky v oblasti soukromí.</string>
+  <string name="onboarding_slide_2_subtitle">Používejte aliasy Hide-My-Email proti phishingovým hrozbám.</string>
+  <string name="onboarding_slide_3_subtitle">Sdílejte hesla a citlivé informace bezpečně a bez námahy.</string>
+  <string name="onboarding_slide_4_subtitle">Dostávejte upozornění, když je váš e-mail nalezen na Dark webu.</string>
+  <string name="create_an_account_button">Vytvořit účet</string>
+  <string name="sign_in_button">Přihlásit se</string>
 </resources>

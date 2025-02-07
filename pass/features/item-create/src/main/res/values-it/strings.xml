@@ -196,7 +196,6 @@
   <string name="mfa_limit_reached">Limite 2FA raggiunto</string>
   <string name="upgrade">Effettua l\'upgrade</string>
   <string name="mfa_icon_content_description">Icona 2FA</string>
-  <string name="select_suffix_upgrade_for_custom_domains">Effettua l\'upgrade per usare i domini personalizzati</string>
   <string name="create_alias_content_limit_banner">Hai raggiunto il limite di alias che puoi creare. Effettua l\'upgrade per creare un numero illimitato di alias.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Aggiorna l\'app per modificare questo elemento</string>
   <string name="remove_passkey_dialog_title">Rimuovi la passkey</string>
@@ -208,4 +207,16 @@
   <string name="open_with">Apri con:</string>
   <string name="open_attachments_error">Impossibile aprire l\'allegato</string>
   <string name="upload_attachments_error">Impossibile caricare l\'allegato</string>
+  <string name="banner_advanced_options_title">Lo sapevi?</string>
+  <string name="banner_advanced_options_subtitle">Tocca l\'icona dell\'ingranaggio per personalizzare l\'alias come preferisci.</string>
+  <string name="banner_custom_domain_title">Lo sapevi?</string>
+  <string name="banner_custom_domain_subtitle">Aggiungendo il tuo dominio, puoi creare alias come ciao@mio-dominio.it.</string>
+  <string name="banner_custom_domain_button">Aggiungi un dominio</string>
+  <string name="banner_mailbox_title">Lo sapevi?</string>
+  <string name="banner_mailbox_subtitle">Condividi gli alias con altri aggiungendo la loro posta in arrivo come casella aggiuntiva.</string>
+  <string name="banner_mailbox_button">Aggiungi una casella email</string>
+  <!-- Suffix -->
+  <string name="suffix_subtitle_premium_domain">Dominio Premium</string>
+  <string name="suffix_subtitle_public_domain">Dominio pubblico</string>
+  <string name="suffix_subtitle_private_domain">Il tuo dominio</string>
 </resources>

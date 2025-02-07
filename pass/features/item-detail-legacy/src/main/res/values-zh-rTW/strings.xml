@@ -19,7 +19,7 @@
   <string name="email_copied_to_clipboard">電郵地址已複製</string>
   <string name="username_copied_to_clipboard">已複製使用者名稱</string>
   <string name="password_copied_to_clipboard">已複製密碼</string>
-  <string name="website_copied_to_clipboard">Website copied</string>
+  <string name="website_copied_to_clipboard">Web address copied</string>
   <string name="totp_copied_to_clipboard">一次性驗證碼已複製</string>
   <string name="field_copied_to_clipboard">以複製欄位</string>
   <string name="move_item_to_trash_message">項目已移至垃圾桶</string>
@@ -119,4 +119,6 @@
   </plurals>
   <string name="open_with">Open with:</string>
   <string name="open_attachments_error">Could not open attachment</string>
+  <string name="banner_contacts_title">Did you know?</string>
+  <string name="banner_contacts_subtitle">Every time your alias receives an email from someone, a new contact is automatically created.</string>
 </resources>

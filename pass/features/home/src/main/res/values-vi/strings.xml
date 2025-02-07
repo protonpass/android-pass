@@ -36,6 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">Đã chuyển nội dung vào thùng rác</string>
   <string name="home_snackbar_items_move_to_trash_error">Nội dung không thể chuyển được tới thùng rác</string>
   <string name="home_toast_items_selected_read_only">Không thể chọn nội dung chỉ-đọc</string>
+  <string name="home_toast_items_selected_shared_with_me">Items shared with you cannot be selected</string>
   <string name="home_autofill_banner_title">Tận hưởng ma thuật của Tự động Điền</string>
   <string name="home_autofill_banner_text">Chỉ một chạm và—pốc!—tên đăng nhập và mật khẩu của bạn được điền vào ngay lập tức.</string>
   <string name="home_autofill_banner_settings">Bật Tự đồng Điền</string>

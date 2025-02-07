@@ -19,7 +19,7 @@
   <string name="email_copied_to_clipboard">Sähköpostiosoite kopioitiin</string>
   <string name="username_copied_to_clipboard">Käyttäjätunnus kopioitiin</string>
   <string name="password_copied_to_clipboard">Salasana kopioitiin</string>
-  <string name="website_copied_to_clipboard">Verkkosivuston osoite kopioitiin</string>
+  <string name="website_copied_to_clipboard">Verkko-osoite kopioitiin</string>
   <string name="totp_copied_to_clipboard">TOTP-koodi kopioitiin</string>
   <string name="field_copied_to_clipboard">Kenttä kopioitiin</string>
   <string name="move_item_to_trash_message">Kohde siirrettiin roskakoriin</string>
@@ -123,4 +123,6 @@
   </plurals>
   <string name="open_with">Avaa käyttäen:</string>
   <string name="open_attachments_error">Liitettä ei voitu avata</string>
+  <string name="banner_contacts_title">Tiesitkö?</string>
+  <string name="banner_contacts_subtitle">Every time your alias receives an email from someone, a new contact is automatically created.</string>
 </resources>

@@ -108,7 +108,7 @@
   <string name="field_card_pin_title">PIN碼</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">到期日</string>
-  <string name="field_card_expiration_date_hint">月份/年分</string>
+  <string name="field_card_expiration_date_hint">MM/YY</string>
   <string name="field_card_expiration_date_error">輸入標準日期 月份/年份 格式</string>
   <string name="create_credit_card_item_creation_error">無法創建信用卡</string>
   <string name="create_credit_card_item_creation_success">信用卡已創建</string>
@@ -127,7 +127,7 @@
   <string name="identity_field_city_title">城市</string>
   <string name="identity_field_state_or_province_title">州或省</string>
   <string name="identity_field_country_or_region_title">國家或地區</string>
-  <string name="identity_field_social_security_number_title">社會安全碼（SSN）</string>
+  <string name="identity_field_social_security_number_title">社會安全碼(SSN)</string>
   <string name="identity_field_passport_number_title">護照號碼</string>
   <string name="identity_field_license_number_title">許可證號碼</string>
   <string name="identity_field_website_title">網站</string>
@@ -145,7 +145,7 @@
   <string name="identity_field_reddit_title">Reddit使用者名稱</string>
   <string name="identity_field_facebook_title">Facebook 網址</string>
   <string name="identity_field_yahoo_title">Yahoo 使用者名稱</string>
-  <string name="identity_field_instagram_title">Instagram handle</string>
+  <string name="identity_field_instagram_title">Instagram username</string>
   <string name="identity_field_personal_website_title">個人網站網址</string>
   <string name="identity_field_work_phone_number_title">工作電話號碼</string>
   <string name="identity_field_work_email_title">工作電子郵件</string>
@@ -160,7 +160,7 @@
   <string name="identity_add_field_reddit">Reddit使用者名稱</string>
   <string name="identity_add_field_facebook">Facebook 網址</string>
   <string name="identity_add_field_yahoo">Yahoo 使用者名稱</string>
-  <string name="identity_add_field_instagram">Instagram handle</string>
+  <string name="identity_add_field_instagram">Instagram username</string>
   <string name="identity_add_field_personal_website">個人網站網址</string>
   <string name="identity_add_field_work_phone_number">工作電話號碼</string>
   <string name="identity_add_field_work_email_address">工作電子郵件</string>
@@ -196,7 +196,6 @@
   <string name="mfa_limit_reached">雙重驗證已達上限</string>
   <string name="upgrade">升級</string>
   <string name="mfa_icon_content_description">雙重驗證圖像</string>
-  <string name="select_suffix_upgrade_for_custom_domains">為自訂網域升級</string>
   <string name="create_alias_content_limit_banner">已用鑿可供創建別名的數量。升級訂購授權即可釋放限制</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">此應用程式需要更新一編輯項目</string>
   <string name="remove_passkey_dialog_title">要移除這個密碼金鑰嗎?</string>
@@ -208,4 +207,16 @@
   <string name="open_with">Open with:</string>
   <string name="open_attachments_error">Could not open attachment</string>
   <string name="upload_attachments_error">Could not upload attachment</string>
+  <string name="banner_advanced_options_title">Did you know?</string>
+  <string name="banner_advanced_options_subtitle">Tap the gear icon to customize the alias the way you want.</string>
+  <string name="banner_custom_domain_title">Did you know?</string>
+  <string name="banner_custom_domain_subtitle">By adding your domain, you can create aliases like hi@my-domain.com.</string>
+  <string name="banner_custom_domain_button">Add domain</string>
+  <string name="banner_mailbox_title">Did you know?</string>
+  <string name="banner_mailbox_subtitle">Share aliases with others by adding their inbox as an additional mailbox.</string>
+  <string name="banner_mailbox_button">Add mailbox</string>
+  <!-- Suffix -->
+  <string name="suffix_subtitle_premium_domain">Premium domain</string>
+  <string name="suffix_subtitle_public_domain">Public domain</string>
+  <string name="suffix_subtitle_private_domain">Your domain</string>
 </resources>

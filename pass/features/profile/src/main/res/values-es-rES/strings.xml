@@ -50,7 +50,7 @@
   <string name="profile_option_change_pin_code">Cambiar el código PIN</string>
   <string name="profile_passkey_support_section_title">Claves de acceso</string>
   <string name="profile_passkey_support_subtitle_supported">Las claves de acceso están admitidas.</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Tu versión de Android no admite claves de acceso.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">La versión de Android no admite claves de acceso.</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Tu dispositivo no admite claves de acceso.</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">No se puede comprobar el soporte para claves de acceso.</string>
   <plurals name="profile_after_days">
@@ -71,7 +71,7 @@
   <string name="account_switcher_sign_out">Cerrar sesión</string>
   <string name="account_switcher_switch_to">Cambiar a</string>
   <string name="account_switcher_add_account">Añadir una cuenta</string>
-  <string name="account_switcher_remove">Borrar</string>
+  <string name="account_switcher_remove">Eliminar</string>
   <string name="filtered_by_logins">Se ha filtrado la lista por inicios de sesión. No se muestran los elementos en la papelera.</string>
   <string name="filtered_by_logins_with_mfa">Se ha filtrado la lista por inicios de sesión con código TOTP. No se muestran los elementos en la papelera.</string>
   <string name="filtered_by_aliases">Se ha filtrado la lista por alias. No se muestran los elementos en la papelera.</string>

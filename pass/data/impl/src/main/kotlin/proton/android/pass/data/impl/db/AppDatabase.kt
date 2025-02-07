@@ -207,7 +207,8 @@ import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
         AutoMigration(from = 65, to = 66),
         AutoMigration(from = 66, to = 67),
         AutoMigration(from = 67, to = 68),
-        AutoMigration(from = 68, to = 69)
+        AutoMigration(from = 68, to = 69),
+        AutoMigration(from = 69, to = 70)
     ],
     version = AppDatabase.VERSION,
     exportSchema = true
@@ -251,7 +252,7 @@ abstract class AppDatabase :
     AuthDatabase {
 
     companion object {
-        const val VERSION = 69
+        const val VERSION = 70
 
         const val DB_NAME = "db-passkey"
 

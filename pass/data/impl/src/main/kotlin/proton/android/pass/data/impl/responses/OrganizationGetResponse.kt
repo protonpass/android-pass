@@ -44,7 +44,9 @@ data class OrganizationGetOrganizationSettings(
     @SerialName("ForceLockSeconds")
     val forceLockSeconds: Int,
     @SerialName("PasswordPolicy")
-    val passwordPolicy: OrganizationGetOrganizationSettingsPasswordPolicy?
+    val passwordPolicy: OrganizationGetOrganizationSettingsPasswordPolicy?,
+    @SerialName("VaultCreateMode")
+    val vaultCreateMode: Int?
 )
 
 @Serializable

@@ -24,7 +24,7 @@
   <string name="home_empty_vault_create_alias">Maak een hide-my-email-alias</string>
   <string name="home_empty_vault_create_note">Notitie aanmaken</string>
   <string name="home_empty_vault_create_credit_card">Kredietkaart aanmaken</string>
-  <string name="home_empty_vault_create_identity">Create an identity</string>
+  <string name="home_empty_vault_create_identity">Identiteit aanmaken</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Fout bij het laden van items</string>
   <string name="error_refreshing">Fout bij vernieuwen</string>
   <string name="home_snackbar_login_moved_to_trash">Login verplaatst naar prullenbak</string>
@@ -36,6 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">Items verplaatst naar de prullenbak</string>
   <string name="home_snackbar_items_move_to_trash_error">Items konden niet verplaatst worden naar de prullenbak</string>
   <string name="home_toast_items_selected_read_only">Alleen-lezen items kunnen niet worden geselecteerd</string>
+  <string name="home_toast_items_selected_shared_with_me">Items gedeeld met u kunnen niet worden geselecteerd</string>
   <string name="home_autofill_banner_title">Geniet van de magie van Automatisch aanvullen</string>
   <string name="home_autofill_banner_text">Eén keer tikken en uw gebruikersnaam en wachtwoord zijn direct ingevuld.</string>
   <string name="home_autofill_banner_settings">Automatisch aanvullen inschakelen ›</string>
@@ -168,10 +169,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Fout bij het losmaken van sommige items</string>
   <string name="home_snackbar_items_unpinned_error">Fout bij het losmaken van de items</string>
   <string name="home_snackbar_items_alias_enabled_success">Alias met succes ingeschakeld</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Fout bij het inschakelen van sommige aliassen</string>
   <string name="home_snackbar_items_alias_enabled_error">Fout inschakelen aliassen</string>
   <string name="home_snackbar_items_alias_disabled_success">Alias met succes uitgeschakeld</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Fout bij het uitschakelen van sommige aliassen</string>
   <string name="home_snackbar_items_alias_disabled_error">Fout bij uitschakelen aliassen</string>
   <string name="bulk_action_unpin">Losmaken</string>
   <string name="bulk_action_pin">Vastpinnen</string>

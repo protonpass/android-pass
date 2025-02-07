@@ -108,7 +108,7 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">有効期限</string>
-  <string name="field_card_expiration_date_hint">MM/YY (月/年)</string>
+  <string name="field_card_expiration_date_hint">月/年</string>
   <string name="field_card_expiration_date_error">月/年の形式で有効な日付を入力してください</string>
   <string name="create_credit_card_item_creation_error">クレジットカードを作成できませんでした</string>
   <string name="create_credit_card_item_creation_success">クレジットカードが作成されました</string>
@@ -196,7 +196,6 @@
   <string name="mfa_limit_reached">2要素認証 制限に達しました</string>
   <string name="upgrade">アップグレード</string>
   <string name="mfa_icon_content_description">2要素認証アイコン</string>
-  <string name="select_suffix_upgrade_for_custom_domains">カスタムドメインのアップグレード</string>
   <string name="create_alias_content_limit_banner">作成できるエイリアスの数に達しました。サブスクリプションをアップグレードすると、エイリアスの作成数が無制限になります。</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">この項目を編集するには、アプリをアップデートする必要があります。</string>
   <string name="remove_passkey_dialog_title">このパスキーを削除しますか?</string>
@@ -208,4 +207,16 @@
   <string name="open_with">開く：</string>
   <string name="open_attachments_error">添付ファイルを開くことができませんでした</string>
   <string name="upload_attachments_error">添付ファイルのアップロードに失敗しました</string>
+  <string name="banner_advanced_options_title">ご存知ですか？</string>
+  <string name="banner_advanced_options_subtitle">歯車アイコンをタップして、エイリアスを好きなようにカスタマイズします。</string>
+  <string name="banner_custom_domain_title">ご存知ですか？</string>
+  <string name="banner_custom_domain_subtitle">ドメインを追加することで、 hi@my-domain.com のようなエイリアスを作成できます。</string>
+  <string name="banner_custom_domain_button">ドメインを追加</string>
+  <string name="banner_mailbox_title">ご存知ですか？</string>
+  <string name="banner_mailbox_subtitle">受信トレイを追加のメールボックスとして追加することで、エイリアスを他のユーザーと共有できます。</string>
+  <string name="banner_mailbox_button">メールボックスを追加</string>
+  <!-- Suffix -->
+  <string name="suffix_subtitle_premium_domain">プレミアムドメイン</string>
+  <string name="suffix_subtitle_public_domain">公開ドメイン</string>
+  <string name="suffix_subtitle_private_domain">あなたのドメイン</string>
 </resources>

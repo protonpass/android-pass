@@ -268,7 +268,7 @@
   </plurals>
   <string name="simple_login_widget_action">Synchroniseer aliassen</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Heeft u de code niet ontvangen?</string>
+  <string name="verification_code_not_received">Code niet ontvangen?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Controleer in uw spam voor een e-mail met onderwerp \"%s\"</string>
   <string name="verification_code_suggestion_subject_new_email_address">Bevestig uw e-mailadres voor Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Bevestig uw mailbox</string>

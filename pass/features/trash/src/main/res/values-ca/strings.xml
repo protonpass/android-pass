@@ -4,11 +4,11 @@
   <string name="bottomsheet_delete_permanently">Elimina de manera permanent</string>
   <string name="alert_confirm_delete_item_dialog_title">Voleu eliminar permanentment?</string>
   <string name="alert_confirm_delete_item_dialog_message">Aquesta acció és irreversible</string>
-  <string name="alert_confirm_delete_item_dialog_shared_warning_message">Aquest element està compartit actualment. Eliminar-ho eliminarà l\'accés per a tots els altres usuaris.</string>
+  <string name="alert_confirm_delete_item_dialog_shared_warning_message">Aquest element està compartit actualment. Eliminar-lo suprimirà l\'accés per a tots els altres usuaris.</string>
   <string name="alias_dialog_move_to_trash_title">Voleu moure a la paperera?</string>
   <string name="alias_dialog_move_to_trash_content">Si moveu un àlies a la paperera, deixarà de reenviar correus electrònics a la vostra bústia.</string>
   <string name="alias_dialog_move_to_trash_confirm">Confirma</string>
-  <string name="delete_alias_confirm">Suprimeix-lo. No ho necessitaré mai.</string>
+  <string name="delete_alias_confirm">Elimina\'l. No el necessitaré mai.</string>
   <string name="delete_alias_title">Elimina %s</string>
   <string name="delete_alias_enabled_subtitle">"Tingueu en compte que, un cop suprimit, l'àlies no es pot restaurar. Potser voleu desactivar l'àlies? "</string>
   <string name="delete_alias_disabled_subtitle">Un cop suprimit, l\'àlies no es pot restaurar. L\'àlies ja està desactivat i no reenviarà correus electrònics a la vostra bústia de correu.</string>

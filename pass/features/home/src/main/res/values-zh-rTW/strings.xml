@@ -36,6 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">項目丟進垃圾桶</string>
   <string name="home_snackbar_items_move_to_trash_error">無法將項目丟進垃圾桶</string>
   <string name="home_toast_items_selected_read_only">僅供讀取的項目無法被選取</string>
+  <string name="home_toast_items_selected_shared_with_me">Items shared with you cannot be selected</string>
   <string name="home_autofill_banner_title">享受自動填入的神奇魔力</string>
   <string name="home_autofill_banner_text">輕輕一按，大功告成！您的使用者名稱和密碼就馬上填好。</string>
   <string name="home_autofill_banner_settings">啟用自動填滿＞</string>

@@ -123,4 +123,6 @@
   </plurals>
   <string name="open_with">Άνοιγμα με:</string>
   <string name="open_attachments_error">Δεν ήταν δυνατό το άνοιγμα του συνημμένου</string>
+  <string name="banner_contacts_title">Γνωρίζετε;</string>
+  <string name="banner_contacts_subtitle">Κάθε φορά που το ψευδώνυμό σας λαμβάνει ένα μήνυμα ηλεκτρονικού ταχυδρομείου από κάποιον, μια νέα επαφή δημιουργείται αυτόματα.</string>
 </resources>

@@ -31,7 +31,7 @@
   <string name="unblock_button">Odblokuj kontakt</string>
   <string name="block_button">Zablokuj kontakt</string>
   <string name="contact_created_date" comment="date of creation">Utworzono %1$s temu</string>
-  <string name="no_activity_contact">Brak aktywności w ciągu ostatnich 14 dni.</string>
+  <string name="no_activity_contact">No activity in the last 14 days.</string>
   <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">w ciągu ostatnich 14 dni.</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
     <item quantity="one">Przekierowano %1$d</item>

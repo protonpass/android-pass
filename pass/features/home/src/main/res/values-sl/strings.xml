@@ -36,6 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">Predmeti premaknjeni v smetnjak</string>
   <string name="home_snackbar_items_move_to_trash_error">Predmetov ni bilo mogoče premakniti v smetnjak</string>
   <string name="home_toast_items_selected_read_only">Predmetov samo za branje ni mogoče izbrati</string>
+  <string name="home_toast_items_selected_shared_with_me">Items shared with you cannot be selected</string>
   <string name="home_autofill_banner_title">Uživajte v čarobnosti samodejnega izpolnjevanja</string>
   <string name="home_autofill_banner_text">Samo en dotik in vaše uporabniško ime in geslo sta v trenutku izpolnjena.</string>
   <string name="home_autofill_banner_settings">Vklopi samodejno izpolnjevanje ›</string>

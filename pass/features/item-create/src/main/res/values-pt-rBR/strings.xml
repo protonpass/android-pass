@@ -196,7 +196,6 @@
   <string name="mfa_limit_reached">Limite A2F atingido</string>
   <string name="upgrade">Fazer upgrade</string>
   <string name="mfa_icon_content_description">Ícone de A2F</string>
-  <string name="select_suffix_upgrade_for_custom_domains">Faça upgrade para domínios personalizados</string>
   <string name="create_alias_content_limit_banner">Você atingiu o limite de aliases que pode criar. Crie um número ilimitado de aliases quando fizer o upgrade de sua assinatura.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">O aplicativo precisa ser atualizado para editar esse item</string>
   <string name="remove_passkey_dialog_title">Remover essa chave de acesso?</string>
@@ -208,4 +207,16 @@
   <string name="open_with">Abrir com:</string>
   <string name="open_attachments_error">Erro ao abrir o anexo</string>
   <string name="upload_attachments_error">Erro ao anexar o arquivo à mensagem</string>
+  <string name="banner_advanced_options_title">Você sabia?</string>
+  <string name="banner_advanced_options_subtitle">Toque no ícone da engrenagem para personalizar o alias que deseja.</string>
+  <string name="banner_custom_domain_title">Você sabia?</string>
+  <string name="banner_custom_domain_subtitle">Adicionando o seu domínio, você pode criar aliases como olá@meu-domínio.br.</string>
+  <string name="banner_custom_domain_button">Adicionar um domínio</string>
+  <string name="banner_mailbox_title">Você sabia?</string>
+  <string name="banner_mailbox_subtitle">Compartilhe aliases com outros adicionando sua caixa de entrada como uma caixa de correio adicional.</string>
+  <string name="banner_mailbox_button">Adicionar caixa de correio</string>
+  <!-- Suffix -->
+  <string name="suffix_subtitle_premium_domain">Domínio premium</string>
+  <string name="suffix_subtitle_public_domain">Domínio público</string>
+  <string name="suffix_subtitle_private_domain">Seu domínio</string>
 </resources>

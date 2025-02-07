@@ -10,7 +10,7 @@
   <string name="profile_option_tutorial">Com utilitzar el Proton Pass</string>
   <string name="profile_option_rating">Valora l\'aplicació</string>
   <string name="profile_option_autofill">Emplenament automàtic</string>
-  <string name="profile_option_autofill_subtitle">Ompliu automàticament els vostres noms d\'usuari i contrasenyes.</string>
+  <string name="profile_option_autofill_subtitle">Empleneu automàticament els vostres noms d\'usuari i contrasenyes.</string>
   <string name="profile_option_secure_links">Enllaços segurs</string>
   <string name="profile_option_alias_management">Gestió dels àlies</string>
   <string name="profile_error_biometry_failed_to_start">No s\'ha pogut iniciar l\'autenticació biomètrica</string>
@@ -34,7 +34,7 @@
   <string name="app_lock_config_pin_code">Codi PIN</string>
   <string name="app_lock_config_app_lock_time">Bloqueig automàtic</string>
   <string name="app_lock_config_password">Contrasenya</string>
-  <string name="app_lock_config_use_system_lock_when_biometric_fails">Utilitzeu el bloqueig del sistema quan la característica biomètrica no funcioni.</string>
+  <string name="app_lock_config_use_system_lock_when_biometric_fails">Utilitzeu el bloqueig del sistema quan la biometria no funcioni.</string>
   <string name="configure_pin_set_pin_code">Establiu el codi PIN</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Desbloqueja l\'aplicació amb aquest codi</string>
   <string name="configure_pin_enter_pin_code">Introduïu el codi PIN</string>
@@ -50,7 +50,7 @@
   <string name="profile_option_change_pin_code">Canvia el codi PIN</string>
   <string name="profile_passkey_support_section_title">Claus d\'accés</string>
   <string name="profile_passkey_support_subtitle_supported">Les claus d\'accés són compatibles</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">La vostra versió d\'Android no suporta claus de pas.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">La vostra versió d\'Android no admet claus de pas.</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">El vostre dispositiu no suporta claus d\'accés.</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">No s\'ha pogut comprovar la compatibilitat per a les claus d\'accés</string>
   <plurals name="profile_after_days">
@@ -80,7 +80,7 @@
   <string name="filtered_by_identities">La llista es filtra per identitats. Els elements de la paperera no es mostren.</string>
   <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Heu de canviar a %1$s per gestionar-lo.</string>
   <string name="account_switch_confirmation_title">Gestiona el compte</string>
-  <string name="account_switch_confirmation_confirm">Canvia de compte i gestiona-lo</string>
+  <string name="account_switch_confirmation_confirm">Canvia de compte i gestiona\'l</string>
   <string name="profile_storage_data_title">Emmagatzematge</string>
   <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s de %2$s</string>
 </resources>

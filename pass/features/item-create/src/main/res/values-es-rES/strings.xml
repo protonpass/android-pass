@@ -2,7 +2,7 @@
 <resources>
   <!-- Actions -->
   <string name="action_save">Guardar</string>
-  <string name="action_remove">Borrar</string>
+  <string name="action_remove">Eliminar</string>
   <!-- Create item bottomsheet -->
   <string name="action_login">Inicio de sesión</string>
   <string name="action_alias">Alias</string>
@@ -49,9 +49,9 @@
   <string name="bottomsheet_custom_field_type_hidden">Oculto</string>
   <string name="bottomsheet_custom_field_type_totp">Clave secreta 2FA (TOTP)</string>
   <string name="bottomsheet_custom_field_option_edit">Editar el nombre</string>
-  <string name="bottomsheet_custom_field_option_remove">Borrar el campo</string>
-  <string name="bottomsheet_custom_field_option_remove_content_description">Borrar el campo personalizado</string>
-  <string name="bottomsheet_custom_section_option_remove">Borrar la sección</string>
+  <string name="bottomsheet_custom_field_option_remove">Eliminar el campo</string>
+  <string name="bottomsheet_custom_field_option_remove_content_description">Eliminar el campo personalizado</string>
+  <string name="bottomsheet_custom_section_option_remove">Eliminar la sección</string>
   <string name="create_login_add_custom_field_button">Añadir otro campo</string>
   <string name="custom_field_hidden_placeholder">Añadir texto oculto</string>
   <string name="custom_field_hidden_icon_content_description">Icono de campo personalizado oculto</string>
@@ -196,11 +196,10 @@
   <string name="mfa_limit_reached">Límite de 2FA alcanzado</string>
   <string name="upgrade">Mejorar</string>
   <string name="mfa_icon_content_description">Ícono de 2FA</string>
-  <string name="select_suffix_upgrade_for_custom_domains">Mejora tu plan para obtener dominios personalizados</string>
   <string name="create_alias_content_limit_banner">Has alcanzado el límite de alias que puedes crear. Crea alias ilimitados al actualizar tu suscripción.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">La aplicación necesita actualizarse para editar este elemento.</string>
-  <string name="remove_passkey_dialog_title">¿Borrar esta clave de acceso?</string>
-  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Estás a punto de borrar la clave de acceso de «%1$s» para «%2$s». ¿Estás seguro?</string>
+  <string name="remove_passkey_dialog_title">¿Eliminar esta clave de acceso?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Estás a punto de eliminar la clave de acceso de «%1$s» para «%2$s». ¿Estás seguro?</string>
   <string name="add_a_custom_section">Añade una sección personalizada</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Archivos adjuntos</string>
@@ -208,4 +207,16 @@
   <string name="open_with">Abrir con:</string>
   <string name="open_attachments_error">Error al abrir el archivo adjunto</string>
   <string name="upload_attachments_error">Error al cargar el archivo adjunto del mensaje</string>
+  <string name="banner_advanced_options_title">¿Lo sabías?</string>
+  <string name="banner_advanced_options_subtitle">Pulsa el ícono de engranaje para personalizar el alias como desees.</string>
+  <string name="banner_custom_domain_title">¿Lo sabías?</string>
+  <string name="banner_custom_domain_subtitle">Al agregar tu dominio, puedes crear alias como hola@mi-dominio.es.</string>
+  <string name="banner_custom_domain_button">Añadir un dominio</string>
+  <string name="banner_mailbox_title">¿Lo sabías?</string>
+  <string name="banner_mailbox_subtitle">Comparte aliases con otros añadiendo su bandeja de entrada como buzón adicional.</string>
+  <string name="banner_mailbox_button">Añadir un buzón</string>
+  <!-- Suffix -->
+  <string name="suffix_subtitle_premium_domain">Dominio premium</string>
+  <string name="suffix_subtitle_public_domain">Dominio público</string>
+  <string name="suffix_subtitle_private_domain">Tu dominio</string>
 </resources>

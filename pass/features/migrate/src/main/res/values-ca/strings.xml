@@ -20,9 +20,9 @@
     <item quantity="one">Mou l\'element a una altra caixa forta?</item>
     <item quantity="other">Mou %d elements a una altra caixa forta?</item>
   </plurals>
-  <string name="migrate_item_shared_warning_message">Aquest element està compartit actualment. Moure-ho a una altra caixa forta suposarà la supressió de l\'accés per a la resta d\'usuaris.</string>
+  <string name="migrate_item_shared_warning_message">Aquest element està compartit actualment. Moure\'l a una altra caixa forta suprimirà l\'accés per a la resta d\'usuaris.</string>
   <plurals name="migrate_items_shared_warning_message">
-    <item quantity="one">%d element està compartit actualment. Moure-ho a una altra caixa forta suposarà la supressió de l\'accés per a la resta d\'usuaris.</item>
-    <item quantity="other">%d elements estan compartits actualment. Moure\'ls a una altra caixa forta suposarà la supressió de l\'accés per a la resta d\'usuaris.\"</item>
+    <item quantity="one">%d element està compartit actualment. Moure\'l a una altra caixa forta suprimirà l\'accés per a la resta d\'usuaris.</item>
+    <item quantity="other">%d elements estan compartits actualment. Moure\'ls a una altra caixa forta suprimirà l\'accés per a la resta d\'usuaris.</item>
   </plurals>
 </resources>

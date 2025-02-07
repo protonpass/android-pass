@@ -24,7 +24,7 @@
   <string name="home_empty_vault_create_alias">Hide-my-email-ის ფსევდონიმის შექმნა</string>
   <string name="home_empty_vault_create_note">შენიშვნის შექმნა</string>
   <string name="home_empty_vault_create_credit_card">საკრედიტო ბარათის შექმნა</string>
-  <string name="home_empty_vault_create_identity">Create an identity</string>
+  <string name="home_empty_vault_create_identity">იდენტიფიკატორის შექმნა</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">ელემენტების ჩატვირთვის შეცდომა</string>
   <string name="error_refreshing">განახლების შეცდომა</string>
   <string name="home_snackbar_login_moved_to_trash">შესვლის ჩანაწერი გადატანილია ნაგვის ყუთში</string>
@@ -36,6 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">ელემენტები გადატანილია ნაგვის ყუთში</string>
   <string name="home_snackbar_items_move_to_trash_error">ელემენტების ნაგვის ყუთში გადატანის შეცდომა</string>
   <string name="home_toast_items_selected_read_only">მხოლოდ-კითხვადი ელემენტების მონიშვნა შეუძლებელია</string>
+  <string name="home_toast_items_selected_shared_with_me">თქვენთან გაზიარებულ ელემენტებს ვერ მონიშნავთ</string>
   <string name="home_autofill_banner_title">ისიამოვნეთ ავტომატური შევსების ჯადოქრობით</string>
   <string name="home_autofill_banner_text">ერთი დატყაპუნება და-ეგაა!-თქვენი მომხმარებლის სახელი და პაროლი ავტომატურად შეივსება.</string>
   <string name="home_autofill_banner_settings">ავტომატური შევსების ჩართვა ›</string>
@@ -168,10 +169,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">ზოგიერთი ელემენტის მოხსნის შეცდომა</string>
   <string name="home_snackbar_items_unpinned_error">ელემენტების მოხსნის შეცდომა</string>
   <string name="home_snackbar_items_alias_enabled_success">ფსევდონიმი წარმატებით ჩაირთო</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">ზოგიერთი ფსევდონიმის ჩართვის შეცდომა</string>
   <string name="home_snackbar_items_alias_enabled_error">ფსევდონიმების ჩართვის შეცდომა</string>
   <string name="home_snackbar_items_alias_disabled_success">ფსევდონიმი წარმატებით გაითიშა</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">ზოგიერთი ფსევდონიმის გათიშვის შეცდომა</string>
   <string name="home_snackbar_items_alias_disabled_error">ფსევდონიმების გამორთვის შეცდომა</string>
   <string name="bulk_action_unpin">მოხსნა</string>
   <string name="bulk_action_pin">მიმაგრება</string>

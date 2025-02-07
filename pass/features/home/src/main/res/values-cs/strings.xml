@@ -24,7 +24,7 @@
   <string name="home_empty_vault_create_alias">Vytvořit alias Hide-my-email</string>
   <string name="home_empty_vault_create_note">Vytvořit poznámku</string>
   <string name="home_empty_vault_create_credit_card">Vytvořit platební kartu</string>
-  <string name="home_empty_vault_create_identity">Create an identity</string>
+  <string name="home_empty_vault_create_identity">Vytvořit identitu</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Chyba při načítání položek</string>
   <string name="error_refreshing">Chyba při obnově</string>
   <string name="home_snackbar_login_moved_to_trash">Přihlášení přesunuto do koše</string>
@@ -36,6 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">Položky přesunuty do koše</string>
   <string name="home_snackbar_items_move_to_trash_error">Položky nemohly být přesunuty do koše</string>
   <string name="home_toast_items_selected_read_only">Položky určené pouze ke čtení nelze vybrat</string>
+  <string name="home_toast_items_selected_shared_with_me">Položky sdílené s vámi nelze vybrat</string>
   <string name="home_autofill_banner_title">Využijte přínosu automatického vyplňování</string>
   <string name="home_autofill_banner_text">Jedno klepnutí a vaše uživatelské jméno a heslo jsou okamžitě vyplněny.</string>
   <string name="home_autofill_banner_settings">Zapnout automatické vyplňování ›</string>
@@ -186,10 +187,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Chyba při odepínání některých položek</string>
   <string name="home_snackbar_items_unpinned_error">Chyba při odepínání položek</string>
   <string name="home_snackbar_items_alias_enabled_success">Alias úspěšně povolen</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Chyba při povolování některých aliasů</string>
   <string name="home_snackbar_items_alias_enabled_error">Chyba při povolování aliasů</string>
   <string name="home_snackbar_items_alias_disabled_success">Alias úspěšně deaktivován</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Chyba při deaktivaci některých aliasů</string>
   <string name="home_snackbar_items_alias_disabled_error">Chyba při deaktivaci aliasů</string>
   <string name="bulk_action_unpin">Odepnout</string>
   <string name="bulk_action_pin">Připnout</string>

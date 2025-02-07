@@ -145,7 +145,7 @@
   <string name="identity_field_reddit_title">Reddit - brugernavn</string>
   <string name="identity_field_facebook_title">Facebook-adresse</string>
   <string name="identity_field_yahoo_title">Yahoo - brugernavn</string>
-  <string name="identity_field_instagram_title">Instagram - brugernavn</string>
+  <string name="identity_field_instagram_title">Instagram-brugernavn</string>
   <string name="identity_field_personal_website_title">Personlig webstedsadresse</string>
   <string name="identity_field_work_phone_number_title">Arbejdstelefon nr.</string>
   <string name="identity_field_work_email_title">Arbejdsmail-adresse</string>
@@ -160,7 +160,7 @@
   <string name="identity_add_field_reddit">Reddit - brugernavn</string>
   <string name="identity_add_field_facebook">Facebook-adresse</string>
   <string name="identity_add_field_yahoo">Yahoo - brugernavn</string>
-  <string name="identity_add_field_instagram">Instagram - brugernavn</string>
+  <string name="identity_add_field_instagram">Instagram-brugernavn</string>
   <string name="identity_add_field_personal_website">Personlig webstedsadresse</string>
   <string name="identity_add_field_work_phone_number">Arbejdstelefon nr.</string>
   <string name="identity_add_field_work_email_address">Arbejdsmail-adresse</string>
@@ -196,7 +196,6 @@
   <string name="mfa_limit_reached">2FA-grænse nået</string>
   <string name="upgrade">Opgrader</string>
   <string name="mfa_icon_content_description">2FA-ikon</string>
-  <string name="select_suffix_upgrade_for_custom_domains">Opgrader for brugerdomæner</string>
   <string name="create_alias_content_limit_banner">Du har nået grænsen for, hvor mange aliasser du kan oprette. Opret et ubegrænset antal aliasser, når du opgraderer dit abonnement.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Appen skal opdateres for at kunne redigere dette element.</string>
   <string name="remove_passkey_dialog_title">Fjern denne adgangsnøgle?</string>
@@ -208,4 +207,16 @@
   <string name="open_with">Åbn med:</string>
   <string name="open_attachments_error">Kunne ikke åbne vedhæftning</string>
   <string name="upload_attachments_error">Kunne ikke uploade vedhæftning</string>
+  <string name="banner_advanced_options_title">Vidste du?</string>
+  <string name="banner_advanced_options_subtitle">Tryk på tandhjulsikonet for at tilpasse aliaset, som du vil have det.</string>
+  <string name="banner_custom_domain_title">Vidste du?</string>
+  <string name="banner_custom_domain_subtitle">Ved at tilføje dit domæne kan du oprette aliasser som hi@my-domain.com.</string>
+  <string name="banner_custom_domain_button">Tilføj domæne</string>
+  <string name="banner_mailbox_title">Vidste du?</string>
+  <string name="banner_mailbox_subtitle">Del aliasser med andre ved at tilføje deres indbakke som en ekstra postkasse.</string>
+  <string name="banner_mailbox_button">Tilføj postkasse</string>
+  <!-- Suffix -->
+  <string name="suffix_subtitle_premium_domain">Premium domæne</string>
+  <string name="suffix_subtitle_public_domain">Offentligt domæne</string>
+  <string name="suffix_subtitle_private_domain">Dit domæne</string>
 </resources>

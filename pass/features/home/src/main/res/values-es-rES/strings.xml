@@ -36,6 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">Se han movido los elementos a la papelera.</string>
   <string name="home_snackbar_items_move_to_trash_error">No se han podido mover los elementos a la papelera.</string>
   <string name="home_toast_items_selected_read_only">No se pueden seleccionar los elementos de solo lectura.</string>
+  <string name="home_toast_items_selected_shared_with_me">Los elementos compartidos contigo no se pueden seleccionar.</string>
   <string name="home_autofill_banner_title">Disfruta de la magia del relleno automático</string>
   <string name="home_autofill_banner_text">Un toque y, ¡listo!, su nombre de usuario y contraseña se completarán instantáneamente.</string>
   <string name="home_autofill_banner_settings">Activar el relleno automático ›</string>
@@ -159,7 +160,7 @@
   <!-- Recent search -->
   <string name="recent_search_header_count">Búsquedas recientes</string>
   <string name="recent_search_clear">Borrar</string>
-  <string name="recent_search_remove_item">Borrar de las búsquedas recientes</string>
+  <string name="recent_search_remove_item">Eliminar de las búsquedas recientes</string>
   <!-- Pinning -->
   <string name="home_snackbar_items_pinned_success">Se han anclado los elementos.</string>
   <string name="home_snackbar_items_pinned_partial_success">Error al anclar algunos elementos</string>

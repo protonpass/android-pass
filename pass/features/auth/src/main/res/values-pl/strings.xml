@@ -34,7 +34,7 @@
   <string name="auth_action_reveal_password">Pokaż hasło główne</string>
   <string name="auth_action_conceal_password">Ukryj hasło główne</string>
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Wpisz kod PIN</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Enter fingerprint instead</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Use fingerprint instead</string>
   <string name="auth_unlock_button">Odblokuj</string>
   <string name="auth_error_empty_password">Hasło nie może być puste</string>
   <string name="auth_error_pin_cannot_be_empty">Kod PIN nie może być pusty</string>
@@ -55,5 +55,5 @@
     <item quantity="other">Pozostało %d prób</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Zbyt wiele nieudanych prób weryfikacji. Użytkownicy zostaną wylogowani.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Too many failed pin attempts.</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
 </resources>

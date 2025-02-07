@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="description_field_label">Wat is uw probleem?</string>
-  <string name="description_field_hint">Beschrijf het probleem zo gedetailleerder mogelijk, als er een fout is, laat het ons weten wat er staat.</string>
+  <string name="description_field_hint">Beschrijf het probleem, hoe gedetailleerder hoe beter. Als er een foutmelding is, laat ons dan weten wat er staat.</string>
   <string name="email_field_label">E-mail</string>
   <string name="email_field_hint">e-mail</string>
   <string name="attach_image_button">Afbeelding toevoegen</string>
@@ -44,7 +44,7 @@
   <string name="report_sending_success">Rapport met succes verzonden.</string>
   <string name="report_sending_error">Het verslag kon niet worden verstuurd.</string>
   <string name="tips_passkey_check_guide">Als u problemen hebt, bekijk onze handleiding.</string>
-  <string name="tips_passkey_android_not_supported">Uw Android versie is te laag. Probeer uw apparaat te upgraden.</string>
+  <string name="tips_passkey_android_not_supported">Uw Android-versie is te laag. Probeer je apparaat bij te werken naar een hogere Android-versie.</string>
   <string name="tips_passkeys_credential_manager_not_supported">De fabrikant van het apparaat geeft geen referentiebeheerder aan.</string>
   <string name="tips_passkey_supported">Passkeys worden ondersteund</string>
   <string name="tips_passkey_not_supported">Passkeys worden niet ondersteund</string>

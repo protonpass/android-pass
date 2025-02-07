@@ -145,7 +145,7 @@
   <string name="identity_field_reddit_title">Reddit gebruikersnaam</string>
   <string name="identity_field_facebook_title">Facebook-URL</string>
   <string name="identity_field_yahoo_title">Yahoo-gebruikersnaam</string>
-  <string name="identity_field_instagram_title">Instagram gebruikersnaam</string>
+  <string name="identity_field_instagram_title">Instagram-gebruikersnaam</string>
   <string name="identity_field_personal_website_title">URL naar persoonlijke website</string>
   <string name="identity_field_work_phone_number_title">Telefoonnummer werk</string>
   <string name="identity_field_work_email_title">E-mailadres werk</string>
@@ -160,7 +160,7 @@
   <string name="identity_add_field_reddit">Reddit gebruikersnaam</string>
   <string name="identity_add_field_facebook">Facebook-URL</string>
   <string name="identity_add_field_yahoo">Yahoo-gebruikersnaam</string>
-  <string name="identity_add_field_instagram">Instagram gebruikersnaam</string>
+  <string name="identity_add_field_instagram">Instagram-gebruikersnaam</string>
   <string name="identity_add_field_personal_website">URL naar persoonlijke website</string>
   <string name="identity_add_field_work_phone_number">Telefoonnummer werk</string>
   <string name="identity_add_field_work_email_address">E-mailadres werk</string>
@@ -196,7 +196,6 @@
   <string name="mfa_limit_reached">2FA-limiet bereikt</string>
   <string name="upgrade">Upgraden</string>
   <string name="mfa_icon_content_description">2FA-pictogram</string>
-  <string name="select_suffix_upgrade_for_custom_domains">Upgrade voor aangepaste domeinen</string>
   <string name="create_alias_content_limit_banner">U heeft de limiet bereikt van aliassen die u kunt maken. Maak een onbeperkt aantal aliassen aan wanneer u uw abonnement upgradet.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">De app moet worden bijgewerkt om dit item te bewerken</string>
   <string name="remove_passkey_dialog_title">Verwijder deze toegangssleutel?</string>
@@ -208,4 +207,16 @@
   <string name="open_with">Openen met</string>
   <string name="open_attachments_error">Kon bijlage niet openen</string>
   <string name="upload_attachments_error">Kon bijlage niet opladen</string>
+  <string name="banner_advanced_options_title">Wist u dat?</string>
+  <string name="banner_advanced_options_subtitle">Tik op het tandwielpictogram om de alias aan te passen.</string>
+  <string name="banner_custom_domain_title">Wist u dat?</string>
+  <string name="banner_custom_domain_subtitle">Door uw domein toe te voegen, kunt u aliassen zoals hoi@mijn-domein.com aanmaken.</string>
+  <string name="banner_custom_domain_button">Domein toevoegen</string>
+  <string name="banner_mailbox_title">Wist u dat?</string>
+  <string name="banner_mailbox_subtitle">Deel aliassen met anderen door hun inbox toe te voegen als extra mailbox.</string>
+  <string name="banner_mailbox_button">Mailbox toevoegen</string>
+  <!-- Suffix -->
+  <string name="suffix_subtitle_premium_domain">Premium domein</string>
+  <string name="suffix_subtitle_public_domain">Publiek domein</string>
+  <string name="suffix_subtitle_private_domain">Uw domein</string>
 </resources>

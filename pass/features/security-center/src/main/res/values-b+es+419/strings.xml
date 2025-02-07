@@ -76,7 +76,7 @@
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Error al cargar la dirección de correo personalizada</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">No se pueden obtener las direcciones de correo.</string>
-  <string name="security_center_dark_web_monitor_custom_email_option_remove">Borrar</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_remove">Eliminar</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">Última vulneración en %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
     <item quantity="one">Encontrada en %s vulneración</item>
@@ -144,13 +144,13 @@
   <!-- Address Bottomsheet options -->
   <string name="security_center_address_bottomsheet_disable_monitoring">Pausar el monitoreo</string>
   <string name="security_center_address_bottomsheet_enable_monitoring">Reanudar el monitoreo</string>
-  <string name="security_center_address_bottomsheet_remove_custom_email">Borrar el correo personalizado</string>
+  <string name="security_center_address_bottomsheet_remove_custom_email">Eliminar el correo personalizado</string>
   <string name="security_center_address_bottomsheet_snackbar_message_enable_error">Ocurrió un error al pausar el monitoreo</string>
   <string name="security_center_address_bottomsheet_snackbar_message_disable_error">Ocurrió un error al reanudar el monitoreo</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">No se pudo borrar el correo personalizado.</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">No se pudo eliminar el correo personalizado</string>
   <string name="security_center_address_bottomsheet_snackbar_message_enable_success">El monitoreo fue reanudado.</string>
   <string name="security_center_address_bottomsheet_snackbar_message_disable_success">El monitoreo fue pausado.</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">El correo personalizado fue borrado.</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">Correo personalizado eliminado</string>
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Alias de hide-my-email</string>
   <string name="security_center_alias_list_excluded_from_monitoring">Excluido del monitoreo</string>

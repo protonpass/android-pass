@@ -37,8 +37,8 @@
   </plurals>
   <string name="sharing_member_count_header">Удзельнікі</string>
   <string name="shared_via_title">Абагулена праз</string>
-  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Item sharing: %s</string>
-  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Vault sharing: %s</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Абагульванне элемента: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Абагульванне сховішча: %s</string>
   <string name="share_with_title">Абагуліць з</string>
   <string name="share_with_email_hint">Адрас электроннай пошты</string>
   <string name="share_with_email_error">Памылковы адрас электроннай пошты</string>
@@ -60,7 +60,7 @@
   <string name="sharing_snackbar_invite_reject_error">Памылка адхілення запрашэння</string>
   <string name="sharing_snackbar_invite_sent_success">Запрашэнне адпраўлена</string>
   <string name="sharing_snackbar_invite_sent_error">Немагчыма адправіць запрашэнне</string>
-  <string name="sharing_snackbar_invite_new_users_error">Cannot send invites to new users</string>
+  <string name="sharing_snackbar_invite_new_users_error">Немагчыма адправіць запрашэнні новым карыстальнікам</string>
   <string name="sharing_snackbar_invite_free_user_error">Item invites are only allowed to be sent to paid users</string>
   <string name="sharing_snackbar_invite_user_already_invited_error">Address has already been invited</string>
   <string name="sharing_snackbar_get_vault_members_error">Немагчыма атрымаць удзельнікаў сховішча</string>

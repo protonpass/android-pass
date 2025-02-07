@@ -32,13 +32,13 @@
   <string name="auth_action_reveal_password">Mostra la contrasenya principal</string>
   <string name="auth_action_conceal_password">Oculta la contrasenya principal</string>
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Utilitzeu el codi PIN en lloc</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Utilitzeu l\'empremta digital en lloc</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Utilitzeu l\'empremta digital</string>
   <string name="auth_unlock_button">Desbloqueja</string>
   <string name="auth_error_empty_password">La contrasenya no pot estar buida.</string>
   <string name="auth_error_pin_cannot_be_empty">El codi PIN no pot estar buit.</string>
-  <string name="auth_extra_password_label">Introduïu la vostra contrasenya d\'inici de sessió</string>
-  <string name="auth_extra_password_error">Error en autenticar-se amb una contrasenya addicional</string>
-  <string name="auth_extra_password_too_many_attempts">Massa intents fallits d\'inici de sessió. Heu tancat la sessió.</string>
+  <string name="auth_extra_password_label">Introduïu la vostra contrasenya addicional</string>
+  <string name="auth_extra_password_error">S\'ha produït un error en autenticar-se amb la contrasenya addicional</string>
+  <string name="auth_extra_password_too_many_attempts">Hi ha hagut massa intents fallits d\'inici de sessió. Se us ha tancat la sessió.</string>
   <string name="auth_error_wrong_password_no_attempts">La contrasenya no és correcta.</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Contrasenya incorrecta. %d intent restant.</item>
@@ -48,6 +48,6 @@
     <item quantity="one">Queda %d intent.</item>
     <item quantity="other">Queden %d intents.</item>
   </plurals>
-  <string name="auth_pin_too_many_attempts">Hi ha massa intents incorrectes del codi PIN. S\'han desconnectat tots els usuaris.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Massa errors d\'inici de sessió amb codi PIN</string>
+  <string name="auth_pin_too_many_attempts">Hi ha hagut massa intents fallits del codi PIN. S\'està tancant la sessió de tots els vostres usuaris.</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Hi ha hagut massa intents fallits del codi PIN</string>
 </resources>

@@ -31,7 +31,7 @@
   <string name="auth_action_reveal_password">Hiển thị mật khẩu chính</string>
   <string name="auth_action_conceal_password">Ẩn mật khẩu chính</string>
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Sử dụng PIN thay thế</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Enter fingerprint instead</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Use fingerprint instead</string>
   <string name="auth_unlock_button">Mở khóa</string>
   <string name="auth_error_empty_password">Mật khẩu không được để trống</string>
   <string name="auth_error_pin_cannot_be_empty">Mã PIN không được để trống</string>
@@ -46,5 +46,5 @@
     <item quantity="other">Còn lại %d lần thử</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Quá nhiều lần đăng nhập không thành công. Bạn đã được đăng xuất.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Too many failed pin attempts.</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
 </resources>

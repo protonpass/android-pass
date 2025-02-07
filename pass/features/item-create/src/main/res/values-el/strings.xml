@@ -196,7 +196,6 @@
   <string name="mfa_limit_reached">Επιτεύχθηκε το όριο 2FA</string>
   <string name="upgrade">Αναβάθμιση</string>
   <string name="mfa_icon_content_description">Εικονίδιο 2FA</string>
-  <string name="select_suffix_upgrade_for_custom_domains">Αναβάθμιση για προσαρμοσμένους τομείς</string>
   <string name="create_alias_content_limit_banner">Έχετε φτάσει στο όριο των ψευδωνύμων που μπορείτε να δημιουργήσετε. Δημιουργήστε απεριόριστο αριθμό ψευδωνύμων κατά την αναβάθμιση της συνδρομής σας.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Η εφαρμογή πρέπει να ενημερωθεί για να επεξεργαστείτε αυτό το στοιχείο</string>
   <string name="remove_passkey_dialog_title">Αφαίρεση αυτού του κλειδιού πρόσβασης;</string>
@@ -208,4 +207,16 @@
   <string name="open_with">Άνοιγμα με:</string>
   <string name="open_attachments_error">Δεν ήταν δυνατό το άνοιγμα του συνημμένου</string>
   <string name="upload_attachments_error">Αποτυχία ανεβάσματος συνημμένου για το μήνυμα</string>
+  <string name="banner_advanced_options_title">Γνωρίζετε;</string>
+  <string name="banner_advanced_options_subtitle">Πατήστε το εικονίδιο με το γρανάζι για να προσαρμόσετε το ψευδώνυμο με τον τρόπο που θέλετε.</string>
+  <string name="banner_custom_domain_title">Γνωρίζετε;</string>
+  <string name="banner_custom_domain_subtitle">Προσθέτοντας τον τομέα σας, μπορείτε να δημιουργήσετε ψευδώνυμα όπως hi@my-domain.com.</string>
+  <string name="banner_custom_domain_button">Προσθήκη τομέα</string>
+  <string name="banner_mailbox_title">Γνωρίζετε;</string>
+  <string name="banner_mailbox_subtitle">Μοιραστείτε ψευδώνυμα με άλλους προσθέτοντας τα εισερχόμενά τους ως πρόσθετο γραμματοκιβώτιο.</string>
+  <string name="banner_mailbox_button">Προσθήκη γραμματοκιβωτίου</string>
+  <!-- Suffix -->
+  <string name="suffix_subtitle_premium_domain">Premium τομέας</string>
+  <string name="suffix_subtitle_public_domain">Δημόσιος τομέας</string>
+  <string name="suffix_subtitle_private_domain">Ο τομέας σας</string>
 </resources>

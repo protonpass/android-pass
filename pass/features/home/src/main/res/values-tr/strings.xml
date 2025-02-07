@@ -36,6 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">Ögeler çöpe atıldı</string>
   <string name="home_snackbar_items_move_to_trash_error">Ögeler çöpe atılamadı</string>
   <string name="home_toast_items_selected_read_only">Salt okunur ögeler seçilemez</string>
+  <string name="home_toast_items_selected_shared_with_me">Sizinle paylaşılan ögeler seçilemez</string>
   <string name="home_autofill_banner_title">Otomatik doldurmanın tadını çıkarın</string>
   <string name="home_autofill_banner_text">Bir dokunuşla tamam. Kullanıcı adınız ve parolanız anında doldurulur.</string>
   <string name="home_autofill_banner_settings">Otomatik doldurmayı aç ›</string>

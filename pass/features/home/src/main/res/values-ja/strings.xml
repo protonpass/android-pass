@@ -24,7 +24,7 @@
   <string name="home_empty_vault_create_alias">Hide-my-emailエイリアスを作成</string>
   <string name="home_empty_vault_create_note">メモを作成</string>
   <string name="home_empty_vault_create_credit_card">クレジットカード情報を作成</string>
-  <string name="home_empty_vault_create_identity">Create an identity</string>
+  <string name="home_empty_vault_create_identity">ユーザー情報を作成</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">アイテム読み込みエラー</string>
   <string name="error_refreshing">更新実行中のエラー</string>
   <string name="home_snackbar_login_moved_to_trash">ログイン情報がごみ箱に移動されました</string>
@@ -36,6 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">アイテムはごみ箱に移動されました</string>
   <string name="home_snackbar_items_move_to_trash_error">アイテムはゴミ箱に移動できませんでした</string>
   <string name="home_toast_items_selected_read_only">読み取り専用アイテムは選択できません</string>
+  <string name="home_toast_items_selected_shared_with_me">あなたと共有されたアイテムは選択できません</string>
   <string name="home_autofill_banner_title">自動入力マジックをお楽しみください</string>
   <string name="home_autofill_banner_text">ワンタップでユーザー名とパスワードが即座に入力されます。</string>
   <string name="home_autofill_banner_settings">自動入力を有効にする ›</string>
@@ -159,10 +160,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">一部のアイテムのピン留めを解除する際にエラーが発生しました</string>
   <string name="home_snackbar_items_unpinned_error">アイテムのピン留め解除中にエラーが発生しました</string>
   <string name="home_snackbar_items_alias_enabled_success">エイリアスは正しく有効化されました</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">一部のエイリアスを有効化する際にエラーが発生しました</string>
   <string name="home_snackbar_items_alias_enabled_error">エイリアスの有効化でエラーが発生しました</string>
   <string name="home_snackbar_items_alias_disabled_success">エイリアスは正しく無効化されました</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">一部のエイリアスを無効化する際にエラーが発生しました</string>
   <string name="home_snackbar_items_alias_disabled_error">エイリアスの無効化でエラーが発生しました</string>
   <string name="bulk_action_unpin">ピンを解除</string>
   <string name="bulk_action_pin">ピン</string>

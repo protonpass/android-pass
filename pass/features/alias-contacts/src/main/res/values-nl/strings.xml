@@ -31,7 +31,7 @@
   <string name="unblock_button">Contact deblokkeren</string>
   <string name="block_button">Contact blokkeren</string>
   <string name="contact_created_date" comment="date of creation">%1$s geleden gemaakt</string>
-  <string name="no_activity_contact">Geen activiteit in de afgelopen 14 dagen.</string>
+  <string name="no_activity_contact">Geen activiteit in de laatste 14 dagen.</string>
   <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">in de afgelopen 14 dagen.</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
     <item quantity="one">%1$d doorgestuurd</item>

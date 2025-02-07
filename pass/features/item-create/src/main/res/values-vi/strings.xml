@@ -108,7 +108,7 @@
   <string name="field_card_pin_title">Mã PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Ngày hết hạn</string>
-  <string name="field_card_expiration_date_hint">MM / YY</string>
+  <string name="field_card_expiration_date_hint">MM/YY</string>
   <string name="field_card_expiration_date_error">Nhập một ngày hợp lệ ở dạng Tháng / Năm</string>
   <string name="create_credit_card_item_creation_error">Không thể tạo thẻ</string>
   <string name="create_credit_card_item_creation_success">Đã tạo thẻ</string>
@@ -145,7 +145,7 @@
   <string name="identity_field_reddit_title">Tài khoản Reddit</string>
   <string name="identity_field_facebook_title">Trang Facebook</string>
   <string name="identity_field_yahoo_title">Tài khoản Yahoo</string>
-  <string name="identity_field_instagram_title">Instagram handle</string>
+  <string name="identity_field_instagram_title">Instagram username</string>
   <string name="identity_field_personal_website_title">Trang web cá nhân</string>
   <string name="identity_field_work_phone_number_title">Số điện thoại công việc</string>
   <string name="identity_field_work_email_title">Địa chỉ email công việc</string>
@@ -160,7 +160,7 @@
   <string name="identity_add_field_reddit">Tài khoản Reddit</string>
   <string name="identity_add_field_facebook">Trang Facebook</string>
   <string name="identity_add_field_yahoo">Tài khoản Yahoo</string>
-  <string name="identity_add_field_instagram">Instagram handle</string>
+  <string name="identity_add_field_instagram">Instagram username</string>
   <string name="identity_add_field_personal_website">Trang web cá nhân</string>
   <string name="identity_add_field_work_phone_number">Số điện thoại công việc</string>
   <string name="identity_add_field_work_email_address">Địa chỉ email công việc</string>
@@ -196,7 +196,6 @@
   <string name="mfa_limit_reached">Đã dạt giới hạn 2FA</string>
   <string name="upgrade">Nâng cấp</string>
   <string name="mfa_icon_content_description">biểu tượng 2FA</string>
-  <string name="select_suffix_upgrade_for_custom_domains">Nâng cấp để dùng tên miền tùy chọn</string>
   <string name="create_alias_content_limit_banner">Bạn đã đạt giới hạn bí danh bạn có thể tạo. Tạo không giới hạn bí danh khi bạn nâng cấp gói đăng ký của mình.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Bạn cần cập nhật app để có thể thay đổi mục</string>
   <string name="remove_passkey_dialog_title">Bạn muốn xóa passkey này ?</string>
@@ -208,4 +207,16 @@
   <string name="open_with">Mở bằng:</string>
   <string name="open_attachments_error">Could not open attachment</string>
   <string name="upload_attachments_error">Could not upload attachment</string>
+  <string name="banner_advanced_options_title">Did you know?</string>
+  <string name="banner_advanced_options_subtitle">Tap the gear icon to customize the alias the way you want.</string>
+  <string name="banner_custom_domain_title">Did you know?</string>
+  <string name="banner_custom_domain_subtitle">By adding your domain, you can create aliases like hi@my-domain.com.</string>
+  <string name="banner_custom_domain_button">Add domain</string>
+  <string name="banner_mailbox_title">Did you know?</string>
+  <string name="banner_mailbox_subtitle">Share aliases with others by adding their inbox as an additional mailbox.</string>
+  <string name="banner_mailbox_button">Add mailbox</string>
+  <!-- Suffix -->
+  <string name="suffix_subtitle_premium_domain">Premium domain</string>
+  <string name="suffix_subtitle_public_domain">Public domain</string>
+  <string name="suffix_subtitle_private_domain">Your domain</string>
 </resources>

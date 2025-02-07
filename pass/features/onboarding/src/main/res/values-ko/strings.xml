@@ -18,4 +18,14 @@
   <string name="error_biometry_failed_to_authenticate">인증하는데 실패하였습니다</string>
   <string name="settings_fingerprint_lock_enabled">지문 잠금 활성화됨</string>
   <string name="error_performing_operation">작업 처리 오류</string>
+  <string name="onboarding_slide_1_title">나의 모든 비밀번호.</string>
+  <string name="onboarding_slide_2_title">나의 받은 편지함 보호하기.</string>
+  <string name="onboarding_slide_3_title">최신 소식 받아보기.</string>
+  <string name="onboarding_slide_4_title">안전하게 공유하기.</string>
+  <string name="onboarding_slide_1_subtitle">가장 안전하게 보관하고 가장 신뢰할 수 있는 개인정보 보호업체의 보호를 받게됩니다.</string>
+  <string name="onboarding_slide_2_subtitle">피싱 위협에 대해 Hide-My-Email 별칭을 사용하세요.</string>
+  <string name="onboarding_slide_3_subtitle">비밀번호와 민감한 정보를 안전하고 쉽게 공유하세요.</string>
+  <string name="onboarding_slide_4_subtitle">내 이메일이 다크 웹에서 발견될 때 알림을 받아보세요.</string>
+  <string name="create_an_account_button">계정 생성</string>
+  <string name="sign_in_button">로그인</string>
 </resources>

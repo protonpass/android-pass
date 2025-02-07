@@ -23,7 +23,7 @@
   <string name="simple_login_sync_management_domain_title">Takma adların varsayılan etki alanı</string>
   <string name="simple_login_sync_management_domain_option_blank">Seçilmemiş</string>
   <string name="simple_login_sync_management_mailboxes_label">E-posta kutuları</string>
-  <string name="simple_login_sync_management_mailboxes_description">E-posta kutusu, bir takma ada gönderilen e-postaların yönlendirildiği yerdir. Gmail, Outlook, Proton Mail gibi normal e-posta kutunuzdur.</string>
+  <string name="simple_login_sync_management_mailboxes_description">E-posta kutusu, bir takma ada gönderilen e-postaların iletildiği yerdir. Gmail, Outlook, Proton Mail gibi normal e-posta kutunuzdur.</string>
   <string name="simple_login_sync_management_mailbox_default">Varsayılan</string>
   <string name="simple_login_sync_management_mailbox_unverified">E-posta kutusu doğrulanmamış</string>
   <string name="simple_login_sync_management_vault_title">SimpleLogin eşitleme</string>

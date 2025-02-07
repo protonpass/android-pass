@@ -19,7 +19,7 @@
   <string name="email_copied_to_clipboard">Адресу електронної пошти скопійовано</string>
   <string name="username_copied_to_clipboard">Ім\'я користувача скопійовано</string>
   <string name="password_copied_to_clipboard">Пароль скопійовано</string>
-  <string name="website_copied_to_clipboard">Вебсайт скопійовано</string>
+  <string name="website_copied_to_clipboard">Web address copied</string>
   <string name="totp_copied_to_clipboard">TOTP скопійовано</string>
   <string name="field_copied_to_clipboard">Поле скопійовано</string>
   <string name="move_item_to_trash_message">Елемент переміщено до смітника</string>
@@ -131,4 +131,6 @@
   </plurals>
   <string name="open_with">Відкрити з:</string>
   <string name="open_attachments_error">Не вдалося відкрити файл</string>
+  <string name="banner_contacts_title">Did you know?</string>
+  <string name="banner_contacts_subtitle">Every time your alias receives an email from someone, a new contact is automatically created.</string>
 </resources>

@@ -108,7 +108,7 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Ablaufdatum</string>
-  <string name="field_card_expiration_date_hint">MM/JJ</string>
+  <string name="field_card_expiration_date_hint">MM/YY</string>
   <string name="field_card_expiration_date_error">Gib ein gültiges Datum im Format MM/JJ ein.</string>
   <string name="create_credit_card_item_creation_error">Fehler beim Erfassen der Kreditkarte.</string>
   <string name="create_credit_card_item_creation_success">Kreditkarte erfasst.</string>
@@ -145,7 +145,7 @@
   <string name="identity_field_reddit_title">Reddit-Benutzername</string>
   <string name="identity_field_facebook_title">Facebook-URL</string>
   <string name="identity_field_yahoo_title">Yahoo-Benutzername</string>
-  <string name="identity_field_instagram_title">Instagram-Benutzername</string>
+  <string name="identity_field_instagram_title">Instagram username</string>
   <string name="identity_field_personal_website_title">URL der persönlichen Website</string>
   <string name="identity_field_work_phone_number_title">Geschäftliche Telefonnummer</string>
   <string name="identity_field_work_email_title">Geschäftliche E-Mail-Adresse</string>
@@ -160,7 +160,7 @@
   <string name="identity_add_field_reddit">Reddit-Benutzername</string>
   <string name="identity_add_field_facebook">Facebook-URL</string>
   <string name="identity_add_field_yahoo">Yahoo-Benutzername</string>
-  <string name="identity_add_field_instagram">Instagram-Benutzername</string>
+  <string name="identity_add_field_instagram">Instagram username</string>
   <string name="identity_add_field_personal_website">URL der persönlichen Website</string>
   <string name="identity_add_field_work_phone_number">Geschäftliche Telefonnummer</string>
   <string name="identity_add_field_work_email_address">Geschäftliche E-Mail-Adresse</string>
@@ -196,7 +196,6 @@
   <string name="mfa_limit_reached">2FA-Limit erreicht</string>
   <string name="upgrade">Upgraden</string>
   <string name="mfa_icon_content_description">2FA-Symbol</string>
-  <string name="select_suffix_upgrade_for_custom_domains">Upgrade für benutzerdefinierte Domains</string>
   <string name="create_alias_content_limit_banner">Du hast das Limit an Aliassen erreicht, die du erstellen kannst. Ein Upgrade deines Abonnements ermöglicht dir das Erstellen von unbegrenzten Aliassen.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Die App muss aktualisiert werden, damit dieser Eintrag bearbeitet werden kann.</string>
   <string name="remove_passkey_dialog_title">Diesen Passkey entfernen?</string>
@@ -208,4 +207,16 @@
   <string name="open_with">Öffnen mit:</string>
   <string name="open_attachments_error">Der Anhang konnte nicht geöffnet werden</string>
   <string name="upload_attachments_error">Hochladen des Anhangs der Nachricht fehlgeschlagen</string>
+  <string name="banner_advanced_options_title">Did you know?</string>
+  <string name="banner_advanced_options_subtitle">Tap the gear icon to customize the alias the way you want.</string>
+  <string name="banner_custom_domain_title">Did you know?</string>
+  <string name="banner_custom_domain_subtitle">By adding your domain, you can create aliases like hi@my-domain.com.</string>
+  <string name="banner_custom_domain_button">Add domain</string>
+  <string name="banner_mailbox_title">Did you know?</string>
+  <string name="banner_mailbox_subtitle">Share aliases with others by adding their inbox as an additional mailbox.</string>
+  <string name="banner_mailbox_button">Add mailbox</string>
+  <!-- Suffix -->
+  <string name="suffix_subtitle_premium_domain">Premium domain</string>
+  <string name="suffix_subtitle_public_domain">Public domain</string>
+  <string name="suffix_subtitle_private_domain">Your domain</string>
 </resources>

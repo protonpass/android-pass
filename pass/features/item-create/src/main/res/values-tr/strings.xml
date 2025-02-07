@@ -108,7 +108,7 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Son kullanma tarihi</string>
-  <string name="field_card_expiration_date_hint">AA / YY</string>
+  <string name="field_card_expiration_date_hint">AA/YY</string>
   <string name="field_card_expiration_date_error">AA/YY biçiminde geçerli bir tarih yazın</string>
   <string name="create_credit_card_item_creation_error">Kredi kartı oluşturulamadı</string>
   <string name="create_credit_card_item_creation_success">Kredi kartı oluşturuldu</string>
@@ -196,7 +196,6 @@
   <string name="mfa_limit_reached">İki adımlı doğrulama sınırına ulaşıldı</string>
   <string name="upgrade">Yükselt</string>
   <string name="mfa_icon_content_description">İki adımlı doğrulama simgesi</string>
-  <string name="select_suffix_upgrade_for_custom_domains">Özel etki alanı kullanmak için tarifenizi yükseltin</string>
   <string name="create_alias_content_limit_banner">Oluşturabileceğiniz takma ad sayısı sınırına ulaştınız. Abonelik tarifenizi yükselterek sınırsız sayıda takma ad oluşturabilirsiniz.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Bu ögeyi düzenlemek için uygulamanın güncellenmesi gerekli</string>
   <string name="remove_passkey_dialog_title">Bu geçiş anahtarı silinsin mi?</string>
@@ -208,4 +207,16 @@
   <string name="open_with">Şununla aç:</string>
   <string name="open_attachments_error">Ek dosya açılamadı</string>
   <string name="upload_attachments_error">Ek dosya yüklenemedi</string>
+  <string name="banner_advanced_options_title">Biliyor muydunuz?</string>
+  <string name="banner_advanced_options_subtitle">Takma adı istediğiniz gibi özelleştirmek için dişli simgesine dokunun.</string>
+  <string name="banner_custom_domain_title">Biliyor muydunuz?</string>
+  <string name="banner_custom_domain_subtitle">Etki alanınızı ekleyerek merhaba@etki-alanim.com gibi takma adlar oluşturabilirsiniz.</string>
+  <string name="banner_custom_domain_button">Etki alanı ekle</string>
+  <string name="banner_mailbox_title">Biliyor muydunuz?</string>
+  <string name="banner_mailbox_subtitle">Başka birinin gelen kutusunu ek e-posta kutusu olarak ekleyerek takma adları onlarla paylaşabilirsiniz.</string>
+  <string name="banner_mailbox_button">E-posta kutusu ekle</string>
+  <!-- Suffix -->
+  <string name="suffix_subtitle_premium_domain">Ücretli etki alanı</string>
+  <string name="suffix_subtitle_public_domain">Herkese açık etki alanı</string>
+  <string name="suffix_subtitle_private_domain">Etki alanınız</string>
 </resources>

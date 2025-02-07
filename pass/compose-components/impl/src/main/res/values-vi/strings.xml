@@ -257,7 +257,7 @@
   </plurals>
   <string name="simple_login_widget_action"/>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t receive the code?</string>
+  <string name="verification_code_not_received">Haven\'t received the code?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Vui lòng kiểm tra trong thư mục Spam của bạn để tìm email có tên “%s“</string>
   <string name="verification_code_suggestion_subject_new_email_address">Vui lòng xác minh địa chỉ email của bạn cho Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Vui lòng xác minh hộp thư của bạn</string>

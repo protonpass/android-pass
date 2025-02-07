@@ -36,6 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">Articolele s-au mutat în gunoi.</string>
   <string name="home_snackbar_items_move_to_trash_error">Articolele nu s-au putut muta în gunoi.</string>
   <string name="home_toast_items_selected_read_only">Articolele în mod doar citire nu pot fi selectate</string>
+  <string name="home_toast_items_selected_shared_with_me">Articolele care vi s-au partajat nu pot fi selectate.</string>
   <string name="home_autofill_banner_title">Bucurați-vă de magia autocompletării</string>
   <string name="home_autofill_banner_text">O apăsare și gata - numele de utilizator și parola sunt completate instant.</string>
   <string name="home_autofill_banner_settings">Activare autocompletare ›</string>
@@ -161,9 +162,9 @@
     <item quantity="other">Sigur doriți să ștergeți %d de articole? Această acțiune nu e reversibilă.</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_shared_warning_message">
-    <item quantity="one">%d item is currently shared. Deleting it will remove access for all other users.</item>
-    <item quantity="few">%d items are currently shared. Deleting them will remove access for all other users.</item>
-    <item quantity="other">%d items are currently shared. Deleting them will remove access for all other users.</item>
+    <item quantity="one">Este partajat %d articol. Dacă îl ștergeți, ceilalți utilizatori nu-l vor mai putea accesa.</item>
+    <item quantity="few">Sunt partajate %d articole. Dacă le ștergeți, ceilalți utilizatori nu le vor mai putea accesa.</item>
+    <item quantity="other">Sunt partajate %d de articole. Dacă le ștergeți, ceilalți utilizatori nu le vor mai putea accesa.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Căutări recente</string>

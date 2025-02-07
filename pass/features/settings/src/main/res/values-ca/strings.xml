@@ -3,10 +3,10 @@
   <string name="title_settings">Preferències</string>
   <string name="settings_autofill_section_title">Emplenament automàtic</string>
   <string name="settings_autofill_preference_title">Emplenament automàtic</string>
-  <string name="settings_autofill_preference_description">Per a inicis de sessió ràpids i fàcils, deixeu que Proton Pass ompli els vostres noms d\'usuari i contrasenyes.</string>
+  <string name="settings_autofill_preference_description">Per a inicis de sessió ràpids i fàcils, deixeu que Proton Pass empleni els vostres noms d\'usuari i contrasenyes.</string>
   <string name="settings_authentication_section_title">Autentificació</string>
   <string name="settings_authentication_preference_title">Blocatge d\'empremta digital</string>
-  <string name="settings_authentication_preference_description_enabled">Obriu ràpidament i de forma segura l\'aplicació amb l\'empremta digital.</string>
+  <string name="settings_authentication_preference_description_enabled">Obriu l\'aplicació de forma ràpida i segura amb l\'empremta digital.</string>
   <string name="settings_authentication_preference_description_no_fingerprint">No podeu requerir l\'empremta digital per interactuar amb l\'aplicació, ja que no hi ha empremtes digitals registrades en aquest dispositiu.</string>
   <string name="settings_appearance_preference_title">Tema</string>
   <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">Com a la configuració del sistema</string>
@@ -32,8 +32,8 @@
   <string name="settings_share_crashes">Comparteix informes d\'error anònims</string>
   <string name="settings_preference_updated">S\'ha actualitzat la vostra preferència</string>
   <string name="settings_display_section_title">Mostra</string>
-  <string name="settings_preference_display_username">Camp Nom d\'usuari sempre visible</string>
-  <string name="settings_preference_display_autofill_pinning">Emplenament automàtic sempre visible</string>
+  <string name="settings_preference_display_username">El camp de Nom d\'usuari serà sempre visible</string>
+  <string name="settings_preference_display_autofill_pinning">L\'emplenament automàtic serà sempre visible</string>
   <string name="view_logs_title">Mostra els registres</string>
   <string name="clipboard_bottomsheet_title">Porta-retalls</string>
   <string name="clipboard_option_clear_clipboard_label">Neteja el porta-retalls</string>
@@ -43,5 +43,5 @@
   <string name="clipboard_option_clear_clipboard_after_60_seconds">Després d\'1 minut</string>
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Després de 3 minuts</string>
   <string name="settings_use_digital_asset_link_preference_title">Activa els enllaços d\'actius digitals</string>
-  <string name="settings_use_digital_asset_link_preference_subtitle">Estableix la verificació de la propietat del lloc web entre una aplicació Android i un lloc web.</string>
+  <string name="settings_use_digital_asset_link_preference_subtitle">S\'estableix la verificació de la propietat del lloc web entre una aplicació Android i un lloc web.</string>
 </resources>

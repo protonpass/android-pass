@@ -36,6 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">Элементы, перемещенные в корзину</string>
   <string name="home_snackbar_items_move_to_trash_error">Элементы не могут быть перемещены в корзину</string>
   <string name="home_toast_items_selected_read_only">Доступные только для чтения элементы не могут быть выбраны</string>
+  <string name="home_toast_items_selected_shared_with_me">Items shared with you cannot be selected</string>
   <string name="home_autofill_banner_title">Насладитесь волшебством автозаполнения</string>
   <string name="home_autofill_banner_text">Одно касание и - престо! - ваше имя пользователя и пароль заполняются мгновенно.</string>
   <string name="home_autofill_banner_settings">Включить автозаполнение ›</string>

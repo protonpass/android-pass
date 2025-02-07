@@ -196,7 +196,6 @@
   <string name="mfa_limit_reached">Limită A2F atinsă.</string>
   <string name="upgrade">Modificare</string>
   <string name="mfa_icon_content_description">Pictogramă A2F</string>
-  <string name="select_suffix_upgrade_for_custom_domains">Pentru domenii personale modificați planul.</string>
   <string name="create_alias_content_limit_banner">Ați atins limita aliasurilor pe care le puteți crea. Puteți creați un număr nelimitat de aliasuri dacă vă modificați abonamentul.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Aplicația trebuie actualizată pentru a edita acest articol.</string>
   <string name="remove_passkey_dialog_title">Eliminați această cheie de acces?</string>
@@ -208,4 +207,16 @@
   <string name="open_with">Deschideți cu:</string>
   <string name="open_attachments_error">Atașamentul nu a putut fi deschis.</string>
   <string name="upload_attachments_error">Atașamentul nu a putut fi încărcat.</string>
+  <string name="banner_advanced_options_title">Știați că?</string>
+  <string name="banner_advanced_options_subtitle">Atingeți pictograma cu roata zimțată pentru vă a personaliza aliasul cum doriți.</string>
+  <string name="banner_custom_domain_title">Știați că?</string>
+  <string name="banner_custom_domain_subtitle">Prin adăugarea domeniului personal, vă puteți crea aliasuri cum ar fi salut@domeniul-meu.com.</string>
+  <string name="banner_custom_domain_button">Adăugare domeniu</string>
+  <string name="banner_mailbox_title">Știați că?</string>
+  <string name="banner_mailbox_subtitle">Partajați aliasuri cu alții adăugând adresa lor de e-mail ca adresă suplimentară.</string>
+  <string name="banner_mailbox_button">Adăugare cont de e-mail</string>
+  <!-- Suffix -->
+  <string name="suffix_subtitle_premium_domain">Domeniu premium</string>
+  <string name="suffix_subtitle_public_domain">Domeniu public</string>
+  <string name="suffix_subtitle_private_domain">Domeniul personal</string>
 </resources>

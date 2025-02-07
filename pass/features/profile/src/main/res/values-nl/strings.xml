@@ -50,7 +50,7 @@
   <string name="profile_option_change_pin_code">Wijzig PIN-code</string>
   <string name="profile_passkey_support_section_title">Passkeys</string>
   <string name="profile_passkey_support_subtitle_supported">Passkeys worden ondersteund</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Uw Android versie ondersteunt geen toegangssleutels.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">Uw Android versie ondersteunt geen passkeys.</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Uw apparaat ondersteunt geen passkeys</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Kon de ondersteuning voor passkeys niet controleren</string>
   <plurals name="profile_after_days">

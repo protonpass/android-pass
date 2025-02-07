@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="description_field_label">問題はなんですか？</string>
-  <string name="description_field_hint">問題をより詳細に説明してください。エラーが発生した場合は、その問題が何であるかをお知らせください。</string>
+  <string name="description_field_hint">問題をより詳細に説明してください。エラーメッセージがある場合は、何といっているかを教えてください。</string>
   <string name="email_field_label">メール</string>
   <string name="email_field_hint">メール</string>
   <string name="attach_image_button">画像を添付</string>

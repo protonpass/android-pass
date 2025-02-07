@@ -108,7 +108,7 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">만료 일자</string>
-  <string name="field_card_expiration_date_hint">MM / YY (월/년)</string>
+  <string name="field_card_expiration_date_hint">MM/YY (월/년)</string>
   <string name="field_card_expiration_date_error">MM/YY (월/년) 형식으로 유효한 날짜를 입력하십시오.</string>
   <string name="create_credit_card_item_creation_error">신용 카드를 생성할 수 없습니다.</string>
   <string name="create_credit_card_item_creation_success">신용 카드 생성됨.</string>
@@ -196,7 +196,6 @@
   <string name="mfa_limit_reached">2단계 인증 제한 도달</string>
   <string name="upgrade">업그레이드</string>
   <string name="mfa_icon_content_description">2단계 인증 아이콘</string>
-  <string name="select_suffix_upgrade_for_custom_domains">사용자 지정 도메인을 위해 업그레이드</string>
   <string name="create_alias_content_limit_banner">생성하실 수 있는 별칭의 한도에 도달했습니다. 구독을 업그레이드하면 별칭을 제한 없이 생성할 수 있습니다.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">이 항목을 편집하려면 앱 업데이트가 필요합니다.</string>
   <string name="remove_passkey_dialog_title">이 패스키를 삭제하시겠습니까?</string>
@@ -208,4 +207,16 @@
   <string name="open_with">열기:</string>
   <string name="open_attachments_error">첨부파일을 열 수 없습니다</string>
   <string name="upload_attachments_error">첨부 파일을 업로드할 수 없습니다</string>
+  <string name="banner_advanced_options_title">알고 계셨나요?</string>
+  <string name="banner_advanced_options_subtitle">톱니바퀴 아이콘을 눌러 별칭을 원하는 방식으로 사용자 지정하세요.</string>
+  <string name="banner_custom_domain_title">알고 계셨나요?</string>
+  <string name="banner_custom_domain_subtitle">도메인을 추가하면 hi@my-domain.com과 같은 별칭을 만들 수 있습니다.</string>
+  <string name="banner_custom_domain_button">도메인 추가</string>
+  <string name="banner_mailbox_title">알고 계셨나요?</string>
+  <string name="banner_mailbox_subtitle">상대방의 메일함을 추가 메일함으로 추가하여 별칭을 공유하세요.</string>
+  <string name="banner_mailbox_button">메일함 추가</string>
+  <!-- Suffix -->
+  <string name="suffix_subtitle_premium_domain">프리미엄 도메인</string>
+  <string name="suffix_subtitle_public_domain">공개 도메인</string>
+  <string name="suffix_subtitle_private_domain">나의 도메인</string>
 </resources>

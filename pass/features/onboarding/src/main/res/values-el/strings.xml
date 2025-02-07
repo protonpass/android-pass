@@ -18,4 +18,14 @@
   <string name="error_biometry_failed_to_authenticate">Αποτυχία επαλήθευσης</string>
   <string name="settings_fingerprint_lock_enabled">Ενεργοποιημένο κλείδωμα δακτυλικών αποτυπωμάτων</string>
   <string name="error_performing_operation">Σφάλμα κατά την εκτέλεση της λειτουργίας</string>
+  <string name="onboarding_slide_1_title">Όλοι οι κωδικοί πρόσβασής σας.</string>
+  <string name="onboarding_slide_2_title">Προστατέψτε τα εισερχόμενά σας.</string>
+  <string name="onboarding_slide_3_title">Μείνετε ενημερωμένοι.</string>
+  <string name="onboarding_slide_4_title">Ασφαλής κοινοποίηση.</string>
+  <string name="onboarding_slide_1_subtitle">Ασφαλής σε ένα μέρος και προστατευόμενοι από το πιο αξιόπιστο όνομα στο απόρρητο.</string>
+  <string name="onboarding_slide_2_subtitle">Χρησιμοποιήστε ψευδώνυμα της Hide-My-Email ενάντια σε απειλές ηλεκτρονικού ψαρέματος.</string>
+  <string name="onboarding_slide_3_subtitle">Μοιραστείτε κωδικούς πρόσβασης και ευαίσθητες πληροφορίες με ασφάλεια και ευκολία.</string>
+  <string name="onboarding_slide_4_subtitle">Λάβετε ειδοποιήσεις όταν το email σας βρίσκεται στον σκοτεινό ιστό.</string>
+  <string name="create_an_account_button">Δημιουργία λογαριασμού</string>
+  <string name="sign_in_button">Σύνδεση</string>
 </resources>

@@ -24,7 +24,7 @@
   <string name="home_empty_vault_create_alias">Opret et Hide-my-email alias</string>
   <string name="home_empty_vault_create_note">Opret en note</string>
   <string name="home_empty_vault_create_credit_card">Opret et betalingskort</string>
-  <string name="home_empty_vault_create_identity">Create an identity</string>
+  <string name="home_empty_vault_create_identity">Opret en identitet</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Fejl ved indlæsning af elementer</string>
   <string name="error_refreshing">Fejl ved genindlæsning</string>
   <string name="home_snackbar_login_moved_to_trash">Login flyttet til papirkurv</string>
@@ -36,6 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">Elementer flyttet til papirkurv</string>
   <string name="home_snackbar_items_move_to_trash_error">Elementer kunne ikke flyttes til papirkurven</string>
   <string name="home_toast_items_selected_read_only">Skrivebeskyttede elementer kan ikke vælges</string>
+  <string name="home_toast_items_selected_shared_with_me">Elementer, der er delt med dig, kan ikke vælges</string>
   <string name="home_autofill_banner_title">Nyd magien ved autofyld</string>
   <string name="home_autofill_banner_text">Ét tryk, og dit brugernavn og din adgangskode udfyldes øjeblikkeligt.</string>
   <string name="home_autofill_banner_settings">Slå autofyld til ›</string>
@@ -168,10 +169,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Fejl ved frigørelse af nogle af elementerne</string>
   <string name="home_snackbar_items_unpinned_error">Fejl ved frigørelse af elementer</string>
   <string name="home_snackbar_items_alias_enabled_success">Alias aktiveret</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Fejl ved aktivering af visse aliasser</string>
   <string name="home_snackbar_items_alias_enabled_error">Fejl ved aktivering af aliasser</string>
   <string name="home_snackbar_items_alias_disabled_success">Alias deaktiveret</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Fejl ved deaktivering af visse aliasser</string>
   <string name="home_snackbar_items_alias_disabled_error">Fejl ved deaktivering af aliasser</string>
   <string name="bulk_action_unpin">Frigør</string>
   <string name="bulk_action_pin">Fastgør</string>

@@ -54,9 +54,9 @@
   <!--Shared-->
   <string name="secure_links_shared_action_copy_link">Copiar el enlace</string>
   <string name="secure_links_shared_action_share_link">Compartir el enlace</string>
-  <string name="secure_links_shared_action_delete_link">Borrar el enlace</string>
-  <string name="secure_links_shared_action_delete_link_inactive">Borrar el enlace inactivo</string>
-  <string name="secure_links_shared_action_delete_links_inactive">Borrar todos los enlaces inactivos</string>
+  <string name="secure_links_shared_action_delete_link">Eliminar el enlace</string>
+  <string name="secure_links_shared_action_delete_link_inactive">Eliminar el enlace inactivo</string>
+  <string name="secure_links_shared_action_delete_links_inactive">Eliminar todos los enlaces inactivos</string>
   <string name="secure_links_shared_snackbar_message_link_copied">Se ha copiado el enlace seguro.</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Se ha cancelado la eliminación del enlace seguro.</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_error">Se ha producido un error al eliminar el enlace seguro.</string>

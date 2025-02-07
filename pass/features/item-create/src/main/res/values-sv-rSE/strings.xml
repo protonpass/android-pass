@@ -196,7 +196,6 @@
   <string name="mfa_limit_reached">2FA-gränsen uppnådd</string>
   <string name="upgrade">Uppgradera</string>
   <string name="mfa_icon_content_description">2FA-ikon</string>
-  <string name="select_suffix_upgrade_for_custom_domains">Uppgradera för anpassade domäner</string>
   <string name="create_alias_content_limit_banner">Du har nått gränsen för alias du kan skapa. Skapa ett obegränsat antal alias när du uppgraderar din prenumeration.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Appen måste uppdateras för att redigera detta objekt</string>
   <string name="remove_passkey_dialog_title">Ta bort denna passkey?</string>
@@ -208,4 +207,16 @@
   <string name="open_with">Öppna med:</string>
   <string name="open_attachments_error">Kunde inte öppna bilaga</string>
   <string name="upload_attachments_error">Kunde inte ladda upp bilaga</string>
+  <string name="banner_advanced_options_title">Visste du att?</string>
+  <string name="banner_advanced_options_subtitle">Tryck på kugghjulsikonen för att anpassa aliaset så som du vill ha det.</string>
+  <string name="banner_custom_domain_title">Visste du att?</string>
+  <string name="banner_custom_domain_subtitle">Genom att lägga till din domän kan du skapa alias som hi@my-domain.com.</string>
+  <string name="banner_custom_domain_button">Lägg till domän</string>
+  <string name="banner_mailbox_title">Visste du att?</string>
+  <string name="banner_mailbox_subtitle">Dela alias med andra genom att lägga till deras inkorg som en ytterligare brevlåda.</string>
+  <string name="banner_mailbox_button">Lägg till brevlåda</string>
+  <!-- Suffix -->
+  <string name="suffix_subtitle_premium_domain">Premiumdomän</string>
+  <string name="suffix_subtitle_public_domain">Offentlig domän</string>
+  <string name="suffix_subtitle_private_domain">Din domän</string>
 </resources>

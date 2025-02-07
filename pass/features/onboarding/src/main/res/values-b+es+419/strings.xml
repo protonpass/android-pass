@@ -18,4 +18,14 @@
   <string name="error_biometry_failed_to_authenticate">Error al autenticar</string>
   <string name="settings_fingerprint_lock_enabled">Bloqueo de huella dactilar activado</string>
   <string name="error_performing_operation">Error al ejecutar la operación</string>
+  <string name="onboarding_slide_1_title">Todas sus contraseñas.</string>
+  <string name="onboarding_slide_2_title">Protega su bandeja de entrada.</string>
+  <string name="onboarding_slide_3_title">Manténgase informado.</string>
+  <string name="onboarding_slide_4_title">Intercambios seguros.</string>
+  <string name="onboarding_slide_1_subtitle">De forma segura en un solo lugar y protegido por el nombre más confiable en privacidad.</string>
+  <string name="onboarding_slide_2_subtitle">Use aliases de hide-my-email contra amenazas de phishing.</string>
+  <string name="onboarding_slide_3_subtitle">Comparta contraseñas e información confidencial de forma segura y sin esfuerzo.</string>
+  <string name="onboarding_slide_4_subtitle">Obtenga alertas cuando su correo electrónico se encuentre en la Dark Web</string>
+  <string name="create_an_account_button">Crear una cuenta</string>
+  <string name="sign_in_button">Iniciar sesión</string>
 </resources>

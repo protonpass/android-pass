@@ -108,7 +108,7 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Utløpsdato</string>
-  <string name="field_card_expiration_date_hint">MM/ÅÅ</string>
+  <string name="field_card_expiration_date_hint">MM / ÅÅ</string>
   <string name="field_card_expiration_date_error">Angi en gyldig dato i MM/ÅÅ-format</string>
   <string name="create_credit_card_item_creation_error">Kunne ikke opprette kredittkort</string>
   <string name="create_credit_card_item_creation_success">Kredittkort opprettet</string>
@@ -196,7 +196,6 @@
   <string name="mfa_limit_reached">2FA-grensen nådd</string>
   <string name="upgrade">Oppgrader</string>
   <string name="mfa_icon_content_description">2FA-ikon</string>
-  <string name="select_suffix_upgrade_for_custom_domains">Oppgrader for egendefinerte domener</string>
   <string name="create_alias_content_limit_banner">Du har nådd grensen for aliaser du kan opprette. Opprett et ubegrenset antall aliaser når du oppgraderer abonnementet.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Appen må oppdateres for å redigere dette elementet</string>
   <string name="remove_passkey_dialog_title">Fjerne denne tilgangsnøkkelen?</string>
@@ -208,4 +207,16 @@
   <string name="open_with">Åpne med:</string>
   <string name="open_attachments_error">Kunne ikke åpne vedlegg</string>
   <string name="upload_attachments_error">Kunne ikke laste opp vedlegg</string>
+  <string name="banner_advanced_options_title">Visste du at?</string>
+  <string name="banner_advanced_options_subtitle">Trykk på tannhjulikonet for å tilpasse aliaset slik du vil.</string>
+  <string name="banner_custom_domain_title">Visste du at?</string>
+  <string name="banner_custom_domain_subtitle">Ved å legge til domenet ditt kan du opprette aliaser som hei@mitt-domene.no.</string>
+  <string name="banner_custom_domain_button">Legg til domene</string>
+  <string name="banner_mailbox_title">Visste du at?</string>
+  <string name="banner_mailbox_subtitle">Del aliaser med andre ved å legge til innboksen deres som en ekstra postboks.</string>
+  <string name="banner_mailbox_button">Legg til postboks</string>
+  <!-- Suffix -->
+  <string name="suffix_subtitle_premium_domain">Premium-domene</string>
+  <string name="suffix_subtitle_public_domain">Offentlig domene</string>
+  <string name="suffix_subtitle_private_domain">Ditt domene</string>
 </resources>

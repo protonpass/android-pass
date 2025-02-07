@@ -50,7 +50,7 @@
   <string name="profile_option_change_pin_code">Cambiar código PIN</string>
   <string name="profile_passkey_support_section_title">Claves de acceso</string>
   <string name="profile_passkey_support_subtitle_supported">Las claves de acceso están admitidas</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Su versión de Android no admite claves de acceso.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">La versión de Android no admite claves de acceso</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Su dispositivo no admite claves de acceso</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">No se puede comprobar el soporte para claves de acceso</string>
   <plurals name="profile_after_days">

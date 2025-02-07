@@ -18,4 +18,14 @@
   <string name="error_biometry_failed_to_authenticate">Misslyckades att autentisera</string>
   <string name="settings_fingerprint_lock_enabled">Fingeravtryckslås aktiverat</string>
   <string name="error_performing_operation">Gick inte utföra åtgärd</string>
+  <string name="onboarding_slide_1_title">Alla dina lösenord.</string>
+  <string name="onboarding_slide_2_title">Skydda din inkorg.</string>
+  <string name="onboarding_slide_3_title">Håll dig informerad.</string>
+  <string name="onboarding_slide_4_title">Säker delning.</string>
+  <string name="onboarding_slide_1_subtitle">Säkert på ett ställe och skyddat av det mest betrodda namnet inom integritet.</string>
+  <string name="onboarding_slide_2_subtitle">Use Hide-My-Email aliases against phishing threats.</string>
+  <string name="onboarding_slide_3_subtitle">Dela lösenord och känslig information säkert och enkelt.</string>
+  <string name="onboarding_slide_4_subtitle">Få varningar när din e-post hittas på den mörka webben.</string>
+  <string name="create_an_account_button">Skapa ett konto</string>
+  <string name="sign_in_button">Logga in</string>
 </resources>

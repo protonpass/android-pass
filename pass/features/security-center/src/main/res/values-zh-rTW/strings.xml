@@ -82,7 +82,7 @@
   <string name="security_center_dark_web_monitor_found_in_breaches">無偵測到外洩</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Proton addresses</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email 別名</string>
-  <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving proton addresses</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving Proton addresses</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Error retrieving Hide-my-email aliases</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Not monitored</string>
   <string name="security_center_dark_web_monitor_see_all">查看全部</string>

@@ -3,7 +3,7 @@
   <string name="action_open">Obre</string>
   <string name="action_copy">Copia</string>
   <!-- Detail -->
-  <string name="detail_init_error">Problema en recuperar els detalls de l\'element</string>
+  <string name="detail_init_error">Hi ha hagut un problema en recuperar els detalls de l\'element</string>
   <string name="top_bar_edit_button_text">Edita</string>
   <!-- Alias details -->
   <string name="field_alias_title">Adreça d\'àlies</string>
@@ -31,9 +31,9 @@
   <string name="item_monitor_exclude_message">S\'ha exclòs l\'element del monitoratge.</string>
   <string name="item_monitor_exclude_message_error">S\'ha produït un error en excloure l\'element del monitoratge.</string>
   <string name="item_monitor_include_message">S\'ha afegit l\'element al monitoratge.</string>
-  <string name="item_monitor_include_message_error">S\'ha produït un error en incloure l\'element al seguiment.</string>
+  <string name="item_monitor_include_message_error">S\'ha produït un error en incloure l\'element al monitoratge.</string>
   <string name="alias_change_status_error">S\'ha produït un error en canviar l\'estat de l\'àlies.</string>
-  <string name="login_item_generate_totp_error">S\'ha produït un error en generar el codi A2F.</string>
+  <string name="login_item_generate_totp_error">S\'ha produït un error en generar el codi d\'autenticació de doble factor (2FA).</string>
   <string name="login_item_view_alias_button">Mostra l\'àlies</string>
   <string name="login_item_monitor_widget_weak_pass_title">Contrasenya feble</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Aquest compte és vulnerable, visiteu el servei i canvieu la contrasenya.</string>
@@ -69,7 +69,7 @@
   <string name="credit_card_expiration_date_field_name">Data de caducitat</string>
   <string name="credit_card_cardholder_copied_to_clipboard">S\'ha copiat el titular de la targeta al porta-retalls</string>
   <string name="credit_card_number_copied_to_clipboard">S\'ha copiat el número de la targeta al porta-retalls</string>
-  <string name="credit_card_verifcation_number_copied_to_clipboard">S\'ha copiat el codi de verificació al porta-retalls.</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">S\'ha copiat el codi de seguretat al porta-retalls.</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Mou a la paperera</string>
   <string name="migrate_item_detail_bottom_sheet">Mou a una altra caixa forta</string>
@@ -89,12 +89,12 @@
     -->
   <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
   <string name="item_detail_cannot_perform_action_edit_title">No es pot editar.</string>
-  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">No podeu editar aquest element perquè no teniu prou permisos per fer-ho.</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">No podeu editar aquest element perquè no teniu prou permisos per a fer-ho.</string>
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Només podeu editar elements a les vostres caixes fortes més antigues. Per editar aquest element, milloreu el vostre pla actual.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">No podeu editar aquest element perquè és a la paperera. Si us plau, traieu-lo de la paperera abans d\'editar-lo.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">No es pot compartir.</string>
   <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">No té els permisos necessaris per realitzar l\'acció sol·licitada.</string>
-  <string name="item_detail_cannot_perform_action_share_limit_reached">Heu assolit el límit de compartició de la caixa forta. Per compartir més caixes fortes, milloreu el vostre pla actual.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Heu assolit el límit de compartició de caixes fortes. Per a compartir més caixes fortes, milloreu el vostre pla actual.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">No podeu compartir aquest element perquè és a la paperera. Traieu-lo de la paperera abans de compartir-lo.</string>
   <string name="password_score_vulnerable">Vulnerable</string>
   <string name="password_score_weak">Feble</string>
@@ -108,7 +108,7 @@
   <string name="contacts">Contactes</string>
   <string name="contacts_section_description">Per mantenir la vostra adreça electrònica personal oculta, podeu crear un contacte d\'àlies que emmascari la vostra adreça.</string>
   <string name="field_detail_display_name_title">Nom per a mostrar</string>
-  <string name="display_name_section_description">Aquest és el nom de visualització quan s\'envia un missatge des d\'aquest àlies.</string>
+  <string name="display_name_section_description">Aquest és el nom per a mostrar quan s\'envia un correu electrònic des d\'aquest àlies.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s reenviament</item>
     <item quantity="other">%1$s reenviaments</item>
@@ -123,4 +123,6 @@
   </plurals>
   <string name="open_with">Obre amb:</string>
   <string name="open_attachments_error">No s\'ha pogut obrir el adjunt.</string>
+  <string name="banner_contacts_title">Ho sabíeu?</string>
+  <string name="banner_contacts_subtitle">Cada vegada que el vostre àlies rep un correu electrònic, es crea automàticament un contacte de qui ho ha enviat.</string>
 </resources>

@@ -19,7 +19,7 @@
   <string name="email_copied_to_clipboard">メールアドレスをコピーしました</string>
   <string name="username_copied_to_clipboard">ユーザー名をコピーしました</string>
   <string name="password_copied_to_clipboard">パスワードをコピーしました</string>
-  <string name="website_copied_to_clipboard">コピーされたウェブサイト</string>
+  <string name="website_copied_to_clipboard">Webアドレスをコピーしました</string>
   <string name="totp_copied_to_clipboard">TOTP をコピーしました</string>
   <string name="field_copied_to_clipboard">フィールドをコピーしました</string>
   <string name="move_item_to_trash_message">アイテムをゴミ箱に移動しました</string>
@@ -119,4 +119,6 @@
   </plurals>
   <string name="open_with">開く：</string>
   <string name="open_attachments_error">添付ファイルを開くことができませんでした</string>
+  <string name="banner_contacts_title">ご存知ですか？</string>
+  <string name="banner_contacts_subtitle">エイリアスが誰かからメールを受け取るたびに、新しい連絡先が自動的に作成されます。</string>
 </resources>

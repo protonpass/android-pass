@@ -36,6 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">Елементи переміщено до смітника</string>
   <string name="home_snackbar_items_move_to_trash_error">Не вдалося перемістити елементи до смітника</string>
   <string name="home_toast_items_selected_read_only">Неможливо вибрати елементи, доступні лише для читання</string>
+  <string name="home_toast_items_selected_shared_with_me">Items shared with you cannot be selected</string>
   <string name="home_autofill_banner_title">Насолоджуйтеся магією автозаповнення</string>
   <string name="home_autofill_banner_text">Ваше ім\'я користувача та пароль заповнюються одним дотиком.</string>
   <string name="home_autofill_banner_settings">Увімкнути автозаповнення ›</string>

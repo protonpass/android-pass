@@ -123,4 +123,6 @@
   </plurals>
   <string name="open_with">Abrir con:</string>
   <string name="open_attachments_error">Error al abrir el archivo adjunto</string>
+  <string name="banner_contacts_title">¿Lo sabía?</string>
+  <string name="banner_contacts_subtitle">Cada vez que su alias reciba un correo de alguien, se creará automáticamente un contacto.</string>
 </resources>

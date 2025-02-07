@@ -312,21 +312,21 @@
   <string name="options_menu_content_description">Меню параметраў</string>
   <!-- Items -->
   <plurals name="shared_items_count">
-    <item quantity="one">%d shared item</item>
-    <item quantity="few">%d shared items</item>
-    <item quantity="many">%d shared items</item>
-    <item quantity="other">%d shared items</item>
+    <item quantity="one">%d абагулены элемент</item>
+    <item quantity="few">%d абагуленыя элементы</item>
+    <item quantity="many">%d абагуленых элементаў</item>
+    <item quantity="other">%d абагуленых элементаў</item>
   </plurals>
   <plurals name="users_count">
-    <item quantity="one">%d user</item>
-    <item quantity="few">%d users</item>
-    <item quantity="many">%d users</item>
-    <item quantity="other">%d users</item>
+    <item quantity="one">%d карыстальнік</item>
+    <item quantity="few">%d карыстальнікі</item>
+    <item quantity="many">%d карыстальнікаў</item>
+    <item quantity="other">%d карыстальнікаў</item>
   </plurals>
   <plurals name="members_count">
-    <item quantity="one">%d member</item>
-    <item quantity="few">%d members</item>
-    <item quantity="many">%d members</item>
-    <item quantity="other">%d members</item>
+    <item quantity="one">%d удзельнік</item>
+    <item quantity="few">%d удзельнікі</item>
+    <item quantity="many">%d удзельнікаў</item>
+    <item quantity="other">%d удзельнікаў</item>
   </plurals>
 </resources>

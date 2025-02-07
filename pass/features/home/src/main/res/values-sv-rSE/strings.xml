@@ -36,6 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">Objekt flyttat till papperskorg</string>
   <string name="home_snackbar_items_move_to_trash_error">Objekt kunde inte flyttas till papperskorg</string>
   <string name="home_toast_items_selected_read_only">Skrivskyddade objekt kan inte väljas</string>
+  <string name="home_toast_items_selected_shared_with_me">Objekt delat med dig kan inte väljas</string>
   <string name="home_autofill_banner_title">Njut av magin med autofyll</string>
   <string name="home_autofill_banner_text">Ett tryck och—vips!—Ditt användarnamn och lösenord fylls i omedelbart.</string>
   <string name="home_autofill_banner_settings">Slå på autofyll ›</string>

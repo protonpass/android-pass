@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="description_field_label">Vad är ditt problem?</string>
-  <string name="description_field_hint">Beskriv problemet så mer detaljerat som möjligt. Om det är något fel, berätta vad det står.</string>
+  <string name="description_field_hint">Beskriv problemet, ju mer detaljerat desto bättre. Om det finns ett felmeddelande, berätta vad det står.</string>
   <string name="email_field_label">E-post</string>
   <string name="email_field_hint">e-post</string>
   <string name="attach_image_button">Bifoga bild</string>

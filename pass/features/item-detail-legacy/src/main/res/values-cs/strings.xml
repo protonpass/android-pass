@@ -19,7 +19,7 @@
   <string name="email_copied_to_clipboard">E-mailová adresa zkopírována</string>
   <string name="username_copied_to_clipboard">Uživatelské jméno bylo zkopírováno</string>
   <string name="password_copied_to_clipboard">Heslo bylo zkopírováno</string>
-  <string name="website_copied_to_clipboard">Webová stránka zkopírována</string>
+  <string name="website_copied_to_clipboard">Webová adresa zkopírována</string>
   <string name="totp_copied_to_clipboard">TOTP zkopírováno</string>
   <string name="field_copied_to_clipboard">Pole zkopírováno</string>
   <string name="move_item_to_trash_message">Položka přesunuta do koše</string>
@@ -131,4 +131,6 @@
   </plurals>
   <string name="open_with">Otevřít pomocí:</string>
   <string name="open_attachments_error">Nepodařilo se otevřít přílohu</string>
+  <string name="banner_contacts_title">Věděli jste?</string>
+  <string name="banner_contacts_subtitle">Pokaždé, když váš alias od někoho obdrží e-mail, automaticky se vytvoří nový kontakt.</string>
 </resources>

@@ -24,7 +24,7 @@
   <string name="home_empty_vault_create_alias">Luo Hide-my-email-alias</string>
   <string name="home_empty_vault_create_note">Luo muistiinpano</string>
   <string name="home_empty_vault_create_credit_card">Luo maksukortti</string>
-  <string name="home_empty_vault_create_identity">Create an identity</string>
+  <string name="home_empty_vault_create_identity">Luo identiteetti</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Virhe ladattaessa kohteita</string>
   <string name="error_refreshing">Virhe päivitettäessä</string>
   <string name="home_snackbar_login_moved_to_trash">Kirjautumistieto siirrettiin roskakoriin</string>
@@ -36,6 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">Kohteet siirrettiin roskakoriin</string>
   <string name="home_snackbar_items_move_to_trash_error">Kohteita ei voitu siirtää roskakoriin</string>
   <string name="home_toast_items_selected_read_only">Vain luku -kohteita ei voida valita</string>
+  <string name="home_toast_items_selected_shared_with_me">Kanssasi jaettuja tiedostoja ei voi valita</string>
   <string name="home_autofill_banner_title">Nauti automaattitäytön taiasta</string>
   <string name="home_autofill_banner_text">Vain yksi napautus ja käyttäjätunnuksesi ja salasanasi on täytetty.</string>
   <string name="home_autofill_banner_settings">Ota automaattitäyttö käyttöön ›</string>
@@ -153,8 +154,8 @@
     <item quantity="other">Haluatko varmasti poistaa %d kohdetta? Tätä ei ole mahdollista kumota.</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_shared_warning_message">
-    <item quantity="one">%d item is currently shared. Deleting it will remove access for all other users.</item>
-    <item quantity="other">%d items are currently shared. Deleting them will remove access for all other users.</item>
+    <item quantity="one">%d kohde on tällä hetkellä jaettuna. Sen poistaminen poistaa pääsyn kaikilta muilta käyttäjiltä.</item>
+    <item quantity="other">%d kohdetta on tällä hetkellä jaettuna. Niiden poistaminen poistaa pääsyn kaikilta muilta käyttäjiltä.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Viimeisimmät haut</string>
@@ -168,10 +169,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Virhe irrotettaessa osaa kohteista</string>
   <string name="home_snackbar_items_unpinned_error">Virhe irrotettaessa kohteita</string>
   <string name="home_snackbar_items_alias_enabled_success">Alias otettiin käyttöön</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Virhe joidenkin aliasten käyttöönotossa</string>
   <string name="home_snackbar_items_alias_enabled_error">Virhe aliasten käyttöönotossa</string>
   <string name="home_snackbar_items_alias_disabled_success">Alias poistettiin käytöstä</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Virhe joidenkin aliasten käytöstä poistamisessa</string>
   <string name="home_snackbar_items_alias_disabled_error">Virhe aliasten käytöstä poistamisessa</string>
   <string name="bulk_action_unpin">Irrota</string>
   <string name="bulk_action_pin">Kiinnitä</string>

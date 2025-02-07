@@ -24,7 +24,7 @@
   <string name="home_empty_vault_create_alias">Δημιουργήστε ένα Hide-my-email ψευδώνυμο</string>
   <string name="home_empty_vault_create_note">Δημιουργία σημείωσης</string>
   <string name="home_empty_vault_create_credit_card">Δημιουργία πιστωτικής κάρτας</string>
-  <string name="home_empty_vault_create_identity">Create an identity</string>
+  <string name="home_empty_vault_create_identity">Δημιουργήστε μια ταυτότητα</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Σφάλμα κατά τη φόρτωση στοιχείων</string>
   <string name="error_refreshing">Σφάλμα κατά την εκτέλεση ανανέωσης</string>
   <string name="home_snackbar_login_moved_to_trash">Η σύνδεση μεταφέρθηκε στον κάδο απορριμμάτων</string>
@@ -36,6 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">Το στοιχεία μετακινήθηκαν στον κάδο απορριμμάτων</string>
   <string name="home_snackbar_items_move_to_trash_error">Δεν ήταν δυνατή η μετακίνηση των στοιχείων στον κάδο απορριμμάτων</string>
   <string name="home_toast_items_selected_read_only">Δεν είναι δυνατή η επιλογή στοιχείων μόνο για ανάγνωση</string>
+  <string name="home_toast_items_selected_shared_with_me">Δεν είναι δυνατή η επιλογή στοιχείων που έχουν τεθεί σε κοινή χρήση με εσάς</string>
   <string name="home_autofill_banner_title">Απολαύστε τη μαγεία της Αυτόματης Συμπλήρωσης</string>
   <string name="home_autofill_banner_text">Ένα πάτημα και—presto!—το όνομα χρήστη και ο κωδικός πρόσβασής σας συμπληρώνονται αμέσως.</string>
   <string name="home_autofill_banner_settings">Ενεργοποίηση Αυτόματης Συμπλήρωσης ›</string>
@@ -168,10 +169,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Σφάλμα κατά το ξεκαρφίτσωμα ορισμένων στοιχείων</string>
   <string name="home_snackbar_items_unpinned_error">Σφάλμα κατά το ξεκαρφίτσωμα στοιχείων</string>
   <string name="home_snackbar_items_alias_enabled_success">Το ψευδώνυμο ενεργοποιήθηκε με επιτυχία</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Σφάλμα κατά την ενεργοποίηση ορισμένων ψευδωνύμων</string>
   <string name="home_snackbar_items_alias_enabled_error">Σφάλμα κατά την ενεργοποίηση ψευδωνύμων</string>
   <string name="home_snackbar_items_alias_disabled_success">Το ψευδώνυμο απενεργοποιήθηκε με επιτυχία</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Σφάλμα κατά την απενεργοποίηση ορισμένων ψευδωνύμων</string>
   <string name="home_snackbar_items_alias_disabled_error">Σφάλμα κατά την απενεργοποίηση ψευδωνύμων</string>
   <string name="bulk_action_unpin">Ξεκαρφίτσωμα</string>
   <string name="bulk_action_pin">Καρφίτσωμα</string>

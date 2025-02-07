@@ -58,7 +58,7 @@
   <string name="sharing_snackbar_invite_sent_error">Spedizione dell\'invito non riuscita</string>
   <string name="sharing_snackbar_invite_new_users_error">Non è possibile inviare inviti a nuovi utenti.</string>
   <string name="sharing_snackbar_invite_free_user_error">Gli inviti con elementi possono essere inviati solo a utenti paganti</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">L\'indirizzo è stato già stati invitato</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">L\'indirizzo è già stato invitato</string>
   <string name="sharing_snackbar_get_vault_members_error">Caricamento dei membri non riuscito</string>
   <string name="sharing_snackbar_change_permission_success">Autorizzazioni cambiate</string>
   <string name="sharing_snackbar_change_permission_error">Cambio delle autorizzazioni non riuscito</string>

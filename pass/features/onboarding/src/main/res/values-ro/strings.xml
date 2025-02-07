@@ -18,4 +18,14 @@
   <string name="error_biometry_failed_to_authenticate">Autentificare nereușită.</string>
   <string name="settings_fingerprint_lock_enabled">Blocarea cu amprentă este activată</string>
   <string name="error_performing_operation">Eroare executare operație.</string>
+  <string name="onboarding_slide_1_title">Toate parolele personale.</string>
+  <string name="onboarding_slide_2_title">Protejați-vă contul.</string>
+  <string name="onboarding_slide_3_title">Rămâneți la curent.</string>
+  <string name="onboarding_slide_4_title">Partajare securizată.</string>
+  <string name="onboarding_slide_1_subtitle">În siguranță într-un singur loc și protejat de cel mai de încredere nume pentru confidențialitate.</string>
+  <string name="onboarding_slide_2_subtitle">Folosiți aliasuri hide-my-email împotriva amenințărilor prin înșelăciune.</string>
+  <string name="onboarding_slide_3_subtitle">Partajați parole și informații private în siguranță și fără efort.</string>
+  <string name="onboarding_slide_4_subtitle">Primiți alerte când adresa de e-mail este găsită pe internetul ascuns.</string>
+  <string name="create_an_account_button">Creare cont</string>
+  <string name="sign_in_button">Conectare</string>
 </resources>

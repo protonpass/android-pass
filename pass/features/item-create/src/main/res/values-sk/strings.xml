@@ -108,7 +108,7 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Koniec platnosti</string>
-  <string name="field_card_expiration_date_hint">MM/RR</string>
+  <string name="field_card_expiration_date_hint">MM/YY</string>
   <string name="field_card_expiration_date_error">Zadajte platný dátum vo formáte MM/RR</string>
   <string name="create_credit_card_item_creation_error">Nepodarilo sa vytvoriť platobnú kartu</string>
   <string name="create_credit_card_item_creation_success">Platobná karta vytvorená</string>
@@ -196,7 +196,6 @@
   <string name="mfa_limit_reached">2FA limit dosiahnutý</string>
   <string name="upgrade">Upgradovať</string>
   <string name="mfa_icon_content_description">Ikona 2FA</string>
-  <string name="select_suffix_upgrade_for_custom_domains">Navýšte predplatné pre vlastné domény</string>
   <string name="create_alias_content_limit_banner">Dosiahli ste limit aliasov, ktoré môžete vytvoriť. Vytvorte neobmedzený počet aliasov po navýšení predplatného.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Na úpravu tejto položky je potrebné aktualizovať aplikáciu</string>
   <string name="remove_passkey_dialog_title">Odstrániť tento prístupový kľúč?</string>
@@ -208,4 +207,16 @@
   <string name="open_with">Otvoriť pomocou:</string>
   <string name="open_attachments_error">Prílohu sa nepodarilo otvoriť</string>
   <string name="upload_attachments_error">Prílohu sa nepodarilo nahrať</string>
+  <string name="banner_advanced_options_title">Vedeli ste?</string>
+  <string name="banner_advanced_options_subtitle">Ťuknite na ikonu ozubeného kolieska a prispôsobte si alias podľa svojich predstáv.</string>
+  <string name="banner_custom_domain_title">Vedeli ste?</string>
+  <string name="banner_custom_domain_subtitle">Pridaním domény môžete vytvoriť aliasy, ako napríklad ahoj@moja-domena.sk.</string>
+  <string name="banner_custom_domain_button">Pridať doménu</string>
+  <string name="banner_mailbox_title">Vedeli ste?</string>
+  <string name="banner_mailbox_subtitle">Zdieľajte aliasy s ostatnými pridaním ich schránky ako ďalšej schránky.</string>
+  <string name="banner_mailbox_button">Pridať poštovú schránku</string>
+  <!-- Suffix -->
+  <string name="suffix_subtitle_premium_domain">Prémiová doména</string>
+  <string name="suffix_subtitle_public_domain">Verejná doména</string>
+  <string name="suffix_subtitle_private_domain">Vaša doména</string>
 </resources>

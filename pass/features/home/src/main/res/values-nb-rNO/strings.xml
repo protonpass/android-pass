@@ -36,6 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">Elementer flyttet til papirkurven</string>
   <string name="home_snackbar_items_move_to_trash_error">Elementer kunne ikke flyttes til papirkurven</string>
   <string name="home_toast_items_selected_read_only">Skrivebeskyttede elementer kan ikke velges</string>
+  <string name="home_toast_items_selected_shared_with_me">Elementer som er delt med deg kan ikke velges</string>
   <string name="home_autofill_banner_title">Gled deg over magien med AutoFyll</string>
   <string name="home_autofill_banner_text">Ett trykk, og – vips! – fylles brukernavnet og passordet ditt ut umiddelbart.</string>
   <string name="home_autofill_banner_settings">Slå på Autofyll ›</string>

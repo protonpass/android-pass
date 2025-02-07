@@ -35,7 +35,7 @@
   <string name="bottomsheet_leave_vault">Kasayı bırak</string>
   <string name="bottomsheet_view_members">Üyeleri görüntüle</string>
   <string name="bottomsheet_manage_access">Erişim yönetimi</string>
-  <string name="bottomsheet_select_vault_read_only">Yalnızca okuyabilirsiniz</string>
+  <string name="bottomsheet_select_vault_read_only">Yalnızca görüntüleyebilirsiniz</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">Yalnızca en eski kasanızda ögeler oluşturabilirsiniz</string>
   <string name="vault_title">Kasa</string>
 </resources>

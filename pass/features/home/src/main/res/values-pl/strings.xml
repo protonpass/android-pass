@@ -36,6 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">Elementy zostały przeniesione do Kosza</string>
   <string name="home_snackbar_items_move_to_trash_error">Przenoszenie elementów do Kosza nie powiodło się</string>
   <string name="home_toast_items_selected_read_only">Nie możesz zaznaczyć elementów tylko do odczytu</string>
+  <string name="home_toast_items_selected_shared_with_me">Items shared with you cannot be selected</string>
   <string name="home_autofill_banner_title">Ciesz się magią autouzupełniania</string>
   <string name="home_autofill_banner_text">Jedno kliknięcie i gotowe! Nazwa użytkownika i hasło są uzupełnione.</string>
   <string name="home_autofill_banner_settings">Włącz autouzupełnianie ›</string>

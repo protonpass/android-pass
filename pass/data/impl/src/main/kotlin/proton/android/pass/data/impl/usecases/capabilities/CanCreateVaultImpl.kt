@@ -20,20 +20,35 @@ package proton.android.pass.data.impl.usecases.capabilities
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.mapLatest
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
+import proton.android.pass.data.api.usecases.organization.ObserveOrganizationVaultsPolicy
 import proton.android.pass.domain.PlanLimit
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class CanCreateVaultImpl @Inject constructor(
+    observeOrganizationVaultsPolicy: ObserveOrganizationVaultsPolicy,
     observeVaults: ObserveVaults,
     currentUserPlan: GetUserPlan
 ) : CanCreateVault {
 
-    private val canCreateVaultFlow: Flow<Boolean> = combine(
+    private val canCreateVaultsByPolicy: Flow<Boolean> = observeOrganizationVaultsPolicy()
+        .mapLatest { organizationVaultsPolicyOption ->
+            when (organizationVaultsPolicyOption) {
+                None -> true
+                is Some -> organizationVaultsPolicyOption.value.canCreateVaults
+            }
+        }
+
+    private val canCreateVaultsByPlanFlow: Flow<Boolean> = combine(
         observeVaults(),
         currentUserPlan()
     ) { vaults, plan ->
@@ -43,6 +58,10 @@ class CanCreateVaultImpl @Inject constructor(
         }
     }
 
+    override fun invoke(): Flow<Boolean> = canCreateVaultsByPolicy
+        .flatMapLatest { canCreateVaultsByPolicy ->
+            if (canCreateVaultsByPolicy) canCreateVaultsByPlanFlow
+            else flowOf(false)
+        }
 
-    override fun invoke(): Flow<Boolean> = canCreateVaultFlow
 }

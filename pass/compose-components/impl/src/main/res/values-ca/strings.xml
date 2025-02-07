@@ -255,7 +255,7 @@
   <string name="snack_bar_message_item_unpinned_success">S\'ha desancorat l\'element.</string>
   <string name="snack_bar_message_item_unpinned_error">S\'ha produït un error en desancorar aquest element.</string>
   <string name="snack_bar_message_item_trashed_success">S\'ha enviat l\'element a la paperera.</string>
-  <string name="snack_bar_message_item_trashed_error">S\'ha produït un error en enviar aquest element a la paperera.</string>
+  <string name="snack_bar_message_item_trashed_error">S\'ha produït un error en enviar a la paperera aquest element</string>
   <string name="snack_bar_message_item_restore_success">S\'ha restaurat l\'element.</string>
   <string name="snack_bar_message_item_restore_error">S\'ha produït un error en restaurar aquest element.</string>
   <string name="snack_bar_message_item_delete_success">S\'ha eliminat l\'element.</string>
@@ -263,13 +263,13 @@
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Activa la sincronització amb SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="one">Hem detectat que teniu %d àlies en SimpleLogin però no apareix en Proton Pass. Voleu importar-lo?</item>
-    <item quantity="other">Hem detectat que teniu %d àlies en SimpleLogin però no apareixen en Proton Pass. Voleu importar-los?</item>
+    <item quantity="one">Hem detectat que teniu %d àlies en SimpleLogin que no apareix en Proton Pass. Voleu importar-lo?</item>
+    <item quantity="other">Hem detectat que teniu %d àlies en SimpleLogin que no apareixen en Proton Pass. Voleu importar-los?</item>
   </plurals>
   <string name="simple_login_widget_action">Sincronitza els àlies</string>
   <!-- Verification codes -->
   <string name="verification_code_not_received">No heu rebut el codi?</string>
-  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Comproveu el correu brossa per trobar un correu electrònic anomenat «%s».</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Comproveu al correu brossa si hi ha un correu electrònic anomenat «%s».</string>
   <string name="verification_code_suggestion_subject_new_email_address">Confirmeu la vostra adreça de correu electrònic per a Proton Pass.</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Confirmeu la vostra bústia de correu</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Si no trobeu aquest correu electrònic, podeu %s.</string>

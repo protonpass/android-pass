@@ -36,6 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">Les éléments ont été déplacés dans la corbeille.</string>
   <string name="home_snackbar_items_move_to_trash_error">Les éléments n\'ont pas pu être déplacés dans la corbeille.</string>
   <string name="home_toast_items_selected_read_only">Les éléments en lecture seule ne peuvent pas être sélectionnés.</string>
+  <string name="home_toast_items_selected_shared_with_me">Les éléments partagés avec vous ne peuvent pas être sélectionnés.</string>
   <string name="home_autofill_banner_title">Profitez du confort du remplissage automatique</string>
   <string name="home_autofill_banner_text">Il vous suffit d\'appuyer pour que votre nom d\'utilisateur et votre mot de passe soient immédiatement renseignés.</string>
   <string name="home_autofill_banner_settings">Activer le remplissage automatique ›</string>

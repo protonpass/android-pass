@@ -50,7 +50,7 @@
   <string name="profile_option_change_pin_code">Spremeni kodo PIN</string>
   <string name="profile_passkey_support_section_title">Identifikacijski ključ</string>
   <string name="profile_passkey_support_subtitle_supported">Podprt je identifikacijski ključ</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your android version does not support passkeys</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your Android version does not support passkeys.</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Vaša naprava ne podpira identifikacijskega ključa</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Ni bilo mogoče preveriti podpore za identifikacijski ključ</string>
   <plurals name="profile_after_days">

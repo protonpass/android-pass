@@ -36,6 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">Položky boli presunuté do koša</string>
   <string name="home_snackbar_items_move_to_trash_error">Položky nemohli byť presunuté do koša</string>
   <string name="home_toast_items_selected_read_only">Položky určené iba na čítanie nie je možné vybrať</string>
+  <string name="home_toast_items_selected_shared_with_me">Položky, ktoré sú s vami zdieľané, nie je možné vybrať</string>
   <string name="home_autofill_banner_title">Vychutnajte si čaro automatického vypĺňania</string>
   <string name="home_autofill_banner_text">Jedno ťuknutie a hotovo! Vaše používateľské meno a heslo bude automaticky vyplnené.</string>
   <string name="home_autofill_banner_settings">Zapnúť automatické vypĺňanie ›</string>

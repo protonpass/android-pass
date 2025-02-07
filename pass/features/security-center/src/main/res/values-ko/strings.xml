@@ -82,7 +82,7 @@
   <string name="security_center_dark_web_monitor_found_in_breaches">감지된 침해사례 없음</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Proton 주소</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email 별칭</string>
-  <string name="security_center_dark_web_monitor_proton_addresses_error">Proton 주소 수신 실패</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving Proton addresses</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Hide-my-email 별칭 수신 오류</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">모니터링되지 않음</string>
   <string name="security_center_dark_web_monitor_see_all">모두 보기</string>

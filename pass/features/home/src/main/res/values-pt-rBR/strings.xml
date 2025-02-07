@@ -36,6 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">Itens movidos para a lixeira</string>
   <string name="home_snackbar_items_move_to_trash_error">Não foi possível mover os itens para a lixeira</string>
   <string name="home_toast_items_selected_read_only">Itens somente-leitura não podem ser selecionados</string>
+  <string name="home_toast_items_selected_shared_with_me">Os itens compartilhados com você não poda ser selecionados.</string>
   <string name="home_autofill_banner_title">Aproveite a mágica do preenchimento automático</string>
   <string name="home_autofill_banner_text">Um toque e ⏤ pronto! ⏤ seu nome de usuário e senha são preenchidos instantaneamente.</string>
   <string name="home_autofill_banner_settings">Ativar o preenchimento automático ›</string>
@@ -153,8 +154,8 @@
     <item quantity="other">Tem certeza de que deseja excluir os %d itens? Esta ação é irreversível</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_shared_warning_message">
-    <item quantity="one">%d item is currently shared. Deleting it will remove access for all other users.</item>
-    <item quantity="other">%d items are currently shared. Deleting them will remove access for all other users.</item>
+    <item quantity="one">%d item está atualmente compartilhado. Eliminá-lo removerá o acesso de todos os outros usuários.</item>
+    <item quantity="other">%d itens estão atualmente compartilhados. Eliminá-los removerá o acesso de todos os outros usuários.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Pesquisas recentes</string>

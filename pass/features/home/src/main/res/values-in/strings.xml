@@ -36,6 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">Item dipindahkan ke sampah</string>
   <string name="home_snackbar_items_move_to_trash_error">Item tidak dapat dipindahkan ke sampah</string>
   <string name="home_toast_items_selected_read_only">Item yang bersifat read-only tidak dapat dipilih</string>
+  <string name="home_toast_items_selected_shared_with_me">Items shared with you cannot be selected</string>
   <string name="home_autofill_banner_title">Nikmati keajaiban Isi Otomatis</string>
   <string name="home_autofill_banner_text">Satu ketukan saja dan—presto!—nama pengguna dan kata sandi Anda akan diisi secara instan.</string>
   <string name="home_autofill_banner_settings">Aktifkan Isi Otomatis ›</string>

@@ -35,7 +35,7 @@
   <string name="bottomsheet_leave_vault">離開保管庫</string>
   <string name="bottomsheet_view_members">檢視成員</string>
   <string name="bottomsheet_manage_access">管理存取權限</string>
-  <string name="bottomsheet_select_vault_read_only">You can only read</string>
+  <string name="bottomsheet_select_vault_read_only">You can only view</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">您僅能在最舊的保管庫創建項目</string>
   <string name="vault_title">保管庫</string>
 </resources>

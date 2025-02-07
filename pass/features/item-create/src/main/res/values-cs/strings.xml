@@ -108,7 +108,7 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Datum vypršení platnosti</string>
-  <string name="field_card_expiration_date_hint">MM / RR</string>
+  <string name="field_card_expiration_date_hint">MM/RR</string>
   <string name="field_card_expiration_date_error">Zadejte platné datum ve formátu MM/RR</string>
   <string name="create_credit_card_item_creation_error">Nelze vytvořit platební kartu</string>
   <string name="create_credit_card_item_creation_success">Platební karta vytvořena</string>
@@ -196,7 +196,6 @@
   <string name="mfa_limit_reached">Dosažen limit 2FA</string>
   <string name="upgrade">Rozšířit</string>
   <string name="mfa_icon_content_description">Ikona 2FA</string>
-  <string name="select_suffix_upgrade_for_custom_domains">Navyšte tarif pro vlastní domény</string>
   <string name="create_alias_content_limit_banner">Dosáhli jste limitu aliasů, které můžete vytvořit. Po navýšení předplatného můžete vytvářet neomezený počet aliasů.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Pro úpravu této položky je třeba aplikaci aktualizovat.</string>
   <string name="remove_passkey_dialog_title">Odebrat tento přístupový klíč?</string>
@@ -208,4 +207,16 @@
   <string name="open_with">Otevřít pomocí:</string>
   <string name="open_attachments_error">Nepodařilo se otevřít přílohu</string>
   <string name="upload_attachments_error">Nepodařilo se nahrát přílohu</string>
+  <string name="banner_advanced_options_title">Věděli jste?</string>
+  <string name="banner_advanced_options_subtitle">Klepněte na ikonu ozubeného kola a přizpůsobte si alias podle svých představ.</string>
+  <string name="banner_custom_domain_title">Věděli jste?</string>
+  <string name="banner_custom_domain_subtitle">Přidáním své domény můžete vytvořit aliasy, například ahoj@moje-domena.cz.</string>
+  <string name="banner_custom_domain_button">Přidat doménu</string>
+  <string name="banner_mailbox_title">Věděli jste?</string>
+  <string name="banner_mailbox_subtitle">Sdílejte aliasy s ostatními přidáním jejich doručené pošty jako další e-mailové schránky.</string>
+  <string name="banner_mailbox_button">Přidat e-mailovou schránku</string>
+  <!-- Suffix -->
+  <string name="suffix_subtitle_premium_domain">Prémiová doména</string>
+  <string name="suffix_subtitle_public_domain">Veřejná doména</string>
+  <string name="suffix_subtitle_private_domain">Vaše doména</string>
 </resources>

@@ -35,7 +35,7 @@
   <string name="bottomsheet_leave_vault">Rời kho lưu trữ</string>
   <string name="bottomsheet_view_members">Xem thành viên</string>
   <string name="bottomsheet_manage_access">Quản lý truy cập</string>
-  <string name="bottomsheet_select_vault_read_only">You can only read</string>
+  <string name="bottomsheet_select_vault_read_only">You can only view</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">Bạn chỉ có thể tạo nội dung trong kho lưu trữ cũ nhất của mình</string>
   <string name="vault_title">Kho lưu trữ</string>
 </resources>

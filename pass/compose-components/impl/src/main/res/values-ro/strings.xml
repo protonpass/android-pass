@@ -230,7 +230,7 @@
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d zi</item>
-    <item quantity="few">%d de zile</item>
+    <item quantity="few">%d zile</item>
     <item quantity="other">%d de zile</item>
   </plurals>
   <plurals name="time_unit_hours">
@@ -301,17 +301,17 @@
   <!-- Items -->
   <plurals name="shared_items_count">
     <item quantity="one">%d articol partajat</item>
-    <item quantity="few">%d shared items</item>
-    <item quantity="other">%d articole partajate</item>
+    <item quantity="few">%d articole partajate</item>
+    <item quantity="other">%d de articole partajate</item>
   </plurals>
   <plurals name="users_count">
-    <item quantity="one">%d user</item>
-    <item quantity="few">%d users</item>
-    <item quantity="other">%d users</item>
+    <item quantity="one">%d utilizator</item>
+    <item quantity="few">%d utilizatori</item>
+    <item quantity="other">%d de utilizatori</item>
   </plurals>
   <plurals name="members_count">
-    <item quantity="one">%d member</item>
-    <item quantity="few">%d members</item>
-    <item quantity="other">%d members</item>
+    <item quantity="one">%d membru</item>
+    <item quantity="few">%d membri</item>
+    <item quantity="other">%d de membri</item>
   </plurals>
 </resources>

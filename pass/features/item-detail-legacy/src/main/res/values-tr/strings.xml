@@ -19,7 +19,7 @@
   <string name="email_copied_to_clipboard">E-posta adresi kopyalandı</string>
   <string name="username_copied_to_clipboard">Kullanıcı adı kopyalandı</string>
   <string name="password_copied_to_clipboard">Parola kopyalandı</string>
-  <string name="website_copied_to_clipboard">Site kopyalandı</string>
+  <string name="website_copied_to_clipboard">Site adresi kopyalandı</string>
   <string name="totp_copied_to_clipboard">Tek kullanımlık parola kopyalandı</string>
   <string name="field_copied_to_clipboard">Alan kopyalandı</string>
   <string name="move_item_to_trash_message">Öge çöpe atıldı</string>
@@ -123,4 +123,6 @@
   </plurals>
   <string name="open_with">Şununla aç:</string>
   <string name="open_attachments_error">Ek dosya açılamadı</string>
+  <string name="banner_contacts_title">Biliyor muydunuz?</string>
+  <string name="banner_contacts_subtitle">Takma adınız birinden bir e-posta aldığında otomatik olarak yeni bir kişi oluşturulur.</string>
 </resources>

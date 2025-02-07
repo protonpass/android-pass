@@ -31,7 +31,7 @@
   <string name="unblock_button">Deblocare contact</string>
   <string name="block_button">Blocare contact</string>
   <string name="contact_created_date" comment="date of creation">Creat acum %1$s</string>
-  <string name="no_activity_contact">No Activity in the last 14 days.</string>
+  <string name="no_activity_contact">Nicio activitate în ultimele 14 zile.</string>
   <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">în ultimele 14 zile</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
     <item quantity="one">Redirecționate: %1$d</item>
@@ -58,7 +58,7 @@
   <string name="snackbar_delete_contact_error">Nu s-a putut șterge contactul.</string>
   <string name="snackbar_email_copied_success">Adresa de e-mail s-a copiat în memorie.</string>
   <string name="contact_option_send_email">Trimitere mesaj</string>
-  <string name="contact_option_copy_address">Copy forwarding address</string>
+  <string name="contact_option_copy_address">Copiere adresă de redirecționare</string>
   <string name="contact_option_block_contact">Blocare contact</string>
   <string name="contact_option_unblock_contact">Deblocare contact</string>
   <string name="contact_option_delete">Ștergere</string>

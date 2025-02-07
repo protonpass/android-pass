@@ -50,7 +50,7 @@
   <string name="profile_option_change_pin_code">PIN-Code ändern</string>
   <string name="profile_passkey_support_section_title">Passkeys</string>
   <string name="profile_passkey_support_subtitle_supported">Passkeys werden unterstützt</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Deine Android-Version unterstützt keine Passkeys.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your Android version does not support passkeys.</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Dein Gerät unterstützt keine Passkeys.</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Fehler beim Überprüfen der Passkey-Kompatibilität.</string>
   <plurals name="profile_after_days">

@@ -31,7 +31,7 @@
   <string name="auth_action_reveal_password">마스터 비밀번호 보이기</string>
   <string name="auth_action_conceal_password">마스터 비밀번호 숨기기</string>
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">대신 PIN 입력</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">대신 지문을 입력하세요</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">대신 지문 인식 사용</string>
   <string name="auth_unlock_button">잠금 해제</string>
   <string name="auth_error_empty_password">비밀번호는 비울 수 없습니다</string>
   <string name="auth_error_pin_cannot_be_empty">PIN은 비울 수 없습니다</string>

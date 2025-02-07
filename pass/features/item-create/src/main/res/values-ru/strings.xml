@@ -108,7 +108,7 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Срок действия</string>
-  <string name="field_card_expiration_date_hint">ММ/ГГ</string>
+  <string name="field_card_expiration_date_hint">MM/YY</string>
   <string name="field_card_expiration_date_error">Введите действительную дату в формате ММ/ГГ</string>
   <string name="create_credit_card_item_creation_error">Не могу создать кредитную карту</string>
   <string name="create_credit_card_item_creation_success">Кредитная карта создана</string>
@@ -145,7 +145,7 @@
   <string name="identity_field_reddit_title">Имя пользователя Reddit</string>
   <string name="identity_field_facebook_title">URL Facebook</string>
   <string name="identity_field_yahoo_title">Имя пользователя Yahoo</string>
-  <string name="identity_field_instagram_title">Ссылка на Instagram</string>
+  <string name="identity_field_instagram_title">Instagram username</string>
   <string name="identity_field_personal_website_title">URL личного веб-сайта</string>
   <string name="identity_field_work_phone_number_title">Рабочий номер телефона</string>
   <string name="identity_field_work_email_title">Рабочий адрес электронной почты</string>
@@ -160,7 +160,7 @@
   <string name="identity_add_field_reddit">Имя пользователя Reddit</string>
   <string name="identity_add_field_facebook">URL Facebook</string>
   <string name="identity_add_field_yahoo">Имя пользователя Yahoo</string>
-  <string name="identity_add_field_instagram">Ссылка на Instagram</string>
+  <string name="identity_add_field_instagram">Instagram username</string>
   <string name="identity_add_field_personal_website">URL личного веб-сайта</string>
   <string name="identity_add_field_work_phone_number">Рабочий номер телефона</string>
   <string name="identity_add_field_work_email_address">Рабочий адрес электронной почты</string>
@@ -196,7 +196,6 @@
   <string name="mfa_limit_reached">Достигнут предел двухфакторных идентификаций</string>
   <string name="upgrade">Повысить</string>
   <string name="mfa_icon_content_description">2FA icon</string>
-  <string name="select_suffix_upgrade_for_custom_domains">Улучшите для своих доменов</string>
   <string name="create_alias_content_limit_banner">Вы достигли лимита на количество псевдонимов, которые можно создать. Создавайте неограниченное количество псевдонимов, улучшив свою подписку.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Для редактирования этого элемента приложение должно быть обновлено</string>
   <string name="remove_passkey_dialog_title">Удалить этот ключ доступа?</string>
@@ -208,4 +207,16 @@
   <string name="open_with">Открыть с помощью:</string>
   <string name="open_attachments_error">Could not open attachment</string>
   <string name="upload_attachments_error">Could not upload attachment</string>
+  <string name="banner_advanced_options_title">Did you know?</string>
+  <string name="banner_advanced_options_subtitle">Tap the gear icon to customize the alias the way you want.</string>
+  <string name="banner_custom_domain_title">Did you know?</string>
+  <string name="banner_custom_domain_subtitle">By adding your domain, you can create aliases like hi@my-domain.com.</string>
+  <string name="banner_custom_domain_button">Add domain</string>
+  <string name="banner_mailbox_title">Did you know?</string>
+  <string name="banner_mailbox_subtitle">Share aliases with others by adding their inbox as an additional mailbox.</string>
+  <string name="banner_mailbox_button">Add mailbox</string>
+  <!-- Suffix -->
+  <string name="suffix_subtitle_premium_domain">Premium domain</string>
+  <string name="suffix_subtitle_public_domain">Public domain</string>
+  <string name="suffix_subtitle_private_domain">Your domain</string>
 </resources>

@@ -44,7 +44,7 @@
   <string name="report_sending_success">Se ha enviado el reporte.</string>
   <string name="report_sending_error">No se ha podido enviar el reporte.</string>
   <string name="tips_passkey_check_guide">Si tienes algún problema, mira nuestra guía.</string>
-  <string name="tips_passkey_android_not_supported">Tu versión de Android es demasiado antigua. Intenta actualizar tu dispositivo.</string>
+  <string name="tips_passkey_android_not_supported">La versión de Android es demasiado antigua. Intenta actualizar tu dispositivo.</string>
   <string name="tips_passkeys_credential_manager_not_supported">El fabricante de este dispositivo no provee un gestor de credenciales.</string>
   <string name="tips_passkey_supported">Se admiten las claves de acceso.</string>
   <string name="tips_passkey_not_supported">No se admiten las claves de acceso.</string>

@@ -145,7 +145,7 @@
   <string name="identity_field_reddit_title">Reddit-ის მომხმარებლის სახელი</string>
   <string name="identity_field_facebook_title">Facebook URL</string>
   <string name="identity_field_yahoo_title">Yahoo-ის მომხმარებლის სახელი</string>
-  <string name="identity_field_instagram_title">Instagram-ის წარწერა</string>
+  <string name="identity_field_instagram_title">Instagram-ის მომხმარებლის სახელი</string>
   <string name="identity_field_personal_website_title">პირადი ვებგვერდის URL</string>
   <string name="identity_field_work_phone_number_title">სამსახურის ტელეფონის ნომერი</string>
   <string name="identity_field_work_email_title">სამსახურის ელფოსტის მისამართი</string>
@@ -160,7 +160,7 @@
   <string name="identity_add_field_reddit">Reddit-ის მომხმარებლის სახელი</string>
   <string name="identity_add_field_facebook">Facebook URL</string>
   <string name="identity_add_field_yahoo">Yahoo-ის მომხმარებლის სახელი</string>
-  <string name="identity_add_field_instagram">Instagram-ის წარწერა</string>
+  <string name="identity_add_field_instagram">Instagram-ის მომხმარებლის სახელი</string>
   <string name="identity_add_field_personal_website">პირადი ვებგვერდის URL</string>
   <string name="identity_add_field_work_phone_number">სამსახურის ტელეფონის ნომერი</string>
   <string name="identity_add_field_work_email_address">სამსახურის ელფოსტის მისამართი</string>
@@ -196,7 +196,6 @@
   <string name="mfa_limit_reached">მიღწეულია 2FA-ის ლიმიტი</string>
   <string name="upgrade">გაუმჯობესება</string>
   <string name="mfa_icon_content_description">2FA-ის ხატულა</string>
-  <string name="select_suffix_upgrade_for_custom_domains">დომენის ხელით მისათითებლად საჭიროა სატარიფო გეგმის აწევა</string>
   <string name="create_alias_content_limit_banner">მიაღწიეთ შესაძლო ფსევდონიმების რაოდენობს ზღვარს. სატარიფო გეგმის აწევის შემთხვევაში ფსევდონიმების რაოდენობა უსაზღვროა.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">ამ ელემენტის ჩასასწორებლად აუცილებელია აპი განაახლოთ</string>
   <string name="remove_passkey_dialog_title">წავშალო ეს წვდომის გასაღები?</string>
@@ -208,4 +207,16 @@
   <string name="open_with">გახსნა პროგრამით:</string>
   <string name="open_attachments_error">მიმაგრებული ფაილის გახსნა შეუძლებელია</string>
   <string name="upload_attachments_error">მიმაგრებული ფაილის ატვირთვა შეუძლებელია</string>
+  <string name="banner_advanced_options_title">იცოდით?</string>
+  <string name="banner_advanced_options_subtitle">დაატყაპუნეთ კბილანას ხატულაზე, რომ მოირგოთ ფსევდონიმი თქვენი სურვილისამებრ.</string>
+  <string name="banner_custom_domain_title">იცოდით?</string>
+  <string name="banner_custom_domain_subtitle">თქვენი დომენის დამატების შემდეგ შეგეძლებათ, hi@my-domain.com-ის მსგავსი ფსევდონიმები შექმნათ.</string>
+  <string name="banner_custom_domain_button">დომენის დამატება</string>
+  <string name="banner_mailbox_title">იცოდით?</string>
+  <string name="banner_mailbox_subtitle">გაუზარეთ ფსევდონიმების სხვებს მათი საფოსტო ყუთის თქვენს დამატებთად დამატებით.</string>
+  <string name="banner_mailbox_button">საფოსტო ყუთის დამატება</string>
+  <!-- Suffix -->
+  <string name="suffix_subtitle_premium_domain">ფასიანი დომენი</string>
+  <string name="suffix_subtitle_public_domain">საჯარო დომენი</string>
+  <string name="suffix_subtitle_private_domain">თქვენი დომენი</string>
 </resources>

@@ -50,7 +50,7 @@
   <string name="profile_option_change_pin_code">Змінити PIN-код</string>
   <string name="profile_passkey_support_section_title">Ключі доступу</string>
   <string name="profile_passkey_support_subtitle_supported">Підтримуються ключі доступу</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Ваша версія Android не підтримує ключів доступу.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your Android version does not support passkeys.</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Ваш пристрій не підтримує ключів доступу</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Не вдалося перевірити підтримку ключів доступу</string>
   <plurals name="profile_after_days">

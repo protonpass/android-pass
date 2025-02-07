@@ -145,7 +145,7 @@
   <string name="identity_field_reddit_title">Імя карыстальніка Reddit</string>
   <string name="identity_field_facebook_title">URL-адрас Facebook</string>
   <string name="identity_field_yahoo_title">Імя карыстальніка Yahoo</string>
-  <string name="identity_field_instagram_title">Профіль Instagram</string>
+  <string name="identity_field_instagram_title">Імя карыстальніка Instagram</string>
   <string name="identity_field_personal_website_title">URL-адрас асабістага вэб-сайта</string>
   <string name="identity_field_work_phone_number_title">Працоўны нумар тэлефона</string>
   <string name="identity_field_work_email_title">Працоўны адрас электроннай пошты</string>
@@ -160,7 +160,7 @@
   <string name="identity_add_field_reddit">Імя карыстальніка Reddit</string>
   <string name="identity_add_field_facebook">URL-адрас Facebook</string>
   <string name="identity_add_field_yahoo">Імя карыстальніка Yahoo</string>
-  <string name="identity_add_field_instagram">Профіль Instagram</string>
+  <string name="identity_add_field_instagram">Імя карыстальніка Instagram</string>
   <string name="identity_add_field_personal_website">URL-адрас асабістага вэб-сайта</string>
   <string name="identity_add_field_work_phone_number">Працоўны нумар тэлефона</string>
   <string name="identity_add_field_work_email_address">Працоўны адрас электроннай пошты</string>
@@ -196,7 +196,6 @@
   <string name="mfa_limit_reached">Дасягнута абмежаванне 2ФА</string>
   <string name="upgrade">Палепшыць</string>
   <string name="mfa_icon_content_description">Значок 2ФА</string>
-  <string name="select_suffix_upgrade_for_custom_domains">Палепшыце свой тарыфны план, каб выкарыстоўваць карыстальніцкія дамены</string>
   <string name="create_alias_content_limit_banner">Вы дасягнулі абмежавання па колькасці псеўданімаў, якія вы можаце стварыць. Неабмежаваная колькасць псеўданімаў стане даступна пасля паляпшэння вашай падпіскі.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Вам неабходна абнавіць праграму, каб адрэдагаваць гэты элемент.</string>
   <string name="remove_passkey_dialog_title">Выдаліць гэты ключ доступу?</string>
@@ -208,4 +207,16 @@
   <string name="open_with">Адкрыць праз:</string>
   <string name="open_attachments_error">Немагчыма адкрыць далучэнне</string>
   <string name="upload_attachments_error">Немагчыма запампаваць далучэнне</string>
+  <string name="banner_advanced_options_title">Ці ведалі вы што?</string>
+  <string name="banner_advanced_options_subtitle">Націсніце значок шасцерні, каб наладзіць псеўданім пад свае патрабаванні.</string>
+  <string name="banner_custom_domain_title">Ці ведалі вы што?</string>
+  <string name="banner_custom_domain_subtitle">Вы можаце стварыць такі псеўданім, як pryvitanne@moi-damen.com пры даданні свайго дамена.</string>
+  <string name="banner_custom_domain_button">Дадаць дамен</string>
+  <string name="banner_mailbox_title">Ці ведалі вы што?</string>
+  <string name="banner_mailbox_subtitle">Share aliases with others by adding their inbox as an additional mailbox.</string>
+  <string name="banner_mailbox_button">Дадаць паштовую скрыню</string>
+  <!-- Suffix -->
+  <string name="suffix_subtitle_premium_domain">Прэміяльны дамен</string>
+  <string name="suffix_subtitle_public_domain">Публічны дамен</string>
+  <string name="suffix_subtitle_private_domain">Ваш дамен</string>
 </resources>

@@ -36,6 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">Einträge in den Papierkorb verschoben.</string>
   <string name="home_snackbar_items_move_to_trash_error">Fehler beim Verschieben der Einträge in den Papierkorb.</string>
   <string name="home_toast_items_selected_read_only">Schreibgeschützte Elemente können nicht ausgewählt werden.</string>
+  <string name="home_toast_items_selected_shared_with_me">Mit dir geteilte Einträge können nicht ausgewählt werden</string>
   <string name="home_autofill_banner_title">Genieße die Magie von AutoFill</string>
   <string name="home_autofill_banner_text">Ein Fingertipp und – schwups – sofort sind dein Benutzername und dein Passwort ausgefüllt.</string>
   <string name="home_autofill_banner_settings">AutoFill aktivieren</string>

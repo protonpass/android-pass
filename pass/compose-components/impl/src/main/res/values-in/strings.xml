@@ -257,7 +257,7 @@
   </plurals>
   <string name="simple_login_widget_action">Sinkronkan alias</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Belum menerima kodenya?</string>
+  <string name="verification_code_not_received">Haven\'t received the code?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Silakan periksa dalam Spam untuk email bernama “%s”</string>
   <string name="verification_code_suggestion_subject_new_email_address">Silakan konfirmasi alamat email Anda untuk Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Silakan konfirmasi kotak surat Anda</string>

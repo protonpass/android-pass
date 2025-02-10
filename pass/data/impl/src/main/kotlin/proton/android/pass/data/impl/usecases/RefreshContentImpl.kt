@@ -22,6 +22,7 @@ import android.content.Context
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
@@ -34,6 +35,7 @@ import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.RefreshContent
+import proton.android.pass.data.api.usecases.organization.ObserveOrganizationVaultsPolicy
 import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.domain.ShareColor
@@ -49,7 +51,8 @@ class RefreshContentImpl @Inject constructor(
     private val workManager: WorkManager,
     private val syncStatusRepository: ItemSyncStatusRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val createVault: CreateVault
+    private val createVault: CreateVault,
+    private val observeOrganizationVaultsPolicy: ObserveOrganizationVaultsPolicy
 ) : RefreshContent {
 
     override suspend fun invoke(userId: UserId?) {
@@ -78,8 +81,21 @@ class RefreshContentImpl @Inject constructor(
     }
 
     private suspend fun handleSharesWhenEmpty(userId: UserId) {
-        PassLogger.i(TAG, "Received an empty list of shares, creating default vault")
+        val canCreateVaults = observeOrganizationVaultsPolicy()
+            .first()
+            .value()
+            ?.canCreateVaults
+            ?: true
 
+        if (!canCreateVaults) {
+            PassLogger.i(TAG, "Received an empty list of shares, skipping default vault creation")
+
+            syncStatusRepository.setMode(SyncMode.Background)
+            syncStatusRepository.emit(ItemSyncStatus.SyncSuccess)
+            return
+        }
+
+        PassLogger.i(TAG, "Received an empty list of shares, creating default vault")
         runCatching {
             val vault = encryptionContextProvider.withEncryptionContextSuspendable {
                 NewVault(

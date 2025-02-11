@@ -30,4 +30,6 @@ object ErrorCodes {
 
     const val USER_ALREADY_INVITED = 2001
 
+    const val EMAIL_ALREADY_IN_USE = 2001
+
 }

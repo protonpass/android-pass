@@ -59,6 +59,8 @@ fun SimpleLoginSyncMailboxOptionsBottomSheet(
             SimpleLoginSyncMailboxOptionsEvent.OnMailboxDeleteSuccess,
             SimpleLoginSyncMailboxOptionsEvent.OnMailboxOptionsError,
             SimpleLoginSyncMailboxOptionsEvent.OnMailboxSetAsDefaultError,
+            SimpleLoginSyncMailboxOptionsEvent.OnMailboxCancelEmailChangeSuccess,
+            SimpleLoginSyncMailboxOptionsEvent.OnMailboxCancelEmailChangeError,
             SimpleLoginSyncMailboxOptionsEvent.OnMailboxSetAsDefaultSuccess -> {
                 onNavigated(SimpleLoginSyncNavDestination.DismissBottomSheet)
             }
@@ -83,6 +85,10 @@ fun SimpleLoginSyncMailboxOptionsBottomSheet(
 
                 SimpleLoginSyncMailboxOptionsUiEvent.OnChangeEmailClicked -> {
                     onChangeMailboxEmail()
+                }
+
+                SimpleLoginSyncMailboxOptionsUiEvent.OnCancelChangeEmailClicked -> {
+                    onCancelMailboxEmailChange()
                 }
             }
         }

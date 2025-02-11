@@ -121,50 +121,32 @@ private fun SimpleLoginSyncManagementMailboxes(
                         text = aliasMailbox.email.asAnnotatedString()
                     )
 
-                    if (aliasMailbox.isDefault) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(space = Spacing.small)
-                        ) {
-                            Text(
-                                modifier = Modifier
-                                    .clip(shape = RoundedCornerShape(size = Radius.medium))
-                                    .background(color = PassTheme.colors.interactionNormMajor2)
-                                    .padding(
-                                        horizontal = Spacing.small,
-                                        vertical = Spacing.extraSmall
-                                    ),
-                                text = stringResource(
-                                    id = R.string.simple_login_sync_management_mailbox_default
-                                ),
-                                style = ProtonTheme.typography.overlineNorm,
-                                color = PassTheme.colors.textInvert
-                            )
-
-                            SectionTitle(
-                                text = pluralStringResource(
-                                    id = CompR.plurals.aliases_count,
-                                    count = aliasMailbox.aliasCount,
-                                    aliasMailbox.aliasCount
-                                )
-                            )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(space = Spacing.small)
+                    ) {
+                        if (aliasMailbox.isDefault) {
+                            DefaultBadge()
                         }
-                    } else {
-                        if (aliasMailbox.isVerified) {
-                            pluralStringResource(
+                        val mailboxDescriptionText = when {
+                            aliasMailbox.isVerified && !aliasMailbox.pendingEmail.isNullOrBlank() ->
+                                stringResource(
+                                    id = R.string.simple_login_sync_management_mailbox_unverified_change
+                                )
+
+                            aliasMailbox.isVerified -> pluralStringResource(
                                 id = CompR.plurals.aliases_count,
                                 count = aliasMailbox.aliasCount,
                                 aliasMailbox.aliasCount
                             )
-                        } else {
-                            stringResource(
+
+                            else -> stringResource(
                                 id = R.string.simple_login_sync_management_mailbox_unverified
                             )
-                        }.also { mailboxDescriptionText ->
-                            SectionTitle(
-                                text = mailboxDescriptionText
-                            )
                         }
+                        SectionTitle(
+                            text = mailboxDescriptionText
+                        )
                     }
                 }
 
@@ -180,6 +162,24 @@ private fun SimpleLoginSyncManagementMailboxes(
             }
         }
     }
+}
+
+@Composable
+private fun DefaultBadge() {
+    Text(
+        modifier = Modifier
+            .clip(shape = RoundedCornerShape(size = Radius.medium))
+            .background(color = PassTheme.colors.interactionNormMajor2)
+            .padding(
+                horizontal = Spacing.small,
+                vertical = Spacing.extraSmall
+            ),
+        text = stringResource(
+            id = R.string.simple_login_sync_management_mailbox_default
+        ),
+        style = ProtonTheme.typography.overlineNorm,
+        color = PassTheme.colors.textInvert
+    )
 }
 
 @[Preview Composable]

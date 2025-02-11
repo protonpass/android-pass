@@ -128,6 +128,12 @@ class RemoteSimpleLoginDataSourceImpl @Inject constructor(
         .invoke { changeSimpleLoginAliasMailboxEmail(mailboxId = mailboxId, request = request) }
         .valueOrThrow
 
+    override suspend fun cancelSimpleLoginAliasMailboxEmailChange(userId: UserId, mailboxId: Long): CodeOnlyResponse =
+        apiProvider
+            .get<PasswordManagerApi>(userId)
+            .invoke { cancelSimpleLoginAliasMailboxEmailChange(mailboxId = mailboxId) }
+            .valueOrThrow
+
     override suspend fun resendSimpleLoginAliasMailboxVerifyCode(
         userId: UserId,
         mailboxId: Long

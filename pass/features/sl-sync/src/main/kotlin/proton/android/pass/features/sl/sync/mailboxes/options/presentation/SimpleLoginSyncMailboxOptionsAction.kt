@@ -19,7 +19,8 @@
 package proton.android.pass.features.sl.sync.mailboxes.options.presentation
 
 internal enum class SimpleLoginSyncMailboxOptionsAction {
+    SetAsDefault,
     Delete,
-    None,
-    SetAsDefault
+    CancelEmailChange,
+    None
 }

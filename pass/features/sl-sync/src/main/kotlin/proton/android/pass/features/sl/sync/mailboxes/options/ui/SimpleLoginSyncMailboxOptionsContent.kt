@@ -41,11 +41,13 @@ internal fun SimpleLoginSyncMailboxOptionsContent(
     onUiEvent: (SimpleLoginSyncMailboxOptionsUiEvent) -> Unit
 ) = with(state) {
     buildList {
-        changeEmail(
-            onClick = {
-                onUiEvent(SimpleLoginSyncMailboxOptionsUiEvent.OnChangeEmailClicked)
-            }
-        ).also(::add)
+        if (canChangeMailbox) {
+            changeEmail(
+                onClick = {
+                    onUiEvent(SimpleLoginSyncMailboxOptionsUiEvent.OnChangeEmailClicked)
+                }
+            ).also(::add)
+        }
 
         if (canSetAsDefault) {
             setAsDefault(
@@ -60,6 +62,14 @@ internal fun SimpleLoginSyncMailboxOptionsContent(
             verify(
                 onClick = {
                     onUiEvent(SimpleLoginSyncMailboxOptionsUiEvent.OnVerifyClicked)
+                }
+            ).also(::add)
+        }
+
+        if (canCancelMailboxChange) {
+            cancelChangeEmail(
+                onClick = {
+                    onUiEvent(SimpleLoginSyncMailboxOptionsUiEvent.OnCancelChangeEmailClicked)
                 }
             ).also(::add)
         }

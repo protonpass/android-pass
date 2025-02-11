@@ -18,25 +18,13 @@
 
 package proton.android.pass.features.sl.sync.mailboxes.verify.navigation
 
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
 import proton.android.pass.features.sl.sync.shared.navigation.mailboxes.SimpleLoginSyncMailboxIdNavArgId
-import proton.android.pass.features.sl.sync.shared.navigation.mailboxes.SimpleLoginSyncPendingEmailNavArgId
 import proton.android.pass.navigation.api.NavItem
-import proton.android.pass.navigation.api.NavParamEncoder
-import proton.android.pass.navigation.api.toPath
 
 object SimpleLoginSyncMailboxVerifyNavItem : NavItem(
     baseRoute = "sl/sync/mailboxes/verify",
-    navArgIds = listOf(SimpleLoginSyncMailboxIdNavArgId),
-    optionalArgIds = listOf(SimpleLoginSyncPendingEmailNavArgId)
+    navArgIds = listOf(SimpleLoginSyncMailboxIdNavArgId)
 ) {
 
-    fun buildRoute(mailboxId: Long, pendingEmail: Option<String>): String = buildString {
-        append("$baseRoute/$mailboxId")
-        if (pendingEmail is Some) {
-            val params = mapOf(SimpleLoginSyncPendingEmailNavArgId.key to NavParamEncoder.encode(pendingEmail.value))
-            append(params.toPath())
-        }
-    }
+    fun buildRoute(mailboxId: Long): String = "$baseRoute/$mailboxId"
 }

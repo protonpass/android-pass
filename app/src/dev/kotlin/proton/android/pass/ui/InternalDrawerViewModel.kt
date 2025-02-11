@@ -40,6 +40,8 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryBannerPreference
+import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryFeature
 import proton.android.pass.preferences.tooltips.TooltipPreferencesRepository
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
 import proton.android.pass.ui.InternalDrawerSnackbarMessage.PreferencesClearError
@@ -149,6 +151,17 @@ class InternalDrawerViewModel @Inject constructor(
                         toastManager.showToast("No attachments found")
                     }
                 }
+            }
+        }
+    }
+
+    fun displayAllFeatureDiscoveryBanners() {
+        viewModelScope.launch {
+            FeatureDiscoveryFeature.entries.forEach { feature ->
+                preferenceRepository.setDisplayFeatureDiscoverBanner(
+                    feature = feature,
+                    preference = FeatureDiscoveryBannerPreference.Display
+                )
             }
         }
     }

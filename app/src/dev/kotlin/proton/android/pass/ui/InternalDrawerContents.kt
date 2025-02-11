@@ -108,6 +108,12 @@ fun InternalDrawerContents(
         ) {
             Text(text = "Clear attachments")
         }
+        Button(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = { viewModel.displayAllFeatureDiscoveryBanners() },
+        ) {
+            Text(text = "Force display feature discovery banners")
+        }
     }
 }
 

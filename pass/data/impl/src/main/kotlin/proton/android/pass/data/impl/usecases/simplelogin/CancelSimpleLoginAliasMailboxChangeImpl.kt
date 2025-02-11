@@ -16,18 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.mailboxes.options.ui
+package proton.android.pass.data.impl.usecases.simplelogin
 
-internal sealed interface SimpleLoginSyncMailboxOptionsUiEvent {
+import proton.android.pass.data.api.repositories.SimpleLoginRepository
+import proton.android.pass.data.api.usecases.simplelogin.CancelSimpleLoginAliasMailboxChange
+import javax.inject.Inject
 
-    data object OnDeleteClicked : SimpleLoginSyncMailboxOptionsUiEvent
+class CancelSimpleLoginAliasMailboxChangeImpl @Inject constructor(
+    private val repository: SimpleLoginRepository
+) : CancelSimpleLoginAliasMailboxChange {
 
-    data object OnSetAsDefaultClicked : SimpleLoginSyncMailboxOptionsUiEvent
-
-    data object OnVerifyClicked : SimpleLoginSyncMailboxOptionsUiEvent
-
-    data object OnChangeEmailClicked : SimpleLoginSyncMailboxOptionsUiEvent
-
-    data object OnCancelChangeEmailClicked : SimpleLoginSyncMailboxOptionsUiEvent
+    override suspend fun invoke(mailboxId: Long) = repository.cancelAliasMailboxEmailChange(mailboxId)
 
 }

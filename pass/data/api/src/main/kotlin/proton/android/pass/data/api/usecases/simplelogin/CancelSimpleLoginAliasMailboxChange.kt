@@ -16,18 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.mailboxes.options.ui
+package proton.android.pass.data.api.usecases.simplelogin
 
-internal sealed interface SimpleLoginSyncMailboxOptionsUiEvent {
+interface CancelSimpleLoginAliasMailboxChange {
 
-    data object OnDeleteClicked : SimpleLoginSyncMailboxOptionsUiEvent
-
-    data object OnSetAsDefaultClicked : SimpleLoginSyncMailboxOptionsUiEvent
-
-    data object OnVerifyClicked : SimpleLoginSyncMailboxOptionsUiEvent
-
-    data object OnChangeEmailClicked : SimpleLoginSyncMailboxOptionsUiEvent
-
-    data object OnCancelChangeEmailClicked : SimpleLoginSyncMailboxOptionsUiEvent
+    suspend operator fun invoke(mailboxId: Long)
 
 }

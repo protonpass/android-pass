@@ -33,6 +33,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
+import proton.android.pass.data.api.usecases.items.ObserveCanCreateItems
 import proton.android.pass.domain.ShareId
 import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.searchoptions.api.VaultSelectionOption
@@ -43,7 +44,8 @@ import javax.inject.Inject
 class CreateItemBottomSheetViewModel @Inject constructor(
     homeSearchOptionsRepository: HomeSearchOptionsRepository,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
+    observeCanCreateItems: ObserveCanCreateItems
 ) : ViewModel() {
 
     private val navShareIdFlow: Flow<Option<ShareId>> =
@@ -65,11 +67,12 @@ class CreateItemBottomSheetViewModel @Inject constructor(
         }
     }
 
-    val state: StateFlow<CreateItemBottomSheetUIState> = combine(
+    internal val stateFlow: StateFlow<CreateItemBottomSheetUIState> = combine(
         observeUpgradeInfo(),
         selectedShareIdFlow,
-        createItemModeFlow
-    ) { upgradeInfo, selectedShare, mode ->
+        createItemModeFlow,
+        observeCanCreateItems()
+    ) { upgradeInfo, selectedShare, mode, canCreateItems ->
         CreateItemBottomSheetUIState(
             shareId = selectedShare,
             mode = mode,
@@ -77,40 +80,52 @@ class CreateItemBottomSheetViewModel @Inject constructor(
                 canUpgrade = upgradeInfo.isUpgradeAvailable,
                 aliasCount = upgradeInfo.totalAlias,
                 aliasLimit = upgradeInfo.plan.aliasLimit.limitOrNull() ?: 0
-            )
+            ),
+            canCreateItems = canCreateItems
         )
     }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = CreateItemBottomSheetUIState.DEFAULT
+            initialValue = CreateItemBottomSheetUIState.Initial
         )
+
 }
 
-data class CreateItemBottomSheetUIState(
+internal data class CreateItemBottomSheetUIState(
     val shareId: ShareId?,
     val mode: CreateItemBottomSheetMode?,
-    val createItemAliasUIState: CreateItemAliasUIState
+    val createItemAliasUIState: CreateItemAliasUIState,
+    val canCreateItems: Boolean
 ) {
-    companion object {
-        val DEFAULT = CreateItemBottomSheetUIState(
+
+    internal companion object {
+
+        val Initial = CreateItemBottomSheetUIState(
             shareId = null,
             mode = null,
-            createItemAliasUIState = CreateItemAliasUIState.DEFAULT
+            createItemAliasUIState = CreateItemAliasUIState.Initial,
+            canCreateItems = false
         )
+
     }
+
 }
 
-data class CreateItemAliasUIState(
+internal data class CreateItemAliasUIState(
     val canUpgrade: Boolean,
     val aliasCount: Int,
     val aliasLimit: Int
 ) {
-    companion object {
-        val DEFAULT = CreateItemAliasUIState(
+
+    internal companion object {
+
+        val Initial = CreateItemAliasUIState(
             canUpgrade = false,
             aliasCount = 0,
             aliasLimit = 0
         )
+
     }
+
 }

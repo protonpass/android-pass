@@ -20,27 +20,29 @@ package proton.android.pass.features.itemcreate.bottomsheets.createitem
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 
-class CreateItemBottomSheetUIStatePreviewProvider :
+internal class CreateItemBottomSheetUIStatePreviewProvider :
     PreviewParameterProvider<CreateItemBottomSheetUIState> {
-    override val values: Sequence<CreateItemBottomSheetUIState>
-        get() = sequenceOf(
-            CreateItemBottomSheetUIState(
-                shareId = null,
-                mode = CreateItemBottomSheetMode.HomeFull,
-                createItemAliasUIState = CreateItemAliasUIState(
-                    canUpgrade = true,
-                    aliasCount = 5,
-                    aliasLimit = 10
-                )
+
+    override val values: Sequence<CreateItemBottomSheetUIState> = sequenceOf(
+        CreateItemBottomSheetUIState(
+            shareId = null,
+            mode = CreateItemBottomSheetMode.HomeFull,
+            createItemAliasUIState = CreateItemAliasUIState(
+                canUpgrade = true,
+                aliasCount = 5,
+                aliasLimit = 10
             ),
-            CreateItemBottomSheetUIState(
-                shareId = null,
-                mode = CreateItemBottomSheetMode.HomeFull,
-                createItemAliasUIState = CreateItemAliasUIState(
-                    canUpgrade = true,
-                    aliasCount = 10,
-                    aliasLimit = 10
-                )
-            )
+            canCreateItems = true
+        ),
+        CreateItemBottomSheetUIState(
+            shareId = null,
+            mode = CreateItemBottomSheetMode.HomeFull,
+            createItemAliasUIState = CreateItemAliasUIState(
+                canUpgrade = true,
+                aliasCount = 10,
+                aliasLimit = 10
+            ),
+            canCreateItems = true
         )
+    )
 }

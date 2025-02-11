@@ -40,8 +40,7 @@ fun SimpleLoginSyncMailboxChangeScreen(
             is SimpleLoginSyncMailboxChangeEvent.OnMailboxChanged -> {
                 if (!event.pendingEmail.value().isNullOrBlank()) {
                     SimpleLoginSyncNavDestination.VerifyMailbox(
-                        mailboxId = event.mailboxId,
-                        pendingEmail = event.pendingEmail
+                        mailboxId = event.mailboxId
                     )
                 } else {
                     SimpleLoginSyncNavDestination.BackToOrigin

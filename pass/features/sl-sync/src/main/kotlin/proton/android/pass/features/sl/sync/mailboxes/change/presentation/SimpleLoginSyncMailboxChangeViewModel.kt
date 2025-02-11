@@ -36,8 +36,8 @@ import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.errors.EmailAlreadyInUseError
 import proton.android.pass.data.api.usecases.simplelogin.ChangeSimpleLoginAliasMailbox
-import proton.android.pass.features.sl.sync.mailboxes.change.presentation.SimpleLoginSyncMailboxChangeSnackbarMessage.ChangeMailboxError
 import proton.android.pass.features.sl.sync.shared.navigation.mailboxes.SimpleLoginSyncMailboxIdNavArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -99,7 +99,11 @@ class SimpleLoginSyncMailboxChangeViewModel @Inject constructor(
                 .onFailure { error ->
                     PassLogger.w(TAG, "There was an error changing the mailbox")
                     PassLogger.w(TAG, error)
-                    snackbarDispatcher(ChangeMailboxError)
+                    if (error is EmailAlreadyInUseError) {
+                        snackbarDispatcher(SimpleLoginSyncMailboxChangeSnackbarMessage.EmailAlreadyInUseError)
+                    } else {
+                        snackbarDispatcher(SimpleLoginSyncMailboxChangeSnackbarMessage.ChangeMailboxError)
+                    }
                 }
                 .onSuccess { changedAliasMailbox ->
                     PassLogger.i(TAG, "Request to change mailbox success")

@@ -140,3 +140,26 @@ internal fun changeEmail(onClick: () -> Unit) = object : BottomSheetItem {
     override val isDivider: Boolean = false
 
 }
+
+internal fun cancelChangeEmail(onClick: () -> Unit) = object : BottomSheetItem {
+
+    override val title: @Composable () -> Unit = {
+        BottomSheetItemTitle(
+            text = stringResource(id = R.string.simple_login_sync_mailbox_cancel_change_email_option),
+            color = PassTheme.colors.textNorm
+        )
+    }
+
+    override val subtitle: @Composable (() -> Unit)? = null
+
+    override val leftIcon: @Composable (() -> Unit) = {
+        BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_cross_circle)
+    }
+
+    override val endIcon: @Composable (() -> Unit)? = null
+
+    override val onClick: (() -> Unit) = onClick
+
+    override val isDivider: Boolean = false
+
+}

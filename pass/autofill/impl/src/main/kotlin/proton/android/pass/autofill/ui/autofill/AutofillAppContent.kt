@@ -140,7 +140,7 @@ fun AutofillAppContent(
                         }
                         AutofillEvent.SelectItemScreenShown -> {
                             viewModel.onSelectItemScreenShown(
-                                packageName = autofillAppState.autofillData.packageInfo.packageName
+                                state = autofillAppState
                             )
                         }
                     }

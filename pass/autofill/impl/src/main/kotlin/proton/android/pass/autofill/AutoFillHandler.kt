@@ -189,6 +189,7 @@ object AutoFillHandler {
         } else {
             val event = AutofillDisplayed(
                 source = AutofillTriggerSource.Source,
+                eventItemType = assistInfo.cluster.eventItemType(),
                 app = packageName
             )
             telemetryManager.sendEvent(event)

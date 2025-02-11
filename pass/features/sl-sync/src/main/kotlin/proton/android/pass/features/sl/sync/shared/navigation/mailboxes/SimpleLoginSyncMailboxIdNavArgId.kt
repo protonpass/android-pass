@@ -20,7 +20,6 @@ package proton.android.pass.features.sl.sync.shared.navigation.mailboxes
 
 import androidx.navigation.NavType
 import proton.android.pass.navigation.api.NavArgId
-import proton.android.pass.navigation.api.OptionalNavArgId
 
 object SimpleLoginSyncMailboxIdNavArgId : NavArgId {
 
@@ -28,13 +27,4 @@ object SimpleLoginSyncMailboxIdNavArgId : NavArgId {
 
     override val navType: NavType<*> = NavType.LongType
 
-}
-
-object SimpleLoginSyncPendingEmailNavArgId : OptionalNavArgId {
-
-    override val key: String = "simple_login_sync_pending_email"
-
-    override val navType: NavType<*> = NavType.StringType
-
-    override val requireEncoding: Boolean = true
 }

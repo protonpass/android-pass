@@ -32,8 +32,6 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -43,9 +41,7 @@ import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAlias
 import proton.android.pass.data.api.usecases.simplelogin.ResendSimpleLoginAliasMailboxVerificationCode
 import proton.android.pass.data.api.usecases.simplelogin.VerifySimpleLoginAliasMailbox
 import proton.android.pass.features.sl.sync.shared.navigation.mailboxes.SimpleLoginSyncMailboxIdNavArgId
-import proton.android.pass.features.sl.sync.shared.navigation.mailboxes.SimpleLoginSyncPendingEmailNavArgId
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
@@ -61,14 +57,11 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
     private val mailboxId = savedStateHandleProvider.get()
         .require<Long>(SimpleLoginSyncMailboxIdNavArgId.key)
 
-    private val pendingEmail = savedStateHandleProvider.get()
-        .get<String?>(SimpleLoginSyncPendingEmailNavArgId.key)
-        .toOption()
-        .map(NavParamEncoder::decode)
-
     private val mailboxEmailFlow = observeSimpleLoginAliasMailbox(mailboxId = mailboxId)
         .mapLatest { aliaMailbox ->
-            if (pendingEmail is Some) pendingEmail.value else aliaMailbox?.email.orEmpty()
+            val pendingEmail = aliaMailbox?.pendingEmail
+            val originalEmail = aliaMailbox?.email
+            if (!pendingEmail.isNullOrBlank()) pendingEmail else originalEmail.orEmpty()
         }
 
     @OptIn(SavedStateHandleSaveableApi::class)

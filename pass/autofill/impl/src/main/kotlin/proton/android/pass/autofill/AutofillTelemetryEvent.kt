@@ -20,6 +20,7 @@ package proton.android.pass.autofill
 
 import proton.android.pass.autofill.extensions.isBrowser
 import proton.android.pass.domain.entity.PackageName
+import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryEvent.DeferredTelemetryEvent
 
 enum class AutofillTriggerSource(val source: String) {
@@ -32,6 +33,7 @@ data object AutosaveDisplay : DeferredTelemetryEvent("autosave.display")
 
 data class AutofillDisplayed(
     val source: AutofillTriggerSource,
+    val eventItemType: EventItemType,
     val app: PackageName
 ) : DeferredTelemetryEvent("autofill.display") {
     override fun dimensions(): Map<String, String> {
@@ -39,12 +41,13 @@ data class AutofillDisplayed(
         if (app.isBrowser()) {
             map["mobileBrowser"] = app.value
         }
-
+        map["itemType"] = eventItemType.itemTypeName
         return map
     }
 }
 data class AutofillDone(
     val source: AutofillTriggerSource,
+    val eventItemType: EventItemType,
     val app: PackageName
 ) : DeferredTelemetryEvent("autofill.triggered") {
     override fun dimensions(): Map<String, String> {
@@ -52,7 +55,7 @@ data class AutofillDone(
         if (app.isBrowser()) {
             map["mobileBrowser"] = app.value
         }
-
+        map["itemType"] = eventItemType.itemTypeName
         return map
     }
 }

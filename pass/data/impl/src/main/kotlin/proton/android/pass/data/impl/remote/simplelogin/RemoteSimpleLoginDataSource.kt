@@ -84,6 +84,8 @@ interface RemoteSimpleLoginDataSource {
         request: SimpleLoginChangeMailboxRequest
     ): SimpleLoginAliasMailboxResponse
 
+    suspend fun cancelSimpleLoginAliasMailboxEmailChange(userId: UserId, mailboxId: Long): CodeOnlyResponse
+
     suspend fun resendSimpleLoginAliasMailboxVerifyCode(
         userId: UserId,
         mailboxId: Long

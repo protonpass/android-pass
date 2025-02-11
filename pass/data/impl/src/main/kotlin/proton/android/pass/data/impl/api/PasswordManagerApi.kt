@@ -568,6 +568,9 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Body request: SimpleLoginChangeMailboxRequest
     ): SimpleLoginAliasMailboxResponse
 
+    @DELETE("$PREFIX/user/alias/mailbox/{mailboxId}/email")
+    suspend fun cancelSimpleLoginAliasMailboxEmailChange(@Path("mailboxId") mailboxId: Long): CodeOnlyResponse
+
     @HTTP(method = "DELETE", path = "$PREFIX/user/alias/mailbox/{mailboxId}", hasBody = true)
     suspend fun deleteSimpleLoginAliasMailbox(
         @Path("mailboxId") mailboxId: Long,

@@ -36,6 +36,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
+import proton.android.pass.data.api.errors.EmailAlreadyInUseError
 import proton.android.pass.data.api.errors.ErrorCodes
 import proton.android.pass.data.api.errors.InvalidVerificationCodeError
 import proton.android.pass.data.api.errors.InvalidVerificationCodeLimitError
@@ -230,14 +231,33 @@ class SimpleLoginRepositoryImpl @Inject constructor(
 
     override suspend fun changeAliasMailboxEmail(mailboxId: Long, email: String): SimpleLoginAliasMailbox =
         withUserId { userId ->
-            remoteSimpleLoginDataSource.changeSimpleLoginAliasMailbox(
-                userId = userId,
-                mailboxId = mailboxId,
-                request = SimpleLoginChangeMailboxRequest(email = email)
-            )
-                .mailbox
-                .toDomain()
+            runCatching {
+                val mailbox = remoteSimpleLoginDataSource.changeSimpleLoginAliasMailbox(
+                    userId = userId,
+                    mailboxId = mailboxId,
+                    request = SimpleLoginChangeMailboxRequest(email = email)
+                ).mailbox.toDomain()
+                localSimpleLoginDataSource.updateAliasMailbox(userId, mailbox)
+                mailbox
+            }.onFailure { error ->
+                when (error.getProtonErrorCode()) {
+                    ErrorCodes.EMAIL_ALREADY_IN_USE -> throw EmailAlreadyInUseError()
+                    else -> throw error
+                }
+            }.getOrThrow()
         }
+
+    override suspend fun cancelAliasMailboxEmailChange(mailboxId: Long) {
+        withUserId { userId ->
+            remoteSimpleLoginDataSource.cancelSimpleLoginAliasMailboxEmailChange(
+                userId = userId,
+                mailboxId = mailboxId
+            )
+            val mailbox = localSimpleLoginDataSource.observeAliasMailbox(userId, mailboxId).first()
+            val updatedMailbox = mailbox?.copy(pendingEmail = null) ?: return@withUserId
+            localSimpleLoginDataSource.updateAliasMailbox(userId, updatedMailbox)
+        }
+    }
 
     override suspend fun resendAliasMailboxVerificationCode(mailboxId: Long) {
         withUserId { userId ->

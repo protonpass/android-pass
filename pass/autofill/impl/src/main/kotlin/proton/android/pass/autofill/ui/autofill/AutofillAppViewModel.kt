@@ -113,11 +113,14 @@ class AutofillAppViewModel @Inject constructor(
         hadSelectedAutofillItem = value.some()
     }
 
-    fun onSelectItemScreenShown(packageName: PackageName) {
-        val event = AutofillDisplayed(
-            source = AutofillTriggerSource.App,
-            app = packageName
-        )
+    fun onSelectItemScreenShown(state: AutofillAppState) {
+        val event = with(state.autofillData) {
+            AutofillDisplayed(
+                source = AutofillTriggerSource.App,
+                eventItemType = assistInfo.cluster.eventItemType(),
+                app = packageInfo.packageName
+            )
+        }
         telemetryManager.sendEvent(event)
     }
 
@@ -240,7 +243,14 @@ class AutofillAppViewModel @Inject constructor(
             AutofillTriggerSource.App
         }
 
-        telemetryManager.sendEvent(AutofillDone(source, state.autofillData.packageInfo.packageName))
+        val event = with(state.autofillData) {
+            AutofillDone(
+                source = source,
+                eventItemType = assistInfo.cluster.eventItemType(),
+                app = packageInfo.packageName
+            )
+        }
+        telemetryManager.sendEvent(event)
         inAppReviewTriggerMetrics.incrementItemAutofillCount()
     }
 

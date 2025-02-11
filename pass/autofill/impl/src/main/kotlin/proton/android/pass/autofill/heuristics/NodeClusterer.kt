@@ -24,6 +24,7 @@ import proton.android.pass.autofill.entities.AssistField
 import proton.android.pass.autofill.entities.AutofillFieldId
 import proton.android.pass.autofill.entities.DetectionType
 import proton.android.pass.autofill.entities.FieldType
+import proton.android.pass.telemetry.api.EventItemType
 
 @Parcelize
 sealed interface NodeCluster : Parcelable {
@@ -31,6 +32,7 @@ sealed interface NodeCluster : Parcelable {
     fun isFocused(): Boolean
     fun fields(): List<AssistField>
     fun type(): String
+    fun eventItemType(): EventItemType
 
     fun url(): String? = fields().firstOrNull()?.url
 
@@ -39,6 +41,7 @@ sealed interface NodeCluster : Parcelable {
         override fun isFocused() = true
         override fun fields(): List<AssistField> = emptyList()
         override fun type() = "NodeCluster.Empty"
+        override fun eventItemType(): EventItemType = EventItemType.Login
     }
 
     @Parcelize
@@ -51,6 +54,7 @@ sealed interface NodeCluster : Parcelable {
         value class OnlyUsername(val username: AssistField) : Login {
             override fun fields(): List<AssistField> = listOf(username)
             override fun type() = "OnlyUsername"
+            override fun eventItemType(): EventItemType = EventItemType.Login
         }
 
         @Parcelize
@@ -58,6 +62,7 @@ sealed interface NodeCluster : Parcelable {
         value class OnlyPassword(val password: AssistField) : Login {
             override fun fields(): List<AssistField> = listOf(password)
             override fun type() = "OnlyPassword"
+            override fun eventItemType(): EventItemType = EventItemType.Login
         }
 
         @Parcelize
@@ -67,6 +72,7 @@ sealed interface NodeCluster : Parcelable {
         ) : Login {
             override fun fields(): List<AssistField> = listOf(username, password)
             override fun type() = "UsernameAndPassword"
+            override fun eventItemType(): EventItemType = EventItemType.Login
         }
     }
 
@@ -79,6 +85,7 @@ sealed interface NodeCluster : Parcelable {
         override fun isFocused() = fields().any { it.isFocused }
         override fun fields(): List<AssistField> = listOf(username, password, repeatPassword)
         override fun type() = "SignUp"
+        override fun eventItemType(): EventItemType = EventItemType.Login
     }
 
     @Parcelize
@@ -109,6 +116,7 @@ sealed interface NodeCluster : Parcelable {
         )
 
         override fun type() = "Identity"
+        override fun eventItemType(): EventItemType = EventItemType.Identity
     }
 
     @Parcelize
@@ -175,6 +183,7 @@ sealed interface NodeCluster : Parcelable {
         }
 
         override fun type() = "CreditCard"
+        override fun eventItemType(): EventItemType = EventItemType.CreditCard
     }
 }
 

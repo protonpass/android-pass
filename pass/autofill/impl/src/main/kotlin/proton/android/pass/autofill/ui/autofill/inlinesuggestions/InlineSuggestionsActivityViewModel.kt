@@ -113,10 +113,13 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
             }
         if (mappingsOption is Some) {
             if (mappingsOption.value.mappings.isNotEmpty()) {
-                val event = AutofillDone(
-                    source = AutofillTriggerSource.Source,
-                    app = appState.autofillData.packageInfo.packageName
-                )
+                val event = with(appState.autofillData) {
+                    AutofillDone(
+                        source = AutofillTriggerSource.Source,
+                        eventItemType = assistInfo.cluster.eventItemType(),
+                        app = packageInfo.packageName
+                    )
+                }
                 telemetryManager.sendEvent(event)
                 inAppReviewTriggerMetrics.incrementItemAutofillCount()
                 PassLogger.i(TAG, "Mappings found: ${mappingsOption.value.mappings.size}")

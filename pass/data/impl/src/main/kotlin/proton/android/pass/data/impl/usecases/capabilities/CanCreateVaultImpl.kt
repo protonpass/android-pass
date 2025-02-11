@@ -43,7 +43,7 @@ class CanCreateVaultImpl @Inject constructor(
     private val canCreateVaultsByPolicy: Flow<Boolean> = observeOrganizationVaultsPolicy()
         .mapLatest { organizationVaultsPolicyOption ->
             when (organizationVaultsPolicyOption) {
-                None -> true
+                None -> false
                 is Some -> organizationVaultsPolicyOption.value.canCreateVaults
             }
         }

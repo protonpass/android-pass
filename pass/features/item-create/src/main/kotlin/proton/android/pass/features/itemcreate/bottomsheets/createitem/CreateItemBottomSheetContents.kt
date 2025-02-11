@@ -18,9 +18,9 @@
 
 package proton.android.pass.features.itemcreate.bottomsheets.createitem
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -30,14 +30,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toPersistentList
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.defaultSmallNorm
-import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
@@ -50,7 +49,6 @@ import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.composecomponents.impl.item.icon.PasswordIcon
-import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateAlias
 import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateCreditCard
@@ -59,212 +57,187 @@ import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateIte
 import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateNote
 import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreatePassword
 
-@ExperimentalMaterialApi
 @Composable
-fun CreateItemBottomSheetContents(
+internal fun CreateItemBottomSheetContents(
     modifier: Modifier = Modifier,
     state: CreateItemBottomSheetUIState,
     onNavigate: (CreateItemBottomsheetNavigation) -> Unit
-) {
+) = with(state) {
+    when (mode) {
+        CreateItemBottomSheetMode.HomeFull -> buildList {
+            if (canCreateItems) {
+                createLogin(
+                    onClick = { onNavigate(CreateLogin(shareId.toOption())) }
+                ).also(::add)
 
-    val items = when (state.mode) {
-        CreateItemBottomSheetMode.HomeFull -> listOfNotNull(
-            createLogin(state.shareId) { onNavigate(CreateLogin(it)) },
-            createAlias(
-                shareId = state.shareId,
-                createItemAliasUIState = state.createItemAliasUIState
-            ) { onNavigate(CreateAlias(it)) },
-            createCreditCard(state.shareId) {
-                onNavigate(CreateCreditCard(it))
-            },
-            createNote(state.shareId) { onNavigate(CreateNote(it)) },
-            createPassword { onNavigate(CreatePassword) },
-            createIdentity(state.shareId) { onNavigate(CreateIdentity(it)) }
-        )
+                createAlias(
+                    createItemAliasUIState = createItemAliasUIState,
+                    onClick = { onNavigate(CreateAlias(shareId.toOption())) }
+                ).also(::add)
 
-        CreateItemBottomSheetMode.AutofillLogin -> listOf(
-            createLogin(state.shareId) { onNavigate(CreateLogin(it)) },
-            createAlias(state.shareId, state.createItemAliasUIState) { onNavigate(CreateAlias(it)) }
-        )
+                createCreditCard(
+                    onClick = { onNavigate(CreateCreditCard(shareId.toOption())) }
+                ).also(::add)
 
-        CreateItemBottomSheetMode.AutofillCreditCard -> listOf(
-            createCreditCard(state.shareId) { onNavigate(CreateCreditCard(it)) }
-        )
+                createNote(
+                    onClick = { onNavigate(CreateNote(shareId.toOption())) }
+                ).also(::add)
 
-        CreateItemBottomSheetMode.AutofillIdentity -> listOf(
-            createIdentity(state.shareId) { onNavigate(CreateIdentity(it)) }
-        )
+                createIdentity(
+                    onClick = { onNavigate(CreateIdentity(shareId.toOption())) }
+                ).also(::add)
+            }
+
+            createPassword(
+                onClick = { onNavigate(CreatePassword) }
+            ).also(::add)
+        }
+
+        CreateItemBottomSheetMode.AutofillLogin -> buildList {
+            if (canCreateItems) {
+                createLogin(
+                    onClick = { onNavigate(CreateLogin(shareId.toOption())) }
+                ).also(::add)
+
+                createAlias(
+                    createItemAliasUIState = createItemAliasUIState,
+                    onClick = { onNavigate(CreateAlias(shareId.toOption())) }
+                ).also(::add)
+            }
+        }
+
+        CreateItemBottomSheetMode.AutofillCreditCard -> buildList {
+            if (canCreateItems) {
+                createCreditCard(
+                    onClick = { onNavigate(CreateCreditCard(shareId.toOption())) }
+                ).also(::add)
+            }
+        }
+
+        CreateItemBottomSheetMode.AutofillIdentity -> buildList {
+            if (canCreateItems) {
+                createIdentity(
+                    onClick = { onNavigate(CreateIdentity(shareId.toOption())) }
+                ).also(::add)
+            }
+        }
 
         null -> emptyList()
+    }.let { items ->
+        BottomSheetItemList(
+            modifier = modifier.bottomSheet(),
+            items = items.withDividers().toPersistentList()
+        )
     }
-
-    BottomSheetItemList(
-        modifier = modifier.bottomSheet(),
-        items = items.withDividers().toPersistentList()
-    )
 }
 
-private fun createLogin(shareId: ShareId?, onCreateLogin: (Option<ShareId>) -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_login)) }
-        override val subtitle: (@Composable () -> Unit)
-            get() = {
-                Text(
-                    text = stringResource(R.string.item_type_login_description),
-                    style = ProtonTheme.typography.defaultSmallNorm,
-                    color = ProtonTheme.colors.textWeak
-                )
-            }
-        override val leftIcon: (@Composable () -> Unit)
-            get() = { LoginIcon() }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onCreateLogin(shareId.toOption()) }
-        override val isDivider = false
-    }
-
-private fun createAlias(
-    shareId: ShareId?,
-    createItemAliasUIState: CreateItemAliasUIState,
-    onCreateAlias: (Option<ShareId>) -> Unit
-): BottomSheetItem = object : BottomSheetItem {
-    override val title: @Composable () -> Unit
-        get() = {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                Text(
-                    text = stringResource(id = R.string.action_alias),
-                    style = ProtonTheme.typography.defaultNorm,
-                    color = PassTheme.colors.textNorm
-                )
-                if (createItemAliasUIState.canUpgrade) {
-                    val color =
-                        if (createItemAliasUIState.aliasCount >= createItemAliasUIState.aliasLimit) {
-                            PassTheme.colors.signalDanger
-                        } else {
-                            PassTheme.colors.textWeak
-                        }
-                    Text(
-                        text = "(${createItemAliasUIState.aliasCount}/${createItemAliasUIState.aliasLimit})",
-                        style = ProtonTheme.typography.defaultNorm,
-                        color = color
-                    )
-                }
-            }
-        }
-    override val subtitle: (@Composable () -> Unit)
-        get() = {
-            Text(
-                text = stringResource(R.string.item_type_alias_description),
-                style = ProtonTheme.typography.defaultSmallNorm,
-                color = ProtonTheme.colors.textWeak
-            )
-        }
-    override val leftIcon: (@Composable () -> Unit)
-        get() = { AliasIcon() }
-    override val endIcon: (@Composable () -> Unit)?
-        get() = null
-    override val onClick: () -> Unit
-        get() = { onCreateAlias(shareId.toOption()) }
-    override val isDivider = false
-}
-
-private fun createCreditCard(shareId: ShareId?, onCreateCreditCard: (Option<ShareId>) -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_credit_card)) }
-        override val subtitle: (@Composable () -> Unit)
-            get() = {
-                Text(
-                    text = stringResource(R.string.item_type_credit_card_description),
-                    style = ProtonTheme.typography.defaultSmallNorm,
-                    color = ProtonTheme.colors.textWeak
-                )
-            }
-        override val leftIcon: (@Composable () -> Unit)
-            get() = { CreditCardIcon() }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onCreateCreditCard(shareId.toOption()) }
-        override val isDivider = false
-    }
-
-private fun createNote(shareId: ShareId?, onCreateNote: (Option<ShareId>) -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_note)) }
-        override val subtitle: (@Composable () -> Unit)
-            get() = {
-                Text(
-                    text = stringResource(R.string.item_type_note_description),
-                    style = ProtonTheme.typography.defaultSmallNorm,
-                    color = ProtonTheme.colors.textWeak
-                )
-            }
-        override val leftIcon: (@Composable () -> Unit)
-            get() = { NoteIcon() }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onCreateNote(shareId.toOption()) }
-        override val isDivider = false
-    }
-
-private fun createPassword(onCreatePassword: () -> Unit): BottomSheetItem = object : BottomSheetItem {
-    override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_password)) }
-    override val subtitle: (@Composable () -> Unit)
-        get() = {
-            Text(
-                text = stringResource(R.string.item_type_password_description),
-                style = ProtonTheme.typography.defaultSmallNorm,
-                color = ProtonTheme.colors.textWeak
-            )
-        }
-    override val leftIcon: (@Composable () -> Unit)
-        get() = { PasswordIcon() }
-    override val endIcon: (@Composable () -> Unit)?
-        get() = null
-    override val onClick: () -> Unit
-        get() = onCreatePassword
-    override val isDivider = false
-}
-
-private fun createIdentity(shareId: ShareId?, onCreateIdentity: (Option<ShareId>) -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_identity)) }
-        override val subtitle: (@Composable () -> Unit)
-            get() = {
-                Text(
-                    text = stringResource(R.string.item_type_identity_description),
-                    style = ProtonTheme.typography.defaultSmallNorm,
-                    color = ProtonTheme.colors.textWeak
-                )
-            }
-        override val leftIcon: (@Composable () -> Unit)
-            get() = { IdentityIcon() }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onCreateIdentity(shareId.toOption()) }
-        override val isDivider = false
-    }
-
-
-class ThemeCreateItemBSPreviewProvider : ThemePairPreviewProvider<CreateItemBottomSheetUIState>(
-    CreateItemBottomSheetUIStatePreviewProvider()
+@Composable
+private fun createLogin(onClick: () -> Unit) = createItem(
+    title = { BottomSheetItemTitle(text = stringResource(id = R.string.action_login)) },
+    subtitleResId = R.string.item_type_login_description,
+    leftIcon = { LoginIcon() },
+    onClick = onClick
 )
 
-@OptIn(ExperimentalMaterialApi::class)
-@Preview
 @Composable
-fun CreateItemBottomSheetLimitPreview(
+private fun createAlias(createItemAliasUIState: CreateItemAliasUIState, onClick: () -> Unit) = createItem(
+    title = {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
+        ) {
+            Text(
+                text = stringResource(id = R.string.action_alias),
+                style = ProtonTheme.typography.defaultNorm,
+                color = PassTheme.colors.textNorm
+            )
+
+            if (createItemAliasUIState.canUpgrade) {
+                val color =
+                    if (createItemAliasUIState.aliasCount >= createItemAliasUIState.aliasLimit) {
+                        PassTheme.colors.signalDanger
+                    } else {
+                        PassTheme.colors.textWeak
+                    }
+                Text(
+                    text = "(${createItemAliasUIState.aliasCount}/${createItemAliasUIState.aliasLimit})",
+                    style = ProtonTheme.typography.defaultNorm,
+                    color = color
+                )
+            }
+        }
+    },
+    subtitleResId = R.string.item_type_alias_description,
+    leftIcon = { AliasIcon() },
+    onClick = onClick
+)
+
+@Composable
+private fun createCreditCard(onClick: () -> Unit) = createItem(
+    title = { BottomSheetItemTitle(text = stringResource(id = R.string.action_credit_card)) },
+    subtitleResId = R.string.item_type_credit_card_description,
+    leftIcon = { CreditCardIcon() },
+    onClick = onClick
+)
+
+@Composable
+private fun createNote(onClick: () -> Unit) = createItem(
+    title = { BottomSheetItemTitle(text = stringResource(id = R.string.action_note)) },
+    subtitleResId = R.string.item_type_note_description,
+    leftIcon = { NoteIcon() },
+    onClick = onClick
+)
+
+@Composable
+private fun createIdentity(onClick: () -> Unit) = createItem(
+    title = { BottomSheetItemTitle(text = stringResource(id = R.string.action_identity)) },
+    subtitleResId = R.string.item_type_identity_description,
+    leftIcon = { IdentityIcon() },
+    onClick = onClick
+)
+
+@Composable
+private fun createPassword(onClick: () -> Unit) = createItem(
+    title = { BottomSheetItemTitle(text = stringResource(id = R.string.action_password)) },
+    subtitleResId = R.string.item_type_password_description,
+    leftIcon = { PasswordIcon() },
+    onClick = onClick
+)
+
+private fun createItem(
+    title: @Composable () -> Unit,
+    @StringRes subtitleResId: Int,
+    leftIcon: @Composable () -> Unit,
+    onClick: () -> Unit
+) = object : BottomSheetItem {
+
+    override val title: @Composable () -> Unit = title
+
+    override val subtitle: (@Composable () -> Unit) = {
+        Text(
+            text = stringResource(id = subtitleResId),
+            style = ProtonTheme.typography.defaultSmallNorm,
+            color = ProtonTheme.colors.textWeak
+        )
+    }
+
+    override val leftIcon: (@Composable () -> Unit) = leftIcon
+
+    override val endIcon: (@Composable () -> Unit)? = null
+
+    override val onClick: () -> Unit = onClick
+
+    override val isDivider = false
+
+}
+
+internal class ThemeCreateItemBSPreviewProvider :
+    ThemePairPreviewProvider<CreateItemBottomSheetUIState>(
+        CreateItemBottomSheetUIStatePreviewProvider()
+    )
+
+@[Preview Composable]
+internal fun CreateItemBottomSheetLimitPreview(
     @PreviewParameter(ThemeCreateItemBSPreviewProvider::class) input: Pair<Boolean, CreateItemBottomSheetUIState>
 ) {
     PassTheme(isDark = input.first) {
@@ -277,26 +250,26 @@ fun CreateItemBottomSheetLimitPreview(
     }
 }
 
-class CreateItemBottomSheetModePreviewProvider :
+internal class CreateItemBottomSheetModePreviewProvider :
     PreviewParameterProvider<CreateItemBottomSheetMode> {
     override val values: Sequence<CreateItemBottomSheetMode>
         get() = CreateItemBottomSheetMode.entries.asSequence()
 }
 
-class ThemedCreateItemModePreviewProvider :
-    ThemePairPreviewProvider<CreateItemBottomSheetMode>(CreateItemBottomSheetModePreviewProvider())
+internal class ThemedCreateItemModePreviewProvider :
+    ThemePairPreviewProvider<CreateItemBottomSheetMode>(
+        CreateItemBottomSheetModePreviewProvider()
+    )
 
-@OptIn(ExperimentalMaterialApi::class)
-@Preview
-@Composable
-fun CreateItemBottomSheetContentsPreview(
+@[Preview Composable]
+internal fun CreateItemBottomSheetContentsPreview(
     @PreviewParameter(ThemedCreateItemModePreviewProvider::class) input: Pair<Boolean, CreateItemBottomSheetMode>
 ) {
     PassTheme(isDark = input.first) {
         Surface {
             CreateItemBottomSheetContents(
                 onNavigate = {},
-                state = CreateItemBottomSheetUIState.DEFAULT.copy(mode = input.second)
+                state = CreateItemBottomSheetUIState.Initial.copy(mode = input.second)
             )
         }
     }

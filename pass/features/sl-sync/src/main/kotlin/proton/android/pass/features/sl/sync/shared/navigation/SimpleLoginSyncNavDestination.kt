@@ -18,8 +18,6 @@
 
 package proton.android.pass.features.sl.sync.shared.navigation
 
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
 import proton.android.pass.domain.ShareId
 
 sealed interface SimpleLoginSyncNavDestination {
@@ -39,10 +37,8 @@ sealed interface SimpleLoginSyncNavDestination {
 
     data object Upsell : SimpleLoginSyncNavDestination
 
-    data class VerifyMailbox(
-        val mailboxId: Long,
-        val pendingEmail: Option<String> = None
-    ) : SimpleLoginSyncNavDestination
+    @JvmInline
+    value class VerifyMailbox(val mailboxId: Long) : SimpleLoginSyncNavDestination
 
     @JvmInline
     value class ChangeMailboxEmail(val mailboxId: Long) : SimpleLoginSyncNavDestination

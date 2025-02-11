@@ -18,21 +18,20 @@
 
 package proton.android.pass.features.itemcreate.bottomsheets.createitem
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CreateItemBottomSheet(
     modifier: Modifier = Modifier,
     onNavigate: (CreateItemBottomsheetNavigation) -> Unit,
     viewModel: CreateItemBottomSheetViewModel = hiltViewModel()
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+
     CreateItemBottomSheetContents(
         modifier = modifier,
         state = state,

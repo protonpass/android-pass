@@ -175,6 +175,7 @@ import proton.android.pass.data.api.usecases.invites.ObserveInvite
 import proton.android.pass.data.api.usecases.items.GetItemCategory
 import proton.android.pass.data.api.usecases.items.GetItemOptions
 import proton.android.pass.data.api.usecases.items.GetMigrationItemsSelection
+import proton.android.pass.data.api.usecases.items.ObserveCanCreateItems
 import proton.android.pass.data.api.usecases.items.ObserveEncryptedSharedItems
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
@@ -397,6 +398,7 @@ import proton.android.pass.data.impl.usecases.invites.ObserveInviteImpl
 import proton.android.pass.data.impl.usecases.items.GetItemCategoryImpl
 import proton.android.pass.data.impl.usecases.items.GetItemOptionsImpl
 import proton.android.pass.data.impl.usecases.items.GetMigrationItemsSelectionImpl
+import proton.android.pass.data.impl.usecases.items.ObserveCanCreateItemsImpl
 import proton.android.pass.data.impl.usecases.items.ObserveEncryptedSharedItemsImpl
 import proton.android.pass.data.impl.usecases.items.ObserveItemRevisionsImpl
 import proton.android.pass.data.impl.usecases.items.ObserveMonitoredItemsImpl
@@ -1178,5 +1180,8 @@ abstract class DataUseCaseModule {
     abstract fun bindObserveOrganizationVaultsPolicy(
         impl: ObserveOrganizationVaultsPolicyImpl
     ): ObserveOrganizationVaultsPolicy
+
+    @[Binds Singleton]
+    abstract fun bindObserveCanCreateItems(impl: ObserveCanCreateItemsImpl): ObserveCanCreateItems
 
 }

@@ -2432,13 +2432,15 @@ fun NavGraphBuilder.appGraph(
 
                 SimpleLoginSyncNavDestination.DismissBottomSheet -> dismissBottomSheet {}
 
-                is SimpleLoginSyncNavDestination.ChangeMailboxEmail -> appNavigator.navigate(
-                    destination = SimpleLoginSyncMailboxChangeNavItem,
-                    route = SimpleLoginSyncMailboxChangeNavItem.buildRoute(
-                        mailboxId = destination.mailboxId
-                    ),
-                    backDestination = SimpleLoginSyncManagementNavItem
-                )
+                is SimpleLoginSyncNavDestination.ChangeMailboxEmail -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = SimpleLoginSyncMailboxChangeNavItem,
+                        route = SimpleLoginSyncMailboxChangeNavItem.buildRoute(
+                            mailboxId = destination.mailboxId
+                        ),
+                        backDestination = SimpleLoginSyncManagementNavItem
+                    )
+                }
             }
         }
     )

@@ -53,6 +53,16 @@ internal enum class SimpleLoginSyncMailboxOptionsMessage(
     DeleteMailboxSuccess(
         id = R.string.simple_login_sync_mailbox_delete_message_delete_success,
         type = SnackbarType.SUCCESS
+    ),
+
+    CancelMailboxChangeError(
+        id = R.string.simple_login_sync_mailbox_cancel_email_change_message_delete_error,
+        type = SnackbarType.ERROR
+    ),
+
+    CancelMailboxChangeSuccess(
+        id = R.string.simple_login_sync_mailbox_cancel_email_change_message_delete_success,
+        type = SnackbarType.SUCCESS
     )
 
 }

@@ -16,18 +16,6 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.mailboxes.options.ui
+package proton.android.pass.data.api.errors
 
-internal sealed interface SimpleLoginSyncMailboxOptionsUiEvent {
-
-    data object OnDeleteClicked : SimpleLoginSyncMailboxOptionsUiEvent
-
-    data object OnSetAsDefaultClicked : SimpleLoginSyncMailboxOptionsUiEvent
-
-    data object OnVerifyClicked : SimpleLoginSyncMailboxOptionsUiEvent
-
-    data object OnChangeEmailClicked : SimpleLoginSyncMailboxOptionsUiEvent
-
-    data object OnCancelChangeEmailClicked : SimpleLoginSyncMailboxOptionsUiEvent
-
-}
+class EmailAlreadyInUseError : Throwable("Email already in use")

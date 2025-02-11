@@ -33,6 +33,11 @@ internal enum class SimpleLoginSyncMailboxChangeSnackbarMessage(
     ChangeMailboxError(
         id = R.string.simple_login_sync_mailbox_change_message_error,
         type = SnackbarType.ERROR
+    ),
+
+    EmailAlreadyInUseError(
+        id = R.string.simple_login_sync_mailbox_change_email_already_in_use_message_error,
+        type = SnackbarType.ERROR
     )
 
 }

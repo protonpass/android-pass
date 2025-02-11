@@ -36,6 +36,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.usecases.simplelogin.CancelSimpleLoginAliasMailboxChange
 import proton.android.pass.data.api.usecases.simplelogin.DeleteSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasMailbox
@@ -50,6 +51,7 @@ class SimpleLoginSyncMailboxOptionsViewModel @Inject constructor(
     observeSimpleLoginAliasMailbox: ObserveSimpleLoginAliasMailbox,
     private val updateSimpleLoginAliasMailbox: UpdateSimpleLoginAliasMailbox,
     private val deleteSimpleLoginAliasMailbox: DeleteSimpleLoginAliasMailbox,
+    private val cancelSimpleLoginAliasMailboxChange: CancelSimpleLoginAliasMailboxChange,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
@@ -120,6 +122,26 @@ class SimpleLoginSyncMailboxOptionsViewModel @Inject constructor(
 
     internal fun onChangeMailboxEmail() {
         eventFlow.update { SimpleLoginSyncMailboxOptionsEvent.OnChangeMailboxEmail(mailboxId) }
+    }
+
+    internal fun onCancelMailboxEmailChange() {
+        viewModelScope.launch {
+            actionFlow.update { SimpleLoginSyncMailboxOptionsAction.CancelEmailChange }
+
+            runCatching { cancelSimpleLoginAliasMailboxChange(mailboxId) }
+                .onFailure { error ->
+                    PassLogger.w(TAG, "There was an error cancelling mailbox email change")
+                    PassLogger.w(TAG, error)
+                    eventFlow.update { SimpleLoginSyncMailboxOptionsEvent.OnMailboxCancelEmailChangeError }
+                    snackbarDispatcher(SimpleLoginSyncMailboxOptionsMessage.CancelMailboxChangeError)
+                }
+                .onSuccess {
+                    eventFlow.update { SimpleLoginSyncMailboxOptionsEvent.OnMailboxCancelEmailChangeSuccess }
+                    snackbarDispatcher(SimpleLoginSyncMailboxOptionsMessage.CancelMailboxChangeSuccess)
+                }
+
+            actionFlow.update { SimpleLoginSyncMailboxOptionsAction.None }
+        }
     }
 
     internal fun onDeleteMailbox() {

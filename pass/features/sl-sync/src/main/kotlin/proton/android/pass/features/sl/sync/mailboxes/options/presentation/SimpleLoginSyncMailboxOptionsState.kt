@@ -41,6 +41,11 @@ internal data class SimpleLoginSyncMailboxOptionsState(
         is Some -> aliasMailboxOption.value.isVerified
     }
 
+    private val hasPendingEmailChange = when (aliasMailboxOption) {
+        None -> false
+        is Some -> !aliasMailboxOption.value.pendingEmail.isNullOrBlank()
+    }
+
     private val hasAliases = when (aliasMailboxOption) {
         None -> false
         is Some -> aliasMailboxOption.value.aliasCount > 0
@@ -48,11 +53,15 @@ internal data class SimpleLoginSyncMailboxOptionsState(
 
     internal val canSetAsDefault: Boolean = !isDefault && isVerified
 
-    internal val canVerify: Boolean = !isVerified
+    internal val canVerify: Boolean = !isVerified || hasPendingEmailChange
 
     internal val canDelete: Boolean = !isDefault
 
     internal val canTransferAliases: Boolean = isVerified && hasAliases
+
+    internal val canChangeMailbox: Boolean = !hasPendingEmailChange
+
+    internal val canCancelMailboxChange: Boolean = hasPendingEmailChange
 
     internal companion object {
 

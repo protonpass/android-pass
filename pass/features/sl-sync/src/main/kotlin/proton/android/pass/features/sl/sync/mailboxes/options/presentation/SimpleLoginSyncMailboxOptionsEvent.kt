@@ -41,4 +41,8 @@ internal sealed interface SimpleLoginSyncMailboxOptionsEvent {
 
     data object OnMailboxDeleteError : SimpleLoginSyncMailboxOptionsEvent
 
+    data object OnMailboxCancelEmailChangeSuccess : SimpleLoginSyncMailboxOptionsEvent
+
+    data object OnMailboxCancelEmailChangeError : SimpleLoginSyncMailboxOptionsEvent
+
 }

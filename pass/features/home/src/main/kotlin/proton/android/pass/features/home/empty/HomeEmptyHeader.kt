@@ -40,7 +40,11 @@ import proton.android.pass.features.home.R
 import proton.android.pass.searchoptions.api.SearchFilterType
 
 @Composable
-internal fun HomeEmptyHeader(modifier: Modifier = Modifier, filterType: SearchFilterType) {
+internal fun HomeEmptyHeader(
+    modifier: Modifier = Modifier,
+    filterType: SearchFilterType,
+    canCreateItems: Boolean
+) {
     val (title, desc) = remember(filterType) {
         when (filterType) {
             SearchFilterType.All ->
@@ -91,13 +95,16 @@ internal fun HomeEmptyHeader(modifier: Modifier = Modifier, filterType: SearchFi
             style = ProtonTheme.typography.headlineSmallNorm,
             textAlign = TextAlign.Center
         )
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = stringResource(desc),
-            style = PassTheme.typography.body3Norm(),
-            color = PassTheme.colors.textWeak,
-            textAlign = TextAlign.Center
-        )
+
+        if (canCreateItems) {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(desc),
+                style = PassTheme.typography.body3Norm(),
+                color = PassTheme.colors.textWeak,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }
 
@@ -105,7 +112,10 @@ internal fun HomeEmptyHeader(modifier: Modifier = Modifier, filterType: SearchFi
 internal fun HomeEmptyHeaderPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            HomeEmptyHeader(filterType = SearchFilterType.All)
+            HomeEmptyHeader(
+                filterType = SearchFilterType.All,
+                canCreateItems = true
+            )
         }
     }
 }

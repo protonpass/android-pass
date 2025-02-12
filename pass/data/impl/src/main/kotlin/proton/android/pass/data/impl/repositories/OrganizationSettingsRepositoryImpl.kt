@@ -29,7 +29,9 @@ import proton.android.pass.data.impl.responses.OrganizationGetOrganization
 import proton.android.pass.domain.ForceLockSeconds
 import proton.android.pass.domain.OrganizationSettings
 import proton.android.pass.domain.OrganizationShareMode
+import proton.android.pass.domain.organizations.OrganizationItemShareMode
 import proton.android.pass.domain.organizations.OrganizationPasswordPolicy
+import proton.android.pass.domain.organizations.OrganizationSecureLinkMode
 import proton.android.pass.domain.organizations.OrganizationVaultCreateMode
 import proton.android.pass.domain.organizations.OrganizationVaultsPolicy
 import javax.inject.Inject
@@ -66,7 +68,9 @@ class OrganizationSettingsRepositoryImpl @Inject constructor(
             memorablePasswordMaxWords = settings?.passwordPolicy?.memorablePasswordMaxWords,
             memorablePasswordCapitalize = settings?.passwordPolicy?.memorablePasswordMustCapitalize,
             memorablePasswordIncludeNumbers = settings?.passwordPolicy?.memorablePasswordMustIncludeNumbers,
-            vaultCreateMode = settings?.vaultCreateMode
+            vaultCreateMode = settings?.vaultCreateMode,
+            itemShareMode = settings?.itemShareMode,
+            secureLinksMode = settings?.publicLinkMode
         )
     }
 
@@ -90,7 +94,9 @@ class OrganizationSettingsRepositoryImpl @Inject constructor(
             ),
             vaultsPolicy = OrganizationVaultsPolicy(
                 vaultCreateMode = OrganizationVaultCreateMode.fromValue(vaultCreateMode)
-            )
+            ),
+            itemShareMode = OrganizationItemShareMode.fromValue(itemShareMode),
+            secureLinkMode = OrganizationSecureLinkMode.fromValue(secureLinksMode)
         )
     } else {
         OrganizationSettings.NotAnOrganization

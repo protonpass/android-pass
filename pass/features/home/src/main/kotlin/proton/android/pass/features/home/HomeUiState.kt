@@ -83,6 +83,7 @@ internal data class HomeUiState(
     val isSLAliasSyncEnabled: Boolean,
     val isItemSharingEnabled: Boolean,
     val canCreateItems: Boolean,
+    val hasShares: Boolean,
     private val aliasTrashDialogStatusPreference: AliasTrashDialogStatusPreference
 ) {
 
@@ -94,6 +95,10 @@ internal data class HomeUiState(
         }
 
     internal val hasSharedTrashedItems: Boolean = sharedTrashedItemsCount > 0
+
+    internal val isTopBarAvailable: Boolean = hasShares
+
+    internal val isDrawerAvailable: Boolean = hasShares
 
     internal fun shouldShowRecentSearchHeader() =
         homeListUiState.items.isNotEmpty() && searchUiState.inSearchMode && searchUiState.isInSuggestionsMode
@@ -136,7 +141,8 @@ internal data class HomeUiState(
             isSLAliasSyncEnabled = false,
             isItemSharingEnabled = false,
             canCreateItems = false,
-            aliasTrashDialogStatusPreference = AliasTrashDialogStatusPreference.Disabled
+            aliasTrashDialogStatusPreference = AliasTrashDialogStatusPreference.Disabled,
+            hasShares = false
         )
 
     }

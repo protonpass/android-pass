@@ -210,6 +210,7 @@ import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
 import proton.android.pass.data.api.usecases.shares.ObserveAutofillShares
+import proton.android.pass.data.api.usecases.shares.ObserveHasShares
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.data.api.usecases.shares.ObserveShareItemMembers
 import proton.android.pass.data.api.usecases.shares.ObserveShareItemsCount
@@ -433,6 +434,7 @@ import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinkImpl
 import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinksCountImpl
 import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinksImpl
 import proton.android.pass.data.impl.usecases.shares.ObserveAutofillSharesImpl
+import proton.android.pass.data.impl.usecases.shares.ObserveHasSharesImpl
 import proton.android.pass.data.impl.usecases.shares.ObserveShareImpl
 import proton.android.pass.data.impl.usecases.shares.ObserveShareItemMembersImpl
 import proton.android.pass.data.impl.usecases.shares.ObserveShareItemsCountImpl
@@ -1183,5 +1185,8 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindObserveCanCreateItems(impl: ObserveCanCreateItemsImpl): ObserveCanCreateItems
+
+    @[Binds Singleton]
+    abstract fun bindObserveHasShares(impl: ObserveHasSharesImpl): ObserveHasShares
 
 }

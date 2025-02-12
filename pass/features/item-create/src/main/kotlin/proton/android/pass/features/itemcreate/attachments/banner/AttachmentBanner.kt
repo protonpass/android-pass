@@ -24,6 +24,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -51,7 +52,10 @@ fun AttachmentBanner(modifier: Modifier = Modifier, onClose: () -> Unit) {
                     title = stringResource(R.string.banner_title_attachments),
                     body = stringResource(R.string.banner_body_attachments)
                 )
-                Image.Default(R.drawable.attachments_file)
+                Image.Default(
+                    modifier = Modifier.clip(PassTheme.shapes.containerInputShape),
+                    id = R.drawable.attachments_file
+                )
             }
         },
         closeIcon = {

@@ -40,7 +40,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -99,10 +98,7 @@ import proton.android.pass.features.trash.ConfirmTrashAliasDialog
 import proton.android.pass.features.trash.TrashItemBottomSheetContents
 import proton.android.pass.searchoptions.api.VaultSelectionOption
 
-@OptIn(
-    ExperimentalMaterialApi::class,
-    ExperimentalComposeUiApi::class
-)
+@OptIn(ExperimentalMaterialApi::class)
 @Suppress("ComplexMethod")
 @Composable
 fun HomeScreen(
@@ -659,6 +655,7 @@ fun HomeScreen(
             drawerState = drawerState,
             drawerShape = CutCornerShape(0.dp),
             scrimColor = PassTheme.colors.backdrop,
+            gesturesEnabled = homeUiState.isDrawerAvailable,
             drawerContent = {
                 if (homeUiState.isItemSharingEnabled) {
                     val homeDrawerState by homeDrawerViewModel.stateFlow.collectAsStateWithLifecycle()

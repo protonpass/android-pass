@@ -269,7 +269,10 @@ internal fun CreateItemBottomSheetContentsPreview(
         Surface {
             CreateItemBottomSheetContents(
                 onNavigate = {},
-                state = CreateItemBottomSheetUIState.Initial.copy(mode = input.second)
+                state = CreateItemBottomSheetUIState.Initial.copy(
+                    mode = input.second,
+                    canCreateItems = true
+                )
             )
         }
     }

@@ -35,7 +35,7 @@ import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.RefreshContent
-import proton.android.pass.data.api.usecases.organization.ObserveOrganizationVaultsPolicy
+import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.domain.ShareColor
@@ -52,7 +52,7 @@ class RefreshContentImpl @Inject constructor(
     private val syncStatusRepository: ItemSyncStatusRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val createVault: CreateVault,
-    private val observeOrganizationVaultsPolicy: ObserveOrganizationVaultsPolicy
+    private val canCreateVault: CanCreateVault
 ) : RefreshContent {
 
     override suspend fun invoke(userId: UserId?) {
@@ -81,13 +81,7 @@ class RefreshContentImpl @Inject constructor(
     }
 
     private suspend fun handleSharesWhenEmpty(userId: UserId) {
-        val canCreateVaults = observeOrganizationVaultsPolicy()
-            .first()
-            .value()
-            ?.canCreateVaults
-            ?: true
-
-        if (!canCreateVaults) {
+        if (!canCreateVault().first()) {
             PassLogger.i(TAG, "Received an empty list of shares, skipping default vault creation")
 
             syncStatusRepository.setMode(SyncMode.Background)

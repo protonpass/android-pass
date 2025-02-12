@@ -43,7 +43,7 @@ import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.repositories.UpdateShareEvent
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CreateVault
-import proton.android.pass.data.api.usecases.organization.ObserveOrganizationVaultsPolicy
+import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.extensions.toDomain
@@ -71,7 +71,7 @@ class ApplyPendingEventsImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val workManager: WorkManager,
     private val itemSyncStatusRepository: ItemSyncStatusRepository,
-    private val observeOrganizationVaultsPolicy: ObserveOrganizationVaultsPolicy
+    private val canCreateVault: CanCreateVault
 ) : ApplyPendingEvents {
 
     override suspend fun invoke(userId: UserId) {
@@ -98,13 +98,7 @@ class ApplyPendingEventsImpl @Inject constructor(
     }
 
     private suspend fun handleSharesWhenEmpty(userId: UserId) {
-        val canCreateVaults = observeOrganizationVaultsPolicy()
-            .first()
-            .value()
-            ?.canCreateVaults
-            ?: true
-
-        if (!canCreateVaults) {
+        if (!canCreateVault().first()) {
             PassLogger.i(TAG, "Received an empty list of shares, skipping default vault creation")
 
             itemSyncStatusRepository.setMode(SyncMode.Background)

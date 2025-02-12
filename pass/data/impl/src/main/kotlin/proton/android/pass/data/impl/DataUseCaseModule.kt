@@ -464,7 +464,7 @@ import proton.android.pass.data.impl.usecases.tooltips.ObserveTooltipEnabledImpl
 import proton.android.pass.data.impl.usecases.vaults.ObserveVaultsGroupedByShareIdImpl
 import javax.inject.Singleton
 
-@Suppress("TooManyFunctions")
+@Suppress("LargeClass", "TooManyFunctions")
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class DataUseCaseModule {

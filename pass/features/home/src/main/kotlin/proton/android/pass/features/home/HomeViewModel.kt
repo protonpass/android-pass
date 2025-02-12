@@ -119,6 +119,7 @@ import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.UnpinItems
+import proton.android.pass.data.api.usecases.items.ObserveCanCreateItems
 import proton.android.pass.data.api.usecases.items.ObserveEncryptedSharedItems
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
@@ -214,7 +215,8 @@ class HomeViewModel @Inject constructor(
     getUserPlan: GetUserPlan,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeItemCount: ObserveItemCount,
-    accountManager: AccountManager
+    accountManager: AccountManager,
+    observeCanCreateItems: ObserveCanCreateItems
 ) : ViewModel() {
 
     init {
@@ -599,7 +601,8 @@ class HomeViewModel @Inject constructor(
         bottomSheetItemActionFlow,
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC),
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1),
-        preferencesRepository.observeAliasTrashDialogStatusPreference()
+        preferencesRepository.observeAliasTrashDialogStatusPreference(),
+        observeCanCreateItems()
     ) { homeListUiState,
         searchUiState,
         userPlan,
@@ -608,7 +611,8 @@ class HomeViewModel @Inject constructor(
         bottomSheetItemAction,
         isSLAliasSyncEnabled,
         isItemSharingEnabled,
-        aliasTrashDialogStatusPreference ->
+        aliasTrashDialogStatusPreference,
+        canCreateItems ->
         HomeUiState(
             homeListUiState = homeListUiState,
             searchUiState = searchUiState,
@@ -619,7 +623,8 @@ class HomeViewModel @Inject constructor(
             isFreePlan = userPlan.map { plan -> plan.isFreePlan }.getOrNull() ?: true,
             isSLAliasSyncEnabled = isSLAliasSyncEnabled,
             isItemSharingEnabled = isItemSharingEnabled,
-            aliasTrashDialogStatusPreference = aliasTrashDialogStatusPreference
+            aliasTrashDialogStatusPreference = aliasTrashDialogStatusPreference,
+            canCreateItems = canCreateItems
         )
     }
         .stateIn(

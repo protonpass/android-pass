@@ -31,13 +31,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -77,8 +75,6 @@ import proton.android.pass.searchoptions.api.VaultSelectionOption
 import me.proton.core.presentation.R as CoreR
 
 @Suppress("ComplexMethod")
-@ExperimentalComposeUiApi
-@ExperimentalMaterialApi
 @Composable
 internal fun HomeContent(
     modifier: Modifier = Modifier,
@@ -318,6 +314,7 @@ internal fun HomeContent(
                 emptyContent = {
                     HomeEmptyContent(
                         modifier = Modifier.testTag(HOME_EMPTY_TAG),
+                        canCreateItems = uiState.canCreateItems,
                         vaultSelectionOption = uiState.homeListUiState.homeVaultSelection,
                         inSearchMode = isPinningOrSearch,
                         filterType = uiState.homeListUiState.searchFilterType,
@@ -332,7 +329,6 @@ internal fun HomeContent(
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun HomeDrawerIcon(
     modifier: Modifier = Modifier,

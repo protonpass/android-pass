@@ -40,8 +40,9 @@ import proton.android.pass.searchoptions.api.SearchFilterType
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun HomeEmptyList(
+internal fun HomeEmptyList(
     modifier: Modifier = Modifier,
+    canCreateItems: Boolean,
     filterType: SearchFilterType,
     onCreateLoginClick: () -> Unit,
     onCreateAliasClick: () -> Unit,
@@ -57,14 +58,16 @@ fun HomeEmptyList(
     ) {
         HomeEmptyHeader(
             modifier = Modifier.padding(bottom = Spacing.large),
-            filterType = filterType
+            filterType = filterType,
+            canCreateItems = canCreateItems
         )
 
         Column(
             verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
         ) {
+            val visibleButtons = remember(canCreateItems, filterType) {
+                if (!canCreateItems) return@remember emptySet()
 
-            val visibleButtons = remember(filterType) {
                 when (filterType) {
                     SearchFilterType.All -> SearchFilterType.entries
                     SearchFilterType.Login, SearchFilterType.LoginMFA -> setOf(
@@ -80,6 +83,7 @@ fun HomeEmptyList(
                     SearchFilterType.SharedByMe -> emptySet()
                 }
             }
+
             if (SearchFilterType.Login in visibleButtons || SearchFilterType.LoginMFA in visibleButtons) {
                 HomeEmptyButton(
                     modifier = Modifier.fillMaxWidth(),
@@ -138,24 +142,24 @@ fun HomeEmptyList(
     }
 }
 
-class SearchFilterTypePreviewProvider : PreviewParameterProvider<SearchFilterType> {
+internal class SearchFilterTypePreviewProvider : PreviewParameterProvider<SearchFilterType> {
     override val values: Sequence<SearchFilterType>
         get() = SearchFilterType.entries.asSequence()
 }
 
-class ThemedSearchFilterTypePreviewProvider : ThemePairPreviewProvider<SearchFilterType>(
+internal class ThemedSearchFilterTypePreviewProvider : ThemePairPreviewProvider<SearchFilterType>(
     provider = SearchFilterTypePreviewProvider()
 )
 
-@Preview
-@Composable
-fun HomeEmptyListPreview(
+@[Preview Composable]
+internal fun HomeEmptyListPreview(
     @PreviewParameter(ThemedSearchFilterTypePreviewProvider::class) input: Pair<Boolean, SearchFilterType>
 ) {
     PassTheme(isDark = input.first) {
         Surface {
             HomeEmptyList(
                 filterType = input.second,
+                canCreateItems = true,
                 onCreateLoginClick = {},
                 onCreateAliasClick = {},
                 onCreateNoteClick = {},

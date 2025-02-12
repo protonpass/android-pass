@@ -34,8 +34,9 @@ import proton.android.pass.searchoptions.api.SearchFilterType
 import proton.android.pass.searchoptions.api.VaultSelectionOption
 
 @Composable
-fun HomeEmptyContent(
+internal fun HomeEmptyContent(
     modifier: Modifier = Modifier,
+    canCreateItems: Boolean,
     inSearchMode: Boolean,
     readOnly: Boolean,
     vaultSelectionOption: VaultSelectionOption,
@@ -59,6 +60,7 @@ fun HomeEmptyContent(
         readOnly -> EmptyReadOnly(modifier)
         else -> HomeEmptyList(
             modifier = modifier.fillMaxHeight(),
+            canCreateItems = canCreateItems,
             filterType = filterType,
             onCreateLoginClick = {
                 onEvent(

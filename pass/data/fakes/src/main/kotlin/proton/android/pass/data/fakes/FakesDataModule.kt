@@ -190,6 +190,7 @@ import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
 import proton.android.pass.data.api.usecases.shares.ObserveAutofillShares
+import proton.android.pass.data.api.usecases.shares.ObserveHasShares
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.data.api.usecases.shares.ObserveShareItemMembers
 import proton.android.pass.data.api.usecases.shares.ObserveShareItemsCount
@@ -384,6 +385,7 @@ import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinks
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinksCount
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveAutofillShares
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveEncryptedSharedItems
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveHasShares
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShareItemMembers
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShareItemsCount
@@ -1042,5 +1044,8 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveCanCreateItems(impl: FakeObserveCanCreateItems): ObserveCanCreateItems
+
+    @Binds
+    abstract fun bindObserveHasShares(impl: FakeObserveHasShares): ObserveHasShares
 
 }

@@ -87,7 +87,13 @@ data class PassOrganizationSettingsEntity(
     val memorablePasswordIncludeNumbers: Boolean?,
 
     @ColumnInfo(name = Columns.VAULT_CREATE_MODE)
-    val vaultCreateMode: Int?
+    val vaultCreateMode: Int?,
+
+    @ColumnInfo(name = Columns.ITEM_SHARE_MODE)
+    val itemShareMode: Int?,
+
+    @ColumnInfo(name = Columns.SECURE_LINKS_MODE)
+    val secureLinksMode: Int?
 ) {
     object Columns {
         const val USER_ID = "user_id"
@@ -107,6 +113,8 @@ data class PassOrganizationSettingsEntity(
         const val MEMORABLE_PASSWORD_INCLUDE_NUMBERS = "memorable_password_include_numbers"
         const val MEMORABLE_PASSWORD_CAPITALIZED = "memorable_password_capitalized"
         const val VAULT_CREATE_MODE = "vault_create_mode"
+        const val ITEM_SHARE_MODE = "item_share_mode"
+        const val SECURE_LINKS_MODE = "secure_links_mode"
     }
 
     companion object {
@@ -129,7 +137,9 @@ data class PassOrganizationSettingsEntity(
             memorablePasswordMaxWords = null,
             memorablePasswordCapitalize = null,
             memorablePasswordIncludeNumbers = null,
-            vaultCreateMode = null
+            vaultCreateMode = null,
+            itemShareMode = null,
+            secureLinksMode = null
         )
     }
 }

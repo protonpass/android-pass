@@ -46,7 +46,11 @@ data class OrganizationGetOrganizationSettings(
     @SerialName("PasswordPolicy")
     val passwordPolicy: OrganizationGetOrganizationSettingsPasswordPolicy?,
     @SerialName("VaultCreateMode")
-    val vaultCreateMode: Int?
+    val vaultCreateMode: Int?,
+    @SerialName("ItemShareMode")
+    val itemShareMode: Int?,
+    @SerialName("PublicLinkMode")
+    val publicLinkMode: Int?
 )
 
 @Serializable

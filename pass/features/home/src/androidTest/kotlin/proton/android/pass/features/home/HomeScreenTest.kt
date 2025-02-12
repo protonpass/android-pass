@@ -52,6 +52,8 @@ import proton.android.pass.data.fakes.usecases.TestObserveAllShares
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.TestTrashItems
+import proton.android.pass.data.fakes.usecases.items.FakeObserveCanCreateItems
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveHasShares
 import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareColor
@@ -106,6 +108,12 @@ class HomeScreenTest {
 
     @Inject
     lateinit var trashItem: TestTrashItems
+
+    @Inject
+    lateinit var observeCanCreateItems: FakeObserveCanCreateItems
+
+    @Inject
+    lateinit var observeHasShares: FakeObserveHasShares
 
     @Before
     fun setup() {
@@ -163,6 +171,7 @@ class HomeScreenTest {
             trashedItemCount = 0
         )
         observeVaultsWithItemCount.sendResult(Result.success(listOf(vault)))
+        setupWithItems(emptyList())
 
         val checker = CallChecker<Unit>()
         composeTestRule.setContent {
@@ -304,6 +313,8 @@ class HomeScreenTest {
         observeAllShares.sendResult(Result.success(vaultShares))
         observeEncryptedItems.emitValue(items)
         observeSearchEntry.emit(searchEntries)
+        observeCanCreateItems.emit(canCreateItems = true)
+        observeHasShares.emit(hasShares = true)
 
     }
 

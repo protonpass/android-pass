@@ -61,7 +61,9 @@ import proton.android.pass.data.fakes.usecases.TestRestoreAllItems
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestTrashItems
 import proton.android.pass.data.fakes.usecases.TestUnpinItems
+import proton.android.pass.data.fakes.usecases.items.FakeObserveCanCreateItems
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveEncryptedSharedItems
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveHasShares
 import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ShareId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
@@ -108,6 +110,8 @@ internal class HomeViewModelTest {
     private lateinit var bulkMoveToVaultRepository: TestBulkMoveToVaultRepository
     private lateinit var toastManager: TestToastManager
     private lateinit var observeCurrentUser: TestObserveCurrentUser
+    private lateinit var observeCanCreateItems: FakeObserveCanCreateItems
+    private lateinit var observeHasShares: FakeObserveHasShares
 
     @Before
     internal fun setup() {
@@ -135,6 +139,8 @@ internal class HomeViewModelTest {
         toastManager = TestToastManager()
         observePinnedItems = TestObservePinnedItems()
         observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) }
+        observeCanCreateItems = FakeObserveCanCreateItems()
+        observeHasShares = FakeObserveHasShares()
         createViewModel()
     }
 
@@ -215,6 +221,8 @@ internal class HomeViewModelTest {
         observeAllShares.sendResult(Result.success(vaultShares))
         observeEncryptedItems.emitValue(items)
         observeSearchEntry.emit(searchEntries)
+        observeCanCreateItems.emit(canCreateItems = true)
+        observeHasShares.emit(hasShares = true)
 
         return items
     }
@@ -269,7 +277,9 @@ internal class HomeViewModelTest {
             changeAliasStatus = FakeChangeAliasStatus(),
             observeItemCount = TestObserveItemCount(),
             accountManager = TestAccountManager(),
-            observeEncryptedSharedItems = FakeObserveEncryptedSharedItems()
+            observeEncryptedSharedItems = FakeObserveEncryptedSharedItems(),
+            observeCanCreateItems = observeCanCreateItems,
+            observeHasShares = observeHasShares
         )
     }
 

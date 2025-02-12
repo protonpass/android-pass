@@ -62,8 +62,8 @@ fun NavGraphBuilder.unAuthGraph(
             EnterPinBottomsheet(
                 onNavigate = {
                     when (it) {
-                        is EnterPinNavigation.Success -> dismissBottomSheet { appNavigator.navigateBack() }
-                        is EnterPinNavigation.CloseBottomsheet -> dismissBottomSheet { appNavigator.navigateBack() }
+                        is EnterPinNavigation.Success -> dismissBottomSheet {}
+                        is EnterPinNavigation.CloseBottomsheet -> dismissBottomSheet {}
                         EnterPinNavigation.ForceSignOutAllUsers -> onNavigate(AppNavigation.ForceSignOutAllUsers)
                     }
                 }

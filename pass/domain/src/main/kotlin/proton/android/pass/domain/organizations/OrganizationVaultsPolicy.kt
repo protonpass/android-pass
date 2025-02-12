@@ -23,7 +23,7 @@ data class OrganizationVaultsPolicy(
 ) {
 
     val canCreateVaults: Boolean = when (vaultCreateMode) {
-        OrganizationVaultCreateMode.AllUsers -> false
+        OrganizationVaultCreateMode.AllUsers -> true
         OrganizationVaultCreateMode.OnlyOrganizationAdmin -> false
     }
 

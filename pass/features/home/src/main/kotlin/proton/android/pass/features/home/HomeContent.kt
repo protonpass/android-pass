@@ -94,82 +94,84 @@ internal fun HomeContent(
     Scaffold(
         modifier = modifier,
         topBar = {
-            AnimatedVisibility(
-                visible = uiState.homeListUiState.selectionState.isInSelectMode,
-                enter = fadeIn() + expandVertically(),
-                exit = fadeOut(),
-                label = "HomeContent-SelectionModeTopBar"
-            ) {
-                SelectionModeTopBar(
-                    selectionState = uiState.homeListUiState.selectionState.topBarState,
-                    onEvent = onEvent
-                )
-            }
-            AnimatedVisibility(
-                visible = !uiState.homeListUiState.selectionState.isInSelectMode,
-                enter = fadeIn() + expandVertically(),
-                exit = fadeOut(),
-                label = "HomeContent-SearchTopBar"
-            ) {
-                SearchTopBar(
-                    searchQuery = uiState.searchUiState.searchQuery,
-                    inSearchMode = uiState.searchUiState.inSearchMode,
-                    placeholderText = if (uiState.pinningUiState.inPinningMode) {
-                        stringResource(R.string.search_topbar_placeholder_pinning)
-                    } else {
-                        when (uiState.homeListUiState.homeVaultSelection) {
-                            VaultSelectionOption.AllVaults -> if (uiState.isItemSharingEnabled) {
-                                stringResource(R.string.search_topbar_placeholder_all_items)
-                            } else {
-                                stringResource(R.string.search_topbar_placeholder_all_vaults)
+            if (uiState.isTopBarAvailable) {
+                AnimatedVisibility(
+                    visible = uiState.homeListUiState.selectionState.isInSelectMode,
+                    enter = fadeIn() + expandVertically(),
+                    exit = fadeOut(),
+                    label = "HomeContent-SelectionModeTopBar"
+                ) {
+                    SelectionModeTopBar(
+                        selectionState = uiState.homeListUiState.selectionState.topBarState,
+                        onEvent = onEvent
+                    )
+                }
+                AnimatedVisibility(
+                    visible = !uiState.homeListUiState.selectionState.isInSelectMode,
+                    enter = fadeIn() + expandVertically(),
+                    exit = fadeOut(),
+                    label = "HomeContent-SearchTopBar"
+                ) {
+                    SearchTopBar(
+                        searchQuery = uiState.searchUiState.searchQuery,
+                        inSearchMode = uiState.searchUiState.inSearchMode,
+                        placeholderText = if (uiState.pinningUiState.inPinningMode) {
+                            stringResource(R.string.search_topbar_placeholder_pinning)
+                        } else {
+                            when (uiState.homeListUiState.homeVaultSelection) {
+                                VaultSelectionOption.AllVaults -> if (uiState.isItemSharingEnabled) {
+                                    stringResource(R.string.search_topbar_placeholder_all_items)
+                                } else {
+                                    stringResource(R.string.search_topbar_placeholder_all_vaults)
+                                }
+
+                                VaultSelectionOption.Trash ->
+                                    stringResource(R.string.search_topbar_placeholder_trash)
+
+                                is VaultSelectionOption.Vault -> stringResource(
+                                    R.string.search_topbar_placeholder_vault,
+                                    uiState.homeListUiState.selectedVaultName
+                                )
+
+                                VaultSelectionOption.SharedByMe -> {
+                                    stringResource(id = R.string.search_topbar_placeholder_shared_by_me)
+                                }
+
+                                VaultSelectionOption.SharedWithMe -> {
+                                    stringResource(id = R.string.search_topbar_placeholder_shared_with_me)
+                                }
                             }
-
-                            VaultSelectionOption.Trash ->
-                                stringResource(R.string.search_topbar_placeholder_trash)
-
-                            is VaultSelectionOption.Vault -> stringResource(
-                                R.string.search_topbar_placeholder_vault,
-                                uiState.homeListUiState.selectedVaultName
+                        },
+                        onEnterSearch = { onEvent(HomeUiEvent.EnterSearch) },
+                        onStopSearch = { onEvent(HomeUiEvent.StopSearch) },
+                        onSearchQueryChange = { onEvent(HomeUiEvent.SearchQueryChange(it)) },
+                        drawerIcon = {
+                            HomeDrawerIcon(
+                                modifier = Modifier.testTag(DRAWER_ICON_TEST_TAG),
+                                selectedVaultOption = uiState.homeListUiState.selectedVaultOption,
+                                homeVaultSelection = uiState.homeListUiState.homeVaultSelection,
+                                isSeeAllPinsMode = uiState.pinningUiState.inPinningMode,
+                                isSearchMode = uiState.searchUiState.inSearchMode,
+                                isItemSharingEnabled = uiState.isItemSharingEnabled,
+                                onEvent = onEvent
                             )
-
-                            VaultSelectionOption.SharedByMe -> {
-                                stringResource(id = R.string.search_topbar_placeholder_shared_by_me)
-                            }
-
-                            VaultSelectionOption.SharedWithMe -> {
-                                stringResource(id = R.string.search_topbar_placeholder_shared_with_me)
-                            }
+                        },
+                        actions = {
+                            val (backgroundColor, iconColor) =
+                                if (uiState.homeListUiState.searchFilterType != SearchFilterType.All) {
+                                    PassTheme.colors.interactionNormMajor2 to PassTheme.colors.textInvert
+                                } else {
+                                    Color.Transparent to PassTheme.colors.textWeak
+                                }
+                            ThreeDotsMenuButton(
+                                modifier = Modifier
+                                    .clip(CircleShape)
+                                    .background(backgroundColor),
+                                dotsColor = iconColor
+                            ) { onEvent(HomeUiEvent.ActionsClick) }
                         }
-                    },
-                    onEnterSearch = { onEvent(HomeUiEvent.EnterSearch) },
-                    onStopSearch = { onEvent(HomeUiEvent.StopSearch) },
-                    onSearchQueryChange = { onEvent(HomeUiEvent.SearchQueryChange(it)) },
-                    drawerIcon = {
-                        HomeDrawerIcon(
-                            modifier = Modifier.testTag(DRAWER_ICON_TEST_TAG),
-                            selectedVaultOption = uiState.homeListUiState.selectedVaultOption,
-                            homeVaultSelection = uiState.homeListUiState.homeVaultSelection,
-                            isSeeAllPinsMode = uiState.pinningUiState.inPinningMode,
-                            isSearchMode = uiState.searchUiState.inSearchMode,
-                            isItemSharingEnabled = uiState.isItemSharingEnabled,
-                            onEvent = onEvent
-                        )
-                    },
-                    actions = {
-                        val (backgroundColor, iconColor) =
-                            if (uiState.homeListUiState.searchFilterType != SearchFilterType.All) {
-                                PassTheme.colors.interactionNormMajor2 to PassTheme.colors.textInvert
-                            } else {
-                                Color.Transparent to PassTheme.colors.textWeak
-                            }
-                        ThreeDotsMenuButton(
-                            modifier = Modifier
-                                .clip(CircleShape)
-                                .background(backgroundColor),
-                            dotsColor = iconColor
-                        ) { onEvent(HomeUiEvent.ActionsClick) }
-                    }
-                )
+                    )
+                }
             }
         }
     ) { contentPadding ->
@@ -314,6 +316,7 @@ internal fun HomeContent(
                 emptyContent = {
                     HomeEmptyContent(
                         modifier = Modifier.testTag(HOME_EMPTY_TAG),
+                        hasShares = uiState.hasShares,
                         canCreateItems = uiState.canCreateItems,
                         vaultSelectionOption = uiState.homeListUiState.homeVaultSelection,
                         inSearchMode = isPinningOrSearch,

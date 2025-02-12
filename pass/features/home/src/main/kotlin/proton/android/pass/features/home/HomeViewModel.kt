@@ -126,6 +126,7 @@ import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry.SearchEntrySelection
+import proton.android.pass.data.api.usecases.shares.ObserveHasShares
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
@@ -216,7 +217,8 @@ class HomeViewModel @Inject constructor(
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeItemCount: ObserveItemCount,
     accountManager: AccountManager,
-    observeCanCreateItems: ObserveCanCreateItems
+    observeCanCreateItems: ObserveCanCreateItems,
+    observeHasShares: ObserveHasShares
 ) : ViewModel() {
 
     init {
@@ -602,7 +604,8 @@ class HomeViewModel @Inject constructor(
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC),
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1),
         preferencesRepository.observeAliasTrashDialogStatusPreference(),
-        observeCanCreateItems()
+        observeCanCreateItems(),
+        observeHasShares()
     ) { homeListUiState,
         searchUiState,
         userPlan,
@@ -612,7 +615,8 @@ class HomeViewModel @Inject constructor(
         isSLAliasSyncEnabled,
         isItemSharingEnabled,
         aliasTrashDialogStatusPreference,
-        canCreateItems ->
+        canCreateItems,
+        hasShares ->
         HomeUiState(
             homeListUiState = homeListUiState,
             searchUiState = searchUiState,
@@ -624,7 +628,8 @@ class HomeViewModel @Inject constructor(
             isSLAliasSyncEnabled = isSLAliasSyncEnabled,
             isItemSharingEnabled = isItemSharingEnabled,
             aliasTrashDialogStatusPreference = aliasTrashDialogStatusPreference,
-            canCreateItems = canCreateItems
+            canCreateItems = canCreateItems,
+            hasShares = hasShares
         )
     }
         .stateIn(

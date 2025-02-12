@@ -26,6 +26,7 @@ import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.composecomponents.impl.item.EmptySearchResults
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.ItemSharedType
+import proton.android.pass.features.home.empty.EmptyNoVaults
 import proton.android.pass.features.home.empty.EmptyReadOnly
 import proton.android.pass.features.home.empty.EmptySharedItems
 import proton.android.pass.features.home.empty.HomeEmptyList
@@ -36,6 +37,7 @@ import proton.android.pass.searchoptions.api.VaultSelectionOption
 @Composable
 internal fun HomeEmptyContent(
     modifier: Modifier = Modifier,
+    hasShares: Boolean,
     canCreateItems: Boolean,
     inSearchMode: Boolean,
     readOnly: Boolean,
@@ -45,6 +47,7 @@ internal fun HomeEmptyContent(
     onEvent: (HomeUiEvent) -> Unit
 ) {
     when {
+        !hasShares -> EmptyNoVaults(modifier)
         inSearchMode -> EmptySearchResults(modifier)
         vaultSelectionOption is VaultSelectionOption.Trash -> EmptyTrashContent(modifier)
         vaultSelectionOption is VaultSelectionOption.SharedByMe -> EmptySharedItems(

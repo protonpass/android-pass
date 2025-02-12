@@ -82,6 +82,7 @@ internal data class HomeUiState(
     val isFreePlan: Boolean,
     val isSLAliasSyncEnabled: Boolean,
     val isItemSharingEnabled: Boolean,
+    val canCreateItems: Boolean,
     private val aliasTrashDialogStatusPreference: AliasTrashDialogStatusPreference
 ) {
 
@@ -134,6 +135,7 @@ internal data class HomeUiState(
             isFreePlan = true,
             isSLAliasSyncEnabled = false,
             isItemSharingEnabled = false,
+            canCreateItems = false,
             aliasTrashDialogStatusPreference = AliasTrashDialogStatusPreference.Disabled
         )
 

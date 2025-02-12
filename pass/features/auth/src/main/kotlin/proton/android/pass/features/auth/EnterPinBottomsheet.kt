@@ -45,14 +45,13 @@ fun EnterPinBottomsheet(
     val keyboardController = LocalSoftwareKeyboardController.current
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    val event = (state as? EnterPinUiState.Data)?.event
+    val event = (state as? EnterPinUiState.Data)?.event ?: EnterPinEvent.Unknown
     LaunchedEffect(event) {
         when (event) {
             is EnterPinEvent.ForceSignOutAllUsers -> onNavigate(EnterPinNavigation.ForceSignOutAllUsers)
             is EnterPinEvent.ForcePassword -> onNavigate(EnterPinNavigation.CloseBottomsheet)
             is EnterPinEvent.Success -> onNavigate(EnterPinNavigation.Success(event.origin))
-            EnterPinEvent.Unknown,
-            null -> {
+            EnterPinEvent.Unknown -> {
             }
         }
     }

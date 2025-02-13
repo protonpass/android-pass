@@ -127,7 +127,8 @@ internal val fieldKeywordsList = setOf(
     ),
     kw(
         fieldType = FieldType.Password,
-        allowedKeywords = setOf("password")
+        allowedKeywords = setOf("password"),
+        deniedKeywords = setOf("search", "buscar")
     ),
     kw(
         fieldType = FieldType.Totp,

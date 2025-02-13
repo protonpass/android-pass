@@ -121,7 +121,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             .apply { add(context.node.id!!) }
             .toList()
 
-        if (context.node.children.isEmpty()) {
+        if (!hasChildren(context.node)) {
             when (val assistField = getAssistField(context)) {
                 is Some -> addNode(assistField.value)
                 None -> {}
@@ -143,6 +143,25 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
 
         visitedNodes += 1
     }
+
+    private fun hasChildren(node: AutofillNode): Boolean {
+        if (node.children.size == 1) {
+            val child = node.children.first()
+            if (child.className == "android.widget.TextView" && isNodeEmpty(child)) {
+                return false
+            }
+        }
+
+        return node.children.isNotEmpty()
+    }
+
+    private fun isNodeEmpty(node: AutofillNode): Boolean = if (node.children.isEmpty()) {
+        node.text.isNullOrBlank() && node.autofillHints.all { it.isBlank() }
+    } else {
+        false
+    }
+
+
 
     private fun addNode(assistField: AssistField) {
         when (assistField.type) {

@@ -22,6 +22,7 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import proton.android.pass.autofill.TestAutofillId
 import proton.android.pass.autofill.entities.AssistField
+import proton.android.pass.autofill.entities.DetectionType
 import proton.android.pass.autofill.entities.FieldType
 
 class NodeClustererTest {
@@ -94,6 +95,26 @@ class NodeClustererTest {
     }
 
     /**
+     * SECTION 10 (SignUp)
+     * username (node 11)
+     * email (node 12)
+     * password (node 13)
+     * password2 (node 14)
+     */
+    @Test
+    fun `can handle 1 username 1 email and 2 passwords`() {
+        val username = loginField(11, listOf(1, 10, 11))
+        val email = emailField(12, listOf(1, 10, 12))
+        val password1 = passwordField(13, listOf(1, 10, 13))
+        val password2 = passwordField(14, listOf(1, 10, 14))
+        val clusters = NodeClusterer.cluster(listOf(username, email, password1, password2))
+
+        assertThat(clusters).isEqualTo(
+            listOf(NodeCluster.SignUp(username, password1, password2, email))
+        )
+    }
+
+    /**
      * SECTION 10 (UsernameAndPassword)
      * username1 (node 11)
      * password (node 12)
@@ -159,10 +180,29 @@ class NodeClustererTest {
         url = url
     )
 
-    private fun passwordField(id: Int, nodePath: List<Int>): AssistField = AssistField(
+    private fun emailField(
+        id: Int,
+        nodePath: List<Int>,
+        url: String? = null
+    ): AssistField = AssistField(
+        id = TestAutofillId(id),
+        type = FieldType.Email,
+        detectionType = null,
+        value = null,
+        text = null,
+        isFocused = false,
+        nodePath = nodePath.map(::TestAutofillId),
+        url = url
+    )
+
+    private fun passwordField(
+        id: Int,
+        nodePath: List<Int>,
+        detectionType: DetectionType? = null
+    ): AssistField = AssistField(
         id = TestAutofillId(id),
         type = FieldType.Password,
-        detectionType = null,
+        detectionType = detectionType,
         value = null,
         text = null,
         isFocused = false,

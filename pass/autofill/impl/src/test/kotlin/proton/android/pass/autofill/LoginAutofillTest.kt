@@ -165,6 +165,11 @@ class LoginAutofillTest : BaseAutofillTest() {
         runLoginAutofillTest("login/app_com.discord_messages.json", allowEmptyFields = true)
     }
 
+    @Test
+    fun `can autofill difmark_com sign up in chrome`() {
+        runLoginAutofillTest("login/chrome_difmark.com_signup.json")
+    }
+
     private fun runLoginAutofillTest(
         file: String,
         flags: List<RequestFlags> = emptyList(),
@@ -176,6 +181,7 @@ class LoginAutofillTest : BaseAutofillTest() {
                 itemId = "123",
                 shareId = "123",
                 username = ExpectedAutofill.USERNAME.value,
+                email = ExpectedAutofill.EMAIL.value,
                 password = TestEncryptionContext.encrypt(ExpectedAutofill.PASSWORD.value),
                 totp = null,
                 shouldLinkPackageName = false

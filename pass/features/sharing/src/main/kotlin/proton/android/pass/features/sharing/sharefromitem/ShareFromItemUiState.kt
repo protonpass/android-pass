@@ -25,6 +25,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.OrganizationSettings
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 
@@ -48,7 +49,8 @@ internal data class ShareFromItemUiState(
     private val isNewCryptoEnabled: Boolean,
     private val isItemSharingAvailable: Boolean,
     private val itemOption: Option<Item>,
-    private val shareOption: Option<Share>
+    private val shareOption: Option<Share>,
+    private val organizationSettingsOption: Option<OrganizationSettings>
 ) {
 
     private val isSharedItem: Boolean = when (itemOption) {
@@ -59,6 +61,22 @@ internal data class ShareFromItemUiState(
     private val isSharedShare: Boolean = when (shareOption) {
         None -> false
         is Some -> shareOption.value.shared
+    }
+
+    private val isItemSharingAllowedByOrganization = when (organizationSettingsOption) {
+        None -> true
+        is Some -> when (val organizationSettings = organizationSettingsOption.value) {
+            OrganizationSettings.NotAnOrganization -> true
+            is OrganizationSettings.Organization -> organizationSettings.canShareItems
+        }
+    }
+
+    private val isSecureLinkSharingAllowedByOrganization = when (organizationSettingsOption) {
+        None -> true
+        is Some -> when (val organizationSettings = organizationSettingsOption.value) {
+            OrganizationSettings.NotAnOrganization -> true
+            is OrganizationSettings.Organization -> organizationSettings.canShareSecureLinks
+        }
     }
 
     internal val isSingleSharingAvailable: Boolean = when (itemOption) {
@@ -77,6 +95,8 @@ internal data class ShareFromItemUiState(
 
     internal val canShareViaItemSharing: Boolean
         get() {
+            if (!isItemSharingAllowedByOrganization) return false
+
             if (!isItemSharingAvailable) return false
 
             return when (shareOption) {
@@ -87,13 +107,19 @@ internal data class ShareFromItemUiState(
                 }
             }
         }
-    internal val canShareViaSecureLink: Boolean = when (shareOption) {
-        None -> false
-        is Some -> when (val share = shareOption.value) {
-            is Share.Item -> isNewCryptoEnabled && share.isAdmin
-            is Share.Vault -> share.isAdmin
+
+    internal val canShareViaSecureLink: Boolean
+        get() {
+            if (!isSecureLinkSharingAllowedByOrganization) return false
+
+            return when (shareOption) {
+                None -> false
+                is Some -> when (val share = shareOption.value) {
+                    is Share.Item -> isNewCryptoEnabled && share.isAdmin
+                    is Share.Vault -> share.isAdmin
+                }
+            }
         }
-    }
 
     internal val canManageAccess: Boolean = isItemSharingAvailable && (isSharedItem || isSharedShare)
 
@@ -107,7 +133,8 @@ internal data class ShareFromItemUiState(
             isItemSharingAvailable = false,
             isNewCryptoEnabled = false,
             itemOption = None,
-            shareOption = None
+            shareOption = None,
+            organizationSettingsOption = None
         )
 
     }

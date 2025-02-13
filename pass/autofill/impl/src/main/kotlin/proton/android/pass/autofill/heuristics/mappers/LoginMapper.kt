@@ -79,6 +79,12 @@ object LoginMapper {
         val mappings = mutableListOf<DatasetMapping>()
 
         mappings.add(mappingForUsername(autofillItem.username, cluster.username.id))
+
+        if (cluster.email != null) {
+            // We need to autofill username and email
+            mappings.add(mappingForUsername(autofillItem.email, cluster.email.id))
+        }
+
         mappings.add(
             mappingForPassword(
                 encryptionContext,

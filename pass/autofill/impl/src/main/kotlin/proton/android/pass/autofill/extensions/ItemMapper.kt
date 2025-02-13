@@ -31,7 +31,8 @@ fun ItemUiModel.toAutoFillItem(shouldLinkPackageName: Boolean = false): Autofill
         username = content.displayValue,
         password = content.password.encrypted,
         totp = content.primaryTotp.encrypted,
-        shouldLinkPackageName = shouldLinkPackageName
+        shouldLinkPackageName = shouldLinkPackageName,
+        email = content.itemEmail
     )
 
     is ItemContents.CreditCard -> AutofillItem.CreditCard(

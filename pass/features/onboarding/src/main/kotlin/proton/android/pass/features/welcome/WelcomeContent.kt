@@ -26,9 +26,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -145,10 +145,7 @@ internal fun WelcomeContent(
                     verticalArrangement = Arrangement.spacedBy(Spacing.small),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Spacer(
-                        modifier = Modifier
-                            .weight(1f)
-                    )
+                    Spacer(modifier = Modifier.weight(1f))
                     Text.Hero(
                         modifier = Modifier.padding(horizontal = Spacing.medium),
                         text = stringResource(titleRes),
@@ -160,10 +157,11 @@ internal fun WelcomeContent(
                         textAlign = TextAlign.Center,
                         color = PassPalette.White100
                     )
-                    Spacer(Modifier.weight(1f))
+                    Spacer(modifier = Modifier.height(height = Spacing.medium))
+                    Spacer(modifier = Modifier.weight(1f))
                     Image.Default(
                         id = imageRes,
-                        contentScale = ContentScale.FillWidth
+                        contentScale = ContentScale.Fit
                     )
                 }
             }

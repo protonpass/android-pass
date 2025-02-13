@@ -80,10 +80,16 @@ sealed interface NodeCluster : Parcelable {
     data class SignUp(
         val username: AssistField,
         val password: AssistField,
-        val repeatPassword: AssistField
+        val repeatPassword: AssistField,
+        val email: AssistField? = null
     ) : NodeCluster {
         override fun isFocused() = fields().any { it.isFocused }
-        override fun fields(): List<AssistField> = listOf(username, password, repeatPassword)
+        override fun fields(): List<AssistField> = listOfNotNull(
+            username,
+            email,
+            password,
+            repeatPassword
+        )
         override fun type() = "SignUp"
         override fun eventItemType(): EventItemType = EventItemType.Login
     }
@@ -367,18 +373,84 @@ object NodeClusterer {
         }
     }
 
+    @Suppress("LongMethod")
     private fun detectSignupForm(
         nodes: List<AssistField>,
         clusters: MutableList<NodeCluster>,
         addedNodes: MutableSet<AssistField>
     ) {
         val usernameFields = nodes.getUsernames(addedNodes)
+
+        val usernameFieldsUsernames = usernameFields.filter { it.type == FieldType.Username }
+        val usernameFieldsEmails = usernameFields.filter { it.type == FieldType.Email }
+
         val passwordFields = nodes.getNodesForType(FieldType.Password, addedNodes)
-        if (usernameFields.size == 1 && passwordFields.size == 2) {
+
+        val (exactPasswordFields, nonExactPasswordFields) = passwordFields.partition {
+            it.detectionType == DetectionType.ExactMatch
+        }
+
+        // If we have exact password fields and non-exact password fields, favour the exact ones
+        val usablePasswordFields = when {
+            nonExactPasswordFields.isEmpty() -> exactPasswordFields
+            exactPasswordFields.isEmpty() -> nonExactPasswordFields
+            else -> exactPasswordFields
+        }
+
+        // Check if we are on a form that has both username and email, and have 2 password fields
+        if (usernameFieldsUsernames.size == 1 && usernameFieldsEmails.size == 1 && usablePasswordFields.size == 2) {
+            // Check if both fields have the same password field as the closest
+            val usernameFieldUsername = usernameFieldsUsernames.first()
+            val usernameFieldEmail = usernameFieldsEmails.first()
+
+            val candidatePasswordFields = usablePasswordFields.filter { !addedNodes.contains(it) }
+            val nearestPasswordFieldToUsername = HeuristicsUtils.findNearestNodeByParentId(
+                currentField = usernameFieldUsername,
+                fields = candidatePasswordFields
+            )
+            val nearestPasswordFieldToEmail = HeuristicsUtils.findNearestNodeByParentId(
+                currentField = usernameFieldEmail,
+                fields = candidatePasswordFields
+            )
+
+            if (nearestPasswordFieldToUsername != null && nearestPasswordFieldToEmail != null) {
+                if (nearestPasswordFieldToUsername.id == nearestPasswordFieldToEmail.id) {
+                    // We can assume both fields belong to the same form
+                    val password = usablePasswordFields.first()
+                    val repeatPassword = usablePasswordFields.last()
+
+                    clusters.add(
+                        NodeCluster.SignUp(
+                            username = usernameFieldUsername,
+                            email = usernameFieldEmail,
+                            password = password,
+                            repeatPassword = repeatPassword
+                        )
+                    )
+                    addedNodes.add(usernameFieldUsername)
+                    addedNodes.add(usernameFieldEmail)
+                    addedNodes.add(password)
+                    addedNodes.add(repeatPassword)
+                    return
+                }
+            }
+        }
+
+        // We are not in that case
+        // Check if there is only one usernameField (of any kind) and process it as usual
+        if (usernameFields.size == 1 && usablePasswordFields.size == 2) {
             val username = usernameFields.first()
-            val password = passwordFields.first()
-            val repeatPassword = passwordFields.last()
-            clusters.add(NodeCluster.SignUp(username, password, repeatPassword))
+            val password = usablePasswordFields.first()
+            val repeatPassword = usablePasswordFields.last()
+
+            clusters.add(
+                NodeCluster.SignUp(
+                    username = username,
+                    email = null,
+                    password = password,
+                    repeatPassword = repeatPassword
+                )
+            )
             addedNodes.add(username)
             addedNodes.add(password)
             addedNodes.add(repeatPassword)

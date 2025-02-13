@@ -34,6 +34,7 @@ const val CC_EXPIRATION = "$CC_EXPIRATION_YEAR-$CC_EXPIRATION_MONTH"
 
 enum class ExpectedAutofill(val value: String, val assertedValue: String = value) {
     USERNAME("username"),
+    EMAIL("email"),
     PASSWORD("password"),
     CC_NUMBER("card_number"),
     CC_CARDHOLDER_NAME("card_name", "card_first_name card_last_name"),

@@ -39,7 +39,8 @@ sealed interface AutofillItem : Parcelable {
         val username: String,
         val password: EncryptedString?,
         val totp: EncryptedString?,
-        val shouldLinkPackageName: Boolean
+        val shouldLinkPackageName: Boolean,
+        val email: String = username
     ) : AutofillItem {
         override fun shareId() = ShareId(shareId)
         override fun itemId() = ItemId(itemId)

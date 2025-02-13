@@ -145,6 +145,7 @@ class ItemFieldMapperTest {
         itemId: String = "ItemID-123",
         shareId: String = "ShareId-123",
         username: String = "username",
+        email: String = "email",
         password: String = TestEncryptionContext.encrypt("password")
     ) = AutofillItem.Login(
         itemId = itemId,
@@ -152,6 +153,7 @@ class ItemFieldMapperTest {
         username = username,
         password = password,
         totp = "",
-        shouldLinkPackageName = false
+        shouldLinkPackageName = false,
+        email = email
     )
 }

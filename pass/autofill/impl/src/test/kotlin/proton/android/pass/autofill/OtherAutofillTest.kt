@@ -55,6 +55,7 @@ class OtherAutofillTest : BaseAutofillTest() {
         itemId = "123",
         shareId = "123",
         username = ExpectedAutofill.USERNAME.value,
+        email = ExpectedAutofill.EMAIL.value,
         password = TestEncryptionContext.encrypt(ExpectedAutofill.PASSWORD.value),
         totp = null,
         shouldLinkPackageName = false

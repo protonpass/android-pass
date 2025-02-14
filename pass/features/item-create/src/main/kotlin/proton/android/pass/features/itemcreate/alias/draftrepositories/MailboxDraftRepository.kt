@@ -39,7 +39,12 @@ class MailboxDraftRepositoryImpl @Inject constructor() : MailboxDraftRepository 
     private val selectedMailboxIds = MutableStateFlow<Set<Int>>(emptySet())
 
     override fun addMailboxes(mailboxes: Set<AliasMailbox>) {
-        this.mailboxes.update { current -> current + mailboxes }
+        this.mailboxes.update { current ->
+            (current + mailboxes)
+                .associateBy { it.id }
+                .values
+                .toSet()
+        }
     }
 
     override fun toggleMailboxById(id: Int) {

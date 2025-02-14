@@ -412,6 +412,7 @@ open class CreateAliasViewModel @Inject constructor(
         aliasOptions.mailboxes.firstOrNull()?.let { mailbox ->
             mailboxDraftRepository.toggleMailboxById(mailbox.id)
         }
+        suffixDraftRepository.clearSuffixes()
         suffixDraftRepository.addSuffixes(aliasOptions.suffixes.toSet())
         aliasOptions.suffixes.firstOrNull()?.let { suffix ->
             suffixDraftRepository.selectSuffixById(suffix.suffix)

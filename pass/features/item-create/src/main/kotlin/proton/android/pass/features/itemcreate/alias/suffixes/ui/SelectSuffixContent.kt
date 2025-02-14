@@ -70,7 +70,7 @@ internal fun SelectSuffixContent(
                 override val title: @Composable () -> Unit
                     get() = {
                         BottomSheetItemTitle(
-                            text = suffix.domain
+                            text = suffix.suffix
                         )
                     }
                 override val subtitle: @Composable () -> Unit = {
@@ -131,21 +131,21 @@ internal fun SelectSuffixContent(
 fun SelectSuffixContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     val suffixList = persistentSetOf(
         AliasSuffix(
-            suffix = "first",
+            suffix = "first@public.proton.me",
             signedSuffix = "",
             isCustom = false,
             isPremium = false,
             domain = "public.proton.me"
         ),
         AliasSuffix(
-            suffix = "second",
+            suffix = "second@premium.proton.me",
             signedSuffix = "",
             isCustom = false,
             isPremium = true,
             domain = "premium.proton.me"
         ),
         AliasSuffix(
-            suffix = "third",
+            suffix = "third@private.proton.me",
             signedSuffix = "",
             isCustom = true,
             isPremium = false,

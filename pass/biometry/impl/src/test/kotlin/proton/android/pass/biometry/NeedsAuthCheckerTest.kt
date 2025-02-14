@@ -27,7 +27,10 @@ import proton.android.pass.common.api.some
 import proton.android.pass.domain.ForceLockSeconds
 import proton.android.pass.domain.OrganizationSettings
 import proton.android.pass.domain.OrganizationShareMode
+import proton.android.pass.domain.organizations.OrganizationItemShareMode
 import proton.android.pass.domain.organizations.OrganizationPasswordPolicy
+import proton.android.pass.domain.organizations.OrganizationSecureLinkMode
+import proton.android.pass.domain.organizations.OrganizationSharingPolicy
 import proton.android.pass.domain.organizations.OrganizationVaultCreateMode
 import proton.android.pass.domain.organizations.OrganizationVaultsPolicy
 import proton.android.pass.preferences.AppLockState
@@ -172,6 +175,10 @@ class NeedsAuthCheckerTest {
             passwordPolicy = OrganizationPasswordPolicy(),
             vaultsPolicy = OrganizationVaultsPolicy(
                 vaultCreateMode = OrganizationVaultCreateMode.AllUsers
+            ),
+            sharingPolicy = OrganizationSharingPolicy(
+                itemShareMode = OrganizationItemShareMode.Enabled,
+                secureLinkMode = OrganizationSecureLinkMode.Enabled
             )
         )
         val now = Clock.System.now()
@@ -200,6 +207,10 @@ class NeedsAuthCheckerTest {
             passwordPolicy = OrganizationPasswordPolicy(),
             vaultsPolicy = OrganizationVaultsPolicy(
                 vaultCreateMode = OrganizationVaultCreateMode.AllUsers
+            ),
+            sharingPolicy = OrganizationSharingPolicy(
+                itemShareMode = OrganizationItemShareMode.Enabled,
+                secureLinkMode = OrganizationSecureLinkMode.Enabled
             )
         )
 

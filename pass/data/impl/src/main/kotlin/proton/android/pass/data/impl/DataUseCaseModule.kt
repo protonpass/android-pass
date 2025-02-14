@@ -187,6 +187,7 @@ import proton.android.pass.data.api.usecases.items.UpdateItemFlag
 import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEnforcedLock
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationPasswordPolicy
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
+import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSharingPolicy
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationVaultsPolicy
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
@@ -411,6 +412,7 @@ import proton.android.pass.data.impl.usecases.items.UpdateItemFlagImpl
 import proton.android.pass.data.impl.usecases.organization.ObserveAnyAccountHasEnforcedLockImpl
 import proton.android.pass.data.impl.usecases.organization.ObserveOrganizationPasswordPolicyImpl
 import proton.android.pass.data.impl.usecases.organization.ObserveOrganizationSettingsImpl
+import proton.android.pass.data.impl.usecases.organization.ObserveOrganizationSharingPolicyImpl
 import proton.android.pass.data.impl.usecases.organization.ObserveOrganizationVaultsPolicyImpl
 import proton.android.pass.data.impl.usecases.organization.RefreshOrganizationSettingsImpl
 import proton.android.pass.data.impl.usecases.passkeys.GetPasskeyByIdImpl
@@ -1188,5 +1190,10 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindObserveHasShares(impl: ObserveHasSharesImpl): ObserveHasShares
+
+    @[Binds Singleton]
+    abstract fun bindObserveOrganizationSharingPolicy(
+        impl: ObserveOrganizationSharingPolicyImpl
+    ): ObserveOrganizationSharingPolicy
 
 }

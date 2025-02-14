@@ -4,7 +4,7 @@
   <string name="bottomsheet_delete_permanently">Выдаліць незваротна</string>
   <string name="alert_confirm_delete_item_dialog_title">Выдаліць незваротна?</string>
   <string name="alert_confirm_delete_item_dialog_message">Гэта дзеянне з\'яўляецца незваротным.</string>
-  <string name="alert_confirm_delete_item_dialog_shared_warning_message">This item is currently shared. Deleting it to will remove access for all other users.</string>
+  <string name="alert_confirm_delete_item_dialog_shared_warning_message">Гэты элемент у цяперашні час абагулены. Яго выдаленне пазбавіць доступу ўсіх іншых карыстальнікаў.</string>
   <string name="alias_dialog_move_to_trash_title">Перамясціць у сметніцу?</string>
   <string name="alias_dialog_move_to_trash_content">Калі вы перамясціце псеўданім у сметніцу, ён перастане перасылаць лісты ў вашу паштовую скрыню.</string>
   <string name="alias_dialog_move_to_trash_confirm">Пацвердзіць</string>

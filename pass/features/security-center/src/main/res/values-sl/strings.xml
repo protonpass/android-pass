@@ -19,18 +19,18 @@
 <resources>
   <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Pass Monitor</string>
-  <string name="security_center_home_dark_web_monitoring_title">Spremljanje Dark Web</string>
+  <string name="security_center_home_dark_web_monitoring_title">Spremljanje temnega spleta</string>
   <string name="security_center_home_widget_breaches_title">Odkrito je uhajanje podatkov</string>
   <string name="security_center_home_widget_breaches_subtitle">Vaš e-poštni naslov je bil razkrit zaradi vsaj 1 kršitve varstva podatkov.</string>
   <string name="security_center_home_widget_no_breaches_subtitle">Prejmite obvestilo, če so bili e-poštni naslov, geslo ali drugi osebni podatki razkriti.</string>
   <string name="security_center_home_row_no_data_breaches_subtitle">Ni odkritih kršitev</string>
-  <string name="security_center_home_row_data_breaches_title">Dark Web opozorilo</string>
+  <string name="security_center_home_row_data_breaches_title">Opozorilo iz temnega spleta</string>
   <string name="security_center_home_row_data_breaches_subtitle">Zaznana kršitev</string>
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
   <string name="security_center_home_row_sentinel_subtitle">Napredni program za zaščito računa</string>
   <string name="security_center_home_row_insecure_passwords_title">Šibka gesla</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">Spremenite svoja gesla</string>
-  <string name="security_center_home_row_reused_passwords_title">Ponovno uporabljena gesla</string>
+  <string name="security_center_home_row_reused_passwords_title">Večkrat uporabljena gesla</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Ustvarite edinstvena gesla</string>
   <string name="security_center_home_row_missing_tfa_title">Neaktiven 2FA</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Nastavite 2FA za večjo varnost</string>
@@ -84,12 +84,12 @@
   <string name="security_center_dark_web_monitor_latest_breach_on">Zadnja kršitev dne %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
     <item quantity="one">Najdeno v %s kršitvi</item>
-    <item quantity="two">Najdeno v %s kršitvi</item>
+    <item quantity="two">Najdeno v %s kršitvah</item>
     <item quantity="few">Najdeno v %s kršitvah</item>
     <item quantity="other">Najdeno v %s kršitvah</item>
   </plurals>
   <string name="security_center_dark_web_monitor_found_in_breaches">Ni odkritih uhajanj podatkov</string>
-  <string name="security_center_dark_web_monitor_proton_addresses">Naslov Proton</string>
+  <string name="security_center_dark_web_monitor_proton_addresses">Naslovi Proton</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Vzdevki hide-my-email</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving Proton addresses</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Napaka pri pridobivanju vzdevkov Hide-my-email</string>
@@ -97,8 +97,8 @@
   <string name="security_center_dark_web_monitor_see_all">Poglejte vse</string>
   <string name="security_center_dark_web_monitor_no_proton_addresses">Ni naslovov Proton</string>
   <string name="security_center_dark_web_monitor_no_aliases">Ni vzdevkov</string>
-  <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Pri pošiljanju kode za preverjanje je prišlo do napake. Prosimo, poskusite znova pozneje.</string>
-  <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Pri odstranjevanju e-poštnega naslova je prišlo do napake. Prosimo, poskusite znova kasneje.</string>
+  <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Pri pošiljanju kode za preverjanje je prišlo do napake. Poskusite znova pozneje.</string>
+  <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Pri odstranjevanju e-poštnega naslova je prišlo do napake. Poskusite znova kasneje.</string>
   <!-- Add custom email monitoring -->
   <string name="security_center_custom_email_top_bar_title">Nadzor elektronske pošte po meri</string>
   <string name="security_center_custom_email_email_address_placeholder">E-poštni naslov</string>
@@ -110,13 +110,13 @@
   <string name="security_center_verify_email_title">Potrdite svoj elektronski naslov.</string>
   <string name="security_center_verify_email_subtitle">Na naslov %s smo poslali kodo za preverjanje. Vnesite jo spodaj:</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">Novo preverjanje je bilo poslano, preverite svoj nabiralnik.</string>
-  <string name="security_center_verify_email_snackbar_message_resend_code_error">Pri pošiljanju kode za preverjanje je prišlo do napake. Prosimo, poskusite znova pozneje.</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_error">Pri pošiljanju kode za preverjanje je prišlo do napake. Poskusite znova pozneje.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Preveč neveljavnih preverjanj. Odstranjevanje e-pošte po meri.</string>
   <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Invalid verification code</string>
   <string name="security_center_verify_email_snackbar_message_verification_error">There was an error verifying the email. Please try again later.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Zaznane kršitve za</string>
-  <string name="security_center_verify_report_title_none">Zaznane niso bile nobene kršitve</string>
+  <string name="security_center_verify_report_title_none">Zaznane niso bile nobene kršitve za</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Uporablja se v</string>
   <string name="security_center_email_report_breaches_header">Kršitve</string>
@@ -140,7 +140,7 @@
   <string name="security_center_report_resolve_confirmation_dialog_title">Odpraviti vse kršitve?</string>
   <string name="security_center_report_resolve_confirmation_dialog_message">Vse trenutne kršitve bodo označene kot odpravljene. V primeru prihodnjih kršitev varstva podatkov boste obveščeni.</string>
   <!-- Proton list -->
-  <string name="security_center_proton_list_top_bar_title">Naslov Proton</string>
+  <string name="security_center_proton_list_top_bar_title">Naslovi Proton</string>
   <string name="security_center_proton_list_no_breaches_detected">Ni odkritih uhajanj podatkov</string>
   <string name="security_center_proton_list_excluded_from_monitoring">Izključeno iz spremljanja</string>
   <string name="security_center_proton_list_error">Naslovov ni bilo mogoče naložiti</string>
@@ -161,7 +161,7 @@
   <string name="security_center_alias_list_top_bar_title">Vzdevki hide-my-email</string>
   <string name="security_center_alias_list_excluded_from_monitoring">Izključeno iz spremljanja</string>
   <string name="security_center_alias_list_error">Naslovov ni bilo mogoče naložiti</string>
-  <string name="security_center_alias_list_included_in_monitoring">Omogočite nadzor, da boste obveščeni, če so vaši vzdevki Hide-my-email pricurljali.</string>
+  <string name="security_center_alias_list_included_in_monitoring">Omogočite nadzor, da boste obveščeni, če so vaši vzdevki Hide-my-email izpostavljeni.</string>
   <string name="security_center_alias_list_monitored">Spremljano</string>
   <string name="security_center_alias_list_custom_email_message">Vzdevki z domenami po meri se ne spremljajo, dodajte jih kot e-poštni naslov po meri za spremljanje.</string>
   <string name="security_center_alias_list_options_menu">Meni z možnostmi zaslona vzdevkov</string>
@@ -170,5 +170,5 @@
   <string name="dark_web_help_dialog_subtitle">Proton nikoli ne deli vaših podatkov s tretjimi osebami. Vsi podatki izvirajo iz iskanja pojava domen Proton na temnem spletu.</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">E-pošte po meri ni mogoče dodati</string>
-  <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Dosegli ste omejitev e-poštnih sporočil po meri.</string>
+  <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Dosegli ste omejitev e-pošte po meri.</string>
 </resources>

@@ -26,6 +26,7 @@
   <string name="simple_login_sync_management_mailboxes_description">Do poštovej schránky sa preposielajú emaily odoslané na alias. Je to vaša bežná poštová schránka, napr. Gmail, Outlook, Proton Mail atď.</string>
   <string name="simple_login_sync_management_mailbox_default">Predvolené</string>
   <string name="simple_login_sync_management_mailbox_unverified">Neoverená poštová schránka</string>
+  <string name="simple_login_sync_management_mailbox_unverified_change">Neoverená zmena poštovej schránky</string>
   <string name="simple_login_sync_management_vault_title">SimpleLogin synchronizácia</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Pri získavaní detailov o SL aliase došlo k chybe</string>
   <string name="simple_login_sync_management_mailboxes_title">Predvolená poštová schránka pre aliasy</string>
@@ -38,6 +39,10 @@
   <!-- Mailbox create screen -->
   <string name="simple_login_sync_mailbox_create_title">Pridať poštovú schránku</string>
   <string name="simple_login_sync_mailbox_create_message_error">Pri pridávaní poštovej schránky došlo k chybe</string>
+  <!-- Mailbox change screen -->
+  <string name="simple_login_sync_mailbox_change_title">Zmeniť poštovú schránku</string>
+  <string name="simple_login_sync_mailbox_change_message_error">Pri zmene poštovej schránky došlo k chybe</string>
+  <string name="simple_login_sync_mailbox_change_email_already_in_use_message_error">Email sa už používa</string>
   <!-- Mailbox verify screen -->
   <string name="simple_login_sync_mailbox_verify_title">Potvrďte svoju emailovú schránku</string>
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Odoslali sme overovací kód na %s. Zadajte ho nižšie:</string>
@@ -73,6 +78,10 @@
   <string name="simple_login_sync_mailbox_options_snackbar_options_error">Nie je možné zobraziť nastavenia poštovej schránky</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_error">Pri aktualizácii predvolenej poštovej schránky došlo k chybe</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_success">Predvolená poštová schránka bola úspešne aktualizovaná</string>
+  <string name="simple_login_sync_mailbox_change_email_option">Zmeniť poštovú schránku</string>
+  <string name="simple_login_sync_mailbox_cancel_change_email_option">Zrušiť zmenu poštovej schránky</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">Pri zrušení zmeny poštovej schránky došlo k chybe</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">Zrušená zmena poštovej schránky</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Predvolený SL trezor</string>
   <string name="simple_login_sync_shared_default_vault_description">Aliasy SimpleLogin budú importované do tohto trezora.</string>

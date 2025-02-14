@@ -26,6 +26,7 @@
   <string name="simple_login_sync_management_mailboxes_description">メールボックスは、エイリアスに送信されたメールが転送される場所です。通常のメールボックス、例えばGmail、Outlook、Proton Mailなどです。</string>
   <string name="simple_login_sync_management_mailbox_default">デフォルト</string>
   <string name="simple_login_sync_management_mailbox_unverified">認証されていないメールボックス</string>
+  <string name="simple_login_sync_management_mailbox_unverified_change">未確認メールボックスの変更</string>
   <string name="simple_login_sync_management_vault_title">SimpleLogin 同期</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">SLエイリアスの詳細を取得中にエラーが発生しました</string>
   <string name="simple_login_sync_management_mailboxes_title">エイリアスのデフォルトメールボックス</string>
@@ -38,6 +39,10 @@
   <!-- Mailbox create screen -->
   <string name="simple_login_sync_mailbox_create_title">メールボックスを追加</string>
   <string name="simple_login_sync_mailbox_create_message_error">メールボックスの追加中にエラーが発生しました</string>
+  <!-- Mailbox change screen -->
+  <string name="simple_login_sync_mailbox_change_title">メールボックスを変更</string>
+  <string name="simple_login_sync_mailbox_change_message_error">メールボックスの変更中にエラーが発生しました</string>
+  <string name="simple_login_sync_mailbox_change_email_already_in_use_message_error">メールアドレスはすでに使用されています</string>
   <!-- Mailbox verify screen -->
   <string name="simple_login_sync_mailbox_verify_title">メールボックスを確認する</string>
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">%sに認証コードを送りました。以下に入力してください：</string>
@@ -73,6 +78,10 @@
   <string name="simple_login_sync_mailbox_options_snackbar_options_error">メールボックスのオプションを表示することができません</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_error">デフォルトのメールボックスの更新中にエラーが発生しました</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_success">デフォルトのメールボックスは正しく更新されました</string>
+  <string name="simple_login_sync_mailbox_change_email_option">メールボックスを変更</string>
+  <string name="simple_login_sync_mailbox_cancel_change_email_option">メールボックスの変更をキャンセル</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">メールボックスの変更をキャンセル中にエラーが発生しました</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">メールボックスの変更をキャンセルしました</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">デフォルトSL保管庫</string>
   <string name="simple_login_sync_shared_default_vault_description">SimpleLogin エイリアスは、この保管庫にインポートされます。</string>

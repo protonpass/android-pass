@@ -33,5 +33,5 @@
   <string name="reset_history_dialog_body">Resetting history will permanently delete all past versions and cannot be undone.</string>
   <string name="reset_history_action">Zurücksetzen</string>
   <string name="reset_history_dialog_snackbar_message_error">There was an error resetting</string>
-  <string name="reset_history_dialog_snackbar_message_success">Item history reset</string>
+  <string name="reset_history_dialog_snackbar_message_success">Der Verlauf des Eintrags wurde zurückgesetzt.</string>
 </resources>

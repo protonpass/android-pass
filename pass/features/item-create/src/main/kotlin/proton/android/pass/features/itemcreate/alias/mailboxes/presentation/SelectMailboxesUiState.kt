@@ -19,12 +19,14 @@
 package proton.android.pass.features.itemcreate.alias.mailboxes.presentation
 
 import androidx.compose.runtime.Stable
+import kotlinx.collections.immutable.PersistentSet
+import kotlinx.collections.immutable.persistentSetOf
 import proton.android.pass.domain.AliasMailbox
 
 @Stable
 internal data class SelectMailboxesUiState(
-    val mailboxes: Set<AliasMailbox>,
-    val selectedMailboxes: Set<AliasMailbox>,
+    val mailboxes: PersistentSet<AliasMailbox>,
+    val selectedMailboxes: PersistentSet<AliasMailbox>,
     val shouldDisplayFeatureDiscoveryBanner: Boolean,
     val event: SelectMailboxesEvent
 ) {
@@ -32,8 +34,8 @@ internal data class SelectMailboxesUiState(
     internal companion object {
 
         internal val Initial = SelectMailboxesUiState(
-            mailboxes = emptySet(),
-            selectedMailboxes = emptySet(),
+            mailboxes = persistentSetOf(),
+            selectedMailboxes = persistentSetOf(),
             shouldDisplayFeatureDiscoveryBanner = false,
             event = SelectMailboxesEvent.Idle
         )

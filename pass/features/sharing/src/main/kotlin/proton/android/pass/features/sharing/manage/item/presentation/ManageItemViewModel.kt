@@ -35,6 +35,7 @@ import proton.android.pass.common.api.combineN
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSharingPolicy
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.data.api.usecases.shares.ObserveShareItemMembers
 import proton.android.pass.data.api.usecases.shares.ObserveShareItemsCount
@@ -54,6 +55,7 @@ class ManageItemViewModel @Inject constructor(
     observeShareItemMembers: ObserveShareItemMembers,
     observeSharePendingInvites: ObserveSharePendingInvites,
     observeShareItemsCount: ObserveShareItemsCount,
+    observeOrganizationSharingPolicy: ObserveOrganizationSharingPolicy,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
@@ -116,6 +118,7 @@ class ManageItemViewModel @Inject constructor(
         observeShareItemsCount(shareId),
         shareItemMembersFlow,
         isLoadingStateFlow,
+        observeOrganizationSharingPolicy(),
         ManageItemState::Success
     ).stateIn(
         scope = viewModelScope,

@@ -19,11 +19,12 @@
 package proton.android.pass.features.itemcreate.alias.mailboxes.presentation
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import kotlinx.collections.immutable.persistentSetOf
 import proton.android.pass.domain.AliasMailbox
 
 internal class SelectMailboxesUiStatePreviewProvider :
     PreviewParameterProvider<SelectMailboxesUiState> {
-    val list = setOf(
+    val list = persistentSetOf(
         AliasMailbox(
             id = 1,
             email = "eric.norbert@proton.me"
@@ -38,7 +39,7 @@ internal class SelectMailboxesUiStatePreviewProvider :
         sequenceOf(
             SelectMailboxesUiState(
                 mailboxes = list,
-                selectedMailboxes = setOf(list.first()),
+                selectedMailboxes = persistentSetOf(list.first()),
                 shouldDisplayFeatureDiscoveryBanner = false,
                 event = SelectMailboxesEvent.Idle
             )

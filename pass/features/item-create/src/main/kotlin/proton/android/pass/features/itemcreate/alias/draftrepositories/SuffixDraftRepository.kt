@@ -40,7 +40,12 @@ class SuffixDraftRepositoryImpl @Inject constructor() : SuffixDraftRepository {
     private val selectedSuffixId = MutableStateFlow<String?>(null)
 
     override fun addSuffixes(suffixes: Set<AliasSuffix>) {
-        this.suffixes.update { current -> current + suffixes }
+        this.suffixes.update { current ->
+            (current + suffixes)
+                .associateBy { it.suffix }
+                .values
+                .toSet()
+        }
     }
 
     override fun selectSuffixById(id: String) {

@@ -26,6 +26,7 @@
   <string name="simple_login_sync_management_mailboxes_description">A caixa de correio é para onde os e-mails enviados para um alias são encaminhados. É a sua caixa de correio normal, por exemplo, Gmail, Outlook, Proton Mail, etc.</string>
   <string name="simple_login_sync_management_mailbox_default">Padrão</string>
   <string name="simple_login_sync_management_mailbox_unverified">Caixa de correio não verificada</string>
+  <string name="simple_login_sync_management_mailbox_unverified_change">Alteração da caixa de correio não verificada</string>
   <string name="simple_login_sync_management_vault_title">Sincronizar com SimpleLogin</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Houve um erro ao buscar os detalhes do alias do SL</string>
   <string name="simple_login_sync_management_mailboxes_title">Caixa de correio padrão para aliases</string>
@@ -38,6 +39,10 @@
   <!-- Mailbox create screen -->
   <string name="simple_login_sync_mailbox_create_title">Adicionar caixa de correio</string>
   <string name="simple_login_sync_mailbox_create_message_error">Houve um erro ao adicionar a caixa de correio</string>
+  <!-- Mailbox change screen -->
+  <string name="simple_login_sync_mailbox_change_title">Alterar caixa de correio</string>
+  <string name="simple_login_sync_mailbox_change_message_error">Houve um erro ao alterar a caixa de correio</string>
+  <string name="simple_login_sync_mailbox_change_email_already_in_use_message_error">E-mail já em uso</string>
   <!-- Mailbox verify screen -->
   <string name="simple_login_sync_mailbox_verify_title">Confirmar sua caixa de correio</string>
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Enviamos um código de verificação para %s. Insira-o abaixo:</string>
@@ -73,6 +78,10 @@
   <string name="simple_login_sync_mailbox_options_snackbar_options_error">Não é possível exibir as opções da caixa de correio</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_error">Houve um erro ao atualizar a caixa de correio padrão</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_success">A caixa de correio padrão foi atualizada.</string>
+  <string name="simple_login_sync_mailbox_change_email_option">Alterar caixa de correio</string>
+  <string name="simple_login_sync_mailbox_cancel_change_email_option">Cancelar alteração da caixa de correio</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">Houve um erro ao cancelar a alteração do e-mail da caixa de correio</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">Alteração do e-mail da caixa de correio cancelada</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Cofre padrão SL</string>
   <string name="simple_login_sync_shared_default_vault_description">Os aliases do SimpleLogin serão importados para esse cofre.</string>

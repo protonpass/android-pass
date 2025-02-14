@@ -19,7 +19,7 @@
   <string name="email_copied_to_clipboard">이메일 주소 복사됨</string>
   <string name="username_copied_to_clipboard">사용자 이름 복사됨</string>
   <string name="password_copied_to_clipboard">비밀번호 복사됨</string>
-  <string name="website_copied_to_clipboard">Web address copied</string>
+  <string name="website_copied_to_clipboard">웹 사이트 주소 복사됨</string>
   <string name="totp_copied_to_clipboard">TOTP 복사됨</string>
   <string name="field_copied_to_clipboard">필드 복사됨</string>
   <string name="move_item_to_trash_message">항목이 휴지통으로 이동되었습니다</string>
@@ -119,6 +119,6 @@
   </plurals>
   <string name="open_with">열기:</string>
   <string name="open_attachments_error">첨부파일을 열 수 없습니다</string>
-  <string name="banner_contacts_title">Did you know?</string>
-  <string name="banner_contacts_subtitle">Every time your alias receives an email from someone, a new contact is automatically created.</string>
+  <string name="banner_contacts_title">알고 계셨나요?</string>
+  <string name="banner_contacts_subtitle">별칭이 누군가로부터 이메일을 받으면 새 연락처가 자동으로 생성됩니다.</string>
 </resources>

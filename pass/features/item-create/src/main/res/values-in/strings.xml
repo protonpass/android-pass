@@ -108,7 +108,7 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Tanggal kedaluwarsa</string>
-  <string name="field_card_expiration_date_hint">MM/YY</string>
+  <string name="field_card_expiration_date_hint">BB/TT</string>
   <string name="field_card_expiration_date_error">Masukkan tanggal yang valid dalam format BB/TT</string>
   <string name="create_credit_card_item_creation_error">Tidak dapat membuat kartu kredit</string>
   <string name="create_credit_card_item_creation_success">Kartu kredit dibuat</string>
@@ -145,7 +145,7 @@
   <string name="identity_field_reddit_title">Nama pengguna Reddit</string>
   <string name="identity_field_facebook_title">URL Facebook</string>
   <string name="identity_field_yahoo_title">Nama pengguna Yahoo</string>
-  <string name="identity_field_instagram_title">Instagram username</string>
+  <string name="identity_field_instagram_title">Nama pengguna Instagram</string>
   <string name="identity_field_personal_website_title">URL situs web pribadi</string>
   <string name="identity_field_work_phone_number_title">Nomor telepon kantor</string>
   <string name="identity_field_work_email_title">Alamat email kantor</string>
@@ -160,7 +160,7 @@
   <string name="identity_add_field_reddit">Nama pengguna Reddit</string>
   <string name="identity_add_field_facebook">URL Facebook</string>
   <string name="identity_add_field_yahoo">Nama pengguna Yahoo</string>
-  <string name="identity_add_field_instagram">Instagram username</string>
+  <string name="identity_add_field_instagram">Nama pengguna Instagram</string>
   <string name="identity_add_field_personal_website">URL situs web pribadi</string>
   <string name="identity_add_field_work_phone_number">Nomor telepon kantor</string>
   <string name="identity_add_field_work_email_address">Alamat email kantor</string>
@@ -207,16 +207,16 @@
   <string name="open_with">Buka dengan:</string>
   <string name="open_attachments_error">Gagal membuka lampiran</string>
   <string name="upload_attachments_error">Gagal mengunggah lampiran</string>
-  <string name="banner_advanced_options_title">Did you know?</string>
-  <string name="banner_advanced_options_subtitle">Tap the gear icon to customize the alias the way you want.</string>
-  <string name="banner_custom_domain_title">Did you know?</string>
-  <string name="banner_custom_domain_subtitle">By adding your domain, you can create aliases like hi@my-domain.com.</string>
-  <string name="banner_custom_domain_button">Add domain</string>
-  <string name="banner_mailbox_title">Did you know?</string>
-  <string name="banner_mailbox_subtitle">Share aliases with others by adding their inbox as an additional mailbox.</string>
-  <string name="banner_mailbox_button">Add mailbox</string>
+  <string name="banner_advanced_options_title">Tahukah Anda?</string>
+  <string name="banner_advanced_options_subtitle">Ketuk ikon gerigi untuk menyesuaikan alias sesuai keinginan Anda.</string>
+  <string name="banner_custom_domain_title">Tahukah Anda?</string>
+  <string name="banner_custom_domain_subtitle">Dengan menambahkan domain milik Anda, Anda dapat membuat alias seperti halo@domain-saya.com.</string>
+  <string name="banner_custom_domain_button">Tambah domain</string>
+  <string name="banner_mailbox_title">Tahukah Anda?</string>
+  <string name="banner_mailbox_subtitle">Bagikan alias kepada pengguna lainnya dengan menambahkan kotak masuk mereka sebagai kotak masuk tambahan.</string>
+  <string name="banner_mailbox_button">Tambah kotak surat</string>
   <!-- Suffix -->
-  <string name="suffix_subtitle_premium_domain">Premium domain</string>
-  <string name="suffix_subtitle_public_domain">Public domain</string>
-  <string name="suffix_subtitle_private_domain">Your domain</string>
+  <string name="suffix_subtitle_premium_domain">Domain premium</string>
+  <string name="suffix_subtitle_public_domain">Domain publik</string>
+  <string name="suffix_subtitle_private_domain">Domain Anda</string>
 </resources>

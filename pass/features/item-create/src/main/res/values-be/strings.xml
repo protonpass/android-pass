@@ -213,7 +213,7 @@
   <string name="banner_custom_domain_subtitle">Вы можаце стварыць такі псеўданім, як pryvitanne@moi-damen.com пры даданні свайго дамена.</string>
   <string name="banner_custom_domain_button">Дадаць дамен</string>
   <string name="banner_mailbox_title">Ці ведалі вы што?</string>
-  <string name="banner_mailbox_subtitle">Share aliases with others by adding their inbox as an additional mailbox.</string>
+  <string name="banner_mailbox_subtitle">Абагульвайце псеўданімы з іншымі, дадаючы іх паштовую скрыню ў якасці дадатковай паштовай скрыні.</string>
   <string name="banner_mailbox_button">Дадаць паштовую скрыню</string>
   <!-- Suffix -->
   <string name="suffix_subtitle_premium_domain">Прэміяльны дамен</string>

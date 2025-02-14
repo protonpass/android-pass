@@ -57,7 +57,7 @@
   <!-- Empty list -->
   <string name="empty_list_title">Προσθέστε το πρώτο σας στοιχείο</string>
   <string name="empty_search_results_title">Δεν βρέθηκε αποτέλεσμα</string>
-  <string name="empty_list_open_extension">Επισκεφτείτε την επέκταση ιστού</string>
+  <string name="empty_list_open_extension">Επισκεφτείτε την προέκταση ιστού</string>
   <string name="empty_list_create_item_button">Δημιουργία νέου στοιχείου</string>
   <!-- Field -->
   <string name="field_title_title">Τίτλος</string>
@@ -200,7 +200,7 @@
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Κλειδί πρόσβασης</string>
   <!-- Upgrade -->
-  <string name="dialog_upgrade_plan_title">Αναβάθμιση προγράμματος;</string>
+  <string name="dialog_upgrade_plan_title">Αναβάθμιση πλάνου;</string>
   <string name="dialog_upgrade_plan_message">Αυτή η λειτουργία δεν είναι διαθέσιμη για χρήστες δωρεάν επιπέδου. Αν θέλετε να το απολαύσετε μαζί με άλλα δροσερά χαρακτηριστικά, αναβαθμίστε το πλάνο σας και δοκιμάστε το!</string>
   <string name="dialog_upgrade_plan_action_confirm">Αναβάθμιση</string>
   <string name="dialog_upgrade_plan_action_cancel">Όχι τώρα</string>

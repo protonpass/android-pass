@@ -26,6 +26,7 @@
   <string name="simple_login_sync_management_mailboxes_description">Паштовая скрыня - гэта месца, куды перасылаюцца электронныя лісты, якія адпраўлены на псеўданім. Гэта ваша звычайная паштовая скрыня такая, як напрыклад Gmail, Outlook, Proton Mail і г.д.</string>
   <string name="simple_login_sync_management_mailbox_default">Прадвызначана</string>
   <string name="simple_login_sync_management_mailbox_unverified">Неправераная паштовая скрыня</string>
+  <string name="simple_login_sync_management_mailbox_unverified_change">Змена неправеранай паштовай скрыні</string>
   <string name="simple_login_sync_management_vault_title">Сінхранізацыя SimpleLogin</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Адбылася памылка падчас атрымання падрабязнасцяў псеўданіма SL</string>
   <string name="simple_login_sync_management_mailboxes_title">Прадвызначаная паштовая скрыня для псеўданімаў</string>
@@ -38,6 +39,10 @@
   <!-- Mailbox create screen -->
   <string name="simple_login_sync_mailbox_create_title">Дадаць паштовую скрыню</string>
   <string name="simple_login_sync_mailbox_create_message_error">Адбылася памылка падчас дадавання паштовай скрыні</string>
+  <!-- Mailbox change screen -->
+  <string name="simple_login_sync_mailbox_change_title">Змяніць паштовую скрыню</string>
+  <string name="simple_login_sync_mailbox_change_message_error">Адбылася памылка падчас зменення паштовай скрыні</string>
+  <string name="simple_login_sync_mailbox_change_email_already_in_use_message_error">Такая электронная пошта ўжо выкарыстоўваецца</string>
   <!-- Mailbox verify screen -->
   <string name="simple_login_sync_mailbox_verify_title">Пацвердзіце сваю паштовую скрыню</string>
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Мы адправілі праверачны код на %s. Увядзіце яго ніжэй:</string>
@@ -73,6 +78,10 @@
   <string name="simple_login_sync_mailbox_options_snackbar_options_error">Немагчыма адлюстраваць параметры паштовай скрыні</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_error">Адбылася памылка падчас абнаўлення прадвызначанай паштовай скрыні</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_success">Прадвызначаная паштовая скрыня паспяхова абноўлена</string>
+  <string name="simple_login_sync_mailbox_change_email_option">Змяніць паштовую скрыню</string>
+  <string name="simple_login_sync_mailbox_cancel_change_email_option">Скасаваць змяненні паштовай скрыні</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">Адбылася памылка падчас скасавання змяненняў паштовай скрыні электроннай пошты</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">Скасаваныя змяненні паштовай скрыні</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Прадвызначанае сховішча SL</string>
   <string name="simple_login_sync_shared_default_vault_description">Псеўданімы SimpleLogin будуць імпартаваны ў гэта сховішча.</string>

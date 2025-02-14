@@ -19,7 +19,7 @@
   <string name="profile_fingerprint_lock_disabled">Zaklepanje s prstnim odtisom onemogočeno</string>
   <string name="profile_app_version_copied_to_clipboard">Različica aplikacije je kopirana</string>
   <string name="feedback_option_reddit">Oglejte si Proton na spletišču Reddit</string>
-  <string name="feedback_option_mail">Pošlji sporočilo</string>
+  <string name="feedback_option_mail">Pošlji nam sporočilo</string>
   <string name="feedback_option_vote_new_features">Glasujte za nove funkcije</string>
   <string name="app_lock_immediately">Takoj</string>
   <string name="app_lock_one_minute">Po 1 minuti</string>
@@ -49,15 +49,15 @@
   <string name="profile_option_unlock_with">Odkleni z</string>
   <string name="profile_option_change_pin_code">Spremeni kodo PIN</string>
   <string name="profile_passkey_support_section_title">Identifikacijski ključ</string>
-  <string name="profile_passkey_support_subtitle_supported">Podprt je identifikacijski ključ</string>
+  <string name="profile_passkey_support_subtitle_supported">Identifikacijski ključi so podprti.</string>
   <string name="profile_passkey_support_subtitle_not_supported_android_version">Your Android version does not support passkeys.</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Vaša naprava ne podpira identifikacijskega ključa</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Ni bilo mogoče preveriti podpore za identifikacijski ključ</string>
   <plurals name="profile_after_days">
     <item quantity="one">Po %d dnevu</item>
     <item quantity="two">Po %d dneh</item>
-    <item quantity="few">Po %d dni</item>
-    <item quantity="other">Po %d dni</item>
+    <item quantity="few">Po %d dneh</item>
+    <item quantity="other">Po %d dneh</item>
   </plurals>
   <plurals name="profile_after_minutes">
     <item quantity="one">Po %d minuti</item>
@@ -87,6 +87,6 @@
   <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">You need to switch to %1$s in order to manage it</string>
   <string name="account_switch_confirmation_title">Upravljajte račun</string>
   <string name="account_switch_confirmation_confirm">Preklopi in upravljaj</string>
-  <string name="profile_storage_data_title">Storage</string>
+  <string name="profile_storage_data_title">Shramba</string>
   <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s of %2$s</string>
 </resources>

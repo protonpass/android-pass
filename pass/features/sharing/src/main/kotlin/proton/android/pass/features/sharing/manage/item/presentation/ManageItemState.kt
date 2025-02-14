@@ -19,9 +19,13 @@
 package proton.android.pass.features.sharing.manage.item.presentation
 
 import androidx.compose.runtime.Stable
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.organizations.OrganizationSharingPolicy
 import proton.android.pass.domain.shares.ShareMember
 import proton.android.pass.domain.shares.SharePendingInvite
 
@@ -46,7 +50,8 @@ internal sealed interface ManageItemState {
         internal val vaultPendingInvites: List<SharePendingInvite>,
         internal val itemsCount: Int,
         private val members: List<ShareMember>,
-        private val isLoadingState: IsLoadingState
+        private val isLoadingState: IsLoadingState,
+        private val organizationSharingPolicyOption: Option<OrganizationSharingPolicy>
     ) : ManageItemState {
 
         internal val itemMembers: List<ShareMember> = members.filter { it.isItemMember }
@@ -62,6 +67,13 @@ internal sealed interface ManageItemState {
         internal val hasVaultPendingInvites = vaultPendingInvites.isNotEmpty()
 
         internal val isLoading: Boolean = isLoadingState.value()
+
+        internal val canInviteMoreToItem = when (organizationSharingPolicyOption) {
+            None -> true
+            is Some -> organizationSharingPolicyOption.value.canShareItems
+        }
+
+        internal val canInviteMoreToVault = true
 
     }
 

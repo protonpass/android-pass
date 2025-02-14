@@ -40,7 +40,7 @@
   <string name="home_autofill_banner_title">Gaudiu de la màgia de l\'emplenament automàtic</string>
   <string name="home_autofill_banner_text">Un toc i —voilà!— el vostre nom d\'usuari i contrasenya s\'emplenen a l\'instant.</string>
   <string name="home_autofill_banner_settings">Activa l\'emplenament automàtic</string>
-  <string name="home_trial_banner_title">El nostre regal de benvinguda per a vostè.</string>
+  <string name="home_trial_banner_title">El nostre regal de benvinguda.</string>
   <string name="home_trial_banner_text">7 dies per provar les funcions prèmium de manera gratuïta. Només durant la primera setmana de Proton Pass.</string>
   <string name="home_trial_banner_settings">Més informació ›</string>
   <string name="home_drawer_all_items">Tots els elements</string>

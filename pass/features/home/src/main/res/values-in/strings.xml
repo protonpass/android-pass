@@ -24,7 +24,7 @@
   <string name="home_empty_vault_create_alias">Buat alias Hide-my-email</string>
   <string name="home_empty_vault_create_note">Buat catatan</string>
   <string name="home_empty_vault_create_credit_card">Buat kartu kredit</string>
-  <string name="home_empty_vault_create_identity">Create an identity</string>
+  <string name="home_empty_vault_create_identity">Buat identitas</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Terdapat kesalahan dalam memuat item</string>
   <string name="error_refreshing">Terjadi kesalahan dalam memuat ulang</string>
   <string name="home_snackbar_login_moved_to_trash">Entri masuk dipindahkan ke sampah</string>
@@ -36,7 +36,7 @@
   <string name="home_snackbar_items_move_to_trash_success">Item dipindahkan ke sampah</string>
   <string name="home_snackbar_items_move_to_trash_error">Item tidak dapat dipindahkan ke sampah</string>
   <string name="home_toast_items_selected_read_only">Item yang bersifat read-only tidak dapat dipilih</string>
-  <string name="home_toast_items_selected_shared_with_me">Items shared with you cannot be selected</string>
+  <string name="home_toast_items_selected_shared_with_me">Item yang dibagikan dengan Anda tidak dapat dipilih</string>
   <string name="home_autofill_banner_title">Nikmati keajaiban Isi Otomatis</string>
   <string name="home_autofill_banner_text">Satu ketukan saja dan—presto!—nama pengguna dan kata sandi Anda akan diisi secara instan.</string>
   <string name="home_autofill_banner_settings">Aktifkan Isi Otomatis ›</string>
@@ -160,10 +160,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Terdapat kesalahan dalam melepas sematan sebagian item</string>
   <string name="home_snackbar_items_unpinned_error">Terdapat kesalahan dalam melepas sematan item</string>
   <string name="home_snackbar_items_alias_enabled_success">Alias berhasil diaktifkan</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Terdapat kesalahan dalam mengaktifkan sebagian alias</string>
   <string name="home_snackbar_items_alias_enabled_error">Terdapat kesalahan dalam mengaktifkan alias</string>
   <string name="home_snackbar_items_alias_disabled_success">Alias berhasil dinonaktifkan</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Terdapat kesalahan dalam menonaktifkan sebagian alias</string>
   <string name="home_snackbar_items_alias_disabled_error">Terdapat kesalahan dalam menonaktifkan alias</string>
   <string name="bulk_action_unpin">Lepas sematan</string>
   <string name="bulk_action_pin">Sematkan</string>

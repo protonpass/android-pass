@@ -61,8 +61,8 @@
   <string name="sharing_snackbar_invite_sent_success">Запрашэнне адпраўлена</string>
   <string name="sharing_snackbar_invite_sent_error">Немагчыма адправіць запрашэнне</string>
   <string name="sharing_snackbar_invite_new_users_error">Немагчыма адправіць запрашэнні новым карыстальнікам</string>
-  <string name="sharing_snackbar_invite_free_user_error">Item invites are only allowed to be sent to paid users</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">Address has already been invited</string>
+  <string name="sharing_snackbar_invite_free_user_error">Запрашэнні на элементы дазволена адпраўляць толькі платным карыстальнікам</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">Адрас ужо быў запрошаны</string>
   <string name="sharing_snackbar_get_vault_members_error">Немагчыма атрымаць удзельнікаў сховішча</string>
   <string name="sharing_snackbar_change_permission_success">Дазволы зменены</string>
   <string name="sharing_snackbar_change_permission_error">Немагчыма змяніць дазволы</string>
@@ -75,7 +75,7 @@
   <string name="share_summary_share_item">Абагуліць элемент</string>
   <string name="share_summary_vault_title">Сховішча</string>
   <string name="share_summary_item_title">Элемент</string>
-  <string name="share_summary_access_level_title">Access level</string>
+  <string name="share_summary_access_level_title">Узровень доступу</string>
   <string name="share_manage_vault_share_with_more_people">Абагуліць з большай колькасцю карыстальнікаў</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">Засталося %d запрашэнне</item>
@@ -103,7 +103,7 @@
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Вы не можаце перанесці апошняе сховішча, якое належала вам.</string>
   <string name="sharing_bottomsheet_remove_access">Адклікаць доступ</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Можа даваць і адклікаць дазвол на доступ да гэтага элемента.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Можа рэдагаваць і выдаляць гэты элемент.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Можа праглядаць гэты элемент.</string>
   <string name="sharing_bottomsheet_resend_invite">Паўторна адправіць запрашэнне</string>
   <string name="sharing_bottomsheet_cancel_invite">Скасаваць запрашэнне</string>

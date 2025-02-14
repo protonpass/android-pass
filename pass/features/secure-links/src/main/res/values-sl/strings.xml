@@ -35,9 +35,9 @@
   <string name="secure_links_overview_widget_open_times_title">Odprto:</string>
   <plurals name="secure_links_overview_widget_max_views_limited">
     <item quantity="one">%d-krat</item>
-    <item quantity="two">%d krat</item>
-    <item quantity="few">%d krat</item>
-    <item quantity="other">%d krat</item>
+    <item quantity="two">%d-krat</item>
+    <item quantity="few">%d-krat</item>
+    <item quantity="other">%d-krat</item>
   </plurals>
   <string name="secure_links_overview_widget_max_views_unlimited">Neomejeno</string>
   <string name="secure_links_overview_button_view_all_links">View all your secure links</string>

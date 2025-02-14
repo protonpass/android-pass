@@ -23,7 +23,7 @@
   <string name="item_details_forbidden_actions_edit_title">Δεν είναι δυνατή η επεξεργασία</string>
   <string name="item_details_forbidden_actions_edit_permission">Δεν μπορείτε να επεξεργαστείτε αυτό το στοιχείο, επειδή δεν έχετε αρκετά δικαιώματα.</string>
   <string name="item_details_forbidden_actions_edit_trash">Δεν μπορείτε να επεξεργαστείτε αυτό το στοιχείο επειδή βρίσκεται στα διαγραμμένα. Μετακινήστε το από τα διαγραμμένα πριν το επεξεργαστείτε.</string>
-  <string name="item_details_forbidden_actions_edit_upgrade">Επιτρέπεται μόνο η επεξεργασία στοιχείων στις παλαιότερες κρύπτες σας. Για να επεξεργαστείτε αυτό το στοιχείο, αναβαθμίστε το τρέχον πλάνο σας.</string>
+  <string name="item_details_forbidden_actions_edit_upgrade">Επιτρέπεται μόνο η επεξεργασία στοιχείων στις παλαιότερες κρύπτες σας. Για να επεξεργαστείτε αυτό το στοιχείο, παρακαλούμε αναβαθμίστε το τρέχον πλάνο σας.</string>
   <string name="item_details_forbidden_actions_share_title">Δεν είναι δυνατή η κοινή χρήση</string>
   <string name="item_details_forbidden_actions_share_limit">Έχετε συμπληρώσει το όριο κοινής χρήσης κρύπτης. Για να μοιραστείτε περισσότερες κρύπτες, αναβαθμίστε το τρέχον πλάνο σας.</string>
   <string name="item_details_forbidden_actions_sharing_permission">Δεν έχετε τα απαραίτητα δικαιώματα για την εκτέλεση αυτής της ενέργειας.</string>

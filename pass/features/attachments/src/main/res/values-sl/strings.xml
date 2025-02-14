@@ -33,6 +33,6 @@
   <string name="rename_attachment_dialog_title">Preimenuj datoteko</string>
   <string name="storage_full_title">Your storage is almost full.</string>
   <string name="storage_full_body">Upgrade to increase your storage capacity.</string>
-  <string name="storage_full_upgrade">Prehod na plačljiv paket</string>
+  <string name="storage_full_upgrade">Nadgradnja</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s od %2$s</string>
 </resources>

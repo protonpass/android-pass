@@ -108,7 +108,7 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Ablaufdatum</string>
-  <string name="field_card_expiration_date_hint">MM/YY</string>
+  <string name="field_card_expiration_date_hint">MM/JJ</string>
   <string name="field_card_expiration_date_error">Gib ein gültiges Datum im Format MM/JJ ein.</string>
   <string name="create_credit_card_item_creation_error">Fehler beim Erfassen der Kreditkarte.</string>
   <string name="create_credit_card_item_creation_success">Kreditkarte erfasst.</string>
@@ -145,7 +145,7 @@
   <string name="identity_field_reddit_title">Reddit-Benutzername</string>
   <string name="identity_field_facebook_title">Facebook-URL</string>
   <string name="identity_field_yahoo_title">Yahoo-Benutzername</string>
-  <string name="identity_field_instagram_title">Instagram username</string>
+  <string name="identity_field_instagram_title">Instagram-Benutzername</string>
   <string name="identity_field_personal_website_title">URL der persönlichen Website</string>
   <string name="identity_field_work_phone_number_title">Geschäftliche Telefonnummer</string>
   <string name="identity_field_work_email_title">Geschäftliche E-Mail-Adresse</string>
@@ -160,7 +160,7 @@
   <string name="identity_add_field_reddit">Reddit-Benutzername</string>
   <string name="identity_add_field_facebook">Facebook-URL</string>
   <string name="identity_add_field_yahoo">Yahoo-Benutzername</string>
-  <string name="identity_add_field_instagram">Instagram username</string>
+  <string name="identity_add_field_instagram">Instagram-Benutzername</string>
   <string name="identity_add_field_personal_website">URL der persönlichen Website</string>
   <string name="identity_add_field_work_phone_number">Geschäftliche Telefonnummer</string>
   <string name="identity_add_field_work_email_address">Geschäftliche E-Mail-Adresse</string>
@@ -172,7 +172,7 @@
   <string name="identity_add_more_fields">Weiteres Feld hinzufügen</string>
   <string name="identity_bottomsheet_add_field">Feld hinzufügen</string>
   <string name="create_identity_init_error">Problem beim Abrufen von Angaben zur Identität</string>
-  <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
+  <string name="update_identity_attachments_init_error">Fehler beim Abrufen der Identität-Anhänge.</string>
   <string name="identity_link_attachments_error">Verknüpfen oder aufheben von Anhängen mit der Identität fehlgeschlagen</string>
   <string name="identity_rename_attachments_error">Umbenennung von Identität-Anhängen fehlgeschlagen</string>
   <string name="create_identity_item_creation_error">Fehler beim Erstellen der Identität.</string>
@@ -203,20 +203,20 @@
   <string name="add_a_custom_section">Benutzerdefinierten Abschnitt hinzufügen</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Anhänge</string>
-  <string name="banner_body_attachments">You can attach files to items for a better organization</string>
+  <string name="banner_body_attachments">Du kannst Dateien an Einträge anhängen, um sie besser zu organisieren.</string>
   <string name="open_with">Öffnen mit:</string>
   <string name="open_attachments_error">Der Anhang konnte nicht geöffnet werden</string>
   <string name="upload_attachments_error">Hochladen des Anhangs der Nachricht fehlgeschlagen</string>
-  <string name="banner_advanced_options_title">Did you know?</string>
+  <string name="banner_advanced_options_title">Wusstest du?</string>
   <string name="banner_advanced_options_subtitle">Tap the gear icon to customize the alias the way you want.</string>
-  <string name="banner_custom_domain_title">Did you know?</string>
-  <string name="banner_custom_domain_subtitle">By adding your domain, you can create aliases like hi@my-domain.com.</string>
-  <string name="banner_custom_domain_button">Add domain</string>
-  <string name="banner_mailbox_title">Did you know?</string>
+  <string name="banner_custom_domain_title">Wusstest du?</string>
+  <string name="banner_custom_domain_subtitle">Wenn du deine Domain hinzufügst, kannst du Aliase wie hallo@mein-domain.de erstellen.</string>
+  <string name="banner_custom_domain_button">Domain hinzufügen</string>
+  <string name="banner_mailbox_title">Wusstest du?</string>
   <string name="banner_mailbox_subtitle">Share aliases with others by adding their inbox as an additional mailbox.</string>
-  <string name="banner_mailbox_button">Add mailbox</string>
+  <string name="banner_mailbox_button">Postfach hinzufügen</string>
   <!-- Suffix -->
-  <string name="suffix_subtitle_premium_domain">Premium domain</string>
-  <string name="suffix_subtitle_public_domain">Public domain</string>
-  <string name="suffix_subtitle_private_domain">Your domain</string>
+  <string name="suffix_subtitle_premium_domain">Premium-Domain</string>
+  <string name="suffix_subtitle_public_domain">Öffentliche Domain</string>
+  <string name="suffix_subtitle_private_domain">Deine Domain</string>
 </resources>

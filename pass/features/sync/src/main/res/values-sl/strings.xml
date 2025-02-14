@@ -35,8 +35,8 @@
   <string name="sync_dialog_title_error">Sinhronizacija ni uspela</string>
   <string name="sync_dialog_title_success">Sinhronizacija je končana</string>
   <string name="sync_dialog_subtitle">Prenašamo in dešifriramo vaše predmete. To lahko traja nekaj minut.</string>
-  <string name="sync_dialog_subtitle_error">Pri prenosu in dešifriranju vaših predmetov je prišlo do napake. Prosim poskusite ponovno.</string>
-  <string name="sync_dialog_subtitle_success">Vaši elementi so bili uspešno preneseni in dešifriran</string>
+  <string name="sync_dialog_subtitle_error">Pri prenosu in dešifriranju vaših predmetov je prišlo do napake. Poskusite ponovno.</string>
+  <string name="sync_dialog_subtitle_success">Vaši predmeti so bili uspešno preneseni in dešifrirani.</string>
   <string name="sync_item_not_started">Ni se začelo</string>
   <string name="sync_item_failed">Sinhronizacija ni uspela</string>
   <string name="sync_dialog_title_inserting">Inserting items…</string>

@@ -6,6 +6,20 @@
 
 ### Other
 
+## 1.30.0 (2025-02-14)
+
+### Features :tada:
+
+- User can change mailbox email.
+
+### Fixes :bug:
+
+- Screen closing on maximum pin attempts.
+
+### Other
+
+- Updated translations.
+
 ## 1.29.1 (2025-01-20)
 
 ### Fixes :bug:

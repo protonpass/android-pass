@@ -24,15 +24,15 @@
   <string name="attachment_options_delete">Löschen</string>
   <string name="file_picker_open_error">Could not open file picker</string>
   <string name="media_picker_open_error">Could not open media picker</string>
-  <string name="camera_open_error">Could not open camera</string>
+  <string name="camera_open_error">Die Kamera konnte nicht geöffnet werden.</string>
   <string name="camera_permission_explanation">Für diese Funktion ist die Kamera-Berechtigung notwendig.</string>
   <string name="camera_permission_open_settings">Einstellungen öffnen</string>
-  <string name="delete_all_attachments_title">Delete all attachments?</string>
+  <string name="delete_all_attachments_title">Alle Anhänge löschen?</string>
   <string name="delete_all_attachments_subtitle">Diese Aktion kann nicht rückgängig gemacht werden</string>
   <string name="delete_all_attachments_confirm">Alle löschen</string>
   <string name="rename_attachment_dialog_title">Datei umbenennen</string>
-  <string name="storage_full_title">Your storage is almost full.</string>
-  <string name="storage_full_body">Upgrade to increase your storage capacity.</string>
+  <string name="storage_full_title">Dein Speicherplatz ist fast voll.</string>
+  <string name="storage_full_body">Upgrade, um deine Speicherkapazität zu erhöhen.</string>
   <string name="storage_full_upgrade">Upgraden</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s von %2$s</string>
 </resources>

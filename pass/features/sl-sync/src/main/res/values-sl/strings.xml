@@ -26,6 +26,7 @@
   <string name="simple_login_sync_management_mailboxes_description">Mailbox is where emails sent to an alias are forwarded to. It\'s your usual mailbox, e.g. Gmail, Outlook, Proton Mail, etc.</string>
   <string name="simple_login_sync_management_mailbox_default">Privzeto</string>
   <string name="simple_login_sync_management_mailbox_unverified">Unverified mailbox</string>
+  <string name="simple_login_sync_management_mailbox_unverified_change">Unverified mailbox change</string>
   <string name="simple_login_sync_management_vault_title">SimpleLogin sync</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">There was an error fetching SL alias details</string>
   <string name="simple_login_sync_management_mailboxes_title">Default mailbox for aliases</string>
@@ -38,6 +39,10 @@
   <!-- Mailbox create screen -->
   <string name="simple_login_sync_mailbox_create_title">Add mailbox</string>
   <string name="simple_login_sync_mailbox_create_message_error">There was an error adding the mailbox</string>
+  <!-- Mailbox change screen -->
+  <string name="simple_login_sync_mailbox_change_title">Change mailbox</string>
+  <string name="simple_login_sync_mailbox_change_message_error">There was an error changing the mailbox</string>
+  <string name="simple_login_sync_mailbox_change_email_already_in_use_message_error">Email already in use</string>
   <!-- Mailbox verify screen -->
   <string name="simple_login_sync_mailbox_verify_title">Confirm your mailbox</string>
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">We sent a verification code to %s. Enter it below:</string>
@@ -73,6 +78,10 @@
   <string name="simple_login_sync_mailbox_options_snackbar_options_error">Cannot display mailbox options</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_error">There was an error updating default mailbox</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_success">Default mailbox successfully updated</string>
+  <string name="simple_login_sync_mailbox_change_email_option">Change mailbox</string>
+  <string name="simple_login_sync_mailbox_cancel_change_email_option">Cancel mailbox change</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">There was an error cancelling mailbox email change</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">Cancelled mailbox email change</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Privzeti trezor SL</string>
   <string name="simple_login_sync_shared_default_vault_description">Vzdevki SimpleLogin bodo uvoženi v ta trezor.</string>

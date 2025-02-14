@@ -99,7 +99,7 @@
   </plurals>
   <!-- Confirm close dialog -->
   <string name="confirm_close_dialog_title">Değişiklikler yok sayılsın mı?</string>
-  <string name="confirm_close_dialog_message">Kaydedilmemiş değişiklikleriniz var, bunları silmek istediğinizden emin misiniz?</string>
+  <string name="confirm_close_dialog_message">Kaydedilmemiş değişiklikleriniz var, bunları silmek istediğinize emin misiniz?</string>
   <string name="confirm_close_dialog_close_button">Yok say</string>
   <!-- Upgrade -->
   <string name="upgrade">Yükselt</string>

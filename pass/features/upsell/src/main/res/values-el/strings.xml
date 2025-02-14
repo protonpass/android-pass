@@ -32,7 +32,7 @@
   <string name="upsell_paid_feature_authenticator_essential">Απαιτείται 2FA για οργάνωση</string>
   <string name="upsell_paid_feature_sso_essential">Ενσωμάτωση SSO (σύντομα διαθέσιμο)</string>
   <string name="upsell_paid_feature_advance_alias_management_title">Διαχείριση των ψευδωνύμων σας</string>
-  <string name="upsell_paid_feature_advance_alias_management_subtitle">Η προηγμένη διαχείριση ψευδωνύμων είναι διαθέσιμη με ένα πρόγραμμα επί πληρωμή. Αναβαθμίστε για άμεση πρόσβαση.</string>
+  <string name="upsell_paid_feature_advance_alias_management_subtitle">Η προηγμένη διαχείριση ψευδωνύμων είναι διαθέσιμη με ένα πλάνο επί πληρωμή. Αναβαθμίστε για άμεση πρόσβαση.</string>
   <string name="upsell_paid_feature_item_sharing_title">Γρήγορη κοινή χρήση στοιχείου</string>
   <string name="upsell_paid_feature_item_sharing_subtitle">Κάντε αναβάθμιση σήμερα, ώστε να μπορείτε να μοιραστείτε ένα στοιχείο με οποιονδήποτε χρήστη του Pass. Και απολαύστε άλλα premium χαρακτηριστικά:</string>
   <string name="upsell_paid_feature_file_attachments_title">Συνημμένα αρχεία</string>

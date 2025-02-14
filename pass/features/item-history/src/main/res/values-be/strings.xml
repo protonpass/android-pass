@@ -28,10 +28,10 @@
   <string name="item_history_timeline_node_leaf_title">Створана</string>
   <string name="item_history_timeline_node_root_title">Бягучая версія</string>
   <string name="item_history_timeline_snackbar_message_error">Адбылася памылка падчас атрымання рэдакцыі элемента</string>
-  <string name="reset_history_bottomsheet_option">Reset History</string>
-  <string name="reset_history_dialog_title">Reset history for this item?</string>
-  <string name="reset_history_dialog_body">Resetting history will permanently delete all past versions and cannot be undone.</string>
+  <string name="reset_history_bottomsheet_option">Скінуць гісторыю</string>
+  <string name="reset_history_dialog_title">Скінуць гісторыю для гэтага элемента?</string>
+  <string name="reset_history_dialog_body">Скіданне гісторыі прывядзе да незваротнага выдалення ўсіх мінулых версій і гэту аперацыю немагчыма будзе адрабіць.</string>
   <string name="reset_history_action">Скінуць</string>
-  <string name="reset_history_dialog_snackbar_message_error">There was an error resetting</string>
-  <string name="reset_history_dialog_snackbar_message_success">Item history reset</string>
+  <string name="reset_history_dialog_snackbar_message_error">Адбылася памылка скінадння</string>
+  <string name="reset_history_dialog_snackbar_message_success">Гісторыя элемента скінута</string>
 </resources>

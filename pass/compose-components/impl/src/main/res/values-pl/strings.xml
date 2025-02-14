@@ -21,8 +21,8 @@
     <item quantity="other">wyników</item>
   </plurals>
   <string name="item_list_header_identities_type">Tożsamości</string>
-  <string name="item_list_header_shared_with_me">Udostępnione Tobie</string>
-  <string name="item_list_header_shared_by_me">Udostępniam</string>
+  <string name="item_list_header_shared_with_me">Udostępnione dla mnie</string>
+  <string name="item_list_header_shared_by_me">Udostępnione przez Ciebie</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Potwierdź</string>
   <string name="bottomsheet_cancel_button">Anuluj</string>
@@ -309,7 +309,7 @@
   <string name="attachment_add_file">Dodaj plik</string>
   <string name="attachment_row_upload_failed">Przesyłanie nie powiodło się</string>
   <string name="attachment_row_retry">Spróbuj ponownie</string>
-  <string name="options_menu_content_description">Menu opcji</string>
+  <string name="options_menu_content_description">Opcje menu</string>
   <!-- Items -->
   <plurals name="shared_items_count">
     <item quantity="one">%d shared item</item>

@@ -268,7 +268,7 @@
   </plurals>
   <string name="simple_login_widget_action">Aliasse synchronisieren</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_not_received">Code nicht erhalten?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Bitte schau in deinem Spam nach einer E-Mail mit dem Namen “%s“</string>
   <string name="verification_code_suggestion_subject_new_email_address">Bitte bestätige deine E-Mail-Adresse für Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Bitte bestätige dein Postfach</string>
@@ -288,8 +288,8 @@
   <string name="options_menu_content_description">Optionsmenü</string>
   <!-- Items -->
   <plurals name="shared_items_count">
-    <item quantity="one">%d shared item</item>
-    <item quantity="other">%d shared items</item>
+    <item quantity="one">%d geteiltes Element</item>
+    <item quantity="other">%d geteilte Elemente</item>
   </plurals>
   <plurals name="users_count">
     <item quantity="one">%d Benutzer</item>

@@ -26,6 +26,7 @@
   <string name="simple_login_sync_management_mailboxes_description">La bústia de correu és on es reenvien els correus electrònics enviats a un àlies. És la vostra bústia habitual, per exemple Gmail, Outlook, Proton Mail, etc.</string>
   <string name="simple_login_sync_management_mailbox_default">Per defecte</string>
   <string name="simple_login_sync_management_mailbox_unverified">No s\'ha verificat la bústia de correu.</string>
+  <string name="simple_login_sync_management_mailbox_unverified_change">No s\'ha verificat el canvi de bústia.</string>
   <string name="simple_login_sync_management_vault_title">Sincronització amb SimpleLogin</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">S\'ha produït un error en obtenir els detalls de l\'àlies SL.</string>
   <string name="simple_login_sync_management_mailboxes_title">Bústia de correu per defecte per als àlies</string>
@@ -38,6 +39,10 @@
   <!-- Mailbox create screen -->
   <string name="simple_login_sync_mailbox_create_title">Afegeix una bústia de correu</string>
   <string name="simple_login_sync_mailbox_create_message_error">S\'ha produït un error en afegir la bústia de correu.</string>
+  <!-- Mailbox change screen -->
+  <string name="simple_login_sync_mailbox_change_title">Canvia la bústia de correu</string>
+  <string name="simple_login_sync_mailbox_change_message_error">S\'ha produït un error en canviar la bústia de correu.</string>
+  <string name="simple_login_sync_mailbox_change_email_already_in_use_message_error">El correu electrònic ja està en ús.</string>
   <!-- Mailbox verify screen -->
   <string name="simple_login_sync_mailbox_verify_title">Confirmeu la vostra bústia de correu</string>
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Hem enviat un codi de verificació a %s. Introduïu-lo a continuació:</string>
@@ -73,6 +78,10 @@
   <string name="simple_login_sync_mailbox_options_snackbar_options_error">No es poden mostrar les opcions de la bústia de correu.</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_error">S\'ha produït un error en actualitzar la bústia de correu per defecte.</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_success">S\'ha actualitzat la bústia de correu per defecte.</string>
+  <string name="simple_login_sync_mailbox_change_email_option">Canvia la bústia de correu</string>
+  <string name="simple_login_sync_mailbox_cancel_change_email_option">Cancel·la el canvi de bústia</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">S\'ha produït un error en cancel·lar el canvi de correu electrònic de la bústia.</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">S\'ha cancel·lat el canvi de correu electrònic de la bústia.</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Caixa forta SL per defecte</string>
   <string name="simple_login_sync_shared_default_vault_description">Els àlies de SimpleLogin s\'importaran a aquesta caixa forta.</string>

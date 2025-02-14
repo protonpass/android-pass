@@ -26,6 +26,7 @@
   <string name="simple_login_sync_management_mailboxes_description">Hộp thư là nơi các email gửi đến một bí danh được chuyển tiếp đến. Đây là hộp thư thông thường của bạn, ví dụ: Gmail, Outlook, Proton Mail, v.v.</string>
   <string name="simple_login_sync_management_mailbox_default">Mặc định</string>
   <string name="simple_login_sync_management_mailbox_unverified">Hộp thư chưa xác minh</string>
+  <string name="simple_login_sync_management_mailbox_unverified_change">Unverified mailbox change</string>
   <string name="simple_login_sync_management_vault_title">Đồng bộ SimpleLogin</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Đã xảy ra lỗi khi lấy chi tiết bí danh SL</string>
   <string name="simple_login_sync_management_mailboxes_title">Hộp thư mặc định cho các bí danh</string>
@@ -38,6 +39,10 @@
   <!-- Mailbox create screen -->
   <string name="simple_login_sync_mailbox_create_title">Thêm hộp thư</string>
   <string name="simple_login_sync_mailbox_create_message_error">Đã xảy ra lỗi khi thêm hộp thư</string>
+  <!-- Mailbox change screen -->
+  <string name="simple_login_sync_mailbox_change_title">Change mailbox</string>
+  <string name="simple_login_sync_mailbox_change_message_error">There was an error changing the mailbox</string>
+  <string name="simple_login_sync_mailbox_change_email_already_in_use_message_error">Email already in use</string>
   <!-- Mailbox verify screen -->
   <string name="simple_login_sync_mailbox_verify_title">Xác nhận hộp thư của bạn</string>
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Chúng tôi đã gửi một mã xác minh đến %s. Nhập nó bên dưới:</string>
@@ -73,6 +78,10 @@
   <string name="simple_login_sync_mailbox_options_snackbar_options_error">Không thể hiển thị tùy chọn hộp thư</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_error">Đã xảy ra lỗi khi cập nhật hộp thư mặc định</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_success">Hộp thư mặc định đã được cập nhật thành công</string>
+  <string name="simple_login_sync_mailbox_change_email_option">Change mailbox</string>
+  <string name="simple_login_sync_mailbox_cancel_change_email_option">Cancel mailbox change</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">There was an error cancelling mailbox email change</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">Cancelled mailbox email change</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Kho SL mặc định</string>
   <string name="simple_login_sync_shared_default_vault_description">Các bí danh SimpleLogin sẽ được nhập vào kho này.</string>

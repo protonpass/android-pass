@@ -52,7 +52,7 @@
   <string name="action_edit">Uredi</string>
   <string name="action_add">Dodaj</string>
   <string name="action_delete">Izbriši</string>
-  <string name="action_make_default">Nastavite na splošno</string>
+  <string name="action_make_default">Nastavi za privzeto</string>
   <string name="action_verify">Preveri</string>
   <string name="action_close">Zapri</string>
   <string name="action_update">Posodobi</string>
@@ -296,7 +296,7 @@
   <string name="verification_code_suggestion_subject_new_mailbox">Please confirm your mailbox</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">If you can\'t find such email, you can %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">request a new code</string>
-  <string name="field_display_name_title">Ime za prikaz</string>
+  <string name="field_display_name_title">Prikazno ime</string>
   <!-- Attachments -->
   <plurals name="attachment_file_amount">
     <item quantity="one">%1$s file</item>

@@ -85,7 +85,7 @@
   <string name="security_center_dark_web_monitor_found_in_breaches">Keine Datenlecks entdeckt</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Proton-Adressen</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email-Aliasse</string>
-  <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving Proton addresses</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Fehler beim Abrufen der Protonen-Adressen.</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Fehler beim Abrufen der Hide-my-email-Aliasse.</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Nicht überwacht</string>
   <string name="security_center_dark_web_monitor_see_all">Alle ansehen</string>

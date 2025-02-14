@@ -26,6 +26,7 @@
   <string name="simple_login_sync_management_mailboxes_description">El buzón es el lugar al que se reenvían los correos electrónicos enviados a un alias. Es el buzón habitual, por ejemplo, Gmail, Outlook, Proton Mail, etc.</string>
   <string name="simple_login_sync_management_mailbox_default">Por defecto</string>
   <string name="simple_login_sync_management_mailbox_unverified">El buzón no está verificado.</string>
+  <string name="simple_login_sync_management_mailbox_unverified_change">No se verificó el cambio del buzón.</string>
   <string name="simple_login_sync_management_vault_title">Sincronización con SimpleLogin</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Ocurrió un error al recuperar los detalles del alias de SL.</string>
   <string name="simple_login_sync_management_mailboxes_title">Buzón por defecto para los alias</string>
@@ -38,6 +39,10 @@
   <!-- Mailbox create screen -->
   <string name="simple_login_sync_mailbox_create_title">Añadir un buzón</string>
   <string name="simple_login_sync_mailbox_create_message_error">Ocurrió un error al añadir el buzón.</string>
+  <!-- Mailbox change screen -->
+  <string name="simple_login_sync_mailbox_change_title">Cambiar el buzón</string>
+  <string name="simple_login_sync_mailbox_change_message_error">Ocurrió un error al cambiar el buzón.</string>
+  <string name="simple_login_sync_mailbox_change_email_already_in_use_message_error">El correo electrónico ya está en uso.</string>
   <!-- Mailbox verify screen -->
   <string name="simple_login_sync_mailbox_verify_title">Confirmar el buzón</string>
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Enviamos un código de verificación a %s. Ingrese el código abajo:</string>
@@ -73,6 +78,10 @@
   <string name="simple_login_sync_mailbox_options_snackbar_options_error">No se pueden mostrar las opciones del buzón.</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_error">Ocurrió un error al actualizar el buzón por defecto.</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_success">Se actualizó el buzón por defecto.</string>
+  <string name="simple_login_sync_mailbox_change_email_option">Cambiar el buzón</string>
+  <string name="simple_login_sync_mailbox_cancel_change_email_option">Cancelar el cambio de buzón</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">Occurio un error al cancelar el cambio de correo del buzón.</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">Se canceló el cambio de correo electrónico del buzón.</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Bóveda SL por defecto</string>
   <string name="simple_login_sync_shared_default_vault_description">Los alias de SimpleLogin se importarán a esta bóveda.</string>

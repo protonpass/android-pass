@@ -6,7 +6,7 @@
   <string name="on_boarding_fingerprint_content">Atur Proton Pass untuk membuka kunci dengan sidik jari Anda sehingga hanya Anda yang memiliki akses.</string>
   <string name="on_boarding_fingerprint_title">Lindungi data Anda yang paling sensitif</string>
   <string name="on_boarding_fingerprint_button">Aktifkan kunci sidik jari</string>
-  <string name="on_boarding_last_page_content">Berhentilah membagikan alamat email asli Anda. Sebaliknya, sembunyikan alamat ini dengan alias email—fitur eksklusif yang tersedia dengan Proton Pass.</string>
+  <string name="on_boarding_last_page_content">Berhentilah membagikan alamat email asli Anda. Sebaliknya, sembunyikan alamat ini dengan alias email—fitur eksklusif yang hanya tersedia di Proton Pass.</string>
   <string name="on_boarding_last_page_title">Kendalikan apa-apa saja yang diterima oleh kotak masuk Anda</string>
   <string name="on_boarding_last_page_button">Mulai gunakan Proton Pass</string>
   <string name="on_boarding_skip">Tidak sekarang</string>
@@ -18,14 +18,14 @@
   <string name="error_biometry_failed_to_authenticate">Gagal mengautentikasi</string>
   <string name="settings_fingerprint_lock_enabled">Kunci sidik jari diaktifkan</string>
   <string name="error_performing_operation">Terjadi kesalahan saat melakukan tindakan</string>
-  <string name="onboarding_slide_1_title">All your passwords.</string>
-  <string name="onboarding_slide_2_title">Protect your inbox.</string>
-  <string name="onboarding_slide_3_title">Stay Informed.</string>
-  <string name="onboarding_slide_4_title">Secure sharing.</string>
-  <string name="onboarding_slide_1_subtitle">Securely in one place and protected by the most trusted name in privacy.</string>
-  <string name="onboarding_slide_2_subtitle">Use Hide-My-Email aliases against phishing threats.</string>
-  <string name="onboarding_slide_3_subtitle">Share passwords and sensitive information securely and effortlessly.</string>
-  <string name="onboarding_slide_4_subtitle">Get alerts when your email is found on the Dark web.</string>
-  <string name="create_an_account_button">Create an account</string>
-  <string name="sign_in_button">Sign in</string>
+  <string name="onboarding_slide_1_title">Seluruh kata sandi Anda.</string>
+  <string name="onboarding_slide_2_title">Lindungi kotak masuk Anda.</string>
+  <string name="onboarding_slide_3_title">Tetaplah terinformasi.</string>
+  <string name="onboarding_slide_4_title">Pembagian yang aman.</string>
+  <string name="onboarding_slide_1_subtitle">Tersimpan aman di satu tempat dan terlindung oleh nama yang paling terpercaya di ranah privasi.</string>
+  <string name="onboarding_slide_2_subtitle">Gunakan alias Hide-My-Email untuk menangkal ancaman phishing.</string>
+  <string name="onboarding_slide_3_subtitle">Bagikan kata sandi dan informasi sensitif secara aman dan mudah.</string>
+  <string name="onboarding_slide_4_subtitle">Dapatkan pemberitahuan pada saat alamat email Anda ditemukan di dark web.</string>
+  <string name="create_an_account_button">Buat akun</string>
+  <string name="sign_in_button">Masuk</string>
 </resources>

@@ -26,6 +26,7 @@
   <string name="simple_login_sync_management_mailboxes_description">La boîte de réception est l\'endroit où les e-mails envoyés à un alias sont redirigés. C\'est votre messagerie habituelle, par exemple Gmail, Outlook, Proton Mail, etc.</string>
   <string name="simple_login_sync_management_mailbox_default">Par défaut</string>
   <string name="simple_login_sync_management_mailbox_unverified">La messagerie n\'est pas vérifiée.</string>
+  <string name="simple_login_sync_management_mailbox_unverified_change">La modification de la messagerie n\'a pas été vérifiée.</string>
   <string name="simple_login_sync_management_vault_title">Synchronisation avec SimpleLogin</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Une erreur est survenue lors de la récupération des informations de l\'alias SL.</string>
   <string name="simple_login_sync_management_mailboxes_title">Messagerie par défaut pour les alias</string>
@@ -38,6 +39,10 @@
   <!-- Mailbox create screen -->
   <string name="simple_login_sync_mailbox_create_title">Ajouter une messagerie</string>
   <string name="simple_login_sync_mailbox_create_message_error">Une erreur s\'est produite lors de l\'ajout de la messagerie.</string>
+  <!-- Mailbox change screen -->
+  <string name="simple_login_sync_mailbox_change_title">Modifier la messagerie</string>
+  <string name="simple_login_sync_mailbox_change_message_error">Une erreur s\'est produite lors de la modification de la messagerie.</string>
+  <string name="simple_login_sync_mailbox_change_email_already_in_use_message_error">L\'adresse e-mail est déjà utilisée</string>
   <!-- Mailbox verify screen -->
   <string name="simple_login_sync_mailbox_verify_title">Confirmez votre messagerie</string>
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Nous avons envoyé un code de vérification à %s. Veuillez le saisir ci-dessous :</string>
@@ -73,6 +78,10 @@
   <string name="simple_login_sync_mailbox_options_snackbar_options_error">Les options de messagerie ne peuvent pas être affichées.</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_error">Une erreur est survenue lors de la mise à jour de la messagerie par défaut.</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_success">La messagerie par défaut a été mise à jour.</string>
+  <string name="simple_login_sync_mailbox_change_email_option">Modifier la messagerie</string>
+  <string name="simple_login_sync_mailbox_cancel_change_email_option">Annuler la modification de la messagerie</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">Une erreur est survenue lors de l\'annulation de la modification de l\'e-mail de la messagerie.</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">La modification apportée à la messagerie a été annulée.</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Coffre-fort SL par défaut</string>
   <string name="simple_login_sync_shared_default_vault_description">Les alias SimpleLogin seront importés dans ce coffre-fort.</string>

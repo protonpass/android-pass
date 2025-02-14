@@ -27,5 +27,5 @@
   <string name="onboarding_slide_3_subtitle">Share passwords and sensitive information securely and effortlessly.</string>
   <string name="onboarding_slide_4_subtitle">Get alerts when your email is found on the Dark web.</string>
   <string name="create_an_account_button">Create an account</string>
-  <string name="sign_in_button">Sign in</string>
+  <string name="sign_in_button">Prijava</string>
 </resources>

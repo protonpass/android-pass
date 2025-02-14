@@ -40,6 +40,7 @@ internal fun ManageItemMembersSection(
     sectionTitle: String,
     isItemSection: Boolean,
     isShareAdmin: Boolean,
+    canInviteMore: Boolean,
     vaultOption: Option<Vault>,
     shareItemsCount: Int,
     pendingInvites: List<SharePendingInvite>,
@@ -78,7 +79,7 @@ internal fun ManageItemMembersSection(
                 }
             }
 
-            if (isItemSection && isShareAdmin) {
+            if (canInviteMore && isItemSection && isShareAdmin) {
                 ManageItemInviteMoreRow(
                     onClick = onInviteMoreClick
                 )

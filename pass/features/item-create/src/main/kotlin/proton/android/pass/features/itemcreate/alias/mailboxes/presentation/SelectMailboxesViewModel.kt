@@ -21,6 +21,7 @@ package proton.android.pass.features.itemcreate.alias.mailboxes.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -50,8 +51,8 @@ class SelectMailboxesViewModel @Inject constructor(
         eventFlow
     ) { mailboxes, selectedMailboxes, featureDiscoveryPreference, event ->
         SelectMailboxesUiState(
-            mailboxes = mailboxes,
-            selectedMailboxes = selectedMailboxes,
+            mailboxes = mailboxes.toPersistentSet(),
+            selectedMailboxes = selectedMailboxes.toPersistentSet(),
             shouldDisplayFeatureDiscoveryBanner = featureDiscoveryPreference.value,
             event = event
         )

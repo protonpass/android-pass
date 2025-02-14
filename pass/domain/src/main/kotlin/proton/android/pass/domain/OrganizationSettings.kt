@@ -18,9 +18,8 @@
 
 package proton.android.pass.domain
 
-import proton.android.pass.domain.organizations.OrganizationItemShareMode
 import proton.android.pass.domain.organizations.OrganizationPasswordPolicy
-import proton.android.pass.domain.organizations.OrganizationSecureLinkMode
+import proton.android.pass.domain.organizations.OrganizationSharingPolicy
 import proton.android.pass.domain.organizations.OrganizationVaultsPolicy
 
 enum class OrganizationShareMode(val value: Int) {
@@ -53,21 +52,8 @@ sealed interface OrganizationSettings {
         val forceLockSeconds: ForceLockSeconds,
         val passwordPolicy: OrganizationPasswordPolicy,
         val vaultsPolicy: OrganizationVaultsPolicy,
-        private val itemShareMode: OrganizationItemShareMode,
-        private val secureLinkMode: OrganizationSecureLinkMode
-    ) : OrganizationSettings {
-
-        val canShareItems: Boolean = when (itemShareMode) {
-            OrganizationItemShareMode.Enabled -> true
-            OrganizationItemShareMode.Disabled -> false
-        }
-
-        val canShareSecureLinks: Boolean = when (secureLinkMode) {
-            OrganizationSecureLinkMode.Enabled -> true
-            OrganizationSecureLinkMode.Disabled -> false
-        }
-
-    }
+        val sharingPolicy: OrganizationSharingPolicy
+    ) : OrganizationSettings
 
     fun isEnforced(): Boolean = when (this) {
         is Organization -> forceLockSeconds is ForceLockSeconds.Enforced

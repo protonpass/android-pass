@@ -36,7 +36,7 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetUserPlan
-import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
+import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSharingPolicy
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PlanType
@@ -54,7 +54,7 @@ class ShareFromItemViewModel @Inject constructor(
     getItemById: GetItemById,
     observeShare: ObserveShare,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
-    observeOrganizationSettings: ObserveOrganizationSettings
+    observeOrganizationSharingPolicy: ObserveOrganizationSharingPolicy
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -86,14 +86,14 @@ class ShareFromItemViewModel @Inject constructor(
         oneShot { getItemById(shareId, itemId) },
         observeShare(shareId),
         featureFlagsRepository.get<Boolean>(FeatureFlag.SECURE_LINK_NEW_CRYPTO_V1),
-        observeOrganizationSettings()
+        observeOrganizationSharingPolicy()
     ) { event,
         canUsePaidFeatures,
         isItemSharingAvailable,
         item,
         share,
         isNewCryptoEnabled,
-        organizationSettingsOption ->
+        organizationSharingPolicyOption ->
         ShareFromItemUiState(
             shareId = shareId,
             itemId = itemId,
@@ -103,7 +103,7 @@ class ShareFromItemViewModel @Inject constructor(
             isNewCryptoEnabled = isNewCryptoEnabled,
             itemOption = item.some(),
             shareOption = share.some(),
-            organizationSettingsOption = organizationSettingsOption
+            organizationSharingPolicyOption = organizationSharingPolicyOption
         )
     }.stateIn(
         scope = viewModelScope,

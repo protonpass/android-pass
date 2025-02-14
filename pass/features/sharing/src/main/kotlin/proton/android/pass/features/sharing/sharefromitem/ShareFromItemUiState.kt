@@ -25,9 +25,9 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
-import proton.android.pass.domain.OrganizationSettings
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.organizations.OrganizationSharingPolicy
 
 @Stable
 internal sealed interface ShareFromItemNavEvent {
@@ -50,7 +50,7 @@ internal data class ShareFromItemUiState(
     private val isItemSharingAvailable: Boolean,
     private val itemOption: Option<Item>,
     private val shareOption: Option<Share>,
-    private val organizationSettingsOption: Option<OrganizationSettings>
+    private val organizationSharingPolicyOption: Option<OrganizationSharingPolicy>
 ) {
 
     private val isSharedItem: Boolean = when (itemOption) {
@@ -63,20 +63,14 @@ internal data class ShareFromItemUiState(
         is Some -> shareOption.value.shared
     }
 
-    private val isItemSharingAllowedByOrganization = when (organizationSettingsOption) {
+    private val isItemSharingAllowedByOrganization = when (organizationSharingPolicyOption) {
         None -> true
-        is Some -> when (val organizationSettings = organizationSettingsOption.value) {
-            OrganizationSettings.NotAnOrganization -> true
-            is OrganizationSettings.Organization -> organizationSettings.canShareItems
-        }
+        is Some -> organizationSharingPolicyOption.value.canShareItems
     }
 
-    private val isSecureLinkSharingAllowedByOrganization = when (organizationSettingsOption) {
+    private val isSecureLinkSharingAllowedByOrganization = when (organizationSharingPolicyOption) {
         None -> true
-        is Some -> when (val organizationSettings = organizationSettingsOption.value) {
-            OrganizationSettings.NotAnOrganization -> true
-            is OrganizationSettings.Organization -> organizationSettings.canShareSecureLinks
-        }
+        is Some -> organizationSharingPolicyOption.value.canShareSecureLinks
     }
 
     internal val isSingleSharingAvailable: Boolean = when (itemOption) {
@@ -134,7 +128,7 @@ internal data class ShareFromItemUiState(
             isNewCryptoEnabled = false,
             itemOption = None,
             shareOption = None,
-            organizationSettingsOption = None
+            organizationSharingPolicyOption = None
         )
 
     }

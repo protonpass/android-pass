@@ -172,6 +172,7 @@ import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.api.usecases.items.UpdateItemFlag
 import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEnforcedLock
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
+import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSharingPolicy
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.data.api.usecases.passwords.ObservePasswordConfig
@@ -372,6 +373,7 @@ import proton.android.pass.data.fakes.usecases.items.FakeObserveMonitoredItems
 import proton.android.pass.data.fakes.usecases.items.FakeObserveSharedItemCountSummary
 import proton.android.pass.data.fakes.usecases.items.FakeOpenItemRevision
 import proton.android.pass.data.fakes.usecases.items.FakeUpdateItemFlag
+import proton.android.pass.data.fakes.usecases.organizations.FakeObserveOrganizationSharingPolicy
 import proton.android.pass.data.fakes.usecases.passwords.FakeObservePasswordConfig
 import proton.android.pass.data.fakes.usecases.passwords.FakeUpdatePasswordConfig
 import proton.android.pass.data.fakes.usecases.securelink.FakeDeleteInactiveSecureLinks
@@ -1047,5 +1049,10 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveHasShares(impl: FakeObserveHasShares): ObserveHasShares
+
+    @Binds
+    abstract fun bindObserveOrganizationSharingPolicy(
+        impl: FakeObserveOrganizationSharingPolicy
+    ): ObserveOrganizationSharingPolicy
 
 }

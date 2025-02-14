@@ -1,2 +1,2 @@
-versionName=1.29.1
-versionCode=12901000
+versionName=1.30.0
+versionCode=13000000

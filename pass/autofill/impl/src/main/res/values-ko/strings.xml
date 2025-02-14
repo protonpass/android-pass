@@ -4,16 +4,16 @@
   <string name="error_loading_items">항목을 불러올 수 없습니다</string>
   <string name="inline_suggestions_open_app">Proton Pass 열기</string>
   <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">자동 완성을 사용하려면 업그레이드</string>
-  <string name="autofill_associate_web_app_name_dialog_title">이 앱 및 웹사이트에서 \"%s\"으로 부터 로그인 상세 정보를 사용하세요.</string>
+  <string name="autofill_associate_web_app_name_dialog_title">이 앱 및 웹사이트에서 \"%s\"의 로그인 세부 정보를 사용하세요.</string>
   <string name="autofill_dialog_associate_and_autofill">항상 사용</string>
   <string name="autofill_dialog_just_autofill">한 번만 사용</string>
   <string name="autofill_dialog_cancel">취소</string>
   <string name="autofill_notification_copy_to_clipboard">TOTP를 클립보드에 복사했습니다</string>
-  <string name="autofill_dialog_associate_title">로그인 사용?</string>
+  <string name="autofill_dialog_associate_title">로그인을 사용하시겠어요?</string>
   <string name="autofill_user_logged_out">로그아웃했습니다. 앱을 열어 다시 로그인해 주세요.</string>
   <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">카드 상세 사항 자동 완성</string>
   <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">카드 상세 사항 자동 완성 기능은 유료 기능입니다. 웹 사이트나 앱에서 사용자의 카드 정보들을 자동으로 채워 넣기 위해선 업그레이드를 하셔야 합니다.</string>
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">허용</string>
-  <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">현재의 앱에 의해 열린 웹사이트에 당신의 자격 증명을 자동완성하려고 합니다. 자동완성 이후에 앱이 자격 증명에 접근할 수 있게 될 수 있으므로 앱을 신뢰하는 경우에만 계속하십시오.</string>
+  <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">현재 앱에 의해 열린 웹사이트에 사용자의 자격 증명을 자동완성하려고 합니다. 자동완성 이후에 앱이 자격 증명에 접근할 수 있게 될 수 있으므로 앱을 신뢰하는 경우에만 계속하십시오.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">자동 완성</string>
 </resources>

@@ -26,6 +26,7 @@
   <string name="simple_login_sync_management_mailboxes_description">Kotak surat adalah tempat di mana email yang dikirim ke alias akan diteruskan. Kotak surat ini adalah kotak surat yang biasa Anda gunakan, mis. Gmail, Outlook, Proton Mail, dll.</string>
   <string name="simple_login_sync_management_mailbox_default">Bawaan</string>
   <string name="simple_login_sync_management_mailbox_unverified">Kotak masuk tidak terverifikasi</string>
+  <string name="simple_login_sync_management_mailbox_unverified_change">Unverified mailbox change</string>
   <string name="simple_login_sync_management_vault_title">Sinkronisasi SimpleLogin</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Terdapat kesalahan dalam memperoleh rincian alias SL</string>
   <string name="simple_login_sync_management_mailboxes_title">Kotak surat bawaan untuk alias</string>
@@ -38,6 +39,10 @@
   <!-- Mailbox create screen -->
   <string name="simple_login_sync_mailbox_create_title">Tambahkan kotak surat</string>
   <string name="simple_login_sync_mailbox_create_message_error">Terdapat kesalahan dalam menambahkan kotak surat</string>
+  <!-- Mailbox change screen -->
+  <string name="simple_login_sync_mailbox_change_title">Ubah kotak surat</string>
+  <string name="simple_login_sync_mailbox_change_message_error">Terdapat kesalahan dalam mengubah kotak surat</string>
+  <string name="simple_login_sync_mailbox_change_email_already_in_use_message_error">Email already in use</string>
   <!-- Mailbox verify screen -->
   <string name="simple_login_sync_mailbox_verify_title">Konfirmasi kotak surat Anda</string>
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Kami telah mengirimkan kode verifikasi ke %s. Masukkan kode tersebut pada kolom di bawah ini:</string>
@@ -73,6 +78,10 @@
   <string name="simple_login_sync_mailbox_options_snackbar_options_error">Pilihan kotak surat tidak dapat ditampilkan</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_error">Terdapat kesalahan dalam memperbarui kotak surat bawaan</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_success">Kotak surat bawaan berhasil diperbarui</string>
+  <string name="simple_login_sync_mailbox_change_email_option">Ubah kotak surat</string>
+  <string name="simple_login_sync_mailbox_cancel_change_email_option">Cancel mailbox change</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">There was an error cancelling mailbox email change</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">Cancelled mailbox email change</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Brankas SL bawaan</string>
   <string name="simple_login_sync_shared_default_vault_description">Alias SimpleLogin akan diimpor ke brankas ini.</string>

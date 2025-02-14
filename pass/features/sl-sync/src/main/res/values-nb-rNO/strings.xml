@@ -26,6 +26,7 @@
   <string name="simple_login_sync_management_mailboxes_description">Postboks er der e-poster sendt til et alias videresendes til. Det er din vanlige postboks, for eksempel Gmail, Outlook, Proton Mail, osv.</string>
   <string name="simple_login_sync_management_mailbox_default">Standard</string>
   <string name="simple_login_sync_management_mailbox_unverified">Ubekreftet postboks</string>
+  <string name="simple_login_sync_management_mailbox_unverified_change">Ubekreftet postboksendring</string>
   <string name="simple_login_sync_management_vault_title">SimpleLogin synkronisering</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Det oppstod en feil under henting av SL-aliasdetaljer</string>
   <string name="simple_login_sync_management_mailboxes_title">Standard postboks for aliaser</string>
@@ -38,6 +39,10 @@
   <!-- Mailbox create screen -->
   <string name="simple_login_sync_mailbox_create_title">Legg til postboks</string>
   <string name="simple_login_sync_mailbox_create_message_error">Det oppstod en feil under å legge til postboksen</string>
+  <!-- Mailbox change screen -->
+  <string name="simple_login_sync_mailbox_change_title">Endre postboks</string>
+  <string name="simple_login_sync_mailbox_change_message_error">Det oppstod en feil ved endring av postboksen</string>
+  <string name="simple_login_sync_mailbox_change_email_already_in_use_message_error">E-post allerede i bruk</string>
   <!-- Mailbox verify screen -->
   <string name="simple_login_sync_mailbox_verify_title">Bekreft postboksen din</string>
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Vi har sendt en verifiseringskode til %s. Angi den nedenfor:</string>
@@ -73,6 +78,10 @@
   <string name="simple_login_sync_mailbox_options_snackbar_options_error">Kan ikke vise alternativer for postboks</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_error">Det oppstod en feil under oppdatering av standard postboks</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_success">Standard postboks ble oppdatert</string>
+  <string name="simple_login_sync_mailbox_change_email_option">Endre postboks</string>
+  <string name="simple_login_sync_mailbox_cancel_change_email_option">Avbryt postboksendring</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">Det oppstod en feil under avbryting av endring av postboks-e-post</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">Kansellert endring av postboks-e-post</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Standard SimpleLogin-hvelv</string>
   <string name="simple_login_sync_shared_default_vault_description">SimpleLogin-aliaser vil bli importert til dette hvelvet.</string>

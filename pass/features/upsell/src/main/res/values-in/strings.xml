@@ -18,11 +18,11 @@
   -->
 <resources>
   <string name="upsell_monitor_title">Tetap aman saat online</string>
-  <string name="upsell_dark_web_monitoring_subtitle">Pemantauan Web Gelap tersedia dengan paket berbayar. Tingkatkan akun Anda untuk memperoleh akses ke fitur ini dengan segera.</string>
+  <string name="upsell_dark_web_monitoring_subtitle">Pemantauan Dark Web tersedia dengan paket berbayar. Tingkatkan akun Anda untuk memperoleh akses ke fitur ini dengan segera.</string>
   <string name="upsell_missing_2fa_subtitle">Tampilkan daftar situs di mana Anda dapat menambahkan faktor autentikasi kedua untuk melindungi presensi daring Anda. Tingkatkan untuk akses langsung.</string>
   <string name="upsell_sentinel_subtitle">Dapatkan berbagai fitur keamanan mutakhir dan log yang terperinci untuk melindungi presensi daring Anda.</string>
   <string name="upsell_paid_feature_file_attachments">Lampiran berkas</string>
-  <string name="upsell_paid_feature_dark_web_monitoring">Pemantauan Web Gelap</string>
+  <string name="upsell_paid_feature_dark_web_monitoring">Pemantauan Dark Web</string>
   <string name="upsell_paid_feature_sentinel">Proton Sentinel</string>
   <string name="upsell_paid_feature_authenticator">Autentikator 2FA terintegrasi</string>
   <string name="upsell_paid_feature_unlimited_aliases">Tanpa batasan jumlah alias hide-my-email</string>

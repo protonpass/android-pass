@@ -31,19 +31,19 @@
   <string name="unblock_button">Kontakt entsperren</string>
   <string name="block_button">Kontakt blockieren</string>
   <string name="contact_created_date" comment="date of creation">Erstellt vor %1$s</string>
-  <string name="no_activity_contact">No activity in the last 14 days.</string>
+  <string name="no_activity_contact">Keine Aktivität in den letzten 14 Tagen.</string>
   <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">In den letzten 14 Tagen.</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d forwarded</item>
-    <item quantity="other">%1$d forwarded</item>
+    <item quantity="one">%1$d weitergeleitet</item>
+    <item quantity="other">%1$d weitergeleitet</item>
   </plurals>
   <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
     <item quantity="one">%1$d gesendet</item>
     <item quantity="other">%1$d gesendet</item>
   </plurals>
   <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d blocked</item>
-    <item quantity="other">%1$d blocked</item>
+    <item quantity="one">%1$d blockiert</item>
+    <item quantity="other">%1$d blockiert</item>
   </plurals>
   <string name="blocked_addresses_subtitle">Blockierte Adressen</string>
   <string name="forwarding_addresses_subtitle">Weiterleitungsadressen</string>
@@ -55,14 +55,14 @@
   <string name="snackbar_delete_contact_error">Fehler beim Löschen des Kontakts.</string>
   <string name="snackbar_email_copied_success">E-Mail-Adresse in Zwischenablage kopiert</string>
   <string name="contact_option_send_email">E-Mail senden</string>
-  <string name="contact_option_copy_address">Copy forwarding address</string>
+  <string name="contact_option_copy_address">Weiterleitungsadresse kopieren</string>
   <string name="contact_option_block_contact">Kontakt blockieren</string>
   <string name="contact_option_unblock_contact">Kontakt entsperren</string>
   <string name="contact_option_delete">Löschen</string>
   <string name="alias_contacts_bottomsheet_title">Alias-Kontakte</string>
   <string name="alias_contacts_bottomsheet_subtitle">Um deine persönliche E-Mail-Adresse zu verbergen, kannst du einen Alias-Kontakt erstellen, der deine Adresse verschleiert.</string>
   <string name="alias_contacts_explanation">So funktioniert es:</string>
-  <string name="alias_contacts_bottomsheet_section_1">Enter the address you want to email.</string>
+  <string name="alias_contacts_bottomsheet_section_1">Gib die Adresse ein, an die du eine E-Mail senden möchtest.</string>
   <string name="alias_contacts_bottomsheet_section_2">Proton Pass erzeugt eine Weiterleitungsadresse (auch als Reverse Alias bezeichnet).</string>
   <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">Email this address and it will appear to be sent from</string>
 </resources>

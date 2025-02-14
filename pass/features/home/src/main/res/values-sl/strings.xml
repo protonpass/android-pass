@@ -187,10 +187,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Napaka pri odpenjanju nekaterih predmetov</string>
   <string name="home_snackbar_items_unpinned_error">Napaka pri odpenjanju predmetov</string>
   <string name="home_snackbar_items_alias_enabled_success">Alias enabled successfully</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Napaka pri omogočanju nekaterih aliasov</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Napaka pri omogočanju nekaterih vzdevkov</string>
   <string name="home_snackbar_items_alias_enabled_error">Error enabling aliases</string>
   <string name="home_snackbar_items_alias_disabled_success">Alias disabled successfully</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Napaka pri onemogočanju nekaterih aliasov</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Napaka pri onemogočanju nekaterih vzdevkov</string>
   <string name="home_snackbar_items_alias_disabled_error">Error disabling aliases</string>
   <string name="bulk_action_unpin">Odpni</string>
   <string name="bulk_action_pin">Pripni</string>

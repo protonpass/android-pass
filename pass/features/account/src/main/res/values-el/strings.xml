@@ -3,7 +3,7 @@
   <string name="account_title">Λογαριασμός</string>
   <string name="account_recovery_title">Λογαριασμός και Ανάκτηση</string>
   <string name="account_username_label">Όνομα χρήστη</string>
-  <string name="account_subscription_label">Πρόγραμμα συνδρομής</string>
+  <string name="account_subscription_label">Πλάνο συνδρομής</string>
   <string name="account_permanently_delete_warning">Αυτό θα διαγράψει οριστικά τον λογαριασμό σας και όλα τα δεδομένα του. Δε θα μπορέσετε να επανενεργοποιήσετε αυτόν τον λογαριασμό.</string>
   <string name="account_delete_account">Διαγραφή λογαριασμού</string>
   <string name="account_delete_account_icon_content_description">Κουμπί διαγραφής λογαριασμού</string>

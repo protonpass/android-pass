@@ -32,7 +32,7 @@
   <string name="auth_action_reveal_password">Master-Passwort anzeigen</string>
   <string name="auth_action_conceal_password">Master-Passwort ausblenden</string>
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Stattdessen PIN eingeben</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Use fingerprint instead</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Stattdessen Fingerabdruck verwenden</string>
   <string name="auth_unlock_button">Entsperren</string>
   <string name="auth_error_empty_password">Passwort kann nicht leer sein</string>
   <string name="auth_error_pin_cannot_be_empty">Der PIN-Code darf nicht leer sein</string>

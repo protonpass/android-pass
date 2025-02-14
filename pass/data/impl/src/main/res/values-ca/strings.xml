@@ -20,5 +20,5 @@
   <string name="sync_channel">Sincronitza</string>
   <string name="sync_channel_description">Canal de notificacions per a sincronitzar els elements</string>
   <string name="syncing_vaults">S\'estan sincronitzant les caixes fortes i els elements</string>
-  <string name="logging_out_free_users">Desconnectant usuaris addicionals gratuïts</string>
+  <string name="logging_out_free_users">S\'estan desconnectant els usuaris addicionals gratuïts</string>
 </resources>

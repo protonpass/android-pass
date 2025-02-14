@@ -108,7 +108,7 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Datum poteka</string>
-  <string name="field_card_expiration_date_hint">MM/YY</string>
+  <string name="field_card_expiration_date_hint">MM/LL</string>
   <string name="field_card_expiration_date_error">Vnesite veljaven datum v obliki MM/LL</string>
   <string name="create_credit_card_item_creation_error">Ni bilo mogoče ustvariti plačilne kartice</string>
   <string name="create_credit_card_item_creation_success">Plačilna kartica ustvarjena</string>
@@ -204,14 +204,14 @@
   <!-- Attachments -->
   <string name="banner_title_attachments">Priponke</string>
   <string name="banner_body_attachments">You can attach files to items for a better organization</string>
-  <string name="open_with">Odpri z::</string>
+  <string name="open_with">Odpri z:</string>
   <string name="open_attachments_error">Could not open attachment</string>
   <string name="upload_attachments_error">Could not upload attachment</string>
   <string name="banner_advanced_options_title">Did you know?</string>
   <string name="banner_advanced_options_subtitle">Tap the gear icon to customize the alias the way you want.</string>
   <string name="banner_custom_domain_title">Did you know?</string>
   <string name="banner_custom_domain_subtitle">By adding your domain, you can create aliases like hi@my-domain.com.</string>
-  <string name="banner_custom_domain_button">Add domain</string>
+  <string name="banner_custom_domain_button">Dodaj domeno</string>
   <string name="banner_mailbox_title">Did you know?</string>
   <string name="banner_mailbox_subtitle">Share aliases with others by adding their inbox as an additional mailbox.</string>
   <string name="banner_mailbox_button">Add mailbox</string>

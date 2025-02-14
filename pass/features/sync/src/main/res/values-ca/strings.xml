@@ -32,9 +32,9 @@
   <string name="sync_dialog_title_success">Sincronització completada</string>
   <string name="sync_dialog_subtitle">S\'estan descarregant i desxifrant els elements. Això podria durar uns minuts.</string>
   <string name="sync_dialog_subtitle_error">S\'ha produït un error en descarregar i desxifrar els vostres elements. Torneu-ho a provar.</string>
-  <string name="sync_dialog_subtitle_success">Els vostres elements s\'han descarregat i desxifrat.</string>
+  <string name="sync_dialog_subtitle_success">S\'han descarregat i desxifrat els vostres elements.</string>
   <string name="sync_item_not_started">No s\'ha iniciat.</string>
   <string name="sync_item_failed">Error de sincronització</string>
-  <string name="sync_dialog_title_inserting">Inserint elements…</string>
+  <string name="sync_dialog_title_inserting">S\'estan inserint elements…</string>
   <string name="sync_dialog_subtitle_inserting">S\'està acabant el darrer pas. Falta poc.</string>
 </resources>

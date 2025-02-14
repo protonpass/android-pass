@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="description_field_label">Was ist dein Problem?</string>
-  <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
+  <string name="description_field_hint">Beschreibe das Problem so detailliert wie möglich, und teile uns mit, was dort steht, wenn es einen Fehler gibt.</string>
   <string name="email_field_label">E-Mail</string>
   <string name="email_field_hint">E-Mail</string>
   <string name="attach_image_button">Bild anhängen</string>
@@ -44,7 +44,7 @@
   <string name="report_sending_success">Der Bericht wurde erfolgreich gesendet.</string>
   <string name="report_sending_error">Der Bericht konnte nicht gesendet werden.</string>
   <string name="tips_passkey_check_guide">Wenn du Probleme hast, lies unseren Leitfaden.</string>
-  <string name="tips_passkey_android_not_supported">Your Android version is too low. Try upgrading your device.</string>
+  <string name="tips_passkey_android_not_supported">Deine Android-Version ist zu niedrig. Versuche, dein Gerät zu aktualisieren.</string>
   <string name="tips_passkeys_credential_manager_not_supported">Der Hersteller des Geräts stellt keinen Credential Manager zur Verfügung.</string>
   <string name="tips_passkey_supported">Passkeys unterstützt</string>
   <string name="tips_passkey_not_supported">Passkeys nicht unterstützt</string>

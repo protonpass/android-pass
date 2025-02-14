@@ -26,6 +26,7 @@
   <string name="simple_login_sync_management_mailboxes_description">Das Postfach ist der Ort, an den die an einen Alias gesendeten E-Mails weitergeleitet werden. Es ist dein übliches Postfach, z.B. Gmail, Outlook, Proton Mail, etc.</string>
   <string name="simple_login_sync_management_mailbox_default">Standard</string>
   <string name="simple_login_sync_management_mailbox_unverified">Nicht verifiziertes Postfach</string>
+  <string name="simple_login_sync_management_mailbox_unverified_change">Ungeprüfte Änderung des Postfachs</string>
   <string name="simple_login_sync_management_vault_title">SimpleLogin-Synchronisierung</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Fehler beim Abrufen der SimpleLogin-Aliasdetails.</string>
   <string name="simple_login_sync_management_mailboxes_title">Standardpostfach für Aliasse</string>
@@ -38,6 +39,10 @@
   <!-- Mailbox create screen -->
   <string name="simple_login_sync_mailbox_create_title">Postfach hinzufügen</string>
   <string name="simple_login_sync_mailbox_create_message_error">Fehler beim Hinzufügen des Postfachs</string>
+  <!-- Mailbox change screen -->
+  <string name="simple_login_sync_mailbox_change_title">Postfach ändern</string>
+  <string name="simple_login_sync_mailbox_change_message_error">Es ist ein Fehler beim Ändern des Postfachs aufgetreten</string>
+  <string name="simple_login_sync_mailbox_change_email_already_in_use_message_error">E-Mail-Adresse bereits vergeben</string>
   <!-- Mailbox verify screen -->
   <string name="simple_login_sync_mailbox_verify_title">Postfach bestätigen</string>
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Wir haben einen Verifizierungscode an %s gesendet. Bitte gib ihn unten ein:</string>
@@ -73,6 +78,10 @@
   <string name="simple_login_sync_mailbox_options_snackbar_options_error">Postfach-Optionen können nicht angezeigt werden</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_error">Fehler beim Aktualisieren des Standard-Postfachs</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_success">Standard-Postfach erfolgreich aktualisiert</string>
+  <string name="simple_login_sync_mailbox_change_email_option">Postfach ändern</string>
+  <string name="simple_login_sync_mailbox_cancel_change_email_option">Änderung des Postfachs abbrechen</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">Es gab einen Fehler beim Abbrechen der E-Mail-Änderung des Postfachs</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">E-Mail-Änderung des Postfachs abgebrochen</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Standard-SL-Tresor</string>
   <string name="simple_login_sync_shared_default_vault_description">SimpleLogin-Aliasse werden in diesen Tresor importiert.</string>

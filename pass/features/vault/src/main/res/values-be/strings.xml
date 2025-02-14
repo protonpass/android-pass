@@ -17,7 +17,7 @@
   <string name="vault_delete_dialog_placeholder">Назва сховішча</string>
   <string name="vault_delete_dialog_cancel_action">Скасаваць</string>
   <string name="vault_delete_dialog_delete_action">Выдаліць</string>
-  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">This vault holds %1$s. Deleting it will remove access for all other users.</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Гэта сховішча ўтрымлівае %1$s. Яго выдаленне пазбавіць доступу ўсіх іншых карыстальнікаў.</string>
   <string name="vault_leave_dialog_title">Выйсці са сховішча</string>
   <string name="vault_leave_dialog_body">Гэта прывядзе да выдалення доступу вашага сховішча з назвай __VAULT_NAME__ і ўсяго яго змесціва. Вы ўпэўнены, што хочаце выйсці?</string>
   <string name="vault_leave_dialog_cancel_action">Скасаваць</string>
@@ -35,7 +35,7 @@
   <string name="bottomsheet_leave_vault">Выйсці са сховішча</string>
   <string name="bottomsheet_view_members">Прагляд удзельнікаў</string>
   <string name="bottomsheet_manage_access">Кіраваць доступам</string>
-  <string name="bottomsheet_select_vault_read_only">You can only view</string>
+  <string name="bottomsheet_select_vault_read_only">Вы можаце толькі чытаць</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">Вы можаце толькі ствараць элементы ў самых старых сховішчах</string>
   <string name="vault_title">Сховішча</string>
 </resources>

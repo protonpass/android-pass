@@ -26,6 +26,7 @@
   <string name="simple_login_sync_management_mailboxes_description">메일함은 별칭으로 전송된 이메일이 전달되는 공간입니다. Gmail, Outlook, Proton Mail 등과 같은 일반적인 메일함입니다.</string>
   <string name="simple_login_sync_management_mailbox_default">기본</string>
   <string name="simple_login_sync_management_mailbox_unverified">확인되지 않은 메일함</string>
+  <string name="simple_login_sync_management_mailbox_unverified_change">확인되지 않은 메일함 변경</string>
   <string name="simple_login_sync_management_vault_title">SimpleLogin 동기화</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">SL 별칭 사항 가져오기 중 오류가 발생했습니다.</string>
   <string name="simple_login_sync_management_mailboxes_title">별칭에 대한 기본 메일함</string>
@@ -38,6 +39,10 @@
   <!-- Mailbox create screen -->
   <string name="simple_login_sync_mailbox_create_title">메일함 추가</string>
   <string name="simple_login_sync_mailbox_create_message_error">메일함 추가 중 오류가 발생했습니다.</string>
+  <!-- Mailbox change screen -->
+  <string name="simple_login_sync_mailbox_change_title">메일함 변경</string>
+  <string name="simple_login_sync_mailbox_change_message_error">메일함 변경 중 오류가 발생했습니다.</string>
+  <string name="simple_login_sync_mailbox_change_email_already_in_use_message_error">이미 사용 중인 이메일입니다.</string>
   <!-- Mailbox verify screen -->
   <string name="simple_login_sync_mailbox_verify_title">메일함을 확인하세요</string>
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">%s(으)로 인증 코드를 발송하였습니다. 아래에 코드를 입력해 주세요:</string>
@@ -73,6 +78,10 @@
   <string name="simple_login_sync_mailbox_options_snackbar_options_error">메일함 옵션을 표시할 수 없음</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_error">기본 메일함을 업데이트하는데 오류가 발생했습니다.</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_success">기본 메일함을 성공적으로 업데이트했습니다.</string>
+  <string name="simple_login_sync_mailbox_change_email_option">메일함 변경</string>
+  <string name="simple_login_sync_mailbox_cancel_change_email_option">메일함 변경 취소</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">메일함 이메일 변경을 취소하는 동안 오류가 발생했습니다.</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">취소된 메일함 이메일 변경</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">기본 SL 금고</string>
   <string name="simple_login_sync_shared_default_vault_description">SimpleLogin 별칭이 이 금고에 불러와집니다.</string>

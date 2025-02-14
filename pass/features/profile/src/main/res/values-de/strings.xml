@@ -50,7 +50,7 @@
   <string name="profile_option_change_pin_code">PIN-Code ändern</string>
   <string name="profile_passkey_support_section_title">Passkeys</string>
   <string name="profile_passkey_support_subtitle_supported">Passkeys werden unterstützt</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your Android version does not support passkeys.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">Deine Android-Version unterstützt keine Passkeys.</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Dein Gerät unterstützt keine Passkeys.</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Fehler beim Überprüfen der Passkey-Kompatibilität.</string>
   <plurals name="profile_after_days">
@@ -78,7 +78,7 @@
   <string name="filtered_by_notes">Nach Notizen gefiltert. Einträge im Papierkorb werden nicht angezeigt.</string>
   <string name="filtered_by_credit_cards">Nach Kreditkarten gefiltert. Einträge im Papierkorb werden nicht angezeigt.</string>
   <string name="filtered_by_identities">Nach Identitäten gefiltert. Einträge im Papierkorb werden nicht angezeigt.</string>
-  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">You need to switch to %1$s in order to manage it</string>
+  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Du musst zu %1$s wechseln, um es zu verwalten.</string>
   <string name="account_switch_confirmation_title">Konto verwalten</string>
   <string name="account_switch_confirmation_confirm">Wechseln und verwalten</string>
   <string name="profile_storage_data_title">Speicher</string>

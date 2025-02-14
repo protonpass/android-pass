@@ -31,7 +31,7 @@
   <string name="auth_action_reveal_password">Tampilkan kata sandi induk</string>
   <string name="auth_action_conceal_password">Samarkan kata sandi induk</string>
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Masukkan PIN</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Use fingerprint instead</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Gunakan sidik jari</string>
   <string name="auth_unlock_button">Buka kunci</string>
   <string name="auth_error_empty_password">Kata sandi tidak boleh kosong</string>
   <string name="auth_error_pin_cannot_be_empty">PIN tidak boleh kosong</string>
@@ -45,6 +45,6 @@
   <plurals name="auth_attempts_remaining">
     <item quantity="other">%d upaya tersisa</item>
   </plurals>
-  <string name="auth_pin_too_many_attempts">Terlalu banyak percobaan PIN yang gagal. Seluruh pengguna Anda sedang dikeluarkan.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
+  <string name="auth_pin_too_many_attempts">Terlalu banyak upaya entri PIN yang gagal. Seluruh pengguna Anda sedang dikeluarkan.</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Terlalu banyak upaya entri PIN yang gagal</string>
 </resources>

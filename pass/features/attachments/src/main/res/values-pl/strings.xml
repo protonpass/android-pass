@@ -28,7 +28,7 @@
   <string name="camera_permission_explanation">Ta funkcja potrzebuje uprawnienia do aparatu.</string>
   <string name="camera_permission_open_settings">Otwórz ustawienia</string>
   <string name="delete_all_attachments_title">Usunąć wszystkie załączniki?</string>
-  <string name="delete_all_attachments_subtitle">Tej czynności nie można cofnąć</string>
+  <string name="delete_all_attachments_subtitle">Nie możesz cofnąć tej akcji</string>
   <string name="delete_all_attachments_confirm">Usuń wszystko</string>
   <string name="rename_attachment_dialog_title">Zmień nazwę pliku</string>
   <string name="storage_full_title">Przestrzeń dyskowa jest prawie pełna.</string>

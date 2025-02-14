@@ -51,7 +51,7 @@
   <string name="sharing_invite_more">Convideu més persones...</string>
   <string name="sharing_snackbar_invite_accepted">Invitació acceptada</string>
   <string name="sharing_snackbar_invite_accept_error">S\'ha produït un error en acceptar la invitació</string>
-  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">No s\'ha pogut acceptar la invitació perquè heu arribat al límit de la caixa forta</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">No s\'ha pogut acceptar la invitació perquè heu arribat al límit de caixes fortes</string>
   <string name="sharing_snackbar_invite_rejected">Invitació rebutjada</string>
   <string name="sharing_snackbar_invite_reject_error">S\'ha produït un error en rebutjar la invitació.</string>
   <string name="sharing_snackbar_invite_sent_success">S\'ha enviat la invitació.</string>
@@ -61,7 +61,7 @@
   <string name="sharing_snackbar_invite_user_already_invited_error">L\'adreça ja ha estat convidada.</string>
   <string name="sharing_snackbar_get_vault_members_error">No s\'han pogut obtenir els membres de la caixa forta</string>
   <string name="sharing_snackbar_change_permission_success">S\'han canviat els permisos.</string>
-  <string name="sharing_snackbar_change_permission_error">No s\'ha pogut canviar els permisos.</string>
+  <string name="sharing_snackbar_change_permission_error">No s\'han pogut canviar els permisos.</string>
   <string name="sharing_snackbar_remove_member_success">S\'ha esborrat el membre de la caixa forta.</string>
   <string name="sharing_snackbar_remove_member_error">No s\'ha pogut esborrar de la caixa forta.</string>
   <string name="sharing_snackbar_fetch_member_error">S\'ha produït un error en obtenir els membres.</string>
@@ -82,7 +82,7 @@
     <item quantity="other">%d elements</item>
   </plurals>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">S\'ha enviat la invitació.</string>
-  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Creació de compte pendent</string>
+  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">La creació del compte està pendent</string>
   <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Confirma l\'accés</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Invitacions</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Membres</string>
@@ -92,35 +92,35 @@
   <string name="share_role_admin">Administrador</string>
   <string name="share_role_owner">Propietari</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transfereix la propietat</string>
-  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">No podeu transferir la vostra última caixa forta que heu tingut en propietat.</string>
+  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">No podeu transferir l\'última caixa forta que posseïu.</string>
   <string name="sharing_bottomsheet_remove_access">Revoca l\'accés</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Pot concedir i revocar l\'accés a aquest element.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Pot editar i suprimir aquest element.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Pot editar i eliminar aquest element.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Pot veure aquest element.</string>
   <string name="sharing_bottomsheet_resend_invite">Reenvia la invitació</string>
   <string name="sharing_bottomsheet_cancel_invite">Cancel·la la invitació</string>
   <string name="sharing_transfer_ownership_confirm_title">Transfereix la propietat</string>
-  <string name="sharing_transfer_ownership_confirm_message">Transferir la propietat d\'aquesta caixa forta a %s?</string>
+  <string name="sharing_transfer_ownership_confirm_message">Voleu transferir la propietat d\'aquesta caixa forta a %s?</string>
   <string name="sharing_snackbar_cancel_invite_success">S\'ha cancel·lat la invitació.</string>
   <string name="sharing_snackbar_cancel_invite_error">S\'ha produït un error en cancel·lar la invitació.</string>
   <string name="sharing_snackbar_resend_invite_success">S\'ha reenviat la invitació.</string>
   <string name="sharing_snackbar_resend_invite_error">S\'ha produït un error en reenviar la invitació.</string>
   <string name="sharing_snackbar_confirm_invite_success">S\'ha confirmat la invitació.</string>
   <string name="sharing_snackbar_confirm_invite_error">S\'ha produït un error en confirmar la invitació.</string>
-  <string name="sharing_snackbar_too_many_invites_sent">S\'ha convidat a la direcció massa vegades.</string>
+  <string name="sharing_snackbar_too_many_invites_sent">S\'ha convidat aquesta adreça massa vegades.</string>
   <string name="sharing_snackbar_transfer_ownership_success">S\'ha transferit la propietat.</string>
-  <string name="sharing_snackbar_transfer_ownership_error">Error transferint la propietat</string>
+  <string name="sharing_snackbar_transfer_ownership_error">S\'ha produït un error en transferir la propietat</string>
   <string name="sharing_invites_info_dialog_title">Límit de nombre de membres</string>
   <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
     <item quantity="one">Aquesta caixa forta pot tenir fins a %1$d membres. Encara us queda %2$d invitació.</item>
     <item quantity="other">Aquesta caixa forta pot tenir fins a %1$d membres. Encara us queden %2$d invitacions.</item>
   </plurals>
   <string name="sharing_limit_reached">Aquesta caixa forta ha arribat al límit de membres i invitacions.</string>
-  <string name="sharing_invites_info_upgrade_text">Milloreu ara per a convidar-ne més.</string>
+  <string name="sharing_invites_info_upgrade_text">Milloreu ara el pla per a convidar més persones.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Comparteix</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Comparteix aquesta caixa forta</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Mou a una caixa forta compartida</string>
-  <string name="sharing_from_item_vault_limit_reached_upgrade">Milloreu per crear més caixes fortes</string>
+  <string name="sharing_from_item_vault_limit_reached_upgrade">Milloreu el pla per a crear més caixes fortes</string>
   <string name="sharing_from_item_vault_limit_reached">Heu arribat al límit de caixes fortes.</string>
   <string name="share_with_suggestions_title">Suggeriments</string>
   <string name="share_with_recents_title">Recents</string>
@@ -130,12 +130,12 @@
   <string name="share_with_manage_shared_item_title">Gestiona l\'accés</string>
   <string name="share_with_manage_shared_item_description">Consulteu tots els membres i els permisos.</string>
   <string name="share_with_secure_link_shared_title">Mitjançant un enllaç segur</string>
-  <string name="share_with_secure_link_shared_description">Per a un ús únic.</string>
-  <string name="sharing_edit_permissions_set_access_level_all_members">Estableix el nivell d`accés per a tots els membres</string>
-  <string name="sharing_edit_permissions_set_access_level_single_member">Defineix el nivell d\'accés per %s</string>
+  <string name="share_with_secure_link_shared_description">Per a una compartició puntual.</string>
+  <string name="sharing_edit_permissions_set_access_level_all_members">Estableix el nivell d\'accés per a tots els membres</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">Defineix el nivell d\'accés per a %s</string>
   <string name="sharing_edit_permissions_remove_user">Esborra l\'usuari</string>
   <string name="sharing_error_dialog_title">Error desconegut</string>
-  <string name="sharing_error_dialog_message">S\'ha produït un error en enviar una invitació per a aquesta caixa forta. Si el problema persisteix, si us plau, poseu-vos en contacte amb el servei d\'atenció al client.</string>
-  <string name="sharing_with_no_addresses_can_be_invited">No es poden convidar adreces.</string>
+  <string name="sharing_error_dialog_message">S\'ha produït un error en enviar una invitació per a aquesta caixa forta. Si el problema persisteix, poseu-vos en contacte amb el servei d\'atenció al client.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">No es pot convidar cap adreça.</string>
   <string name="sharing_with_some_addresses_cannot_be_invited">Algunes adreces no es poden convidar.</string>
 </resources>

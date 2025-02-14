@@ -32,6 +32,7 @@ import proton.android.pass.domain.OrganizationShareMode
 import proton.android.pass.domain.organizations.OrganizationItemShareMode
 import proton.android.pass.domain.organizations.OrganizationPasswordPolicy
 import proton.android.pass.domain.organizations.OrganizationSecureLinkMode
+import proton.android.pass.domain.organizations.OrganizationSharingPolicy
 import proton.android.pass.domain.organizations.OrganizationVaultCreateMode
 import proton.android.pass.domain.organizations.OrganizationVaultsPolicy
 import javax.inject.Inject
@@ -95,8 +96,10 @@ class OrganizationSettingsRepositoryImpl @Inject constructor(
             vaultsPolicy = OrganizationVaultsPolicy(
                 vaultCreateMode = OrganizationVaultCreateMode.fromValue(vaultCreateMode)
             ),
-            itemShareMode = OrganizationItemShareMode.fromValue(itemShareMode),
-            secureLinkMode = OrganizationSecureLinkMode.fromValue(secureLinksMode)
+            sharingPolicy = OrganizationSharingPolicy(
+                itemShareMode = OrganizationItemShareMode.fromValue(itemShareMode),
+                secureLinkMode = OrganizationSecureLinkMode.fromValue(secureLinksMode)
+            )
         )
     } else {
         OrganizationSettings.NotAnOrganization

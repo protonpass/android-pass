@@ -78,6 +78,7 @@ val BROWSERS = setOf(
     "org.chromium.webview_shell",
     "org.codeaurora.swe.browser",
     "org.gnu.icecat",
+    "org.ironfoxoss.ironfox",
     "org.mozilla.fenix",
     "org.mozilla.fenix.nightly",
     "org.mozilla.fennec_aurora",

@@ -76,6 +76,8 @@ val BROWSERS = setOf(
     "org.bromite.chromium",
     "org.chromium.chrome",
     "org.chromium.webview_shell",
+    "org.cromite.cromite",
+    "org.cromite.webview",
     "org.codeaurora.swe.browser",
     "org.gnu.icecat",
     "org.ironfoxoss.ironfox",

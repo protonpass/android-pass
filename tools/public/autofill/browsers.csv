@@ -73,6 +73,8 @@ org.bromite.bromite,10000000000
 org.bromite.chromium,10000000000
 org.chromium.chrome,10000000000
 org.chromium.webview_shell,10000000000
+org.cromite.cromite,10000000000
+org.cromite.webview,10000000000
 org.codeaurora.swe.browser,10000000000
 org.gnu.icecat,10000000000
 org.ironfoxoss.ironfox,10000000000

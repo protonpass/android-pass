@@ -280,6 +280,7 @@ fun AliasDetail(
                             )
                         },
                         onContactsClicked = {
+                            viewModel.dismissContactsBanner()
                             onNavigate(
                                 ItemDetailNavigation.OnContactsClicked(
                                     shareId = state.itemUiModel.shareId,

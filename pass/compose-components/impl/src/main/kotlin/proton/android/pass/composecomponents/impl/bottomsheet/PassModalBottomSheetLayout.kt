@@ -51,8 +51,6 @@ fun PassModalBottomSheetLayout(
     ),
     content: @Composable () -> Unit
 ) {
-    PassBottomSheetBackHandler(bottomSheetState = sheetState)
-
     ModalBottomSheetLayout(
         modifier = modifier,
         sheetState = sheetState,
@@ -65,15 +63,13 @@ fun PassModalBottomSheetLayout(
     )
 }
 
-@OptIn(ExperimentalMaterialNavigationApi::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable
 fun PassModalBottomSheetLayout(
     bottomSheetNavigator: PassBottomSheetNavigator,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) = with(bottomSheetNavigator) {
-    PassBottomSheetBackHandler(bottomSheetState = sheetState)
-
     ModalBottomSheetLayout(
         sheetState = sheetState,
         sheetContent = sheetContent,
@@ -87,8 +83,8 @@ fun PassModalBottomSheetLayout(
     )
 }
 
-@[Composable OptIn(ExperimentalMaterialApi::class)]
-private fun PassBottomSheetBackHandler(bottomSheetState: ModalBottomSheetState) {
+@Composable
+fun PassBottomSheetBackHandler(bottomSheetState: ModalBottomSheetState) {
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
 
     // We're not using BackHandler enable property here so we can preserve the order of the

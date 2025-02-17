@@ -1153,8 +1153,9 @@ fun NavGraphBuilder.appGraph(
                 CreateAliasNavigation.SelectSuffix ->
                     appNavigator.navigate(AliasSelectSuffixBottomSheetNavItem)
 
-                CreateAliasNavigation.AddMailbox ->
+                CreateAliasNavigation.AddMailbox -> dismissBottomSheet {
                     appNavigator.navigate(SimpleLoginSyncMailboxCreateNavItem)
+                }
             }
         }
     )

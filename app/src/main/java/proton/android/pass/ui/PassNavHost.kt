@@ -22,9 +22,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
+import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import proton.android.pass.composecomponents.impl.bottomsheet.PassBottomSheetBackHandler
 import proton.android.pass.features.home.HomeNavItem
 import proton.android.pass.navigation.api.AppNavigator
 
+@OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable
 fun PassNavHost(
     modifier: Modifier = Modifier,
@@ -39,5 +42,8 @@ fun PassNavHost(
     ) {
         graph()
     }
+    PassBottomSheetBackHandler(
+        bottomSheetState = appNavigator.passBottomSheetNavigator.sheetState
+    )
 }
 

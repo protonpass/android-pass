@@ -94,7 +94,8 @@ internal fun SelectMailboxesContent(
         BottomSheetItemList(
             items = list.withDividers().toPersistentList()
         )
-        if (canAddMailbox) {
+        val showBanner = false
+        if (canAddMailbox && showBanner) {
             AnimatedVisibility(state.shouldDisplayFeatureDiscoveryBanner) {
                 AliasMailboxBanner(
                     modifier = Modifier.padding(horizontal = Spacing.medium),

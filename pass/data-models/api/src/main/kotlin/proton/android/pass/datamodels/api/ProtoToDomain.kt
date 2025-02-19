@@ -47,6 +47,9 @@ fun ItemType.Companion.fromParsed(
     ItemV1.Content.ContentCase.ALIAS -> createAliasItemType(aliasEmail)
     ItemV1.Content.ContentCase.CREDIT_CARD -> createCreditCardItemType(parsed, context)
     ItemV1.Content.ContentCase.IDENTITY -> createIdentityItemType(parsed, context)
+    ItemV1.Content.ContentCase.SSH_KEY,
+    ItemV1.Content.ContentCase.WIFI,
+    ItemV1.Content.ContentCase.CUSTOM,
     ItemV1.Content.ContentCase.CONTENT_NOT_SET,
     null -> ItemType.Unknown
 }

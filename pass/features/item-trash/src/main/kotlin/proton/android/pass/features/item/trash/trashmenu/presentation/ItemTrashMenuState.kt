@@ -48,6 +48,7 @@ internal data class ItemTrashMenuState(
             is ItemContents.Note -> itemContents.note.replace("\n", " ")
             is ItemContents.CreditCard,
             is ItemContents.Identity,
+            is ItemContents.Custom,
             is ItemContents.Unknown -> ""
         }
     }
@@ -65,6 +66,7 @@ internal data class ItemTrashMenuState(
             is ItemContents.Note,
             is ItemContents.CreditCard,
             is ItemContents.Identity,
+            is ItemContents.Custom,
             is ItemContents.Unknown -> ""
         }
     }
@@ -77,6 +79,7 @@ internal data class ItemTrashMenuState(
             is ItemContents.Note,
             is ItemContents.CreditCard,
             is ItemContents.Identity,
+            is ItemContents.Custom,
             is ItemContents.Unknown -> ""
         }
     }

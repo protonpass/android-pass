@@ -50,6 +50,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
+import proton.android.pass.composecomponents.impl.item.icon.CustomIcon
 import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
@@ -142,7 +143,7 @@ private fun SecureLinksListGridCellIcon(
         website = itemWebsite,
         packageName = itemPackageName
     )
-
+    ItemCategory.Custom -> CustomIcon(modifier = modifier)
     ItemCategory.Alias,
     ItemCategory.Password,
     ItemCategory.Unknown -> {

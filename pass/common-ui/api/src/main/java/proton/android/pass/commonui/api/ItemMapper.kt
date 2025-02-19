@@ -111,6 +111,7 @@ fun toItemContents(
     is ItemType.Note -> createNote(encryptionContext, title, note)
     is ItemType.CreditCard -> createCreditCard(encryptionContext, title, note, itemType)
     is ItemType.Identity -> createIdentity(encryptionContext, title, note, itemType)
+    is ItemType.Custom -> createCustom(encryptionContext, title, note, itemType)
     ItemType.Password,
     ItemType.Unknown -> ItemContents.Unknown(
         title = encryptionContext.decrypt(title),
@@ -240,6 +241,17 @@ private fun WorkDetails.toContent(encryptionContext: EncryptionContext) = WorkDe
 private fun ExtraSection.toContent(encryptionContext: EncryptionContext) = ExtraSectionContent(
     title = sectionName,
     customFields = customFields.mapNotNull { it.toContent(encryptionContext, true) }
+)
+
+private fun createCustom(
+    encryptionContext: EncryptionContext,
+    title: String,
+    note: String,
+    type: ItemType.Custom
+) = ItemContents.Custom(
+    title = encryptionContext.decrypt(title),
+    note = encryptionContext.decrypt(note),
+    sectionContentList = type.extraSections.map { it.toContent(encryptionContext) }
 )
 
 private fun concealedOrEmpty(value: String, encryptionContext: EncryptionContext): HiddenState {

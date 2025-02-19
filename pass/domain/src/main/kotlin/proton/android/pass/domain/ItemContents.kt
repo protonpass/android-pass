@@ -231,6 +231,18 @@ sealed class ItemContents {
 
     }
 
+    @Stable
+    @Serializable
+    data class Custom(
+        override val title: String,
+        override val note: String,
+        val sectionContentList: List<ExtraSectionContent>
+    ) : ItemContents() {
+
+        override val displayValue: String = title
+
+    }
+
     @Serializable
     data class Unknown(
         override val title: String,

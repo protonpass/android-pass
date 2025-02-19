@@ -34,6 +34,7 @@ internal object ItemDisplayBuilder {
         is ItemType.Identity -> item.itemName(encryptionContext)
         is ItemType.Alias,
         is ItemType.Note,
+        is ItemType.Custom,
         ItemType.Password,
         ItemType.Unknown -> throw IllegalArgumentException("Unsupported item type for title")
     }
@@ -45,6 +46,7 @@ internal object ItemDisplayBuilder {
             is ItemType.Identity -> createIdentitySubtitle(itemType)
             is ItemType.Alias,
             is ItemType.Note,
+            is ItemType.Custom,
             ItemType.Password,
             ItemType.Unknown -> throw IllegalArgumentException("Unsupported item type for subtitle")
         }

@@ -95,6 +95,7 @@ class ItemDetailViewModel @Inject constructor(
                     ItemType.Password -> ItemTypeUiState.Password
                     is ItemType.CreditCard -> ItemTypeUiState.CreditCard
                     is ItemType.Identity -> ItemTypeUiState.Identity
+                    is ItemType.Custom -> ItemTypeUiState.Custom
                     ItemType.Unknown -> ItemTypeUiState.Unknown
                 },
                 canLoadExternalImages = favicons.value(),
@@ -116,6 +117,7 @@ class ItemDetailViewModel @Inject constructor(
             ItemTypeUiState.Password -> EventItemType.Password
             ItemTypeUiState.CreditCard -> EventItemType.CreditCard
             ItemTypeUiState.Identity -> EventItemType.Identity
+            ItemTypeUiState.Custom -> EventItemType.Custom
             ItemTypeUiState.Unknown -> null
         }
         eventItemType?.let {

@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.extension.toSmallResource
 import proton.android.pass.composecomponents.impl.item.CreditCardRow
+import proton.android.pass.composecomponents.impl.item.CustomRow
 import proton.android.pass.composecomponents.impl.item.IdentityRow
 import proton.android.pass.composecomponents.impl.item.LoginRow
 import proton.android.pass.composecomponents.impl.item.NoteRow
@@ -43,7 +44,7 @@ internal fun SecureLinksOverviewHeader(
             vaultIcon = shareIcon?.toSmallResource(),
             canLoadExternalImages = canLoadExternalImages
         )
-
+        ItemCategory.Custom -> CustomRow(item = item)
         ItemCategory.Alias,
         ItemCategory.Password,
         ItemCategory.Unknown -> Unit

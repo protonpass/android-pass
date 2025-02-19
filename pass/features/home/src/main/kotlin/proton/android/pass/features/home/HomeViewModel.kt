@@ -141,6 +141,7 @@ import proton.android.pass.features.home.HomeSnackbarMessage.AliasItemsEnabledSu
 import proton.android.pass.features.home.HomeSnackbarMessage.AliasMovedToTrash
 import proton.android.pass.features.home.HomeSnackbarMessage.ClearTrashError
 import proton.android.pass.features.home.HomeSnackbarMessage.CreditCardMovedToTrash
+import proton.android.pass.features.home.HomeSnackbarMessage.CustomMovedToTrash
 import proton.android.pass.features.home.HomeSnackbarMessage.DeleteItemError
 import proton.android.pass.features.home.HomeSnackbarMessage.DeleteItemSuccess
 import proton.android.pass.features.home.HomeSnackbarMessage.DeleteItemsError
@@ -719,6 +720,7 @@ class HomeViewModel @Inject constructor(
                             is ItemContents.Note -> snackbarDispatcher(NoteMovedToTrash)
                             is ItemContents.CreditCard -> snackbarDispatcher(CreditCardMovedToTrash)
                             is ItemContents.Identity -> snackbarDispatcher(IdentityMovedToTrash)
+                            is ItemContents.Custom -> snackbarDispatcher(CustomMovedToTrash)
                             is ItemContents.Unknown -> {}
                         }
                     } else {

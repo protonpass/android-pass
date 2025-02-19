@@ -47,6 +47,7 @@ object ItemUiFilter {
             is ItemContents.Note -> isNoteMatch(contents, query)
             is ItemContents.CreditCard -> isCreditCardMatch(contents, query)
             is ItemContents.Identity -> isIdentityMatch(contents, query)
+            is ItemContents.Custom -> isCustomMatch(contents, query)
             is ItemContents.Unknown -> return false
         }
     }
@@ -111,6 +112,16 @@ object ItemUiFilter {
 
                 false
             }
+        }
+    }
+
+    private fun isCustomMatch(content: ItemContents.Custom, query: String): Boolean = when {
+        else -> {
+            content.sectionContentList.forEach {
+                if (hasMatchingCustomField(it.customFields, query)) return true
+            }
+
+            false
         }
     }
 

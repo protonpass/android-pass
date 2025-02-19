@@ -305,6 +305,7 @@ fun NavGraphBuilder.appGraph(
 
                         ItemTypeUiState.Identity ->
                             CreateIdentity to CreateIdentity.createNavRoute(it.shareId)
+                        ItemTypeUiState.Custom -> TODO()
                     }
 
                     appNavigator.navigate(destination, route)
@@ -1348,9 +1349,10 @@ fun NavGraphBuilder.appGraph(
                         is ItemContents.Alias -> EditAlias
                         is ItemContents.CreditCard -> EditCreditCard
                         is ItemContents.Unknown -> null
+                        is ItemContents.Custom,
                         is ItemContents.Identity -> {
-                            // Not required for identity as already migrated to new item-details feature
-                            throw IllegalStateException("Identity should navigate from new graph")
+                            // Not required as already migrated to new item-details feature
+                            throw IllegalStateException("Should navigate from new graph")
                         }
                     }
                     val route = when (it.itemUiModel.contents) {
@@ -1374,9 +1376,10 @@ fun NavGraphBuilder.appGraph(
                             it.itemUiModel.id
                         )
 
+                        is ItemContents.Custom,
                         is ItemContents.Identity -> {
-                            // Not required for identity as already migrated to new item-details feature
-                            throw IllegalStateException("Identity should navigate from new graph")
+                            // Not required as already migrated to new item-details feature
+                            throw IllegalStateException("Should navigate from new graph")
                         }
 
                         is ItemContents.Unknown -> null
@@ -1543,6 +1546,7 @@ fun NavGraphBuilder.appGraph(
                         itemId = itemDetailsNavDestination.itemId
                     )
 
+                    ItemCategory.Custom -> TODO()
                     ItemCategory.Password,
                     ItemCategory.Unknown -> throw IllegalStateException(
                         "Cannot edit items with category: ${itemDetailsNavDestination.itemCategory}"
@@ -2567,6 +2571,7 @@ private fun getItemDetailsDestination(itemCategory: ItemCategory) = when (itemCa
     ItemCategory.CreditCard -> ViewItem
 
     // Identity is the first item category migrated
+    ItemCategory.Custom,
     ItemCategory.Identity -> ItemDetailsNavItem
 
     ItemCategory.Unknown,
@@ -2586,7 +2591,8 @@ private fun getItemDetailsRoute(
     ItemCategory.CreditCard -> ViewItem.createNavRoute(shareId, itemId)
 
     // Identity is the first item category migrated
-    ItemCategory.Identity -> ItemDetailsNavItem.createNavRoute(shareId, itemId)
+    ItemCategory.Identity,
+    ItemCategory.Custom -> ItemDetailsNavItem.createNavRoute(shareId, itemId)
 
     ItemCategory.Unknown,
     ItemCategory.Password -> throw IllegalArgumentException("Cannot view items with category: $itemCategory")

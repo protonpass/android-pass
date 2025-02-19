@@ -54,12 +54,14 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAct
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
+import proton.android.pass.composecomponents.impl.item.icon.CustomIcon
 import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.features.home.HomeBottomSheetType.AliasOptions
 import proton.android.pass.features.home.HomeBottomSheetType.CreditCardOptions
+import proton.android.pass.features.home.HomeBottomSheetType.CustomOptions
 import proton.android.pass.features.home.HomeBottomSheetType.IdentityOptions
 import proton.android.pass.features.home.HomeBottomSheetType.LoginOptions
 import proton.android.pass.features.home.HomeBottomSheetType.NoteOptions
@@ -568,6 +570,10 @@ fun HomeScreen(
                     )
                 }
 
+                CustomOptions -> {
+                    // Implement custom item options
+                }
+
                 TrashItemOptions -> {
                     val item = selectedItem ?: return@PassModalBottomSheetLayout
                     TrashItemBottomSheetContents(
@@ -619,6 +625,7 @@ fun HomeScreen(
                                 is ItemContents.Note -> NoteIcon()
                                 is ItemContents.CreditCard -> CreditCardIcon()
                                 is ItemContents.Identity -> IdentityIcon()
+                                is ItemContents.Custom -> CustomIcon()
                                 is ItemContents.Unknown -> {}
                             }
                         }
@@ -854,6 +861,7 @@ fun HomeScreen(
                                     is ItemContents.Note -> NoteOptions
                                     is ItemContents.CreditCard -> CreditCardOptions
                                     is ItemContents.Identity -> IdentityOptions
+                                    is ItemContents.Custom -> CustomOptions
                                     is ItemContents.Unknown -> LoginOptions
                                 }
                             }

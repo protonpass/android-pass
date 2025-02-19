@@ -177,4 +177,7 @@ object PassPalette {
     val IndigoViolet = Color(0xFF5B53ED)
     val PaleApricot = Color(0x1AFFD580)
 
+    val SlateGray = Color(0xFF88859D)
+    val MistGray = Color(0xFFB8B6C4)
+
 }

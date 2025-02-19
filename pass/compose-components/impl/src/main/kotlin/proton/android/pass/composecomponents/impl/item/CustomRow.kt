@@ -37,6 +37,7 @@ import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.badge.CircledBadge
 import proton.android.pass.composecomponents.impl.badge.OverlayBadge
+import proton.android.pass.composecomponents.impl.item.icon.CustomIcon
 import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.ExtraSectionContent
@@ -81,7 +82,7 @@ fun CustomRow(
                             backgroundColor = PassTheme.colors.interactionNormMajor1
                         )
                     },
-                    content = { IdentityIcon() }
+                    content = { CustomIcon() }
                 )
 
                 is ItemSelectionModeState.InSelectionMode -> {
@@ -169,12 +170,12 @@ class ThemedCustomItemPreviewProvider :
 
 @Preview
 @Composable
-fun IdentityRowPreview(
+fun CustomRowPreview(
     @PreviewParameter(ThemedCustomItemPreviewProvider::class) input: Pair<Boolean, CustomRowParameter>
 ) {
     PassTheme(isDark = input.first) {
         Surface {
-            IdentityRow(
+            CustomRow(
                 item = input.second.model,
                 highlight = input.second.highlight,
                 titleSuffix = None

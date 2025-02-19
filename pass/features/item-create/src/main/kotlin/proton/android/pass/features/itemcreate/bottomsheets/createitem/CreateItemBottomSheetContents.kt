@@ -45,6 +45,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTit
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
+import proton.android.pass.composecomponents.impl.item.icon.CustomIcon
 import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
@@ -52,6 +53,7 @@ import proton.android.pass.composecomponents.impl.item.icon.PasswordIcon
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateAlias
 import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateCreditCard
+import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateCustom
 import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateIdentity
 import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateLogin
 import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateNote
@@ -86,6 +88,12 @@ internal fun CreateItemBottomSheetContents(
                 createIdentity(
                     onClick = { onNavigate(CreateIdentity(shareId.toOption())) }
                 ).also(::add)
+
+                if (canCreateCustom) {
+                    createCustom(
+                        onClick = { onNavigate(CreateCustom(shareId.toOption())) }
+                    ).also(::add)
+                }
             }
 
             createPassword(
@@ -193,6 +201,14 @@ private fun createIdentity(onClick: () -> Unit) = createItem(
     title = { BottomSheetItemTitle(text = stringResource(id = R.string.action_identity)) },
     subtitleResId = R.string.item_type_identity_description,
     leftIcon = { IdentityIcon() },
+    onClick = onClick
+)
+
+@Composable
+private fun createCustom(onClick: () -> Unit) = createItem(
+    title = { BottomSheetItemTitle(text = stringResource(id = R.string.action_custom)) },
+    subtitleResId = R.string.item_type_custom_description,
+    leftIcon = { CustomIcon() },
     onClick = onClick
 )
 

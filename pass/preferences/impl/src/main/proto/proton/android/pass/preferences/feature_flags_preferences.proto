@@ -30,4 +30,5 @@ message FeatureFlagsPreferences {
   BoolFlagPrefProto file_attachments_v1_enabled = 22;
   BoolFlagPrefProto secure_link_new_crypto_v1_enabled = 23;
   BoolFlagPrefProto new_login_flow_enabled = 24;
+  BoolFlagPrefProto custom_type_v1_enabled = 25;
 }

@@ -305,7 +305,7 @@ fun NavGraphBuilder.appGraph(
 
                         ItemTypeUiState.Identity ->
                             CreateIdentity to CreateIdentity.createNavRoute(it.shareId)
-                        ItemTypeUiState.Custom -> TODO()
+                        ItemTypeUiState.Custom -> TODO("To implement")
                     }
 
                     appNavigator.navigate(destination, route)
@@ -551,7 +551,7 @@ fun NavGraphBuilder.appGraph(
                             CreateIdentity.createNavRoute(it.shareId)
                         )
 
-                    is CreateItemBottomsheetNavigation.CreateCustom -> TODO()
+                    is CreateItemBottomsheetNavigation.CreateCustom -> TODO("To implement")
                 }
             }
         }
@@ -1548,7 +1548,7 @@ fun NavGraphBuilder.appGraph(
                         itemId = itemDetailsNavDestination.itemId
                     )
 
-                    ItemCategory.Custom -> TODO()
+                    ItemCategory.Custom -> TODO("To implement")
                     ItemCategory.Password,
                     ItemCategory.Unknown -> throw IllegalStateException(
                         "Cannot edit items with category: ${itemDetailsNavDestination.itemCategory}"

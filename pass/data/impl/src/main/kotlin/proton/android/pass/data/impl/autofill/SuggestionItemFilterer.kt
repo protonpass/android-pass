@@ -40,6 +40,7 @@ class SuggestionItemFiltererImpl @Inject constructor(
             is ItemType.Identity -> true
             is ItemType.Alias,
             is ItemType.Note,
+            is ItemType.Custom,
             ItemType.Password,
             ItemType.Unknown -> throw IllegalArgumentException("Unsupported item type")
         }

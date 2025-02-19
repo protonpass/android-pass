@@ -243,6 +243,21 @@ fun ItemContents.serializeToProto(
             )
 
         }
+        is ItemContents.Custom ->
+            builder.content.toBuilder().setCustom(
+                builder.content.custom.toBuilder()
+                    .clearSections()
+                    .addAllSections(
+                        sectionContentList.map {
+                            ItemV1.CustomSection.newBuilder()
+                                .setSectionName(it.title)
+                                .clearSectionFields()
+                                .addAllSectionFields(it.customFields.mapToExtraFields(encryptionContext))
+                                .build()
+                        }
+                    )
+                    .build()
+            )
 
         is ItemContents.Unknown -> throw IllegalStateException("Cannot be unknown")
     }.build()

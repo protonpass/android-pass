@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.container.BoxedIcon
 
 @Composable
@@ -49,10 +49,13 @@ fun CreditCardIcon(
 
 @Preview
 @Composable
-fun CreditCardIconPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
-    PassTheme(isDark = isDark) {
+fun CreditCardIconPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
+    PassTheme(isDark = input.first) {
         Surface {
-            CreditCardIcon(shape = PassTheme.shapes.squircleMediumShape)
+            CreditCardIcon(
+                shape = PassTheme.shapes.squircleMediumShape,
+                enabled = input.second
+            )
         }
     }
 }

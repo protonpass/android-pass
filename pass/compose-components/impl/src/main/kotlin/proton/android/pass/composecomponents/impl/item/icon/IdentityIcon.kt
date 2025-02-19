@@ -30,7 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.container.BoxedIcon
 import me.proton.core.presentation.R as CoreR
 
@@ -68,10 +68,13 @@ fun IdentityIcon(
 
 @Preview
 @Composable
-fun IdentityIconPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
-    PassTheme(isDark = isDark) {
+fun IdentityIconPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
+    PassTheme(isDark = input.first) {
         Surface {
-            IdentityIcon(shape = PassTheme.shapes.squircleMediumShape)
+            IdentityIcon(
+                shape = PassTheme.shapes.squircleMediumShape,
+                enabled = input.second
+            )
         }
     }
 }

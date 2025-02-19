@@ -28,10 +28,14 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.container.BoxedIcon
+
+private const val ALPHA = 0.3f
 
 @Composable
 fun CustomIcon(
@@ -40,14 +44,14 @@ fun CustomIcon(
     size: Int = 40,
     shape: Shape = PassTheme.shapes.squircleMediumShape,
     backgroundColor: Color = if (enabled) {
-        PassTheme.colors.noteInteractionNormMinor1
+        PassPalette.SlateGray.copy(alpha = ALPHA)
     } else {
-        PassTheme.colors.noteInteractionNormMinor2
+        PassPalette.MistGray.copy(alpha = ALPHA)
     },
     foregroundColor: Color = if (enabled) {
-        PassTheme.colors.noteInteractionNormMajor2
+        ProtonTheme.colors.textNorm
     } else {
-        PassTheme.colors.noteInteractionNormMinor1
+        ProtonTheme.colors.textDisabled
     }
 ) {
     BoxedIcon(
@@ -67,10 +71,13 @@ fun CustomIcon(
 
 @Preview
 @Composable
-fun CustomIconPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
-    PassTheme(isDark = isDark) {
+fun CustomIconPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
+    PassTheme(isDark = input.first) {
         Surface {
-            CustomIcon(shape = PassTheme.shapes.squircleMediumShape)
+            CustomIcon(
+                shape = PassTheme.shapes.squircleMediumShape,
+                enabled = input.second
+            )
         }
     }
 }

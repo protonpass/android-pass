@@ -59,6 +59,7 @@ sealed interface CreateItemBottomsheetNavigation {
     data class CreateNote(val shareId: Option<ShareId>) : CreateItemBottomsheetNavigation
     data class CreateCreditCard(val shareId: Option<ShareId>) : CreateItemBottomsheetNavigation
     data class CreateIdentity(val shareId: Option<ShareId>) : CreateItemBottomsheetNavigation
+    data class CreateCustom(val shareId: Option<ShareId>) : CreateItemBottomsheetNavigation
     data object CreatePassword : CreateItemBottomsheetNavigation
 }
 

@@ -198,6 +198,11 @@ sealed interface ItemType {
     ) : ItemType
 
     @Serializable
+    data class Custom(
+        val extraSections: List<ExtraSection>
+    ) : ItemType
+
+    @Serializable
     data object Password : ItemType
 
     @Serializable
@@ -211,6 +216,7 @@ sealed interface ItemType {
             is Note -> ItemCategory.Note
             Password -> ItemCategory.Password
             is Identity -> ItemCategory.Identity
+            is Custom -> ItemCategory.Custom
             Unknown -> ItemCategory.Unknown
         }
 

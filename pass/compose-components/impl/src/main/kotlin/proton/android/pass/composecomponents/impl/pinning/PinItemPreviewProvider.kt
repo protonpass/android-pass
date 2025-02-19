@@ -139,6 +139,24 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
             revision = 1,
             shareCount = 0,
             isOwner = true
+        ),
+        ItemUiModel(
+            id = ItemId("123"),
+            userId = UserId("user-id"),
+            shareId = ShareId("345"),
+            contents = ItemContents.Custom(
+                title = "Custom title",
+                note = "",
+                sectionContentList = emptyList()
+            ),
+            state = 0,
+            createTime = Clock.System.now(),
+            modificationTime = Clock.System.now(),
+            lastAutofillTime = Clock.System.now(),
+            isPinned = true,
+            revision = 1,
+            shareCount = 0,
+            isOwner = true
         )
     )
 }

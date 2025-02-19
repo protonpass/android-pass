@@ -35,6 +35,7 @@ enum class HomeSnackbarMessage(
     NoteMovedToTrash(R.string.home_snackbar_note_moved_to_trash, SnackbarType.SUCCESS),
     CreditCardMovedToTrash(R.string.home_snackbar_credit_card_moved_to_trash, SnackbarType.SUCCESS),
     IdentityMovedToTrash(R.string.home_snackbar_identity_moved_to_trash, SnackbarType.SUCCESS),
+    CustomMovedToTrash(R.string.home_snackbar_custom_moved_to_trash, SnackbarType.SUCCESS),
     MoveToTrashError(R.string.home_snackbar_move_to_trash_error, SnackbarType.ERROR),
     AliasCopied(R.string.alias_copied_to_clipboard, SnackbarType.NORM, true),
     NoteCopied(R.string.note_copied_to_clipboard, SnackbarType.NORM, true),

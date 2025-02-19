@@ -28,6 +28,7 @@ enum class EventItemType(val itemTypeName: String) {
     Password("password"),
     CreditCard("credit_card"),
     Identity("identity"),
+    Custom("custom"),
     Unknown("unknown");
 
     companion object {
@@ -39,6 +40,7 @@ enum class EventItemType(val itemTypeName: String) {
             is ItemType.Login -> Login
             is ItemType.CreditCard -> CreditCard
             is ItemType.Identity -> Identity
+            is ItemType.Custom -> Custom
         }
 
         fun from(itemContents: ItemContents): EventItemType = when (itemContents) {
@@ -47,6 +49,7 @@ enum class EventItemType(val itemTypeName: String) {
             is ItemContents.Note -> Note
             is ItemContents.CreditCard -> CreditCard
             is ItemContents.Identity -> Identity
+            is ItemContents.Custom -> Custom
             is ItemContents.Unknown -> Unknown
         }
     }

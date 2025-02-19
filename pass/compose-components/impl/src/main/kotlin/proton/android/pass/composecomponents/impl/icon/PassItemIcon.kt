@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
+import proton.android.pass.composecomponents.impl.item.icon.CustomIcon
 import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
@@ -59,6 +60,10 @@ fun PassItemIcon(
             website = website,
             packageName = packageName,
             canLoadExternalImages = canLoadExternalImages
+        )
+
+        ItemCategory.Custom -> CustomIcon(
+            modifier = modifier
         )
 
         ItemCategory.Password,

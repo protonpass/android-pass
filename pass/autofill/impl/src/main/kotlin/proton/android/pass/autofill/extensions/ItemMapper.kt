@@ -68,6 +68,7 @@ fun ItemUiModel.toAutoFillItem(shouldLinkPackageName: Boolean = false): Autofill
         shouldLinkPackageName = false
     )
     is ItemContents.Note,
+    is ItemContents.Custom,
     is ItemContents.Unknown -> throw IllegalStateException("Unsupported item type")
 }
 

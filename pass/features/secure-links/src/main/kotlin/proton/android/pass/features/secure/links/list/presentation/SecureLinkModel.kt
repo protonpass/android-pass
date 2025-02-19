@@ -41,6 +41,7 @@ internal data class SecureLinkModel(
         is ItemType.CreditCard,
         is ItemType.Identity,
         is ItemType.Note,
+        is ItemType.Custom,
         ItemType.Password,
         ItemType.Unknown -> null
     }
@@ -51,6 +52,7 @@ internal data class SecureLinkModel(
         is ItemType.CreditCard,
         is ItemType.Identity,
         is ItemType.Note,
+        is ItemType.Custom,
         ItemType.Password,
         ItemType.Unknown -> null
     }

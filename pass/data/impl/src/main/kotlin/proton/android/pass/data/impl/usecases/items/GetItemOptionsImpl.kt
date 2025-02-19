@@ -58,6 +58,7 @@ class GetItemOptionsImpl @Inject constructor(
             is ItemType.CreditCard,
             is ItemType.Identity,
             is ItemType.Note,
+            is ItemType.Custom,
             ItemType.Password,
             ItemType.Unknown -> emptyList()
         }.let { itemOptions -> if (itemOptions.isEmpty()) None else Some(itemOptions) }

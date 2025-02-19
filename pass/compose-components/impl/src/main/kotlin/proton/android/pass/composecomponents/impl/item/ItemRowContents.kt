@@ -81,6 +81,15 @@ internal fun ItemRowContents(
             selection = selection
         )
 
+        is ItemContents.Custom -> CustomRow(
+            modifier = modifier,
+            item = item,
+            titleSuffix = titleSuffix,
+            highlight = highlight,
+            vaultIcon = vaultIcon,
+            selection = selection
+        )
+
         is ItemContents.Unknown -> {
         }
 

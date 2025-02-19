@@ -110,6 +110,7 @@ internal sealed class SharingSummaryState {
             ItemCategory.Note,
             ItemCategory.Identity,
             ItemCategory.Password,
+            ItemCategory.Custom,
             ItemCategory.Unknown -> itemUiModel.contents.displayValue
         }.takeIfNotBlank()
 
@@ -119,6 +120,7 @@ internal sealed class SharingSummaryState {
             is ItemContents.CreditCard,
             is ItemContents.Identity,
             is ItemContents.Note,
+            is ItemContents.Custom,
             is ItemContents.Unknown -> ""
         }
 
@@ -128,6 +130,7 @@ internal sealed class SharingSummaryState {
             is ItemContents.CreditCard,
             is ItemContents.Identity,
             is ItemContents.Note,
+            is ItemContents.Custom,
             is ItemContents.Unknown -> ""
         }
 

@@ -79,6 +79,7 @@ internal data class ShareFromItemUiState(
             is ItemType.CreditCard,
             is ItemType.Identity,
             is ItemType.Login,
+            is ItemType.Custom,
             is ItemType.Note -> true
 
             is ItemType.Alias,

@@ -536,11 +536,10 @@ fun NavGraphBuilder.autofillActivityGraph(
                     )
                 }
 
-                is CreateItemBottomsheetNavigation.CreateNote ->
-                    throw IllegalStateException("Cannot create note from autofill bottomsheet")
-
+                is CreateItemBottomsheetNavigation.CreateCustom,
+                is CreateItemBottomsheetNavigation.CreateNote,
                 CreateItemBottomsheetNavigation.CreatePassword ->
-                    throw IllegalStateException("Cannot create password from autofill bottomsheet")
+                    throw IllegalStateException("Cannot create $it from autofill bottomsheet")
 
                 is CreateItemBottomsheetNavigation.CreateIdentity -> dismissBottomSheet {
                     appNavigator.navigate(

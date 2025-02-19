@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import proton.android.pass.preferences.FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
+import proton.android.pass.preferences.FeatureFlag.CUSTOM_TYPE_V1
 import proton.android.pass.preferences.FeatureFlag.DIGITAL_ASSET_LINKS
 import proton.android.pass.preferences.FeatureFlag.EXTRA_LOGGING
 import proton.android.pass.preferences.FeatureFlag.FILE_ATTACHMENTS_V1
@@ -56,6 +57,7 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
             FILE_ATTACHMENTS_V1 -> it.getOrDefault(FILE_ATTACHMENTS_V1, false) as T
             SECURE_LINK_NEW_CRYPTO_V1 -> it.getOrDefault(SECURE_LINK_NEW_CRYPTO_V1, false) as T
             NEW_LOGIN_FLOW -> it.getOrDefault(NEW_LOGIN_FLOW, false) as T
+            CUSTOM_TYPE_V1 -> it.getOrDefault(CUSTOM_TYPE_V1, false) as T
         }
     }
 

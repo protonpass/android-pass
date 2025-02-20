@@ -25,6 +25,6 @@ import proton.android.pass.domain.items.ItemSharedType
 
 interface ObserveEncryptedSharedItems {
 
-    operator fun invoke(itemSharedType: ItemSharedType, itemState: ItemState?): Flow<List<ItemEncrypted>>
+    operator fun invoke(itemSharedType: ItemSharedType, itemState: ItemState? = null): Flow<List<ItemEncrypted>>
 
 }

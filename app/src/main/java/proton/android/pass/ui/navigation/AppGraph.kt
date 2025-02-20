@@ -110,6 +110,9 @@ import proton.android.pass.features.itemcreate.creditcard.EditCreditCard
 import proton.android.pass.features.itemcreate.creditcard.UpdateCreditCardNavigation
 import proton.android.pass.features.itemcreate.creditcard.createCreditCardGraph
 import proton.android.pass.features.itemcreate.creditcard.updateCreditCardGraph
+import proton.android.pass.features.itemcreate.custom.selecttemplate.navigation.SelectTemplateNavItem
+import proton.android.pass.features.itemcreate.custom.selecttemplate.navigation.SelectTemplateNavigation
+import proton.android.pass.features.itemcreate.custom.selecttemplate.navigation.selectTemplateGraph
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameDialogNavItem
 import proton.android.pass.features.itemcreate.dialogs.customfield.EditCustomFieldNameDialogNavItem
 import proton.android.pass.features.itemcreate.identity.navigation.BaseIdentityNavigation
@@ -551,7 +554,11 @@ fun NavGraphBuilder.appGraph(
                             CreateIdentity.createNavRoute(it.shareId)
                         )
 
-                    is CreateItemBottomsheetNavigation.CreateCustom -> TODO("To implement")
+                    is CreateItemBottomsheetNavigation.CreateCustom ->
+                        appNavigator.navigate(
+                            SelectTemplateNavItem,
+                            SelectTemplateNavItem.createNavRoute(it.shareId)
+                        )
                 }
             }
         }
@@ -690,6 +697,17 @@ fun NavGraphBuilder.appGraph(
             )
         }
     )
+    selectTemplateGraph {
+        when (it) {
+            SelectTemplateNavigation.NavigateBack -> appNavigator.navigateBack()
+            SelectTemplateNavigation.NavigateToFromScratch -> {
+                // navigate to create
+            }
+            is SelectTemplateNavigation.NavigateToTemplate -> {
+                // navigate to create
+            }
+        }
+    }
     profileGraph(
         onNavigateEvent = {
             when (it) {

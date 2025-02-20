@@ -115,14 +115,12 @@ object ItemUiFilter {
         }
     }
 
-    private fun isCustomMatch(content: ItemContents.Custom, query: String): Boolean = when {
-        else -> {
-            content.sectionContentList.forEach {
-                if (hasMatchingCustomField(it.customFields, query)) return true
-            }
-
-            false
+    private fun isCustomMatch(content: ItemContents.Custom, query: String): Boolean {
+        content.sectionContentList.forEach {
+            if (hasMatchingCustomField(it.customFields, query)) return true
         }
+
+        return false
     }
 
     private fun hasMatchingCustomField(customFields: List<CustomFieldContent>, query: String): Boolean {

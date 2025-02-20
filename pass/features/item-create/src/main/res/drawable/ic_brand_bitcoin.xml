@@ -1,0 +1,32 @@
+<!--
+  ~ Copyright (c) 2025 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+  <path
+      android:pathData="M12,21C16.971,21 21,16.971 21,12C21,7.029 16.971,3 12,3C7.029,3 3,7.029 3,12C3,16.971 7.029,21 12,21ZM12,22.5C17.799,22.5 22.5,17.799 22.5,12C22.5,6.201 17.799,1.5 12,1.5C6.201,1.5 1.5,6.201 1.5,12C1.5,17.799 6.201,22.5 12,22.5Z"
+      android:fillColor="@color/icon_norm"
+      android:fillType="evenOdd"/>
+  <path
+      android:pathData="M12,4.875C12.414,4.875 12.75,5.211 12.75,5.625V6H13.5C15.157,6 16.5,7.343 16.5,9C16.5,9.839 16.155,10.598 15.6,11.143C16.596,11.817 17.25,12.957 17.25,14.25C17.25,16.321 15.571,18 13.5,18H12.75V18.375C12.75,18.789 12.414,19.125 12,19.125C11.586,19.125 11.25,18.789 11.25,18.375V18H8.25C7.836,18 7.5,17.664 7.5,17.25C7.5,16.836 7.836,16.5 8.25,16.5H9V7.5H8.25C7.836,7.5 7.5,7.164 7.5,6.75C7.5,6.336 7.836,6 8.25,6H11.25V5.625C11.25,5.211 11.586,4.875 12,4.875ZM10.5,7.5V10.5H13.5C14.328,10.5 15,9.828 15,9C15,8.172 14.328,7.5 13.5,7.5H10.5ZM10.5,12V16.5H13.5C14.743,16.5 15.75,15.493 15.75,14.25C15.75,13.007 14.743,12 13.5,12H10.5Z"
+      android:fillColor="@color/icon_norm"
+      android:fillType="evenOdd"/>
+</vector>

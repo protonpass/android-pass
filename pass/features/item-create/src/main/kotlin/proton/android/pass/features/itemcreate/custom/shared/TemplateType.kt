@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.custom.template.ui
+package proton.android.pass.features.itemcreate.custom.shared
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

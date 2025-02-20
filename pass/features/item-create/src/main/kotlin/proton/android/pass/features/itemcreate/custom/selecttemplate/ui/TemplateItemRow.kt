@@ -16,9 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.custom.template.ui
+package proton.android.pass.features.itemcreate.custom.selecttemplate.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,28 +29,37 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.features.itemcreate.custom.shared.TemplateType
 
 @Composable
-fun TemplateItem(item: TemplateType) {
+fun TemplateItem(
+    modifier: Modifier = Modifier,
+    item: TemplateType,
+    onClick: (TemplateEvent) -> Unit
+) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp)
+            .clip(PassTheme.shapes.squircleMediumLargeShape)
+            .clickable { onClick(TemplateEvent.OnTemplateSelected(item)) },
+        shape = PassTheme.shapes.squircleMediumLargeShape
     ) {
         val (bgColor, fgColor) = when (item.category) {
             TemplateType.Category.TECHNOLOGY ->
-                PassTheme.colors.backgroundWeak to PassTheme.colors.interactionNormMajor2
+                PassTheme.colors.interactionNormMinor2 to PassTheme.colors.interactionNormMajor2
+
             TemplateType.Category.FINANCE ->
                 PassTheme.colors.noteInteractionNormMinor2 to PassTheme.colors.noteInteractionNormMajor2
+
             TemplateType.Category.PERSONAL ->
                 PassTheme.colors.aliasInteractionNormMinor2 to PassTheme.colors.aliasInteractionNormMajor2
         }
@@ -71,7 +81,10 @@ fun TemplateItem(item: TemplateType) {
 fun TemplateItemPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            TemplateItem(TemplateType.SERVER)
+            TemplateItem(
+                item = TemplateType.SERVER,
+                onClick = {}
+            )
         }
     }
 }

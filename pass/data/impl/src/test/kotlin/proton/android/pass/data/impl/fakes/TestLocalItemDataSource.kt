@@ -213,7 +213,8 @@ class TestLocalItemDataSource : LocalItemDataSource {
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?,
-        onlyShared: Boolean
+        onlyShared: Boolean,
+        applyItemStateToSharedItems: Boolean
     ): Flow<ItemCountSummary> = summary
 
 }

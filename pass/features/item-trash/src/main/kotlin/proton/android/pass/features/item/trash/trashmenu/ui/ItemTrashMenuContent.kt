@@ -30,6 +30,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemRow
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.delete
+import proton.android.pass.composecomponents.impl.bottomsheet.leave
 import proton.android.pass.composecomponents.impl.bottomsheet.restore
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.icon.PassItemIcon
@@ -60,13 +61,22 @@ internal fun ItemTrashMenuContent(
 
         Divider(modifier = Modifier.fillMaxWidth())
 
-        listOf(
+        buildList {
+            if (canLeaveItem) {
+                leave(
+                    onClick = { onEvent(ItemTrashMenuUiEvent.OnLeaveItemClicked) }
+                ).also(::add)
+            }
+
             restore(
                 action = action,
                 onClick = { onEvent(ItemTrashMenuUiEvent.OnRestoreItemClicked) }
-            ),
-            delete { onEvent(ItemTrashMenuUiEvent.OnDeleteItemPermanentlyClicked) }
-        ).let { bottomSheetItems ->
+            ).also(::add)
+
+            delete(
+                onClick = { onEvent(ItemTrashMenuUiEvent.OnDeleteItemPermanentlyClicked) }
+            ).also(::add)
+        }.let { bottomSheetItems ->
             BottomSheetItemList(
                 items = bottomSheetItems.withDividers().toPersistentList()
             )

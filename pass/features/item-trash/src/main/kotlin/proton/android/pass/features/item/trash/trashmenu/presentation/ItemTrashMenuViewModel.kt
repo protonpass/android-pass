@@ -97,6 +97,10 @@ class ItemTrashMenuViewModel @Inject constructor(
         eventFlow.compareAndSet(event, ItemTrashMenuEvent.Idle)
     }
 
+    internal fun onLeaveItem() {
+        eventFlow.update { ItemTrashMenuEvent.OnLeaveItem(shareId) }
+    }
+
     internal fun onDeleteItem() {
         eventFlow.update { ItemTrashMenuEvent.OnDeleteItem(shareId, itemId) }
     }

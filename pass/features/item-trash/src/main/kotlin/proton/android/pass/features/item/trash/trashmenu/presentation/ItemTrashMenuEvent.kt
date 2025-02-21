@@ -30,6 +30,9 @@ internal sealed interface ItemTrashMenuEvent {
         internal val itemId: ItemId
     ) : ItemTrashMenuEvent
 
+    @JvmInline
+    value class OnLeaveItem(internal val shareId: ShareId) : ItemTrashMenuEvent
+
     data object OnItemRestored : ItemTrashMenuEvent
 
     data object OnItemRestoreError : ItemTrashMenuEvent

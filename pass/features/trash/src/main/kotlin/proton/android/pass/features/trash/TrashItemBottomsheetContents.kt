@@ -50,6 +50,7 @@ import proton.android.pass.domain.ShareId
 @Composable
 fun TrashItemBottomSheetContents(
     modifier: Modifier = Modifier,
+    canBeDeleted: Boolean,
     itemUiModel: ItemUiModel,
     onLeaveItem: (ItemUiModel) -> Unit,
     onRestoreItem: (ItemUiModel) -> Unit,
@@ -82,14 +83,16 @@ fun TrashItemBottomSheetContents(
                 ).also(::add)
             }
 
-            restore(
-                action = BottomSheetItemAction.None,
-                onClick = { onRestoreItem(itemUiModel) }
-            ).also(::add)
+            if (canBeDeleted) {
+                restore(
+                    action = BottomSheetItemAction.None,
+                    onClick = { onRestoreItem(itemUiModel) }
+                ).also(::add)
 
-            delete(
-                onClick = { onDeleteItem(itemUiModel) }
-            ).also(::add)
+                delete(
+                    onClick = { onDeleteItem(itemUiModel) }
+                ).also(::add)
+            }
         }.let { items ->
             BottomSheetItemList(
                 items = items.withDividers().toPersistentList()
@@ -103,6 +106,7 @@ internal fun TrashItemBottomSheetContentsPreview(@PreviewParameter(ThemePreviewP
     PassTheme(isDark = isDark) {
         Surface {
             TrashItemBottomSheetContents(
+                canBeDeleted = true,
                 itemUiModel = ItemUiModel(
                     id = ItemId(id = ""),
                     shareId = ShareId(id = ""),

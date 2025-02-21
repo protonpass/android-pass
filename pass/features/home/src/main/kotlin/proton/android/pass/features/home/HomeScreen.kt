@@ -578,6 +578,15 @@ fun HomeScreen(
                     val item = selectedItem ?: return@PassModalBottomSheetLayout
                     TrashItemBottomSheetContents(
                         itemUiModel = item,
+                        onLeaveItem = remember {
+                            {
+                                scope.launch { bottomSheetState.hide() }
+
+                                HomeNavigation.LeaveItemShare(
+                                    shareId = item.shareId
+                                ).also(onNavigateEvent)
+                            }
+                        },
                         onRestoreItem = remember {
                             {
                                 scope.launch {
@@ -1010,7 +1019,7 @@ fun HomeScreen(
             ConfirmDeleteItemDialog(
                 isLoading = actionState is ActionState.Loading,
                 show = shouldShowDeleteItemDialog,
-                isSharedItem = selectedItem?.isShared ?: false,
+                isSharedItem = selectedItem?.isShared == true,
                 onConfirm = {
                     selectedItem?.let {
                         homeViewModel.deleteItems(listOf(it))

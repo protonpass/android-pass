@@ -84,6 +84,11 @@ internal data class ItemTrashMenuState(
         }
     }
 
+    internal val canLeaveItem: Boolean = when (itemUiModelOption) {
+        None -> false
+        is Some -> itemUiModelOption.value.isSharedWithMe
+    }
+
     internal companion object {
 
         internal val Initial: ItemTrashMenuState = ItemTrashMenuState(

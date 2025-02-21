@@ -31,4 +31,7 @@ sealed interface ItemTrashNavDestination {
 
     data class DeleteItem(val shareId: ShareId, val itemId: ItemId) : ItemTrashNavDestination
 
+    @JvmInline
+    value class LeaveItem(val shareId: ShareId) : ItemTrashNavDestination
+
 }

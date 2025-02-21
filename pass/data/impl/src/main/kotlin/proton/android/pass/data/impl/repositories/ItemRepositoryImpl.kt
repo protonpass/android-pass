@@ -895,8 +895,15 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?,
-        onlyShared: Boolean
-    ): Flow<ItemCountSummary> = localItemDataSource.observeItemCountSummary(userId, shareIds, itemState, onlyShared)
+        onlyShared: Boolean,
+        applyItemStateToSharedItems: Boolean
+    ): Flow<ItemCountSummary> = localItemDataSource.observeItemCountSummary(
+        userId = userId,
+        shareIds = shareIds,
+        itemState = itemState,
+        onlyShared = onlyShared,
+        applyItemStateToSharedItems = applyItemStateToSharedItems
+    )
 
     override suspend fun updateItemLastUsed(vaultId: VaultId, itemId: ItemId) {
         val readyUsers = accountManager.getAccounts(AccountState.Ready).firstOrNull() ?: emptyList()

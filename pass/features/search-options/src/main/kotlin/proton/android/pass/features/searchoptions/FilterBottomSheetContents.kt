@@ -206,7 +206,8 @@ internal fun FilterBottomSheetContentsPreview(
                         identities = 0,
                         sharedWithMe = sharedItemsCount,
                         sharedByMe = sharedItemsCount,
-                        trashed = 0
+                        trashed = 0,
+                        sharedWithMeTrashed = 0
                     ),
                     isItemSharingAvailable = true
                 ),

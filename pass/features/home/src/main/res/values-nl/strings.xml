@@ -18,6 +18,8 @@
   <string name="home_empty_shared_items_title">Geen gedeelde items gevonden</string>
   <string name="home_empty_shared_items_with_me_subtitle">Geen items gevonden die gedeeld werden met jou</string>
   <string name="home_empty_shared_items_by_me_subtitle">Geen items gevonden die gedeeld werden door jou</string>
+  <string name="home_empty_no_vaults_title">U hebt geen kluis</string>
+  <string name="home_empty_no_vaults_subtitle">Neem contact op met het ondersteuningsteam van uw organisatie.</string>
   <string name="home_empty_read_only_vault_title">Deze kluis is leeg</string>
   <string name="home_empty_read_only_vault_subtitle">U kunt geen items toevoegen aan een alleen-lezen kluis.</string>
   <string name="home_empty_vault_create_login">Login aanmaken</string>
@@ -32,6 +34,7 @@
   <string name="home_snackbar_note_moved_to_trash">Notitie verplaatst naar prullenbak</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Kredietkaart verplaatst naar prullenbak</string>
   <string name="home_snackbar_identity_moved_to_trash">Identiteit verplaatst naar prullenbak</string>
+  <string name="home_snackbar_custom_moved_to_trash">Aangepast item werd naar de prullenbak verplaats</string>
   <string name="home_snackbar_move_to_trash_error">Item kon niet verplaatst worden naar prullenbak.</string>
   <string name="home_snackbar_items_move_to_trash_success">Items verplaatst naar de prullenbak</string>
   <string name="home_snackbar_items_move_to_trash_error">Items konden niet verplaatst worden naar de prullenbak</string>

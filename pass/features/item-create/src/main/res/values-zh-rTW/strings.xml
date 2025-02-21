@@ -10,11 +10,13 @@
   <string name="action_credit_card">信用卡</string>
   <string name="action_password">密碼</string>
   <string name="action_identity">身分識別</string>
+  <string name="action_custom">Custom item</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">替應用程式或網頁新增登入詳細資料</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">取得電子郵件別名以使用新的應用程式</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">記下一個 PIN 碼、代碼或自己的筆記</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">安全的保存付款資料</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">填寫您的個人資訊</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Create items with fully customised fields</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">生成一個安全密碼</string>
   <!-- Create Login -->
   <string name="field_email_title">電子郵件位址</string>

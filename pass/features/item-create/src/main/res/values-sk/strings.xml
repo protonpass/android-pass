@@ -10,11 +10,13 @@
   <string name="action_credit_card">Platobná karta</string>
   <string name="action_password">Heslo</string>
   <string name="action_identity">Identita</string>
+  <string name="action_custom">Vlastná položka</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Pridať prihlasovacie údaje pre aplikáciu alebo stránku</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Získať emailový alias na použitie v nových aplikáciách</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Poznačte si PIN, kód alebo poznámku pre seba</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Bezpečne uložte svoje platobné informácie</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Vyplňte svoje osobné údaje</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Vytvárajte položky s plne prispôsobenými poľami</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Vygenerovať bezpečné heslo</string>
   <!-- Create Login -->
   <string name="field_email_title">Emailová adresa</string>

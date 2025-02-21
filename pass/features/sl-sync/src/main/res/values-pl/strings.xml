@@ -26,7 +26,7 @@
   <string name="simple_login_sync_management_mailboxes_description">Skrzynka pocztowa to miejsce, do którego przekierowane są wiadomości wysłane do aliasu. Jest to zwykła skrzynka pocztowa, np. Gmail, Outlook, Proton Mail itp.</string>
   <string name="simple_login_sync_management_mailbox_default">Domyślna</string>
   <string name="simple_login_sync_management_mailbox_unverified">Niezweryfikowana skrzynka pocztowa</string>
-  <string name="simple_login_sync_management_mailbox_unverified_change">Unverified mailbox change</string>
+  <string name="simple_login_sync_management_mailbox_unverified_change">Niezweryfikowana zmiana skrzynki pocztowej</string>
   <string name="simple_login_sync_management_vault_title">Synchronizacja SimpleLogin</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Wystąpił błąd podczas pobierania szczegółów aliasu SimpleLogin</string>
   <string name="simple_login_sync_management_mailboxes_title">Domyślna skrzynka pocztowa dla aliasów</string>
@@ -40,9 +40,9 @@
   <string name="simple_login_sync_mailbox_create_title">Dodaj skrzynkę pocztową</string>
   <string name="simple_login_sync_mailbox_create_message_error">Wystąpił błąd podczas dodawania skrzynki pocztowej</string>
   <!-- Mailbox change screen -->
-  <string name="simple_login_sync_mailbox_change_title">Change mailbox</string>
-  <string name="simple_login_sync_mailbox_change_message_error">There was an error changing the mailbox</string>
-  <string name="simple_login_sync_mailbox_change_email_already_in_use_message_error">Email already in use</string>
+  <string name="simple_login_sync_mailbox_change_title">Zmień skrzynkę pocztową</string>
+  <string name="simple_login_sync_mailbox_change_message_error">Wystąpił błąd podczas zmiany skrzynki pocztowej</string>
+  <string name="simple_login_sync_mailbox_change_email_already_in_use_message_error">Ten adres e-mail jest już zajęty</string>
   <!-- Mailbox verify screen -->
   <string name="simple_login_sync_mailbox_verify_title">Potwierdź skrzynkę pocztową</string>
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Wyślemy kod weryfikacyjny do %s. Wpisz go poniżej:</string>
@@ -78,10 +78,10 @@
   <string name="simple_login_sync_mailbox_options_snackbar_options_error">Nie można wyświetlić opcji skrzynki pocztowej</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_error">Wystąpił błąd podczas aktualizowania domyślnej skrzynki pocztowej</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_success">Domyślna skrzynka pocztowa została zaktualizowana</string>
-  <string name="simple_login_sync_mailbox_change_email_option">Change mailbox</string>
-  <string name="simple_login_sync_mailbox_cancel_change_email_option">Cancel mailbox change</string>
-  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">There was an error cancelling mailbox email change</string>
-  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">Cancelled mailbox email change</string>
+  <string name="simple_login_sync_mailbox_change_email_option">Zmień skrzynkę pocztową</string>
+  <string name="simple_login_sync_mailbox_cancel_change_email_option">Anuluj zmianę skrzynki pocztowej</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">Wystąpił błąd podczas anulowania zmiany adresu e-mail skrzynki pocztowej</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">Anuluj zmianę skrzynki pocztowej</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Domyślny sejf SimpleLogin</string>
   <string name="simple_login_sync_shared_default_vault_description">Aliasy SimpleLogin zostaną zaimportowane do tego sejfu.</string>

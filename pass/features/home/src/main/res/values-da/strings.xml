@@ -18,6 +18,8 @@
   <string name="home_empty_shared_items_title">Ingen delte elementer fundet</string>
   <string name="home_empty_shared_items_with_me_subtitle">Ingen elementer er blevet delt med dig.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Ingen elementer er blevet delt af dig.</string>
+  <string name="home_empty_no_vaults_title">Du har ikke nogen boks</string>
+  <string name="home_empty_no_vaults_subtitle">Kontakt din organisations supportteam.</string>
   <string name="home_empty_read_only_vault_title">Denne boks er tom</string>
   <string name="home_empty_read_only_vault_subtitle">Du kan ikke tilføje elementer til en skrivebeskyttet boks.</string>
   <string name="home_empty_vault_create_login">Opret et login</string>
@@ -32,6 +34,7 @@
   <string name="home_snackbar_note_moved_to_trash">Note flyttet til papirkurv</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Betalingskort flyttet til papirkurv</string>
   <string name="home_snackbar_identity_moved_to_trash">Identitet flyttet til papirkurven</string>
+  <string name="home_snackbar_custom_moved_to_trash">Custom item moved to trash</string>
   <string name="home_snackbar_move_to_trash_error">Element kunne ikke flyttes til papirkurven</string>
   <string name="home_snackbar_items_move_to_trash_success">Elementer flyttet til papirkurv</string>
   <string name="home_snackbar_items_move_to_trash_error">Elementer kunne ikke flyttes til papirkurven</string>

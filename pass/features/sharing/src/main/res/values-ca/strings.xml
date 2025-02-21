@@ -116,7 +116,7 @@
     <item quantity="other">Aquesta caixa forta pot tenir fins a %1$d membres. Encara us queden %2$d invitacions.</item>
   </plurals>
   <string name="sharing_limit_reached">Aquesta caixa forta ha arribat al límit de membres i invitacions.</string>
-  <string name="sharing_invites_info_upgrade_text">Milloreu ara el pla per a convidar més persones.</string>
+  <string name="sharing_invites_info_upgrade_text">Milloreu el pla per a convidar més persones.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Comparteix</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Comparteix aquesta caixa forta</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Mou a una caixa forta compartida</string>

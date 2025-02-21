@@ -10,11 +10,13 @@
   <string name="action_credit_card">Кредитна картка</string>
   <string name="action_password">Пароль</string>
   <string name="action_identity">Ідентичність</string>
+  <string name="action_custom">Custom item</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Додайте дані входу для програми або сайту</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Отримайте псевдонім е-пошти для використання в нових програмах</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Запишіть для себе PIN-код, код допуску або нотатку</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Надійно зберігайте платіжну інформацію</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Заповніть ваші особисті дані</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Create items with fully customised fields</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Згенерувати надійний пароль</string>
   <!-- Create Login -->
   <string name="field_email_title">Адреса електронної пошти</string>

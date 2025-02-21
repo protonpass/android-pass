@@ -18,6 +18,8 @@
   <string name="home_empty_shared_items_title">Не знайдено спільних елементів</string>
   <string name="home_empty_shared_items_with_me_subtitle">З вами не поділились жодним елементом.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Ви не поділилися жодним елементом.</string>
+  <string name="home_empty_no_vaults_title">You don\'t have any vault</string>
+  <string name="home_empty_no_vaults_subtitle">Please, contact your organization support team.</string>
   <string name="home_empty_read_only_vault_title">Ваше сховище порожнє</string>
   <string name="home_empty_read_only_vault_subtitle">Ви не можете додавати елементи до сховища, доступні лише для читання.</string>
   <string name="home_empty_vault_create_login">Створити запис входу</string>
@@ -32,6 +34,7 @@
   <string name="home_snackbar_note_moved_to_trash">Нотатку переміщено до смітника</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Банківську картку переміщено до смітника</string>
   <string name="home_snackbar_identity_moved_to_trash">Особисті дані переміщено до смітника</string>
+  <string name="home_snackbar_custom_moved_to_trash">Custom item moved to trash</string>
   <string name="home_snackbar_move_to_trash_error">Не вдалося перемістити елемент до смітника</string>
   <string name="home_snackbar_items_move_to_trash_success">Елементи переміщено до смітника</string>
   <string name="home_snackbar_items_move_to_trash_error">Не вдалося перемістити елементи до смітника</string>

@@ -22,8 +22,8 @@
   <string name="add_attachment_choose_a_file">Datei wählen</string>
   <string name="attachment_options_rename">Umbenennen</string>
   <string name="attachment_options_delete">Löschen</string>
-  <string name="file_picker_open_error">Could not open file picker</string>
-  <string name="media_picker_open_error">Could not open media picker</string>
+  <string name="file_picker_open_error">Der Dateiauswahl-Dialog konnte nicht geöffnet werden.</string>
+  <string name="media_picker_open_error">Der Medienauswahl-Dialog konnte nicht geöffnet werden.</string>
   <string name="camera_open_error">Die Kamera konnte nicht geöffnet werden.</string>
   <string name="camera_permission_explanation">Für diese Funktion ist die Kamera-Berechtigung notwendig.</string>
   <string name="camera_permission_open_settings">Einstellungen öffnen</string>

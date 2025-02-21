@@ -10,11 +10,13 @@
   <string name="action_credit_card">Крэдытная картка</string>
   <string name="action_password">Пароль</string>
   <string name="action_identity">Ідэнтычнасць</string>
+  <string name="action_custom">Custom item</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Дадайце запіс уваходу для праграм або сайтаў</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Атрымайце псеўданім электроннай пошты для выкарыстання ў новых праграмах</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Запішыце PIN, код або нататку для сябе</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Бяспечна захоўвайце сваю плацежную інфармацыю</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Запоўніце свае асабістыя даныя</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Create items with fully customised fields</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Згенерыруйце надзейны пароль</string>
   <!-- Create Login -->
   <string name="field_email_title">Адрас электроннай пошты</string>
@@ -208,9 +210,9 @@
   <string name="open_attachments_error">Немагчыма адкрыць далучэнне</string>
   <string name="upload_attachments_error">Немагчыма запампаваць далучэнне</string>
   <string name="banner_advanced_options_title">Ці ведалі вы што?</string>
-  <string name="banner_advanced_options_subtitle">Націсніце значок шасцерні, каб наладзіць псеўданім пад свае патрабаванні.</string>
+  <string name="banner_advanced_options_subtitle">Націсніце значок шасцярэнькі, каб наладзіць псеўданім пад свае патрабаванні.</string>
   <string name="banner_custom_domain_title">Ці ведалі вы што?</string>
-  <string name="banner_custom_domain_subtitle">Вы можаце стварыць такі псеўданім, як pryvitanne@moi-damen.com пры даданні свайго дамена.</string>
+  <string name="banner_custom_domain_subtitle">Вы можаце ствараць такія псеўданімы, як pryvitanne@moi-damen.com, калі дададзіце свой дамен.</string>
   <string name="banner_custom_domain_button">Дадаць дамен</string>
   <string name="banner_mailbox_title">Ці ведалі вы што?</string>
   <string name="banner_mailbox_subtitle">Абагульвайце псеўданімы з іншымі, дадаючы іх паштовую скрыню ў якасці дадатковай паштовай скрыні.</string>

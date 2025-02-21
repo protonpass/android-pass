@@ -18,6 +18,8 @@
   <string name="home_empty_shared_items_title">Ingen delte elementer funnet</string>
   <string name="home_empty_shared_items_with_me_subtitle">Ingen elementer er delt med deg.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Ingen elementer er delt av deg.</string>
+  <string name="home_empty_no_vaults_title">Du har ikke noe hvelv</string>
+  <string name="home_empty_no_vaults_subtitle">Ta kontakt med organisasjonens støtteteam.</string>
   <string name="home_empty_read_only_vault_title">Dette hvelvet er tomt</string>
   <string name="home_empty_read_only_vault_subtitle">Du kan ikke legge til elementer i et skrivebeskyttet hvelv.</string>
   <string name="home_empty_vault_create_login">Opprett en pålogging</string>
@@ -32,6 +34,7 @@
   <string name="home_snackbar_note_moved_to_trash">Notat flyttet til papirkurven</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Kredittkort flyttet til papirkurven</string>
   <string name="home_snackbar_identity_moved_to_trash">Identitet flyttet til papirkurven</string>
+  <string name="home_snackbar_custom_moved_to_trash">Tilpasset element flyttet til papirkurven</string>
   <string name="home_snackbar_move_to_trash_error">Elementet kunne ikke flyttes til papirkurven</string>
   <string name="home_snackbar_items_move_to_trash_success">Elementer flyttet til papirkurven</string>
   <string name="home_snackbar_items_move_to_trash_error">Elementer kunne ikke flyttes til papirkurven</string>

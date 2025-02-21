@@ -32,7 +32,7 @@
   <string name="delete_all_attachments_confirm">Выдаліць усе</string>
   <string name="rename_attachment_dialog_title">Перайменаваць файл</string>
   <string name="storage_full_title">Ваша сховішча амаль запоўнена.</string>
-  <string name="storage_full_body">Палепшыць каб павялічыць ёмістасць вашага сховішча.</string>
+  <string name="storage_full_body">Палепшыць, каб павялічыць ёмістасць вашага сховішча.</string>
   <string name="storage_full_upgrade">Палепшыць</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s з %2$s</string>
 </resources>

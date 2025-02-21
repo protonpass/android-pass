@@ -10,11 +10,13 @@
   <string name="action_credit_card">Thẻ tín dụng</string>
   <string name="action_password">Mật khẩu</string>
   <string name="action_identity">Danh tính</string>
+  <string name="action_custom">Custom item</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Thêm thông tin đăng nhập cho một ừng dụng hoặc một trang web</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Tạo một bí danh email để sử dụng trên các ứng dụng mới</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Ghi lại một mã PIN, mã thường, hay một ghi chú cho bản thân</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Lưu trữ an toàn thông tin thanh toán của bạn</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Điền vào thông tin cá nhân</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Create items with fully customised fields</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Tạo một mật khẩu bảo mật</string>
   <!-- Create Login -->
   <string name="field_email_title">Địa chỉ email</string>

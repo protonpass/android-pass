@@ -68,7 +68,7 @@
   <string name="sharing_snackbar_fetch_pending_invites_error">Se ha producido un error al obtener las invitaciones pendientes.</string>
   <string name="share_summary_title">Revisar y compartir</string>
   <string name="share_summary_share_vault">Compartir la caja fuerte</string>
-  <string name="share_summary_share_item">Compartir l\'elemento</string>
+  <string name="share_summary_share_item">Compartir el elemento</string>
   <string name="share_summary_vault_title">caja fuerte</string>
   <string name="share_summary_item_title">Elemento</string>
   <string name="share_summary_access_level_title">Nivel de acceso</string>

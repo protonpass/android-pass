@@ -10,11 +10,13 @@
   <string name="action_credit_card">신용 카드</string>
   <string name="action_password">비밀번호</string>
   <string name="action_identity">신원</string>
+  <string name="action_custom">Custom item</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">앱 및 사이트의 로그인 상세 정보 추가</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">새 앱에서 사용할 이메일 별칭 받기</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">PIN, 코드 또는 메모 적기</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">안전하게 결제 수단 정보 저장하기</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">개인 정보를 입력해주세요</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Create items with fully customised fields</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">보안 비밀번호 생성</string>
   <!-- Create Login -->
   <string name="field_email_title">이메일 주소</string>
@@ -139,7 +141,7 @@
   <string name="identity_field_middle_name_title">중간 이름</string>
   <string name="identity_field_birthdate_title">생년월일</string>
   <string name="identity_field_gender_title">성별</string>
-  <string name="identity_field_floor_title">바닥</string>
+  <string name="identity_field_floor_title">층수</string>
   <string name="identity_field_county_title">구/군</string>
   <string name="identity_field_linkedin_title">Linkedin</string>
   <string name="identity_field_reddit_title">Reddit 사용자 이름</string>
@@ -154,7 +156,7 @@
   <string name="identity_add_field_last_name">성</string>
   <string name="identity_add_field_birthdate">생년월일</string>
   <string name="identity_add_field_gender">성별</string>
-  <string name="identity_add_field_floor">바닥</string>
+  <string name="identity_add_field_floor">층수</string>
   <string name="identity_add_field_county">구/군</string>
   <string name="identity_add_field_linkedin">Linkedin</string>
   <string name="identity_add_field_reddit">Reddit 사용자 이름</string>

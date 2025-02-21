@@ -18,6 +18,8 @@
   <string name="home_empty_shared_items_title">Aucun élément partagé n\'a été trouvé.</string>
   <string name="home_empty_shared_items_with_me_subtitle">Aucun élément n’a été partagé avec vous.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Vous n\'avez partagé aucun élément.</string>
+  <string name="home_empty_no_vaults_title">Vous n\'avez aucun coffre-fort.</string>
+  <string name="home_empty_no_vaults_subtitle">Contactez l\'équipe de support de votre organisation.</string>
   <string name="home_empty_read_only_vault_title">Ce coffre-fort est vide.</string>
   <string name="home_empty_read_only_vault_subtitle">Vous ne pouvez pas ajouter des éléments à un coffre-fort en lecture seule.</string>
   <string name="home_empty_vault_create_login">Créer un identifiant</string>
@@ -32,6 +34,7 @@
   <string name="home_snackbar_note_moved_to_trash">La note a été déplacée dans la corbeille.</string>
   <string name="home_snackbar_credit_card_moved_to_trash">La carte de paiement a été déplacée dans la corbeille.</string>
   <string name="home_snackbar_identity_moved_to_trash">L\'identité a été déplacée dans la corbeille.</string>
+  <string name="home_snackbar_custom_moved_to_trash">L\'élément personnalisé a été déplacé dans le dossier Corbeille.</string>
   <string name="home_snackbar_move_to_trash_error">L\'élément n\'a pas pu être déplacé dans la corbeille.</string>
   <string name="home_snackbar_items_move_to_trash_success">Les éléments ont été déplacés dans la corbeille.</string>
   <string name="home_snackbar_items_move_to_trash_error">Les éléments n\'ont pas pu être déplacés dans la corbeille.</string>

@@ -18,6 +18,8 @@
   <string name="home_empty_shared_items_title">Nebyly nalezeny žádné sdílené položky</string>
   <string name="home_empty_shared_items_with_me_subtitle">Nebyly s vámi sdíleny žádné položky.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Nebyly vámi sdíleny žádné položky.</string>
+  <string name="home_empty_no_vaults_title">Nemáte žádný trezor</string>
+  <string name="home_empty_no_vaults_subtitle">Kontaktujte prosím tým podpory své organizace.</string>
   <string name="home_empty_read_only_vault_title">Tento trezor je prázdný</string>
   <string name="home_empty_read_only_vault_subtitle">Do trezoru určeného pouze ke čtení nelze přidávat položky.</string>
   <string name="home_empty_vault_create_login">Vytvořit přihlášení</string>
@@ -32,6 +34,7 @@
   <string name="home_snackbar_note_moved_to_trash">Poznámka přesunuta do koše</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Platební karta přesunuta do koše</string>
   <string name="home_snackbar_identity_moved_to_trash">Identita přesunuta do koše</string>
+  <string name="home_snackbar_custom_moved_to_trash">Vlastní položka přesunuta do koše</string>
   <string name="home_snackbar_move_to_trash_error">Položku nelze přesunout do koše</string>
   <string name="home_snackbar_items_move_to_trash_success">Položky přesunuty do koše</string>
   <string name="home_snackbar_items_move_to_trash_error">Položky nemohly být přesunuty do koše</string>

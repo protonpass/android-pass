@@ -25,7 +25,6 @@ import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.local.LocalShareDataSource
-import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
 
@@ -132,10 +131,10 @@ class TestLocalShareDataSource : LocalShareDataSource {
         isActive: Boolean?
     ): Flow<List<ShareEntity>> = observeSharesByTypeFlow.map { it.getOrThrow() }
 
-    override fun observeSharedWithMeIds(userId: UserId, itemState: ItemState?): Flow<List<String>> =
-        observeSharedWithMeIds.map { it.getOrThrow() }
+    override fun observeSharedWithMeIds(userId: UserId): Flow<List<String>> = observeSharedWithMeIds
+        .map { it.getOrThrow() }
 
-    override fun observeSharedByMeIds(userId: UserId, itemState: ItemState?): Flow<List<String>> =
-        observeSharedByMeIds.map { it.getOrThrow() }
+    override fun observeSharedByMeIds(userId: UserId): Flow<List<String>> = observeSharedByMeIds
+        .map { it.getOrThrow() }
 
 }

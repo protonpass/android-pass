@@ -249,7 +249,8 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?,
-        onlyShared: Boolean
+        onlyShared: Boolean,
+        applyItemStateToSharedItems: Boolean
     ): Flow<ItemCountSummary> = testFlow()
 
     override fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>> {

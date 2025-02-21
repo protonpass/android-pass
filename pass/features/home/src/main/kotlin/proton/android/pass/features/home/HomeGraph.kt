@@ -152,4 +152,7 @@ sealed interface HomeNavigation {
 
     data object ItemsMigrationSharedWarning : HomeNavigation
 
+    @JvmInline
+    value class LeaveItemShare(val shareId: ShareId) : HomeNavigation
+
 }

@@ -20,6 +20,8 @@ package proton.android.pass.features.item.trash.trashmenu.ui
 
 internal sealed interface ItemTrashMenuUiEvent {
 
+    data object OnLeaveItemClicked : ItemTrashMenuUiEvent
+
     data object OnDeleteItemPermanentlyClicked : ItemTrashMenuUiEvent
 
     data object OnRestoreItemClicked : ItemTrashMenuUiEvent

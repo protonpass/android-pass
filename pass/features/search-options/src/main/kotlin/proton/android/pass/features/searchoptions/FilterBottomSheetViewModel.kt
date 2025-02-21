@@ -56,13 +56,11 @@ class FilterBottomSheetViewModel @Inject constructor(
                 VaultSelectionOption.AllVaults -> observeItemCount()
 
                 VaultSelectionOption.SharedByMe -> observeSharedItemCountSummary(
-                    itemSharedType = ItemSharedType.SharedByMe,
-                    itemState = ItemState.Active
+                    itemSharedType = ItemSharedType.SharedByMe
                 )
 
                 VaultSelectionOption.SharedWithMe -> observeSharedItemCountSummary(
-                    itemSharedType = ItemSharedType.SharedWithMe,
-                    itemState = ItemState.Active
+                    itemSharedType = ItemSharedType.SharedWithMe
                 )
 
                 VaultSelectionOption.Trash -> observeItemCount(

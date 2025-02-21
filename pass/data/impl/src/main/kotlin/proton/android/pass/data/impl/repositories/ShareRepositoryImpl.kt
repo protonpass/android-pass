@@ -62,7 +62,6 @@ import proton.android.pass.data.impl.remote.RemoteShareDataSource
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.data.impl.util.TimeUtil.toDate
-import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.SharePermission
@@ -377,13 +376,12 @@ class ShareRepositoryImpl @Inject constructor(
         return address
     }
 
-    override fun observeSharedWithMeIds(userId: UserId, itemState: ItemState?): Flow<List<ShareId>> =
-        localShareDataSource
-            .observeSharedWithMeIds(userId, itemState)
-            .map { shares -> shares.map(::ShareId) }
+    override fun observeSharedWithMeIds(userId: UserId): Flow<List<ShareId>> = localShareDataSource
+        .observeSharedWithMeIds(userId)
+        .map { shares -> shares.map(::ShareId) }
 
-    override fun observeSharedByMeIds(userId: UserId, itemState: ItemState?): Flow<List<ShareId>> = localShareDataSource
-        .observeSharedByMeIds(userId, itemState)
+    override fun observeSharedByMeIds(userId: UserId): Flow<List<ShareId>> = localShareDataSource
+        .observeSharedByMeIds(userId)
         .map { shares -> shares.map(::ShareId) }
 
     private suspend fun onShareResponseEntity(

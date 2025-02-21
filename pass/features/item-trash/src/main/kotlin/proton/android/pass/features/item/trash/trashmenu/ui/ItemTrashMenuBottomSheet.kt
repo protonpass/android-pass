@@ -36,7 +36,11 @@ fun ItemTrashMenuBottomSheet(
 
     LaunchedEffect(key1 = state.event) {
         when (val event = state.event) {
-            ItemTrashMenuEvent.Idle -> {}
+            ItemTrashMenuEvent.Idle -> Unit
+
+            is ItemTrashMenuEvent.OnLeaveItem -> ItemTrashNavDestination.LeaveItem(
+                shareId = event.shareId
+            ).also(onNavigated)
 
             is ItemTrashMenuEvent.OnDeleteItem -> ItemTrashNavDestination.DeleteItem(
                 shareId = event.shareId,
@@ -59,6 +63,7 @@ fun ItemTrashMenuBottomSheet(
         state = state,
         onEvent = { uiEvent ->
             when (uiEvent) {
+                ItemTrashMenuUiEvent.OnLeaveItemClicked -> onLeaveItem()
                 ItemTrashMenuUiEvent.OnDeleteItemPermanentlyClicked -> onDeleteItem()
                 ItemTrashMenuUiEvent.OnRestoreItemClicked -> onRestoreItem()
             }

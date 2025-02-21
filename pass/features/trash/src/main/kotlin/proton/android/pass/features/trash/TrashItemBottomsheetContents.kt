@@ -24,34 +24,34 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.datetime.Clock
-import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
-import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemRow
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
-import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
+import proton.android.pass.composecomponents.impl.bottomsheet.delete
+import proton.android.pass.composecomponents.impl.bottomsheet.leave
+import proton.android.pass.composecomponents.impl.bottomsheet.restore
+import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun TrashItemBottomSheetContents(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
+    onLeaveItem: (ItemUiModel) -> Unit,
     onRestoreItem: (ItemUiModel) -> Unit,
     onDeleteItem: (ItemUiModel) -> Unit,
     icon: @Composable () -> Unit
@@ -75,55 +75,28 @@ fun TrashItemBottomSheetContents(
 
         Divider(modifier = Modifier.fillMaxWidth())
 
-        BottomSheetItemList(
-            items = persistentListOf(
-                restoreItem(itemUiModel, onRestoreItem),
-                bottomSheetDivider(),
-                deleteItem(itemUiModel, onDeleteItem)
+        buildList {
+            if (itemUiModel.isSharedWithMe) {
+                leave(
+                    onClick = { onLeaveItem(itemUiModel) }
+                ).also(::add)
+            }
+
+            restore(
+                action = BottomSheetItemAction.None,
+                onClick = { onRestoreItem(itemUiModel) }
+            ).also(::add)
+
+            delete(
+                onClick = { onDeleteItem(itemUiModel) }
+            ).also(::add)
+        }.let { items ->
+            BottomSheetItemList(
+                items = items.withDividers().toPersistentList()
             )
-        )
+        }
     }
 }
-
-private fun restoreItem(item: ItemUiModel, onRestoreItem: (ItemUiModel) -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.trash_action_restore)) }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_clock_rotate_left) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onRestoreItem(item) }
-        override val isDivider = false
-    }
-
-private fun deleteItem(item: ItemUiModel, onDeleteItem: (ItemUiModel) -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = {
-                BottomSheetItemTitle(
-                    text = stringResource(id = R.string.bottomsheet_delete_permanently),
-                    color = ProtonTheme.colors.notificationError
-                )
-            }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = {
-                BottomSheetItemIcon(
-                    iconId = CoreR.drawable.ic_proton_trash_cross,
-                    tint = ProtonTheme.colors.notificationError
-                )
-            }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onDeleteItem(item) }
-        override val isDivider = false
-    }
 
 @[Preview Composable]
 internal fun TrashItemBottomSheetContentsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
@@ -148,6 +121,7 @@ internal fun TrashItemBottomSheetContentsPreview(@PreviewParameter(ThemePreviewP
                     shareCount = 0,
                     isOwner = true
                 ),
+                onLeaveItem = { },
                 onRestoreItem = { },
                 onDeleteItem = { },
                 icon = { AliasIcon() }

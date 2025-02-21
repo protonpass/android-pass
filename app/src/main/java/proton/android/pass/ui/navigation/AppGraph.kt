@@ -471,6 +471,15 @@ fun NavGraphBuilder.appGraph(
                         filter = MigrateVaultFilter.All
                     )
                 )
+
+                is HomeNavigation.LeaveItemShare -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = ItemDetailsLeaveNavItem,
+                        route = ItemDetailsLeaveNavItem.createNavRoute(
+                            shareId = it.shareId
+                        )
+                    )
+                }
             }
         }
     )
@@ -1740,6 +1749,15 @@ fun NavGraphBuilder.appGraph(
                         itemId = itemTrashNavDestination.itemId
                     )
                 )
+
+                is ItemTrashNavDestination.LeaveItem -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = ItemDetailsLeaveNavItem,
+                        route = ItemDetailsLeaveNavItem.createNavRoute(
+                            shareId = itemTrashNavDestination.shareId
+                        )
+                    )
+                }
             }
         }
     )

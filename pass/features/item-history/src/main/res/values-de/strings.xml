@@ -30,8 +30,8 @@
   <string name="item_history_timeline_snackbar_message_error">Fehler beim Abrufen der Eintragsrevisionen.</string>
   <string name="reset_history_bottomsheet_option">Verlauf löschen</string>
   <string name="reset_history_dialog_title">Verlauf für dieses Element löschen?</string>
-  <string name="reset_history_dialog_body">Resetting history will permanently delete all past versions and cannot be undone.</string>
+  <string name="reset_history_dialog_body">Den Verlauf zurückzusetzen, löscht alle früheren Versionen endgültig und kann nicht rückgängig gemacht werden.</string>
   <string name="reset_history_action">Zurücksetzen</string>
-  <string name="reset_history_dialog_snackbar_message_error">There was an error resetting</string>
+  <string name="reset_history_dialog_snackbar_message_error">Beim Zurücksetzen ist ein Fehler aufgetreten.</string>
   <string name="reset_history_dialog_snackbar_message_success">Der Verlauf des Eintrags wurde zurückgesetzt.</string>
 </resources>

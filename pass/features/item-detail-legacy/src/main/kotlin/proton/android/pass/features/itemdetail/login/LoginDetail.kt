@@ -180,6 +180,7 @@ fun LoginDetail(
                             )
 
                             ItemState.Trashed.value -> TrashItemBottomSheetContents(
+                                canBeDeleted = state.share.canBeDeleted,
                                 itemUiModel = state.itemUiModel,
                                 onLeaveItem = { item ->
                                     scope.launch { bottomSheetState.hide() }

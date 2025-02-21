@@ -4,7 +4,7 @@
   <string name="bottomsheet_delete_permanently">Dauerhaft löschen</string>
   <string name="alert_confirm_delete_item_dialog_title">Dauerhaft löschen?</string>
   <string name="alert_confirm_delete_item_dialog_message">Dieser Vorgang kann nicht rückgängig gemacht werden.</string>
-  <string name="alert_confirm_delete_item_dialog_shared_warning_message">This item is currently shared. Deleting it to will remove access for all other users.</string>
+  <string name="alert_confirm_delete_item_dialog_shared_warning_message">Dieses Element wird derzeit geteilt. Wenn du es löschst, wird der Zugang für alle anderen Benutzer gesperrt.</string>
   <string name="alias_dialog_move_to_trash_title">In Papierkorb verschieben?</string>
   <string name="alias_dialog_move_to_trash_content">Wenn du einen Alias in den Papierkorb verschiebst, wird er keine E-Mails mehr an dein Postfach weiterleiten.</string>
   <string name="alias_dialog_move_to_trash_confirm">Bestätigen</string>

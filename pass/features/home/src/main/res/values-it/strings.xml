@@ -18,6 +18,8 @@
   <string name="home_empty_shared_items_title">Nessun elemento condiviso trovato</string>
   <string name="home_empty_shared_items_with_me_subtitle">Nessun elemento è stato condiviso con te.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Nessun elemento è stato condiviso da te.</string>
+  <string name="home_empty_no_vaults_title">Non hai nessuna cassaforte</string>
+  <string name="home_empty_no_vaults_subtitle">Contatta il team di supporto della tua organizzazione.</string>
   <string name="home_empty_read_only_vault_title">Questa cassaforte è vuota</string>
   <string name="home_empty_read_only_vault_subtitle">Non puoi aggiungere elementi a una cassaforte che puoi solo visualizzare.</string>
   <string name="home_empty_vault_create_login">Crea un login</string>
@@ -32,6 +34,7 @@
   <string name="home_snackbar_note_moved_to_trash">Nota spostata nel cestino</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Carta spostata nel cestino</string>
   <string name="home_snackbar_identity_moved_to_trash">Identità spostata nel cestino</string>
+  <string name="home_snackbar_custom_moved_to_trash">Elemento personalizzato spostato nel cestino</string>
   <string name="home_snackbar_move_to_trash_error">Spostamento dell\'elemento nel cestino non riuscito</string>
   <string name="home_snackbar_items_move_to_trash_success">Elementi spostati nel cestino</string>
   <string name="home_snackbar_items_move_to_trash_error">Spostamento degli elementi nel cestino non riuscito</string>

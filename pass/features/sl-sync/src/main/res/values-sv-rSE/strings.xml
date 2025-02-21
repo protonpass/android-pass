@@ -79,9 +79,9 @@
   <string name="simple_login_sync_mailbox_options_snackbar_default_error">Det uppstod ett fel vid uppdatering av standardbrevlåda</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_success">Standardbrevlåda uppdaterad</string>
   <string name="simple_login_sync_mailbox_change_email_option">Ändra brevlåda</string>
-  <string name="simple_login_sync_mailbox_cancel_change_email_option">Cancel mailbox change</string>
+  <string name="simple_login_sync_mailbox_cancel_change_email_option">Avbryt ändring av brevlåda</string>
   <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">There was an error cancelling mailbox email change</string>
-  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">Cancelled mailbox email change</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">Avbryt ändring av e-post för brevlåda</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Standard SL-valv</string>
   <string name="simple_login_sync_shared_default_vault_description">SimpleLogin-alias kommer att importeras till detta valv.</string>

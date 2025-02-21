@@ -10,11 +10,13 @@
   <string name="action_credit_card">Kreditkarte</string>
   <string name="action_password">Passwort</string>
   <string name="action_identity">Identität</string>
+  <string name="action_custom">Benutzerdefinierter Eintrag</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Zugangsdaten für eine App oder Website hinzufügen</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Hol dir einen E-Mail-Alias, den du für neue Apps verwenden kannst.</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Notiere dir eine PIN, einen Code oder eine Notiz an dich selbst</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Speichere deine Zahlungsinformationen sicher</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Fülle deine persönlichen Daten aus</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Eintrag mit vollständig angepassten Feldern erstellen</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Sicheres Passwort generieren</string>
   <!-- Create Login -->
   <string name="field_email_title">E‐Mail‐Adresse</string>
@@ -92,10 +94,10 @@
   <string name="cannot_retrieve_alias_options">Fehler beim Abrufen der Alias-Optionen.</string>
   <string name="alias_mailbox_dialog_title">Weiterleiten an</string>
   <string name="sl_note_info_title">Was ist eine SimpleLogin-Notiz?</string>
-  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">In Pass, an item note is encrypted with the item encryption key and only users who have access to the item can view the note.</string>
+  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">In Pass wird eine Eintragsnotiz mit einem individuellen Schlüssel verschlüsselt und nur Benutzer, die Zugriff auf den Eintrag haben, können die Notiz einsehen.</string>
   <string name="sl_note_info_message_part2">Noch nicht einmal Proton oder SimpleLogin können sie sehen.</string>
-  <string name="sl_note_info_message_part3">SimpleLogin note is stored together in the same location with alias address and while it is protected by encryption at rest, it isn\'t E2E encrypted meaning anyone who has access to SimpleLogin database can read it.</string>
-  <string name="sl_note_info_content_description">Show SL note information dialog</string>
+  <string name="sl_note_info_message_part3">Die SimpleLogin-Notiz wird zusammen mit der Alias-Adresse am selben Ort gespeichert und ist zwar durch eine Verschlüsselung im Ruhezustand geschützt, aber nicht E2E-verschlüsselt, d.h. jeder, der Zugang zur SimpleLogin-Datenbank hat, kann sie lesen.</string>
+  <string name="sl_note_info_content_description">SL-Hinweisinformationsdialog anzeigen</string>
   <!-- Create note -->
   <string name="note_hint">Notiz</string>
   <!-- Create Credit Card -->
@@ -208,12 +210,12 @@
   <string name="open_attachments_error">Der Anhang konnte nicht geöffnet werden</string>
   <string name="upload_attachments_error">Hochladen des Anhangs der Nachricht fehlgeschlagen</string>
   <string name="banner_advanced_options_title">Wusstest du?</string>
-  <string name="banner_advanced_options_subtitle">Tap the gear icon to customize the alias the way you want.</string>
+  <string name="banner_advanced_options_subtitle">Tippe auf das Zahnrad-Symbol, um den Alias nach deinen Wünschen zu gestalten.</string>
   <string name="banner_custom_domain_title">Wusstest du?</string>
   <string name="banner_custom_domain_subtitle">Wenn du deine Domain hinzufügst, kannst du Aliase wie hallo@mein-domain.de erstellen.</string>
   <string name="banner_custom_domain_button">Domain hinzufügen</string>
   <string name="banner_mailbox_title">Wusstest du?</string>
-  <string name="banner_mailbox_subtitle">Share aliases with others by adding their inbox as an additional mailbox.</string>
+  <string name="banner_mailbox_subtitle">Gib Aliase für andere Personen frei, indem du deren Posteingang als zusätzliches Postfach hinzufügst.</string>
   <string name="banner_mailbox_button">Postfach hinzufügen</string>
   <!-- Suffix -->
   <string name="suffix_subtitle_premium_domain">Premium-Domain</string>

@@ -10,11 +10,13 @@
   <string name="action_credit_card">საკრედიტო ბარათი</string>
   <string name="action_password">პაროლი</string>
   <string name="action_identity">იდენტობა</string>
+  <string name="action_custom">Custom item</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">აპისთვის ან საიტისთვის შესვლის დეტალების დამატება</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">მიიღეთ ელფოსტის ფსევდონიმი ახალ აპებზე გამოსაყენებლად</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">PIN კოდი სადმე საიმედო ადგილას ჩაიწერეთ</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">უსაფრთხოდ შეინახეთ თქვენი გადახდის ინფორმაცია</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">შეავსეთ თქვენი პირადი მონაცემები</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Create items with fully customised fields</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">უსაფრთხო პაროლის გენერირება</string>
   <!-- Create Login -->
   <string name="field_email_title">ელფოსტის მისამართი</string>

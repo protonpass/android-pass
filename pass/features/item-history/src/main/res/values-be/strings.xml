@@ -32,6 +32,6 @@
   <string name="reset_history_dialog_title">Скінуць гісторыю для гэтага элемента?</string>
   <string name="reset_history_dialog_body">Скіданне гісторыі прывядзе да незваротнага выдалення ўсіх мінулых версій і гэту аперацыю немагчыма будзе адрабіць.</string>
   <string name="reset_history_action">Скінуць</string>
-  <string name="reset_history_dialog_snackbar_message_error">Адбылася памылка скінадння</string>
+  <string name="reset_history_dialog_snackbar_message_error">Адбылася памылка скідання</string>
   <string name="reset_history_dialog_snackbar_message_success">Гісторыя элемента скінута</string>
 </resources>

@@ -18,6 +18,8 @@
   <string name="home_empty_shared_items_title">Inga delade objekt hittades</string>
   <string name="home_empty_shared_items_with_me_subtitle">Inga objekt har delats med dig.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Inga objekt har delats av dig.</string>
+  <string name="home_empty_no_vaults_title">Du har inga valv</string>
+  <string name="home_empty_no_vaults_subtitle">Kontakta din organisations supportteam.</string>
   <string name="home_empty_read_only_vault_title">Detta valv är tomt</string>
   <string name="home_empty_read_only_vault_subtitle">Du kan inte lägga till objekt i ett skrivskyddat valv.</string>
   <string name="home_empty_vault_create_login">Skapa en inloggning</string>
@@ -32,6 +34,7 @@
   <string name="home_snackbar_note_moved_to_trash">Anteckning flyttad till papperskorg</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Kreditkort flyttat till papperskorg</string>
   <string name="home_snackbar_identity_moved_to_trash">Identitet flyttad till papperskorg</string>
+  <string name="home_snackbar_custom_moved_to_trash">Anpassat objekt flyttat till papperskorg</string>
   <string name="home_snackbar_move_to_trash_error">Objekt kunde inte flyttas till papperskorg</string>
   <string name="home_snackbar_items_move_to_trash_success">Objekt flyttat till papperskorg</string>
   <string name="home_snackbar_items_move_to_trash_error">Objekt kunde inte flyttas till papperskorg</string>

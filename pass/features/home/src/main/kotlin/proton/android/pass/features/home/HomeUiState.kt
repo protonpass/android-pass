@@ -113,8 +113,7 @@ internal data class HomeUiState(
         is VaultSelectionOption.Vault ->
             homeListUiState
                 .shares[selection.shareId]
-                ?.isViewer
-                ?: false
+                ?.isViewer == true
 
         VaultSelectionOption.AllVaults,
         VaultSelectionOption.SharedByMe,
@@ -247,12 +246,13 @@ internal data class HomeListUiState(
         .orEmpty()
 
     internal fun isItemSelectable(item: ItemUiModel): Boolean = shares[item.shareId]
-        ?.canBeSelected
-        ?: false
+        ?.canBeSelected == true
 
-    fun checkCanUpdate(shareId: ShareId): Boolean = shares[shareId]?.canBeUpdated ?: false
+    fun checkCanUpdate(shareId: ShareId): Boolean = shares[shareId]?.canBeUpdated == true
 
-    fun canViewHistory(shareId: ShareId): Boolean = shares[shareId]?.canBeHistoryViewed ?: false
+    fun canViewHistory(shareId: ShareId): Boolean = shares[shareId]?.canBeHistoryViewed == true
+
+    fun canBeDeleted(shareId: ShareId): Boolean = shares[shareId]?.canBeDeleted == true
 
     internal companion object {
 

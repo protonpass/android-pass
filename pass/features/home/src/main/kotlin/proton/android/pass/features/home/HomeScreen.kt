@@ -577,13 +577,14 @@ fun HomeScreen(
                 TrashItemOptions -> {
                     val item = selectedItem ?: return@PassModalBottomSheetLayout
                     TrashItemBottomSheetContents(
+                        canBeDeleted = homeUiState.homeListUiState.canBeDeleted(item.shareId),
                         itemUiModel = item,
                         onLeaveItem = remember {
                             {
                                 scope.launch { bottomSheetState.hide() }
 
                                 HomeNavigation.LeaveItemShare(
-                                    shareId = item.shareId
+                                    shareId = it.shareId
                                 ).also(onNavigateEvent)
                             }
                         },

@@ -437,7 +437,7 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
           AND ${ItemEntity.Columns.SHARE_COUNT} > 0
-          AND ${ItemEntity.Columns.STATE} = :itemState OR :itemState IS NULL
+          AND (:itemState IS NULL OR ${ItemEntity.Columns.STATE} = :itemState)
         """
     )
     abstract fun countSharedItems(

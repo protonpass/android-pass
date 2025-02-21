@@ -26,7 +26,6 @@ import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.items.ObserveSharedItemCountSummary
-import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.items.ItemSharedType
 import javax.inject.Inject
 
@@ -36,29 +35,27 @@ class ObserveSharedItemCountSummaryImpl @Inject constructor(
     private val itemRepository: ItemRepository
 ) : ObserveSharedItemCountSummary {
 
-    override fun invoke(itemSharedType: ItemSharedType, itemState: ItemState?): Flow<ItemCountSummary> =
-        observeCurrentUser()
-            .flatMapLatest { user ->
-                when (itemSharedType) {
-                    ItemSharedType.SharedByMe -> itemRepository.observeSharedByMeEncryptedItems(
-                        userId = user.userId,
-                        itemState = itemState
-                    ).mapLatest { encryptedItemsSharedByMe ->
-                        encryptedItemsSharedByMe.map { it.shareId }
-                    }
-
-                    ItemSharedType.SharedWithMe -> shareRepository.observeSharedWithMeIds(
-                        userId = user.userId,
-                        itemState = itemState
-                    )
-                }.flatMapLatest { sharedShareIds ->
-                    itemRepository.observeItemCountSummary(
-                        userId = user.userId,
-                        shareIds = sharedShareIds,
-                        itemState = itemState,
-                        onlyShared = true
-                    )
+    override fun invoke(itemSharedType: ItemSharedType): Flow<ItemCountSummary> = observeCurrentUser()
+        .flatMapLatest { user ->
+            when (itemSharedType) {
+                ItemSharedType.SharedByMe -> itemRepository.observeSharedByMeEncryptedItems(
+                    userId = user.userId,
+                    itemState = null
+                ).mapLatest { encryptedItemsSharedByMe ->
+                    encryptedItemsSharedByMe.map { it.shareId }
                 }
+
+                ItemSharedType.SharedWithMe -> shareRepository.observeSharedWithMeIds(
+                    userId = user.userId
+                )
+            }.flatMapLatest { sharedShareIds ->
+                itemRepository.observeItemCountSummary(
+                    userId = user.userId,
+                    shareIds = sharedShareIds,
+                    itemState = null,
+                    onlyShared = true
+                )
             }
+        }
 
 }

@@ -49,5 +49,5 @@
     <item quantity="other">%d Versuche verbleibend</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Zu viele fehlgeschlagene PIN-Versuche. Alle deine Benutzer werden abgemeldet.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Zu viele fehlgeschlagene PIN-Versuche</string>
 </resources>

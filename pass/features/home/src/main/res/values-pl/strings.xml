@@ -18,6 +18,8 @@
   <string name="home_empty_shared_items_title">Nie znaleziono udostępnionych elementów</string>
   <string name="home_empty_shared_items_with_me_subtitle">Brak elementów udostępnionych Tobie.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Brak udostępnionych elementów.</string>
+  <string name="home_empty_no_vaults_title">You don\'t have any vault</string>
+  <string name="home_empty_no_vaults_subtitle">Please, contact your organization support team.</string>
   <string name="home_empty_read_only_vault_title">Sejf jest pusty</string>
   <string name="home_empty_read_only_vault_subtitle">Nie możesz dodawać elementów w sejfie tylko do odczytu.</string>
   <string name="home_empty_vault_create_login">Utwórz dane logowania</string>
@@ -32,11 +34,12 @@
   <string name="home_snackbar_note_moved_to_trash">Notatka została przeniesiona do Kosza</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Karta płatnicza została przeniesiona do Kosza</string>
   <string name="home_snackbar_identity_moved_to_trash">Tożsamość została przeniesiona do Kosza</string>
+  <string name="home_snackbar_custom_moved_to_trash">Custom item moved to trash</string>
   <string name="home_snackbar_move_to_trash_error">Przenoszenie elementu do Kosza nie powiodło się</string>
   <string name="home_snackbar_items_move_to_trash_success">Elementy zostały przeniesione do Kosza</string>
   <string name="home_snackbar_items_move_to_trash_error">Przenoszenie elementów do Kosza nie powiodło się</string>
   <string name="home_toast_items_selected_read_only">Nie możesz zaznaczyć elementów tylko do odczytu</string>
-  <string name="home_toast_items_selected_shared_with_me">Items shared with you cannot be selected</string>
+  <string name="home_toast_items_selected_shared_with_me">Nie można wybrać elementów udostępnionych Tobie</string>
   <string name="home_autofill_banner_title">Ciesz się magią autouzupełniania</string>
   <string name="home_autofill_banner_text">Jedno kliknięcie i gotowe! Nazwa użytkownika i hasło są uzupełnione.</string>
   <string name="home_autofill_banner_settings">Włącz autouzupełnianie ›</string>

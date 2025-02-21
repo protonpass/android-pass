@@ -17,7 +17,7 @@
   <string name="vault_delete_dialog_placeholder">Tresorname</string>
   <string name="vault_delete_dialog_cancel_action">Abbrechen</string>
   <string name="vault_delete_dialog_delete_action">Löschen</string>
-  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">This vault holds %1$s. Deleting it will remove access for all other users.</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Dieser Tresor enthält %1$s. Das Löschen wird den Zugriff für alle anderen Nutzer entfernen.</string>
   <string name="vault_leave_dialog_title">Tresor verlassen</string>
   <string name="vault_leave_dialog_body">Dadurch wird dein Zugriff auf den Tresor __VAULT_NAME__ und alle seine Inhalte entfernt. Bist du sicher, dass du ihn verlassen willst?</string>
   <string name="vault_leave_dialog_cancel_action">Abbrechen</string>

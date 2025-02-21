@@ -30,7 +30,7 @@
   <string name="item_details_forbidden_actions_share_trash">Du kannst diesen Eintrag nicht bearbeiten, da er sich im Papierkorb befindet. Bitte entferne ihn aus dem Papierkorb, um ihn zu bearbeiten.</string>
   <!-- Item details leave item -->
   <string name="item_details_leave_dialog_title">Dieses Element verlassen?</string>
-  <string name="item_details_leave_dialog_message">You will lose access to this item and its details. Do you want to continue?</string>
+  <string name="item_details_leave_dialog_message">Du wirst den Zugriff auf dieses Element und seine Details verlieren. Möchtest du fortfahren?</string>
   <string name="item_details_leave_item_message_error">Fehler beim Verlassen des Elements.</string>
-  <string name="item_details_leave_item_message_success">Item successfully left</string>
+  <string name="item_details_leave_item_message_success">Eintrag erfolgreich verlassen</string>
 </resources>

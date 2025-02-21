@@ -26,7 +26,7 @@
   <string name="simple_login_sync_management_mailboxes_description">La boîte de réception est l\'endroit où les e-mails envoyés à un alias sont redirigés. C\'est votre messagerie habituelle, par exemple Gmail, Outlook, Proton Mail, etc.</string>
   <string name="simple_login_sync_management_mailbox_default">Par défaut</string>
   <string name="simple_login_sync_management_mailbox_unverified">La messagerie n\'est pas vérifiée.</string>
-  <string name="simple_login_sync_management_mailbox_unverified_change">La modification de la messagerie n\'a pas été vérifiée.</string>
+  <string name="simple_login_sync_management_mailbox_unverified_change">Modification de la messagerie non vérifiée</string>
   <string name="simple_login_sync_management_vault_title">Synchronisation avec SimpleLogin</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Une erreur est survenue lors de la récupération des informations de l\'alias SL.</string>
   <string name="simple_login_sync_management_mailboxes_title">Messagerie par défaut pour les alias</string>

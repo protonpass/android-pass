@@ -26,7 +26,7 @@
   <string name="simple_login_sync_management_mailboxes_description">Do e-mailové schránky se přeposílají e-maily odeslané na alias. Je to vaše obvyklá e-mailová schránka, např. Gmail, Outlook, Proton Mail atd.</string>
   <string name="simple_login_sync_management_mailbox_default">Výchozí</string>
   <string name="simple_login_sync_management_mailbox_unverified">Neověřená e-mailová schránka</string>
-  <string name="simple_login_sync_management_mailbox_unverified_change">Změna neověřené e-mailové schránky</string>
+  <string name="simple_login_sync_management_mailbox_unverified_change">Neověřená změna e-mailové schránky</string>
   <string name="simple_login_sync_management_vault_title">Synchronizace SimpleLogin</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Došlo k chybě při získávání detailů SL aliasu</string>
   <string name="simple_login_sync_management_mailboxes_title">Výchozí e-mailová schránka pro aliasy</string>
@@ -80,8 +80,8 @@
   <string name="simple_login_sync_mailbox_options_snackbar_default_success">Výchozí e-mailová schránka úspěšně aktualizována</string>
   <string name="simple_login_sync_mailbox_change_email_option">Změna e-mailové schránky</string>
   <string name="simple_login_sync_mailbox_cancel_change_email_option">Zrušení změny e-mailové schránky</string>
-  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">Došlo k chybě při rušení změny e-mailové schránky</string>
-  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">Změna e-mailové schránky zrušena</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">Došlo k chybě při rušení změny e-mailu schránky</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">Změna e-mailu schránky zrušena</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Výchozí trezor SL</string>
   <string name="simple_login_sync_shared_default_vault_description">SimpleLogin aliasy budou importovány do tohoto trezoru.</string>

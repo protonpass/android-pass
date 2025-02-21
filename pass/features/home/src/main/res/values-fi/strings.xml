@@ -18,6 +18,8 @@
   <string name="home_empty_shared_items_title">Jaettuja kohteita ei löytynyt</string>
   <string name="home_empty_shared_items_with_me_subtitle">Kohteita ei ole jaettu kanssasi.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Et ole jakanut kohteita.</string>
+  <string name="home_empty_no_vaults_title">You don\'t have any vault</string>
+  <string name="home_empty_no_vaults_subtitle">Please, contact your organization support team.</string>
   <string name="home_empty_read_only_vault_title">Tämä holvi on tyhjä</string>
   <string name="home_empty_read_only_vault_subtitle">Et voi lisätä kohteita holviin, johon on vain lukuoikeus.</string>
   <string name="home_empty_vault_create_login">Luo kirjautumistieto</string>
@@ -32,6 +34,7 @@
   <string name="home_snackbar_note_moved_to_trash">Muistiinpano siirrettiin roskakoriin</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Maksukortti siirrettiin roskakoriin</string>
   <string name="home_snackbar_identity_moved_to_trash">Identiteetti siirrettiin roskakoriin</string>
+  <string name="home_snackbar_custom_moved_to_trash">Custom item moved to trash</string>
   <string name="home_snackbar_move_to_trash_error">Kohdetta ei voitu siirtää roskakoriin</string>
   <string name="home_snackbar_items_move_to_trash_success">Kohteet siirrettiin roskakoriin</string>
   <string name="home_snackbar_items_move_to_trash_error">Kohteita ei voitu siirtää roskakoriin</string>

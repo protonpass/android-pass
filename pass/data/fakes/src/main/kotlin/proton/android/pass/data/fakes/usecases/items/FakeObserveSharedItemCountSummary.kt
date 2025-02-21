@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.map
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.usecases.items.ObserveSharedItemCountSummary
-import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.items.ItemSharedType
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -37,7 +36,7 @@ class FakeObserveSharedItemCountSummary @Inject constructor() : ObserveSharedIte
         sharedItemCountSummaryFlow.tryEmit(Result.success(value))
     }
 
-    override fun invoke(itemSharedType: ItemSharedType, itemState: ItemState?): Flow<ItemCountSummary> =
+    override fun invoke(itemSharedType: ItemSharedType): Flow<ItemCountSummary> =
         sharedItemCountSummaryFlow.map(Result<ItemCountSummary>::getOrThrow)
 
 }

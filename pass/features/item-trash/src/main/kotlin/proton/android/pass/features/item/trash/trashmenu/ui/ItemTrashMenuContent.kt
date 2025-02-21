@@ -62,20 +62,22 @@ internal fun ItemTrashMenuContent(
         Divider(modifier = Modifier.fillMaxWidth())
 
         buildList {
-            if (canLeaveItem) {
+            if (canBeLeft) {
                 leave(
                     onClick = { onEvent(ItemTrashMenuUiEvent.OnLeaveItemClicked) }
                 ).also(::add)
             }
 
-            restore(
-                action = action,
-                onClick = { onEvent(ItemTrashMenuUiEvent.OnRestoreItemClicked) }
-            ).also(::add)
+            if (canBeDeleted) {
+                restore(
+                    action = action,
+                    onClick = { onEvent(ItemTrashMenuUiEvent.OnRestoreItemClicked) }
+                ).also(::add)
 
-            delete(
-                onClick = { onEvent(ItemTrashMenuUiEvent.OnDeleteItemPermanentlyClicked) }
-            ).also(::add)
+                delete(
+                    onClick = { onEvent(ItemTrashMenuUiEvent.OnDeleteItemPermanentlyClicked) }
+                ).also(::add)
+            }
         }.let { bottomSheetItems ->
             BottomSheetItemList(
                 items = bottomSheetItems.withDividers().toPersistentList()

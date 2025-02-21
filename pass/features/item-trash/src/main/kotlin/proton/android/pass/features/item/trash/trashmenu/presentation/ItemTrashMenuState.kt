@@ -25,6 +25,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.items.ItemCategory
 
 @Stable
@@ -32,6 +33,7 @@ internal data class ItemTrashMenuState(
     internal val action: BottomSheetItemAction,
     internal val event: ItemTrashMenuEvent,
     internal val canLoadExternalImages: Boolean,
+    private val shareOption: Option<Share>,
     private val itemUiModelOption: Option<ItemUiModel>
 ) {
 
@@ -84,7 +86,12 @@ internal data class ItemTrashMenuState(
         }
     }
 
-    internal val canLeaveItem: Boolean = when (itemUiModelOption) {
+    internal val canBeDeleted: Boolean = when (shareOption) {
+        None -> false
+        is Some -> shareOption.value.canBeDeleted
+    }
+
+    internal val canBeLeft: Boolean = when (itemUiModelOption) {
         None -> false
         is Some -> itemUiModelOption.value.isSharedWithMe
     }
@@ -95,6 +102,7 @@ internal data class ItemTrashMenuState(
             action = BottomSheetItemAction.None,
             event = ItemTrashMenuEvent.Idle,
             canLoadExternalImages = false,
+            shareOption = None,
             itemUiModelOption = None
         )
 

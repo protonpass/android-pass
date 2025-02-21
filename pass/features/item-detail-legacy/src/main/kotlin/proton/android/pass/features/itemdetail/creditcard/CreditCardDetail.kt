@@ -146,6 +146,7 @@ fun CreditCardDetail(
                         )
 
                         ItemState.Trashed.value -> TrashItemBottomSheetContents(
+                            canBeDeleted = state.share.canBeDeleted,
                             itemUiModel = itemUiModel,
                             onLeaveItem = { item ->
                                 scope.launch { bottomSheetState.hide() }

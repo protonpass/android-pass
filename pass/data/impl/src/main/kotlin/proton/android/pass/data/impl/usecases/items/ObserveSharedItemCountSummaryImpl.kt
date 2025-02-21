@@ -53,7 +53,8 @@ class ObserveSharedItemCountSummaryImpl @Inject constructor(
                     userId = user.userId,
                     shareIds = sharedShareIds,
                     itemState = null,
-                    onlyShared = true
+                    onlyShared = true,
+                    applyItemStateToSharedItems = false
                 )
             }
         }

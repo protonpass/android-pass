@@ -27,7 +27,8 @@ data class ItemCountSummary(
     val identities: Long,
     val sharedWithMe: Long,
     val sharedByMe: Long,
-    val trashed: Long
+    val trashed: Long,
+    private val sharedWithMeTrashed: Long
 ) {
 
     val total: Long = login
@@ -40,6 +41,8 @@ data class ItemCountSummary(
 
     val hasSharedByMeItems: Boolean = sharedByMe > 0
 
+    val sharedWithMeActive: Long = sharedWithMe - sharedWithMeTrashed
+
     companion object {
 
         val Initial = ItemCountSummary(
@@ -51,7 +54,8 @@ data class ItemCountSummary(
             identities = 0,
             sharedWithMe = 0,
             sharedByMe = 0,
-            trashed = 0
+            trashed = 0,
+            sharedWithMeTrashed = 0
         )
 
     }

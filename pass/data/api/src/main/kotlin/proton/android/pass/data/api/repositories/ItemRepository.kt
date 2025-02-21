@@ -172,7 +172,8 @@ interface ItemRepository {
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?,
-        onlyShared: Boolean
+        onlyShared: Boolean,
+        applyItemStateToSharedItems: Boolean
     ): Flow<ItemCountSummary>
 
     fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>>

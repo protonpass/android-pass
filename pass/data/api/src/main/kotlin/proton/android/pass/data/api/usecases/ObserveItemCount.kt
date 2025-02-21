@@ -24,8 +24,11 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 
 interface ObserveItemCount {
+
     operator fun invoke(
         itemState: ItemState? = ItemState.Active,
-        selectedShareId: ShareId? = null
+        selectedShareId: ShareId? = null,
+        applyItemStateToSharedItems: Boolean = true
     ): Flow<ItemCountSummary>
+
 }

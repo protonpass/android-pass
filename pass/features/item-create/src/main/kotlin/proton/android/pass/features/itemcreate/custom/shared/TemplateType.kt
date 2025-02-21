@@ -63,6 +63,7 @@ enum class TemplateType(
     }
 
     companion object {
-        fun fromId(id: Int): TemplateType? = entries.find { it.id == id }
+        fun fromId(id: Int): TemplateType = entries.find { it.id == id }
+            ?: throw IllegalStateException("Unknown template type id: $id")
     }
 }

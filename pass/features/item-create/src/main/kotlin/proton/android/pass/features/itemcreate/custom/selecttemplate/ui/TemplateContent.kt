@@ -79,7 +79,7 @@ fun TemplateContent(modifier: Modifier = Modifier, onEvent: (TemplateEvent) -> U
                         )
                     }
 
-                    items(items) { item ->
+                    items(items, key = TemplateType::id) { item ->
                         TemplateItem(
                             modifier = Modifier.padding(vertical = Spacing.extraSmall),
                             item = item,

@@ -27,7 +27,6 @@ import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.repositories.RefreshSharesResult
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.UpdateShareEvent
-import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
@@ -166,11 +165,10 @@ class TestShareRepository : ShareRepository {
     override suspend fun getAddressForShareId(userId: UserId, shareId: ShareId): UserAddress =
         getAddressForShareIdResult.getOrThrow()
 
-    override fun observeSharedWithMeIds(userId: UserId, itemState: ItemState?): Flow<List<ShareId>> =
-        observeSharedWithMeIds
-            .map { it.getOrThrow() }
+    override fun observeSharedWithMeIds(userId: UserId): Flow<List<ShareId>> = observeSharedWithMeIds
+        .map { it.getOrThrow() }
 
-    override fun observeSharedByMeIds(userId: UserId, itemState: ItemState?): Flow<List<ShareId>> = observeSharedByMeIds
+    override fun observeSharedByMeIds(userId: UserId): Flow<List<ShareId>> = observeSharedByMeIds
         .map { it.getOrThrow() }
 
     data class RefreshSharePayload(

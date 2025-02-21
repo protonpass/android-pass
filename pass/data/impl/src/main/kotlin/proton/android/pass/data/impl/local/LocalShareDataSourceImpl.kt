@@ -24,7 +24,6 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ShareEntity
-import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.ShareType
@@ -92,21 +91,18 @@ class LocalShareDataSourceImpl @Inject constructor(
             isActive = isActive
         )
 
-    override fun observeSharedWithMeIds(userId: UserId, itemState: ItemState?): Flow<List<String>> =
-        database.sharesDao()
-            .observeSharedIds(
-                userId = userId.id,
-                shareType = ShareType.Item.value,
-                shareRole = null,
-                isActive = itemState?.let { it == ItemState.Active }
-            )
+    override fun observeSharedWithMeIds(userId: UserId): Flow<List<String>> = database.sharesDao()
+        .observeSharedIds(
+            userId = userId.id,
+            shareType = ShareType.Item.value,
+            shareRole = null
+        )
 
-    override fun observeSharedByMeIds(userId: UserId, itemState: ItemState?): Flow<List<String>> = database.sharesDao()
+    override fun observeSharedByMeIds(userId: UserId): Flow<List<String>> = database.sharesDao()
         .observeSharedIds(
             userId = userId.id,
             shareType = null,
-            shareRole = ShareRole.SHARE_ROLE_ADMIN,
-            isActive = itemState?.let { it == ItemState.Active }
+            shareRole = ShareRole.SHARE_ROLE_ADMIN
         )
 
     private companion object {

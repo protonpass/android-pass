@@ -147,6 +147,13 @@ fun CreditCardDetail(
 
                         ItemState.Trashed.value -> TrashItemBottomSheetContents(
                             itemUiModel = itemUiModel,
+                            onLeaveItem = { item ->
+                                scope.launch { bottomSheetState.hide() }
+
+                                ItemDetailNavigation.LeaveItemShare(
+                                    shareId = item.shareId
+                                ).also(onNavigate)
+                            },
                             onRestoreItem = { item ->
                                 scope.launch { bottomSheetState.hide() }
                                 viewModel.onItemRestore(item.shareId, item.id)

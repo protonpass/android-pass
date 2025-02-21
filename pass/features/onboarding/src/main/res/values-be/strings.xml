@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="on_boarding_autofill_content">Дазвольце Proton Pass запоўняць запісы ўваходу за вас. Няма неабходнасці нічога ўводзіць або выконваць аперацыі капіявання і ўстаўкі.</string>
+  <string name="on_boarding_autofill_content">Дазвольце Proton Pass запаўняць запісы ўваходу за вас. Няма неабходнасці нічога ўводзіць або выконваць аперацыі капіявання і ўстаўкі.</string>
   <string name="on_boarding_autofill_title">Імгненна ўваходзьце ў праграмы</string>
   <string name="on_boarding_autofill_button">Аўтазапаўняць з Proton Pass</string>
   <string name="on_boarding_fingerprint_content">Наладзьце разблакіроўку Proton Pass з дапамогай адбітка, каб толькі ў вас быў доступ да яго.</string>
@@ -25,7 +25,7 @@
   <string name="onboarding_slide_1_subtitle">Бяспечна ў адным месцы і абаронены самай надзейнай кампаніяй у галіне прыватнасці.</string>
   <string name="onboarding_slide_2_subtitle">Выкарыстоўвайце псеўданімы Hide-My-Email, каб абараніцца ад пагроз фішынгу.</string>
   <string name="onboarding_slide_3_subtitle">Абагульвайце паролі і канфідэнцыяльныя звесткі бяспечна і без намаганняў.</string>
-  <string name="onboarding_slide_4_subtitle">Атрымлівайце абвесткі, калі ваша электронная пошта трапляе ў Dark Web</string>
+  <string name="onboarding_slide_4_subtitle">Атрымлівайце абвесткі, калі ваша электронная пошта знойдзена ў Dark Web</string>
   <string name="create_an_account_button">Стварыць уліковы запіс</string>
   <string name="sign_in_button">Увайсці</string>
 </resources>

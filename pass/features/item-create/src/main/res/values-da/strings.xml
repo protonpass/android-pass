@@ -10,11 +10,13 @@
   <string name="action_credit_card">Betalingskort</string>
   <string name="action_password">Adgangskode</string>
   <string name="action_identity">Identitet</string>
+  <string name="action_custom">Custom item</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Tilføj loginoplysninger for en app eller et websted</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Få et e-mail-alias til brug i nye apps</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Notér en pinkode, kode eller bemærkning til dig selv</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Opbevar dine betalingsoplysninger sikkert</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Udfyld dine personlige data</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Create items with fully customised fields</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Generér en sikker adgangskode</string>
   <!-- Create Login -->
   <string name="field_email_title">E-mailadresse</string>

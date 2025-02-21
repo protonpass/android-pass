@@ -10,11 +10,13 @@
   <string name="action_credit_card">Carta</string>
   <string name="action_password">Password</string>
   <string name="action_identity">Identità</string>
+  <string name="action_custom">Elemento personalizzato</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Aggiungi le credenziali per un\'app o un sito web</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Crea un alias email per le nuove registrazioni</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Appunta un PIN, un codice o una nota personale</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Memorizza in modo sicuro le informazioni di pagamento</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Inserisci le tue informazioni personali</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Crea elementi con campi completamente personalizzati</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Genera una password sicura</string>
   <!-- Create Login -->
   <string name="field_email_title">Indirizzo email</string>

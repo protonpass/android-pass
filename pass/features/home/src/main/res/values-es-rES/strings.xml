@@ -18,6 +18,8 @@
   <string name="home_empty_shared_items_title">No se han encontrado elementos compartidos.</string>
   <string name="home_empty_shared_items_with_me_subtitle">No se ha compartido ningún elemento contigo.</string>
   <string name="home_empty_shared_items_by_me_subtitle">No has compartido ningún elemento.</string>
+  <string name="home_empty_no_vaults_title">No tienes ninguna caja fuerte.</string>
+  <string name="home_empty_no_vaults_subtitle">Póngate en contacto con el equipo de soporte de tu organización.</string>
   <string name="home_empty_read_only_vault_title">Esta caja fuerte está vacía.</string>
   <string name="home_empty_read_only_vault_subtitle">No puedes añadir elementos a una caja fuerte de solo lectura.</string>
   <string name="home_empty_vault_create_login">Crear un inicio de sesión</string>
@@ -32,6 +34,7 @@
   <string name="home_snackbar_note_moved_to_trash">Se ha movido la nota a la papelera.</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Se ha movido la tarjeta de crédito a la papelera.</string>
   <string name="home_snackbar_identity_moved_to_trash">Se ha movido la identidad a la papelera.</string>
+  <string name="home_snackbar_custom_moved_to_trash">Se ha movido el elemento personalizado a la papelera.</string>
   <string name="home_snackbar_move_to_trash_error">El elemento no se ha podido mover a la papelera.</string>
   <string name="home_snackbar_items_move_to_trash_success">Se han movido los elementos a la papelera.</string>
   <string name="home_snackbar_items_move_to_trash_error">No se han podido mover los elementos a la papelera.</string>

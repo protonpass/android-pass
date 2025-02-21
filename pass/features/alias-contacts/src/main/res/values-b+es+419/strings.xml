@@ -19,7 +19,7 @@
 <resources>
   <string name="create_contact_button">Crear un contacto</string>
   <string name="save_contact_alias">Guardar</string>
-  <string name="snackbar_contact_create_success">Contacto creado con éxito</string>
+  <string name="snackbar_contact_create_success">Se creó el contacto.</string>
   <string name="snackbar_contact_create_error">Error al crear el contacto</string>
   <string name="create_contact_title">Crear un contacto</string>
   <string name="detail_contact_title">Contactos</string>

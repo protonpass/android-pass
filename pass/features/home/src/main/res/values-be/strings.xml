@@ -18,6 +18,8 @@
   <string name="home_empty_shared_items_title">Абагуленых элементаў не знойдзена</string>
   <string name="home_empty_shared_items_with_me_subtitle">З вамі не абагулена ніякіх элементаў.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Вы не абагульвалі ніякія элементы.</string>
+  <string name="home_empty_no_vaults_title">У вас няма сховішчаў</string>
+  <string name="home_empty_no_vaults_subtitle">Звяжыцеся з камандай падтрымкі ў сваёй арганізацыі.</string>
   <string name="home_empty_read_only_vault_title">Гэта сховішча нічога не змяшчае</string>
   <string name="home_empty_read_only_vault_subtitle">Нельга дадаваць элементы ў сховішча з правамі толькі на чытанне.</string>
   <string name="home_empty_vault_create_login">Стварыць запіс уваходу</string>
@@ -32,6 +34,7 @@
   <string name="home_snackbar_note_moved_to_trash">Нататка перамешчана ў сметніцу</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Крэдытная картка перамешчана ў сметніцу</string>
   <string name="home_snackbar_identity_moved_to_trash">Ідэнтычнасць перамешчана ў сметніцу</string>
+  <string name="home_snackbar_custom_moved_to_trash">Custom item moved to trash</string>
   <string name="home_snackbar_move_to_trash_error">Не атрымалася перамясціць элемент у сметніцу</string>
   <string name="home_snackbar_items_move_to_trash_success">Элементы перамешчаны ў сметніцу</string>
   <string name="home_snackbar_items_move_to_trash_error">Не атрымалася перамясціць элементы ў сметніцу</string>
@@ -170,10 +173,10 @@
     <item quantity="other">Вы сапраўды хочаце выдаліць %d элементаў? Гэта дзеянне з\'яўляецца незваротным</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_shared_warning_message">
-    <item quantity="one">%d элемент у цяпершані час абагулены. Яго выдаленне пазбавіць доступу ўсіх іншых карыстальнікаў.</item>
-    <item quantity="few">%d элементы ў цяпершані час абагулены. Іх выдаленне пазбавіць доступу ўсіх іншых карыстальнікаў.</item>
-    <item quantity="many">%d элементаў у цяпершані час абагулены. Іх выдаленне пазбавіць доступу ўсіх іншых карыстальнікаў.</item>
-    <item quantity="other">%d элементаў у цяпершані час абагулены. Іх выдаленне пазбавіць доступу ўсіх іншых карыстальнікаў.</item>
+    <item quantity="one">%d элемент у цяперашні час абагулены. Яго выдаленне пазбавіць доступу ўсіх іншых карыстальнікаў.</item>
+    <item quantity="few">%d элементы ў цяперашні час абагулены. Іх выдаленне пазбавіць доступу ўсіх іншых карыстальнікаў.</item>
+    <item quantity="many">%d элементаў у цяперашні час абагулены. Іх выдаленне пазбавіць доступу ўсіх іншых карыстальнікаў.</item>
+    <item quantity="other">%d элементаў у цяперашні час абагулены. Іх выдаленне пазбавіць доступу ўсіх іншых карыстальнікаў.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Нядаўнія пошукі</string>
@@ -190,7 +193,7 @@
   <string name="home_snackbar_items_alias_enabled_partial_success">Памылка ўключэння некаторых псеўданімаў</string>
   <string name="home_snackbar_items_alias_enabled_error">Памылка пры ўключэнні псеўданімаў</string>
   <string name="home_snackbar_items_alias_disabled_success">Псеўданім паспяхова адключаны</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Памылка пры адключэнні некаторых псеўданімаў</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Памылка адключэння некаторых псеўданімаў</string>
   <string name="home_snackbar_items_alias_disabled_error">Памылка пры адключэнні псеўданімаў</string>
   <string name="bulk_action_unpin">Адмацаваць</string>
   <string name="bulk_action_pin">Замацаваць</string>

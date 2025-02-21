@@ -18,6 +18,8 @@
   <string name="home_empty_shared_items_title">No se encontraron elementos compartidos.</string>
   <string name="home_empty_shared_items_with_me_subtitle">No se compartió ningún elemento con usted.</string>
   <string name="home_empty_shared_items_by_me_subtitle">No compartió ningún elemento.</string>
+  <string name="home_empty_no_vaults_title">No tiene ninguna bóveda.</string>
+  <string name="home_empty_no_vaults_subtitle">Póngase en contacto con el equipo de soporte de su organización.</string>
   <string name="home_empty_read_only_vault_title">Esta bóveda está vacía</string>
   <string name="home_empty_read_only_vault_subtitle">No puede añadir elementos a una bóveda de solo lectura.</string>
   <string name="home_empty_vault_create_login">Crear un inicio de sesión</string>
@@ -32,6 +34,7 @@
   <string name="home_snackbar_note_moved_to_trash">Nota movida a la papelera</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Tarjeta de crédito movida a la papelera</string>
   <string name="home_snackbar_identity_moved_to_trash">Identidad movida a la papelera</string>
+  <string name="home_snackbar_custom_moved_to_trash">Se movió el elemento personalizado a la papelera.</string>
   <string name="home_snackbar_move_to_trash_error">No se pudo mover el elemento a la papelera</string>
   <string name="home_snackbar_items_move_to_trash_success">Elementos movidos a la papelera</string>
   <string name="home_snackbar_items_move_to_trash_error">No se pudieron mover los elementos a la papelera</string>
@@ -162,10 +165,10 @@
   <string name="recent_search_clear">Borrar</string>
   <string name="recent_search_remove_item">Eliminar de las búsquedas recientes</string>
   <!-- Pinning -->
-  <string name="home_snackbar_items_pinned_success">Elementos anclados con éxito</string>
+  <string name="home_snackbar_items_pinned_success">Se anclaron los elementos.</string>
   <string name="home_snackbar_items_pinned_partial_success">Error al anclar algunos elementos</string>
   <string name="home_snackbar_items_pinned_error">Error al anclar los elementos</string>
-  <string name="home_snackbar_items_unpinned_success">Elementos desanclados con éxito</string>
+  <string name="home_snackbar_items_unpinned_success">Se desanclaron los elementos.</string>
   <string name="home_snackbar_items_unpinned_partial_success">Error al desanclar algunos elementos</string>
   <string name="home_snackbar_items_unpinned_error">Error al desanclar los elementos</string>
   <string name="home_snackbar_items_alias_enabled_success">Se activó el alias.</string>

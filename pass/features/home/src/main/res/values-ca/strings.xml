@@ -18,6 +18,8 @@
   <string name="home_empty_shared_items_title">No s\'han trobat elements compartits.</string>
   <string name="home_empty_shared_items_with_me_subtitle">No heu rebut cap element compartit.</string>
   <string name="home_empty_shared_items_by_me_subtitle">No heu compartit cap element.</string>
+  <string name="home_empty_no_vaults_title">No teniu cap caixa forta.</string>
+  <string name="home_empty_no_vaults_subtitle">Poseu-vos en contacte amb l\'equip d\'assistència de l\'organització.</string>
   <string name="home_empty_read_only_vault_title">Aquesta caixa forta està buida.</string>
   <string name="home_empty_read_only_vault_subtitle">No podeu afegir elements a una caixa forta de només lectura.</string>
   <string name="home_empty_vault_create_login">Crea un inici de sessió</string>
@@ -32,11 +34,12 @@
   <string name="home_snackbar_note_moved_to_trash">La nota s\'ha mogut a la paperera</string>
   <string name="home_snackbar_credit_card_moved_to_trash">S\'ha mogut la targeta de crèdit a la paperera.</string>
   <string name="home_snackbar_identity_moved_to_trash">S\'ha mogut la identitat a la paperera.</string>
+  <string name="home_snackbar_custom_moved_to_trash">S\'ha mogut l\'element personalitzat a la paperera.</string>
   <string name="home_snackbar_move_to_trash_error">No s\'ha pogut moure element a la paperera.</string>
   <string name="home_snackbar_items_move_to_trash_success">Els elements s\'han mogut a la paperera.</string>
   <string name="home_snackbar_items_move_to_trash_error">No s\'han pogut moure els elements a la paperera.</string>
   <string name="home_toast_items_selected_read_only">No es poden seleccionar elements de només lectura</string>
-  <string name="home_toast_items_selected_shared_with_me">Els elements compartits que heu rebut no es poden seleccionar.</string>
+  <string name="home_toast_items_selected_shared_with_me">Els elements compartits amb vós no es poden seleccionar.</string>
   <string name="home_autofill_banner_title">Gaudiu de la màgia de l\'emplenament automàtic</string>
   <string name="home_autofill_banner_text">Un toc i —voilà!— el vostre nom d\'usuari i contrasenya s\'emplenen a l\'instant.</string>
   <string name="home_autofill_banner_settings">Activa l\'emplenament automàtic</string>

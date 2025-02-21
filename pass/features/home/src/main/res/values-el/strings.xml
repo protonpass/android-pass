@@ -18,6 +18,8 @@
   <string name="home_empty_shared_items_title">Δεν βρέθηκαν στοιχεία σε κοινή χρήση</string>
   <string name="home_empty_shared_items_with_me_subtitle">Δεν υπάρχουν στοιχεία σε κοινή χρήση με εσάς.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Δεν έχετε κοινοποιήσει κανένα στοιχείο.</string>
+  <string name="home_empty_no_vaults_title">Δεν έχετε καμία κρύπτη</string>
+  <string name="home_empty_no_vaults_subtitle">Παρακαλούμε, επικοινωνήστε με την ομάδα υποστήριξης του οργανισμού σας.</string>
   <string name="home_empty_read_only_vault_title">Αυτή η κρύπτη είναι άδεια</string>
   <string name="home_empty_read_only_vault_subtitle">Δεν μπορείτε να προσθέσετε στοιχεία σε κρύπτη ορισμένη μόνο για ανάγνωση.</string>
   <string name="home_empty_vault_create_login">Δημιουργία σύνδεσης</string>
@@ -32,6 +34,7 @@
   <string name="home_snackbar_note_moved_to_trash">Η σημείωση μετακινήθηκε στον κάδο απορριμμάτων</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Η πιστωτική κάρτα μεταφέρθηκε στον κάδο απορριμμάτων</string>
   <string name="home_snackbar_identity_moved_to_trash">Η ταυτότητα μετακινήθηκε στα διαγραμμένα</string>
+  <string name="home_snackbar_custom_moved_to_trash">Το προσαρμοσμένο στοιχείο μετακινήθηκε στον κάδο απορριμμάτων</string>
   <string name="home_snackbar_move_to_trash_error">Δεν ήταν δυνατή η μετακίνηση του στοιχείου στον κάδο απορριμμάτων</string>
   <string name="home_snackbar_items_move_to_trash_success">Το στοιχεία μετακινήθηκαν στον κάδο απορριμμάτων</string>
   <string name="home_snackbar_items_move_to_trash_error">Δεν ήταν δυνατή η μετακίνηση των στοιχείων στον κάδο απορριμμάτων</string>

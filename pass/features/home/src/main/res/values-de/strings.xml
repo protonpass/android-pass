@@ -10,7 +10,7 @@
   <string name="home_empty_vault_notes_title">Keine Notizen gefunden</string>
   <string name="home_empty_vault_notes_subtitle">Erstelle deinen ersten Notiz-Eintrag.</string>
   <string name="home_empty_vault_logins_mfa_title">Keine Logins mit Einmalpasswort gefunden.</string>
-  <string name="home_empty_vault_logins_mfa_subtitle">Get started by creating your first login with TOTP.</string>
+  <string name="home_empty_vault_logins_mfa_subtitle">Erstelle deinen ersten Anmeldung-Eintrag mit Einmalpasswort.</string>
   <string name="home_empty_vault_identity_title">Keine Identitäten gefunden.</string>
   <string name="home_empty_vault_identity_subtitle">Erstelle deinen ersten Identität-Eintrag.</string>
   <string name="home_empty_vault_cc_title">Keine Kreditkarte gefunden</string>
@@ -18,6 +18,8 @@
   <string name="home_empty_shared_items_title">Keine geteilten Elemente gefunden.</string>
   <string name="home_empty_shared_items_with_me_subtitle">Es wurden keine Elemente mit dir geteilt.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Es wurden keine Elemente von dir geteilt.</string>
+  <string name="home_empty_no_vaults_title">Es wurde noch kein Tresor angelegt</string>
+  <string name="home_empty_no_vaults_subtitle">Bitte wende dich an das Support-Team deiner Organisation.</string>
   <string name="home_empty_read_only_vault_title">Dieser Tresor ist leer</string>
   <string name="home_empty_read_only_vault_subtitle">Einem schreibgeschützten Tresor kannst du keine Einträge hinzufügen.</string>
   <string name="home_empty_vault_create_login">Login erstellen</string>
@@ -32,6 +34,7 @@
   <string name="home_snackbar_note_moved_to_trash">Notiz in den Papierkorb verschoben</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Kreditkarte in den Papierkorb verschoben.</string>
   <string name="home_snackbar_identity_moved_to_trash">Identität in den Papierkorb verschoben.</string>
+  <string name="home_snackbar_custom_moved_to_trash">Benutzerdefinierter Eintrag in den Papierkorb verschoben</string>
   <string name="home_snackbar_move_to_trash_error">Eintrag konnte nicht in den Papierkorb verschoben werden.</string>
   <string name="home_snackbar_items_move_to_trash_success">Einträge in den Papierkorb verschoben.</string>
   <string name="home_snackbar_items_move_to_trash_error">Fehler beim Verschieben der Einträge in den Papierkorb.</string>
@@ -50,7 +53,7 @@
     <item quantity="other">Du hast %d Aliasse, die in SimpleLogin vorhanden sind, aber in Proton Pass fehlen. Möchtest du sie synchronisieren?</item>
   </plurals>
   <string name="sl_sync_banner_settings">Aliasse synchronisieren ›</string>
-  <string name="sl_sync_banner_note">Once synced, deleting aliases in Pass will also delete them in SimpleLogin.</string>
+  <string name="sl_sync_banner_note">Nach der Synchronisierung werden Aliasnamen, die in Pass gelöscht werden, auch in SimpleLogin gelöscht.</string>
   <string name="home_notification_permission_banner_title">Erhalte wichtige Updates</string>
   <string name="home_notification_permission_banner_text">Aktiviere Push-Benachrichtigungen, um informiert zu werden, wenn andere einen Tresor mit dir teilen.</string>
   <string name="home_notification_permission_banner_settings">Berechtigung erteilen ›</string>
@@ -154,8 +157,8 @@
     <item quantity="other">Sollen diese %d Elemente wirklich gelöscht werden? Diese Aktion kann nicht rückgängig gemacht werden.</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_shared_warning_message">
-    <item quantity="one">%d item is currently shared. Deleting it will remove access for all other users.</item>
-    <item quantity="other">%d items are currently shared. Deleting them will remove access for all other users.</item>
+    <item quantity="one">%d Eintrag ist derzeit geteilt. Ihn zu löschen, wird der Zugriff für alle anderen Benutzer entfernen.</item>
+    <item quantity="other">%d Einträge sind derzeit geteilt. Sie zu löschen, wird der Zugriff für alle anderen Benutzer entfernen.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Letzte Suchanfragen</string>

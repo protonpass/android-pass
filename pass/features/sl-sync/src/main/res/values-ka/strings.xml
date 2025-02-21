@@ -80,7 +80,7 @@
   <string name="simple_login_sync_mailbox_options_snackbar_default_success">ნაგულისხმევი საფოსტო ყუთი წარმატებით განახლდა</string>
   <string name="simple_login_sync_mailbox_change_email_option">საფოსტო ყუთის შეცვლა</string>
   <string name="simple_login_sync_mailbox_cancel_change_email_option">საფოსტო ყუთის ცვლილების გაუქმება</string>
-  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">There was an error cancelling mailbox email change</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">შეცდომა საფოსტო ყუთის ელფოსტის ცვლილების გაუქმებისას</string>
   <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">საფოსტო ყუთის ელფოსტის ცვლილება გაუქმდა</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">ნაგულისხმევი SL-ის საცავი</string>

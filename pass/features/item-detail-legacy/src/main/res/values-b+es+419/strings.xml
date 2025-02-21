@@ -28,9 +28,9 @@
   <string name="item_permanently_deleted_message_error">Error al eliminar el elemento</string>
   <string name="item_restored_message">Elemento restaurado</string>
   <string name="item_restored_message_error">Error al restaurar el elemento</string>
-  <string name="item_monitor_exclude_message">Elemento excluido del monitoreo con éxito</string>
+  <string name="item_monitor_exclude_message">El elemento fue excluido del monitoreo.</string>
   <string name="item_monitor_exclude_message_error">Hubo un error al excluir el elemento del monitoreo</string>
-  <string name="item_monitor_include_message">Elemento incluido en el monitoreo con éxito</string>
+  <string name="item_monitor_include_message">El elemento fue incluido en el monitoreo.</string>
   <string name="item_monitor_include_message_error">Hubo un error al incluir el elemento en el monitoreo</string>
   <string name="alias_change_status_error">Hubo un error al cambiar el estado del alias</string>
   <string name="login_item_generate_totp_error">Error al generar el código 2FA</string>

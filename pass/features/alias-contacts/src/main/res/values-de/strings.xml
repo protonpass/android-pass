@@ -24,7 +24,7 @@
   <string name="create_contact_title">Kontakt erstellen</string>
   <string name="detail_contact_title">Kontakte</string>
   <string name="email_input_error">Ungültige E-Mail-Adresse</string>
-  <string name="detail_contact_display_name" comment="sender email address">A contact is created for every email address that sends emails to or receives emails from %1$s</string>
+  <string name="detail_contact_display_name" comment="sender email address">Für jede E-Mail-Adresse mit E-Mails gesendet an oder empfangen von %1$s, wird ein Kontakt erstellt.</string>
   <string name="empty_alias_contacts_title">Alias-Kontakte</string>
   <string name="empty_alias_contacts_body">Um deine persönliche E-Mail-Adresse zu verbergen, kannst du einen Alias-Kontakt erstellen, der deine Adresse verschleiert.</string>
   <string name="empty_alias_contacts_learn_more">Erfahre mehr</string>
@@ -64,5 +64,5 @@
   <string name="alias_contacts_explanation">So funktioniert es:</string>
   <string name="alias_contacts_bottomsheet_section_1">Gib die Adresse ein, an die du eine E-Mail senden möchtest.</string>
   <string name="alias_contacts_bottomsheet_section_2">Proton Pass erzeugt eine Weiterleitungsadresse (auch als Reverse Alias bezeichnet).</string>
-  <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">Email this address and it will appear to be sent from</string>
+  <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">Sende eine Nachricht an diese Adresse, und sie wird als von der folgenden Adresse gesendet erscheinen:</string>
 </resources>

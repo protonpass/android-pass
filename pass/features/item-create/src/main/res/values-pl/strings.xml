@@ -10,11 +10,13 @@
   <string name="action_credit_card">Karta płatnicza</string>
   <string name="action_password">Hasło</string>
   <string name="action_identity">Tożsamość</string>
+  <string name="action_custom">Custom item</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Dodaj dane logowania do aplikacji i stron</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Uzyskaj alias do użycia w nowych aplikacjach</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Zapisz kod PIN lub notatkę</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Bezpieczne przechowywanie informacji o płatnościach</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Uzupełnij dane osobowe</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Create items with fully customised fields</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Generuj bezpieczne hasło</string>
   <!-- Create Login -->
   <string name="field_email_title">Adres e-mail</string>
@@ -108,7 +110,7 @@
   <string name="field_card_pin_title">Kod PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Data wygaśnięcia</string>
-  <string name="field_card_expiration_date_hint">MM/YY</string>
+  <string name="field_card_expiration_date_hint">MM/RR</string>
   <string name="field_card_expiration_date_error">Wpisz datę w formacie MM/RR</string>
   <string name="create_credit_card_item_creation_error">Nie można utworzyć karty płatniczej</string>
   <string name="create_credit_card_item_creation_success">Karta płatnicza została utworzona</string>
@@ -145,7 +147,7 @@
   <string name="identity_field_reddit_title">Nazwa użytkownika Reddit</string>
   <string name="identity_field_facebook_title">Profil Facebook</string>
   <string name="identity_field_yahoo_title">Nazwa użytkownika Yahoo</string>
-  <string name="identity_field_instagram_title">Instagram username</string>
+  <string name="identity_field_instagram_title">Profil Instagram</string>
   <string name="identity_field_personal_website_title">Osobista strona internetowa</string>
   <string name="identity_field_work_phone_number_title">Służbowy numer telefonu</string>
   <string name="identity_field_work_email_title">Służbowy adres e-mail</string>
@@ -160,7 +162,7 @@
   <string name="identity_add_field_reddit">Nazwa użytkownika Reddit</string>
   <string name="identity_add_field_facebook">Profil Facebook</string>
   <string name="identity_add_field_yahoo">Nazwa użytkownika Yahoo</string>
-  <string name="identity_add_field_instagram">Instagram username</string>
+  <string name="identity_add_field_instagram">Profil Instagram</string>
   <string name="identity_add_field_personal_website">Osobista strona internetowa</string>
   <string name="identity_add_field_work_phone_number">Służbowy numer telefonu</string>
   <string name="identity_add_field_work_email_address">Służbowy adres e-mail</string>
@@ -207,16 +209,16 @@
   <string name="open_with">Otwórz za pomocą:</string>
   <string name="open_attachments_error">Nie można otworzyć załącznika</string>
   <string name="upload_attachments_error">Nie można przesłać załącznika</string>
-  <string name="banner_advanced_options_title">Did you know?</string>
+  <string name="banner_advanced_options_title">Czy wiesz?</string>
   <string name="banner_advanced_options_subtitle">Tap the gear icon to customize the alias the way you want.</string>
-  <string name="banner_custom_domain_title">Did you know?</string>
+  <string name="banner_custom_domain_title">Czy wiesz?</string>
   <string name="banner_custom_domain_subtitle">By adding your domain, you can create aliases like hi@my-domain.com.</string>
-  <string name="banner_custom_domain_button">Add domain</string>
-  <string name="banner_mailbox_title">Did you know?</string>
+  <string name="banner_custom_domain_button">Dodaj domenę</string>
+  <string name="banner_mailbox_title">Czy wiesz?</string>
   <string name="banner_mailbox_subtitle">Share aliases with others by adding their inbox as an additional mailbox.</string>
-  <string name="banner_mailbox_button">Add mailbox</string>
+  <string name="banner_mailbox_button">Dodaj skrzynkę pocztową</string>
   <!-- Suffix -->
-  <string name="suffix_subtitle_premium_domain">Premium domain</string>
-  <string name="suffix_subtitle_public_domain">Public domain</string>
-  <string name="suffix_subtitle_private_domain">Your domain</string>
+  <string name="suffix_subtitle_premium_domain">Domena premium</string>
+  <string name="suffix_subtitle_public_domain">Domena publiczna</string>
+  <string name="suffix_subtitle_private_domain">Twoja domena</string>
 </resources>

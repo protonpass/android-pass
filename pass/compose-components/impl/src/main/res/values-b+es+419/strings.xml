@@ -250,9 +250,9 @@
   <string name="snack_bar_message_item_monitor_excluded_error">Ocurrió un error al excluir el elemento del monitoreo</string>
   <string name="snack_bar_message_item_monitor_included_success">Elemento incluido en el monitoreo</string>
   <string name="snack_bar_message_item_monitor_included_error">Ocurrió un error al incluir el elemento en el monitoreo</string>
-  <string name="snack_bar_message_item_pinned_success">Elemento anclado con éxito</string>
+  <string name="snack_bar_message_item_pinned_success">Se ancló el elemento.</string>
   <string name="snack_bar_message_item_pinned_error">Ocurrió un error al anclar este elemento</string>
-  <string name="snack_bar_message_item_unpinned_success">Elemento desanclado con éxito</string>
+  <string name="snack_bar_message_item_unpinned_success">Se desancló el elemento.</string>
   <string name="snack_bar_message_item_unpinned_error">Ocurrió un error al desanclar este elemento</string>
   <string name="snack_bar_message_item_trashed_success">Se eliminó el elemento.</string>
   <string name="snack_bar_message_item_trashed_error">Ocurrió un error al eliminar este elemento</string>

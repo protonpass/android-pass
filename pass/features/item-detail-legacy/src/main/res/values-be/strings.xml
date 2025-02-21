@@ -132,5 +132,5 @@
   <string name="open_with">Адкрыць праз:</string>
   <string name="open_attachments_error">Немагчыма адкрыць далучэнне</string>
   <string name="banner_contacts_title">Ці ведалі вы што?</string>
-  <string name="banner_contacts_subtitle">Новы кантакт аўтаматычна ствараецца. Гэта адбываецца кожны раз, калі ваш псеўданім атрымлівае ліст ад каго-небудзь.</string>
+  <string name="banner_contacts_subtitle">Новы кантакт ствараецца аўтаматычна. Гэта адбываецца кожны раз, калі ваш псеўданім атрымлівае ліст ад каго-небудзь.</string>
 </resources>

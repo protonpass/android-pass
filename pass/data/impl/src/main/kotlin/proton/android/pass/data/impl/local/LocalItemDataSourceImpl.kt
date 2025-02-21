@@ -235,19 +235,26 @@ class LocalItemDataSourceImpl @Inject constructor(
         userId: UserId,
         shareIds: List<String>?,
         itemState: ItemState?
-    ) = localShareDataSource.observeSharedWithMeIds(userId, itemState)
+    ) = localShareDataSource.observeSharedWithMeIds(userId)
         .map { sharedWithMeShareIds ->
             sharedWithMeShareIds.filter { sharedWithMeShareId ->
                 if (shareIds == null) true
                 else sharedWithMeShareId in shareIds
-            }.size
+            }
+        }
+        .flatMapLatest { sharedWithMeShareIds ->
+            database.itemsDao().countSharedItems(
+                userId = userId.id,
+                shareIds = sharedWithMeShareIds,
+                itemState = null
+            )
         }
 
     private fun observeSharedByMeItemCount(
         userId: UserId,
         shareIds: List<String>?,
         itemState: ItemState?
-    ) = localShareDataSource.observeSharedByMeIds(userId, itemState)
+    ) = localShareDataSource.observeSharedByMeIds(userId)
         .mapLatest { sharedByMeShareIds ->
             sharedByMeShareIds.filter { sharedByMeShareId ->
                 if (shareIds == null) true
@@ -258,7 +265,7 @@ class LocalItemDataSourceImpl @Inject constructor(
             database.itemsDao().countSharedItems(
                 userId = userId.id,
                 shareIds = sharedByMeShareIds,
-                itemState = itemState?.value
+                itemState = null
             )
         }
 

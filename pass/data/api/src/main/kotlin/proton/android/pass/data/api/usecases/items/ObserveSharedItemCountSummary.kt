@@ -20,11 +20,10 @@ package proton.android.pass.data.api.usecases.items
 
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.data.api.ItemCountSummary
-import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.items.ItemSharedType
 
 interface ObserveSharedItemCountSummary {
 
-    operator fun invoke(itemSharedType: ItemSharedType, itemState: ItemState?): Flow<ItemCountSummary>
+    operator fun invoke(itemSharedType: ItemSharedType): Flow<ItemCountSummary>
 
 }

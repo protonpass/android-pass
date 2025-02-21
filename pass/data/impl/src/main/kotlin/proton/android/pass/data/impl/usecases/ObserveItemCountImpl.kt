@@ -33,13 +33,19 @@ class ObserveItemCountImpl @Inject constructor(
     private val itemRepository: ItemRepository
 ) : ObserveItemCount {
 
-    override fun invoke(itemState: ItemState?, selectedShareId: ShareId?): Flow<ItemCountSummary> = observeCurrentUser()
+    override fun invoke(
+        itemState: ItemState?,
+        selectedShareId: ShareId?,
+        applyItemStateToSharedItems: Boolean
+    ): Flow<ItemCountSummary> = observeCurrentUser()
         .flatMapLatest { user ->
             itemRepository.observeItemCountSummary(
                 userId = user.userId,
                 shareIds = listOfNotNull(selectedShareId),
                 itemState = itemState,
-                onlyShared = false
+                onlyShared = false,
+                applyItemStateToSharedItems = applyItemStateToSharedItems
             )
         }
+
 }

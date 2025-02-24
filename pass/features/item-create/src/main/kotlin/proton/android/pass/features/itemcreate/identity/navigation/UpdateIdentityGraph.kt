@@ -37,7 +37,7 @@ import proton.android.pass.navigation.api.composable
 
 const val UPDATE_IDENTITY_GRAPH = "update_identity_graph"
 
-object UpdateIdentity : NavItem(
+object UpdateIdentityNavItem : NavItem(
     baseRoute = "identity/update/screen",
     navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)
 ) {
@@ -51,9 +51,9 @@ sealed interface UpdateIdentityNavigation {
 fun NavGraphBuilder.updateIdentityGraph(onNavigate: (BaseIdentityNavigation) -> Unit) {
     navigation(
         route = UPDATE_IDENTITY_GRAPH,
-        startDestination = UpdateIdentity.route
+        startDestination = UpdateIdentityNavItem.route
     ) {
-        composable(UpdateIdentity) {
+        composable(UpdateIdentityNavItem) {
             UpdateIdentityScreen(
                 onNavigate = onNavigate
             )

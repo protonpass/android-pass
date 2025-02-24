@@ -18,7 +18,10 @@
 
 package proton.android.pass.features.itemcreate.common
 
-import proton.android.pass.features.itemcreate.login.EditLogin
+import proton.android.pass.features.itemcreate.identity.navigation.CreateIdentityNavItem
+import proton.android.pass.features.itemcreate.identity.navigation.UpdateIdentityNavItem
+import proton.android.pass.features.itemcreate.login.CreateLoginNavItem
+import proton.android.pass.features.itemcreate.login.EditLoginNavItem
 import proton.android.pass.navigation.api.NavItem
 
 enum class CustomFieldPrefix {
@@ -29,16 +32,16 @@ enum class CustomFieldPrefix {
 
     companion object {
         fun fromLogin(navItem: NavItem?): CustomFieldPrefix = when (navItem) {
-            proton.android.pass.features.itemcreate.login.CreateLogin -> CreateLogin
-            EditLogin -> UpdateLogin
+            CreateLoginNavItem -> CreateLogin
+            EditLoginNavItem -> UpdateLogin
             else -> {
                 throw IllegalArgumentException("Unknown NavItem: $navItem")
             }
         }
 
         fun fromIdentity(navItem: NavItem?): CustomFieldPrefix = when (navItem) {
-            proton.android.pass.features.itemcreate.identity.navigation.CreateIdentity -> CreateIdentity
-            proton.android.pass.features.itemcreate.identity.navigation.UpdateIdentity -> UpdateIdentity
+            CreateIdentityNavItem -> CreateIdentity
+            UpdateIdentityNavItem -> UpdateIdentity
             else -> {
                 throw IllegalArgumentException("Unknown NavItem: $navItem")
             }

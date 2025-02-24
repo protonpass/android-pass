@@ -45,7 +45,7 @@ import proton.android.pass.navigation.api.toPath
 
 const val CREATE_IDENTITY_GRAPH = "create_identity_graph"
 
-object CreateIdentity : NavItem(
+object CreateIdentityNavItem : NavItem(
     baseRoute = "identity/create/screen",
     optionalArgIds = listOf(CommonOptionalNavArgId.ShareId)
 ) {
@@ -71,9 +71,9 @@ sealed interface CreateIdentityNavigation : BaseIdentityNavigation {
 fun NavGraphBuilder.createIdentityGraph(canUseAttachments: Boolean, onNavigate: (BaseIdentityNavigation) -> Unit) {
     navigation(
         route = CREATE_IDENTITY_GRAPH,
-        startDestination = CreateIdentity.route
+        startDestination = CreateIdentityNavItem.route
     ) {
-        composable(CreateIdentity) { navBackStack ->
+        composable(CreateIdentityNavItem) { navBackStack ->
             val selectVault by navBackStack.savedStateHandle
                 .getStateFlow<String?>(KEY_VAULT_SELECTED, null)
                 .collectAsStateWithLifecycle()

@@ -79,7 +79,7 @@ import javax.inject.Inject
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @HiltAndroidTest
-class CreateLoginScreenTest {
+class CreateLoginNavItemScreenTest {
 
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)

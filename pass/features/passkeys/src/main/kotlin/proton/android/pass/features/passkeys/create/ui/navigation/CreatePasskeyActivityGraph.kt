@@ -36,7 +36,7 @@ import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameDialogNavItem
 import proton.android.pass.features.itemcreate.dialogs.customfield.EditCustomFieldNameDialogNavItem
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation
-import proton.android.pass.features.itemcreate.login.CreateLogin
+import proton.android.pass.features.itemcreate.login.CreateLoginNavItem
 import proton.android.pass.features.itemcreate.login.CreateLoginNavigation
 import proton.android.pass.features.itemcreate.login.bottomsheet.aliasoptions.AliasOptionsBottomSheet
 import proton.android.pass.features.itemcreate.login.bottomsheet.aliasoptions.CLEAR_ALIAS_NAV_PARAMETER_KEY
@@ -106,8 +106,8 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
             when (it) {
                 SelectItemNavigation.AddItem -> {
                     appNavigator.navigate(
-                        destination = CreateLogin,
-                        route = CreateLogin.createNavRoute()
+                        destination = CreateLoginNavItem,
+                        route = CreateLoginNavItem.createNavRoute()
                     )
                 }
 
@@ -222,7 +222,7 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                     appNavigator.navigate(
                         destination = CustomFieldNameDialogNavItem.CreateLogin,
                         route = CustomFieldNameDialogNavItem.CreateLogin.buildRoute(it.type),
-                        backDestination = CreateLogin
+                        backDestination = CreateLoginNavItem
                     )
                 }
 
@@ -241,7 +241,7 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                             it.index,
                             it.currentValue
                         ),
-                        backDestination = CreateLogin
+                        backDestination = CreateLoginNavItem
                     )
                 }
 
@@ -252,7 +252,7 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                 is BaseLoginNavigation.OpenImagePicker -> appNavigator.navigate(
                     destination = PhotoPickerTotp,
                     route = PhotoPickerTotp.createNavRoute(it.index),
-                    backDestination = CreateLogin
+                    backDestination = CreateLoginNavItem
                 )
 
                 BaseLoginNavigation.TotpCancel -> appNavigator.navigateBack()
@@ -381,8 +381,8 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
         when (it) {
             AccountSwitchNavigation.CreateItem -> dismissBottomSheet {
                 appNavigator.navigate(
-                    destination = CreateLogin,
-                    route = CreateLogin.createNavRoute()
+                    destination = CreateLoginNavItem,
+                    route = CreateLoginNavItem.createNavRoute()
                 )
             }
         }

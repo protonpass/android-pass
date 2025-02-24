@@ -75,7 +75,7 @@ import proton.android.pass.test.domain.TestUser
 import proton.android.pass.test.domain.TestVault
 import proton.android.pass.totp.fakes.TestTotpManager
 
-internal class CreateLoginViewModelTest {
+internal class CreateLoginNavItemViewModelTest {
 
     @get:Rule
     val dispatcherRule = MainDispatcherRule()

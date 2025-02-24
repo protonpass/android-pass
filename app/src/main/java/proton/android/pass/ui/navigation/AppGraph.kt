@@ -116,9 +116,9 @@ import proton.android.pass.features.itemcreate.custom.selecttemplate.navigation.
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameDialogNavItem
 import proton.android.pass.features.itemcreate.dialogs.customfield.EditCustomFieldNameDialogNavItem
 import proton.android.pass.features.itemcreate.identity.navigation.BaseIdentityNavigation
-import proton.android.pass.features.itemcreate.identity.navigation.CreateIdentity
+import proton.android.pass.features.itemcreate.identity.navigation.CreateIdentityNavItem
 import proton.android.pass.features.itemcreate.identity.navigation.CreateIdentityNavigation
-import proton.android.pass.features.itemcreate.identity.navigation.UpdateIdentity
+import proton.android.pass.features.itemcreate.identity.navigation.UpdateIdentityNavItem
 import proton.android.pass.features.itemcreate.identity.navigation.UpdateIdentityNavigation
 import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.IdentityFieldsBottomSheet
 import proton.android.pass.features.itemcreate.identity.navigation.createUpdateIdentityGraph
@@ -126,9 +126,9 @@ import proton.android.pass.features.itemcreate.identity.navigation.customsection
 import proton.android.pass.features.itemcreate.identity.navigation.customsection.CustomSectionOptionsBottomSheetNavItem
 import proton.android.pass.features.itemcreate.identity.navigation.customsection.EditCustomSectionNameDialogNavItem
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation
-import proton.android.pass.features.itemcreate.login.CreateLogin
+import proton.android.pass.features.itemcreate.login.CreateLoginNavItem
 import proton.android.pass.features.itemcreate.login.CreateLoginNavigation
-import proton.android.pass.features.itemcreate.login.EditLogin
+import proton.android.pass.features.itemcreate.login.EditLoginNavItem
 import proton.android.pass.features.itemcreate.login.UpdateLoginNavigation
 import proton.android.pass.features.itemcreate.login.bottomsheet.aliasoptions.AliasOptionsBottomSheet
 import proton.android.pass.features.itemcreate.login.bottomsheet.aliasoptions.CLEAR_ALIAS_NAV_PARAMETER_KEY
@@ -295,7 +295,7 @@ fun NavGraphBuilder.appGraph(
                                 shareId = it.shareId
                             )
 
-                        ItemTypeUiState.Login -> CreateLogin to CreateLogin.createNavRoute(it.shareId)
+                        ItemTypeUiState.Login -> CreateLoginNavItem to CreateLoginNavItem.createNavRoute(it.shareId)
                         ItemTypeUiState.Note -> CreateNote to CreateNote.createNavRoute(it.shareId)
                         ItemTypeUiState.Alias -> CreateAlias to CreateAlias.createNavRoute(it.shareId)
                         ItemTypeUiState.Password ->
@@ -307,7 +307,7 @@ fun NavGraphBuilder.appGraph(
                             CreateCreditCard to CreateCreditCard.createNavRoute(it.shareId)
 
                         ItemTypeUiState.Identity ->
-                            CreateIdentity to CreateIdentity.createNavRoute(it.shareId)
+                            CreateIdentityNavItem to CreateIdentityNavItem.createNavRoute(it.shareId)
                         ItemTypeUiState.Custom -> TODO("To implement")
                     }
 
@@ -332,8 +332,8 @@ fun NavGraphBuilder.appGraph(
 
                 is HomeNavigation.EditLogin -> {
                     appNavigator.navigate(
-                        EditLogin,
-                        EditLogin.createNavRoute(it.shareId, it.itemId)
+                        EditLoginNavItem,
+                        EditLoginNavItem.createNavRoute(it.shareId, it.itemId)
                     )
                 }
 
@@ -350,8 +350,8 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 is HomeNavigation.EditIdentity -> appNavigator.navigate(
-                    UpdateIdentity,
-                    UpdateIdentity.createNavRoute(it.shareId, it.itemId)
+                    UpdateIdentityNavItem,
+                    UpdateIdentityNavItem.createNavRoute(it.shareId, it.itemId)
                 )
 
                 is HomeNavigation.ItemDetail -> appNavigator.navigate(
@@ -526,8 +526,8 @@ fun NavGraphBuilder.appGraph(
 
                     is CreateItemBottomsheetNavigation.CreateLogin ->
                         appNavigator.navigate(
-                            CreateLogin,
-                            CreateLogin.createNavRoute(it.shareId)
+                            CreateLoginNavItem,
+                            CreateLoginNavItem.createNavRoute(it.shareId)
                         )
 
                     is CreateItemBottomsheetNavigation.CreateNote ->
@@ -559,8 +559,8 @@ fun NavGraphBuilder.appGraph(
 
                     is CreateItemBottomsheetNavigation.CreateIdentity ->
                         appNavigator.navigate(
-                            CreateIdentity,
-                            CreateIdentity.createNavRoute(it.shareId)
+                            CreateIdentityNavItem,
+                            CreateIdentityNavItem.createNavRoute(it.shareId)
                         )
 
                     is CreateItemBottomsheetNavigation.CreateCustom ->
@@ -810,8 +810,8 @@ fun NavGraphBuilder.appGraph(
         canUseAttachments = true,
         onNavigate = {
             val backDestination = when {
-                appNavigator.hasDestinationInStack(CreateLogin) -> CreateLogin
-                appNavigator.hasDestinationInStack(EditLogin) -> EditLogin
+                appNavigator.hasDestinationInStack(CreateLoginNavItem) -> CreateLoginNavItem
+                appNavigator.hasDestinationInStack(EditLoginNavItem) -> EditLoginNavItem
                 else -> null
             }
             when (it) {
@@ -1236,8 +1236,8 @@ fun NavGraphBuilder.appGraph(
     createUpdateIdentityGraph(
         onNavigate = {
             val backDestination = when {
-                appNavigator.hasDestinationInStack(CreateIdentity) -> CreateIdentity
-                appNavigator.hasDestinationInStack(UpdateIdentity) -> UpdateIdentity
+                appNavigator.hasDestinationInStack(CreateIdentityNavItem) -> CreateIdentityNavItem
+                appNavigator.hasDestinationInStack(UpdateIdentityNavItem) -> UpdateIdentityNavItem
                 else -> null
             }
             when (it) {
@@ -1362,8 +1362,8 @@ fun NavGraphBuilder.appGraph(
 
                 is ItemDetailNavigation.OnCreateLoginFromAlias -> {
                     appNavigator.navigate(
-                        destination = CreateLogin,
-                        route = CreateLogin.createNavRoute(
+                        destination = CreateLoginNavItem,
+                        route = CreateLoginNavItem.createNavRoute(
                             emailOption = it.alias.some(),
                             shareId = it.shareId.toOption()
                         ),
@@ -1373,7 +1373,7 @@ fun NavGraphBuilder.appGraph(
 
                 is ItemDetailNavigation.OnEdit -> {
                     val destination = when (it.itemUiModel.contents) {
-                        is ItemContents.Login -> EditLogin
+                        is ItemContents.Login -> EditLoginNavItem
                         is ItemContents.Note -> EditNote
                         is ItemContents.Alias -> EditAlias
                         is ItemContents.CreditCard -> EditCreditCard
@@ -1385,7 +1385,7 @@ fun NavGraphBuilder.appGraph(
                         }
                     }
                     val route = when (it.itemUiModel.contents) {
-                        is ItemContents.Login -> EditLogin.createNavRoute(
+                        is ItemContents.Login -> EditLoginNavItem.createNavRoute(
                             it.itemUiModel.shareId,
                             it.itemUiModel.id
                         )
@@ -1560,12 +1560,12 @@ fun NavGraphBuilder.appGraph(
                         itemId = itemDetailsNavDestination.itemId
                     )
 
-                    ItemCategory.Identity -> UpdateIdentity to UpdateIdentity.createNavRoute(
+                    ItemCategory.Identity -> UpdateIdentityNavItem to UpdateIdentityNavItem.createNavRoute(
                         shareId = itemDetailsNavDestination.shareId,
                         itemId = itemDetailsNavDestination.itemId
                     )
 
-                    ItemCategory.Login -> EditLogin to EditLogin.createNavRoute(
+                    ItemCategory.Login -> EditLoginNavItem to EditLoginNavItem.createNavRoute(
                         shareId = itemDetailsNavDestination.shareId,
                         itemId = itemDetailsNavDestination.itemId
                     )

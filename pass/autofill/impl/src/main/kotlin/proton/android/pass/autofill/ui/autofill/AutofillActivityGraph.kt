@@ -61,7 +61,7 @@ import proton.android.pass.features.itemcreate.creditcard.createCreditCardGraph
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameDialogNavItem
 import proton.android.pass.features.itemcreate.dialogs.customfield.EditCustomFieldNameDialogNavItem
 import proton.android.pass.features.itemcreate.identity.navigation.BaseIdentityNavigation
-import proton.android.pass.features.itemcreate.identity.navigation.CreateIdentity
+import proton.android.pass.features.itemcreate.identity.navigation.CreateIdentityNavItem
 import proton.android.pass.features.itemcreate.identity.navigation.CreateIdentityNavigation
 import proton.android.pass.features.itemcreate.identity.navigation.UpdateIdentityNavigation
 import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.IdentityFieldsBottomSheet
@@ -70,7 +70,7 @@ import proton.android.pass.features.itemcreate.identity.navigation.customsection
 import proton.android.pass.features.itemcreate.identity.navigation.customsection.CustomSectionOptionsBottomSheetNavItem
 import proton.android.pass.features.itemcreate.identity.navigation.customsection.EditCustomSectionNameDialogNavItem
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation
-import proton.android.pass.features.itemcreate.login.CreateLogin
+import proton.android.pass.features.itemcreate.login.CreateLoginNavItem
 import proton.android.pass.features.itemcreate.login.CreateLoginNavigation
 import proton.android.pass.features.itemcreate.login.InitialCreateLoginUiState
 import proton.android.pass.features.itemcreate.login.bottomsheet.aliasoptions.AliasOptionsBottomSheet
@@ -298,7 +298,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                     appNavigator.navigate(
                         destination = CustomFieldNameDialogNavItem.CreateLogin,
                         route = CustomFieldNameDialogNavItem.CreateLogin.buildRoute(it.type),
-                        backDestination = CreateLogin
+                        backDestination = CreateLoginNavItem
                     )
                 }
 
@@ -317,7 +317,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                             it.index,
                             it.currentValue
                         ),
-                        backDestination = CreateLogin
+                        backDestination = CreateLoginNavItem
                     )
                 }
 
@@ -328,7 +328,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                 is BaseLoginNavigation.OpenImagePicker -> appNavigator.navigate(
                     destination = PhotoPickerTotp,
                     route = PhotoPickerTotp.createNavRoute(it.index),
-                    backDestination = CreateLogin
+                    backDestination = CreateLoginNavItem
                 )
 
                 BaseLoginNavigation.TotpCancel -> appNavigator.navigateBack()
@@ -456,7 +456,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                     appNavigator.navigate(
                         destination = CustomFieldNameDialogNavItem.CreateIdentity,
                         route = CustomFieldNameDialogNavItem.CreateIdentity.buildRoute(it.type),
-                        backDestination = CreateIdentity
+                        backDestination = CreateIdentityNavItem
                     )
                 }
 
@@ -467,7 +467,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                             it.index,
                             it.title
                         ),
-                        backDestination = CreateIdentity
+                        backDestination = CreateIdentityNavItem
                     )
                 }
 
@@ -488,7 +488,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                     appNavigator.navigate(
                         destination = EditCustomSectionNameDialogNavItem,
                         route = EditCustomSectionNameDialogNavItem.buildRoute(it.index, it.title),
-                        backDestination = CreateIdentity
+                        backDestination = CreateIdentityNavItem
                     )
                 }
 
@@ -524,8 +524,8 @@ fun NavGraphBuilder.autofillActivityGraph(
 
                 is CreateItemBottomsheetNavigation.CreateLogin -> dismissBottomSheet {
                     appNavigator.navigate(
-                        destination = CreateLogin,
-                        route = CreateLogin.createNavRoute(it.shareId)
+                        destination = CreateLoginNavItem,
+                        route = CreateLoginNavItem.createNavRoute(it.shareId)
                     )
                 }
 
@@ -543,8 +543,8 @@ fun NavGraphBuilder.autofillActivityGraph(
 
                 is CreateItemBottomsheetNavigation.CreateIdentity -> dismissBottomSheet {
                     appNavigator.navigate(
-                        destination = CreateIdentity,
-                        route = CreateIdentity.createNavRoute(it.shareId)
+                        destination = CreateIdentityNavItem,
+                        route = CreateIdentityNavItem.createNavRoute(it.shareId)
                     )
                 }
             }

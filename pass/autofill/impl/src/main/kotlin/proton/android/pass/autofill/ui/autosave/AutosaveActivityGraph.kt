@@ -31,7 +31,7 @@ import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameDialogNavItem
 import proton.android.pass.features.itemcreate.dialogs.customfield.EditCustomFieldNameDialogNavItem
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation
-import proton.android.pass.features.itemcreate.login.CreateLogin
+import proton.android.pass.features.itemcreate.login.CreateLoginNavItem
 import proton.android.pass.features.itemcreate.login.CreateLoginNavigation
 import proton.android.pass.features.itemcreate.login.InitialCreateLoginUiState
 import proton.android.pass.features.itemcreate.login.createUpdateLoginGraph
@@ -60,7 +60,7 @@ fun NavGraphBuilder.autosaveActivityGraph(
         navigation = {
             when (it) {
                 is AuthNavigation.CloseScreen -> onNavigate(AutosaveNavigation.Cancel)
-                is AuthNavigation.Success -> appNavigator.navigate(CreateLogin)
+                is AuthNavigation.Success -> appNavigator.navigate(CreateLoginNavItem)
                 AuthNavigation.Dismissed -> onNavigate(AutosaveNavigation.Cancel)
                 AuthNavigation.Failed -> onNavigate(AutosaveNavigation.Cancel)
                 is AuthNavigation.ForceSignOut ->
@@ -133,7 +133,7 @@ fun NavGraphBuilder.autosaveActivityGraph(
                     appNavigator.navigate(
                         destination = CustomFieldNameDialogNavItem.CreateLogin,
                         route = CustomFieldNameDialogNavItem.CreateLogin.buildRoute(it.type),
-                        backDestination = CreateLogin
+                        backDestination = CreateLoginNavItem
                     )
                 }
 
@@ -152,7 +152,7 @@ fun NavGraphBuilder.autosaveActivityGraph(
                             it.index,
                             it.currentValue
                         ),
-                        backDestination = CreateLogin
+                        backDestination = CreateLoginNavItem
                     )
                 }
 
@@ -167,7 +167,7 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 is BaseLoginNavigation.OpenImagePicker -> appNavigator.navigate(
                     destination = PhotoPickerTotp,
                     route = PhotoPickerTotp.createNavRoute(it.index),
-                    backDestination = CreateLogin
+                    backDestination = CreateLoginNavItem
                 )
 
                 BaseLoginNavigation.TotpCancel -> appNavigator.navigateBack()

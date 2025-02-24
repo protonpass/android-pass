@@ -55,7 +55,7 @@ object CreateLoginDefaultEmailArg : OptionalNavArgId {
 
 }
 
-object CreateLogin : NavItem(
+object CreateLoginNavItem : NavItem(
     baseRoute = "login/create",
     optionalArgIds = listOf(CommonOptionalNavArgId.ShareId, CreateLoginDefaultEmailArg)
 ) {
@@ -82,9 +82,9 @@ fun NavGraphBuilder.createLoginGraph(
 ) {
     navigation(
         route = CREATE_LOGIN_GRAPH,
-        startDestination = CreateLogin.route
+        startDestination = CreateLoginNavItem.route
     ) {
-        composable(CreateLogin) { navBackStack ->
+        composable(CreateLoginNavItem) { navBackStack ->
             val navTotpUri by navBackStack.savedStateHandle
                 .getStateFlow<String?>(TOTP_NAV_PARAMETER_KEY, null)
                 .collectAsStateWithLifecycle()

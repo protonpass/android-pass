@@ -43,7 +43,7 @@ internal fun PassIdentityItemDetailsExtraSection(
             val rows = mutableListOf<@Composable () -> Unit>()
 
             rows.addCustomFieldRows(
-                customFields = extraSectionContent.customFields,
+                customFields = extraSectionContent.customFieldList,
                 customFieldSection = ItemCustomFieldSection.Identity.ExtraSection(extraSectionIndex),
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,

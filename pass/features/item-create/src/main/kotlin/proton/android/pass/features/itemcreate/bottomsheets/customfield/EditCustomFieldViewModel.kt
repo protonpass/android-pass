@@ -23,10 +23,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.repositories.DRAFT_REMOVE_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.features.itemcreate.common.customsection.CustomSectionIndexNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
 import javax.inject.Inject
 
@@ -40,6 +44,9 @@ class EditCustomFieldViewModel @Inject constructor(
     private val title = savedStateHandle.get().require<String>(CustomFieldTitleNavArgId.key).let {
         NavParamEncoder.decode(it)
     }
+    private val sectionIndex = savedStateHandle.get().require<Int>(CustomSectionIndexNavArgId.key)
+        .let { if (it > 0) Some(it) else None }
+
 
     private val eventStateFlow: MutableStateFlow<EditCustomFieldEvent> =
         MutableStateFlow(EditCustomFieldEvent.Unknown)
@@ -47,7 +54,13 @@ class EditCustomFieldViewModel @Inject constructor(
     val eventState: StateFlow<EditCustomFieldEvent> = eventStateFlow
 
     fun onEdit() {
-        eventStateFlow.update { EditCustomFieldEvent.EditField(index = index, title = title) }
+        eventStateFlow.update {
+            EditCustomFieldEvent.EditField(
+                index = index,
+                title = title,
+                sectionIndex = sectionIndex
+            )
+        }
     }
 
     fun onRemove() {
@@ -58,6 +71,11 @@ class EditCustomFieldViewModel @Inject constructor(
 
 sealed interface EditCustomFieldEvent {
     data object Unknown : EditCustomFieldEvent
-    data class EditField(val index: Int, val title: String) : EditCustomFieldEvent
+    data class EditField(
+        val index: Int,
+        val title: String,
+        val sectionIndex: Option<Int>
+    ) : EditCustomFieldEvent
+
     data object RemovedField : EditCustomFieldEvent
 }

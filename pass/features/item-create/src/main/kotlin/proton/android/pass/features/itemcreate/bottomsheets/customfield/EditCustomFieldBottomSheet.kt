@@ -49,11 +49,19 @@ fun EditCustomFieldBottomSheet(
     LaunchedEffect(state) {
         when (val event = state) {
             is EditCustomFieldEvent.EditField -> {
-                onNavigate(CustomFieldOptionsNavigation.EditCustomField(event.index, event.title))
+                onNavigate(
+                    CustomFieldOptionsNavigation.EditCustomField(
+                        index = event.index,
+                        title = event.title,
+                        sectionIndex = event.sectionIndex
+                    )
+                )
             }
+
             EditCustomFieldEvent.RemovedField -> {
                 onNavigate(CustomFieldOptionsNavigation.RemoveCustomField)
             }
+
             EditCustomFieldEvent.Unknown -> {}
         }
     }

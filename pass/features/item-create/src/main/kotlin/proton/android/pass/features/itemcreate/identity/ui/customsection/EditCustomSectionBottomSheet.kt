@@ -34,7 +34,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemLis
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.features.itemcreate.R
-import proton.android.pass.features.itemcreate.identity.navigation.customsection.ExtraSectionNavigation
+import proton.android.pass.features.itemcreate.common.customsection.ExtraSectionNavigation
 import proton.android.pass.features.itemcreate.identity.presentation.customsection.EditCustomSectionEvent
 import proton.android.pass.features.itemcreate.identity.presentation.customsection.EditCustomSectionViewModel
 import me.proton.core.presentation.R as CoreR

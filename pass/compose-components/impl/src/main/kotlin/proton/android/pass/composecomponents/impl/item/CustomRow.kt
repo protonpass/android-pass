@@ -130,7 +130,7 @@ private fun getHighlightedFields(
 
         extraSectionContentList.forEach { extraSectionContent ->
             val extraSectionCustomField =
-                extraSectionContent.customFields.filterIsInstance<CustomFieldContent.Text>()
+                extraSectionContent.customFieldList.filterIsInstance<CustomFieldContent.Text>()
                     .mapNotNull { customField ->
                         customFieldToAnnotatedString(
                             customField,

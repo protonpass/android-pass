@@ -67,6 +67,7 @@ import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.CustomFieldIndexTitle
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
+import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.ItemLinkAttachmentsError

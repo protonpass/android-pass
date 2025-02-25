@@ -240,7 +240,7 @@ private fun WorkDetails.toContent(encryptionContext: EncryptionContext) = WorkDe
 
 private fun ExtraSection.toContent(encryptionContext: EncryptionContext) = ExtraSectionContent(
     title = sectionName,
-    customFields = customFields.mapNotNull { it.toContent(encryptionContext, true) }
+    customFieldList = customFields.mapNotNull { it.toContent(encryptionContext, true) }
 )
 
 private fun createCustom(
@@ -251,6 +251,7 @@ private fun createCustom(
 ) = ItemContents.Custom(
     title = encryptionContext.decrypt(title),
     note = encryptionContext.decrypt(note),
+    customFieldList = type.customFields.mapNotNull { it.toContent(encryptionContext, true) },
     sectionContentList = type.extraSections.map { it.toContent(encryptionContext) }
 )
 

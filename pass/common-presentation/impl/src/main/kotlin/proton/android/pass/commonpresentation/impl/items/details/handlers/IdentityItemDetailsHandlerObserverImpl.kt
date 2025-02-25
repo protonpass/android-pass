@@ -121,8 +121,8 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
                                         set(
                                             index = hiddenFieldSection.index,
                                             element = extraSectionContent.copy(
-                                                customFields = toggleHiddenCustomField(
-                                                    customFieldsContent = extraSectionContent.customFields,
+                                                customFieldList = toggleHiddenCustomField(
+                                                    customFieldsContent = extraSectionContent.customFieldList,
                                                     hiddenFieldType = hiddenFieldType,
                                                     hiddenState = hiddenState
                                                 )
@@ -333,10 +333,10 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
             extraCustomFields = baseItemContents.extraSectionContentList.mapIndexed { index, extraSectionContent ->
                 calculateItemDiffTypes(
                     encryptionContext = this@withEncryptionContext,
-                    baseItemCustomFieldsContent = extraSectionContent.customFields,
+                    baseItemCustomFieldsContent = extraSectionContent.customFieldList,
                     otherItemCustomFieldsContent = otherItemContents.extraSectionContentList
                         .getOrNull(index)
-                        ?.customFields
+                        ?.customFieldList
                         ?: emptyList()
                 )
             },

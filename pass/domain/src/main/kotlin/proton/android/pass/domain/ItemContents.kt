@@ -236,6 +236,7 @@ sealed class ItemContents {
     data class Custom(
         override val title: String,
         override val note: String,
+        val customFieldList: List<CustomFieldContent>,
         val sectionContentList: List<ExtraSectionContent>
     ) : ItemContents() {
 
@@ -504,15 +505,15 @@ data class WorkDetailsContent(
 @Serializable
 data class ExtraSectionContent(
     val title: String,
-    val customFields: List<CustomFieldContent>
+    val customFieldList: List<CustomFieldContent>
 ) {
 
-    val hasCustomFields: Boolean by lazy { customFields.isNotEmpty() }
+    val hasCustomFields: Boolean by lazy { customFieldList.isNotEmpty() }
 
     companion object {
         val EMPTY = ExtraSectionContent(
             title = "",
-            customFields = emptyList()
+            customFieldList = emptyList()
         )
     }
 }

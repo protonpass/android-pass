@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.identity.navigation
+package proton.android.pass.features.itemcreate.custom.createupdate.navigation
 
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -33,20 +33,18 @@ import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
 import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
 import proton.android.pass.features.itemcreate.common.customsection.ExtraSectionNavigation
 import proton.android.pass.features.itemcreate.common.customsection.extraSectionGraph
+import proton.android.pass.features.itemcreate.custom.createupdate.ui.CreateCustomItemScreen
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameNavigation
 import proton.android.pass.features.itemcreate.dialogs.customfield.customFieldNameDialogGraph
-import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.IdentityFieldsNavigation
-import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.identityFieldsGraph
-import proton.android.pass.features.itemcreate.identity.ui.CreateIdentityScreen
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.toPath
 
-const val CREATE_IDENTITY_GRAPH = "create_identity_graph"
+const val CREATE_CUSTOM_ITEM_GRAPH = "create_custom_item_graph"
 
-object CreateIdentityNavItem : NavItem(
-    baseRoute = "identity/create/screen",
+object CreateCustomItemNavItem : NavItem(
+    baseRoute = "customitem/create/screen",
     optionalArgIds = listOf(CommonOptionalNavArgId.ShareId)
 ) {
     fun createNavRoute(shareId: Option<ShareId> = None) = buildString {
@@ -60,64 +58,56 @@ object CreateIdentityNavItem : NavItem(
     }
 }
 
-sealed interface CreateIdentityNavigation : BaseIdentityNavigation {
+sealed interface CreateCustomItemNavigation : BaseCustomItemNavigation {
     @JvmInline
-    value class ItemCreated(val itemUiModel: ItemUiModel) : CreateIdentityNavigation
+    value class ItemCreated(val itemUiModel: ItemUiModel) : CreateCustomItemNavigation
 
     @JvmInline
-    value class SelectVault(val shareId: ShareId) : CreateIdentityNavigation
+    value class SelectVault(val shareId: ShareId) : CreateCustomItemNavigation
 }
 
-fun NavGraphBuilder.createIdentityGraph(canUseAttachments: Boolean, onNavigate: (BaseIdentityNavigation) -> Unit) {
+fun NavGraphBuilder.createCustomItemGraph(canUseAttachments: Boolean, onNavigate: (BaseCustomItemNavigation) -> Unit) {
     navigation(
-        route = CREATE_IDENTITY_GRAPH,
-        startDestination = CreateIdentityNavItem.route
+        route = CREATE_CUSTOM_ITEM_GRAPH,
+        startDestination = CreateCustomItemNavItem.route
     ) {
-        composable(CreateIdentityNavItem) { navBackStack ->
+        composable(CreateCustomItemNavItem) { navBackStack ->
             val selectVault by navBackStack.savedStateHandle
                 .getStateFlow<String?>(KEY_VAULT_SELECTED, null)
                 .collectAsStateWithLifecycle()
 
-            CreateIdentityScreen(
+            CreateCustomItemScreen(
                 selectVault = selectVault.toOption().map { ShareId(it) }.value(),
                 canUseAttachments = canUseAttachments,
                 onNavigate = onNavigate
             )
         }
-        identityFieldsGraph {
-            when (it) {
-                IdentityFieldsNavigation.DismissBottomsheet ->
-                    onNavigate(BaseIdentityNavigation.DismissBottomsheet)
-                IdentityFieldsNavigation.AddCustomField ->
-                    onNavigate(BaseIdentityNavigation.OpenCustomFieldBottomSheet)
-            }
-        }
         customFieldBottomSheetGraph(
-            prefix = CustomFieldPrefix.CreateIdentity,
+            prefix = CustomFieldPrefix.CreateCustomItem,
             onAddCustomFieldNavigate = {
-                onNavigate(BaseIdentityNavigation.CustomFieldTypeSelected(it))
+                onNavigate(BaseCustomItemNavigation.CustomFieldTypeSelected(it))
             },
-            onEditCustomFieldNavigate = { title: String, index: Int, _: Option<Int> ->
-                onNavigate(BaseIdentityNavigation.EditCustomField(title, index))
+            onEditCustomFieldNavigate = { title: String, index: Int, sectionIndex: Option<Int> ->
+                onNavigate(BaseCustomItemNavigation.EditCustomField(title, index, sectionIndex))
             },
             onRemoveCustomFieldNavigate = {
-                onNavigate(BaseIdentityNavigation.RemovedCustomField)
+                onNavigate(BaseCustomItemNavigation.RemoveCustomField)
             },
-            onDismissBottomsheet = { onNavigate(BaseIdentityNavigation.DismissBottomsheet) }
+            onDismissBottomsheet = { onNavigate(BaseCustomItemNavigation.DismissBottomsheet) }
         )
-        customFieldNameDialogGraph(CustomFieldPrefix.CreateIdentity) {
+        customFieldNameDialogGraph(CustomFieldPrefix.CreateCustomItem) {
             when (it) {
-                is CustomFieldNameNavigation.CloseScreen -> onNavigate(BaseIdentityNavigation.CloseScreen)
+                is CustomFieldNameNavigation.CloseScreen -> onNavigate(BaseCustomItemNavigation.CloseScreen)
             }
         }
         extraSectionGraph {
             when (it) {
-                is ExtraSectionNavigation.CloseScreen -> onNavigate(BaseIdentityNavigation.CloseScreen)
+                is ExtraSectionNavigation.CloseScreen -> onNavigate(BaseCustomItemNavigation.CloseScreen)
                 is ExtraSectionNavigation.EditCustomSection ->
-                    onNavigate(BaseIdentityNavigation.EditCustomSection(it.title, it.index))
+                    onNavigate(BaseCustomItemNavigation.EditSection(it.title, it.index))
 
                 ExtraSectionNavigation.RemoveCustomSection ->
-                    onNavigate(BaseIdentityNavigation.RemoveCustomSection)
+                    onNavigate(BaseCustomItemNavigation.RemoveSection)
             }
         }
     }

@@ -107,7 +107,7 @@ object ItemUiFilter {
             hasMatchingCustomField(workDetails.customFields, query) -> true
             else -> {
                 content.extraSectionContentList.forEach {
-                    if (hasMatchingCustomField(it.customFields, query)) return true
+                    if (hasMatchingCustomField(it.customFieldList, query)) return true
                 }
 
                 false
@@ -117,7 +117,7 @@ object ItemUiFilter {
 
     private fun isCustomMatch(content: ItemContents.Custom, query: String): Boolean {
         content.sectionContentList.forEach {
-            if (hasMatchingCustomField(it.customFields, query)) return true
+            if (hasMatchingCustomField(it.customFieldList, query)) return true
         }
 
         return false

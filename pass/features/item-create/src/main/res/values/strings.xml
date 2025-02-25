@@ -277,4 +277,16 @@
     <string name="button_start_from_scratch">Start from scratch</string>
     <string name="select_template_title">Custom item</string>
 
+    <!-- Custom item screen -->
+    <string name="add_custom_field_button">Add field</string>
+    <string name="add_section_button">Add section</string>
+
+    <string name="create_custom_item_init_error">Problem retrieving custom item details</string>
+    <string name="update_custom_item_attachments_init_error">Problem retrieving custom item attachments</string>
+    <string name="custom_item_link_attachments_error">Failed to link or unlink attachments to the custom item</string>
+    <string name="custom_item_rename_attachments_error">Failed to rename custom item attachments</string>
+    <string name="create_custom_item_item_creation_error">Could not create custom item</string>
+    <string name="create_custom_item_item_creation_success">Custom item created</string>
+    <string name="update_custom_item_item_creation_success">Custom item updated</string>
+    <string name="update_custom_item_item_creation_error">Could not update custom item</string>
 </resources>

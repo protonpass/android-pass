@@ -20,7 +20,10 @@ package proton.android.pass.features.itemcreate.bottomsheets.customfield
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
+import proton.android.pass.features.itemcreate.common.customsection.CustomSectionIndexNavArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
@@ -31,7 +34,6 @@ object CustomFieldIndexNavArgId : NavArgId {
     override val key = "index"
     override val navType = NavType.IntType
 }
-
 object CustomFieldTitleNavArgId : NavArgId {
     override val key = "title"
     override val navType = NavType.StringType
@@ -49,10 +51,14 @@ class AddCustomFieldBottomSheetNavItem(val prefix: CustomFieldPrefix) : NavItem(
 
 class CustomFieldOptionsBottomSheetNavItem(val prefix: CustomFieldPrefix) : NavItem(
     baseRoute = "${prefix.name}/item/create/customfield/options/bottomsheet",
-    navArgIds = listOf(CustomFieldIndexNavArgId, CustomFieldTitleNavArgId),
+    navArgIds = listOf(CustomFieldIndexNavArgId, CustomFieldTitleNavArgId, CustomSectionIndexNavArgId),
     navItemType = NavItemType.Bottomsheet
 ) {
-    fun buildRoute(index: Int, currentTitle: String) = buildString {
+    fun buildRoute(
+        index: Int,
+        currentTitle: String,
+        sectionIndex: Option<Int> = None
+    ) = buildString {
         append("$baseRoute/$index/")
         val encodedTitle = NavParamEncoder.encode(currentTitle)
         if (encodedTitle.isNotBlank()) {
@@ -60,6 +66,7 @@ class CustomFieldOptionsBottomSheetNavItem(val prefix: CustomFieldPrefix) : NavI
         } else {
             append("Unknown")
         }
+        append("/${sectionIndex.value() ?: -1}")
     }
 
     companion object {
@@ -76,14 +83,18 @@ sealed interface AddCustomFieldNavigation {
 
 sealed interface CustomFieldOptionsNavigation {
     data object Close : CustomFieldOptionsNavigation
-    data class EditCustomField(val index: Int, val title: String) : CustomFieldOptionsNavigation
+    data class EditCustomField(
+        val index: Int,
+        val title: String,
+        val sectionIndex: Option<Int>
+    ) : CustomFieldOptionsNavigation
     data object RemoveCustomField : CustomFieldOptionsNavigation
 }
 
 fun NavGraphBuilder.customFieldBottomSheetGraph(
     prefix: CustomFieldPrefix,
     onAddCustomFieldNavigate: (CustomFieldType) -> Unit,
-    onEditCustomFieldNavigate: (String, Int) -> Unit,
+    onEditCustomFieldNavigate: (String, Int, Option<Int>) -> Unit,
     onRemoveCustomFieldNavigate: () -> Unit,
     onDismissBottomsheet: () -> Unit
 ) {
@@ -102,7 +113,7 @@ fun NavGraphBuilder.customFieldBottomSheetGraph(
             onNavigate = {
                 when (it) {
                     is CustomFieldOptionsNavigation.EditCustomField ->
-                        onEditCustomFieldNavigate(it.title, it.index)
+                        onEditCustomFieldNavigate(it.title, it.index, it.sectionIndex)
                     CustomFieldOptionsNavigation.RemoveCustomField -> onRemoveCustomFieldNavigate()
                     CustomFieldOptionsNavigation.Close -> onDismissBottomsheet()
                 }

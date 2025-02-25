@@ -235,7 +235,7 @@ fun ItemContents.serializeToProto(
                             ItemV1.ExtraIdentitySection.newBuilder()
                                 .setSectionName(it.title)
                                 .clearSectionFields()
-                                .addAllSectionFields(it.customFields.mapToExtraFields(encryptionContext))
+                                .addAllSectionFields(it.customFieldList.mapToExtraFields(encryptionContext))
                                 .build()
                         }
                     )
@@ -252,7 +252,7 @@ fun ItemContents.serializeToProto(
                             ItemV1.CustomSection.newBuilder()
                                 .setSectionName(it.title)
                                 .clearSectionFields()
-                                .addAllSectionFields(it.customFields.mapToExtraFields(encryptionContext))
+                                .addAllSectionFields(it.customFieldList.mapToExtraFields(encryptionContext))
                                 .build()
                         }
                     )

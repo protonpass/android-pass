@@ -23,6 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -92,7 +93,7 @@ fun NavGraphBuilder.updateLoginGraph(canUseAttachments: Boolean, onNavigate: (Ba
         customFieldBottomSheetGraph(
             prefix = CustomFieldPrefix.UpdateLogin,
             onAddCustomFieldNavigate = { onNavigate(BaseLoginNavigation.CustomFieldTypeSelected(it)) },
-            onEditCustomFieldNavigate = { title: String, index: Int ->
+            onEditCustomFieldNavigate = { title: String, index: Int, _: Option<Int> ->
                 onNavigate(BaseLoginNavigation.EditCustomField(title, index))
             },
             onRemoveCustomFieldNavigate = { onNavigate(BaseLoginNavigation.RemovedCustomField) },

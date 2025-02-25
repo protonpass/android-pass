@@ -27,8 +27,8 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.repositories.DRAFT_REMOVE_CUSTOM_SECTION_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
-import proton.android.pass.features.itemcreate.identity.navigation.customsection.CustomSectionIndexNavArgId
-import proton.android.pass.features.itemcreate.identity.navigation.customsection.CustomSectionTitleNavArgId
+import proton.android.pass.features.itemcreate.common.customsection.CustomSectionIndexNavArgId
+import proton.android.pass.features.itemcreate.common.customsection.CustomSectionTitleNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
 import javax.inject.Inject
 

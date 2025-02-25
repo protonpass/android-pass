@@ -147,6 +147,7 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
             contents = ItemContents.Custom(
                 title = "Custom title",
                 note = "",
+                customFieldList = emptyList(),
                 sectionContentList = emptyList()
             ),
             state = 0,

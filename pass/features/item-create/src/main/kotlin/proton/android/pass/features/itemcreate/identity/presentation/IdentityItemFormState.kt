@@ -28,6 +28,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.PersonalDetailsContent
 import proton.android.pass.domain.WorkDetailsContent
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
+import proton.android.pass.features.itemcreate.common.UIExtraSection
 
 @Parcelize
 @Immutable
@@ -105,7 +106,7 @@ data class IdentityItemFormState(
         extraSectionContentList = uiExtraSections.map {
             ExtraSectionContent(
                 title = it.title,
-                customFields = it.customFields.map(UICustomFieldContent::toCustomFieldContent)
+                customFieldList = it.customFields.map(UICustomFieldContent::toCustomFieldContent)
             )
         }
     )
@@ -317,19 +318,6 @@ data class UIWorkDetails(
             customFields = emptyList()
         )
     }
-}
-
-@Parcelize
-@Immutable
-data class UIExtraSection(
-    val title: String,
-    val customFields: List<UICustomFieldContent>
-) : Parcelable {
-
-    constructor(extraSectionContent: ExtraSectionContent) : this(
-        title = extraSectionContent.title,
-        customFields = extraSectionContent.customFields.map(UICustomFieldContent.Companion::from)
-    )
 }
 
 sealed interface IdentityValidationErrors {

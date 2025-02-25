@@ -103,6 +103,9 @@ import proton.android.pass.features.itemcreate.bottomsheets.customfield.AddCusto
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldOptionsBottomSheetNavItem
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
 import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
+import proton.android.pass.features.itemcreate.common.customsection.CustomSectionNameDialogNavItem
+import proton.android.pass.features.itemcreate.common.customsection.CustomSectionOptionsBottomSheetNavItem
+import proton.android.pass.features.itemcreate.common.customsection.EditCustomSectionNameDialogNavItem
 import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation
 import proton.android.pass.features.itemcreate.creditcard.CreateCreditCard
 import proton.android.pass.features.itemcreate.creditcard.CreateCreditCardNavigation
@@ -110,6 +113,10 @@ import proton.android.pass.features.itemcreate.creditcard.EditCreditCard
 import proton.android.pass.features.itemcreate.creditcard.UpdateCreditCardNavigation
 import proton.android.pass.features.itemcreate.creditcard.createCreditCardGraph
 import proton.android.pass.features.itemcreate.creditcard.updateCreditCardGraph
+import proton.android.pass.features.itemcreate.custom.createupdate.navigation.BaseCustomItemNavigation
+import proton.android.pass.features.itemcreate.custom.createupdate.navigation.CreateCustomItemNavItem
+import proton.android.pass.features.itemcreate.custom.createupdate.navigation.CreateCustomItemNavigation
+import proton.android.pass.features.itemcreate.custom.createupdate.navigation.createUpdateCustomItemGraph
 import proton.android.pass.features.itemcreate.custom.selecttemplate.navigation.SelectTemplateNavItem
 import proton.android.pass.features.itemcreate.custom.selecttemplate.navigation.SelectTemplateNavigation
 import proton.android.pass.features.itemcreate.custom.selecttemplate.navigation.selectTemplateGraph
@@ -122,9 +129,6 @@ import proton.android.pass.features.itemcreate.identity.navigation.UpdateIdentit
 import proton.android.pass.features.itemcreate.identity.navigation.UpdateIdentityNavigation
 import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.IdentityFieldsBottomSheet
 import proton.android.pass.features.itemcreate.identity.navigation.createUpdateIdentityGraph
-import proton.android.pass.features.itemcreate.identity.navigation.customsection.CustomSectionNameDialogNavItem
-import proton.android.pass.features.itemcreate.identity.navigation.customsection.CustomSectionOptionsBottomSheetNavItem
-import proton.android.pass.features.itemcreate.identity.navigation.customsection.EditCustomSectionNameDialogNavItem
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation
 import proton.android.pass.features.itemcreate.login.CreateLoginNavItem
 import proton.android.pass.features.itemcreate.login.CreateLoginNavigation
@@ -709,12 +713,14 @@ fun NavGraphBuilder.appGraph(
     selectTemplateGraph {
         when (it) {
             SelectTemplateNavigation.NavigateBack -> appNavigator.navigateBack()
-            SelectTemplateNavigation.NavigateToFromScratch -> {
-                // navigate to create
-            }
-            is SelectTemplateNavigation.NavigateToTemplate -> {
-                // navigate to create
-            }
+            SelectTemplateNavigation.NavigateToFromScratch -> appNavigator.navigate(
+                CreateCustomItemNavItem,
+                CreateCustomItemNavItem.createNavRoute()
+            )
+            is SelectTemplateNavigation.NavigateToTemplate -> appNavigator.navigate(
+                CreateCustomItemNavItem,
+                CreateCustomItemNavItem.createNavRoute()
+            )
         }
     }
     profileGraph(
@@ -1354,6 +1360,97 @@ fun NavGraphBuilder.appGraph(
             }
         }
     )
+    createUpdateCustomItemGraph {
+        val backDestination = when {
+            appNavigator.hasDestinationInStack(CreateCustomItemNavItem) -> CreateCustomItemNavItem
+            else -> null
+        }
+        when (it) {
+            BaseCustomItemNavigation.CloseScreen -> appNavigator.navigateBack()
+            BaseCustomItemNavigation.DismissBottomsheet -> dismissBottomSheet {}
+            is CreateCustomItemNavigation.ItemCreated -> appNavigator.navigateBack()
+            is CreateCustomItemNavigation.SelectVault -> appNavigator.navigate(
+                destination = SelectVaultBottomsheet,
+                route = SelectVaultBottomsheet.createNavRoute(it.shareId)
+            )
+            is BaseCustomItemNavigation.AddCustomField -> dismissBottomSheet {
+                val prefix = CustomFieldPrefix.fromCustomItem(backDestination)
+                appNavigator.navigate(AddCustomFieldBottomSheetNavItem(prefix))
+            }
+            is BaseCustomItemNavigation.CustomFieldOptions -> {
+                val prefix = CustomFieldPrefix.fromIdentity(backDestination)
+                appNavigator.navigate(
+                    destination = CustomFieldOptionsBottomSheetNavItem(prefix),
+                    route = CustomFieldOptionsBottomSheetNavItem(prefix).buildRoute(
+                        it.index,
+                        it.title
+                    )
+                )
+            }
+            is BaseCustomItemNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
+                val prefix = CustomFieldPrefix.fromCustomItem(backDestination)
+                appNavigator.navigate(
+                    destination = CustomFieldNameDialogNavItem(prefix),
+                    route = CustomFieldNameDialogNavItem(prefix).buildRoute(it.type),
+                    backDestination = backDestination
+                )
+            }
+            is BaseCustomItemNavigation.EditCustomField -> dismissBottomSheet {
+                val prefix = CustomFieldPrefix.fromCustomItem(backDestination)
+                appNavigator.navigate(
+                    destination = EditCustomFieldNameDialogNavItem(prefix),
+                    route = EditCustomFieldNameDialogNavItem(prefix).buildRoute(
+                        it.index,
+                        it.title
+                    ),
+                    backDestination = backDestination
+                )
+            }
+
+            BaseCustomItemNavigation.AddAttachment ->
+                appNavigator.navigate(AddAttachmentNavItem)
+            is BaseCustomItemNavigation.OpenAttachmentOptions ->
+                appNavigator.navigate(
+                    destination = AttachmentOptionsNavItem,
+                    route = AttachmentOptionsNavItem.createNavRoute(
+                        shareId = it.shareId,
+                        itemId = it.itemId,
+                        attachmentId = it.attachmentId
+                    )
+                )
+            is BaseCustomItemNavigation.OpenDraftAttachmentOptions ->
+                appNavigator.navigate(
+                    destination = AttachmentOptionsNavItem,
+                    route = AttachmentOptionsNavItem.createNavRoute(it.uri)
+                )
+            BaseCustomItemNavigation.UpsellAttachments ->
+                appNavigator.navigate(
+                    destination = UpsellNavItem,
+                    route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
+                )
+            is BaseCustomItemNavigation.DeleteAllAttachments ->
+                appNavigator.navigate(
+                    destination = DeleteAllAttachmentsDialogNavItem,
+                    route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
+                )
+            BaseCustomItemNavigation.AddSection ->
+                appNavigator.navigate(CustomSectionNameDialogNavItem)
+            is BaseCustomItemNavigation.SectionOptions ->
+                appNavigator.navigate(
+                    destination = CustomSectionOptionsBottomSheetNavItem,
+                    route = CustomSectionOptionsBottomSheetNavItem.buildRoute(it.index, it.title)
+                )
+            is BaseCustomItemNavigation.EditSection -> dismissBottomSheet {
+                appNavigator.navigate(
+                    destination = EditCustomSectionNameDialogNavItem,
+                    route = EditCustomSectionNameDialogNavItem.buildRoute(it.index, it.title),
+                    backDestination = backDestination
+                )
+            }
+            BaseCustomItemNavigation.RemoveCustomField -> dismissBottomSheet {}
+            BaseCustomItemNavigation.RemoveSection -> dismissBottomSheet {}
+        }
+    }
     itemDetailGraph(
         onNavigate = {
             when (it) {

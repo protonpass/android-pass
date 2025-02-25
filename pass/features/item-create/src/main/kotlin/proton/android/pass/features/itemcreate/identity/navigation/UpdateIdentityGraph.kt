@@ -20,16 +20,17 @@ package proton.android.pass.features.itemcreate.identity.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
+import proton.android.pass.common.api.Option
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.customFieldBottomSheetGraph
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
+import proton.android.pass.features.itemcreate.common.customsection.ExtraSectionNavigation
+import proton.android.pass.features.itemcreate.common.customsection.extraSectionGraph
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameNavigation
 import proton.android.pass.features.itemcreate.dialogs.customfield.customFieldNameDialogGraph
 import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.IdentityFieldsNavigation
 import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.identityFieldsGraph
-import proton.android.pass.features.itemcreate.identity.navigation.customsection.ExtraSectionNavigation
-import proton.android.pass.features.itemcreate.identity.navigation.customsection.extraSectionGraph
 import proton.android.pass.features.itemcreate.identity.ui.UpdateIdentityScreen
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
@@ -71,7 +72,7 @@ fun NavGraphBuilder.updateIdentityGraph(onNavigate: (BaseIdentityNavigation) -> 
             onAddCustomFieldNavigate = {
                 onNavigate(BaseIdentityNavigation.CustomFieldTypeSelected(it))
             },
-            onEditCustomFieldNavigate = { title: String, index: Int ->
+            onEditCustomFieldNavigate = { title: String, index: Int, _: Option<Int> ->
                 onNavigate(BaseIdentityNavigation.EditCustomField(title, index))
             },
             onRemoveCustomFieldNavigate = {

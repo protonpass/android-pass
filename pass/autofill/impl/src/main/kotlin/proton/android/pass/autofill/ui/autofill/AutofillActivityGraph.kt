@@ -66,9 +66,9 @@ import proton.android.pass.features.itemcreate.identity.navigation.CreateIdentit
 import proton.android.pass.features.itemcreate.identity.navigation.UpdateIdentityNavigation
 import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.IdentityFieldsBottomSheet
 import proton.android.pass.features.itemcreate.identity.navigation.createIdentityGraph
-import proton.android.pass.features.itemcreate.identity.navigation.customsection.CustomSectionNameDialogNavItem
-import proton.android.pass.features.itemcreate.identity.navigation.customsection.CustomSectionOptionsBottomSheetNavItem
-import proton.android.pass.features.itemcreate.identity.navigation.customsection.EditCustomSectionNameDialogNavItem
+import proton.android.pass.features.itemcreate.common.customsection.CustomSectionNameDialogNavItem
+import proton.android.pass.features.itemcreate.common.customsection.CustomSectionOptionsBottomSheetNavItem
+import proton.android.pass.features.itemcreate.common.customsection.EditCustomSectionNameDialogNavItem
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation
 import proton.android.pass.features.itemcreate.login.CreateLoginNavItem
 import proton.android.pass.features.itemcreate.login.CreateLoginNavigation

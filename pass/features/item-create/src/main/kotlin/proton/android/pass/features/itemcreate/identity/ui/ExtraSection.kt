@@ -28,6 +28,7 @@ import androidx.compose.ui.focus.focusRequester
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.common.customfields.AddMoreButton
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEntry
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent
@@ -36,7 +37,6 @@ import proton.android.pass.features.itemcreate.identity.navigation.IdentityConte
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnCustomFieldOptions
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnFieldChange
 import proton.android.pass.features.itemcreate.identity.presentation.FieldChange
-import proton.android.pass.features.itemcreate.identity.presentation.UIExtraSection
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ExtraSectionCustomField
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.FocusedField
 

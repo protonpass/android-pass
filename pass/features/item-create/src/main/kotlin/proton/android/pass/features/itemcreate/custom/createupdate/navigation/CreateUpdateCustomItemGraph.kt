@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,10 +16,17 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.identity.navigation.customsection
+package proton.android.pass.features.itemcreate.custom.createupdate.navigation
 
-sealed interface ExtraSectionNavigation {
-    data object CloseScreen : ExtraSectionNavigation
-    data class EditCustomSection(val index: Int, val title: String) : ExtraSectionNavigation
-    data object RemoveCustomSection : ExtraSectionNavigation
+import androidx.navigation.NavGraphBuilder
+
+fun NavGraphBuilder.createUpdateCustomItemGraph(onNavigate: (BaseCustomItemNavigation) -> Unit) {
+    createCustomItemGraph(
+        canUseAttachments = true,
+        onNavigate = onNavigate
+    )
+/*    updateLoginGraph(
+        canUseAttachments = canUseAttachments,
+        onNavigate = onNavigate
+    )*/
 }

@@ -199,6 +199,7 @@ sealed interface ItemType {
 
     @Serializable
     data class Custom(
+        val customFields: List<CustomField>,
         val extraSections: List<ExtraSection>
     ) : ItemType
 

@@ -39,7 +39,7 @@ import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
-import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_KEY
+import proton.android.pass.data.api.repositories.DRAFT_NEW_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
@@ -327,13 +327,13 @@ class CreateLoginNavItemScreenTest {
             onNode(hasText(titleText)).performClick().performScrollTo()
             writeTextAndWait(hasText(titleText), title)
 
-            draftRepository.save(DRAFT_CUSTOM_FIELD_KEY, textCustomField)
+            draftRepository.save(DRAFT_NEW_CUSTOM_FIELD_KEY, textCustomField)
             waitUntilExists(hasText(textCustomFieldValue))
 
-            draftRepository.save(DRAFT_CUSTOM_FIELD_KEY, hiddenCustomField)
+            draftRepository.save(DRAFT_NEW_CUSTOM_FIELD_KEY, hiddenCustomField)
             waitUntilExists(hasText(hiddenCustomFieldValue))
 
-            draftRepository.save(DRAFT_CUSTOM_FIELD_KEY, totpCustomField)
+            draftRepository.save(DRAFT_NEW_CUSTOM_FIELD_KEY, totpCustomField)
             val addCustomFieldText =
                 activity.getString(R.string.create_login_add_custom_field_button)
             onNodeWithText(addCustomFieldText).performScrollTo()

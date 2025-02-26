@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_KEY
+import proton.android.pass.data.api.repositories.DRAFT_NEW_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
@@ -95,7 +95,7 @@ class CustomFieldNameViewModel @Inject constructor(
             }
         }
 
-        draftRepository.save(DRAFT_CUSTOM_FIELD_KEY, field)
+        draftRepository.save(DRAFT_NEW_CUSTOM_FIELD_KEY, field)
         eventFlow.update { CustomFieldEvent.Close }
     }
 

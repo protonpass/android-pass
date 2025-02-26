@@ -40,13 +40,12 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemCreate
-import proton.android.pass.features.itemcreate.common.CustomItemFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
@@ -70,15 +69,13 @@ class CreateCustomItemViewModel @Inject constructor(
     observeVaults: ObserveVaultsWithItemCount,
     observeDefaultVault: ObserveDefaultVault,
     attachmentsHandler: AttachmentsHandler,
-    draftRepository: DraftRepository,
-    customItemFieldDraftRepository: CustomItemFieldDraftRepository,
+    customFieldDraftRepository: CustomFieldDraftRepository,
     encryptionContextProvider: EncryptionContextProvider,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCustomItemViewModel(
     attachmentsHandler = attachmentsHandler,
-    draftRepository = draftRepository,
     encryptionContextProvider = encryptionContextProvider,
-    customItemFieldDraftRepository = customItemFieldDraftRepository,
+    customFieldDraftRepository = customFieldDraftRepository,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
 

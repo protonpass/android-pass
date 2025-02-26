@@ -19,24 +19,26 @@
 package proton.android.pass.features.itemcreate.bottomsheets.customfield
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.data.api.repositories.DRAFT_REMOVE_CUSTOM_FIELD_KEY
-import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
 import proton.android.pass.features.itemcreate.common.customsection.CustomSectionIndexNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
 import javax.inject.Inject
 
 @HiltViewModel
 class EditCustomFieldViewModel @Inject constructor(
-    private val draftRepository: DraftRepository,
+    private val customFieldDraftRepository: CustomFieldDraftRepository,
     savedStateHandle: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -64,8 +66,11 @@ class EditCustomFieldViewModel @Inject constructor(
     }
 
     fun onRemove() {
-        draftRepository.save(DRAFT_REMOVE_CUSTOM_FIELD_KEY, index)
-        eventStateFlow.update { EditCustomFieldEvent.RemovedField }
+        viewModelScope.launch {
+            val event = DraftFormFieldEvent.FieldRemoved(sectionIndex = None, index = index)
+            customFieldDraftRepository.emit(event)
+            eventStateFlow.update { EditCustomFieldEvent.RemovedField }
+        }
     }
 }
 

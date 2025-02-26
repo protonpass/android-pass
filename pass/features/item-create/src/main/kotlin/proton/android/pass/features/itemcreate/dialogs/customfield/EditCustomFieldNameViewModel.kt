@@ -28,19 +28,19 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.data.api.repositories.DRAFT_EDIT_CUSTOM_FIELD_TITLE_KEY
-import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldIndexNavArgId
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldTitleNavArgId
-import proton.android.pass.features.itemcreate.common.CustomFieldIndexTitle
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
 import proton.android.pass.navigation.api.NavParamEncoder
 import javax.inject.Inject
 
 @HiltViewModel
 class EditCustomFieldNameViewModel @Inject constructor(
-    private val draftRepository: DraftRepository,
+    private val customFieldDraftRepository: CustomFieldDraftRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -77,14 +77,15 @@ class EditCustomFieldNameViewModel @Inject constructor(
         nameFlow.update { name }
     }
 
-    fun onSave() = viewModelScope.launch {
-        draftRepository.save(
-            key = DRAFT_EDIT_CUSTOM_FIELD_TITLE_KEY,
-            value = CustomFieldIndexTitle(
-                title = nameFlow.value.trim(),
-                index = customFieldIndex
+    fun onSave() {
+        viewModelScope.launch {
+            val event = DraftFormFieldEvent.FieldRenamed(
+                sectionIndex = None,
+                index = customFieldIndex,
+                newLabel = nameFlow.value.trim()
             )
-        )
-        eventFlow.update { CustomFieldEvent.Close }
+            customFieldDraftRepository.emit(event)
+            eventFlow.update { CustomFieldEvent.Close }
+        }
     }
 }

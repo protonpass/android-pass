@@ -28,20 +28,17 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.repositories.DRAFT_NEW_CUSTOM_FIELD_KEY
-import proton.android.pass.data.api.repositories.DraftRepository
-import proton.android.pass.domain.CustomFieldContent
-import proton.android.pass.domain.HiddenState
-import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldType
+import proton.android.pass.domain.CustomFieldType
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
 import javax.inject.Inject
 
 @HiltViewModel
 class CustomFieldNameViewModel @Inject constructor(
-    private val draftRepository: DraftRepository,
-    private val encryptionContextProvider: EncryptionContextProvider,
+    private val customFieldDraftRepository: CustomFieldDraftRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -75,28 +72,15 @@ class CustomFieldNameViewModel @Inject constructor(
         nameFlow.update { name }
     }
 
-    fun onSave() = viewModelScope.launch {
-        val field = when (customFieldType) {
-            CustomFieldType.Text -> CustomFieldContent.Text(label = nameFlow.value, value = "")
-            CustomFieldType.Hidden -> {
-                val value = encryptionContextProvider.withEncryptionContext { encrypt("") }
-                CustomFieldContent.Hidden(
-                    label = nameFlow.value.trim(),
-                    value = HiddenState.Empty(encrypted = value)
-                )
-            }
-
-            CustomFieldType.Totp -> {
-                val value = encryptionContextProvider.withEncryptionContext { encrypt("") }
-                CustomFieldContent.Totp(
-                    label = nameFlow.value,
-                    value = HiddenState.Empty(encrypted = value)
-                )
-            }
+    fun onSave() {
+        viewModelScope.launch {
+            val event = DraftFormFieldEvent.FieldAdded(
+                sectionIndex = None,
+                label = state.value.value,
+                type = customFieldType
+            )
+            customFieldDraftRepository.emit(event)
+            eventFlow.update { CustomFieldEvent.Close }
         }
-
-        draftRepository.save(DRAFT_NEW_CUSTOM_FIELD_KEY, field)
-        eventFlow.update { CustomFieldEvent.Close }
     }
-
 }

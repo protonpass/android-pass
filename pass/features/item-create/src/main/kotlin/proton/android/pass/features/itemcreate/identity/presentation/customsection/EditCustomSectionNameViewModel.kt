@@ -30,17 +30,16 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.data.api.repositories.DRAFT_EDIT_CUSTOM_SECTION_TITLE_KEY
-import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldIndexNavArgId
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldTitleNavArgId
-import proton.android.pass.features.itemcreate.common.CustomFieldIndexTitle
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.DraftFormSectionEvent
 import proton.android.pass.navigation.api.NavParamEncoder
 import javax.inject.Inject
 
 @HiltViewModel
 class EditCustomSectionNameViewModel @Inject constructor(
-    private val draftRepository: DraftRepository,
+    private val customFieldDraftRepository: CustomFieldDraftRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -77,14 +76,11 @@ class EditCustomSectionNameViewModel @Inject constructor(
         nameFlow.update { name }
     }
 
-    fun onSave() = viewModelScope.launch {
-        draftRepository.save(
-            key = DRAFT_EDIT_CUSTOM_SECTION_TITLE_KEY,
-            value = CustomFieldIndexTitle(
-                title = nameFlow.value.trim(),
-                index = customSectionIndex
-            )
-        )
-        eventFlow.update { CustomSectionEvent.Close }
+    fun onSave() {
+        viewModelScope.launch {
+            val event = DraftFormSectionEvent.SectionRenamed(customSectionIndex, nameFlow.value.trim())
+            customFieldDraftRepository.emit(event)
+            eventFlow.update { CustomSectionEvent.Close }
+        }
     }
 }

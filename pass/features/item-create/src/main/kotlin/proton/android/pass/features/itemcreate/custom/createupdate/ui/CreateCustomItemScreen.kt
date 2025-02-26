@@ -80,7 +80,7 @@ fun CreateCustomItemScreen(
     Box(modifier = modifier.fillMaxSize()) {
         CustomContent(
             itemFormState = viewModel.itemFormState,
-            customItemState = state,
+            itemSharedProperties = state,
             canUseAttachments = canUseAttachments,
             topBarActionName = stringResource(id = R.string.title_create),
             onEvent = {

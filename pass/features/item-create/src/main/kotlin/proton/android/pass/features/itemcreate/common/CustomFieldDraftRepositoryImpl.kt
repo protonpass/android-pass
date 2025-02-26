@@ -19,16 +19,22 @@
 package proton.android.pass.features.itemcreate.common
 
 import kotlinx.coroutines.flow.Flow
-import proton.android.pass.common.api.Option
-import proton.android.pass.features.itemcreate.custom.createupdate.ui.CustomField
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.filterIsInstance
+import javax.inject.Inject
+import javax.inject.Singleton
 
-data class FocusedField(val index: Int, val sectionIndex: Option<Int>)
+@Singleton
+class CustomFieldDraftRepositoryImpl @Inject constructor() : CustomFieldDraftRepository {
 
-interface CustomItemFieldDraftRepository {
-    fun observeCustomFields(): Flow<Set<CustomField>>
-    fun addField(extraField: CustomField, focus: Boolean)
-    fun clearAddedFields()
-    fun observeLastAddedCustomField(): Flow<Option<FocusedField>>
-    fun resetLastAddedCustomField()
-    fun addCustomFieldIndex(index: Int)
+    private val events: MutableSharedFlow<DraftFormEvent> = MutableSharedFlow()
+
+    override fun observeAllEvents(): Flow<DraftFormEvent> = events
+
+    override fun observeCustomFieldEvents(): Flow<DraftFormFieldEvent> = events
+        .filterIsInstance<DraftFormFieldEvent>()
+
+    override suspend fun emit(event: DraftFormEvent) {
+        events.emit(event)
+    }
 }

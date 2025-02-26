@@ -28,13 +28,13 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import proton.android.pass.data.api.repositories.DRAFT_IDENTITY_EXTRA_SECTION_KEY
-import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.DraftFormSectionEvent
 import javax.inject.Inject
 
 @HiltViewModel
 class CustomSectionNameViewModel @Inject constructor(
-    private val draftRepository: DraftRepository
+    private val customFieldDraftRepository: CustomFieldDraftRepository
 ) : ViewModel() {
 
     private val eventFlow: MutableStateFlow<CustomSectionEvent> =
@@ -61,9 +61,12 @@ class CustomSectionNameViewModel @Inject constructor(
         nameFlow.update { name }
     }
 
-    fun onSave() = viewModelScope.launch {
-        draftRepository.save(DRAFT_IDENTITY_EXTRA_SECTION_KEY, nameFlow.value)
-        eventFlow.update { CustomSectionEvent.Close }
+    fun onSave() {
+        viewModelScope.launch {
+            val event = DraftFormSectionEvent.SectionAdded(nameFlow.value)
+            customFieldDraftRepository.emit(event)
+            eventFlow.update { CustomSectionEvent.Close }
+        }
     }
 
     fun consumeEvent(event: CustomSectionEvent) = viewModelScope.launch {

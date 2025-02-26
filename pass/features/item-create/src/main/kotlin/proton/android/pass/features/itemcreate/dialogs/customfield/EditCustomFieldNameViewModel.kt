@@ -28,13 +28,15 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldIndexNavArgId
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldTitleNavArgId
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
+import proton.android.pass.features.itemcreate.common.customsection.CustomSectionIndexNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
 import javax.inject.Inject
 
@@ -47,6 +49,11 @@ class EditCustomFieldNameViewModel @Inject constructor(
     private val customFieldIndex: Int = savedStateHandleProvider
         .get()
         .require(CustomFieldIndexNavArgId.key)
+
+    private val sectionIndex: Option<Int> = savedStateHandleProvider
+        .get()
+        .require<Int>(CustomSectionIndexNavArgId.key)
+        .let { it.takeIf { it >= 0 }.toOption() }
 
     private val customFieldTitle: String = savedStateHandleProvider
         .get()
@@ -80,7 +87,7 @@ class EditCustomFieldNameViewModel @Inject constructor(
     fun onSave() {
         viewModelScope.launch {
             val event = DraftFormFieldEvent.FieldRenamed(
-                sectionIndex = None,
+                sectionIndex = sectionIndex,
                 index = customFieldIndex,
                 newLabel = nameFlow.value.trim()
             )

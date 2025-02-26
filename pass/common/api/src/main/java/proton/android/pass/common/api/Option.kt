@@ -100,3 +100,8 @@ fun <T> Option<T>.orRight(other: Option<T>) = when (this) {
         is Some -> other
     }
 }
+
+inline fun <T> Option<T>.getOrElse(default: () -> T): T = when (this) {
+    is Some -> value
+    else -> default()
+}

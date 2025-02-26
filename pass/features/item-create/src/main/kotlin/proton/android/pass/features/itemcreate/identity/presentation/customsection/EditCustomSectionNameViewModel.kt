@@ -30,10 +30,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldIndexNavArgId
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldTitleNavArgId
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.DraftFormSectionEvent
+import proton.android.pass.features.itemcreate.common.customsection.CustomSectionIndexNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
 import javax.inject.Inject
 
@@ -45,7 +45,7 @@ class EditCustomSectionNameViewModel @Inject constructor(
 
     private val customSectionIndex: Int = savedStateHandleProvider
         .get()
-        .require(CustomFieldIndexNavArgId.key)
+        .require(CustomSectionIndexNavArgId.key)
 
     private val customSectionTitle: String = savedStateHandleProvider
         .get()

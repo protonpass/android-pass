@@ -91,7 +91,7 @@ class AppNavigator(
                     launchSingleTop = true
                     if (backDestination != null) {
                         popUpTo(backDestination.route) {
-                            if (destination.noHistory) {
+                            if (backDestination.noHistory) {
                                 inclusive = true
                             }
                         }
@@ -101,7 +101,7 @@ class AppNavigator(
             else -> navController.navigate(destinationRoute) {
                 if (backDestination != null) {
                     popUpTo(backDestination.route) {
-                        if (destination.noHistory) {
+                        if (backDestination.noHistory) {
                             inclusive = true
                         }
                     }

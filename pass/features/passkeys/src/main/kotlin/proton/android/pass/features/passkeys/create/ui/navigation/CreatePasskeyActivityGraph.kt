@@ -19,6 +19,7 @@
 package proton.android.pass.features.passkeys.create.ui.navigation
 
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.common.api.None
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsBottomSheetNavItem
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsNavDestination
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.itemOptionsNavGraph
@@ -221,7 +222,10 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                 is BaseLoginNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
                     appNavigator.navigate(
                         destination = CustomFieldNameDialogNavItem.CreateLogin,
-                        route = CustomFieldNameDialogNavItem.CreateLogin.buildRoute(it.type),
+                        route = CustomFieldNameDialogNavItem.CreateLogin.buildRoute(
+                            type = it.type,
+                            sectionIndex = None
+                        ),
                         backDestination = CreateLoginNavItem
                     )
                 }
@@ -229,8 +233,9 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                 is BaseLoginNavigation.CustomFieldOptions -> appNavigator.navigate(
                     destination = CustomFieldOptionsBottomSheetNavItem.CreateLogin,
                     route = CustomFieldOptionsBottomSheetNavItem.CreateLogin.buildRoute(
-                        it.index,
-                        it.currentValue
+                        index = it.index,
+                        sectionIndex = None,
+                        currentTitle = it.currentValue
                     )
                 )
 
@@ -238,8 +243,9 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                     appNavigator.navigate(
                         destination = EditCustomFieldNameDialogNavItem.CreateLogin,
                         route = EditCustomFieldNameDialogNavItem.CreateLogin.buildRoute(
-                            it.index,
-                            it.currentValue
+                            index = it.index,
+                            sectionIndex = None,
+                            currentValue = it.currentValue
                         ),
                         backDestination = CreateLoginNavItem
                     )

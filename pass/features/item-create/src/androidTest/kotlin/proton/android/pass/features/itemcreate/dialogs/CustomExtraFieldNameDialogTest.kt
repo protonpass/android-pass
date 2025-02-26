@@ -33,7 +33,7 @@ import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
-import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_KEY
+import proton.android.pass.data.api.repositories.DRAFT_NEW_CUSTOM_FIELD_KEY
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
@@ -127,7 +127,7 @@ class CustomExtraFieldNameDialogTest {
 
         runBlocking {
             val customField = draftRepository
-                .get<CustomFieldContent>(DRAFT_CUSTOM_FIELD_KEY)
+                .get<CustomFieldContent>(DRAFT_NEW_CUSTOM_FIELD_KEY)
                 .first()
 
             assertNotNull(customField.value())

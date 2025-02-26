@@ -78,7 +78,8 @@ class CreateCustomItemViewModel @Inject constructor(
     attachmentsHandler = attachmentsHandler,
     draftRepository = draftRepository,
     encryptionContextProvider = encryptionContextProvider,
-    customItemFieldDraftRepository = customItemFieldDraftRepository
+    customItemFieldDraftRepository = customItemFieldDraftRepository,
+    savedStateHandleProvider = savedStateHandleProvider
 ) {
 
     private val navShareId: Option<ShareId> =
@@ -148,7 +149,7 @@ class CreateCustomItemViewModel @Inject constructor(
             runCatching {
                 createItem(
                     shareId = shareId,
-                    itemContents = getFormState().toItemContents()
+                    itemContents = itemFormState.toItemContents()
                 )
             }
                 .onFailure {

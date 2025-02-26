@@ -1378,7 +1378,7 @@ fun NavGraphBuilder.appGraph(
                 appNavigator.navigate(AddCustomFieldBottomSheetNavItem(prefix))
             }
             is BaseCustomItemNavigation.CustomFieldOptions -> {
-                val prefix = CustomFieldPrefix.fromIdentity(backDestination)
+                val prefix = CustomFieldPrefix.fromCustomItem(backDestination)
                 appNavigator.navigate(
                     destination = CustomFieldOptionsBottomSheetNavItem(prefix),
                     route = CustomFieldOptionsBottomSheetNavItem(prefix).buildRoute(

@@ -18,7 +18,7 @@
 
 package proton.android.pass.features.itemcreate.identity.presentation
 
-import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldType
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType
 
 sealed interface FieldChange {

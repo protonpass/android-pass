@@ -61,8 +61,8 @@ import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.toEncryptedByteArray
-import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_KEY
-import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_TITLE_KEY
+import proton.android.pass.data.api.repositories.DRAFT_EDIT_CUSTOM_FIELD_TITLE_KEY
+import proton.android.pass.data.api.repositories.DRAFT_NEW_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DRAFT_PASSWORD_KEY
 import proton.android.pass.data.api.repositories.DRAFT_REMOVE_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
@@ -399,7 +399,7 @@ abstract class BaseLoginViewModel(
 
     internal fun clearDraftData() {
         draftRepository.delete<AliasItemFormState>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
-        draftRepository.delete<CustomFieldContent>(DRAFT_CUSTOM_FIELD_KEY)
+        draftRepository.delete<CustomFieldContent>(DRAFT_NEW_CUSTOM_FIELD_KEY)
         attachmentsHandler.onClearAttachments()
     }
 
@@ -719,10 +719,10 @@ abstract class BaseLoginViewModel(
 
     private suspend fun observeNewCustomField() {
         draftRepository
-            .get<CustomFieldContent>(DRAFT_CUSTOM_FIELD_KEY)
+            .get<CustomFieldContent>(DRAFT_NEW_CUSTOM_FIELD_KEY)
             .collect {
                 if (it is Some) {
-                    draftRepository.delete<CustomFieldContent>(DRAFT_CUSTOM_FIELD_KEY).value()
+                    draftRepository.delete<CustomFieldContent>(DRAFT_NEW_CUSTOM_FIELD_KEY).value()
                         ?.let { customField ->
                             loginItemFormMutableState = loginItemFormState.copy(
                                 customFields = loginItemFormState.customFields.toMutableList()
@@ -845,10 +845,10 @@ abstract class BaseLoginViewModel(
 
     private suspend fun observeRenameCustomField() {
         draftRepository
-            .get<CustomFieldIndexTitle>(DRAFT_CUSTOM_FIELD_TITLE_KEY)
+            .get<CustomFieldIndexTitle>(DRAFT_EDIT_CUSTOM_FIELD_TITLE_KEY)
             .collect {
                 if (it is Some) {
-                    draftRepository.delete<CustomFieldIndexTitle>(DRAFT_CUSTOM_FIELD_TITLE_KEY)
+                    draftRepository.delete<CustomFieldIndexTitle>(DRAFT_EDIT_CUSTOM_FIELD_TITLE_KEY)
                         .value()
                         ?.let { customField ->
                             renameCustomField(customField)

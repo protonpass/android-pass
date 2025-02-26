@@ -18,8 +18,11 @@
 
 package proton.android.pass.features.itemcreate.custom.createupdate.presentation
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
+import androidx.lifecycle.viewmodel.compose.saveable
 import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,14 +32,15 @@ import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_KEY
-import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_TITLE_KEY
-import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_SECTION_TITLE_KEY
+import proton.android.pass.data.api.repositories.DRAFT_EDIT_CUSTOM_FIELD_TITLE_KEY
+import proton.android.pass.data.api.repositories.DRAFT_EDIT_CUSTOM_SECTION_TITLE_KEY
 import proton.android.pass.data.api.repositories.DRAFT_IDENTITY_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DRAFT_IDENTITY_EXTRA_SECTION_KEY
+import proton.android.pass.data.api.repositories.DRAFT_NEW_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DRAFT_REMOVE_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DRAFT_REMOVE_CUSTOM_SECTION_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
@@ -78,14 +82,19 @@ abstract class BaseCustomItemViewModel(
     private val draftRepository: DraftRepository,
     private val customItemFieldDraftRepository: CustomItemFieldDraftRepository,
     private val attachmentsHandler: AttachmentsHandler,
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val encryptionContextProvider: EncryptionContextProvider,
+    savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
     init {
         processCommonIntent(BaseCustomItemCommonIntent.ObserveCustomFields)
     }
 
-    private var formState: ItemFormState = ItemFormState.EMPTY
+    @OptIn(SavedStateHandleSaveableApi::class)
+    var itemFormState: ItemFormState by savedStateHandleProvider.get()
+        .saveable { mutableStateOf(ItemFormState.EMPTY) }
+        private set
+
     private val isLoadingState = MutableStateFlow<IsLoadingState>(IsLoadingState.NotLoading)
     private val hasUserEditedContentState = MutableStateFlow(false)
     private val validationErrorsState = MutableStateFlow(emptySet<ItemValidationErrors>())
@@ -119,10 +128,10 @@ abstract class BaseCustomItemViewModel(
     }
 
     private suspend fun observeNewCustomField() {
-        draftRepository.get<CustomFieldContent>(DRAFT_CUSTOM_FIELD_KEY)
+        draftRepository.get<CustomFieldContent>(DRAFT_NEW_CUSTOM_FIELD_KEY)
             .collect {
                 if (it !is Some) return@collect
-                draftRepository.delete<CustomFieldContent>(DRAFT_CUSTOM_FIELD_KEY)
+                draftRepository.delete<CustomFieldContent>(DRAFT_NEW_CUSTOM_FIELD_KEY)
                 val extraFieldType =
                     draftRepository.delete<CustomExtraField>(DRAFT_IDENTITY_CUSTOM_FIELD_KEY)
                 if (extraFieldType !is Some) return@collect
@@ -141,8 +150,8 @@ abstract class BaseCustomItemViewModel(
     }
 
     private fun onAddExtraSection(value: String) {
-        formState = formState.copy(
-            sectionList = formState.sectionList + listOf(UIExtraSection(value, emptyList()))
+        itemFormState = itemFormState.copy(
+            sectionList = itemFormState.sectionList + listOf(UIExtraSection(value, emptyList()))
         )
     }
 
@@ -169,16 +178,16 @@ abstract class BaseCustomItemViewModel(
     }
 
     private fun onRemoveCustomSection(index: Int) {
-        formState = formState.copy(
-            sectionList = formState.sectionList.toMutableList().apply { removeAt(index) }
+        itemFormState = itemFormState.copy(
+            sectionList = itemFormState.sectionList.toMutableList().apply { removeAt(index) }
         )
     }
 
     private suspend fun observeRenameCustomField() {
-        draftRepository.get<CustomFieldIndexTitle>(DRAFT_CUSTOM_FIELD_TITLE_KEY)
+        draftRepository.get<CustomFieldIndexTitle>(DRAFT_EDIT_CUSTOM_FIELD_TITLE_KEY)
             .collect {
                 if (it !is Some) return@collect
-                draftRepository.delete<CustomFieldIndexTitle>(DRAFT_CUSTOM_FIELD_TITLE_KEY)
+                draftRepository.delete<CustomFieldIndexTitle>(DRAFT_EDIT_CUSTOM_FIELD_TITLE_KEY)
                 val extraFieldType =
                     draftRepository.delete<CustomExtraField>(DRAFT_IDENTITY_CUSTOM_FIELD_KEY)
                 if (extraFieldType !is Some) return@collect
@@ -188,21 +197,21 @@ abstract class BaseCustomItemViewModel(
     }
 
     private suspend fun observeRenameExtraSection() {
-        draftRepository.get<CustomFieldIndexTitle>(DRAFT_CUSTOM_SECTION_TITLE_KEY)
+        draftRepository.get<CustomFieldIndexTitle>(DRAFT_EDIT_CUSTOM_SECTION_TITLE_KEY)
             .collect {
                 if (it !is Some) return@collect
-                draftRepository.delete<CustomFieldIndexTitle>(DRAFT_CUSTOM_SECTION_TITLE_KEY)
+                draftRepository.delete<CustomFieldIndexTitle>(DRAFT_EDIT_CUSTOM_SECTION_TITLE_KEY)
                 onRenameCustomSection(it.value)
             }
     }
 
     private fun onRenameCustomSection(value: CustomFieldIndexTitle) {
-        formState = formState.copy(
-            sectionList = formState.sectionList.toMutableList()
+        itemFormState = itemFormState.copy(
+            sectionList = itemFormState.sectionList.toMutableList()
                 .apply {
                     set(
                         value.index,
-                        formState.sectionList[value.index].copy(title = value.title)
+                        itemFormState.sectionList[value.index].copy(title = value.title)
                     )
                 }
         )
@@ -214,10 +223,10 @@ abstract class BaseCustomItemViewModel(
         sectionIndex: Option<Int>
     ) {
         val sectionPos = sectionIndex.value() ?: 0
-        if (sectionPos >= formState.sectionList.size) return
+        if (sectionPos >= itemFormState.sectionList.size) return
 
-        formState = formState.copy(
-            sectionList = formState.sectionList.mapIndexed sections@{ index, section ->
+        itemFormState = itemFormState.copy(
+            sectionList = itemFormState.sectionList.mapIndexed sections@{ index, section ->
                 if (index != fieldIndex) return@sections section
 
                 val updatedFields = section.customFields.mapIndexed fields@{ i, field ->
@@ -255,7 +264,7 @@ abstract class BaseCustomItemViewModel(
 
     private fun onTitleChange(field: String) {
         onUserEditedContent()
-        formState = formState.copy(title = field)
+        itemFormState = itemFormState.copy(title = field)
     }
 
     private fun onUserEditedContent() {
@@ -265,7 +274,7 @@ abstract class BaseCustomItemViewModel(
     }
 
     protected fun isFormStateValid(): Boolean {
-        val validationErrors = formState.validate()
+        val validationErrors = itemFormState.validate()
         validationErrorsState.update { validationErrors }
         return validationErrors.isEmpty()
     }
@@ -273,8 +282,6 @@ abstract class BaseCustomItemViewModel(
     protected fun updateLoadingState(isLoading: IsLoadingState) {
         isLoadingState.update { isLoading }
     }
-
-    fun getFormState(): ItemFormState = formState
 
     private fun onCustomFieldChange(
         index: Int,
@@ -284,21 +291,21 @@ abstract class BaseCustomItemViewModel(
         onUserEditedContent()
         when (sectionIndex) {
             None -> {
-                val updatedFields = updateCustomField(formState.customFieldList, index, value)
-                formState = formState.copy(customFieldList = updatedFields)
+                val updatedFields = updateCustomField(itemFormState.customFieldList, index, value)
+                itemFormState = itemFormState.copy(customFieldList = updatedFields)
             }
 
             is Some -> {
-                val currentFields = formState.sectionList[sectionIndex.value].customFields
+                val currentFields = itemFormState.sectionList[sectionIndex.value].customFields
                 val updatedFields = updateCustomField(currentFields, index, value)
-                val updatedSections = formState.sectionList.toMutableList().apply {
+                val updatedSections = itemFormState.sectionList.toMutableList().apply {
                     set(
                         sectionIndex.value,
-                        formState.sectionList[sectionIndex.value]
+                        itemFormState.sectionList[sectionIndex.value]
                             .copy(customFields = updatedFields)
                     )
                 }
-                formState = formState.copy(sectionList = updatedSections)
+                itemFormState = itemFormState.copy(sectionList = updatedSections)
             }
         }
     }

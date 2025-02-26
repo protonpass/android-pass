@@ -22,8 +22,10 @@ import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
 import proton.android.pass.crypto.api.context.EncryptionContext
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.domain.CustomFieldContent
-import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldType
+import proton.android.pass.domain.CustomFieldType
+import proton.android.pass.domain.HiddenState
 import java.util.UUID
 
 @Immutable
@@ -73,6 +75,12 @@ sealed interface UICustomFieldContent : Parcelable {
         }
     }
 
+    fun updateLabel(newLabel: String) = when (this) {
+        is Text -> copy(label = newLabel)
+        is Hidden -> copy(label = newLabel)
+        is Totp -> copy(label = newLabel)
+    }
+
     companion object {
         fun from(state: CustomFieldContent) = when (state) {
             is CustomFieldContent.Text -> Text(state.label, state.value)
@@ -81,5 +89,34 @@ sealed interface UICustomFieldContent : Parcelable {
         }
 
         private fun generateUniqueID(): String = UUID.randomUUID().toString()
+
+        fun createCustomField(
+            type: CustomFieldType,
+            label: String,
+            encryptionContextProvider: EncryptionContextProvider
+        ): UICustomFieldContent = when (type) {
+            CustomFieldType.Text ->
+                CustomFieldContent.Text(
+                    label = label.trim(),
+                    value = ""
+                )
+
+            CustomFieldType.Hidden -> {
+                val value = encryptionContextProvider.withEncryptionContext { encrypt("") }
+                CustomFieldContent.Hidden(
+                    label = label.trim(),
+                    value = HiddenState.Empty(encrypted = value)
+                )
+            }
+
+            CustomFieldType.Totp -> {
+                val value =
+                    encryptionContextProvider.withEncryptionContext { encrypt("") }
+                CustomFieldContent.Totp(
+                    label = label.trim(),
+                    value = HiddenState.Empty(encrypted = value)
+                )
+            }
+        }.let(Companion::from)
     }
 }

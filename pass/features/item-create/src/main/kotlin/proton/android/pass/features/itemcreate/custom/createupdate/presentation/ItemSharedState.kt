@@ -25,7 +25,8 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.features.itemcreate.ItemSavedState
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.FocusedField
+
+data class FocusedField(val sectionIndex: Option<Int>, val index: Int)
 
 data class ItemSharedUiState(
     val isLoadingState: IsLoadingState,

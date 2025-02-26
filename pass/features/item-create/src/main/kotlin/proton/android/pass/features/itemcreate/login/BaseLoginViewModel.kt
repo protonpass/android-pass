@@ -61,10 +61,7 @@ import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.toEncryptedByteArray
-import proton.android.pass.data.api.repositories.DRAFT_EDIT_CUSTOM_FIELD_TITLE_KEY
-import proton.android.pass.data.api.repositories.DRAFT_NEW_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DRAFT_PASSWORD_KEY
-import proton.android.pass.data.api.repositories.DRAFT_REMOVE_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
@@ -72,7 +69,6 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
-import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.attachments.Attachment
@@ -82,8 +78,10 @@ import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.OpenScanState
 import proton.android.pass.features.itemcreate.alias.AliasItemFormState
 import proton.android.pass.features.itemcreate.alias.CreateAliasViewModel
-import proton.android.pass.features.itemcreate.common.CustomFieldIndexTitle
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
+import proton.android.pass.features.itemcreate.common.UICustomFieldContent.Companion.createCustomField
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.features.itemcreate.login.LoginItemValidationErrors.CustomFieldValidationError
@@ -111,6 +109,7 @@ abstract class BaseLoginViewModel(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val attachmentsHandler: AttachmentsHandler,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    private val customFieldDraftRepository: CustomFieldDraftRepository,
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
     observeTooltipEnabled: ObserveTooltipEnabled,
@@ -144,9 +143,7 @@ abstract class BaseLoginViewModel(
     init {
         viewModelScope.launch {
             launch { observeGeneratedPassword() }
-            launch { observeNewCustomField() }
-            launch { observeRemoveCustomField() }
-            launch { observeRenameCustomField() }
+            launch { observeCustomField() }
             launch { observeDisplayUsernameFieldPreference() }
         }
         attachmentsHandler.observeNewAttachments {
@@ -399,7 +396,6 @@ abstract class BaseLoginViewModel(
 
     internal fun clearDraftData() {
         draftRepository.delete<AliasItemFormState>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
-        draftRepository.delete<CustomFieldContent>(DRAFT_NEW_CUSTOM_FIELD_KEY)
         attachmentsHandler.onClearAttachments()
     }
 
@@ -717,35 +713,93 @@ abstract class BaseLoginViewModel(
             }
     }
 
-    private suspend fun observeNewCustomField() {
-        draftRepository
-            .get<CustomFieldContent>(DRAFT_NEW_CUSTOM_FIELD_KEY)
+    private suspend fun observeCustomField() {
+        customFieldDraftRepository.observeCustomFieldEvents()
             .collect {
-                if (it is Some) {
-                    draftRepository.delete<CustomFieldContent>(DRAFT_NEW_CUSTOM_FIELD_KEY).value()
-                        ?.let { customField ->
-                            loginItemFormMutableState = loginItemFormState.copy(
-                                customFields = loginItemFormState.customFields.toMutableList()
-                                    .apply { add(UICustomFieldContent.from(customField)) }
-                                    .toPersistentList()
-                            )
-                            val index = loginItemFormState.customFields.size - 1
-                            when (customField) {
-                                is CustomFieldContent.Hidden -> focusedFieldFlow.update {
-                                    LoginCustomField.CustomFieldHidden(index).some()
-                                }
-
-                                is CustomFieldContent.Text -> focusedFieldFlow.update {
-                                    LoginCustomField.CustomFieldText(index).some()
-                                }
-
-                                is CustomFieldContent.Totp -> focusedFieldFlow.update {
-                                    LoginCustomField.CustomFieldTOTP(index).some()
-                                }
-                            }
-                        }
+                onUserEditedContent()
+                when (it) {
+                    is DraftFormFieldEvent.FieldAdded -> onFieldAdded(it)
+                    is DraftFormFieldEvent.FieldRemoved -> onFieldRemoved(it)
+                    is DraftFormFieldEvent.FieldRenamed -> onFieldRenamed(it)
                 }
             }
+    }
+
+    private fun onFieldRemoved(event: DraftFormFieldEvent.FieldRemoved) {
+        val (_, index) = event
+        loginItemFormMutableState = loginItemFormState.copy(
+            customFields = loginItemFormState.customFields
+                .toMutableList()
+                .apply { removeAt(index) }
+                .toPersistentList()
+        )
+    }
+
+    private fun onFieldRenamed(event: DraftFormFieldEvent.FieldRenamed) {
+        val (_, index, newLabel) = event
+        val customFields = loginItemFormState.customFields.toMutableList()
+        val updated = when (val field = customFields[index]) {
+            is UICustomFieldContent.Hidden -> {
+                UICustomFieldContent.Hidden(
+                    label = newLabel,
+                    value = field.value
+                )
+            }
+
+            is UICustomFieldContent.Text -> UICustomFieldContent.Text(
+                label = newLabel,
+                value = field.value
+            )
+
+            is UICustomFieldContent.Totp -> UICustomFieldContent.Totp(
+                label = newLabel,
+                value = field.value,
+                id = field.id
+            )
+        }
+        customFields[index] = updated
+        loginItemFormMutableState =
+            loginItemFormState.copy(customFields = customFields.toPersistentList())
+
+        when (loginItemFormState.customFields.getOrNull(index)) {
+            is UICustomFieldContent.Hidden -> focusedFieldFlow.update {
+                LoginCustomField.CustomFieldHidden(index).some()
+            }
+
+            is UICustomFieldContent.Text -> focusedFieldFlow.update {
+                LoginCustomField.CustomFieldText(index).some()
+            }
+
+            is UICustomFieldContent.Totp -> focusedFieldFlow.update {
+                LoginCustomField.CustomFieldTOTP(index).some()
+            }
+
+            null -> {}
+        }
+    }
+
+    private fun onFieldAdded(event: DraftFormFieldEvent.FieldAdded) {
+        val (_, label, type) = event
+        val field = createCustomField(type, label, encryptionContextProvider)
+        loginItemFormMutableState = loginItemFormState.copy(
+            customFields = loginItemFormState.customFields.toMutableList()
+                .apply { add(field) }
+                .toPersistentList()
+        )
+        val index = loginItemFormState.customFields.size - 1
+        when (field) {
+            is UICustomFieldContent.Hidden -> focusedFieldFlow.update {
+                LoginCustomField.CustomFieldHidden(index).some()
+            }
+
+            is UICustomFieldContent.Text -> focusedFieldFlow.update {
+                LoginCustomField.CustomFieldText(index).some()
+            }
+
+            is UICustomFieldContent.Totp -> focusedFieldFlow.update {
+                LoginCustomField.CustomFieldTOTP(index).some()
+            }
+        }
     }
 
     internal fun onFocusChange(field: LoginField, isFocused: Boolean) {
@@ -831,32 +885,6 @@ abstract class BaseLoginViewModel(
         loginItemFormMutableState = loginItemFormState.copy(password = passwordHiddenState)
     }
 
-    private suspend fun observeRemoveCustomField() {
-        draftRepository
-            .get<Int>(DRAFT_REMOVE_CUSTOM_FIELD_KEY)
-            .collect {
-                if (it is Some) {
-                    draftRepository.delete<Int>(DRAFT_REMOVE_CUSTOM_FIELD_KEY)
-                        .value()
-                        ?.let { index -> removeCustomField(index) }
-                }
-            }
-    }
-
-    private suspend fun observeRenameCustomField() {
-        draftRepository
-            .get<CustomFieldIndexTitle>(DRAFT_EDIT_CUSTOM_FIELD_TITLE_KEY)
-            .collect {
-                if (it is Some) {
-                    draftRepository.delete<CustomFieldIndexTitle>(DRAFT_EDIT_CUSTOM_FIELD_TITLE_KEY)
-                        .value()
-                        ?.let { customField ->
-                            renameCustomField(customField)
-                        }
-                }
-            }
-    }
-
     private suspend fun observeDisplayUsernameFieldPreference() {
         userPreferencesRepository.observeDisplayUsernameFieldPreference()
             .collect { displayUsernameFieldPreference ->
@@ -864,58 +892,6 @@ abstract class BaseLoginViewModel(
                     isExpandedByPreference = displayUsernameFieldPreference.value
                 )
             }
-    }
-
-    private fun renameCustomField(indexTitle: CustomFieldIndexTitle) {
-        val customFields = loginItemFormState.customFields.toMutableList()
-        val updated = when (val field = customFields[indexTitle.index]) {
-            is UICustomFieldContent.Hidden -> {
-                UICustomFieldContent.Hidden(
-                    label = indexTitle.title,
-                    value = field.value
-                )
-            }
-
-            is UICustomFieldContent.Text -> UICustomFieldContent.Text(
-                label = indexTitle.title,
-                value = field.value
-            )
-
-            is UICustomFieldContent.Totp -> UICustomFieldContent.Totp(
-                label = indexTitle.title,
-                value = field.value,
-                id = field.id
-            )
-        }
-        customFields[indexTitle.index] = updated
-        loginItemFormMutableState =
-            loginItemFormState.copy(customFields = customFields.toPersistentList())
-
-        when (loginItemFormState.customFields.getOrNull(indexTitle.index)) {
-            is UICustomFieldContent.Hidden -> focusedFieldFlow.update {
-                LoginCustomField.CustomFieldHidden(indexTitle.index).some()
-            }
-
-            is UICustomFieldContent.Text -> focusedFieldFlow.update {
-                LoginCustomField.CustomFieldText(indexTitle.index).some()
-            }
-
-            is UICustomFieldContent.Totp -> focusedFieldFlow.update {
-                LoginCustomField.CustomFieldTOTP(indexTitle.index).some()
-            }
-
-            null -> {}
-        }
-    }
-
-    private fun removeCustomField(index: Int) = viewModelScope.launch {
-        onUserEditedContent()
-        loginItemFormMutableState = loginItemFormState.copy(
-            customFields = loginItemFormState.customFields
-                .toMutableList()
-                .apply { removeAt(index) }
-                .toPersistentList()
-        )
     }
 
     private fun addValidationError(error: LoginItemValidationErrors) {

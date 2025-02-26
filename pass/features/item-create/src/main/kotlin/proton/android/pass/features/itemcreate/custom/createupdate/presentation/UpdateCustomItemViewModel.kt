@@ -21,23 +21,20 @@ package proton.android.pass.features.itemcreate.custom.createupdate.presentation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.repositories.DraftRepository
-import proton.android.pass.features.itemcreate.common.CustomItemFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import javax.inject.Inject
 
 @HiltViewModel
 class UpdateCustomItemViewModel @Inject constructor(
     attachmentsHandler: AttachmentsHandler,
-    draftRepository: DraftRepository,
-    customItemFieldDraftRepository: CustomItemFieldDraftRepository,
+    customFieldDraftRepository: CustomFieldDraftRepository,
     encryptionContextProvider: EncryptionContextProvider,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCustomItemViewModel(
     attachmentsHandler = attachmentsHandler,
-    draftRepository = draftRepository,
     encryptionContextProvider = encryptionContextProvider,
-    customItemFieldDraftRepository = customItemFieldDraftRepository,
+    customFieldDraftRepository = customFieldDraftRepository,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
 

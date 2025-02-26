@@ -22,15 +22,13 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import proton.android.pass.features.itemcreate.common.CustomItemFieldDraftRepository
-import proton.android.pass.features.itemcreate.common.CustomItemFieldDraftRepositoryImpl
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class CustomItemModule {
 
     @Binds
-    abstract fun bindCustomItemFieldDraftRepository(
-        impl: CustomItemFieldDraftRepositoryImpl
-    ): CustomItemFieldDraftRepository
+    abstract fun bindCustomItemFieldDraftRepository(impl: CustomFieldDraftRepositoryImpl): CustomFieldDraftRepository
 }

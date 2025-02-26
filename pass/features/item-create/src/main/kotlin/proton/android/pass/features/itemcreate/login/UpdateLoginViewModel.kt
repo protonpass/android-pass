@@ -78,6 +78,7 @@ import proton.android.pass.features.itemcreate.MFAUpdated
 import proton.android.pass.features.itemcreate.alias.AliasItemFormState
 import proton.android.pass.features.itemcreate.alias.AliasMailboxUiModel
 import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
@@ -121,6 +122,7 @@ class UpdateLoginViewModel @Inject constructor(
     disableTooltip: DisableTooltip,
     attachmentsHandler: AttachmentsHandler,
     userPreferencesRepository: UserPreferencesRepository,
+    customFieldDraftRepository: CustomFieldDraftRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseLoginViewModel(
     accountManager = accountManager,
@@ -138,6 +140,7 @@ class UpdateLoginViewModel @Inject constructor(
     attachmentsHandler = attachmentsHandler,
     userPreferencesRepository = userPreferencesRepository,
     featureFlagsRepository = featureFlagsRepository,
+    customFieldDraftRepository = customFieldDraftRepository,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
     private val navShareId: ShareId = savedStateHandleProvider.get()

@@ -25,11 +25,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEntry
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.FocusedField
 
 @Composable
 fun CustomFieldsList(
@@ -37,7 +40,7 @@ fun CustomFieldsList(
     customFields: List<UICustomFieldContent>,
     enabled: Boolean,
     sectionIndex: Option<Int>,
-    focusedField: Option<CustomField>,
+    focusedField: Option<FocusedField>,
     onEvent: (ItemContentEvent) -> Unit
 ) {
     Column(
@@ -77,9 +80,12 @@ fun CustomFieldsList(
 
             RequestFocusLaunchedEffect(
                 focusRequester = focusRequester,
-                requestFocus = focusedField.value()?.let {
-                    it.sectionIndex == sectionIndex && it.index == index
-                } ?: false,
+                requestFocus = when (focusedField) {
+                    None -> false
+                    is Some ->
+                        focusedField.value.sectionIndex == sectionIndex &&
+                            focusedField.value.index == index
+                },
                 callback = { onEvent(ItemContentEvent.ClearLastAddedFieldFocus) }
             )
         }

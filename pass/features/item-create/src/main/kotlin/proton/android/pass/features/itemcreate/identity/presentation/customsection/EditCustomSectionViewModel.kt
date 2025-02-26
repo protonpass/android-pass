@@ -19,14 +19,16 @@
 package proton.android.pass.features.itemcreate.identity.presentation.customsection
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.data.api.repositories.DRAFT_REMOVE_CUSTOM_SECTION_KEY
-import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.DraftFormSectionEvent
 import proton.android.pass.features.itemcreate.common.customsection.CustomSectionIndexNavArgId
 import proton.android.pass.features.itemcreate.common.customsection.CustomSectionTitleNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
@@ -34,7 +36,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EditCustomSectionViewModel @Inject constructor(
-    private val draftRepository: DraftRepository,
+    private val customFieldDraftRepository: CustomFieldDraftRepository,
     savedStateHandle: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -52,8 +54,11 @@ class EditCustomSectionViewModel @Inject constructor(
     }
 
     fun onRemove() {
-        draftRepository.save(DRAFT_REMOVE_CUSTOM_SECTION_KEY, index)
-        eventStateFlow.update { EditCustomSectionEvent.RemovedField }
+        viewModelScope.launch {
+            val event = DraftFormSectionEvent.SectionRemoved(index = index)
+            customFieldDraftRepository.emit(event)
+            eventStateFlow.update { EditCustomSectionEvent.RemovedField }
+        }
     }
 }
 

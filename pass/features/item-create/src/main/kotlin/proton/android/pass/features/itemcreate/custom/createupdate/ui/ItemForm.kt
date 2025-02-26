@@ -83,7 +83,7 @@ fun ItemForm(
             customFields = itemFormState.customFieldList,
             enabled = itemSharedProperties.isFormEnabled,
             sectionIndex = None,
-            focusedField = None,
+            focusedField = itemSharedProperties.focusedField,
             onEvent = onEvent
         )
 
@@ -108,7 +108,7 @@ fun ItemForm(
                     customFields = section.customFields,
                     enabled = itemSharedProperties.isFormEnabled,
                     sectionIndex = sectionIndex.some(),
-                    focusedField = None,
+                    focusedField = itemSharedProperties.focusedField,
                     onEvent = onEvent
                 )
             }

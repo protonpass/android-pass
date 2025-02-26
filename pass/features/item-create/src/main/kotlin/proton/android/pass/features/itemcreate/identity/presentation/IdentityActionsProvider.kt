@@ -32,7 +32,6 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
-import proton.android.pass.features.itemcreate.common.CustomFieldIndexTitle
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Birthdate
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.County
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.CustomExtraField
@@ -57,7 +56,6 @@ import java.net.URI
 interface IdentityFormActions {
     fun onFieldChange(field: FieldChange)
     fun observeActions(coroutineScope: CoroutineScope)
-    fun onRenameCustomField(value: CustomFieldIndexTitle, customExtraField: CustomExtraField)
     fun getFormState(): IdentityItemFormState
     fun isFormStateValid(): Boolean
     fun clearDraftData()

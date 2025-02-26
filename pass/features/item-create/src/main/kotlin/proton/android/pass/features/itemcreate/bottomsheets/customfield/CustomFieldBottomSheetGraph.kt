@@ -23,6 +23,7 @@ import androidx.navigation.NavType
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.common.customsection.CustomSectionIndexNavArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem

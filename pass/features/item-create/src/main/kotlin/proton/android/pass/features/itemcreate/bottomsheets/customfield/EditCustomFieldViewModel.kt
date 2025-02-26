@@ -25,9 +25,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
@@ -43,12 +42,15 @@ class EditCustomFieldViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val index = savedStateHandle.get().require<Int>(CustomFieldIndexNavArgId.key)
+
     private val title = savedStateHandle.get().require<String>(CustomFieldTitleNavArgId.key).let {
         NavParamEncoder.decode(it)
     }
-    private val sectionIndex = savedStateHandle.get().require<Int>(CustomSectionIndexNavArgId.key)
-        .let { if (it > 0) Some(it) else None }
 
+    private val sectionIndex: Option<Int> = savedStateHandle
+        .get()
+        .require<Int>(CustomSectionIndexNavArgId.key)
+        .let { it.takeIf { it >= 0 }.toOption() }
 
     private val eventStateFlow: MutableStateFlow<EditCustomFieldEvent> =
         MutableStateFlow(EditCustomFieldEvent.Unknown)
@@ -67,7 +69,7 @@ class EditCustomFieldViewModel @Inject constructor(
 
     fun onRemove() {
         viewModelScope.launch {
-            val event = DraftFormFieldEvent.FieldRemoved(sectionIndex = None, index = index)
+            val event = DraftFormFieldEvent.FieldRemoved(sectionIndex = sectionIndex, index = index)
             customFieldDraftRepository.emit(event)
             eventStateFlow.update { EditCustomFieldEvent.RemovedField }
         }

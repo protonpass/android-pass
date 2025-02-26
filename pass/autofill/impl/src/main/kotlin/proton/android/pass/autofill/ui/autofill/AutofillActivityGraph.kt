@@ -30,6 +30,7 @@ import proton.android.pass.autofill.extensions.isBrowser
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.extensions.toAutofillItem
 import proton.android.pass.autofill.heuristics.NodeCluster
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsBottomSheetNavItem
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsNavDestination
@@ -53,6 +54,9 @@ import proton.android.pass.features.itemcreate.bottomsheets.createitem.bottomshe
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.AddCustomFieldBottomSheetNavItem
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldOptionsBottomSheetNavItem
 import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
+import proton.android.pass.features.itemcreate.common.customsection.CustomSectionNameDialogNavItem
+import proton.android.pass.features.itemcreate.common.customsection.CustomSectionOptionsBottomSheetNavItem
+import proton.android.pass.features.itemcreate.common.customsection.EditCustomSectionNameDialogNavItem
 import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation
 import proton.android.pass.features.itemcreate.creditcard.CreateCreditCard
 import proton.android.pass.features.itemcreate.creditcard.CreateCreditCardNavigation
@@ -66,9 +70,6 @@ import proton.android.pass.features.itemcreate.identity.navigation.CreateIdentit
 import proton.android.pass.features.itemcreate.identity.navigation.UpdateIdentityNavigation
 import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.IdentityFieldsBottomSheet
 import proton.android.pass.features.itemcreate.identity.navigation.createIdentityGraph
-import proton.android.pass.features.itemcreate.common.customsection.CustomSectionNameDialogNavItem
-import proton.android.pass.features.itemcreate.common.customsection.CustomSectionOptionsBottomSheetNavItem
-import proton.android.pass.features.itemcreate.common.customsection.EditCustomSectionNameDialogNavItem
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation
 import proton.android.pass.features.itemcreate.login.CreateLoginNavItem
 import proton.android.pass.features.itemcreate.login.CreateLoginNavigation
@@ -297,7 +298,10 @@ fun NavGraphBuilder.autofillActivityGraph(
                 is BaseLoginNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
                     appNavigator.navigate(
                         destination = CustomFieldNameDialogNavItem.CreateLogin,
-                        route = CustomFieldNameDialogNavItem.CreateLogin.buildRoute(it.type),
+                        route = CustomFieldNameDialogNavItem.CreateLogin.buildRoute(
+                            type = it.type,
+                            sectionIndex = None
+                        ),
                         backDestination = CreateLoginNavItem
                     )
                 }
@@ -305,8 +309,9 @@ fun NavGraphBuilder.autofillActivityGraph(
                 is BaseLoginNavigation.CustomFieldOptions -> appNavigator.navigate(
                     destination = CustomFieldOptionsBottomSheetNavItem.CreateLogin,
                     route = CustomFieldOptionsBottomSheetNavItem.CreateLogin.buildRoute(
-                        it.index,
-                        it.currentValue
+                        index = it.index,
+                        sectionIndex = None,
+                        currentTitle = it.currentValue
                     )
                 )
 
@@ -314,8 +319,9 @@ fun NavGraphBuilder.autofillActivityGraph(
                     appNavigator.navigate(
                         destination = EditCustomFieldNameDialogNavItem.CreateLogin,
                         route = EditCustomFieldNameDialogNavItem.CreateLogin.buildRoute(
-                            it.index,
-                            it.currentValue
+                            index = it.index,
+                            sectionIndex = None,
+                            currentValue = it.currentValue
                         ),
                         backDestination = CreateLoginNavItem
                     )
@@ -455,7 +461,10 @@ fun NavGraphBuilder.autofillActivityGraph(
                 is BaseIdentityNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
                     appNavigator.navigate(
                         destination = CustomFieldNameDialogNavItem.CreateIdentity,
-                        route = CustomFieldNameDialogNavItem.CreateIdentity.buildRoute(it.type),
+                        route = CustomFieldNameDialogNavItem.CreateIdentity.buildRoute(
+                            type = it.type,
+                            sectionIndex = None
+                        ),
                         backDestination = CreateIdentityNavItem
                     )
                 }
@@ -464,8 +473,9 @@ fun NavGraphBuilder.autofillActivityGraph(
                     appNavigator.navigate(
                         destination = EditCustomFieldNameDialogNavItem.CreateIdentity,
                         route = EditCustomFieldNameDialogNavItem.CreateIdentity.buildRoute(
-                            it.index,
-                            it.title
+                            index = it.index,
+                            sectionIndex = None,
+                            currentValue = it.title
                         ),
                         backDestination = CreateIdentityNavItem
                     )
@@ -474,8 +484,9 @@ fun NavGraphBuilder.autofillActivityGraph(
                 is BaseIdentityNavigation.CustomFieldOptions -> appNavigator.navigate(
                     destination = CustomFieldOptionsBottomSheetNavItem.CreateIdentity,
                     route = CustomFieldOptionsBottomSheetNavItem.CreateIdentity.buildRoute(
-                        it.index,
-                        it.title
+                        index = it.index,
+                        sectionIndex = None,
+                        currentTitle = it.title
                     )
                 )
 

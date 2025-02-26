@@ -26,7 +26,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.collections.immutable.toPersistentList
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
@@ -42,14 +44,15 @@ import me.proton.core.presentation.compose.R as CoreR
 fun AddCustomFieldBottomSheet(
     modifier: Modifier = Modifier,
     prefix: CustomFieldPrefix,
-    onNavigate: (AddCustomFieldNavigation) -> Unit
+    viewModel: AddCustomFieldViewModel = hiltViewModel(),
+    onNavigate: (AddCustomFieldNavigation, sectionIndex: Option<Int>) -> Unit
 ) {
     val list = mutableListOf<BottomSheetItem>()
-    list.add(textField { onNavigate(AddCustomFieldNavigation.AddText) })
+    list.add(textField { onNavigate(AddCustomFieldNavigation.AddText, viewModel.sectionIndex) })
     if (prefix != CustomFieldPrefix.CreateIdentity && prefix != CustomFieldPrefix.UpdateIdentity) {
-        list.add(totpField { onNavigate(AddCustomFieldNavigation.AddTotp) })
+        list.add(totpField { onNavigate(AddCustomFieldNavigation.AddTotp, viewModel.sectionIndex) })
     }
-    list.add(hiddenField { onNavigate(AddCustomFieldNavigation.AddHidden) })
+    list.add(hiddenField { onNavigate(AddCustomFieldNavigation.AddHidden, viewModel.sectionIndex) })
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
         items = list.withDividers().toPersistentList()
@@ -116,7 +119,10 @@ private fun totpField(onClick: () -> Unit): BottomSheetItem = object : BottomShe
 fun AddCustomFieldBottomSheetPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            AddCustomFieldBottomSheet(prefix = CustomFieldPrefix.CreateLogin, onNavigate = {})
+            AddCustomFieldBottomSheet(
+                prefix = CustomFieldPrefix.CreateLogin,
+                onNavigate = { _, _ -> }
+            )
         }
     }
 }

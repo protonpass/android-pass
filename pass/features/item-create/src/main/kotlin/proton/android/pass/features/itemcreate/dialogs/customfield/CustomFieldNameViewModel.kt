@@ -28,12 +28,14 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
+import proton.android.pass.features.itemcreate.common.customsection.CustomSectionIndexNavArgId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,11 +44,15 @@ class CustomFieldNameViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
-    private val customFieldType: CustomFieldType = CustomFieldType.valueOf(
-        savedStateHandleProvider
-            .get()
-            .require(CustomFieldTypeNavArgId.key)
-    )
+    private val customFieldType: CustomFieldType = savedStateHandleProvider
+        .get()
+        .require<String>(CustomFieldTypeNavArgId.key)
+        .let(CustomFieldType::valueOf)
+
+    private val sectionIndex: Option<Int> = savedStateHandleProvider
+        .get()
+        .require<Int>(CustomSectionIndexNavArgId.key)
+        .let { it.takeIf { it >= 0 }.toOption() }
 
     private val eventFlow: MutableStateFlow<CustomFieldEvent> =
         MutableStateFlow(CustomFieldEvent.Unknown)
@@ -75,7 +81,7 @@ class CustomFieldNameViewModel @Inject constructor(
     fun onSave() {
         viewModelScope.launch {
             val event = DraftFormFieldEvent.FieldAdded(
-                sectionIndex = None,
+                sectionIndex = sectionIndex,
                 label = state.value.value,
                 type = customFieldType
             )

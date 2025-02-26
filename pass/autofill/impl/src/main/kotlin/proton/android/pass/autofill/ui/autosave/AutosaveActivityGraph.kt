@@ -20,6 +20,7 @@ package proton.android.pass.autofill.ui.autosave
 
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.autofill.entities.usernamePassword
+import proton.android.pass.common.api.None
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.features.auth.AuthNavigation
 import proton.android.pass.features.auth.EnterPin
@@ -132,7 +133,10 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 is BaseLoginNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
                     appNavigator.navigate(
                         destination = CustomFieldNameDialogNavItem.CreateLogin,
-                        route = CustomFieldNameDialogNavItem.CreateLogin.buildRoute(it.type),
+                        route = CustomFieldNameDialogNavItem.CreateLogin.buildRoute(
+                            type = it.type,
+                            sectionIndex = None
+                        ),
                         backDestination = CreateLoginNavItem
                     )
                 }
@@ -140,8 +144,9 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 is BaseLoginNavigation.CustomFieldOptions -> appNavigator.navigate(
                     destination = CustomFieldOptionsBottomSheetNavItem.CreateLogin,
                     route = CustomFieldOptionsBottomSheetNavItem.CreateLogin.buildRoute(
-                        it.index,
-                        it.currentValue
+                        index = it.index,
+                        sectionIndex = None,
+                        currentTitle = it.currentValue
                     )
                 )
 
@@ -149,8 +154,9 @@ fun NavGraphBuilder.autosaveActivityGraph(
                     appNavigator.navigate(
                         destination = EditCustomFieldNameDialogNavItem.CreateLogin,
                         route = EditCustomFieldNameDialogNavItem.CreateLogin.buildRoute(
-                            it.index,
-                            it.currentValue
+                            index = it.index,
+                            sectionIndex = None,
+                            currentValue = it.currentValue
                         ),
                         backDestination = CreateLoginNavItem
                     )

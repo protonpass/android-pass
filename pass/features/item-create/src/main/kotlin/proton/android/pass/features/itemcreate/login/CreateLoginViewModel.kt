@@ -80,6 +80,7 @@ import proton.android.pass.features.itemcreate.MFACreated
 import proton.android.pass.features.itemcreate.alias.AliasItemFormState
 import proton.android.pass.features.itemcreate.alias.AliasMailboxUiModel
 import proton.android.pass.features.itemcreate.alias.CreateAliasViewModel
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.UIHiddenState
@@ -130,6 +131,7 @@ class CreateLoginViewModel @Inject constructor(
     disableTooltip: DisableTooltip,
     attachmentsHandler: AttachmentsHandler,
     userPreferencesRepository: UserPreferencesRepository,
+    customFieldDraftRepository: CustomFieldDraftRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseLoginViewModel(
     accountManager = accountManager,
@@ -147,6 +149,7 @@ class CreateLoginViewModel @Inject constructor(
     userPreferencesRepository = userPreferencesRepository,
     attachmentsHandler = attachmentsHandler,
     featureFlagsRepository = featureFlagsRepository,
+    customFieldDraftRepository = customFieldDraftRepository,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
     private val navShareId: Option<ShareId> = savedStateHandleProvider.get()

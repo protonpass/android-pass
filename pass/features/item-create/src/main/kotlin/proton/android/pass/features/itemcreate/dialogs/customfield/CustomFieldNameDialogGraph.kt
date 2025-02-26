@@ -22,7 +22,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldIndexNavArgId
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldTitleNavArgId
-import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldType
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem

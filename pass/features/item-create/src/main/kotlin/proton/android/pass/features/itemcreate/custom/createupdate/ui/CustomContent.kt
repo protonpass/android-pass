@@ -34,7 +34,7 @@ fun CustomContent(
     modifier: Modifier = Modifier,
     itemFormState: ItemFormState,
     topBarActionName: String,
-    customItemState: ItemSharedProperties,
+    itemSharedProperties: ItemSharedProperties,
     canUseAttachments: Boolean,
     onEvent: (ItemContentEvent) -> Unit
 ) {
@@ -43,21 +43,21 @@ fun CustomContent(
         topBar = {
             CreateUpdateTopBar(
                 text = topBarActionName,
-                isLoading = customItemState.isLoading,
+                isLoading = itemSharedProperties.isLoading,
                 actionColor = PassTheme.colors.interactionNormMajor1,
                 iconColor = PassTheme.colors.interactionNormMajor2,
                 iconBackgroundColor = PassTheme.colors.interactionNormMinor1,
-                selectedVault = customItemState.selectedVault.value(),
-                showVaultSelector = customItemState.shouldShowVaultSelector,
+                selectedVault = itemSharedProperties.selectedVault.value(),
+                showVaultSelector = itemSharedProperties.shouldShowVaultSelector,
                 onCloseClick = { onEvent(ItemContentEvent.Up) },
                 onActionClick = {
-                    customItemState.selectedVault.value()?.shareId?.let {
+                    itemSharedProperties.selectedVault.value()?.shareId?.let {
                         onEvent(ItemContentEvent.Submit(it))
                     }
                 },
                 onUpgrade = { },
                 onVaultSelectorClick = {
-                    customItemState.selectedVault.value()?.shareId?.let {
+                    itemSharedProperties.selectedVault.value()?.shareId?.let {
                         onEvent(ItemContentEvent.Submit(it))
                     }
                 }
@@ -67,7 +67,7 @@ fun CustomContent(
         ItemForm(
             modifier = Modifier.padding(padding),
             itemFormState = itemFormState,
-            itemSharedProperties = customItemState,
+            itemSharedProperties = itemSharedProperties,
             canUseAttachments = canUseAttachments,
             onEvent = onEvent
         )

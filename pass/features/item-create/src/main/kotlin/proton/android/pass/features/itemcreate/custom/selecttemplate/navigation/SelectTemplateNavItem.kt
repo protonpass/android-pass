@@ -28,7 +28,8 @@ import proton.android.pass.navigation.api.toPath
 
 object SelectTemplateNavItem : NavItem(
     baseRoute = "select/template/screen",
-    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId)
+    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId),
+    noHistory = true
 ) {
     fun createNavRoute(shareId: Option<ShareId> = None) = buildString {
         append(baseRoute)

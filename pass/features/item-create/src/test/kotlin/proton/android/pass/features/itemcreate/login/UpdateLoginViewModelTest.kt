@@ -49,6 +49,7 @@ import proton.android.pass.data.fakes.work.FakeWorkerLauncher
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -108,7 +109,8 @@ class UpdateLoginViewModelTest {
             workerLauncher = FakeWorkerLauncher(),
             attachmentsHandler = proton.android.pass.features.itemcreate.attachments.FakeAttachmentHandler(),
             linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
-            renameAttachments = FakeRenameAttachments()
+            renameAttachments = FakeRenameAttachments(),
+            customFieldDraftRepository = CustomFieldDraftRepositoryImpl()
         )
     }
 

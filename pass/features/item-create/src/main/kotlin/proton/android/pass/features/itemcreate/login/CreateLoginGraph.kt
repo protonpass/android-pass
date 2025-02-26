@@ -130,7 +130,9 @@ fun NavGraphBuilder.createLoginGraph(
         aliasOptionsBottomSheetGraph(onNavigate)
         customFieldBottomSheetGraph(
             prefix = CustomFieldPrefix.CreateLogin,
-            onAddCustomFieldNavigate = { onNavigate(BaseLoginNavigation.CustomFieldTypeSelected(it)) },
+            onAddCustomFieldNavigate = { type, _ ->
+                onNavigate(BaseLoginNavigation.CustomFieldTypeSelected(type))
+            },
             onEditCustomFieldNavigate = { title: String, index: Int, _: Option<Int> ->
                 onNavigate(BaseLoginNavigation.EditCustomField(title, index))
             },

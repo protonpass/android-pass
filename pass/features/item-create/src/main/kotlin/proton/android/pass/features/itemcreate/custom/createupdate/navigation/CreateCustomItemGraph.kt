@@ -27,6 +27,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.customFieldBottomSheetGraph
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
@@ -84,8 +85,8 @@ fun NavGraphBuilder.createCustomItemGraph(canUseAttachments: Boolean, onNavigate
         }
         customFieldBottomSheetGraph(
             prefix = CustomFieldPrefix.CreateCustomItem,
-            onAddCustomFieldNavigate = {
-                onNavigate(BaseCustomItemNavigation.CustomFieldTypeSelected(it))
+            onAddCustomFieldNavigate = { type: CustomFieldType, sectionIndex: Option<Int> ->
+                onNavigate(BaseCustomItemNavigation.CustomFieldTypeSelected(type, sectionIndex))
             },
             onEditCustomFieldNavigate = { title: String, index: Int, sectionIndex: Option<Int> ->
                 onNavigate(BaseCustomItemNavigation.EditCustomField(title, index, sectionIndex))

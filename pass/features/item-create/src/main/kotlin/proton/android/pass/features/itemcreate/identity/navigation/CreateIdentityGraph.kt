@@ -88,14 +88,15 @@ fun NavGraphBuilder.createIdentityGraph(canUseAttachments: Boolean, onNavigate: 
             when (it) {
                 IdentityFieldsNavigation.DismissBottomsheet ->
                     onNavigate(BaseIdentityNavigation.DismissBottomsheet)
+
                 IdentityFieldsNavigation.AddCustomField ->
                     onNavigate(BaseIdentityNavigation.OpenCustomFieldBottomSheet)
             }
         }
         customFieldBottomSheetGraph(
             prefix = CustomFieldPrefix.CreateIdentity,
-            onAddCustomFieldNavigate = {
-                onNavigate(BaseIdentityNavigation.CustomFieldTypeSelected(it))
+            onAddCustomFieldNavigate = { type, _ ->
+                onNavigate(BaseIdentityNavigation.CustomFieldTypeSelected(type))
             },
             onEditCustomFieldNavigate = { title: String, index: Int, _: Option<Int> ->
                 onNavigate(BaseIdentityNavigation.EditCustomField(title, index))

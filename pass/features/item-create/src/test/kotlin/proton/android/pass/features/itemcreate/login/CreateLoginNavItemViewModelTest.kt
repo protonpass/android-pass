@@ -61,6 +61,8 @@ import proton.android.pass.features.itemcreate.alias.AliasItemFormState
 import proton.android.pass.features.itemcreate.alias.AliasMailboxUiModel
 import proton.android.pass.features.itemcreate.alias.AliasOptionsUiModel
 import proton.android.pass.features.itemcreate.alias.AliasSuffixUiModel
+import proton.android.pass.features.itemcreate.attachments.FakeAttachmentHandler
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
@@ -127,7 +129,8 @@ internal class CreateLoginNavItemViewModelTest {
             workerLauncher = FakeWorkerLauncher(),
             userPreferencesRepository = TestPreferenceRepository(),
             linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
-            attachmentsHandler = proton.android.pass.features.itemcreate.attachments.FakeAttachmentHandler()
+            attachmentsHandler = FakeAttachmentHandler(),
+            customFieldDraftRepository = CustomFieldDraftRepositoryImpl()
         )
     }
 

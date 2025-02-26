@@ -39,6 +39,8 @@ import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
+import proton.android.pass.features.itemcreate.attachments.FakeAttachmentHandler
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
@@ -56,7 +58,7 @@ internal class BaseLoginViewModelTest {
     private lateinit var totpManager: TestTotpManager
     private lateinit var clipboardManager: TestClipboardManager
     private lateinit var observeCurrentUser: TestObserveCurrentUser
-    private lateinit var baseLoginViewModel: proton.android.pass.features.itemcreate.login.BaseLoginViewModel
+    private lateinit var baseLoginViewModel: BaseLoginViewModel
     private lateinit var encryptionContextProvider: EncryptionContextProvider
     private lateinit var draftRepository: DraftRepository
     private lateinit var passwordStrengthCalculator: TestPasswordStrengthCalculator
@@ -73,7 +75,7 @@ internal class BaseLoginViewModelTest {
         passwordStrengthCalculator = TestPasswordStrengthCalculator()
         emailValidator = TestEmailValidator()
         featureFlagsPreferenceRepository = TestFeatureFlagsPreferenceRepository()
-        baseLoginViewModel = object : proton.android.pass.features.itemcreate.login.BaseLoginViewModel(
+        baseLoginViewModel = object : BaseLoginViewModel(
             accountManager = TestAccountManager(),
             snackbarDispatcher = TestSnackbarDispatcher(),
             clipboardManager = clipboardManager,
@@ -89,7 +91,8 @@ internal class BaseLoginViewModelTest {
             disableTooltip = FakeDisableTooltip(),
             userPreferencesRepository = TestPreferenceRepository(),
             featureFlagsRepository = featureFlagsPreferenceRepository,
-            attachmentsHandler = proton.android.pass.features.itemcreate.attachments.FakeAttachmentHandler()
+            attachmentsHandler = FakeAttachmentHandler(),
+            customFieldDraftRepository = CustomFieldDraftRepositoryImpl()
         ) {}
     }
 

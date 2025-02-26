@@ -30,7 +30,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_TITLE_KEY
+import proton.android.pass.data.api.repositories.DRAFT_EDIT_CUSTOM_FIELD_TITLE_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldIndexNavArgId
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldTitleNavArgId
@@ -79,7 +79,7 @@ class EditCustomFieldNameViewModel @Inject constructor(
 
     fun onSave() = viewModelScope.launch {
         draftRepository.save(
-            key = DRAFT_CUSTOM_FIELD_TITLE_KEY,
+            key = DRAFT_EDIT_CUSTOM_FIELD_TITLE_KEY,
             value = CustomFieldIndexTitle(
                 title = nameFlow.value.trim(),
                 index = customFieldIndex

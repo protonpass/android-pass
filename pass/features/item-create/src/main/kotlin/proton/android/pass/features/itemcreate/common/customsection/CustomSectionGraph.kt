@@ -20,7 +20,6 @@ package proton.android.pass.features.itemcreate.common.customsection
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
-import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldIndexNavArgId
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldTitleNavArgId
 import proton.android.pass.features.itemcreate.identity.ui.customsection.CustomSectionNameDialog
 import proton.android.pass.features.itemcreate.identity.ui.customsection.EditCustomSectionBottomSheet
@@ -33,7 +32,7 @@ import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.dialog
 
 object CustomSectionIndexNavArgId : NavArgId {
-    override val key = "index"
+    override val key = "sectionindex"
     override val navType = NavType.IntType
 }
 
@@ -57,7 +56,7 @@ object EditCustomSectionNameDialogNavItem : NavItem(
 
 object CustomSectionOptionsBottomSheetNavItem : NavItem(
     baseRoute = "item/create/customsection/options/bottomsheet",
-    navArgIds = listOf(CustomFieldIndexNavArgId, CustomFieldTitleNavArgId),
+    navArgIds = listOf(CustomSectionIndexNavArgId, CustomFieldTitleNavArgId),
     navItemType = NavItemType.Bottomsheet
 ) {
     fun buildRoute(index: Int, currentTitle: String) = buildString {

@@ -20,10 +20,12 @@ package proton.android.pass.features.itemcreate.bottomsheets.customfield
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
-import proton.android.pass.common.api.None
+import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.common.api.Option
-import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
+import proton.android.pass.common.api.SpecialCharacters
+import proton.android.pass.common.api.getOrElse
 import proton.android.pass.domain.CustomFieldType
+import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
 import proton.android.pass.features.itemcreate.common.customsection.CustomSectionIndexNavArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
@@ -35,6 +37,7 @@ object CustomFieldIndexNavArgId : NavArgId {
     override val key = "index"
     override val navType = NavType.IntType
 }
+
 object CustomFieldTitleNavArgId : NavArgId {
     override val key = "title"
     override val navType = NavType.StringType
@@ -42,8 +45,15 @@ object CustomFieldTitleNavArgId : NavArgId {
 
 class AddCustomFieldBottomSheetNavItem(val prefix: CustomFieldPrefix) : NavItem(
     baseRoute = "${prefix.name}/item/create/customfield/add/bottomsheet",
+    navArgIds = listOf(CustomSectionIndexNavArgId),
     navItemType = NavItemType.Bottomsheet
 ) {
+    fun buildRoute(sectionIndex: Option<Int>) = buildString {
+        append(baseRoute)
+        append(SpecialCharacters.SLASH)
+        append(sectionIndex.getOrElse { -1 })
+    }
+
     companion object {
         val CreateLogin = AddCustomFieldBottomSheetNavItem(CustomFieldPrefix.CreateLogin)
         val CreateIdentity = AddCustomFieldBottomSheetNavItem(CustomFieldPrefix.CreateIdentity)
@@ -52,22 +62,25 @@ class AddCustomFieldBottomSheetNavItem(val prefix: CustomFieldPrefix) : NavItem(
 
 class CustomFieldOptionsBottomSheetNavItem(val prefix: CustomFieldPrefix) : NavItem(
     baseRoute = "${prefix.name}/item/create/customfield/options/bottomsheet",
-    navArgIds = listOf(CustomFieldIndexNavArgId, CustomFieldTitleNavArgId, CustomSectionIndexNavArgId),
+    navArgIds = listOf(
+        CustomFieldIndexNavArgId,
+        CustomSectionIndexNavArgId,
+        CustomFieldTitleNavArgId
+    ),
     navItemType = NavItemType.Bottomsheet
 ) {
     fun buildRoute(
         index: Int,
-        currentTitle: String,
-        sectionIndex: Option<Int> = None
+        sectionIndex: Option<Int>,
+        currentTitle: String
     ) = buildString {
-        append("$baseRoute/$index/")
-        val encodedTitle = NavParamEncoder.encode(currentTitle)
-        if (encodedTitle.isNotBlank()) {
-            append(encodedTitle)
-        } else {
-            append("Unknown")
-        }
-        append("/${sectionIndex.value() ?: -1}")
+        append(baseRoute)
+        append(SpecialCharacters.SLASH)
+        append(index)
+        append(SpecialCharacters.SLASH)
+        append(sectionIndex.getOrElse { -1 })
+        append(SpecialCharacters.SLASH)
+        append(NavParamEncoder.encode(currentTitle.takeIfNotBlank() ?: "Unknown"))
     }
 
     companion object {
@@ -89,22 +102,28 @@ sealed interface CustomFieldOptionsNavigation {
         val title: String,
         val sectionIndex: Option<Int>
     ) : CustomFieldOptionsNavigation
+
     data object RemoveCustomField : CustomFieldOptionsNavigation
 }
 
 fun NavGraphBuilder.customFieldBottomSheetGraph(
     prefix: CustomFieldPrefix,
-    onAddCustomFieldNavigate: (CustomFieldType) -> Unit,
+    onAddCustomFieldNavigate: (CustomFieldType, Option<Int>) -> Unit,
     onEditCustomFieldNavigate: (String, Int, Option<Int>) -> Unit,
     onRemoveCustomFieldNavigate: () -> Unit,
     onDismissBottomsheet: () -> Unit
 ) {
     bottomSheet(AddCustomFieldBottomSheetNavItem(prefix)) {
-        AddCustomFieldBottomSheet(prefix = prefix) {
-            when (it) {
-                is AddCustomFieldNavigation.AddText -> onAddCustomFieldNavigate(CustomFieldType.Text)
-                is AddCustomFieldNavigation.AddHidden -> onAddCustomFieldNavigate(CustomFieldType.Hidden)
-                is AddCustomFieldNavigation.AddTotp -> onAddCustomFieldNavigate(CustomFieldType.Totp)
+        AddCustomFieldBottomSheet(prefix = prefix) { event, sectionIndex ->
+            when (event) {
+                is AddCustomFieldNavigation.AddText ->
+                    onAddCustomFieldNavigate(CustomFieldType.Text, sectionIndex)
+
+                is AddCustomFieldNavigation.AddHidden ->
+                    onAddCustomFieldNavigate(CustomFieldType.Hidden, sectionIndex)
+
+                is AddCustomFieldNavigation.AddTotp ->
+                    onAddCustomFieldNavigate(CustomFieldType.Totp, sectionIndex)
             }
         }
     }
@@ -115,6 +134,7 @@ fun NavGraphBuilder.customFieldBottomSheetGraph(
                 when (it) {
                     is CustomFieldOptionsNavigation.EditCustomField ->
                         onEditCustomFieldNavigate(it.title, it.index, it.sectionIndex)
+
                     CustomFieldOptionsNavigation.RemoveCustomField -> onRemoveCustomFieldNavigate()
                     CustomFieldOptionsNavigation.Close -> onDismissBottomsheet()
                 }

@@ -19,10 +19,10 @@
 package proton.android.pass.features.itemcreate.custom.createupdate.navigation
 
 import proton.android.pass.common.api.Option
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
-import proton.android.pass.domain.CustomFieldType
 import java.net.URI
 
 sealed interface BaseCustomItemNavigation {
@@ -36,8 +36,10 @@ sealed interface BaseCustomItemNavigation {
 
     data object RemoveCustomField : BaseCustomItemNavigation
 
-    @JvmInline
-    value class CustomFieldTypeSelected(val type: CustomFieldType) : BaseCustomItemNavigation
+    data class CustomFieldTypeSelected(
+        val type: CustomFieldType,
+        val sectionIndex: Option<Int>
+    ) : BaseCustomItemNavigation
 
     data class CustomFieldOptions(
         val title: String,

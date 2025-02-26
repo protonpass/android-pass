@@ -902,14 +902,20 @@ fun NavGraphBuilder.appGraph(
 
                 BaseLoginNavigation.AddCustomField -> {
                     val prefix = CustomFieldPrefix.fromLogin(backDestination)
-                    appNavigator.navigate(AddCustomFieldBottomSheetNavItem(prefix))
+                    appNavigator.navigate(
+                        destination = AddCustomFieldBottomSheetNavItem(prefix),
+                        route = AddCustomFieldBottomSheetNavItem(prefix).buildRoute(sectionIndex = None)
+                    )
                 }
 
                 is BaseLoginNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
                     val prefix = CustomFieldPrefix.fromLogin(backDestination)
                     appNavigator.navigate(
                         destination = CustomFieldNameDialogNavItem(prefix),
-                        route = CustomFieldNameDialogNavItem(prefix).buildRoute(it.type),
+                        route = CustomFieldNameDialogNavItem(prefix).buildRoute(
+                            type = it.type,
+                            sectionIndex = None
+                        ),
                         backDestination = backDestination
                     )
                 }
@@ -918,8 +924,11 @@ fun NavGraphBuilder.appGraph(
                     val prefix = CustomFieldPrefix.fromLogin(backDestination)
                     appNavigator.navigate(
                         destination = CustomFieldOptionsBottomSheetNavItem(prefix),
-                        route = CustomFieldOptionsBottomSheetNavItem(prefix)
-                            .buildRoute(it.index, it.currentValue)
+                        route = CustomFieldOptionsBottomSheetNavItem(prefix).buildRoute(
+                            index = it.index,
+                            sectionIndex = None,
+                            currentTitle = it.currentValue
+                        )
                     )
                 }
 
@@ -928,8 +937,9 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(
                         destination = EditCustomFieldNameDialogNavItem(prefix),
                         route = EditCustomFieldNameDialogNavItem(prefix).buildRoute(
-                            it.index,
-                            it.currentValue
+                            index = it.index,
+                            sectionIndex = None,
+                            currentValue = it.currentValue
                         ),
                         backDestination = backDestination
                     )
@@ -1265,14 +1275,20 @@ fun NavGraphBuilder.appGraph(
 
                 BaseIdentityNavigation.OpenCustomFieldBottomSheet -> dismissBottomSheet {
                     val prefix = CustomFieldPrefix.fromIdentity(backDestination)
-                    appNavigator.navigate(AddCustomFieldBottomSheetNavItem(prefix))
+                    appNavigator.navigate(
+                        destination = AddCustomFieldBottomSheetNavItem(prefix),
+                        route = AddCustomFieldBottomSheetNavItem(prefix).buildRoute(sectionIndex = None)
+                    )
                 }
 
                 is BaseIdentityNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
                     val prefix = CustomFieldPrefix.fromIdentity(backDestination)
                     appNavigator.navigate(
                         destination = CustomFieldNameDialogNavItem(prefix),
-                        route = CustomFieldNameDialogNavItem(prefix).buildRoute(it.type),
+                        route = CustomFieldNameDialogNavItem(prefix).buildRoute(
+                            type = it.type,
+                            sectionIndex = None
+                        ),
                         backDestination = backDestination
                     )
                 }
@@ -1282,8 +1298,9 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(
                         destination = EditCustomFieldNameDialogNavItem(prefix),
                         route = EditCustomFieldNameDialogNavItem(prefix).buildRoute(
-                            it.index,
-                            it.title
+                            index = it.index,
+                            sectionIndex = None,
+                            currentValue = it.title
                         ),
                         backDestination = backDestination
                     )
@@ -1294,8 +1311,9 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(
                         destination = CustomFieldOptionsBottomSheetNavItem(prefix),
                         route = CustomFieldOptionsBottomSheetNavItem(prefix).buildRoute(
-                            it.index,
-                            it.title
+                            index = it.index,
+                            sectionIndex = None,
+                            currentTitle = it.title
                         )
                     )
                 }
@@ -1375,15 +1393,21 @@ fun NavGraphBuilder.appGraph(
             )
             is BaseCustomItemNavigation.AddCustomField -> dismissBottomSheet {
                 val prefix = CustomFieldPrefix.fromCustomItem(backDestination)
-                appNavigator.navigate(AddCustomFieldBottomSheetNavItem(prefix))
+                appNavigator.navigate(
+                    destination = AddCustomFieldBottomSheetNavItem(prefix),
+                    route = AddCustomFieldBottomSheetNavItem(prefix).buildRoute(
+                        sectionIndex = it.sectionIndex
+                    )
+                )
             }
             is BaseCustomItemNavigation.CustomFieldOptions -> {
                 val prefix = CustomFieldPrefix.fromCustomItem(backDestination)
                 appNavigator.navigate(
                     destination = CustomFieldOptionsBottomSheetNavItem(prefix),
                     route = CustomFieldOptionsBottomSheetNavItem(prefix).buildRoute(
-                        it.index,
-                        it.title
+                        index = it.index,
+                        sectionIndex = it.sectionIndex,
+                        currentTitle = it.title
                     )
                 )
             }
@@ -1391,7 +1415,10 @@ fun NavGraphBuilder.appGraph(
                 val prefix = CustomFieldPrefix.fromCustomItem(backDestination)
                 appNavigator.navigate(
                     destination = CustomFieldNameDialogNavItem(prefix),
-                    route = CustomFieldNameDialogNavItem(prefix).buildRoute(it.type),
+                    route = CustomFieldNameDialogNavItem(prefix).buildRoute(
+                        type = it.type,
+                        sectionIndex = it.sectionIndex
+                    ),
                     backDestination = backDestination
                 )
             }
@@ -1400,8 +1427,9 @@ fun NavGraphBuilder.appGraph(
                 appNavigator.navigate(
                     destination = EditCustomFieldNameDialogNavItem(prefix),
                     route = EditCustomFieldNameDialogNavItem(prefix).buildRoute(
-                        it.index,
-                        it.title
+                        index = it.index,
+                        sectionIndex = it.sectionIndex,
+                        currentValue = it.title
                     ),
                     backDestination = backDestination
                 )

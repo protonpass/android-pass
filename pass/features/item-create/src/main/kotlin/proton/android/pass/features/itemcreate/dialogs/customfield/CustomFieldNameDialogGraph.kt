@@ -20,10 +20,14 @@ package proton.android.pass.features.itemcreate.dialogs.customfield
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.SpecialCharacters
+import proton.android.pass.common.api.getOrElse
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldIndexNavArgId
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldTitleNavArgId
-import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
+import proton.android.pass.features.itemcreate.common.customsection.CustomSectionIndexNavArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
@@ -37,10 +41,16 @@ object CustomFieldTypeNavArgId : NavArgId {
 
 class CustomFieldNameDialogNavItem(prefix: CustomFieldPrefix) : NavItem(
     baseRoute = "${prefix.name}/item/create/customfield/add/dialog",
-    navArgIds = listOf(CustomFieldTypeNavArgId),
+    navArgIds = listOf(CustomFieldTypeNavArgId, CustomSectionIndexNavArgId),
     navItemType = NavItemType.Dialog
 ) {
-    fun buildRoute(type: CustomFieldType) = "$baseRoute/${type.name}"
+    fun buildRoute(type: CustomFieldType, sectionIndex: Option<Int>) = buildString {
+        append(baseRoute)
+        append(SpecialCharacters.SLASH)
+        append(type.name)
+        append(SpecialCharacters.SLASH)
+        append(sectionIndex.getOrElse { -1 })
+    }
 
     companion object {
         val CreateLogin = CustomFieldNameDialogNavItem(CustomFieldPrefix.CreateLogin)
@@ -50,10 +60,22 @@ class CustomFieldNameDialogNavItem(prefix: CustomFieldPrefix) : NavItem(
 
 class EditCustomFieldNameDialogNavItem(val prefix: CustomFieldPrefix) : NavItem(
     baseRoute = "${prefix.name}/item/create/customfield/edit/dialog",
-    navArgIds = listOf(CustomFieldIndexNavArgId, CustomFieldTitleNavArgId),
+    navArgIds = listOf(CustomFieldIndexNavArgId, CustomSectionIndexNavArgId, CustomFieldTitleNavArgId),
     navItemType = NavItemType.Dialog
 ) {
-    fun buildRoute(index: Int, currentValue: String) = "$baseRoute/$index/${NavParamEncoder.encode(currentValue)}"
+    fun buildRoute(
+        index: Int,
+        sectionIndex: Option<Int>,
+        currentValue: String
+    ) = buildString {
+        append(baseRoute)
+        append(SpecialCharacters.SLASH)
+        append(index)
+        append(SpecialCharacters.SLASH)
+        append(sectionIndex.getOrElse { -1 })
+        append(SpecialCharacters.SLASH)
+        append(NavParamEncoder.encode(currentValue))
+    }
 
     companion object {
         val CreateLogin = EditCustomFieldNameDialogNavItem(CustomFieldPrefix.CreateLogin)

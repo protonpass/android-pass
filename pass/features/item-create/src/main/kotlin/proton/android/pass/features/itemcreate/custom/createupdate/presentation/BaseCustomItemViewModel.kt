@@ -179,10 +179,25 @@ abstract class BaseCustomItemViewModel(
 
     private fun onFieldRemoved(event: DraftFormFieldEvent.FieldRemoved) {
         val (sectionIndex, index) = event
-        when (sectionIndex) {
-            None -> itemFormState.customFieldList.toMutableList().apply { removeAt(index) }
-            is Some -> itemFormState.sectionList[sectionIndex.value].customFields.toMutableList()
-                .apply { removeAt(index) }
+        itemFormState = when (sectionIndex) {
+            None -> itemFormState.copy(
+                customFieldList = itemFormState.customFieldList.toMutableList()
+                    .apply { removeAt(index) }
+            )
+
+            is Some -> {
+                val section = itemFormState.sectionList[sectionIndex.value]
+                val updatedSection = section.copy(
+                    customFields = section.customFields.toMutableList().apply {
+                        removeAt(index)
+                    }
+                )
+                itemFormState.copy(
+                    sectionList = itemFormState.sectionList.toMutableList().apply {
+                        set(sectionIndex.value, updatedSection)
+                    }
+                )
+            }
         }
     }
 
@@ -318,13 +333,39 @@ abstract class BaseCustomItemViewModel(
     private fun updateCustomField(
         fields: List<UICustomFieldContent>,
         index: Int,
-        value: String
+        newValue: String
     ): List<UICustomFieldContent> = fields.toMutableList().apply {
         if (index in indices) {
-            val updatedField = when (val field = get(index)) {
-                is UICustomFieldContent.Hidden -> field.copy(value)
-                is UICustomFieldContent.Text -> field.copy(value)
-                is UICustomFieldContent.Totp -> field.copy(value)
+            val updatedField = encryptionContextProvider.withEncryptionContext {
+                when (val content = get(index)) {
+                    is UICustomFieldContent.Hidden -> {
+                        UICustomFieldContent.Hidden(
+                            label = content.label,
+                            value = if (newValue.isBlank()) {
+                                UIHiddenState.Empty(encrypt(""))
+                            } else {
+                                UIHiddenState.Revealed(
+                                    encrypted = encrypt(newValue),
+                                    clearText = newValue
+                                )
+                            }
+                        )
+                    }
+
+                    is UICustomFieldContent.Text -> UICustomFieldContent.Text(
+                        label = content.label,
+                        value = newValue
+                    )
+
+                    is UICustomFieldContent.Totp -> UICustomFieldContent.Totp(
+                        label = content.label,
+                        value = UIHiddenState.Revealed(
+                            encrypted = encrypt(newValue),
+                            clearText = newValue
+                        ),
+                        id = content.id
+                    )
+                }
             }
             set(index, updatedField)
         }

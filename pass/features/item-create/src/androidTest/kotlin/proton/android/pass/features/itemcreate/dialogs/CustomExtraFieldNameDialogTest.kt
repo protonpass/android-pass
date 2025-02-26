@@ -38,7 +38,7 @@ import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.features.itemcreate.R
-import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldType
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameDialog
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameNavigation
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldTypeNavArgId

@@ -92,6 +92,9 @@ interface ItemSharedProperties {
     val validationErrors: PersistentSet<ItemValidationErrors>
         get() = sharedState.validationErrors
 
+    val focusedField: Option<FocusedField>
+        get() = sharedState.focusedField
+
     val canUseCustomFields: Boolean
         get() = sharedState.canUseCustomFields
 

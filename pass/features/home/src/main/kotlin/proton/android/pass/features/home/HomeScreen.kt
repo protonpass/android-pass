@@ -71,6 +71,7 @@ import proton.android.pass.features.home.HomeBottomSheetType.Unknown
 import proton.android.pass.features.home.HomeNavigation.SortingBottomsheet
 import proton.android.pass.features.home.bottomsheet.AliasOptionsBottomSheetContents
 import proton.android.pass.features.home.bottomsheet.CreditCardOptionsBottomSheetContents
+import proton.android.pass.features.home.bottomsheet.CustomItemOptionsBottomSheetContents
 import proton.android.pass.features.home.bottomsheet.IdentityOptionsBottomSheetContents
 import proton.android.pass.features.home.bottomsheet.LoginOptionsBottomSheetContents
 import proton.android.pass.features.home.bottomsheet.NoteOptionsBottomSheetContents
@@ -571,7 +572,39 @@ fun HomeScreen(
                 }
 
                 CustomOptions -> {
-                    // Implement custom item options
+                    val item = selectedItem ?: return@PassModalBottomSheetLayout
+                    CustomItemOptionsBottomSheetContents(
+                        itemUiModel = item,
+                        canUpdate = homeUiState.homeListUiState.checkCanUpdate(item.shareId),
+                        canViewHistory = homeUiState.homeListUiState.canViewHistory(item.shareId),
+                        isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
+                        action = homeUiState.action,
+                        isFreePlan = homeUiState.isFreePlan,
+                        onPinned = { shareId, itemId ->
+                            scope.launch { bottomSheetState.hide() }
+                            homeViewModel.pinItem(shareId, itemId)
+                        },
+                        onUnpinned = { shareId, itemId ->
+                            scope.launch { bottomSheetState.hide() }
+                            homeViewModel.unpinItem(shareId, itemId)
+                        },
+                        onViewHistory = { shareId, itemId ->
+                            scope.launch { bottomSheetState.hide() }
+                            homeViewModel.viewItemHistory(shareId, itemId)
+                        },
+                        onEdit = { shareId, itemId ->
+                            scope.launch { bottomSheetState.hide() }
+                            onNavigateEvent(HomeNavigation.EditCustomItem(shareId, itemId))
+                        },
+                        onMoveToTrash = {
+                            scope.launch { bottomSheetState.hide() }
+                            homeViewModel.sendItemsToTrash(listOf(it))
+                        },
+                        onRemoveFromRecentSearch = { shareId, itemId ->
+                            scope.launch { bottomSheetState.hide() }
+                            homeViewModel.onClearRecentSearch(shareId, itemId)
+                        }
+                    )
                 }
 
                 TrashItemOptions -> {

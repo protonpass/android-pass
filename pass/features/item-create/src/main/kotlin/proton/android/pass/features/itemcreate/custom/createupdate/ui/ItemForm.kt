@@ -50,7 +50,6 @@ fun ItemForm(
     modifier: Modifier,
     itemFormState: ItemFormState,
     itemSharedProperties: ItemSharedProperties,
-    canUseAttachments: Boolean,
     onEvent: (ItemContentEvent) -> Unit
 ) {
     val isGroupCollapsed = rememberSaveable(saver = isCollapsedSaver<Int>()) {
@@ -129,7 +128,7 @@ fun ItemForm(
                 }
             }
         }
-        if (itemSharedProperties.showFileAttachments && canUseAttachments) {
+        if (itemSharedProperties.showFileAttachments) {
             item {
                 AttachmentSection(
                     modifier = Modifier.padding(vertical = Spacing.small)

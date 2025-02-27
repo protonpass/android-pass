@@ -27,6 +27,7 @@ const val FILTER_IDENTITY = 6
 const val FILTER_LOGIN_MFA = 7
 const val FILTER_SHARED_WITH_ME = 8
 const val FILTER_SHARED_BY_ME = 9
+const val FILTER_CUSTOM_ITEM = 10
 
 enum class FilterOptionPreference(val value: Int) {
     All(FILTER_ALL),
@@ -35,6 +36,7 @@ enum class FilterOptionPreference(val value: Int) {
     Note(FILTER_NOTE),
     CreditCard(FILTER_CREDIT_CARD),
     Identity(FILTER_IDENTITY),
+    Custom(FILTER_CUSTOM_ITEM),
     LoginMFA(FILTER_LOGIN_MFA),
     SharedWithMe(FILTER_SHARED_WITH_ME),
     SharedByMe(FILTER_SHARED_BY_ME);
@@ -48,6 +50,7 @@ enum class FilterOptionPreference(val value: Int) {
             FILTER_NOTE -> Note
             FILTER_CREDIT_CARD -> CreditCard
             FILTER_IDENTITY -> Identity
+            FILTER_CUSTOM_ITEM -> Custom
             FILTER_LOGIN_MFA -> LoginMFA
             FILTER_SHARED_WITH_ME -> SharedWithMe
             FILTER_SHARED_BY_ME -> SharedByMe

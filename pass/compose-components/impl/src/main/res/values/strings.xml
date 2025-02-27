@@ -19,6 +19,7 @@
         <item quantity="other">results</item>
     </plurals>
     <string name="item_list_header_identities_type">Identities</string>
+    <string name="item_list_header_custom_type">Custom items</string>
     <string name="item_list_header_shared_with_me">Shared with me</string>
     <string name="item_list_header_shared_by_me">Shared by me</string>
     <!-- Bottomsheets -->

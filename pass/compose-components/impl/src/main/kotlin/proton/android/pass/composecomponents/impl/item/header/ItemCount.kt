@@ -93,6 +93,7 @@ fun getTitleCountRes(itemType: SearchFilterType, isPinnedMode: Boolean): Int = w
     SearchFilterType.Note -> R.string.item_list_header_notes_type
     SearchFilterType.CreditCard -> R.string.item_list_header_credit_cards_type
     SearchFilterType.Identity -> R.string.item_list_header_identities_type
+    SearchFilterType.Custom -> R.string.item_list_header_custom_type
     SearchFilterType.SharedWithMe -> R.string.item_list_header_shared_with_me
     SearchFilterType.SharedByMe -> R.string.item_list_header_shared_by_me
 }

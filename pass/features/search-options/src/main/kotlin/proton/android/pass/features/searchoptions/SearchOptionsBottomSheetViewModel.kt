@@ -99,6 +99,7 @@ class SearchOptionsBottomSheetViewModel @Inject constructor(
                 SearchFilterType.Note -> summary.note
                 SearchFilterType.CreditCard -> summary.creditCard
                 SearchFilterType.Identity -> summary.identities
+                SearchFilterType.Custom -> summary.custom
                 SearchFilterType.LoginMFA -> summary.loginWithMFA
                 SearchFilterType.SharedWithMe -> summary.sharedWithMe
                 SearchFilterType.SharedByMe -> summary.sharedByMe

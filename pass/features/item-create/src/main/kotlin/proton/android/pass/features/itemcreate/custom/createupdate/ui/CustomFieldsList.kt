@@ -18,9 +18,11 @@
 
 package proton.android.pass.features.itemcreate.custom.createupdate.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.runtime.Composable
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -28,29 +30,36 @@ import androidx.compose.ui.focus.focusRequester
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.getOrElse
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEntry
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.FocusedField
 
-@Composable
-fun CustomFieldsList(
-    modifier: Modifier = Modifier,
+@Suppress("LongParameterList", "LongMethod")
+fun LazyListScope.customFieldsList(
     customFields: List<UICustomFieldContent>,
     enabled: Boolean,
+    isVisible: Boolean,
     sectionIndex: Option<Int>,
     focusedField: Option<FocusedField>,
     onEvent: (ItemContentEvent) -> Unit
 ) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(Spacing.small)
-    ) {
-        customFields.forEachIndexed { index, value ->
-            val focusRequester = remember { FocusRequester() }
+    itemsIndexed(
+        items = customFields,
+        key = { index, _ -> "${sectionIndex.getOrElse { -1 }}/$index" }
+    ) { index, value ->
+        val focusRequester = remember { FocusRequester() }
+        AnimatedVisibility(
+            modifier = Modifier.fillMaxWidth(),
+            visible = isVisible
+        ) {
             CustomFieldEntry(
-                modifier = Modifier.focusRequester(focusRequester),
+                modifier = Modifier
+                    .padding(vertical = Spacing.small)
+                    .padding(horizontal = Spacing.medium)
+                    .focusRequester(focusRequester),
                 entry = value,
                 canEdit = enabled,
                 isError = false,
@@ -77,21 +86,29 @@ fun CustomFieldsList(
                     )
                 }
             )
-
-            RequestFocusLaunchedEffect(
-                focusRequester = focusRequester,
-                requestFocus = when (focusedField) {
-                    None -> false
-                    is Some ->
-                        focusedField.value.sectionIndex == sectionIndex &&
-                            focusedField.value.index == index
-                },
-                callback = { onEvent(ItemContentEvent.ClearLastAddedFieldFocus) }
-            )
         }
-        AddCustomFieldButton(
-            isEnabled = enabled,
-            onClick = { onEvent(ItemContentEvent.OnAddCustomField(sectionIndex)) }
+        RequestFocusLaunchedEffect(
+            focusRequester = focusRequester,
+            requestFocus = when (focusedField) {
+                None -> false
+                is Some ->
+                    focusedField.value.sectionIndex == sectionIndex &&
+                        focusedField.value.index == index
+            },
+            callback = { onEvent(ItemContentEvent.ClearLastAddedFieldFocus) }
         )
     }
+    item {
+        AnimatedVisibility(
+            modifier = Modifier.padding(vertical = Spacing.small).fillMaxWidth(),
+            visible = isVisible
+        ) {
+            AddCustomFieldButton(
+                modifier = Modifier.padding(horizontal = Spacing.medium),
+                isEnabled = enabled,
+                onClick = { onEvent(ItemContentEvent.OnAddCustomField(sectionIndex)) }
+            )
+        }
+    }
 }
+

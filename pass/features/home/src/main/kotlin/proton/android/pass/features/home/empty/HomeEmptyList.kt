@@ -32,6 +32,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
@@ -48,7 +50,8 @@ internal fun HomeEmptyList(
     onCreateAliasClick: () -> Unit,
     onCreateNoteClick: () -> Unit,
     onCreateCreditCardClick: () -> Unit,
-    onCreateIdentityClick: () -> Unit
+    onCreateIdentityClick: () -> Unit,
+    onCreateCustomItemClick: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -139,6 +142,16 @@ internal fun HomeEmptyList(
                     onClick = onCreateIdentityClick
                 )
             }
+            if (SearchFilterType.Custom in visibleButtons) {
+                HomeEmptyButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(R.string.home_empty_vault_create_custom_item),
+                    backgroundColor = PassPalette.SlateGray.copy(alpha = 0.3f),
+                    textColor = ProtonTheme.colors.textNorm,
+                    icon = CoreR.drawable.ic_proton_pencil,
+                    onClick = onCreateCustomItemClick
+                )
+            }
         }
     }
 }
@@ -165,7 +178,8 @@ internal fun HomeEmptyListPreview(
                 onCreateAliasClick = {},
                 onCreateNoteClick = {},
                 onCreateCreditCardClick = {},
-                onCreateIdentityClick = {}
+                onCreateIdentityClick = {},
+                onCreateCustomItemClick = {}
             )
         }
     }

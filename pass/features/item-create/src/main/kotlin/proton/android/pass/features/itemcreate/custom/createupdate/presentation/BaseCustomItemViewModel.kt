@@ -35,9 +35,11 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.domain.Item
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
@@ -301,6 +303,16 @@ abstract class BaseCustomItemViewModel(
 
     protected fun updateLoadingState(isLoading: IsLoadingState) {
         isLoadingState.update { isLoading }
+    }
+
+    protected fun onItemSavedState(item: Item) {
+        val itemSavedState = encryptionContextProvider.withEncryptionContext {
+            ItemSavedState.Success(
+                item.id,
+                item.toUiModel(this@withEncryptionContext)
+            )
+        }
+        isItemSavedState.update { itemSavedState }
     }
 
     private fun onCustomFieldChange(

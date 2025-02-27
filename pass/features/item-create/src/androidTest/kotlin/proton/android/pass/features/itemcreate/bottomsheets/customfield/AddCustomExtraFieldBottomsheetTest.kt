@@ -65,8 +65,8 @@ class AddCustomExtraFieldBottomsheetTest {
                 PassTheme {
                     AddCustomFieldBottomSheet(
                         prefix = CustomFieldPrefix.CreateLogin,
-                        onNavigate = {
-                            if (it == navigation) {
+                        onNavigate = { event, _ ->
+                            if (event == navigation) {
                                 checker.call()
                             }
                         }

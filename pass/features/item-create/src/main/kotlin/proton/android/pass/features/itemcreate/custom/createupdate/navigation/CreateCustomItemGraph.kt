@@ -21,6 +21,7 @@ package proton.android.pass.features.itemcreate.custom.createupdate.navigation
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
 import androidx.navigation.navigation
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -35,24 +36,34 @@ import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
 import proton.android.pass.features.itemcreate.common.customsection.ExtraSectionNavigation
 import proton.android.pass.features.itemcreate.common.customsection.extraSectionGraph
 import proton.android.pass.features.itemcreate.custom.createupdate.ui.CreateCustomItemScreen
+import proton.android.pass.features.itemcreate.custom.shared.TemplateType
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameNavigation
 import proton.android.pass.features.itemcreate.dialogs.customfield.customFieldNameDialogGraph
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.OptionalNavArgId
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.toPath
 
 const val CREATE_CUSTOM_ITEM_GRAPH = "create_custom_item_graph"
 
+internal object TemplateTypeNavArgId : OptionalNavArgId {
+    override val key = "templateType"
+    override val navType = NavType.IntType
+}
+
 object CreateCustomItemNavItem : NavItem(
     baseRoute = "customitem/create/screen",
-    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId)
+    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId, TemplateTypeNavArgId)
 ) {
-    fun createNavRoute(shareId: Option<ShareId> = None) = buildString {
+    fun createNavRoute(shareId: Option<ShareId> = None, templateType: Option<TemplateType> = None) = buildString {
         append(baseRoute)
         val map = mutableMapOf<String, Any>()
         if (shareId is Some) {
             map[CommonOptionalNavArgId.ShareId.key] = shareId.value.id
+        }
+        if (templateType is Some) {
+            map[TemplateTypeNavArgId.key] = templateType.value.id
         }
         val path = map.toPath()
         append(path)

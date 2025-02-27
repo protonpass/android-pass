@@ -18,15 +18,14 @@
 
 package proton.android.pass.features.itemcreate.custom.selecttemplate.ui
 
+import proton.android.pass.common.api.Option
 import proton.android.pass.features.itemcreate.custom.shared.TemplateType
 
 sealed interface TemplateEvent {
 
     data object OnBackClick : TemplateEvent
 
-    data object OnFromScratchClick : TemplateEvent
-
     @JvmInline
-    value class OnTemplateSelected(val templateType: TemplateType) : TemplateEvent
+    value class OnTemplateSelected(val templateType: Option<TemplateType>) : TemplateEvent
 
 }

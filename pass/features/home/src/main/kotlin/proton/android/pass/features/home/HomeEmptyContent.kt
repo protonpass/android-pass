@@ -87,6 +87,9 @@ internal fun HomeEmptyContent(
             },
             onCreateIdentityClick = {
                 onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Identity))
+            },
+            onCreateCustomItemClick = {
+                onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Custom))
             }
         )
     }

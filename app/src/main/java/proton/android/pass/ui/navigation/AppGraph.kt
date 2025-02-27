@@ -312,7 +312,8 @@ fun NavGraphBuilder.appGraph(
 
                         ItemTypeUiState.Identity ->
                             CreateIdentityNavItem to CreateIdentityNavItem.createNavRoute(it.shareId)
-                        ItemTypeUiState.Custom -> TODO("To implement")
+                        ItemTypeUiState.Custom ->
+                            SelectTemplateNavItem to SelectTemplateNavItem.createNavRoute(it.shareId)
                     }
 
                     appNavigator.navigate(destination, route)

@@ -65,13 +65,14 @@ fun LazyListScope.customFieldsList(
                 isError = false,
                 errorMessage = "",
                 index = index,
-                onValueChange = {
-                    val fieldChange = CustomField(
-                        index = index,
-                        value = it,
-                        sectionIndex = sectionIndex
+                onValueChange = { newValue ->
+                    onEvent(
+                        ItemContentEvent.OnCustomFieldChange(
+                            index = index,
+                            sectionIndex = sectionIndex,
+                            value = newValue
+                        )
                     )
-                    onEvent(ItemContentEvent.OnCustomFieldChange(fieldChange))
                 },
                 onFocusChange = { idx, isFocused ->
                     onEvent(ItemContentEvent.OnCustomFieldFocused(idx, isFocused, sectionIndex))
@@ -100,7 +101,9 @@ fun LazyListScope.customFieldsList(
     }
     item {
         AnimatedVisibility(
-            modifier = Modifier.padding(vertical = Spacing.small).fillMaxWidth(),
+            modifier = Modifier
+                .padding(vertical = Spacing.small)
+                .fillMaxWidth(),
             visible = isVisible
         ) {
             AddCustomFieldButton(

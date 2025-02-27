@@ -32,8 +32,11 @@ sealed interface ItemContentEvent {
     @JvmInline
     value class OnTitleChange(val value: String) : ItemContentEvent
 
-    @JvmInline
-    value class OnCustomFieldChange(val value: CustomField) : ItemContentEvent
+    data class OnCustomFieldChange(
+        val index: Int,
+        val sectionIndex: Option<Int>,
+        val value: String
+    ) : ItemContentEvent
 
     @JvmInline
     value class OnVaultSelect(val shareId: ShareId) : ItemContentEvent

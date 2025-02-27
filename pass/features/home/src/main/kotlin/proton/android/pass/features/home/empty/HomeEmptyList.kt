@@ -79,6 +79,7 @@ internal fun HomeEmptyList(
                     SearchFilterType.Note -> setOf(SearchFilterType.Note)
                     SearchFilterType.CreditCard -> setOf(SearchFilterType.CreditCard)
                     SearchFilterType.Identity -> setOf(SearchFilterType.Identity)
+                    SearchFilterType.Custom -> setOf(SearchFilterType.Custom)
                     SearchFilterType.SharedWithMe,
                     SearchFilterType.SharedByMe -> emptySet()
                 }

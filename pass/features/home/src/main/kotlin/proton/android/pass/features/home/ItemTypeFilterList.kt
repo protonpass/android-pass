@@ -49,10 +49,13 @@ import proton.android.pass.searchoptions.api.SearchFilterType
 import proton.android.pass.searchoptions.api.SearchFilterType.Alias
 import proton.android.pass.searchoptions.api.SearchFilterType.All
 import proton.android.pass.searchoptions.api.SearchFilterType.CreditCard
+import proton.android.pass.searchoptions.api.SearchFilterType.Custom
 import proton.android.pass.searchoptions.api.SearchFilterType.Identity
 import proton.android.pass.searchoptions.api.SearchFilterType.Login
 import proton.android.pass.searchoptions.api.SearchFilterType.LoginMFA
 import proton.android.pass.searchoptions.api.SearchFilterType.Note
+import proton.android.pass.searchoptions.api.SearchFilterType.SharedByMe
+import proton.android.pass.searchoptions.api.SearchFilterType.SharedWithMe
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -107,9 +110,10 @@ private fun ItemTypeButton(
             Note -> CoreR.drawable.ic_proton_file_lines
             CreditCard -> CoreR.drawable.ic_proton_credit_card
             Identity -> CoreR.drawable.ic_proton_card_identity
+            Custom -> CoreR.drawable.ic_proton_pencil
             LoginMFA -> CoreR.drawable.ic_proton_lock
-            SearchFilterType.SharedWithMe -> CoreR.drawable.ic_proton_user_arrow_left
-            SearchFilterType.SharedByMe -> CoreR.drawable.ic_proton_user_arrow_right
+            SharedWithMe -> CoreR.drawable.ic_proton_user_arrow_left
+            SharedByMe -> CoreR.drawable.ic_proton_user_arrow_right
         }
     }
 
@@ -121,9 +125,10 @@ private fun ItemTypeButton(
             Note -> R.string.item_type_filter_note
             CreditCard -> R.string.item_type_filter_credit_card
             Identity -> R.string.item_type_filter_identity
+            Custom -> R.string.item_type_filter_custom
             LoginMFA -> R.string.item_type_filter_login_totp
-            SearchFilterType.SharedWithMe -> R.string.item_type_filter_items_shared_with_me
-            SearchFilterType.SharedByMe -> R.string.item_type_filter_items_shared_by_me
+            SharedWithMe -> R.string.item_type_filter_items_shared_with_me
+            SharedByMe -> R.string.item_type_filter_items_shared_by_me
         }
     }
 

@@ -92,13 +92,15 @@ internal fun FilterBottomSheetContents(
             onClick = { onSortingTypeSelected(SearchFilterType.CreditCard) }
         ).also(::add)
 
-        filterRow(
-            titleResId = R.string.item_type_filter_identity,
-            startIconResId = CoreR.drawable.ic_proton_card_identity,
-            itemCount = summary.identities,
-            isSelected = filterType == SearchFilterType.Identity,
-            onClick = { onSortingTypeSelected(SearchFilterType.Identity) }
-        ).also(::add)
+        if (isCustomItemEnabled) {
+            filterRow(
+                titleResId = R.string.item_type_filter_custom_item,
+                startIconResId = CoreR.drawable.ic_proton_pencil,
+                itemCount = summary.custom,
+                isSelected = filterType == SearchFilterType.Custom,
+                onClick = { onSortingTypeSelected(SearchFilterType.Custom) }
+            ).also(::add)
+        }
 
         filterRow(
             titleResId = R.string.item_type_filter_login_mfa,
@@ -204,11 +206,13 @@ internal fun FilterBottomSheetContentsPreview(
                         alias = 0,
                         creditCard = 0,
                         identities = 0,
+                        custom = 0,
                         sharedWithMe = sharedItemsCount,
                         sharedByMe = sharedItemsCount,
                         trashed = 0,
                         sharedWithMeTrashed = 0
                     ),
+                    isCustomItemEnabled = true,
                     isItemSharingAvailable = true
                 ),
                 onSortingTypeSelected = {}

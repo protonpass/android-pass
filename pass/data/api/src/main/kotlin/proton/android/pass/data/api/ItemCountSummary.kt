@@ -25,6 +25,7 @@ data class ItemCountSummary(
     val alias: Long,
     val creditCard: Long,
     val identities: Long,
+    val custom: Long,
     val sharedWithMe: Long,
     val sharedByMe: Long,
     val trashed: Long,
@@ -36,6 +37,7 @@ data class ItemCountSummary(
         .plus(alias)
         .plus(creditCard)
         .plus(identities)
+        .plus(custom)
 
     val hasSharedWithMeItems: Boolean = sharedWithMe > 0
 
@@ -52,6 +54,7 @@ data class ItemCountSummary(
             alias = 0,
             creditCard = 0,
             identities = 0,
+            custom = 0,
             sharedWithMe = 0,
             sharedByMe = 0,
             trashed = 0,

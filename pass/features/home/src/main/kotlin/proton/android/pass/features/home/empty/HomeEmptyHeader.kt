@@ -75,6 +75,10 @@ internal fun HomeEmptyHeader(
                 R.string.home_empty_vault_identity_title to
                     R.string.home_empty_vault_identity_subtitle
 
+            SearchFilterType.Custom ->
+                R.string.home_empty_vault_custom_item_title to
+                    R.string.home_empty_vault_custom_item_subtitle
+
             SearchFilterType.SharedWithMe -> {
                 R.string.home_empty_shared_items_title to R.string.home_empty_shared_items_with_me_subtitle
             }

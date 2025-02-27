@@ -197,6 +197,7 @@ class LocalItemDataSourceImpl @Inject constructor(
                     alias = values.getCount(ItemCategory.Alias),
                     creditCard = values.getCount(ItemCategory.CreditCard),
                     identities = values.getCount(ItemCategory.Identity),
+                    custom = values.getCount(ItemCategory.Custom),
                     sharedWithMe = sharedWithMeItemCount.toLong(),
                     sharedByMe = sharedByMeItemCount.toLong(),
                     trashed = trashedItemsCount.toLong(),

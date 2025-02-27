@@ -20,19 +20,27 @@ package proton.android.pass.features.itemcreate.custom.selecttemplate.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import proton.android.pass.features.itemcreate.custom.selecttemplate.navigation.SelectTemplateNavigation
+import proton.android.pass.features.itemcreate.custom.selecttemplate.presentation.TemplateViewmodel
 
 @Composable
-fun TemplateScreen(modifier: Modifier = Modifier, onNavigate: (SelectTemplateNavigation) -> Unit) {
+fun TemplateScreen(
+    modifier: Modifier = Modifier,
+    viewmodel: TemplateViewmodel = hiltViewModel(),
+    onNavigate: (SelectTemplateNavigation) -> Unit
+) {
     TemplateContent(
         modifier = modifier,
         onEvent = {
             when (it) {
-                TemplateEvent.OnFromScratchClick ->
-                    onNavigate(SelectTemplateNavigation.NavigateToFromScratch)
-
                 is TemplateEvent.OnTemplateSelected ->
-                    onNavigate(SelectTemplateNavigation.NavigateToTemplate(it.templateType.id))
+                    onNavigate(
+                        SelectTemplateNavigation.NavigateToCreate(
+                            shareId = viewmodel.optionalShareId,
+                            templateType = it.templateType
+                        )
+                    )
 
                 TemplateEvent.OnBackClick ->
                     onNavigate(SelectTemplateNavigation.NavigateBack)

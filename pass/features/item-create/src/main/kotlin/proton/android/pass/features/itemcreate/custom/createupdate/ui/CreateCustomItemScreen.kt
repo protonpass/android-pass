@@ -97,9 +97,9 @@ fun CreateCustomItemScreen(
 
                     is ItemContentEvent.OnCustomFieldChange -> viewModel.processIntent(
                         BaseCustomItemCommonIntent.OnCustomFieldChanged(
-                            index = it.value.index,
-                            value = it.value.value,
-                            sectionIndex = it.value.sectionIndex
+                            index = it.index,
+                            value = it.value,
+                            sectionIndex = it.sectionIndex
                         )
                     )
 

@@ -86,6 +86,7 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
 
                 ItemTypeFilter.All,
                 ItemTypeFilter.Aliases,
+                ItemTypeFilter.Custom,
                 ItemTypeFilter.Notes -> throw IllegalArgumentException("ItemType is not supported: $itemTypeFilter")
             }
         }

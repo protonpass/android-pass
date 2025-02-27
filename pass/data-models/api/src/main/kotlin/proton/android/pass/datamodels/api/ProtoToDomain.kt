@@ -47,9 +47,9 @@ fun ItemType.Companion.fromParsed(
     ItemV1.Content.ContentCase.ALIAS -> createAliasItemType(aliasEmail)
     ItemV1.Content.ContentCase.CREDIT_CARD -> createCreditCardItemType(parsed, context)
     ItemV1.Content.ContentCase.IDENTITY -> createIdentityItemType(parsed, context)
-    ItemV1.Content.ContentCase.SSH_KEY,
-    ItemV1.Content.ContentCase.WIFI,
-    ItemV1.Content.ContentCase.CUSTOM,
+    ItemV1.Content.ContentCase.CUSTOM -> createCustomItemType(parsed, context)
+    ItemV1.Content.ContentCase.SSH_KEY -> throw IllegalStateException("Needs to be handled")
+    ItemV1.Content.ContentCase.WIFI -> throw IllegalStateException("Needs to be handled")
     ItemV1.Content.ContentCase.CONTENT_NOT_SET,
     null -> ItemType.Unknown
 }
@@ -171,6 +171,15 @@ private fun createLoginItemType(parsed: ItemV1.Item, context: EncryptionContext)
     }
 )
 
+private fun createCustomItemType(parsed: ItemV1.Item, context: EncryptionContext): ItemType.Custom = ItemType.Custom(
+    customFields = parsed.extraFieldsList.map { field ->
+        field.toDomain(context)
+    },
+    extraSections = parsed.content.custom.sectionsList.map { section ->
+        section.toDomain(context)
+    }
+)
+
 fun ItemV1.ExtraField.toDomain(context: EncryptionContext): CustomField {
     return when (this.contentCase) {
         ItemV1.ExtraField.ContentCase.TEXT -> CustomField.Text(
@@ -203,6 +212,13 @@ fun ItemV1.CardType.toDomain(): CreditCardType = when (this) {
 }
 
 fun ItemV1.ExtraIdentitySection.toDomain(context: EncryptionContext): ExtraSection = ExtraSection(
+    sectionName = this.sectionName,
+    customFields = this.sectionFieldsList.map { field ->
+        field.toDomain(context)
+    }
+)
+
+fun ItemV1.CustomSection.toDomain(context: EncryptionContext): ExtraSection = ExtraSection(
     sectionName = this.sectionName,
     customFields = this.sectionFieldsList.map { field ->
         field.toDomain(context)

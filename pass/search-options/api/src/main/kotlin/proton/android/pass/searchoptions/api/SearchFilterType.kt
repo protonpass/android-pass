@@ -26,6 +26,7 @@ enum class SearchFilterType {
     Note,
     CreditCard,
     Identity,
+    Custom,
     SharedWithMe,
     SharedByMe
 }

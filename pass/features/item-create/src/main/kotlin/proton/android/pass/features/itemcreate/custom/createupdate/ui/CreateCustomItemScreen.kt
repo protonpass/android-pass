@@ -52,7 +52,6 @@ import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardH
 fun CreateCustomItemScreen(
     modifier: Modifier = Modifier,
     selectVault: ShareId?,
-    canUseAttachments: Boolean,
     viewModel: CreateCustomItemViewModel = hiltViewModel(),
     onNavigate: (BaseCustomItemNavigation) -> Unit
 ) {
@@ -81,7 +80,6 @@ fun CreateCustomItemScreen(
         CustomContent(
             itemFormState = viewModel.itemFormState,
             itemSharedProperties = state,
-            canUseAttachments = canUseAttachments,
             topBarActionName = stringResource(id = R.string.title_create),
             onEvent = {
                 when (it) {

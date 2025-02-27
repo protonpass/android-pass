@@ -78,7 +78,7 @@ sealed interface CreateCustomItemNavigation : BaseCustomItemNavigation {
     value class SelectVault(val shareId: ShareId) : CreateCustomItemNavigation
 }
 
-fun NavGraphBuilder.createCustomItemGraph(canUseAttachments: Boolean, onNavigate: (BaseCustomItemNavigation) -> Unit) {
+fun NavGraphBuilder.createCustomItemGraph(onNavigate: (BaseCustomItemNavigation) -> Unit) {
     navigation(
         route = CREATE_CUSTOM_ITEM_GRAPH,
         startDestination = CreateCustomItemNavItem.route
@@ -90,7 +90,6 @@ fun NavGraphBuilder.createCustomItemGraph(canUseAttachments: Boolean, onNavigate
 
             CreateCustomItemScreen(
                 selectVault = selectVault.toOption().map { ShareId(it) }.value(),
-                canUseAttachments = canUseAttachments,
                 onNavigate = onNavigate
             )
         }

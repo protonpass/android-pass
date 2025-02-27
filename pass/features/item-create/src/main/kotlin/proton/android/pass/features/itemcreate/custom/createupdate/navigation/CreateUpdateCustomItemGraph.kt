@@ -22,11 +22,9 @@ import androidx.navigation.NavGraphBuilder
 
 fun NavGraphBuilder.createUpdateCustomItemGraph(onNavigate: (BaseCustomItemNavigation) -> Unit) {
     createCustomItemGraph(
-        canUseAttachments = true,
         onNavigate = onNavigate
     )
-/*    updateLoginGraph(
-        canUseAttachments = canUseAttachments,
+    updateCustomItemGraph(
         onNavigate = onNavigate
-    )*/
+    )
 }

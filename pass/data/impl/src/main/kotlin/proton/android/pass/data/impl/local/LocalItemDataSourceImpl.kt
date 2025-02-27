@@ -381,6 +381,7 @@ class LocalItemDataSourceImpl @Inject constructor(
         ItemTypeFilter.Notes -> ItemCategory.Note.value
         ItemTypeFilter.CreditCards -> ItemCategory.CreditCard.value
         ItemTypeFilter.Identity -> ItemCategory.Identity.value
+        ItemTypeFilter.Custom -> ItemCategory.Custom.value
         ItemTypeFilter.All -> throw IllegalStateException("Cannot call value to ItemTypeFilter.All")
     }
 

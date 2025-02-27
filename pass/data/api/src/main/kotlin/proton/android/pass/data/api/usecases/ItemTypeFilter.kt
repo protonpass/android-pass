@@ -24,5 +24,6 @@ enum class ItemTypeFilter {
     Aliases,
     Notes,
     CreditCards,
-    Identity
+    Identity,
+    Custom
 }

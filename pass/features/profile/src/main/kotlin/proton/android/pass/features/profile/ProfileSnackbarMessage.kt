@@ -39,5 +39,6 @@ enum class ProfileSnackbarMessage(
     FilteredByAliases(R.string.filtered_by_aliases, SnackbarType.NORM),
     FilteredByNote(R.string.filtered_by_notes, SnackbarType.NORM),
     FilteredByCreditCards(R.string.filtered_by_credit_cards, SnackbarType.NORM),
-    FilteredByIdentities(R.string.filtered_by_identities, SnackbarType.NORM)
+    FilteredByIdentities(R.string.filtered_by_identities, SnackbarType.NORM),
+    FilteredByCustomItems(R.string.filtered_by_custom_items, SnackbarType.NORM)
 }

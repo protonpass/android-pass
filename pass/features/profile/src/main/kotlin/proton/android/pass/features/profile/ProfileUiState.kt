@@ -55,6 +55,8 @@ internal sealed interface ProfileEvent {
 
     data object HomeIdentities : ProfileEvent
 
+    data object HomeCustomItems : ProfileEvent
+
     data object AllMFA : ProfileEvent
 
 }
@@ -81,7 +83,7 @@ internal data class ProfileUiState(
         internal fun initial(appVersion: String) = ProfileUiState(
             appLockSectionState = AppLockSectionState.Loading,
             autofillStatus = AutofillSupportedStatus.Supported(AutofillStatus.Disabled),
-            itemSummaryUiState = ItemSummaryUiState(),
+            itemSummaryUiState = ItemSummaryUiState.Default,
             appVersion = appVersion,
             accountType = PlanInfo.Hide,
             event = ProfileEvent.Unknown,
@@ -166,12 +168,29 @@ internal sealed interface EnforcedAppLockSectionState {
 }
 
 internal data class ItemSummaryUiState(
-    val loginCount: Int = 0,
-    val notesCount: Int = 0,
-    val aliasCount: Int = 0,
-    val creditCardsCount: Int = 0,
-    val identityCount: Int = 0,
-    val mfaCount: Int = 0,
-    val aliasLimit: Int? = null,
-    val mfaLimit: Int? = null
-)
+    val loginCount: Int,
+    val notesCount: Int,
+    val aliasCount: Int,
+    val creditCardsCount: Int,
+    val identityCount: Int,
+    val customItemCount: Int,
+    val mfaCount: Int,
+    val aliasLimit: Int?,
+    val mfaLimit: Int?,
+    val isCustomItemEnabled: Boolean
+) {
+    companion object {
+        val Default = ItemSummaryUiState(
+            loginCount = 0,
+            notesCount = 0,
+            aliasCount = 0,
+            creditCardsCount = 0,
+            identityCount = 0,
+            customItemCount = 0,
+            mfaCount = 0,
+            aliasLimit = null,
+            mfaLimit = null,
+            isCustomItemEnabled = false
+        )
+    }
+}

@@ -62,6 +62,8 @@ sealed interface ProfileUiEvent {
 
     data object OnIdentityCountClick : ProfileUiEvent
 
+    data object OnCustomItemCountClick : ProfileUiEvent
+
     data object OnMFACountClick : ProfileUiEvent
 
     data object OnStorageFullClick : ProfileUiEvent

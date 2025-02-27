@@ -18,83 +18,48 @@
 
 package proton.android.pass.features.itemcreate.custom.createupdate.navigation
 
-import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.material.Text
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavType
 import androidx.navigation.navigation
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.CustomFieldType
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.customFieldBottomSheetGraph
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
-import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
 import proton.android.pass.features.itemcreate.common.customsection.ExtraSectionNavigation
 import proton.android.pass.features.itemcreate.common.customsection.extraSectionGraph
-import proton.android.pass.features.itemcreate.custom.createupdate.ui.CreateCustomItemScreen
-import proton.android.pass.features.itemcreate.custom.shared.TemplateType
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameNavigation
 import proton.android.pass.features.itemcreate.dialogs.customfield.customFieldNameDialogGraph
-import proton.android.pass.navigation.api.CommonOptionalNavArgId
+import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
-import proton.android.pass.navigation.api.OptionalNavArgId
 import proton.android.pass.navigation.api.composable
-import proton.android.pass.navigation.api.toPath
 
-const val CREATE_CUSTOM_ITEM_GRAPH = "create_custom_item_graph"
+const val UPDATE_CUSTOM_ITEM_GRAPH = "update_custom_item_graph"
 
-internal object TemplateTypeNavArgId : OptionalNavArgId {
-    override val key = "templateType"
-    override val navType = NavType.IntType
-}
-
-object CreateCustomItemNavItem : NavItem(
-    baseRoute = "customitem/create/screen",
-    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId, TemplateTypeNavArgId)
+object UpdateCustomItemNavItem : NavItem(
+    baseRoute = "customitem/update/screen",
+    navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)
 ) {
-    fun createNavRoute(shareId: Option<ShareId> = None, templateType: Option<TemplateType> = None) = buildString {
-        append(baseRoute)
-        val map = mutableMapOf<String, Any>()
-        if (shareId is Some) {
-            map[CommonOptionalNavArgId.ShareId.key] = shareId.value.id
-        }
-        if (templateType is Some) {
-            map[TemplateTypeNavArgId.key] = templateType.value.id
-        }
-        val path = map.toPath()
-        append(path)
-    }
+    fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
 }
 
-sealed interface CreateCustomItemNavigation : BaseCustomItemNavigation {
+sealed interface UpdateCustomItemNavigation : BaseCustomItemNavigation {
     @JvmInline
-    value class ItemCreated(val itemUiModel: ItemUiModel) : CreateCustomItemNavigation
-
-    @JvmInline
-    value class SelectVault(val shareId: ShareId) : CreateCustomItemNavigation
+    value class ItemUpdated(val itemUiModel: ItemUiModel) : CreateCustomItemNavigation
 }
 
-fun NavGraphBuilder.createCustomItemGraph(onNavigate: (BaseCustomItemNavigation) -> Unit) {
+fun NavGraphBuilder.updateCustomItemGraph(onNavigate: (BaseCustomItemNavigation) -> Unit) {
     navigation(
-        route = CREATE_CUSTOM_ITEM_GRAPH,
-        startDestination = CreateCustomItemNavItem.route
+        route = UPDATE_CUSTOM_ITEM_GRAPH,
+        startDestination = UpdateCustomItemNavItem.route
     ) {
-        composable(CreateCustomItemNavItem) { navBackStack ->
-            val selectVault by navBackStack.savedStateHandle
-                .getStateFlow<String?>(KEY_VAULT_SELECTED, null)
-                .collectAsStateWithLifecycle()
-
-            CreateCustomItemScreen(
-                selectVault = selectVault.toOption().map { ShareId(it) }.value(),
-                onNavigate = onNavigate
-            )
+        composable(UpdateCustomItemNavItem) { navBackStack ->
+            Text("Empty")
         }
         customFieldBottomSheetGraph(
-            prefix = CustomFieldPrefix.CreateCustomItem,
+            prefix = CustomFieldPrefix.UpdateCustomItem,
             onAddCustomFieldNavigate = { type: CustomFieldType, sectionIndex: Option<Int> ->
                 onNavigate(BaseCustomItemNavigation.CustomFieldTypeSelected(type, sectionIndex))
             },
@@ -106,7 +71,7 @@ fun NavGraphBuilder.createCustomItemGraph(onNavigate: (BaseCustomItemNavigation)
             },
             onDismissBottomsheet = { onNavigate(BaseCustomItemNavigation.DismissBottomsheet) }
         )
-        customFieldNameDialogGraph(CustomFieldPrefix.CreateCustomItem) {
+        customFieldNameDialogGraph(CustomFieldPrefix.UpdateCustomItem) {
             when (it) {
                 is CustomFieldNameNavigation.CloseScreen -> onNavigate(BaseCustomItemNavigation.CloseScreen)
             }

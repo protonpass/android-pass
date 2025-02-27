@@ -24,13 +24,17 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
+import proton.android.pass.features.itemcreate.common.customsection.CustomSectionIndexNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import javax.inject.Inject
 
 @HiltAndroidTest
 class AddCustomExtraFieldBottomsheetTest {
@@ -40,6 +44,14 @@ class AddCustomExtraFieldBottomsheetTest {
 
     @get:Rule(order = 1)
     val composeTestRule = createAndroidComposeRule<HiltComponentActivity>()
+
+    @Inject
+    lateinit var savedStateProvider: SavedStateHandleProvider
+
+    @Before
+    fun setup() {
+        hiltRule.inject()
+    }
 
     @Test
     fun testAddTextField() {
@@ -59,6 +71,7 @@ class AddCustomExtraFieldBottomsheetTest {
     }
 
     private fun performTest(@StringRes text: Int, navigation: AddCustomFieldNavigation) {
+        savedStateProvider.get()[CustomSectionIndexNavArgId.key] = 0
         val checker = CallChecker<Unit>()
         composeTestRule.apply {
             setContent {

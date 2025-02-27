@@ -714,14 +714,12 @@ fun NavGraphBuilder.appGraph(
     selectTemplateGraph {
         when (it) {
             SelectTemplateNavigation.NavigateBack -> appNavigator.navigateBack()
-            SelectTemplateNavigation.NavigateToFromScratch -> appNavigator.navigate(
+            is SelectTemplateNavigation.NavigateToCreate -> appNavigator.navigate(
                 destination = CreateCustomItemNavItem,
-                route = CreateCustomItemNavItem.createNavRoute(),
-                backDestination = SelectTemplateNavItem
-            )
-            is SelectTemplateNavigation.NavigateToTemplate -> appNavigator.navigate(
-                destination = CreateCustomItemNavItem,
-                route = CreateCustomItemNavItem.createNavRoute(),
+                route = CreateCustomItemNavItem.createNavRoute(
+                    shareId = it.shareId,
+                    templateType = it.templateType
+                ),
                 backDestination = SelectTemplateNavItem
             )
         }

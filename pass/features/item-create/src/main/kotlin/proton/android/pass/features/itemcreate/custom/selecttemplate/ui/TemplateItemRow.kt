@@ -33,6 +33,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -50,7 +51,7 @@ fun TemplateItem(
         modifier = modifier
             .fillMaxWidth()
             .clip(PassTheme.shapes.squircleMediumLargeShape)
-            .clickable { onClick(TemplateEvent.OnTemplateSelected(item)) },
+            .clickable { onClick(TemplateEvent.OnTemplateSelected(item.some())) },
         shape = PassTheme.shapes.squircleMediumLargeShape
     ) {
         val (bgColor, fgColor) = when (item.category) {

@@ -156,8 +156,7 @@ class CreateCustomItemViewModel @Inject constructor(
                 }
                 .onSuccess { item ->
                     inAppReviewTriggerMetrics.incrementItemCreatedCount()
-                    TODO()
-                    // onItemSavedState(item)
+                    onItemSavedState(item)
                     telemetryManager.sendEvent(ItemCreate(EventItemType.Custom))
                     snackbarDispatcher(CustomItemSnackbarMessage.ItemCreated)
                 }

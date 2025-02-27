@@ -30,16 +30,17 @@ import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.runBlocking
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
-import proton.android.pass.data.api.repositories.DRAFT_NEW_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
@@ -52,6 +53,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.domain.AliasSuffix
 import proton.android.pass.domain.CustomFieldContent
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Plan
@@ -65,6 +67,8 @@ import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.alias.AliasItemFormState
 import proton.android.pass.features.itemcreate.alias.AliasSuffixUiModel
 import proton.android.pass.features.itemcreate.alias.CreateAliasViewModel
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
@@ -116,6 +120,9 @@ class CreateLoginNavItemScreenTest {
 
     @Inject
     lateinit var draftRepository: TestDraftRepository
+
+    @Inject
+    lateinit var customFieldDraftRepository: CustomFieldDraftRepository
 
     @Inject
     lateinit var totpManager: TestTotpManager
@@ -285,10 +292,10 @@ class CreateLoginNavItemScreenTest {
 
         val hiddenCustomField = CustomFieldContent.Hidden(
             label = hiddenCustomFieldLabel,
-            value = HiddenState.Revealed(
+            value = HiddenState.Concealed(
                 TestEncryptionContext.encrypt(
                     hiddenCustomFieldValue
-                ), hiddenCustomFieldValue
+                )
             )
         )
 
@@ -327,17 +334,51 @@ class CreateLoginNavItemScreenTest {
             onNode(hasText(titleText)).performClick().performScrollTo()
             writeTextAndWait(hasText(titleText), title)
 
-            draftRepository.save(DRAFT_NEW_CUSTOM_FIELD_KEY, textCustomField)
-            waitUntilExists(hasText(textCustomFieldValue))
-
-            draftRepository.save(DRAFT_NEW_CUSTOM_FIELD_KEY, hiddenCustomField)
-            waitUntilExists(hasText(hiddenCustomFieldValue))
-
-            draftRepository.save(DRAFT_NEW_CUSTOM_FIELD_KEY, totpCustomField)
+            runBlocking {
+                customFieldDraftRepository.emit(
+                    DraftFormFieldEvent.FieldAdded(
+                        sectionIndex = None,
+                        label = textCustomField.label,
+                        type = CustomFieldType.Text
+                    )
+                )
+            }
+            waitUntilExists(hasText(textCustomField.label))
+            onNodeWithText(textCustomField.label).performScrollTo().performClick()
+            val textPlaceholder =
+                activity.getString(R.string.custom_field_text_placeholder)
+            onNodeWithText(textPlaceholder).performTextReplacement(textCustomFieldValue)
+            runBlocking {
+                customFieldDraftRepository.emit(
+                    DraftFormFieldEvent.FieldAdded(
+                        sectionIndex = None,
+                        label = hiddenCustomField.label,
+                        type = CustomFieldType.Hidden
+                    )
+                )
+            }
+            waitUntilExists(hasText(hiddenCustomField.label))
+            onNodeWithText(hiddenCustomField.label).performScrollTo().performClick()
+            val hiddenTextPlaceholder =
+                activity.getString(R.string.custom_field_hidden_placeholder)
+            onNodeWithText(hiddenTextPlaceholder).performTextReplacement(hiddenCustomFieldValue)
+            runBlocking {
+                customFieldDraftRepository.emit(
+                    DraftFormFieldEvent.FieldAdded(
+                        sectionIndex = None,
+                        label = totpCustomField.label,
+                        type = CustomFieldType.Totp
+                    )
+                )
+            }
             val addCustomFieldText =
                 activity.getString(R.string.create_login_add_custom_field_button)
             onNodeWithText(addCustomFieldText).performScrollTo()
-            waitUntilExists(hasText(totpCustomFieldValue))
+            waitUntilExists(hasText(totpCustomField.label))
+            onNodeWithText(totpCustomField.label).performScrollTo().performClick()
+            val totpPlaceholder =
+                activity.getString(R.string.totp_create_login_field_placeholder)
+            onNodeWithText(totpPlaceholder).performTextReplacement(totpCustomFieldValue)
 
             onNode(hasText(titleText)).performClick().performScrollTo()
             // Submit

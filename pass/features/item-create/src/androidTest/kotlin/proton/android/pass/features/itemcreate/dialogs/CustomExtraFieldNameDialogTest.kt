@@ -18,27 +18,30 @@
 
 package proton.android.pass.features.itemcreate.dialogs
 
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.flow.onEach
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
-import proton.android.pass.data.api.repositories.DRAFT_NEW_CUSTOM_FIELD_KEY
-import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.domain.CustomFieldContent
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.features.itemcreate.R
-import proton.android.pass.domain.CustomFieldType
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
+import proton.android.pass.features.itemcreate.common.customsection.CustomSectionIndexNavArgId
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameDialog
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameNavigation
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldTypeNavArgId
@@ -46,9 +49,7 @@ import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.waitUntilExists
 import javax.inject.Inject
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
-import me.proton.core.presentation.compose.R as CoreR
+import kotlin.test.assertTrue
 
 @HiltAndroidTest
 class CustomExtraFieldNameDialogTest {
@@ -63,8 +64,7 @@ class CustomExtraFieldNameDialogTest {
     lateinit var savedStateProvider: SavedStateHandleProvider
 
     @Inject
-    lateinit var draftRepository: TestDraftRepository
-
+    lateinit var customFieldDraftRepository: CustomFieldDraftRepository
 
     @Before
     fun setup() {
@@ -100,15 +100,32 @@ class CustomExtraFieldNameDialogTest {
 
     private fun performTest(type: CustomFieldType, expected: CustomFieldContent) {
         savedStateProvider.get()[CustomFieldTypeNavArgId.key] = type.name
+        savedStateProvider.get()[CustomSectionIndexNavArgId.key] = 0
 
-        val checker = CallChecker<Unit>()
+        val eventChecker = CallChecker<Unit>()
+
+        val navChecker = CallChecker<Unit>()
         composeTestRule.apply {
             setContent {
+                val event by customFieldDraftRepository.observeCustomFieldEvents()
+                    .onEach {
+                        println("event: $it")
+                        eventChecker.call()
+                        assertTrue(it is DraftFormFieldEvent.FieldAdded)
+                        assertEquals(expected.label, it.label)
+                        val expectedFieldType = when(expected) {
+                            is CustomFieldContent.Hidden -> CustomFieldType.Hidden
+                            is CustomFieldContent.Text -> CustomFieldType.Text
+                            is CustomFieldContent.Totp -> CustomFieldType.Totp
+                        }
+                        assertEquals(expectedFieldType , it.type)
+                    }
+                    .collectAsStateWithLifecycle(null)
                 PassTheme {
                     CustomFieldNameDialog(
                         onNavigate = {
                             if (it == CustomFieldNameNavigation.CloseScreen) {
-                                checker.call()
+                                navChecker.call()
                             }
                         }
                     )
@@ -116,22 +133,15 @@ class CustomExtraFieldNameDialogTest {
             }
 
             val placeholder = activity.getString(R.string.custom_field_dialog_placeholder)
-            val confirmText = activity.getString(CoreR.string.presentation_alert_ok)
+            val confirmText =
+                activity.getString(me.proton.core.presentation.compose.R.string.presentation_alert_ok)
 
             waitUntilExists(hasText(placeholder))
             onNodeWithText(placeholder).performTextInput(LABEL)
             onNodeWithText(confirmText).performClick()
 
-            waitUntil { checker.isCalled }
-        }
-
-        runBlocking {
-            val customField = draftRepository
-                .get<CustomFieldContent>(DRAFT_NEW_CUSTOM_FIELD_KEY)
-                .first()
-
-            assertNotNull(customField.value())
-            assertEquals(expected, customField.value())
+            waitUntil { navChecker.isCalled }
+            waitUntil { eventChecker.isCalled }
         }
     }
 

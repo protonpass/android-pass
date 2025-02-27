@@ -35,7 +35,6 @@ fun CustomContent(
     itemFormState: ItemFormState,
     topBarActionName: String,
     itemSharedProperties: ItemSharedProperties,
-    canUseAttachments: Boolean,
     onEvent: (ItemContentEvent) -> Unit
 ) {
     Scaffold(
@@ -68,7 +67,6 @@ fun CustomContent(
             modifier = Modifier.padding(padding),
             itemFormState = itemFormState,
             itemSharedProperties = itemSharedProperties,
-            canUseAttachments = canUseAttachments,
             onEvent = onEvent
         )
     }

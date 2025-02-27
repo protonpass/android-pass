@@ -116,6 +116,8 @@ import proton.android.pass.features.itemcreate.creditcard.updateCreditCardGraph
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.BaseCustomItemNavigation
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.CreateCustomItemNavItem
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.CreateCustomItemNavigation
+import proton.android.pass.features.itemcreate.custom.createupdate.navigation.UpdateCustomItemNavItem
+import proton.android.pass.features.itemcreate.custom.createupdate.navigation.UpdateCustomItemNavigation
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.createUpdateCustomItemGraph
 import proton.android.pass.features.itemcreate.custom.selecttemplate.navigation.SelectTemplateNavItem
 import proton.android.pass.features.itemcreate.custom.selecttemplate.navigation.SelectTemplateNavigation
@@ -357,6 +359,11 @@ fun NavGraphBuilder.appGraph(
                 is HomeNavigation.EditIdentity -> appNavigator.navigate(
                     UpdateIdentityNavItem,
                     UpdateIdentityNavItem.createNavRoute(it.shareId, it.itemId)
+                )
+
+                is HomeNavigation.EditCustomItem -> appNavigator.navigate(
+                    UpdateCustomItemNavItem,
+                    UpdateCustomItemNavItem.createNavRoute(it.shareId, it.itemId)
                 )
 
                 is HomeNavigation.ItemDetail -> appNavigator.navigate(
@@ -1478,6 +1485,7 @@ fun NavGraphBuilder.appGraph(
             }
             BaseCustomItemNavigation.RemoveCustomField -> dismissBottomSheet {}
             BaseCustomItemNavigation.RemoveSection -> dismissBottomSheet {}
+            is UpdateCustomItemNavigation.ItemUpdated -> TODO()
         }
     }
     itemDetailGraph(

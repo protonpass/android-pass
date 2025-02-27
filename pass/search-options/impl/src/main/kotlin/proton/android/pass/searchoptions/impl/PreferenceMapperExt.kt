@@ -43,6 +43,7 @@ internal fun FilterOptionPreference.toDomain(): SearchFilterType = when (this) {
     FilterOptionPreference.Note -> SearchFilterType.Note
     FilterOptionPreference.CreditCard -> SearchFilterType.CreditCard
     FilterOptionPreference.Identity -> SearchFilterType.Identity
+    FilterOptionPreference.Custom -> SearchFilterType.Custom
     FilterOptionPreference.LoginMFA -> SearchFilterType.LoginMFA
     FilterOptionPreference.SharedWithMe -> SearchFilterType.SharedWithMe
     FilterOptionPreference.SharedByMe -> SearchFilterType.SharedByMe
@@ -71,6 +72,7 @@ internal fun FilterOption.toPreference(): FilterOptionPreference = when (this.se
     SearchFilterType.Note -> FilterOptionPreference.Note
     SearchFilterType.CreditCard -> FilterOptionPreference.CreditCard
     SearchFilterType.Identity -> FilterOptionPreference.Identity
+    SearchFilterType.Custom -> FilterOptionPreference.Custom
     SearchFilterType.LoginMFA -> FilterOptionPreference.LoginMFA
     SearchFilterType.SharedWithMe -> FilterOptionPreference.SharedWithMe
     SearchFilterType.SharedByMe -> FilterOptionPreference.SharedByMe

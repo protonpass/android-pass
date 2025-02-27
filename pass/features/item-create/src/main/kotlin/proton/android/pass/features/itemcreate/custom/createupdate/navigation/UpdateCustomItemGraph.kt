@@ -22,7 +22,6 @@ import androidx.compose.material.Text
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 import proton.android.pass.common.api.Option
-import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -46,8 +45,7 @@ object UpdateCustomItemNavItem : NavItem(
 }
 
 sealed interface UpdateCustomItemNavigation : BaseCustomItemNavigation {
-    @JvmInline
-    value class ItemUpdated(val itemUiModel: ItemUiModel) : CreateCustomItemNavigation
+    data class ItemUpdated(val shareId: ShareId, val itemId: ItemId) : CreateCustomItemNavigation
 }
 
 fun NavGraphBuilder.updateCustomItemGraph(onNavigate: (BaseCustomItemNavigation) -> Unit) {

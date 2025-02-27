@@ -1485,7 +1485,14 @@ fun NavGraphBuilder.appGraph(
             }
             BaseCustomItemNavigation.RemoveCustomField -> dismissBottomSheet {}
             BaseCustomItemNavigation.RemoveSection -> dismissBottomSheet {}
-            is UpdateCustomItemNavigation.ItemUpdated -> TODO()
+            is UpdateCustomItemNavigation.ItemUpdated -> appNavigator.navigate(
+                destination = ItemDetailsNavItem,
+                route = ItemDetailsNavItem.createNavRoute(
+                    shareId = it.shareId,
+                    itemId = it.itemId
+                ),
+                backDestination = HomeNavItem
+            )
         }
     }
     itemDetailGraph(

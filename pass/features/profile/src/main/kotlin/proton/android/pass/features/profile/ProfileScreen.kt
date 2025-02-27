@@ -75,6 +75,7 @@ fun ProfileScreen(
             ProfileEvent.HomeCreditCards,
             ProfileEvent.HomeIdentities,
             ProfileEvent.HomeLogins,
+            ProfileEvent.HomeCustomItems,
             ProfileEvent.HomeNotes -> onNavigateEvent(ProfileNavigation.Home)
         }
 
@@ -137,6 +138,7 @@ fun ProfileScreen(
                 ProfileUiEvent.OnLoginCountClick -> viewModel.onLoginCountClick()
                 ProfileUiEvent.OnMFACountClick -> viewModel.onMFACountClick()
                 ProfileUiEvent.OnNoteCountClick -> viewModel.onNoteCountClick()
+                ProfileUiEvent.OnCustomItemCountClick -> viewModel.onCustomItemCountClick()
                 ProfileUiEvent.OnStorageFullClick -> onNavigateEvent(ProfileNavigation.StorageFull)
             }
         }

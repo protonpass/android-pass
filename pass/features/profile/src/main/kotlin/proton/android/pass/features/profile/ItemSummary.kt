@@ -45,6 +45,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
+import proton.android.pass.composecomponents.impl.item.icon.CustomIcon
 import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.MFAIcon
@@ -89,6 +90,13 @@ internal fun ItemSummary(
             count = itemSummaryUiState.identityCount,
             onClick = { onEvent(ProfileUiEvent.OnIdentityCountClick) }
         )
+        if (itemSummaryUiState.isCustomItemEnabled) {
+            ItemTypeBox(
+                type = SummaryItemType.Custom,
+                count = itemSummaryUiState.customItemCount,
+                onClick = { onEvent(ProfileUiEvent.OnCustomItemCountClick) }
+            )
+        }
         ItemTypeBox(
             type = SummaryItemType.MFA,
             count = itemSummaryUiState.mfaCount,
@@ -122,6 +130,7 @@ private fun ItemTypeBox(
             SummaryItemType.Alias -> AliasIcon(shape = CircleShape)
             SummaryItemType.MFA -> MFAIcon(shape = CircleShape)
             SummaryItemType.Identity -> IdentityIcon(shape = CircleShape)
+            SummaryItemType.Custom -> CustomIcon(shape = CircleShape)
         }
         Spacer(modifier = Modifier.width(10.dp))
         Text(
@@ -143,6 +152,7 @@ private enum class SummaryItemType {
     CreditCards,
     Identity,
     Logins,
+    Custom,
     MFA,
     Notes
 }
@@ -153,7 +163,7 @@ internal fun ItemSummaryPreview(@PreviewParameter(ThemePreviewProvider::class) i
     PassTheme(isDark = isDark) {
         Surface {
             ItemSummary(
-                itemSummaryUiState = ItemSummaryUiState(aliasLimit = 1),
+                itemSummaryUiState = ItemSummaryUiState.Default.copy(aliasLimit = 1),
                 onEvent = {}
             )
         }

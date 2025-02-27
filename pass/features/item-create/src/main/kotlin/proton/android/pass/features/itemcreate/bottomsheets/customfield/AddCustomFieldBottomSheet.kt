@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.collections.immutable.toPersistentList
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -47,12 +48,27 @@ fun AddCustomFieldBottomSheet(
     viewModel: AddCustomFieldViewModel = hiltViewModel(),
     onNavigate: (AddCustomFieldNavigation, sectionIndex: Option<Int>) -> Unit
 ) {
+    AddCustomFieldBottomContent(
+        modifier = modifier,
+        onNavigate = onNavigate,
+        sectionIndex = viewModel.sectionIndex,
+        prefix = prefix
+    )
+}
+
+@Composable
+fun AddCustomFieldBottomContent(
+    modifier: Modifier = Modifier,
+    onNavigate: (AddCustomFieldNavigation, sectionIndex: Option<Int>) -> Unit,
+    sectionIndex: Option<Int>,
+    prefix: CustomFieldPrefix
+) {
     val list = mutableListOf<BottomSheetItem>()
-    list.add(textField { onNavigate(AddCustomFieldNavigation.AddText, viewModel.sectionIndex) })
+    list.add(textField { onNavigate(AddCustomFieldNavigation.AddText, sectionIndex) })
     if (prefix != CustomFieldPrefix.CreateIdentity && prefix != CustomFieldPrefix.UpdateIdentity) {
-        list.add(totpField { onNavigate(AddCustomFieldNavigation.AddTotp, viewModel.sectionIndex) })
+        list.add(totpField { onNavigate(AddCustomFieldNavigation.AddTotp, sectionIndex) })
     }
-    list.add(hiddenField { onNavigate(AddCustomFieldNavigation.AddHidden, viewModel.sectionIndex) })
+    list.add(hiddenField { onNavigate(AddCustomFieldNavigation.AddHidden, sectionIndex) })
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
         items = list.withDividers().toPersistentList()
@@ -116,11 +132,12 @@ private fun totpField(onClick: () -> Unit): BottomSheetItem = object : BottomShe
 
 @Preview
 @Composable
-fun AddCustomFieldBottomSheetPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+fun AddCustomFieldBottomContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            AddCustomFieldBottomSheet(
+            AddCustomFieldBottomContent(
                 prefix = CustomFieldPrefix.CreateLogin,
+                sectionIndex = None,
                 onNavigate = { _, _ -> }
             )
         }

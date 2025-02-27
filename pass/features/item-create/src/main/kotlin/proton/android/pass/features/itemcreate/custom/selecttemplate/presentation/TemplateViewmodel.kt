@@ -16,16 +16,26 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.custom.selecttemplate.ui
+package proton.android.pass.features.itemcreate.custom.selecttemplate.presentation
 
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import proton.android.pass.common.api.Option
-import proton.android.pass.features.itemcreate.custom.shared.TemplateType
+import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.domain.ShareId
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
+import javax.inject.Inject
 
-sealed interface TemplateEvent {
+@HiltViewModel
+class TemplateViewmodel @Inject constructor(
+    savedStateHandleProvider: SavedStateHandleProvider
+) : ViewModel() {
 
-    data object OnBackClick : TemplateEvent
-
-    @JvmInline
-    value class OnTemplateSelected(val templateType: Option<TemplateType>) : TemplateEvent
+    val optionalShareId: Option<ShareId> = savedStateHandleProvider
+        .get()
+        .get<String?>(CommonOptionalNavArgId.ShareId.key)
+        .toOption()
+        .map(::ShareId)
 
 }

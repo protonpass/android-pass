@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -59,7 +60,7 @@ fun TemplateContent(modifier: Modifier = Modifier, onEvent: (TemplateEvent) -> U
             item {
                 StartFromScratchButton(
                     modifier = Modifier.padding(bottom = Spacing.medium),
-                    onClick = { onEvent(TemplateEvent.OnFromScratchClick) }
+                    onClick = { onEvent(TemplateEvent.OnTemplateSelected(None)) }
                 )
             }
             TemplateType.entries.groupBy { it.category }

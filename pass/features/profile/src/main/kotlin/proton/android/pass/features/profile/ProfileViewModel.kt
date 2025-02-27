@@ -71,6 +71,7 @@ import proton.android.pass.domain.PlanType
 import proton.android.pass.features.profile.ProfileSnackbarMessage.AppVersionCopied
 import proton.android.pass.features.profile.ProfileSnackbarMessage.FilteredByAliases
 import proton.android.pass.features.profile.ProfileSnackbarMessage.FilteredByCreditCards
+import proton.android.pass.features.profile.ProfileSnackbarMessage.FilteredByCustomItems
 import proton.android.pass.features.profile.ProfileSnackbarMessage.FilteredByIdentities
 import proton.android.pass.features.profile.ProfileSnackbarMessage.FilteredByLogins
 import proton.android.pass.features.profile.ProfileSnackbarMessage.FilteredByLoginsWithMFA
@@ -163,8 +164,9 @@ class ProfileViewModel @Inject constructor(
     private val itemSummaryUiStateFlow = combine(
         observeItemCount(itemState = null).asLoadingResult(),
         observeMFACount(),
-        upgradeInfoFlow
-    ) { itemCountResult, mfaCount, upgradeInfoResult ->
+        upgradeInfoFlow,
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1)
+    ) { itemCountResult, mfaCount, upgradeInfoResult, isCustomItemEnabled ->
         val itemCount = itemCountResult.getOrNull()
         val upgradeInfo = upgradeInfoResult.getOrNull()
         val isUpgradeAvailable = upgradeInfo?.isUpgradeAvailable ?: false
@@ -183,9 +185,11 @@ class ProfileViewModel @Inject constructor(
             aliasCount = itemCount?.alias?.toInt() ?: 0,
             creditCardsCount = itemCount?.creditCard?.toInt() ?: 0,
             identityCount = itemCount?.identities?.toInt() ?: 0,
+            customItemCount = itemCount?.custom?.toInt() ?: 0,
             mfaCount = mfaCount,
             aliasLimit = aliasLimit,
-            mfaLimit = mfaLimit
+            mfaLimit = mfaLimit,
+            isCustomItemEnabled = isCustomItemEnabled
         )
     }
 
@@ -435,6 +439,14 @@ class ProfileViewModel @Inject constructor(
             selectFilters(SearchFilterType.Note)
             eventFlow.update { ProfileEvent.HomeNotes }
             snackbarDispatcher(FilteredByNote)
+        }
+    }
+
+    fun onCustomItemCountClick() {
+        viewModelScope.launch {
+            selectFilters(SearchFilterType.Custom)
+            eventFlow.update { ProfileEvent.HomeCustomItems }
+            snackbarDispatcher(FilteredByCustomItems)
         }
     }
 

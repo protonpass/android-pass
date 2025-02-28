@@ -11,7 +11,7 @@
   <string name="action_password">Contraseña</string>
   <string name="action_identity">Identidad</string>
   <string name="action_custom">Elemento personalizado</string>
-  <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Añada detalles de inicio de sesión para una aplicación o sitio web</string>
+  <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Agregue detalles de inicio de sesión para una aplicación o sitio web</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Obtenga un alias de correo para usar en aplicaciones nuevas</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Anote un PIN, un código o una nota para usted</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Almacene de forma segura su información de pago</string>
@@ -20,20 +20,20 @@
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Genere una contraseña segura</string>
   <!-- Create Login -->
   <string name="field_email_title">Dirección de correo electrónico</string>
-  <string name="field_email_hint">Añadir una dirección de correo electrónico</string>
+  <string name="field_email_hint">Agregar una dirección de correo electrónico</string>
   <string name="field_email_error">Dirección de correo inválida</string>
-  <string name="field_email_tooltip_title">Añadir un campo de nombre de usuario</string>
-  <string name="field_email_tooltip_description">Pulse aquí para añadir un campo para el nombre de usuario.</string>
+  <string name="field_email_tooltip_title">Agregar un campo de nombre de usuario</string>
+  <string name="field_email_tooltip_description">Pulse aquí para agregar un campo para el nombre de usuario.</string>
   <string name="field_username_title">Nombre de usuario</string>
-  <string name="field_username_hint">Añadir un nombre de usuario</string>
+  <string name="field_username_hint">Agregar un nombre de usuario</string>
   <string name="field_username_or_email_title">Nombre de usuario o dirección de correo electrónico</string>
-  <string name="field_username_or_email_hint">Añadir un nombre de usuario o una dirección de correo electrónico</string>
+  <string name="field_username_or_email_hint">Agregar un nombre de usuario o una dirección de correo electrónico</string>
   <string name="field_password_title">Contraseña</string>
-  <string name="field_password_hint">Añadir contraseña</string>
+  <string name="field_password_hint">Agregar contraseña</string>
   <string name="field_website_address_title">Sitio web</string>
   <string name="field_website_address_invalid">URL inválida</string>
   <string name="field_website_address_hint">https://</string>
-  <string name="field_website_add_another">Añadir</string>
+  <string name="field_website_add_another">Agregar</string>
   <string name="sticky_button_generate_password" comment="Sticky button on the Create login screen. When tapped, the Generate password bottomsheet is shown">Generar una contraseña nueva</string>
   <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">Hide-my-email</string>
   <string name="sticky_button_use_account_email" comment="Sticky button on the Create login screen. When tapped, the current user email is autofilled">Usar %s</string>
@@ -54,10 +54,10 @@
   <string name="bottomsheet_custom_field_option_remove">Eliminar el campo</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Eliminar el campo personalizado</string>
   <string name="bottomsheet_custom_section_option_remove">Eliminar la sección</string>
-  <string name="create_login_add_custom_field_button">Añadir otro campo</string>
-  <string name="custom_field_hidden_placeholder">Añadir el texto oculto</string>
+  <string name="create_login_add_custom_field_button">Agregar otro campo</string>
+  <string name="custom_field_hidden_placeholder">Agregar el texto oculto</string>
   <string name="custom_field_hidden_icon_content_description">Ícono de campo personalizado oculto</string>
-  <string name="custom_field_text_placeholder">Añadir texto</string>
+  <string name="custom_field_text_placeholder">Agregar texto</string>
   <string name="custom_field_dialog_title">Nombre de campo personalizado</string>
   <string name="custom_field_dialog_body">Dé un nombre a su campo personalizado</string>
   <string name="custom_field_dialog_placeholder">P. ej.: ID de usuario, código PIN</string>
@@ -171,8 +171,8 @@
   <string name="identity_section_address_details">Detalles de dirección</string>
   <string name="identity_section_contact_details">Detalles de contacto</string>
   <string name="identity_section_work_details">Detalles de trabajo</string>
-  <string name="identity_add_more_fields">Añadir otro campo</string>
-  <string name="identity_bottomsheet_add_field">Añadir un campo</string>
+  <string name="identity_add_more_fields">Agregar otro campo</string>
+  <string name="identity_bottomsheet_add_field">Agregar un campo</string>
   <string name="create_identity_init_error">Problema al recuperar los detalles de la identidad</string>
   <string name="update_identity_attachments_init_error">Problema al recuperar los archivos adjuntos de la identidad</string>
   <string name="identity_link_attachments_error">Error al vincular o desvincular los archivos adjuntos de la identidad</string>
@@ -187,7 +187,7 @@
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Clave secreta 2FA (TOTP)</string>
   <string name="totp_create_login_field_invalid">La clave secreta 2FA (TOTP) no es válida.</string>
-  <string name="totp_create_login_field_placeholder">Añadir clave secreta 2FA (TOTP)</string>
+  <string name="totp_create_login_field_placeholder">Agregar clave secreta 2FA (TOTP)</string>
   <string name="close_scree_icon_content_description">Cerrar botón de pantalla</string>
   <string name="totp_paste_code_action">Pegar código</string>
   <string name="totp_scan_code_action">Escanear código</string>
@@ -202,7 +202,7 @@
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">La aplicación necesita actualizarse para editar este elemento</string>
   <string name="remove_passkey_dialog_title">¿Eliminar esta clave de acceso?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Está a punto de eliminar la clave de acceso de «%1$s» para «%2$s». ¿Continuar?</string>
-  <string name="add_a_custom_section">Añada una sección personalizada</string>
+  <string name="add_a_custom_section">Agregue una sección personalizada</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Archivos adjuntos</string>
   <string name="banner_body_attachments">Puede adjuntar archivos a los elementos para una mejor organización.</string>
@@ -212,13 +212,33 @@
   <string name="banner_advanced_options_title">¿Lo sabía?</string>
   <string name="banner_advanced_options_subtitle">Pulse el ícono de engranaje para personalizar el alias como desee.</string>
   <string name="banner_custom_domain_title">¿Lo sabía?</string>
-  <string name="banner_custom_domain_subtitle">Al añadir su dominio, puede crear alias como hola@mi-dominio.com.</string>
-  <string name="banner_custom_domain_button">Añadir un dominio</string>
+  <string name="banner_custom_domain_subtitle">Al agregar su dominio, puede crear alias como hola@mi-dominio.com.</string>
+  <string name="banner_custom_domain_button">Agregar un dominio</string>
   <string name="banner_mailbox_title">¿Lo sabía?</string>
-  <string name="banner_mailbox_subtitle">Comparta alias con otros añadiendo sus bandejas de entrada como buzón adicional.</string>
-  <string name="banner_mailbox_button">Añadir un buzón</string>
+  <string name="banner_mailbox_subtitle">Comparta alias con otros agregando sus bandejas de entrada como buzón adicional.</string>
+  <string name="banner_mailbox_button">Agregar un buzón</string>
   <!-- Suffix -->
   <string name="suffix_subtitle_premium_domain">Dominio premium</string>
   <string name="suffix_subtitle_public_domain">Dominio público</string>
   <string name="suffix_subtitle_private_domain">Su dominio</string>
+  <!-- Templates -->
+  <string name="template_item_api_credential">Credencial API</string>
+  <string name="template_item_database">Base de datos</string>
+  <string name="template_item_server">Servidor</string>
+  <string name="template_item_software_license">Licencia de software</string>
+  <string name="template_item_ssh_key">Clave SSH</string>
+  <string name="template_item_wifi_network">Red WiFi</string>
+  <string name="template_item_bank_account">Cuenta bancaria</string>
+  <string name="template_item_crypto_wallet">Cartera de criptomonedas</string>
+  <string name="template_item_driver_license">Licencia de conducir</string>
+  <string name="template_item_medical_record">Registro médico</string>
+  <string name="template_item_membership">Suscripción</string>
+  <string name="template_item_passport">Pasaporte</string>
+  <string name="template_item_reward_program">Programa de recompensas</string>
+  <string name="template_item_social_security_number">Número de seguro social</string>
+  <string name="template_header_technology">Tecnología</string>
+  <string name="template_header_finance">Finanzas</string>
+  <string name="template_header_personal">Finanzas</string>
+  <string name="button_start_from_scratch">Empezar desde cero</string>
+  <string name="select_template_title">Elemento personalizado</string>
 </resources>

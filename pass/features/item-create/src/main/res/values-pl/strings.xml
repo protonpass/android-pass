@@ -221,4 +221,24 @@
   <string name="suffix_subtitle_premium_domain">Domena premium</string>
   <string name="suffix_subtitle_public_domain">Domena publiczna</string>
   <string name="suffix_subtitle_private_domain">Twoja domena</string>
+  <!-- Templates -->
+  <string name="template_item_api_credential">API Credential</string>
+  <string name="template_item_database">Baza danych</string>
+  <string name="template_item_server">Serwer</string>
+  <string name="template_item_software_license">Software License</string>
+  <string name="template_item_ssh_key">Klucz SSH</string>
+  <string name="template_item_wifi_network">WiFi Network</string>
+  <string name="template_item_bank_account">Bank Account</string>
+  <string name="template_item_crypto_wallet">Crypto Wallet</string>
+  <string name="template_item_driver_license">Prawo jazdy</string>
+  <string name="template_item_medical_record">Medical Record</string>
+  <string name="template_item_membership">Subskrypcja</string>
+  <string name="template_item_passport">Paszport</string>
+  <string name="template_item_reward_program">Reward Program</string>
+  <string name="template_item_social_security_number">Numer ubezpieczenia społecznego</string>
+  <string name="template_header_technology">Technologia</string>
+  <string name="template_header_finance">Finanse</string>
+  <string name="template_header_personal">Finanse</string>
+  <string name="button_start_from_scratch">Start from scratch</string>
+  <string name="select_template_title">Custom item</string>
 </resources>

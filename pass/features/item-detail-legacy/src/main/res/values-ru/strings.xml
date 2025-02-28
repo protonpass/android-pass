@@ -19,7 +19,7 @@
   <string name="email_copied_to_clipboard">Адрес электронной почты скопирован</string>
   <string name="username_copied_to_clipboard">Имя пользователя скопировано</string>
   <string name="password_copied_to_clipboard">Пароль скопирован</string>
-  <string name="website_copied_to_clipboard">Web address copied</string>
+  <string name="website_copied_to_clipboard">Веб-адрес скопирован</string>
   <string name="totp_copied_to_clipboard">TOTP скопирован</string>
   <string name="field_copied_to_clipboard">Поле скопировано</string>
   <string name="move_item_to_trash_message">Элемент перемещен в корзину</string>
@@ -95,7 +95,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Вы можете редактировать элементы только в самых старых хранилищах. Чтобы отредактировать этот элемент, пожалуйста, обновите текущий тариф.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Вы не можете отредактировать этот элемент, потому что он находится в корзине. Пожалуйста, переместите его из корзины, прежде чем редактировать.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Невозможно поделиться</string>
-  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">You don\'t have enough permissions to perform this action.</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">У вас недостаточно прав для выполнения этого действия.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Вы достигли предела общего доступа к хранилищу. Для того, чтобы поделиться большим количеством хранилищ, улучшите ваш текущий тариф.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Вы не можете поделиться этим элементом, потому что он находится в корзине. Переместите его из корзины перед тем, как делиться доступом.</string>
   <string name="password_score_vulnerable">Уязвимый</string>
@@ -131,6 +131,6 @@
   </plurals>
   <string name="open_with">Открыть с помощью:</string>
   <string name="open_attachments_error">Could not open attachment</string>
-  <string name="banner_contacts_title">Did you know?</string>
-  <string name="banner_contacts_subtitle">Every time your alias receives an email from someone, a new contact is automatically created.</string>
+  <string name="banner_contacts_title">Вы знали?</string>
+  <string name="banner_contacts_subtitle">Каждый раз, когда ваш псевдоним получает письмо от кого-то, новый контакт создается автоматически.</string>
 </resources>

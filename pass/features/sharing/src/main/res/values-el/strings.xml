@@ -122,7 +122,7 @@
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Μετακίνηση σε κοινόχρηστη κρύπτη</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Αναβαθμίστε για να δημιουργήσετε περισσότερες κρύπτες</string>
   <string name="sharing_from_item_vault_limit_reached">Έχετε φτάσει το όριο της κρύπτης</string>
-  <string name="share_with_suggestions_title">Προτάσεις</string>
+  <string name="share_with_suggestions_title">Υποδείξεις</string>
   <string name="share_with_recents_title">Πρόσφατα</string>
   <string name="share_with_remove_email_content_description">Αφαίρεση email</string>
   <string name="share_with_user_shared_title">Με άλλους χρήστες του Proton Pass</string>

@@ -318,10 +318,10 @@
     <item quantity="other">%d shared items</item>
   </plurals>
   <plurals name="users_count">
-    <item quantity="one">%d user</item>
-    <item quantity="few">%d users</item>
-    <item quantity="many">%d users</item>
-    <item quantity="other">%d users</item>
+    <item quantity="one">%d użytkownik</item>
+    <item quantity="few">%d użytkowników</item>
+    <item quantity="many">%d użytkowników</item>
+    <item quantity="other">%d użytkowników</item>
   </plurals>
   <plurals name="members_count">
     <item quantity="one">%d member</item>

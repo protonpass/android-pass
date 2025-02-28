@@ -21,7 +21,7 @@
   <string name="home_empty_no_vaults_title">No tiene ninguna bóveda.</string>
   <string name="home_empty_no_vaults_subtitle">Póngase en contacto con el equipo de soporte de su organización.</string>
   <string name="home_empty_read_only_vault_title">Esta bóveda está vacía</string>
-  <string name="home_empty_read_only_vault_subtitle">No puede añadir elementos a una bóveda de solo lectura.</string>
+  <string name="home_empty_read_only_vault_subtitle">No puede agregar elementos a una bóveda de solo lectura.</string>
   <string name="home_empty_vault_create_login">Crear un inicio de sesión</string>
   <string name="home_empty_vault_create_alias">Crear un alias de Hide-my-email</string>
   <string name="home_empty_vault_create_note">Crear una nota</string>

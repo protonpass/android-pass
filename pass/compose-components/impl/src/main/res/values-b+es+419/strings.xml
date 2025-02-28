@@ -48,14 +48,14 @@
   <string name="action_continue">Continuar</string>
   <string name="action_retry">Reintentar</string>
   <string name="action_edit">Editar</string>
-  <string name="action_add">Añadir</string>
+  <string name="action_add">Agregar</string>
   <string name="action_delete">Eliminar</string>
   <string name="action_make_default">Establecer por defecto</string>
   <string name="action_verify">Verificar</string>
   <string name="action_close">Cerrar</string>
   <string name="action_update">Actualizar</string>
   <!-- Empty list -->
-  <string name="empty_list_title">Añada el primer elemento</string>
+  <string name="empty_list_title">Agregue el primer elemento</string>
   <string name="empty_search_results_title">No se encontraron resultados</string>
   <string name="empty_list_open_extension">Visitar sitio web de la extensión</string>
   <string name="empty_list_create_item_button">Crear elemento</string>
@@ -65,19 +65,19 @@
   <string name="field_title_required">Título requerido</string>
   <string name="small_cross_icon_content_description">Ícono de cruz pequeño</string>
   <string name="field_note_title">Nota</string>
-  <string name="field_note_hint">Añadir nota</string>
+  <string name="field_note_hint">Agregar nota</string>
   <string name="linked_apps_title">Apps enlazadas</string>
   <!-- Indicator that indicates lack of internet connectivity -->
   <string name="indicator_no_network">Sin conexión</string>
   <!-- Icon content description -->
   <string name="missing_app_icon_content_description">Ícono de aplicación ausente</string>
-  <string name="add_item_icon_content_description">Añadir ícono de elemento</string>
+  <string name="add_item_icon_content_description">Agregar ícono de elemento</string>
   <string name="navigate_back_icon_content_description">Ícono de navegar atrás</string>
   <!-- Vault selector -->
   <string name="vault_selector_title">Bóveda</string>
   <!-- Bottom bar -->
   <string name="bottom_bar_list_items_icon_content_description">Elementos de la lista</string>
-  <string name="bottom_bar_add_item_icon_content_description">Añadir elemento</string>
+  <string name="bottom_bar_add_item_icon_content_description">Agregar elemento</string>
   <string name="bottom_bar_profile_icon_content_description">Perfil</string>
   <string name="bottom_bar_security_center_icon_content_description">Centro de seguridad</string>
   <!-- List group by most recents -->

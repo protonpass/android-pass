@@ -16,7 +16,7 @@
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Skriv ner en PIN-kod, kod eller anteckning till dig själv</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Spara din betalningsinformation säkert</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Fyll i dina personuppgifter</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Create items with fully customised fields</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Skapa objekt med fullständigt anpassade fält</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Generera ett säkert lösenord</string>
   <!-- Create Login -->
   <string name="field_email_title">E-postadress</string>
@@ -221,4 +221,24 @@
   <string name="suffix_subtitle_premium_domain">Premiumdomän</string>
   <string name="suffix_subtitle_public_domain">Offentlig domän</string>
   <string name="suffix_subtitle_private_domain">Din domän</string>
+  <!-- Templates -->
+  <string name="template_item_api_credential">API Credential</string>
+  <string name="template_item_database">Databas</string>
+  <string name="template_item_server">Server</string>
+  <string name="template_item_software_license">Programvarulicens</string>
+  <string name="template_item_ssh_key">SSH-nyckel</string>
+  <string name="template_item_wifi_network">WiFi-nätverk</string>
+  <string name="template_item_bank_account">Bankkonto</string>
+  <string name="template_item_crypto_wallet">Crypto Wallet</string>
+  <string name="template_item_driver_license">Körkort</string>
+  <string name="template_item_medical_record">Medical Record</string>
+  <string name="template_item_membership">Medlemskap</string>
+  <string name="template_item_passport">Pass</string>
+  <string name="template_item_reward_program">Belöningsprogram</string>
+  <string name="template_item_social_security_number">Personnummer</string>
+  <string name="template_header_technology">Teknologi</string>
+  <string name="template_header_finance">Ekonomi</string>
+  <string name="template_header_personal">Finans</string>
+  <string name="button_start_from_scratch">Börja från början</string>
+  <string name="select_template_title">Anpassat objekt</string>
 </resources>

@@ -21,7 +21,7 @@
   <string name="upsell_dark_web_monitoring_subtitle">Мониторинг Темной паутины доступен в платном тарифе. Улучшите тариф, чтобы получить немедленный доступ.</string>
   <string name="upsell_missing_2fa_subtitle">Просмотрите список сайтов, на которых вы можете добавить второй фактор аутентификации для защиты своего присутствия в Интернете. Улучшите тариф для немедленного доступа.</string>
   <string name="upsell_sentinel_subtitle">Разблокируйте передовые функции безопасности и подробные журналы для защиты вашего присутствия в Интернете.</string>
-  <string name="upsell_paid_feature_file_attachments">File attachments</string>
+  <string name="upsell_paid_feature_file_attachments">Вложенные файлы</string>
   <string name="upsell_paid_feature_dark_web_monitoring">Мониторинг Темной паутины</string>
   <string name="upsell_paid_feature_sentinel">Proton Sentinel</string>
   <string name="upsell_paid_feature_authenticator">Интегрированная двухфакторная аутентификация</string>
@@ -35,7 +35,7 @@
   <string name="upsell_paid_feature_advance_alias_management_subtitle">Advanced alias management is available with a paid plan. Upgrade for immediate access.</string>
   <string name="upsell_paid_feature_item_sharing_title">Quickly share an item</string>
   <string name="upsell_paid_feature_item_sharing_subtitle">Upgrade today so you can share an item with any Pass user. And enjoy other premium features:</string>
-  <string name="upsell_paid_feature_file_attachments_title">File attachments</string>
+  <string name="upsell_paid_feature_file_attachments_title">Вложенные файлы</string>
   <string name="upsell_button_upgrade">Получить Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Получить Pass Business</string>
 </resources>

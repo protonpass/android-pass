@@ -37,4 +37,10 @@ sealed interface ItemCustomFieldSection {
 
     }
 
+    sealed interface CustomItem : ItemCustomFieldSection {
+
+        @JvmInline
+        value class ExtraSection(val index: Int) : Identity
+    }
+
 }

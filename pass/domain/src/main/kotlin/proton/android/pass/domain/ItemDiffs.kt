@@ -102,16 +102,18 @@ sealed interface ItemDiffs {
     ) : ItemDiffs {
 
         fun customField(section: ItemCustomFieldSection, index: Int): ItemDiffType = when (section) {
-            ItemCustomFieldSection.Login -> emptyList()
-            ItemCustomFieldSection.Identity.Address -> addressCustomFields
-            ItemCustomFieldSection.Identity.Contact -> contactCustomFields
-            ItemCustomFieldSection.Identity.Personal -> personalCustomFields
-            ItemCustomFieldSection.Identity.Work -> workCustomFields
+            is ItemCustomFieldSection.Identity.Address -> addressCustomFields
+            is ItemCustomFieldSection.Identity.Contact -> contactCustomFields
+            is ItemCustomFieldSection.Identity.Personal -> personalCustomFields
+            is ItemCustomFieldSection.Identity.Work -> workCustomFields
             is ItemCustomFieldSection.Identity.ExtraSection -> extraCustomFields.getOrElse(
                 section.index
             ) {
                 emptyList()
             }
+            is ItemCustomFieldSection.Login,
+            is ItemCustomFieldSection.CustomItem.ExtraSection ->
+                throw IllegalStateException("Not supported sections")
         }.let { customFields -> customFields.getOrElse(index) { ItemDiffType.None } }
 
     }
@@ -136,6 +138,30 @@ sealed interface ItemDiffs {
         fun customField(index: Int): ItemDiffType = customFields.getOrElse(index) { ItemDiffType.None }
 
         fun passkey(passkeyId: String): ItemDiffType = passkeys.getOrElse(passkeyId) { ItemDiffType.None }
+
+    }
+
+    data class Custom(
+        override val title: ItemDiffType = ItemDiffType.None,
+        override val note: ItemDiffType = ItemDiffType.None,
+        override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap(),
+        private val customFields: List<ItemDiffType> = emptyList(),
+        private val extraCustomFields: List<List<ItemDiffType>> = emptyList()
+    ) : ItemDiffs {
+
+        fun customField(index: Int): ItemDiffType = customFields.getOrElse(index) { ItemDiffType.None }
+
+        fun customField(section: ItemCustomFieldSection, index: Int): ItemDiffType = when (section) {
+            is ItemCustomFieldSection.CustomItem.ExtraSection ->
+                extraCustomFields.getOrElse(section.index) { emptyList() }
+            is ItemCustomFieldSection.Login,
+            is ItemCustomFieldSection.Identity.Address,
+            is ItemCustomFieldSection.Identity.Contact,
+            is ItemCustomFieldSection.Identity.Personal,
+            is ItemCustomFieldSection.Identity.Work,
+            is ItemCustomFieldSection.Identity.ExtraSection ->
+                throw UnsupportedOperationException("cannot use section ${section::class.simpleName} ")
+        }.let { customFields -> customFields.getOrElse(index) { ItemDiffType.None } }
 
     }
 

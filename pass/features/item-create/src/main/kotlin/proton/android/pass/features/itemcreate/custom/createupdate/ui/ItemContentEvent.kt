@@ -28,7 +28,6 @@ sealed interface ItemContentEvent {
     @JvmInline
     value class Submit(val shareId: ShareId) : ItemContentEvent
 
-
     @JvmInline
     value class OnTitleChange(val value: String) : ItemContentEvent
 

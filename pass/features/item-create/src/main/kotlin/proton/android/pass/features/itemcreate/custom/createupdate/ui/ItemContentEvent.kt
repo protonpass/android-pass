@@ -62,5 +62,7 @@ sealed interface ItemContentEvent {
     @JvmInline
     value class OnAttachmentEvent(val event: AttachmentContentEvent) : ItemContentEvent
 
+    data object DismissAttachmentBanner : ItemContentEvent
+
     data object ClearLastAddedFieldFocus : ItemContentEvent
 }

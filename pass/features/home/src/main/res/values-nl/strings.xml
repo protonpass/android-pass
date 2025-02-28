@@ -34,7 +34,7 @@
   <string name="home_snackbar_note_moved_to_trash">Notitie verplaatst naar prullenbak</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Kredietkaart verplaatst naar prullenbak</string>
   <string name="home_snackbar_identity_moved_to_trash">Identiteit verplaatst naar prullenbak</string>
-  <string name="home_snackbar_custom_moved_to_trash">Aangepast item werd naar de prullenbak verplaats</string>
+  <string name="home_snackbar_custom_moved_to_trash">Aangepast item werd naar de prullenbak verplaatst</string>
   <string name="home_snackbar_move_to_trash_error">Item kon niet verplaatst worden naar prullenbak.</string>
   <string name="home_snackbar_items_move_to_trash_success">Items verplaatst naar de prullenbak</string>
   <string name="home_snackbar_items_move_to_trash_error">Items konden niet verplaatst worden naar de prullenbak</string>

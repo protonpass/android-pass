@@ -70,7 +70,7 @@
   <string name="account_switcher_sign_in">Iniciar sesión</string>
   <string name="account_switcher_sign_out">Cerrar sesión</string>
   <string name="account_switcher_switch_to">Cambiar a</string>
-  <string name="account_switcher_add_account">Añadir cuenta</string>
+  <string name="account_switcher_add_account">Agregar cuenta</string>
   <string name="account_switcher_remove">Eliminar</string>
   <string name="filtered_by_logins">Se filtró la lista por inicios de sesión. No se muestran los elementos en la papelera.</string>
   <string name="filtered_by_logins_with_mfa">Se filtró la lista por inicios de sesión con código TOTP. No se muestran los elementos en la papelera.</string>

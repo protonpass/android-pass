@@ -34,7 +34,7 @@
   <string name="home_snackbar_note_moved_to_trash">Note flyttet til papirkurv</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Betalingskort flyttet til papirkurv</string>
   <string name="home_snackbar_identity_moved_to_trash">Identitet flyttet til papirkurven</string>
-  <string name="home_snackbar_custom_moved_to_trash">Custom item moved to trash</string>
+  <string name="home_snackbar_custom_moved_to_trash">Brugerdefineret element flyttet til papirkurv</string>
   <string name="home_snackbar_move_to_trash_error">Element kunne ikke flyttes til papirkurven</string>
   <string name="home_snackbar_items_move_to_trash_success">Elementer flyttet til papirkurv</string>
   <string name="home_snackbar_items_move_to_trash_error">Elementer kunne ikke flyttes til papirkurven</string>

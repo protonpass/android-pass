@@ -10,13 +10,13 @@
   <string name="action_credit_card">クレジットカード</string>
   <string name="action_password">パスワード</string>
   <string name="action_identity">ユーザー情報</string>
-  <string name="action_custom">Custom item</string>
+  <string name="action_custom">カスタムアイテム</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">アプリやサイトのログイン情報を追加する</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">新しいアプリで使用するメールエイリアスを取得する</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">PIN、コード、自分へのメモを書き留める</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">お客様のお支払い情報を安全に保管</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">個人情報を入力してください</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Create items with fully customised fields</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">完全にカスタマイズされたフィールドでアイテムを作成</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">安全なパスワードの生成</string>
   <!-- Create Login -->
   <string name="field_email_title">メールアドレス</string>
@@ -221,4 +221,24 @@
   <string name="suffix_subtitle_premium_domain">プレミアムドメイン</string>
   <string name="suffix_subtitle_public_domain">公開ドメイン</string>
   <string name="suffix_subtitle_private_domain">あなたのドメイン</string>
+  <!-- Templates -->
+  <string name="template_item_api_credential">API 資格情報</string>
+  <string name="template_item_database">データベース</string>
+  <string name="template_item_server">サーバー</string>
+  <string name="template_item_software_license">ソフトウェアライセンス</string>
+  <string name="template_item_ssh_key">SSHキー</string>
+  <string name="template_item_wifi_network">Wi-Fiネットワーク</string>
+  <string name="template_item_bank_account">銀行口座</string>
+  <string name="template_item_crypto_wallet">暗号通貨ウォレット</string>
+  <string name="template_item_driver_license">運転免許証</string>
+  <string name="template_item_medical_record">医療記録</string>
+  <string name="template_item_membership">メンバーシップ</string>
+  <string name="template_item_passport">パスポート</string>
+  <string name="template_item_reward_program">報酬プログラム</string>
+  <string name="template_item_social_security_number">社会保障番号</string>
+  <string name="template_header_technology">テクノロジー</string>
+  <string name="template_header_finance">ファイナンス</string>
+  <string name="template_header_personal">ファイナンス</string>
+  <string name="button_start_from_scratch">ゼロから始める</string>
+  <string name="select_template_title">カスタムアイテム</string>
 </resources>

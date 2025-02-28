@@ -34,7 +34,7 @@
   <string name="home_snackbar_note_moved_to_trash">메모를 휴지통으로 이동했습니다</string>
   <string name="home_snackbar_credit_card_moved_to_trash">신용 카드를 휴지통으로 이동했습니다</string>
   <string name="home_snackbar_identity_moved_to_trash">신원을 휴지통으로 이동했습니다</string>
-  <string name="home_snackbar_custom_moved_to_trash">Custom item moved to trash</string>
+  <string name="home_snackbar_custom_moved_to_trash">휴지통으로 이동된 항목 사용자화</string>
   <string name="home_snackbar_move_to_trash_error">항목을 휴지통으로 이동하는데 실패했습니다.</string>
   <string name="home_snackbar_items_move_to_trash_success">항목을 휴지통으로 이동했습니다.</string>
   <string name="home_snackbar_items_move_to_trash_error">항목을 휴지통으로 이동하는데 실패했습니다.</string>

@@ -19,7 +19,7 @@
   <string name="home_empty_shared_items_with_me_subtitle">Nenhum item foi compartilhado com você.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Nenhuns itens foram compartilhados por você.</string>
   <string name="home_empty_no_vaults_title">Você não tem nenhum cofre</string>
-  <string name="home_empty_no_vaults_subtitle">Please, contact your organization support team.</string>
+  <string name="home_empty_no_vaults_subtitle">Entre em contato com a equipe de suporte da sua organização.</string>
   <string name="home_empty_read_only_vault_title">O cofre está vazio</string>
   <string name="home_empty_read_only_vault_subtitle">Você não pode adicionar itens em um cofre somente leitura.</string>
   <string name="home_empty_vault_create_login">Criar um início de sessão</string>
@@ -34,7 +34,7 @@
   <string name="home_snackbar_note_moved_to_trash">Nota movida para a lixeira</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Cartão de crédito movido para a lixeira</string>
   <string name="home_snackbar_identity_moved_to_trash">Identidade movida para a lixeira</string>
-  <string name="home_snackbar_custom_moved_to_trash">Custom item moved to trash</string>
+  <string name="home_snackbar_custom_moved_to_trash">O item personalizado foi movido para a lixeira.</string>
   <string name="home_snackbar_move_to_trash_error">Não foi possível mover o item para a lixeira</string>
   <string name="home_snackbar_items_move_to_trash_success">Itens movidos para a lixeira</string>
   <string name="home_snackbar_items_move_to_trash_error">Não foi possível mover os itens para a lixeira</string>

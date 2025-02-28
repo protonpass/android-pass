@@ -34,7 +34,7 @@
   <string name="home_snackbar_note_moved_to_trash">メモがごみ箱に移動されました</string>
   <string name="home_snackbar_credit_card_moved_to_trash">クレジットカード情報がごみ箱に移動されました</string>
   <string name="home_snackbar_identity_moved_to_trash">ユーザー情報がゴミ箱に移動されました</string>
-  <string name="home_snackbar_custom_moved_to_trash">Custom item moved to trash</string>
+  <string name="home_snackbar_custom_moved_to_trash">カスタムアイテムをゴミ箱に移動しました</string>
   <string name="home_snackbar_move_to_trash_error">アイテムはゴミ箱に移動できませんでした</string>
   <string name="home_snackbar_items_move_to_trash_success">アイテムはごみ箱に移動されました</string>
   <string name="home_snackbar_items_move_to_trash_error">アイテムはゴミ箱に移動できませんでした</string>

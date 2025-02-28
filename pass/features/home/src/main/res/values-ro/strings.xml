@@ -34,7 +34,7 @@
   <string name="home_snackbar_note_moved_to_trash">Notița s-a mutat în gunoi.</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Cardul de plată s-a mutat în gunoi.</string>
   <string name="home_snackbar_identity_moved_to_trash">Identitatea fost mutată în gunoi.</string>
-  <string name="home_snackbar_custom_moved_to_trash">Custom item moved to trash</string>
+  <string name="home_snackbar_custom_moved_to_trash">Articolul personal a fost mutat în gunoi.</string>
   <string name="home_snackbar_move_to_trash_error">Articolul nu s-a putut muta în gunoi.</string>
   <string name="home_snackbar_items_move_to_trash_success">Articolele s-au mutat în gunoi.</string>
   <string name="home_snackbar_items_move_to_trash_error">Articolele nu s-au putut muta în gunoi.</string>

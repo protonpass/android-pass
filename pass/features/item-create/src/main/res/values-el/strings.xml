@@ -221,4 +221,24 @@
   <string name="suffix_subtitle_premium_domain">Premium τομέας</string>
   <string name="suffix_subtitle_public_domain">Δημόσιος τομέας</string>
   <string name="suffix_subtitle_private_domain">Ο τομέας σας</string>
+  <!-- Templates -->
+  <string name="template_item_api_credential">Διαπιστευτήρια API</string>
+  <string name="template_item_database">Βάση δεδομένων</string>
+  <string name="template_item_server">Διακομιστής</string>
+  <string name="template_item_software_license">Άδεια Χρήσης Λογισμικού</string>
+  <string name="template_item_ssh_key">Κλειδί SSH</string>
+  <string name="template_item_wifi_network">Δίκτυο WiFi</string>
+  <string name="template_item_bank_account">Τραπεζικός Λογαριασμός</string>
+  <string name="template_item_crypto_wallet">Crypto Wallet</string>
+  <string name="template_item_driver_license">Άδεια Οδήγησης</string>
+  <string name="template_item_medical_record">Ιατρικός Φάκελος</string>
+  <string name="template_item_membership">Ιδιότητα Μέλους</string>
+  <string name="template_item_passport">Διαβατήριο</string>
+  <string name="template_item_reward_program">Πρόγραμμα Επιβράβευσης</string>
+  <string name="template_item_social_security_number">ΑΜΚΑ</string>
+  <string name="template_header_technology">Τεχνολογία</string>
+  <string name="template_header_finance">Οικονομικά</string>
+  <string name="template_header_personal">Οικονομικά</string>
+  <string name="button_start_from_scratch">Ξεκινήστε από την αρχή</string>
+  <string name="select_template_title">Προσαρμοσμένο στοιχείο</string>
 </resources>

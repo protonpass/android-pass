@@ -10,13 +10,13 @@
   <string name="action_credit_card">Крэдытная картка</string>
   <string name="action_password">Пароль</string>
   <string name="action_identity">Ідэнтычнасць</string>
-  <string name="action_custom">Custom item</string>
+  <string name="action_custom">Карыстальніцкія элементы</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Дадайце запіс уваходу для праграм або сайтаў</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Атрымайце псеўданім электроннай пошты для выкарыстання ў новых праграмах</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Запішыце PIN, код або нататку для сябе</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Бяспечна захоўвайце сваю плацежную інфармацыю</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Запоўніце свае асабістыя даныя</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Create items with fully customised fields</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Стварыць элементы з палямі, якія можна цалкам наладзіць</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Згенерыруйце надзейны пароль</string>
   <!-- Create Login -->
   <string name="field_email_title">Адрас электроннай пошты</string>
@@ -221,4 +221,24 @@
   <string name="suffix_subtitle_premium_domain">Прэміяльны дамен</string>
   <string name="suffix_subtitle_public_domain">Публічны дамен</string>
   <string name="suffix_subtitle_private_domain">Ваш дамен</string>
+  <!-- Templates -->
+  <string name="template_item_api_credential">Уліковыя даныя API</string>
+  <string name="template_item_database">База даных</string>
+  <string name="template_item_server">Сервер</string>
+  <string name="template_item_software_license">Ліцэнзія ПЗ</string>
+  <string name="template_item_ssh_key">Ключ SSH</string>
+  <string name="template_item_wifi_network">Сетка Wi-Fi</string>
+  <string name="template_item_bank_account">Банкаўскі рахунак</string>
+  <string name="template_item_crypto_wallet">Крыптакашалёк</string>
+  <string name="template_item_driver_license">Пасведчанне кіроўцы</string>
+  <string name="template_item_medical_record">Медыцынская картка</string>
+  <string name="template_item_membership">Членства</string>
+  <string name="template_item_passport">Пашпарт</string>
+  <string name="template_item_reward_program">Праграмы ўзнагароджання</string>
+  <string name="template_item_social_security_number">Нумар сацыяльнага страхавання</string>
+  <string name="template_header_technology">Тэхналогіі</string>
+  <string name="template_header_finance">Фінансы</string>
+  <string name="template_header_personal">Фінансы</string>
+  <string name="button_start_from_scratch">Пачаць з нуля</string>
+  <string name="select_template_title">Карыстальніцкія элементы</string>
 </resources>

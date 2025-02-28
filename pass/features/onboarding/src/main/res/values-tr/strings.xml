@@ -2,13 +2,13 @@
 <resources>
   <string name="on_boarding_autofill_content">Proton Pass oturum açma bilgilerinizi sizin için doldurabilir. Yazmanız veya kopyalayıp yapıştırmanız gerekmez.</string>
   <string name="on_boarding_autofill_title">Uygulamalarda anında oturum açın</string>
-  <string name="on_boarding_autofill_button">Proton Pass ile otomatik doldur</string>
+  <string name="on_boarding_autofill_button">Proton ile otomatik doldur</string>
   <string name="on_boarding_fingerprint_content">Yalnızca sizin erişebilmeniz için Proton Pass kilidini parmak izinizle açılacak şekilde ayarlayın.</string>
   <string name="on_boarding_fingerprint_title">En önemli verilerinizi koruyun</string>
-  <string name="on_boarding_fingerprint_button">Parmak izi kilidini kullanıma al</string>
+  <string name="on_boarding_fingerprint_button">Parmak iziyle aç</string>
   <string name="on_boarding_last_page_content">Gerçek e-posta adresinizi paylaşmayın. Onun yerine, Proton Pass takma adlarıyla e-posta adresinizi gizleyin.</string>
   <string name="on_boarding_last_page_title">Gelen kutunuza ulaşacak e-postaları belirleyin</string>
-  <string name="on_boarding_last_page_button">Proton Pass kullanmaya başlayın</string>
+  <string name="on_boarding_last_page_button">Proton Pass ile başla</string>
   <string name="on_boarding_skip">Şimdi değil</string>
   <string name="on_boarding_tutorial">Proton Pass kullanımı ile ilgili kısa bir videoyu izleyin</string>
   <string name="on_boarding_pending_invite_content">Güvenlik nedeniyle erişiminizin onaylanması gerekiyor.</string>

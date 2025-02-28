@@ -56,7 +56,7 @@
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Reusada %1$d veces</string>
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">2FA inactiva</string>
-  <string name="security_center_missing_tfa_top_bar_subtitle">Para añadir seguridad, configure la autenticación de dos factores en las siguientes cuentas.</string>
+  <string name="security_center_missing_tfa_top_bar_subtitle">Para agregar seguridad, configure la autenticación de dos factores en las siguientes cuentas.</string>
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">Elementos excluidos</string>
   <!-- Dark web monitor -->
@@ -64,8 +64,8 @@
   <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Última revisión: %s</string>
   <string name="security_center_dark_web_monitor_custom_emails_title">Direcciones de correo personalizadas</string>
   <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">No verificada</string>
-  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Añadir dirección de correo personalizada</string>
-  <string name="security_center_dark_web_monitor_custom_emails_add_button">Añadir</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Agregar dirección de correo personalizada</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_button">Agregar</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
     <item quantity="one">Usada en %d inicio de sesión</item>
     <item quantity="other">Usada en %d inicios de sesión</item>
@@ -99,7 +99,7 @@
   <string name="security_center_custom_email_invalid_address">Dirección de correo inválida</string>
   <string name="security_center_custom_email_continue">Continuar</string>
   <string name="security_center_custom_email_already_verified">Correo ya verificado</string>
-  <string name="security_center_custom_email_error_adding">Error al añadir la dirección de correo electrónico</string>
+  <string name="security_center_custom_email_error_adding">Error al agregar la dirección de correo electrónico</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_email_title">Confirme el correo electrónico</string>
   <string name="security_center_verify_email_subtitle">Hemos enviado un código de verificación a %s. Ingrese el código abajo:</string>
@@ -163,6 +163,6 @@
   <string name="dark_web_help_dialog_title">Seguridad de datos</string>
   <string name="dark_web_help_dialog_subtitle">Proton nunca comparte sus datos con terceros. Todos los datos provienen de búsquedas de la presencia de dominios de Proton en la dark web.</string>
   <!-- Cannot add custom emails -->
-  <string name="dark_web_cannot_add_custom_emails_dialog_title">No se puede añadir un correo electrónico personalizado.</string>
+  <string name="dark_web_cannot_add_custom_emails_dialog_title">No se puede agregar un correo electrónico personalizado.</string>
   <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Alcanzó el límite de correos electrónicos personalizados.</string>
 </resources>

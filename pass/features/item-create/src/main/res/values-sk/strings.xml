@@ -221,4 +221,24 @@
   <string name="suffix_subtitle_premium_domain">Prémiová doména</string>
   <string name="suffix_subtitle_public_domain">Verejná doména</string>
   <string name="suffix_subtitle_private_domain">Vaša doména</string>
+  <!-- Templates -->
+  <string name="template_item_api_credential">API poverenie</string>
+  <string name="template_item_database">Databáza</string>
+  <string name="template_item_server">Server</string>
+  <string name="template_item_software_license">Softvérová licencia</string>
+  <string name="template_item_ssh_key">SSH kľúč</string>
+  <string name="template_item_wifi_network">WiFi sieť</string>
+  <string name="template_item_bank_account">Bankový účet</string>
+  <string name="template_item_crypto_wallet">Krypto peňaženka</string>
+  <string name="template_item_driver_license">Vodičský preukaz</string>
+  <string name="template_item_medical_record">Zdravotný záznam</string>
+  <string name="template_item_membership">Členstvo</string>
+  <string name="template_item_passport">Cestovný pas</string>
+  <string name="template_item_reward_program">Vernostný program</string>
+  <string name="template_item_social_security_number">Číslo poistenca sociálnej poisťovne</string>
+  <string name="template_header_technology">Technológia</string>
+  <string name="template_header_finance">Financie</string>
+  <string name="template_header_personal">Financie</string>
+  <string name="button_start_from_scratch">Začať úplne od začiatku</string>
+  <string name="select_template_title">Vlastná položka</string>
 </resources>

@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.itemcreate.custom.createupdate.presentation
 
+import android.content.Context
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -29,6 +30,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toItemContents
@@ -40,12 +42,15 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
@@ -58,11 +63,15 @@ class UpdateCustomItemViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
-    attachmentsHandler: AttachmentsHandler,
+    private val attachmentsHandler: AttachmentsHandler,
+    userPreferencesRepository: UserPreferencesRepository,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     customFieldDraftRepository: CustomFieldDraftRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCustomItemViewModel(
     attachmentsHandler = attachmentsHandler,
+    userPreferencesRepository = userPreferencesRepository,
+    featureFlagsRepository = featureFlagsRepository,
     encryptionContextProvider = encryptionContextProvider,
     customFieldDraftRepository = customFieldDraftRepository,
     savedStateHandleProvider = savedStateHandleProvider
@@ -77,7 +86,9 @@ class UpdateCustomItemViewModel @Inject constructor(
 
     private var receivedItem: Option<Item> = None
 
-    init { processIntent(UpdateSpecificIntent.LoadInitialData) }
+    init {
+        processIntent(UpdateSpecificIntent.LoadInitialData)
+    }
 
     val state = observeSharedState()
         .map { CustomItemState.UpdateCustomItemState(navShareId.some(), it) }
@@ -99,6 +110,8 @@ class UpdateCustomItemViewModel @Inject constructor(
         when (intent) {
             is UpdateSpecificIntent.SubmitUpdate -> onSubmitUpdate()
             is UpdateSpecificIntent.LoadInitialData -> onLoadInitialData()
+            is UpdateSpecificIntent.OnOpenAttachment ->
+                onOpenAttachment(intent.contextHolder, intent.attachment)
         }
     }
 
@@ -112,8 +125,6 @@ class UpdateCustomItemViewModel @Inject constructor(
                     ?: throw IllegalStateException("User id is null")
                 val item = receivedItem.value()
                     ?: throw IllegalStateException("Item is null")
-                val form = itemFormState
-                val content = itemFormState.toItemContents()
                 updateItem(
                     userId = userId,
                     shareId = navShareId,
@@ -160,6 +171,15 @@ class UpdateCustomItemViewModel @Inject constructor(
         itemFormState = ItemFormState(itemContents)
     }
 
+    private fun onOpenAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
+        viewModelScope.launch {
+            attachmentsHandler.openAttachment(
+                contextHolder = contextHolder,
+                attachment = attachment
+            )
+        }
+    }
+
     companion object {
         private const val TAG = "UpdateCustomItemViewModel"
     }
@@ -168,5 +188,10 @@ class UpdateCustomItemViewModel @Inject constructor(
 sealed interface UpdateSpecificIntent : BaseItemFormIntent {
     data object SubmitUpdate : UpdateSpecificIntent
     data object LoadInitialData : UpdateSpecificIntent
+
+    data class OnOpenAttachment(
+        val contextHolder: ClassHolder<Context>,
+        val attachment: Attachment
+    ) : UpdateSpecificIntent
 }
 

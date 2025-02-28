@@ -10,13 +10,13 @@
   <string name="action_credit_card">საკრედიტო ბარათი</string>
   <string name="action_password">პაროლი</string>
   <string name="action_identity">იდენტობა</string>
-  <string name="action_custom">Custom item</string>
+  <string name="action_custom">მომხმარებლის ელემენტი</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">აპისთვის ან საიტისთვის შესვლის დეტალების დამატება</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">მიიღეთ ელფოსტის ფსევდონიმი ახალ აპებზე გამოსაყენებლად</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">PIN კოდი სადმე საიმედო ადგილას ჩაიწერეთ</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">უსაფრთხოდ შეინახეთ თქვენი გადახდის ინფორმაცია</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">შეავსეთ თქვენი პირადი მონაცემები</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Create items with fully customised fields</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">შექმენით ელემენტები სრულად მორგებული ველებით</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">უსაფრთხო პაროლის გენერირება</string>
   <!-- Create Login -->
   <string name="field_email_title">ელფოსტის მისამართი</string>
@@ -221,4 +221,24 @@
   <string name="suffix_subtitle_premium_domain">ფასიანი დომენი</string>
   <string name="suffix_subtitle_public_domain">საჯარო დომენი</string>
   <string name="suffix_subtitle_private_domain">თქვენი დომენი</string>
+  <!-- Templates -->
+  <string name="template_item_api_credential">API-ის ავტორიზაციის დეტალები</string>
+  <string name="template_item_database">მონაცემთა ბაზა</string>
+  <string name="template_item_server">სერვერი</string>
+  <string name="template_item_software_license">პროგრამული უზრუნველყოფის ლიცენზია</string>
+  <string name="template_item_ssh_key">SSH გასაღები</string>
+  <string name="template_item_wifi_network">WiFi ქსელი</string>
+  <string name="template_item_bank_account">საბანკო ანგარიში</string>
+  <string name="template_item_crypto_wallet">კრიპტო საფულე</string>
+  <string name="template_item_driver_license">მართვის მოწმობა</string>
+  <string name="template_item_medical_record">სამედიცინო ჩანაწერი</string>
+  <string name="template_item_membership">წევრობა</string>
+  <string name="template_item_passport">პასპორტი</string>
+  <string name="template_item_reward_program">დაჯილდოების პროგრამა</string>
+  <string name="template_item_social_security_number">სოციალური უსაფრთხოების ნომერი</string>
+  <string name="template_header_technology">ტექნოლოგია</string>
+  <string name="template_header_finance">ფინანსები</string>
+  <string name="template_header_personal">ფინანსები</string>
+  <string name="button_start_from_scratch">ნულიდან დაწყება</string>
+  <string name="select_template_title">მომხმარებლის ელემენტი</string>
 </resources>

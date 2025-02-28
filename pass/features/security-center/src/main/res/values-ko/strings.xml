@@ -109,7 +109,7 @@
   <string name="security_center_verify_report_title_detected">침해 사례가 다음에서 감지됨:</string>
   <string name="security_center_verify_report_title_none">다음에서 침해 사례가 감지되지 않음:</string>
   <!-- Email breach report -->
-  <string name="security_center_email_report_used_in_header">다음에서 사용됨:</string>
+  <string name="security_center_email_report_used_in_header">다음 항목에서 사용됨:</string>
   <string name="security_center_email_report_breaches_header">유출</string>
   <string name="security_center_email_report_resolved_breaches_header">해결된 유출</string>
   <string name="security_center_email_report_mark_as_resolved">해결됨으로 표시</string>
@@ -123,7 +123,7 @@
   <string name="security_center_report_detail_details">세부 사항</string>
   <string name="security_center_report_detail_email_address">이메일 주소</string>
   <string name="security_center_report_detail_password">비밀번호</string>
-  <string name="security_center_report_detail_recommended_actions">조치 권장</string>
+  <string name="security_center_report_detail_recommended_actions">권장하는 조치</string>
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">노출된 정보가 %s(에)서 유출되었습니다. 사용자의 계정 정보는 안전하고 암호화 상태로 유지됩니다.</string>
   <string name="security_center_report_detail_learn_more">더 알아보기</string>
   <string name="security_center_report_detail_snackbar_error">침해 사례 정보를 불러올 수 없음</string>

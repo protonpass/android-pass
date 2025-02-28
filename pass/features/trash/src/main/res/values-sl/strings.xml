@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="trash_action_restore">Obnovi</string>
   <string name="bottomsheet_delete_permanently">Trajno izbriši</string>
   <string name="alert_confirm_delete_item_dialog_title">Trajno izbriši?</string>
   <string name="alert_confirm_delete_item_dialog_message">To dejanje je nepreklicno</string>

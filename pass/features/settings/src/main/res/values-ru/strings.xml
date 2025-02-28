@@ -42,6 +42,6 @@
   <string name="clipboard_option_clear_clipboard_never">Никогда</string>
   <string name="clipboard_option_clear_clipboard_after_60_seconds">Через 1 минуту</string>
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Через 3 минуты</string>
-  <string name="settings_use_digital_asset_link_preference_title">Enable Digital Asset Links</string>
-  <string name="settings_use_digital_asset_link_preference_subtitle">Establishes website ownership verification between an Android app and a website.</string>
+  <string name="settings_use_digital_asset_link_preference_title">Включить ссылки на цифровые активы</string>
+  <string name="settings_use_digital_asset_link_preference_subtitle">Обеспечивает проверку владения веб-сайтом между приложением для Android и веб-сайтом.</string>
 </resources>

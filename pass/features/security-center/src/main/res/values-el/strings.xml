@@ -34,7 +34,7 @@
   <string name="security_center_home_row_reused_passwords_subtitle">Δημιουργήστε μοναδικούς κωδικούς πρόσβασης</string>
   <string name="security_center_home_row_missing_tfa_title">Απενεργοποιημένο 2FA</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Ρυθμίστε το 2FA για περισσότερη ασφάλεια</string>
-  <string name="security_center_home_row_excludes_items_title">Εξαιρείτούνται από την παρακολούθηση</string>
+  <string name="security_center_home_row_excludes_items_title">Εξαιρούνται από την παρακολούθηση</string>
   <string name="security_center_home_row_excludes_items_subtitle">Αυτά τα στοιχεία παραμένουν σε κίνδυνο</string>
   <string name="security_center_get_breaches_error">Δεν ήταν δυνατή η φόρτωση παραβιάσεων</string>
   <string name="security_center_home_section_password_health">Υγεία κωδικού πρόσβασης</string>
@@ -130,7 +130,7 @@
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">Οι εκτεθειμένες πληροφορίες διέρρευσαν από το %s. Οι πληροφορίες του λογαριασμού Proton παραμένουν ασφαλείς και κρυπτογραφημένες.</string>
   <string name="security_center_report_detail_learn_more">Μάθετε περισσότερα</string>
   <string name="security_center_report_detail_snackbar_error">Δεν ήταν δυνατή η φόρτωση λεπτομερειών παραβίασης</string>
-  <string name="security_center_report_detail_excluded_from_monitoring">Εξαιρείτούνται από την παρακολούθηση</string>
+  <string name="security_center_report_detail_excluded_from_monitoring">Εξαιρούνται από την παρακολούθηση</string>
   <string name="security_center_report_resolve_confirmation_dialog_title">Επίλυση όλων των παραβιάσεων;</string>
   <string name="security_center_report_resolve_confirmation_dialog_message">Όλες οι τρέχουσες παραβιάσεις θα επισημανθούν ως επιλυμένες. Σε περίπτωση μελλοντικών παραβιάσεων δεδομένων, θα ειδοποιηθείτε.</string>
   <!-- Proton list -->
@@ -153,7 +153,7 @@
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">Το προσαρμοσμένο ηλεκτρονικό ταχυδρομείο καταργήθηκε</string>
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Hide-my-email ψευδώνυμα</string>
-  <string name="security_center_alias_list_excluded_from_monitoring">Εξαιρείτούνται από την παρακολούθηση</string>
+  <string name="security_center_alias_list_excluded_from_monitoring">Εξαιρούνται από την παρακολούθηση</string>
   <string name="security_center_alias_list_error">Δεν ήταν δυνατή η φόρτωση διευθύνσεων</string>
   <string name="security_center_alias_list_included_in_monitoring">Ενεργοποιήστε την παρακολούθηση για να ειδοποιηθείτε εάν τα ψευδώνυμα Hide-my-email σας διέρρευσαν.</string>
   <string name="security_center_alias_list_monitored">Παρακολουθούνται</string>

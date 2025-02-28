@@ -42,7 +42,7 @@
     <item quantity="other">Otros %d inicios de sesión usan la misma contraseña.</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Configure la 2FA para más seguridad</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Este servicio ofrece 2FA. Actívelo para añadir seguridad a la cuenta.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Este servicio ofrece 2FA. Actívelo para agregar seguridad a la cuenta.</string>
   <string name="login_item_reused_passwords_subtitle">Elementos de las bóvedas que usan esta contraseña.</string>
   <string name="field_email">Dirección de correo electrónico</string>
   <string name="field_username">Nombre de usuario</string>

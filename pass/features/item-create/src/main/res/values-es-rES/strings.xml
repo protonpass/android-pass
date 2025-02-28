@@ -212,7 +212,7 @@
   <string name="banner_advanced_options_title">¿Lo sabías?</string>
   <string name="banner_advanced_options_subtitle">Pulsa el ícono de engranaje para personalizar el alias como desees.</string>
   <string name="banner_custom_domain_title">¿Lo sabías?</string>
-  <string name="banner_custom_domain_subtitle">Al agregar tu dominio, puedes crear alias como hola@mi-dominio.es.</string>
+  <string name="banner_custom_domain_subtitle">Al añadir tu dominio, puedes crear alias como hola@mi-dominio.es.</string>
   <string name="banner_custom_domain_button">Añadir un dominio</string>
   <string name="banner_mailbox_title">¿Lo sabías?</string>
   <string name="banner_mailbox_subtitle">Comparte aliases con otros añadiendo su bandeja de entrada como buzón adicional.</string>
@@ -221,4 +221,24 @@
   <string name="suffix_subtitle_premium_domain">Dominio premium</string>
   <string name="suffix_subtitle_public_domain">Dominio público</string>
   <string name="suffix_subtitle_private_domain">Tu dominio</string>
+  <!-- Templates -->
+  <string name="template_item_api_credential">Credenciales de API</string>
+  <string name="template_item_database">Base de datos</string>
+  <string name="template_item_server">Servidor</string>
+  <string name="template_item_software_license">Licencia de software</string>
+  <string name="template_item_ssh_key">Clave SSH</string>
+  <string name="template_item_wifi_network">Red WiFi</string>
+  <string name="template_item_bank_account">Cuenta bancaria</string>
+  <string name="template_item_crypto_wallet">Cartera de criptomonedas</string>
+  <string name="template_item_driver_license">Permiso de conducir</string>
+  <string name="template_item_medical_record">Historial médico</string>
+  <string name="template_item_membership">Suscripción</string>
+  <string name="template_item_passport">Pasaporte</string>
+  <string name="template_item_reward_program">Programa de recompensas</string>
+  <string name="template_item_social_security_number">Número de seguridad social</string>
+  <string name="template_header_technology">Tecnología</string>
+  <string name="template_header_finance">Finanzas</string>
+  <string name="template_header_personal">Finanzas</string>
+  <string name="button_start_from_scratch">Empezar desde cero</string>
+  <string name="select_template_title">Elemento personalizado</string>
 </resources>

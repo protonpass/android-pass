@@ -16,7 +16,7 @@
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Skrible ned en PIN-kode, kode eller notat til deg selv.</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Lagre betalingsinformasjonen din på en sikker måte.</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Fyll ut personopplysningene dine</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Opprette elementer med fullstendig tilpassede felt</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Opprett elementer med fullstendig tilpassede felt</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Generer et sikkert passord</string>
   <!-- Create Login -->
   <string name="field_email_title">E-postadresse</string>
@@ -221,4 +221,24 @@
   <string name="suffix_subtitle_premium_domain">Premium-domene</string>
   <string name="suffix_subtitle_public_domain">Offentlig domene</string>
   <string name="suffix_subtitle_private_domain">Ditt domene</string>
+  <!-- Templates -->
+  <string name="template_item_api_credential">API-identifikator</string>
+  <string name="template_item_database">Database</string>
+  <string name="template_item_server">Tjener</string>
+  <string name="template_item_software_license">Programvarelisens</string>
+  <string name="template_item_ssh_key">SSH-nøkkel</string>
+  <string name="template_item_wifi_network">WiFi-nettverk</string>
+  <string name="template_item_bank_account">Bankkonto</string>
+  <string name="template_item_crypto_wallet">Krypto-wallet</string>
+  <string name="template_item_driver_license">Førerkort</string>
+  <string name="template_item_medical_record">Medisinsk journal</string>
+  <string name="template_item_membership">Medlemskap</string>
+  <string name="template_item_passport">Pass</string>
+  <string name="template_item_reward_program">Belønningsprogram</string>
+  <string name="template_item_social_security_number">Personnummer</string>
+  <string name="template_header_technology">Teknologi</string>
+  <string name="template_header_finance">Finans</string>
+  <string name="template_header_personal">Finans</string>
+  <string name="button_start_from_scratch">Start fra begynnelsen</string>
+  <string name="select_template_title">Tilpasset element</string>
 </resources>

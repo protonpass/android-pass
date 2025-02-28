@@ -41,7 +41,10 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
@@ -54,6 +57,8 @@ import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnCustomFieldChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnTitleChanged
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
@@ -95,6 +100,8 @@ sealed interface BaseCustomItemCommonIntent : BaseItemFormIntent {
 }
 
 abstract class BaseCustomItemViewModel(
+    private val linkAttachmentsToItem: LinkAttachmentsToItem,
+    private val snackbarDispatcher: SnackbarDispatcher,
     private val customFieldDraftRepository: CustomFieldDraftRepository,
     private val attachmentsHandler: AttachmentsHandler,
     private val userPreferencesRepository: UserPreferencesRepository,
@@ -447,7 +454,21 @@ abstract class BaseCustomItemViewModel(
         }
     }
 
-    fun observeSharedState(): Flow<ItemSharedUiState> = combineN(
+    protected suspend fun linkAttachments(
+        shareId: ShareId,
+        itemId: ItemId,
+        revision: Long
+    ) {
+        runCatching {
+            linkAttachmentsToItem(shareId, itemId, revision)
+        }.onFailure {
+            PassLogger.w(TAG, "Link attachment error")
+            PassLogger.w(TAG, it)
+            snackbarDispatcher(CustomItemSnackbarMessage.ItemLinkAttachmentsError)
+        }
+    }
+
+    protected fun observeSharedState(): Flow<ItemSharedUiState> = combineN(
         isLoadingState,
         hasUserEditedContentState,
         validationErrorsState,
@@ -469,5 +490,9 @@ abstract class BaseCustomItemViewModel(
             isFileAttachmentsEnabled = isFileAttachmentsEnabled,
             attachmentsState = attachmentsState
         )
+    }
+
+    companion object {
+        private const val TAG = "BaseCustomItemViewModel"
     }
 }

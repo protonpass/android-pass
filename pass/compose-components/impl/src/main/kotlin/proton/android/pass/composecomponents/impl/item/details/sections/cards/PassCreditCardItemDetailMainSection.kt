@@ -130,7 +130,7 @@ internal fun PassCreditCardItemDetailMainSection(
                             isVisible = isVisible,
                             hiddenState = cvv,
                             fieldType = ItemDetailsFieldType.Hidden.Cvv,
-                            fieldSection = ItemCustomFieldSection.Login
+                            fieldSection = ItemCustomFieldSection.CustomField
                         )
                     )
                 }
@@ -153,7 +153,7 @@ internal fun PassCreditCardItemDetailMainSection(
                             isVisible = isVisible,
                             hiddenState = pin,
                             fieldType = ItemDetailsFieldType.Hidden.Pin,
-                            fieldSection = ItemCustomFieldSection.Login
+                            fieldSection = ItemCustomFieldSection.CustomField
                         )
                     )
                 }

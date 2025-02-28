@@ -309,7 +309,9 @@ class IdentityActionsProviderImpl @Inject constructor(
             .delete<CustomExtraField>(DRAFT_IDENTITY_CUSTOM_FIELD_KEY)
             .value()
             ?: return
-        val field = createCustomField(type, label, encryptionContextProvider)
+        val field = encryptionContextProvider.withEncryptionContext {
+            createCustomField(type, label, this)
+        }
         identityItemFormMutableState = when (customExtraField) {
             is AddressCustomField -> {
                 val addressDetails = identityItemFormMutableState.uiAddressDetails

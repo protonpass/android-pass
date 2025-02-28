@@ -18,12 +18,14 @@
 
 package proton.android.pass.features.itemcreate.custom.createupdate.presentation
 
+import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -36,23 +38,30 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
+import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
+import proton.android.pass.features.itemcreate.custom.createupdate.navigation.TemplateTypeNavArgId
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateSpecificIntent.OnVaultSelected
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateSpecificIntent.PrefillTemplate
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateSpecificIntent.SubmitCreate
+import proton.android.pass.features.itemcreate.custom.shared.TemplateType
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -65,10 +74,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CreateCustomItemViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val createItem: CreateItem,
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val snackbarDispatcher: SnackbarDispatcher,
+    private val encryptionContextProvider: EncryptionContextProvider,
     linkAttachmentsToItem: LinkAttachmentsToItem,
     attachmentsHandler: AttachmentsHandler,
     userPreferencesRepository: UserPreferencesRepository,
@@ -76,7 +87,6 @@ class CreateCustomItemViewModel @Inject constructor(
     observeVaults: ObserveVaultsWithItemCount,
     observeDefaultVault: ObserveDefaultVault,
     customFieldDraftRepository: CustomFieldDraftRepository,
-    encryptionContextProvider: EncryptionContextProvider,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCustomItemViewModel(
     linkAttachmentsToItem = linkAttachmentsToItem,
@@ -93,6 +103,12 @@ class CreateCustomItemViewModel @Inject constructor(
         savedStateHandleProvider.get().get<String>(CommonOptionalNavArgId.ShareId.key)
             .toOption()
             .map(::ShareId)
+
+    private val navTemplateType: Option<TemplateType> =
+        savedStateHandleProvider.get().require<Int>(TemplateTypeNavArgId.key)
+            .let { if (it > 0) TemplateType.fromId(it).some() else None }
+
+    init { processIntent(PrefillTemplate) }
 
     @OptIn(SavedStateHandleSaveableApi::class)
     private var selectedShareIdMutableState: Option<ShareId> by savedStateHandleProvider.get()
@@ -146,7 +162,26 @@ class CreateCustomItemViewModel @Inject constructor(
         when (intent) {
             is SubmitCreate -> onSubmitCreate(intent.shareId)
             is OnVaultSelected -> onVaultSelected(intent.shareId)
+            PrefillTemplate -> onPrefillTemplate()
         }
+    }
+
+    private fun onPrefillTemplate() {
+        val templateType = navTemplateType.value() ?: return
+        val fields = encryptionContextProvider.withEncryptionContext {
+            templateType.fields.map {
+                UICustomFieldContent.createCustomField(
+                    type = if (it.isHidden) CustomFieldType.Hidden else CustomFieldType.Text,
+                    label = context.getString(it.nameResId),
+                    encryptionContext = this
+                )
+            }
+        }
+        itemFormState = itemFormState.copy(
+            customFieldList = itemFormState.customFieldList.toMutableList().apply {
+                addAll(fields)
+            }
+        )
     }
 
     private fun onSubmitCreate(shareId: ShareId) {
@@ -185,6 +220,8 @@ class CreateCustomItemViewModel @Inject constructor(
 }
 
 sealed interface CreateSpecificIntent : BaseItemFormIntent {
+    data object PrefillTemplate : CreateSpecificIntent
+
     @JvmInline
     value class SubmitCreate(val shareId: ShareId) : CreateSpecificIntent
 

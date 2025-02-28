@@ -254,7 +254,9 @@ abstract class BaseCustomItemViewModel(
 
     private fun onFieldAdded(event: DraftFormFieldEvent.FieldAdded) {
         val (sectionIndex, label, type) = event
-        val field = createCustomField(type, label, encryptionContextProvider)
+        val field = encryptionContextProvider.withEncryptionContext {
+            createCustomField(type, label, this)
+        }
         when (sectionIndex) {
             is Some -> {
                 val section = itemFormState.sectionList[sectionIndex.value]

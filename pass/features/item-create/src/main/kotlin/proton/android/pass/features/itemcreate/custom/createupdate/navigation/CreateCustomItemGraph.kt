@@ -62,9 +62,7 @@ object CreateCustomItemNavItem : NavItem(
         if (shareId is Some) {
             map[CommonOptionalNavArgId.ShareId.key] = shareId.value.id
         }
-        if (templateType is Some) {
-            map[TemplateTypeNavArgId.key] = templateType.value.id
-        }
+        map[TemplateTypeNavArgId.key] = templateType.value()?.id ?: -1
         val path = map.toPath()
         append(path)
     }

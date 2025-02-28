@@ -226,6 +226,44 @@ sealed interface ItemDetailState {
     }
 
     @Stable
+    data class Custom(
+        override val itemContents: ItemContents.Custom,
+        override val itemId: ItemId,
+        override val shareId: ShareId,
+        override val isItemPinned: Boolean,
+        override val itemShare: Share,
+        override val itemCreatedAt: Instant,
+        override val itemModifiedAt: Instant,
+        override val itemLastAutofillAtOption: Option<Instant>,
+        override val itemRevision: Long,
+        override val itemState: ItemState,
+        override val itemDiffs: ItemDiffs.Custom,
+        override val itemShareCount: Int,
+        override val attachmentsState: AttachmentsState
+    ) : ItemDetailState {
+
+        override val itemCategory: ItemCategory = ItemCategory.Custom
+
+        override fun update(itemContents: ItemContents, itemDiffs: ItemDiffs): ItemDetailState = when {
+            itemContents is ItemContents.Custom && itemDiffs is ItemDiffs.Custom -> this.copy(
+                itemContents = itemContents,
+                itemDiffs = itemDiffs
+            )
+
+            itemContents is ItemContents.Custom -> this.copy(
+                itemContents = itemContents
+            )
+
+            itemDiffs is ItemDiffs.Custom -> this.copy(
+                itemDiffs = itemDiffs
+            )
+
+            else -> this
+        }
+
+    }
+
+    @Stable
     data class Note(
         override val itemContents: ItemContents.Note,
         override val itemId: ItemId,

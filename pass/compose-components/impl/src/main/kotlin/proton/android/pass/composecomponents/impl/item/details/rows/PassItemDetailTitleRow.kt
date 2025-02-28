@@ -38,6 +38,7 @@ import proton.android.pass.composecomponents.impl.item.details.titles.PassItemDe
 import proton.android.pass.composecomponents.impl.item.details.titles.PassItemDetailTitle
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
+import proton.android.pass.composecomponents.impl.item.icon.CustomIcon
 import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
@@ -178,6 +179,27 @@ internal fun PassItemDetailTitleRow(
                         }
                     )
                 }
+            }
+        }
+
+        is ItemDetailState.Custom -> {
+            ItemDetailTitleRow(
+                modifier = modifier,
+                title = itemContents.title,
+                isPinned = isItemPinned,
+                itemColors = itemColors,
+                share = itemShare,
+                itemDiffType = itemDetailState.itemDiffs.title,
+                onSharedVaultClick = { sharedVaultId ->
+                    PassItemDetailsUiEvent.OnSharedVaultClick(
+                        sharedVaultId = sharedVaultId
+                    ).also(onEvent)
+                }
+            ) {
+                CustomIcon(
+                    size = 60,
+                    shape = PassTheme.shapes.squircleMediumLargeShape
+                )
             }
         }
 

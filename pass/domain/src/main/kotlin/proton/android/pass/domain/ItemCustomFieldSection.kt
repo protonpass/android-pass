@@ -20,7 +20,7 @@ package proton.android.pass.domain
 
 sealed interface ItemCustomFieldSection {
 
-    data object Login : ItemCustomFieldSection
+    data object CustomField : ItemCustomFieldSection
 
     sealed interface Identity : ItemCustomFieldSection {
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="trash_action_restore">Återställ</string>
   <string name="bottomsheet_delete_permanently">Ta bort permanent</string>
   <string name="alert_confirm_delete_item_dialog_title">Ta bort permanent?</string>
   <string name="alert_confirm_delete_item_dialog_message">Denna åtgärd är oåterkallelig.</string>

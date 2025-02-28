@@ -37,8 +37,8 @@
   </plurals>
   <string name="sharing_member_count_header">Участники</string>
   <string name="shared_via_title">Совместное использование через</string>
-  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Item sharing: %s</string>
-  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Vault sharing: %s</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Элементов в общем доступе: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Хранилищ в общем доступе: %s</string>
   <string name="share_with_title">Поделиться с</string>
   <string name="share_with_email_hint">Адрес эл. почты</string>
   <string name="share_with_email_error">Недействительный адрес эл. почты</string>
@@ -60,9 +60,9 @@
   <string name="sharing_snackbar_invite_reject_error">Ошибка при отклонении приглашения</string>
   <string name="sharing_snackbar_invite_sent_success">Приглашение отправлено</string>
   <string name="sharing_snackbar_invite_sent_error">Не могу отправить приглашение</string>
-  <string name="sharing_snackbar_invite_new_users_error">Cannot send invites to new users</string>
-  <string name="sharing_snackbar_invite_free_user_error">Item invites are only allowed to be sent to paid users</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">Address has already been invited</string>
+  <string name="sharing_snackbar_invite_new_users_error">Не удается отправить приглашения новым пользователям</string>
+  <string name="sharing_snackbar_invite_free_user_error">Приглашения к элементам разрешено отправлять только платящим пользователям</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">Адрес уже был приглашен</string>
   <string name="sharing_snackbar_get_vault_members_error">Не могу получить участников хранилища</string>
   <string name="sharing_snackbar_change_permission_success">Разрешения изменены</string>
   <string name="sharing_snackbar_change_permission_error">Не могу изменить разрешения</string>
@@ -75,7 +75,7 @@
   <string name="share_summary_share_item">Share item</string>
   <string name="share_summary_vault_title">Хранилище</string>
   <string name="share_summary_item_title">Элемент</string>
-  <string name="share_summary_access_level_title">Access level</string>
+  <string name="share_summary_access_level_title">Уровень доступа</string>
   <string name="share_manage_vault_share_with_more_people">Делитесь с большим числом людей</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">Осталось %d приглашение</item>
@@ -103,7 +103,7 @@
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Вы не можете передать последнее принадлежащее вам хранилище.</string>
   <string name="sharing_bottomsheet_remove_access">Отозвать доступ</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Можно редактировать и удалять этот элемент.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Can view this item.</string>
   <string name="sharing_bottomsheet_resend_invite">Отправить повторное приглашение</string>
   <string name="sharing_bottomsheet_cancel_invite">Отменить приглашение</string>

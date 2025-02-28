@@ -18,8 +18,8 @@
   <string name="home_empty_shared_items_title">No shared items found</string>
   <string name="home_empty_shared_items_with_me_subtitle">No items have been shared with you.</string>
   <string name="home_empty_shared_items_by_me_subtitle">No items have been shared by you.</string>
-  <string name="home_empty_no_vaults_title">You don\'t have any vault</string>
-  <string name="home_empty_no_vaults_subtitle">Please, contact your organization support team.</string>
+  <string name="home_empty_no_vaults_title">У вас нет хранилища</string>
+  <string name="home_empty_no_vaults_subtitle">Пожалуйста, свяжитесь со службой поддержки вашей организации.</string>
   <string name="home_empty_read_only_vault_title">Это хранилище пусто</string>
   <string name="home_empty_read_only_vault_subtitle">Вы не можете добавлять элементы в хранилище, доступное только для чтения.</string>
   <string name="home_empty_vault_create_login">Создать логин</string>
@@ -34,12 +34,12 @@
   <string name="home_snackbar_note_moved_to_trash">Заметка перемещена в корзину</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Кредитная карта перемещена в корзину</string>
   <string name="home_snackbar_identity_moved_to_trash">Личные данные перемещены в корзину</string>
-  <string name="home_snackbar_custom_moved_to_trash">Custom item moved to trash</string>
+  <string name="home_snackbar_custom_moved_to_trash">Пользовательский элемент перемещен в корзину</string>
   <string name="home_snackbar_move_to_trash_error">Элемент не может быть перемещен в корзину</string>
   <string name="home_snackbar_items_move_to_trash_success">Элементы, перемещенные в корзину</string>
   <string name="home_snackbar_items_move_to_trash_error">Элементы не могут быть перемещены в корзину</string>
   <string name="home_toast_items_selected_read_only">Доступные только для чтения элементы не могут быть выбраны</string>
-  <string name="home_toast_items_selected_shared_with_me">Items shared with you cannot be selected</string>
+  <string name="home_toast_items_selected_shared_with_me">Предметы, находящиеся в общем доступе с вами, не могут быть выбраны</string>
   <string name="home_autofill_banner_title">Насладитесь волшебством автозаполнения</string>
   <string name="home_autofill_banner_text">Одно касание и - престо! - ваше имя пользователя и пароль заполняются мгновенно.</string>
   <string name="home_autofill_banner_settings">Включить автозаполнение ›</string>
@@ -100,7 +100,7 @@
   <string name="snackbar_delete_vault_success">Хранилище удалено</string>
   <string name="snackbar_delete_vault_error">Хранилище не удалено</string>
   <!-- Search top bar -->
-  <string name="search_topbar_placeholder_all_items">Search in all items…</string>
+  <string name="search_topbar_placeholder_all_items">Искать среди всех элементов</string>
   <string name="search_topbar_placeholder_all_vaults">Поиск во всех хранилищах...</string>
   <string name="search_topbar_placeholder_vault">Поиск в %s…</string>
   <string name="search_topbar_placeholder_trash">Поиск в Корзине…</string>
@@ -173,10 +173,10 @@
     <item quantity="other">Вы уверены, что хотите удалить %d элементов? Это действие необратимо</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_shared_warning_message">
-    <item quantity="one">%d item is currently shared. Deleting it will remove access for all other users.</item>
-    <item quantity="few">%d items are currently shared. Deleting them will remove access for all other users.</item>
-    <item quantity="many">%d items are currently shared. Deleting them will remove access for all other users.</item>
-    <item quantity="other">%d items are currently shared. Deleting them will remove access for all other users.</item>
+    <item quantity="one">Элемент %d в настоящее время находится в общем доступе. При его удалении доступ к нему будет закрыт для всех остальных пользователей.</item>
+    <item quantity="few">Элемент %d в настоящее время находится в общем доступе. При его удалении доступ к нему будет закрыт для всех остальных пользователей.</item>
+    <item quantity="many">Элемент %d в настоящее время находится в общем доступе. При его удалении доступ к нему будет закрыт для всех остальных пользователей.</item>
+    <item quantity="other">Элемент %d в настоящее время находится в общем доступе. При его удалении доступ к нему будет закрыт для всех остальных пользователей.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Недавние поиски</string>

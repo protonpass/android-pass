@@ -10,13 +10,13 @@
   <string name="action_credit_card">Kartu kredit</string>
   <string name="action_password">Kata sandi</string>
   <string name="action_identity">Identitas</string>
-  <string name="action_custom">Custom item</string>
+  <string name="action_custom">Item khusus</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Tambahkan rincian entri masuk untuk aplikasi atau situs tertentu</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Dapatkan alias email untuk digunakan pada berbagai aplikasi baru</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Tulis PIN, kode, atau catatan untuk diri Anda sendiri</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Simpan informasi pembayaran Anda dengan aman</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Isi data pribadi Anda</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Create items with fully customised fields</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Buat berbagai item dengan kolom yang dapat disesuaikan sepenuhnya</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Hasilkan kata sandi yang aman</string>
   <!-- Create Login -->
   <string name="field_email_title">Alamat email</string>
@@ -221,4 +221,24 @@
   <string name="suffix_subtitle_premium_domain">Domain premium</string>
   <string name="suffix_subtitle_public_domain">Domain publik</string>
   <string name="suffix_subtitle_private_domain">Domain Anda</string>
+  <!-- Templates -->
+  <string name="template_item_api_credential">Kredensial API</string>
+  <string name="template_item_database">Basis data</string>
+  <string name="template_item_server">Server</string>
+  <string name="template_item_software_license">Lisensi Perangkat</string>
+  <string name="template_item_ssh_key">Kunci SSH</string>
+  <string name="template_item_wifi_network">Jaringan Wi-Fi</string>
+  <string name="template_item_bank_account">Akun Bank</string>
+  <string name="template_item_crypto_wallet">Dompet Kripto</string>
+  <string name="template_item_driver_license">Surat Izin Mengemudi</string>
+  <string name="template_item_medical_record">Rekaman Medis</string>
+  <string name="template_item_membership">Keanggotaan</string>
+  <string name="template_item_passport">Paspor</string>
+  <string name="template_item_reward_program">Program Hadiah</string>
+  <string name="template_item_social_security_number">Nomor Jaminan Sosial</string>
+  <string name="template_header_technology">Teknologi</string>
+  <string name="template_header_finance">Keuangan</string>
+  <string name="template_header_personal">Keuangan</string>
+  <string name="button_start_from_scratch">Mulai dari awal</string>
+  <string name="select_template_title">Item khusus</string>
 </resources>

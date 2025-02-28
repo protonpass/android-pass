@@ -221,4 +221,24 @@
   <string name="suffix_subtitle_premium_domain">Domini prèmium</string>
   <string name="suffix_subtitle_public_domain">Domini públic</string>
   <string name="suffix_subtitle_private_domain">El vostre domini</string>
+  <!-- Templates -->
+  <string name="template_item_api_credential">Credencials d\'API</string>
+  <string name="template_item_database">Base de dades</string>
+  <string name="template_item_server">Servidor</string>
+  <string name="template_item_software_license">Llicència de programari</string>
+  <string name="template_item_ssh_key">Clau SSH</string>
+  <string name="template_item_wifi_network">Xarxa wifi</string>
+  <string name="template_item_bank_account">Compte bancari</string>
+  <string name="template_item_crypto_wallet">Cartera de criptomonedes</string>
+  <string name="template_item_driver_license">Permís de conduir</string>
+  <string name="template_item_medical_record">Registre mèdic</string>
+  <string name="template_item_membership">Subscripció</string>
+  <string name="template_item_passport">Passaport</string>
+  <string name="template_item_reward_program">Programa de recompenses</string>
+  <string name="template_item_social_security_number">Número de la seguretat social</string>
+  <string name="template_header_technology">Tecnologia</string>
+  <string name="template_header_finance">Finances</string>
+  <string name="template_header_personal">Finances</string>
+  <string name="button_start_from_scratch">Comença des de zero</string>
+  <string name="select_template_title">Element personalitzat</string>
 </resources>

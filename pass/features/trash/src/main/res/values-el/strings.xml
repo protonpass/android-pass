@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="trash_action_restore">Επαναφορά</string>
   <string name="bottomsheet_delete_permanently">Οριστική διαγραφή</string>
   <string name="alert_confirm_delete_item_dialog_title">Οριστική διαγραφή;</string>
   <string name="alert_confirm_delete_item_dialog_message">Αυτή η ενέργεια είναι μην αναστρέψιμη.</string>

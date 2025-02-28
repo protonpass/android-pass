@@ -186,6 +186,8 @@ fun UpdateCustomItemScreen(
                     ItemContentEvent.ClearLastAddedFieldFocus ->
                         viewModel.processIntent(BaseCustomItemCommonIntent.ClearLastAddedFieldFocus)
 
+                    ItemContentEvent.DismissAttachmentBanner ->
+                        viewModel.processIntent(BaseCustomItemCommonIntent.DismissFileAttachmentsBanner)
                 }
             }
         )

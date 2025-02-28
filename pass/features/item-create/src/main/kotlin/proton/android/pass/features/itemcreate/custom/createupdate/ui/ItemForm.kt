@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.itemcreate.custom.createupdate.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -41,6 +42,7 @@ import proton.android.pass.composecomponents.impl.labels.CollapsibleSectionHeade
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemFormState
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemSharedProperties
 
@@ -56,6 +58,21 @@ fun ItemForm(
         mutableStateListOf()
     }
     LazyColumn(modifier = modifier.fillMaxSize()) {
+        item {
+            AnimatedVisibility(
+                modifier = Modifier.fillMaxWidth(),
+                visible = itemSharedProperties.showFileAttachments &&
+                    itemSharedProperties.showFileAttachmentsBanner
+            ) {
+                AttachmentBanner(
+                    modifier = Modifier
+                        .padding(horizontal = Spacing.medium)
+                        .padding(bottom = Spacing.mediumSmall)
+                ) {
+                    onEvent(ItemContentEvent.DismissAttachmentBanner)
+                }
+            }
+        }
         item {
             TitleSection(
                 modifier = Modifier
@@ -131,7 +148,8 @@ fun ItemForm(
         if (itemSharedProperties.showFileAttachments) {
             item {
                 AttachmentSection(
-                    modifier = Modifier.padding(vertical = Spacing.small)
+                    modifier = Modifier
+                        .padding(vertical = Spacing.small)
                         .padding(horizontal = Spacing.medium),
                     attachmentsState = itemSharedProperties.attachmentsState,
                     isDetail = false,

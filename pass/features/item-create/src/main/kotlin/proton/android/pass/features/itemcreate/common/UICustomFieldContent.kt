@@ -22,7 +22,6 @@ import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
 import proton.android.pass.crypto.api.context.EncryptionContext
-import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.HiddenState
@@ -93,7 +92,7 @@ sealed interface UICustomFieldContent : Parcelable {
         fun createCustomField(
             type: CustomFieldType,
             label: String,
-            encryptionContextProvider: EncryptionContextProvider
+            encryptionContext: EncryptionContext
         ): UICustomFieldContent = when (type) {
             CustomFieldType.Text ->
                 CustomFieldContent.Text(
@@ -102,7 +101,7 @@ sealed interface UICustomFieldContent : Parcelable {
                 )
 
             CustomFieldType.Hidden -> {
-                val value = encryptionContextProvider.withEncryptionContext { encrypt("") }
+                val value = encryptionContext.encrypt("")
                 CustomFieldContent.Hidden(
                     label = label.trim(),
                     value = HiddenState.Empty(encrypted = value)
@@ -110,8 +109,7 @@ sealed interface UICustomFieldContent : Parcelable {
             }
 
             CustomFieldType.Totp -> {
-                val value =
-                    encryptionContextProvider.withEncryptionContext { encrypt("") }
+                val value = encryptionContext.encrypt("")
                 CustomFieldContent.Totp(
                     label = label.trim(),
                     value = HiddenState.Empty(encrypted = value)

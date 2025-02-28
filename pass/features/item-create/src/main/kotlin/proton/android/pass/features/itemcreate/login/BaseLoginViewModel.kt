@@ -780,7 +780,9 @@ abstract class BaseLoginViewModel(
 
     private fun onFieldAdded(event: DraftFormFieldEvent.FieldAdded) {
         val (_, label, type) = event
-        val field = createCustomField(type, label, encryptionContextProvider)
+        val field = encryptionContextProvider.withEncryptionContext {
+            createCustomField(type, label, this)
+        }
         loginItemFormMutableState = loginItemFormState.copy(
             customFields = loginItemFormState.customFields.toMutableList()
                 .apply { add(field) }

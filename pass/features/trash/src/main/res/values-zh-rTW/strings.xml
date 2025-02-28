@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="trash_action_restore">還原</string>
   <string name="bottomsheet_delete_permanently">永久刪除</string>
   <string name="alert_confirm_delete_item_dialog_title">永久刪除？</string>
   <string name="alert_confirm_delete_item_dialog_message">此動作不可逆。</string>

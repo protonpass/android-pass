@@ -221,4 +221,24 @@
   <string name="suffix_subtitle_premium_domain">Premium domein</string>
   <string name="suffix_subtitle_public_domain">Publiek domein</string>
   <string name="suffix_subtitle_private_domain">Uw domein</string>
+  <!-- Templates -->
+  <string name="template_item_api_credential">API-referentiegegevens</string>
+  <string name="template_item_database">Database</string>
+  <string name="template_item_server">Server</string>
+  <string name="template_item_software_license">Software licentie</string>
+  <string name="template_item_ssh_key">SSH-sleutel</string>
+  <string name="template_item_wifi_network">WiFi-netwerk</string>
+  <string name="template_item_bank_account">Bankrekening</string>
+  <string name="template_item_crypto_wallet">Crypto Wallet</string>
+  <string name="template_item_driver_license">Rijbewijs</string>
+  <string name="template_item_medical_record">Medisch Gegeven</string>
+  <string name="template_item_membership">Lidmaatschap</string>
+  <string name="template_item_passport">Paspoort</string>
+  <string name="template_item_reward_program">Beloningsprogramma</string>
+  <string name="template_item_social_security_number">Burgerservicenummer(Rijksregisternummer)</string>
+  <string name="template_header_technology">Technologie</string>
+  <string name="template_header_finance">Financieel</string>
+  <string name="template_header_personal">Financieel</string>
+  <string name="button_start_from_scratch">Begin vanaf nul</string>
+  <string name="select_template_title">Aangepast item</string>
 </resources>

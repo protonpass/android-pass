@@ -10,13 +10,13 @@
   <string name="action_credit_card">Kredi kartı</string>
   <string name="action_password">Parola</string>
   <string name="action_identity">Kimlik</string>
-  <string name="action_custom">Özel öğe</string>
+  <string name="action_custom">Özel öge</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Bir uygulama ya da sitenin oturum açma bilgilerini ekleyin</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Yeni uygulamalarda kullanmak için bir takma e-posta adresi alın</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Bir PIN kodu ya da kendinize bir not yazın</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Ödeme bilgilerinizi güvenle kaydedin</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Kişisel bilgilerinizi yazın</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Tamamen özelleştirilmiş alanlara sahip öğeler oluşturun</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Tümüyle özelleştirilmiş alanları olan ögeler oluşturun</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Güvenli bir parola oluşturun</string>
   <!-- Create Login -->
   <string name="field_email_title">E-posta adresi</string>
@@ -221,4 +221,24 @@
   <string name="suffix_subtitle_premium_domain">Ücretli etki alanı</string>
   <string name="suffix_subtitle_public_domain">Herkese açık etki alanı</string>
   <string name="suffix_subtitle_private_domain">Etki alanınız</string>
+  <!-- Templates -->
+  <string name="template_item_api_credential">API kimlik doğrulama bilgisi</string>
+  <string name="template_item_database">Veri tabanı</string>
+  <string name="template_item_server">Sunucu</string>
+  <string name="template_item_software_license">Yazılım lisansı</string>
+  <string name="template_item_ssh_key">SSH anahtarı</string>
+  <string name="template_item_wifi_network">Wi-Fi ağı</string>
+  <string name="template_item_bank_account">Banka hesabı</string>
+  <string name="template_item_crypto_wallet">Kripto cüzdanı</string>
+  <string name="template_item_driver_license">Sürücü belgesi</string>
+  <string name="template_item_medical_record">Sağlık kaydı</string>
+  <string name="template_item_membership">Üyelik</string>
+  <string name="template_item_passport">Pasaport</string>
+  <string name="template_item_reward_program">Ödül programı</string>
+  <string name="template_item_social_security_number">Sosyal güvenlik numarası</string>
+  <string name="template_header_technology">Teknoloji</string>
+  <string name="template_header_finance">Finans</string>
+  <string name="template_header_personal">Finans</string>
+  <string name="button_start_from_scratch">Sıfırdan başla</string>
+  <string name="select_template_title">Özel öge</string>
 </resources>

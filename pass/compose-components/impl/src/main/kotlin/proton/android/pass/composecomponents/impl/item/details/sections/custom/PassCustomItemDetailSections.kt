@@ -16,50 +16,39 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.composecomponents.impl.item.details.sections.login
+package proton.android.pass.composecomponents.impl.item.details.sections.custom
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.datetime.Instant
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonuimodels.api.PackageInfoUi
-import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
-import proton.android.pass.composecomponents.impl.item.details.sections.login.passkeys.PasskeysSection
+import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent.OnAttachmentEvent
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailCustomFieldsSection
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsExtraSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
-import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Totp
 
 @Composable
-internal fun PassLoginItemDetailSections(
+internal fun PassCustomItemDetailSections(
     modifier: Modifier = Modifier,
     itemId: ItemId,
     shareId: ShareId,
-    contents: ItemContents.Login,
-    passwordStrength: PasswordStrength,
-    primaryTotp: Totp?,
-    secondaryTotps: ImmutableMap<String, Totp?>,
-    passkeys: ImmutableList<UIPasskeyContent>,
+    contents: ItemContents.Custom,
     itemColors: PassItemColors,
-    itemDiffs: ItemDiffs.Login,
+    itemDiffs: ItemDiffs.Custom,
     lastAutofillOption: Option<Instant>,
     revision: Long,
     createdAt: Instant,
@@ -72,51 +61,21 @@ internal fun PassLoginItemDetailSections(
 ) = with(contents) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium.minus(Spacing.extraSmall))
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
-        if (passkeys.isNotEmpty()) {
-            PasskeysSection(
-                passkeys = passkeys,
-                itemDiffs = itemDiffs,
-                itemColors = itemColors,
-                onSelected = { passkeyContent ->
-                    onEvent(PassItemDetailsUiEvent.OnPasskeyClick(passkeyContent))
-                }
-            )
-        }
-
-        PassLoginItemDetailMainSection(
-            email = itemEmail,
-            username = itemUsername,
-            password = password,
-            passwordStrength = passwordStrength,
-            primaryTotp = primaryTotp,
-            itemColors = itemColors,
-            itemDiffs = itemDiffs,
-            onEvent = onEvent
-        )
-
-        if (urls.isNotEmpty()) {
-            PassLoginItemDetailWebsitesSection(
-                websiteUrls = urls.toPersistentList(),
+        if (customFieldList.isNotEmpty()) {
+            PassItemDetailCustomFieldsSection(
+                customFields = customFieldList.toPersistentList(),
+                secondaryTotps = persistentMapOf(),
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,
                 onEvent = onEvent
             )
         }
 
-        if (note.isNotBlank()) {
-            PassSharedItemDetailNoteSection(
-                note = note,
-                itemColors = itemColors,
-                itemDiffs = itemDiffs
-            )
-        }
-
-        if (customFields.isNotEmpty()) {
-            PassItemDetailCustomFieldsSection(
-                customFields = customFields.toPersistentList(),
-                secondaryTotps = secondaryTotps,
+        if (sectionContentList.isNotEmpty()) {
+            PassItemDetailsExtraSection(
+                extraSectionContents = sectionContentList.toPersistentList(),
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,
                 onEvent = onEvent
@@ -128,8 +87,8 @@ internal fun PassLoginItemDetailSections(
                 attachmentsState = attachmentsState,
                 isDetail = true,
                 itemColors = itemColors,
-                onEvent = { onEvent(PassItemDetailsUiEvent.OnAttachmentEvent(it)) },
-                itemDiffs = itemDiffs
+                itemDiffs = itemDiffs,
+                onEvent = { onEvent(OnAttachmentEvent(it)) }
             )
         }
 
@@ -142,19 +101,6 @@ internal fun PassLoginItemDetailSections(
                 itemColors = itemColors,
                 onViewItemHistoryClicked = { onEvent(PassItemDetailsUiEvent.OnViewItemHistoryClick) },
                 shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
-            )
-        }
-
-        if (packageInfoSet.isNotEmpty()) {
-            val mapped = remember(packageInfoSet.hashCode()) {
-                packageInfoSet.map { PackageInfoUi(it) }.toPersistentSet()
-            }
-
-            PassLoginItemDetailLinkedAppsSection(
-                packageInfoUiSet = mapped,
-                isEditable = false,
-                onLinkedAppDelete = {},
-                itemDiffs = itemDiffs
             )
         }
 

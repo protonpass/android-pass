@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,41 +16,50 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.composecomponents.impl.item.details.sections.identity
+package proton.android.pass.composecomponents.impl.item.details.sections.shared
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
-import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
-import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.rows.addCustomFieldRows
-import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.sections.PassIdentityItemDetailsSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ExtraSectionContent
+import proton.android.pass.domain.ItemCustomFieldSection.CustomItem
+import proton.android.pass.domain.ItemCustomFieldSection.Identity
 import proton.android.pass.domain.ItemDiffs
 
 @Composable
-internal fun PassIdentityItemDetailsExtraSection(
+internal fun PassItemDetailsExtraSection(
     modifier: Modifier = Modifier,
     extraSectionContents: ImmutableList<ExtraSectionContent>,
     itemColors: PassItemColors,
-    itemDiffs: ItemDiffs.Identity,
+    itemDiffs: ItemDiffs,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     extraSectionContents.forEachIndexed { extraSectionIndex, extraSectionContent ->
         if (extraSectionContent.hasCustomFields) {
             val rows = mutableListOf<@Composable () -> Unit>()
-
+            val customFieldSection = when (itemDiffs) {
+                is ItemDiffs.Identity -> Identity.ExtraSection(extraSectionIndex)
+                is ItemDiffs.Custom -> CustomItem.ExtraSection(extraSectionIndex)
+                is ItemDiffs.Login,
+                ItemDiffs.None,
+                is ItemDiffs.Note,
+                is ItemDiffs.Alias,
+                is ItemDiffs.CreditCard,
+                is ItemDiffs.Unknown ->
+                    throw UnsupportedOperationException("type unsupported ${itemDiffs::class.simpleName} ")
+            }
             rows.addCustomFieldRows(
                 customFields = extraSectionContent.customFieldList,
-                customFieldSection = ItemCustomFieldSection.Identity.ExtraSection(extraSectionIndex),
+                customFieldSection = customFieldSection,
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,
                 onEvent = onEvent
             )
 
-            PassIdentityItemDetailsSection(
+            PassItemDetailsSection(
                 modifier = modifier,
                 title = extraSectionContent.title,
                 sections = rows.toPersistentList()

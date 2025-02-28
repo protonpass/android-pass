@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.composecomponents.impl.item.details.sections.login
+package proton.android.pass.composecomponents.impl.item.details.sections.shared
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,7 +26,6 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
-import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.masks.TextMask
@@ -38,6 +37,7 @@ import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDeta
 import proton.android.pass.composecomponents.impl.progress.PassTotpProgress
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.CustomFieldContent
+import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.Totp
 import me.proton.core.presentation.R as CoreR
@@ -45,12 +45,12 @@ import me.proton.core.presentation.R as CoreR
 private const val HIDDEN_CUSTOM_FIELD_TEXT_LENGTH = 12
 
 @Composable
-internal fun PassLoginItemDetailCustomFieldsSection(
+internal fun PassItemDetailCustomFieldsSection(
     modifier: Modifier = Modifier,
     customFields: ImmutableList<CustomFieldContent>,
     secondaryTotps: ImmutableMap<String, Totp?>,
     itemColors: PassItemColors,
-    itemDiffs: ItemDiffs.Login,
+    itemDiffs: ItemDiffs,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     Column(
@@ -58,6 +58,17 @@ internal fun PassLoginItemDetailCustomFieldsSection(
         verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
         customFields.forEachIndexed { index, customFieldContent ->
+            val itemDiffType = when (itemDiffs) {
+                is ItemDiffs.Custom -> itemDiffs.customField(index)
+                is ItemDiffs.Login -> itemDiffs.customField(index)
+                is ItemDiffs.Alias,
+                is ItemDiffs.CreditCard,
+                is ItemDiffs.Identity,
+                is ItemDiffs.Note,
+                ItemDiffs.None,
+                is ItemDiffs.Unknown ->
+                    throw UnsupportedOperationException("Unsupported ${itemDiffs::class.simpleName}")
+            }
             RoundedCornersColumn {
                 when (customFieldContent) {
                     is CustomFieldContent.Text -> PassItemDetailFieldRow(
@@ -65,7 +76,7 @@ internal fun PassLoginItemDetailCustomFieldsSection(
                         title = customFieldContent.label,
                         subtitle = customFieldContent.value,
                         itemColors = itemColors,
-                        itemDiffType = itemDiffs.customField(index),
+                        itemDiffType = itemDiffType,
                         onClick = {
                             onEvent(
                                 PassItemDetailsUiEvent.OnSectionClick(
@@ -82,7 +93,7 @@ internal fun PassLoginItemDetailCustomFieldsSection(
                         hiddenState = customFieldContent.value,
                         hiddenTextLength = HIDDEN_CUSTOM_FIELD_TEXT_LENGTH,
                         itemColors = itemColors,
-                        itemDiffType = itemDiffs.customField(index),
+                        itemDiffType = itemDiffType,
                         hiddenTextStyle = ProtonTheme.typography.defaultNorm,
                         onClick = {
                             onEvent(
@@ -111,7 +122,7 @@ internal fun PassLoginItemDetailCustomFieldsSection(
                                 title = customFieldContent.label,
                                 maskedSubtitle = TextMask.TotpCode(customFieldTotp.code),
                                 itemColors = itemColors,
-                                itemDiffType = itemDiffs.customField(index),
+                                itemDiffType = itemDiffType,
                                 onClick = {
                                     onEvent(
                                         PassItemDetailsUiEvent.OnSectionClick(

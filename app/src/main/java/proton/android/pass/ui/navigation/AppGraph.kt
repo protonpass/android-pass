@@ -1717,7 +1717,11 @@ fun NavGraphBuilder.appGraph(
                         itemId = itemDetailsNavDestination.itemId
                     )
 
-                    ItemCategory.Custom -> TODO("To implement")
+                    ItemCategory.Custom ->
+                        UpdateCustomItemNavItem to UpdateCustomItemNavItem.createNavRoute(
+                            shareId = itemDetailsNavDestination.shareId,
+                            itemId = itemDetailsNavDestination.itemId
+                        )
                     ItemCategory.Password,
                     ItemCategory.Unknown -> throw IllegalStateException(
                         "Cannot edit items with category: ${itemDetailsNavDestination.itemCategory}"

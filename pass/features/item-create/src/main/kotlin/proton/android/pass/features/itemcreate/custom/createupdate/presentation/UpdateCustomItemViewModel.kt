@@ -38,6 +38,8 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.UpdateItem
+import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
+import proton.android.pass.data.api.usecases.attachments.RenameAttachments
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
@@ -64,12 +66,16 @@ class UpdateCustomItemViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val attachmentsHandler: AttachmentsHandler,
+    private val renameAttachments: RenameAttachments,
+    linkAttachmentsToItem: LinkAttachmentsToItem,
     userPreferencesRepository: UserPreferencesRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     customFieldDraftRepository: CustomFieldDraftRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCustomItemViewModel(
+    linkAttachmentsToItem = linkAttachmentsToItem,
     attachmentsHandler = attachmentsHandler,
+    snackbarDispatcher = snackbarDispatcher,
     userPreferencesRepository = userPreferencesRepository,
     featureFlagsRepository = featureFlagsRepository,
     encryptionContextProvider = encryptionContextProvider,
@@ -132,6 +138,8 @@ class UpdateCustomItemViewModel @Inject constructor(
                     contents = itemFormState.toItemContents()
                 )
             }.onSuccess { item ->
+                linkAttachments(item.shareId, item.id, item.revision)
+                onRenameAttachments(item.shareId, item.id)
                 onItemSavedState(item)
                 telemetryManager.sendEvent(ItemCreate(EventItemType.Custom))
                 snackbarDispatcher(CustomItemSnackbarMessage.ItemUpdated)
@@ -180,6 +188,15 @@ class UpdateCustomItemViewModel @Inject constructor(
         }
     }
 
+    private suspend fun onRenameAttachments(shareId: ShareId, itemId: ItemId) {
+        runCatching {
+            renameAttachments(shareId, itemId)
+        }.onFailure {
+            PassLogger.w(TAG, "Error renaming attachments")
+            PassLogger.w(TAG, it)
+            snackbarDispatcher(CustomItemSnackbarMessage.ItemRenameAttachmentsError)
+        }
+    }
     companion object {
         private const val TAG = "UpdateCustomItemViewModel"
     }

@@ -38,7 +38,6 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.badge.CircledBadge
 import proton.android.pass.composecomponents.impl.badge.OverlayBadge
 import proton.android.pass.composecomponents.impl.item.icon.CustomIcon
-import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.ExtraSectionContent
 import proton.android.pass.domain.ItemContents
@@ -99,7 +98,7 @@ fun CustomRow(
                                     backgroundColor = PassTheme.colors.interactionNormMajor1
                                 )
                             },
-                            content = { IdentityIcon(enabled = isEnabled) }
+                            content = { CustomIcon(enabled = isEnabled) }
                         )
                     }
                 }

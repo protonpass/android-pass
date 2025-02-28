@@ -57,14 +57,20 @@ sealed interface CustomItemState : ItemSharedProperties {
             get() = shareUiState is ShareUiState.Success && shareUiState.vaultList.size > 1
 
         override val selectedVault: Option<Vault>
-            get() = if (shareUiState is ShareUiState.Success) shareUiState.currentVault.vault.some() else None
+            get() = if (shareUiState is ShareUiState.Success) {
+                shareUiState.currentVault.vault.some()
+            } else {
+                None
+            }
+
+        override val selectedShareId: Option<ShareId>
+            get() = selectedVault.map { it.shareId }
     }
 
     @Immutable
     data class UpdateCustomItemState(
-        val selectedShareId: ShareId,
-        override val sharedState: ItemSharedUiState,
-        override val hasReceivedItem: Boolean
+        override val selectedShareId: Option<ShareId>,
+        override val sharedState: ItemSharedUiState
     ) : CustomItemState
 }
 
@@ -78,6 +84,9 @@ interface ItemSharedProperties {
         get() = false
 
     val selectedVault: Option<Vault>
+        get() = None
+
+    val selectedShareId: Option<ShareId>
         get() = None
 
     val itemSavedState: ItemSavedState

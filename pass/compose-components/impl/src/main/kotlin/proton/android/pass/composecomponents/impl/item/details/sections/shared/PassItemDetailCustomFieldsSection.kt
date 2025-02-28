@@ -58,17 +58,6 @@ internal fun PassItemDetailCustomFieldsSection(
         verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
         customFields.forEachIndexed { index, customFieldContent ->
-            val itemDiffType = when (itemDiffs) {
-                is ItemDiffs.Custom -> itemDiffs.customField(index)
-                is ItemDiffs.Login -> itemDiffs.customField(index)
-                is ItemDiffs.Alias,
-                is ItemDiffs.CreditCard,
-                is ItemDiffs.Identity,
-                is ItemDiffs.Note,
-                ItemDiffs.None,
-                is ItemDiffs.Unknown ->
-                    throw UnsupportedOperationException("Unsupported ${itemDiffs::class.simpleName}")
-            }
             RoundedCornersColumn {
                 when (customFieldContent) {
                     is CustomFieldContent.Text -> PassItemDetailFieldRow(
@@ -76,7 +65,7 @@ internal fun PassItemDetailCustomFieldsSection(
                         title = customFieldContent.label,
                         subtitle = customFieldContent.value,
                         itemColors = itemColors,
-                        itemDiffType = itemDiffType,
+                        itemDiffType = itemDiffs.customField(index),
                         onClick = {
                             onEvent(
                                 PassItemDetailsUiEvent.OnSectionClick(
@@ -93,7 +82,7 @@ internal fun PassItemDetailCustomFieldsSection(
                         hiddenState = customFieldContent.value,
                         hiddenTextLength = HIDDEN_CUSTOM_FIELD_TEXT_LENGTH,
                         itemColors = itemColors,
-                        itemDiffType = itemDiffType,
+                        itemDiffType = itemDiffs.customField(index),
                         hiddenTextStyle = ProtonTheme.typography.defaultNorm,
                         onClick = {
                             onEvent(
@@ -122,7 +111,7 @@ internal fun PassItemDetailCustomFieldsSection(
                                 title = customFieldContent.label,
                                 maskedSubtitle = TextMask.TotpCode(customFieldTotp.code),
                                 itemColors = itemColors,
-                                itemDiffType = itemDiffType,
+                                itemDiffType = itemDiffs.customField(index),
                                 onClick = {
                                     onEvent(
                                         PassItemDetailsUiEvent.OnSectionClick(

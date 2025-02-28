@@ -42,6 +42,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemCreate
@@ -68,6 +69,7 @@ class CreateCustomItemViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val snackbarDispatcher: SnackbarDispatcher,
+    linkAttachmentsToItem: LinkAttachmentsToItem,
     attachmentsHandler: AttachmentsHandler,
     userPreferencesRepository: UserPreferencesRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
@@ -77,6 +79,8 @@ class CreateCustomItemViewModel @Inject constructor(
     encryptionContextProvider: EncryptionContextProvider,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCustomItemViewModel(
+    linkAttachmentsToItem = linkAttachmentsToItem,
+    snackbarDispatcher = snackbarDispatcher,
     attachmentsHandler = attachmentsHandler,
     userPreferencesRepository = userPreferencesRepository,
     featureFlagsRepository = featureFlagsRepository,
@@ -161,6 +165,7 @@ class CreateCustomItemViewModel @Inject constructor(
                     snackbarDispatcher(CustomItemSnackbarMessage.ItemCreationError)
                 }
                 .onSuccess { item ->
+                    linkAttachments(item.shareId, item.id, item.revision)
                     inAppReviewTriggerMetrics.incrementItemCreatedCount()
                     onItemSavedState(item)
                     telemetryManager.sendEvent(ItemCreate(EventItemType.Custom))

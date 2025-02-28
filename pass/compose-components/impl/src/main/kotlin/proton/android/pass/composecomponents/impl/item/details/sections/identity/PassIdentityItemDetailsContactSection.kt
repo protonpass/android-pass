@@ -27,8 +27,8 @@ import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetai
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.rows.addItemDetailsFieldRow
-import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.rows.addCustomFieldRows
-import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.sections.PassIdentityItemDetailsSection
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.addCustomFieldRows
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ContactDetailsContent
 import proton.android.pass.domain.ItemDiffs
@@ -174,7 +174,7 @@ internal fun PassIdentityItemDetailsContactSection(
         )
     }
 
-    PassIdentityItemDetailsSection(
+    PassItemDetailsSection(
         modifier = modifier,
         title = stringResource(id = R.string.item_details_identity_section_contact_title),
         sections = rows.toPersistentList()

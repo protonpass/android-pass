@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.rows
+package proton.android.pass.composecomponents.impl.item.details.sections.shared
 
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
@@ -36,7 +36,7 @@ import proton.android.pass.domain.ItemDiffs
 private const val HIDDEN_CUSTOM_FIELD_TEXT_LENGTH = 12
 
 @Composable
-internal fun PassIdentityItemDetailsCustomFieldRow(
+internal fun PassItemDetailsCustomFieldRow(
     modifier: Modifier = Modifier,
     customFieldIndex: Int,
     customFieldContent: CustomFieldContent,
@@ -100,17 +100,28 @@ internal fun MutableList<@Composable () -> Unit>.addCustomFieldRows(
     customFields: List<CustomFieldContent>,
     customFieldSection: ItemCustomFieldSection,
     itemColors: PassItemColors,
-    itemDiffs: ItemDiffs.Identity,
+    itemDiffs: ItemDiffs,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     customFields.forEachIndexed { index, customFieldContent ->
         add {
-            PassIdentityItemDetailsCustomFieldRow(
+            val itemDiffType = when (itemDiffs) {
+                is ItemDiffs.Identity -> itemDiffs.customField(customFieldSection, index)
+                is ItemDiffs.Custom -> itemDiffs.customField(customFieldSection, index)
+                is ItemDiffs.Login,
+                ItemDiffs.None,
+                is ItemDiffs.Note,
+                is ItemDiffs.Alias,
+                is ItemDiffs.CreditCard,
+                is ItemDiffs.Unknown ->
+                    throw UnsupportedOperationException("sections in ${itemDiffs::class.simpleName} ")
+            }
+            PassItemDetailsCustomFieldRow(
                 customFieldIndex = index,
                 customFieldContent = customFieldContent,
                 customFieldSection = customFieldSection,
                 itemColors = itemColors,
-                itemDiffType = itemDiffs.customField(customFieldSection, index),
+                itemDiffType = itemDiffType,
                 onEvent = onEvent
             )
         }

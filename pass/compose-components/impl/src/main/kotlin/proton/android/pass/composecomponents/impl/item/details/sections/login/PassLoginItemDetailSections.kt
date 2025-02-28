@@ -37,6 +37,7 @@ import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.sections.login.passkeys.PasskeysSection
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailCustomFieldsSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
@@ -113,7 +114,7 @@ internal fun PassLoginItemDetailSections(
         }
 
         if (customFields.isNotEmpty()) {
-            PassLoginItemDetailCustomFieldsSection(
+            PassItemDetailCustomFieldsSection(
                 customFields = customFields.toPersistentList(),
                 secondaryTotps = secondaryTotps,
                 itemColors = itemColors,

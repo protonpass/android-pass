@@ -31,6 +31,7 @@ import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent.OnAttachmentEvent
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsExtraSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
@@ -98,7 +99,7 @@ internal fun PassIdentityItemDetailsSections(
         }
 
         if (extraSectionContentList.isNotEmpty()) {
-            PassIdentityItemDetailsExtraSection(
+            PassItemDetailsExtraSection(
                 extraSectionContents = extraSectionContentList.toPersistentList(),
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,

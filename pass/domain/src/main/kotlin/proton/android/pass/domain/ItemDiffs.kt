@@ -120,7 +120,7 @@ sealed interface ItemDiffs {
                 emptyList()
             }
 
-            is ItemCustomFieldSection.Login,
+            is ItemCustomFieldSection.CustomField,
             is ItemCustomFieldSection.CustomItem.ExtraSection ->
                 throw IllegalStateException("Not supported sections")
         }.let { customFields -> customFields.getOrElse(index) { ItemDiffType.None } }
@@ -160,7 +160,7 @@ sealed interface ItemDiffs {
             is ItemCustomFieldSection.CustomItem.ExtraSection ->
                 extraCustomFields.getOrElse(section.index) { emptyList() }
 
-            is ItemCustomFieldSection.Login,
+            is ItemCustomFieldSection.CustomField,
             is ItemCustomFieldSection.Identity.Address,
             is ItemCustomFieldSection.Identity.Contact,
             is ItemCustomFieldSection.Identity.Personal,

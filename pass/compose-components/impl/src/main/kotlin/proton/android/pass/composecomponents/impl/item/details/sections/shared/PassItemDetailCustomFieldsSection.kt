@@ -98,7 +98,7 @@ internal fun PassItemDetailCustomFieldsSection(
                                     isVisible = isVisible,
                                     hiddenState = customFieldContent.value,
                                     fieldType = ItemDetailsFieldType.Hidden.CustomField(index),
-                                    fieldSection = ItemCustomFieldSection.Login
+                                    fieldSection = ItemCustomFieldSection.CustomField
                                 )
                             )
                         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.sections
+package proton.android.pass.composecomponents.impl.item.details.sections.shared
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,10 +25,9 @@ import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.item.SectionTitle
-import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailMainSectionContainer
 
 @Composable
-internal fun PassIdentityItemDetailsSection(
+internal fun PassItemDetailsSection(
     modifier: Modifier = Modifier,
     title: String,
     sections: ImmutableList<@Composable () -> Unit>

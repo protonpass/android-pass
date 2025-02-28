@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.itemcreate.custom.createupdate.presentation
 
+import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,19 +28,21 @@ import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.some
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toUiModel
-import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
@@ -51,6 +54,12 @@ import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnCustomFieldChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnTitleChanged
+import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.value
+import java.net.URI
 
 sealed interface BaseItemFormIntent
 sealed interface BaseCustomItemCommonIntent : BaseItemFormIntent {
@@ -72,11 +81,24 @@ sealed interface BaseCustomItemCommonIntent : BaseItemFormIntent {
     data object ClearDraft : BaseCustomItemCommonIntent
     data object ClearLastAddedFieldFocus : BaseCustomItemCommonIntent
     data object ViewModelObserve : BaseCustomItemCommonIntent
+
+    data class OnOpenDraftAttachment(
+        val contextHolder: ClassHolder<Context>,
+        val uri: URI,
+        val mimetype: String
+    ) : BaseCustomItemCommonIntent
+
+    @JvmInline
+    value class OnRetryUploadAttachment(val metadata: FileMetadata) : BaseCustomItemCommonIntent
+
+    data object DismissFileAttachmentsBanner : BaseCustomItemCommonIntent
 }
 
 abstract class BaseCustomItemViewModel(
     private val customFieldDraftRepository: CustomFieldDraftRepository,
     private val attachmentsHandler: AttachmentsHandler,
+    private val userPreferencesRepository: UserPreferencesRepository,
+    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
@@ -108,6 +130,12 @@ abstract class BaseCustomItemViewModel(
             is BaseCustomItemCommonIntent.OnCustomFieldFocusedChanged ->
                 onCustomFieldFocusedChanged(intent.index, intent.value, intent.sectionIndex)
 
+            BaseCustomItemCommonIntent.DismissFileAttachmentsBanner ->
+                dismissFileAttachmentsOnboardingBanner()
+            is BaseCustomItemCommonIntent.OnOpenDraftAttachment ->
+                openDraftAttachment(intent.contextHolder, intent.uri, intent.mimetype)
+            is BaseCustomItemCommonIntent.OnRetryUploadAttachment ->
+                retryUploadDraftAttachment(intent.metadata)
         }
     }
 
@@ -126,6 +154,20 @@ abstract class BaseCustomItemViewModel(
                     }
                 }
         }
+        attachmentsHandler.observeNewAttachments {
+            onUserEditedContent()
+            viewModelScope.launch {
+                isLoadingState.update { IsLoadingState.Loading }
+                attachmentsHandler.uploadNewAttachment(it.metadata)
+                isLoadingState.update { IsLoadingState.NotLoading }
+            }
+        }.launchIn(viewModelScope)
+        attachmentsHandler.observeHasDeletedAttachments {
+            onUserEditedContent()
+        }.launchIn(viewModelScope)
+        attachmentsHandler.observeHasRenamedAttachments {
+            onUserEditedContent()
+        }.launchIn(viewModelScope)
     }
 
     private fun onSectionRenamed(event: DraftFormSectionEvent.SectionRenamed) {
@@ -383,13 +425,39 @@ abstract class BaseCustomItemViewModel(
         }
     }
 
-    fun observeSharedState(): Flow<ItemSharedUiState> = combine(
+    private fun openDraftAttachment(
+        contextHolder: ClassHolder<Context>,
+        uri: URI,
+        mimetype: String
+    ) {
+        attachmentsHandler.openDraftAttachment(contextHolder, uri, mimetype)
+    }
+
+    private fun retryUploadDraftAttachment(metadata: FileMetadata) {
+        viewModelScope.launch {
+            isLoadingState.update { IsLoadingState.Loading }
+            attachmentsHandler.uploadNewAttachment(metadata)
+            isLoadingState.update { IsLoadingState.NotLoading }
+        }
+    }
+
+    private fun dismissFileAttachmentsOnboardingBanner() {
+        viewModelScope.launch {
+            userPreferencesRepository.setDisplayFileAttachmentsOnboarding(NotDisplay)
+        }
+    }
+
+    fun observeSharedState(): Flow<ItemSharedUiState> = combineN(
         isLoadingState,
         hasUserEditedContentState,
         validationErrorsState,
         isItemSavedState,
-        focusedFieldState
-    ) { isLoading, hasEdited, errors, savedState, lastAddedField ->
+        focusedFieldState,
+        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
+        userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
+        attachmentsHandler.attachmentState
+    ) { isLoading, hasEdited, errors, savedState, lastAddedField,
+        isFileAttachmentsEnabled, displayFileAttachmentsOnboarding, attachmentsState ->
         ItemSharedUiState(
             isLoadingState = isLoading,
             hasUserEditedContent = hasEdited,
@@ -397,9 +465,9 @@ abstract class BaseCustomItemViewModel(
             isItemSaved = savedState,
             focusedField = lastAddedField,
             canUseCustomFields = true,
-            displayFileAttachmentsOnboarding = false,
-            isFileAttachmentsEnabled = true,
-            attachmentsState = AttachmentsState.Initial
+            displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
+            isFileAttachmentsEnabled = isFileAttachmentsEnabled,
+            attachmentsState = attachmentsState
         )
     }
 }

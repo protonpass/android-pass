@@ -32,17 +32,23 @@ sealed interface ItemDiffs {
 
     val note: ItemDiffType
 
+    val customFields: List<ItemDiffType>
+
     val attachments: Map<AttachmentId, ItemDiffType>
+
+    fun customField(index: Int): ItemDiffType = customFields.getOrElse(index) { ItemDiffType.None }
 
     data object None : ItemDiffs {
         override val title: ItemDiffType = ItemDiffType.None
         override val note: ItemDiffType = ItemDiffType.None
+        override val customFields: List<ItemDiffType> = emptyList()
         override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap()
     }
 
     data class Alias(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
+        override val customFields: List<ItemDiffType> = emptyList(),
         override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap(),
         val aliasEmail: ItemDiffType = ItemDiffType.None
     ) : ItemDiffs
@@ -50,6 +56,7 @@ sealed interface ItemDiffs {
     data class CreditCard(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
+        override val customFields: List<ItemDiffType> = emptyList(),
         override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap(),
         val cardHolder: ItemDiffType = ItemDiffType.None,
         val cardNumber: ItemDiffType = ItemDiffType.None,
@@ -61,6 +68,7 @@ sealed interface ItemDiffs {
     data class Identity(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
+        override val customFields: List<ItemDiffType> = emptyList(),
         override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap(),
         val organization: ItemDiffType = ItemDiffType.None,
         val streetAddress: ItemDiffType = ItemDiffType.None,
@@ -111,6 +119,7 @@ sealed interface ItemDiffs {
             ) {
                 emptyList()
             }
+
             is ItemCustomFieldSection.Login,
             is ItemCustomFieldSection.CustomItem.ExtraSection ->
                 throw IllegalStateException("Not supported sections")
@@ -122,6 +131,7 @@ sealed interface ItemDiffs {
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
         override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap(),
+        override val customFields: List<ItemDiffType> = emptyList(),
         val email: ItemDiffType = ItemDiffType.None,
         val username: ItemDiffType = ItemDiffType.None,
         val password: ItemDiffType = ItemDiffType.None,
@@ -131,11 +141,8 @@ sealed interface ItemDiffs {
             ItemDiffType.None,
             emptyList()
         ),
-        private val customFields: List<ItemDiffType> = emptyList(),
         private val passkeys: Map<String, ItemDiffType> = emptyMap()
     ) : ItemDiffs {
-
-        fun customField(index: Int): ItemDiffType = customFields.getOrElse(index) { ItemDiffType.None }
 
         fun passkey(passkeyId: String): ItemDiffType = passkeys.getOrElse(passkeyId) { ItemDiffType.None }
 
@@ -144,16 +151,15 @@ sealed interface ItemDiffs {
     data class Custom(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
+        override val customFields: List<ItemDiffType> = emptyList(),
         override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap(),
-        private val customFields: List<ItemDiffType> = emptyList(),
         private val extraCustomFields: List<List<ItemDiffType>> = emptyList()
     ) : ItemDiffs {
-
-        fun customField(index: Int): ItemDiffType = customFields.getOrElse(index) { ItemDiffType.None }
 
         fun customField(section: ItemCustomFieldSection, index: Int): ItemDiffType = when (section) {
             is ItemCustomFieldSection.CustomItem.ExtraSection ->
                 extraCustomFields.getOrElse(section.index) { emptyList() }
+
             is ItemCustomFieldSection.Login,
             is ItemCustomFieldSection.Identity.Address,
             is ItemCustomFieldSection.Identity.Contact,
@@ -168,12 +174,14 @@ sealed interface ItemDiffs {
     data class Note(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
+        override val customFields: List<ItemDiffType> = emptyList(),
         override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap()
     ) : ItemDiffs
 
     data class Unknown(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
+        override val customFields: List<ItemDiffType> = emptyList(),
         override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap()
     ) : ItemDiffs
 

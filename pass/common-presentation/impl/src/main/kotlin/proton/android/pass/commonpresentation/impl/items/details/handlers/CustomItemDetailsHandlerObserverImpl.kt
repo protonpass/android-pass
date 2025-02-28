@@ -87,8 +87,32 @@ class CustomItemDetailsHandlerObserverImpl @Inject constructor(
     ): ItemContents = when (hiddenFieldType) {
         is ItemDetailsFieldType.Hidden.CustomField -> {
             when (hiddenFieldSection) {
-                is ItemCustomFieldSection.CustomItem -> itemContents
-                is ItemCustomFieldSection.Login -> itemContents
+                is ItemCustomFieldSection.CustomItem.ExtraSection -> itemContents.copy(
+                    sectionContentList = itemContents.sectionContentList
+                        .toMutableList()
+                        .apply {
+                            itemContents.sectionContentList[hiddenFieldSection.index]
+                                .let { extraSectionContent ->
+                                    set(
+                                        index = hiddenFieldSection.index,
+                                        element = extraSectionContent.copy(
+                                            customFieldList = toggleHiddenCustomField(
+                                                customFieldsContent = extraSectionContent.customFieldList,
+                                                hiddenFieldType = hiddenFieldType,
+                                                hiddenState = hiddenState
+                                            )
+                                        )
+                                    )
+                                }
+                        }
+                )
+                is ItemCustomFieldSection.CustomField -> itemContents.copy(
+                    customFieldList = toggleHiddenCustomField(
+                        customFieldsContent = itemContents.customFieldList,
+                        hiddenFieldType = hiddenFieldType,
+                        hiddenState = hiddenState
+                    )
+                )
                 is ItemCustomFieldSection.Identity -> itemContents
             }
         }

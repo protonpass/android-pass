@@ -157,7 +157,7 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
                     )
                 }
 
-                ItemCustomFieldSection.Login,
+                ItemCustomFieldSection.CustomField,
                 is ItemCustomFieldSection.CustomItem.ExtraSection ->
                     throw UnsupportedOperationException(
                         "cannot have custom section in ${hiddenFieldType::class.simpleName}"

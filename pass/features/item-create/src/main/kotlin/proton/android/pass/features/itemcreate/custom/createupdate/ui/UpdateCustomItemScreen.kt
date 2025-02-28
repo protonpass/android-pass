@@ -28,9 +28,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.features.itemcreate.R
@@ -49,6 +51,7 @@ fun UpdateCustomItemScreen(
     viewModel: UpdateCustomItemViewModel = hiltViewModel(),
     onNavigate: (BaseCustomItemNavigation) -> Unit
 ) {
+    val context = LocalContext.current
     var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
     PerformActionAfterKeyboardHide(
         action = actionAfterKeyboardHide,
@@ -126,7 +129,14 @@ fun UpdateCustomItemScreen(
                     is ItemContentEvent.OnAttachmentEvent -> when (val event = it.event) {
                         AttachmentContentEvent.OnAddAttachment ->
                             onNavigate(BaseCustomItemNavigation.AddAttachment)
-                        is AttachmentContentEvent.OnAttachmentOpen -> TODO()
+
+                        is AttachmentContentEvent.OnAttachmentOpen ->
+                            viewModel.processIntent(
+                                UpdateSpecificIntent.OnOpenAttachment(
+                                    contextHolder = context.toClassHolder(),
+                                    attachment = event.attachment
+                                )
+                            )
 
                         is AttachmentContentEvent.OnAttachmentOptions ->
                             onNavigate(
@@ -137,14 +147,29 @@ fun UpdateCustomItemScreen(
                                 )
                             )
 
-                        AttachmentContentEvent.OnDeleteAllAttachments -> TODO()
+                        AttachmentContentEvent.OnDeleteAllAttachments ->
+                            onNavigate(
+                                BaseCustomItemNavigation.DeleteAllAttachments(
+                                    state.attachmentsState.allToUnlink
+                                )
+                            )
 
-                        is AttachmentContentEvent.OnDraftAttachmentOpen -> TODO()
+                        is AttachmentContentEvent.OnDraftAttachmentOpen ->
+                            viewModel.processIntent(
+                                BaseCustomItemCommonIntent.OnOpenDraftAttachment(
+                                    contextHolder = context.toClassHolder(),
+                                    uri = event.uri,
+                                    mimetype = event.mimetype
+                                )
+                            )
 
                         is AttachmentContentEvent.OnDraftAttachmentOptions ->
                             onNavigate(BaseCustomItemNavigation.OpenDraftAttachmentOptions(event.uri))
 
-                        is AttachmentContentEvent.OnDraftAttachmentRetry -> TODO()
+                        is AttachmentContentEvent.OnDraftAttachmentRetry ->
+                            viewModel.processIntent(
+                                BaseCustomItemCommonIntent.OnRetryUploadAttachment(event.metadata)
+                            )
 
                         AttachmentContentEvent.UpsellAttachments ->
                             onNavigate(BaseCustomItemNavigation.UpsellAttachments)

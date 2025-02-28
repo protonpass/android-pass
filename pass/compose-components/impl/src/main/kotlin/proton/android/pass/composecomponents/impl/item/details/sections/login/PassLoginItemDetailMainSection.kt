@@ -133,7 +133,7 @@ internal fun PassLoginItemDetailMainSection(
                             isVisible = isVisible,
                             hiddenState = password,
                             fieldType = ItemDetailsFieldType.Hidden.Password,
-                            fieldSection = ItemCustomFieldSection.Login
+                            fieldSection = ItemCustomFieldSection.CustomField
                         )
                     )
                 },

@@ -62,42 +62,7 @@ fun ItemContents.serializeToProto(
                 .build()
 
             builder.clearExtraFields()
-            for (customField in customFields) {
-                when (customField) {
-                    is CustomFieldContent.Text -> {
-                        builder.addExtraFields(
-                            extraField {
-                                fieldName = customField.label
-                                text = extraTextField {
-                                    content = customField.value
-                                }
-                            }
-                        )
-                    }
-
-                    is CustomFieldContent.Hidden -> {
-                        builder.addExtraFields(
-                            extraField {
-                                fieldName = customField.label
-                                hidden = extraHiddenField {
-                                    content = encryptionContext.decrypt(customField.value.encrypted)
-                                }
-                            }
-                        )
-                    }
-
-                    is CustomFieldContent.Totp -> {
-                        builder.addExtraFields(
-                            extraField {
-                                fieldName = customField.label
-                                totp = extraTotp {
-                                    totpUri = encryptionContext.decrypt(customField.value.encrypted)
-                                }
-                            }
-                        )
-                    }
-                }
-            }
+                .addAllExtraFields(customFields.mapToExtraFields(encryptionContext))
 
             builder.content.toBuilder().setLogin(
                 builder.content.login.toBuilder()
@@ -245,7 +210,11 @@ fun ItemContents.serializeToProto(
         }
         is ItemContents.Custom ->
             builder.content.toBuilder().setCustom(
-                builder.content.custom.toBuilder()
+                builder.clearExtraFields()
+                    .addAllExtraFields(customFieldList.mapToExtraFields(encryptionContext))
+                    .content
+                    .custom
+                    .toBuilder()
                     .clearSections()
                     .addAllSections(
                         sectionContentList.map {

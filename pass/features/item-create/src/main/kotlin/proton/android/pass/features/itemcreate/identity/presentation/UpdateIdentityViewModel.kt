@@ -37,7 +37,6 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.UpdateItem
-import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
@@ -61,7 +60,6 @@ class UpdateIdentityViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val accountManager: AccountManager,
-    private val linkAttachmentsToItem: LinkAttachmentsToItem,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel(), IdentityActionsProvider by identityActionsProvider {
 

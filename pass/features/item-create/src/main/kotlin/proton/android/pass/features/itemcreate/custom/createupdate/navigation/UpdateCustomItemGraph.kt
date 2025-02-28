@@ -18,7 +18,6 @@
 
 package proton.android.pass.features.itemcreate.custom.createupdate.navigation
 
-import androidx.compose.material.Text
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 import proton.android.pass.common.api.Option
@@ -29,6 +28,7 @@ import proton.android.pass.features.itemcreate.bottomsheets.customfield.customFi
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
 import proton.android.pass.features.itemcreate.common.customsection.ExtraSectionNavigation
 import proton.android.pass.features.itemcreate.common.customsection.extraSectionGraph
+import proton.android.pass.features.itemcreate.custom.createupdate.ui.UpdateCustomItemScreen
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameNavigation
 import proton.android.pass.features.itemcreate.dialogs.customfield.customFieldNameDialogGraph
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -53,8 +53,8 @@ fun NavGraphBuilder.updateCustomItemGraph(onNavigate: (BaseCustomItemNavigation)
         route = UPDATE_CUSTOM_ITEM_GRAPH,
         startDestination = UpdateCustomItemNavItem.route
     ) {
-        composable(UpdateCustomItemNavItem) { navBackStack ->
-            Text("Empty")
+        composable(UpdateCustomItemNavItem) {
+            UpdateCustomItemScreen(onNavigate = onNavigate)
         }
         customFieldBottomSheetGraph(
             prefix = CustomFieldPrefix.UpdateCustomItem,

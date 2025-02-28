@@ -50,13 +50,13 @@ fun CustomContent(
                 showVaultSelector = itemSharedProperties.shouldShowVaultSelector,
                 onCloseClick = { onEvent(ItemContentEvent.Up) },
                 onActionClick = {
-                    itemSharedProperties.selectedVault.value()?.shareId?.let {
+                    itemSharedProperties.selectedShareId.value()?.let {
                         onEvent(ItemContentEvent.Submit(it))
                     }
                 },
                 onUpgrade = { },
                 onVaultSelectorClick = {
-                    itemSharedProperties.selectedVault.value()?.shareId?.let {
+                    itemSharedProperties.selectedShareId.value()?.let {
                         onEvent(ItemContentEvent.Submit(it))
                     }
                 }

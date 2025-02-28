@@ -1389,6 +1389,7 @@ fun NavGraphBuilder.appGraph(
     createUpdateCustomItemGraph {
         val backDestination = when {
             appNavigator.hasDestinationInStack(CreateCustomItemNavItem) -> CreateCustomItemNavItem
+            appNavigator.hasDestinationInStack(UpdateCustomItemNavItem) -> UpdateCustomItemNavItem
             else -> null
         }
         when (it) {

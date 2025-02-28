@@ -39,7 +39,7 @@
   <string name="share_with_email_hint">Dirección de correo</string>
   <string name="share_with_email_error">Dirección de correo inválida</string>
   <string name="share_with_email_cannot_invite_outside_org">No puede invitar personas fuera de la organización, contacte con el administrador para más información</string>
-  <string name="share_with_email_email_already_added">Ya ha añadido a esta dirección de correo electrónico.</string>
+  <string name="share_with_email_email_already_added">Ya ha agregado a esta dirección de correo electrónico.</string>
   <string name="share_permissions_title">Configurar el nivel de acceso</string>
   <string name="sharing_reject_invitation">Rechazar invitación</string>
   <string name="sharing_vault_invitation_title">Invitación a una bóveda compartida</string>

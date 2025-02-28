@@ -290,7 +290,7 @@
   </plurals>
   <string name="simple_login_widget_action">Синхронизировать псевдонимы</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_not_received">Не получили код?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Please check in your Spam for an email called “%s“</string>
   <string name="verification_code_suggestion_subject_new_email_address">Please confirm your email address for Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Please confirm your mailbox</string>
@@ -312,21 +312,21 @@
   <string name="options_menu_content_description">Options menu</string>
   <!-- Items -->
   <plurals name="shared_items_count">
-    <item quantity="one">%d shared item</item>
-    <item quantity="few">%d shared items</item>
-    <item quantity="many">%d shared items</item>
-    <item quantity="other">%d shared items</item>
+    <item quantity="one">%d общий элемент</item>
+    <item quantity="few">%d общих элемента</item>
+    <item quantity="many">%d общий элементов</item>
+    <item quantity="other">%d общий элементов</item>
   </plurals>
   <plurals name="users_count">
-    <item quantity="one">%d user</item>
-    <item quantity="few">%d users</item>
-    <item quantity="many">%d users</item>
-    <item quantity="other">%d users</item>
+    <item quantity="one">%d пользователь</item>
+    <item quantity="few">%d пользователя</item>
+    <item quantity="many">%d пользователей</item>
+    <item quantity="other">%d пользователей</item>
   </plurals>
   <plurals name="members_count">
-    <item quantity="one">%d member</item>
-    <item quantity="few">%d members</item>
-    <item quantity="many">%d members</item>
-    <item quantity="other">%d members</item>
+    <item quantity="one">%d участник</item>
+    <item quantity="few">%d участника</item>
+    <item quantity="many">%d участников</item>
+    <item quantity="other">%d участников</item>
   </plurals>
 </resources>

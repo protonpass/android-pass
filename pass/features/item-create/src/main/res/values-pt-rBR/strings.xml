@@ -10,13 +10,13 @@
   <string name="action_credit_card">Cartão de crédito</string>
   <string name="action_password">Senha</string>
   <string name="action_identity">Identidade</string>
-  <string name="action_custom">Custom item</string>
+  <string name="action_custom">Item personalizado</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Adicione detalhes de início de sessão para um aplicativo ou site</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Obtenha um alias de e-mail para usar em novos aplicativos</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Anote um PIN, código ou nota para si próprio</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Armazene de forma segura suas informações de pagamento</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Preencha seus dados pessoais</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Create items with fully customised fields</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Crie itens com campos totalmente personalizados</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Gerar uma senha segura</string>
   <!-- Create Login -->
   <string name="field_email_title">Endereço de e-mail</string>
@@ -221,4 +221,24 @@
   <string name="suffix_subtitle_premium_domain">Domínio premium</string>
   <string name="suffix_subtitle_public_domain">Domínio público</string>
   <string name="suffix_subtitle_private_domain">Seu domínio</string>
+  <!-- Templates -->
+  <string name="template_item_api_credential">Credencial de API</string>
+  <string name="template_item_database">Base de dados</string>
+  <string name="template_item_server">Servidor</string>
+  <string name="template_item_software_license">Licença de software</string>
+  <string name="template_item_ssh_key">Chave SSH</string>
+  <string name="template_item_wifi_network">Rede WiFi</string>
+  <string name="template_item_bank_account">Conta bancária</string>
+  <string name="template_item_crypto_wallet">Carteira de criptomoedas</string>
+  <string name="template_item_driver_license">Carteira de motorista</string>
+  <string name="template_item_medical_record">Registro médico</string>
+  <string name="template_item_membership">Subscrição</string>
+  <string name="template_item_passport">Passaporte</string>
+  <string name="template_item_reward_program">Programa de recompensas</string>
+  <string name="template_item_social_security_number">Número de segurança social</string>
+  <string name="template_header_technology">Tecnologia</string>
+  <string name="template_header_finance">Finanças</string>
+  <string name="template_header_personal">Finanças</string>
+  <string name="button_start_from_scratch">Começar do zero</string>
+  <string name="select_template_title">Item personalizado</string>
 </resources>

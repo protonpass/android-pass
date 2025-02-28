@@ -34,7 +34,7 @@
   <string name="auth_action_reveal_password">Показать мастер-пароль</string>
   <string name="auth_action_conceal_password">Скрыть мастер-пароль</string>
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Вместо этого ввести PIN-код</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Use fingerprint instead</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Использовать отпечаток пальца</string>
   <string name="auth_unlock_button">Разблокировать</string>
   <string name="auth_error_empty_password">Пароль не может быть пустым</string>
   <string name="auth_error_pin_cannot_be_empty">PIN-код не может быть пустым</string>
@@ -55,5 +55,5 @@
     <item quantity="other">Осталось %d попыток</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Слишком много попыток ввести PIN-код. Все пользователи вышли из системы.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Слишком много неудачных попыток ввода PIN</string>
 </resources>

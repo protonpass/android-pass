@@ -10,13 +10,13 @@
   <string name="action_credit_card">Card de credit</string>
   <string name="action_password">Parolă</string>
   <string name="action_identity">Identitate</string>
-  <string name="action_custom">Custom item</string>
+  <string name="action_custom">Articol personal</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Adăugați detalii de autentificare pentru o aplicație sau site</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Obțineți un alias de e-mail pentru a-l utiliza la aplicațiile noi.</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Notați-vă un PIN, cod sau o notiță.</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Stocați în siguranță informații de plată.</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Completați detaliile personale</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Create items with fully customised fields</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Creați articole cu câmpuri complet personalizate.</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Generați o parolă sigură.</string>
   <!-- Create Login -->
   <string name="field_email_title">Adresa de e-mail</string>
@@ -221,4 +221,24 @@
   <string name="suffix_subtitle_premium_domain">Domeniu premium</string>
   <string name="suffix_subtitle_public_domain">Domeniu public</string>
   <string name="suffix_subtitle_private_domain">Domeniul personal</string>
+  <!-- Templates -->
+  <string name="template_item_api_credential">Acreditare API</string>
+  <string name="template_item_database">Baza de date</string>
+  <string name="template_item_server">Server</string>
+  <string name="template_item_software_license">Licență program</string>
+  <string name="template_item_ssh_key">Cheie SSH</string>
+  <string name="template_item_wifi_network">Rețea Wi-Fi</string>
+  <string name="template_item_bank_account">Cont bancar</string>
+  <string name="template_item_crypto_wallet">Portofel cripto</string>
+  <string name="template_item_driver_license">Permis de conducere</string>
+  <string name="template_item_medical_record">Fișă medicală</string>
+  <string name="template_item_membership">Apartenență</string>
+  <string name="template_item_passport">Pașaport</string>
+  <string name="template_item_reward_program">Program de recompense</string>
+  <string name="template_item_social_security_number">Cod numeric personal</string>
+  <string name="template_header_technology">Tehnologie</string>
+  <string name="template_header_finance">Finanțe</string>
+  <string name="template_header_personal">Finanțe</string>
+  <string name="button_start_from_scratch">De la început</string>
+  <string name="select_template_title">Articol personal</string>
 </resources>

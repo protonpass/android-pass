@@ -22,7 +22,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -46,6 +45,7 @@ import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
+import proton.android.pass.features.itemcreate.common.customfields.AddSectionButton
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnAttachmentEvent
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnExtraSectionOptions
@@ -212,17 +212,6 @@ fun IdentityItemForm(
             )
         }
 
-        if (identityUiState.showFileAttachments() && canUseAttachments) {
-            AttachmentSection(
-                modifier = Modifier.padding(horizontal = Spacing.medium),
-                attachmentsState = identityUiState.getAttachmentsState(),
-                isDetail = false,
-                itemColors = passItemColors(ItemCategory.Identity),
-                itemDiffs = ItemDiffs.None,
-                onEvent = { onEvent(OnAttachmentEvent(it)) }
-            )
-        }
-
         identityItemFormState.uiExtraSections.forEachIndexed { sectionIndex, section ->
             CollapsibleSectionHeader(
                 sectionTitle = section.title,
@@ -250,12 +239,32 @@ fun IdentityItemForm(
             }
         }
         if (canUseCustomFields) {
-            PassDivider(modifier = Modifier.padding(Spacing.medium))
-            AddSectionButton(
+            Column(
+                modifier = Modifier.padding(
+                    vertical = Spacing.small,
+                    horizontal = Spacing.medium
+                ),
+                verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+            ) {
+                PassDivider()
+                AddSectionButton(
+                    passItemColors = passItemColors(ItemCategory.Identity),
+                    isEnabled = enabled,
+                    onClick = { onEvent(IdentityContentEvent.OnAddExtraSection) }
+                )
+            }
+        }
+
+        if (identityUiState.showFileAttachments() && canUseAttachments) {
+            AttachmentSection(
                 modifier = Modifier
-                    .padding(Spacing.medium)
-                    .fillMaxWidth(),
-                onClick = { onEvent(IdentityContentEvent.OnAddExtraSection) }
+                    .padding(horizontal = Spacing.medium)
+                    .padding(bottom = Spacing.small),
+                attachmentsState = identityUiState.getAttachmentsState(),
+                isDetail = false,
+                itemColors = passItemColors(ItemCategory.Identity),
+                itemDiffs = ItemDiffs.None,
+                onEvent = { onEvent(OnAttachmentEvent(it)) }
             )
         }
     }

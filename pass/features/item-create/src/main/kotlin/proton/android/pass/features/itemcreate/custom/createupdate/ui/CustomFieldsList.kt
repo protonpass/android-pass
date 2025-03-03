@@ -33,7 +33,10 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.getOrElse
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
+import proton.android.pass.features.itemcreate.common.customfields.AddCustomFieldButton
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEntry
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.FocusedField
 
@@ -109,6 +112,7 @@ fun LazyListScope.customFieldsList(
             AddCustomFieldButton(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
                 isEnabled = enabled,
+                passItemColors = passItemColors(ItemCategory.Custom),
                 onClick = { onEvent(ItemContentEvent.OnAddCustomField(sectionIndex)) }
             )
         }

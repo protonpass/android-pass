@@ -60,7 +60,7 @@ fun LazyListScope.customFieldsList(
         ) {
             CustomFieldEntry(
                 modifier = Modifier
-                    .padding(vertical = Spacing.small)
+                    .padding(vertical = Spacing.extraSmall)
                     .padding(horizontal = Spacing.medium)
                     .focusRequester(focusRequester),
                 entry = value,

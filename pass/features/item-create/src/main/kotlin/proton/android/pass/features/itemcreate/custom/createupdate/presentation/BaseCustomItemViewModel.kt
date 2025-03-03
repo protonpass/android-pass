@@ -273,7 +273,7 @@ abstract class BaseCustomItemViewModel(
                 focusedFieldState.update {
                     FocusedField(
                         sectionIndex = sectionIndex,
-                        index = section.customFields.lastIndex
+                        index = updatedSection.customFields.lastIndex
                     ).some()
                 }
             }

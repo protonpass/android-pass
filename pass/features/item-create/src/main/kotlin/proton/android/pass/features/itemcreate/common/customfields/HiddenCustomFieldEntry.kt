@@ -68,7 +68,7 @@ internal fun HiddenCustomFieldEntry(
 
     Box(modifier = modifier.roundedContainerNorm()) {
         ProtonTextField(
-            modifier = modifier.padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
+            modifier = Modifier.padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
             value = text,
             editable = canEdit,
             moveToNextOnEnter = true,

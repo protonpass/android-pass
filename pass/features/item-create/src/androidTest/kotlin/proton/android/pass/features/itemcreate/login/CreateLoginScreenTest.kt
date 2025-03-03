@@ -372,7 +372,7 @@ class CreateLoginScreenTest {
                 )
             }
             val addCustomFieldText =
-                activity.getString(R.string.create_login_add_custom_field_button)
+                activity.getString(R.string.add_custom_field_button)
             onNodeWithText(addCustomFieldText).performScrollTo()
             waitUntilExists(hasText(totpCustomField.label))
             onNodeWithText(totpCustomField.label).performScrollTo().performClick()
@@ -583,7 +583,7 @@ class CreateLoginScreenTest {
             waitUntilExists(hasText(buttonText))
 
             val addCustomFieldText =
-                activity.getString(R.string.create_login_add_custom_field_button)
+                activity.getString(R.string.add_custom_field_button)
             onNodeWithText(addCustomFieldText).performScrollTo().performClick()
 
             waitUntil { checker.isCalled }

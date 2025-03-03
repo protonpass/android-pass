@@ -43,6 +43,7 @@ import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
+import proton.android.pass.features.itemcreate.common.customfields.AddSectionButton
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemFormState
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemSharedProperties
 
@@ -133,13 +134,16 @@ fun ItemForm(
         if (itemSharedProperties.canUseCustomFields) {
             item {
                 Column(
-                    modifier = Modifier.padding(horizontal = Spacing.medium),
-                    verticalArrangement = Arrangement.spacedBy(Spacing.small)
+                    modifier = Modifier.padding(
+                        vertical = Spacing.small,
+                        horizontal = Spacing.medium
+                    ),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.medium)
                 ) {
                     PassDivider()
                     AddSectionButton(
-                        modifier = Modifier.fillMaxWidth(),
                         isEnabled = itemSharedProperties.isFormEnabled,
+                        passItemColors = passItemColors(ItemCategory.Custom),
                         onClick = { onEvent(ItemContentEvent.OnAddSection) }
                     )
                 }

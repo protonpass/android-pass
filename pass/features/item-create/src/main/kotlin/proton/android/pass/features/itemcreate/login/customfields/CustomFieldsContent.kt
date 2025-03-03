@@ -29,11 +29,12 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
-import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
+import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
-import proton.android.pass.features.itemcreate.common.customfields.AddMoreButton
+import proton.android.pass.features.itemcreate.common.customfields.AddCustomFieldButton
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEntry
 import proton.android.pass.features.itemcreate.login.LoginCustomField
 import proton.android.pass.features.itemcreate.login.LoginCustomField.CustomFieldHidden
@@ -116,10 +117,9 @@ internal fun CustomFieldsContent(
         }
 
         if (canUseCustomFields) {
-            AddMoreButton(
-                text = stringResource(R.string.create_login_add_custom_field_button),
-                bgColor = PassTheme.colors.loginInteractionNormMinor1,
-                textColor = PassTheme.colors.loginInteractionNormMajor2,
+            AddCustomFieldButton(
+                passItemColors = passItemColors(ItemCategory.Login),
+                isEnabled = canEdit,
                 onClick = { onEvent(CustomFieldEvent.AddCustomField) }
             )
         }

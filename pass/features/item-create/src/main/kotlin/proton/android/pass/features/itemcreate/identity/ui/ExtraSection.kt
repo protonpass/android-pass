@@ -28,8 +28,10 @@ import androidx.compose.ui.focus.focusRequester
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.common.UIExtraSection
-import proton.android.pass.features.itemcreate.common.customfields.AddMoreButton
+import proton.android.pass.features.itemcreate.common.customfields.AddCustomFieldButton
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEntry
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnAddExtraSectionCustomField
@@ -93,6 +95,10 @@ fun ExtraSection(
                 callback = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
             )
         }
-        AddMoreButton(onClick = { onEvent(OnAddExtraSectionCustomField(sectionIndex)) })
+        AddCustomFieldButton(
+            passItemColors = passItemColors(ItemCategory.Identity),
+            isEnabled = enabled,
+            onClick = { onEvent(OnAddExtraSectionCustomField(sectionIndex)) }
+        )
     }
 }

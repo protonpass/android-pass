@@ -194,16 +194,6 @@ internal fun LoginItemForm(
                 onChange = { onEvent(OnNoteChange(it)) }
             )
 
-            if (isFileAttachmentsEnabled) {
-                AttachmentSection(
-                    attachmentsState = attachmentsState,
-                    isDetail = false,
-                    itemColors = passItemColors(ItemCategory.Login),
-                    itemDiffs = ItemDiffs.None,
-                    onEvent = { onEvent(OnAttachmentEvent(it)) }
-                )
-            }
-
             CustomFieldsContent(
                 customFields = loginItemFormState.customFields.toImmutableList(),
                 focusedField = focusedField as? LoginCustomField,
@@ -218,6 +208,16 @@ internal fun LoginItemForm(
                     packageInfoUiSet = loginItemFormState.packageInfoSet.toImmutableSet(),
                     isEditable = true,
                     onLinkedAppDelete = { onEvent(OnLinkedAppDelete(it)) }
+                )
+            }
+
+            if (isFileAttachmentsEnabled) {
+                AttachmentSection(
+                    attachmentsState = attachmentsState,
+                    isDetail = false,
+                    itemColors = passItemColors(ItemCategory.Login),
+                    itemDiffs = ItemDiffs.None,
+                    onEvent = { onEvent(OnAttachmentEvent(it)) }
                 )
             }
 

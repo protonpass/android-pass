@@ -139,8 +139,10 @@ abstract class BaseCustomItemViewModel(
 
             BaseCustomItemCommonIntent.DismissFileAttachmentsBanner ->
                 dismissFileAttachmentsOnboardingBanner()
+
             is BaseCustomItemCommonIntent.OnOpenDraftAttachment ->
                 openDraftAttachment(intent.contextHolder, intent.uri, intent.mimetype)
+
             is BaseCustomItemCommonIntent.OnRetryUploadAttachment ->
                 retryUploadDraftAttachment(intent.metadata)
         }
@@ -291,39 +293,55 @@ abstract class BaseCustomItemViewModel(
     }
 
     private fun onCustomFieldFocusedChanged(
-        fieldIndex: Int,
+        focusedFieldIndex: Int,
         isFocused: Boolean,
         sectionIndex: Option<Int>
     ) {
-        val sectionPos = sectionIndex.value() ?: 0
-        if (sectionPos >= itemFormState.sectionList.size) return
+        when (sectionIndex) {
+            None -> itemFormState = itemFormState.copy(
+                customFieldList = itemFormState.customFieldList.mapIndexed fields@{ customFieldIndex, field ->
+                    updateFocus(customFieldIndex, focusedFieldIndex, field, isFocused)
+                }
+            )
 
-        itemFormState = itemFormState.copy(
-            sectionList = itemFormState.sectionList.mapIndexed sections@{ index, section ->
-                if (index != fieldIndex) return@sections section
+            is Some -> {
+                val sectionPos = sectionIndex.value() ?: 0
+                if (sectionPos >= itemFormState.sectionList.size) return
 
-                val updatedFields = section.customFields.mapIndexed fields@{ i, field ->
-                    if (i != fieldIndex || field !is UICustomFieldContent.Hidden) return@fields field
+                itemFormState = itemFormState.copy(
+                    sectionList = itemFormState.sectionList.mapIndexed sections@{ index, section ->
+                        if (index != focusedFieldIndex) return@sections section
 
-                    when {
-                        field.value is UIHiddenState.Empty -> field
-                        isFocused -> encryptionContextProvider.withEncryptionContext {
-                            field.copy(
-                                value = UIHiddenState.Revealed(
-                                    encrypted = field.value.encrypted,
-                                    clearText = decrypt(field.value.encrypted)
-                                )
-                            )
+                        val updatedFields = section.customFields.mapIndexed fields@{ customFieldIndex, field ->
+                            updateFocus(customFieldIndex, focusedFieldIndex, field, isFocused)
                         }
 
-                        else -> field.copy(
-                            value = UIHiddenState.Concealed(encrypted = field.value.encrypted)
-                        )
+                        section.copy(customFields = updatedFields)
                     }
-                }
-
-                section.copy(customFields = updatedFields)
+                )
             }
+        }
+    }
+
+    private fun updateFocus(
+        customFieldIndex: Int,
+        focusedFieldIndex: Int,
+        field: UICustomFieldContent,
+        isFocused: Boolean
+    ) = when {
+        customFieldIndex != focusedFieldIndex || field !is UICustomFieldContent.Hidden -> field
+        field.value is UIHiddenState.Empty -> field
+        isFocused -> encryptionContextProvider.withEncryptionContext {
+            field.copy(
+                value = UIHiddenState.Revealed(
+                    encrypted = field.value.encrypted,
+                    clearText = decrypt(field.value.encrypted)
+                )
+            )
+        }
+
+        else -> field.copy(
+            value = UIHiddenState.Concealed(encrypted = field.value.encrypted)
         )
     }
 

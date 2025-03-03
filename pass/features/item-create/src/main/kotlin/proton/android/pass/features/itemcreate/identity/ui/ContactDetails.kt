@@ -39,7 +39,9 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
-import proton.android.pass.features.itemcreate.common.customfields.AddMoreButton
+import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.features.itemcreate.common.customfields.AddCustomFieldButton
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEntry
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnCustomFieldOptions
@@ -203,7 +205,11 @@ internal fun ContactDetails(
             )
         }
         if (showAddContactDetailsButton) {
-            AddMoreButton(onClick = { onEvent(IdentityContentEvent.OnAddContactDetailField) })
+            AddCustomFieldButton(
+                passItemColors = passItemColors(ItemCategory.Identity),
+                isEnabled = enabled,
+                onClick = { onEvent(IdentityContentEvent.OnAddContactDetailField) }
+            )
         }
     }
 }

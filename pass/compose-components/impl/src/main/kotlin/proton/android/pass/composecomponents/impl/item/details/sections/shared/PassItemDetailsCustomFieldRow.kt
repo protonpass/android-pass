@@ -107,6 +107,8 @@ internal fun MutableList<@Composable () -> Unit>.addCustomFieldRows(
         add {
             val itemDiffType = when (itemDiffs) {
                 is ItemDiffs.Identity -> itemDiffs.customField(customFieldSection, index)
+                is ItemDiffs.WifiNetwork -> itemDiffs.customField(customFieldSection, index)
+                is ItemDiffs.SSHKey -> itemDiffs.customField(customFieldSection, index)
                 is ItemDiffs.Custom -> itemDiffs.customField(customFieldSection, index)
                 is ItemDiffs.Login,
                 ItemDiffs.None,

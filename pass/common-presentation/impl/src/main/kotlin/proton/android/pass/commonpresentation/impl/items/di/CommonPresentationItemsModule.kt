@@ -33,6 +33,8 @@ import proton.android.pass.commonpresentation.impl.items.details.handlers.Identi
 import proton.android.pass.commonpresentation.impl.items.details.handlers.ItemDetailsHandlerImpl
 import proton.android.pass.commonpresentation.impl.items.details.handlers.LoginItemDetailsHandlerObserverImpl
 import proton.android.pass.commonpresentation.impl.items.details.handlers.NoteItemDetailsHandlerObserverImpl
+import proton.android.pass.commonpresentation.impl.items.details.handlers.SSHKeyDetailsHandlerObserverImpl
+import proton.android.pass.commonpresentation.impl.items.details.handlers.WifiNetworkDetailsHandlerObserverImpl
 import proton.android.pass.domain.items.ItemCategory
 
 @[Module InstallIn(ViewModelComponent::class)]
@@ -69,6 +71,16 @@ internal abstract class CommonPresentationItemsModule {
     @[Binds ViewModelScoped IntoMap ItemDetailsHandlerObserverKey(ItemCategory.Custom)]
     internal abstract fun bindCustomItemDetailsHandlerObserver(
         impl: CustomItemDetailsHandlerObserverImpl
+    ): ItemDetailsHandlerObserver<*>
+
+    @[Binds ViewModelScoped IntoMap ItemDetailsHandlerObserverKey(ItemCategory.WifiNetwork)]
+    internal abstract fun bindWifiItemDetailsHandlerObserver(
+        impl: WifiNetworkDetailsHandlerObserverImpl
+    ): ItemDetailsHandlerObserver<*>
+
+    @[Binds ViewModelScoped IntoMap ItemDetailsHandlerObserverKey(ItemCategory.SSHKey)]
+    internal abstract fun bindSSHKeyItemDetailsHandlerObserver(
+        impl: SSHKeyDetailsHandlerObserverImpl
     ): ItemDetailsHandlerObserver<*>
 
 }

@@ -145,7 +145,7 @@ private fun ItemTopBarActions(
         }
 
         ItemDetailOptionsButton(
-            isEnabled = actions.canOptions,
+            isEnabled = actions.canUseOptions,
             isVisible = !isLoading,
             iconBackgroundColor = iconBackgroundColor,
             iconColor = iconColor,

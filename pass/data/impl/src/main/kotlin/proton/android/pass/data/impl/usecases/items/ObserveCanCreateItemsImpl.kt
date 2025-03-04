@@ -20,7 +20,10 @@ package proton.android.pass.data.impl.usecases.items
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.items.ObserveCanCreateItems
@@ -32,18 +35,20 @@ class ObserveCanCreateItemsImpl @Inject constructor(
     private val shareRepository: ShareRepository
 ) : ObserveCanCreateItems {
 
-    override fun invoke(): Flow<Boolean> = observeCurrentUser()
-        .flatMapLatest { user ->
-            shareRepository.observeSharesByType(
-                userId = user.userId,
-                shareType = ShareType.Vault,
-                isActive = true
-            )
+    override fun invoke(userId: UserId?): Flow<Boolean> = if (userId == null) {
+        observeCurrentUser().mapLatest { user -> user.userId }
+    } else {
+        flowOf(userId)
+    }.flatMapLatest { userId ->
+        shareRepository.observeSharesByType(
+            userId = userId,
+            shareType = ShareType.Vault,
+            isActive = true
+        )
+    }.map { vaultShares ->
+        vaultShares.any { vaultShare ->
+            vaultShare.canBeCreated
         }
-        .map { vaultShares ->
-            vaultShares.any { vaultShare ->
-                vaultShare.canBeCreated
-            }
-        }
+    }
 
 }

@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -37,12 +38,14 @@ import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
+import proton.android.pass.data.api.usecases.items.ObserveCanCreateItems
 import javax.inject.Inject
 
 @HiltViewModel
 class AccountSwitchViewModel @Inject constructor(
+    userManager: UserManager,
     private val accountManager: AccountManager,
-    userManager: UserManager
+    private val observeCanCreateItems: ObserveCanCreateItems
 ) : ViewModel() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -53,9 +56,11 @@ class AccountSwitchViewModel @Inject constructor(
             }
             combine(flows) { it }
         }
-    private val accountSwitchEventFlow: MutableStateFlow<AccountSwitchEvent> = MutableStateFlow(AccountSwitchEvent.Idle)
 
-    val state = combine(
+    private val accountSwitchEventFlow: MutableStateFlow<AccountSwitchEvent> =
+        MutableStateFlow(AccountSwitchEvent.Idle)
+
+    internal val stateFlow = combine(
         accountManager.getPrimaryAccount(),
         userReadyFlow,
         accountSwitchEventFlow
@@ -78,14 +83,21 @@ class AccountSwitchViewModel @Inject constructor(
             initialValue = AccountSelectorUIState.Loading
         )
 
-    fun onAccountSelected(userId: UserId) {
+    internal fun onAccountSelected(userId: UserId) {
         viewModelScope.launch {
-            accountManager.setAsPrimary(userId)
-            accountSwitchEventFlow.update { AccountSwitchEvent.CreateItem }
+            if (!observeCanCreateItems(userId).first()) {
+                accountManager.setAsPrimary(userId)
+                AccountSwitchEvent.CreateItem
+            } else {
+                AccountSwitchEvent.CannotCreateItem
+            }.also { event ->
+                accountSwitchEventFlow.update { event }
+            }
         }
     }
 
-    fun onEventConsumed(event: AccountSwitchEvent) {
+    internal fun onEventConsumed(event: AccountSwitchEvent) {
         accountSwitchEventFlow.compareAndSet(event, AccountSwitchEvent.Idle)
     }
+
 }

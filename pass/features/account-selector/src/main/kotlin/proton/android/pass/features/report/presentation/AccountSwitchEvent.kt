@@ -18,7 +18,12 @@
 
 package proton.android.pass.features.report.presentation
 
-sealed interface AccountSwitchEvent {
+internal sealed interface AccountSwitchEvent {
+
     data object Idle : AccountSwitchEvent
+
+    data object CannotCreateItem : AccountSwitchEvent
+
     data object CreateItem : AccountSwitchEvent
+
 }

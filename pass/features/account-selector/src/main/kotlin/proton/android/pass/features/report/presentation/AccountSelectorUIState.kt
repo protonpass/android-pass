@@ -21,11 +21,18 @@ package proton.android.pass.features.report.presentation
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
-data class AccountSelectorUIState(
+internal data class AccountSelectorUIState(
     val accounts: PersistentList<AccountRowUIState>,
     val event: AccountSwitchEvent
 ) {
-    companion object {
-        val Loading = AccountSelectorUIState(persistentListOf(), AccountSwitchEvent.Idle)
+
+    internal companion object {
+
+        val Loading = AccountSelectorUIState(
+            accounts = persistentListOf(),
+            event = AccountSwitchEvent.Idle
+        )
+
     }
+
 }

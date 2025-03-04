@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.toPersistentList
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
@@ -60,7 +61,7 @@ internal fun AccountSwitchContent(
     }
 }
 
-fun accountItem(accountRowUIState: AccountRowUIState, onClick: (UserId) -> Unit): BottomSheetItem =
+private fun accountItem(accountRowUIState: AccountRowUIState, onClick: (UserId) -> Unit): BottomSheetItem =
     object : BottomSheetItem {
 
         override val title: @Composable () -> Unit = {
@@ -74,7 +75,12 @@ fun accountItem(accountRowUIState: AccountRowUIState, onClick: (UserId) -> Unit)
         override val leftIcon: @Composable (() -> Unit)? = null
 
         override val endIcon: @Composable (() -> Unit)? = if (accountRowUIState.isPrimary) {
-            { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_checkmark) }
+            {
+                BottomSheetItemIcon(
+                    iconId = CoreR.drawable.ic_proton_checkmark,
+                    tint = PassTheme.colors.interactionNormMajor1
+                )
+            }
         } else {
             null
         }

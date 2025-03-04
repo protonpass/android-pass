@@ -599,6 +599,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                     CreateItemBottomsheetNavItem.createNavRoute(mode)
                 )
             }
+            AccountSwitchNavigation.CannotCreateItem -> dismissBottomSheet {}
         }
     }
 }

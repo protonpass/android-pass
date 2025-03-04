@@ -27,7 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.Spacing
@@ -72,16 +71,16 @@ fun PrivateKeyInput(
             onChange = onChange,
             label = { ProtonTextFieldLabel(text = stringResource(R.string.template_ssh_key_field_private_key)) },
             placeholder = {
-                ProtonTextFieldPlaceHolder(text = stringResource(R.string.custom_field_hidden_placeholder))
+                ProtonTextFieldPlaceHolder(text = stringResource(R.string.add_public_key_placeholder))
             },
             leadingIcon = {
                 Icon.Default(
-                    id = CoreR.drawable.ic_proton_eye_slash,
+                    id = CoreR.drawable.ic_proton_key,
                     tint = ProtonTheme.colors.iconWeak
                 )
             },
             trailingIcon = {
-                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)) {
                     if (text.isNotEmpty()) {
                         SmallCrossIconButton { onChange("") }
                     }

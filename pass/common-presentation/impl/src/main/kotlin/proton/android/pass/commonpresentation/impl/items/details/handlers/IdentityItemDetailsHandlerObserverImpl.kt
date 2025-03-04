@@ -166,6 +166,7 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
 
         ItemDetailsFieldType.Hidden.Cvv,
         ItemDetailsFieldType.Hidden.Password,
+        ItemDetailsFieldType.Hidden.PrivateKey,
         ItemDetailsFieldType.Hidden.Pin -> itemContents
     }
 

@@ -27,6 +27,8 @@ import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUi
 import proton.android.pass.composecomponents.impl.item.details.sections.alias.PassAliasItemDetailSections
 import proton.android.pass.composecomponents.impl.item.details.sections.cards.PassCreditCardItemDetailsSections
 import proton.android.pass.composecomponents.impl.item.details.sections.custom.PassCustomItemDetailSections
+import proton.android.pass.composecomponents.impl.item.details.sections.custom.PassSSHKeyItemDetailSections
+import proton.android.pass.composecomponents.impl.item.details.sections.custom.PassWifiNetworkItemDetailSections
 import proton.android.pass.composecomponents.impl.item.details.sections.identity.PassIdentityItemDetailsSections
 import proton.android.pass.composecomponents.impl.item.details.sections.login.PassLoginItemDetailSections
 import proton.android.pass.composecomponents.impl.item.details.sections.notes.PassNoteItemDetailSections
@@ -121,8 +123,42 @@ internal fun PassItemDetailSections(
             shouldDisplayFileAttachments = shouldDisplayFileAttachments
         )
 
-        is ItemDetailState.SSHKey,
-        is ItemDetailState.WifiNetwork,
+        is ItemDetailState.SSHKey -> PassSSHKeyItemDetailSections(
+            modifier = modifier,
+            itemId = itemId,
+            shareId = shareId,
+            contents = itemContents,
+            itemColors = itemColors,
+            itemDiffs = itemDiffs,
+            onEvent = onEvent,
+            lastAutofillOption = itemLastAutofillAtOption,
+            revision = itemRevision,
+            createdAt = itemCreatedAt,
+            modifiedAt = itemModifiedAt,
+            attachmentsState = attachmentsState,
+            shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
+            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
+            shouldDisplayFileAttachments = shouldDisplayFileAttachments
+        )
+
+        is ItemDetailState.WifiNetwork -> PassWifiNetworkItemDetailSections(
+            modifier = modifier,
+            itemId = itemId,
+            shareId = shareId,
+            contents = itemContents,
+            itemColors = itemColors,
+            itemDiffs = itemDiffs,
+            onEvent = onEvent,
+            lastAutofillOption = itemLastAutofillAtOption,
+            revision = itemRevision,
+            createdAt = itemCreatedAt,
+            modifiedAt = itemModifiedAt,
+            attachmentsState = attachmentsState,
+            shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
+            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
+            shouldDisplayFileAttachments = shouldDisplayFileAttachments
+        )
+
         is ItemDetailState.Custom -> PassCustomItemDetailSections(
             modifier = modifier,
             itemId = itemId,

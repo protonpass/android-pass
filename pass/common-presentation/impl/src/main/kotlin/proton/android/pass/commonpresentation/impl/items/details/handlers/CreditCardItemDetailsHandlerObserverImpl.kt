@@ -93,6 +93,7 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
         )
 
         is ItemDetailsFieldType.Hidden.CustomField,
+        is ItemDetailsFieldType.Hidden.PrivateKey,
         ItemDetailsFieldType.Hidden.Password -> itemContents
     }
 

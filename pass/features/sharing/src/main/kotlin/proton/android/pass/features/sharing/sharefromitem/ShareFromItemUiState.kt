@@ -79,6 +79,8 @@ internal data class ShareFromItemUiState(
             is ItemType.CreditCard,
             is ItemType.Identity,
             is ItemType.Login,
+            is ItemType.WifiNetwork,
+            is ItemType.SSHKey,
             is ItemType.Custom,
             is ItemType.Note -> true
 

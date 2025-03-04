@@ -48,6 +48,8 @@ object ItemUiFilter {
             is ItemContents.CreditCard -> isCreditCardMatch(contents, query)
             is ItemContents.Identity -> isIdentityMatch(contents, query)
             is ItemContents.Custom -> isCustomMatch(contents, query)
+            is ItemContents.WifiNetwork -> isWifiNetworkMatch(contents, query)
+            is ItemContents.SSHKey -> isSSHKeyMatch(contents, query)
             is ItemContents.Unknown -> return false
         }
     }
@@ -115,17 +117,44 @@ object ItemUiFilter {
         }
     }
 
-    private fun isCustomMatch(content: ItemContents.Custom, query: String): Boolean {
-        content.sectionContentList.forEach {
-            if (hasMatchingCustomField(it.customFieldList, query)) return true
-        }
+    private fun isCustomMatch(content: ItemContents.Custom, query: String): Boolean = when {
+        hasMatchingCustomField(content.customFieldList, query) -> true
+        else -> {
+            content.sectionContentList.forEach {
+                if (hasMatchingCustomField(it.customFieldList, query)) return true
+            }
 
-        return false
+            false
+        }
+    }
+
+    private fun isWifiNetworkMatch(content: ItemContents.WifiNetwork, query: String): Boolean = when {
+        content.ssid.preprocess().contains(query) -> true
+        hasMatchingCustomField(content.customFieldList, query) -> true
+        else -> {
+            content.sectionContentList.forEach {
+                if (hasMatchingCustomField(it.customFieldList, query)) return true
+            }
+
+            false
+        }
+    }
+    private fun isSSHKeyMatch(content: ItemContents.SSHKey, query: String): Boolean = when {
+        hasMatchingCustomField(content.customFieldList, query) -> true
+        else -> {
+            content.sectionContentList.forEach {
+                if (hasMatchingCustomField(it.customFieldList, query)) return true
+            }
+
+            false
+        }
     }
 
     private fun hasMatchingCustomField(customFields: List<CustomFieldContent>, query: String): Boolean {
         val customFieldsText: List<CustomFieldContent.Text> = customFields.filterByType()
-        return customFieldsText.any { it.label.preprocess().contains(query) || it.value.preprocess().contains(query) }
+        return customFieldsText.any {
+            it.label.preprocess().contains(query) || it.value.preprocess().contains(query)
+        }
     }
 
     private fun isLoginMatch(content: ItemContents.Login, query: String): Boolean {

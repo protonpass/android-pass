@@ -43,6 +43,7 @@ import proton.android.pass.data.api.usecases.attachments.RenameAttachments
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.features.itemcreate.ItemCreate
@@ -174,9 +175,14 @@ class UpdateCustomItemViewModel @Inject constructor(
                 title = item.title,
                 note = item.note,
                 flags = item.flags
-            ) as ItemContents.Custom
+            )
         }
-        itemFormState = ItemFormState(itemContents)
+        itemFormState = when (item.itemType) {
+            is ItemType.Custom -> ItemFormState(itemContents as ItemContents.Custom)
+            is ItemType.SSHKey -> ItemFormState(itemContents as ItemContents.SSHKey)
+            is ItemType.WifiNetwork -> ItemFormState(itemContents as ItemContents.WifiNetwork)
+            else -> throw IllegalStateException("Unsupported item type")
+        }
     }
 
     private fun onOpenAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
@@ -197,6 +203,7 @@ class UpdateCustomItemViewModel @Inject constructor(
             snackbarDispatcher(CustomItemSnackbarMessage.ItemRenameAttachmentsError)
         }
     }
+
     companion object {
         private const val TAG = "UpdateCustomItemViewModel"
     }

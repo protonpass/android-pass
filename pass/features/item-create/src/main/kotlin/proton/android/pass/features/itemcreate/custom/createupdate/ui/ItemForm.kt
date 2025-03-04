@@ -46,6 +46,7 @@ import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBann
 import proton.android.pass.features.itemcreate.common.customfields.AddSectionButton
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemFormState
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemSharedProperties
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemStaticFields
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -91,8 +92,37 @@ fun ItemForm(
                 onTitleRequiredError = false,
                 enabled = itemSharedProperties.isFormEnabled,
                 isRounded = true,
-                onChange = { onEvent(ItemContentEvent.OnTitleChange(it)) }
+                onChange = {
+                    onEvent(ItemContentEvent.OnFieldValueChange(FieldChange.Title, it))
+                }
             )
+        }
+
+        when (itemFormState.itemStaticFields) {
+            ItemStaticFields.Custom -> {}
+            is ItemStaticFields.SSHKey -> item {
+                SSHKeyContent(
+                    modifier = Modifier.padding(
+                        vertical = Spacing.small,
+                        horizontal = Spacing.medium
+                    ),
+                    itemStaticFields = itemFormState.itemStaticFields,
+                    isEditAllowed = itemSharedProperties.isFormEnabled,
+                    onEvent = onEvent
+                )
+            }
+
+            is ItemStaticFields.WifiNetwork -> item {
+                WifiNetworkContent(
+                    modifier = Modifier.padding(
+                        vertical = Spacing.small,
+                        horizontal = Spacing.medium
+                    ),
+                    itemStaticFields = itemFormState.itemStaticFields,
+                    isEditAllowed = itemSharedProperties.isFormEnabled,
+                    onEvent = onEvent
+                )
+            }
         }
 
         customFieldsList(

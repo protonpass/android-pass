@@ -352,7 +352,7 @@
     <string name="template_membership_field_membership_id">Membership ID</string>
     <string name="template_membership_field_member_name">Member Name</string>
     <string name="template_membership_field_expiry_date">Expiry Date</string>
-    <string name="template_membership_field_tier_level">Tier Level</string>
+    <string name="template_membership_field_tier_level">Tier/Level</string>
     <string name="template_membership_field_note">Note</string>
 
     <!-- Passport Fields -->

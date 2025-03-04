@@ -233,8 +233,8 @@ sealed interface ItemType {
             is Note -> ItemCategory.Note
             Password -> ItemCategory.Password
             is Identity -> ItemCategory.Identity
-            is SSHKey,
-            is WifiNetwork,
+            is SSHKey -> ItemCategory.SSHKey
+            is WifiNetwork -> ItemCategory.WifiNetwork
             is Custom -> ItemCategory.Custom
             Unknown -> ItemCategory.Unknown
         }

@@ -37,9 +37,9 @@ import proton.android.pass.domain.Share
 import proton.android.pass.domain.attachments.Attachment
 import javax.inject.Inject
 
-class CustomItemDetailsHandlerObserverImpl @Inject constructor(
+class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
-) : ItemDetailsHandlerObserver<ItemContents.Custom>() {
+) : ItemDetailsHandlerObserver<ItemContents.WifiNetwork>() {
 
     override fun observe(
         share: Share,
@@ -47,7 +47,7 @@ class CustomItemDetailsHandlerObserverImpl @Inject constructor(
         attachmentsState: AttachmentsState
     ): Flow<ItemDetailState> = observeCustomItemContents(item)
         .mapLatest { identityItemContents ->
-            ItemDetailState.Custom(
+            ItemDetailState.WifiNetwork(
                 itemContents = identityItemContents,
                 itemId = item.id,
                 shareId = item.shareId,
@@ -57,14 +57,14 @@ class CustomItemDetailsHandlerObserverImpl @Inject constructor(
                 itemLastAutofillAtOption = item.lastAutofillTime,
                 itemRevision = item.revision,
                 itemState = ItemState.from(item.state),
-                itemDiffs = ItemDiffs.Custom(),
+                itemDiffs = ItemDiffs.WifiNetwork(),
                 itemShare = share,
                 itemShareCount = item.shareCount,
                 attachmentsState = attachmentsState
             )
         }
 
-    private fun observeCustomItemContents(item: Item): Flow<ItemContents.Custom> = flow {
+    private fun observeCustomItemContents(item: Item): Flow<ItemContents.WifiNetwork> = flow {
         encryptionContextProvider.withEncryptionContext {
             toItemContents(
                 itemType = item.itemType,
@@ -72,7 +72,7 @@ class CustomItemDetailsHandlerObserverImpl @Inject constructor(
                 title = item.title,
                 note = item.note,
                 flags = item.flags
-            ) as ItemContents.Custom
+            ) as ItemContents.WifiNetwork
         }.let { identityItemContents ->
             emit(identityItemContents)
         }
@@ -80,7 +80,7 @@ class CustomItemDetailsHandlerObserverImpl @Inject constructor(
 
     @Suppress("LongMethod")
     override fun updateItemContents(
-        itemContents: ItemContents.Custom,
+        itemContents: ItemContents.WifiNetwork,
         hiddenFieldType: ItemDetailsFieldType.Hidden,
         hiddenFieldSection: ItemCustomFieldSection,
         hiddenState: HiddenState
@@ -124,12 +124,12 @@ class CustomItemDetailsHandlerObserverImpl @Inject constructor(
 
     @Suppress("LongMethod")
     override fun calculateItemDiffs(
-        baseItemContents: ItemContents.Custom,
-        otherItemContents: ItemContents.Custom,
+        baseItemContents: ItemContents.WifiNetwork,
+        otherItemContents: ItemContents.WifiNetwork,
         baseAttachments: List<Attachment>,
         otherAttachments: List<Attachment>
     ): ItemDiffs = encryptionContextProvider.withEncryptionContext {
-        ItemDiffs.Custom(
+        ItemDiffs.WifiNetwork(
             title = calculateItemDiffType(
                 baseItemFieldValue = baseItemContents.title,
                 otherItemFieldValue = otherItemContents.title

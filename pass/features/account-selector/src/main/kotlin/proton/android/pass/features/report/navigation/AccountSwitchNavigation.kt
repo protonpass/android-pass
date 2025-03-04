@@ -19,5 +19,9 @@
 package proton.android.pass.features.report.navigation
 
 sealed interface AccountSwitchNavigation {
+
+    data object CannotCreateItem : AccountSwitchNavigation
+
     data object CreateItem : AccountSwitchNavigation
+
 }

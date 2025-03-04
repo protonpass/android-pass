@@ -19,9 +19,10 @@
 package proton.android.pass.data.api.usecases.items
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.entity.UserId
 
 interface ObserveCanCreateItems {
 
-    operator fun invoke(): Flow<Boolean>
+    operator fun invoke(userId: UserId? = null): Flow<Boolean>
 
 }

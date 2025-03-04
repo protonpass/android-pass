@@ -32,15 +32,18 @@ fun AccountSwitchBottomSheet(
     viewModel: AccountSwitchViewModel = hiltViewModel(),
     onNavigate: (AccountSwitchNavigation) -> Unit
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
     LaunchedEffect(state.event) {
         when (state.event) {
-            AccountSwitchEvent.Idle -> {}
+            AccountSwitchEvent.Idle -> Unit
+            AccountSwitchEvent.CannotCreateItem -> onNavigate(AccountSwitchNavigation.CannotCreateItem)
             AccountSwitchEvent.CreateItem -> onNavigate(AccountSwitchNavigation.CreateItem)
         }
+
         viewModel.onEventConsumed(state.event)
     }
+
     AccountSwitchContent(
         state = state,
         onClick = viewModel::onAccountSelected

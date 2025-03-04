@@ -47,7 +47,7 @@ class ItemDetailTopBarPreviewProvider : PreviewParameterProvider<ItemDetailTopBa
                                 canMoveToTrash = true,
                                 canRestoreFromTrash = false,
                                 canDelete = false,
-                                canOptions = true
+                                canUseOptions = true
                             )
                         )
                     )

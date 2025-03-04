@@ -59,6 +59,8 @@ class GetItemOptionsImpl @Inject constructor(
             is ItemType.Identity,
             is ItemType.Note,
             is ItemType.Custom,
+            is ItemType.WifiNetwork,
+            is ItemType.SSHKey,
             ItemType.Password,
             ItemType.Unknown -> emptyList()
         }.let { itemOptions -> if (itemOptions.isEmpty()) None else Some(itemOptions) }

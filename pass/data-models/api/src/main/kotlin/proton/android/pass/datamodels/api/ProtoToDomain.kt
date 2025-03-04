@@ -48,8 +48,8 @@ fun ItemType.Companion.fromParsed(
     ItemV1.Content.ContentCase.CREDIT_CARD -> createCreditCardItemType(parsed, context)
     ItemV1.Content.ContentCase.IDENTITY -> createIdentityItemType(parsed, context)
     ItemV1.Content.ContentCase.CUSTOM -> createCustomItemType(parsed, context)
-    ItemV1.Content.ContentCase.SSH_KEY -> throw IllegalStateException("Needs to be handled")
-    ItemV1.Content.ContentCase.WIFI -> throw IllegalStateException("Needs to be handled")
+    ItemV1.Content.ContentCase.SSH_KEY -> createSSHKeyItemType(parsed, context)
+    ItemV1.Content.ContentCase.WIFI -> createWifiNetworkItemType(parsed, context)
     ItemV1.Content.ContentCase.CONTENT_NOT_SET,
     null -> ItemType.Unknown
 }
@@ -176,6 +176,29 @@ private fun createCustomItemType(parsed: ItemV1.Item, context: EncryptionContext
         field.toDomain(context)
     },
     extraSections = parsed.content.custom.sectionsList.map { section ->
+        section.toDomain(context)
+    }
+)
+
+private fun createWifiNetworkItemType(parsed: ItemV1.Item, context: EncryptionContext): ItemType.WifiNetwork =
+    ItemType.WifiNetwork(
+        ssid = parsed.content.wifi.ssid,
+        password = context.encrypt(parsed.content.wifi.password),
+        customFields = parsed.extraFieldsList.map { field ->
+            field.toDomain(context)
+        },
+        extraSections = parsed.content.wifi.sectionsList.map { section ->
+            section.toDomain(context)
+        }
+    )
+
+private fun createSSHKeyItemType(parsed: ItemV1.Item, context: EncryptionContext): ItemType.SSHKey = ItemType.SSHKey(
+    publicKey = parsed.content.sshKey.publicKey,
+    privateKey = context.encrypt(parsed.content.sshKey.privateKey),
+    customFields = parsed.extraFieldsList.map { field ->
+        field.toDomain(context)
+    },
+    extraSections = parsed.content.sshKey.sectionsList.map { section ->
         section.toDomain(context)
     }
 )

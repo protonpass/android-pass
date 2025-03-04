@@ -1520,6 +1520,8 @@ fun NavGraphBuilder.appGraph(
                         is ItemContents.Alias -> EditAlias
                         is ItemContents.CreditCard -> EditCreditCard
                         is ItemContents.Unknown -> null
+                        is ItemContents.WifiNetwork,
+                        is ItemContents.SSHKey,
                         is ItemContents.Custom,
                         is ItemContents.Identity -> {
                             // Not required as already migrated to new item-details feature
@@ -1547,6 +1549,8 @@ fun NavGraphBuilder.appGraph(
                             it.itemUiModel.id
                         )
 
+                        is ItemContents.WifiNetwork,
+                        is ItemContents.SSHKey,
                         is ItemContents.Custom,
                         is ItemContents.Identity -> {
                             // Not required as already migrated to new item-details feature

@@ -668,6 +668,8 @@ fun HomeScreen(
                                 is ItemContents.Note -> NoteIcon()
                                 is ItemContents.CreditCard -> CreditCardIcon()
                                 is ItemContents.Identity -> IdentityIcon()
+                                is ItemContents.WifiNetwork,
+                                is ItemContents.SSHKey,
                                 is ItemContents.Custom -> CustomIcon()
                                 is ItemContents.Unknown -> {}
                             }
@@ -904,6 +906,8 @@ fun HomeScreen(
                                     is ItemContents.Note -> NoteOptions
                                     is ItemContents.CreditCard -> CreditCardOptions
                                     is ItemContents.Identity -> IdentityOptions
+                                    is ItemContents.WifiNetwork,
+                                    is ItemContents.SSHKey,
                                     is ItemContents.Custom -> CustomOptions
                                     is ItemContents.Unknown -> LoginOptions
                                 }

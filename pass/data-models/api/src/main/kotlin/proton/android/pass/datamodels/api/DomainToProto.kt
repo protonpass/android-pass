@@ -208,6 +208,7 @@ fun ItemContents.serializeToProto(
             )
 
         }
+
         is ItemContents.Custom ->
             builder.content.toBuilder().setCustom(
                 builder.clearExtraFields()
@@ -215,6 +216,50 @@ fun ItemContents.serializeToProto(
                     .content
                     .custom
                     .toBuilder()
+                    .clearSections()
+                    .addAllSections(
+                        sectionContentList.map {
+                            ItemV1.CustomSection.newBuilder()
+                                .setSectionName(it.title)
+                                .clearSectionFields()
+                                .addAllSectionFields(it.customFieldList.mapToExtraFields(encryptionContext))
+                                .build()
+                        }
+                    )
+                    .build()
+            )
+
+        is ItemContents.WifiNetwork ->
+            builder.content.toBuilder().setWifi(
+                builder.clearExtraFields()
+                    .addAllExtraFields(customFieldList.mapToExtraFields(encryptionContext))
+                    .content
+                    .wifi
+                    .toBuilder()
+                    .setSsid(ssid)
+                    .setPassword(encryptionContext.decrypt(password.encrypted))
+                    .clearSections()
+                    .addAllSections(
+                        sectionContentList.map {
+                            ItemV1.CustomSection.newBuilder()
+                                .setSectionName(it.title)
+                                .clearSectionFields()
+                                .addAllSectionFields(it.customFieldList.mapToExtraFields(encryptionContext))
+                                .build()
+                        }
+                    )
+                    .build()
+            )
+
+        is ItemContents.SSHKey ->
+            builder.content.toBuilder().setSshKey(
+                builder.clearExtraFields()
+                    .addAllExtraFields(customFieldList.mapToExtraFields(encryptionContext))
+                    .content
+                    .sshKey
+                    .toBuilder()
+                    .setPublicKey(publicKey)
+                    .setPrivateKey(encryptionContext.decrypt(privateKey.encrypted))
                     .clearSections()
                     .addAllSections(
                         sectionContentList.map {

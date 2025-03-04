@@ -244,6 +244,36 @@ sealed class ItemContents {
 
     }
 
+    @Stable
+    @Serializable
+    data class WifiNetwork(
+        override val title: String,
+        override val note: String,
+        val ssid: String,
+        val password: HiddenState,
+        val customFieldList: List<CustomFieldContent>,
+        val sectionContentList: List<ExtraSectionContent>
+    ) : ItemContents() {
+
+        override val displayValue: String = title
+
+    }
+
+    @Stable
+    @Serializable
+    data class SSHKey(
+        override val title: String,
+        override val note: String,
+        val publicKey: String,
+        val privateKey: HiddenState,
+        val customFieldList: List<CustomFieldContent>,
+        val sectionContentList: List<ExtraSectionContent>
+    ) : ItemContents() {
+
+        override val displayValue: String = title
+
+    }
+
     @Serializable
     data class Unknown(
         override val title: String,

@@ -112,6 +112,8 @@ fun toItemContents(
     is ItemType.CreditCard -> createCreditCard(encryptionContext, title, note, itemType)
     is ItemType.Identity -> createIdentity(encryptionContext, title, note, itemType)
     is ItemType.Custom -> createCustom(encryptionContext, title, note, itemType)
+    is ItemType.WifiNetwork -> createWifiNetWork(encryptionContext, title, note, itemType)
+    is ItemType.SSHKey -> createSSHKey(encryptionContext, title, note, itemType)
     ItemType.Password,
     ItemType.Unknown -> ItemContents.Unknown(
         title = encryptionContext.decrypt(title),
@@ -251,6 +253,34 @@ private fun createCustom(
 ) = ItemContents.Custom(
     title = encryptionContext.decrypt(title),
     note = encryptionContext.decrypt(note),
+    customFieldList = type.customFields.mapNotNull { it.toContent(encryptionContext, true) },
+    sectionContentList = type.extraSections.map { it.toContent(encryptionContext) }
+)
+
+private fun createWifiNetWork(
+    encryptionContext: EncryptionContext,
+    title: String,
+    note: String,
+    type: ItemType.WifiNetwork
+) = ItemContents.WifiNetwork(
+    title = encryptionContext.decrypt(title),
+    note = encryptionContext.decrypt(note),
+    ssid = type.ssid,
+    password = concealedOrEmpty(type.password, encryptionContext),
+    customFieldList = type.customFields.mapNotNull { it.toContent(encryptionContext, true) },
+    sectionContentList = type.extraSections.map { it.toContent(encryptionContext) }
+)
+
+private fun createSSHKey(
+    encryptionContext: EncryptionContext,
+    title: String,
+    note: String,
+    type: ItemType.SSHKey
+) = ItemContents.SSHKey(
+    title = encryptionContext.decrypt(title),
+    note = encryptionContext.decrypt(note),
+    publicKey = type.publicKey,
+    privateKey = concealedOrEmpty(type.privateKey, encryptionContext),
     customFieldList = type.customFields.mapNotNull { it.toContent(encryptionContext, true) },
     sectionContentList = type.extraSections.map { it.toContent(encryptionContext) }
 )

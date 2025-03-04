@@ -81,6 +81,8 @@ internal fun ItemRowContents(
             selection = selection
         )
 
+        is ItemContents.WifiNetwork,
+        is ItemContents.SSHKey,
         is ItemContents.Custom -> CustomRow(
             modifier = modifier,
             item = item,

@@ -41,6 +41,8 @@ internal data class SecureLinkModel(
         is ItemType.CreditCard,
         is ItemType.Identity,
         is ItemType.Note,
+        is ItemType.WifiNetwork,
+        is ItemType.SSHKey,
         is ItemType.Custom,
         ItemType.Password,
         ItemType.Unknown -> null
@@ -52,6 +54,8 @@ internal data class SecureLinkModel(
         is ItemType.CreditCard,
         is ItemType.Identity,
         is ItemType.Note,
+        is ItemType.WifiNetwork,
+        is ItemType.SSHKey,
         is ItemType.Custom,
         ItemType.Password,
         ItemType.Unknown -> null

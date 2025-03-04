@@ -41,6 +41,8 @@ class SuggestionItemFiltererImpl @Inject constructor(
             is ItemType.Alias,
             is ItemType.Note,
             is ItemType.Custom,
+            is ItemType.WifiNetwork,
+            is ItemType.SSHKey,
             ItemType.Password,
             ItemType.Unknown -> throw IllegalArgumentException("Unsupported item type")
         }

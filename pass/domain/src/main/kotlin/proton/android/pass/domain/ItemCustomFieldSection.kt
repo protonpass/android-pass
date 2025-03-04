@@ -22,25 +22,18 @@ sealed interface ItemCustomFieldSection {
 
     data object CustomField : ItemCustomFieldSection
 
+    @JvmInline
+    value class ExtraSection(val index: Int) : ItemCustomFieldSection
+
     sealed interface Identity : ItemCustomFieldSection {
 
         data object Address : Identity
 
         data object Contact : Identity
 
-        @JvmInline
-        value class ExtraSection(val index: Int) : Identity
 
         data object Personal : Identity
 
         data object Work : Identity
-
     }
-
-    sealed interface CustomItem : ItemCustomFieldSection {
-
-        @JvmInline
-        value class ExtraSection(val index: Int) : Identity
-    }
-
 }

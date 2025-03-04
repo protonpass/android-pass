@@ -177,6 +177,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             password = hiddenState
         )
 
+        ItemDetailsFieldType.Hidden.PrivateKey,
         ItemDetailsFieldType.Hidden.Cvv,
         ItemDetailsFieldType.Hidden.Pin -> itemContents
     }

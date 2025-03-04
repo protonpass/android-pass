@@ -88,6 +88,9 @@ sealed interface ItemDetailsFieldType {
 
         data object ZipOrPostalCode : Plain
 
+        data object PublicKey : Plain
+
+        data object SSID : Plain
     }
 
     sealed interface Hidden : ItemDetailsFieldType {
@@ -100,6 +103,8 @@ sealed interface ItemDetailsFieldType {
         data object Password : Hidden
 
         data object Pin : Hidden
+
+        data object PrivateKey : Hidden
 
     }
 

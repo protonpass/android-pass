@@ -86,6 +86,7 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
     ): ItemContents = when (hiddenFieldType) {
         is ItemDetailsFieldType.Hidden.CustomField,
         ItemDetailsFieldType.Hidden.Cvv,
+        ItemDetailsFieldType.Hidden.PrivateKey,
         ItemDetailsFieldType.Hidden.Password,
         ItemDetailsFieldType.Hidden.Pin -> itemContents
     }

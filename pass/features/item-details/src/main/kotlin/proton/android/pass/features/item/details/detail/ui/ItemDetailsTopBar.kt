@@ -56,6 +56,7 @@ internal fun ItemDetailsTopBar(
     onUpClick: () -> Unit,
     isEditEnabled: Boolean,
     onEditClick: () -> Unit,
+    areOptionsEnabled: Boolean,
     onOptionsClick: () -> Unit,
     isShareEnabled: Boolean,
     onShareClick: () -> Unit,
@@ -109,6 +110,7 @@ internal fun ItemDetailsTopBar(
 
                 ItemDetailOptionsButton(
                     isVisible = !isLoading,
+                    isEnabled = areOptionsEnabled,
                     iconBackgroundColor = itemColors.minorPrimary,
                     iconColor = itemColors.majorSecondary,
                     onOptionsClick = onOptionsClick
@@ -200,6 +202,7 @@ private fun ItemDetailShareButton(
 private fun ItemDetailOptionsButton(
     modifier: Modifier = Modifier,
     isVisible: Boolean,
+    isEnabled: Boolean,
     iconBackgroundColor: Color,
     iconColor: Color,
     onOptionsClick: () -> Unit
@@ -212,6 +215,7 @@ private fun ItemDetailOptionsButton(
             backgroundColor = iconBackgroundColor,
             tintColor = iconColor,
             iconContentDescription = stringResource(id = R.string.item_details_toolbar_content_description_menu_button),
+            enabled = isEnabled,
             onClick = onOptionsClick
         )
     }

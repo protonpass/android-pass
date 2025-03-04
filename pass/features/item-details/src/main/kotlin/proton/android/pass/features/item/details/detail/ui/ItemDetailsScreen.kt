@@ -42,8 +42,7 @@ fun ItemDetailsScreen(
 
     LaunchedEffect(key1 = state.event) {
         when (state.event) {
-            ItemDetailsEvent.Idle -> {
-            }
+            ItemDetailsEvent.Idle -> Unit
 
             ItemDetailsEvent.OnItemNotFound ->
                 ItemDetailsNavDestination.Home

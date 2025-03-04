@@ -35,6 +35,7 @@ import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareType
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -61,7 +62,8 @@ class GetItemActionsImpl @Inject constructor(
             canMoveToOtherVault = canMigrate(isItemTrashed, share, shares),
             canMoveToTrash = !isItemTrashed && share.canBeTrashed,
             canDelete = isItemTrashed && share.canBeDeleted,
-            canRestoreFromTrash = isItemTrashed
+            canRestoreFromTrash = isItemTrashed,
+            canOptions = canOptions(isItemTrashed, share)
         )
     }.first()
 
@@ -136,4 +138,11 @@ class GetItemActionsImpl @Inject constructor(
             )
         }
     }
+
+    private fun canOptions(isItemTrashed: Boolean, share: Share) = when {
+        !isItemTrashed -> true
+        share.canBeDeleted -> true
+        else -> share.shareType == ShareType.Item
+    }
+
 }

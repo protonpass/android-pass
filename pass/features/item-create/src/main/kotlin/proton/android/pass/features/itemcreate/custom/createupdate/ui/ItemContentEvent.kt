@@ -22,14 +22,19 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.ShareId
 
+enum class FieldChange {
+    Title, SSID, Password, PrivateKey, PublicKey
+}
+
 sealed interface ItemContentEvent {
     data object Up : ItemContentEvent
 
     @JvmInline
     value class Submit(val shareId: ShareId) : ItemContentEvent
 
-    @JvmInline
-    value class OnTitleChange(val value: String) : ItemContentEvent
+    data class OnFieldValueChange(val field: FieldChange, val value: String) : ItemContentEvent
+
+    data class OnFieldFocusChange(val field: FieldChange, val isFocused: Boolean) : ItemContentEvent
 
     data class OnCustomFieldChange(
         val index: Int,

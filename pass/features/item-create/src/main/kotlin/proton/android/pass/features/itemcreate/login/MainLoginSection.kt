@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.domain.ShareId
+import proton.android.pass.features.itemcreate.common.PasswordInput
 
 @Composable
 internal fun MainLoginSection(

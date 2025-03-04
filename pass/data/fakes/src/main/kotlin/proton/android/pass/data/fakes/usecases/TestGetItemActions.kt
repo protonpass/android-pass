@@ -44,7 +44,8 @@ class TestGetItemActions @Inject constructor() : GetItemActions {
             canMoveToOtherVault = ItemActions.CanMoveToOtherVaultState.Enabled,
             canMoveToTrash = true,
             canRestoreFromTrash = false,
-            canDelete = true
+            canDelete = true,
+            canOptions = true
         )
     }
 

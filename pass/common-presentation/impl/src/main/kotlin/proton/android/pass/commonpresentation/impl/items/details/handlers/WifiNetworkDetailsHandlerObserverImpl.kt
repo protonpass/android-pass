@@ -116,9 +116,11 @@ class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
                 is ItemCustomFieldSection.Identity -> itemContents
             }
         }
-
+        ItemDetailsFieldType.Hidden.Password -> itemContents.copy(
+            password = hiddenState
+        )
         ItemDetailsFieldType.Hidden.Cvv,
-        ItemDetailsFieldType.Hidden.Password,
+        ItemDetailsFieldType.Hidden.PrivateKey,
         ItemDetailsFieldType.Hidden.Pin -> itemContents
     }
 
@@ -137,6 +139,15 @@ class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
             note = calculateItemDiffType(
                 baseItemFieldValue = baseItemContents.note,
                 otherItemFieldValue = otherItemContents.note
+            ),
+            ssid = calculateItemDiffType(
+                baseItemFieldValue = baseItemContents.ssid,
+                otherItemFieldValue = otherItemContents.ssid
+            ),
+            password = calculateItemDiffType(
+                encryptionContext = this@withEncryptionContext,
+                baseItemFieldHiddenState = baseItemContents.password,
+                otherItemFieldHiddenState = otherItemContents.password
             ),
             customFields = calculateItemDiffTypes(
                 encryptionContext = this@withEncryptionContext,

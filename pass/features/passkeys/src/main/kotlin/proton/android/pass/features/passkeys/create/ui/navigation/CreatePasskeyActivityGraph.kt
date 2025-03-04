@@ -391,6 +391,8 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                     route = CreateLoginNavItem.createNavRoute()
                 )
             }
+
+            AccountSwitchNavigation.CannotCreateItem -> dismissBottomSheet {}
         }
     }
 }

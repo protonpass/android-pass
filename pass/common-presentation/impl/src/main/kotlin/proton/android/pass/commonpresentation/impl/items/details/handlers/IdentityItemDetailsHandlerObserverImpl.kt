@@ -111,7 +111,7 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
                     )
                 }
 
-                is ItemCustomFieldSection.Identity.ExtraSection -> {
+                is ItemCustomFieldSection.ExtraSection -> {
                     itemContents.copy(
                         extraSectionContentList = itemContents.extraSectionContentList
                             .toMutableList()
@@ -157,8 +157,7 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
                     )
                 }
 
-                ItemCustomFieldSection.CustomField,
-                is ItemCustomFieldSection.CustomItem.ExtraSection ->
+                ItemCustomFieldSection.CustomField ->
                     throw UnsupportedOperationException(
                         "cannot have custom section in ${hiddenFieldType::class.simpleName}"
                     )

@@ -46,9 +46,9 @@ internal fun PassCustomItemDetailSections(
     modifier: Modifier = Modifier,
     itemId: ItemId,
     shareId: ShareId,
-    contents: ItemContents.Custom,
+    contents: ItemContents,
     itemColors: PassItemColors,
-    itemDiffs: ItemDiffs.Custom,
+    itemDiffs: ItemDiffs,
     lastAutofillOption: Option<Instant>,
     revision: Long,
     createdAt: Instant,
@@ -58,8 +58,14 @@ internal fun PassCustomItemDetailSections(
     shouldDisplayFileAttachments: Boolean,
     attachmentsState: AttachmentsState,
     onEvent: (PassItemDetailsUiEvent) -> Unit
-) = with(contents) {
-    Column(
+) {
+    val (customFieldList, sectionContentList) = when (contents) {
+        is ItemContents.Custom -> contents.customFieldList to contents.sectionContentList
+        is ItemContents.SSHKey -> contents.customFieldList to contents.sectionContentList
+        is ItemContents.WifiNetwork -> contents.customFieldList to contents.sectionContentList
+        else -> throw IllegalStateException("Item type not supported: $contents")
+    }
+    return Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {

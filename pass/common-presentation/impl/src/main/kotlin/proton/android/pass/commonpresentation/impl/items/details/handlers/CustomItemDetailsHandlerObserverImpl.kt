@@ -87,7 +87,7 @@ class CustomItemDetailsHandlerObserverImpl @Inject constructor(
     ): ItemContents = when (hiddenFieldType) {
         is ItemDetailsFieldType.Hidden.CustomField -> {
             when (hiddenFieldSection) {
-                is ItemCustomFieldSection.CustomItem.ExtraSection -> itemContents.copy(
+                is ItemCustomFieldSection.ExtraSection -> itemContents.copy(
                     sectionContentList = itemContents.sectionContentList
                         .toMutableList()
                         .apply {

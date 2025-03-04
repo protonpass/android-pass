@@ -81,6 +81,8 @@ fun passItemColors(itemCategory: ItemCategory): PassItemColors = when (itemCateg
         minorSecondary = PassTheme.colors.interactionNormMinor2
     )
 
+    ItemCategory.WifiNetwork,
+    ItemCategory.SSHKey,
     ItemCategory.Custom -> PassItemColors(
         norm = PassTheme.colors.interactionNorm,
         majorPrimary = PassTheme.colors.interactionNormMajor1,

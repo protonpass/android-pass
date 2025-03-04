@@ -34,6 +34,9 @@ import proton.android.pass.features.itemcreate.alias.createAliasGraph
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.AddCustomFieldBottomSheetNavItem
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldOptionsBottomSheetNavItem
 import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
+import proton.android.pass.features.itemcreate.dialogs.cannotcreateitems.navigation.CannotCreateItemsNavDestination
+import proton.android.pass.features.itemcreate.dialogs.cannotcreateitems.navigation.CannotCreateItemsNavItem
+import proton.android.pass.features.itemcreate.dialogs.cannotcreateitems.navigation.cannotCreateItemsNavGraph
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameDialogNavItem
 import proton.android.pass.features.itemcreate.dialogs.customfield.EditCustomFieldNameDialogNavItem
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation
@@ -87,13 +90,15 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
 
                 is AuthNavigation.ForceSignOut ->
                     onNavigate(CreatePasskeyNavigation.ForceSignOut(it.userId))
+
                 is AuthNavigation.EnterPin -> appNavigator.navigate(
                     destination = EnterPin,
                     route = EnterPin.buildRoute(it.origin)
                 )
 
                 is AuthNavigation.SignOut,
-                AuthNavigation.ForceSignOutAllUsers -> {}
+                AuthNavigation.ForceSignOutAllUsers -> {
+                }
 
                 AuthNavigation.CloseBottomsheet -> dismissBottomSheet {}
             }
@@ -133,7 +138,11 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
 
                 is SelectItemNavigation.ItemOptions -> appNavigator.navigate(
                     destination = ItemOptionsBottomSheetNavItem,
-                    route = ItemOptionsBottomSheetNavItem.createRoute(it.userId, it.shareId, it.itemId)
+                    route = ItemOptionsBottomSheetNavItem.createRoute(
+                        it.userId,
+                        it.shareId,
+                        it.itemId
+                    )
                 )
 
                 SelectItemNavigation.Upgrade -> {
@@ -315,8 +324,10 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                         route = SelectVaultBottomsheet.createNavRoute(it.shareId)
                     )
                 }
+
                 CreateAliasNavigation.SelectMailbox ->
                     appNavigator.navigate(AliasSelectMailboxBottomSheetNavItem)
+
                 CreateAliasNavigation.SelectSuffix ->
                     appNavigator.navigate(AliasSelectSuffixBottomSheetNavItem)
 
@@ -392,7 +403,17 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                 )
             }
 
-            AccountSwitchNavigation.CannotCreateItem -> dismissBottomSheet {}
+            AccountSwitchNavigation.CannotCreateItem -> dismissBottomSheet {
+                appNavigator.navigate(
+                    destination = CannotCreateItemsNavItem
+                )
+            }
+        }
+    }
+
+    cannotCreateItemsNavGraph { destination ->
+        when (destination) {
+            CannotCreateItemsNavDestination.Back -> appNavigator.navigateBack()
         }
     }
 }

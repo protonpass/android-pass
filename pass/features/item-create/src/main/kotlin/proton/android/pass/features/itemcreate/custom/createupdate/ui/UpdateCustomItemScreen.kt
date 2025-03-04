@@ -41,6 +41,13 @@ import proton.android.pass.features.itemcreate.custom.createupdate.navigation.Ba
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.CreateCustomItemNavigation
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.ClearDraft
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnPasswordChanged
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnPasswordFocusedChanged
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnPrivateKeyChanged
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnPrivateKeyFocusedChanged
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnPublicKeyChanged
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnSSIDChanged
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnTitleChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.UpdateCustomItemViewModel
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.UpdateSpecificIntent
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
@@ -77,8 +84,25 @@ fun UpdateCustomItemScreen(
                 when (it) {
                     ItemContentEvent.Up -> onExit()
 
-                    is ItemContentEvent.OnTitleChange ->
-                        viewModel.processIntent(BaseCustomItemCommonIntent.OnTitleChanged(it.value))
+                    is ItemContentEvent.OnFieldValueChange -> when (it.field) {
+                        FieldChange.Password ->
+                            viewModel.processIntent(OnPasswordChanged(it.value))
+                        FieldChange.PrivateKey ->
+                            viewModel.processIntent(OnPrivateKeyChanged(it.value))
+                        FieldChange.PublicKey ->
+                            viewModel.processIntent(OnPublicKeyChanged(it.value))
+                        FieldChange.SSID ->
+                            viewModel.processIntent(OnSSIDChanged(it.value))
+                        FieldChange.Title ->
+                            viewModel.processIntent(OnTitleChanged(it.value))
+                    }
+                    is ItemContentEvent.OnFieldFocusChange -> when (it.field) {
+                        FieldChange.Password ->
+                            viewModel.processIntent(OnPasswordFocusedChanged(it.isFocused))
+                        FieldChange.PrivateKey ->
+                            viewModel.processIntent(OnPrivateKeyFocusedChanged(it.isFocused))
+                        else -> throw IllegalStateException("Ignore focus change for ${it.field}")
+                    }
 
                     is ItemContentEvent.OnAddCustomField ->
                         actionAfterKeyboardHide = {

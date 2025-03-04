@@ -71,6 +71,24 @@ sealed interface BaseCustomItemCommonIntent : BaseItemFormIntent {
     @JvmInline
     value class OnTitleChanged(val value: String) : BaseCustomItemCommonIntent
 
+    @JvmInline
+    value class OnSSIDChanged(val value: String) : BaseCustomItemCommonIntent
+
+    @JvmInline
+    value class OnPasswordChanged(val value: String) : BaseCustomItemCommonIntent
+
+    @JvmInline
+    value class OnPublicKeyChanged(val value: String) : BaseCustomItemCommonIntent
+
+    @JvmInline
+    value class OnPrivateKeyChanged(val value: String) : BaseCustomItemCommonIntent
+
+    @JvmInline
+    value class OnPasswordFocusedChanged(val isFocused: Boolean) : BaseCustomItemCommonIntent
+
+    @JvmInline
+    value class OnPrivateKeyFocusedChanged(val isFocused: Boolean) : BaseCustomItemCommonIntent
+
     data class OnCustomFieldChanged(
         val index: Int,
         val value: String,
@@ -99,6 +117,7 @@ sealed interface BaseCustomItemCommonIntent : BaseItemFormIntent {
     data object DismissFileAttachmentsBanner : BaseCustomItemCommonIntent
 }
 
+@Suppress("TooManyFunctions")
 abstract class BaseCustomItemViewModel(
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -145,6 +164,16 @@ abstract class BaseCustomItemViewModel(
 
             is BaseCustomItemCommonIntent.OnRetryUploadAttachment ->
                 retryUploadDraftAttachment(intent.metadata)
+
+            is BaseCustomItemCommonIntent.OnPasswordChanged -> onPasswordChange(intent.value)
+            is BaseCustomItemCommonIntent.OnPrivateKeyChanged -> onPrivateKeyChange(intent.value)
+            is BaseCustomItemCommonIntent.OnPublicKeyChanged -> onPublicKeyChange(intent.value)
+            is BaseCustomItemCommonIntent.OnSSIDChanged -> onSSIDChange(intent.value)
+            is BaseCustomItemCommonIntent.OnPasswordFocusedChanged ->
+                onPasswordFocusedChange(intent.isFocused)
+
+            is BaseCustomItemCommonIntent.OnPrivateKeyFocusedChanged ->
+                onPrivateKeyFocusedChange(intent.isFocused)
         }
     }
 
@@ -312,9 +341,10 @@ abstract class BaseCustomItemViewModel(
                     sectionList = itemFormState.sectionList.mapIndexed sections@{ index, section ->
                         if (index != focusedFieldIndex) return@sections section
 
-                        val updatedFields = section.customFields.mapIndexed fields@{ customFieldIndex, field ->
-                            updateFocus(customFieldIndex, focusedFieldIndex, field, isFocused)
-                        }
+                        val updatedFields =
+                            section.customFields.mapIndexed fields@{ customFieldIndex, field ->
+                                updateFocus(customFieldIndex, focusedFieldIndex, field, isFocused)
+                            }
 
                         section.copy(customFields = updatedFields)
                     }
@@ -485,6 +515,81 @@ abstract class BaseCustomItemViewModel(
             PassLogger.w(TAG, "Link attachment error")
             PassLogger.w(TAG, it)
             snackbarDispatcher(CustomItemSnackbarMessage.ItemLinkAttachmentsError)
+        }
+    }
+
+    private fun onSSIDChange(value: String) {
+        val updatedStaticFields = (itemFormState.itemStaticFields as ItemStaticFields.WifiNetwork)
+            .copy(ssid = value)
+        itemFormState = itemFormState.copy(itemStaticFields = updatedStaticFields)
+    }
+
+    private fun onPublicKeyChange(value: String) {
+        val updatedStaticFields = (itemFormState.itemStaticFields as ItemStaticFields.SSHKey)
+            .copy(publicKey = value)
+        itemFormState = itemFormState.copy(itemStaticFields = updatedStaticFields)
+    }
+
+    private fun onPrivateKeyChange(value: String) {
+        val privateKey = encryptionContextProvider.withEncryptionContext {
+            if (value.isBlank()) {
+                UIHiddenState.Empty(encrypt(""))
+            } else {
+                UIHiddenState.Revealed(
+                    encrypted = encrypt(value),
+                    clearText = value
+                )
+            }
+        }
+        val updatedStaticFields = (itemFormState.itemStaticFields as ItemStaticFields.SSHKey)
+            .copy(privateKey = privateKey)
+        itemFormState = itemFormState.copy(itemStaticFields = updatedStaticFields)
+    }
+
+    private fun onPasswordChange(value: String) {
+        val password = encryptionContextProvider.withEncryptionContext {
+            if (value.isBlank()) {
+                UIHiddenState.Empty(encrypt(""))
+            } else {
+                UIHiddenState.Revealed(
+                    encrypted = encrypt(value),
+                    clearText = value
+                )
+            }
+        }
+        val updatedStaticFields = (itemFormState.itemStaticFields as ItemStaticFields.WifiNetwork)
+            .copy(password = password)
+        itemFormState = itemFormState.copy(itemStaticFields = updatedStaticFields)
+    }
+
+    private fun onFieldFocusedChange(
+        isFocused: Boolean,
+        field: UIHiddenState,
+        updateField: (UIHiddenState) -> Unit
+    ) {
+        when (field) {
+            is UIHiddenState.Concealed -> if (isFocused) {
+                val clearText = encryptionContextProvider.withEncryptionContext { decrypt(field.encrypted) }
+                updateField(UIHiddenState.Revealed(encrypted = field.encrypted, clearText = clearText))
+            }
+            is UIHiddenState.Empty -> {}
+            is UIHiddenState.Revealed -> if (!isFocused) {
+                updateField(UIHiddenState.Concealed(field.encrypted))
+            }
+        }
+    }
+
+    private fun onPrivateKeyFocusedChange(isFocused: Boolean) {
+        val sshKeyFields = itemFormState.itemStaticFields as ItemStaticFields.SSHKey
+        onFieldFocusedChange(isFocused, sshKeyFields.privateKey) { updatedKey ->
+            itemFormState = itemFormState.copy(itemStaticFields = sshKeyFields.copy(privateKey = updatedKey))
+        }
+    }
+
+    private fun onPasswordFocusedChange(isFocused: Boolean) {
+        val wifiNetworkFields = itemFormState.itemStaticFields as ItemStaticFields.WifiNetwork
+        onFieldFocusedChange(isFocused, wifiNetworkFields.password) { updatedPassword ->
+            itemFormState = itemFormState.copy(itemStaticFields = wifiNetworkFields.copy(password = updatedPassword))
         }
     }
 

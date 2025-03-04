@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.login
+package proton.android.pass.features.itemcreate.common
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
@@ -45,7 +45,9 @@ import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.composecomponents.impl.icon.PassPasswordStrengthIcon
 import proton.android.pass.composecomponents.impl.labels.PassPasswordStrengthLabel
 import proton.android.pass.features.itemcreate.R
-import proton.android.pass.features.itemcreate.common.UIHiddenState
+import proton.android.pass.features.itemcreate.login.PASSWORD_CONCEALED_LENGTH
+import proton.android.pass.features.itemcreate.login.PasswordInputPreviewParams
+import proton.android.pass.features.itemcreate.login.PasswordInputPreviewProvider
 
 @Composable
 internal fun PasswordInput(

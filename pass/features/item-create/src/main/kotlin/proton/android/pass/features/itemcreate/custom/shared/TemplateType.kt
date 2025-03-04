@@ -92,8 +92,6 @@ enum class TemplateType(
         titleResId = R.string.template_item_ssh_key,
         iconResId = CoreR.drawable.ic_proton_filing_cabinet,
         fields = listOf(
-            Field(R.string.template_ssh_key_field_private_key, true),
-            Field(R.string.template_ssh_key_field_public_key, false),
             Field(R.string.template_ssh_key_field_username, false),
             Field(R.string.template_ssh_key_field_host, false),
             Field(R.string.template_ssh_key_field_note, false)
@@ -105,8 +103,6 @@ enum class TemplateType(
         titleResId = R.string.template_item_wifi_network,
         iconResId = CoreR.drawable.ic_proton_shield_2_bolt,
         fields = listOf(
-            Field(R.string.template_wifi_network_field_ssid, false),
-            Field(R.string.template_wifi_network_field_password, true),
             Field(R.string.template_wifi_network_field_security_type, false),
             Field(R.string.template_wifi_network_field_note, false)
         )

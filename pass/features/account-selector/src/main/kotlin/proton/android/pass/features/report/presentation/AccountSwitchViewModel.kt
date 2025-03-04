@@ -85,7 +85,7 @@ class AccountSwitchViewModel @Inject constructor(
 
     internal fun onAccountSelected(userId: UserId) {
         viewModelScope.launch {
-            if (!observeCanCreateItems(userId).first()) {
+            if (observeCanCreateItems(userId).first()) {
                 accountManager.setAsPrimary(userId)
                 AccountSwitchEvent.CreateItem
             } else {

@@ -163,6 +163,7 @@ class ItemDetailsHandlerImpl @Inject constructor(
         ItemDetailsFieldType.Hidden.Cvv -> ItemDetailsSnackbarMessage.CvvCopied
         ItemDetailsFieldType.Hidden.Password -> ItemDetailsSnackbarMessage.PasswordCopied
         ItemDetailsFieldType.Hidden.Pin -> ItemDetailsSnackbarMessage.PinCopied
+        ItemDetailsFieldType.Hidden.PrivateKey -> ItemDetailsSnackbarMessage.PrivateKeyCopied
         ItemDetailsFieldType.Plain.Alias -> ItemDetailsSnackbarMessage.AliasCopied
         ItemDetailsFieldType.Plain.BirthDate -> ItemDetailsSnackbarMessage.BirthDateCopied
         ItemDetailsFieldType.Plain.CardNumber -> ItemDetailsSnackbarMessage.CardNumberCopied
@@ -196,6 +197,8 @@ class ItemDetailsHandlerImpl @Inject constructor(
         ItemDetailsFieldType.Plain.XHandle -> ItemDetailsSnackbarMessage.XHandleCopied
         ItemDetailsFieldType.Plain.Yahoo -> ItemDetailsSnackbarMessage.YahooCopied
         ItemDetailsFieldType.Plain.ZipOrPostalCode -> ItemDetailsSnackbarMessage.ZipOrPostalCodeCopied
+        ItemDetailsFieldType.Plain.PublicKey -> ItemDetailsSnackbarMessage.PublicKeyCopied
+        ItemDetailsFieldType.Plain.SSID -> ItemDetailsSnackbarMessage.SSIDCopied
     }.let { snackbarMessage -> snackbarDispatcher(snackbarMessage) }
 
     override fun updateItemDetailsContent(

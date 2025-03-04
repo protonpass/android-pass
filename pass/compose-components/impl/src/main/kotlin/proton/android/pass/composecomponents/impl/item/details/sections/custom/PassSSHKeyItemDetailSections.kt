@@ -42,13 +42,13 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
 @Composable
-internal fun PassCustomItemDetailSections(
+internal fun PassSSHKeyItemDetailSections(
     modifier: Modifier = Modifier,
     itemId: ItemId,
     shareId: ShareId,
-    contents: ItemContents.Custom,
+    contents: ItemContents.SSHKey,
     itemColors: PassItemColors,
-    itemDiffs: ItemDiffs.Custom,
+    itemDiffs: ItemDiffs.SSHKey,
     lastAutofillOption: Option<Instant>,
     revision: Long,
     createdAt: Instant,
@@ -63,6 +63,12 @@ internal fun PassCustomItemDetailSections(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
+        PassSSHKeyMainSection(
+            contents = contents,
+            itemColors = itemColors,
+            itemDiffs = itemDiffs,
+            onEvent = onEvent
+        )
         if (contents.customFieldList.isNotEmpty()) {
             PassItemDetailCustomFieldsSection(
                 customFields = contents.customFieldList.toPersistentList(),
@@ -110,3 +116,4 @@ internal fun PassCustomItemDetailSections(
         )
     }
 }
+

@@ -85,6 +85,9 @@ class SSHKeyDetailsHandlerObserverImpl @Inject constructor(
         hiddenFieldSection: ItemCustomFieldSection,
         hiddenState: HiddenState
     ): ItemContents = when (hiddenFieldType) {
+        is ItemDetailsFieldType.Hidden.PrivateKey -> itemContents.copy(
+            privateKey = hiddenState
+        )
         is ItemDetailsFieldType.Hidden.CustomField -> {
             when (hiddenFieldSection) {
                 is ItemCustomFieldSection.ExtraSection -> itemContents.copy(
@@ -137,6 +140,15 @@ class SSHKeyDetailsHandlerObserverImpl @Inject constructor(
             note = calculateItemDiffType(
                 baseItemFieldValue = baseItemContents.note,
                 otherItemFieldValue = otherItemContents.note
+            ),
+            publicKey = calculateItemDiffType(
+                baseItemFieldValue = baseItemContents.publicKey,
+                otherItemFieldValue = otherItemContents.publicKey
+            ),
+            privateKey = calculateItemDiffType(
+                encryptionContext = this@withEncryptionContext,
+                baseItemFieldHiddenState = baseItemContents.privateKey,
+                otherItemFieldHiddenState = otherItemContents.privateKey
             ),
             customFields = calculateItemDiffTypes(
                 encryptionContext = this@withEncryptionContext,

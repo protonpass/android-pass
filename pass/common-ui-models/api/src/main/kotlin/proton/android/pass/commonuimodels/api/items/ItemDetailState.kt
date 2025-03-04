@@ -280,7 +280,7 @@ sealed interface ItemDetailState {
         override val attachmentsState: AttachmentsState
     ) : ItemDetailState {
 
-        override val itemCategory: ItemCategory = ItemCategory.Custom
+        override val itemCategory: ItemCategory = ItemCategory.WifiNetwork
 
         override fun update(itemContents: ItemContents, itemDiffs: ItemDiffs): ItemDetailState = when {
             itemContents is ItemContents.WifiNetwork && itemDiffs is ItemDiffs.WifiNetwork -> this.copy(
@@ -318,7 +318,7 @@ sealed interface ItemDetailState {
         override val attachmentsState: AttachmentsState
     ) : ItemDetailState {
 
-        override val itemCategory: ItemCategory = ItemCategory.Custom
+        override val itemCategory: ItemCategory = ItemCategory.SSHKey
 
         override fun update(itemContents: ItemContents, itemDiffs: ItemDiffs): ItemDetailState = when {
             itemContents is ItemContents.SSHKey && itemDiffs is ItemDiffs.SSHKey -> this.copy(

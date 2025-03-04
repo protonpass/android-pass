@@ -29,6 +29,8 @@ enum class EventItemType(val itemTypeName: String) {
     CreditCard("credit_card"),
     Identity("identity"),
     Custom("custom"),
+    WifiNetwork("wifi_network"),
+    SSHKey("ssh_key"),
     Unknown("unknown");
 
     companion object {
@@ -41,6 +43,8 @@ enum class EventItemType(val itemTypeName: String) {
             is ItemType.CreditCard -> CreditCard
             is ItemType.Identity -> Identity
             is ItemType.Custom -> Custom
+            is ItemType.SSHKey -> WifiNetwork
+            is ItemType.WifiNetwork -> SSHKey
         }
 
         fun from(itemContents: ItemContents): EventItemType = when (itemContents) {
@@ -50,6 +54,8 @@ enum class EventItemType(val itemTypeName: String) {
             is ItemContents.CreditCard -> CreditCard
             is ItemContents.Identity -> Identity
             is ItemContents.Custom -> Custom
+            is ItemContents.WifiNetwork -> WifiNetwork
+            is ItemContents.SSHKey -> SSHKey
             is ItemContents.Unknown -> Unknown
         }
     }

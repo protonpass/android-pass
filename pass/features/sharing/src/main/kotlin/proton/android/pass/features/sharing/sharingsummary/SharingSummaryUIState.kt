@@ -105,33 +105,17 @@ internal sealed class SharingSummaryState {
 
         internal val itemSubtitle: String? = when (itemCategory) {
             ItemCategory.CreditCard -> TextMask.CardNumber(itemUiModel.contents.displayValue).masked
-            ItemCategory.Alias,
-            ItemCategory.Login,
-            ItemCategory.Note,
-            ItemCategory.Identity,
-            ItemCategory.Password,
-            ItemCategory.Custom,
-            ItemCategory.Unknown -> itemUiModel.contents.displayValue
+            else -> itemUiModel.contents.displayValue
         }.takeIfNotBlank()
 
         internal val itemPackageName: String = when (val contents = itemUiModel.contents) {
             is ItemContents.Login -> contents.packageName.orEmpty()
-            is ItemContents.Alias,
-            is ItemContents.CreditCard,
-            is ItemContents.Identity,
-            is ItemContents.Note,
-            is ItemContents.Custom,
-            is ItemContents.Unknown -> ""
+            else -> ""
         }
 
         internal val itemWebsite: String = when (val contents = itemUiModel.contents) {
             is ItemContents.Login -> contents.websiteUrl.orEmpty()
-            is ItemContents.Alias,
-            is ItemContents.CreditCard,
-            is ItemContents.Identity,
-            is ItemContents.Note,
-            is ItemContents.Custom,
-            is ItemContents.Unknown -> ""
+            else -> ""
         }
 
         internal val canItemLoadExternalImages: Boolean = useFaviconsPreference.value()

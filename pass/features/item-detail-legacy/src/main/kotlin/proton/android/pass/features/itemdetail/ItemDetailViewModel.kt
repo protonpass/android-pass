@@ -95,6 +95,8 @@ class ItemDetailViewModel @Inject constructor(
                     ItemType.Password -> ItemTypeUiState.Password
                     is ItemType.CreditCard -> ItemTypeUiState.CreditCard
                     is ItemType.Identity -> ItemTypeUiState.Identity
+                    is ItemType.WifiNetwork,
+                    is ItemType.SSHKey,
                     is ItemType.Custom -> ItemTypeUiState.Custom
                     ItemType.Unknown -> ItemTypeUiState.Unknown
                 },

@@ -64,6 +64,8 @@ fun PinItem(
         is ItemContents.Alias -> PassTheme.colors.aliasInteractionNormMinor1
         is ItemContents.CreditCard -> PassTheme.colors.cardInteractionNormMinor1
         is ItemContents.Identity -> PassTheme.colors.interactionNormMinor1
+        is ItemContents.WifiNetwork,
+        is ItemContents.SSHKey,
         is ItemContents.Custom -> PassTheme.colors.loginInteractionNormMinor1
         is ItemContents.Unknown -> Color.Transparent
     }
@@ -113,6 +115,8 @@ fun PinItem(
                 shape = PassTheme.shapes.squircleSmallShape,
                 backgroundColor = PassTheme.colors.cardInteractionNormMinor2
             )
+            is ItemContents.WifiNetwork,
+            is ItemContents.SSHKey,
             is ItemContents.Custom -> CustomIcon(
                 modifier = Modifier.size(ICON_SIZE.dp),
                 shape = PassTheme.shapes.squircleSmallShape,

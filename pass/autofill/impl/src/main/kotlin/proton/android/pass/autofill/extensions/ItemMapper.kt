@@ -68,6 +68,8 @@ fun ItemUiModel.toAutoFillItem(shouldLinkPackageName: Boolean = false): Autofill
         shouldLinkPackageName = false
     )
     is ItemContents.Note,
+    is ItemContents.WifiNetwork,
+    is ItemContents.SSHKey,
     is ItemContents.Custom,
     is ItemContents.Unknown -> throw IllegalStateException("Unsupported item type")
 }

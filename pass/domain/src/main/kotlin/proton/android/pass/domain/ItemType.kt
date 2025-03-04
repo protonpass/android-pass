@@ -204,6 +204,22 @@ sealed interface ItemType {
     ) : ItemType
 
     @Serializable
+    data class WifiNetwork(
+        val ssid: String,
+        val password: EncryptedString,
+        val customFields: List<CustomField>,
+        val extraSections: List<ExtraSection>
+    ) : ItemType
+
+    @Serializable
+    data class SSHKey(
+        val publicKey: String,
+        val privateKey: EncryptedString,
+        val customFields: List<CustomField>,
+        val extraSections: List<ExtraSection>
+    ) : ItemType
+
+    @Serializable
     data object Password : ItemType
 
     @Serializable
@@ -217,6 +233,8 @@ sealed interface ItemType {
             is Note -> ItemCategory.Note
             Password -> ItemCategory.Password
             is Identity -> ItemCategory.Identity
+            is SSHKey,
+            is WifiNetwork,
             is Custom -> ItemCategory.Custom
             Unknown -> ItemCategory.Unknown
         }

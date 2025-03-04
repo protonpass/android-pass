@@ -714,6 +714,8 @@ class HomeViewModel @Inject constructor(
                             is ItemContents.Note -> snackbarDispatcher(NoteMovedToTrash)
                             is ItemContents.CreditCard -> snackbarDispatcher(CreditCardMovedToTrash)
                             is ItemContents.Identity -> snackbarDispatcher(IdentityMovedToTrash)
+                            is ItemContents.SSHKey,
+                            is ItemContents.WifiNetwork,
                             is ItemContents.Custom -> snackbarDispatcher(CustomMovedToTrash)
                             is ItemContents.Unknown -> {}
                         }

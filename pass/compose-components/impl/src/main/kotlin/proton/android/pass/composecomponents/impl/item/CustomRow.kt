@@ -54,16 +54,35 @@ fun CustomRow(
     selection: ItemSelectionModeState = ItemSelectionModeState.NotInSelectionMode,
     titleSuffix: Option<String> = None
 ) {
-    val content = remember(item.contents) { item.contents as ItemContents.Custom }
+    val (title, customFields, sections) = remember(item.contents) {
+        when (val contents = item.contents) {
+            is ItemContents.Custom -> Triple(
+                contents.title,
+                contents.customFieldList,
+                contents.sectionContentList
+            )
+
+            is ItemContents.SSHKey -> Triple(
+                contents.title,
+                contents.customFieldList,
+                contents.sectionContentList
+            )
+
+            is ItemContents.WifiNetwork -> Triple(
+                contents.title,
+                contents.customFieldList,
+                contents.sectionContentList
+            )
+
+            else -> throw IllegalStateException("Unsupported item type")
+        }
+    }
     val highlightColor = PassTheme.colors.interactionNorm
-    val fields = remember(
-        content.title,
-        content.sectionContentList,
-        highlight
-    ) {
+    val fields = remember(title, customFields, sections, highlight) {
         getHighlightedFields(
-            title = content.title,
-            extraSectionContentList = content.sectionContentList,
+            title = title,
+            customFields = customFields,
+            extraSectionContentList = sections,
             highlight = highlight,
             highlightColor = highlightColor
         )
@@ -115,6 +134,7 @@ fun CustomRow(
 
 private fun getHighlightedFields(
     title: String,
+    customFields: List<CustomFieldContent>,
     extraSectionContentList: List<ExtraSectionContent>,
     highlight: String,
     highlightColor: Color
@@ -126,6 +146,17 @@ private fun getHighlightedFields(
         title.highlight(highlight, highlightColor)?.let {
             annotatedTitle = it
         }
+
+        val filteredCustomFields = customFields.filterIsInstance<CustomFieldContent.Text>()
+            .mapNotNull { customField ->
+                customFieldToAnnotatedString(
+                    customField,
+                    highlight,
+                    highlightColor
+                )
+            }
+            .take(MAX_CUSTOM_FIELDS)
+        annotatedFields.addAll(filteredCustomFields)
 
         extraSectionContentList.forEach { extraSectionContent ->
             val extraSectionCustomField =

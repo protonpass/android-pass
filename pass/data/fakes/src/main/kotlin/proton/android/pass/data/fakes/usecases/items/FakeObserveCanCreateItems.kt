@@ -19,6 +19,7 @@
 package proton.android.pass.data.fakes.usecases.items
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.usecases.items.ObserveCanCreateItems
 import javax.inject.Inject
@@ -33,6 +34,6 @@ class FakeObserveCanCreateItems @Inject constructor() : ObserveCanCreateItems {
         canCreateItemsFlow.tryEmit(canCreateItems)
     }
 
-    override fun invoke(): Flow<Boolean> = canCreateItemsFlow
+    override fun invoke(userId: UserId?): Flow<Boolean> = canCreateItemsFlow
 
 }

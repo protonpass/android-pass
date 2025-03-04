@@ -79,7 +79,8 @@ internal class GetItemActionsImplTest {
             canMoveToOtherVault = ItemActions.CanMoveToOtherVaultState.Enabled,
             canMoveToTrash = true,
             canRestoreFromTrash = false,
-            canDelete = false
+            canDelete = false,
+            canOptions = true
         )
         assertThat(res).isEqualTo(expected)
     }

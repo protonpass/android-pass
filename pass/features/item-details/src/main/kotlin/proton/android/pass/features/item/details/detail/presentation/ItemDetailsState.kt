@@ -107,6 +107,8 @@ internal sealed interface ItemDetailsState {
                 }
             }
 
+        internal val areOptionsEnabled: Boolean = itemActions.canOptions
+
     }
 
 }

@@ -51,7 +51,6 @@ import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.domain.items.ItemCategory
 import me.proton.core.presentation.R as CoreR
 
-@ExperimentalComposeUiApi
 @Composable
 internal fun ItemDetailTopBar(
     modifier: Modifier = Modifier,
@@ -146,6 +145,7 @@ private fun ItemTopBarActions(
         }
 
         ItemDetailOptionsButton(
+            isEnabled = actions.canOptions,
             isVisible = !isLoading,
             iconBackgroundColor = iconBackgroundColor,
             iconColor = iconColor,
@@ -224,6 +224,7 @@ private fun ItemDetailShareButton(
 private fun ItemDetailOptionsButton(
     modifier: Modifier = Modifier,
     isVisible: Boolean,
+    isEnabled: Boolean,
     iconBackgroundColor: Color,
     iconColor: Color,
     onOptionsClick: () -> Unit
@@ -236,6 +237,7 @@ private fun ItemDetailOptionsButton(
             backgroundColor = iconBackgroundColor,
             tintColor = iconColor,
             iconContentDescription = stringResource(id = R.string.open_menu_icon_content_description),
+            enabled = isEnabled,
             onClick = onOptionsClick
         )
     }

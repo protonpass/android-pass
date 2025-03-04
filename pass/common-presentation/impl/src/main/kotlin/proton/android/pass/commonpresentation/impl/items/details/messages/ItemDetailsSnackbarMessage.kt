@@ -245,6 +245,24 @@ internal enum class ItemDetailsSnackbarMessage(
         isClipboard = true
     ),
 
+    PublicKeyCopied(
+        id = R.string.item_details_snackbar_message_public_key_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
+    PrivateKeyCopied(
+        id = R.string.item_details_snackbar_message_private_key_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
+    SSIDCopied(
+        id = R.string.item_details_snackbar_message_ssid_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
     OpenAttachmentsError(R.string.open_attachments_error, SnackbarType.ERROR)
 
 }

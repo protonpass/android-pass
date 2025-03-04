@@ -62,11 +62,9 @@ internal fun CustomItemOptionsBottomSheetContents(
     onMoveToTrash: (ItemUiModel) -> Unit,
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit
 ) {
-    val contents = itemUiModel.contents as ItemContents.Custom
-
     Column(modifier.bottomSheet()) {
         BottomSheetItemRow(
-            title = { BottomSheetItemTitle(text = contents.title) },
+            title = { BottomSheetItemTitle(text = itemUiModel.contents.title) },
             leftIcon = { CustomIcon() }
         )
 

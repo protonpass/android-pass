@@ -92,6 +92,7 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
         hiddenState: HiddenState
     ): ItemContents = when (hiddenFieldType) {
         is ItemDetailsFieldType.Hidden.CustomField,
+        is ItemDetailsFieldType.Hidden.PrivateKey,
         ItemDetailsFieldType.Hidden.Cvv,
         ItemDetailsFieldType.Hidden.Password,
         ItemDetailsFieldType.Hidden.Pin -> itemContents

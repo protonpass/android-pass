@@ -29,7 +29,7 @@ data class ItemActions(
     val canMoveToTrash: Boolean,
     val canRestoreFromTrash: Boolean,
     val canDelete: Boolean,
-    val canOptions: Boolean
+    val canUseOptions: Boolean
 ) {
     sealed interface CanEditActionState {
 
@@ -83,7 +83,7 @@ data class ItemActions(
             canMoveToTrash = false,
             canRestoreFromTrash = false,
             canDelete = false,
-            canOptions = false
+            canUseOptions = false
         )
     }
 }

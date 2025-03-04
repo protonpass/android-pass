@@ -46,9 +46,9 @@ internal fun PassCustomItemDetailSections(
     modifier: Modifier = Modifier,
     itemId: ItemId,
     shareId: ShareId,
-    contents: ItemContents,
+    contents: ItemContents.Custom,
     itemColors: PassItemColors,
-    itemDiffs: ItemDiffs,
+    itemDiffs: ItemDiffs.Custom,
     lastAutofillOption: Option<Instant>,
     revision: Long,
     createdAt: Instant,
@@ -59,19 +59,13 @@ internal fun PassCustomItemDetailSections(
     attachmentsState: AttachmentsState,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
-    val (customFieldList, sectionContentList) = when (contents) {
-        is ItemContents.Custom -> contents.customFieldList to contents.sectionContentList
-        is ItemContents.SSHKey -> contents.customFieldList to contents.sectionContentList
-        is ItemContents.WifiNetwork -> contents.customFieldList to contents.sectionContentList
-        else -> throw IllegalStateException("Item type not supported: $contents")
-    }
     return Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
-        if (customFieldList.isNotEmpty()) {
+        if (contents.customFieldList.isNotEmpty()) {
             PassItemDetailCustomFieldsSection(
-                customFields = customFieldList.toPersistentList(),
+                customFields = contents.customFieldList.toPersistentList(),
                 secondaryTotps = persistentMapOf(),
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,
@@ -79,9 +73,9 @@ internal fun PassCustomItemDetailSections(
             )
         }
 
-        if (sectionContentList.isNotEmpty()) {
+        if (contents.sectionContentList.isNotEmpty()) {
             PassItemDetailsExtraSection(
-                extraSectionContents = sectionContentList.toPersistentList(),
+                extraSectionContents = contents.sectionContentList.toPersistentList(),
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,
                 onEvent = onEvent

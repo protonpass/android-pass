@@ -388,6 +388,9 @@
     <!-- Custom item screen -->
     <string name="add_custom_field_button">Add field</string>
     <string name="add_section_button">Add section</string>
+    <string name="add_public_key_placeholder">Add public key</string>
+    <string name="add_private_key_placeholder">Add private key</string>
+    <string name="add_ssid_placeholder">Add SSID</string>
 
     <string name="create_custom_item_init_error">Problem retrieving custom item details</string>
     <string name="update_custom_item_attachments_init_error">Problem retrieving custom item attachments</string>

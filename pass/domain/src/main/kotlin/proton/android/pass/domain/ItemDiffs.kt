@@ -169,6 +169,8 @@ sealed interface ItemDiffs {
     data class WifiNetwork(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
+        val ssid: ItemDiffType = ItemDiffType.None,
+        val password: ItemDiffType = ItemDiffType.None,
         override val customFields: List<ItemDiffType> = emptyList(),
         override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap(),
         private val extraCustomFields: List<List<ItemDiffType>> = emptyList()
@@ -191,6 +193,8 @@ sealed interface ItemDiffs {
     data class SSHKey(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
+        val publicKey: ItemDiffType = ItemDiffType.None,
+        val privateKey: ItemDiffType = ItemDiffType.None,
         override val customFields: List<ItemDiffType> = emptyList(),
         override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap(),
         private val extraCustomFields: List<List<ItemDiffType>> = emptyList()

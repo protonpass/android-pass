@@ -45,10 +45,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -118,10 +118,19 @@ class LauncherViewModel @Inject constructor(
         }
     }
 
+    private val isNewFlowEnabled: Flow<Boolean> = combine(
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.NEW_LOGIN_FLOW),
+        internalSettingsRepository.getPersistentUUID()
+    ) { isFlagEnabled, uuid ->
+        val bucket = BucketAssigner.getBucket(numBuckets = 2, uuid = uuid)
+        val isBucketB = bucket == 1
+        isFlagEnabled || isBucketB
+    }
+
     internal val state: StateFlow<LauncherState> = combine(
         accountManager.getAccounts().map { accounts -> getState(accounts) },
         userPreferencesRepository.getThemePreference(),
-        featureFlagsPreferencesRepository[FeatureFlag.NEW_LOGIN_FLOW],
+        isNewFlowEnabled,
         ::LauncherState
     ).stateIn(
         scope = viewModelScope,
@@ -129,13 +138,11 @@ class LauncherViewModel @Inject constructor(
         initialValue = runBlocking {
             val themePreference = userPreferencesRepository.getThemePreference().firstOrNull()
                 ?: ThemePreference.System
-            val isNewLoginFlowFeatureFlagEnabled =
-                featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.NEW_LOGIN_FLOW)
-                    .first()
-            val persistentUUID = internalSettingsRepository.getPersistentUUID().first()
-            val isBucketB = BucketAssigner.getBucket(2, persistentUUID) == 1
-            val isNewFlowEnabled = isNewLoginFlowFeatureFlagEnabled || isBucketB
-            LauncherState(AccountState.Processing, themePreference, isNewFlowEnabled)
+            LauncherState(
+                accountState = AccountState.Processing,
+                themePreference = themePreference,
+                isNewLoginFlowEnabled = isNewFlowEnabled.firstOrNull() ?: false
+            )
         }
     )
 

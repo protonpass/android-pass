@@ -121,6 +121,8 @@ internal fun PassItemDetailSections(
             shouldDisplayFileAttachments = shouldDisplayFileAttachments
         )
 
+        is ItemDetailState.SSHKey,
+        is ItemDetailState.WifiNetwork,
         is ItemDetailState.Custom -> PassCustomItemDetailSections(
             modifier = modifier,
             itemId = itemId,

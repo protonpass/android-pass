@@ -55,6 +55,7 @@ import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
+import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.TemplateTypeNavArgId
@@ -168,16 +169,29 @@ class CreateCustomItemViewModel @Inject constructor(
 
     private fun onPrefillTemplate() {
         val templateType = navTemplateType.value() ?: return
-        val fields = encryptionContextProvider.withEncryptionContext {
-            templateType.fields.map {
+        val (fields, staticFields) = encryptionContextProvider.withEncryptionContext {
+            val fields = templateType.fields.map {
                 UICustomFieldContent.createCustomField(
                     type = if (it.isHidden) CustomFieldType.Hidden else CustomFieldType.Text,
                     label = context.getString(it.nameResId),
                     encryptionContext = this
                 )
             }
+            val staticFields = when (templateType) {
+                TemplateType.SSH_KEY -> ItemStaticFields.SSHKey(
+                    publicKey = "",
+                    privateKey = UIHiddenState.Empty(encrypt(""))
+                )
+                TemplateType.WIFI_NETWORK -> ItemStaticFields.WifiNetwork(
+                    ssid = "",
+                    password = UIHiddenState.Empty(encrypt(""))
+                )
+                else -> ItemStaticFields.Custom
+            }
+            fields to staticFields
         }
         itemFormState = itemFormState.copy(
+            itemStaticFields = staticFields,
             customFieldList = itemFormState.customFieldList.toMutableList().apply {
                 addAll(fields)
             }

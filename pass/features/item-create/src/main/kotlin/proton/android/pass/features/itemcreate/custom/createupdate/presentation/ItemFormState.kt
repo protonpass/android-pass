@@ -25,17 +25,60 @@ import proton.android.pass.domain.ExtraSectionContent
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIExtraSection
+import proton.android.pass.features.itemcreate.common.UIHiddenState
+
+@Parcelize
+@Immutable
+sealed interface ItemStaticFields : Parcelable {
+
+    @Parcelize
+    data object Custom : ItemStaticFields
+
+    @Parcelize
+    data class WifiNetwork(
+        val ssid: String,
+        val password: UIHiddenState
+    ) : ItemStaticFields
+
+    @Parcelize
+    data class SSHKey(
+        val publicKey: String,
+        val privateKey: UIHiddenState
+    ) : ItemStaticFields
+}
 
 @Parcelize
 @Immutable
 data class ItemFormState(
     val title: String,
+    val itemStaticFields: ItemStaticFields,
     val customFieldList: List<UICustomFieldContent>,
     val sectionList: List<UIExtraSection>
 ) : Parcelable {
 
     constructor(itemContents: ItemContents.Custom) : this(
         title = itemContents.title,
+        itemStaticFields = ItemStaticFields.Custom,
+        customFieldList = itemContents.customFieldList.map(UICustomFieldContent.Companion::from),
+        sectionList = itemContents.sectionContentList.map(::UIExtraSection)
+    )
+
+    constructor(itemContents: ItemContents.WifiNetwork) : this(
+        title = itemContents.title,
+        itemStaticFields = ItemStaticFields.WifiNetwork(
+            ssid = itemContents.ssid,
+            password = UIHiddenState.from(itemContents.password)
+        ),
+        customFieldList = itemContents.customFieldList.map(UICustomFieldContent.Companion::from),
+        sectionList = itemContents.sectionContentList.map(::UIExtraSection)
+    )
+
+    constructor(itemContents: ItemContents.SSHKey) : this(
+        title = itemContents.title,
+        itemStaticFields = ItemStaticFields.SSHKey(
+            publicKey = itemContents.publicKey,
+            privateKey = UIHiddenState.from(itemContents.privateKey)
+        ),
         customFieldList = itemContents.customFieldList.map(UICustomFieldContent.Companion::from),
         sectionList = itemContents.sectionContentList.map(::UIExtraSection)
     )
@@ -46,21 +89,50 @@ data class ItemFormState(
         return mutableSet.toSet()
     }
 
-    fun toItemContents(): ItemContents = ItemContents.Custom(
-        title = title,
-        note = "",
-        customFieldList = customFieldList.map(UICustomFieldContent::toCustomFieldContent),
-        sectionContentList = sectionList.map {
-            ExtraSectionContent(
-                title = it.title,
-                customFieldList = it.customFields.map(UICustomFieldContent::toCustomFieldContent)
-            )
-        }
-    )
+    fun toItemContents(): ItemContents = when (itemStaticFields) {
+        ItemStaticFields.Custom -> ItemContents.Custom(
+            title = title,
+            note = "",
+            customFieldList = customFieldList.map(UICustomFieldContent::toCustomFieldContent),
+            sectionContentList = sectionList.map {
+                ExtraSectionContent(
+                    title = it.title,
+                    customFieldList = it.customFields.map(UICustomFieldContent::toCustomFieldContent)
+                )
+            }
+        )
+        is ItemStaticFields.SSHKey -> ItemContents.SSHKey(
+            title = title,
+            note = "",
+            publicKey = itemStaticFields.publicKey,
+            privateKey = itemStaticFields.privateKey.toHiddenState(),
+            customFieldList = customFieldList.map(UICustomFieldContent::toCustomFieldContent),
+            sectionContentList = sectionList.map {
+                ExtraSectionContent(
+                    title = it.title,
+                    customFieldList = it.customFields.map(UICustomFieldContent::toCustomFieldContent)
+                )
+            }
+        )
+        is ItemStaticFields.WifiNetwork -> ItemContents.WifiNetwork(
+            title = title,
+            note = "",
+            ssid = itemStaticFields.ssid,
+            password = itemStaticFields.password.toHiddenState(),
+            customFieldList = customFieldList.map(UICustomFieldContent::toCustomFieldContent),
+            sectionContentList = sectionList.map {
+                ExtraSectionContent(
+                    title = it.title,
+                    customFieldList = it.customFields.map(UICustomFieldContent::toCustomFieldContent)
+                )
+            }
+        )
+    }
 
     companion object {
         val EMPTY = ItemFormState(
             title = "",
+            itemStaticFields = ItemStaticFields.Custom,
             customFieldList = emptyList(),
             sectionList = emptyList()
         )

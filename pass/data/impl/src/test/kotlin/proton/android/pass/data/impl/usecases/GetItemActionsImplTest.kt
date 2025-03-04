@@ -80,7 +80,7 @@ internal class GetItemActionsImplTest {
             canMoveToTrash = true,
             canRestoreFromTrash = false,
             canDelete = false,
-            canOptions = true
+            canUseOptions = true
         )
         assertThat(res).isEqualTo(expected)
     }

@@ -63,7 +63,7 @@ class GetItemActionsImpl @Inject constructor(
             canMoveToTrash = !isItemTrashed && share.canBeTrashed,
             canDelete = isItemTrashed && share.canBeDeleted,
             canRestoreFromTrash = isItemTrashed,
-            canOptions = canOptions(isItemTrashed, share)
+            canUseOptions = canOptions(isItemTrashed, share)
         )
     }.first()
 

@@ -45,7 +45,7 @@ class TestGetItemActions @Inject constructor() : GetItemActions {
             canMoveToTrash = true,
             canRestoreFromTrash = false,
             canDelete = true,
-            canOptions = true
+            canUseOptions = true
         )
     }
 

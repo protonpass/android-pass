@@ -211,13 +211,6 @@ fun ItemV1.CardType.toDomain(): CreditCardType = when (this) {
     ItemV1.CardType.UNRECOGNIZED -> CreditCardType.Other
 }
 
-fun ItemV1.ExtraIdentitySection.toDomain(context: EncryptionContext): ExtraSection = ExtraSection(
-    sectionName = this.sectionName,
-    customFields = this.sectionFieldsList.map { field ->
-        field.toDomain(context)
-    }
-)
-
 fun ItemV1.CustomSection.toDomain(context: EncryptionContext): ExtraSection = ExtraSection(
     sectionName = this.sectionName,
     customFields = this.sectionFieldsList.map { field ->

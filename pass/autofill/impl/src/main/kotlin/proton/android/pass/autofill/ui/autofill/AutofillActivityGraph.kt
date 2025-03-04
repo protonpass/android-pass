@@ -62,6 +62,9 @@ import proton.android.pass.features.itemcreate.creditcard.CreateCreditCard
 import proton.android.pass.features.itemcreate.creditcard.CreateCreditCardNavigation
 import proton.android.pass.features.itemcreate.creditcard.UpdateCreditCardNavigation
 import proton.android.pass.features.itemcreate.creditcard.createCreditCardGraph
+import proton.android.pass.features.itemcreate.dialogs.cannotcreateitems.navigation.CannotCreateItemsNavDestination
+import proton.android.pass.features.itemcreate.dialogs.cannotcreateitems.navigation.CannotCreateItemsNavItem
+import proton.android.pass.features.itemcreate.dialogs.cannotcreateitems.navigation.cannotCreateItemsNavGraph
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameDialogNavItem
 import proton.android.pass.features.itemcreate.dialogs.customfield.EditCustomFieldNameDialogNavItem
 import proton.android.pass.features.itemcreate.identity.navigation.BaseIdentityNavigation
@@ -599,7 +602,18 @@ fun NavGraphBuilder.autofillActivityGraph(
                     CreateItemBottomsheetNavItem.createNavRoute(mode)
                 )
             }
-            AccountSwitchNavigation.CannotCreateItem -> dismissBottomSheet {}
+
+            AccountSwitchNavigation.CannotCreateItem -> dismissBottomSheet {
+                appNavigator.navigate(
+                    destination = CannotCreateItemsNavItem
+                )
+            }
+        }
+    }
+
+    cannotCreateItemsNavGraph { destination ->
+        when (destination) {
+            CannotCreateItemsNavDestination.Back -> appNavigator.navigateBack()
         }
     }
 }

@@ -71,7 +71,7 @@ class LocalItemDataSourceImpl @Inject constructor(
             userId = userId.id,
             shareIds = shareIds.map { it.id },
             itemState = itemState?.value,
-            itemType = filter.value()
+            itemTypes = filter.value()
         )
     }
 
@@ -92,7 +92,7 @@ class LocalItemDataSourceImpl @Inject constructor(
         database.itemsDao().observeAllForAddress(
             userId = userId.id,
             itemState = itemState?.value,
-            itemType = filter.value(),
+            itemTypes = filter.value(),
             setFlags = setFlags,
             clearFlags = clearFlags
         )
@@ -117,7 +117,7 @@ class LocalItemDataSourceImpl @Inject constructor(
     } else {
         database.itemsDao().observeAllPinnedItemsForShares(
             userId = userId.id,
-            itemType = filter.value(),
+            itemTypes = filter.value(),
             shareIds = shareIds.map { it.id }
         )
     }
@@ -197,7 +197,9 @@ class LocalItemDataSourceImpl @Inject constructor(
                     alias = values.getCount(ItemCategory.Alias),
                     creditCard = values.getCount(ItemCategory.CreditCard),
                     identities = values.getCount(ItemCategory.Identity),
-                    custom = values.getCount(ItemCategory.Custom),
+                    custom = values.getCount(ItemCategory.Custom) +
+                        values.getCount(ItemCategory.WifiNetwork) +
+                        values.getCount(ItemCategory.SSHKey),
                     sharedWithMe = sharedWithMeItemCount.toLong(),
                     sharedByMe = sharedByMeItemCount.toLong(),
                     trashed = trashedItemsCount.toLong(),
@@ -376,13 +378,17 @@ class LocalItemDataSourceImpl @Inject constructor(
         createTime = Instant.fromEpochSeconds(createTime)
     )
 
-    private fun ItemTypeFilter.value(): Int = when (this) {
-        ItemTypeFilter.Logins -> ItemCategory.Login.value
-        ItemTypeFilter.Aliases -> ItemCategory.Alias.value
-        ItemTypeFilter.Notes -> ItemCategory.Note.value
-        ItemTypeFilter.CreditCards -> ItemCategory.CreditCard.value
-        ItemTypeFilter.Identity -> ItemCategory.Identity.value
-        ItemTypeFilter.Custom -> ItemCategory.Custom.value
+    private fun ItemTypeFilter.value(): List<Int> = when (this) {
+        ItemTypeFilter.Logins -> listOf(ItemCategory.Login.value)
+        ItemTypeFilter.Aliases -> listOf(ItemCategory.Alias.value)
+        ItemTypeFilter.Notes -> listOf(ItemCategory.Note.value)
+        ItemTypeFilter.CreditCards -> listOf(ItemCategory.CreditCard.value)
+        ItemTypeFilter.Identity -> listOf(ItemCategory.Identity.value)
+        ItemTypeFilter.Custom -> listOf(
+            ItemCategory.Custom.value,
+            ItemCategory.WifiNetwork.value,
+            ItemCategory.SSHKey.value
+        )
         ItemTypeFilter.All -> throw IllegalStateException("Cannot call value to ItemTypeFilter.All")
     }
 

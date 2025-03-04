@@ -197,7 +197,7 @@ fun ItemContents.serializeToProto(
                     .clearExtraSections()
                     .addAllExtraSections(
                         extraSectionContentList.map {
-                            ItemV1.ExtraIdentitySection.newBuilder()
+                            ItemV1.CustomSection.newBuilder()
                                 .setSectionName(it.title)
                                 .clearSectionFields()
                                 .addAllSectionFields(it.customFieldList.mapToExtraFields(encryptionContext))

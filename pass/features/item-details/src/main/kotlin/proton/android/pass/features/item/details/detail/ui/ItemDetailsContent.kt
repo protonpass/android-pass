@@ -71,6 +71,7 @@ internal fun ItemDetailsContent(
                                 ItemDetailsUiEvent.OnDisabledEditClicked(reason = cannotEditReason)
                             }.also(onEvent)
                         },
+                        areOptionsEnabled = areOptionsEnabled,
                         onOptionsClick = {
                             ItemDetailsUiEvent.OnMenuClicked(
                                 shareId = shareId,

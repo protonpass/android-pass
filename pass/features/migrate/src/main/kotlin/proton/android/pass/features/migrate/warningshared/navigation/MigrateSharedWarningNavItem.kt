@@ -36,6 +36,7 @@ object MigrateSharedWarningNavItem : NavItem(
         CommonOptionalNavArgId.ShareId,
         MigrateVaultFilterArg
     ),
+    noHistory = true,
     navItemType = NavItemType.Dialog
 ) {
 

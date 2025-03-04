@@ -44,6 +44,8 @@ internal fun SecureLinksOverviewHeader(
             vaultIcon = shareIcon?.toSmallResource(),
             canLoadExternalImages = canLoadExternalImages
         )
+        ItemCategory.SSHKey,
+        ItemCategory.WifiNetwork,
         ItemCategory.Custom -> CustomRow(item = item)
         ItemCategory.Alias,
         ItemCategory.Password,

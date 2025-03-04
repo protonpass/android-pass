@@ -1721,6 +1721,8 @@ fun NavGraphBuilder.appGraph(
                         itemId = itemDetailsNavDestination.itemId
                     )
 
+                    ItemCategory.SSHKey,
+                    ItemCategory.WifiNetwork,
                     ItemCategory.Custom ->
                         UpdateCustomItemNavItem to UpdateCustomItemNavItem.createNavRoute(
                             shareId = itemDetailsNavDestination.shareId,
@@ -2759,6 +2761,8 @@ private fun getItemDetailsDestination(itemCategory: ItemCategory) = when (itemCa
     ItemCategory.CreditCard -> ViewItem
 
     // Identity is the first item category migrated
+    ItemCategory.SSHKey,
+    ItemCategory.WifiNetwork,
     ItemCategory.Custom,
     ItemCategory.Identity -> ItemDetailsNavItem
 
@@ -2780,6 +2784,8 @@ private fun getItemDetailsRoute(
 
     // Identity is the first item category migrated
     ItemCategory.Identity,
+    ItemCategory.SSHKey,
+    ItemCategory.WifiNetwork,
     ItemCategory.Custom -> ItemDetailsNavItem.createNavRoute(shareId, itemId)
 
     ItemCategory.Unknown,

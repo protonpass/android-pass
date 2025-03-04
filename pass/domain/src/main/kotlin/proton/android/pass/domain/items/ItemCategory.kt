@@ -26,6 +26,8 @@ private const val ITEM_CATEGORY_PASSWORD = 3
 private const val ITEM_CATEGORY_CREDIT_CARD = 4
 private const val ITEM_CATEGORY_IDENTITY = 5
 private const val ITEM_CATEGORY_CUSTOM = 6
+private const val ITEM_CATEGORY_WIFI_NETWORK = 7
+private const val ITEM_CATEGORY_SSH_KEY = 8
 
 enum class ItemCategory(val value: Int) {
     Unknown(ITEM_CATEGORY_UNKNOWN),
@@ -35,5 +37,7 @@ enum class ItemCategory(val value: Int) {
     Password(ITEM_CATEGORY_PASSWORD),
     CreditCard(ITEM_CATEGORY_CREDIT_CARD),
     Identity(ITEM_CATEGORY_IDENTITY),
-    Custom(ITEM_CATEGORY_CUSTOM)
+    Custom(ITEM_CATEGORY_CUSTOM),
+    WifiNetwork(ITEM_CATEGORY_WIFI_NETWORK),
+    SSHKey(ITEM_CATEGORY_SSH_KEY)
 }

@@ -182,6 +182,8 @@ internal fun PassItemDetailTitleRow(
             }
         }
 
+        is ItemDetailState.WifiNetwork,
+        is ItemDetailState.SSHKey,
         is ItemDetailState.Custom -> {
             ItemDetailTitleRow(
                 modifier = modifier,

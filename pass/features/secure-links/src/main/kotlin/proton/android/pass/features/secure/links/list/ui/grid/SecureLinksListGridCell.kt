@@ -143,6 +143,8 @@ private fun SecureLinksListGridCellIcon(
         website = itemWebsite,
         packageName = itemPackageName
     )
+    ItemCategory.SSHKey,
+    ItemCategory.WifiNetwork,
     ItemCategory.Custom -> CustomIcon(modifier = modifier)
     ItemCategory.Alias,
     ItemCategory.Password,

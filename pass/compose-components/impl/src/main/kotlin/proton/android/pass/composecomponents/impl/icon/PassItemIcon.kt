@@ -62,6 +62,8 @@ fun PassItemIcon(
             canLoadExternalImages = canLoadExternalImages
         )
 
+        ItemCategory.WifiNetwork,
+        ItemCategory.SSHKey,
         ItemCategory.Custom -> CustomIcon(
             modifier = modifier
         )

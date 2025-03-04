@@ -25,8 +25,7 @@ import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ExtraSectionContent
-import proton.android.pass.domain.ItemCustomFieldSection.CustomItem
-import proton.android.pass.domain.ItemCustomFieldSection.Identity
+import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
 
 @Composable
@@ -41,8 +40,10 @@ internal fun PassItemDetailsExtraSection(
         if (extraSectionContent.hasCustomFields) {
             val rows = mutableListOf<@Composable () -> Unit>()
             val customFieldSection = when (itemDiffs) {
-                is ItemDiffs.Identity -> Identity.ExtraSection(extraSectionIndex)
-                is ItemDiffs.Custom -> CustomItem.ExtraSection(extraSectionIndex)
+                is ItemDiffs.Identity,
+                is ItemDiffs.WifiNetwork,
+                is ItemDiffs.SSHKey,
+                is ItemDiffs.Custom -> ItemCustomFieldSection.ExtraSection(extraSectionIndex)
                 is ItemDiffs.Login,
                 ItemDiffs.None,
                 is ItemDiffs.Note,

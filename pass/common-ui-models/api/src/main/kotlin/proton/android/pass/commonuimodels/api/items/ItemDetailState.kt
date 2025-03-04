@@ -264,6 +264,82 @@ sealed interface ItemDetailState {
     }
 
     @Stable
+    data class WifiNetwork(
+        override val itemContents: ItemContents.WifiNetwork,
+        override val itemId: ItemId,
+        override val shareId: ShareId,
+        override val isItemPinned: Boolean,
+        override val itemShare: Share,
+        override val itemCreatedAt: Instant,
+        override val itemModifiedAt: Instant,
+        override val itemLastAutofillAtOption: Option<Instant>,
+        override val itemRevision: Long,
+        override val itemState: ItemState,
+        override val itemDiffs: ItemDiffs.WifiNetwork,
+        override val itemShareCount: Int,
+        override val attachmentsState: AttachmentsState
+    ) : ItemDetailState {
+
+        override val itemCategory: ItemCategory = ItemCategory.Custom
+
+        override fun update(itemContents: ItemContents, itemDiffs: ItemDiffs): ItemDetailState = when {
+            itemContents is ItemContents.WifiNetwork && itemDiffs is ItemDiffs.WifiNetwork -> this.copy(
+                itemContents = itemContents,
+                itemDiffs = itemDiffs
+            )
+
+            itemContents is ItemContents.WifiNetwork -> this.copy(
+                itemContents = itemContents
+            )
+
+            itemDiffs is ItemDiffs.WifiNetwork -> this.copy(
+                itemDiffs = itemDiffs
+            )
+
+            else -> this
+        }
+
+    }
+
+    @Stable
+    data class SSHKey(
+        override val itemContents: ItemContents.SSHKey,
+        override val itemId: ItemId,
+        override val shareId: ShareId,
+        override val isItemPinned: Boolean,
+        override val itemShare: Share,
+        override val itemCreatedAt: Instant,
+        override val itemModifiedAt: Instant,
+        override val itemLastAutofillAtOption: Option<Instant>,
+        override val itemRevision: Long,
+        override val itemState: ItemState,
+        override val itemDiffs: ItemDiffs.SSHKey,
+        override val itemShareCount: Int,
+        override val attachmentsState: AttachmentsState
+    ) : ItemDetailState {
+
+        override val itemCategory: ItemCategory = ItemCategory.Custom
+
+        override fun update(itemContents: ItemContents, itemDiffs: ItemDiffs): ItemDetailState = when {
+            itemContents is ItemContents.SSHKey && itemDiffs is ItemDiffs.SSHKey -> this.copy(
+                itemContents = itemContents,
+                itemDiffs = itemDiffs
+            )
+
+            itemContents is ItemContents.SSHKey -> this.copy(
+                itemContents = itemContents
+            )
+
+            itemDiffs is ItemDiffs.SSHKey -> this.copy(
+                itemDiffs = itemDiffs
+            )
+
+            else -> this
+        }
+
+    }
+
+    @Stable
     data class Note(
         override val itemContents: ItemContents.Note,
         override val itemId: ItemId,

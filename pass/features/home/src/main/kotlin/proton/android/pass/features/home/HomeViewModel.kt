@@ -392,6 +392,7 @@ class HomeViewModel @Inject constructor(
                 }
             }.asResultWithoutLoading()
                 .map { itemResult ->
+                    PassLogger.i("VicLog", "itemResult: $itemResult")
                     itemResult.map { list ->
                         encryptionContextProvider.withEncryptionContextSuspendable {
                             list.asSequence()
@@ -1119,7 +1120,10 @@ class HomeViewModel @Inject constructor(
             SearchFilterType.Note -> item.contents is ItemContents.Note
             SearchFilterType.CreditCard -> item.contents is ItemContents.CreditCard
             SearchFilterType.Identity -> item.contents is ItemContents.Identity
-            SearchFilterType.Custom -> item.contents is ItemContents.Custom
+            SearchFilterType.Custom ->
+                item.contents is ItemContents.Custom ||
+                    item.contents is ItemContents.WifiNetwork ||
+                    item.contents is ItemContents.SSHKey
             SearchFilterType.LoginMFA ->
                 item.contents is ItemContents.Login && (item.contents as ItemContents.Login).hasPrimaryTotp
 

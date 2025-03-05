@@ -24,6 +24,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.biometry.FakeAuthOverrideState
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.commonui.fakes.FakeFileHandler
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
@@ -108,7 +109,8 @@ class CreditCardDetailViewModelTest {
             observeItemAttachments = FakeObserveDetailItemAttachments(),
             observeShare = observeShare,
             downloadAttachment = FakeDownloadAttachment(),
-            fileHandler = FakeFileHandler()
+            fileHandler = FakeFileHandler(),
+            authOverrideState = FakeAuthOverrideState()
         )
 
         observeShare.emitValue(TestShare.Vault.create(id = SHARE_ID))

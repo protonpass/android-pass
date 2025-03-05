@@ -46,7 +46,8 @@ fun IdentityContent(
         topBar = {
             CreateUpdateTopBar(
                 text = topBarActionName,
-                isLoading = identityUiState.getSubmitLoadingState().value(),
+                isLoading = identityUiState.getSubmitLoadingState().value() ||
+                    identityUiState.getAttachmentsState().loadingDraftAttachments.isNotEmpty(),
                 actionColor = PassTheme.colors.interactionNormMajor1,
                 iconColor = PassTheme.colors.interactionNormMajor2,
                 iconBackgroundColor = PassTheme.colors.interactionNormMinor1,

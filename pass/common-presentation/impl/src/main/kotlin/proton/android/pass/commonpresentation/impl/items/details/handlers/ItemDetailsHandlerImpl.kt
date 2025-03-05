@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
+import proton.android.pass.biometry.AuthOverrideState
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.None
@@ -70,7 +71,8 @@ class ItemDetailsHandlerImpl @Inject constructor(
     private val downloadAttachment: DownloadAttachment,
     private val fileHandler: FileHandler,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val snackbarDispatcher: SnackbarDispatcher
+    private val snackbarDispatcher: SnackbarDispatcher,
+    private val authOverrideState: AuthOverrideState
 ) : ItemDetailsHandler {
 
     private val loadingAttachmentsState = MutableStateFlow<Set<AttachmentId>>(emptySet())
@@ -93,6 +95,7 @@ class ItemDetailsHandlerImpl @Inject constructor(
 
     override suspend fun onAttachmentOpen(contextHolder: ClassHolder<Context>, attachment: Attachment) {
         loadingAttachmentsState.update { it + attachment.id }
+        authOverrideState.setAuthOverride(true)
         runCatching {
             val uri = downloadAttachment(attachment)
             fileHandler.openFile(

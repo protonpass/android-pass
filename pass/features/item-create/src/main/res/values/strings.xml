@@ -400,5 +400,5 @@
 
     <!-- Cannot create items dialog -->
     <string name="cannot_create_items_dialog_title">Cannot create items</string>
-    <string name="cannot_create_items_dialog_message">You don\'t have any vaults with editor or admin access. Try creating one in the main app or ask you organization\'s administrator for support.</string>
+    <string name="cannot_create_items_dialog_message">You don\'t have any vaults with editor or admin access. Try creating one in the main app or ask your organization\'s administrator for support.</string>
 </resources>

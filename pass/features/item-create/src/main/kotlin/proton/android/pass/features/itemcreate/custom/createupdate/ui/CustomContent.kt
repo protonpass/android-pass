@@ -42,7 +42,8 @@ fun CustomContent(
         topBar = {
             CreateUpdateTopBar(
                 text = topBarActionName,
-                isLoading = itemSharedProperties.isLoading,
+                isLoading = itemSharedProperties.isLoading ||
+                    itemSharedProperties.attachmentsState.loadingDraftAttachments.isNotEmpty(),
                 actionColor = PassTheme.colors.interactionNormMajor1,
                 iconColor = PassTheme.colors.interactionNormMajor2,
                 iconBackgroundColor = PassTheme.colors.interactionNormMinor1,

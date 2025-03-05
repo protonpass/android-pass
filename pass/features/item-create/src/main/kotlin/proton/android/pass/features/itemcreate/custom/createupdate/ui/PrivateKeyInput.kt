@@ -71,7 +71,7 @@ fun PrivateKeyInput(
             onChange = onChange,
             label = { ProtonTextFieldLabel(text = stringResource(R.string.template_ssh_key_field_private_key)) },
             placeholder = {
-                ProtonTextFieldPlaceHolder(text = stringResource(R.string.add_public_key_placeholder))
+                ProtonTextFieldPlaceHolder(text = stringResource(R.string.add_private_key_placeholder))
             },
             leadingIcon = {
                 Icon.Default(

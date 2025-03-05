@@ -86,17 +86,17 @@ fun ItemContents.serializeToProto(
                         passkeys.map { passkey ->
                             var passkeyBuilder = ItemV1.Passkey.newBuilder()
                                 .setKeyId(passkey.id.value)
-                                .setContent(ByteString.copyFrom(passkey.contents))
+                                .setContent(ByteString.copyFrom(passkey.contents.data))
                                 .setDomain(passkey.domain)
                                 .setRpId(passkey.rpId)
                                 .setRpName(passkey.rpName)
                                 .setUserName(passkey.userName)
                                 .setUserDisplayName(passkey.userDisplayName)
-                                .setUserId(ByteString.copyFrom(passkey.userId))
+                                .setUserId(ByteString.copyFrom(passkey.userId.data))
                                 .setNote(passkey.note)
                                 .setCreateTime(passkey.createTime.epochSeconds.toInt())
-                                .setUserHandle(ByteString.copyFrom(passkey.userHandle))
-                                .setCredentialId(ByteString.copyFrom(passkey.credentialId))
+                                .setUserHandle(ByteString.copyFrom(passkey.userHandle?.data))
+                                .setCredentialId(ByteString.copyFrom(passkey.credentialId.data))
 
                             passkey.creationData?.let { creationData ->
                                 passkeyBuilder = passkeyBuilder.setCreationData(

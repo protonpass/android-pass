@@ -33,12 +33,12 @@ fun ItemV1.Item.withPasskey(passkey: Passkey): ItemV1.Item {
             .setRpName(rpName)
             .setUserName(userName)
             .setUserDisplayName(userDisplayName)
-            .setUserId(ByteString.copyFrom(userId))
-            .setContent(ByteString.copyFrom(contents))
+            .setUserId(ByteString.copyFrom(userId.data))
+            .setContent(ByteString.copyFrom(contents.data))
             .setCreateTime(createTime.epochSeconds.toInt())
             .setNote(note)
-            .setUserHandle(ByteString.copyFrom(userHandle))
-            .setCredentialId(ByteString.copyFrom(credentialId))
+            .setUserHandle(ByteString.copyFrom(userHandle?.data))
+            .setCredentialId(ByteString.copyFrom(credentialId.data))
 
         creationData?.let { data ->
             builder = builder.setCreationData(

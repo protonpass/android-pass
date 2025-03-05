@@ -41,7 +41,6 @@ import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.labels.CollapsibleSectionHeader
 import proton.android.pass.composecomponents.impl.utils.passItemColors
-import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
@@ -263,7 +262,6 @@ fun IdentityItemForm(
                 attachmentsState = identityUiState.getAttachmentsState(),
                 isDetail = false,
                 itemColors = passItemColors(ItemCategory.Identity),
-                itemDiffs = ItemDiffs.None,
                 onEvent = { onEvent(OnAttachmentEvent(it)) }
             )
         }

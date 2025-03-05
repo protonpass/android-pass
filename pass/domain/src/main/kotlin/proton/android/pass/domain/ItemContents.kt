@@ -85,6 +85,13 @@ data class PasskeyCreationData(
 )
 
 @Serializable
+data class ByteArrayWrapper(val data: ByteArray) {
+    override fun equals(other: Any?): Boolean = other is ByteArrayWrapper && data.contentEquals(other.data)
+
+    override fun hashCode(): Int = data.contentHashCode()
+}
+
+@Serializable
 data class Passkey(
     val id: PasskeyId,
     val domain: String,
@@ -92,12 +99,12 @@ data class Passkey(
     val rpName: String,
     val userName: String,
     val userDisplayName: String,
-    val userId: ByteArray,
+    val userId: ByteArrayWrapper,
     val note: String,
     val createTime: Instant,
-    val contents: ByteArray,
-    val userHandle: ByteArray?,
-    val credentialId: ByteArray,
+    val contents: ByteArrayWrapper,
+    val userHandle: ByteArrayWrapper?,
+    val credentialId: ByteArrayWrapper,
     val creationData: PasskeyCreationData?
 )
 

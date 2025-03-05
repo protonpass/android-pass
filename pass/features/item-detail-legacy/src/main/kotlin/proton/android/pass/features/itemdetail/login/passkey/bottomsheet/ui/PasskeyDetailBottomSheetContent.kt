@@ -45,6 +45,7 @@ import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.utils.passFormattedDateText
+import proton.android.pass.domain.ByteArrayWrapper
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.PasskeyCreationData
 import proton.android.pass.domain.PasskeyId
@@ -148,12 +149,12 @@ internal fun PasskeyDetailBottomSheetContentPreview(@PreviewParameter(ThemePrevi
                     rpName = "rpName",
                     userName = "userName",
                     userDisplayName = "User name",
-                    userId = byteArrayOf(),
+                    userId = ByteArrayWrapper(byteArrayOf()),
                     note = "Note",
                     createTime = now,
-                    contents = byteArrayOf(),
+                    contents = ByteArrayWrapper(byteArrayOf()),
                     userHandle = null,
-                    credentialId = byteArrayOf(),
+                    credentialId = ByteArrayWrapper(byteArrayOf()),
                     creationData = PasskeyCreationData(
                         osName = "Android",
                         osVersion = "14",

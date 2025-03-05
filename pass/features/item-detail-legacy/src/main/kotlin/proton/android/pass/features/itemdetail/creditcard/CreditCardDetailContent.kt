@@ -32,7 +32,6 @@ import proton.android.pass.composecomponents.impl.item.details.sections.shared.P
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemdetail.common.NoteSection
@@ -89,7 +88,6 @@ internal fun CreditCardDetailContent(
                 attachmentsState = attachmentsState,
                 isDetail = true,
                 itemColors = passItemColors(ItemCategory.CreditCard),
-                itemDiffs = ItemDiffs.None,
                 onEvent = { onEvent(CreditCardDetailEvent.OnAttachmentEvent(it)) }
             )
         }

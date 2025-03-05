@@ -62,6 +62,7 @@ dependencies {
     debugImplementation(libs.showkase)
     kspDebug(libs.showkaseProcessor)
 
+    implementation(projects.pass.biometry.api)
     implementation(projects.pass.clipboard.api)
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonRust.api)

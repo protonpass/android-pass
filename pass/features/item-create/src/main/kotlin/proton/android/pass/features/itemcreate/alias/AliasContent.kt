@@ -52,7 +52,8 @@ internal fun AliasContent(
         topBar = {
             CreateUpdateTopBar(
                 text = topBarActionName,
-                isLoading = uiState.isLoadingState.value(),
+                isLoading = uiState.isLoadingState.value() ||
+                    uiState.attachmentsState.loadingDraftAttachments.isNotEmpty(),
                 showVaultSelector = showVaultSelector,
                 actionColor = PassTheme.colors.aliasInteractionNormMajor1,
                 iconColor = PassTheme.colors.aliasInteractionNormMajor2,

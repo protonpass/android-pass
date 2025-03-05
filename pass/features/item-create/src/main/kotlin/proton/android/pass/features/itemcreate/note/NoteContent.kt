@@ -53,7 +53,8 @@ internal fun NoteContent(
         topBar = {
             CreateUpdateTopBar(
                 text = topBarActionName,
-                isLoading = uiState.isLoadingState.value(),
+                isLoading = uiState.isLoadingState.value() ||
+                    uiState.attachmentsState.loadingDraftAttachments.isNotEmpty(),
                 actionColor = PassTheme.colors.noteInteractionNormMajor1,
                 iconColor = PassTheme.colors.noteInteractionNormMajor2,
                 iconBackgroundColor = PassTheme.colors.noteInteractionNormMinor1,

@@ -32,7 +32,7 @@ fun CreditCardContent(
         topBar = {
             CreateUpdateTopBar(
                 text = topBarActionName,
-                isLoading = state.isLoading,
+                isLoading = state.isLoading || state.attachmentsState.loadingDraftAttachments.isNotEmpty(),
                 actionColor = PassTheme.colors.cardInteractionNormMajor1,
                 iconColor = PassTheme.colors.cardInteractionNormMajor2,
                 showUpgrade = state.isDowngradedMode,

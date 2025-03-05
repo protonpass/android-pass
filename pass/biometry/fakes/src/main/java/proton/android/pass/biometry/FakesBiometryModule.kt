@@ -44,4 +44,7 @@ abstract class FakesBiometryModule {
 
     @Binds
     abstract fun bindExtendAuthTime(impl: FakeExtendAuthTime): ExtendAuthTime
+
+    @Binds
+    abstract fun bindAuthOverrideState(impl: FakeAuthOverrideState): AuthOverrideState
 }

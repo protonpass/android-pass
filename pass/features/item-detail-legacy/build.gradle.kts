@@ -93,6 +93,7 @@ dependencies {
     testImplementation(libs.coroutines.test)
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.datetime)
+    testImplementation(projects.pass.biometry.fakes)
     testImplementation(projects.pass.clipboard.fakes)
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.commonUi.fakes)
@@ -108,6 +109,7 @@ dependencies {
     androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(libs.kotlinTest)
 
+    androidTestImplementation(projects.pass.biometry.fakes)
     androidTestImplementation(projects.pass.clipboard.fakes)
     androidTestImplementation(projects.pass.commonRust.fakes)
     androidTestImplementation(projects.pass.commonTest)

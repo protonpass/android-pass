@@ -30,6 +30,7 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import proton.android.pass.biometry.AuthOverrideState
 import proton.android.pass.biometry.ExtendAuthTime
 import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.commonui.api.PassAppLifecycleProvider
@@ -54,6 +55,7 @@ class AppLockListenerInitializer : Initializer<Unit> {
                 when (it) {
                     State.Foreground -> if (!needsBiometricAuth().first()) {
                         userPreferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
+                        entryPoint.authOverrideState().setAuthOverride(false)
                     }
                     State.Background -> extendAuthTime()
                 }
@@ -71,9 +73,6 @@ class AppLockListenerInitializer : Initializer<Unit> {
         fun needsBiometricAuth(): NeedsBiometricAuth
         fun userPreferencesRepository(): UserPreferencesRepository
         fun extendAuthTime(): ExtendAuthTime
-    }
-
-    companion object {
-        private const val TAG = "AppLockListenerInitializer"
+        fun authOverrideState(): AuthOverrideState
     }
 }

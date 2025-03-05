@@ -37,6 +37,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.biometry.AuthOverrideState
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
@@ -113,6 +114,7 @@ class NoteDetailViewModel @Inject constructor(
     private val unpinItem: UnpinItem,
     private val downloadAttachment: DownloadAttachment,
     private val fileHandler: FileHandler,
+    private val authOverrideState: AuthOverrideState,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     canPerformPaidAction: CanPerformPaidAction,
     observeItemByIdWithVault: ObserveItemByIdWithVault,
@@ -369,6 +371,7 @@ class NoteDetailViewModel @Inject constructor(
     fun onAttachmentOpen(contextHolder: ClassHolder<Context>, attachment: Attachment) {
         viewModelScope.launch {
             loadingAttachmentsState.update { it + attachment.id }
+            authOverrideState.setAuthOverride(true)
             runCatching {
                 val uri = downloadAttachment(attachment)
                 fileHandler.openFile(

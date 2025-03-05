@@ -20,6 +20,7 @@ package proton.android.pass.passkeys.impl
 
 import kotlinx.datetime.Clock
 import proton.android.pass.commonrust.PasskeyManager
+import proton.android.pass.domain.ByteArrayWrapper
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.passkeys.api.GeneratePasskey
@@ -46,12 +47,12 @@ class GeneratePasskeyImpl @Inject constructor(
                     domain = it.domain,
                     id = PasskeyId(it.keyId),
                     rpId = it.rpId,
-                    userId = it.userId,
-                    contents = it.passkey,
+                    userId = ByteArrayWrapper(it.userId),
+                    contents = ByteArrayWrapper(it.passkey),
                     note = "",
                     createTime = clock.now(),
-                    credentialId = it.credentialId,
-                    userHandle = it.userHandle,
+                    credentialId = ByteArrayWrapper(it.credentialId),
+                    userHandle = it.userHandle?.let(::ByteArrayWrapper),
                     creationData = creationData
                 ),
                 response = it.response

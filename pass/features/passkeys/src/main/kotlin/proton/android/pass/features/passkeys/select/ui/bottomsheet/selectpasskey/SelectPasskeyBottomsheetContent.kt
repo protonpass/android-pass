@@ -42,6 +42,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSub
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.ByteArrayWrapper
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.PasskeyId
 import me.proton.core.presentation.R as CoreR
@@ -111,11 +112,11 @@ fun SelectPasskeyBSContentPreview(@PreviewParameter(ThemePreviewProvider::class)
             rpName = domain,
             userName = username,
             userDisplayName = "",
-            userId = byteArrayOf(),
-            contents = byteArrayOf(),
+            userId = ByteArrayWrapper(byteArrayOf()),
+            contents = ByteArrayWrapper(byteArrayOf()),
             note = "",
             createTime = Instant.fromEpochSeconds(1_708_327_525),
-            credentialId = byteArrayOf(),
+            credentialId = ByteArrayWrapper(byteArrayOf()),
             userHandle = null,
             creationData = null
         )

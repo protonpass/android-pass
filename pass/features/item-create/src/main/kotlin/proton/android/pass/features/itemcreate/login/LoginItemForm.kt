@@ -52,7 +52,6 @@ import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
-import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
@@ -217,7 +216,6 @@ internal fun LoginItemForm(
                     attachmentsState = attachmentsState,
                     isDetail = false,
                     itemColors = passItemColors(ItemCategory.Login),
-                    itemDiffs = ItemDiffs.None,
                     onEvent = { onEvent(OnAttachmentEvent(it)) }
                 )
             }

@@ -35,7 +35,6 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
-import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
 import proton.android.pass.features.itemcreate.creditcard.CreditCardContentEvent.OnAttachmentEvent
@@ -110,7 +109,6 @@ fun CreditCardItemForm(
                 attachmentsState = attachmentsState,
                 isDetail = false,
                 itemColors = passItemColors(ItemCategory.CreditCard),
-                itemDiffs = ItemDiffs.None,
                 onEvent = { onEvent(OnAttachmentEvent(it)) }
             )
         }

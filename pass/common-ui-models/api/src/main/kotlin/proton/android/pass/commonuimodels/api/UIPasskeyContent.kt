@@ -23,6 +23,7 @@ import androidx.compose.runtime.Stable
 import kotlinx.datetime.Instant
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
+import proton.android.pass.domain.ByteArrayWrapper
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.PasskeyCreationData
 import proton.android.pass.domain.PasskeyId
@@ -116,12 +117,12 @@ data class UIPasskeyContent(
         rpName = rpName,
         userName = userName,
         userDisplayName = userDisplayName,
-        userId = userId,
-        contents = contents,
+        userId = ByteArrayWrapper(userId),
+        contents = ByteArrayWrapper(contents),
         createTime = Instant.fromEpochSeconds(createTime.toLong()),
         note = note,
-        credentialId = credentialId,
-        userHandle = userHandle,
+        credentialId = ByteArrayWrapper(credentialId),
+        userHandle = userHandle?.let(::ByteArrayWrapper),
         creationData = creationData?.toDomain()
     )
 
@@ -134,12 +135,12 @@ data class UIPasskeyContent(
                 rpName = rpName,
                 userName = userName,
                 userDisplayName = userDisplayName,
-                contents = contents,
+                contents = contents.data,
                 createTime = createTime.epochSeconds.toInt(),
                 note = note,
-                userId = userId,
-                credentialId = credentialId,
-                userHandle = userHandle,
+                userId = userId.data,
+                credentialId = credentialId.data,
+                userHandle = userHandle?.data,
                 creationData = creationData?.let { UIPasskeyCreationData.from(it) }
             )
         }

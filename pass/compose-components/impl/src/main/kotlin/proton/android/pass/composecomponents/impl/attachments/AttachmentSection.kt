@@ -47,7 +47,6 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.composecomponents.impl.utils.passItemColors
-import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.items.ItemCategory
 
 @Composable
@@ -56,7 +55,6 @@ fun AttachmentSection(
     attachmentsState: AttachmentsState,
     isDetail: Boolean,
     itemColors: PassItemColors,
-    itemDiffs: ItemDiffs,
     onEvent: (AttachmentContentEvent) -> Unit
 ) {
     if (!attachmentsState.hasAnyAttachment && isDetail) return
@@ -206,7 +204,6 @@ fun AttachmentSectionPreview(
                 attachmentsState = input.second.second,
                 isDetail = input.second.first,
                 itemColors = passItemColors(itemCategory = ItemCategory.Login),
-                itemDiffs = ItemDiffs.None,
                 onEvent = {}
             )
         }

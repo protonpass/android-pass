@@ -84,8 +84,7 @@ internal fun PassCreditCardItemDetailsSections(
                 attachmentsState = attachmentsState,
                 isDetail = true,
                 itemColors = itemColors,
-                onEvent = { onEvent(OnAttachmentEvent(it)) },
-                itemDiffs = itemDiffs
+                onEvent = { onEvent(OnAttachmentEvent(it)) }
             )
         }
 

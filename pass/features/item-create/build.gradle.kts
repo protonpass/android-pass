@@ -118,6 +118,7 @@ dependencies {
     androidTestImplementation(libs.kotlinTest)
     androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(projects.pass.account.fakes)
+    androidTestImplementation(projects.pass.biometry.fakes)
     androidTestImplementation(projects.pass.clipboard.fakes)
     androidTestImplementation(projects.pass.commonRust.fakes)
     androidTestImplementation(projects.pass.commonTest)

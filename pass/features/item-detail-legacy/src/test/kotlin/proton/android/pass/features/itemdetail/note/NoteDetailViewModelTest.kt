@@ -28,6 +28,7 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.biometry.FakeAuthOverrideState
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.toUiModel
@@ -122,7 +123,8 @@ class NoteDetailViewModelTest {
             observeItemAttachments = FakeObserveDetailItemAttachments(),
             observeShare = observeShare,
             downloadAttachment = FakeDownloadAttachment(),
-            fileHandler = FakeFileHandler()
+            fileHandler = FakeFileHandler(),
+            authOverrideState = FakeAuthOverrideState()
         )
 
         observeShare.emitValue(TestShare.Vault.create())

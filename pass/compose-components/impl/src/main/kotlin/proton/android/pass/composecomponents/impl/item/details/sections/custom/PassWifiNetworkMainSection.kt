@@ -18,13 +18,18 @@
 
 package proton.android.pass.composecomponents.impl.item.details.sections.custom
 
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.form.PassDivider
@@ -32,9 +37,12 @@ import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUi
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailsHiddenFieldRow
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
+import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.items.ItemCategory
 import me.proton.core.presentation.R as CoreR
 
 private const val HIDDEN_PRIVATE_KEY_TEXT_LENGTH = 12
@@ -93,5 +101,27 @@ fun PassWifiNetworkMainSection(
                 )
             }
         )
+    }
+}
+
+@Preview
+@Composable
+fun PassWifiNetworkMainSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            PassWifiNetworkMainSection(
+                contents = ItemContents.WifiNetwork(
+                    ssid = "SSID",
+                    password = HiddenState.Empty(""),
+                    note = "",
+                    title = "",
+                    customFieldList = emptyList(),
+                    sectionContentList = emptyList()
+                ),
+                itemColors = passItemColors(ItemCategory.WifiNetwork),
+                itemDiffs = ItemDiffs.WifiNetwork(),
+                onEvent = {}
+            )
+        }
     }
 }

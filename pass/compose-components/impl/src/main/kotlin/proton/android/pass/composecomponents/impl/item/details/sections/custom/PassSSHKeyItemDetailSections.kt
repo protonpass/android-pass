@@ -96,7 +96,6 @@ internal fun PassSSHKeyItemDetailSections(
                 attachmentsState = attachmentsState,
                 isDetail = true,
                 itemColors = itemColors,
-                itemDiffs = itemDiffs,
                 onEvent = { onEvent(OnAttachmentEvent(it)) }
             )
         }

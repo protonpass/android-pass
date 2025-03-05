@@ -21,6 +21,7 @@ package proton.android.pass.datamodels.api
 import kotlinx.datetime.Instant
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.domain.AddressDetails
+import proton.android.pass.domain.ByteArrayWrapper
 import proton.android.pass.domain.ContactDetails
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.CustomField
@@ -157,12 +158,12 @@ private fun createLoginItemType(parsed: ItemV1.Item, context: EncryptionContext)
             rpName = it.rpName,
             userName = it.userName,
             userDisplayName = it.userDisplayName,
-            userId = it.userId.toByteArray(),
-            contents = it.content.toByteArray(),
+            userId = ByteArrayWrapper(it.userId.toByteArray()),
+            contents = ByteArrayWrapper(it.content.toByteArray()),
             note = it.note,
             createTime = Instant.fromEpochSeconds(it.createTime.toLong()),
-            credentialId = it.credentialId.toByteArray(),
-            userHandle = it.userHandle.toByteArray(),
+            credentialId = ByteArrayWrapper(it.credentialId.toByteArray()),
+            userHandle = it.userHandle?.let { ByteArrayWrapper(it.toByteArray()) },
             creationData = it.creationDataOrNull?.let { creationData ->
                 PasskeyCreationData(
                     osName = creationData.osName,

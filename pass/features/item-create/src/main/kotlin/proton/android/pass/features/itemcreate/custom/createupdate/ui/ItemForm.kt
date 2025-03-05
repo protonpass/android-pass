@@ -50,7 +50,6 @@ import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.labels.CollapsibleSectionHeader
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.CustomFieldType
-import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
 import proton.android.pass.features.itemcreate.common.StickyTotpOptions
@@ -210,10 +209,8 @@ fun ItemForm(
                         attachmentsState = itemSharedProperties.attachmentsState,
                         isDetail = false,
                         itemColors = passItemColors(ItemCategory.Custom),
-                        itemDiffs = ItemDiffs.None,
                         onEvent = { onEvent(ItemContentEvent.OnAttachmentEvent(it)) }
-                    )
-                }
+                )}
             }
             if (isCurrentStickyVisible) {
                 item { Spacer(modifier = Modifier.height(48.dp)) }

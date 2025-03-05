@@ -172,6 +172,7 @@ fun CreateNoteScreen(
             },
             onConfirm = {
                 showConfirmDialog = false
+                viewModel.clearDraftData()
                 actionAfterKeyboardHide = { onNavigate(CreateNoteNavigation.CloseScreen) }
             }
         )

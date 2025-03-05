@@ -222,6 +222,7 @@ fun UpdateCustomItemScreen(
             },
             onConfirm = {
                 showConfirmDialog = false
+                viewModel.processIntent(ClearDraft)
                 actionAfterKeyboardHide = { onNavigate(BaseCustomItemNavigation.CloseScreen) }
             }
         )

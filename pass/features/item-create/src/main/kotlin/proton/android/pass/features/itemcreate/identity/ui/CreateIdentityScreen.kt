@@ -209,6 +209,7 @@ fun CreateIdentityScreen(
             },
             onConfirm = {
                 showConfirmDialog = false
+                viewModel.clearDraftData()
                 actionAfterKeyboardHide = { onNavigate(BaseIdentityNavigation.CloseScreen) }
             }
         )

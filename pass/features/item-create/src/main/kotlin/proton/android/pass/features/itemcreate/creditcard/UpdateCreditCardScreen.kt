@@ -167,6 +167,7 @@ fun UpdateCreditCardScreen(
                     },
                     onConfirm = {
                         showConfirmDialog = false
+                        viewModel.clearDraftData()
                         actionAfterKeyboardHide = { onNavigate(CloseScreen) }
                     }
                 )

@@ -187,6 +187,7 @@ fun CreateAliasScreen(
             },
             onConfirm = {
                 showConfirmDialog = false
+                viewModel.clearDraftData()
                 actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.CloseScreen) }
             }
         )

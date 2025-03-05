@@ -44,7 +44,7 @@ class AuthenticateWithPasskeyImpl @Inject constructor(
         val request = AuthenticateWithPasskeyAndroidRequest(
             origin = origin,
             request = sanitized,
-            passkey = passkey.contents,
+            passkey = passkey.contents.data,
             clientDataHash = clientDataHash
         )
         val res = passkeyManager.resolveChallengeForAndroid(request)

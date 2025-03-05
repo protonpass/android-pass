@@ -55,7 +55,8 @@ internal fun LoginContent(
         topBar = {
             CreateUpdateTopBar(
                 text = topBarActionName,
-                isLoading = uiState.isLoadingState.value(),
+                isLoading = uiState.isLoadingState.value() ||
+                    uiState.attachmentsState.loadingDraftAttachments.isNotEmpty(),
                 actionColor = PassTheme.colors.loginInteractionNormMajor1,
                 iconColor = PassTheme.colors.loginInteractionNormMajor2,
                 iconBackgroundColor = PassTheme.colors.loginInteractionNormMinor1,

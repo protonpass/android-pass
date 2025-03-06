@@ -94,7 +94,7 @@ data class LoginItemFormState(
             itemEmail = itemEmail,
             itemUsername = itemUsername,
             password = password.toHiddenState(),
-            urls = urls,
+            urls = urls.filter(String::isNotBlank),
             packageInfoSet = packageInfoSet.map(PackageInfoUi::toPackageInfo).toSet(),
             primaryTotp = primaryTotp.toHiddenState(),
             customFields = customFields.map(UICustomFieldContent::toCustomFieldContent),

@@ -32,6 +32,7 @@ import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
+import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.fakes.repositories.FakePendingAttachmentLinkRepository
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestObserveItemById
@@ -63,6 +64,7 @@ class UpdateCreditCardViewModelTest {
     private lateinit var updateItem: TestUpdateItem
     private lateinit var accountManager: TestAccountManager
     private lateinit var featureFlagsRepository: TestFeatureFlagsPreferenceRepository
+    private lateinit var pendingAttachmentLinkRepository: PendingAttachmentLinkRepository
 
     @Before
     fun setup() {
@@ -71,6 +73,7 @@ class UpdateCreditCardViewModelTest {
         getItemById = TestObserveItemById()
         updateItem = TestUpdateItem()
         featureFlagsRepository = TestFeatureFlagsPreferenceRepository()
+        pendingAttachmentLinkRepository = FakePendingAttachmentLinkRepository()
         accountManager = TestAccountManager()
         accountManager.sendPrimaryUserId(UserId("user-id"))
         instance = UpdateCreditCardViewModel(
@@ -90,7 +93,7 @@ class UpdateCreditCardViewModelTest {
             linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
             renameAttachments = FakeRenameAttachments(),
             userPreferencesRepository = TestPreferenceRepository(),
-            pendingAttachmentLinkRepository = FakePendingAttachmentLinkRepository()
+            pendingAttachmentLinkRepository = pendingAttachmentLinkRepository
         )
     }
 
@@ -114,6 +117,7 @@ class UpdateCreditCardViewModelTest {
     fun `can update with valid contents`() = runTest {
         val item = TestObserveItems.createCreditCard(title = "title")
         getItemById.emitValue(Result.success(item))
+        instance.onTitleChange("TitleChanged") // there needs to be a change to trigger an update
         updateItem.setResult(Result.success(item))
 
         instance.update()
@@ -160,6 +164,7 @@ class UpdateCreditCardViewModelTest {
     private suspend fun runTestError(exception: Throwable) {
         val item = TestObserveItems.createCreditCard(title = "title")
         getItemById.emitValue(Result.success(item))
+        instance.onTitleChange("TitleChanged") // there needs to be a change to trigger an update
         updateItem.setResult(Result.failure(exception))
 
         instance.update()

@@ -32,6 +32,7 @@ import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
+import proton.android.pass.data.fakes.repositories.FakePendingAttachmentLinkRepository
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveItems
@@ -88,7 +89,8 @@ class UpdateCreditCardViewModelTest {
             attachmentsHandler = proton.android.pass.features.itemcreate.attachments.FakeAttachmentHandler(),
             linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
             renameAttachments = FakeRenameAttachments(),
-            userPreferencesRepository = TestPreferenceRepository()
+            userPreferencesRepository = TestPreferenceRepository(),
+            pendingAttachmentLinkRepository = FakePendingAttachmentLinkRepository()
         )
     }
 

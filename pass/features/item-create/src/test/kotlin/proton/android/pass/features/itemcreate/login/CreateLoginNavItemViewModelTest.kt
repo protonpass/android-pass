@@ -31,7 +31,6 @@ import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.commonrust.fakes.TestEmailValidator
 import proton.android.pass.commonrust.fakes.passwords.strengths.TestPasswordStrengthCalculator
-import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -54,6 +53,7 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.MFACreated
@@ -197,13 +197,7 @@ internal class CreateLoginNavItemViewModelTest {
                             id = item.id,
                             userId = UserId("user-id"),
                             shareId = item.shareId,
-                            contents = toItemContents(
-                                itemType = item.itemType,
-                                encryptionContext = TestEncryptionContext,
-                                title = item.title,
-                                note = item.note,
-                                flags = item.flags
-                            ),
+                            contents = item.toItemContents { TestEncryptionContext.decrypt(it) },
                             createTime = item.createTime,
                             state = ItemState.Active.value,
                             modificationTime = item.modificationTime,

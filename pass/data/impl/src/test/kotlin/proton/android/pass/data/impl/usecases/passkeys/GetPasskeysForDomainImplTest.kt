@@ -29,6 +29,7 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.usecases.passkeys.PasskeySelection
 import proton.android.pass.data.fakes.usecases.TestObserveItemsWithPasskeys
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveAutofillShares
+import proton.android.pass.domain.ByteArrayWrapper
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.PasskeyId
@@ -255,12 +256,12 @@ class GetPasskeysForDomainImplTest {
         rpName = "",
         userName = "",
         userDisplayName = "",
-        userId = byteArrayOf(),
+        userId = ByteArrayWrapper(byteArrayOf()),
         note = "",
         createTime = createTime,
-        contents = byteArrayOf(),
+        contents = ByteArrayWrapper(byteArrayOf()),
         userHandle = null,
-        credentialId = id.value.toByteArray(),
+        credentialId = ByteArrayWrapper(id.value.toByteArray()),
         creationData = null
     )
 }

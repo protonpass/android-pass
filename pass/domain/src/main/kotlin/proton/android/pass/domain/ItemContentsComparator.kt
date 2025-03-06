@@ -16,36 +16,30 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.common
+package proton.android.pass.domain
 
-import proton.android.pass.crypto.api.context.EncryptionContext
-import proton.android.pass.domain.CustomFieldContent
-import proton.android.pass.domain.ExtraSectionContent
-import proton.android.pass.domain.HiddenState
-import proton.android.pass.domain.ItemContents
+private fun HiddenState.compareDecrypted(other: HiddenState, decrypt: (String) -> String): Int {
+    val (decryptedThis, decryptedOther) = decrypt(this.encrypted) to decrypt(other.encrypted)
+    return decryptedThis.compareTo(decryptedOther)
+}
 
-private fun CustomFieldContent.compareDecrypted(b: CustomFieldContent, context: EncryptionContext): Int = when {
+private fun CustomFieldContent.compareDecrypted(b: CustomFieldContent, decrypt: (String) -> String): Int = when {
     this is CustomFieldContent.Text && b is CustomFieldContent.Text ->
         this.value.compareTo(b.value)
 
     this is CustomFieldContent.Hidden && b is CustomFieldContent.Hidden ->
-        this.value.compareDecrypted(b.value, context)
+        this.value.compareDecrypted(b.value, decrypt)
 
     this is CustomFieldContent.Totp && b is CustomFieldContent.Totp ->
-        this.value.compareDecrypted(b.value, context)
+        this.value.compareDecrypted(b.value, decrypt)
 
     else -> this::class.simpleName!!.compareTo(b::class.simpleName!!)
 }
 
 private fun List<CustomFieldContent>.compareDecrypted(
     other: List<CustomFieldContent>,
-    context: EncryptionContext
-): Int = compareLists(this, other) { a, b -> a.compareDecrypted(b, context) }
-
-private fun HiddenState.compareDecrypted(other: HiddenState, context: EncryptionContext): Int {
-    val (decryptedThis, decryptedOther) = context.decrypt(this.encrypted) to context.decrypt(other.encrypted)
-    return decryptedThis.compareTo(decryptedOther)
-}
+    decrypt: (String) -> String
+): Int = compareLists(this, other) { a, b -> a.compareDecrypted(b, decrypt) }
 
 private fun <T> compareLists(
     a: List<T>,
@@ -59,21 +53,19 @@ private fun <T> compareLists(
 
 private fun List<ExtraSectionContent>.compareSections(
     other: List<ExtraSectionContent>,
-    context: EncryptionContext
+    decrypt: (String) -> String
 ): Int = compareLists(this, other) { a, b ->
-    when {
-        a.title != b.title -> a.title.compareTo(b.title)
-        else -> a.customFieldList.compareDecrypted(b.customFieldList, context)
-    }
+    a.title.compareTo(b.title).takeIf { it != 0 }
+        ?: a.customFieldList.compareDecrypted(b.customFieldList, decrypt)
 }
 
 fun areItemContentsEqual(
     a: ItemContents,
     b: ItemContents,
-    encryptionContext: EncryptionContext
+    decrypt: (String) -> String
 ): Boolean = when {
     a is ItemContents.Login && b is ItemContents.Login ->
-        areLoginItemsEqual(a, b, encryptionContext)
+        areLoginItemsEqual(a, b, decrypt)
 
     a is ItemContents.Note && b is ItemContents.Note ->
         areNoteItemsEqual(a, b)
@@ -82,19 +74,19 @@ fun areItemContentsEqual(
         areAliasItemsEqual(a, b)
 
     a is ItemContents.CreditCard && b is ItemContents.CreditCard ->
-        areCreditCardItemsEqual(a, b, encryptionContext)
+        areCreditCardItemsEqual(a, b, decrypt)
 
     a is ItemContents.Identity && b is ItemContents.Identity ->
-        areIdentityItemsEqual(a, b, encryptionContext)
+        areIdentityItemsEqual(a, b, decrypt)
 
     a is ItemContents.Custom && b is ItemContents.Custom ->
-        areCustomItemEqual(a, b, encryptionContext)
+        areCustomItemEqual(a, b, decrypt)
 
     a is ItemContents.WifiNetwork && b is ItemContents.WifiNetwork ->
-        areWifiNetworkItemEqual(a, b, encryptionContext)
+        areWifiNetworkItemEqual(a, b, decrypt)
 
     a is ItemContents.SSHKey && b is ItemContents.SSHKey ->
-        areSSHKeyItemEqual(a, b, encryptionContext)
+        areSSHKeyItemEqual(a, b, decrypt)
 
     else -> false
 }
@@ -102,38 +94,38 @@ fun areItemContentsEqual(
 private fun areSSHKeyItemEqual(
     a: ItemContents.SSHKey,
     b: ItemContents.SSHKey,
-    encryptionContext: EncryptionContext
+    decrypt: (String) -> String
 ) = a.title == b.title &&
     a.note == b.note &&
     a.publicKey == b.publicKey &&
-    a.privateKey.compareDecrypted(b.privateKey, encryptionContext) == 0 &&
-    a.customFieldList.compareDecrypted(b.customFieldList, encryptionContext) == 0 &&
-    a.sectionContentList.compareSections(b.sectionContentList, encryptionContext) == 0
+    a.privateKey.compareDecrypted(b.privateKey, decrypt) == 0 &&
+    a.customFieldList.compareDecrypted(b.customFieldList, decrypt) == 0 &&
+    a.sectionContentList.compareSections(b.sectionContentList, decrypt) == 0
 
 private fun areWifiNetworkItemEqual(
     a: ItemContents.WifiNetwork,
     b: ItemContents.WifiNetwork,
-    encryptionContext: EncryptionContext
+    decrypt: (String) -> String
 ) = a.title == b.title &&
     a.note == b.note &&
     a.ssid == b.ssid &&
-    a.password.compareDecrypted(b.password, encryptionContext) == 0 &&
-    a.customFieldList.compareDecrypted(b.customFieldList, encryptionContext) == 0 &&
-    a.sectionContentList.compareSections(b.sectionContentList, encryptionContext) == 0
+    a.password.compareDecrypted(b.password, decrypt) == 0 &&
+    a.customFieldList.compareDecrypted(b.customFieldList, decrypt) == 0 &&
+    a.sectionContentList.compareSections(b.sectionContentList, decrypt) == 0
 
 private fun areCustomItemEqual(
     a: ItemContents.Custom,
     b: ItemContents.Custom,
-    encryptionContext: EncryptionContext
+    decrypt: (String) -> String
 ) = a.title == b.title &&
     a.note == b.note &&
-    a.customFieldList.compareDecrypted(b.customFieldList, encryptionContext) == 0 &&
-    a.sectionContentList.compareSections(b.sectionContentList, encryptionContext) == 0
+    a.customFieldList.compareDecrypted(b.customFieldList, decrypt) == 0 &&
+    a.sectionContentList.compareSections(b.sectionContentList, decrypt) == 0
 
 private fun areIdentityItemsEqual(
     a: ItemContents.Identity,
     b: ItemContents.Identity,
-    encryptionContext: EncryptionContext
+    decrypt: (String) -> String
 ) = a.title == b.title &&
     a.note == b.note &&
     a.personalDetailsContent.copy(customFields = emptyList()) == b.personalDetailsContent.copy(
@@ -141,40 +133,40 @@ private fun areIdentityItemsEqual(
     ) &&
     a.personalDetailsContent.customFields.compareDecrypted(
         b.personalDetailsContent.customFields,
-        encryptionContext
+        decrypt
     ) == 0 &&
     a.addressDetailsContent.copy(customFields = emptyList()) == b.addressDetailsContent.copy(
         customFields = emptyList()
     ) &&
     a.addressDetailsContent.customFields.compareDecrypted(
         b.addressDetailsContent.customFields,
-        encryptionContext
+        decrypt
     ) == 0 &&
     a.contactDetailsContent.copy(customFields = emptyList()) == b.contactDetailsContent.copy(
         customFields = emptyList()
     ) &&
     a.contactDetailsContent.customFields.compareDecrypted(
         b.contactDetailsContent.customFields,
-        encryptionContext
+        decrypt
     ) == 0 &&
     a.workDetailsContent.copy(customFields = emptyList()) == b.workDetailsContent.copy(customFields = emptyList()) &&
     a.workDetailsContent.customFields.compareDecrypted(
         b.workDetailsContent.customFields,
-        encryptionContext
+        decrypt
     ) == 0 &&
-    a.extraSectionContentList.compareSections(b.extraSectionContentList, encryptionContext) == 0
+    a.extraSectionContentList.compareSections(b.extraSectionContentList, decrypt) == 0
 
 private fun areCreditCardItemsEqual(
     a: ItemContents.CreditCard,
     b: ItemContents.CreditCard,
-    encryptionContext: EncryptionContext
+    decrypt: (String) -> String
 ) = a.title == b.title &&
     a.note == b.note &&
     a.cardHolder == b.cardHolder &&
     a.type == b.type &&
     a.number == b.number &&
-    a.cvv.compareDecrypted(b.cvv, encryptionContext) == 0 &&
-    a.pin.compareDecrypted(b.pin, encryptionContext) == 0 &&
+    a.cvv.compareDecrypted(b.cvv, decrypt) == 0 &&
+    a.pin.compareDecrypted(b.pin, decrypt) == 0 &&
     a.expirationDate == b.expirationDate
 
 private fun areAliasItemsEqual(a: ItemContents.Alias, b: ItemContents.Alias) = a.title == b.title &&
@@ -188,14 +180,14 @@ private fun areNoteItemsEqual(a: ItemContents.Note, b: ItemContents.Note) = a.ti
 private fun areLoginItemsEqual(
     a: ItemContents.Login,
     b: ItemContents.Login,
-    encryptionContext: EncryptionContext
+    decrypt: (String) -> String
 ) = a.title == b.title &&
     a.note == b.note &&
     a.itemEmail == b.itemEmail &&
     a.itemUsername == b.itemUsername &&
-    a.password.compareDecrypted(b.password, encryptionContext) == 0 &&
-    a.primaryTotp.compareDecrypted(b.primaryTotp, encryptionContext) == 0 &&
-    a.customFields.compareDecrypted(b.customFields, encryptionContext) == 0 &&
+    a.password.compareDecrypted(b.password, decrypt) == 0 &&
+    a.primaryTotp.compareDecrypted(b.primaryTotp, decrypt) == 0 &&
+    a.customFields.compareDecrypted(b.customFields, decrypt) == 0 &&
     a.urls == b.urls &&
     a.packageInfoSet == b.packageInfoSet &&
     a.passkeys == b.passkeys

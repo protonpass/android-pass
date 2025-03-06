@@ -43,7 +43,7 @@ import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.commonui.api.toItemContents
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
@@ -72,6 +72,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.areItemContentsEqual
 import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.ItemUpdate
@@ -82,7 +83,6 @@ import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
-import proton.android.pass.features.itemcreate.common.areItemContentsEqual
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.AttachmentsInitError
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.InitError
@@ -261,13 +261,7 @@ class UpdateLoginViewModel @Inject constructor(
         encryptionContextProvider.withEncryptionContext {
             val default = LoginItemFormState.default(this)
             if (loginItemFormState.compare(default, this)) {
-                val itemContents = toItemContents(
-                    itemType = item.itemType,
-                    encryptionContext = this,
-                    title = item.title,
-                    note = item.note,
-                    flags = item.flags
-                ) as ItemContents.Login
+                val itemContents = item.toItemContents<ItemContents.Login> { decrypt(it) }
 
                 val decryptedTotp = handleTotp(
                     encryptionContext = this@withEncryptionContext,
@@ -367,15 +361,9 @@ class UpdateLoginViewModel @Inject constructor(
         runCatching {
             val hasContentsChanged = encryptionContextProvider.withEncryptionContextSuspendable {
                 areItemContentsEqual(
-                    a = toItemContents(
-                        itemType = currentItem.itemType,
-                        encryptionContext = this,
-                        title = currentItem.title,
-                        note = currentItem.note,
-                        flags = currentItem.flags
-                    ),
+                    a = currentItem.toItemContents { decrypt(it) },
                     b = contents,
-                    encryptionContext = this
+                    decrypt = { decrypt(it) }
                 )
             }
 

@@ -34,6 +34,7 @@ import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
+import proton.android.pass.data.fakes.repositories.FakePendingAttachmentLinkRepository
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
@@ -110,7 +111,8 @@ class UpdateLoginViewModelTest {
             attachmentsHandler = proton.android.pass.features.itemcreate.attachments.FakeAttachmentHandler(),
             linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
             renameAttachments = FakeRenameAttachments(),
-            customFieldDraftRepository = CustomFieldDraftRepositoryImpl()
+            customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
+            pendingAttachmentLinkRepository = FakePendingAttachmentLinkRepository()
         )
     }
 

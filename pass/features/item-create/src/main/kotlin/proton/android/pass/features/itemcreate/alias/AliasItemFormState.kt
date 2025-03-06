@@ -26,6 +26,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonrust.api.AliasPrefixError
 import proton.android.pass.commonrust.api.AliasPrefixValidator
+import proton.android.pass.domain.ItemContents
 import proton.android.pass.log.api.PassLogger
 
 @Parcelize
@@ -63,6 +64,12 @@ data class AliasItemFormState(
 
         return mutableSet.toSet()
     }
+
+    internal fun toItemContents(): ItemContents.Alias = ItemContents.Alias(
+        title = title,
+        note = note,
+        aliasEmail = aliasToBeCreated.orEmpty()
+    )
 
     companion object {
         private const val TAG = "AliasItemFormState"

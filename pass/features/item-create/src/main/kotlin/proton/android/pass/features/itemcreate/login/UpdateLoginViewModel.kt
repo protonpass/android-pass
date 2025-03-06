@@ -52,6 +52,7 @@ import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemById
@@ -81,6 +82,7 @@ import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
+import proton.android.pass.features.itemcreate.common.areItemContentsEqual
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.AttachmentsInitError
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.InitError
@@ -109,9 +111,10 @@ class UpdateLoginViewModel @Inject constructor(
     private val createAlias: CreateAlias,
     private val workerLauncher: WorkerLauncher,
     private val totpManager: TotpManager,
-    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
     private val renameAttachments: RenameAttachments,
+    private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     accountManager: AccountManager,
     clipboardManager: ClipboardManager,
     observeCurrentUser: ObserveCurrentUser,
@@ -354,6 +357,7 @@ class UpdateLoginViewModel @Inject constructor(
         Result.failure(Exception(message))
     }
 
+    @Suppress("LongMethod")
     private suspend fun performUpdateItem(
         userId: UserId,
         shareId: ShareId,
@@ -361,7 +365,34 @@ class UpdateLoginViewModel @Inject constructor(
         contents: ItemContents.Login
     ) {
         runCatching {
-            updateItem(userId, shareId, currentItem, contents)
+            val hasContentsChanged = encryptionContextProvider.withEncryptionContextSuspendable {
+                areItemContentsEqual(
+                    a = toItemContents(
+                        itemType = currentItem.itemType,
+                        encryptionContext = this,
+                        title = currentItem.title,
+                        note = currentItem.note,
+                        flags = currentItem.flags
+                    ),
+                    b = contents,
+                    encryptionContext = this
+                )
+            }
+
+            val hasPendingAttachments =
+                pendingAttachmentLinkRepository.getAllToLink().isNotEmpty() ||
+                    pendingAttachmentLinkRepository.getAllToUnLink().isNotEmpty()
+
+            if (hasContentsChanged || hasPendingAttachments) {
+                updateItem(
+                    userId = userId,
+                    shareId = shareId,
+                    item = currentItem,
+                    contents = contents
+                )
+            } else {
+                currentItem
+            }
         }.onSuccess { item ->
             if (isFileAttachmentsEnabled()) {
                 runCatching {

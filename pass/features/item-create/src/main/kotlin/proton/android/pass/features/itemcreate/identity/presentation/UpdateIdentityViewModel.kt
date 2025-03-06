@@ -34,7 +34,6 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.domain.toItemContents
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
@@ -45,6 +44,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.areItemContentsEqual
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.FileMetadata
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.InitError
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.ItemUpdateError
@@ -119,7 +119,7 @@ class UpdateIdentityViewModel @Inject constructor(
             val userId = accountManager.getPrimaryUserId().first()
                 ?: throw IllegalStateException("User id is null")
             val hasContentsChanged = encryptionContextProvider.withEncryptionContextSuspendable {
-                areItemContentsEqual(
+                !areItemContentsEqual(
                     a = item.toItemContents { decrypt(it) },
                     b = contents,
                     decrypt = { decrypt(it) }

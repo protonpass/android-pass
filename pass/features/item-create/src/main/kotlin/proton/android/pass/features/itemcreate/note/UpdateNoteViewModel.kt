@@ -36,7 +36,6 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.domain.toItemContents
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -50,6 +49,7 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.areItemContentsEqual
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.ItemUpdate
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
@@ -169,7 +169,7 @@ class UpdateNoteViewModel @Inject constructor(
             val contents = noteItemFormMutableState.toItemContents()
             runCatching {
                 val hasContentsChanged = encryptionContextProvider.withEncryptionContextSuspendable {
-                    areItemContentsEqual(
+                    !areItemContentsEqual(
                         a = initialItem.value.toItemContents { decrypt(it) },
                         b = contents,
                         decrypt = { decrypt(it) }

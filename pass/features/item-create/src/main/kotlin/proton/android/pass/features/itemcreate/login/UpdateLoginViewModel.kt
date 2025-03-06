@@ -43,7 +43,6 @@ import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.domain.toItemContents
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
@@ -74,6 +73,7 @@ import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.areItemContentsEqual
 import proton.android.pass.domain.entity.NewAlias
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.ItemUpdate
 import proton.android.pass.features.itemcreate.MFAUpdated
@@ -360,7 +360,7 @@ class UpdateLoginViewModel @Inject constructor(
     ) {
         runCatching {
             val hasContentsChanged = encryptionContextProvider.withEncryptionContextSuspendable {
-                areItemContentsEqual(
+                !areItemContentsEqual(
                     a = currentItem.toItemContents { decrypt(it) },
                     b = contents,
                     decrypt = { decrypt(it) }

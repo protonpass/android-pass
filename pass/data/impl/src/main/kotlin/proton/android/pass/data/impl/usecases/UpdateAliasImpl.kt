@@ -22,22 +22,25 @@ import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asResultWithoutLoading
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.AliasRepository
-import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.data.api.usecases.GetShareById
+import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasContent
-import proton.android.pass.data.api.usecases.UpdateAliasItemContent
+import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.areItemContentsEqual
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class UpdateAliasImpl @Inject constructor(
     private val aliasRepository: AliasRepository,
-    private val itemRepository: ItemRepository,
-    private val getShareById: GetShareById
+    private val updateItem: UpdateItem,
+    private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
+    private val encryptionContextProvider: EncryptionContextProvider
 ) : UpdateAlias {
 
     override suspend fun invoke(
@@ -76,7 +79,7 @@ class UpdateAliasImpl @Inject constructor(
         }
 
         return if (content.itemData is Some) {
-            val itemData = (content.itemData as Some<UpdateAliasItemContent>).value
+            val itemData = (content.itemData as Some<ItemContents.Alias>).value
             updateItemContent(userId, item, itemData)
         } else {
             item
@@ -86,16 +89,25 @@ class UpdateAliasImpl @Inject constructor(
     private suspend fun updateItemContent(
         userId: UserId,
         item: Item,
-        content: UpdateAliasItemContent
+        content: ItemContents.Alias
     ): Item {
-        val share = getShareById(userId, item.shareId)
-        val itemContents = ItemContents.Alias(
-            title = content.title,
-            note = content.note,
-            aliasEmail = "" // Not used when creating the payload
-        )
+        val hasContentsChanged = encryptionContextProvider.withEncryptionContextSuspendable {
+            areItemContentsEqual(
+                a = item.toItemContents { decrypt(it) },
+                b = content,
+                decrypt = { decrypt(it) }
+            )
+        }
 
-        return itemRepository.updateItem(userId, share, item, itemContents)
+        val hasPendingAttachments =
+            pendingAttachmentLinkRepository.getAllToLink().isNotEmpty() ||
+                pendingAttachmentLinkRepository.getAllToUnLink().isNotEmpty()
+
+        return if (hasContentsChanged || hasPendingAttachments) {
+            updateItem(userId, item.shareId, item, content)
+        } else {
+            item
+        }
     }
 
     private companion object {

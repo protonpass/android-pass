@@ -30,7 +30,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
-import proton.android.pass.commonui.api.toItemContents
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
@@ -96,13 +96,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
 
     private fun observeLoginItemContents(item: Item): Flow<ItemContents.Login> = flow {
         encryptionContextProvider.withEncryptionContext {
-            toItemContents(
-                itemType = item.itemType,
-                encryptionContext = this,
-                title = item.title,
-                note = item.note,
-                flags = item.flags
-            ) as ItemContents.Login
+            item.toItemContents<ItemContents.Login> { decrypt(it) }
         }.let { loginItemContents ->
             emit(loginItemContents)
         }

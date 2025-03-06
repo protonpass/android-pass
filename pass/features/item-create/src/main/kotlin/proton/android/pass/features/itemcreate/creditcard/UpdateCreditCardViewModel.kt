@@ -16,7 +16,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.commonui.api.toItemContents
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -31,9 +31,9 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.areItemContentsEqual
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.ItemUpdate
-import proton.android.pass.features.itemcreate.common.areItemContentsEqual
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.AttachmentsInitError
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.InitError
@@ -122,13 +122,7 @@ class UpdateCreditCardViewModel @Inject constructor(
         encryptionContextProvider.withEncryptionContext {
             val default = CreditCardItemFormState.default(this)
             if (creditCardItemFormState.compare(default, this)) {
-                val itemContents = toItemContents(
-                    itemType = item.itemType,
-                    encryptionContext = this,
-                    title = item.title,
-                    note = item.note,
-                    flags = item.flags
-                )as ItemContents.CreditCard
+                val itemContents = item.toItemContents<ItemContents.CreditCard> { decrypt(it) }
                 val expirationDate =
                     ExpirationDateProtoMapper.fromProto(itemContents.expirationDate)
                 creditCardItemFormMutableState =
@@ -152,15 +146,9 @@ class UpdateCreditCardViewModel @Inject constructor(
             val contents = creditCardItemFormState.sanitise().toItemContents()
             val hasContentsChanged = encryptionContextProvider.withEncryptionContextSuspendable {
                 areItemContentsEqual(
-                    a = toItemContents(
-                        itemType = initialItem.itemType,
-                        encryptionContext = this,
-                        title = initialItem.title,
-                        note = initialItem.note,
-                        flags = initialItem.flags
-                    ),
+                    a = initialItem.toItemContents { decrypt(it) },
                     b = contents,
-                    encryptionContext = this
+                    decrypt = { decrypt(it) }
                 )
             }
             val hasPendingAttachments =

@@ -43,7 +43,6 @@ import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
-import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -57,6 +56,7 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.FileMetadata
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
@@ -710,13 +710,7 @@ class IdentityActionsProviderImpl @Inject constructor(
         getItemAttachments(item)
         itemState.update { item.some() }
         val itemContents = encryptionContextProvider.withEncryptionContext {
-            toItemContents(
-                itemType = item.itemType,
-                encryptionContext = this,
-                title = item.title,
-                note = item.note,
-                flags = item.flags
-            ) as ItemContents.Identity
+            item.toItemContents<ItemContents.Identity> { decrypt(it) }
         }
         val personalDetails = itemContents.personalDetailsContent
         val addressDetails = itemContents.addressDetailsContent

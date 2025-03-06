@@ -24,15 +24,11 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.Item
-
-data class UpdateAliasItemContent(
-    val title: String,
-    val note: String
-)
+import proton.android.pass.domain.ItemContents
 
 data class UpdateAliasContent(
     val mailboxes: Option<List<AliasMailbox>>,
-    val itemData: Option<UpdateAliasItemContent>,
+    val itemData: Option<ItemContents.Alias>,
     private val slNoteOption: Option<String>,
     private val displayNameOption: Option<String>
 ) {

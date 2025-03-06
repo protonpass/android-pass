@@ -37,7 +37,7 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.commonui.api.toItemContents
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetItemById
@@ -149,25 +149,10 @@ class SelectPasskeyBottomsheetViewModel @Inject constructor(
         getItemById(shareId, itemId)
     }.fold(
         onSuccess = { item ->
-            val itemContents = encryptionContextProvider.withEncryptionContext {
-                toItemContents(
-                    itemType = item.itemType,
-                    encryptionContext = this,
-                    title = item.title,
-                    note = item.note,
-                    flags = item.flags
-                )
+            val itemContents: ItemContents.Login = encryptionContextProvider.withEncryptionContext {
+                item.toItemContents { decrypt(it) }
             }
-
-            when (itemContents) {
-                is ItemContents.Login -> {
-                    Result.success(itemContents.passkeys.toPersistentList())
-                }
-
-                else -> {
-                    Result.failure(IllegalStateException("Received ItemContents that are not ItemContents.Login"))
-                }
-            }
+            Result.success(itemContents.passkeys.toPersistentList())
         },
         onFailure = { Result.failure(it) }
     )

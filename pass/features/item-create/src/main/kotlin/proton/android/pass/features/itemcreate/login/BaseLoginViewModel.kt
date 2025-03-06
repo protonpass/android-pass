@@ -299,7 +299,7 @@ abstract class BaseLoginViewModel(
 
             else -> loginItemFormState.copy(
                 email = "",
-                username = trimmedNewEmail
+                username = newEmail.trimStart()
             )
         }.also { updatedLoginItemFormState ->
             loginItemFormMutableState = updatedLoginItemFormState
@@ -310,7 +310,7 @@ abstract class BaseLoginViewModel(
         onUserEditedContent()
 
         loginItemFormMutableState = loginItemFormMutableState.copy(
-            username = newUsername.trim()
+            username = newUsername.trimStart()
         )
     }
 

@@ -16,7 +16,6 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.domain.toItemContents
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -32,6 +31,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.areItemContentsEqual
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.ItemUpdate
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
@@ -145,7 +145,7 @@ class UpdateCreditCardViewModel @Inject constructor(
             val initialItem = itemOption.value() ?: throw IllegalStateException("Item is null")
             val contents = creditCardItemFormState.sanitise().toItemContents()
             val hasContentsChanged = encryptionContextProvider.withEncryptionContextSuspendable {
-                areItemContentsEqual(
+                !areItemContentsEqual(
                     a = initialItem.toItemContents { decrypt(it) },
                     b = contents,
                     decrypt = { decrypt(it) }

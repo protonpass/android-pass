@@ -92,7 +92,7 @@ class UpdateAliasImpl @Inject constructor(
         content: ItemContents.Alias
     ): Item {
         val hasContentsChanged = encryptionContextProvider.withEncryptionContextSuspendable {
-            areItemContentsEqual(
+            !areItemContentsEqual(
                 a = item.toItemContents { decrypt(it) },
                 b = content,
                 decrypt = { decrypt(it) }

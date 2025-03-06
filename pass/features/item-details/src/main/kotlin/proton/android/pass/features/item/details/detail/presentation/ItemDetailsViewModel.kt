@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -97,6 +98,7 @@ class ItemDetailsViewModel @Inject constructor(
         combine(
             itemContentsUpdateOptionFlow,
             itemDetailsHandler.observeItemDetails(item, ItemDetailsSource.DETAIL)
+                .onEach { itemContentsUpdateOptionFlow.update { None } }
         ) { itemContentsUpdateOption, itemDetailState ->
             when (itemContentsUpdateOption) {
                 None -> itemDetailState

@@ -392,7 +392,6 @@ class HomeViewModel @Inject constructor(
                 }
             }.asResultWithoutLoading()
                 .map { itemResult ->
-                    PassLogger.i("VicLog", "itemResult: $itemResult")
                     itemResult.map { list ->
                         encryptionContextProvider.withEncryptionContextSuspendable {
                             list.asSequence()

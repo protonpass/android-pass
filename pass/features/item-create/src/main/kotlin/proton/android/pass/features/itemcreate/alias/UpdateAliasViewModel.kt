@@ -55,7 +55,6 @@ import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasContent
-import proton.android.pass.data.api.usecases.UpdateAliasItemContent
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.RenameAttachments
 import proton.android.pass.domain.AliasDetails
@@ -380,12 +379,7 @@ class UpdateAliasViewModel @Inject constructor(
         } else None
 
         val itemData = if (itemDataChanged) {
-            Some(
-                UpdateAliasItemContent(
-                    title = aliasItemFormState.title,
-                    note = aliasItemFormState.note
-                )
-            )
+            Some(aliasItemFormState.toItemContents())
         } else None
 
         return UpdateAliasContent(

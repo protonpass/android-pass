@@ -29,7 +29,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
-import proton.android.pass.commonui.api.toItemContents
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -108,13 +108,7 @@ class CustomItemDetailsHandlerObserverImpl @Inject constructor(
 
     private fun observeCustomItemContents(item: Item): Flow<ItemContents.Custom> = flow {
         encryptionContextProvider.withEncryptionContext {
-            toItemContents(
-                itemType = item.itemType,
-                encryptionContext = this,
-                title = item.title,
-                note = item.note,
-                flags = item.flags
-            ) as ItemContents.Custom
+            item.toItemContents<ItemContents.Custom> { decrypt(it) }
         }.let { identityItemContents ->
             emit(identityItemContents)
         }

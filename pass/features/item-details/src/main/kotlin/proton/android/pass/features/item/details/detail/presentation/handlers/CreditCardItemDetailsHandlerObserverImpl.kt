@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapLatest
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
-import proton.android.pass.commonui.api.toItemContents
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -65,13 +65,7 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
 
     private fun observeCreditCardItemContents(item: Item): Flow<ItemContents.CreditCard> = flow {
         encryptionContextProvider.withEncryptionContext {
-            toItemContents(
-                itemType = item.itemType,
-                encryptionContext = this,
-                title = item.title,
-                note = item.note,
-                flags = item.flags
-            ) as ItemContents.CreditCard
+            item.toItemContents<ItemContents.CreditCard> { decrypt(it) }
         }.let { creditCardItemContents ->
             emit(creditCardItemContents)
         }

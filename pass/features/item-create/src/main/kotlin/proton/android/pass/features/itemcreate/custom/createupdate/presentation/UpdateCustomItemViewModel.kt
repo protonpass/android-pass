@@ -35,7 +35,7 @@ import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.commonui.api.toItemContents
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -47,7 +47,9 @@ import proton.android.pass.data.api.usecases.attachments.RenameAttachments
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.areItemContentsEqual
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
@@ -55,7 +57,6 @@ import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
-import proton.android.pass.features.itemcreate.common.areItemContentsEqual
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -153,15 +154,9 @@ class UpdateCustomItemViewModel @Inject constructor(
                 val updatedContents: ItemContents = itemFormState.toItemContents()
                 val hasContentsChanged = encryptionContextProvider.withEncryptionContextSuspendable {
                     areItemContentsEqual(
-                        a = toItemContents(
-                            itemType = item.itemType,
-                            encryptionContext = this,
-                            title = item.title,
-                            note = item.note,
-                            flags = item.flags
-                        ),
+                        a = item.toItemContents { decrypt(it) },
                         b = updatedContents,
-                        encryptionContext = this
+                        decrypt = { decrypt(it) }
                     )
                 }
                 val hasPendingAttachments =
@@ -216,38 +211,34 @@ class UpdateCustomItemViewModel @Inject constructor(
             snackbarDispatcher(CustomItemSnackbarMessage.AttachmentsInitError)
         }
         receivedItem = item.some()
-        encryptionContextProvider.withEncryptionContextSuspendable {
-            val itemContents = toItemContents(
-                itemType = item.itemType,
-                encryptionContext = this,
-                title = item.title,
-                note = item.note,
-                flags = item.flags
-            )
 
-            val formState = when (itemContents) {
-                is ItemContents.Custom -> ItemFormState(itemContents)
-                is ItemContents.SSHKey -> ItemFormState(itemContents)
-                is ItemContents.WifiNetwork -> ItemFormState(itemContents)
-                else -> throw IllegalStateException("Unsupported item type")
-            }
+         encryptionContextProvider.withEncryptionContextSuspendable {
+             val formState = when (item.itemType) {
+                 is ItemType.Custom ->
+                     ItemFormState(item.toItemContents<ItemContents.Custom> { decrypt(it) })
+                 is ItemType.SSHKey ->
+                     ItemFormState(item.toItemContents<ItemContents.SSHKey> { decrypt(it) })
+                 is ItemType.WifiNetwork ->
+                     ItemFormState(item.toItemContents<ItemContents.WifiNetwork> { decrypt(it) })
+                 else -> throw IllegalStateException("Unsupported item type")
+             }
 
-            originalCustomFields = formState.customFieldList
-            originalSections = formState.sectionList
-            val customFieldsForEdit = formState.customFieldList.map { entry ->
-                cleanupTotpDataToEdit(entry, this)
-            }
-            val sectionsForEdit = formState.sectionList.map { section ->
-                section.copy(
-                    customFields = section.customFields.map { entry ->
-                        cleanupTotpDataToEdit(entry, this)
-                    }
-                )
-            }
-            itemFormState = formState.copy(
-                customFieldList = customFieldsForEdit,
-                sectionList = sectionsForEdit
-            )
+             originalCustomFields = formState.customFieldList
+             originalSections = formState.sectionList
+             val customFieldsForEdit = formState.customFieldList.map { entry ->
+                 cleanupTotpDataToEdit(entry, this)
+             }
+             val sectionsForEdit = formState.sectionList.map { section ->
+                 section.copy(
+                     customFields = section.customFields.map { entry ->
+                         cleanupTotpDataToEdit(entry, this)
+                     }
+                 )
+             }
+             itemFormState = formState.copy(
+                 customFieldList = customFieldsForEdit,
+                 sectionList = sectionsForEdit
+             )
         }
     }
 

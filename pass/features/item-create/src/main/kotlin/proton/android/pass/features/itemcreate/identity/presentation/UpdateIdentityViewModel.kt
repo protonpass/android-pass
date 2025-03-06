@@ -34,7 +34,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.commonui.api.toItemContents
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
@@ -42,13 +42,13 @@ import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.areItemContentsEqual
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.InitError
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.ItemUpdateError
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.ItemUpdated
-import proton.android.pass.features.itemcreate.common.areItemContentsEqual
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -120,15 +120,9 @@ class UpdateIdentityViewModel @Inject constructor(
                 ?: throw IllegalStateException("User id is null")
             val hasContentsChanged = encryptionContextProvider.withEncryptionContextSuspendable {
                 areItemContentsEqual(
-                    a = toItemContents(
-                        itemType = item.itemType,
-                        encryptionContext = this,
-                        title = item.title,
-                        note = item.note,
-                        flags = item.flags
-                    ),
+                    a = item.toItemContents { decrypt(it) },
                     b = contents,
-                    encryptionContext = this
+                    decrypt = { decrypt(it) }
                 )
             }
             val hasPendingAttachments =

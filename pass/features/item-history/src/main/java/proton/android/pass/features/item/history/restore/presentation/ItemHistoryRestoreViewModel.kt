@@ -41,7 +41,7 @@ import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDet
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsSource
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.commonui.api.toItemContents
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRevision
@@ -104,10 +104,10 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     }
 
     private val revisionItemContentsFlow = revisionItemFlow.map { revisionItem ->
-        encryptionContextProvider.withEncryptionContext {
+        encryptionContextProvider.withEncryptionContextSuspendable {
             toItemContents(
+                decrypt = { decrypt(it) },
                 itemType = revisionItem.itemType,
-                encryptionContext = this,
                 title = revisionItem.title,
                 note = revisionItem.note,
                 flags = revisionItem.flags
@@ -120,10 +120,10 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     }
 
     private val currentItemContentsFlow = currentItemFlow.map { currentItem ->
-        encryptionContextProvider.withEncryptionContext {
+        encryptionContextProvider.withEncryptionContextSuspendable {
             toItemContents(
+                decrypt = { decrypt(it) },
                 itemType = currentItem.itemType,
-                encryptionContext = this,
                 title = currentItem.title,
                 note = currentItem.note,
                 flags = currentItem.flags

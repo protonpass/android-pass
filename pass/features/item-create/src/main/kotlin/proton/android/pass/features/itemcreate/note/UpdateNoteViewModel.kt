@@ -36,7 +36,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.commonui.api.toItemContents
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -49,9 +49,9 @@ import proton.android.pass.data.api.usecases.attachments.RenameAttachments
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.areItemContentsEqual
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.ItemUpdate
-import proton.android.pass.features.itemcreate.common.areItemContentsEqual
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.AttachmentsInitError
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.InitError
@@ -170,15 +170,9 @@ class UpdateNoteViewModel @Inject constructor(
             runCatching {
                 val hasContentsChanged = encryptionContextProvider.withEncryptionContextSuspendable {
                     areItemContentsEqual(
-                        a = toItemContents(
-                            itemType = initialItem.value.itemType,
-                            encryptionContext = this,
-                            title = initialItem.value.title,
-                            note = initialItem.value.note,
-                            flags = initialItem.value.flags
-                        ),
+                        a = initialItem.value.toItemContents { decrypt(it) },
                         b = contents,
-                        encryptionContext = this
+                        decrypt = { decrypt(it) }
                     )
                 }
                 val hasPendingAttachments =

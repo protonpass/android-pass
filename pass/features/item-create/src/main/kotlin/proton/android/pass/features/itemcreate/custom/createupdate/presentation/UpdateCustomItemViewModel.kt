@@ -39,6 +39,7 @@ import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
@@ -54,6 +55,7 @@ import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
+import proton.android.pass.features.itemcreate.common.areItemContentsEqual
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -75,6 +77,7 @@ class UpdateCustomItemViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val attachmentsHandler: AttachmentsHandler,
     private val renameAttachments: RenameAttachments,
+    private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
     private val totpManager: TotpManager,
     linkAttachmentsToItem: LinkAttachmentsToItem,
     userPreferencesRepository: UserPreferencesRepository,
@@ -147,12 +150,33 @@ class UpdateCustomItemViewModel @Inject constructor(
                     ?: throw IllegalStateException("User id is null")
                 val item = receivedItem.value()
                     ?: throw IllegalStateException("Item is null")
-                updateItem(
-                    userId = userId,
-                    shareId = navShareId,
-                    item = item,
-                    contents = itemFormState.toItemContents()
-                )
+                val updatedContents: ItemContents = itemFormState.toItemContents()
+                val hasContentsChanged = encryptionContextProvider.withEncryptionContextSuspendable {
+                    areItemContentsEqual(
+                        a = toItemContents(
+                            itemType = item.itemType,
+                            encryptionContext = this,
+                            title = item.title,
+                            note = item.note,
+                            flags = item.flags
+                        ),
+                        b = updatedContents,
+                        encryptionContext = this
+                    )
+                }
+                val hasPendingAttachments =
+                    pendingAttachmentLinkRepository.getAllToLink().isNotEmpty() ||
+                        pendingAttachmentLinkRepository.getAllToUnLink().isNotEmpty()
+                if (hasContentsChanged || hasPendingAttachments) {
+                    updateItem(
+                        userId = userId,
+                        shareId = navShareId,
+                        item = item,
+                        contents = updatedContents
+                    )
+                } else {
+                    item
+                }
             }.onSuccess { item ->
                 linkAttachments(item.shareId, item.id, item.revision)
                 onRenameAttachments(item.shareId, item.id)
@@ -182,6 +206,15 @@ class UpdateCustomItemViewModel @Inject constructor(
     }
 
     private suspend fun onItemReceived(item: Item) {
+        runCatching {
+            if (item.hasAttachments) {
+                attachmentsHandler.getAttachmentsForItem(item.shareId, item.id)
+            }
+        }.onFailure {
+            PassLogger.w(TAG, it)
+            PassLogger.w(TAG, "Get attachments error")
+            snackbarDispatcher(CustomItemSnackbarMessage.AttachmentsInitError)
+        }
         receivedItem = item.some()
         encryptionContextProvider.withEncryptionContextSuspendable {
             val itemContents = toItemContents(

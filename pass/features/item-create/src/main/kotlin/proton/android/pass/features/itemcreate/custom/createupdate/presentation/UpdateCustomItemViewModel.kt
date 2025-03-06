@@ -35,7 +35,6 @@ import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.domain.toItemContents
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -51,6 +50,7 @@ import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.areItemContentsEqual
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
@@ -153,7 +153,7 @@ class UpdateCustomItemViewModel @Inject constructor(
                     ?: throw IllegalStateException("Item is null")
                 val updatedContents: ItemContents = itemFormState.toItemContents()
                 val hasContentsChanged = encryptionContextProvider.withEncryptionContextSuspendable {
-                    areItemContentsEqual(
+                    !areItemContentsEqual(
                         a = item.toItemContents { decrypt(it) },
                         b = updatedContents,
                         decrypt = { decrypt(it) }

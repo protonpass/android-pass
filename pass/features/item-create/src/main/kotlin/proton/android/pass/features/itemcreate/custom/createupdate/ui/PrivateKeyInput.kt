@@ -30,7 +30,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
@@ -55,7 +54,7 @@ fun PrivateKeyInput(
         is UIHiddenState.Empty -> "" to VisualTransformation.None
     }
 
-    Box(modifier = modifier.roundedContainerNorm()) {
+    Box(modifier = modifier) {
         ProtonTextField(
             modifier = Modifier.padding(
                 start = Spacing.none,

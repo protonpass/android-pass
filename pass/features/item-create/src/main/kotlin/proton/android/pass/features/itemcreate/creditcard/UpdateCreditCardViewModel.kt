@@ -21,6 +21,7 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
+import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.UpdateItem
@@ -32,6 +33,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.ItemUpdate
+import proton.android.pass.features.itemcreate.common.areItemContentsEqual
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.AttachmentsInitError
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.InitError
@@ -58,6 +60,7 @@ class UpdateCreditCardViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
     private val renameAttachments: RenameAttachments,
+    private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
     userPreferencesRepository: UserPreferencesRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     attachmentsHandler: AttachmentsHandler,
@@ -134,6 +137,7 @@ class UpdateCreditCardViewModel @Inject constructor(
         }
     }
 
+    @Suppress("LongMethod")
     fun update() = viewModelScope.launch {
         val canUpdate = validateItem()
         if (!canUpdate) {
@@ -145,13 +149,33 @@ class UpdateCreditCardViewModel @Inject constructor(
             val userId = accountManager.getPrimaryUserId().first()
                 ?: throw IllegalStateException("User id is null")
             val initialItem = itemOption.value() ?: throw IllegalStateException("Item is null")
-            val sanitisedItemFormState = creditCardItemFormState.sanitise()
-            updateItem(
-                userId = userId,
-                shareId = navShareId,
-                item = initialItem,
-                contents = sanitisedItemFormState.toItemContents()
-            )
+            val contents = creditCardItemFormState.sanitise().toItemContents()
+            val hasContentsChanged = encryptionContextProvider.withEncryptionContextSuspendable {
+                areItemContentsEqual(
+                    a = toItemContents(
+                        itemType = initialItem.itemType,
+                        encryptionContext = this,
+                        title = initialItem.title,
+                        note = initialItem.note,
+                        flags = initialItem.flags
+                    ),
+                    b = contents,
+                    encryptionContext = this
+                )
+            }
+            val hasPendingAttachments =
+                pendingAttachmentLinkRepository.getAllToLink().isNotEmpty() ||
+                    pendingAttachmentLinkRepository.getAllToUnLink().isNotEmpty()
+            if (hasContentsChanged || hasPendingAttachments) {
+                updateItem(
+                    userId = userId,
+                    shareId = navShareId,
+                    item = initialItem,
+                    contents = contents
+                )
+            } else {
+                initialItem
+            }
         }.onSuccess { item ->
             if (isFileAttachmentsEnabled()) {
                 runCatching {

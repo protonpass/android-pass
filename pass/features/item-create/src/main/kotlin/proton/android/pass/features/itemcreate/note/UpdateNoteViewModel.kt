@@ -36,12 +36,14 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
-import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.data.api.usecases.GetShareById
+import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
+import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.RenameAttachments
 import proton.android.pass.domain.Item
@@ -49,6 +51,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.ItemUpdate
+import proton.android.pass.features.itemcreate.common.areItemContentsEqual
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.AttachmentsInitError
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.InitError
@@ -69,14 +72,15 @@ import javax.inject.Inject
 @HiltViewModel
 class UpdateNoteViewModel @Inject constructor(
     private val accountManager: AccountManager,
-    private val itemRepository: ItemRepository,
-    private val getShare: GetShareById,
+    private val getItemById: GetItemById,
+    private val updateItem: UpdateItem,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
     private val attachmentsHandler: AttachmentsHandler,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
     private val renameAttachments: RenameAttachments,
+    private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
     userPreferencesRepository: UserPreferencesRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -118,7 +122,7 @@ class UpdateNoteViewModel @Inject constructor(
     private suspend fun setupInitialState() {
         if (itemOption != None) return
         isLoadingState.update { IsLoadingState.Loading }
-        runCatching { itemRepository.getById(navShareId, navItemId) }
+        runCatching { getItemById(navShareId, navItemId) }
             .onFailure {
                 PassLogger.w(TAG, it)
                 PassLogger.w(TAG, "Get item error")
@@ -159,57 +163,74 @@ class UpdateNoteViewModel @Inject constructor(
         val initialItem = itemOption
         if (initialItem == None) return@launch
         isLoadingState.update { IsLoadingState.Loading }
-        val noteItem = noteItemFormMutableState
         val userId = accountManager.getPrimaryUserId()
             .first { userId -> userId != null }
         if (userId != null && initialItem is Some) {
-            val itemContents = noteItem.toItemContents()
-            runCatching { getShare(userId, shareId) }
-                .onFailure {
-                    PassLogger.e(TAG, it, "Get share error")
-                    snackbarDispatcher(ItemUpdateError)
+            val contents = noteItemFormMutableState.toItemContents()
+            runCatching {
+                val hasContentsChanged = encryptionContextProvider.withEncryptionContextSuspendable {
+                    areItemContentsEqual(
+                        a = toItemContents(
+                            itemType = initialItem.value.itemType,
+                            encryptionContext = this,
+                            title = initialItem.value.title,
+                            note = initialItem.value.note,
+                            flags = initialItem.value.flags
+                        ),
+                        b = contents,
+                        encryptionContext = this
+                    )
                 }
-                .mapCatching { share ->
-                    itemRepository.updateItem(userId, share, initialItem.value, itemContents)
+                val hasPendingAttachments =
+                    pendingAttachmentLinkRepository.getAllToLink().isNotEmpty() ||
+                        pendingAttachmentLinkRepository.getAllToUnLink().isNotEmpty()
+                if (hasContentsChanged || hasPendingAttachments) {
+                    updateItem(
+                        userId = userId,
+                        shareId = shareId,
+                        item = initialItem.value,
+                        contents = contents
+                    )
+                } else {
+                    initialItem.value
                 }
-                .onSuccess { item ->
-                    if (isFileAttachmentsEnabled()) {
-                        runCatching {
-                            renameAttachments(item.shareId, item.id)
-                        }.onFailure {
-                            PassLogger.w(TAG, "Error renaming attachments")
-                            PassLogger.w(TAG, it)
-                            snackbarDispatcher(ItemRenameAttachmentsError)
-                        }
-                        runCatching {
-                            linkAttachmentsToItem(item.shareId, item.id, item.revision)
-                        }.onFailure {
-                            PassLogger.w(TAG, "Link attachment error")
-                            PassLogger.w(TAG, it)
-                            snackbarDispatcher(ItemLinkAttachmentsError)
-                        }
+            }.onSuccess { item ->
+                if (isFileAttachmentsEnabled()) {
+                    runCatching {
+                        renameAttachments(item.shareId, item.id)
+                    }.onFailure {
+                        PassLogger.w(TAG, "Error renaming attachments")
+                        PassLogger.w(TAG, it)
+                        snackbarDispatcher(ItemRenameAttachmentsError)
                     }
-                    isItemSavedState.update {
-                        encryptionContextProvider.withEncryptionContext {
-                            ItemSavedState.Success(
-                                item.id,
-                                item.toUiModel(this@withEncryptionContext)
-                            )
-                        }
+                    runCatching {
+                        linkAttachmentsToItem(item.shareId, item.id, item.revision)
+                    }.onFailure {
+                        PassLogger.w(TAG, "Link attachment error")
+                        PassLogger.w(TAG, it)
+                        snackbarDispatcher(ItemLinkAttachmentsError)
                     }
-                    snackbarDispatcher(NoteUpdated)
-                    telemetryManager.sendEvent(ItemUpdate(EventItemType.Note))
                 }
-                .onFailure {
-                    val message = if (it is InvalidContentFormatVersionError) {
-                        UpdateAppToUpdateItemError
-                    } else {
-                        ItemUpdateError
+                isItemSavedState.update {
+                    encryptionContextProvider.withEncryptionContext {
+                        ItemSavedState.Success(
+                            item.id,
+                            item.toUiModel(this@withEncryptionContext)
+                        )
                     }
-                    PassLogger.w(TAG, "Update item error")
-                    PassLogger.w(TAG, it)
-                    snackbarDispatcher(message)
                 }
+                snackbarDispatcher(NoteUpdated)
+                telemetryManager.sendEvent(ItemUpdate(EventItemType.Note))
+            }.onFailure {
+                val message = if (it is InvalidContentFormatVersionError) {
+                    UpdateAppToUpdateItemError
+                } else {
+                    ItemUpdateError
+                }
+                PassLogger.w(TAG, "Update item error")
+                PassLogger.w(TAG, it)
+                snackbarDispatcher(message)
+            }
         } else {
             PassLogger.i(TAG, "Empty User Id")
             snackbarDispatcher(ItemUpdateError)

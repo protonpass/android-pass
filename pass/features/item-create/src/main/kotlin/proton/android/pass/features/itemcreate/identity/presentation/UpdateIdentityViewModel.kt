@@ -34,7 +34,10 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.domain.ItemId
@@ -45,6 +48,7 @@ import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.InitError
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.ItemUpdateError
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.ItemUpdated
+import proton.android.pass.features.itemcreate.common.areItemContentsEqual
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -60,6 +64,8 @@ class UpdateIdentityViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val accountManager: AccountManager,
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel(), IdentityActionsProvider by identityActionsProvider {
 
@@ -108,14 +114,36 @@ class UpdateIdentityViewModel @Inject constructor(
         if (!identityActionsProvider.isFormStateValid()) return@launch
         identityActionsProvider.updateLoadingState(IsLoadingState.Loading)
         runCatching {
+            val item = identityActionsProvider.getReceivedItem()
+            val contents = identityActionsProvider.getFormState().toItemContents()
             val userId = accountManager.getPrimaryUserId().first()
                 ?: throw IllegalStateException("User id is null")
-            updateItem(
-                userId = userId,
-                shareId = shareId,
-                item = identityActionsProvider.getReceivedItem(),
-                contents = identityActionsProvider.getFormState().toItemContents()
-            )
+            val hasContentsChanged = encryptionContextProvider.withEncryptionContextSuspendable {
+                areItemContentsEqual(
+                    a = toItemContents(
+                        itemType = item.itemType,
+                        encryptionContext = this,
+                        title = item.title,
+                        note = item.note,
+                        flags = item.flags
+                    ),
+                    b = contents,
+                    encryptionContext = this
+                )
+            }
+            val hasPendingAttachments =
+                pendingAttachmentLinkRepository.getAllToLink().isNotEmpty() ||
+                    pendingAttachmentLinkRepository.getAllToUnLink().isNotEmpty()
+            if (hasContentsChanged || hasPendingAttachments) {
+                updateItem(
+                    userId = userId,
+                    shareId = shareId,
+                    item = item,
+                    contents = contents
+                )
+            } else {
+                item
+            }
         }.onSuccess { item ->
             identityActionsProvider.onItemSavedState(item)
             telemetryManager.sendEvent(ItemCreate(EventItemType.Identity))

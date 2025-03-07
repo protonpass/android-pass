@@ -21,6 +21,7 @@ package proton.android.pass.features.itemcreate.custom.createupdate.ui
 import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.ShareId
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.FieldIdentifier
 
 enum class FieldChange {
     Title, SSID, Password, PrivateKey, PublicKey
@@ -37,8 +38,7 @@ sealed interface ItemContentEvent {
     data class OnFieldFocusChange(val field: FieldChange, val isFocused: Boolean) : ItemContentEvent
 
     data class OnCustomFieldChange(
-        val index: Int,
-        val sectionIndex: Option<Int>,
+        val field: FieldIdentifier,
         val value: String
     ) : ItemContentEvent
 
@@ -46,15 +46,13 @@ sealed interface ItemContentEvent {
     value class OnVaultSelect(val shareId: ShareId) : ItemContentEvent
 
     data class OnCustomFieldOptions(
-        val index: Int,
-        val label: String,
-        val sectionIndex: Option<Int>
+        val field: FieldIdentifier,
+        val label: String
     ) : ItemContentEvent
 
     data class OnCustomFieldFocused(
-        val index: Int,
-        val isFocused: Boolean,
-        val sectionIndex: Option<Int>
+        val field: FieldIdentifier,
+        val isFocused: Boolean
     ) : ItemContentEvent
 
     @JvmInline
@@ -68,6 +66,4 @@ sealed interface ItemContentEvent {
     value class OnAttachmentEvent(val event: AttachmentContentEvent) : ItemContentEvent
 
     data object DismissAttachmentBanner : ItemContentEvent
-
-    data object ClearLastAddedFieldFocus : ItemContentEvent
 }

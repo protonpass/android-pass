@@ -16,7 +16,7 @@
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Notér en pinkode, kode eller bemærkning til dig selv</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Opbevar dine betalingsoplysninger sikkert</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Udfyld dine personlige data</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Opret elementer med helt brugerdefinerede felter</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Opret elementer med brugerdefinerede felter</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Generér en sikker adgangskode</string>
   <!-- Create Login -->
   <string name="field_email_title">E-mailadresse</string>
@@ -54,7 +54,6 @@
   <string name="bottomsheet_custom_field_option_remove">Fjern felt</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Fjern brugerdefineret felt</string>
   <string name="bottomsheet_custom_section_option_remove">Fjern sektion</string>
-  <string name="create_login_add_custom_field_button">Tilføj endnu et felt</string>
   <string name="custom_field_hidden_placeholder">Tilføj skjult tekst</string>
   <string name="custom_field_hidden_icon_content_description">Ikon for skjult brugerdefineret felt</string>
   <string name="custom_field_text_placeholder">Tilføj tekst</string>
@@ -124,7 +123,7 @@
   <string name="identity_field_email_title">E-mail</string>
   <string name="identity_field_phone_number_title">Telefonnummer</string>
   <string name="identity_field_organization_title">Organisation</string>
-  <string name="identity_field_street_address_title">Gadeadresse, postboks</string>
+  <string name="identity_field_street_address_title">Adresse, postboks</string>
   <string name="identity_field_zip_or_postal_code_title">Postnummer</string>
   <string name="identity_field_city_title">By</string>
   <string name="identity_field_state_or_province_title">Stat eller provins</string>
@@ -171,7 +170,6 @@
   <string name="identity_section_address_details">Adresseoplysninger</string>
   <string name="identity_section_contact_details">Kontaktoplysninger</string>
   <string name="identity_section_work_details">Arbejdsoplysninger</string>
-  <string name="identity_add_more_fields">Tilføj et felt mere</string>
   <string name="identity_bottomsheet_add_field">Tilføj felt</string>
   <string name="create_identity_init_error">Problem med at hente identitetsdetaljer</string>
   <string name="update_identity_attachments_init_error">Problem med at hente identitet-vedhæftninger</string>
@@ -202,7 +200,6 @@
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Appen skal opdateres for at kunne redigere dette element.</string>
   <string name="remove_passkey_dialog_title">Fjern denne adgangsnøgle?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Du er ved at fjerne adgangsnøglen for brugeren \'%1$s\' til \'%2$s\'. Er du sikker?</string>
-  <string name="add_a_custom_section">Tilføj en brugerdefineret sektion</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Vedhæftninger</string>
   <string name="banner_body_attachments">Du kan vedhæfte filer til elementer for at få en bedre organisering</string>
@@ -236,9 +233,121 @@
   <string name="template_item_passport">Pas</string>
   <string name="template_item_reward_program">Belønningsprogram</string>
   <string name="template_item_social_security_number">Personnummer</string>
+  <!-- API Credential Fields -->
+  <string name="template_api_credential_field_api_key">API-nøgle</string>
+  <string name="template_api_credential_field_secret">Hemmelighed</string>
+  <string name="template_api_credential_field_expiry_date">Udløbsdato</string>
+  <string name="template_api_credential_field_permissions">Tilladelser</string>
+  <string name="template_api_credential_field_note">Note</string>
+  <!-- Database Fields -->
+  <string name="template_database_field_host">Vært</string>
+  <string name="template_database_field_port">Port</string>
+  <string name="template_database_field_username">Brugernavn</string>
+  <string name="template_database_field_password">Adgangskode</string>
+  <string name="template_database_field_database_type">Databasetype</string>
+  <string name="template_database_field_note">Note</string>
+  <!-- Server Fields -->
+  <string name="template_server_field_ip_address">IP-adresse</string>
+  <string name="template_server_field_hostname">Værtsnavn</string>
+  <string name="template_server_field_os">Operativsystem</string>
+  <string name="template_server_field_username">Brugernavn</string>
+  <string name="template_server_field_password">Adgangskode</string>
+  <string name="template_server_field_note">Note</string>
+  <!-- Software License Fields -->
+  <string name="template_software_license_field_license_key">Licensnøgle</string>
+  <string name="template_software_license_field_product">Produkt</string>
+  <string name="template_software_license_field_expiry_date">Udløbsdato</string>
+  <string name="template_software_license_field_owner">Ejer</string>
+  <string name="template_software_license_field_note">Note</string>
+  <!-- SSH Key Fields -->
+  <string name="template_ssh_key_field_private_key">Privat nøgle</string>
+  <string name="template_ssh_key_field_public_key">Offentlig nøgle</string>
+  <string name="template_ssh_key_field_username">Brugernavn</string>
+  <string name="template_ssh_key_field_host">Vært</string>
+  <string name="template_ssh_key_field_note">Note</string>
+  <!-- WiFi Network Fields -->
+  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_security_type">Sikkerhedstype</string>
+  <string name="template_wifi_network_field_note">Note</string>
+  <!-- Bank Account Fields -->
+  <string name="template_bank_account_field_bank_name">Banknavn</string>
+  <string name="template_bank_account_field_account_number">Kontonummer</string>
+  <string name="template_bank_account_field_routing_number">Registreringsnummer</string>
+  <string name="template_bank_account_field_account_type">Kontotype</string>
+  <string name="template_bank_account_field_iban">IBAN</string>
+  <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
+  <string name="template_bank_account_field_holder_name">Holder Name</string>
+  <string name="template_bank_account_field_note">Note</string>
+  <!-- Crypto Wallet Fields -->
+  <string name="template_crypto_wallet_field_wallet_name">Wallet-navn</string>
+  <string name="template_crypto_wallet_field_address">Adresse</string>
+  <string name="template_crypto_wallet_field_private_key">Privat nøgle</string>
+  <string name="template_crypto_wallet_field_seed_phrase">Seed Phrase</string>
+  <string name="template_crypto_wallet_field_network">Netværk</string>
+  <string name="template_crypto_wallet_field_note">Note</string>
+  <!-- Driver License Fields -->
+  <string name="template_driver_license_field_full_name">Fulde navn</string>
+  <string name="template_driver_license_field_license_number">Licensnummer</string>
+  <string name="template_driver_license_field_issuing_state_country">Stat/Land</string>
+  <string name="template_driver_license_field_expiry_date">Udløbsdato</string>
+  <string name="template_driver_license_field_date_of_birth">Fødselsdato</string>
+  <string name="template_driver_license_field_class">Class</string>
+  <string name="template_driver_license_field_note">Note</string>
+  <!-- Medical Record Fields -->
+  <string name="template_medical_record_field_patient_name">Navn på patient</string>
+  <string name="template_medical_record_field_record_number">Record Number</string>
+  <string name="template_medical_record_field_medical_conditions">Medical Conditions</string>
+  <string name="template_medical_record_field_medications">Medications</string>
+  <string name="template_medical_record_field_doctor">Praktiserende læge</string>
+  <string name="template_medical_record_field_hospital">Hospital</string>
+  <string name="template_medical_record_field_note">Note</string>
+  <!-- Membership Fields -->
+  <string name="template_membership_field_organization_name">Navn på organisation</string>
+  <string name="template_membership_field_membership_id">Medlem-ID</string>
+  <string name="template_membership_field_member_name">Navn på medlem</string>
+  <string name="template_membership_field_expiry_date">Udløbsdato</string>
+  <string name="template_membership_field_tier_level">Tier/Level</string>
+  <string name="template_membership_field_note">Note</string>
+  <!-- Passport Fields -->
+  <string name="template_passport_field_full_name">Fulde navn</string>
+  <string name="template_passport_field_passport_number">Pasnummer</string>
+  <string name="template_passport_field_country">Land</string>
+  <string name="template_passport_field_expiry_date">Udløbsdato</string>
+  <string name="template_passport_field_date_of_birth">Fødselsdato</string>
+  <string name="template_passport_field_issuing_authority">Myndighed</string>
+  <string name="template_passport_field_note">Note</string>
+  <!-- Reward Program Fields -->
+  <string name="template_reward_program_field_program_name">Programnavn</string>
+  <string name="template_reward_program_field_member_id">Member ID</string>
+  <string name="template_reward_program_field_points_balance">Points Balance</string>
+  <string name="template_reward_program_field_expiry_date">Udløbsdato</string>
+  <string name="template_reward_program_field_tier_status">Tier/Status</string>
+  <string name="template_reward_program_field_note">Note</string>
+  <!-- Social Security Number Fields -->
+  <string name="template_social_security_number_field_full_name">Fulde navn</string>
+  <string name="template_social_security_number_field_ssn">CPR-nummer (personnummer)</string>
+  <string name="template_social_security_number_field_issuing_country">Issuing Country</string>
+  <string name="template_social_security_number_field_note">Note</string>
   <string name="template_header_technology">Teknologi</string>
   <string name="template_header_finance">Finans</string>
   <string name="template_header_personal">Finans</string>
   <string name="button_start_from_scratch">Start fra bunden</string>
   <string name="select_template_title">Brugerdefineret element</string>
+  <!-- Custom item screen -->
+  <string name="add_custom_field_button">Tilføj felt</string>
+  <string name="add_section_button">Tilføj sektion</string>
+  <string name="add_public_key_placeholder">Tilføj offentlig nøgle</string>
+  <string name="add_private_key_placeholder">Tilføj privat nøgle</string>
+  <string name="add_ssid_placeholder">Tilføj SSID</string>
+  <string name="create_custom_item_init_error">Problem med at hente brugerdefinerede elementdetaljer</string>
+  <string name="update_custom_item_attachments_init_error">Problem med at hente vedhæftninger for brugerdefinerede element</string>
+  <string name="custom_item_link_attachments_error">Kunne ikke linke eller fjerne link til vedhæftede filer for brugerdefineret element</string>
+  <string name="custom_item_rename_attachments_error">Kunne ikke omdøbe vedhæftede filer til brugerdefinerede elementer</string>
+  <string name="create_custom_item_item_creation_error">Kunne ikke oprette brugerdefineret element</string>
+  <string name="create_custom_item_item_creation_success">Brugerdefineret element oprettet</string>
+  <string name="update_custom_item_item_creation_success">Brugerdefineret element opdateret</string>
+  <string name="update_custom_item_item_creation_error">Kunne ikke opdatere brugerdefineret element</string>
+  <!-- Cannot create items dialog -->
+  <string name="cannot_create_items_dialog_title">Cannot create items</string>
+  <string name="cannot_create_items_dialog_message">You don\'t have any vaults with editor or admin access. Try creating one in the main app or ask your organization\'s administrator for support.</string>
 </resources>

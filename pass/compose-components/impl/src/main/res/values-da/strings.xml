@@ -19,6 +19,7 @@
     <item quantity="other">resultater</item>
   </plurals>
   <string name="item_list_header_identities_type">Identiteter</string>
+  <string name="item_list_header_custom_type">Brugerdefinerede elementer</string>
   <string name="item_list_header_shared_with_me">Delt med mig</string>
   <string name="item_list_header_shared_by_me">Delt af mig</string>
   <!-- Bottomsheets -->
@@ -72,7 +73,7 @@
   <!-- Icon content description -->
   <string name="missing_app_icon_content_description">Mangler app-ikon</string>
   <string name="add_item_icon_content_description">Tilføj element-ikon</string>
-  <string name="navigate_back_icon_content_description">Ikon for at gå tilbage</string>
+  <string name="navigate_back_icon_content_description">Tilbage-ikon</string>
   <!-- Vault selector -->
   <string name="vault_selector_title">Boks</string>
   <!-- Bottom bar -->
@@ -125,7 +126,7 @@
     Pattern used when displaying a date in the same year as we are.
     It would translate to 12 Feb 12:34
     -->
-  <string name="date_full_date_format_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL HH:mm</string>
+  <string name="date_full_date_format_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL TT:mm</string>
   <!--
     Pattern used when displaying a date including the year.
     It would translate to
@@ -162,7 +163,7 @@
   <string name="item_details_identity_section_personal_birthday_title">Fødselsdag</string>
   <string name="item_details_identity_section_address_title">Adresseoplysninger</string>
   <string name="item_details_identity_section_address_organization_title">Organisation</string>
-  <string name="item_details_identity_section_address_street_address_title">Gadeadresse, postboks</string>
+  <string name="item_details_identity_section_address_street_address_title">Adresse, postboks</string>
   <string name="item_details_identity_section_address_floor_title">Etage</string>
   <string name="item_details_identity_section_address_city_title">By</string>
   <string name="item_details_identity_section_address_zip_or_postal_code_title">Postnummer</string>
@@ -174,7 +175,7 @@
   <string name="item_details_identity_section_contact_passport_number_title">Pasnummer</string>
   <string name="item_details_identity_section_contact_license_number_title">Kørekortnummer</string>
   <string name="item_details_identity_section_contact_website_title">Websted</string>
-  <string name="item_details_identity_section_contact_x_handle_title">X-@navn</string>
+  <string name="item_details_identity_section_contact_x_handle_title">X-navn</string>
   <string name="item_details_identity_section_contact_secondary_phone_number_title">Sekundært telefonnummer</string>
   <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
   <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
@@ -184,7 +185,7 @@
   <string name="item_details_identity_section_work_title">Arbejdsoplysninger</string>
   <string name="item_details_identity_section_work_company_title">Firma</string>
   <string name="item_details_identity_section_work_occupation_title">Beskæftigelse</string>
-  <string name="item_details_identity_section_work_email_title">Arbejdsmail-adresse</string>
+  <string name="item_details_identity_section_work_email_title">Arbejdse-mailadresse</string>
   <string name="item_details_identity_section_work_phone_number_title">Arbejdstelefonnummer</string>
   <string name="item_details_identity_section_work_personal_website_title">Personligt websted</string>
   <string name="item_details_shared_section_note_title">Note</string>
@@ -196,12 +197,16 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Ikon for mere elementinformation</string>
   <string name="item_details_shared_section_more_info_item_id">Element-ID</string>
   <string name="item_details_shared_section_more_info_share_id">Boks-ID</string>
+  <string name="item_details_wifi_network_label_ssid">SSID</string>
+  <string name="item_details_wifi_network_label_password">Adgangskode</string>
+  <string name="item_details_ssh_key_label_public_key">Offentlig nøgle</string>
+  <string name="item_details_ssh_key_label_private_key">Privat nøgle</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Denne app-version understøttes ikke længere, opdater venligst din app.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Adgangsnøgle</string>
   <!-- Upgrade -->
   <string name="dialog_upgrade_plan_title">Opgradér abonnement?</string>
-  <string name="dialog_upgrade_plan_message">Denne funktion er ikke tilgængelig for gratisbrugere. Hvis du vil have glæde af den sammen med andre fede funktioner, så opgradér dit abonnement og prøv den!</string>
+  <string name="dialog_upgrade_plan_message">Denne funktion er ikke tilgængelig med et gratis abonnement. Hvis du vil bruge dén og andre fede funktioner, så opgradér dit abonnement.</string>
   <string name="dialog_upgrade_plan_action_confirm">Opgradér</string>
   <string name="dialog_upgrade_plan_action_cancel">Ikke nu</string>
   <!-- Words -->
@@ -245,28 +250,28 @@
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Note kopieret</string>
-  <string name="snack_bar_message_item_migration_error">Der var en fejl i flytningen af dette element</string>
+  <string name="snack_bar_message_item_migration_error">Der opstod en fejl ved flytningen af dette element</string>
   <string name="snack_bar_message_item_monitor_excluded_success">Elementet er udelukket fra overvågning</string>
-  <string name="snack_bar_message_item_monitor_excluded_error">Der var en fejl ved udelukkelse af element fra overvågning</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">Der opstod en fejl ved udelukkelse af element fra overvågning</string>
   <string name="snack_bar_message_item_monitor_included_success">Elementet er medtaget i overvågningen</string>
-  <string name="snack_bar_message_item_monitor_included_error">Der var en fejl ved medtagelse af element i overvågning</string>
+  <string name="snack_bar_message_item_monitor_included_error">Der opstod en fejl ved medtagelse af element i overvågning</string>
   <string name="snack_bar_message_item_pinned_success">Element fastgjort</string>
-  <string name="snack_bar_message_item_pinned_error">Der var en fejl ved fastgørelsen af dette element</string>
+  <string name="snack_bar_message_item_pinned_error">Der opstod en fejl ved fastgørelsen af dette element</string>
   <string name="snack_bar_message_item_unpinned_success">Elementet er blevet frigjort</string>
-  <string name="snack_bar_message_item_unpinned_error">Der var en fejl ved frigørelsen af dette element</string>
+  <string name="snack_bar_message_item_unpinned_error">Der opstod en fejl ved frigørelsen af dette element</string>
   <string name="snack_bar_message_item_trashed_success">Elementet blev smidt ud</string>
-  <string name="snack_bar_message_item_trashed_error">Der var en fejl ved udsmidning af dette element</string>
+  <string name="snack_bar_message_item_trashed_error">Der opstod en fejl ved udsmidning af dette element</string>
   <string name="snack_bar_message_item_restore_success">Elementet er gendannet</string>
-  <string name="snack_bar_message_item_restore_error">Der var en fejl ved gendannelse af dette element</string>
+  <string name="snack_bar_message_item_restore_error">Der opstod en fejl ved gendannelse af dette element</string>
   <string name="snack_bar_message_item_delete_success">Elementet er slettet</string>
-  <string name="snack_bar_message_item_delete_error">Der var en fejl ved sletning af dette element</string>
+  <string name="snack_bar_message_item_delete_error">Der opstod en fejl ved sletning af dette element</string>
   <!-- Simple Login -->
-  <string name="simple_login_widget_title">Aktivér SimpleLogin-synkronisering</string>
+  <string name="simple_login_widget_title">Aktivér synkronisering af SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
     <item quantity="one">Vi registrerede, at du har %d alias som findes i SimpleLogin, men som mangler i Proton Pass. Vil du gerne importere det?</item>
     <item quantity="other">Vi registrerede, at du har %d aliasser som findes i SimpleLogin, men som mangler i Proton Pass. Vil du gerne importere dem?</item>
   </plurals>
-  <string name="simple_login_widget_action">Synkroniser aliasser</string>
+  <string name="simple_login_widget_action">Synkronisér aliasser</string>
   <!-- Verification codes -->
   <string name="verification_code_not_received">Har du ikke modtaget koden?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Se efter en e-mail med navnet %s i din spam-mappe.</string>

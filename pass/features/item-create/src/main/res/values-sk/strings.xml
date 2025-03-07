@@ -16,7 +16,7 @@
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Poznačte si PIN, kód alebo poznámku pre seba</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Bezpečne uložte svoje platobné informácie</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Vyplňte svoje osobné údaje</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Vytvárajte položky s plne prispôsobenými poľami</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Vytvárajte položky s plne prispôsobeným poliami</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Vygenerovať bezpečné heslo</string>
   <!-- Create Login -->
   <string name="field_email_title">Emailová adresa</string>
@@ -54,7 +54,6 @@
   <string name="bottomsheet_custom_field_option_remove">Odstrániť pole</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Odstrániť vlastné pole</string>
   <string name="bottomsheet_custom_section_option_remove">Odstrániť sekciu</string>
-  <string name="create_login_add_custom_field_button">Pridať ďalšie pole</string>
   <string name="custom_field_hidden_placeholder">Pridať skrytý text</string>
   <string name="custom_field_hidden_icon_content_description">Ikona skrytého vlastného poľa</string>
   <string name="custom_field_text_placeholder">Pridať text</string>
@@ -171,7 +170,6 @@
   <string name="identity_section_address_details">Detaily adresy</string>
   <string name="identity_section_contact_details">Kontaktné údaje</string>
   <string name="identity_section_work_details">Podrobnosti o pracovnej činnosti</string>
-  <string name="identity_add_more_fields">Pridať ďalšie pole</string>
   <string name="identity_bottomsheet_add_field">Pridať pole</string>
   <string name="create_identity_init_error">Problém s načítaním podrobností identity</string>
   <string name="update_identity_attachments_init_error">Problém s načítaním príloh k identite</string>
@@ -202,7 +200,6 @@
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Na úpravu tejto položky je potrebné aktualizovať aplikáciu</string>
   <string name="remove_passkey_dialog_title">Odstrániť tento prístupový kľúč?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Chystáte sa odstrániť prístupový kľúč používateľa \'%1$s\' pre \'%2$s\'. Ste si istí?</string>
-  <string name="add_a_custom_section">Pridať vlastnú sekciu</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Prílohy</string>
   <string name="banner_body_attachments">Pre lepšiu organizáciu môžete k položkám pripojiť súbory</string>
@@ -236,9 +233,121 @@
   <string name="template_item_passport">Cestovný pas</string>
   <string name="template_item_reward_program">Vernostný program</string>
   <string name="template_item_social_security_number">Číslo poistenca sociálnej poisťovne</string>
+  <!-- API Credential Fields -->
+  <string name="template_api_credential_field_api_key">API kľúč</string>
+  <string name="template_api_credential_field_secret">Tajné</string>
+  <string name="template_api_credential_field_expiry_date">Dátum exspirácie</string>
+  <string name="template_api_credential_field_permissions">Oprávnenia</string>
+  <string name="template_api_credential_field_note">Poznámka</string>
+  <!-- Database Fields -->
+  <string name="template_database_field_host">Hostiteľ</string>
+  <string name="template_database_field_port">Port</string>
+  <string name="template_database_field_username">Použív. meno</string>
+  <string name="template_database_field_password">Heslo</string>
+  <string name="template_database_field_database_type">Typ databázy</string>
+  <string name="template_database_field_note">Poznámka</string>
+  <!-- Server Fields -->
+  <string name="template_server_field_ip_address">IP adresa</string>
+  <string name="template_server_field_hostname">Názov hostiteľa</string>
+  <string name="template_server_field_os">Operačný systém</string>
+  <string name="template_server_field_username">Použív. meno</string>
+  <string name="template_server_field_password">Heslo</string>
+  <string name="template_server_field_note">Poznámka</string>
+  <!-- Software License Fields -->
+  <string name="template_software_license_field_license_key">Licenčný kľúč</string>
+  <string name="template_software_license_field_product">Produkt</string>
+  <string name="template_software_license_field_expiry_date">Dátum exspirácie</string>
+  <string name="template_software_license_field_owner">Vlastník</string>
+  <string name="template_software_license_field_note">Poznámka</string>
+  <!-- SSH Key Fields -->
+  <string name="template_ssh_key_field_private_key">Súkromný kľúč</string>
+  <string name="template_ssh_key_field_public_key">Verejný kľúč</string>
+  <string name="template_ssh_key_field_username">Použív. meno</string>
+  <string name="template_ssh_key_field_host">Hostiteľ</string>
+  <string name="template_ssh_key_field_note">Poznámka</string>
+  <!-- WiFi Network Fields -->
+  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_security_type">Typ zabezpečenia</string>
+  <string name="template_wifi_network_field_note">Poznámka</string>
+  <!-- Bank Account Fields -->
+  <string name="template_bank_account_field_bank_name">Názov banky</string>
+  <string name="template_bank_account_field_account_number">Číslo účtu</string>
+  <string name="template_bank_account_field_routing_number">Kód banky</string>
+  <string name="template_bank_account_field_account_type">Typ účtu</string>
+  <string name="template_bank_account_field_iban">IBAN</string>
+  <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
+  <string name="template_bank_account_field_holder_name">Meno vlastníka</string>
+  <string name="template_bank_account_field_note">Poznámka</string>
+  <!-- Crypto Wallet Fields -->
+  <string name="template_crypto_wallet_field_wallet_name">Názov peňaženky</string>
+  <string name="template_crypto_wallet_field_address">Adresa</string>
+  <string name="template_crypto_wallet_field_private_key">Súkromný kľúč</string>
+  <string name="template_crypto_wallet_field_seed_phrase">Seed fráza</string>
+  <string name="template_crypto_wallet_field_network">Sieť</string>
+  <string name="template_crypto_wallet_field_note">Poznámka</string>
+  <!-- Driver License Fields -->
+  <string name="template_driver_license_field_full_name">Celé meno</string>
+  <string name="template_driver_license_field_license_number">Licenčné číslo</string>
+  <string name="template_driver_license_field_issuing_state_country">Štát vydania/Krajina</string>
+  <string name="template_driver_license_field_expiry_date">Dátum exspirácie</string>
+  <string name="template_driver_license_field_date_of_birth">Dátum narodenia</string>
+  <string name="template_driver_license_field_class">Trieda</string>
+  <string name="template_driver_license_field_note">Poznámka</string>
+  <!-- Medical Record Fields -->
+  <string name="template_medical_record_field_patient_name">Meno pacienta</string>
+  <string name="template_medical_record_field_record_number">Číslo záznamu</string>
+  <string name="template_medical_record_field_medical_conditions">Zdravotný stav</string>
+  <string name="template_medical_record_field_medications">Lieky</string>
+  <string name="template_medical_record_field_doctor">Lekár</string>
+  <string name="template_medical_record_field_hospital">Nemocnica</string>
+  <string name="template_medical_record_field_note">Poznámka</string>
+  <!-- Membership Fields -->
+  <string name="template_membership_field_organization_name">Názov organizácie</string>
+  <string name="template_membership_field_membership_id">ID členstva</string>
+  <string name="template_membership_field_member_name">Meno člena</string>
+  <string name="template_membership_field_expiry_date">Dátum exspirácie</string>
+  <string name="template_membership_field_tier_level">Úroveň členstva</string>
+  <string name="template_membership_field_note">Poznámka</string>
+  <!-- Passport Fields -->
+  <string name="template_passport_field_full_name">Celé meno</string>
+  <string name="template_passport_field_passport_number">Číslo pasu</string>
+  <string name="template_passport_field_country">Krajina</string>
+  <string name="template_passport_field_expiry_date">Dátum exspirácie</string>
+  <string name="template_passport_field_date_of_birth">Dátum narodenia</string>
+  <string name="template_passport_field_issuing_authority">Vydal</string>
+  <string name="template_passport_field_note">Poznámka</string>
+  <!-- Reward Program Fields -->
+  <string name="template_reward_program_field_program_name">Názov programu</string>
+  <string name="template_reward_program_field_member_id">ID člena</string>
+  <string name="template_reward_program_field_points_balance">Stav bodov</string>
+  <string name="template_reward_program_field_expiry_date">Dátum exspirácie</string>
+  <string name="template_reward_program_field_tier_status">Úroveň členstva/Stav</string>
+  <string name="template_reward_program_field_note">Poznámka</string>
+  <!-- Social Security Number Fields -->
+  <string name="template_social_security_number_field_full_name">Celé meno</string>
+  <string name="template_social_security_number_field_ssn">Číslo poistenca sociálnej poisťovne</string>
+  <string name="template_social_security_number_field_issuing_country">Vydávajúca krajina</string>
+  <string name="template_social_security_number_field_note">Poznámka</string>
   <string name="template_header_technology">Technológia</string>
   <string name="template_header_finance">Financie</string>
   <string name="template_header_personal">Financie</string>
   <string name="button_start_from_scratch">Začať úplne od začiatku</string>
   <string name="select_template_title">Vlastná položka</string>
+  <!-- Custom item screen -->
+  <string name="add_custom_field_button">Pridať pole</string>
+  <string name="add_section_button">Pridať sekciu</string>
+  <string name="add_public_key_placeholder">Pridať verejný kľúč</string>
+  <string name="add_private_key_placeholder">Pridať súkromný kľúč</string>
+  <string name="add_ssid_placeholder">Pridať SSID</string>
+  <string name="create_custom_item_init_error">Problém s načítaním podrobností vlastnej položky</string>
+  <string name="update_custom_item_attachments_init_error">Problém s načítaním príloh vlastnej položky</string>
+  <string name="custom_item_link_attachments_error">Nepodarilo sa prepojiť alebo zrušiť prepojenie príloh s vlastnou položkou</string>
+  <string name="custom_item_rename_attachments_error">Nepodarilo sa premenovať prílohy vlastnej položky</string>
+  <string name="create_custom_item_item_creation_error">Nepodarilo sa vytvoriť vlastnú položku</string>
+  <string name="create_custom_item_item_creation_success">Vlastná položka vytvorená</string>
+  <string name="update_custom_item_item_creation_success">Vlastná položka aktualizovaná</string>
+  <string name="update_custom_item_item_creation_error">Nepodarilo sa aktualizovať vlastnú položku</string>
+  <!-- Cannot create items dialog -->
+  <string name="cannot_create_items_dialog_title">Nie je možné vytvoriť položky</string>
+  <string name="cannot_create_items_dialog_message">Nemáte žiadne trezory s prístupom editora alebo administrátora. Skúste si ich vytvoriť v hlavnej aplikácii alebo požiadajte o podporu správcu vašej organizácie.</string>
 </resources>

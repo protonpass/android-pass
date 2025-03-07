@@ -20,6 +20,7 @@
     <item quantity="other">de rezultate</item>
   </plurals>
   <string name="item_list_header_identities_type">Identități</string>
+  <string name="item_list_header_custom_type">Articole personalizate</string>
   <string name="item_list_header_shared_with_me">Partajate cu mine</string>
   <string name="item_list_header_shared_by_me">Partajate de mine</string>
   <!-- Bottomsheets -->
@@ -198,6 +199,10 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Pictogramă detalii articol</string>
   <string name="item_details_shared_section_more_info_item_id">ID articol</string>
   <string name="item_details_shared_section_more_info_share_id">ID seif</string>
+  <string name="item_details_wifi_network_label_ssid">SSID</string>
+  <string name="item_details_wifi_network_label_password">Parola</string>
+  <string name="item_details_ssh_key_label_public_key">Cheia publică</string>
+  <string name="item_details_ssh_key_label_private_key">Cheia privată</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Versiunea actuală a aplicației nu mai e suportată. Actualizați aplicația.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Cheie de acces</string>

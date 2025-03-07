@@ -119,7 +119,7 @@
   <string name="security_center_email_report_snackbar_marked_as_resolved_success">La vulneración ha sido marcada como resuelta.</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_error">No se ha podido marcar como resuelta.</string>
   <string name="security_center_email_report_snackbar_get_breaches_error">No se han podido cargar las vulneraciones.</string>
-  <string name="security_center_email_report_options_menu">Menú de opciones del informe de filtración</string>
+  <string name="security_center_email_report_options_menu">Menú de opciones del informe de vulneraciones</string>
   <!-- Breach report detail-->
   <string name="security_center_report_detail_your_exposed_information">Los datos expuestos</string>
   <string name="security_center_report_detail_subtitle">Tus datos estaban en una vulneración de datos y se han encontrado el __DATE__.</string>

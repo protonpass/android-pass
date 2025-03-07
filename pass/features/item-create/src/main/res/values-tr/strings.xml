@@ -54,7 +54,6 @@
   <string name="bottomsheet_custom_field_option_remove">Alanı kaldır</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Özel alanı kaldır</string>
   <string name="bottomsheet_custom_section_option_remove">Bölümü kaldır</string>
-  <string name="create_login_add_custom_field_button">Başka bir alan ekle</string>
   <string name="custom_field_hidden_placeholder">Gizli metin ekle</string>
   <string name="custom_field_hidden_icon_content_description">Gizli özel alan simgesi</string>
   <string name="custom_field_text_placeholder">Metin ekle</string>
@@ -68,8 +67,8 @@
   <string name="create_note_item_creation_error">Not oluşturulamadı</string>
   <string name="create_note_item_update_error">Not güncellenemedi</string>
   <string name="create_note_init_error">Not bilgileri alınırken sorun çıktı</string>
-  <string name="update_note_attachments_init_error">Not ek dosyaları alınırken sorun çıktı</string>
-  <string name="note_link_attachments_error">Nota ek dosya bağlantısı eklenemedi ya da kaldırılamadı</string>
+  <string name="update_note_attachments_init_error">Notun ek dosyaları alınırken sorun çıktı</string>
+  <string name="note_link_attachments_error">Nota ek dosyaların bağlantısı eklenemedi ya da kaldırılamadı</string>
   <string name="note_rename_attachments_error">Notun ek dosyaları yeniden adlandırılamadı</string>
   <string name="note_created">Not oluşturuldu</string>
   <!-- Create Alias -->
@@ -87,8 +86,8 @@
   <string name="alias_rate_limited">Kısa sürede çok fazla sayıda takma ad oluşturuldu</string>
   <string name="create_alias_item_update_error">Takma ad güncellenemedi</string>
   <string name="create_alias_init_error">Takma ad bilgileri alınırken sorun çıktı</string>
-  <string name="update_alias_attachments_init_error">Takma ad ek dosyaları alınırken sorun çıktı</string>
-  <string name="alias_link_attachments_error">Takma ada ek dosya bağlantısı eklenemedi ya da kaldırılamadı</string>
+  <string name="update_alias_attachments_init_error">Takma adın ek dosyaları alınırken sorun çıktı</string>
+  <string name="alias_link_attachments_error">Takma ada ek dosyaların bağlantısı eklenemedi ya da kaldırılamadı</string>
   <string name="alias_rename_attachments_error">Takma adın ek dosyaları yeniden adlandırılamadı</string>
   <string name="alias_created">Takma ad oluşturuldu</string>
   <string name="cannot_retrieve_alias_options">Takma ad seçenekleri alınamadı</string>
@@ -115,8 +114,8 @@
   <string name="create_credit_card_item_creation_error">Kredi kartı oluşturulamadı</string>
   <string name="create_credit_card_item_creation_success">Kredi kartı oluşturuldu</string>
   <string name="credit_card_init_error">Kredi kartı bilgileri alınırken sorun çıktı</string>
-  <string name="update_credit_card_attachments_init_error">Kredi kartı ek dosyaları alınırken sorun çıktı</string>
-  <string name="credit_card_link_attachments_error">Kredi kartına ek dosya bağlantısı eklenemedi ya da kaldırılamadı</string>
+  <string name="update_credit_card_attachments_init_error">Kredi kartının ek dosyaları alınırken sorun çıktı</string>
+  <string name="credit_card_link_attachments_error">Kredi kartına ek dosyaların bağlantısı eklenemedi ya da kaldırılamadı</string>
   <string name="credit_card_rename_attachments_error">Kredi kartının ek dosyaları yeniden adlandırılamadı</string>
   <string name="credit_card_item_update_error">Kredi kartı güncellenemedi</string>
   <!-- Create Identity -->
@@ -171,11 +170,10 @@
   <string name="identity_section_address_details">Adres bilgileri</string>
   <string name="identity_section_contact_details">Kişi bilgileri</string>
   <string name="identity_section_work_details">İş bilgileri</string>
-  <string name="identity_add_more_fields">Başka bir alan ekle</string>
   <string name="identity_bottomsheet_add_field">Alan ekle</string>
   <string name="create_identity_init_error">Kimlik bilgileri alınırken sorun çıktı</string>
-  <string name="update_identity_attachments_init_error">Kimlik ek dosyaları alınırken sorun çıktı</string>
-  <string name="identity_link_attachments_error">Kimliğe ek dosya bağlantısı eklenemedi ya da kaldırılamadı</string>
+  <string name="update_identity_attachments_init_error">Kimliğin ek dosyaları alınırken sorun çıktı</string>
+  <string name="identity_link_attachments_error">Kimliğe ek dosyaların bağlantısı eklenemedi ya da kaldırılamadı</string>
   <string name="identity_rename_attachments_error">Kimliğin ek dosyaları yeniden adlandırılamadı</string>
   <string name="create_identity_item_creation_error">Kimlik oluşturulamadı</string>
   <string name="create_identity_item_creation_success">Kimlik oluşturuldu</string>
@@ -202,7 +200,6 @@
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Bu ögeyi düzenlemek için uygulamanın güncellenmesi gerekli</string>
   <string name="remove_passkey_dialog_title">Bu geçiş anahtarı silinsin mi?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">%1$s kullanıcısının %2$s geçiş anahtarını silmek üzeresiniz. Emin misiniz?</string>
-  <string name="add_a_custom_section">Özel bir bölüm ekle</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Ek dosyalar</string>
   <string name="banner_body_attachments">Daha iyi bir düzen için ögelere dosyalar ekleyebilirsiniz</string>
@@ -236,9 +233,121 @@
   <string name="template_item_passport">Pasaport</string>
   <string name="template_item_reward_program">Ödül programı</string>
   <string name="template_item_social_security_number">Sosyal güvenlik numarası</string>
+  <!-- API Credential Fields -->
+  <string name="template_api_credential_field_api_key">API anahtarı</string>
+  <string name="template_api_credential_field_secret">Parola</string>
+  <string name="template_api_credential_field_expiry_date">Geçerlilik sonu tarihi</string>
+  <string name="template_api_credential_field_permissions">İzinler</string>
+  <string name="template_api_credential_field_note">Not</string>
+  <!-- Database Fields -->
+  <string name="template_database_field_host">Sunucu</string>
+  <string name="template_database_field_port">Bağlantı noktası</string>
+  <string name="template_database_field_username">Kullanıcı adı</string>
+  <string name="template_database_field_password">Parola</string>
+  <string name="template_database_field_database_type">Veri tabanı türü</string>
+  <string name="template_database_field_note">Not</string>
+  <!-- Server Fields -->
+  <string name="template_server_field_ip_address">IP adresi</string>
+  <string name="template_server_field_hostname">Sunucu adı</string>
+  <string name="template_server_field_os">İşletim sistemi</string>
+  <string name="template_server_field_username">Kullanıcı adı</string>
+  <string name="template_server_field_password">Parola</string>
+  <string name="template_server_field_note">Not</string>
+  <!-- Software License Fields -->
+  <string name="template_software_license_field_license_key">Lisans anahtarı</string>
+  <string name="template_software_license_field_product">Ürün</string>
+  <string name="template_software_license_field_expiry_date">Geçerlilik sonu tarihi</string>
+  <string name="template_software_license_field_owner">Sahibi</string>
+  <string name="template_software_license_field_note">Not</string>
+  <!-- SSH Key Fields -->
+  <string name="template_ssh_key_field_private_key">Kişisel anahtar</string>
+  <string name="template_ssh_key_field_public_key">Herkese açık anahtar</string>
+  <string name="template_ssh_key_field_username">Kullanıcı adı</string>
+  <string name="template_ssh_key_field_host">Sunucu</string>
+  <string name="template_ssh_key_field_note">Not</string>
+  <!-- WiFi Network Fields -->
+  <string name="template_wifi_network_field_ssid">Ağ adı</string>
+  <string name="template_wifi_network_field_security_type">Güvenlik türü</string>
+  <string name="template_wifi_network_field_note">Not</string>
+  <!-- Bank Account Fields -->
+  <string name="template_bank_account_field_bank_name">Banka adı</string>
+  <string name="template_bank_account_field_account_number">Hesap numarası</string>
+  <string name="template_bank_account_field_routing_number">Şube kodu</string>
+  <string name="template_bank_account_field_account_type">Hesap türü</string>
+  <string name="template_bank_account_field_iban">IBAN</string>
+  <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
+  <string name="template_bank_account_field_holder_name">Kart üzerindeki ad</string>
+  <string name="template_bank_account_field_note">Not</string>
+  <!-- Crypto Wallet Fields -->
+  <string name="template_crypto_wallet_field_wallet_name">Cüzdan adı</string>
+  <string name="template_crypto_wallet_field_address">Adres</string>
+  <string name="template_crypto_wallet_field_private_key">Kişisel anahtar</string>
+  <string name="template_crypto_wallet_field_seed_phrase">Tohum ifadesi</string>
+  <string name="template_crypto_wallet_field_network">Ağ</string>
+  <string name="template_crypto_wallet_field_note">Not</string>
+  <!-- Driver License Fields -->
+  <string name="template_driver_license_field_full_name">Tam ad</string>
+  <string name="template_driver_license_field_license_number">Ehliyet numarası</string>
+  <string name="template_driver_license_field_issuing_state_country">Verildiği il/ülke</string>
+  <string name="template_driver_license_field_expiry_date">Geçerlilik sonu tarihi</string>
+  <string name="template_driver_license_field_date_of_birth">Doğum tarihi</string>
+  <string name="template_driver_license_field_class">Sınıf</string>
+  <string name="template_driver_license_field_note">Not</string>
+  <!-- Medical Record Fields -->
+  <string name="template_medical_record_field_patient_name">Hasta adı</string>
+  <string name="template_medical_record_field_record_number">Kayıt numarası</string>
+  <string name="template_medical_record_field_medical_conditions">Tıbbi durumlar</string>
+  <string name="template_medical_record_field_medications">İlaçlar</string>
+  <string name="template_medical_record_field_doctor">Doktor</string>
+  <string name="template_medical_record_field_hospital">Hastane</string>
+  <string name="template_medical_record_field_note">Not</string>
+  <!-- Membership Fields -->
+  <string name="template_membership_field_organization_name">Kuruluş adı</string>
+  <string name="template_membership_field_membership_id">Üyelik kimliği</string>
+  <string name="template_membership_field_member_name">Üye adı</string>
+  <string name="template_membership_field_expiry_date">Geçerlilik sonu tarihi</string>
+  <string name="template_membership_field_tier_level">Sınıf/Düzey</string>
+  <string name="template_membership_field_note">Not</string>
+  <!-- Passport Fields -->
+  <string name="template_passport_field_full_name">Tam ad</string>
+  <string name="template_passport_field_passport_number">Pasaport numarası</string>
+  <string name="template_passport_field_country">Ülke</string>
+  <string name="template_passport_field_expiry_date">Geçerlilik sonu tarihi</string>
+  <string name="template_passport_field_date_of_birth">Doğum tarihi</string>
+  <string name="template_passport_field_issuing_authority">Veren makam</string>
+  <string name="template_passport_field_note">Not</string>
+  <!-- Reward Program Fields -->
+  <string name="template_reward_program_field_program_name">Program adı</string>
+  <string name="template_reward_program_field_member_id">Üye kimliği</string>
+  <string name="template_reward_program_field_points_balance">Puan bakiyesi</string>
+  <string name="template_reward_program_field_expiry_date">Geçerlilik sonu tarihi</string>
+  <string name="template_reward_program_field_tier_status">Düzey/Durum</string>
+  <string name="template_reward_program_field_note">Not</string>
+  <!-- Social Security Number Fields -->
+  <string name="template_social_security_number_field_full_name">Tam ad</string>
+  <string name="template_social_security_number_field_ssn">Sosyal güvenlik numarası</string>
+  <string name="template_social_security_number_field_issuing_country">Veren ülke</string>
+  <string name="template_social_security_number_field_note">Not</string>
   <string name="template_header_technology">Teknoloji</string>
   <string name="template_header_finance">Finans</string>
   <string name="template_header_personal">Finans</string>
   <string name="button_start_from_scratch">Sıfırdan başla</string>
   <string name="select_template_title">Özel öge</string>
+  <!-- Custom item screen -->
+  <string name="add_custom_field_button">Alan ekle</string>
+  <string name="add_section_button">Bölüm ekle</string>
+  <string name="add_public_key_placeholder">Herkese açık anahtar ekle</string>
+  <string name="add_private_key_placeholder">Kişisel anahtar ekle</string>
+  <string name="add_ssid_placeholder">SSID ekle</string>
+  <string name="create_custom_item_init_error">Özel öge ayrıntıları alınırken sorun çıktı</string>
+  <string name="update_custom_item_attachments_init_error">Özel ögenin ek dosyaları alınırken sorun çıktı</string>
+  <string name="custom_item_link_attachments_error">Özel ögeye ek dosyaların bağlantısı eklenemedi ya da kaldırılamadı</string>
+  <string name="custom_item_rename_attachments_error">Özel öge ek dosyaları yeniden adlandırılamadı</string>
+  <string name="create_custom_item_item_creation_error">Özel öge oluşturulamadı</string>
+  <string name="create_custom_item_item_creation_success">Özel öge oluşturuldu</string>
+  <string name="update_custom_item_item_creation_success">Özel öge güncellendi</string>
+  <string name="update_custom_item_item_creation_error">Özel öge güncellenemedi</string>
+  <!-- Cannot create items dialog -->
+  <string name="cannot_create_items_dialog_title">Ögeler oluşturulamadı</string>
+  <string name="cannot_create_items_dialog_message">Düzenleyicisi veya yöneticisi olduğunuz herhangi bir kasa yok. Ana uygulamadan bir kasa oluşturmayı deneyin veya kuruluşunuzun yöneticisinden destek isteyin.</string>
 </resources>

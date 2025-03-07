@@ -76,4 +76,6 @@ sealed interface BaseCustomItemNavigation {
 
     @JvmInline
     value class OpenDraftAttachmentOptions(val uri: URI) : BaseCustomItemNavigation
+
+    data object OpenTOTPScanner : BaseCustomItemNavigation
 }

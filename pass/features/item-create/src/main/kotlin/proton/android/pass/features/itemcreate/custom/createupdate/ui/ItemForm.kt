@@ -229,8 +229,8 @@ fun ItemForm(
             StickyTotpOptions(
                 hasCamera = hasCamera,
                 passItemColors = passItemColors(ItemCategory.Custom),
-                onPasteCode = {},
-                onScanCode = {}
+                onPasteCode = { onEvent(ItemContentEvent.OnPasteTOTPSecret) },
+                onScanCode = { onEvent(ItemContentEvent.OnOpenTOTPScanner) }
             )
         }
     }

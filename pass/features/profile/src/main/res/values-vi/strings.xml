@@ -75,6 +75,7 @@
   <string name="filtered_by_notes">Đã lọc theo ghi chú. Các mục đã xóa không được hiển thị</string>
   <string name="filtered_by_credit_cards">Đã lọc theo thẻ tín dụng. Các mục đã xóa không được hiển thị</string>
   <string name="filtered_by_identities">Đã lọc theo danh tính. Các mục đã xóa không được hiển thị</string>
+  <string name="filtered_by_custom_items">Filtered by custom items. Trashed items aren\'t shown</string>
   <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Bạn cần chuyển sang %1$s để quản lý nó</string>
   <string name="account_switch_confirmation_title">Quản lý tài khoản</string>
   <string name="account_switch_confirmation_confirm">Chuyển và quản lý</string>

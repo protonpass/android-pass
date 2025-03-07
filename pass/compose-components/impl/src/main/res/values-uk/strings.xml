@@ -21,6 +21,7 @@
     <item quantity="other">результатів</item>
   </plurals>
   <string name="item_list_header_identities_type">Особисті дані</string>
+  <string name="item_list_header_custom_type">Custom items</string>
   <string name="item_list_header_shared_with_me">Поширено для мене</string>
   <string name="item_list_header_shared_by_me">Поширено мною</string>
   <!-- Bottomsheets -->
@@ -200,6 +201,10 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Додаткові значки інформації про елемент</string>
   <string name="item_details_shared_section_more_info_item_id">ID елемента</string>
   <string name="item_details_shared_section_more_info_share_id">ID сховища</string>
+  <string name="item_details_wifi_network_label_ssid">SSID</string>
+  <string name="item_details_wifi_network_label_password">Password</string>
+  <string name="item_details_ssh_key_label_public_key">Public key</string>
+  <string name="item_details_ssh_key_label_private_key">Private key</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Поточна версія програми більше не підтримується, будь ласка, оновіть програму.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Ключ доступу</string>

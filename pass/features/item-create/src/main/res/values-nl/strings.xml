@@ -16,7 +16,7 @@
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Noteer een pincode, code of notitie voor uzelf</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Bewaar veilig uw betalingsgegevens</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Vul uw persoonlijke gegevens in</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Creëer items met volledig aangepaste velden</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Creëer items met volledig aanpasbare velden</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Genereer een veilig wachtwoord</string>
   <!-- Create Login -->
   <string name="field_email_title">E-mailadres</string>
@@ -54,7 +54,6 @@
   <string name="bottomsheet_custom_field_option_remove">Verwijder veld</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Aangepast veld verwijderen</string>
   <string name="bottomsheet_custom_section_option_remove">Sectie verwijderen</string>
-  <string name="create_login_add_custom_field_button">Nog een veld toevoegen</string>
   <string name="custom_field_hidden_placeholder">Verborgen tekst toevoegen</string>
   <string name="custom_field_hidden_icon_content_description">Verborgen aangepast veldpictogram</string>
   <string name="custom_field_text_placeholder">Tekst toevoegen</string>
@@ -171,7 +170,6 @@
   <string name="identity_section_address_details">Adresgegevens</string>
   <string name="identity_section_contact_details">Contactgegevens</string>
   <string name="identity_section_work_details">Werk gegevens</string>
-  <string name="identity_add_more_fields">Nog een veld toevoegen</string>
   <string name="identity_bottomsheet_add_field">Veld toevoegen</string>
   <string name="create_identity_init_error">Probleem bij verkrijgen identiteitsgegevens</string>
   <string name="update_identity_attachments_init_error">Probleem bij ophalen van bijlages identiteit</string>
@@ -202,7 +200,6 @@
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">De app moet worden bijgewerkt om dit item te bewerken</string>
   <string name="remove_passkey_dialog_title">Verwijder deze toegangssleutel?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">U staat op het punt om de toegangssleutel te verwijderen van gebruiker \'%1$s\' voor \'%2$s\'. Weet u het zeker?</string>
-  <string name="add_a_custom_section">Voeg een aangepaste sectie toe</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Bijlagen</string>
   <string name="banner_body_attachments">U kunt bestanden bijvoegen aan items voor een betere organisatie</string>
@@ -236,9 +233,121 @@
   <string name="template_item_passport">Paspoort</string>
   <string name="template_item_reward_program">Beloningsprogramma</string>
   <string name="template_item_social_security_number">Burgerservicenummer(Rijksregisternummer)</string>
+  <!-- API Credential Fields -->
+  <string name="template_api_credential_field_api_key">API-sleutel</string>
+  <string name="template_api_credential_field_secret">Geheim</string>
+  <string name="template_api_credential_field_expiry_date">Vervaldatum</string>
+  <string name="template_api_credential_field_permissions">Machtigingen</string>
+  <string name="template_api_credential_field_note">Notitie</string>
+  <!-- Database Fields -->
+  <string name="template_database_field_host">Host</string>
+  <string name="template_database_field_port">Poort</string>
+  <string name="template_database_field_username">Gebruikersnaam</string>
+  <string name="template_database_field_password">Wachtwoord</string>
+  <string name="template_database_field_database_type">Databasetype</string>
+  <string name="template_database_field_note">Notitie</string>
+  <!-- Server Fields -->
+  <string name="template_server_field_ip_address">IP-adres</string>
+  <string name="template_server_field_hostname">Hostnaam</string>
+  <string name="template_server_field_os">Besturingssysteem</string>
+  <string name="template_server_field_username">Gebruikersnaam</string>
+  <string name="template_server_field_password">Wachtwoord</string>
+  <string name="template_server_field_note">Notitie</string>
+  <!-- Software License Fields -->
+  <string name="template_software_license_field_license_key">Licentiecode</string>
+  <string name="template_software_license_field_product">Product</string>
+  <string name="template_software_license_field_expiry_date">Vervaldatum</string>
+  <string name="template_software_license_field_owner">Eigenaar</string>
+  <string name="template_software_license_field_note">Notitie</string>
+  <!-- SSH Key Fields -->
+  <string name="template_ssh_key_field_private_key">Private sleutel</string>
+  <string name="template_ssh_key_field_public_key">Publieke sleutel</string>
+  <string name="template_ssh_key_field_username">Gebruikersnaam</string>
+  <string name="template_ssh_key_field_host">Host</string>
+  <string name="template_ssh_key_field_note">Notitie</string>
+  <!-- WiFi Network Fields -->
+  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_security_type">Beveiligingstype</string>
+  <string name="template_wifi_network_field_note">Notitie</string>
+  <!-- Bank Account Fields -->
+  <string name="template_bank_account_field_bank_name">Naam bank</string>
+  <string name="template_bank_account_field_account_number">Account Nummer</string>
+  <string name="template_bank_account_field_routing_number">Routeringsnummer</string>
+  <string name="template_bank_account_field_account_type">Accounttype</string>
+  <string name="template_bank_account_field_iban">IBAN</string>
+  <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
+  <string name="template_bank_account_field_holder_name">Naam rekeninghouder</string>
+  <string name="template_bank_account_field_note">Notitie</string>
+  <!-- Crypto Wallet Fields -->
+  <string name="template_crypto_wallet_field_wallet_name">Wallet Naam</string>
+  <string name="template_crypto_wallet_field_address">Adres</string>
+  <string name="template_crypto_wallet_field_private_key">Private sleutel</string>
+  <string name="template_crypto_wallet_field_seed_phrase">Seed Zin</string>
+  <string name="template_crypto_wallet_field_network">Netwerk</string>
+  <string name="template_crypto_wallet_field_note">Notitie</string>
+  <!-- Driver License Fields -->
+  <string name="template_driver_license_field_full_name">Volledige Naam</string>
+  <string name="template_driver_license_field_license_number">Nummer rijbewijs</string>
+  <string name="template_driver_license_field_issuing_state_country">Staat/Land van uitgifte</string>
+  <string name="template_driver_license_field_expiry_date">Vervaldatum</string>
+  <string name="template_driver_license_field_date_of_birth">Geboortedatum</string>
+  <string name="template_driver_license_field_class">Klasse</string>
+  <string name="template_driver_license_field_note">Notitie</string>
+  <!-- Medical Record Fields -->
+  <string name="template_medical_record_field_patient_name">Naam patiënt</string>
+  <string name="template_medical_record_field_record_number">Recordnummer</string>
+  <string name="template_medical_record_field_medical_conditions">Medische Aandoeningen</string>
+  <string name="template_medical_record_field_medications">Geneesmiddelen</string>
+  <string name="template_medical_record_field_doctor">Dokter</string>
+  <string name="template_medical_record_field_hospital">Ziekenhuis</string>
+  <string name="template_medical_record_field_note">Notitie</string>
+  <!-- Membership Fields -->
+  <string name="template_membership_field_organization_name">Bedrijfsnaam</string>
+  <string name="template_membership_field_membership_id">Lidmaatschap-ID</string>
+  <string name="template_membership_field_member_name">Lid Naam</string>
+  <string name="template_membership_field_expiry_date">Vervaldatum</string>
+  <string name="template_membership_field_tier_level">Niveau</string>
+  <string name="template_membership_field_note">Notitie</string>
+  <!-- Passport Fields -->
+  <string name="template_passport_field_full_name">Volledige Naam</string>
+  <string name="template_passport_field_passport_number">Paspoortnummer</string>
+  <string name="template_passport_field_country">Land</string>
+  <string name="template_passport_field_expiry_date">Vervaldatum</string>
+  <string name="template_passport_field_date_of_birth">Geboortedatum</string>
+  <string name="template_passport_field_issuing_authority">Uitgevende autoriteit</string>
+  <string name="template_passport_field_note">Notitie</string>
+  <!-- Reward Program Fields -->
+  <string name="template_reward_program_field_program_name">Programmanaam</string>
+  <string name="template_reward_program_field_member_id">Lid-ID</string>
+  <string name="template_reward_program_field_points_balance">Puntensaldo</string>
+  <string name="template_reward_program_field_expiry_date">Vervaldatum</string>
+  <string name="template_reward_program_field_tier_status">Rang/Status</string>
+  <string name="template_reward_program_field_note">Notitie</string>
+  <!-- Social Security Number Fields -->
+  <string name="template_social_security_number_field_full_name">Volledige Naam</string>
+  <string name="template_social_security_number_field_ssn">Burgerservicenummer(Rijksregisternummer)</string>
+  <string name="template_social_security_number_field_issuing_country">Land van uitgifte</string>
+  <string name="template_social_security_number_field_note">Notitie</string>
   <string name="template_header_technology">Technologie</string>
   <string name="template_header_finance">Financieel</string>
   <string name="template_header_personal">Financieel</string>
   <string name="button_start_from_scratch">Begin vanaf nul</string>
   <string name="select_template_title">Aangepast item</string>
+  <!-- Custom item screen -->
+  <string name="add_custom_field_button">Veld toevoegen</string>
+  <string name="add_section_button">Sectie toevoegen</string>
+  <string name="add_public_key_placeholder">Voeg publieke sleutel toe</string>
+  <string name="add_private_key_placeholder">Voeg privé-sleutel toe</string>
+  <string name="add_ssid_placeholder">Voeg SSID toe</string>
+  <string name="create_custom_item_init_error">Probleem bij het opvragen details van aangepast item</string>
+  <string name="update_custom_item_attachments_init_error">Probleem bij het opvragen bijlagen van aangepast item</string>
+  <string name="custom_item_link_attachments_error">Fout bij het koppelen of ontkoppelen van de bijlagen met het aangepast item</string>
+  <string name="custom_item_rename_attachments_error">Fout bij het hernoemen van de bijlagen van het aangepast item</string>
+  <string name="create_custom_item_item_creation_error">Kan aangepast item niet maken</string>
+  <string name="create_custom_item_item_creation_success">Aangepast item gemaakt</string>
+  <string name="update_custom_item_item_creation_success">Aangepast item bijgewerkt</string>
+  <string name="update_custom_item_item_creation_error">Kan aangepast item niet bijwerken</string>
+  <!-- Cannot create items dialog -->
+  <string name="cannot_create_items_dialog_title">Kan geen items maken</string>
+  <string name="cannot_create_items_dialog_message">U heeft geen kluizen met editor of admin toegang. Probeer er één aan te maken in de hoofdapplicatie, of vraag de beheerder van uw organisatie om ondersteuning.</string>
 </resources>

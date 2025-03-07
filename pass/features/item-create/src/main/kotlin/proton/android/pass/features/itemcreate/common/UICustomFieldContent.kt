@@ -80,6 +80,18 @@ sealed interface UICustomFieldContent : Parcelable {
         is Totp -> copy(label = newLabel)
     }
 
+    fun updateContent(value: String) = when (this) {
+        is Text -> copy(value = value)
+        is Hidden,
+        is Totp -> throw IllegalStateException("Cannot update content with text")
+    }
+
+    fun updateContent(value: UIHiddenState) = when (this) {
+        is Text -> throw IllegalStateException("Text cannot be updated with hidden state")
+        is Hidden -> copy(value = value)
+        is Totp -> copy(value = value)
+    }
+
     companion object {
         fun from(state: CustomFieldContent) = when (state) {
             is CustomFieldContent.Text -> Text(state.label, state.value)

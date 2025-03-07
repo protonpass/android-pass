@@ -1494,6 +1494,10 @@ fun NavGraphBuilder.appGraph(
                 ),
                 backDestination = HomeNavItem
             )
+
+            BaseCustomItemNavigation.OpenTOTPScanner -> {
+
+            }
         }
     }
     itemDetailGraph(

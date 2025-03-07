@@ -18,6 +18,7 @@
     <item quantity="other">kết quả</item>
   </plurals>
   <string name="item_list_header_identities_type">Danh tính</string>
+  <string name="item_list_header_custom_type">Custom items</string>
   <string name="item_list_header_shared_with_me">Đã chia sẻ với tôi</string>
   <string name="item_list_header_shared_by_me">Đã chia sẻ bởi tôi</string>
   <!-- Bottomsheets -->
@@ -194,6 +195,10 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Thông tin thêm</string>
   <string name="item_details_shared_section_more_info_item_id">Item ID</string>
   <string name="item_details_shared_section_more_info_share_id">Vault ID</string>
+  <string name="item_details_wifi_network_label_ssid">SSID</string>
+  <string name="item_details_wifi_network_label_password">Password</string>
+  <string name="item_details_ssh_key_label_public_key">Public key</string>
+  <string name="item_details_ssh_key_label_private_key">Private key</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Phiên bản ứng dụng nay không còn được hỗ trợ, vui lòng cập nhật.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Khóa truy cập</string>

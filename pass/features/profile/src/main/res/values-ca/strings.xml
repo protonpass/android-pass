@@ -78,6 +78,7 @@
   <string name="filtered_by_notes">La llista es filtra per notes. Els elements de la paperera no es mostren.</string>
   <string name="filtered_by_credit_cards">La llista es filtra per targetes de crèdit. Els elements de la paperera no es mostren</string>
   <string name="filtered_by_identities">La llista es filtra per identitats. Els elements de la paperera no es mostren.</string>
+  <string name="filtered_by_custom_items">La llista es filtra per elements personalitzats. Els elements de la paperera no es mostren.</string>
   <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Heu de canviar a %1$s per gestionar-lo.</string>
   <string name="account_switch_confirmation_title">Gestiona el compte</string>
   <string name="account_switch_confirmation_confirm">Canvia de compte i gestiona\'l</string>

@@ -84,6 +84,7 @@
   <string name="filtered_by_notes">Фильтруется по заметкам. Удаленные элементы не отображаются</string>
   <string name="filtered_by_credit_cards">Фильтруется по кредитным картам. Удаленные элементы не отображаются</string>
   <string name="filtered_by_identities">Фильтруется по личным данным. Удаленные элементы не отображаются</string>
+  <string name="filtered_by_custom_items">Отфильтровано по пользовательским элементам. Удаленные элементы не отображаются</string>
   <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">You need to switch to %1$s in order to manage it</string>
   <string name="account_switch_confirmation_title">Manage account</string>
   <string name="account_switch_confirmation_confirm">Switch and manage</string>

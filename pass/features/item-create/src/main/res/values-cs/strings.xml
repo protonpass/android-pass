@@ -54,7 +54,6 @@
   <string name="bottomsheet_custom_field_option_remove">Odebrat pole</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Odebrat vlastní pole</string>
   <string name="bottomsheet_custom_section_option_remove">Odebrat sekci</string>
-  <string name="create_login_add_custom_field_button">Přidat další pole</string>
   <string name="custom_field_hidden_placeholder">Přidat skrytý text</string>
   <string name="custom_field_hidden_icon_content_description">Ikona vlastního skrytého pole</string>
   <string name="custom_field_text_placeholder">Přidat text</string>
@@ -171,7 +170,6 @@
   <string name="identity_section_address_details">Detaily adresy</string>
   <string name="identity_section_contact_details">Detaily kontaktu</string>
   <string name="identity_section_work_details">Detaily práce</string>
-  <string name="identity_add_more_fields">Přidat další pole</string>
   <string name="identity_bottomsheet_add_field">Přidat pole</string>
   <string name="create_identity_init_error">Problém s načítáním detailů identity</string>
   <string name="update_identity_attachments_init_error">Problém s načítáním příloh identity</string>
@@ -202,7 +200,6 @@
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Pro úpravu této položky je třeba aplikaci aktualizovat.</string>
   <string name="remove_passkey_dialog_title">Odebrat tento přístupový klíč?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Chystáte se odebrat přístupový klíč uživatele \'%1$s\' pro \'%2$s\'. Jste si jisti?</string>
-  <string name="add_a_custom_section">Přidejte vlastní sekci</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Přílohy</string>
   <string name="banner_body_attachments">Pro lepší organizaci můžete k položkám připojit soubory</string>
@@ -236,9 +233,121 @@
   <string name="template_item_passport">Cestovní pas</string>
   <string name="template_item_reward_program">Program odměn</string>
   <string name="template_item_social_security_number">Rodné číslo (číslo sociálního pojištění)</string>
+  <!-- API Credential Fields -->
+  <string name="template_api_credential_field_api_key">API klíč</string>
+  <string name="template_api_credential_field_secret">Secret</string>
+  <string name="template_api_credential_field_expiry_date">Datum vypršení platnosti</string>
+  <string name="template_api_credential_field_permissions">Oprávnění</string>
+  <string name="template_api_credential_field_note">Poznámka</string>
+  <!-- Database Fields -->
+  <string name="template_database_field_host">Hostitel</string>
+  <string name="template_database_field_port">Port</string>
+  <string name="template_database_field_username">Uživatelské jméno</string>
+  <string name="template_database_field_password">Heslo</string>
+  <string name="template_database_field_database_type">Typ databáze</string>
+  <string name="template_database_field_note">Poznámka</string>
+  <!-- Server Fields -->
+  <string name="template_server_field_ip_address">IP adresa</string>
+  <string name="template_server_field_hostname">Název hostitele</string>
+  <string name="template_server_field_os">Operační systém</string>
+  <string name="template_server_field_username">Uživatelské jméno</string>
+  <string name="template_server_field_password">Heslo</string>
+  <string name="template_server_field_note">Poznámka</string>
+  <!-- Software License Fields -->
+  <string name="template_software_license_field_license_key">Licenční klíč</string>
+  <string name="template_software_license_field_product">Produkt</string>
+  <string name="template_software_license_field_expiry_date">Datum vypršení platnosti</string>
+  <string name="template_software_license_field_owner">Vlastník</string>
+  <string name="template_software_license_field_note">Poznámka</string>
+  <!-- SSH Key Fields -->
+  <string name="template_ssh_key_field_private_key">Soukromý klíč</string>
+  <string name="template_ssh_key_field_public_key">Veřejný klíč</string>
+  <string name="template_ssh_key_field_username">Uživatelské jméno</string>
+  <string name="template_ssh_key_field_host">Hostitel</string>
+  <string name="template_ssh_key_field_note">Poznámka</string>
+  <!-- WiFi Network Fields -->
+  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_security_type">Typ zabezpečení</string>
+  <string name="template_wifi_network_field_note">Poznámka</string>
+  <!-- Bank Account Fields -->
+  <string name="template_bank_account_field_bank_name">Název banky</string>
+  <string name="template_bank_account_field_account_number">Číslo účtu</string>
+  <string name="template_bank_account_field_routing_number">Směrový kód banky</string>
+  <string name="template_bank_account_field_account_type">Typ účtu</string>
+  <string name="template_bank_account_field_iban">IBAN</string>
+  <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
+  <string name="template_bank_account_field_holder_name">Jméno držitele</string>
+  <string name="template_bank_account_field_note">Poznámka</string>
+  <!-- Crypto Wallet Fields -->
+  <string name="template_crypto_wallet_field_wallet_name">Název peněženky</string>
+  <string name="template_crypto_wallet_field_address">Adresa</string>
+  <string name="template_crypto_wallet_field_private_key">Soukromý klíč</string>
+  <string name="template_crypto_wallet_field_seed_phrase">Seed fráze</string>
+  <string name="template_crypto_wallet_field_network">Síť</string>
+  <string name="template_crypto_wallet_field_note">Poznámka</string>
+  <!-- Driver License Fields -->
+  <string name="template_driver_license_field_full_name">Jméno a příjmení</string>
+  <string name="template_driver_license_field_license_number">Číslo řidičského průkazu</string>
+  <string name="template_driver_license_field_issuing_state_country">Stát/země vydání průkazu</string>
+  <string name="template_driver_license_field_expiry_date">Datum vypršení platnosti</string>
+  <string name="template_driver_license_field_date_of_birth">Datum narození</string>
+  <string name="template_driver_license_field_class">Třída</string>
+  <string name="template_driver_license_field_note">Poznámka</string>
+  <!-- Medical Record Fields -->
+  <string name="template_medical_record_field_patient_name">Jméno pacienta</string>
+  <string name="template_medical_record_field_record_number">Číslo záznamu</string>
+  <string name="template_medical_record_field_medical_conditions">Zdravotní obtíže</string>
+  <string name="template_medical_record_field_medications">Přehled léků</string>
+  <string name="template_medical_record_field_doctor">Lékař</string>
+  <string name="template_medical_record_field_hospital">Nemocnice</string>
+  <string name="template_medical_record_field_note">Poznámka</string>
+  <!-- Membership Fields -->
+  <string name="template_membership_field_organization_name">Název organizace</string>
+  <string name="template_membership_field_membership_id">ID členství</string>
+  <string name="template_membership_field_member_name">Jméno člena</string>
+  <string name="template_membership_field_expiry_date">Datum vypršení platnosti</string>
+  <string name="template_membership_field_tier_level">Úroveň</string>
+  <string name="template_membership_field_note">Poznámka</string>
+  <!-- Passport Fields -->
+  <string name="template_passport_field_full_name">Jméno a příjmení</string>
+  <string name="template_passport_field_passport_number">Číslo cestovního pasu</string>
+  <string name="template_passport_field_country">Země</string>
+  <string name="template_passport_field_expiry_date">Datum vypršení platnosti</string>
+  <string name="template_passport_field_date_of_birth">Datum narození</string>
+  <string name="template_passport_field_issuing_authority">Vydávající úřad</string>
+  <string name="template_passport_field_note">Poznámka</string>
+  <!-- Reward Program Fields -->
+  <string name="template_reward_program_field_program_name">Název programu</string>
+  <string name="template_reward_program_field_member_id">ID člena</string>
+  <string name="template_reward_program_field_points_balance">Zůstatek bodů</string>
+  <string name="template_reward_program_field_expiry_date">Datum vypršení platnosti</string>
+  <string name="template_reward_program_field_tier_status">Úroveň/stav</string>
+  <string name="template_reward_program_field_note">Poznámka</string>
+  <!-- Social Security Number Fields -->
+  <string name="template_social_security_number_field_full_name">Jméno a příjmení</string>
+  <string name="template_social_security_number_field_ssn">Rodné číslo (číslo sociálního pojištění)</string>
+  <string name="template_social_security_number_field_issuing_country">Země vydání průkazu</string>
+  <string name="template_social_security_number_field_note">Poznámka</string>
   <string name="template_header_technology">Technologie</string>
   <string name="template_header_finance">Finance</string>
   <string name="template_header_personal">Finance</string>
   <string name="button_start_from_scratch">Začít od nuly</string>
   <string name="select_template_title">Vlastní položka</string>
+  <!-- Custom item screen -->
+  <string name="add_custom_field_button">Přidat pole</string>
+  <string name="add_section_button">Přidat sekci</string>
+  <string name="add_public_key_placeholder">Přidat veřejný klíč</string>
+  <string name="add_private_key_placeholder">Přidat soukromý klíč</string>
+  <string name="add_ssid_placeholder">Přidat SSID</string>
+  <string name="create_custom_item_init_error">Problém s načtením detailů vlastní položky</string>
+  <string name="update_custom_item_attachments_init_error">Problém s načtením příloh vlastní položky</string>
+  <string name="custom_item_link_attachments_error">Připojení nebo odpojení příloh k vlastní položce selhalo</string>
+  <string name="custom_item_rename_attachments_error">Přejmenování příloh vlastní položky selhalo</string>
+  <string name="create_custom_item_item_creation_error">Nebylo možné vytvořit vlastní položku</string>
+  <string name="create_custom_item_item_creation_success">Vlastní položka vytvořena</string>
+  <string name="update_custom_item_item_creation_success">Vlastní položka aktualizována</string>
+  <string name="update_custom_item_item_creation_error">Nebylo možné aktualizovat vlastní položku</string>
+  <!-- Cannot create items dialog -->
+  <string name="cannot_create_items_dialog_title">Nelze vytvářet položky</string>
+  <string name="cannot_create_items_dialog_message">Nemáte žádné trezory s přístupem editora nebo správce. Zkuste vytvořit trezor v hlavní aplikaci nebo požádejte vašeho správce organizace o podporu.</string>
 </resources>

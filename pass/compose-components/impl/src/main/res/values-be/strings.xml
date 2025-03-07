@@ -21,6 +21,7 @@
     <item quantity="other">вынікаў</item>
   </plurals>
   <string name="item_list_header_identities_type">Ідэнтычнасці</string>
+  <string name="item_list_header_custom_type">Карыстальніцкія элементы</string>
   <string name="item_list_header_shared_with_me">Абагулена са мной</string>
   <string name="item_list_header_shared_by_me">Абагулена мной</string>
   <!-- Bottomsheets -->
@@ -200,6 +201,10 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Больш звестак аб значку элемента</string>
   <string name="item_details_shared_section_more_info_item_id">Ідэнтыфікатар элемента</string>
   <string name="item_details_shared_section_more_info_share_id">Ідэнтыфікатар сховішча</string>
+  <string name="item_details_wifi_network_label_ssid">SSID</string>
+  <string name="item_details_wifi_network_label_password">Пароль</string>
+  <string name="item_details_ssh_key_label_public_key">Публічны ключ</string>
+  <string name="item_details_ssh_key_label_private_key">Прыватны ключ</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Дадзеная версія праграмы больш не падтрымліваецца. Абнавіце праграму да апошняй версіі.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Ключ доступу</string>

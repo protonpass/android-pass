@@ -54,7 +54,6 @@
   <string name="bottomsheet_custom_field_option_remove">Esborra el camp</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Esborra el camp personalitzat</string>
   <string name="bottomsheet_custom_section_option_remove">Esborra la secció</string>
-  <string name="create_login_add_custom_field_button">Afegeix un altre camp</string>
   <string name="custom_field_hidden_placeholder">Afegeix text ocult</string>
   <string name="custom_field_hidden_icon_content_description">Icona de camp personalitzat amagat</string>
   <string name="custom_field_text_placeholder">Afegeix text</string>
@@ -171,7 +170,6 @@
   <string name="identity_section_address_details">Detalls de l\'adreça</string>
   <string name="identity_section_contact_details">Detalls del contacte</string>
   <string name="identity_section_work_details">Detalls del treball</string>
-  <string name="identity_add_more_fields">Afegeix un altre camp</string>
   <string name="identity_bottomsheet_add_field">Afegeix un camp</string>
   <string name="create_identity_init_error">Hi ha hagut un problema en recuperar els detalls d\'identitat</string>
   <string name="update_identity_attachments_init_error">Hi ha hagut un problema en recuperar els adjunts de la identitat</string>
@@ -202,7 +200,6 @@
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Cal actualitzar l\'aplicació per a editar l\'element</string>
   <string name="remove_passkey_dialog_title">Voleu suprimir aquesta clau d\'accés?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Esteu a punt d\'eliminar la clau d\'accés per a l\'usuari «%1$s» per a «%2$s». Segur?</string>
-  <string name="add_a_custom_section">Afegeix una secció personalitzada</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Fitxers adjunts</string>
   <string name="banner_body_attachments">Podeu adjuntar fitxers als elements per a una millor organització</string>
@@ -236,9 +233,121 @@
   <string name="template_item_passport">Passaport</string>
   <string name="template_item_reward_program">Programa de recompenses</string>
   <string name="template_item_social_security_number">Número de la seguretat social</string>
+  <!-- API Credential Fields -->
+  <string name="template_api_credential_field_api_key">Clau API</string>
+  <string name="template_api_credential_field_secret">Secret</string>
+  <string name="template_api_credential_field_expiry_date">Data d\'expiració</string>
+  <string name="template_api_credential_field_permissions">Permisos</string>
+  <string name="template_api_credential_field_note">Nota</string>
+  <!-- Database Fields -->
+  <string name="template_database_field_host">Amfitrió</string>
+  <string name="template_database_field_port">Port</string>
+  <string name="template_database_field_username">Nom d\'usuari</string>
+  <string name="template_database_field_password">Contrasenya</string>
+  <string name="template_database_field_database_type">Tipus de base de dades</string>
+  <string name="template_database_field_note">Nota</string>
+  <!-- Server Fields -->
+  <string name="template_server_field_ip_address">Adreça IP</string>
+  <string name="template_server_field_hostname">Nom de l\'amfitrió</string>
+  <string name="template_server_field_os">Sistema operatiu</string>
+  <string name="template_server_field_username">Nom d\'usuari</string>
+  <string name="template_server_field_password">Contrasenya</string>
+  <string name="template_server_field_note">Nota</string>
+  <!-- Software License Fields -->
+  <string name="template_software_license_field_license_key">Clau de llicència</string>
+  <string name="template_software_license_field_product">Producte</string>
+  <string name="template_software_license_field_expiry_date">Data d\'expiració</string>
+  <string name="template_software_license_field_owner">Propietari</string>
+  <string name="template_software_license_field_note">Nota</string>
+  <!-- SSH Key Fields -->
+  <string name="template_ssh_key_field_private_key">Clau privada</string>
+  <string name="template_ssh_key_field_public_key">Clau pública</string>
+  <string name="template_ssh_key_field_username">Nom d\'usuari</string>
+  <string name="template_ssh_key_field_host">Amfitrió</string>
+  <string name="template_ssh_key_field_note">Nota</string>
+  <!-- WiFi Network Fields -->
+  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_security_type">Tipus de seguretat</string>
+  <string name="template_wifi_network_field_note">Nota</string>
+  <!-- Bank Account Fields -->
+  <string name="template_bank_account_field_bank_name">Nom del banc</string>
+  <string name="template_bank_account_field_account_number">Número de compte</string>
+  <string name="template_bank_account_field_routing_number">Número d\'encaminament</string>
+  <string name="template_bank_account_field_account_type">Tipus de compte</string>
+  <string name="template_bank_account_field_iban">IBAN</string>
+  <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
+  <string name="template_bank_account_field_holder_name">Nom del titular</string>
+  <string name="template_bank_account_field_note">Nota</string>
+  <!-- Crypto Wallet Fields -->
+  <string name="template_crypto_wallet_field_wallet_name">Nom de la cartera</string>
+  <string name="template_crypto_wallet_field_address">Adreça</string>
+  <string name="template_crypto_wallet_field_private_key">Clau privada</string>
+  <string name="template_crypto_wallet_field_seed_phrase">Frase de recuperació</string>
+  <string name="template_crypto_wallet_field_network">Xarxa</string>
+  <string name="template_crypto_wallet_field_note">Nota</string>
+  <!-- Driver License Fields -->
+  <string name="template_driver_license_field_full_name">Nom complet</string>
+  <string name="template_driver_license_field_license_number">Número de llicència</string>
+  <string name="template_driver_license_field_issuing_state_country">País o estat emissor</string>
+  <string name="template_driver_license_field_expiry_date">Data d\'expiració</string>
+  <string name="template_driver_license_field_date_of_birth">Data de naixement</string>
+  <string name="template_driver_license_field_class">Classe</string>
+  <string name="template_driver_license_field_note">Nota</string>
+  <!-- Medical Record Fields -->
+  <string name="template_medical_record_field_patient_name">Nom del pacient</string>
+  <string name="template_medical_record_field_record_number">Número de registre</string>
+  <string name="template_medical_record_field_medical_conditions">Condicions mèdiques</string>
+  <string name="template_medical_record_field_medications">Medicaments</string>
+  <string name="template_medical_record_field_doctor">Doctor</string>
+  <string name="template_medical_record_field_hospital">Hospital</string>
+  <string name="template_medical_record_field_note">Nota</string>
+  <!-- Membership Fields -->
+  <string name="template_membership_field_organization_name">Nom de l\'organització</string>
+  <string name="template_membership_field_membership_id">ID de subscripció</string>
+  <string name="template_membership_field_member_name">Nom del membre</string>
+  <string name="template_membership_field_expiry_date">Data d\'expiració</string>
+  <string name="template_membership_field_tier_level">Nivell</string>
+  <string name="template_membership_field_note">Nota</string>
+  <!-- Passport Fields -->
+  <string name="template_passport_field_full_name">Nom complet</string>
+  <string name="template_passport_field_passport_number">Número de passaport</string>
+  <string name="template_passport_field_country">País</string>
+  <string name="template_passport_field_expiry_date">Data d\'expiració</string>
+  <string name="template_passport_field_date_of_birth">Data de naixement</string>
+  <string name="template_passport_field_issuing_authority">Autoritat emissora</string>
+  <string name="template_passport_field_note">Nota</string>
+  <!-- Reward Program Fields -->
+  <string name="template_reward_program_field_program_name">Nom del programa</string>
+  <string name="template_reward_program_field_member_id">ID del membre</string>
+  <string name="template_reward_program_field_points_balance">Saldo de punts</string>
+  <string name="template_reward_program_field_expiry_date">Data d\'expiració</string>
+  <string name="template_reward_program_field_tier_status">Nivell/Estat</string>
+  <string name="template_reward_program_field_note">Nota</string>
+  <!-- Social Security Number Fields -->
+  <string name="template_social_security_number_field_full_name">Nom complet</string>
+  <string name="template_social_security_number_field_ssn">Número de la seguretat social</string>
+  <string name="template_social_security_number_field_issuing_country">País emissor</string>
+  <string name="template_social_security_number_field_note">Nota</string>
   <string name="template_header_technology">Tecnologia</string>
   <string name="template_header_finance">Finances</string>
   <string name="template_header_personal">Finances</string>
   <string name="button_start_from_scratch">Comença des de zero</string>
   <string name="select_template_title">Element personalitzat</string>
+  <!-- Custom item screen -->
+  <string name="add_custom_field_button">Afegeix un camp</string>
+  <string name="add_section_button">Afegeix una secció</string>
+  <string name="add_public_key_placeholder">Afegeix una clau pública</string>
+  <string name="add_private_key_placeholder">Afegeix una clau privada</string>
+  <string name="add_ssid_placeholder">Afegeix SSID</string>
+  <string name="create_custom_item_init_error">Hi ha hagut un problema recuperant els detalls de l\'element personalitzat</string>
+  <string name="update_custom_item_attachments_init_error">Hi ha hagut un problema recuperant els elements personalitzats adjunts</string>
+  <string name="custom_item_link_attachments_error">Ha fallat en vincular o desvincular els elements personalitzats adjunts</string>
+  <string name="custom_item_rename_attachments_error">Ha fallat en reanomenar els elements personalitzats adjunts</string>
+  <string name="create_custom_item_item_creation_error">No s\'ha pogut crear l\'element personalitzat</string>
+  <string name="create_custom_item_item_creation_success">S\'ha creat l\'element personalitzat</string>
+  <string name="update_custom_item_item_creation_success">S\'ha actualitzat l\'element personalitzat</string>
+  <string name="update_custom_item_item_creation_error">No s\'ha pogut actualitzar l\'element personalitzat</string>
+  <!-- Cannot create items dialog -->
+  <string name="cannot_create_items_dialog_title">No es pot crear els elements.</string>
+  <string name="cannot_create_items_dialog_message">No teniu cap caixa forta amb permisos d\'editor o administrador. Creeu una a l\'aplicació principal o demaneu assistència a l\'administrador de la vostra organització.</string>
 </resources>

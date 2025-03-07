@@ -25,7 +25,7 @@
   <string name="settings_use_favicons_preference_title">Site simgeleri kullanılsın</string>
   <string name="settings_use_favicons_preference_subtitle">Ögelerinizde site simgelerini görmek isteyip istemediğinizi seçin.</string>
   <string name="settings_allow_screenshots_preference_title">Ekran görüntüsü alınabilsin</string>
-  <string name="settings_allow_screenshots_preference_subtitle">Açıldığında, uygulamanın ekran görüntüsünü alabilirsiniz.</string>
+  <string name="settings_allow_screenshots_preference_subtitle">Uygulamanın ekran görüntüsünün alınabilmesini sağlar.</string>
   <string name="settings_clear_icon_cache_success">Simge ön belleği temizlendi</string>
   <string name="settings_clear_icon_cache_error">Simge ön belleği temizlenemedi</string>
   <string name="settings_share_telemetry">Anonim kullanım verileri paylaşılsın</string>
@@ -33,7 +33,7 @@
   <string name="settings_preference_updated">Tercihleriniz güncellendi</string>
   <string name="settings_display_section_title">Görünüm</string>
   <string name="settings_preference_display_username">Kullanıcı adı alanı her zaman görüntülensin</string>
-  <string name="settings_preference_display_autofill_pinning">Otomatik doldurma sabitlemesi her zaman görünür</string>
+  <string name="settings_preference_display_autofill_pinning">Otomatik doldurma sabitleme her zaman görüntülensin</string>
   <string name="view_logs_title">Günlüğü görüntüle</string>
   <string name="clipboard_bottomsheet_title">Pano</string>
   <string name="clipboard_option_clear_clipboard_label">Panoyu temizle</string>

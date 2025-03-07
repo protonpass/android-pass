@@ -54,7 +54,6 @@
   <string name="bottomsheet_custom_field_option_remove">Remover o campo</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Remover o campo personalizado</string>
   <string name="bottomsheet_custom_section_option_remove">Remover seção</string>
-  <string name="create_login_add_custom_field_button">Adicionar outro campo</string>
   <string name="custom_field_hidden_placeholder">Adicionar texto oculto</string>
   <string name="custom_field_hidden_icon_content_description">Ícone de campo personalizado oculto</string>
   <string name="custom_field_text_placeholder">Adicionar texto</string>
@@ -171,7 +170,6 @@
   <string name="identity_section_address_details">Detalhes do endereço</string>
   <string name="identity_section_contact_details">Detalhes do contato</string>
   <string name="identity_section_work_details">Detalhes do trabalho</string>
-  <string name="identity_add_more_fields">Adicionar outro campo</string>
   <string name="identity_bottomsheet_add_field">Adicionar campo</string>
   <string name="create_identity_init_error">Problema ao recuperar os detalhes da identidade.</string>
   <string name="update_identity_attachments_init_error">Problema ao recuperar anexos de identidade</string>
@@ -202,7 +200,6 @@
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">O aplicativo precisa ser atualizado para editar esse item</string>
   <string name="remove_passkey_dialog_title">Remover essa chave de acesso?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Você está prestes a remover a chave de acesso para o usuário \'%1$s\' em \'%2$s\'. Tem certeza?</string>
-  <string name="add_a_custom_section">Adicionar um campo personalizado</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Anexos</string>
   <string name="banner_body_attachments">Você pode anexar arquivos para itens para melhor organização</string>
@@ -213,7 +210,7 @@
   <string name="banner_advanced_options_subtitle">Toque no ícone da engrenagem para personalizar o alias que deseja.</string>
   <string name="banner_custom_domain_title">Você sabia?</string>
   <string name="banner_custom_domain_subtitle">Adicionando o seu domínio, você pode criar aliases como olá@meu-domínio.br.</string>
-  <string name="banner_custom_domain_button">Adicionar um domínio</string>
+  <string name="banner_custom_domain_button">Adicionar domínio</string>
   <string name="banner_mailbox_title">Você sabia?</string>
   <string name="banner_mailbox_subtitle">Compartilhe aliases com outros adicionando sua caixa de entrada como uma caixa de correio adicional.</string>
   <string name="banner_mailbox_button">Adicionar caixa de correio</string>
@@ -227,7 +224,7 @@
   <string name="template_item_server">Servidor</string>
   <string name="template_item_software_license">Licença de software</string>
   <string name="template_item_ssh_key">Chave SSH</string>
-  <string name="template_item_wifi_network">Rede WiFi</string>
+  <string name="template_item_wifi_network">Rede Wi-Fi</string>
   <string name="template_item_bank_account">Conta bancária</string>
   <string name="template_item_crypto_wallet">Carteira de criptomoedas</string>
   <string name="template_item_driver_license">Carteira de motorista</string>
@@ -236,9 +233,121 @@
   <string name="template_item_passport">Passaporte</string>
   <string name="template_item_reward_program">Programa de recompensas</string>
   <string name="template_item_social_security_number">Número de segurança social</string>
+  <!-- API Credential Fields -->
+  <string name="template_api_credential_field_api_key">Chave API</string>
+  <string name="template_api_credential_field_secret">Segredo</string>
+  <string name="template_api_credential_field_expiry_date">Data de validade</string>
+  <string name="template_api_credential_field_permissions">Permissões</string>
+  <string name="template_api_credential_field_note">Nota</string>
+  <!-- Database Fields -->
+  <string name="template_database_field_host">Servidor</string>
+  <string name="template_database_field_port">Porta</string>
+  <string name="template_database_field_username">Nome de usuário</string>
+  <string name="template_database_field_password">Senha</string>
+  <string name="template_database_field_database_type">Tipo do banco de dados</string>
+  <string name="template_database_field_note">Nota</string>
+  <!-- Server Fields -->
+  <string name="template_server_field_ip_address">Endereço IP</string>
+  <string name="template_server_field_hostname">Nome do anfitrião</string>
+  <string name="template_server_field_os">Sistema operacional</string>
+  <string name="template_server_field_username">Nome de usuário</string>
+  <string name="template_server_field_password">Senha</string>
+  <string name="template_server_field_note">Nota</string>
+  <!-- Software License Fields -->
+  <string name="template_software_license_field_license_key">Chave de licença</string>
+  <string name="template_software_license_field_product">Produto</string>
+  <string name="template_software_license_field_expiry_date">Data de validade</string>
+  <string name="template_software_license_field_owner">Proprietário</string>
+  <string name="template_software_license_field_note">Nota</string>
+  <!-- SSH Key Fields -->
+  <string name="template_ssh_key_field_private_key">Chave privada</string>
+  <string name="template_ssh_key_field_public_key">Chave pública</string>
+  <string name="template_ssh_key_field_username">Nome de usuário</string>
+  <string name="template_ssh_key_field_host">Servidor</string>
+  <string name="template_ssh_key_field_note">Nota</string>
+  <!-- WiFi Network Fields -->
+  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_security_type">Tipo de segurança</string>
+  <string name="template_wifi_network_field_note">Nota</string>
+  <!-- Bank Account Fields -->
+  <string name="template_bank_account_field_bank_name">Nome do banco</string>
+  <string name="template_bank_account_field_account_number">Número da conta</string>
+  <string name="template_bank_account_field_routing_number">Número de roteamento</string>
+  <string name="template_bank_account_field_account_type">Tipo de conta</string>
+  <string name="template_bank_account_field_iban">IBAN</string>
+  <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
+  <string name="template_bank_account_field_holder_name">Nome do Titular</string>
+  <string name="template_bank_account_field_note">Nota</string>
+  <!-- Crypto Wallet Fields -->
+  <string name="template_crypto_wallet_field_wallet_name">Nome da carteira</string>
+  <string name="template_crypto_wallet_field_address">Endereço</string>
+  <string name="template_crypto_wallet_field_private_key">Chave Privada</string>
+  <string name="template_crypto_wallet_field_seed_phrase">Frase de recuperação</string>
+  <string name="template_crypto_wallet_field_network">Rede</string>
+  <string name="template_crypto_wallet_field_note">Nota</string>
+  <!-- Driver License Fields -->
+  <string name="template_driver_license_field_full_name">Nome completo</string>
+  <string name="template_driver_license_field_license_number">Número da Licença</string>
+  <string name="template_driver_license_field_issuing_state_country">Estado/país Emissor</string>
+  <string name="template_driver_license_field_expiry_date">Data de validade</string>
+  <string name="template_driver_license_field_date_of_birth">Data de nascimento</string>
+  <string name="template_driver_license_field_class">Classe</string>
+  <string name="template_driver_license_field_note">Nota</string>
+  <!-- Medical Record Fields -->
+  <string name="template_medical_record_field_patient_name">Nome do paciente</string>
+  <string name="template_medical_record_field_record_number">Número de registro</string>
+  <string name="template_medical_record_field_medical_conditions">Condições médicas</string>
+  <string name="template_medical_record_field_medications">Medicamentos</string>
+  <string name="template_medical_record_field_doctor">Médico</string>
+  <string name="template_medical_record_field_hospital">Hospital</string>
+  <string name="template_medical_record_field_note">Nota</string>
+  <!-- Membership Fields -->
+  <string name="template_membership_field_organization_name">Nome da organização</string>
+  <string name="template_membership_field_membership_id">Identificação da associação</string>
+  <string name="template_membership_field_member_name">Nome do membro</string>
+  <string name="template_membership_field_expiry_date">Data de expiração</string>
+  <string name="template_membership_field_tier_level">Camada/Nível</string>
+  <string name="template_membership_field_note">Nota</string>
+  <!-- Passport Fields -->
+  <string name="template_passport_field_full_name">Nome completo</string>
+  <string name="template_passport_field_passport_number">Número de passaporte</string>
+  <string name="template_passport_field_country">País</string>
+  <string name="template_passport_field_expiry_date">Data de expiração</string>
+  <string name="template_passport_field_date_of_birth">Data de nascimento</string>
+  <string name="template_passport_field_issuing_authority">Autoridade emissora</string>
+  <string name="template_passport_field_note">Nota</string>
+  <!-- Reward Program Fields -->
+  <string name="template_reward_program_field_program_name">Nome do programa</string>
+  <string name="template_reward_program_field_member_id">ID de membro</string>
+  <string name="template_reward_program_field_points_balance">Saldo de pontos</string>
+  <string name="template_reward_program_field_expiry_date">Data de expiração</string>
+  <string name="template_reward_program_field_tier_status">Nível</string>
+  <string name="template_reward_program_field_note">Nota</string>
+  <!-- Social Security Number Fields -->
+  <string name="template_social_security_number_field_full_name">Nome completo</string>
+  <string name="template_social_security_number_field_ssn">Número de segurança social</string>
+  <string name="template_social_security_number_field_issuing_country">País emissor</string>
+  <string name="template_social_security_number_field_note">Nota</string>
   <string name="template_header_technology">Tecnologia</string>
   <string name="template_header_finance">Finanças</string>
   <string name="template_header_personal">Finanças</string>
   <string name="button_start_from_scratch">Começar do zero</string>
   <string name="select_template_title">Item personalizado</string>
+  <!-- Custom item screen -->
+  <string name="add_custom_field_button">Adicionar campo</string>
+  <string name="add_section_button">Adicionar seção</string>
+  <string name="add_public_key_placeholder">Adicionar chave pública</string>
+  <string name="add_private_key_placeholder">Adicionar chave privada</string>
+  <string name="add_ssid_placeholder">Adicionar SSID</string>
+  <string name="create_custom_item_init_error">Problema ao recuperar detalhes do item personalizado</string>
+  <string name="update_custom_item_attachments_init_error">Problema ao recuperar anexos de itens personalizados</string>
+  <string name="custom_item_link_attachments_error">Falha ao vincular ou desvincular anexos do item personalizado</string>
+  <string name="custom_item_rename_attachments_error">Falha ao renomear anexos de itens personalizados</string>
+  <string name="create_custom_item_item_creation_error">Não foi possível criar o item personalizado</string>
+  <string name="create_custom_item_item_creation_success">Item personalizado criado</string>
+  <string name="update_custom_item_item_creation_success">item personalizado atualizado</string>
+  <string name="update_custom_item_item_creation_error">Não foi possível atualizar o item personalizado</string>
+  <!-- Cannot create items dialog -->
+  <string name="cannot_create_items_dialog_title">Não é possível criar itens.</string>
+  <string name="cannot_create_items_dialog_message">Você não tem nenhum cofre com acesso de editor ou administrador. Tente criar um, no aplicativo principal ou peça suporte ao administrador da sua organização.</string>
 </resources>

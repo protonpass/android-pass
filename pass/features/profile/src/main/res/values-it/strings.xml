@@ -78,6 +78,7 @@
   <string name="filtered_by_notes">Filtrato per note. Gli elementi cestinati non sono visualizzati</string>
   <string name="filtered_by_credit_cards">Filtrato per carte di credito. Gli elementi cestinati non sono visualizzati</string>
   <string name="filtered_by_identities">Filtrato per identità. Gli elementi cestinati non sono visualizzati</string>
+  <string name="filtered_by_custom_items">Filtrato per elementi personalizzati. Gli elementi eliminati non vengono mostrati</string>
   <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Devi passare a %1$s per poterlo gestire</string>
   <string name="account_switch_confirmation_title">Gestisci l\'account</string>
   <string name="account_switch_confirmation_confirm">Passa e gestisci</string>

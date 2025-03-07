@@ -54,7 +54,6 @@
   <string name="bottomsheet_custom_field_option_remove">Eliminare câmp</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Eliminare câmp personal</string>
   <string name="bottomsheet_custom_section_option_remove">Eliminare secțiune</string>
-  <string name="create_login_add_custom_field_button">Adăugare alt câmp</string>
   <string name="custom_field_hidden_placeholder">Adăugare text ascuns</string>
   <string name="custom_field_hidden_icon_content_description">Pictogramă câmp personal ascuns</string>
   <string name="custom_field_text_placeholder">Adăugare text</string>
@@ -171,7 +170,6 @@
   <string name="identity_section_address_details">Detalii adresă</string>
   <string name="identity_section_contact_details">Detalii contact</string>
   <string name="identity_section_work_details">Loc de muncă</string>
-  <string name="identity_add_more_fields">Adăugare alt câmp</string>
   <string name="identity_bottomsheet_add_field">Adăugare câmp</string>
   <string name="create_identity_init_error">Problemă preluare detalii identitate.</string>
   <string name="update_identity_attachments_init_error">Problemă preluare atașamente identitate.</string>
@@ -202,7 +200,6 @@
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Aplicația trebuie actualizată pentru a edita acest articol.</string>
   <string name="remove_passkey_dialog_title">Eliminați această cheie de acces?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Sunteți pe cale să eliminați cheia de acces pentru utilizatorul „%1$s” pentru „%2$s”. Confirmați?</string>
-  <string name="add_a_custom_section">Adăugare secțiune proprie</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Atașamente</string>
   <string name="banner_body_attachments">Puteți atașa fișiere la articole pentru o organizare mai bună.</string>
@@ -236,9 +233,121 @@
   <string name="template_item_passport">Pașaport</string>
   <string name="template_item_reward_program">Program de recompense</string>
   <string name="template_item_social_security_number">Cod numeric personal</string>
+  <!-- API Credential Fields -->
+  <string name="template_api_credential_field_api_key">Cheie API</string>
+  <string name="template_api_credential_field_secret">Secret</string>
+  <string name="template_api_credential_field_expiry_date">Data expirării</string>
+  <string name="template_api_credential_field_permissions">Permisiuni</string>
+  <string name="template_api_credential_field_note">Notiță</string>
+  <!-- Database Fields -->
+  <string name="template_database_field_host">Gazdă</string>
+  <string name="template_database_field_port">Port</string>
+  <string name="template_database_field_username">Nume de utilizator</string>
+  <string name="template_database_field_password">Parola</string>
+  <string name="template_database_field_database_type">Tip bază de date</string>
+  <string name="template_database_field_note">Notiță</string>
+  <!-- Server Fields -->
+  <string name="template_server_field_ip_address">Adresa IP</string>
+  <string name="template_server_field_hostname">Nume gazdă</string>
+  <string name="template_server_field_os">Sistem de operare</string>
+  <string name="template_server_field_username">Nume de utilizator</string>
+  <string name="template_server_field_password">Parola</string>
+  <string name="template_server_field_note">Notiță</string>
+  <!-- Software License Fields -->
+  <string name="template_software_license_field_license_key">Cheie licență</string>
+  <string name="template_software_license_field_product">Produs</string>
+  <string name="template_software_license_field_expiry_date">Data expirării</string>
+  <string name="template_software_license_field_owner">Proprietar</string>
+  <string name="template_software_license_field_note">Notiță</string>
+  <!-- SSH Key Fields -->
+  <string name="template_ssh_key_field_private_key">Cheie privată</string>
+  <string name="template_ssh_key_field_public_key">Cheie publică</string>
+  <string name="template_ssh_key_field_username">Nume de utilizator</string>
+  <string name="template_ssh_key_field_host">Gazdă</string>
+  <string name="template_ssh_key_field_note">Notiță</string>
+  <!-- WiFi Network Fields -->
+  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_security_type">Tip de securitate</string>
+  <string name="template_wifi_network_field_note">Notiță</string>
+  <!-- Bank Account Fields -->
+  <string name="template_bank_account_field_bank_name">Nume bancă</string>
+  <string name="template_bank_account_field_account_number">Număr cont</string>
+  <string name="template_bank_account_field_routing_number">Număr de repartizare</string>
+  <string name="template_bank_account_field_account_type">Tip de cont</string>
+  <string name="template_bank_account_field_iban">IBAN</string>
+  <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
+  <string name="template_bank_account_field_holder_name">Nume titular</string>
+  <string name="template_bank_account_field_note">Notiță</string>
+  <!-- Crypto Wallet Fields -->
+  <string name="template_crypto_wallet_field_wallet_name">Nume portofel</string>
+  <string name="template_crypto_wallet_field_address">Adresa</string>
+  <string name="template_crypto_wallet_field_private_key">Cheie privată</string>
+  <string name="template_crypto_wallet_field_seed_phrase">Fraza de bază</string>
+  <string name="template_crypto_wallet_field_network">Rețea</string>
+  <string name="template_crypto_wallet_field_note">Notiță</string>
+  <!-- Driver License Fields -->
+  <string name="template_driver_license_field_full_name">Nume complet</string>
+  <string name="template_driver_license_field_license_number">Număr licență</string>
+  <string name="template_driver_license_field_issuing_state_country">Stat/Țară emitentă</string>
+  <string name="template_driver_license_field_expiry_date">Data expirării</string>
+  <string name="template_driver_license_field_date_of_birth">Data nașterii</string>
+  <string name="template_driver_license_field_class">Clasa</string>
+  <string name="template_driver_license_field_note">Notiță</string>
+  <!-- Medical Record Fields -->
+  <string name="template_medical_record_field_patient_name">Nume pacient</string>
+  <string name="template_medical_record_field_record_number">Număr de înregistrare</string>
+  <string name="template_medical_record_field_medical_conditions">Afecțiuni medicale</string>
+  <string name="template_medical_record_field_medications">Tratamente medicamentoase</string>
+  <string name="template_medical_record_field_doctor">Doctor</string>
+  <string name="template_medical_record_field_hospital">Spital</string>
+  <string name="template_medical_record_field_note">Notiță</string>
+  <!-- Membership Fields -->
+  <string name="template_membership_field_organization_name">Nume organizație</string>
+  <string name="template_membership_field_membership_id">ID de membru</string>
+  <string name="template_membership_field_member_name">Nume membru</string>
+  <string name="template_membership_field_expiry_date">Data expirării</string>
+  <string name="template_membership_field_tier_level">Rang/Nivel</string>
+  <string name="template_membership_field_note">Notiță</string>
+  <!-- Passport Fields -->
+  <string name="template_passport_field_full_name">Nume complet</string>
+  <string name="template_passport_field_passport_number">Număr pașaport</string>
+  <string name="template_passport_field_country">Țara</string>
+  <string name="template_passport_field_expiry_date">Data expirării</string>
+  <string name="template_passport_field_date_of_birth">Data nașterii</string>
+  <string name="template_passport_field_issuing_authority">Autoritatea emitentă</string>
+  <string name="template_passport_field_note">Notiță</string>
+  <!-- Reward Program Fields -->
+  <string name="template_reward_program_field_program_name">Nume program</string>
+  <string name="template_reward_program_field_member_id">ID membru</string>
+  <string name="template_reward_program_field_points_balance">Balanță puncte</string>
+  <string name="template_reward_program_field_expiry_date">Data expirării</string>
+  <string name="template_reward_program_field_tier_status">Rang/Stare</string>
+  <string name="template_reward_program_field_note">Notiță</string>
+  <!-- Social Security Number Fields -->
+  <string name="template_social_security_number_field_full_name">Nume complet</string>
+  <string name="template_social_security_number_field_ssn">Cod numeric personal</string>
+  <string name="template_social_security_number_field_issuing_country">Țara emitentă</string>
+  <string name="template_social_security_number_field_note">Notiță</string>
   <string name="template_header_technology">Tehnologie</string>
   <string name="template_header_finance">Finanțe</string>
   <string name="template_header_personal">Finanțe</string>
   <string name="button_start_from_scratch">De la început</string>
   <string name="select_template_title">Articol personal</string>
+  <!-- Custom item screen -->
+  <string name="add_custom_field_button">Adăugare câmp</string>
+  <string name="add_section_button">Adăugare secțiune</string>
+  <string name="add_public_key_placeholder">Adăugare cheie publică</string>
+  <string name="add_private_key_placeholder">Adăugare cheie privată</string>
+  <string name="add_ssid_placeholder">Adăugare SSID</string>
+  <string name="create_custom_item_init_error">Problemă preluare detalii articol personalizat.</string>
+  <string name="update_custom_item_attachments_init_error">Problemă preluare atașamente articol personalizat.</string>
+  <string name="custom_item_link_attachments_error">Legarea sau dezlegarea atașamentelor la articolul personalizat a eșuat.</string>
+  <string name="custom_item_rename_attachments_error">Eșuare redenumire atașamente articol personalizat.</string>
+  <string name="create_custom_item_item_creation_error">Nu s-a putut crea articolul personalizat.</string>
+  <string name="create_custom_item_item_creation_success">S-a creat articolul personalizat.</string>
+  <string name="update_custom_item_item_creation_success">S-a actualizat articolul personalizat.</string>
+  <string name="update_custom_item_item_creation_error">Nu s-a putut actualiza articolul personalizat.</string>
+  <!-- Cannot create items dialog -->
+  <string name="cannot_create_items_dialog_title">Nu se pot crea articole</string>
+  <string name="cannot_create_items_dialog_message">Nu aveți seifuri cu acces de editor sau de administrator. Încercați să creați unul în aplicația principală sau solicitați asistență administratorului organizației proprii.</string>
 </resources>

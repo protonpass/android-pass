@@ -53,6 +53,9 @@
   <string name="item_details_snackbar_message_x_handle_copied">Le compte X a été copié.</string>
   <string name="item_details_snackbar_message_yahoo_copied">Le compte Yahoo a été copié.</string>
   <string name="item_details_snackbar_message_zip_or_postal_code_copied">Le code postal a été copié.</string>
+  <string name="item_details_snackbar_message_public_key_copied">La clé publique a été copiée.</string>
+  <string name="item_details_snackbar_message_private_key_copied">La clé privée a été copiée.</string>
+  <string name="item_details_snackbar_message_ssid_copied">Le SSID a été copié.</string>
   <string name="open_with">Ouvrir avec :</string>
   <string name="open_attachments_error">La pièce jointe n\'a pu être ouverte.</string>
 </resources>

@@ -19,6 +19,7 @@
     <item quantity="other">resultats</item>
   </plurals>
   <string name="item_list_header_identities_type">Identitats</string>
+  <string name="item_list_header_custom_type">Elements personalitzats</string>
   <string name="item_list_header_shared_with_me">Compartit amb mi</string>
   <string name="item_list_header_shared_by_me">Compartit per mi</string>
   <!-- Bottomsheets -->
@@ -196,6 +197,10 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Icona Més informació sobre l\'element</string>
   <string name="item_details_shared_section_more_info_item_id">ID de l\'element</string>
   <string name="item_details_shared_section_more_info_share_id">ID de la caixa forta</string>
+  <string name="item_details_wifi_network_label_ssid">SSID</string>
+  <string name="item_details_wifi_network_label_password">Contrasenya</string>
+  <string name="item_details_ssh_key_label_public_key">Clau pública</string>
+  <string name="item_details_ssh_key_label_private_key">Clau privada</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">La versió de l\'aplicació ja no és compatible. Actualitzeu-la.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Clau d\'accés</string>

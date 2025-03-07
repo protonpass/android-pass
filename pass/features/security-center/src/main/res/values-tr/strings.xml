@@ -157,7 +157,7 @@
   <string name="security_center_alias_list_error">Adresler yüklenemedi</string>
   <string name="security_center_alias_list_included_in_monitoring">Hide-my-email adreslerinizin sızdırılması durumunda bildirim almak için izlemeyi açın.</string>
   <string name="security_center_alias_list_monitored">İzlendi</string>
-  <string name="security_center_alias_list_custom_email_message">Özel etki alanlarındaki takma adlar izlenmez. Lütfen bunları izlemek için özel bir e-posta olarak ekleyin.</string>
+  <string name="security_center_alias_list_custom_email_message">Özel etki alanlarındaki takma adlar izlenmez. Lütfen bunları izlemek için bir özel e-posta olarak ekleyin.</string>
   <string name="security_center_alias_list_options_menu">Takma ad ekran ayarları menüsü</string>
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Veri güvenliği</string>

@@ -6,6 +6,17 @@
 
 ### Other
 
+## 1.30.1 (2025-03-07)
+
+### Fixes :bug:
+
+- Allow spaces on login username.
+- Bug fixes and improvements.
+
+### Other
+
+- Updated translations.
+
 ## 1.30.0 (2025-02-14)
 
 ### Features :tada:

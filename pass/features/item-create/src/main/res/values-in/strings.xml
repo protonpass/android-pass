@@ -16,7 +16,7 @@
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Tulis PIN, kode, atau catatan untuk diri Anda sendiri</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Simpan informasi pembayaran Anda dengan aman</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Isi data pribadi Anda</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Buat berbagai item dengan kolom yang dapat disesuaikan sepenuhnya</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Buat item dengan kolom yang dapat disesuaikan sepenuhnya</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Hasilkan kata sandi yang aman</string>
   <!-- Create Login -->
   <string name="field_email_title">Alamat email</string>
@@ -54,7 +54,6 @@
   <string name="bottomsheet_custom_field_option_remove">Hapus kolom</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Hapus kolom khusus</string>
   <string name="bottomsheet_custom_section_option_remove">Hapus bagian</string>
-  <string name="create_login_add_custom_field_button">Tambah kolom lainnya</string>
   <string name="custom_field_hidden_placeholder">Tambahkan teks tersembunyi</string>
   <string name="custom_field_hidden_icon_content_description">Ikon kolom khusus tersembunyi</string>
   <string name="custom_field_text_placeholder">Tambahkan teks</string>
@@ -171,7 +170,6 @@
   <string name="identity_section_address_details">Detail alamat</string>
   <string name="identity_section_contact_details">Rincian kontak</string>
   <string name="identity_section_work_details">Detail pekerjaan</string>
-  <string name="identity_add_more_fields">Tambah kolom lainnya</string>
   <string name="identity_bottomsheet_add_field">Tambah kolom</string>
   <string name="create_identity_init_error">Terdapat masalah dalam memperoleh rincian identitas</string>
   <string name="update_identity_attachments_init_error">Terjadi masalah mendapatkan lampiran identitas</string>
@@ -202,7 +200,6 @@
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Aplikasi perlu diperbarui untuk menyunting item ini</string>
   <string name="remove_passkey_dialog_title">Hapus kunci sandi ini?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Anda akan menghapus kunci sandi untuk pengguna \'%1$s\' untuk \'%2$s\'. Apakah Anda yakin?</string>
-  <string name="add_a_custom_section">Tambah sesi custom</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Lampiran</string>
   <string name="banner_body_attachments">Anda dapat melampirkan item ke berkas untuk pengelolaan yang lebih baik</string>
@@ -236,9 +233,121 @@
   <string name="template_item_passport">Paspor</string>
   <string name="template_item_reward_program">Program Hadiah</string>
   <string name="template_item_social_security_number">Nomor Jaminan Sosial</string>
+  <!-- API Credential Fields -->
+  <string name="template_api_credential_field_api_key">Kunci API</string>
+  <string name="template_api_credential_field_secret">Secret</string>
+  <string name="template_api_credential_field_expiry_date">Tanggal Kedaluwarsa</string>
+  <string name="template_api_credential_field_permissions">Perizinan</string>
+  <string name="template_api_credential_field_note">Catatan</string>
+  <!-- Database Fields -->
+  <string name="template_database_field_host">Host</string>
+  <string name="template_database_field_port">Port</string>
+  <string name="template_database_field_username">Nama Pengguna</string>
+  <string name="template_database_field_password">Kata Sandi</string>
+  <string name="template_database_field_database_type">Jenis Basis Data</string>
+  <string name="template_database_field_note">Catatan</string>
+  <!-- Server Fields -->
+  <string name="template_server_field_ip_address">Alamat IP</string>
+  <string name="template_server_field_hostname">Nama Host</string>
+  <string name="template_server_field_os">Sistem Operasi</string>
+  <string name="template_server_field_username">Nama Pengguna</string>
+  <string name="template_server_field_password">Kata Sandi</string>
+  <string name="template_server_field_note">Catatan</string>
+  <!-- Software License Fields -->
+  <string name="template_software_license_field_license_key">Kunci Lisensi</string>
+  <string name="template_software_license_field_product">Produk</string>
+  <string name="template_software_license_field_expiry_date">Tanggal Kedaluwarsa</string>
+  <string name="template_software_license_field_owner">Pemilik</string>
+  <string name="template_software_license_field_note">Catatan</string>
+  <!-- SSH Key Fields -->
+  <string name="template_ssh_key_field_private_key">Kunci Pribadi</string>
+  <string name="template_ssh_key_field_public_key">Kunci Publik</string>
+  <string name="template_ssh_key_field_username">Nama pengguna</string>
+  <string name="template_ssh_key_field_host">Host</string>
+  <string name="template_ssh_key_field_note">Catatan</string>
+  <!-- WiFi Network Fields -->
+  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_security_type">Jenis Keamanan</string>
+  <string name="template_wifi_network_field_note">Catatan</string>
+  <!-- Bank Account Fields -->
+  <string name="template_bank_account_field_bank_name">Nama Bank</string>
+  <string name="template_bank_account_field_account_number">Nomor Rekening</string>
+  <string name="template_bank_account_field_routing_number">Nomor Perutean</string>
+  <string name="template_bank_account_field_account_type">Tipe Rekening</string>
+  <string name="template_bank_account_field_iban">IBAN</string>
+  <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
+  <string name="template_bank_account_field_holder_name">Nama Pemegang Akun</string>
+  <string name="template_bank_account_field_note">Catatan</string>
+  <!-- Crypto Wallet Fields -->
+  <string name="template_crypto_wallet_field_wallet_name">Nama Dompet</string>
+  <string name="template_crypto_wallet_field_address">Alamat</string>
+  <string name="template_crypto_wallet_field_private_key">Kunci Pribadi</string>
+  <string name="template_crypto_wallet_field_seed_phrase">Frasa Benih</string>
+  <string name="template_crypto_wallet_field_network">Jaringan</string>
+  <string name="template_crypto_wallet_field_note">Catatan</string>
+  <!-- Driver License Fields -->
+  <string name="template_driver_license_field_full_name">Nama Lengkap</string>
+  <string name="template_driver_license_field_license_number">Nomor Lisensi</string>
+  <string name="template_driver_license_field_issuing_state_country">Negara Bagian/Negara Penerbit</string>
+  <string name="template_driver_license_field_expiry_date">Tanggal Kedaluwarsa</string>
+  <string name="template_driver_license_field_date_of_birth">Tanggal Lahir</string>
+  <string name="template_driver_license_field_class">Kelas</string>
+  <string name="template_driver_license_field_note">Catatan</string>
+  <!-- Medical Record Fields -->
+  <string name="template_medical_record_field_patient_name">Nama Pasien</string>
+  <string name="template_medical_record_field_record_number">Nomor Rekaman</string>
+  <string name="template_medical_record_field_medical_conditions">Kondisi Kesehatan</string>
+  <string name="template_medical_record_field_medications">Pengobatan</string>
+  <string name="template_medical_record_field_doctor">Dokter</string>
+  <string name="template_medical_record_field_hospital">Rumah Sakit</string>
+  <string name="template_medical_record_field_note">Catatan</string>
+  <!-- Membership Fields -->
+  <string name="template_membership_field_organization_name">Nama Organisasi</string>
+  <string name="template_membership_field_membership_id">ID Keanggotaan</string>
+  <string name="template_membership_field_member_name">Nama Anggota</string>
+  <string name="template_membership_field_expiry_date">Tanggal Kedaluwarsa</string>
+  <string name="template_membership_field_tier_level">Tier/Level</string>
+  <string name="template_membership_field_note">Catatan</string>
+  <!-- Passport Fields -->
+  <string name="template_passport_field_full_name">Nama Lengkap</string>
+  <string name="template_passport_field_passport_number">Nomor Paspor</string>
+  <string name="template_passport_field_country">Negara</string>
+  <string name="template_passport_field_expiry_date">Tanggal Kedaluwarsa</string>
+  <string name="template_passport_field_date_of_birth">Tanggal Lahir</string>
+  <string name="template_passport_field_issuing_authority">Otoritas Penerbit</string>
+  <string name="template_passport_field_note">Catatan</string>
+  <!-- Reward Program Fields -->
+  <string name="template_reward_program_field_program_name">Nama Program</string>
+  <string name="template_reward_program_field_member_id">ID Anggota</string>
+  <string name="template_reward_program_field_points_balance">Saldo</string>
+  <string name="template_reward_program_field_expiry_date">Tanggal Kedaluwarsa</string>
+  <string name="template_reward_program_field_tier_status">Tingkatan/Status</string>
+  <string name="template_reward_program_field_note">Catatan</string>
+  <!-- Social Security Number Fields -->
+  <string name="template_social_security_number_field_full_name">Nama Lengkap</string>
+  <string name="template_social_security_number_field_ssn">Nomor Jaminan Sosial</string>
+  <string name="template_social_security_number_field_issuing_country">Negara Penerbit</string>
+  <string name="template_social_security_number_field_note">Catatan</string>
   <string name="template_header_technology">Teknologi</string>
   <string name="template_header_finance">Keuangan</string>
   <string name="template_header_personal">Keuangan</string>
   <string name="button_start_from_scratch">Mulai dari awal</string>
   <string name="select_template_title">Item khusus</string>
+  <!-- Custom item screen -->
+  <string name="add_custom_field_button">Tambahkan kolom</string>
+  <string name="add_section_button">Tambahkan bagian</string>
+  <string name="add_public_key_placeholder">Add public key</string>
+  <string name="add_private_key_placeholder">Add private key</string>
+  <string name="add_ssid_placeholder">Add SSID</string>
+  <string name="create_custom_item_init_error">Terdapat masalah mendapatkan detail item khusus</string>
+  <string name="update_custom_item_attachments_init_error">Terdapat masalah mendapatkan lampiran item khusus</string>
+  <string name="custom_item_link_attachments_error">Gagal menautkan atau menghapus tautan lampiran ke item khusus</string>
+  <string name="custom_item_rename_attachments_error">Gagal mengubah nama lampiran catatan khusus</string>
+  <string name="create_custom_item_item_creation_error">Tidak dapat membuat item khusus</string>
+  <string name="create_custom_item_item_creation_success">Item khusus dibuat</string>
+  <string name="update_custom_item_item_creation_success">Item khusus diperbarui</string>
+  <string name="update_custom_item_item_creation_error">Tidak dapat memperbarui item khusus</string>
+  <!-- Cannot create items dialog -->
+  <string name="cannot_create_items_dialog_title">Tidak dapat membuat item</string>
+  <string name="cannot_create_items_dialog_message">You don\'t have any vaults with editor or admin access. Try creating one in the main app or ask your organization\'s administrator for support.</string>
 </resources>

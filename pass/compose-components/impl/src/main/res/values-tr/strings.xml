@@ -19,6 +19,7 @@
     <item quantity="other">sonuçlar</item>
   </plurals>
   <string name="item_list_header_identities_type">Kimlikler</string>
+  <string name="item_list_header_custom_type">Özel ögeler</string>
   <string name="item_list_header_shared_with_me">Benimle paylaşılan</string>
   <string name="item_list_header_shared_by_me">Benim paylaştıklarım</string>
   <!-- Bottomsheets -->
@@ -196,6 +197,10 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Diğer öge bilgileri simgesi</string>
   <string name="item_details_shared_section_more_info_item_id">Öge kimliği</string>
   <string name="item_details_shared_section_more_info_share_id">Kasa kimliği</string>
+  <string name="item_details_wifi_network_label_ssid">SSID</string>
+  <string name="item_details_wifi_network_label_password">Parola</string>
+  <string name="item_details_ssh_key_label_public_key">Herkese açık anahtar</string>
+  <string name="item_details_ssh_key_label_private_key">Kişisel anahtar</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Uygulamanın bu sürümü artık desteklenmiyor. Lütfen uygulamanızı güncelleyin.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Geçiş anahtarı</string>

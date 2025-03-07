@@ -18,6 +18,7 @@
     <item quantity="other">hasil</item>
   </plurals>
   <string name="item_list_header_identities_type">Identitas</string>
+  <string name="item_list_header_custom_type">Item khusus</string>
   <string name="item_list_header_shared_with_me">Dibagikan dengan saya</string>
   <string name="item_list_header_shared_by_me">Dibagikan oleh saya</string>
   <!-- Bottomsheets -->
@@ -194,6 +195,10 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Ikon informasi lebih banyak item</string>
   <string name="item_details_shared_section_more_info_item_id">ID item</string>
   <string name="item_details_shared_section_more_info_share_id">ID brankas</string>
+  <string name="item_details_wifi_network_label_ssid">SSID</string>
+  <string name="item_details_wifi_network_label_password">Password</string>
+  <string name="item_details_ssh_key_label_public_key">Public key</string>
+  <string name="item_details_ssh_key_label_private_key">Private key</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Versi aplikasi ini sudah tidak lagi didukung. Silakan perbarui aplikasi Anda.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Passkey</string>

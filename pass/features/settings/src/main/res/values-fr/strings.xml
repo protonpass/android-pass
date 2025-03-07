@@ -42,6 +42,6 @@
   <string name="clipboard_option_clear_clipboard_never">Jamais</string>
   <string name="clipboard_option_clear_clipboard_after_60_seconds">Après 1 minute</string>
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Après 3 minutes</string>
-  <string name="settings_use_digital_asset_link_preference_title">Activer les liens d\'actifs numériques</string>
+  <string name="settings_use_digital_asset_link_preference_title">Activer le Digital Asset Links (DLA)</string>
   <string name="settings_use_digital_asset_link_preference_subtitle">Établit la vérification de la propriété du site web entre une application Android et un site web.</string>
 </resources>

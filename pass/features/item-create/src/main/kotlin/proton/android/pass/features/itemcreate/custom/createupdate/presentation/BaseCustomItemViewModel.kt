@@ -36,6 +36,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toUiModel
@@ -90,19 +91,17 @@ sealed interface BaseCustomItemCommonIntent : BaseItemFormIntent {
     value class OnPrivateKeyFocusedChanged(val isFocused: Boolean) : BaseCustomItemCommonIntent
 
     data class OnCustomFieldChanged(
-        val index: Int,
-        val value: String,
-        val sectionIndex: Option<Int>
+        val field: FieldIdentifier,
+        val value: String
     ) : BaseCustomItemCommonIntent
 
     data class OnCustomFieldFocusedChanged(
-        val index: Int,
-        val value: Boolean,
-        val sectionIndex: Option<Int>
+        val field: FieldIdentifier,
+        val isFocused: Boolean
     ) : BaseCustomItemCommonIntent
 
     data object ClearDraft : BaseCustomItemCommonIntent
-    data object ClearLastAddedFieldFocus : BaseCustomItemCommonIntent
+
     data object ViewModelObserve : BaseCustomItemCommonIntent
 
     data class OnOpenDraftAttachment(
@@ -142,19 +141,16 @@ abstract class BaseCustomItemViewModel(
     private val hasUserEditedContentState = MutableStateFlow(false)
     private val validationErrorsState = MutableStateFlow(emptySet<ItemValidationErrors>())
     private val isItemSavedState = MutableStateFlow<ItemSavedState>(ItemSavedState.Unknown)
-    private val focusedFieldState = MutableStateFlow<Option<FocusedField>>(None)
+    private val focusedFieldState = MutableStateFlow<Option<FieldIdentifier>>(None)
 
     protected fun processCommonIntent(intent: BaseCustomItemCommonIntent) {
         when (intent) {
             BaseCustomItemCommonIntent.ViewModelObserve -> onViewModelObserve()
             is OnTitleChanged -> onTitleChange(intent.value)
-            is OnCustomFieldChanged ->
-                onCustomFieldChange(intent.index, intent.value, intent.sectionIndex)
-
+            is OnCustomFieldChanged -> onCustomFieldChange(intent.field, intent.value)
             BaseCustomItemCommonIntent.ClearDraft -> onClearDraft()
-            BaseCustomItemCommonIntent.ClearLastAddedFieldFocus -> onClearLastAddedFieldFocus()
             is BaseCustomItemCommonIntent.OnCustomFieldFocusedChanged ->
-                onCustomFieldFocusedChanged(intent.index, intent.value, intent.sectionIndex)
+                onCustomFieldFocusedChanged(intent.field, intent.isFocused)
 
             BaseCustomItemCommonIntent.DismissFileAttachmentsBanner ->
                 dismissFileAttachmentsOnboardingBanner()
@@ -291,18 +287,17 @@ abstract class BaseCustomItemViewModel(
         when (sectionIndex) {
             is Some -> {
                 val section = itemFormState.sectionList[sectionIndex.value]
-                val updatedSection = section.copy(
-                    customFields = section.customFields + field
-                )
+                val updatedSection = section.copy(customFields = section.customFields + field)
                 itemFormState = itemFormState.copy(
                     sectionList = itemFormState.sectionList.toMutableList().apply {
                         set(sectionIndex.value, updatedSection)
                     }
                 )
                 focusedFieldState.update {
-                    FocusedField(
+                    FieldIdentifier(
                         sectionIndex = sectionIndex,
-                        index = updatedSection.customFields.lastIndex
+                        index = updatedSection.customFields.lastIndex,
+                        type = type
                     ).some()
                 }
             }
@@ -312,44 +307,58 @@ abstract class BaseCustomItemViewModel(
                     customFieldList = itemFormState.customFieldList + field
                 )
                 focusedFieldState.update {
-                    FocusedField(
+                    FieldIdentifier(
                         sectionIndex = sectionIndex,
-                        index = itemFormState.customFieldList.lastIndex
+                        index = itemFormState.customFieldList.lastIndex,
+                        type = type
                     ).some()
                 }
             }
         }
     }
 
-    private fun onCustomFieldFocusedChanged(
-        focusedFieldIndex: Int,
-        isFocused: Boolean,
-        sectionIndex: Option<Int>
-    ) {
-        when (sectionIndex) {
-            None -> itemFormState = itemFormState.copy(
-                customFieldList = itemFormState.customFieldList.mapIndexed fields@{ customFieldIndex, field ->
-                    updateFocus(customFieldIndex, focusedFieldIndex, field, isFocused)
-                }
-            )
+    private fun onCustomFieldFocusedChanged(fieldIdentifier: FieldIdentifier, isFocused: Boolean) {
+        when (fieldIdentifier.sectionIndex) {
+            None -> {
+                itemFormState = itemFormState.copy(
+                    customFieldList = itemFormState.customFieldList.mapIndexed fields@{ customFieldIndex, field ->
+                        updateFocus(customFieldIndex, fieldIdentifier.index, field, isFocused)
+                    }
+                )
+            }
 
             is Some -> {
-                val sectionPos = sectionIndex.value() ?: 0
+                val sectionPos = fieldIdentifier.sectionIndex.value() ?: 0
                 if (sectionPos >= itemFormState.sectionList.size) return
 
                 itemFormState = itemFormState.copy(
                     sectionList = itemFormState.sectionList.mapIndexed sections@{ index, section ->
-                        if (index != focusedFieldIndex) return@sections section
+                        if (index != fieldIdentifier.index) return@sections section
 
                         val updatedFields =
                             section.customFields.mapIndexed fields@{ customFieldIndex, field ->
-                                updateFocus(customFieldIndex, focusedFieldIndex, field, isFocused)
+                                updateFocus(
+                                    customFieldIndex,
+                                    fieldIdentifier.index,
+                                    field,
+                                    isFocused
+                                )
                             }
 
                         section.copy(customFields = updatedFields)
                     }
                 )
             }
+        }
+
+        focusedFieldState.update {
+            FieldIdentifier(
+                fieldIdentifier.sectionIndex,
+                fieldIdentifier.index,
+                fieldIdentifier.type
+            )
+                .takeIf { isFocused }
+                .toOption()
         }
     }
 
@@ -373,10 +382,6 @@ abstract class BaseCustomItemViewModel(
         else -> field.copy(
             value = UIHiddenState.Concealed(encrypted = field.value.encrypted)
         )
-    }
-
-    private fun onClearLastAddedFieldFocus() {
-        focusedFieldState.update { None }
     }
 
     private fun onClearDraft() {
@@ -414,25 +419,22 @@ abstract class BaseCustomItemViewModel(
         isItemSavedState.update { itemSavedState }
     }
 
-    private fun onCustomFieldChange(
-        index: Int,
-        value: String,
-        sectionIndex: Option<Int>
-    ) {
+    private fun onCustomFieldChange(field: FieldIdentifier, value: String) {
         onUserEditedContent()
-        when (sectionIndex) {
+        when (field.sectionIndex) {
             None -> {
-                val updatedFields = updateCustomField(itemFormState.customFieldList, index, value)
+                val updatedFields =
+                    updateCustomField(itemFormState.customFieldList, field.index, value)
                 itemFormState = itemFormState.copy(customFieldList = updatedFields)
             }
 
             is Some -> {
-                val currentFields = itemFormState.sectionList[sectionIndex.value].customFields
-                val updatedFields = updateCustomField(currentFields, index, value)
+                val currentFields = itemFormState.sectionList[field.sectionIndex.value].customFields
+                val updatedFields = updateCustomField(currentFields, field.index, value)
                 val updatedSections = itemFormState.sectionList.toMutableList().apply {
                     set(
-                        sectionIndex.value,
-                        itemFormState.sectionList[sectionIndex.value]
+                        field.sectionIndex.value,
+                        itemFormState.sectionList[field.sectionIndex.value]
                             .copy(customFields = updatedFields)
                     )
                 }
@@ -569,9 +571,16 @@ abstract class BaseCustomItemViewModel(
     ) {
         when (field) {
             is UIHiddenState.Concealed -> if (isFocused) {
-                val clearText = encryptionContextProvider.withEncryptionContext { decrypt(field.encrypted) }
-                updateField(UIHiddenState.Revealed(encrypted = field.encrypted, clearText = clearText))
+                val clearText =
+                    encryptionContextProvider.withEncryptionContext { decrypt(field.encrypted) }
+                updateField(
+                    UIHiddenState.Revealed(
+                        encrypted = field.encrypted,
+                        clearText = clearText
+                    )
+                )
             }
+
             is UIHiddenState.Empty -> {}
             is UIHiddenState.Revealed -> if (!isFocused) {
                 updateField(UIHiddenState.Concealed(field.encrypted))
@@ -582,14 +591,16 @@ abstract class BaseCustomItemViewModel(
     private fun onPrivateKeyFocusedChange(isFocused: Boolean) {
         val sshKeyFields = itemFormState.itemStaticFields as ItemStaticFields.SSHKey
         onFieldFocusedChange(isFocused, sshKeyFields.privateKey) { updatedKey ->
-            itemFormState = itemFormState.copy(itemStaticFields = sshKeyFields.copy(privateKey = updatedKey))
+            itemFormState =
+                itemFormState.copy(itemStaticFields = sshKeyFields.copy(privateKey = updatedKey))
         }
     }
 
     private fun onPasswordFocusedChange(isFocused: Boolean) {
         val wifiNetworkFields = itemFormState.itemStaticFields as ItemStaticFields.WifiNetwork
         onFieldFocusedChange(isFocused, wifiNetworkFields.password) { updatedPassword ->
-            itemFormState = itemFormState.copy(itemStaticFields = wifiNetworkFields.copy(password = updatedPassword))
+            itemFormState =
+                itemFormState.copy(itemStaticFields = wifiNetworkFields.copy(password = updatedPassword))
         }
     }
 

@@ -122,9 +122,8 @@ fun CreateCustomItemScreen(
 
                     is ItemContentEvent.OnCustomFieldChange -> viewModel.processIntent(
                         BaseCustomItemCommonIntent.OnCustomFieldChanged(
-                            index = it.index,
-                            value = it.value,
-                            sectionIndex = it.sectionIndex
+                            field = it.field,
+                            value = it.value
                         )
                     )
 
@@ -133,17 +132,16 @@ fun CreateCustomItemScreen(
                             onNavigate(
                                 BaseCustomItemNavigation.CustomFieldOptions(
                                     title = it.label,
-                                    index = it.index,
-                                    sectionIndex = it.sectionIndex
+                                    index = it.field.index,
+                                    sectionIndex = it.field.sectionIndex
                                 )
                             )
                         }
 
                     is ItemContentEvent.OnCustomFieldFocused -> viewModel.processIntent(
                         BaseCustomItemCommonIntent.OnCustomFieldFocusedChanged(
-                            index = it.index,
-                            value = it.isFocused,
-                            sectionIndex = it.sectionIndex
+                            field = it.field,
+                            isFocused = it.isFocused
                         )
                     )
 
@@ -211,9 +209,6 @@ fun CreateCustomItemScreen(
 
                     is ItemContentEvent.Submit ->
                         viewModel.processIntent(CreateSpecificIntent.SubmitCreate(it.shareId))
-
-                    ItemContentEvent.ClearLastAddedFieldFocus ->
-                        viewModel.processIntent(BaseCustomItemCommonIntent.ClearLastAddedFieldFocus)
 
                     ItemContentEvent.DismissAttachmentBanner ->
                         viewModel.processIntent(BaseCustomItemCommonIntent.DismissFileAttachmentsBanner)

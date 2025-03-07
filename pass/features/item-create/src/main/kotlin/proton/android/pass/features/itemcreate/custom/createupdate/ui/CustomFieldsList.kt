@@ -27,9 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.getOrElse
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
@@ -38,7 +36,7 @@ import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.customfields.AddCustomFieldButton
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEntry
-import proton.android.pass.features.itemcreate.custom.createupdate.presentation.FocusedField
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.FieldIdentifier
 
 @Suppress("LongParameterList", "LongMethod")
 fun LazyListScope.customFieldsList(
@@ -46,14 +44,19 @@ fun LazyListScope.customFieldsList(
     enabled: Boolean,
     isVisible: Boolean,
     sectionIndex: Option<Int>,
-    focusedField: Option<FocusedField>,
+    focusedField: Option<FieldIdentifier>,
     onEvent: (ItemContentEvent) -> Unit
 ) {
     itemsIndexed(
         items = customFields,
         key = { index, _ -> "${sectionIndex.getOrElse { -1 }}/$index" }
-    ) { index, value ->
+    ) { index, entry ->
         val focusRequester = remember { FocusRequester() }
+        val field = FieldIdentifier(
+            sectionIndex = sectionIndex,
+            index = index,
+            type = entry.toCustomFieldType()
+        )
         AnimatedVisibility(
             modifier = Modifier.fillMaxWidth(),
             visible = isVisible
@@ -63,43 +66,25 @@ fun LazyListScope.customFieldsList(
                     .padding(vertical = Spacing.extraSmall)
                     .padding(horizontal = Spacing.medium)
                     .focusRequester(focusRequester),
-                entry = value,
+                entry = entry,
                 canEdit = enabled,
                 isError = false,
                 errorMessage = "",
                 index = index,
                 onValueChange = { newValue ->
-                    onEvent(
-                        ItemContentEvent.OnCustomFieldChange(
-                            index = index,
-                            sectionIndex = sectionIndex,
-                            value = newValue
-                        )
-                    )
+                    onEvent(ItemContentEvent.OnCustomFieldChange(field, newValue))
                 },
-                onFocusChange = { idx, isFocused ->
-                    onEvent(ItemContentEvent.OnCustomFieldFocused(idx, isFocused, sectionIndex))
+                onFocusChange = { _, isFocused ->
+                    onEvent(ItemContentEvent.OnCustomFieldFocused(field, isFocused))
                 },
                 onOptionsClick = {
-                    onEvent(
-                        ItemContentEvent.OnCustomFieldOptions(
-                            index = index,
-                            label = value.label,
-                            sectionIndex = sectionIndex
-                        )
-                    )
+                    onEvent(ItemContentEvent.OnCustomFieldOptions(field, entry.label))
                 }
             )
         }
         RequestFocusLaunchedEffect(
             focusRequester = focusRequester,
-            requestFocus = when (focusedField) {
-                None -> false
-                is Some ->
-                    focusedField.value.sectionIndex == sectionIndex &&
-                        focusedField.value.index == index
-            },
-            callback = { onEvent(ItemContentEvent.ClearLastAddedFieldFocus) }
+            requestFocus = field == focusedField.value()
         )
     }
     item {

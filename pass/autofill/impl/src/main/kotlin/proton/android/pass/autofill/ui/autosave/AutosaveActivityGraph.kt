@@ -127,7 +127,8 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 BaseLoginNavigation.Upgrade -> onNavigate(AutosaveNavigation.Upgrade)
 
                 BaseLoginNavigation.AddCustomField -> appNavigator.navigate(
-                    destination = AddCustomFieldBottomSheetNavItem.CreateLogin
+                    destination = AddCustomFieldBottomSheetNavItem.CreateLogin,
+                    route = AddCustomFieldBottomSheetNavItem.CreateLogin.buildRoute(None)
                 )
 
                 is BaseLoginNavigation.CustomFieldTypeSelected -> dismissBottomSheet {

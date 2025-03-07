@@ -66,4 +66,8 @@ sealed interface ItemContentEvent {
     value class OnAttachmentEvent(val event: AttachmentContentEvent) : ItemContentEvent
 
     data object DismissAttachmentBanner : ItemContentEvent
+
+    data object OnPasteTOTPSecret : ItemContentEvent
+
+    data object OnOpenTOTPScanner : ItemContentEvent
 }

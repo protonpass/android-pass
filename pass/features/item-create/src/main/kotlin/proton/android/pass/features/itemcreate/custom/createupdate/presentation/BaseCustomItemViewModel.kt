@@ -25,12 +25,15 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import kotlinx.collections.immutable.toPersistentSet
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -43,6 +46,7 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -114,9 +118,11 @@ sealed interface BaseCustomItemCommonIntent : BaseItemFormIntent {
     value class OnRetryUploadAttachment(val metadata: FileMetadata) : BaseCustomItemCommonIntent
 
     data object DismissFileAttachmentsBanner : BaseCustomItemCommonIntent
+
+    data object PasteTOTPSecret : BaseCustomItemCommonIntent
 }
 
-@Suppress("TooManyFunctions")
+@Suppress("TooManyFunctions", "LargeClass")
 abstract class BaseCustomItemViewModel(
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -125,6 +131,7 @@ abstract class BaseCustomItemViewModel(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
+    private val clipboardManager: ClipboardManager,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -170,6 +177,34 @@ abstract class BaseCustomItemViewModel(
 
             is BaseCustomItemCommonIntent.OnPrivateKeyFocusedChanged ->
                 onPrivateKeyFocusedChange(intent.isFocused)
+
+            BaseCustomItemCommonIntent.PasteTOTPSecret -> onPasteTOTPSecret()
+        }
+    }
+
+    private fun onPasteTOTPSecret() {
+        onUserEditedContent()
+        viewModelScope.launch(Dispatchers.IO) {
+            clipboardManager.getClipboardContent()
+                .onSuccess { clipboardContent ->
+                    val sanitisedContent = clipboardContent
+                        .replace(" ", "")
+                        .replace("\n", "")
+
+                    withContext(Dispatchers.Main) {
+                        val focusedField = focusedFieldState.value.value() ?: return@withContext
+                        if (focusedField.type == CustomFieldType.Totp) {
+                            updateContent(
+                                sectionIndex = focusedField.sectionIndex,
+                                index = focusedField.index,
+                                newValue = sanitisedContent
+                            )
+                        }
+                    }
+                }
+                .onFailure {
+                    PassLogger.w(TAG, "Failed on getting clipboard content")
+                }
         }
     }
 
@@ -421,24 +456,45 @@ abstract class BaseCustomItemViewModel(
 
     private fun onCustomFieldChange(field: FieldIdentifier, value: String) {
         onUserEditedContent()
-        when (field.sectionIndex) {
+        updateContent(field.sectionIndex, field.index, value)
+    }
+
+    private fun updateContent(
+        sectionIndex: Option<Int>,
+        index: Int,
+        newValue: String
+    ) {
+        when (sectionIndex) {
             None -> {
-                val updatedFields =
-                    updateCustomField(itemFormState.customFieldList, field.index, value)
-                itemFormState = itemFormState.copy(customFieldList = updatedFields)
+                itemFormState = itemFormState.copy(
+                    customFieldList = updateCustomField(
+                        fields = itemFormState.customFieldList,
+                        index = index,
+                        newValue = newValue
+                    )
+                )
             }
 
-            is Some -> {
-                val currentFields = itemFormState.sectionList[field.sectionIndex.value].customFields
-                val updatedFields = updateCustomField(currentFields, field.index, value)
-                val updatedSections = itemFormState.sectionList.toMutableList().apply {
-                    set(
-                        field.sectionIndex.value,
-                        itemFormState.sectionList[field.sectionIndex.value]
-                            .copy(customFields = updatedFields)
+            is Some<Int> -> {
+                val section =
+                    itemFormState.sectionList[sectionIndex.value]
+                val updatedSection = section.copy(
+                    customFields = updateCustomField(
+                        fields = section.customFields,
+                        index = index,
+                        newValue = newValue
                     )
-                }
-                itemFormState = itemFormState.copy(sectionList = updatedSections)
+                )
+                itemFormState = itemFormState.copy(
+                    sectionList = itemFormState.sectionList
+                        .toMutableList()
+                        .apply {
+                            set(
+                                index = sectionIndex.value,
+                                element = updatedSection
+                            )
+                        }
+                )
             }
         }
     }
@@ -447,40 +503,51 @@ abstract class BaseCustomItemViewModel(
         fields: List<UICustomFieldContent>,
         index: Int,
         newValue: String
-    ): List<UICustomFieldContent> = fields.toMutableList().apply {
-        if (index in indices) {
-            val updatedField = encryptionContextProvider.withEncryptionContext {
-                when (val content = get(index)) {
-                    is UICustomFieldContent.Hidden -> {
-                        UICustomFieldContent.Hidden(
-                            label = content.label,
-                            value = if (newValue.isBlank()) {
-                                UIHiddenState.Empty(encrypt(""))
-                            } else {
-                                UIHiddenState.Revealed(
-                                    encrypted = encrypt(newValue),
-                                    clearText = newValue
-                                )
-                            }
-                        )
-                    }
+    ): List<UICustomFieldContent> {
+        if (index !in fields.indices) return fields
+        val updatedField = when (val currentField = fields[index]) {
+            is UICustomFieldContent.Hidden -> UICustomFieldContent.Hidden(
+                label = currentField.label,
+                value = createHiddenState(newValue)
+            )
 
-                    is UICustomFieldContent.Text -> UICustomFieldContent.Text(
-                        label = content.label,
-                        value = newValue
-                    )
+            is UICustomFieldContent.Text -> UICustomFieldContent.Text(
+                label = currentField.label,
+                value = newValue
+            )
 
-                    is UICustomFieldContent.Totp -> UICustomFieldContent.Totp(
-                        label = content.label,
-                        value = UIHiddenState.Revealed(
-                            encrypted = encrypt(newValue),
-                            clearText = newValue
-                        ),
-                        id = content.id
-                    )
+            is UICustomFieldContent.Totp -> UICustomFieldContent.Totp(
+                label = currentField.label,
+                value = createHiddenState(newValue),
+                id = currentField.id
+            )
+        }
+
+        return fields.toMutableList().apply { set(index, updatedField) }
+    }
+
+    private fun toggleHiddenState(field: UIHiddenState, isFocused: Boolean): UIHiddenState = if (isFocused) {
+        if (field !is UIHiddenState.Empty) {
+            UIHiddenState.Revealed(
+                encrypted = field.encrypted,
+                clearText = encryptionContextProvider.withEncryptionContext {
+                    decrypt(field.encrypted)
                 }
-            }
-            set(index, updatedField)
+            )
+        } else {
+            field
+        }
+    } else {
+        UIHiddenState.Concealed(field.encrypted)
+    }
+
+    private fun createHiddenState(value: String): UIHiddenState = encryptionContextProvider.withEncryptionContext {
+        when {
+            value.isBlank() -> UIHiddenState.Empty(encrypt(""))
+            else -> UIHiddenState.Revealed(
+                encrypted = encrypt(value),
+                clearText = value
+            )
         }
     }
 
@@ -564,44 +631,22 @@ abstract class BaseCustomItemViewModel(
         itemFormState = itemFormState.copy(itemStaticFields = updatedStaticFields)
     }
 
-    private fun onFieldFocusedChange(
-        isFocused: Boolean,
-        field: UIHiddenState,
-        updateField: (UIHiddenState) -> Unit
-    ) {
-        when (field) {
-            is UIHiddenState.Concealed -> if (isFocused) {
-                val clearText =
-                    encryptionContextProvider.withEncryptionContext { decrypt(field.encrypted) }
-                updateField(
-                    UIHiddenState.Revealed(
-                        encrypted = field.encrypted,
-                        clearText = clearText
-                    )
-                )
-            }
-
-            is UIHiddenState.Empty -> {}
-            is UIHiddenState.Revealed -> if (!isFocused) {
-                updateField(UIHiddenState.Concealed(field.encrypted))
-            }
-        }
-    }
-
     private fun onPrivateKeyFocusedChange(isFocused: Boolean) {
         val sshKeyFields = itemFormState.itemStaticFields as ItemStaticFields.SSHKey
-        onFieldFocusedChange(isFocused, sshKeyFields.privateKey) { updatedKey ->
-            itemFormState =
-                itemFormState.copy(itemStaticFields = sshKeyFields.copy(privateKey = updatedKey))
-        }
+        itemFormState = itemFormState.copy(
+            itemStaticFields = sshKeyFields.copy(
+                privateKey = toggleHiddenState(sshKeyFields.privateKey, isFocused)
+            )
+        )
     }
 
     private fun onPasswordFocusedChange(isFocused: Boolean) {
         val wifiNetworkFields = itemFormState.itemStaticFields as ItemStaticFields.WifiNetwork
-        onFieldFocusedChange(isFocused, wifiNetworkFields.password) { updatedPassword ->
-            itemFormState =
-                itemFormState.copy(itemStaticFields = wifiNetworkFields.copy(password = updatedPassword))
-        }
+        itemFormState = itemFormState.copy(
+            itemStaticFields = wifiNetworkFields.copy(
+                password = toggleHiddenState(wifiNetworkFields.password, isFocused)
+            )
+        )
     }
 
     protected fun observeSharedState(): Flow<ItemSharedUiState> = combineN(

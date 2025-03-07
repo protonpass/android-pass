@@ -16,7 +16,7 @@
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Säilytä PIN- tai muita koodeja, tai muita muistiinpanoja.</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Säilytä maksutapojesi tiedot turvallisesti.</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Täytä henkilötietosi</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Create items with fully customised fields</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Create items with fully customized fields</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Luo turvallinen salasana.</string>
   <!-- Create Login -->
   <string name="field_email_title">Sähköpostiosoite</string>
@@ -54,7 +54,6 @@
   <string name="bottomsheet_custom_field_option_remove">Poista kenttä</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Poista mukautettu kenttä</string>
   <string name="bottomsheet_custom_section_option_remove">Poista osio</string>
-  <string name="create_login_add_custom_field_button">Lisää kenttä</string>
   <string name="custom_field_hidden_placeholder">Lisää piilotettu teksti</string>
   <string name="custom_field_hidden_icon_content_description">Mukautetun piilotetun kentän kuvake</string>
   <string name="custom_field_text_placeholder">Lisää teksti</string>
@@ -171,7 +170,6 @@
   <string name="identity_section_address_details">Osoitetiedot</string>
   <string name="identity_section_contact_details">Yhteystiedot</string>
   <string name="identity_section_work_details">Työtiedot</string>
-  <string name="identity_add_more_fields">Lisää kenttä</string>
   <string name="identity_bottomsheet_add_field">Lisää kenttä</string>
   <string name="create_identity_init_error">Ongelma noudettaessa identiteetin tietoja</string>
   <string name="update_identity_attachments_init_error">Ongelma noudettaessa identiteetin liitteitä</string>
@@ -202,7 +200,6 @@
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Sovellus on päivitettävä tämän kohteen muokkaamiseksi</string>
   <string name="remove_passkey_dialog_title">Poistetaanko tämä pääsyavain?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Haluatko varmasti poistaa pääsyavaimen osoitteen \"%2$s\" käyttäjältä \"%1$s\"?</string>
-  <string name="add_a_custom_section">Lisää mukautettu osio</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Liitteet</string>
   <string name="banner_body_attachments">Voit liittää kohteisiin tiedostoja parempaa organisointia varten</string>
@@ -236,9 +233,121 @@
   <string name="template_item_passport">Passport</string>
   <string name="template_item_reward_program">Reward Program</string>
   <string name="template_item_social_security_number">Social Security Number</string>
+  <!-- API Credential Fields -->
+  <string name="template_api_credential_field_api_key">API Key</string>
+  <string name="template_api_credential_field_secret">Secret</string>
+  <string name="template_api_credential_field_expiry_date">Expiry Date</string>
+  <string name="template_api_credential_field_permissions">Permissions</string>
+  <string name="template_api_credential_field_note">Note</string>
+  <!-- Database Fields -->
+  <string name="template_database_field_host">Host</string>
+  <string name="template_database_field_port">Port</string>
+  <string name="template_database_field_username">Username</string>
+  <string name="template_database_field_password">Password</string>
+  <string name="template_database_field_database_type">Database Type</string>
+  <string name="template_database_field_note">Note</string>
+  <!-- Server Fields -->
+  <string name="template_server_field_ip_address">IP Address</string>
+  <string name="template_server_field_hostname">Hostname</string>
+  <string name="template_server_field_os">Operating System</string>
+  <string name="template_server_field_username">Username</string>
+  <string name="template_server_field_password">Password</string>
+  <string name="template_server_field_note">Note</string>
+  <!-- Software License Fields -->
+  <string name="template_software_license_field_license_key">License Key</string>
+  <string name="template_software_license_field_product">Product</string>
+  <string name="template_software_license_field_expiry_date">Expiry Date</string>
+  <string name="template_software_license_field_owner">Owner</string>
+  <string name="template_software_license_field_note">Note</string>
+  <!-- SSH Key Fields -->
+  <string name="template_ssh_key_field_private_key">Private Key</string>
+  <string name="template_ssh_key_field_public_key">Public Key</string>
+  <string name="template_ssh_key_field_username">Username</string>
+  <string name="template_ssh_key_field_host">Host</string>
+  <string name="template_ssh_key_field_note">Note</string>
+  <!-- WiFi Network Fields -->
+  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_security_type">Security Type</string>
+  <string name="template_wifi_network_field_note">Note</string>
+  <!-- Bank Account Fields -->
+  <string name="template_bank_account_field_bank_name">Bank Name</string>
+  <string name="template_bank_account_field_account_number">Account Number</string>
+  <string name="template_bank_account_field_routing_number">Routing Number</string>
+  <string name="template_bank_account_field_account_type">Account Type</string>
+  <string name="template_bank_account_field_iban">IBAN</string>
+  <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
+  <string name="template_bank_account_field_holder_name">Holder Name</string>
+  <string name="template_bank_account_field_note">Note</string>
+  <!-- Crypto Wallet Fields -->
+  <string name="template_crypto_wallet_field_wallet_name">Wallet Name</string>
+  <string name="template_crypto_wallet_field_address">Address</string>
+  <string name="template_crypto_wallet_field_private_key">Private Key</string>
+  <string name="template_crypto_wallet_field_seed_phrase">Seed Phrase</string>
+  <string name="template_crypto_wallet_field_network">Network</string>
+  <string name="template_crypto_wallet_field_note">Note</string>
+  <!-- Driver License Fields -->
+  <string name="template_driver_license_field_full_name">Full Name</string>
+  <string name="template_driver_license_field_license_number">License Number</string>
+  <string name="template_driver_license_field_issuing_state_country">Issuing State/Country</string>
+  <string name="template_driver_license_field_expiry_date">Expiry Date</string>
+  <string name="template_driver_license_field_date_of_birth">Date of Birth</string>
+  <string name="template_driver_license_field_class">Class</string>
+  <string name="template_driver_license_field_note">Note</string>
+  <!-- Medical Record Fields -->
+  <string name="template_medical_record_field_patient_name">Patient Name</string>
+  <string name="template_medical_record_field_record_number">Record Number</string>
+  <string name="template_medical_record_field_medical_conditions">Medical Conditions</string>
+  <string name="template_medical_record_field_medications">Medications</string>
+  <string name="template_medical_record_field_doctor">Doctor</string>
+  <string name="template_medical_record_field_hospital">Hospital</string>
+  <string name="template_medical_record_field_note">Note</string>
+  <!-- Membership Fields -->
+  <string name="template_membership_field_organization_name">Organization Name</string>
+  <string name="template_membership_field_membership_id">Membership ID</string>
+  <string name="template_membership_field_member_name">Member Name</string>
+  <string name="template_membership_field_expiry_date">Expiry Date</string>
+  <string name="template_membership_field_tier_level">Tier/Level</string>
+  <string name="template_membership_field_note">Note</string>
+  <!-- Passport Fields -->
+  <string name="template_passport_field_full_name">Full Name</string>
+  <string name="template_passport_field_passport_number">Passport Number</string>
+  <string name="template_passport_field_country">Country</string>
+  <string name="template_passport_field_expiry_date">Expiry Date</string>
+  <string name="template_passport_field_date_of_birth">Date of Birth</string>
+  <string name="template_passport_field_issuing_authority">Issuing Authority</string>
+  <string name="template_passport_field_note">Note</string>
+  <!-- Reward Program Fields -->
+  <string name="template_reward_program_field_program_name">Program Name</string>
+  <string name="template_reward_program_field_member_id">Member ID</string>
+  <string name="template_reward_program_field_points_balance">Points Balance</string>
+  <string name="template_reward_program_field_expiry_date">Expiry Date</string>
+  <string name="template_reward_program_field_tier_status">Tier/Status</string>
+  <string name="template_reward_program_field_note">Note</string>
+  <!-- Social Security Number Fields -->
+  <string name="template_social_security_number_field_full_name">Full Name</string>
+  <string name="template_social_security_number_field_ssn">Social Security Number</string>
+  <string name="template_social_security_number_field_issuing_country">Issuing Country</string>
+  <string name="template_social_security_number_field_note">Note</string>
   <string name="template_header_technology">Technology</string>
   <string name="template_header_finance">Finance</string>
   <string name="template_header_personal">Finance</string>
   <string name="button_start_from_scratch">Start from scratch</string>
   <string name="select_template_title">Custom item</string>
+  <!-- Custom item screen -->
+  <string name="add_custom_field_button">Add field</string>
+  <string name="add_section_button">Add section</string>
+  <string name="add_public_key_placeholder">Add public key</string>
+  <string name="add_private_key_placeholder">Add private key</string>
+  <string name="add_ssid_placeholder">Add SSID</string>
+  <string name="create_custom_item_init_error">Problem retrieving custom item details</string>
+  <string name="update_custom_item_attachments_init_error">Problem retrieving custom item attachments</string>
+  <string name="custom_item_link_attachments_error">Failed to link or unlink attachments to the custom item</string>
+  <string name="custom_item_rename_attachments_error">Failed to rename custom item attachments</string>
+  <string name="create_custom_item_item_creation_error">Could not create custom item</string>
+  <string name="create_custom_item_item_creation_success">Custom item created</string>
+  <string name="update_custom_item_item_creation_success">Custom item updated</string>
+  <string name="update_custom_item_item_creation_error">Could not update custom item</string>
+  <!-- Cannot create items dialog -->
+  <string name="cannot_create_items_dialog_title">Cannot create items</string>
+  <string name="cannot_create_items_dialog_message">You don\'t have any vaults with editor or admin access. Try creating one in the main app or ask your organization\'s administrator for support.</string>
 </resources>

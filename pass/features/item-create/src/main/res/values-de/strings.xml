@@ -16,7 +16,7 @@
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Notiere dir eine PIN, einen Code oder eine Notiz an dich selbst</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Speichere deine Zahlungsinformationen sicher</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Fülle deine persönlichen Daten aus</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Eintrag mit vollständig angepassten Feldern erstellen</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Einträge mit vollständig benutzerdefinierten Feldern erstellen</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Sicheres Passwort generieren</string>
   <!-- Create Login -->
   <string name="field_email_title">E‐Mail‐Adresse</string>
@@ -54,7 +54,6 @@
   <string name="bottomsheet_custom_field_option_remove">Feld entfernen</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Benutzerdefiniertes Feld entfernen</string>
   <string name="bottomsheet_custom_section_option_remove">Abschnitt entfernen</string>
-  <string name="create_login_add_custom_field_button">Weiteres Feld hinzufügen</string>
   <string name="custom_field_hidden_placeholder">Versteckten Text hinzufügen</string>
   <string name="custom_field_hidden_icon_content_description">Verstecktes benutzerdefiniertes Feld-Symbol</string>
   <string name="custom_field_text_placeholder">Text hinzufügen</string>
@@ -171,7 +170,6 @@
   <string name="identity_section_address_details">Adressdetails</string>
   <string name="identity_section_contact_details">Kontaktdetails</string>
   <string name="identity_section_work_details">Geschäftliche Details</string>
-  <string name="identity_add_more_fields">Weiteres Feld hinzufügen</string>
   <string name="identity_bottomsheet_add_field">Feld hinzufügen</string>
   <string name="create_identity_init_error">Problem beim Abrufen von Angaben zur Identität</string>
   <string name="update_identity_attachments_init_error">Fehler beim Abrufen der Identität-Anhänge.</string>
@@ -202,7 +200,6 @@
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Die App muss aktualisiert werden, damit dieser Eintrag bearbeitet werden kann.</string>
   <string name="remove_passkey_dialog_title">Diesen Passkey entfernen?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Du bist dabei, den Passkey für den Benutzer \'%1$s\' für \'%2$s\' zu entfernen. Bist du sicher?</string>
-  <string name="add_a_custom_section">Benutzerdefinierten Abschnitt hinzufügen</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Anhänge</string>
   <string name="banner_body_attachments">Du kannst Dateien an Einträge anhängen, um sie besser zu organisieren.</string>
@@ -236,9 +233,121 @@
   <string name="template_item_passport">Reisepass</string>
   <string name="template_item_reward_program">Treueprogramm</string>
   <string name="template_item_social_security_number">Sozialversicherungsnummer</string>
+  <!-- API Credential Fields -->
+  <string name="template_api_credential_field_api_key">API-Schlüssel</string>
+  <string name="template_api_credential_field_secret">Geheim</string>
+  <string name="template_api_credential_field_expiry_date">Ablaufdatum</string>
+  <string name="template_api_credential_field_permissions">Berechtigungen</string>
+  <string name="template_api_credential_field_note">Notiz</string>
+  <!-- Database Fields -->
+  <string name="template_database_field_host">Host</string>
+  <string name="template_database_field_port">Port</string>
+  <string name="template_database_field_username">Benutzername</string>
+  <string name="template_database_field_password">Passwort</string>
+  <string name="template_database_field_database_type">Datenbanktyp</string>
+  <string name="template_database_field_note">Notiz</string>
+  <!-- Server Fields -->
+  <string name="template_server_field_ip_address">IP-Adresse</string>
+  <string name="template_server_field_hostname">Hostname</string>
+  <string name="template_server_field_os">Betriebssystem</string>
+  <string name="template_server_field_username">Benutzername</string>
+  <string name="template_server_field_password">Passwort</string>
+  <string name="template_server_field_note">Notiz</string>
+  <!-- Software License Fields -->
+  <string name="template_software_license_field_license_key">Lizenzschlüssel</string>
+  <string name="template_software_license_field_product">Produkt</string>
+  <string name="template_software_license_field_expiry_date">Ablaufdatum</string>
+  <string name="template_software_license_field_owner">Besitzer</string>
+  <string name="template_software_license_field_note">Notiz</string>
+  <!-- SSH Key Fields -->
+  <string name="template_ssh_key_field_private_key">Privater Schlüssel</string>
+  <string name="template_ssh_key_field_public_key">Öffentlicher Schlüssel</string>
+  <string name="template_ssh_key_field_username">Benutzername</string>
+  <string name="template_ssh_key_field_host">Host</string>
+  <string name="template_ssh_key_field_note">Notiz</string>
+  <!-- WiFi Network Fields -->
+  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_security_type">Sicherheitstyp</string>
+  <string name="template_wifi_network_field_note">Notiz</string>
+  <!-- Bank Account Fields -->
+  <string name="template_bank_account_field_bank_name">Bankname</string>
+  <string name="template_bank_account_field_account_number">Kontonummer</string>
+  <string name="template_bank_account_field_routing_number">Bankleitzahl</string>
+  <string name="template_bank_account_field_account_type">Kontotyp</string>
+  <string name="template_bank_account_field_iban">IBAN</string>
+  <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
+  <string name="template_bank_account_field_holder_name">Name des Kontoinhabers</string>
+  <string name="template_bank_account_field_note">Notiz</string>
+  <!-- Crypto Wallet Fields -->
+  <string name="template_crypto_wallet_field_wallet_name">Name der Wallet</string>
+  <string name="template_crypto_wallet_field_address">Adresse</string>
+  <string name="template_crypto_wallet_field_private_key">Privater Schlüssel</string>
+  <string name="template_crypto_wallet_field_seed_phrase">Wiederherstellungsphrase</string>
+  <string name="template_crypto_wallet_field_network">Netzwerk</string>
+  <string name="template_crypto_wallet_field_note">Notiz</string>
+  <!-- Driver License Fields -->
+  <string name="template_driver_license_field_full_name">Vollständiger Name</string>
+  <string name="template_driver_license_field_license_number">Autokennzeichen</string>
+  <string name="template_driver_license_field_issuing_state_country">Ausstellender Staat/Land</string>
+  <string name="template_driver_license_field_expiry_date">Ablaufdatum</string>
+  <string name="template_driver_license_field_date_of_birth">Geburtsdatum</string>
+  <string name="template_driver_license_field_class">Klasse</string>
+  <string name="template_driver_license_field_note">Notiz</string>
+  <!-- Medical Record Fields -->
+  <string name="template_medical_record_field_patient_name">Patientenname</string>
+  <string name="template_medical_record_field_record_number">Aktenzeichen</string>
+  <string name="template_medical_record_field_medical_conditions">Gesundheitszustand</string>
+  <string name="template_medical_record_field_medications">Medikamente</string>
+  <string name="template_medical_record_field_doctor">Arzt</string>
+  <string name="template_medical_record_field_hospital">Krankenhaus</string>
+  <string name="template_medical_record_field_note">Notiz</string>
+  <!-- Membership Fields -->
+  <string name="template_membership_field_organization_name">Name der Organisation</string>
+  <string name="template_membership_field_membership_id">Mitgliedschaftsnummer</string>
+  <string name="template_membership_field_member_name">Mitgliedsname</string>
+  <string name="template_membership_field_expiry_date">Ablaufdatum</string>
+  <string name="template_membership_field_tier_level">Stufe/Ebene</string>
+  <string name="template_membership_field_note">Notiz</string>
+  <!-- Passport Fields -->
+  <string name="template_passport_field_full_name">Vollständiger Name</string>
+  <string name="template_passport_field_passport_number">Passnummer</string>
+  <string name="template_passport_field_country">Land</string>
+  <string name="template_passport_field_expiry_date">Ablaufdatum</string>
+  <string name="template_passport_field_date_of_birth">Geburtsdatum</string>
+  <string name="template_passport_field_issuing_authority">Ausstellende Behörde</string>
+  <string name="template_passport_field_note">Notiz</string>
+  <!-- Reward Program Fields -->
+  <string name="template_reward_program_field_program_name">Programmname</string>
+  <string name="template_reward_program_field_member_id">Mitgliedsnummer</string>
+  <string name="template_reward_program_field_points_balance">Punktestand</string>
+  <string name="template_reward_program_field_expiry_date">Ablaufdatum</string>
+  <string name="template_reward_program_field_tier_status">Stufe/Status</string>
+  <string name="template_reward_program_field_note">Notiz</string>
+  <!-- Social Security Number Fields -->
+  <string name="template_social_security_number_field_full_name">Vollständiger Name</string>
+  <string name="template_social_security_number_field_ssn">Sozialversicherungsnummer</string>
+  <string name="template_social_security_number_field_issuing_country">Ausstellendes Land</string>
+  <string name="template_social_security_number_field_note">Notiz</string>
   <string name="template_header_technology">Technologie</string>
   <string name="template_header_finance">Finanzen</string>
   <string name="template_header_personal">Finanzen</string>
   <string name="button_start_from_scratch">Ganz von vorne anfangen</string>
   <string name="select_template_title">Benutzerdefinierter Eintrag</string>
+  <!-- Custom item screen -->
+  <string name="add_custom_field_button">Feld hinzufügen</string>
+  <string name="add_section_button">Abschnitt hinzufügen</string>
+  <string name="add_public_key_placeholder">Öffentlicher Schlüssel hinzufügen</string>
+  <string name="add_private_key_placeholder">Privater Schlüssel hinzufügen</string>
+  <string name="add_ssid_placeholder">SSID hinzufügen</string>
+  <string name="create_custom_item_init_error">Problem beim Abrufen benutzerdefinierter Eintragdetails</string>
+  <string name="update_custom_item_attachments_init_error">Problem beim Abrufen benutzerdefinierter Eintrag-Anhänge</string>
+  <string name="custom_item_link_attachments_error">Verknüpfung oder Aufhebung der Verknüpfung von Anhängen mit dem benutzerdefinierten Eintrag fehlgeschlagen.</string>
+  <string name="custom_item_rename_attachments_error">Umbenennen von Anhängen für benutzerdefinierte Einträge fehlgeschlagen</string>
+  <string name="create_custom_item_item_creation_error">Benutzerdefinierter Eintrag konnte nicht erstellt werden</string>
+  <string name="create_custom_item_item_creation_success">Benutzerdefinierter Eintrag erstellt</string>
+  <string name="update_custom_item_item_creation_success">Benutzerdefinierter Eintrag aktualisiert</string>
+  <string name="update_custom_item_item_creation_error">Benutzerdefinierter Eintrag konnte nicht aktualisiert werden</string>
+  <!-- Cannot create items dialog -->
+  <string name="cannot_create_items_dialog_title">Kann keine Einträge erstellen</string>
+  <string name="cannot_create_items_dialog_message">Du hast keine Tresore mit Bearbeitungs- oder Admin-Zugang. Versuche, einen in der Hauptanwendung zu erstellen, oder bitte den Administrator deiner Organisation um Unterstützung.</string>
 </resources>

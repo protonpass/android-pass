@@ -54,7 +54,6 @@
   <string name="bottomsheet_custom_field_option_remove">Fjern felt</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Fjern tilpasset felt</string>
   <string name="bottomsheet_custom_section_option_remove">Fjern seksjon</string>
-  <string name="create_login_add_custom_field_button">Legg til et annet felt</string>
   <string name="custom_field_hidden_placeholder">Legg til skjult tekst</string>
   <string name="custom_field_hidden_icon_content_description">Ikon for skjult tilpasset felt</string>
   <string name="custom_field_text_placeholder">Legg til tekst</string>
@@ -171,7 +170,6 @@
   <string name="identity_section_address_details">Adressedetaljer</string>
   <string name="identity_section_contact_details">Kontaktdetaljer</string>
   <string name="identity_section_work_details">Arbeidsdetaljer</string>
-  <string name="identity_add_more_fields">Legg til et annet felt</string>
   <string name="identity_bottomsheet_add_field">Legg til felt</string>
   <string name="create_identity_init_error">Problem med å hente identitetsdetaljer</string>
   <string name="update_identity_attachments_init_error">Problemer med å hente identitetsvedlegg</string>
@@ -202,7 +200,6 @@
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Appen må oppdateres for å redigere dette elementet</string>
   <string name="remove_passkey_dialog_title">Fjerne denne tilgangsnøkkelen?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Du er i ferd med å fjerne tilgangsnøkkelen for brukeren \'%1$s\' for \'%2$s\'. Er du sikker?</string>
-  <string name="add_a_custom_section">Legg til en tilpasset seksjon</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Vedlegg</string>
   <string name="banner_body_attachments">Du kan legge ved filer til elementer for en bedre organisering</string>
@@ -236,9 +233,121 @@
   <string name="template_item_passport">Pass</string>
   <string name="template_item_reward_program">Belønningsprogram</string>
   <string name="template_item_social_security_number">Personnummer</string>
+  <!-- API Credential Fields -->
+  <string name="template_api_credential_field_api_key">API-nøkkel</string>
+  <string name="template_api_credential_field_secret">Hemmelig</string>
+  <string name="template_api_credential_field_expiry_date">Utløpsdato</string>
+  <string name="template_api_credential_field_permissions">Tillatelser</string>
+  <string name="template_api_credential_field_note">Notat</string>
+  <!-- Database Fields -->
+  <string name="template_database_field_host">Vert</string>
+  <string name="template_database_field_port">Port</string>
+  <string name="template_database_field_username">Brukernavn</string>
+  <string name="template_database_field_password">Passord</string>
+  <string name="template_database_field_database_type">Databasetype</string>
+  <string name="template_database_field_note">Notat</string>
+  <!-- Server Fields -->
+  <string name="template_server_field_ip_address">IP-adresse</string>
+  <string name="template_server_field_hostname">Vertsnavn</string>
+  <string name="template_server_field_os">Operativsystem</string>
+  <string name="template_server_field_username">Brukernavn</string>
+  <string name="template_server_field_password">Passord</string>
+  <string name="template_server_field_note">Notat</string>
+  <!-- Software License Fields -->
+  <string name="template_software_license_field_license_key">Lisensnøkkel</string>
+  <string name="template_software_license_field_product">Produkt</string>
+  <string name="template_software_license_field_expiry_date">Utløpsdato</string>
+  <string name="template_software_license_field_owner">Eier</string>
+  <string name="template_software_license_field_note">Notat</string>
+  <!-- SSH Key Fields -->
+  <string name="template_ssh_key_field_private_key">Privat nøkkel</string>
+  <string name="template_ssh_key_field_public_key">Offentlig nøkkel</string>
+  <string name="template_ssh_key_field_username">Brukernavn</string>
+  <string name="template_ssh_key_field_host">Vert</string>
+  <string name="template_ssh_key_field_note">Notat</string>
+  <!-- WiFi Network Fields -->
+  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_security_type">Sikkerhetstype</string>
+  <string name="template_wifi_network_field_note">Notat</string>
+  <!-- Bank Account Fields -->
+  <string name="template_bank_account_field_bank_name">Banknavn</string>
+  <string name="template_bank_account_field_account_number">Kontonummer</string>
+  <string name="template_bank_account_field_routing_number">Rutenummer</string>
+  <string name="template_bank_account_field_account_type">Kontotype</string>
+  <string name="template_bank_account_field_iban">IBAN</string>
+  <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
+  <string name="template_bank_account_field_holder_name">Navn på innehaveren</string>
+  <string name="template_bank_account_field_note">Notat</string>
+  <!-- Crypto Wallet Fields -->
+  <string name="template_crypto_wallet_field_wallet_name">Navn på lommebok</string>
+  <string name="template_crypto_wallet_field_address">Adresse</string>
+  <string name="template_crypto_wallet_field_private_key">Privat nøkkel</string>
+  <string name="template_crypto_wallet_field_seed_phrase">Gjenopprettingsfrase</string>
+  <string name="template_crypto_wallet_field_network">Nettverk</string>
+  <string name="template_crypto_wallet_field_note">Notat</string>
+  <!-- Driver License Fields -->
+  <string name="template_driver_license_field_full_name">Fullt navn</string>
+  <string name="template_driver_license_field_license_number">Førerkortnummer</string>
+  <string name="template_driver_license_field_issuing_state_country">Utstedende stat/land</string>
+  <string name="template_driver_license_field_expiry_date">Utløpsdato</string>
+  <string name="template_driver_license_field_date_of_birth">Fødselsdato</string>
+  <string name="template_driver_license_field_class">Klasse</string>
+  <string name="template_driver_license_field_note">Notat</string>
+  <!-- Medical Record Fields -->
+  <string name="template_medical_record_field_patient_name">Pasientnavn</string>
+  <string name="template_medical_record_field_record_number">Registreringsnummer</string>
+  <string name="template_medical_record_field_medical_conditions">Medisinske tilstander</string>
+  <string name="template_medical_record_field_medications">Medisiner</string>
+  <string name="template_medical_record_field_doctor">Doktor</string>
+  <string name="template_medical_record_field_hospital">Sykehus</string>
+  <string name="template_medical_record_field_note">Notat</string>
+  <!-- Membership Fields -->
+  <string name="template_membership_field_organization_name">Organisasjonsnavn</string>
+  <string name="template_membership_field_membership_id">Medlemskaps-ID</string>
+  <string name="template_membership_field_member_name">Medlemsnavn</string>
+  <string name="template_membership_field_expiry_date">Utløpsdato</string>
+  <string name="template_membership_field_tier_level">Nivå</string>
+  <string name="template_membership_field_note">Notat</string>
+  <!-- Passport Fields -->
+  <string name="template_passport_field_full_name">Fullt navn</string>
+  <string name="template_passport_field_passport_number">Passnummer</string>
+  <string name="template_passport_field_country">Land</string>
+  <string name="template_passport_field_expiry_date">Utløpsdato</string>
+  <string name="template_passport_field_date_of_birth">Fødselsdato</string>
+  <string name="template_passport_field_issuing_authority">Utstedende myndighet</string>
+  <string name="template_passport_field_note">Notat</string>
+  <!-- Reward Program Fields -->
+  <string name="template_reward_program_field_program_name">Programnavn</string>
+  <string name="template_reward_program_field_member_id">Medlems-ID</string>
+  <string name="template_reward_program_field_points_balance">Poengsaldo</string>
+  <string name="template_reward_program_field_expiry_date">Utløpsdato</string>
+  <string name="template_reward_program_field_tier_status">Nivå/status</string>
+  <string name="template_reward_program_field_note">Notat</string>
+  <!-- Social Security Number Fields -->
+  <string name="template_social_security_number_field_full_name">Fullt navn</string>
+  <string name="template_social_security_number_field_ssn">Personnummer</string>
+  <string name="template_social_security_number_field_issuing_country">Utstedende land</string>
+  <string name="template_social_security_number_field_note">Notat</string>
   <string name="template_header_technology">Teknologi</string>
   <string name="template_header_finance">Finans</string>
   <string name="template_header_personal">Finans</string>
   <string name="button_start_from_scratch">Start fra begynnelsen</string>
   <string name="select_template_title">Tilpasset element</string>
+  <!-- Custom item screen -->
+  <string name="add_custom_field_button">Legg til felt</string>
+  <string name="add_section_button">Legg til seksjon</string>
+  <string name="add_public_key_placeholder">Legg til offentlig nøkkel</string>
+  <string name="add_private_key_placeholder">Legg til privat nøkkel</string>
+  <string name="add_ssid_placeholder">Legg til SSID</string>
+  <string name="create_custom_item_init_error">Problem med å hente tilpassede elementdetaljer</string>
+  <string name="update_custom_item_attachments_init_error">Problem med å hente tilpassede elementvedlegg</string>
+  <string name="custom_item_link_attachments_error">Kunne ikke koble til eller fra vedlegg for det tilpassede elementet</string>
+  <string name="custom_item_rename_attachments_error">Kunne ikke gi nytt navn til tilpassede elementvedlegg</string>
+  <string name="create_custom_item_item_creation_error">Kunne ikke opprette tilpasset element</string>
+  <string name="create_custom_item_item_creation_success">Tilpasset element opprettet</string>
+  <string name="update_custom_item_item_creation_success">Tilpasset element oppdatert</string>
+  <string name="update_custom_item_item_creation_error">Kunne ikke oppdatere tilpasset element</string>
+  <!-- Cannot create items dialog -->
+  <string name="cannot_create_items_dialog_title">Kan ikke opprette elementer</string>
+  <string name="cannot_create_items_dialog_message">Du har ingen hvelv med redigerings- eller administratortilgang. Prøv å opprette en i hovedappen, eller be organisasjonens administrator om støtte.</string>
 </resources>

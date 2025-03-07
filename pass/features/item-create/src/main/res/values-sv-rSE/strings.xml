@@ -16,7 +16,7 @@
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Skriv ner en PIN-kod, kod eller anteckning till dig själv</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Spara din betalningsinformation säkert</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Fyll i dina personuppgifter</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Skapa objekt med fullständigt anpassade fält</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Skapa objekt med helt anpassade fält</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Generera ett säkert lösenord</string>
   <!-- Create Login -->
   <string name="field_email_title">E-postadress</string>
@@ -54,7 +54,6 @@
   <string name="bottomsheet_custom_field_option_remove">Ta bort fält</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Ta bort anpassat fält</string>
   <string name="bottomsheet_custom_section_option_remove">Ta bort sektion</string>
-  <string name="create_login_add_custom_field_button">Lägg till ytterligare fält</string>
   <string name="custom_field_hidden_placeholder">Lägg till dold text</string>
   <string name="custom_field_hidden_icon_content_description">Ikon för dolt anpassat fält</string>
   <string name="custom_field_text_placeholder">Lägga till text</string>
@@ -171,7 +170,6 @@
   <string name="identity_section_address_details">Adressuppgifter</string>
   <string name="identity_section_contact_details">Kontaktuppgifter</string>
   <string name="identity_section_work_details">Arbetsdetaljer</string>
-  <string name="identity_add_more_fields">Lägg till ett annat fält</string>
   <string name="identity_bottomsheet_add_field">Lägg till fält</string>
   <string name="create_identity_init_error">Problem att hämta identitetsdetaljer</string>
   <string name="update_identity_attachments_init_error">Problem att hämta identitetsbilagor</string>
@@ -202,7 +200,6 @@
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Appen måste uppdateras för att redigera detta objekt</string>
   <string name="remove_passkey_dialog_title">Ta bort denna passkey?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Du håller på att ta bort passkey för användare \'%1$s\' för \'%2$s\'. Är du säker?</string>
-  <string name="add_a_custom_section">Lägg till en anpassad sektion</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Bilagor</string>
   <string name="banner_body_attachments">Du kan bifoga filer till objekt för en bättre organisering</string>
@@ -222,23 +219,135 @@
   <string name="suffix_subtitle_public_domain">Offentlig domän</string>
   <string name="suffix_subtitle_private_domain">Din domän</string>
   <!-- Templates -->
-  <string name="template_item_api_credential">API Credential</string>
+  <string name="template_item_api_credential">API-behörighet</string>
   <string name="template_item_database">Databas</string>
   <string name="template_item_server">Server</string>
   <string name="template_item_software_license">Programvarulicens</string>
   <string name="template_item_ssh_key">SSH-nyckel</string>
   <string name="template_item_wifi_network">WiFi-nätverk</string>
   <string name="template_item_bank_account">Bankkonto</string>
-  <string name="template_item_crypto_wallet">Crypto Wallet</string>
+  <string name="template_item_crypto_wallet">Krypto plånbok</string>
   <string name="template_item_driver_license">Körkort</string>
-  <string name="template_item_medical_record">Medical Record</string>
+  <string name="template_item_medical_record">Medicinsk journal</string>
   <string name="template_item_membership">Medlemskap</string>
   <string name="template_item_passport">Pass</string>
   <string name="template_item_reward_program">Belöningsprogram</string>
   <string name="template_item_social_security_number">Personnummer</string>
+  <!-- API Credential Fields -->
+  <string name="template_api_credential_field_api_key">API-nyckel</string>
+  <string name="template_api_credential_field_secret">Hemlig</string>
+  <string name="template_api_credential_field_expiry_date">Utgångsdatum</string>
+  <string name="template_api_credential_field_permissions">Behörigheter</string>
+  <string name="template_api_credential_field_note">Anteckning</string>
+  <!-- Database Fields -->
+  <string name="template_database_field_host">Host</string>
+  <string name="template_database_field_port">Port</string>
+  <string name="template_database_field_username">Användarnamn</string>
+  <string name="template_database_field_password">Lösenord</string>
+  <string name="template_database_field_database_type">Databastyp</string>
+  <string name="template_database_field_note">Anteckning</string>
+  <!-- Server Fields -->
+  <string name="template_server_field_ip_address">IP-adress</string>
+  <string name="template_server_field_hostname">Hostnamn</string>
+  <string name="template_server_field_os">Operativsystem</string>
+  <string name="template_server_field_username">Användarnamn</string>
+  <string name="template_server_field_password">Lösenord</string>
+  <string name="template_server_field_note">Anteckning</string>
+  <!-- Software License Fields -->
+  <string name="template_software_license_field_license_key">Licensnyckel</string>
+  <string name="template_software_license_field_product">Produkt</string>
+  <string name="template_software_license_field_expiry_date">Utgångsdatum</string>
+  <string name="template_software_license_field_owner">Ägare</string>
+  <string name="template_software_license_field_note">Anteckning</string>
+  <!-- SSH Key Fields -->
+  <string name="template_ssh_key_field_private_key">Privat nyckel</string>
+  <string name="template_ssh_key_field_public_key">Offentlig nyckel</string>
+  <string name="template_ssh_key_field_username">Användarnamn</string>
+  <string name="template_ssh_key_field_host">Host</string>
+  <string name="template_ssh_key_field_note">Anteckning</string>
+  <!-- WiFi Network Fields -->
+  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_security_type">Säkerhetstyp</string>
+  <string name="template_wifi_network_field_note">Anteckning</string>
+  <!-- Bank Account Fields -->
+  <string name="template_bank_account_field_bank_name">Banknamn</string>
+  <string name="template_bank_account_field_account_number">Kontonummer</string>
+  <string name="template_bank_account_field_routing_number">Clearingnummer</string>
+  <string name="template_bank_account_field_account_type">Kontotyp</string>
+  <string name="template_bank_account_field_iban">IBAN</string>
+  <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
+  <string name="template_bank_account_field_holder_name">Innehavarens namn</string>
+  <string name="template_bank_account_field_note">Anteckning</string>
+  <!-- Crypto Wallet Fields -->
+  <string name="template_crypto_wallet_field_wallet_name">Plånboksnamn</string>
+  <string name="template_crypto_wallet_field_address">Adress</string>
+  <string name="template_crypto_wallet_field_private_key">Privat nyckel</string>
+  <string name="template_crypto_wallet_field_seed_phrase">Säkerhetsfras</string>
+  <string name="template_crypto_wallet_field_network">Nätverk</string>
+  <string name="template_crypto_wallet_field_note">Anteckning</string>
+  <!-- Driver License Fields -->
+  <string name="template_driver_license_field_full_name">Fullständigt namn</string>
+  <string name="template_driver_license_field_license_number">Licensnummer</string>
+  <string name="template_driver_license_field_issuing_state_country">Utfärdande delstat/land</string>
+  <string name="template_driver_license_field_expiry_date">Utgångsdatum</string>
+  <string name="template_driver_license_field_date_of_birth">Födelsedatum</string>
+  <string name="template_driver_license_field_class">Klass</string>
+  <string name="template_driver_license_field_note">Anteckning</string>
+  <!-- Medical Record Fields -->
+  <string name="template_medical_record_field_patient_name">Patientnamn</string>
+  <string name="template_medical_record_field_record_number">Record Number</string>
+  <string name="template_medical_record_field_medical_conditions">Medicinska tillstånd</string>
+  <string name="template_medical_record_field_medications">Mediciner</string>
+  <string name="template_medical_record_field_doctor">Läkare</string>
+  <string name="template_medical_record_field_hospital">Sjukhus</string>
+  <string name="template_medical_record_field_note">Anteckning</string>
+  <!-- Membership Fields -->
+  <string name="template_membership_field_organization_name">Organisationsnamn</string>
+  <string name="template_membership_field_membership_id">Medlemskaps-ID</string>
+  <string name="template_membership_field_member_name">Medlemsnamn</string>
+  <string name="template_membership_field_expiry_date">Utgångsdatum</string>
+  <string name="template_membership_field_tier_level">Tier/Level</string>
+  <string name="template_membership_field_note">Anteckning</string>
+  <!-- Passport Fields -->
+  <string name="template_passport_field_full_name">Fullständigt namn</string>
+  <string name="template_passport_field_passport_number">Passnummer</string>
+  <string name="template_passport_field_country">Land</string>
+  <string name="template_passport_field_expiry_date">Utgångsdatum</string>
+  <string name="template_passport_field_date_of_birth">Födelsedatum</string>
+  <string name="template_passport_field_issuing_authority">Utfärdande myndighet</string>
+  <string name="template_passport_field_note">Anteckning</string>
+  <!-- Reward Program Fields -->
+  <string name="template_reward_program_field_program_name">Programnamn</string>
+  <string name="template_reward_program_field_member_id">Medlems-ID</string>
+  <string name="template_reward_program_field_points_balance">Poängsaldo</string>
+  <string name="template_reward_program_field_expiry_date">Utgångsdatum</string>
+  <string name="template_reward_program_field_tier_status">Nivå/status</string>
+  <string name="template_reward_program_field_note">Anteckning</string>
+  <!-- Social Security Number Fields -->
+  <string name="template_social_security_number_field_full_name">Fullständigt namn</string>
+  <string name="template_social_security_number_field_ssn">Personnummer</string>
+  <string name="template_social_security_number_field_issuing_country">Utfärdande land</string>
+  <string name="template_social_security_number_field_note">Anteckning</string>
   <string name="template_header_technology">Teknologi</string>
-  <string name="template_header_finance">Ekonomi</string>
-  <string name="template_header_personal">Finans</string>
+  <string name="template_header_finance">Finans</string>
+  <string name="template_header_personal">Ekonomi</string>
   <string name="button_start_from_scratch">Börja från början</string>
   <string name="select_template_title">Anpassat objekt</string>
+  <!-- Custom item screen -->
+  <string name="add_custom_field_button">Lägg till fält</string>
+  <string name="add_section_button">Lägg till sektion</string>
+  <string name="add_public_key_placeholder">Lägg till offentlig nyckel</string>
+  <string name="add_private_key_placeholder">Lägg till privat nyckel</string>
+  <string name="add_ssid_placeholder">Lägg till SSID</string>
+  <string name="create_custom_item_init_error">Problem att hämta anpassade objektdetaljer</string>
+  <string name="update_custom_item_attachments_init_error">Problem retrieving custom item attachments</string>
+  <string name="custom_item_link_attachments_error">Failed to link or unlink attachments to the custom item</string>
+  <string name="custom_item_rename_attachments_error">Failed to rename custom item attachments</string>
+  <string name="create_custom_item_item_creation_error">Kunde inte skapa anpassat objekt</string>
+  <string name="create_custom_item_item_creation_success">Anpassat objekt skapat</string>
+  <string name="update_custom_item_item_creation_success">Anpassat objekt uppdaterat</string>
+  <string name="update_custom_item_item_creation_error">Kunde inte uppdatera anpassat objekt</string>
+  <!-- Cannot create items dialog -->
+  <string name="cannot_create_items_dialog_title">Kan inte skapa objekt</string>
+  <string name="cannot_create_items_dialog_message">Du har inga valv med redigerings- eller administratörsåtkomst. Prova skapa ett i huvudappen eller be din organisations administratör om support.</string>
 </resources>

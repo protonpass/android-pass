@@ -19,6 +19,7 @@
     <item quantity="other">resultat</item>
   </plurals>
   <string name="item_list_header_identities_type">Identiteter</string>
+  <string name="item_list_header_custom_type">Anpassade objekt</string>
   <string name="item_list_header_shared_with_me">Delat med mig</string>
   <string name="item_list_header_shared_by_me">Delat av mig</string>
   <!-- Bottomsheets -->
@@ -196,6 +197,10 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Ikon för mer objektinformation</string>
   <string name="item_details_shared_section_more_info_item_id">Objekt-ID</string>
   <string name="item_details_shared_section_more_info_share_id">Valv-ID</string>
+  <string name="item_details_wifi_network_label_ssid">SSID</string>
+  <string name="item_details_wifi_network_label_password">Lösenord</string>
+  <string name="item_details_ssh_key_label_public_key">Offentlig nyckel</string>
+  <string name="item_details_ssh_key_label_private_key">Privat nyckel</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Appversionen stöds inte längre, uppdatera din app.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Passkey</string>

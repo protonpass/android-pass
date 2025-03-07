@@ -24,16 +24,21 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.ItemSavedState
 
-data class FocusedField(val sectionIndex: Option<Int>, val index: Int)
+data class FieldIdentifier(
+    val sectionIndex: Option<Int>,
+    val index: Int,
+    val type: CustomFieldType
+)
 
 data class ItemSharedUiState(
     val isLoadingState: IsLoadingState,
     val hasUserEditedContent: Boolean,
     val validationErrors: PersistentSet<ItemValidationErrors>,
     val isItemSaved: ItemSavedState,
-    val focusedField: Option<FocusedField>,
+    val focusedField: Option<FieldIdentifier>,
     val canUseCustomFields: Boolean,
     val displayFileAttachmentsOnboarding: Boolean,
     val isFileAttachmentsEnabled: Boolean,

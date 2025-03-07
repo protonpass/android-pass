@@ -190,7 +190,11 @@ fun NavGraphBuilder.autofillActivityGraph(
 
                 is SelectItemNavigation.ItemOptions -> appNavigator.navigate(
                     destination = ItemOptionsBottomSheetNavItem,
-                    route = ItemOptionsBottomSheetNavItem.createRoute(it.userId, it.shareId, it.itemId)
+                    route = ItemOptionsBottomSheetNavItem.createRoute(
+                        it.userId,
+                        it.shareId,
+                        it.itemId
+                    )
                 )
 
                 SelectItemNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
@@ -295,7 +299,8 @@ fun NavGraphBuilder.autofillActivityGraph(
                 }
 
                 BaseLoginNavigation.AddCustomField -> appNavigator.navigate(
-                    destination = AddCustomFieldBottomSheetNavItem.CreateLogin
+                    destination = AddCustomFieldBottomSheetNavItem.CreateLogin,
+                    route = AddCustomFieldBottomSheetNavItem.CreateLogin.buildRoute(None)
                 )
 
                 is BaseLoginNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
@@ -394,6 +399,7 @@ fun NavGraphBuilder.autofillActivityGraph(
 
                 CreateAliasNavigation.SelectMailbox ->
                     appNavigator.navigate(AliasSelectMailboxBottomSheetNavItem)
+
                 CreateAliasNavigation.SelectSuffix ->
                     appNavigator.navigate(AliasSelectSuffixBottomSheetNavItem)
 
@@ -458,8 +464,12 @@ fun NavGraphBuilder.autofillActivityGraph(
                     route = SelectVaultBottomsheet.createNavRoute(it.shareId)
                 )
 
-                BaseIdentityNavigation.OpenCustomFieldBottomSheet ->
-                    dismissBottomSheet { appNavigator.navigate(AddCustomFieldBottomSheetNavItem.CreateIdentity) }
+                BaseIdentityNavigation.OpenCustomFieldBottomSheet -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = AddCustomFieldBottomSheetNavItem.CreateIdentity,
+                        route = AddCustomFieldBottomSheetNavItem.CreateIdentity.buildRoute(None)
+                    )
+                }
 
                 is BaseIdentityNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
                     appNavigator.navigate(

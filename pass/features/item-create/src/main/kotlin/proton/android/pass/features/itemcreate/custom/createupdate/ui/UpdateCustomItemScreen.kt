@@ -207,6 +207,12 @@ fun UpdateCustomItemScreen(
 
                     ItemContentEvent.DismissAttachmentBanner ->
                         viewModel.processIntent(BaseCustomItemCommonIntent.DismissFileAttachmentsBanner)
+
+                    ItemContentEvent.OnOpenTOTPScanner ->
+                        onNavigate(BaseCustomItemNavigation.OpenTOTPScanner)
+
+                    ItemContentEvent.OnPasteTOTPSecret ->
+                        viewModel.processIntent(BaseCustomItemCommonIntent.PasteTOTPSecret)
                 }
             }
         )

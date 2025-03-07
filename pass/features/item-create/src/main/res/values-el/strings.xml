@@ -54,7 +54,6 @@
   <string name="bottomsheet_custom_field_option_remove">Αφαίρεση πεδίου</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Κατάργηση προσαρμοσμένου πεδίου</string>
   <string name="bottomsheet_custom_section_option_remove">Αφαίρεση τμήματος</string>
-  <string name="create_login_add_custom_field_button">Προσθήκη άλλου πεδίου</string>
   <string name="custom_field_hidden_placeholder">Προσθήκη κρυφού κειμένου</string>
   <string name="custom_field_hidden_icon_content_description">Εικονίδιο κρυφού προσαρμοσμένου πεδίου</string>
   <string name="custom_field_text_placeholder">Προσθήκη κειμένου</string>
@@ -171,7 +170,6 @@
   <string name="identity_section_address_details">Λεπτομέρειες διεύθυνσης</string>
   <string name="identity_section_contact_details">Στοιχεία επαφής</string>
   <string name="identity_section_work_details">Λεπτομέρειες εργασίας</string>
-  <string name="identity_add_more_fields">Προσθήκη άλλου πεδίου</string>
   <string name="identity_bottomsheet_add_field">Προσθήκη πεδίου</string>
   <string name="create_identity_init_error">Πρόβλημα ανάκτησης λεπτομερειών ταυτότητας</string>
   <string name="update_identity_attachments_init_error">Πρόβλημα ανάκτησης συνημμένων ταυτότητας</string>
@@ -202,7 +200,6 @@
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Η εφαρμογή πρέπει να ενημερωθεί για να επεξεργαστείτε αυτό το στοιχείο</string>
   <string name="remove_passkey_dialog_title">Αφαίρεση αυτού του κλειδιού πρόσβασης;</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Πρόκειται να καταργήσετε το κλειδί πρόσβασης για το χρήστη \'%1$s\' για \'%2$s\'. Είστε σίγουροι;</string>
-  <string name="add_a_custom_section">Προσθήκη προσαρμοσμένης ενότητας</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Συνημμένα</string>
   <string name="banner_body_attachments">Μπορείτε να επισυνάψετε αρχεία στα στοιχεία για καλύτερη οργάνωση</string>
@@ -236,9 +233,121 @@
   <string name="template_item_passport">Διαβατήριο</string>
   <string name="template_item_reward_program">Πρόγραμμα Επιβράβευσης</string>
   <string name="template_item_social_security_number">ΑΜΚΑ</string>
+  <!-- API Credential Fields -->
+  <string name="template_api_credential_field_api_key">Κλειδί API</string>
+  <string name="template_api_credential_field_secret">Μυστικό</string>
+  <string name="template_api_credential_field_expiry_date">Ημερομηνία Λήξης</string>
+  <string name="template_api_credential_field_permissions">Δικαιώματα</string>
+  <string name="template_api_credential_field_note">Σημείωση</string>
+  <!-- Database Fields -->
+  <string name="template_database_field_host">Διακομιστής</string>
+  <string name="template_database_field_port">Θύρα</string>
+  <string name="template_database_field_username">Όνομα Χρήστη</string>
+  <string name="template_database_field_password">Κωδικός πρόσβασης</string>
+  <string name="template_database_field_database_type">Τύπος βάσης δεδομένων</string>
+  <string name="template_database_field_note">Σημείωση</string>
+  <!-- Server Fields -->
+  <string name="template_server_field_ip_address">Διεύθυνση IP</string>
+  <string name="template_server_field_hostname">Όνομα κεντρικού υπολογιστή</string>
+  <string name="template_server_field_os">Λειτουργικό Σύστημα</string>
+  <string name="template_server_field_username">Όνομα Χρήστη</string>
+  <string name="template_server_field_password">Κωδικός πρόσβασης</string>
+  <string name="template_server_field_note">Σημείωση</string>
+  <!-- Software License Fields -->
+  <string name="template_software_license_field_license_key">Κλειδί άδειας</string>
+  <string name="template_software_license_field_product">Προϊόν</string>
+  <string name="template_software_license_field_expiry_date">Ημερομηνία Λήξης</string>
+  <string name="template_software_license_field_owner">Ιδιοκτήτης</string>
+  <string name="template_software_license_field_note">Σημείωση</string>
+  <!-- SSH Key Fields -->
+  <string name="template_ssh_key_field_private_key">Ιδιωτικό Κλειδί</string>
+  <string name="template_ssh_key_field_public_key">Δημόσιο Κλειδί</string>
+  <string name="template_ssh_key_field_username">Όνομα Χρήστη</string>
+  <string name="template_ssh_key_field_host">Διακομιστής</string>
+  <string name="template_ssh_key_field_note">Σημείωση</string>
+  <!-- WiFi Network Fields -->
+  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_security_type">Τύπος Ασφάλειας</string>
+  <string name="template_wifi_network_field_note">Σημείωση</string>
+  <!-- Bank Account Fields -->
+  <string name="template_bank_account_field_bank_name">Όνομα Τράπεζας</string>
+  <string name="template_bank_account_field_account_number">Αριθμός Λογαριασμού</string>
+  <string name="template_bank_account_field_routing_number">Αριθμός Δρομολόγησης</string>
+  <string name="template_bank_account_field_account_type">Τύπος Λογαριασμού</string>
+  <string name="template_bank_account_field_iban">IBAN</string>
+  <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
+  <string name="template_bank_account_field_holder_name">Όνομα Κατόχου</string>
+  <string name="template_bank_account_field_note">Σημείωση</string>
+  <!-- Crypto Wallet Fields -->
+  <string name="template_crypto_wallet_field_wallet_name">Όνομα Wallet</string>
+  <string name="template_crypto_wallet_field_address">Διεύθυνση</string>
+  <string name="template_crypto_wallet_field_private_key">Ιδιωτικό Κλειδί</string>
+  <string name="template_crypto_wallet_field_seed_phrase">Φράση Σπόρου</string>
+  <string name="template_crypto_wallet_field_network">Δίκτυο</string>
+  <string name="template_crypto_wallet_field_note">Σημείωση</string>
+  <!-- Driver License Fields -->
+  <string name="template_driver_license_field_full_name">Ονοματεπώνυμο</string>
+  <string name="template_driver_license_field_license_number">Αριθμός Άδειας</string>
+  <string name="template_driver_license_field_issuing_state_country">Κράτος/Χώρα Έκδοσης</string>
+  <string name="template_driver_license_field_expiry_date">Ημερομηνία Λήξης</string>
+  <string name="template_driver_license_field_date_of_birth">Ημερομηνία Γεννήσεως</string>
+  <string name="template_driver_license_field_class">Κατηγορία</string>
+  <string name="template_driver_license_field_note">Σημείωση</string>
+  <!-- Medical Record Fields -->
+  <string name="template_medical_record_field_patient_name">Όνομα Ασθενούς</string>
+  <string name="template_medical_record_field_record_number">Αριθμός Εγγραφής</string>
+  <string name="template_medical_record_field_medical_conditions">Ιατρικές Συνθήκες</string>
+  <string name="template_medical_record_field_medications">Φαρμακευτικές αγωγές</string>
+  <string name="template_medical_record_field_doctor">Γιατρός</string>
+  <string name="template_medical_record_field_hospital">Νοσοκομείο</string>
+  <string name="template_medical_record_field_note">Σημείωση</string>
+  <!-- Membership Fields -->
+  <string name="template_membership_field_organization_name">Όνομα Οργανισμού</string>
+  <string name="template_membership_field_membership_id">Ιδιότητα Μέλους</string>
+  <string name="template_membership_field_member_name">Όνομα Μέλους</string>
+  <string name="template_membership_field_expiry_date">Ημερομηνία Λήξης</string>
+  <string name="template_membership_field_tier_level">Βαθμίδα/Επίπεδο</string>
+  <string name="template_membership_field_note">Σημείωση</string>
+  <!-- Passport Fields -->
+  <string name="template_passport_field_full_name">Ονοματεπώνυμο</string>
+  <string name="template_passport_field_passport_number">Αριθμός Διαβατηρίου</string>
+  <string name="template_passport_field_country">Χώρα</string>
+  <string name="template_passport_field_expiry_date">Ημερομηνία Λήξης</string>
+  <string name="template_passport_field_date_of_birth">Ημερομηνία Γεννήσεως</string>
+  <string name="template_passport_field_issuing_authority">Εκδούσα Αρχή</string>
+  <string name="template_passport_field_note">Σημείωση</string>
+  <!-- Reward Program Fields -->
+  <string name="template_reward_program_field_program_name">Όνομα Προγράμματος</string>
+  <string name="template_reward_program_field_member_id">ID Mέλους</string>
+  <string name="template_reward_program_field_points_balance">Υπόλοιπο Πόντων</string>
+  <string name="template_reward_program_field_expiry_date">Ημερομηνία Λήξης</string>
+  <string name="template_reward_program_field_tier_status">Βαθμίδα/Κατάσταση</string>
+  <string name="template_reward_program_field_note">Σημείωση</string>
+  <!-- Social Security Number Fields -->
+  <string name="template_social_security_number_field_full_name">Ονοματεπώνυμο</string>
+  <string name="template_social_security_number_field_ssn">ΑΜΚΑ</string>
+  <string name="template_social_security_number_field_issuing_country">Χώρα Έκδοσης</string>
+  <string name="template_social_security_number_field_note">Σημείωση</string>
   <string name="template_header_technology">Τεχνολογία</string>
   <string name="template_header_finance">Οικονομικά</string>
   <string name="template_header_personal">Οικονομικά</string>
   <string name="button_start_from_scratch">Ξεκινήστε από την αρχή</string>
   <string name="select_template_title">Προσαρμοσμένο στοιχείο</string>
+  <!-- Custom item screen -->
+  <string name="add_custom_field_button">Προσθήκη πεδίου</string>
+  <string name="add_section_button">Προσθήκη ενότητας</string>
+  <string name="add_public_key_placeholder">Προσθήκη δημόσιου κλειδιού</string>
+  <string name="add_private_key_placeholder">Προσθήκη ιδιωτικού κλειδιού</string>
+  <string name="add_ssid_placeholder">Προσθήκη SSID</string>
+  <string name="create_custom_item_init_error">Πρόβλημα ανάκτησης λεπτομερειών προσαρμοσμένου στοιχείου</string>
+  <string name="update_custom_item_attachments_init_error">Πρόβλημα ανάκτησης συνημμένων προσαρμοσμένου στοιχείου</string>
+  <string name="custom_item_link_attachments_error">Αποτυχία σύνδεσης ή αποσύνδεσης συνημμένων στο προσαρμοσμένο στοιχείο</string>
+  <string name="custom_item_rename_attachments_error">Αποτυχία μετονομασίας συνημμένων προσαρμοσμένου στοιχείου</string>
+  <string name="create_custom_item_item_creation_error">Δεν ήταν δυνατή η δημιουργία προσαρμοσμένου στοιχείου</string>
+  <string name="create_custom_item_item_creation_success">Το προσαρμοσμένο στοιχείο δημιουργήθηκε</string>
+  <string name="update_custom_item_item_creation_success">Το προσαρμοσμένο στοιχείο ενημερώθηκε</string>
+  <string name="update_custom_item_item_creation_error">Δεν ήταν δυνατή η ενημέρωση του προσαρμοσμένου στοιχείου</string>
+  <!-- Cannot create items dialog -->
+  <string name="cannot_create_items_dialog_title">Δεν είναι δυνατή η δημιουργία στοιχείων</string>
+  <string name="cannot_create_items_dialog_message">Δεν έχετε κρύπτες με πρόσβαση συντάκτη ή διαχειριστή. Δοκιμάστε να δημιουργήσετε μία στην κύρια εφαρμογή ή ζητήστε υποστήριξη από τον διαχειριστή του οργανισμού σας.</string>
 </resources>

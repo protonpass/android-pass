@@ -13,6 +13,8 @@
   <string name="home_empty_vault_logins_mfa_subtitle">Začnite vytvorením vašej prvej prihlasovacej položky s TOTP.</string>
   <string name="home_empty_vault_identity_title">Nebola nájdená žiadna identita</string>
   <string name="home_empty_vault_identity_subtitle">Začnite vytvorením vašej prvej identity.</string>
+  <string name="home_empty_vault_custom_item_title">Neboli nájdené žiadne vlastné položky</string>
+  <string name="home_empty_vault_custom_item_subtitle">Začnite vytvorením prvej vlastnej položky.</string>
   <string name="home_empty_vault_cc_title">Nebola nájdená žiadna platobná karta</string>
   <string name="home_empty_vault_cc_subtitle">Začnite vytvorením vašej prvej platobnej karty.</string>
   <string name="home_empty_shared_items_title">Neboli nájdené žiadne zdieľané položky</string>
@@ -27,6 +29,7 @@
   <string name="home_empty_vault_create_note">Vytvoriť poznámku</string>
   <string name="home_empty_vault_create_credit_card">Vytvoriť platobnú kartu</string>
   <string name="home_empty_vault_create_identity">Vytvoriť identitu</string>
+  <string name="home_empty_vault_create_custom_item">Vytvoriť vlastnú položku</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Chyba pri načítaní položiek</string>
   <string name="error_refreshing">Chyba pri obnovení</string>
   <string name="home_snackbar_login_moved_to_trash">Prihlásenie presunuté do koša</string>
@@ -114,6 +117,7 @@
   <string name="item_type_filter_note">Poznámka</string>
   <string name="item_type_filter_credit_card">Karta</string>
   <string name="item_type_filter_identity">Identita</string>
+  <string name="item_type_filter_custom">Vlastná položka</string>
   <string name="item_type_filter_login_totp">Prihlásenie pomocou TOTP</string>
   <string name="item_type_filter_items_shared_with_me">Zdieľané so mnou</string>
   <string name="item_type_filter_items_shared_by_me">Mnou zdieľané</string>

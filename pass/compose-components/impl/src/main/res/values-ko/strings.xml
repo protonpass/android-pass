@@ -18,6 +18,7 @@
     <item quantity="other">결과</item>
   </plurals>
   <string name="item_list_header_identities_type">신원</string>
+  <string name="item_list_header_custom_type">사용지 지정 항목</string>
   <string name="item_list_header_shared_with_me">나와 공유됨</string>
   <string name="item_list_header_shared_by_me">내가 공유함</string>
   <!-- Bottomsheets -->
@@ -194,6 +195,10 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">더 많은 항목 정보 아이콘</string>
   <string name="item_details_shared_section_more_info_item_id">항목 ID</string>
   <string name="item_details_shared_section_more_info_share_id">금고 ID</string>
+  <string name="item_details_wifi_network_label_ssid">SSID</string>
+  <string name="item_details_wifi_network_label_password">Password</string>
+  <string name="item_details_ssh_key_label_public_key">Public key</string>
+  <string name="item_details_ssh_key_label_private_key">Private key</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">더 이상 지원하지 않는 앱 버전입니다. 앱을 업데이트하십시오.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">패스키</string>

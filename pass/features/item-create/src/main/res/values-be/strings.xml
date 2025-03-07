@@ -10,7 +10,7 @@
   <string name="action_credit_card">Крэдытная картка</string>
   <string name="action_password">Пароль</string>
   <string name="action_identity">Ідэнтычнасць</string>
-  <string name="action_custom">Карыстальніцкія элементы</string>
+  <string name="action_custom">Карыстальніцкі элемент</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Дадайце запіс уваходу для праграм або сайтаў</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Атрымайце псеўданім электроннай пошты для выкарыстання ў новых праграмах</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Запішыце PIN, код або нататку для сябе</string>
@@ -54,7 +54,6 @@
   <string name="bottomsheet_custom_field_option_remove">Выдаліць поле</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Выдаліць карыстальніцкае поле</string>
   <string name="bottomsheet_custom_section_option_remove">Выдаліць раздзел</string>
-  <string name="create_login_add_custom_field_button">Дадаць яшчэ адно поле</string>
   <string name="custom_field_hidden_placeholder">Дадаць схаваны тэкст</string>
   <string name="custom_field_hidden_icon_content_description">Значок схаванага карыстальніцкага поля</string>
   <string name="custom_field_text_placeholder">Дадаць тэкст</string>
@@ -171,7 +170,6 @@
   <string name="identity_section_address_details">Звесткі аб адрасе</string>
   <string name="identity_section_contact_details">Кантактныя звесткі</string>
   <string name="identity_section_work_details">Падрабязнасці аб працы</string>
-  <string name="identity_add_more_fields">Дадаць яшчэ адно поле</string>
   <string name="identity_bottomsheet_add_field">Дадаць поле</string>
   <string name="create_identity_init_error">Праблема пры атрыманні падрабязнасцяў ідэнтычнасці</string>
   <string name="update_identity_attachments_init_error">Праблема атрымання далучэнняў ідэнтычнасці</string>
@@ -202,7 +200,6 @@
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Вам неабходна абнавіць праграму, каб адрэдагаваць гэты элемент.</string>
   <string name="remove_passkey_dialog_title">Выдаліць гэты ключ доступу?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Вы збіраецеся выдаліць ключ доступу карыстальніка \'%1$s\' для дамена \'%2$s\'. Вы ўпэўнены?</string>
-  <string name="add_a_custom_section">Дадаць карыстальніцкі раздзел</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Далучэнні</string>
   <string name="banner_body_attachments">Вы можаце далучыць файлы да элементаў для лепшай арганізацыі</string>
@@ -236,9 +233,121 @@
   <string name="template_item_passport">Пашпарт</string>
   <string name="template_item_reward_program">Праграмы ўзнагароджання</string>
   <string name="template_item_social_security_number">Нумар сацыяльнага страхавання</string>
+  <!-- API Credential Fields -->
+  <string name="template_api_credential_field_api_key">Ключ API</string>
+  <string name="template_api_credential_field_secret">Сакрэт</string>
+  <string name="template_api_credential_field_expiry_date">Тэрмін дзеяння</string>
+  <string name="template_api_credential_field_permissions">Дазволы</string>
+  <string name="template_api_credential_field_note">Нататка</string>
+  <!-- Database Fields -->
+  <string name="template_database_field_host">Вузел</string>
+  <string name="template_database_field_port">Порт</string>
+  <string name="template_database_field_username">Імя карыстальніка</string>
+  <string name="template_database_field_password">Пароль</string>
+  <string name="template_database_field_database_type">Тып базы даных</string>
+  <string name="template_database_field_note">Нататка</string>
+  <!-- Server Fields -->
+  <string name="template_server_field_ip_address">IP-адрас</string>
+  <string name="template_server_field_hostname">Імя вузла</string>
+  <string name="template_server_field_os">Аперацыйная сістэма</string>
+  <string name="template_server_field_username">Імя карыстальніка</string>
+  <string name="template_server_field_password">Пароль</string>
+  <string name="template_server_field_note">Нататка</string>
+  <!-- Software License Fields -->
+  <string name="template_software_license_field_license_key">Ліцэнзійны ключ</string>
+  <string name="template_software_license_field_product">Прадукт</string>
+  <string name="template_software_license_field_expiry_date">Тэрмін дзеяння</string>
+  <string name="template_software_license_field_owner">Уладальнік</string>
+  <string name="template_software_license_field_note">Нататка</string>
+  <!-- SSH Key Fields -->
+  <string name="template_ssh_key_field_private_key">Прыватны ключ</string>
+  <string name="template_ssh_key_field_public_key">Публічны ключ</string>
+  <string name="template_ssh_key_field_username">Імя карыстальніка</string>
+  <string name="template_ssh_key_field_host">Вузел</string>
+  <string name="template_ssh_key_field_note">Нататка</string>
+  <!-- WiFi Network Fields -->
+  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_security_type">Тып бяспекі</string>
+  <string name="template_wifi_network_field_note">Нататка</string>
+  <!-- Bank Account Fields -->
+  <string name="template_bank_account_field_bank_name">Назва банка</string>
+  <string name="template_bank_account_field_account_number">Нумар рахунка</string>
+  <string name="template_bank_account_field_routing_number">Нумар маршрута</string>
+  <string name="template_bank_account_field_account_type">Тып рахунка</string>
+  <string name="template_bank_account_field_iban">IBAN</string>
+  <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
+  <string name="template_bank_account_field_holder_name">Імя трымальніка</string>
+  <string name="template_bank_account_field_note">Нататка</string>
+  <!-- Crypto Wallet Fields -->
+  <string name="template_crypto_wallet_field_wallet_name">Назва кашалька</string>
+  <string name="template_crypto_wallet_field_address">Адрас</string>
+  <string name="template_crypto_wallet_field_private_key">Прыватны ключ</string>
+  <string name="template_crypto_wallet_field_seed_phrase">Seed-фраза</string>
+  <string name="template_crypto_wallet_field_network">Сетка</string>
+  <string name="template_crypto_wallet_field_note">Нататка</string>
+  <!-- Driver License Fields -->
+  <string name="template_driver_license_field_full_name">Поўнае імя</string>
+  <string name="template_driver_license_field_license_number">Нумар ліцэнзіі</string>
+  <string name="template_driver_license_field_issuing_state_country">Краіна або штат, якія выдалі</string>
+  <string name="template_driver_license_field_expiry_date">Тэрмін дзеяння</string>
+  <string name="template_driver_license_field_date_of_birth">Дата нараджэння</string>
+  <string name="template_driver_license_field_class">Клас</string>
+  <string name="template_driver_license_field_note">Нататка</string>
+  <!-- Medical Record Fields -->
+  <string name="template_medical_record_field_patient_name">Імя пацыента</string>
+  <string name="template_medical_record_field_record_number">Нумар запісу</string>
+  <string name="template_medical_record_field_medical_conditions">Медыцынскія ўмовы</string>
+  <string name="template_medical_record_field_medications">Медыкаменты</string>
+  <string name="template_medical_record_field_doctor">Урач</string>
+  <string name="template_medical_record_field_hospital">Бальніца</string>
+  <string name="template_medical_record_field_note">Нататка</string>
+  <!-- Membership Fields -->
+  <string name="template_membership_field_organization_name">Назва арганізацыі</string>
+  <string name="template_membership_field_membership_id">Ідэнт. удзельніка</string>
+  <string name="template_membership_field_member_name">Імя ўдзельніка</string>
+  <string name="template_membership_field_expiry_date">Тэрмін дзеяння</string>
+  <string name="template_membership_field_tier_level">Узровень</string>
+  <string name="template_membership_field_note">Нататка</string>
+  <!-- Passport Fields -->
+  <string name="template_passport_field_full_name">Поўнае імя</string>
+  <string name="template_passport_field_passport_number">Нумар пашпарта</string>
+  <string name="template_passport_field_country">Краіна</string>
+  <string name="template_passport_field_expiry_date">Тэрмін дзеяння</string>
+  <string name="template_passport_field_date_of_birth">Дата нараджэння</string>
+  <string name="template_passport_field_issuing_authority">Орган, які выдаў</string>
+  <string name="template_passport_field_note">Нататка</string>
+  <!-- Reward Program Fields -->
+  <string name="template_reward_program_field_program_name">Назва праграмы</string>
+  <string name="template_reward_program_field_member_id">Ідэнт. удзельніка</string>
+  <string name="template_reward_program_field_points_balance">Баланс балаў</string>
+  <string name="template_reward_program_field_expiry_date">Тэрмін дзеяння</string>
+  <string name="template_reward_program_field_tier_status">Узровень/статус</string>
+  <string name="template_reward_program_field_note">Нататка</string>
+  <!-- Social Security Number Fields -->
+  <string name="template_social_security_number_field_full_name">Поўнае імя</string>
+  <string name="template_social_security_number_field_ssn">Нумар сацыяльнага страхавання</string>
+  <string name="template_social_security_number_field_issuing_country">Краіна, якая выдала</string>
+  <string name="template_social_security_number_field_note">Нататка</string>
   <string name="template_header_technology">Тэхналогіі</string>
   <string name="template_header_finance">Фінансы</string>
   <string name="template_header_personal">Фінансы</string>
   <string name="button_start_from_scratch">Пачаць з нуля</string>
-  <string name="select_template_title">Карыстальніцкія элементы</string>
+  <string name="select_template_title">Карыстальніцкі элемент</string>
+  <!-- Custom item screen -->
+  <string name="add_custom_field_button">Дадаць поле</string>
+  <string name="add_section_button">Дадаць раздзел</string>
+  <string name="add_public_key_placeholder">Дадаць публічны ключ</string>
+  <string name="add_private_key_placeholder">Дадаць прыватны ключ</string>
+  <string name="add_ssid_placeholder">Дадаць SSID</string>
+  <string name="create_custom_item_init_error">Праблема пры атрыманні падрабязнасцяў карыстальніцкага элемента</string>
+  <string name="update_custom_item_attachments_init_error">Праблема пры атрыманні далучэнняў карыстальніцкага элемента</string>
+  <string name="custom_item_link_attachments_error">Не ўдалося звязаць або адвязаць далучэнні ў карыстальніцкім элеменце</string>
+  <string name="custom_item_rename_attachments_error">Не ўдалося перайменаваць далучэнні карыстальніцкага элемента</string>
+  <string name="create_custom_item_item_creation_error">Немагчыма стварыць карыстальніцкі элемент</string>
+  <string name="create_custom_item_item_creation_success">Карыстальніцкі элемент створаны</string>
+  <string name="update_custom_item_item_creation_success">Карыстальніцкі элемент абноўлены</string>
+  <string name="update_custom_item_item_creation_error">Немагчыма абнавіць карыстальніцкі элемент</string>
+  <!-- Cannot create items dialog -->
+  <string name="cannot_create_items_dialog_title">Немагчыма стварыць элементы</string>
+  <string name="cannot_create_items_dialog_message">У вас адсутнічаюць сховішчы з магчымасцю рэдагавання або доступам адміністратара. Паспрабуйце стварыць яго ў галоўнай праграме або папрасіце дапамагчы з гэтым адміністратара вашай арганізацыі.</string>
 </resources>

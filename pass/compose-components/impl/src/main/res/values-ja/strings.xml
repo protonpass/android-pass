@@ -18,6 +18,7 @@
     <item quantity="other">結果</item>
   </plurals>
   <string name="item_list_header_identities_type">ユーザー情報</string>
+  <string name="item_list_header_custom_type">カスタムアイテム</string>
   <string name="item_list_header_shared_with_me">私と共有中</string>
   <string name="item_list_header_shared_by_me">自分が共有</string>
   <!-- Bottomsheets -->
@@ -194,6 +195,10 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">アイテム情報アイコン</string>
   <string name="item_details_shared_section_more_info_item_id">アイテム ID</string>
   <string name="item_details_shared_section_more_info_share_id">保管庫 ID</string>
+  <string name="item_details_wifi_network_label_ssid">SSID</string>
+  <string name="item_details_wifi_network_label_password">パスワード</string>
+  <string name="item_details_ssh_key_label_public_key">公開鍵</string>
+  <string name="item_details_ssh_key_label_private_key">秘密鍵</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">アプリのバージョンはサポートされなくなりました。アプリを更新してください。</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">パスキー</string>

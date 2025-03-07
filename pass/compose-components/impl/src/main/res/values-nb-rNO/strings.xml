@@ -19,6 +19,7 @@
     <item quantity="other">resultater</item>
   </plurals>
   <string name="item_list_header_identities_type">Identiteter</string>
+  <string name="item_list_header_custom_type">Tilpassede elementer</string>
   <string name="item_list_header_shared_with_me">Delt med meg</string>
   <string name="item_list_header_shared_by_me">Delt av meg</string>
   <!-- Bottomsheets -->
@@ -196,6 +197,10 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Ikon for mer elementinformasjon</string>
   <string name="item_details_shared_section_more_info_item_id">Element-ID</string>
   <string name="item_details_shared_section_more_info_share_id">Hvelv-ID</string>
+  <string name="item_details_wifi_network_label_ssid">SSID</string>
+  <string name="item_details_wifi_network_label_password">Passord</string>
+  <string name="item_details_ssh_key_label_public_key">Offentlig nøkkel</string>
+  <string name="item_details_ssh_key_label_private_key">Privat nøkkel</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Appversjonen støttes ikke lenger, oppdater appen din.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Tilgangsnøkkel</string>

@@ -64,14 +64,18 @@ class LocalItemDataSourceImpl @Inject constructor(
         database.itemsDao().observeAllForShares(
             userId = userId.id,
             shareIds = shareIds.map { it.id },
-            itemState = itemState?.value
+            itemState = itemState?.value,
+            setFlags = setFlags,
+            clearFlags = clearFlags
         )
     } else {
         database.itemsDao().observeAllForShare(
             userId = userId.id,
             shareIds = shareIds.map { it.id },
             itemState = itemState?.value,
-            itemTypes = filter.value()
+            itemTypes = filter.value(),
+            setFlags = setFlags,
+            clearFlags = clearFlags
         )
     }
 

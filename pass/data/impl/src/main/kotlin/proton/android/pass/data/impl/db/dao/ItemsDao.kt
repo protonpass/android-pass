@@ -88,15 +88,20 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
           AND (${ItemEntity.Columns.STATE} = :itemState OR :itemState IS NULL)
+          AND (:setFlags IS NULL OR (flags & :setFlags) == :setFlags)
+          AND (:clearFlags IS NULL OR (flags & :clearFlags) == 0)
         ORDER BY ${ItemEntity.Columns.CREATE_TIME} DESC
         """
     )
     abstract fun observeAllForShares(
         userId: String,
         shareIds: List<String>,
-        itemState: Int?
+        itemState: Int?,
+        setFlags: Int?,
+        clearFlags: Int?
     ): Flow<List<ItemEntity>>
 
+    @Suppress("LongParameterList")
     @Query(
         """
         SELECT * FROM ${ItemEntity.TABLE} 
@@ -104,6 +109,8 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
           AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
           AND (${ItemEntity.Columns.STATE} = :itemState OR :itemState IS NULL)
           AND ${ItemEntity.Columns.ITEM_TYPE} IN (:itemTypes)
+          AND (:setFlags IS NULL OR (flags & :setFlags) == :setFlags)
+          AND (:clearFlags IS NULL OR (flags & :clearFlags) == 0)
         ORDER BY ${ItemEntity.Columns.CREATE_TIME} DESC
         """
     )
@@ -111,7 +118,9 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         userId: String,
         shareIds: List<String>,
         itemState: Int?,
-        itemTypes: List<Int>
+        itemTypes: List<Int>,
+        setFlags: Int?,
+        clearFlags: Int?
     ): Flow<List<ItemEntity>>
 
     @Query(

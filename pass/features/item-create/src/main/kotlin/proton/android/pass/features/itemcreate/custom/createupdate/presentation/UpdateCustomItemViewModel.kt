@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
@@ -72,6 +73,7 @@ class UpdateCustomItemViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     customFieldDraftRepository: CustomFieldDraftRepository,
+    clipboardManager: ClipboardManager,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCustomItemViewModel(
     linkAttachmentsToItem = linkAttachmentsToItem,
@@ -81,6 +83,7 @@ class UpdateCustomItemViewModel @Inject constructor(
     featureFlagsRepository = featureFlagsRepository,
     encryptionContextProvider = encryptionContextProvider,
     customFieldDraftRepository = customFieldDraftRepository,
+    clipboardManager = clipboardManager,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
 

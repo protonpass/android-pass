@@ -34,6 +34,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -88,6 +89,7 @@ class CreateCustomItemViewModel @Inject constructor(
     observeVaults: ObserveVaultsWithItemCount,
     observeDefaultVault: ObserveDefaultVault,
     customFieldDraftRepository: CustomFieldDraftRepository,
+    clipboardManager: ClipboardManager,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCustomItemViewModel(
     linkAttachmentsToItem = linkAttachmentsToItem,
@@ -97,6 +99,7 @@ class CreateCustomItemViewModel @Inject constructor(
     featureFlagsRepository = featureFlagsRepository,
     encryptionContextProvider = encryptionContextProvider,
     customFieldDraftRepository = customFieldDraftRepository,
+    clipboardManager = clipboardManager,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
 

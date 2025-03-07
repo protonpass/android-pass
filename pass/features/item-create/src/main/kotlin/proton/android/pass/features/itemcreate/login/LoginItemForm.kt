@@ -20,12 +20,12 @@ package proton.android.pass.features.itemcreate.login
 
 import android.content.pm.PackageManager
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
@@ -56,6 +56,7 @@ import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
+import proton.android.pass.features.itemcreate.common.StickyTotpOptions
 import proton.android.pass.features.itemcreate.login.LoginContentEvent.OnAttachmentEvent
 import proton.android.pass.features.itemcreate.login.LoginContentEvent.OnCreateAlias
 import proton.android.pass.features.itemcreate.login.LoginContentEvent.OnCreatePassword
@@ -228,10 +229,10 @@ internal fun LoginItemForm(
 
         AnimatedVisibility(
             modifier = Modifier
+                .fillMaxWidth()
                 .align(Alignment.BottomCenter)
                 .imePadding(),
-            visible = isCurrentStickyVisible,
-            enter = expandVertically()
+            visible = isCurrentStickyVisible
         ) {
             when (currentStickyFormOption) {
                 GeneratePassword ->
@@ -265,6 +266,7 @@ internal fun LoginItemForm(
 
                     StickyTotpOptions(
                         hasCamera = hasCamera,
+                        passItemColors = passItemColors(ItemCategory.Login),
                         onPasteCode = {
                             onEvent(PasteTotp)
                         },

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.login
+package proton.android.pass.features.itemcreate.common
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -40,13 +40,20 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.composecomponents.impl.utils.PassItemColors
+import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.R
+import proton.android.pass.features.itemcreate.login.StickyImeRow
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun StickyTotpOptions(
     modifier: Modifier = Modifier,
     hasCamera: Boolean,
+    passItemColors: PassItemColors,
     onPasteCode: () -> Unit,
     onScanCode: () -> Unit
 ) {
@@ -56,18 +63,21 @@ fun StickyTotpOptions(
                 .weight(1f)
                 .clickable { onPasteCode() }
                 .fillMaxHeight()
-                .padding(6.dp, 0.dp),
+                .padding(horizontal = Spacing.small, vertical = Spacing.none),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
+            horizontalArrangement = Arrangement.spacedBy(
+                Spacing.small,
+                Alignment.CenterHorizontally
+            )
         ) {
             Icon(
-                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_squares),
+                painter = painterResource(CoreR.drawable.ic_proton_squares),
                 contentDescription = null,
-                tint = PassTheme.colors.loginInteractionNormMajor2
+                tint = passItemColors.majorSecondary
             )
             Text(
                 text = stringResource(R.string.totp_paste_code_action),
-                color = PassTheme.colors.loginInteractionNormMajor2,
+                color = passItemColors.majorSecondary,
                 style = ProtonTheme.typography.defaultNorm,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1
@@ -78,25 +88,28 @@ fun StickyTotpOptions(
                 modifier = Modifier
                     .width(1.dp)
                     .fillMaxHeight()
-                    .padding(0.dp, 9.dp)
+                    .padding(horizontal = Spacing.none, vertical = Spacing.small)
             )
             Row(
                 modifier = Modifier
                     .weight(1f)
                     .clickable { onScanCode() }
                     .fillMaxHeight()
-                    .padding(6.dp, 0.dp),
+                    .padding(horizontal = Spacing.small, vertical = Spacing.none),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
+                horizontalArrangement = Arrangement.spacedBy(
+                    Spacing.small,
+                    Alignment.CenterHorizontally
+                )
             ) {
                 Icon(
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_camera),
+                    painter = painterResource(CoreR.drawable.ic_proton_camera),
                     contentDescription = null,
-                    tint = PassTheme.colors.loginInteractionNormMajor2
+                    tint = passItemColors.majorSecondary
                 )
                 Text(
                     text = stringResource(R.string.totp_scan_code_action),
-                    color = PassTheme.colors.loginInteractionNormMajor2,
+                    color = passItemColors.majorSecondary,
                     style = ProtonTheme.typography.defaultNorm,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
@@ -111,7 +124,12 @@ fun StickyTotpOptions(
 fun StickyTotpOptionsPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     PassTheme(isDark = input.first) {
         Surface {
-            StickyTotpOptions(hasCamera = input.second, onPasteCode = {}, onScanCode = {})
+            StickyTotpOptions(
+                hasCamera = input.second,
+                passItemColors = passItemColors(ItemCategory.Login),
+                onPasteCode = {},
+                onScanCode = {}
+            )
         }
     }
 }

@@ -139,29 +139,30 @@ data class ItemFormState(
         val errors = mutableSetOf<ItemValidationErrors>()
         entries.forEachIndexed { index, entry ->
             if (entry !is UICustomFieldContent.Totp) return@forEachIndexed
-
+            val decrypted = encryptionContext.decrypt(entry.value.encrypted)
+            if (decrypted.isBlank()) {
+                errors.add(ItemValidationErrors.EmptyTotp(sectionIndex, index))
+                return@forEachIndexed
+            }
             val original = originalEntriesById[entry.id]
                 ?.let { encryptionContext.decrypt(it.value.encrypted) }
                 ?: ""
-            val result = totpManager.sanitiseToSave(
-                original,
-                encryptionContext.decrypt(entry.value.encrypted)
-            )
+            val result = totpManager.sanitiseToSave(original, decrypted)
 
             result.fold(
                 onSuccess = { sanitisedUri ->
                     totpManager.parse(sanitisedUri).getOrElse {
-                        errors.add(ItemValidationErrors.InvalidTotp(sectionIndex, index.some()))
+                        errors.add(ItemValidationErrors.InvalidTotp(sectionIndex, index))
                     }
 
                     val totpCodeResult =
                         runCatching { totpManager.observeCode(sanitisedUri).firstOrNull() }
                     if (totpCodeResult.isFailure) {
-                        errors.add(ItemValidationErrors.InvalidTotp(sectionIndex, index.some()))
+                        errors.add(ItemValidationErrors.InvalidTotp(sectionIndex, index))
                     }
                 },
                 onFailure = {
-                    errors.add(ItemValidationErrors.InvalidTotp(sectionIndex, index.some()))
+                    errors.add(ItemValidationErrors.InvalidTotp(sectionIndex, index))
                 }
             )
         }
@@ -223,8 +224,12 @@ data class ItemFormState(
 
 sealed interface ItemValidationErrors {
     data object BlankTitle : ItemValidationErrors
+    data class EmptyTotp(
+        val sectionIndex: Option<Int>,
+        val index: Int
+    ) : ItemValidationErrors
     data class InvalidTotp(
         val sectionIndex: Option<Int>,
-        val index: Option<Int>
+        val index: Int
     ) : ItemValidationErrors
 }

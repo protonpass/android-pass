@@ -164,65 +164,6 @@ class UpdateCustomItemViewModel @Inject constructor(
         }
     }
 
-    private suspend fun cleanupTotpDataToSave(
-        originalCustomFields: List<UICustomFieldContent>,
-        originalSections: List<UIExtraSection>
-    ) {
-        encryptionContextProvider.withEncryptionContextSuspendable {
-            val originalCustomFieldsById = originalCustomFields
-                .filterIsInstance<UICustomFieldContent.Totp>()
-                .associateBy { it.id }
-            val customFieldsSanitised = itemFormState.customFieldList.map { entry ->
-                cleanupTotpCustomField(
-                    entry = entry,
-                    originalCustomFieldsById = originalCustomFieldsById,
-                    encryptionContext = this
-                )
-            }
-            val sectionsSanitised = itemFormState.sectionList.mapIndexed { sectionIndex, section ->
-                val originalSectionCustomFieldsById =
-                    (originalSections.getOrNull(sectionIndex)?.customFields ?: emptyList())
-                        .filterIsInstance<UICustomFieldContent.Totp>()
-                        .associateBy { it.id }
-                section.copy(
-                    customFields = section.customFields.map { entry ->
-                        cleanupTotpCustomField(
-                            entry = entry,
-                            originalCustomFieldsById = originalSectionCustomFieldsById,
-                            encryptionContext = this
-                        )
-                    }
-                )
-            }
-            itemFormState = itemFormState.copy(
-                customFieldList = customFieldsSanitised,
-                sectionList = sectionsSanitised
-            )
-        }
-    }
-
-    private fun cleanupTotpCustomField(
-        entry: UICustomFieldContent,
-        originalCustomFieldsById: Map<String, UICustomFieldContent.Totp>,
-        encryptionContext: EncryptionContext
-    ) = when (entry) {
-        !is UICustomFieldContent.Totp -> entry
-        else -> {
-            val originalValue = originalCustomFieldsById[entry.id]?.value?.encrypted
-                ?.let { encryptionContext.decrypt(it) }
-                ?: ""
-            val updatedValue = encryptionContext.decrypt(entry.value.encrypted)
-            val sanitised = totpManager.sanitiseToSave(originalValue, updatedValue)
-                .getOrDefault(updatedValue)
-            entry.copy(
-                value = UIHiddenState.Revealed(
-                    encrypted = encryptionContext.encrypt(sanitised),
-                    clearText = sanitised
-                )
-            )
-        }
-    }
-
     private fun onLoadInitialData() {
         viewModelScope.launch {
             updateLoadingState(IsLoadingState.Loading)

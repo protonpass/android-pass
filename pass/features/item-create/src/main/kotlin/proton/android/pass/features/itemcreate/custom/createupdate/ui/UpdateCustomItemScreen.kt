@@ -22,6 +22,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,6 +33,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
@@ -46,6 +49,7 @@ import proton.android.pass.features.itemcreate.custom.createupdate.presentation.
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnPrivateKeyChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnPrivateKeyFocusedChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnPublicKeyChanged
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnReceiveTotp
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnSSIDChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnTitleChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.UpdateCustomItemViewModel
@@ -55,6 +59,7 @@ import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardH
 @Composable
 fun UpdateCustomItemScreen(
     modifier: Modifier = Modifier,
+    selectTotp: Triple<Option<String>, Option<Int>, Option<Int>>,
     viewModel: UpdateCustomItemViewModel = hiltViewModel(),
     onNavigate: (BaseCustomItemNavigation) -> Unit
 ) {
@@ -74,6 +79,13 @@ fun UpdateCustomItemScreen(
             actionAfterKeyboardHide = { onNavigate(BaseCustomItemNavigation.CloseScreen) }
         }
     }
+    LaunchedEffect(selectTotp) {
+        val (totp, sectionIndex, index) = selectTotp
+        if (totp is Some && index is Some) {
+            viewModel.processIntent(OnReceiveTotp(totp.value, sectionIndex, index.value))
+        }
+    }
+
     BackHandler(onBack = onExit)
     Box(modifier = modifier.fillMaxSize()) {
         CustomContent(
@@ -208,8 +220,8 @@ fun UpdateCustomItemScreen(
                     ItemContentEvent.DismissAttachmentBanner ->
                         viewModel.processIntent(BaseCustomItemCommonIntent.DismissFileAttachmentsBanner)
 
-                    ItemContentEvent.OnOpenTOTPScanner ->
-                        onNavigate(BaseCustomItemNavigation.OpenTOTPScanner)
+                    is ItemContentEvent.OnOpenTOTPScanner ->
+                        onNavigate(BaseCustomItemNavigation.OpenTOTPScanner(it.sectionIndex, it.index))
 
                     ItemContentEvent.OnPasteTOTPSecret ->
                         viewModel.processIntent(BaseCustomItemCommonIntent.PasteTOTPSecret)

@@ -58,6 +58,8 @@ import proton.android.pass.features.itemcreate.common.customfields.AddSectionBut
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemFormState
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemSharedProperties
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemStaticFields
+import proton.android.pass.features.itemcreate.custom.createupdate.ui.ItemContentEvent.OnOpenTOTPScanner
+import proton.android.pass.features.itemcreate.custom.createupdate.ui.ItemContentEvent.OnPasteTOTPSecret
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -229,8 +231,12 @@ fun ItemForm(
             StickyTotpOptions(
                 hasCamera = hasCamera,
                 passItemColors = passItemColors(ItemCategory.Custom),
-                onPasteCode = { onEvent(ItemContentEvent.OnPasteTOTPSecret) },
-                onScanCode = { onEvent(ItemContentEvent.OnOpenTOTPScanner) }
+                onPasteCode = { onEvent(OnPasteTOTPSecret) },
+                onScanCode = {
+                    itemSharedProperties.focusedField.value()?.let {
+                        onEvent(OnOpenTOTPScanner(it.sectionIndex, it.index))
+                    }
+                }
             )
         }
     }

@@ -372,6 +372,7 @@ abstract class BaseCustomItemViewModel(
     }
 
     private fun onCustomFieldFocusedChanged(fieldIdentifier: FieldIdentifier, isFocused: Boolean) {
+        if (fieldIdentifier.type == CustomFieldType.Totp) return
         when (fieldIdentifier.sectionIndex) {
             None -> {
                 itemFormState = itemFormState.copy(
@@ -545,9 +546,7 @@ abstract class BaseCustomItemViewModel(
 
             is UICustomFieldContent.Totp -> UICustomFieldContent.Totp(
                 label = currentField.label,
-                value = createHiddenState(
-                    totpManager.sanitiseToEdit(newValue).getOrElse { newValue }
-                ),
+                value = createHiddenState(newValue),
                 id = currentField.id
             )
         }

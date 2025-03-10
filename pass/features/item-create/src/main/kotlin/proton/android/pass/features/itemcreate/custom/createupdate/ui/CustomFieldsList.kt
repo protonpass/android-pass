@@ -50,7 +50,7 @@ fun LazyListScope.customFieldsList(
     isVisible: Boolean,
     sectionIndex: Option<Int>,
     focusedField: Option<FieldIdentifier>,
-    onEvent: (ItemContentEvent) -> Unit,
+    onEvent: (ItemContentEvent) -> Unit
 ) {
     itemsIndexed(
         items = customFields,
@@ -73,8 +73,8 @@ fun LazyListScope.customFieldsList(
                     .focusRequester(focusRequester),
                 entry = entry,
                 canEdit = enabled,
-                isError = errors.contains(ItemValidationErrors.EmptyTotp(sectionIndex, index))
-                    || errors.contains(ItemValidationErrors.InvalidTotp(sectionIndex, index)),
+                isError = errors.contains(ItemValidationErrors.EmptyTotp(sectionIndex, index)) ||
+                    errors.contains(ItemValidationErrors.InvalidTotp(sectionIndex, index)),
                 errorMessage = when {
                     errors.contains(ItemValidationErrors.EmptyTotp(sectionIndex, index)) ->
                         stringResource(R.string.field_cannot_be_empty)

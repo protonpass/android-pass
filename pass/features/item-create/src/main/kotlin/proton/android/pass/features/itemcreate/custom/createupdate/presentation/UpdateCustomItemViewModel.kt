@@ -136,7 +136,7 @@ class UpdateCustomItemViewModel @Inject constructor(
     private fun onSubmitUpdate() {
         viewModelScope.launch {
             if (!isFormStateValid(originalCustomFields, originalSections)) return@launch
-            cleanupTotpData(originalCustomFields, originalSections)
+            cleanupTotpDataToSave(originalCustomFields, originalSections)
             updateLoadingState(IsLoadingState.Loading)
             runCatching {
                 val userId = accountManager.getPrimaryUserId().first()
@@ -164,7 +164,7 @@ class UpdateCustomItemViewModel @Inject constructor(
         }
     }
 
-    private suspend fun cleanupTotpData(
+    private suspend fun cleanupTotpDataToSave(
         originalCustomFields: List<UICustomFieldContent>,
         originalSections: List<UIExtraSection>
     ) {
@@ -238,24 +238,56 @@ class UpdateCustomItemViewModel @Inject constructor(
 
     private suspend fun onItemReceived(item: Item) {
         receivedItem = item.some()
-        val itemContents = encryptionContextProvider.withEncryptionContextSuspendable {
-            toItemContents(
+        encryptionContextProvider.withEncryptionContextSuspendable {
+            val itemContents = toItemContents(
                 itemType = item.itemType,
                 encryptionContext = this,
                 title = item.title,
                 note = item.note,
                 flags = item.flags
             )
+
+            val formState = when (itemContents) {
+                is ItemContents.Custom -> ItemFormState(itemContents)
+                is ItemContents.SSHKey -> ItemFormState(itemContents)
+                is ItemContents.WifiNetwork -> ItemFormState(itemContents)
+                else -> throw IllegalStateException("Unsupported item type")
+            }
+
+            originalCustomFields = formState.customFieldList
+            originalSections = formState.sectionList
+            val customFieldsForEdit = formState.customFieldList.map { entry ->
+                cleanupTotpDataToEdit(entry, this)
+            }
+            val sectionsForEdit = formState.sectionList.map { section ->
+                section.copy(
+                    customFields = section.customFields.map { entry ->
+                        cleanupTotpDataToEdit(entry, this)
+                    }
+                )
+            }
+            itemFormState = formState.copy(
+                customFieldList = customFieldsForEdit,
+                sectionList = sectionsForEdit
+            )
         }
-        itemFormState = when (itemContents) {
-            is ItemContents.Custom -> ItemFormState(itemContents)
-            is ItemContents.SSHKey -> ItemFormState(itemContents)
-            is ItemContents.WifiNetwork -> ItemFormState(itemContents)
-            else -> throw IllegalStateException("Unsupported item type")
-        }
-        originalCustomFields = itemFormState.customFieldList
-        originalSections = itemFormState.sectionList
     }
+
+    private fun cleanupTotpDataToEdit(entry: UICustomFieldContent, encryptionContext: EncryptionContext) =
+        when (entry) {
+            !is UICustomFieldContent.Totp -> entry
+            else -> {
+                val updatedValue = encryptionContext.decrypt(entry.value.encrypted)
+                val sanitised = totpManager.sanitiseToEdit(updatedValue)
+                    .getOrDefault(updatedValue)
+                entry.copy(
+                    value = UIHiddenState.Revealed(
+                        encrypted = encryptionContext.encrypt(sanitised),
+                        clearText = sanitised
+                    )
+                )
+            }
+        }
 
     private fun onOpenAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
         viewModelScope.launch {

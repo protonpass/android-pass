@@ -207,7 +207,8 @@ class CreateCustomItemViewModel @Inject constructor(
 
     private fun onSubmitCreate(shareId: ShareId) {
         viewModelScope.launch {
-            if (!isFormStateValid(emptyList(), emptyList())) return@launch
+            if (!isFormStateValid()) return@launch
+            cleanupTotpDataToSave()
             updateLoadingState(IsLoadingState.Loading)
             runCatching {
                 createItem(

@@ -36,6 +36,7 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.UpdateItem
@@ -44,11 +45,13 @@ import proton.android.pass.data.api.usecases.attachments.RenameAttachments
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.UICustomFieldContent
+import proton.android.pass.features.itemcreate.common.UIExtraSection
+import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -57,6 +60,7 @@ import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
+import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
 @HiltViewModel
@@ -69,6 +73,7 @@ class UpdateCustomItemViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val attachmentsHandler: AttachmentsHandler,
     private val renameAttachments: RenameAttachments,
+    private val totpManager: TotpManager,
     linkAttachmentsToItem: LinkAttachmentsToItem,
     userPreferencesRepository: UserPreferencesRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
@@ -84,6 +89,7 @@ class UpdateCustomItemViewModel @Inject constructor(
     encryptionContextProvider = encryptionContextProvider,
     customFieldDraftRepository = customFieldDraftRepository,
     clipboardManager = clipboardManager,
+    totpManager = totpManager,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
 
@@ -95,6 +101,8 @@ class UpdateCustomItemViewModel @Inject constructor(
             .let(::ItemId)
 
     private var receivedItem: Option<Item> = None
+    private var originalCustomFields: List<UICustomFieldContent> = emptyList()
+    private var originalSections: List<UIExtraSection> = emptyList()
 
     init {
         processIntent(UpdateSpecificIntent.LoadInitialData)
@@ -127,8 +135,8 @@ class UpdateCustomItemViewModel @Inject constructor(
 
     private fun onSubmitUpdate() {
         viewModelScope.launch {
-            if (!isFormStateValid()) return@launch
-
+            if (!isFormStateValid(originalCustomFields, originalSections)) return@launch
+            cleanupTotpData(originalCustomFields, originalSections)
             updateLoadingState(IsLoadingState.Loading)
             runCatching {
                 val userId = accountManager.getPrimaryUserId().first()
@@ -156,6 +164,63 @@ class UpdateCustomItemViewModel @Inject constructor(
         }
     }
 
+    private fun cleanupTotpData(
+        originalCustomFields: List<UICustomFieldContent>,
+        originalSections: List<UIExtraSection>
+    ) {
+        encryptionContextProvider.withEncryptionContext {
+            val customFieldsSanitised = itemFormState.customFieldList.map { entry ->
+                cleanupTotpCustomField(
+                    entry = entry,
+                    originalCustomFieldsById = originalCustomFields
+                        .filterIsInstance<UICustomFieldContent.Totp>()
+                        .associateBy { it.id },
+                    encryptionContext = this
+                )
+            }
+            val sectionsSanitised = itemFormState.sectionList.mapIndexed { sectionIndex, section ->
+                section.copy(
+                    customFields = section.customFields.map { entry ->
+                        cleanupTotpCustomField(
+                            entry = entry,
+                            originalCustomFieldsById =
+                            (originalSections.getOrNull(sectionIndex)?.customFields ?: emptyList())
+                                .filterIsInstance<UICustomFieldContent.Totp>()
+                                .associateBy { it.id },
+                            encryptionContext = this
+                        )
+                    }
+                )
+            }
+            itemFormState.copy(
+                customFieldList = customFieldsSanitised,
+                sectionList = sectionsSanitised
+            )
+        }
+    }
+
+    private fun cleanupTotpCustomField(
+        entry: UICustomFieldContent,
+        originalCustomFieldsById: Map<String, UICustomFieldContent.Totp>,
+        encryptionContext: EncryptionContext
+    ) = when (entry) {
+        !is UICustomFieldContent.Totp -> entry
+        else -> {
+            val originalValue = originalCustomFieldsById[entry.id]?.value?.encrypted
+                ?.let { encryptionContext.decrypt(it) }
+                ?: ""
+            val updatedValue = encryptionContext.decrypt(entry.value.encrypted)
+            val sanitised = totpManager.sanitiseToSave(originalValue, updatedValue)
+                .getOrDefault(updatedValue)
+            entry.copy(
+                value = UIHiddenState.Revealed(
+                    encrypted = encryptionContext.encrypt(sanitised),
+                    clearText = sanitised
+                )
+            )
+        }
+    }
+
     private fun onLoadInitialData() {
         viewModelScope.launch {
             updateLoadingState(IsLoadingState.Loading)
@@ -180,12 +245,14 @@ class UpdateCustomItemViewModel @Inject constructor(
                 flags = item.flags
             )
         }
-        itemFormState = when (item.itemType) {
-            is ItemType.Custom -> ItemFormState(itemContents as ItemContents.Custom)
-            is ItemType.SSHKey -> ItemFormState(itemContents as ItemContents.SSHKey)
-            is ItemType.WifiNetwork -> ItemFormState(itemContents as ItemContents.WifiNetwork)
+        itemFormState = when (itemContents) {
+            is ItemContents.Custom -> ItemFormState(itemContents)
+            is ItemContents.SSHKey -> ItemFormState(itemContents)
+            is ItemContents.WifiNetwork -> ItemFormState(itemContents)
             else -> throw IllegalStateException("Unsupported item type")
         }
+        originalCustomFields = itemFormState.customFieldList
+        originalSections = itemFormState.sectionList
     }
 
     private fun onOpenAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {

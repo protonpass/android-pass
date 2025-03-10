@@ -164,35 +164,37 @@ class UpdateCustomItemViewModel @Inject constructor(
         }
     }
 
-    private fun cleanupTotpData(
+    private suspend fun cleanupTotpData(
         originalCustomFields: List<UICustomFieldContent>,
         originalSections: List<UIExtraSection>
     ) {
-        encryptionContextProvider.withEncryptionContext {
+        encryptionContextProvider.withEncryptionContextSuspendable {
+            val originalCustomFieldsById = originalCustomFields
+                .filterIsInstance<UICustomFieldContent.Totp>()
+                .associateBy { it.id }
             val customFieldsSanitised = itemFormState.customFieldList.map { entry ->
                 cleanupTotpCustomField(
                     entry = entry,
-                    originalCustomFieldsById = originalCustomFields
-                        .filterIsInstance<UICustomFieldContent.Totp>()
-                        .associateBy { it.id },
+                    originalCustomFieldsById = originalCustomFieldsById,
                     encryptionContext = this
                 )
             }
             val sectionsSanitised = itemFormState.sectionList.mapIndexed { sectionIndex, section ->
+                val originalSectionCustomFieldsById =
+                    (originalSections.getOrNull(sectionIndex)?.customFields ?: emptyList())
+                        .filterIsInstance<UICustomFieldContent.Totp>()
+                        .associateBy { it.id }
                 section.copy(
                     customFields = section.customFields.map { entry ->
                         cleanupTotpCustomField(
                             entry = entry,
-                            originalCustomFieldsById =
-                            (originalSections.getOrNull(sectionIndex)?.customFields ?: emptyList())
-                                .filterIsInstance<UICustomFieldContent.Totp>()
-                                .associateBy { it.id },
+                            originalCustomFieldsById = originalSectionCustomFieldsById,
                             encryptionContext = this
                         )
                     }
                 )
             }
-            itemFormState.copy(
+            itemFormState = itemFormState.copy(
                 customFieldList = customFieldsSanitised,
                 sectionList = sectionsSanitised
             )

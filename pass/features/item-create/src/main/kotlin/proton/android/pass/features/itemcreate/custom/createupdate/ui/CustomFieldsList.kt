@@ -27,25 +27,30 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.res.stringResource
+import kotlinx.collections.immutable.PersistentSet
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.getOrElse
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.customfields.AddCustomFieldButton
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEntry
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.FieldIdentifier
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemValidationErrors
 
 @Suppress("LongParameterList", "LongMethod")
 fun LazyListScope.customFieldsList(
     customFields: List<UICustomFieldContent>,
     enabled: Boolean,
+    errors: PersistentSet<ItemValidationErrors>,
     isVisible: Boolean,
     sectionIndex: Option<Int>,
     focusedField: Option<FieldIdentifier>,
-    onEvent: (ItemContentEvent) -> Unit
+    onEvent: (ItemContentEvent) -> Unit,
 ) {
     itemsIndexed(
         items = customFields,
@@ -68,8 +73,15 @@ fun LazyListScope.customFieldsList(
                     .focusRequester(focusRequester),
                 entry = entry,
                 canEdit = enabled,
-                isError = false,
-                errorMessage = "",
+                isError = errors.contains(ItemValidationErrors.EmptyTotp(sectionIndex, index))
+                    || errors.contains(ItemValidationErrors.InvalidTotp(sectionIndex, index)),
+                errorMessage = when {
+                    errors.contains(ItemValidationErrors.EmptyTotp(sectionIndex, index)) ->
+                        stringResource(R.string.field_cannot_be_empty)
+                    errors.contains(ItemValidationErrors.InvalidTotp(sectionIndex, index)) ->
+                        stringResource(R.string.create_login_invalid_totp)
+                    else -> ""
+                },
                 index = index,
                 onValueChange = { newValue ->
                     onEvent(ItemContentEvent.OnCustomFieldChange(field, newValue))

@@ -77,5 +77,13 @@ sealed interface BaseCustomItemNavigation {
     @JvmInline
     value class OpenDraftAttachmentOptions(val uri: URI) : BaseCustomItemNavigation
 
-    data object OpenTOTPScanner : BaseCustomItemNavigation
+    data class OpenTOTPScanner(val sectionIndex: Option<Int>, val index: Int) : BaseCustomItemNavigation
+
+    @JvmInline
+    value class TotpSuccess(val results: Map<String, Any>) : BaseCustomItemNavigation
+
+    data object TotpCancel : BaseCustomItemNavigation
+
+    data class OpenImagePicker(val sectionIndex: Option<Int>, val index: Int) : BaseCustomItemNavigation
+
 }

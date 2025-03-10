@@ -33,6 +33,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
@@ -49,6 +51,7 @@ import proton.android.pass.features.itemcreate.custom.createupdate.presentation.
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnPrivateKeyChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnPrivateKeyFocusedChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnPublicKeyChanged
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnReceiveTotp
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnSSIDChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnTitleChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateCustomItemViewModel
@@ -60,14 +63,22 @@ import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardH
 @Composable
 fun CreateCustomItemScreen(
     modifier: Modifier = Modifier,
-    selectVault: ShareId?,
+    selectVault: Option<ShareId>,
+    selectTotp: Triple<Option<String>, Option<Int>, Option<Int>>,
     viewModel: CreateCustomItemViewModel = hiltViewModel(),
     onNavigate: (BaseCustomItemNavigation) -> Unit
 ) {
     val context = LocalContext.current
     LaunchedEffect(selectVault) {
-        selectVault ?: return@LaunchedEffect
-        viewModel.processIntent(OnVaultSelected(selectVault))
+        if (selectVault is Some) {
+            viewModel.processIntent(OnVaultSelected(selectVault.value))
+        }
+    }
+    LaunchedEffect(selectTotp) {
+        val (totp, sectionIndex, index) = selectTotp
+        if (totp is Some && index is Some) {
+            viewModel.processIntent(OnReceiveTotp(totp.value, sectionIndex, index.value))
+        }
     }
 
     var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
@@ -213,8 +224,8 @@ fun CreateCustomItemScreen(
                     ItemContentEvent.DismissAttachmentBanner ->
                         viewModel.processIntent(BaseCustomItemCommonIntent.DismissFileAttachmentsBanner)
 
-                    ItemContentEvent.OnOpenTOTPScanner ->
-                        onNavigate(BaseCustomItemNavigation.OpenTOTPScanner)
+                    is ItemContentEvent.OnOpenTOTPScanner ->
+                        onNavigate(BaseCustomItemNavigation.OpenTOTPScanner(it.sectionIndex, it.index))
 
                     ItemContentEvent.OnPasteTOTPSecret ->
                         viewModel.processIntent(BaseCustomItemCommonIntent.PasteTOTPSecret)

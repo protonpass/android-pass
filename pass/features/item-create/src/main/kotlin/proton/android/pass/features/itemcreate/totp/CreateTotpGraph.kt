@@ -20,7 +20,6 @@ package proton.android.pass.features.itemcreate.totp
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.features.itemcreate.totp.camera.CameraPreviewTotp
 import proton.android.pass.features.itemcreate.totp.photopicker.PhotoPickerTotpScreen
@@ -30,35 +29,48 @@ import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.toPath
 
 const val TOTP_NAV_PARAMETER_KEY = "totp_nav_parameter_key"
+const val SECTION_INDEX_NAV_PARAMETER_KEY = "section_index_nav_parameter_key"
 const val INDEX_NAV_PARAMETER_KEY = "index_nav_parameter_key"
 
-object CameraTotp : NavItem(
+object CameraTotpNavItem : NavItem(
     baseRoute = "totp/camera",
-    optionalArgIds = listOf(TotpOptionalNavArgId.TotpIndexField)
+    optionalArgIds = listOf(
+        TotpOptionalNavArgId.TotpSectionIndexField,
+        TotpOptionalNavArgId.TotpIndexField
+    )
 ) {
-    fun createNavRoute(index: Option<Int> = None) = buildString {
+    fun createNavRoute(sectionIndex: Option<Int>, index: Option<Int>) = buildString {
         append(baseRoute)
-        val map = mutableMapOf<String, Any>()
-        map[TotpOptionalNavArgId.TotpIndexField.key] = index.value() ?: -1
-        val path = map.toPath()
+        val path = mapOf(
+            TotpOptionalNavArgId.TotpSectionIndexField.key to sectionIndex,
+            TotpOptionalNavArgId.TotpIndexField.key to index
+        ).toPath()
         append(path)
     }
 }
 
-object PhotoPickerTotp : NavItem(
+object PhotoPickerTotpNavItem : NavItem(
     baseRoute = "totp/photopicker",
-    optionalArgIds = listOf(TotpOptionalNavArgId.TotpIndexField)
+    optionalArgIds = listOf(
+        TotpOptionalNavArgId.TotpSectionIndexField,
+        TotpOptionalNavArgId.TotpIndexField
+    )
 ) {
-    fun createNavRoute(index: Option<Int> = None) = buildString {
+    fun createNavRoute(sectionIndex: Option<Int>, index: Option<Int>) = buildString {
         append(baseRoute)
-        val map = mutableMapOf<String, Any>()
-        map[TotpOptionalNavArgId.TotpIndexField.key] = index.value() ?: -1
-        val path = map.toPath()
+        val path = mapOf(
+            TotpOptionalNavArgId.TotpSectionIndexField.key to sectionIndex,
+            TotpOptionalNavArgId.TotpIndexField.key to index
+        ).toPath()
         append(path)
     }
 }
 
 enum class TotpOptionalNavArgId : OptionalNavArgId {
+    TotpSectionIndexField {
+        override val key: String = "sectionIndex"
+        override val navType: NavType<*> = NavType.IntType
+    },
     TotpIndexField {
         override val key: String = "index"
         override val navType: NavType<*> = NavType.IntType
@@ -66,24 +78,32 @@ enum class TotpOptionalNavArgId : OptionalNavArgId {
 }
 
 fun NavGraphBuilder.createTotpGraph(
-    onSuccess: (String, Int?) -> Unit,
+    onSuccess: (String, Int?, Int?) -> Unit,
     onCloseTotp: () -> Unit,
-    onOpenImagePicker: (Int?) -> Unit
+    onOpenImagePicker: (Int?, Int?) -> Unit
 ) {
-    composable(CameraTotp) { backStackEntry ->
+    composable(CameraTotpNavItem) { backStackEntry ->
+        val totpSectionIndexField =
+            backStackEntry.arguments?.getInt(TotpOptionalNavArgId.TotpSectionIndexField.key)
         val totpIndexField =
             backStackEntry.arguments?.getInt(TotpOptionalNavArgId.TotpIndexField.key)
         CameraPreviewTotp(
-            onUriReceived = { uri -> onSuccess(uri, totpIndexField) },
-            onOpenImagePicker = { onOpenImagePicker(totpIndexField) },
+            onUriReceived = { uri ->
+                onSuccess(uri, totpSectionIndexField, totpIndexField)
+            },
+            onOpenImagePicker = { onOpenImagePicker(-1, -1) },
             onClosePreview = onCloseTotp
         )
     }
-    composable(PhotoPickerTotp) { backStackEntry ->
+    composable(PhotoPickerTotpNavItem) { backStackEntry ->
+        val totpSectionIndexField =
+            backStackEntry.arguments?.getInt(TotpOptionalNavArgId.TotpSectionIndexField.key)
         val totpIndexField =
             backStackEntry.arguments?.getInt(TotpOptionalNavArgId.TotpIndexField.key)
         PhotoPickerTotpScreen(
-            onQrReceived = { uri -> onSuccess(uri, totpIndexField) },
+            onQrReceived = { uri ->
+                onSuccess(uri, totpSectionIndexField, totpIndexField)
+            },
             onQrNotDetected = onCloseTotp,
             onPhotoPickerDismissed = onCloseTotp
         )

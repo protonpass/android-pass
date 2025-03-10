@@ -45,8 +45,8 @@ import proton.android.pass.features.itemcreate.login.CreateLoginNavigation
 import proton.android.pass.features.itemcreate.login.bottomsheet.aliasoptions.AliasOptionsBottomSheet
 import proton.android.pass.features.itemcreate.login.bottomsheet.aliasoptions.CLEAR_ALIAS_NAV_PARAMETER_KEY
 import proton.android.pass.features.itemcreate.login.createUpdateLoginGraph
-import proton.android.pass.features.itemcreate.totp.CameraTotp
-import proton.android.pass.features.itemcreate.totp.PhotoPickerTotp
+import proton.android.pass.features.itemcreate.totp.CameraTotpNavItem
+import proton.android.pass.features.itemcreate.totp.PhotoPickerTotpNavItem
 import proton.android.pass.features.passkeys.create.presentation.CreatePasskeyNavState
 import proton.android.pass.features.passkeys.create.ui.app.CreatePasskeyEvent
 import proton.android.pass.features.passkeys.create.ui.app.CreatePasskeyNavigation
@@ -197,8 +197,8 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                 }
 
                 is BaseLoginNavigation.ScanTotp -> appNavigator.navigate(
-                    destination = CameraTotp,
-                    route = CameraTotp.createNavRoute(it.index)
+                    destination = CameraTotpNavItem,
+                    route = CameraTotpNavItem.createNavRoute(None, it.index)
                 )
 
                 BaseLoginNavigation.Upgrade -> onNavigate(CreatePasskeyNavigation.Upgrade)
@@ -266,8 +266,8 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                 // Updates cannot happen
                 is BaseLoginNavigation.OnUpdateLoginEvent -> {}
                 is BaseLoginNavigation.OpenImagePicker -> appNavigator.navigate(
-                    destination = PhotoPickerTotp,
-                    route = PhotoPickerTotp.createNavRoute(it.index),
+                    destination = PhotoPickerTotpNavItem,
+                    route = PhotoPickerTotpNavItem.createNavRoute(None, it.index),
                     backDestination = CreateLoginNavItem
                 )
 

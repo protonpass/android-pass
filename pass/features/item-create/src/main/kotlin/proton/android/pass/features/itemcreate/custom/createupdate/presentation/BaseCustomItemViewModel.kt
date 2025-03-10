@@ -120,6 +120,12 @@ sealed interface BaseCustomItemCommonIntent : BaseItemFormIntent {
     data object DismissFileAttachmentsBanner : BaseCustomItemCommonIntent
 
     data object PasteTOTPSecret : BaseCustomItemCommonIntent
+
+    data class OnReceiveTotp(
+        val uri: String,
+        val sectionIndex: Option<Int>,
+        val index: Int
+    ) : BaseCustomItemCommonIntent
 }
 
 @Suppress("TooManyFunctions", "LargeClass")
@@ -179,7 +185,18 @@ abstract class BaseCustomItemViewModel(
                 onPrivateKeyFocusedChange(intent.isFocused)
 
             BaseCustomItemCommonIntent.PasteTOTPSecret -> onPasteTOTPSecret()
+            is BaseCustomItemCommonIntent.OnReceiveTotp ->
+                onReceiveTotp(intent.uri, intent.sectionIndex, intent.index)
         }
+    }
+
+    private fun onReceiveTotp(
+        secret: String,
+        sectionIndex: Option<Int>,
+        index: Int
+    ) {
+        onUserEditedContent()
+        updateContent(sectionIndex, index, secret)
     }
 
     private fun onPasteTOTPSecret() {

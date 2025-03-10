@@ -145,8 +145,8 @@ import proton.android.pass.features.itemcreate.note.EditNote
 import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation
 import proton.android.pass.features.itemcreate.note.createNoteGraph
 import proton.android.pass.features.itemcreate.note.updateNoteGraph
-import proton.android.pass.features.itemcreate.totp.CameraTotp
-import proton.android.pass.features.itemcreate.totp.PhotoPickerTotp
+import proton.android.pass.features.itemcreate.totp.CameraTotpNavItem
+import proton.android.pass.features.itemcreate.totp.PhotoPickerTotpNavItem
 import proton.android.pass.features.itemdetail.ItemDetailCannotPerformAction
 import proton.android.pass.features.itemdetail.ItemDetailNavScope
 import proton.android.pass.features.itemdetail.ItemDetailNavigation
@@ -879,8 +879,8 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 is BaseLoginNavigation.ScanTotp -> appNavigator.navigate(
-                    destination = CameraTotp,
-                    route = CameraTotp.createNavRoute(it.index)
+                    destination = CameraTotpNavItem,
+                    route = CameraTotpNavItem.createNavRoute(None, it.index)
                 )
 
                 BaseLoginNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
@@ -957,8 +957,8 @@ fun NavGraphBuilder.appGraph(
 
                 is BaseLoginNavigation.OpenImagePicker -> {
                     appNavigator.navigate(
-                        destination = PhotoPickerTotp,
-                        route = PhotoPickerTotp.createNavRoute(it.index),
+                        destination = PhotoPickerTotpNavItem,
+                        route = PhotoPickerTotpNavItem.createNavRoute(None, it.index),
                         backDestination = backDestination
                     )
                 }
@@ -1495,9 +1495,19 @@ fun NavGraphBuilder.appGraph(
                 backDestination = HomeNavItem
             )
 
-            BaseCustomItemNavigation.OpenTOTPScanner -> {
+            is BaseCustomItemNavigation.OpenTOTPScanner -> appNavigator.navigate(
+                destination = CameraTotpNavItem,
+                route = CameraTotpNavItem.createNavRoute(it.sectionIndex, it.index.some())
+            )
+            is BaseCustomItemNavigation.OpenImagePicker -> appNavigator.navigate(
+                destination = PhotoPickerTotpNavItem,
+                route = PhotoPickerTotpNavItem.createNavRoute(it.sectionIndex, it.index.some()),
+                backDestination = backDestination
+            )
 
-            }
+            BaseCustomItemNavigation.TotpCancel -> appNavigator.navigateBack()
+            is BaseCustomItemNavigation.TotpSuccess ->
+                appNavigator.navigateBackWithResult(it.results)
         }
     }
     itemDetailGraph(

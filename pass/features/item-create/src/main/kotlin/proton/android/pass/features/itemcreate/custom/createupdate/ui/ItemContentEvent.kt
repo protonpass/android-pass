@@ -69,5 +69,5 @@ sealed interface ItemContentEvent {
 
     data object OnPasteTOTPSecret : ItemContentEvent
 
-    data object OnOpenTOTPScanner : ItemContentEvent
+    data class OnOpenTOTPScanner(val sectionIndex: Option<Int>, val index: Int) : ItemContentEvent
 }

@@ -24,10 +24,7 @@ import proton.android.pass.domain.CustomField
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
 
-fun CustomField.toContent(
-    encryptionContext: EncryptionContext,
-    isConcealed: Boolean
-): CustomFieldContent? =
+fun CustomField.toContent(encryptionContext: EncryptionContext, isConcealed: Boolean): CustomFieldContent? =
     when (this) {
         CustomField.Unknown -> null
         is CustomField.Hidden -> {

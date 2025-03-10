@@ -180,7 +180,7 @@ fun ItemForm(
                     isVisible = !isGroupCollapsed.contains(sectionIndex),
                     sectionIndex = sectionIndex.some(),
                     focusedField = itemSharedProperties.focusedField,
-                    onEvent = onEvent,
+                    onEvent = onEvent
                 )
             }
             if (itemSharedProperties.canUseCustomFields) {

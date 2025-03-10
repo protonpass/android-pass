@@ -18,9 +18,13 @@
 
 package proton.android.pass.features.itemcreate.custom.createupdate.navigation
 
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -31,6 +35,9 @@ import proton.android.pass.features.itemcreate.common.customsection.extraSection
 import proton.android.pass.features.itemcreate.custom.createupdate.ui.UpdateCustomItemScreen
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameNavigation
 import proton.android.pass.features.itemcreate.dialogs.customfield.customFieldNameDialogGraph
+import proton.android.pass.features.itemcreate.totp.INDEX_NAV_PARAMETER_KEY
+import proton.android.pass.features.itemcreate.totp.SECTION_INDEX_NAV_PARAMETER_KEY
+import proton.android.pass.features.itemcreate.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
@@ -48,13 +55,40 @@ sealed interface UpdateCustomItemNavigation : BaseCustomItemNavigation {
     data class ItemUpdated(val shareId: ShareId, val itemId: ItemId) : CreateCustomItemNavigation
 }
 
+@Suppress("LongMethod")
 fun NavGraphBuilder.updateCustomItemGraph(onNavigate: (BaseCustomItemNavigation) -> Unit) {
     navigation(
         route = UPDATE_CUSTOM_ITEM_GRAPH,
         startDestination = UpdateCustomItemNavItem.route
     ) {
-        composable(UpdateCustomItemNavItem) {
-            UpdateCustomItemScreen(onNavigate = onNavigate)
+        composable(UpdateCustomItemNavItem) { navBackStack ->
+            val navTotpUri by navBackStack.savedStateHandle
+                .getStateFlow<String?>(TOTP_NAV_PARAMETER_KEY, null)
+                .collectAsStateWithLifecycle()
+            val navTotpSectionIndex by navBackStack.savedStateHandle
+                .getStateFlow<Int?>(SECTION_INDEX_NAV_PARAMETER_KEY, null)
+                .collectAsStateWithLifecycle()
+            val navTotpIndex by navBackStack.savedStateHandle
+                .getStateFlow<Int?>(INDEX_NAV_PARAMETER_KEY, null)
+                .collectAsStateWithLifecycle()
+
+            LaunchedEffect(navTotpUri) {
+                navBackStack.savedStateHandle.remove<String?>(TOTP_NAV_PARAMETER_KEY)
+            }
+            LaunchedEffect(navTotpSectionIndex) {
+                navBackStack.savedStateHandle.remove<Int?>(SECTION_INDEX_NAV_PARAMETER_KEY)
+            }
+            LaunchedEffect(navTotpIndex) {
+                navBackStack.savedStateHandle.remove<Int?>(INDEX_NAV_PARAMETER_KEY)
+            }
+            UpdateCustomItemScreen(
+                selectTotp = Triple(
+                    first = navTotpUri.toOption(),
+                    second = navTotpSectionIndex.takeIf { value: Int? -> value != null && value >= 0 }.toOption(),
+                    third = navTotpIndex.takeIf { value: Int? -> value != null && value >= 0 }.toOption()
+                ),
+                onNavigate = onNavigate
+            )
         }
         customFieldBottomSheetGraph(
             prefix = CustomFieldPrefix.UpdateCustomItem,

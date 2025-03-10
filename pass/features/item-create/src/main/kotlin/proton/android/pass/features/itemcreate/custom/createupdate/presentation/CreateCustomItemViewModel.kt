@@ -72,8 +72,10 @@ import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
+import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
+@Suppress("LongParameterList")
 @HiltViewModel
 class CreateCustomItemViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
@@ -90,6 +92,7 @@ class CreateCustomItemViewModel @Inject constructor(
     observeDefaultVault: ObserveDefaultVault,
     customFieldDraftRepository: CustomFieldDraftRepository,
     clipboardManager: ClipboardManager,
+    totpManager: TotpManager,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCustomItemViewModel(
     linkAttachmentsToItem = linkAttachmentsToItem,
@@ -100,6 +103,7 @@ class CreateCustomItemViewModel @Inject constructor(
     encryptionContextProvider = encryptionContextProvider,
     customFieldDraftRepository = customFieldDraftRepository,
     clipboardManager = clipboardManager,
+    totpManager = totpManager,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
 
@@ -203,7 +207,7 @@ class CreateCustomItemViewModel @Inject constructor(
 
     private fun onSubmitCreate(shareId: ShareId) {
         viewModelScope.launch {
-            if (!isFormStateValid()) return@launch
+            if (!isFormStateValid(emptyList(), emptyList())) return@launch
             updateLoadingState(IsLoadingState.Loading)
             runCatching {
                 createItem(

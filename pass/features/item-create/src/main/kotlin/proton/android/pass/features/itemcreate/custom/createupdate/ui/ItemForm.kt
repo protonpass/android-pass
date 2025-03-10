@@ -58,6 +58,7 @@ import proton.android.pass.features.itemcreate.common.customfields.AddSectionBut
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemFormState
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemSharedProperties
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemStaticFields
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemValidationErrors
 import proton.android.pass.features.itemcreate.custom.createupdate.ui.ItemContentEvent.OnOpenTOTPScanner
 import proton.android.pass.features.itemcreate.custom.createupdate.ui.ItemContentEvent.OnPasteTOTPSecret
 
@@ -106,7 +107,9 @@ fun ItemForm(
                         ),
                     value = itemFormState.title,
                     requestFocus = true,
-                    onTitleRequiredError = false,
+                    onTitleRequiredError = itemSharedProperties.validationErrors.contains(
+                        ItemValidationErrors.BlankTitle
+                    ),
                     enabled = itemSharedProperties.isFormEnabled,
                     isRounded = true,
                     onChange = {
@@ -145,6 +148,7 @@ fun ItemForm(
             customFieldsList(
                 customFields = itemFormState.customFieldList,
                 enabled = itemSharedProperties.isFormEnabled,
+                errors = itemSharedProperties.validationErrors,
                 isVisible = true,
                 sectionIndex = None,
                 focusedField = itemSharedProperties.focusedField,
@@ -172,10 +176,11 @@ fun ItemForm(
                 customFieldsList(
                     customFields = section.customFields,
                     enabled = itemSharedProperties.isFormEnabled,
+                    errors = itemSharedProperties.validationErrors,
                     isVisible = !isGroupCollapsed.contains(sectionIndex),
                     sectionIndex = sectionIndex.some(),
                     focusedField = itemSharedProperties.focusedField,
-                    onEvent = onEvent
+                    onEvent = onEvent,
                 )
             }
             if (itemSharedProperties.canUseCustomFields) {

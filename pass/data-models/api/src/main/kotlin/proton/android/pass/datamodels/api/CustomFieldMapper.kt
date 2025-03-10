@@ -24,7 +24,10 @@ import proton.android.pass.domain.CustomField
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
 
-fun CustomField.toContent(encryptionContext: EncryptionContext, isConcealed: Boolean): CustomFieldContent? =
+fun CustomField.toContent(
+    encryptionContext: EncryptionContext,
+    isConcealed: Boolean
+): CustomFieldContent? =
     when (this) {
         CustomField.Unknown -> null
         is CustomField.Hidden -> {
@@ -50,11 +53,7 @@ fun CustomField.toContent(encryptionContext: EncryptionContext, isConcealed: Boo
             val hiddenState = if (totpFieldByteArray.isEmpty()) {
                 HiddenState.Empty(value)
             } else {
-                if (isConcealed) {
-                    HiddenState.Concealed(value)
-                } else {
-                    HiddenState.Revealed(value, totpFieldByteArray.decodeToString())
-                }
+                HiddenState.Revealed(value, totpFieldByteArray.decodeToString())
             }
             CustomFieldContent.Totp(label = this.label, value = hiddenState)
         }

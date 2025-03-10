@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.itemcreate.custom.createupdate.navigation
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
@@ -39,6 +40,10 @@ import proton.android.pass.features.itemcreate.custom.createupdate.ui.CreateCust
 import proton.android.pass.features.itemcreate.custom.shared.TemplateType
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameNavigation
 import proton.android.pass.features.itemcreate.dialogs.customfield.customFieldNameDialogGraph
+import proton.android.pass.features.itemcreate.totp.INDEX_NAV_PARAMETER_KEY
+import proton.android.pass.features.itemcreate.totp.SECTION_INDEX_NAV_PARAMETER_KEY
+import proton.android.pass.features.itemcreate.totp.TOTP_NAV_PARAMETER_KEY
+import proton.android.pass.features.itemcreate.totp.createTotpGraph
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.OptionalNavArgId
@@ -76,6 +81,7 @@ sealed interface CreateCustomItemNavigation : BaseCustomItemNavigation {
     value class SelectVault(val shareId: ShareId) : CreateCustomItemNavigation
 }
 
+@Suppress("LongMethod")
 fun NavGraphBuilder.createCustomItemGraph(onNavigate: (BaseCustomItemNavigation) -> Unit) {
     navigation(
         route = CREATE_CUSTOM_ITEM_GRAPH,
@@ -86,8 +92,33 @@ fun NavGraphBuilder.createCustomItemGraph(onNavigate: (BaseCustomItemNavigation)
                 .getStateFlow<String?>(KEY_VAULT_SELECTED, null)
                 .collectAsStateWithLifecycle()
 
+            val navTotpUri by navBackStack.savedStateHandle
+                .getStateFlow<String?>(TOTP_NAV_PARAMETER_KEY, null)
+                .collectAsStateWithLifecycle()
+            val navTotpSectionIndex by navBackStack.savedStateHandle
+                .getStateFlow<Int?>(SECTION_INDEX_NAV_PARAMETER_KEY, null)
+                .collectAsStateWithLifecycle()
+            val navTotpIndex by navBackStack.savedStateHandle
+                .getStateFlow<Int?>(INDEX_NAV_PARAMETER_KEY, null)
+                .collectAsStateWithLifecycle()
+
+            LaunchedEffect(navTotpUri) {
+                navBackStack.savedStateHandle.remove<String?>(TOTP_NAV_PARAMETER_KEY)
+            }
+            LaunchedEffect(navTotpSectionIndex) {
+                navBackStack.savedStateHandle.remove<Int?>(SECTION_INDEX_NAV_PARAMETER_KEY)
+            }
+            LaunchedEffect(navTotpIndex) {
+                navBackStack.savedStateHandle.remove<Int?>(INDEX_NAV_PARAMETER_KEY)
+            }
+
             CreateCustomItemScreen(
-                selectVault = selectVault.toOption().map { ShareId(it) }.value(),
+                selectVault = selectVault.toOption().map(::ShareId),
+                selectTotp = Triple(
+                    first = navTotpUri.toOption(),
+                    second = navTotpSectionIndex.takeIf { value: Int? -> value != null && value >= 0 }.toOption(),
+                    third = navTotpIndex.takeIf { value: Int? -> value != null && value >= 0 }.toOption()
+                ),
                 onNavigate = onNavigate
             )
         }
@@ -119,6 +150,25 @@ fun NavGraphBuilder.createCustomItemGraph(onNavigate: (BaseCustomItemNavigation)
                     onNavigate(BaseCustomItemNavigation.RemoveSection)
             }
         }
+        createTotpGraph(
+            onSuccess = { totp, sectionIndex, index ->
+                val values = buildMap<String, Any> {
+                    put(TOTP_NAV_PARAMETER_KEY, totp)
+                    sectionIndex?.let { put(SECTION_INDEX_NAV_PARAMETER_KEY, it) }
+                    index?.let { put(INDEX_NAV_PARAMETER_KEY, it) }
+                }
+                onNavigate(BaseCustomItemNavigation.TotpSuccess(values))
+            },
+            onCloseTotp = { onNavigate(BaseCustomItemNavigation.TotpCancel) },
+            onOpenImagePicker = { sectionIndex, index ->
+                onNavigate(
+                    BaseCustomItemNavigation.OpenImagePicker(
+                        sectionIndex = sectionIndex.toOption(),
+                        index = index ?: -1
+                    )
+                )
+            }
+        )
     }
 }
 

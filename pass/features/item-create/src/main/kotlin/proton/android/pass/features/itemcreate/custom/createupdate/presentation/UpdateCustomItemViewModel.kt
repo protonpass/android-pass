@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
@@ -63,6 +64,7 @@ import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
+@Suppress("LongParameterList")
 @HiltViewModel
 class UpdateCustomItemViewModel @Inject constructor(
     private val getItemById: GetItemById,
@@ -79,6 +81,7 @@ class UpdateCustomItemViewModel @Inject constructor(
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     customFieldDraftRepository: CustomFieldDraftRepository,
     clipboardManager: ClipboardManager,
+    appDispatchers: AppDispatchers,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCustomItemViewModel(
     linkAttachmentsToItem = linkAttachmentsToItem,
@@ -90,6 +93,7 @@ class UpdateCustomItemViewModel @Inject constructor(
     customFieldDraftRepository = customFieldDraftRepository,
     clipboardManager = clipboardManager,
     totpManager = totpManager,
+    appDispatchers = appDispatchers,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
 

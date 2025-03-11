@@ -113,10 +113,9 @@ data class ItemFormState(
             sectionList.forEachIndexed { sectionIndex, section ->
                 errors += validateTotpFields(
                     entries = section.customFields,
-                    originalEntriesById = (
-                        originalSections.getOrNull(sectionIndex)?.customFields
-                            ?: emptyList()
-                        )
+                    originalEntriesById = originalSections.getOrNull(sectionIndex)
+                        ?.customFields
+                        .orEmpty()
                         .filterIsInstance<UICustomFieldContent.Totp>()
                         .associateBy { it.id },
                     sectionIndex = sectionIndex.some(),
@@ -146,7 +145,7 @@ data class ItemFormState(
             }
             val original = originalEntriesById[entry.id]
                 ?.let { encryptionContext.decrypt(it.value.encrypted) }
-                ?: ""
+                .orEmpty()
             val result = totpManager.sanitiseToSave(original, decrypted)
 
             result.fold(
@@ -228,6 +227,7 @@ sealed interface ItemValidationErrors {
         val sectionIndex: Option<Int>,
         val index: Int
     ) : ItemValidationErrors
+
     data class InvalidTotp(
         val sectionIndex: Option<Int>,
         val index: Int

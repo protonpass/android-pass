@@ -483,6 +483,8 @@ abstract class BaseLoginViewModel(
                     }
                     validated
                 }
+                is UICustomFieldContent.Date ->
+                    throw IllegalStateException("Date field not supported")
             }
         }
 
@@ -675,6 +677,9 @@ abstract class BaseLoginViewModel(
                     ),
                     id = field.id
                 )
+
+                is UICustomFieldContent.Date ->
+                    throw IllegalStateException("Date field not supported")
             }
         }
 
@@ -756,6 +761,8 @@ abstract class BaseLoginViewModel(
                 value = field.value,
                 id = field.id
             )
+
+            is UICustomFieldContent.Date -> throw IllegalStateException("Date field not supported")
         }
         customFields[index] = updated
         loginItemFormMutableState =
@@ -773,6 +780,8 @@ abstract class BaseLoginViewModel(
             is UICustomFieldContent.Totp -> focusedFieldFlow.update {
                 LoginCustomField.CustomFieldTOTP(index).some()
             }
+
+            is UICustomFieldContent.Date -> throw IllegalStateException("Date field not supported")
 
             null -> {}
         }
@@ -801,6 +810,9 @@ abstract class BaseLoginViewModel(
             is UICustomFieldContent.Totp -> focusedFieldFlow.update {
                 LoginCustomField.CustomFieldTOTP(index).some()
             }
+
+            is UICustomFieldContent.Date ->
+                throw IllegalStateException("Date field not supported in login")
         }
     }
 

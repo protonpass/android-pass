@@ -117,6 +117,7 @@ class CustomExtraFieldNameDialogTest {
                             is CustomFieldContent.Hidden -> CustomFieldType.Hidden
                             is CustomFieldContent.Text -> CustomFieldType.Text
                             is CustomFieldContent.Totp -> CustomFieldType.Totp
+                            is CustomFieldContent.Date -> CustomFieldType.Date
                         }
                         assertEquals(expectedFieldType , it.type)
                     }

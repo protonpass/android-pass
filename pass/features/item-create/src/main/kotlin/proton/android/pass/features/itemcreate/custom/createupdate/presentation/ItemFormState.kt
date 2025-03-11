@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.parcelize.Parcelize
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -209,6 +210,12 @@ data class ItemFormState(
                 )
             }
         )
+    }
+
+    fun findCustomField(field: FieldIdentifier): UICustomFieldContent = if (field.sectionIndex is Some) {
+        sectionList[field.sectionIndex.value].customFields[field.index]
+    } else {
+        customFieldList[field.index]
     }
 
     companion object {

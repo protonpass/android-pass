@@ -220,7 +220,15 @@ fun ItemV1.ExtraField.toDomain(context: EncryptionContext): CustomField {
             value = context.encrypt(this.totp.totpUri)
         )
 
-        else -> CustomField.Unknown
+        ItemV1.ExtraField.ContentCase.TIMESTAMP -> {
+            CustomField.Date(
+                label = this.fieldName,
+                value = this.timestamp.timestamp.seconds * 1000 + this.timestamp.timestamp.nanos / 1_000_000
+            )
+        }
+
+        ItemV1.ExtraField.ContentCase.CONTENT_NOT_SET,
+        null -> CustomField.Unknown
     }
 }
 

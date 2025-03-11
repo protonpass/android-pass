@@ -6,6 +6,7 @@ targetSdk = "34"
 accompanist = "0.34.0"
 # Android
 material = "1.7.0"
+material3 = "1.3.1"
 desugar = "2.0.3"
 # AndroidX
 androidx-activity = "1.9.3"
@@ -280,6 +281,7 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 
 # Material
 material = { module = "com.google.android.material:material", version.ref = "material" }
+material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
 
 # Pass
 pass-common = { module = "me.proton.pass.common:lib", version.ref = "passCommon" }

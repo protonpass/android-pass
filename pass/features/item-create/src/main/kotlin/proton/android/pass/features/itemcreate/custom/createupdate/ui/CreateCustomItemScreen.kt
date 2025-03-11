@@ -33,19 +33,23 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
+import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.BaseCustomItemNavigation
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.CreateCustomItemNavigation
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.ClearDraft
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnCustomFieldChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnPasswordChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnPasswordFocusedChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnPrivateKeyChanged
@@ -57,6 +61,7 @@ import proton.android.pass.features.itemcreate.custom.createupdate.presentation.
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateCustomItemViewModel
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateSpecificIntent
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateSpecificIntent.OnVaultSelected
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.FieldIdentifier
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
 
@@ -87,7 +92,10 @@ fun CreateCustomItemScreen(
         clearAction = { actionAfterKeyboardHide = null }
     )
     val state by viewModel.state.collectAsStateWithLifecycle()
+
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
+    var showDatePickerForField: Option<FieldIdentifier> by remember { mutableStateOf(None) }
+
     val onExit = {
         if (state.hasUserEdited) {
             showConfirmDialog = !showConfirmDialog
@@ -109,20 +117,27 @@ fun CreateCustomItemScreen(
                     is ItemContentEvent.OnFieldValueChange -> when (it.field) {
                         FieldChange.Password ->
                             viewModel.processIntent(OnPasswordChanged(it.value))
+
                         FieldChange.PrivateKey ->
                             viewModel.processIntent(OnPrivateKeyChanged(it.value))
+
                         FieldChange.PublicKey ->
                             viewModel.processIntent(OnPublicKeyChanged(it.value))
+
                         FieldChange.SSID ->
                             viewModel.processIntent(OnSSIDChanged(it.value))
+
                         FieldChange.Title ->
                             viewModel.processIntent(OnTitleChanged(it.value))
                     }
+
                     is ItemContentEvent.OnFieldFocusChange -> when (it.field) {
                         FieldChange.Password ->
                             viewModel.processIntent(OnPasswordFocusedChanged(it.isFocused))
+
                         FieldChange.PrivateKey ->
                             viewModel.processIntent(OnPrivateKeyFocusedChanged(it.isFocused))
+
                         else -> throw IllegalStateException("Ignore focus change for ${it.field}")
                     }
 
@@ -132,7 +147,7 @@ fun CreateCustomItemScreen(
                         }
 
                     is ItemContentEvent.OnCustomFieldChange -> viewModel.processIntent(
-                        BaseCustomItemCommonIntent.OnCustomFieldChanged(
+                        OnCustomFieldChanged(
                             field = it.field,
                             value = it.value
                         )
@@ -149,7 +164,14 @@ fun CreateCustomItemScreen(
                             )
                         }
 
-                    is ItemContentEvent.OnCustomFieldClick -> {}
+                    is ItemContentEvent.OnCustomFieldClick -> {
+                        when (it.field.type) {
+                            CustomFieldType.Date -> {
+                                showDatePickerForField = Some(it.field)
+                            }
+                            else -> throw IllegalStateException("Unhandled action")
+                        }
+                    }
                     is ItemContentEvent.OnCustomFieldFocused -> viewModel.processIntent(
                         BaseCustomItemCommonIntent.OnCustomFieldFocusedChanged(
                             field = it.field,
@@ -174,6 +196,7 @@ fun CreateCustomItemScreen(
                     is ItemContentEvent.OnAttachmentEvent -> when (val event = it.event) {
                         AttachmentContentEvent.OnAddAttachment ->
                             onNavigate(BaseCustomItemNavigation.AddAttachment)
+
                         is AttachmentContentEvent.OnAttachmentOpen ->
                             throw IllegalStateException("Cannot open attachment during create")
 
@@ -226,7 +249,12 @@ fun CreateCustomItemScreen(
                         viewModel.processIntent(BaseCustomItemCommonIntent.DismissFileAttachmentsBanner)
 
                     is ItemContentEvent.OnOpenTOTPScanner ->
-                        onNavigate(BaseCustomItemNavigation.OpenTOTPScanner(it.sectionIndex, it.index))
+                        onNavigate(
+                            BaseCustomItemNavigation.OpenTOTPScanner(
+                                it.sectionIndex,
+                                it.index
+                            )
+                        )
 
                     ItemContentEvent.OnPasteTOTPSecret ->
                         viewModel.processIntent(BaseCustomItemCommonIntent.PasteTOTPSecret)
@@ -245,6 +273,17 @@ fun CreateCustomItemScreen(
                 actionAfterKeyboardHide = { onNavigate(BaseCustomItemNavigation.CloseScreen) }
             }
         )
+        showDatePickerForField.value()?.let { fieldIdentifier ->
+            val selectedDate = viewModel.itemFormState
+                .findCustomField(fieldIdentifier) as UICustomFieldContent.Date
+            DatePickerModal(
+                selectedDate = selectedDate.value,
+                onDateSelected = {
+                    viewModel.processIntent(OnCustomFieldChanged(fieldIdentifier, it.toString()))
+                },
+                onDismiss = { showDatePickerForField = None }
+            )
+        }
     }
     ItemSavedLaunchedEffect(
         isItemSaved = state.itemSavedState,

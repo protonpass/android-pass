@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
     implementation(libs.core.userSettings.domain)
+    implementation(libs.material3)
     implementation(libs.zxing.core)
 
     debugImplementation(libs.androidx.compose.uiTooling)

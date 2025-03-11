@@ -54,4 +54,8 @@ fun CustomField.toContent(encryptionContext: EncryptionContext, isConcealed: Boo
             }
             CustomFieldContent.Totp(label = this.label, value = hiddenState)
         }
+
+        is CustomField.Date -> {
+            CustomFieldContent.Date(label = this.label, value = this.value)
+        }
     }

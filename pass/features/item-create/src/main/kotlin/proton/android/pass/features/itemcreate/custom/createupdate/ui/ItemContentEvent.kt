@@ -50,6 +50,9 @@ sealed interface ItemContentEvent {
         val label: String
     ) : ItemContentEvent
 
+    @JvmInline
+    value class OnCustomFieldClick(val field: FieldIdentifier) : ItemContentEvent
+
     data class OnCustomFieldFocused(
         val field: FieldIdentifier,
         val isFocused: Boolean

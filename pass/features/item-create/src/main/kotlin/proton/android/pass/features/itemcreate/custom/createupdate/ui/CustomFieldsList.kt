@@ -86,6 +86,9 @@ fun LazyListScope.customFieldsList(
                 onValueChange = { newValue ->
                     onEvent(ItemContentEvent.OnCustomFieldChange(field, newValue))
                 },
+                onClick = {
+                    onEvent(ItemContentEvent.OnCustomFieldClick(field))
+                },
                 onFocusChange = { _, isFocused ->
                     onEvent(ItemContentEvent.OnCustomFieldFocused(field, isFocused))
                 },

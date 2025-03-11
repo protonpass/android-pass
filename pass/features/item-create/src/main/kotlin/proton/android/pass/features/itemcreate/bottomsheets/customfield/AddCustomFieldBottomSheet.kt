@@ -18,11 +18,9 @@
 
 package proton.android.pass.features.itemcreate.bottomsheets.customfield
 
-import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -37,6 +35,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
+import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
 import me.proton.core.presentation.compose.R as CoreR
@@ -69,6 +68,9 @@ fun AddCustomFieldBottomContent(
         list.add(totpField { onNavigate(AddCustomFieldNavigation.AddTotp, sectionIndex) })
     }
     list.add(hiddenField { onNavigate(AddCustomFieldNavigation.AddHidden, sectionIndex) })
+    if (prefix == CustomFieldPrefix.CreateCustomItem || prefix == CustomFieldPrefix.UpdateCustomItem) {
+        list.add(dateField { onNavigate(AddCustomFieldNavigation.AddDate, sectionIndex) })
+    }
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
         items = list.withDividers().toPersistentList()
@@ -81,12 +83,7 @@ private fun textField(onClick: () -> Unit): BottomSheetItem = object : BottomShe
     override val subtitle: (@Composable () -> Unit)?
         get() = null
     override val leftIcon: (@Composable () -> Unit)
-        get() = {
-            Icon(
-                painter = painterResource(CoreR.drawable.ic_proton_text_align_left),
-                contentDescription = stringResource(R.string.bottomsheet_custom_field_type_text_content_description)
-            )
-        }
+        get() = { Icon.Default(CoreR.drawable.ic_proton_text_align_left) }
     override val endIcon: (@Composable () -> Unit)?
         get() = null
     override val onClick: () -> Unit = onClick
@@ -99,31 +96,33 @@ private fun hiddenField(onClick: () -> Unit): BottomSheetItem = object : BottomS
     override val subtitle: (@Composable () -> Unit)?
         get() = null
     override val leftIcon: (@Composable () -> Unit)
-        get() = {
-            Icon(
-                painter = painterResource(CoreR.drawable.ic_proton_eye_slash),
-                contentDescription = null
-            )
-        }
+        get() = { Icon.Default(CoreR.drawable.ic_proton_eye_slash) }
     override val endIcon: (@Composable () -> Unit)?
         get() = null
     override val onClick: () -> Unit = onClick
     override val isDivider = false
 }
 
-
 private fun totpField(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
         get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_custom_field_type_totp)) }
     override val subtitle: (@Composable () -> Unit)?
         get() = null
-    override val leftIcon: (@Composable () -> Unit)
-        get() = {
-            Icon(
-                painter = painterResource(CoreR.drawable.ic_proton_lock),
-                contentDescription = null
-            )
-        }
+    override val leftIcon: @Composable () -> Unit
+        get() = { Icon.Default(id = CoreR.drawable.ic_proton_lock) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: () -> Unit = onClick
+    override val isDivider = false
+}
+
+private fun dateField(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_custom_field_type_date)) }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: @Composable () -> Unit
+        get() = { Icon.Default(id = CoreR.drawable.ic_proton_calendar_today) }
     override val endIcon: (@Composable () -> Unit)?
         get() = null
     override val onClick: () -> Unit = onClick

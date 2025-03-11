@@ -149,6 +149,7 @@ fun CreateCustomItemScreen(
                             )
                         }
 
+                    is ItemContentEvent.OnCustomFieldClick -> {}
                     is ItemContentEvent.OnCustomFieldFocused -> viewModel.processIntent(
                         BaseCustomItemCommonIntent.OnCustomFieldFocusedChanged(
                             field = it.field,

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonpresentation.impl.items.di
+package proton.android.pass.features.item.details.detail.di
 
 import dagger.Binds
 import dagger.Module
@@ -26,16 +26,16 @@ import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.multibindings.IntoMap
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
-import proton.android.pass.commonpresentation.impl.items.details.handlers.AliasItemDetailsHandlerObserverImpl
-import proton.android.pass.commonpresentation.impl.items.details.handlers.CreditCardItemDetailsHandlerObserverImpl
-import proton.android.pass.commonpresentation.impl.items.details.handlers.CustomItemDetailsHandlerObserverImpl
-import proton.android.pass.commonpresentation.impl.items.details.handlers.IdentityItemDetailsHandlerObserverImpl
-import proton.android.pass.commonpresentation.impl.items.details.handlers.ItemDetailsHandlerImpl
-import proton.android.pass.commonpresentation.impl.items.details.handlers.LoginItemDetailsHandlerObserverImpl
-import proton.android.pass.commonpresentation.impl.items.details.handlers.NoteItemDetailsHandlerObserverImpl
-import proton.android.pass.commonpresentation.impl.items.details.handlers.SSHKeyDetailsHandlerObserverImpl
-import proton.android.pass.commonpresentation.impl.items.details.handlers.WifiNetworkDetailsHandlerObserverImpl
 import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.features.item.details.detail.presentation.handlers.AliasItemDetailsHandlerObserverImpl
+import proton.android.pass.features.item.details.detail.presentation.handlers.CreditCardItemDetailsHandlerObserverImpl
+import proton.android.pass.features.item.details.detail.presentation.handlers.CustomItemDetailsHandlerObserverImpl
+import proton.android.pass.features.item.details.detail.presentation.handlers.IdentityItemDetailsHandlerObserverImpl
+import proton.android.pass.features.item.details.detail.presentation.handlers.ItemDetailsHandlerImpl
+import proton.android.pass.features.item.details.detail.presentation.handlers.LoginItemDetailsHandlerObserverImpl
+import proton.android.pass.features.item.details.detail.presentation.handlers.NoteItemDetailsHandlerObserverImpl
+import proton.android.pass.features.item.details.detail.presentation.handlers.SSHKeyDetailsHandlerObserverImpl
+import proton.android.pass.features.item.details.detail.presentation.handlers.WifiNetworkDetailsHandlerObserverImpl
 
 @[Module InstallIn(ViewModelComponent::class)]
 internal abstract class CommonPresentationItemsModule {

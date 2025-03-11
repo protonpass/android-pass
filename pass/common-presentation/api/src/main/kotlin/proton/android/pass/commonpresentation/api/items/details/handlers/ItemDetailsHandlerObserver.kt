@@ -95,6 +95,13 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
                     )
                 }
 
+                baseContent is CustomFieldContent.Date && otherContent is CustomFieldContent.Date -> {
+                    calculateItemDiffType(
+                        baseItemFieldValue = baseContent.value,
+                        otherItemFieldValue = otherContent.value
+                    )
+                }
+
                 else -> ItemDiffType.Content
             }
         }
@@ -132,7 +139,10 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
         calculateItemDiffType(baseItemFieldValue, otherItemFieldValue)
     }
 
-    protected fun calculateItemDiffType(baseItemFieldValue: String, otherItemFieldValue: String): ItemDiffType = when {
+    protected fun calculateItemDiffType(
+        baseItemFieldValue: String,
+        otherItemFieldValue: String
+    ): ItemDiffType = when {
         baseItemFieldValue.isEmpty() && otherItemFieldValue.isEmpty() -> ItemDiffType.None
         baseItemFieldValue.isNotEmpty() && otherItemFieldValue.isNotEmpty() ->
             if (baseItemFieldValue == otherItemFieldValue) {
@@ -142,6 +152,15 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
             }
 
         else -> ItemDiffType.Field
+    }
+
+    protected fun calculateItemDiffType(
+        baseItemFieldValue: Long,
+        otherItemFieldValue: Long
+    ): ItemDiffType = if (baseItemFieldValue == otherItemFieldValue) {
+        ItemDiffType.None
+    } else {
+        ItemDiffType.Content
     }
 
     protected fun calculateItemDiffType(
@@ -161,10 +180,12 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
                     // The attachment was removed
                     diffMap[attachmentId] = ItemDiffType.Field
                 }
+
                 baseAttachment != otherAttachment -> {
                     // The attachment was modified
                     diffMap[attachmentId] = calculateAttachmentDiffType(baseAttachment, otherAttachment)
                 }
+
                 else -> {
                     // No change
                     diffMap[attachmentId] = ItemDiffType.None

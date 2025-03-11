@@ -38,6 +38,9 @@ sealed interface CustomFieldContent {
 
     @Serializable
     data class Totp(override val label: String, val value: HiddenState) : CustomFieldContent
+
+    @Serializable
+    data class Date(override val label: String, val value: Long) : CustomFieldContent
 }
 
 @Stable

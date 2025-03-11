@@ -64,5 +64,8 @@ internal fun CustomFieldEntry(
             onFocusChange = onFocusChange,
             onOptionsClick = onOptionsClick
         )
+        is UICustomFieldContent.Date -> {
+            // Needs to be implemented
+        }
     }
 }

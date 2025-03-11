@@ -92,7 +92,11 @@ internal fun PassItemDetailsCustomFieldRow(
     )
 
     is CustomFieldContent.Totp -> {
-        // We do not offer TOTP on identity
+        // Needs to be implemented
+    }
+
+    is CustomFieldContent.Date -> {
+        // Needs to be implemented
     }
 }
 

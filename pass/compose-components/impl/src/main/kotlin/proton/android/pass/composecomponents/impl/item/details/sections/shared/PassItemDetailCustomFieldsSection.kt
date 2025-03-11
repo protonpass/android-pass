@@ -129,6 +129,10 @@ internal fun PassItemDetailCustomFieldsSection(
                             )
                         }
                     }
+
+                    is CustomFieldContent.Date -> {
+                        // Needs to be implemented
+                    }
                 }
             }
         }

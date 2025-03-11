@@ -93,6 +93,7 @@ sealed interface AddCustomFieldNavigation {
     data object AddText : AddCustomFieldNavigation
     data object AddHidden : AddCustomFieldNavigation
     data object AddTotp : AddCustomFieldNavigation
+    data object AddDate : AddCustomFieldNavigation
 }
 
 sealed interface CustomFieldOptionsNavigation {
@@ -124,6 +125,9 @@ fun NavGraphBuilder.customFieldBottomSheetGraph(
 
                 is AddCustomFieldNavigation.AddTotp ->
                     onAddCustomFieldNavigate(CustomFieldType.Totp, sectionIndex)
+
+                is AddCustomFieldNavigation.AddDate ->
+                    onAddCustomFieldNavigate(CustomFieldType.Date, sectionIndex)
             }
         }
     }

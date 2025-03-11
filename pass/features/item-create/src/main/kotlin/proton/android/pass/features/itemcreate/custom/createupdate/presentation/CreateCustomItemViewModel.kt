@@ -35,6 +35,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -93,6 +94,7 @@ class CreateCustomItemViewModel @Inject constructor(
     customFieldDraftRepository: CustomFieldDraftRepository,
     clipboardManager: ClipboardManager,
     totpManager: TotpManager,
+    appDispatchers: AppDispatchers,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCustomItemViewModel(
     linkAttachmentsToItem = linkAttachmentsToItem,
@@ -104,6 +106,7 @@ class CreateCustomItemViewModel @Inject constructor(
     customFieldDraftRepository = customFieldDraftRepository,
     clipboardManager = clipboardManager,
     totpManager = totpManager,
+    appDispatchers = appDispatchers,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
 

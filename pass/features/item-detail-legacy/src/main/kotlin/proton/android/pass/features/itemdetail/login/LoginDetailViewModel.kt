@@ -660,6 +660,7 @@ class LoginDetailViewModel @Inject constructor(
                 val totpCode = observeTotpFromUri(totpUri).firstOrNull()?.code ?: ""
                 totpCode to false
             }
+            is CustomFieldContent.Date -> throw IllegalStateException("Date field not supported")
         }
 
         if (content.isNotEmpty()) {
@@ -861,6 +862,9 @@ class LoginDetailViewModel @Inject constructor(
                 } else {
                     CustomFieldUiContent.Limited.Totp(label = field.label)
                 }
+
+                is CustomFieldContent.Date ->
+                    throw IllegalStateException("Date field not supported")
             }
         }
 

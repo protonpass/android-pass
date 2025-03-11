@@ -551,6 +551,11 @@ abstract class BaseCustomItemViewModel(
                 value = createHiddenState(newValue),
                 id = currentField.id
             )
+
+            is UICustomFieldContent.Date -> UICustomFieldContent.Date(
+                label = currentField.label,
+                value = newValue.toLong()
+            )
         }
 
         return fields.toMutableList().apply { set(index, updatedField) }

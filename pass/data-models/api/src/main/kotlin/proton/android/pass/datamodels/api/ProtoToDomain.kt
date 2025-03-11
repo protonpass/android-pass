@@ -37,6 +37,9 @@ import proton.android.pass.domain.entity.PackageName
 import proton_pass_item_v1.ItemV1
 import proton_pass_item_v1.creationDataOrNull
 
+private const val MILLIS_IN_SECOND = 1_000L
+private const val NANOS_IN_MILLI = 1_000_000L
+
 fun ItemType.Companion.fromParsed(
     context: EncryptionContext,
     parsed: ItemV1.Item,
@@ -223,7 +226,8 @@ fun ItemV1.ExtraField.toDomain(context: EncryptionContext): CustomField {
         ItemV1.ExtraField.ContentCase.TIMESTAMP -> {
             CustomField.Date(
                 label = this.fieldName,
-                value = this.timestamp.timestamp.seconds * 1000 + this.timestamp.timestamp.nanos / 1_000_000
+                value = this.timestamp.timestamp.seconds * MILLIS_IN_SECOND +
+                    this.timestamp.timestamp.nanos / NANOS_IN_MILLI
             )
         }
 

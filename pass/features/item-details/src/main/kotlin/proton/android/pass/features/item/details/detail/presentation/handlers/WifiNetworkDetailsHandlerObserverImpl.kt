@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonpresentation.impl.items.details.handlers
+package proton.android.pass.features.item.details.detail.presentation.handlers
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -37,9 +37,9 @@ import proton.android.pass.domain.Share
 import proton.android.pass.domain.attachments.Attachment
 import javax.inject.Inject
 
-class SSHKeyDetailsHandlerObserverImpl @Inject constructor(
+class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
-) : ItemDetailsHandlerObserver<ItemContents.SSHKey>() {
+) : ItemDetailsHandlerObserver<ItemContents.WifiNetwork>() {
 
     override fun observe(
         share: Share,
@@ -47,7 +47,7 @@ class SSHKeyDetailsHandlerObserverImpl @Inject constructor(
         attachmentsState: AttachmentsState
     ): Flow<ItemDetailState> = observeCustomItemContents(item)
         .mapLatest { identityItemContents ->
-            ItemDetailState.SSHKey(
+            ItemDetailState.WifiNetwork(
                 itemContents = identityItemContents,
                 itemId = item.id,
                 shareId = item.shareId,
@@ -57,14 +57,14 @@ class SSHKeyDetailsHandlerObserverImpl @Inject constructor(
                 itemLastAutofillAtOption = item.lastAutofillTime,
                 itemRevision = item.revision,
                 itemState = ItemState.from(item.state),
-                itemDiffs = ItemDiffs.SSHKey(),
+                itemDiffs = ItemDiffs.WifiNetwork(),
                 itemShare = share,
                 itemShareCount = item.shareCount,
                 attachmentsState = attachmentsState
             )
         }
 
-    private fun observeCustomItemContents(item: Item): Flow<ItemContents.SSHKey> = flow {
+    private fun observeCustomItemContents(item: Item): Flow<ItemContents.WifiNetwork> = flow {
         encryptionContextProvider.withEncryptionContext {
             toItemContents(
                 itemType = item.itemType,
@@ -72,7 +72,7 @@ class SSHKeyDetailsHandlerObserverImpl @Inject constructor(
                 title = item.title,
                 note = item.note,
                 flags = item.flags
-            ) as ItemContents.SSHKey
+            ) as ItemContents.WifiNetwork
         }.let { identityItemContents ->
             emit(identityItemContents)
         }
@@ -80,14 +80,11 @@ class SSHKeyDetailsHandlerObserverImpl @Inject constructor(
 
     @Suppress("LongMethod")
     override fun updateItemContents(
-        itemContents: ItemContents.SSHKey,
+        itemContents: ItemContents.WifiNetwork,
         hiddenFieldType: ItemDetailsFieldType.Hidden,
         hiddenFieldSection: ItemCustomFieldSection,
         hiddenState: HiddenState
     ): ItemContents = when (hiddenFieldType) {
-        is ItemDetailsFieldType.Hidden.PrivateKey -> itemContents.copy(
-            privateKey = hiddenState
-        )
         is ItemDetailsFieldType.Hidden.CustomField -> {
             when (hiddenFieldSection) {
                 is ItemCustomFieldSection.ExtraSection -> itemContents.copy(
@@ -119,20 +116,22 @@ class SSHKeyDetailsHandlerObserverImpl @Inject constructor(
                 is ItemCustomFieldSection.Identity -> itemContents
             }
         }
-
+        ItemDetailsFieldType.Hidden.Password -> itemContents.copy(
+            password = hiddenState
+        )
         ItemDetailsFieldType.Hidden.Cvv,
-        ItemDetailsFieldType.Hidden.Password,
+        ItemDetailsFieldType.Hidden.PrivateKey,
         ItemDetailsFieldType.Hidden.Pin -> itemContents
     }
 
     @Suppress("LongMethod")
     override fun calculateItemDiffs(
-        baseItemContents: ItemContents.SSHKey,
-        otherItemContents: ItemContents.SSHKey,
+        baseItemContents: ItemContents.WifiNetwork,
+        otherItemContents: ItemContents.WifiNetwork,
         baseAttachments: List<Attachment>,
         otherAttachments: List<Attachment>
     ): ItemDiffs = encryptionContextProvider.withEncryptionContext {
-        ItemDiffs.SSHKey(
+        ItemDiffs.WifiNetwork(
             title = calculateItemDiffType(
                 baseItemFieldValue = baseItemContents.title,
                 otherItemFieldValue = otherItemContents.title
@@ -141,14 +140,14 @@ class SSHKeyDetailsHandlerObserverImpl @Inject constructor(
                 baseItemFieldValue = baseItemContents.note,
                 otherItemFieldValue = otherItemContents.note
             ),
-            publicKey = calculateItemDiffType(
-                baseItemFieldValue = baseItemContents.publicKey,
-                otherItemFieldValue = otherItemContents.publicKey
+            ssid = calculateItemDiffType(
+                baseItemFieldValue = baseItemContents.ssid,
+                otherItemFieldValue = otherItemContents.ssid
             ),
-            privateKey = calculateItemDiffType(
+            password = calculateItemDiffType(
                 encryptionContext = this@withEncryptionContext,
-                baseItemFieldHiddenState = baseItemContents.privateKey,
-                otherItemFieldHiddenState = otherItemContents.privateKey
+                baseItemFieldHiddenState = baseItemContents.password,
+                otherItemFieldHiddenState = otherItemContents.password
             ),
             customFields = calculateItemDiffTypes(
                 encryptionContext = this@withEncryptionContext,

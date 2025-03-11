@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonpresentation.impl.items.details.handlers
+package proton.android.pass.features.item.details.detail.presentation.handlers
 
 import android.content.Context
 import kotlinx.coroutines.flow.Flow
@@ -37,8 +37,6 @@ import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetai
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsSource
-import proton.android.pass.commonpresentation.impl.R
-import proton.android.pass.commonpresentation.impl.items.details.messages.ItemDetailsSnackbarMessage
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
@@ -58,6 +56,8 @@ import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.features.item.details.R
+import proton.android.pass.features.item.details.detail.presentation.messages.ItemDetailsSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject

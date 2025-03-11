@@ -30,6 +30,7 @@ internal fun CustomFieldEntry(
     errorMessage: String,
     index: Int,
     canEdit: Boolean,
+    onClick: () -> Unit = {},
     onValueChange: (String) -> Unit,
     onFocusChange: (Int, Boolean) -> Unit,
     onOptionsClick: () -> Unit
@@ -64,8 +65,14 @@ internal fun CustomFieldEntry(
             onFocusChange = onFocusChange,
             onOptionsClick = onOptionsClick
         )
-        is UICustomFieldContent.Date -> {
-            // Needs to be implemented
-        }
+        is UICustomFieldContent.Date -> DateCustomFieldEntry(
+            modifier = modifier,
+            content = entry,
+            index = index,
+            isLoading = canEdit,
+            onClick = onClick,
+            onFocusChange = onFocusChange,
+            onOptionsClick = onOptionsClick
+        )
     }
 }

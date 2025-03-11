@@ -33,7 +33,7 @@ import proton_pass_item_v1.extraTotp
 import java.util.UUID
 
 private const val MILLIS_IN_SECOND = 1_000L
-private const val NANOS_IN_MILLI = 1_000_000
+private const val NANOS_IN_MILLI = 1_000_000L
 
 @Suppress("LongMethod", "ComplexMethod")
 fun ItemContents.serializeToProto(

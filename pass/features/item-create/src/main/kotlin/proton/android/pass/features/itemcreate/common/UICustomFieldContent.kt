@@ -20,10 +20,6 @@ package proton.android.pass.features.itemcreate.common
 
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
-import kotlinx.datetime.Instant
-import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import kotlinx.parcelize.Parcelize
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.domain.CustomFieldContent
@@ -51,10 +47,7 @@ sealed interface UICustomFieldContent : Parcelable {
 
     @Immutable
     @Parcelize
-    data class Date(override val label: String, val value: Long) : UICustomFieldContent {
-        val dateTime: LocalDateTime
-            get() = Instant.fromEpochMilliseconds(value).toLocalDateTime(TimeZone.UTC)
-    }
+    data class Date(override val label: String, val value: Long) : UICustomFieldContent
 
     fun toCustomFieldContent() = when (this) {
         is Text -> CustomFieldContent.Text(label, value)

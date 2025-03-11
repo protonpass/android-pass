@@ -21,5 +21,6 @@ package proton.android.pass.domain
 enum class CustomFieldType {
     Text,
     Hidden,
-    Totp
+    Totp,
+    Date
 }

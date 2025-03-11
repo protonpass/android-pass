@@ -20,6 +20,10 @@ package proton.android.pass.features.itemcreate.common
 
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
+import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import kotlinx.parcelize.Parcelize
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.domain.CustomFieldContent
@@ -45,16 +49,25 @@ sealed interface UICustomFieldContent : Parcelable {
     data class Totp(override val label: String, val value: UIHiddenState, val id: String) :
         UICustomFieldContent
 
+    @Immutable
+    @Parcelize
+    data class Date(override val label: String, val value: Long) : UICustomFieldContent {
+        val dateTime: LocalDateTime
+            get() = Instant.fromEpochMilliseconds(value).toLocalDateTime(TimeZone.UTC)
+    }
+
     fun toCustomFieldContent() = when (this) {
         is Text -> CustomFieldContent.Text(label, value)
         is Hidden -> CustomFieldContent.Hidden(label, value.toHiddenState())
         is Totp -> CustomFieldContent.Totp(label, value.toHiddenState())
+        is Date -> CustomFieldContent.Date(label, value)
     }
 
     fun toCustomFieldType(): CustomFieldType = when (this) {
         is Text -> CustomFieldType.Text
         is Hidden -> CustomFieldType.Hidden
         is Totp -> CustomFieldType.Totp
+        is Date -> CustomFieldType.Date
     }
 
     fun compare(other: UICustomFieldContent, encryptionContext: EncryptionContext): Boolean = when (this) {
@@ -72,24 +85,18 @@ sealed interface UICustomFieldContent : Parcelable {
             is Totp -> value.compare(other.value, encryptionContext)
             else -> false
         }
+
+        is Date -> when (other) {
+            is Date -> value == other.value
+            else -> false
+        }
     }
 
     fun updateLabel(newLabel: String) = when (this) {
         is Text -> copy(label = newLabel)
         is Hidden -> copy(label = newLabel)
         is Totp -> copy(label = newLabel)
-    }
-
-    fun updateContent(value: String) = when (this) {
-        is Text -> copy(value = value)
-        is Hidden,
-        is Totp -> throw IllegalStateException("Cannot update content with text")
-    }
-
-    fun updateContent(value: UIHiddenState) = when (this) {
-        is Text -> throw IllegalStateException("Text cannot be updated with hidden state")
-        is Hidden -> copy(value = value)
-        is Totp -> copy(value = value)
+        is Date -> copy(label = newLabel)
     }
 
     companion object {
@@ -97,6 +104,7 @@ sealed interface UICustomFieldContent : Parcelable {
             is CustomFieldContent.Text -> Text(state.label, state.value)
             is CustomFieldContent.Hidden -> Hidden(state.label, UIHiddenState.from(state.value))
             is CustomFieldContent.Totp -> Totp(state.label, UIHiddenState.from(state.value), generateUniqueID())
+            is CustomFieldContent.Date -> Date(state.label, state.value)
         }
 
         private fun generateUniqueID(): String = UUID.randomUUID().toString()
@@ -125,6 +133,14 @@ sealed interface UICustomFieldContent : Parcelable {
                 CustomFieldContent.Totp(
                     label = label.trim(),
                     value = HiddenState.Empty(encrypted = value)
+                )
+            }
+
+            CustomFieldType.Date -> {
+                val value = System.currentTimeMillis()
+                CustomFieldContent.Date(
+                    label = label.trim(),
+                    value = value
                 )
             }
         }.let(Companion::from)

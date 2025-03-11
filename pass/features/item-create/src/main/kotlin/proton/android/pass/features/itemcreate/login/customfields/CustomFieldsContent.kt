@@ -102,6 +102,7 @@ internal fun CustomFieldsContent(
                         is UICustomFieldContent.Hidden -> CustomFieldHidden(index)
                         is UICustomFieldContent.Text -> CustomFieldText(index)
                         is UICustomFieldContent.Totp -> CustomFieldTOTP(index)
+                        is UICustomFieldContent.Date -> throw IllegalStateException("Date field not supported")
                     }
                     onEvent(CustomFieldEvent.FocusRequested(loginCustomField, isFocused))
                 },

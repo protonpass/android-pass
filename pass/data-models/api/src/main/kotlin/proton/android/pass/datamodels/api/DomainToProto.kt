@@ -19,6 +19,7 @@
 package proton.android.pass.datamodels.api
 
 import com.google.protobuf.ByteString
+import com.google.protobuf.timestamp
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.CustomFieldContent
@@ -27,8 +28,12 @@ import proton_pass_item_v1.ItemV1
 import proton_pass_item_v1.extraField
 import proton_pass_item_v1.extraHiddenField
 import proton_pass_item_v1.extraTextField
+import proton_pass_item_v1.extraTimestampField
 import proton_pass_item_v1.extraTotp
 import java.util.UUID
+
+private const val MILLIS_IN_SECOND = 1_000L
+private const val NANOS_IN_MILLI = 1_000_000
 
 @Suppress("LongMethod", "ComplexMethod")
 fun ItemContents.serializeToProto(
@@ -302,6 +307,16 @@ private fun List<CustomFieldContent>.mapToExtraFields(encryptionContext: Encrypt
                 fieldName = customField.label
                 totp = extraTotp {
                     totpUri = encryptionContext.decrypt(customField.value.encrypted)
+                }
+            }
+
+            is CustomFieldContent.Date -> extraField {
+                fieldName = customField.label
+                timestamp = extraTimestampField {
+                    timestamp = timestamp {
+                        seconds = customField.value / MILLIS_IN_SECOND
+                        nanos = (customField.value % MILLIS_IN_SECOND * NANOS_IN_MILLI).toInt()
+                    }
                 }
             }
         }

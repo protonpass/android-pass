@@ -63,8 +63,10 @@ android {
 }
 
 dependencies {
+    implementation(projects.pass.biometry.api)
     implementation(projects.pass.clipboard.api)
     implementation(projects.pass.commonPresentation.api)
+    implementation(projects.pass.commonRust.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.composeComponents.impl)
@@ -75,6 +77,7 @@ dependencies {
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
+    implementation(projects.pass.totp.api)
 
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.runtime)

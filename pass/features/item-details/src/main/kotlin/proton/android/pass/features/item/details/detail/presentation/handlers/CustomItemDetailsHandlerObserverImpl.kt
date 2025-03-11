@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonpresentation.impl.items.details.handlers
+package proton.android.pass.features.item.details.detail.presentation.handlers
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -37,34 +37,34 @@ import proton.android.pass.domain.Share
 import proton.android.pass.domain.attachments.Attachment
 import javax.inject.Inject
 
-class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
+class CustomItemDetailsHandlerObserverImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
-) : ItemDetailsHandlerObserver<ItemContents.CreditCard>() {
+) : ItemDetailsHandlerObserver<ItemContents.Custom>() {
 
     override fun observe(
         share: Share,
         item: Item,
         attachmentsState: AttachmentsState
-    ): Flow<ItemDetailState> = observeCreditCardItemContents(item)
-        .mapLatest { creditCardItemContents ->
-            ItemDetailState.CreditCard(
-                itemContents = creditCardItemContents,
+    ): Flow<ItemDetailState> = observeCustomItemContents(item)
+        .mapLatest { identityItemContents ->
+            ItemDetailState.Custom(
+                itemContents = identityItemContents,
                 itemId = item.id,
                 shareId = item.shareId,
                 isItemPinned = item.isPinned,
-                itemShare = share,
                 itemCreatedAt = item.createTime,
                 itemModifiedAt = item.modificationTime,
                 itemLastAutofillAtOption = item.lastAutofillTime,
                 itemRevision = item.revision,
                 itemState = ItemState.from(item.state),
-                itemDiffs = ItemDiffs.CreditCard(),
+                itemDiffs = ItemDiffs.Custom(),
+                itemShare = share,
                 itemShareCount = item.shareCount,
                 attachmentsState = attachmentsState
             )
         }
 
-    private fun observeCreditCardItemContents(item: Item): Flow<ItemContents.CreditCard> = flow {
+    private fun observeCustomItemContents(item: Item): Flow<ItemContents.Custom> = flow {
         encryptionContextProvider.withEncryptionContext {
             toItemContents(
                 itemType = item.itemType,
@@ -72,38 +72,65 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
                 title = item.title,
                 note = item.note,
                 flags = item.flags
-            ) as ItemContents.CreditCard
-        }.let { creditCardItemContents ->
-            emit(creditCardItemContents)
+            ) as ItemContents.Custom
+        }.let { identityItemContents ->
+            emit(identityItemContents)
         }
     }
 
+    @Suppress("LongMethod")
     override fun updateItemContents(
-        itemContents: ItemContents.CreditCard,
+        itemContents: ItemContents.Custom,
         hiddenFieldType: ItemDetailsFieldType.Hidden,
         hiddenFieldSection: ItemCustomFieldSection,
         hiddenState: HiddenState
     ): ItemContents = when (hiddenFieldType) {
-        ItemDetailsFieldType.Hidden.Cvv -> itemContents.copy(
-            cvv = hiddenState
-        )
+        is ItemDetailsFieldType.Hidden.CustomField -> {
+            when (hiddenFieldSection) {
+                is ItemCustomFieldSection.ExtraSection -> itemContents.copy(
+                    sectionContentList = itemContents.sectionContentList
+                        .toMutableList()
+                        .apply {
+                            itemContents.sectionContentList[hiddenFieldSection.index]
+                                .let { extraSectionContent ->
+                                    set(
+                                        index = hiddenFieldSection.index,
+                                        element = extraSectionContent.copy(
+                                            customFieldList = toggleHiddenCustomField(
+                                                customFieldsContent = extraSectionContent.customFieldList,
+                                                hiddenFieldType = hiddenFieldType,
+                                                hiddenState = hiddenState
+                                            )
+                                        )
+                                    )
+                                }
+                        }
+                )
+                is ItemCustomFieldSection.CustomField -> itemContents.copy(
+                    customFieldList = toggleHiddenCustomField(
+                        customFieldsContent = itemContents.customFieldList,
+                        hiddenFieldType = hiddenFieldType,
+                        hiddenState = hiddenState
+                    )
+                )
+                is ItemCustomFieldSection.Identity -> itemContents
+            }
+        }
 
-        ItemDetailsFieldType.Hidden.Pin -> itemContents.copy(
-            pin = hiddenState
-        )
-
-        is ItemDetailsFieldType.Hidden.CustomField,
-        is ItemDetailsFieldType.Hidden.PrivateKey,
-        ItemDetailsFieldType.Hidden.Password -> itemContents
+        ItemDetailsFieldType.Hidden.Cvv,
+        ItemDetailsFieldType.Hidden.Password,
+        ItemDetailsFieldType.Hidden.PrivateKey,
+        ItemDetailsFieldType.Hidden.Pin -> itemContents
     }
 
+    @Suppress("LongMethod")
     override fun calculateItemDiffs(
-        baseItemContents: ItemContents.CreditCard,
-        otherItemContents: ItemContents.CreditCard,
+        baseItemContents: ItemContents.Custom,
+        otherItemContents: ItemContents.Custom,
         baseAttachments: List<Attachment>,
         otherAttachments: List<Attachment>
     ): ItemDiffs = encryptionContextProvider.withEncryptionContext {
-        ItemDiffs.CreditCard(
+        ItemDiffs.Custom(
             title = calculateItemDiffType(
                 baseItemFieldValue = baseItemContents.title,
                 otherItemFieldValue = otherItemContents.title
@@ -112,28 +139,21 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
                 baseItemFieldValue = baseItemContents.note,
                 otherItemFieldValue = otherItemContents.note
             ),
-            cardHolder = calculateItemDiffType(
-                baseItemFieldValue = baseItemContents.cardHolder,
-                otherItemFieldValue = otherItemContents.cardHolder
-            ),
-            cardNumber = calculateItemDiffType(
-                baseItemFieldValue = baseItemContents.number,
-                otherItemFieldValue = otherItemContents.number
-            ),
-            cvv = calculateItemDiffType(
+            customFields = calculateItemDiffTypes(
                 encryptionContext = this@withEncryptionContext,
-                baseItemFieldHiddenState = baseItemContents.cvv,
-                otherItemFieldHiddenState = otherItemContents.cvv
+                baseItemCustomFieldsContent = baseItemContents.customFieldList,
+                otherItemCustomFieldsContent = otherItemContents.customFieldList
             ),
-            pin = calculateItemDiffType(
-                encryptionContext = this@withEncryptionContext,
-                baseItemFieldHiddenState = baseItemContents.pin,
-                otherItemFieldHiddenState = otherItemContents.pin
-            ),
-            expirationDate = calculateItemDiffType(
-                baseItemFieldValue = baseItemContents.expirationDate,
-                otherItemFieldValue = otherItemContents.expirationDate
-            ),
+            extraCustomFields = baseItemContents.sectionContentList.mapIndexed { index, extraSectionContent ->
+                calculateItemDiffTypes(
+                    encryptionContext = this@withEncryptionContext,
+                    baseItemCustomFieldsContent = extraSectionContent.customFieldList,
+                    otherItemCustomFieldsContent = otherItemContents.sectionContentList
+                        .getOrNull(index)
+                        ?.customFieldList
+                        ?: emptyList()
+                )
+            },
             attachments = calculateItemDiffType(
                 baseItemAttachments = baseAttachments,
                 otherItemAttachments = otherAttachments

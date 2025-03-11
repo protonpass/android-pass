@@ -36,6 +36,9 @@ sealed interface CustomField {
     @Serializable
     data class Totp(override val label: String, val value: EncryptedString) : CustomField
 
+    @Serializable
+    data class Date(override val label: String, val value: Long) : CustomField
+
     data object Unknown : CustomField {
         override val label: String = "UNKNOWN"
     }

@@ -47,6 +47,7 @@ import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.login.customfields.CustomFieldOptionsButton
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -59,9 +60,8 @@ internal fun DateCustomFieldEntry(
     onFocusChange: (Int, Boolean) -> Unit,
     onOptionsClick: () -> Unit
 ) {
-    val date = remember(content.value) {
-        formatCustomDate(content.value)
-    }
+    val pattern = stringResource(R.string.custom_field_date_pattern)
+    val date = remember(pattern, content.value) { formatCustomDate(pattern, content.value) }
     ProtonTextField(
         modifier = modifier
             .roundedContainerNorm()
@@ -92,12 +92,15 @@ internal fun DateCustomFieldEntry(
     )
 }
 
-fun formatCustomDate(epochMillis: Long): String {
-    val instant = Instant.fromEpochMilliseconds(epochMillis)
-    val dateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
-    val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-    return dateTime.toJavaLocalDateTime().format(formatter)
-}
+fun formatCustomDate(pattern: String, epochMillis: Long): String = runCatching {
+    DateTimeFormatter.ofPattern(pattern)
+        .withLocale(Locale.getDefault())
+        .format(
+            Instant.fromEpochMilliseconds(epochMillis)
+                .toLocalDateTime(TimeZone.currentSystemDefault())
+                .toJavaLocalDateTime()
+        )
+}.getOrDefault("")
 
 @Preview
 @Composable

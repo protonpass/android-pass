@@ -26,7 +26,7 @@ import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemCustomFieldSection
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.items.ItemCategory
@@ -43,10 +43,7 @@ interface ItemDetailsHandler {
 
     @Suppress("LongParameterList")
     fun updateItemDetailsContent(
-        isVisible: Boolean,
-        hiddenState: HiddenState,
-        hiddenFieldType: ItemDetailsFieldType.Hidden,
-        hiddenFieldSection: ItemCustomFieldSection,
+        revealedHiddenFields: Map<ItemSection, Set<ItemDetailsFieldType.Hidden>>,
         itemCategory: ItemCategory,
         itemContents: ItemContents
     ): ItemContents

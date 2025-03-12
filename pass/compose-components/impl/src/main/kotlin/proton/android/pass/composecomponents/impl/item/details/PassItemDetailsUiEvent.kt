@@ -22,7 +22,7 @@ import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetai
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.HiddenState
-import proton.android.pass.domain.ItemCustomFieldSection
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ShareId
 
 sealed interface PassItemDetailsUiEvent {
@@ -32,16 +32,16 @@ sealed interface PassItemDetailsUiEvent {
         val field: ItemDetailsFieldType.Plain
     ) : PassItemDetailsUiEvent
 
-    data class OnHiddenSectionClick(
+    data class OnHiddenFieldClick(
         val state: HiddenState,
         val field: ItemDetailsFieldType.Hidden
     ) : PassItemDetailsUiEvent
 
-    data class OnHiddenSectionToggle(
+    data class OnHiddenFieldToggle(
         val isVisible: Boolean,
         val hiddenState: HiddenState,
         val fieldType: ItemDetailsFieldType.Hidden,
-        val fieldSection: ItemCustomFieldSection
+        val fieldSection: ItemSection
     ) : PassItemDetailsUiEvent
 
     @JvmInline

@@ -39,7 +39,7 @@ import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDeta
 import proton.android.pass.composecomponents.impl.progress.PassTotpProgress
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.CustomFieldContent
-import proton.android.pass.domain.ItemCustomFieldSection
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.Totp
 import me.proton.core.presentation.R as CoreR
@@ -88,7 +88,7 @@ internal fun PassItemDetailCustomFieldsSection(
                         hiddenTextStyle = ProtonTheme.typography.defaultNorm,
                         onClick = {
                             onEvent(
-                                PassItemDetailsUiEvent.OnHiddenSectionClick(
+                                PassItemDetailsUiEvent.OnHiddenFieldClick(
                                     state = customFieldContent.value,
                                     field = ItemDetailsFieldType.Hidden.CustomField(index)
                                 )
@@ -96,11 +96,11 @@ internal fun PassItemDetailCustomFieldsSection(
                         },
                         onToggle = { isVisible ->
                             onEvent(
-                                PassItemDetailsUiEvent.OnHiddenSectionToggle(
+                                PassItemDetailsUiEvent.OnHiddenFieldToggle(
                                     isVisible = isVisible,
                                     hiddenState = customFieldContent.value,
                                     fieldType = ItemDetailsFieldType.Hidden.CustomField(index),
-                                    fieldSection = ItemCustomFieldSection.CustomField
+                                    fieldSection = ItemSection.CustomField
                                 )
                             )
                         }

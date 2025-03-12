@@ -84,6 +84,7 @@ internal fun PassWifiNetworkItemDetailSections(
         if (contents.sectionContentList.isNotEmpty()) {
             PassItemDetailsExtraSection(
                 extraSectionContents = contents.sectionContentList.toPersistentList(),
+                customFieldTotps = customFieldTotps,
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,
                 onEvent = onEvent

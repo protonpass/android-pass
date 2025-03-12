@@ -115,7 +115,7 @@ sealed interface ItemDiffs {
             is ItemCustomFieldSection.Identity.Personal -> personalCustomFields
             is ItemCustomFieldSection.Identity.Work -> workCustomFields
             is ItemCustomFieldSection.ExtraSection ->
-                extraCustomFields.getOrElse(section.index) { emptyList() }
+                extraCustomFields.getOrElse(index) { emptyList() }
 
             is ItemCustomFieldSection.CustomField ->
                 throw IllegalStateException("Not supported sections")
@@ -156,7 +156,7 @@ sealed interface ItemDiffs {
             is ItemCustomFieldSection.ExtraSection ->
                 extraCustomFields.getOrElse(section.index) { emptyList() }
 
-            is ItemCustomFieldSection.CustomField,
+            is ItemCustomFieldSection.CustomField -> customFields
             is ItemCustomFieldSection.Identity.Address,
             is ItemCustomFieldSection.Identity.Contact,
             is ItemCustomFieldSection.Identity.Personal,
@@ -180,7 +180,7 @@ sealed interface ItemDiffs {
             is ItemCustomFieldSection.ExtraSection ->
                 extraCustomFields.getOrElse(section.index) { emptyList() }
 
-            is ItemCustomFieldSection.CustomField,
+            is ItemCustomFieldSection.CustomField -> customFields
             is ItemCustomFieldSection.Identity.Address,
             is ItemCustomFieldSection.Identity.Contact,
             is ItemCustomFieldSection.Identity.Personal,
@@ -204,7 +204,7 @@ sealed interface ItemDiffs {
             is ItemCustomFieldSection.ExtraSection ->
                 extraCustomFields.getOrElse(section.index) { emptyList() }
 
-            is ItemCustomFieldSection.CustomField,
+            is ItemCustomFieldSection.CustomField -> customFields
             is ItemCustomFieldSection.Identity.Address,
             is ItemCustomFieldSection.Identity.Contact,
             is ItemCustomFieldSection.Identity.Personal,

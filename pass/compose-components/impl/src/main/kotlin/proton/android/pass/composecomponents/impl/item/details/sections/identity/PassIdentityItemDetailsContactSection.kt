@@ -21,16 +21,17 @@ package proton.android.pass.composecomponents.impl.item.details.sections.identit
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toPersistentList
-import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.rows.addItemDetailsFieldRow
-import proton.android.pass.composecomponents.impl.item.details.sections.shared.addCustomFieldRows
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsSection
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.addCustomFieldRows
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ContactDetailsContent
+import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
 
 @Composable
@@ -168,6 +169,7 @@ internal fun PassIdentityItemDetailsContactSection(
         rows.addCustomFieldRows(
             customFields = customFields,
             customFieldSection = ItemCustomFieldSection.Identity.Contact,
+            customFieldTotps = persistentMapOf(),
             itemColors = itemColors,
             itemDiffs = itemDiffs,
             onEvent = onEvent

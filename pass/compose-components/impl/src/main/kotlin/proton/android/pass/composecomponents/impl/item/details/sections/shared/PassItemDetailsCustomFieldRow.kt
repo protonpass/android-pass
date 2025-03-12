@@ -36,7 +36,7 @@ import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDeta
 import proton.android.pass.composecomponents.impl.progress.PassTotpProgress
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.CustomFieldContent
-import proton.android.pass.domain.ItemCustomFieldSection
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.Totp
@@ -48,7 +48,7 @@ internal fun PassItemDetailsCustomFieldRow(
     modifier: Modifier = Modifier,
     customFieldIndex: Int,
     customFieldContent: CustomFieldContent,
-    customFieldSection: ItemCustomFieldSection,
+    customFieldSection: ItemSection,
     customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, Totp>,
     itemColors: PassItemColors,
     itemDiffType: ItemDiffType,
@@ -66,7 +66,7 @@ internal fun PassItemDetailsCustomFieldRow(
             hiddenTextStyle = ProtonTheme.typography.defaultNorm,
             onClick = {
                 onEvent(
-                    PassItemDetailsUiEvent.OnHiddenSectionClick(
+                    PassItemDetailsUiEvent.OnHiddenFieldClick(
                         state = customFieldContent.value,
                         field = ItemDetailsFieldType.Hidden.CustomField(customFieldIndex)
                     )
@@ -74,7 +74,7 @@ internal fun PassItemDetailsCustomFieldRow(
             },
             onToggle = { isVisible ->
                 onEvent(
-                    PassItemDetailsUiEvent.OnHiddenSectionToggle(
+                    PassItemDetailsUiEvent.OnHiddenFieldToggle(
                         isVisible = isVisible,
                         hiddenState = customFieldContent.value,
                         fieldType = ItemDetailsFieldType.Hidden.CustomField(customFieldIndex),
@@ -102,7 +102,7 @@ internal fun PassItemDetailsCustomFieldRow(
         )
 
         is CustomFieldContent.Totp -> {
-            val sectionIndex = (customFieldSection as? ItemCustomFieldSection.ExtraSection)
+            val sectionIndex = (customFieldSection as? ItemSection.ExtraSection)
                 ?.index
                 .toOption()
             customFieldTotps[sectionIndex to customFieldIndex]?.let { customFieldTotp ->
@@ -139,7 +139,7 @@ internal fun PassItemDetailsCustomFieldRow(
 @Suppress("LongParameterList")
 internal fun MutableList<@Composable () -> Unit>.addCustomFieldRows(
     customFields: List<CustomFieldContent>,
-    customFieldSection: ItemCustomFieldSection,
+    customFieldSection: ItemSection,
     customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, Totp>,
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs,

@@ -27,11 +27,10 @@ import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.attachments.Attachment
@@ -78,96 +77,50 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
         }
     }
 
-    @Suppress("LongMethod")
-    override fun updateItemContents(
+    override fun updateHiddenFieldsContents(
         itemContents: ItemContents.Identity,
-        hiddenFieldType: ItemDetailsFieldType.Hidden,
-        hiddenFieldSection: ItemCustomFieldSection,
-        hiddenState: HiddenState
-    ): ItemContents = when (hiddenFieldType) {
-        is ItemDetailsFieldType.Hidden.CustomField -> {
-            when (hiddenFieldSection) {
-                ItemCustomFieldSection.Identity.Address -> {
-                    itemContents.copy(
-                        addressDetailsContent = itemContents.addressDetailsContent.copy(
-                            customFields = toggleHiddenCustomField(
-                                customFieldsContent = itemContents.addressDetailsContent.customFields,
-                                hiddenFieldType = hiddenFieldType,
-                                hiddenState = hiddenState
-                            )
-                        )
-                    )
-                }
-
-                ItemCustomFieldSection.Identity.Contact -> {
-                    itemContents.copy(
-                        contactDetailsContent = itemContents.contactDetailsContent.copy(
-                            customFields = toggleHiddenCustomField(
-                                customFieldsContent = itemContents.contactDetailsContent.customFields,
-                                hiddenFieldType = hiddenFieldType,
-                                hiddenState = hiddenState
-                            )
-                        )
-                    )
-                }
-
-                is ItemCustomFieldSection.ExtraSection -> {
-                    itemContents.copy(
-                        extraSectionContentList = itemContents.extraSectionContentList
-                            .toMutableList()
-                            .apply {
-                                itemContents.extraSectionContentList[hiddenFieldSection.index]
-                                    .let { extraSectionContent ->
-                                        set(
-                                            index = hiddenFieldSection.index,
-                                            element = extraSectionContent.copy(
-                                                customFieldList = toggleHiddenCustomField(
-                                                    customFieldsContent = extraSectionContent.customFieldList,
-                                                    hiddenFieldType = hiddenFieldType,
-                                                    hiddenState = hiddenState
-                                                )
-                                            )
-                                        )
-                                    }
-                            }
-                    )
-                }
-
-                ItemCustomFieldSection.Identity.Personal -> {
-                    itemContents.copy(
-                        personalDetailsContent = itemContents.personalDetailsContent.copy(
-                            customFields = toggleHiddenCustomField(
-                                customFieldsContent = itemContents.personalDetailsContent.customFields,
-                                hiddenFieldType = hiddenFieldType,
-                                hiddenState = hiddenState
-                            )
-                        )
-                    )
-                }
-
-                ItemCustomFieldSection.Identity.Work -> {
-                    itemContents.copy(
-                        workDetailsContent = itemContents.workDetailsContent.copy(
-                            customFields = toggleHiddenCustomField(
-                                customFieldsContent = itemContents.workDetailsContent.customFields,
-                                hiddenFieldType = hiddenFieldType,
-                                hiddenState = hiddenState
-                            )
-                        )
-                    )
-                }
-
-                ItemCustomFieldSection.CustomField ->
-                    throw UnsupportedOperationException(
-                        "cannot have custom section in ${hiddenFieldType::class.simpleName}"
-                    )
+        revealedHiddenFields: Map<ItemSection, Set<ItemDetailsFieldType.Hidden>>
+    ): ItemContents {
+        val mutableSections = itemContents.extraSectionContentList.toMutableList()
+        mutableSections.forEachIndexed { sectionIndex, sectionContent ->
+            val updatedCustomFields = sectionContent.customFieldList.mapIndexed { fieldIndex, field ->
+                val shouldBeRevealed = revealedHiddenFields[ItemSection.ExtraSection(sectionIndex)]
+                    ?.any { it is ItemDetailsFieldType.Hidden.CustomField && it.index == fieldIndex } == true
+                updateHiddenState(field, shouldBeRevealed, encryptionContextProvider)
             }
+            mutableSections[sectionIndex] = sectionContent.copy(customFieldList = updatedCustomFields)
         }
-
-        ItemDetailsFieldType.Hidden.Cvv,
-        ItemDetailsFieldType.Hidden.Password,
-        ItemDetailsFieldType.Hidden.PrivateKey,
-        ItemDetailsFieldType.Hidden.Pin -> itemContents
+        return itemContents.copy(
+            personalDetailsContent = itemContents.personalDetailsContent.copy(
+                customFields = itemContents.personalDetailsContent.customFields.mapIndexed { fieldIndex, field ->
+                    val shouldBeRevealed = revealedHiddenFields[ItemSection.Identity.Personal]
+                        ?.any { it is ItemDetailsFieldType.Hidden.CustomField && it.index == fieldIndex } == true
+                    updateHiddenState(field, shouldBeRevealed, encryptionContextProvider)
+                }
+            ),
+            workDetailsContent = itemContents.workDetailsContent.copy(
+                customFields = itemContents.workDetailsContent.customFields.mapIndexed { fieldIndex, field ->
+                    val shouldBeRevealed = revealedHiddenFields[ItemSection.Identity.Work]
+                        ?.any { it is ItemDetailsFieldType.Hidden.CustomField && it.index == fieldIndex } == true
+                    updateHiddenState(field, shouldBeRevealed, encryptionContextProvider)
+                }
+            ),
+            contactDetailsContent = itemContents.contactDetailsContent.copy(
+                customFields = itemContents.contactDetailsContent.customFields.mapIndexed { fieldIndex, field ->
+                    val shouldBeRevealed = revealedHiddenFields[ItemSection.Identity.Contact]
+                        ?.any { it is ItemDetailsFieldType.Hidden.CustomField && it.index == fieldIndex } == true
+                    updateHiddenState(field, shouldBeRevealed, encryptionContextProvider)
+                }
+            ),
+            addressDetailsContent = itemContents.addressDetailsContent.copy(
+                customFields = itemContents.addressDetailsContent.customFields.mapIndexed { fieldIndex, field ->
+                    val shouldBeRevealed = revealedHiddenFields[ItemSection.Identity.Address]
+                        ?.any { it is ItemDetailsFieldType.Hidden.CustomField && it.index == fieldIndex } == true
+                    updateHiddenState(field, shouldBeRevealed, encryptionContextProvider)
+                }
+            ),
+            extraSectionContentList = mutableSections
+        )
     }
 
     @Suppress("LongMethod")

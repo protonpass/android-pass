@@ -27,7 +27,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ExtraSectionContent
-import proton.android.pass.domain.ItemCustomFieldSection
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.Totp
 
@@ -47,7 +47,7 @@ internal fun PassItemDetailsExtraSection(
                 is ItemDiffs.Identity,
                 is ItemDiffs.WifiNetwork,
                 is ItemDiffs.SSHKey,
-                is ItemDiffs.Custom -> ItemCustomFieldSection.ExtraSection(extraSectionIndex)
+                is ItemDiffs.Custom -> ItemSection.ExtraSection(extraSectionIndex)
                 is ItemDiffs.Login,
                 ItemDiffs.None,
                 is ItemDiffs.Note,

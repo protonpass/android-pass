@@ -94,12 +94,12 @@ internal fun ItemDetailsContent(
                 },
                 onEvent = { uiEvent ->
                     when (uiEvent) {
-                        is PassItemDetailsUiEvent.OnHiddenSectionClick -> ItemDetailsUiEvent.OnHiddenFieldClicked(
+                        is PassItemDetailsUiEvent.OnHiddenFieldClick -> ItemDetailsUiEvent.OnHiddenFieldClicked(
                             state = uiEvent.state,
                             field = uiEvent.field
                         )
 
-                        is PassItemDetailsUiEvent.OnHiddenSectionToggle -> ItemDetailsUiEvent.OnHiddenFieldToggled(
+                        is PassItemDetailsUiEvent.OnHiddenFieldToggle -> ItemDetailsUiEvent.OnHiddenFieldToggled(
                             isVisible = uiEvent.isVisible,
                             state = uiEvent.hiddenState,
                             fieldType = uiEvent.fieldType,

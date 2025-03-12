@@ -23,13 +23,14 @@ import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetai
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContext
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
@@ -42,11 +43,9 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
         attachmentsState: AttachmentsState
     ): Flow<ItemDetailState>
 
-    abstract fun updateItemContents(
+    abstract fun updateHiddenFieldsContents(
         itemContents: ITEM_CONTENTS,
-        hiddenFieldType: ItemDetailsFieldType.Hidden,
-        hiddenFieldSection: ItemCustomFieldSection,
-        hiddenState: HiddenState
+        revealedHiddenFields: Map<ItemSection, Set<ItemDetailsFieldType.Hidden>>
     ): ItemContents
 
     abstract fun calculateItemDiffs(
@@ -204,16 +203,27 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
             else -> ItemDiffType.None
         }
 
-    protected fun toggleHiddenCustomField(
-        customFieldsContent: List<CustomFieldContent>,
-        hiddenFieldType: ItemDetailsFieldType.Hidden.CustomField,
-        hiddenState: HiddenState
-    ): List<CustomFieldContent> = customFieldsContent.mapIndexed { index, customFieldContent ->
-        if (index == hiddenFieldType.index && customFieldContent is CustomFieldContent.Hidden) {
-            customFieldContent.copy(value = hiddenState)
-        } else {
-            customFieldContent
-        }
+    protected fun updateHiddenStateValue(
+        hiddenState: HiddenState,
+        shouldBeRevealed: Boolean,
+        encryptionContextProvider: EncryptionContextProvider
+    ): HiddenState = when {
+        shouldBeRevealed && hiddenState is HiddenState.Concealed ->
+            encryptionContextProvider.withEncryptionContext {
+                HiddenState.Revealed(hiddenState.encrypted, decrypt(hiddenState.encrypted))
+            }
+        !shouldBeRevealed && hiddenState is HiddenState.Revealed ->
+            HiddenState.Concealed(hiddenState.encrypted)
+        else -> hiddenState
     }
 
+    protected fun updateHiddenState(
+        customField: CustomFieldContent,
+        shouldBeRevealed: Boolean,
+        encryptionContextProvider: EncryptionContextProvider
+    ): CustomFieldContent = if (customField is CustomFieldContent.Hidden) {
+        customField.copy(value = updateHiddenStateValue(customField.value, shouldBeRevealed, encryptionContextProvider))
+    } else {
+        customField
+    }
 }

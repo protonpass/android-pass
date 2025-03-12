@@ -139,10 +139,7 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
         calculateItemDiffType(baseItemFieldValue, otherItemFieldValue)
     }
 
-    protected fun calculateItemDiffType(
-        baseItemFieldValue: String,
-        otherItemFieldValue: String
-    ): ItemDiffType = when {
+    protected fun calculateItemDiffType(baseItemFieldValue: String, otherItemFieldValue: String): ItemDiffType = when {
         baseItemFieldValue.isEmpty() && otherItemFieldValue.isEmpty() -> ItemDiffType.None
         baseItemFieldValue.isNotEmpty() && otherItemFieldValue.isNotEmpty() ->
             if (baseItemFieldValue == otherItemFieldValue) {
@@ -154,14 +151,12 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
         else -> ItemDiffType.Field
     }
 
-    protected fun calculateItemDiffType(
-        baseItemFieldValue: Long,
-        otherItemFieldValue: Long
-    ): ItemDiffType = if (baseItemFieldValue == otherItemFieldValue) {
-        ItemDiffType.None
-    } else {
-        ItemDiffType.Content
-    }
+    protected fun calculateItemDiffType(baseItemFieldValue: Long, otherItemFieldValue: Long): ItemDiffType =
+        if (baseItemFieldValue == otherItemFieldValue) {
+            ItemDiffType.None
+        } else {
+            ItemDiffType.Content
+        }
 
     protected fun calculateItemDiffType(
         baseItemAttachments: List<Attachment>,

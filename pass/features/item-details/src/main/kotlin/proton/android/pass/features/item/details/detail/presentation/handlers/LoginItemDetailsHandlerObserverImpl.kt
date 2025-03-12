@@ -25,6 +25,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
@@ -33,7 +35,6 @@ import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -65,9 +66,9 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     ): Flow<ItemDetailState> = combine(
         observeLoginItemContents(item),
         observePrimaryTotp(item),
-        observeSecondaryTotps(item),
+        observeCustomFieldTotps(item),
         userPreferencesRepository.getUseFaviconsPreference()
-    ) { loginItemContents, primaryTotp, secondaryTotps, useFaviconsPreference ->
+    ) { loginItemContents, primaryTotp, customFieldsTotps, useFaviconsPreference ->
         ItemDetailState.Login(
             itemContents = loginItemContents,
             itemId = item.id,
@@ -87,7 +88,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                     .let(passwordStrengthCalculator::calculateStrength)
             },
             primaryTotp = primaryTotp,
-            secondaryTotps = secondaryTotps,
+            customFieldTotps = customFieldsTotps,
             passkeys = loginItemContents.passkeys.map { passkey -> UIPasskeyContent.from(passkey) },
             attachmentsState = attachmentsState
         )
@@ -112,32 +113,26 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             observeTotp(loginItemContents.primaryTotp)
         }
 
-    private fun observeSecondaryTotps(item: Item): Flow<Map<String, Totp?>> =
-        observeLoginItemContents(item).flatMapLatest { loginItemContents ->
-            loginItemContents.customFields
-                .filterIsInstance<CustomFieldContent.Totp>()
-                .let { totpCustomFieldsContent ->
-                    combine(
-                        observeTotpCustomFieldsLabels(totpCustomFieldsContent),
-                        observeTotpCustomFieldsValues(totpCustomFieldsContent)
-                    ) { totpCustomFieldsLabels, totpCustomFieldsValues ->
-                        totpCustomFieldsLabels.zip(totpCustomFieldsValues).toMap()
+    private fun observeCustomFieldTotps(item: Item): Flow<Map<Pair<Option<Int>, Int>, Totp>> =
+        observeLoginItemContents(item).flatMapLatest { contents ->
+            val decrypted = encryptionContextProvider.withEncryptionContextSuspendable {
+                contents.customFields.mapToDecryptedTotp(
+                    sectionIndex = None,
+                    decrypt = ::decrypt
+                ).toMap()
+            }
+            val flows = decrypted.map { uri ->
+                totpManager.observeCode(uri.value)
+                    .map {
+                        uri.key to Totp(
+                            code = it.code,
+                            remainingSeconds = it.remainingSeconds,
+                            totalSeconds = it.totalSeconds
+                        )
                     }
-                }
+            }
+            combine(flows) { it.toMap() }
         }.onStart { emit(emptyMap()) }
-
-    private fun observeTotpCustomFieldsLabels(
-        totpCustomFieldsContent: List<CustomFieldContent.Totp>
-    ): Flow<List<String>> = totpCustomFieldsContent.map { totpCustomFieldContent ->
-        totpCustomFieldContent.label
-    }.let(::flowOf)
-
-    private fun observeTotpCustomFieldsValues(
-        totpCustomFieldsContent: List<CustomFieldContent.Totp>
-    ): Flow<List<Totp?>> = combine(
-        totpCustomFieldsContent.map { totpCustomFieldContent -> observeTotp(totpCustomFieldContent.value) },
-        Array<Totp?>::asList
-    )
 
     private fun observeTotp(hiddenTotpState: HiddenState): Flow<Totp?> = when (hiddenTotpState) {
         is HiddenState.Empty -> ""

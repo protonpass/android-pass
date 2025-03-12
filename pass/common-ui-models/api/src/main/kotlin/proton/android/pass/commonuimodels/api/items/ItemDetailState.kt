@@ -199,7 +199,7 @@ sealed interface ItemDetailState {
         val canLoadExternalImages: Boolean,
         val passwordStrength: PasswordStrength,
         val primaryTotp: Totp?,
-        val secondaryTotps: Map<String, Totp?>,
+        val customFieldTotps: Map<Pair<Option<Int>, Int>, Totp>,
         val passkeys: List<UIPasskeyContent>,
         override val attachmentsState: AttachmentsState
     ) : ItemDetailState {
@@ -239,7 +239,8 @@ sealed interface ItemDetailState {
         override val itemState: ItemState,
         override val itemDiffs: ItemDiffs.Custom,
         override val itemShareCount: Int,
-        override val attachmentsState: AttachmentsState
+        override val attachmentsState: AttachmentsState,
+        val customFieldTotps: Map<Pair<Option<Int>, Int>, Totp>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Custom
@@ -277,7 +278,8 @@ sealed interface ItemDetailState {
         override val itemState: ItemState,
         override val itemDiffs: ItemDiffs.WifiNetwork,
         override val itemShareCount: Int,
-        override val attachmentsState: AttachmentsState
+        override val attachmentsState: AttachmentsState,
+        val customFieldTotps: Map<Pair<Option<Int>, Int>, Totp>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.WifiNetwork
@@ -315,7 +317,8 @@ sealed interface ItemDetailState {
         override val itemState: ItemState,
         override val itemDiffs: ItemDiffs.SSHKey,
         override val itemShareCount: Int,
-        override val attachmentsState: AttachmentsState
+        override val attachmentsState: AttachmentsState,
+        val customFieldsTotps: Map<Pair<Option<Int>, Int>, Totp>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.SSHKey

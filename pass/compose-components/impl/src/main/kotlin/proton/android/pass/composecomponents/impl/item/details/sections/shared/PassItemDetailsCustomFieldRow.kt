@@ -21,17 +21,25 @@ package proton.android.pass.composecomponents.impl.item.details.sections.shared
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import kotlinx.collections.immutable.ImmutableMap
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
+import me.proton.core.presentation.R
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
+import proton.android.pass.commonuimodels.api.masks.TextMask
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
+import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailMaskedFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailsHiddenFieldRow
+import proton.android.pass.composecomponents.impl.progress.PassTotpProgress
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.Totp
 
 private const val HIDDEN_CUSTOM_FIELD_TEXT_LENGTH = 12
 
@@ -41,68 +49,98 @@ internal fun PassItemDetailsCustomFieldRow(
     customFieldIndex: Int,
     customFieldContent: CustomFieldContent,
     customFieldSection: ItemCustomFieldSection,
+    customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, Totp>,
     itemColors: PassItemColors,
     itemDiffType: ItemDiffType,
     onEvent: (PassItemDetailsUiEvent) -> Unit,
     @DrawableRes iconResId: Int? = null
-) = when (customFieldContent) {
-    is CustomFieldContent.Hidden -> PassItemDetailsHiddenFieldRow(
-        icon = null,
-        title = customFieldContent.label,
-        hiddenState = customFieldContent.value,
-        hiddenTextLength = HIDDEN_CUSTOM_FIELD_TEXT_LENGTH,
-        itemColors = itemColors,
-        itemDiffType = itemDiffType,
-        hiddenTextStyle = ProtonTheme.typography.defaultNorm,
-        onClick = {
-            onEvent(
-                PassItemDetailsUiEvent.OnHiddenSectionClick(
-                    state = customFieldContent.value,
-                    field = ItemDetailsFieldType.Hidden.CustomField(customFieldIndex)
+) {
+    when (customFieldContent) {
+        is CustomFieldContent.Hidden -> PassItemDetailsHiddenFieldRow(
+            icon = null,
+            title = customFieldContent.label,
+            hiddenState = customFieldContent.value,
+            hiddenTextLength = HIDDEN_CUSTOM_FIELD_TEXT_LENGTH,
+            itemColors = itemColors,
+            itemDiffType = itemDiffType,
+            hiddenTextStyle = ProtonTheme.typography.defaultNorm,
+            onClick = {
+                onEvent(
+                    PassItemDetailsUiEvent.OnHiddenSectionClick(
+                        state = customFieldContent.value,
+                        field = ItemDetailsFieldType.Hidden.CustomField(customFieldIndex)
+                    )
                 )
-            )
-        },
-        onToggle = { isVisible ->
-            onEvent(
-                PassItemDetailsUiEvent.OnHiddenSectionToggle(
-                    isVisible = isVisible,
-                    hiddenState = customFieldContent.value,
-                    fieldType = ItemDetailsFieldType.Hidden.CustomField(customFieldIndex),
-                    fieldSection = customFieldSection
+            },
+            onToggle = { isVisible ->
+                onEvent(
+                    PassItemDetailsUiEvent.OnHiddenSectionToggle(
+                        isVisible = isVisible,
+                        hiddenState = customFieldContent.value,
+                        fieldType = ItemDetailsFieldType.Hidden.CustomField(customFieldIndex),
+                        fieldSection = customFieldSection
+                    )
                 )
-            )
+            }
+        )
+
+        is CustomFieldContent.Text -> PassItemDetailFieldRow(
+            modifier = modifier,
+            icon = iconResId,
+            title = customFieldContent.label,
+            subtitle = customFieldContent.value,
+            itemColors = itemColors,
+            itemDiffType = itemDiffType,
+            onClick = {
+                onEvent(
+                    PassItemDetailsUiEvent.OnSectionClick(
+                        section = customFieldContent.value,
+                        field = ItemDetailsFieldType.Plain.CustomField
+                    )
+                )
+            }
+        )
+
+        is CustomFieldContent.Totp -> {
+            val sectionIndex = (customFieldSection as? ItemCustomFieldSection.ExtraSection)
+                ?.index
+                .toOption()
+            customFieldTotps[sectionIndex to customFieldIndex]?.let { customFieldTotp ->
+                PassItemDetailMaskedFieldRow(
+                    icon = R.drawable.ic_proton_lock,
+                    title = customFieldContent.label,
+                    maskedSubtitle = TextMask.TotpCode(customFieldTotp.code),
+                    itemColors = itemColors,
+                    itemDiffType = itemDiffType,
+                    onClick = {
+                        onEvent(
+                            PassItemDetailsUiEvent.OnSectionClick(
+                                section = customFieldTotp.code,
+                                field = ItemDetailsFieldType.Plain.TotpCode
+                            )
+                        )
+                    },
+                    contentInBetween = {
+                        PassTotpProgress(
+                            remainingSeconds = customFieldTotp.remainingSeconds,
+                            totalSeconds = customFieldTotp.totalSeconds
+                        )
+                    }
+                )
+            }
         }
-    )
 
-    is CustomFieldContent.Text -> PassItemDetailFieldRow(
-        modifier = modifier,
-        icon = iconResId,
-        title = customFieldContent.label,
-        subtitle = customFieldContent.value,
-        itemColors = itemColors,
-        itemDiffType = itemDiffType,
-        onClick = {
-            onEvent(
-                PassItemDetailsUiEvent.OnSectionClick(
-                    section = customFieldContent.value,
-                    field = ItemDetailsFieldType.Plain.CustomField
-                )
-            )
+        is CustomFieldContent.Date -> {
+            // Needs to be implemented
         }
-    )
-
-    is CustomFieldContent.Totp -> {
-        // Needs to be implemented
-    }
-
-    is CustomFieldContent.Date -> {
-        // Needs to be implemented
     }
 }
 
+@Suppress("LongParameterList")
 internal fun MutableList<@Composable () -> Unit>.addCustomFieldRows(
     customFields: List<CustomFieldContent>,
     customFieldSection: ItemCustomFieldSection,
+    customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, Totp>,
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs,
     onEvent: (PassItemDetailsUiEvent) -> Unit
@@ -126,6 +164,7 @@ internal fun MutableList<@Composable () -> Unit>.addCustomFieldRows(
                 customFieldIndex = index,
                 customFieldContent = customFieldContent,
                 customFieldSection = customFieldSection,
+                customFieldTotps = customFieldTotps,
                 itemColors = itemColors,
                 itemDiffType = itemDiffType,
                 onEvent = onEvent

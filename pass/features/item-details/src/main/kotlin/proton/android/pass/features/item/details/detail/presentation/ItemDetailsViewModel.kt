@@ -30,29 +30,24 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.FlowUtils.oneShot
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.some
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsSource
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.HiddenState
-import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemCustomFieldSection
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
@@ -92,18 +87,22 @@ class ItemDetailsViewModel @Inject constructor(
             }
         }
 
-    private val itemContentsUpdateOptionFlow = MutableStateFlow<Option<ItemContents>>(None)
+    private val revealedHiddenFieldsFlow = MutableStateFlow(
+        emptyMap<ItemSection, Set<ItemDetailsFieldType.Hidden>>()
+    )
 
     private val itemDetailsStateFlow = itemFlow.flatMapLatest { item ->
         combine(
-            itemContentsUpdateOptionFlow,
+            revealedHiddenFieldsFlow,
             itemDetailsHandler.observeItemDetails(item, ItemDetailsSource.DETAIL)
-                .onEach { itemContentsUpdateOptionFlow.update { None } }
-        ) { itemContentsUpdateOption, itemDetailState ->
-            when (itemContentsUpdateOption) {
-                None -> itemDetailState
-                is Some -> itemDetailState.update(itemContents = itemContentsUpdateOption.value)
-            }
+        ) { revealedHiddenFields, itemDetailState: ItemDetailState ->
+            itemDetailState.update(
+                itemContents = itemDetailsHandler.updateItemDetailsContent(
+                    revealedHiddenFields = revealedHiddenFields,
+                    itemCategory = itemDetailState.itemCategory,
+                    itemContents = itemDetailState.itemContents
+                )
+            )
         }
     }
 
@@ -167,24 +166,27 @@ class ItemDetailsViewModel @Inject constructor(
 
     internal fun onToggleItemHiddenField(
         isVisible: Boolean,
-        hiddenState: HiddenState,
         hiddenFieldType: ItemDetailsFieldType.Hidden,
-        hiddenFieldSection: ItemCustomFieldSection
+        hiddenFieldSection: ItemSection
     ) {
-        when (val stateValue = state.value) {
+        when (state.value) {
             ItemDetailsState.Error,
             ItemDetailsState.Loading -> return
 
             is ItemDetailsState.Success -> {
-                itemDetailsHandler.updateItemDetailsContent(
-                    isVisible = isVisible,
-                    hiddenState = hiddenState,
-                    hiddenFieldType = hiddenFieldType,
-                    hiddenFieldSection = hiddenFieldSection,
-                    itemCategory = stateValue.itemDetailState.itemCategory,
-                    itemContents = stateValue.itemDetailState.itemContents
-                ).also { updatedItemContents ->
-                    itemContentsUpdateOptionFlow.update { updatedItemContents.some() }
+                if (isVisible) {
+                    revealedHiddenFieldsFlow.update {
+                        it.toMutableMap().apply {
+                            this[hiddenFieldSection] = (this[hiddenFieldSection] ?: emptySet()) + hiddenFieldType
+                        }
+                    }
+                } else {
+                    revealedHiddenFieldsFlow.update {
+                        it.toMutableMap().apply {
+                            this[hiddenFieldSection] = (this[hiddenFieldSection] ?: emptySet()) - hiddenFieldType
+                            if (this[hiddenFieldSection]?.isEmpty() == true) remove(hiddenFieldSection)
+                        }
+                    }
                 }
             }
         }

@@ -36,7 +36,6 @@ import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.some
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsSource
@@ -54,7 +53,7 @@ import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.api.usecases.items.RestoreItemRevision
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemCustomFieldSection
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -247,16 +246,15 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     internal fun onToggleItemHiddenField(
         selection: ItemHistoryRestoreSelection,
         isVisible: Boolean,
-        hiddenState: HiddenState,
         hiddenFieldType: ItemDetailsFieldType.Hidden,
-        hiddenFieldSection: ItemCustomFieldSection
+        hiddenFieldSection: ItemSection
     ) {
         when (val stateValue = state.value) {
             ItemHistoryRestoreState.Initial -> return
             is ItemHistoryRestoreState.ItemDetails -> {
                 when (selection) {
                     ItemHistoryRestoreSelection.Revision -> {
-                        itemDetailsHandler.updateItemDetailsContent(
+                        /*itemDetailsHandler.updateItemDetailsContent(
                             isVisible = isVisible,
                             hiddenState = hiddenState,
                             hiddenFieldType = hiddenFieldType,
@@ -265,11 +263,11 @@ class ItemHistoryRestoreViewModel @Inject constructor(
                             itemContents = stateValue.revisionItemDetailState.itemContents
                         ).also { updatedItemContents ->
                             revisionItemContentsUpdateOptionFlow.update { updatedItemContents.some() }
-                        }
+                        }*/
                     }
 
                     ItemHistoryRestoreSelection.Current -> {
-                        itemDetailsHandler.updateItemDetailsContent(
+                        /*itemDetailsHandler.updateItemDetailsContent(
                             isVisible = isVisible,
                             hiddenState = hiddenState,
                             hiddenFieldType = hiddenFieldType,
@@ -278,7 +276,7 @@ class ItemHistoryRestoreViewModel @Inject constructor(
                             itemContents = stateValue.currentItemDetailState.itemContents
                         ).also { updatedItemContents ->
                             currentItemContentsUpdateOptionFlow.update { updatedItemContents.some() }
-                        }
+                        }*/
                     }
                 }
             }

@@ -18,22 +18,29 @@
 
 package proton.android.pass.domain
 
-sealed interface ItemCustomFieldSection {
+sealed interface ItemSection {
 
-    data object CustomField : ItemCustomFieldSection
+    data object CustomField : ItemSection
 
     @JvmInline
-    value class ExtraSection(val index: Int) : ItemCustomFieldSection
+    value class ExtraSection(val index: Int) : ItemSection
 
-    sealed interface Identity : ItemCustomFieldSection {
+    sealed interface Identity : ItemSection {
 
         data object Address : Identity
 
         data object Contact : Identity
 
-
         data object Personal : Identity
 
         data object Work : Identity
     }
+
+    data object Login : ItemSection
+
+    data object CreditCard : ItemSection
+
+    data object WifiNetwork : ItemSection
+
+    data object SSHKey : ItemSection
 }

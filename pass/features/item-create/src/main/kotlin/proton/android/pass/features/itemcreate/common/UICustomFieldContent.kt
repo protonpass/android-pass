@@ -100,6 +100,9 @@ sealed interface UICustomFieldContent : Parcelable {
             is CustomFieldContent.Date -> Date(state.label, state.value)
         }
 
+        fun from(state: CustomFieldContent.Totp) =
+            Totp(state.label, UIHiddenState.from(state.value), generateUniqueID())
+
         private fun generateUniqueID(): String = UUID.randomUUID().toString()
 
         fun createCustomField(

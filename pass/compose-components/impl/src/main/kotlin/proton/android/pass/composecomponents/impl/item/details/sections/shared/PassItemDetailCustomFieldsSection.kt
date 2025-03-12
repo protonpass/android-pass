@@ -26,6 +26,8 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.masks.TextMask
@@ -48,7 +50,7 @@ private const val HIDDEN_CUSTOM_FIELD_TEXT_LENGTH = 12
 internal fun PassItemDetailCustomFieldsSection(
     modifier: Modifier = Modifier,
     customFields: ImmutableList<CustomFieldContent>,
-    secondaryTotps: ImmutableMap<String, Totp?>,
+    customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, Totp>,
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs,
     onEvent: (PassItemDetailsUiEvent) -> Unit
@@ -105,7 +107,7 @@ internal fun PassItemDetailCustomFieldsSection(
                     )
 
                     is CustomFieldContent.Totp -> {
-                        secondaryTotps[customFieldContent.label]?.let { customFieldTotp ->
+                        customFieldTotps[None to index]?.let { customFieldTotp ->
                             PassItemDetailMaskedFieldRow(
                                 icon = CoreR.drawable.ic_proton_lock,
                                 title = customFieldContent.label,

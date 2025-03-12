@@ -44,7 +44,7 @@ import proton.android.pass.composecomponents.impl.progress.PassTotpProgress
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.HiddenState
-import proton.android.pass.domain.ItemCustomFieldSection
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.Totp
@@ -121,7 +121,7 @@ internal fun PassLoginItemDetailMainSection(
                     .copy(fontFamily = FontFamily.Monospace),
                 onClick = {
                     onEvent(
-                        PassItemDetailsUiEvent.OnHiddenSectionClick(
+                        PassItemDetailsUiEvent.OnHiddenFieldClick(
                             state = password,
                             field = ItemDetailsFieldType.Hidden.Password
                         )
@@ -129,11 +129,11 @@ internal fun PassLoginItemDetailMainSection(
                 },
                 onToggle = { isVisible ->
                     onEvent(
-                        PassItemDetailsUiEvent.OnHiddenSectionToggle(
+                        PassItemDetailsUiEvent.OnHiddenFieldToggle(
                             isVisible = isVisible,
                             hiddenState = password,
                             fieldType = ItemDetailsFieldType.Hidden.Password,
-                            fieldSection = ItemCustomFieldSection.CustomField
+                            fieldSection = ItemSection.Login
                         )
                     )
                 },

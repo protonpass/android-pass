@@ -30,10 +30,9 @@ import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.domain.AliasDetails
-import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemCustomFieldSection
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
@@ -85,18 +84,10 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
         }
     }
 
-    override fun updateItemContents(
+    override fun updateHiddenFieldsContents(
         itemContents: ItemContents.Alias,
-        hiddenFieldType: ItemDetailsFieldType.Hidden,
-        hiddenFieldSection: ItemCustomFieldSection,
-        hiddenState: HiddenState
-    ): ItemContents = when (hiddenFieldType) {
-        is ItemDetailsFieldType.Hidden.CustomField,
-        is ItemDetailsFieldType.Hidden.PrivateKey,
-        ItemDetailsFieldType.Hidden.Cvv,
-        ItemDetailsFieldType.Hidden.Password,
-        ItemDetailsFieldType.Hidden.Pin -> itemContents
-    }
+        revealedHiddenFields: Map<ItemSection, Set<ItemDetailsFieldType.Hidden>>
+    ): ItemContents = itemContents
 
     override fun calculateItemDiffs(
         baseItemContents: ItemContents.Alias,

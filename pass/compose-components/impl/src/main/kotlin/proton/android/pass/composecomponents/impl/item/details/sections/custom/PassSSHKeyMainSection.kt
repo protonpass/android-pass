@@ -40,7 +40,7 @@ import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemCustomFieldSection
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.items.ItemCategory
 import me.proton.core.presentation.R as CoreR
@@ -84,7 +84,7 @@ fun PassSSHKeyMainSection(
                 .copy(fontFamily = FontFamily.Monospace),
             onClick = {
                 onEvent(
-                    PassItemDetailsUiEvent.OnHiddenSectionClick(
+                    PassItemDetailsUiEvent.OnHiddenFieldClick(
                         state = contents.privateKey,
                         field = ItemDetailsFieldType.Hidden.PrivateKey
                     )
@@ -92,11 +92,11 @@ fun PassSSHKeyMainSection(
             },
             onToggle = { isVisible ->
                 onEvent(
-                    PassItemDetailsUiEvent.OnHiddenSectionToggle(
+                    PassItemDetailsUiEvent.OnHiddenFieldToggle(
                         isVisible = isVisible,
                         hiddenState = contents.privateKey,
                         fieldType = ItemDetailsFieldType.Hidden.PrivateKey,
-                        fieldSection = ItemCustomFieldSection.CustomField
+                        fieldSection = ItemSection.SSHKey
                     )
                 )
             }

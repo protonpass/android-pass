@@ -21,7 +21,9 @@ package proton.android.pass.composecomponents.impl.item.details.sections.shared
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import me.proton.core.compose.theme.ProtonTheme
@@ -29,8 +31,10 @@ import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
+import proton.android.pass.commonui.api.DateFormatUtils
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.masks.TextMask
+import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
@@ -39,8 +43,8 @@ import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDeta
 import proton.android.pass.composecomponents.impl.progress.PassTotpProgress
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.CustomFieldContent
-import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.Totp
 import me.proton.core.presentation.R as CoreR
 
@@ -133,7 +137,18 @@ internal fun PassItemDetailCustomFieldsSection(
                     }
 
                     is CustomFieldContent.Date -> {
-                        // Needs to be implemented
+                        val pattern = stringResource(R.string.custom_field_date_format)
+                        val date = remember(pattern, customFieldContent.value) {
+                            DateFormatUtils.formatDateFromMillis(pattern, customFieldContent.value)
+                        }
+                        PassItemDetailFieldRow(
+                            modifier = modifier,
+                            icon = CoreR.drawable.ic_proton_calendar_today,
+                            title = customFieldContent.label,
+                            subtitle = date,
+                            itemColors = itemColors,
+                            itemDiffType = itemDiffs.customField(index)
+                        )
                     }
                 }
             }

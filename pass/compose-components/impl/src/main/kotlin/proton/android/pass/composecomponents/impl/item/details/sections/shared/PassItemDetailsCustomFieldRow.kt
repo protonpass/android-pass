@@ -20,15 +20,18 @@ package proton.android.pass.composecomponents.impl.item.details.sections.shared
 
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.ImmutableMap
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
-import me.proton.core.presentation.R
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
+import proton.android.pass.commonui.api.DateFormatUtils
 import proton.android.pass.commonuimodels.api.masks.TextMask
+import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailMaskedFieldRow
@@ -36,10 +39,11 @@ import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDeta
 import proton.android.pass.composecomponents.impl.progress.PassTotpProgress
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.CustomFieldContent
-import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.Totp
+import me.proton.core.presentation.R as CoreR
 
 private const val HIDDEN_CUSTOM_FIELD_TEXT_LENGTH = 12
 
@@ -107,7 +111,7 @@ internal fun PassItemDetailsCustomFieldRow(
                 .toOption()
             customFieldTotps[sectionIndex to customFieldIndex]?.let { customFieldTotp ->
                 PassItemDetailMaskedFieldRow(
-                    icon = R.drawable.ic_proton_lock,
+                    icon = CoreR.drawable.ic_proton_lock,
                     title = customFieldContent.label,
                     maskedSubtitle = TextMask.TotpCode(customFieldTotp.code),
                     itemColors = itemColors,
@@ -131,7 +135,18 @@ internal fun PassItemDetailsCustomFieldRow(
         }
 
         is CustomFieldContent.Date -> {
-            // Needs to be implemented
+            val pattern = stringResource(R.string.custom_field_date_format)
+            val date = remember(pattern, customFieldContent.value) {
+                DateFormatUtils.formatDateFromMillis(pattern, customFieldContent.value)
+            }
+            PassItemDetailFieldRow(
+                modifier = modifier,
+                icon = CoreR.drawable.ic_proton_calendar_today,
+                title = customFieldContent.label,
+                subtitle = date,
+                itemColors = itemColors,
+                itemDiffType = itemDiffType
+            )
         }
     }
 }

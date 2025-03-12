@@ -312,4 +312,7 @@
         <item quantity="one">%d member</item>
         <item quantity="other">%d members</item>
     </plurals>
+
+    <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
+
 </resources>

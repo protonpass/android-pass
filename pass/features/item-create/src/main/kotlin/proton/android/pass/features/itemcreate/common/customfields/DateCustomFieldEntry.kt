@@ -29,12 +29,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import kotlinx.datetime.Instant
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toJavaLocalDateTime
-import kotlinx.datetime.toLocalDateTime
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
+import proton.android.pass.commonui.api.DateFormatUtils
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
@@ -46,8 +43,6 @@ import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.login.customfields.CustomFieldOptionsButton
-import java.time.format.DateTimeFormatter
-import java.util.Locale
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -61,7 +56,9 @@ internal fun DateCustomFieldEntry(
     onOptionsClick: () -> Unit
 ) {
     val pattern = stringResource(R.string.custom_field_date_pattern)
-    val date = remember(pattern, content.value) { formatCustomDate(pattern, content.value) }
+    val date = remember(pattern, content.value) {
+        DateFormatUtils.formatDateFromMillis(pattern, content.value)
+    }
     ProtonTextField(
         modifier = modifier
             .roundedContainerNorm()
@@ -91,16 +88,6 @@ internal fun DateCustomFieldEntry(
         onFocusChange = { onFocusChange(index, it) }
     )
 }
-
-fun formatCustomDate(pattern: String, epochMillis: Long): String = runCatching {
-    DateTimeFormatter.ofPattern(pattern)
-        .withLocale(Locale.getDefault())
-        .format(
-            Instant.fromEpochMilliseconds(epochMillis)
-                .toLocalDateTime(TimeZone.currentSystemDefault())
-                .toJavaLocalDateTime()
-        )
-}.getOrDefault("")
 
 @Preview
 @Composable

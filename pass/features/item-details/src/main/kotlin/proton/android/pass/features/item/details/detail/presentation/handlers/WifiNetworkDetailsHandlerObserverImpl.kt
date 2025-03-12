@@ -19,8 +19,14 @@
 package proton.android.pass.features.item.details.detail.presentation.handlers
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.some
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonui.api.toItemContents
@@ -34,37 +40,43 @@ import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.Totp
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
 class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val totpManager: TotpManager
 ) : ItemDetailsHandlerObserver<ItemContents.WifiNetwork>() {
 
     override fun observe(
         share: Share,
         item: Item,
         attachmentsState: AttachmentsState
-    ): Flow<ItemDetailState> = observeCustomItemContents(item)
-        .mapLatest { identityItemContents ->
-            ItemDetailState.WifiNetwork(
-                itemContents = identityItemContents,
-                itemId = item.id,
-                shareId = item.shareId,
-                isItemPinned = item.isPinned,
-                itemCreatedAt = item.createTime,
-                itemModifiedAt = item.modificationTime,
-                itemLastAutofillAtOption = item.lastAutofillTime,
-                itemRevision = item.revision,
-                itemState = ItemState.from(item.state),
-                itemDiffs = ItemDiffs.WifiNetwork(),
-                itemShare = share,
-                itemShareCount = item.shareCount,
-                attachmentsState = attachmentsState
-            )
-        }
+    ): Flow<ItemDetailState> = combine(
+        observeWifiNetworkItemContents(item),
+        observeTotps(item)
+    ) { itemContents, customFieldsTotps ->
+        ItemDetailState.WifiNetwork(
+            itemContents = itemContents,
+            itemId = item.id,
+            shareId = item.shareId,
+            isItemPinned = item.isPinned,
+            itemCreatedAt = item.createTime,
+            itemModifiedAt = item.modificationTime,
+            itemLastAutofillAtOption = item.lastAutofillTime,
+            itemRevision = item.revision,
+            itemState = ItemState.from(item.state),
+            itemDiffs = ItemDiffs.WifiNetwork(),
+            itemShare = share,
+            itemShareCount = item.shareCount,
+            attachmentsState = attachmentsState,
+            customFieldTotps = customFieldsTotps
+        )
+    }
 
-    private fun observeCustomItemContents(item: Item): Flow<ItemContents.WifiNetwork> = flow {
+    private fun observeWifiNetworkItemContents(item: Item): Flow<ItemContents.WifiNetwork> = flow {
         encryptionContextProvider.withEncryptionContext {
             toItemContents(
                 itemType = item.itemType,
@@ -77,6 +89,37 @@ class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
             emit(identityItemContents)
         }
     }
+
+    private fun observeTotps(item: Item): Flow<Map<Pair<Option<Int>, Int>, Totp>> =
+        observeWifiNetworkItemContents(item).flatMapLatest { contents ->
+            val decrypted = encryptionContextProvider.withEncryptionContextSuspendable {
+                val sectionCustomFields =
+                    contents.sectionContentList.flatMapIndexed { sectionIndex, sectionContent ->
+                        sectionContent.customFieldList.mapToDecryptedTotp(
+                            sectionIndex = sectionIndex.some(),
+                            decrypt = ::decrypt
+                        )
+                    }.toMap()
+
+                val customFields = contents.customFieldList.mapToDecryptedTotp(
+                    sectionIndex = None,
+                    decrypt = ::decrypt
+                ).toMap()
+
+                sectionCustomFields + customFields
+            }
+            val flows = decrypted.map { uri ->
+                totpManager.observeCode(uri.value)
+                    .map {
+                        uri.key to Totp(
+                            code = it.code,
+                            remainingSeconds = it.remainingSeconds,
+                            totalSeconds = it.totalSeconds
+                        )
+                    }
+            }
+            combine(flows) { it.toMap() }
+        }.onStart { emit(emptyMap()) }
 
     @Suppress("LongMethod")
     override fun updateItemContents(
@@ -106,6 +149,7 @@ class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
                                 }
                         }
                 )
+
                 is ItemCustomFieldSection.CustomField -> itemContents.copy(
                     customFieldList = toggleHiddenCustomField(
                         customFieldsContent = itemContents.customFieldList,
@@ -113,12 +157,15 @@ class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
                         hiddenState = hiddenState
                     )
                 )
+
                 is ItemCustomFieldSection.Identity -> itemContents
             }
         }
+
         ItemDetailsFieldType.Hidden.Password -> itemContents.copy(
             password = hiddenState
         )
+
         ItemDetailsFieldType.Hidden.Cvv,
         ItemDetailsFieldType.Hidden.PrivateKey,
         ItemDetailsFieldType.Hidden.Pin -> itemContents

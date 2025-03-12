@@ -56,7 +56,7 @@ internal fun PassLoginItemDetailSections(
     contents: ItemContents.Login,
     passwordStrength: PasswordStrength,
     primaryTotp: Totp?,
-    secondaryTotps: ImmutableMap<String, Totp?>,
+    customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, Totp>,
     passkeys: ImmutableList<UIPasskeyContent>,
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs.Login,
@@ -116,7 +116,7 @@ internal fun PassLoginItemDetailSections(
         if (customFields.isNotEmpty()) {
             PassItemDetailCustomFieldsSection(
                 customFields = customFields.toPersistentList(),
-                secondaryTotps = secondaryTotps,
+                customFieldTotps = customFieldTotps,
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,
                 onEvent = onEvent

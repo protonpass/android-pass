@@ -22,7 +22,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import kotlinx.collections.immutable.persistentMapOf
+import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.datetime.Instant
 import proton.android.pass.common.api.Option
@@ -40,6 +40,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Totp
 
 @Composable
 internal fun PassSSHKeyItemDetailSections(
@@ -47,6 +48,7 @@ internal fun PassSSHKeyItemDetailSections(
     itemId: ItemId,
     shareId: ShareId,
     contents: ItemContents.SSHKey,
+    customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, Totp>,
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs.SSHKey,
     lastAutofillOption: Option<Instant>,
@@ -72,7 +74,7 @@ internal fun PassSSHKeyItemDetailSections(
         if (contents.customFieldList.isNotEmpty()) {
             PassItemDetailCustomFieldsSection(
                 customFields = contents.customFieldList.toPersistentList(),
-                secondaryTotps = persistentMapOf(),
+                customFieldTotps = customFieldTotps,
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,
                 onEvent = onEvent

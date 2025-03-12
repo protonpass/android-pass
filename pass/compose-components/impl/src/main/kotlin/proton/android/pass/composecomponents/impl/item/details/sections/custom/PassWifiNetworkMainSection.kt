@@ -40,7 +40,7 @@ import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemCustomFieldSection
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.items.ItemCategory
 import me.proton.core.presentation.R as CoreR
@@ -84,7 +84,7 @@ fun PassWifiNetworkMainSection(
                 .copy(fontFamily = FontFamily.Monospace),
             onClick = {
                 onEvent(
-                    PassItemDetailsUiEvent.OnHiddenSectionClick(
+                    PassItemDetailsUiEvent.OnHiddenFieldClick(
                         state = contents.password,
                         field = ItemDetailsFieldType.Hidden.Password
                     )
@@ -92,11 +92,11 @@ fun PassWifiNetworkMainSection(
             },
             onToggle = { isVisible ->
                 onEvent(
-                    PassItemDetailsUiEvent.OnHiddenSectionToggle(
+                    PassItemDetailsUiEvent.OnHiddenFieldToggle(
                         isVisible = isVisible,
                         hiddenState = contents.password,
                         fieldType = ItemDetailsFieldType.Hidden.Password,
-                        fieldSection = ItemCustomFieldSection.CustomField
+                        fieldSection = ItemSection.WifiNetwork
                     )
                 )
             }

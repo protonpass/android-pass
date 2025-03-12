@@ -57,12 +57,12 @@ internal fun ItemHistoryRestoreTab(
                     field = uiEvent.field
                 ).also(onEvent)
 
-                is PassItemDetailsUiEvent.OnHiddenSectionClick -> ItemHistoryRestoreUiEvent.OnHiddenSectionClick(
+                is PassItemDetailsUiEvent.OnHiddenFieldClick -> ItemHistoryRestoreUiEvent.OnHiddenFieldClick(
                     state = uiEvent.state,
                     field = uiEvent.field
                 ).also(onEvent)
 
-                is PassItemDetailsUiEvent.OnHiddenSectionToggle -> ItemHistoryRestoreUiEvent.OnHiddenSectionToggle(
+                is PassItemDetailsUiEvent.OnHiddenFieldToggle -> ItemHistoryRestoreUiEvent.OnHiddenFieldToggle(
                     selection = selection,
                     isVisible = uiEvent.isVisible,
                     hiddenState = uiEvent.hiddenState,

@@ -22,7 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.toPersistentList
-import proton.android.pass.domain.ItemCustomFieldSection
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.masks.TextMask
 import proton.android.pass.composecomponents.impl.R
@@ -118,7 +118,7 @@ internal fun PassCreditCardItemDetailMainSection(
                 itemDiffType = itemDiffs.cvv,
                 onClick = {
                     onEvent(
-                        PassItemDetailsUiEvent.OnHiddenSectionClick(
+                        PassItemDetailsUiEvent.OnHiddenFieldClick(
                             state = cvv,
                             field = ItemDetailsFieldType.Hidden.Cvv
                         )
@@ -126,11 +126,11 @@ internal fun PassCreditCardItemDetailMainSection(
                 },
                 onToggle = { isVisible ->
                     onEvent(
-                        PassItemDetailsUiEvent.OnHiddenSectionToggle(
+                        PassItemDetailsUiEvent.OnHiddenFieldToggle(
                             isVisible = isVisible,
                             hiddenState = cvv,
                             fieldType = ItemDetailsFieldType.Hidden.Cvv,
-                            fieldSection = ItemCustomFieldSection.CustomField
+                            fieldSection = ItemSection.CreditCard
                         )
                     )
                 }
@@ -149,11 +149,11 @@ internal fun PassCreditCardItemDetailMainSection(
                 itemDiffType = itemDiffs.pin,
                 onToggle = { isVisible ->
                     onEvent(
-                        PassItemDetailsUiEvent.OnHiddenSectionToggle(
+                        PassItemDetailsUiEvent.OnHiddenFieldToggle(
                             isVisible = isVisible,
                             hiddenState = pin,
                             fieldType = ItemDetailsFieldType.Hidden.Pin,
-                            fieldSection = ItemCustomFieldSection.CustomField
+                            fieldSection = ItemSection.CreditCard
                         )
                     )
                 }

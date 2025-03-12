@@ -38,9 +38,9 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.Share
@@ -154,27 +154,27 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         }
     }
 
-    override fun updateItemContents(
+    override fun updateHiddenFieldsContents(
         itemContents: ItemContents.Login,
-        hiddenFieldType: ItemDetailsFieldType.Hidden,
-        hiddenFieldSection: ItemCustomFieldSection,
-        hiddenState: HiddenState
-    ): ItemContents = when (hiddenFieldType) {
-        is ItemDetailsFieldType.Hidden.CustomField -> itemContents.copy(
-            customFields = toggleHiddenCustomField(
-                customFieldsContent = itemContents.customFields,
-                hiddenFieldType = hiddenFieldType,
-                hiddenState = hiddenState
-            )
-        )
+        revealedHiddenFields: Map<ItemSection, Set<ItemDetailsFieldType.Hidden>>
+    ): ItemContents {
+        val revealedFields = revealedHiddenFields[ItemSection.Login] ?: emptyList()
+        val mutableCustomFields = itemContents.customFields.toMutableList()
 
-        ItemDetailsFieldType.Hidden.Password -> itemContents.copy(
-            password = hiddenState
-        )
+        mutableCustomFields.forEachIndexed { index, field ->
+            val shouldBeRevealed = revealedHiddenFields[ItemSection.CustomField]
+                ?.any { it is ItemDetailsFieldType.Hidden.CustomField && it.index == index } == true
+            mutableCustomFields[index] = updateHiddenState(field, shouldBeRevealed, encryptionContextProvider)
+        }
 
-        ItemDetailsFieldType.Hidden.PrivateKey,
-        ItemDetailsFieldType.Hidden.Cvv,
-        ItemDetailsFieldType.Hidden.Pin -> itemContents
+        return itemContents.copy(
+            password = updateHiddenStateValue(
+                hiddenState = itemContents.password,
+                shouldBeRevealed = revealedFields.contains(ItemDetailsFieldType.Hidden.Password),
+                encryptionContextProvider = encryptionContextProvider
+            ),
+            customFields = mutableCustomFields
+        )
     }
 
     override fun calculateItemDiffs(

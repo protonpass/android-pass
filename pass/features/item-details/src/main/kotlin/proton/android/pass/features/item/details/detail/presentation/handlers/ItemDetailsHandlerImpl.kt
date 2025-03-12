@@ -42,7 +42,6 @@ import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.ObserveAllItemRevisionAttachments
@@ -51,8 +50,8 @@ import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.items.ItemCategory
@@ -205,33 +204,13 @@ class ItemDetailsHandlerImpl @Inject constructor(
     }.let { snackbarMessage -> snackbarDispatcher(snackbarMessage) }
 
     override fun updateItemDetailsContent(
-        isVisible: Boolean,
-        hiddenState: HiddenState,
-        hiddenFieldType: ItemDetailsFieldType.Hidden,
-        hiddenFieldSection: ItemCustomFieldSection,
+        revealedHiddenFields: Map<ItemSection, Set<ItemDetailsFieldType.Hidden>>,
         itemCategory: ItemCategory,
         itemContents: ItemContents
-    ): ItemContents = encryptionContextProvider.withEncryptionContext {
-        when {
-            isVisible -> HiddenState.Revealed(
-                encrypted = hiddenState.encrypted,
-                clearText = decrypt(hiddenState.encrypted)
-            )
-
-            decrypt(hiddenState.encrypted.toEncryptedByteArray()).isEmpty() -> HiddenState.Empty(
-                encrypt("")
-            )
-
-            else -> HiddenState.Concealed(encrypted = hiddenState.encrypted)
-        }
-    }.let { toggledHiddenState ->
-        getItemDetailsObserver(itemCategory).updateItemContents(
-            itemContents = itemContents,
-            hiddenFieldType = hiddenFieldType,
-            hiddenFieldSection = hiddenFieldSection,
-            hiddenState = toggledHiddenState
-        )
-    }
+    ): ItemContents = getItemDetailsObserver(itemCategory).updateHiddenFieldsContents(
+        itemContents = itemContents,
+        revealedHiddenFields = revealedHiddenFields
+    )
 
     override fun updateItemDetailsDiffs(
         itemCategory: ItemCategory,

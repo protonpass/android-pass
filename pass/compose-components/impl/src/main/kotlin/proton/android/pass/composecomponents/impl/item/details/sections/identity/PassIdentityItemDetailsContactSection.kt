@@ -31,8 +31,8 @@ import proton.android.pass.composecomponents.impl.item.details.sections.shared.P
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.addCustomFieldRows
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ContactDetailsContent
-import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.ItemSection
 
 @Composable
 internal fun PassIdentityItemDetailsContactSection(
@@ -168,7 +168,7 @@ internal fun PassIdentityItemDetailsContactSection(
     if (hasCustomFields) {
         rows.addCustomFieldRows(
             customFields = customFields,
-            customFieldSection = ItemCustomFieldSection.Identity.Contact,
+            customFieldSection = ItemSection.Identity.Contact,
             customFieldTotps = persistentMapOf(),
             itemColors = itemColors,
             itemDiffs = itemDiffs,

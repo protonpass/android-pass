@@ -87,7 +87,6 @@ fun ItemDetailsScreen(
 
                 is ItemDetailsUiEvent.OnHiddenFieldToggled -> onToggleItemHiddenField(
                     isVisible = uiEvent.isVisible,
-                    hiddenState = uiEvent.state,
                     hiddenFieldType = uiEvent.fieldType,
                     hiddenFieldSection = uiEvent.fieldSection
                 )

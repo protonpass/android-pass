@@ -30,7 +30,7 @@ import proton.android.pass.composecomponents.impl.item.details.rows.addItemDetai
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.addCustomFieldRows
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
-import proton.android.pass.domain.ItemCustomFieldSection
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.WorkDetailsContent
 
@@ -102,7 +102,7 @@ internal fun PassIdentityItemDetailsWorkSection(
     if (hasCustomFields) {
         rows.addCustomFieldRows(
             customFields = customFields,
-            customFieldSection = ItemCustomFieldSection.Identity.Work,
+            customFieldSection = ItemSection.Identity.Work,
             customFieldTotps = persistentMapOf(),
             itemColors = itemColors,
             itemDiffs = itemDiffs,

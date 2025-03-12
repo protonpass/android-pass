@@ -27,11 +27,10 @@ import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.attachments.Attachment
@@ -78,23 +77,23 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
         }
     }
 
-    override fun updateItemContents(
+    override fun updateHiddenFieldsContents(
         itemContents: ItemContents.CreditCard,
-        hiddenFieldType: ItemDetailsFieldType.Hidden,
-        hiddenFieldSection: ItemCustomFieldSection,
-        hiddenState: HiddenState
-    ): ItemContents = when (hiddenFieldType) {
-        ItemDetailsFieldType.Hidden.Cvv -> itemContents.copy(
-            cvv = hiddenState
+        revealedHiddenFields: Map<ItemSection, Set<ItemDetailsFieldType.Hidden>>
+    ): ItemContents {
+        val revealedFields = revealedHiddenFields[ItemSection.CreditCard] ?: emptyList()
+        return itemContents.copy(
+            cvv = updateHiddenStateValue(
+                hiddenState = itemContents.cvv,
+                shouldBeRevealed = revealedFields.contains(ItemDetailsFieldType.Hidden.Cvv),
+                encryptionContextProvider = encryptionContextProvider
+            ),
+            pin = updateHiddenStateValue(
+                hiddenState = itemContents.pin,
+                shouldBeRevealed = revealedFields.contains(ItemDetailsFieldType.Hidden.Pin),
+                encryptionContextProvider = encryptionContextProvider
+            )
         )
-
-        ItemDetailsFieldType.Hidden.Pin -> itemContents.copy(
-            pin = hiddenState
-        )
-
-        is ItemDetailsFieldType.Hidden.CustomField,
-        is ItemDetailsFieldType.Hidden.PrivateKey,
-        ItemDetailsFieldType.Hidden.Password -> itemContents
     }
 
     override fun calculateItemDiffs(

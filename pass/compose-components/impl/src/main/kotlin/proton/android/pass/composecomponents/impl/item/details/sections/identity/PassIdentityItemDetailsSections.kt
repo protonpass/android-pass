@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.datetime.Instant
 import proton.android.pass.common.api.Option
@@ -101,6 +102,7 @@ internal fun PassIdentityItemDetailsSections(
         if (extraSectionContentList.isNotEmpty()) {
             PassItemDetailsExtraSection(
                 extraSectionContents = extraSectionContentList.toPersistentList(),
+                customFieldTotps = persistentMapOf(),
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,
                 onEvent = onEvent

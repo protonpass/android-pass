@@ -401,6 +401,8 @@
     <string name="update_custom_item_item_creation_success">Custom item updated</string>
     <string name="update_custom_item_item_creation_error">Could not update custom item</string>
 
+    <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
+
     <!-- Cannot create items dialog -->
     <string name="cannot_create_items_dialog_title">Cannot create items</string>
     <string name="cannot_create_items_dialog_message">You don\'t have any vaults with editor or admin access. Try creating one in the main app or ask your organization\'s administrator for support.</string>

@@ -23,9 +23,22 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
+import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.datetime.toLocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 object DateFormatUtils {
+
+    fun formatDateFromMillis(pattern: String, epochMillis: Long): String = runCatching {
+        DateTimeFormatter.ofPattern(pattern)
+            .withLocale(Locale.getDefault())
+            .format(
+                Instant.fromEpochMilliseconds(epochMillis)
+                    .toLocalDateTime(TimeZone.currentSystemDefault())
+                    .toJavaLocalDateTime()
+            )
+    }.getOrDefault("")
 
     fun getFormat(
         now: Instant,

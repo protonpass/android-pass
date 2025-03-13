@@ -212,33 +212,33 @@ class UpdateCustomItemViewModel @Inject constructor(
         }
         receivedItem = item.some()
 
-         encryptionContextProvider.withEncryptionContextSuspendable {
-             val formState = when (item.itemType) {
-                 is ItemType.Custom ->
-                     ItemFormState(item.toItemContents<ItemContents.Custom> { decrypt(it) })
-                 is ItemType.SSHKey ->
-                     ItemFormState(item.toItemContents<ItemContents.SSHKey> { decrypt(it) })
-                 is ItemType.WifiNetwork ->
-                     ItemFormState(item.toItemContents<ItemContents.WifiNetwork> { decrypt(it) })
-                 else -> throw IllegalStateException("Unsupported item type")
-             }
+        encryptionContextProvider.withEncryptionContextSuspendable {
+            val formState = when (item.itemType) {
+                is ItemType.Custom ->
+                    ItemFormState(item.toItemContents<ItemContents.Custom> { decrypt(it) })
+                is ItemType.SSHKey ->
+                    ItemFormState(item.toItemContents<ItemContents.SSHKey> { decrypt(it) })
+                is ItemType.WifiNetwork ->
+                    ItemFormState(item.toItemContents<ItemContents.WifiNetwork> { decrypt(it) })
+                else -> throw IllegalStateException("Unsupported item type")
+            }
 
-             originalCustomFields = formState.customFieldList
-             originalSections = formState.sectionList
-             val customFieldsForEdit = formState.customFieldList.map { entry ->
-                 cleanupTotpDataToEdit(entry, this)
-             }
-             val sectionsForEdit = formState.sectionList.map { section ->
-                 section.copy(
-                     customFields = section.customFields.map { entry ->
-                         cleanupTotpDataToEdit(entry, this)
-                     }
-                 )
-             }
-             itemFormState = formState.copy(
-                 customFieldList = customFieldsForEdit,
-                 sectionList = sectionsForEdit
-             )
+            originalCustomFields = formState.customFieldList
+            originalSections = formState.sectionList
+            val customFieldsForEdit = formState.customFieldList.map { entry ->
+                cleanupTotpDataToEdit(entry, this)
+            }
+            val sectionsForEdit = formState.sectionList.map { section ->
+                section.copy(
+                    customFields = section.customFields.map { entry ->
+                        cleanupTotpDataToEdit(entry, this)
+                    }
+                )
+            }
+            itemFormState = formState.copy(
+                customFieldList = customFieldsForEdit,
+                sectionList = sectionsForEdit
+            )
         }
     }
 

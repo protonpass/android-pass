@@ -52,7 +52,7 @@ import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.WifiSecurity
+import proton.android.pass.domain.WifiSecurityType
 import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
@@ -196,7 +196,7 @@ class CreateCustomItemViewModel @Inject constructor(
                 TemplateType.WIFI_NETWORK -> ItemStaticFields.WifiNetwork(
                     ssid = "",
                     password = UIHiddenState.Empty(encrypt("")),
-                    wifiSecurity = WifiSecurity.Unknown
+                    wifiSecurityType = WifiSecurityType.Unknown
                 )
                 else -> ItemStaticFields.Custom
             }

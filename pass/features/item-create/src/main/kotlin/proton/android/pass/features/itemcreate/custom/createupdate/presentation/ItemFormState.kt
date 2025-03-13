@@ -30,7 +30,7 @@ import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.domain.ExtraSectionContent
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.WifiSecurity
+import proton.android.pass.domain.WifiSecurityType
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.common.UIHiddenState
@@ -47,7 +47,7 @@ sealed interface ItemStaticFields : Parcelable {
     data class WifiNetwork(
         val ssid: String,
         val password: UIHiddenState,
-        val wifiSecurity: WifiSecurity
+        val wifiSecurityType: WifiSecurityType
     ) : ItemStaticFields
 
     @Parcelize
@@ -78,7 +78,7 @@ data class ItemFormState(
         itemStaticFields = ItemStaticFields.WifiNetwork(
             ssid = itemContents.ssid,
             password = UIHiddenState.from(itemContents.password),
-            wifiSecurity = itemContents.wifiSecurity
+            wifiSecurityType = itemContents.wifiSecurityType
         ),
         customFieldList = itemContents.customFieldList.map(UICustomFieldContent.Companion::from),
         sectionList = itemContents.sectionContentList.map(::UIExtraSection)
@@ -205,7 +205,7 @@ data class ItemFormState(
             note = "",
             ssid = itemStaticFields.ssid,
             password = itemStaticFields.password.toHiddenState(),
-            wifiSecurity = itemStaticFields.wifiSecurity,
+            wifiSecurityType = itemStaticFields.wifiSecurityType,
             customFieldList = customFieldList.map(UICustomFieldContent::toCustomFieldContent),
             sectionContentList = sectionList.map {
                 ExtraSectionContent(

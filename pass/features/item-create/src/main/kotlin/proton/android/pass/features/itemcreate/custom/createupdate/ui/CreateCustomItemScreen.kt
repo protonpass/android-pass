@@ -41,11 +41,13 @@ import proton.android.pass.composecomponents.impl.attachments.AttachmentContentE
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.WifiSecurityType
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.BaseCustomItemNavigation
+import proton.android.pass.features.itemcreate.custom.createupdate.navigation.BaseCustomItemNavigation.OpenWifiSecurityTypeSelector
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.CreateCustomItemNavigation
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.ClearDraft
@@ -56,19 +58,23 @@ import proton.android.pass.features.itemcreate.custom.createupdate.presentation.
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnPrivateKeyFocusedChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnPublicKeyChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnReceiveTotp
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnReceiveWifiSecurityType
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnSSIDChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnTitleChanged
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnWifiSecurityTypeChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateCustomItemViewModel
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateSpecificIntent
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateSpecificIntent.OnVaultSelected
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.FieldIdentifier
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
+import proton.android.pass.log.api.PassLogger
 
 @Composable
 fun CreateCustomItemScreen(
     modifier: Modifier = Modifier,
     selectVault: Option<ShareId>,
+    selectWifiSecurityType: Option<WifiSecurityType>,
     selectTotp: Triple<Option<String>, Option<Int>, Option<Int>>,
     viewModel: CreateCustomItemViewModel = hiltViewModel(),
     onNavigate: (BaseCustomItemNavigation) -> Unit
@@ -83,6 +89,13 @@ fun CreateCustomItemScreen(
         val (totp, sectionIndex, index) = selectTotp
         if (totp is Some && index is Some) {
             viewModel.processIntent(OnReceiveTotp(totp.value, sectionIndex, index.value))
+        }
+    }
+
+    PassLogger.i("VicLog", selectWifiSecurityType.toString())
+    LaunchedEffect(selectWifiSecurityType) {
+        if (selectWifiSecurityType is Some) {
+            viewModel.processIntent(OnReceiveWifiSecurityType(selectWifiSecurityType.value))
         }
     }
 
@@ -116,19 +129,22 @@ fun CreateCustomItemScreen(
 
                     is ItemContentEvent.OnFieldValueChange -> when (it.field) {
                         FieldChange.Password ->
-                            viewModel.processIntent(OnPasswordChanged(it.value))
+                            viewModel.processIntent(OnPasswordChanged(it.value as String))
 
                         FieldChange.PrivateKey ->
-                            viewModel.processIntent(OnPrivateKeyChanged(it.value))
+                            viewModel.processIntent(OnPrivateKeyChanged(it.value as String))
 
                         FieldChange.PublicKey ->
-                            viewModel.processIntent(OnPublicKeyChanged(it.value))
+                            viewModel.processIntent(OnPublicKeyChanged(it.value as String))
 
                         FieldChange.SSID ->
-                            viewModel.processIntent(OnSSIDChanged(it.value))
+                            viewModel.processIntent(OnSSIDChanged(it.value as String))
+
+                        FieldChange.WifiSecurityType ->
+                            viewModel.processIntent(OnWifiSecurityTypeChanged(it.value as Int))
 
                         FieldChange.Title ->
-                            viewModel.processIntent(OnTitleChanged(it.value))
+                            viewModel.processIntent(OnTitleChanged(it.value as String))
                     }
 
                     is ItemContentEvent.OnFieldFocusChange -> when (it.field) {
@@ -258,6 +274,9 @@ fun CreateCustomItemScreen(
 
                     ItemContentEvent.OnPasteTOTPSecret ->
                         viewModel.processIntent(BaseCustomItemCommonIntent.PasteTOTPSecret)
+
+                    is ItemContentEvent.OnOpenWifiSecurityType ->
+                        onNavigate(OpenWifiSecurityTypeSelector(it.wifiSecurityType))
 
                 }
             }

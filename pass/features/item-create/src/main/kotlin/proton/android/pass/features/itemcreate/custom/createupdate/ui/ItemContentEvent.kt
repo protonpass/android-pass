@@ -21,10 +21,11 @@ package proton.android.pass.features.itemcreate.custom.createupdate.ui
 import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.WifiSecurityType
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.FieldIdentifier
 
 enum class FieldChange {
-    Title, SSID, Password, PrivateKey, PublicKey
+    Title, SSID, Password, WifiSecurityType, PrivateKey, PublicKey
 }
 
 sealed interface ItemContentEvent {
@@ -33,7 +34,7 @@ sealed interface ItemContentEvent {
     @JvmInline
     value class Submit(val shareId: ShareId) : ItemContentEvent
 
-    data class OnFieldValueChange(val field: FieldChange, val value: String) : ItemContentEvent
+    data class OnFieldValueChange(val field: FieldChange, val value: Any) : ItemContentEvent
 
     data class OnFieldFocusChange(val field: FieldChange, val isFocused: Boolean) : ItemContentEvent
 
@@ -73,4 +74,7 @@ sealed interface ItemContentEvent {
     data object OnPasteTOTPSecret : ItemContentEvent
 
     data class OnOpenTOTPScanner(val sectionIndex: Option<Int>, val index: Int) : ItemContentEvent
+
+    @JvmInline
+    value class OnOpenWifiSecurityType(val wifiSecurityType: WifiSecurityType) : ItemContentEvent
 }

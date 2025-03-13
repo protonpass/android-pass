@@ -316,6 +316,7 @@
 
     <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
 
+    <string name="wifi_security_unspecified" translatable="false">Unspecified</string>
     <string name="wifi_security_wpa" translatable="false">WPA</string>
     <string name="wifi_security_wpa2" translatable="false">WPA2</string>
     <string name="wifi_security_wpa3" translatable="false">WPA3</string>

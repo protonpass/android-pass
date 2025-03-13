@@ -122,6 +122,8 @@ import proton.android.pass.features.itemcreate.custom.createupdate.navigation.cr
 import proton.android.pass.features.itemcreate.custom.selecttemplate.navigation.SelectTemplateNavItem
 import proton.android.pass.features.itemcreate.custom.selecttemplate.navigation.SelectTemplateNavigation
 import proton.android.pass.features.itemcreate.custom.selecttemplate.navigation.selectTemplateGraph
+import proton.android.pass.features.itemcreate.custom.selectwifisecuritytype.navigation.SelectWifiSecurityTypeNavItem
+import proton.android.pass.features.itemcreate.custom.selectwifisecuritytype.navigation.WIFI_SECURITY_TYPE_PARAMETER_KEY
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameDialogNavItem
 import proton.android.pass.features.itemcreate.dialogs.customfield.EditCustomFieldNameDialogNavItem
 import proton.android.pass.features.itemcreate.identity.navigation.BaseIdentityNavigation
@@ -301,7 +303,10 @@ fun NavGraphBuilder.appGraph(
                                 shareId = it.shareId
                             )
 
-                        ItemTypeUiState.Login -> CreateLoginNavItem to CreateLoginNavItem.createNavRoute(it.shareId)
+                        ItemTypeUiState.Login -> CreateLoginNavItem to CreateLoginNavItem.createNavRoute(
+                            it.shareId
+                        )
+
                         ItemTypeUiState.Note -> CreateNote to CreateNote.createNavRoute(it.shareId)
                         ItemTypeUiState.Alias -> CreateAlias to CreateAlias.createNavRoute(it.shareId)
                         ItemTypeUiState.Password ->
@@ -314,6 +319,7 @@ fun NavGraphBuilder.appGraph(
 
                         ItemTypeUiState.Identity ->
                             CreateIdentityNavItem to CreateIdentityNavItem.createNavRoute(it.shareId)
+
                         ItemTypeUiState.Custom ->
                             SelectTemplateNavItem to SelectTemplateNavItem.createNavRoute(it.shareId)
                     }
@@ -1204,6 +1210,7 @@ fun NavGraphBuilder.appGraph(
 
                 CreateAliasNavigation.SelectMailbox ->
                     appNavigator.navigate(AliasSelectMailboxBottomSheetNavItem)
+
                 CreateAliasNavigation.SelectSuffix ->
                     appNavigator.navigate(AliasSelectSuffixBottomSheetNavItem)
 
@@ -1226,6 +1233,7 @@ fun NavGraphBuilder.appGraph(
                 UpdateAliasNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 UpdateAliasNavigation.SelectMailbox ->
                     appNavigator.navigate(AliasSelectMailboxBottomSheetNavItem)
+
                 UpdateAliasNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
                 is UpdateAliasNavigation.OpenAttachmentOptions ->
                     appNavigator.navigate(
@@ -1400,6 +1408,7 @@ fun NavGraphBuilder.appGraph(
                 destination = SelectVaultBottomsheet,
                 route = SelectVaultBottomsheet.createNavRoute(it.shareId)
             )
+
             is BaseCustomItemNavigation.AddCustomField -> dismissBottomSheet {
                 val prefix = CustomFieldPrefix.fromCustomItem(backDestination)
                 appNavigator.navigate(
@@ -1409,6 +1418,7 @@ fun NavGraphBuilder.appGraph(
                     )
                 )
             }
+
             is BaseCustomItemNavigation.CustomFieldOptions -> {
                 val prefix = CustomFieldPrefix.fromCustomItem(backDestination)
                 appNavigator.navigate(
@@ -1420,6 +1430,7 @@ fun NavGraphBuilder.appGraph(
                     )
                 )
             }
+
             is BaseCustomItemNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
                 val prefix = CustomFieldPrefix.fromCustomItem(backDestination)
                 appNavigator.navigate(
@@ -1431,6 +1442,7 @@ fun NavGraphBuilder.appGraph(
                     backDestination = backDestination
                 )
             }
+
             is BaseCustomItemNavigation.EditCustomField -> dismissBottomSheet {
                 val prefix = CustomFieldPrefix.fromCustomItem(backDestination)
                 appNavigator.navigate(
@@ -1446,6 +1458,7 @@ fun NavGraphBuilder.appGraph(
 
             BaseCustomItemNavigation.AddAttachment ->
                 appNavigator.navigate(AddAttachmentNavItem)
+
             is BaseCustomItemNavigation.OpenAttachmentOptions ->
                 appNavigator.navigate(
                     destination = AttachmentOptionsNavItem,
@@ -1455,28 +1468,34 @@ fun NavGraphBuilder.appGraph(
                         attachmentId = it.attachmentId
                     )
                 )
+
             is BaseCustomItemNavigation.OpenDraftAttachmentOptions ->
                 appNavigator.navigate(
                     destination = AttachmentOptionsNavItem,
                     route = AttachmentOptionsNavItem.createNavRoute(it.uri)
                 )
+
             BaseCustomItemNavigation.UpsellAttachments ->
                 appNavigator.navigate(
                     destination = UpsellNavItem,
                     route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
                 )
+
             is BaseCustomItemNavigation.DeleteAllAttachments ->
                 appNavigator.navigate(
                     destination = DeleteAllAttachmentsDialogNavItem,
                     route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
                 )
+
             BaseCustomItemNavigation.AddSection ->
                 appNavigator.navigate(CustomSectionNameDialogNavItem)
+
             is BaseCustomItemNavigation.SectionOptions ->
                 appNavigator.navigate(
                     destination = CustomSectionOptionsBottomSheetNavItem,
                     route = CustomSectionOptionsBottomSheetNavItem.buildRoute(it.index, it.title)
                 )
+
             is BaseCustomItemNavigation.EditSection -> dismissBottomSheet {
                 appNavigator.navigate(
                     destination = EditCustomSectionNameDialogNavItem,
@@ -1484,6 +1503,7 @@ fun NavGraphBuilder.appGraph(
                     backDestination = backDestination
                 )
             }
+
             BaseCustomItemNavigation.RemoveCustomField -> dismissBottomSheet {}
             BaseCustomItemNavigation.RemoveSection -> dismissBottomSheet {}
             is UpdateCustomItemNavigation.ItemUpdated -> appNavigator.navigate(
@@ -1499,6 +1519,7 @@ fun NavGraphBuilder.appGraph(
                 destination = CameraTotpNavItem,
                 route = CameraTotpNavItem.createNavRoute(it.sectionIndex, it.index.some())
             )
+
             is BaseCustomItemNavigation.OpenImagePicker -> appNavigator.navigate(
                 destination = PhotoPickerTotpNavItem,
                 route = PhotoPickerTotpNavItem.createNavRoute(it.sectionIndex, it.index.some()),
@@ -1508,6 +1529,23 @@ fun NavGraphBuilder.appGraph(
             BaseCustomItemNavigation.TotpCancel -> appNavigator.navigateBack()
             is BaseCustomItemNavigation.TotpSuccess ->
                 appNavigator.navigateBackWithResult(it.results)
+
+            is BaseCustomItemNavigation.OpenWifiSecurityTypeSelector ->
+                appNavigator.navigate(
+                    destination = SelectWifiSecurityTypeNavItem,
+                    route = SelectWifiSecurityTypeNavItem.createNavRoute(it.wifiSecurityType)
+                )
+
+            is BaseCustomItemNavigation.WifiSecurityTypeSelected -> {
+                dismissBottomSheet {
+                    appNavigator.setResult(
+                        mapOf(
+                            WIFI_SECURITY_TYPE_PARAMETER_KEY
+                                to it.wifiSecurityType.id
+                        )
+                    )
+                }
+            }
         }
     }
     itemDetailGraph(
@@ -1742,6 +1780,7 @@ fun NavGraphBuilder.appGraph(
                             shareId = itemDetailsNavDestination.shareId,
                             itemId = itemDetailsNavDestination.itemId
                         )
+
                     ItemCategory.Password,
                     ItemCategory.Unknown -> throw IllegalStateException(
                         "Cannot edit items with category: ${itemDetailsNavDestination.itemCategory}"
@@ -2571,8 +2610,10 @@ fun NavGraphBuilder.appGraph(
                 SimpleLoginSyncNavDestination.BackToOrigin -> when {
                     appNavigator.hasDestinationInStack(SimpleLoginSyncManagementNavItem) ->
                         appNavigator.popUpTo(SimpleLoginSyncManagementNavItem)
+
                     appNavigator.hasDestinationInStack(CreateAlias) ->
                         appNavigator.popUpTo(CreateAlias)
+
                     appNavigator.hasDestinationInStack(EditAlias) ->
                         appNavigator.popUpTo(EditAlias)
                 }

@@ -18,17 +18,21 @@
 
 package proton.android.pass.domain
 
+import proton.android.pass.domain.HiddenState.Concealed
+import proton.android.pass.domain.HiddenState.Empty
+import proton.android.pass.domain.HiddenState.Revealed
+
 fun CustomField.toContent(decrypt: (String) -> String, isConcealed: Boolean): CustomFieldContent? = when (this) {
     CustomField.Unknown -> null
     is CustomField.Hidden -> {
         val hiddenFieldByteArray = decrypt(value)
         val hiddenState = if (hiddenFieldByteArray.isEmpty()) {
-            HiddenState.Empty(value)
+            Empty(value)
         } else {
             if (isConcealed) {
-                HiddenState.Concealed(value)
+                Concealed(value)
             } else {
-                HiddenState.Revealed(value, hiddenFieldByteArray)
+                Revealed(value, hiddenFieldByteArray)
             }
         }
         CustomFieldContent.Hidden(label = this.label, value = hiddenState)
@@ -41,14 +45,12 @@ fun CustomField.toContent(decrypt: (String) -> String, isConcealed: Boolean): Cu
     is CustomField.Totp -> {
         val totpFieldByteArray = decrypt(value)
         val hiddenState = if (totpFieldByteArray.isEmpty()) {
-            HiddenState.Empty(value)
+            Empty(value)
         } else {
-            if (isConcealed) {
-                HiddenState.Concealed(value)
-            } else {
-                HiddenState.Revealed(value, totpFieldByteArray)
-            }
+            Revealed(value, totpFieldByteArray)
         }
         CustomFieldContent.Totp(label = this.label, value = hiddenState)
     }
+
+    is CustomField.Date -> CustomFieldContent.Date(label = this.label, value = this.value)
 }

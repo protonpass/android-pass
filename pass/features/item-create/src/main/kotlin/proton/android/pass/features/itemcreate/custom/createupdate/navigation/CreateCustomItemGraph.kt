@@ -31,12 +31,16 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.WifiSecurityType
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.customFieldBottomSheetGraph
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
 import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
 import proton.android.pass.features.itemcreate.common.customsection.ExtraSectionNavigation
 import proton.android.pass.features.itemcreate.common.customsection.extraSectionGraph
 import proton.android.pass.features.itemcreate.custom.createupdate.ui.CreateCustomItemScreen
+import proton.android.pass.features.itemcreate.custom.selectwifisecuritytype.navigation.WIFI_SECURITY_TYPE_PARAMETER_KEY
+import proton.android.pass.features.itemcreate.custom.selectwifisecuritytype.navigation.SelectWifiSecurityTypeNavItem
+import proton.android.pass.features.itemcreate.custom.selectwifisecuritytype.ui.SelectWifiSecurityTypeBottomsheet
 import proton.android.pass.features.itemcreate.custom.shared.TemplateType
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameNavigation
 import proton.android.pass.features.itemcreate.dialogs.customfield.customFieldNameDialogGraph
@@ -47,6 +51,7 @@ import proton.android.pass.features.itemcreate.totp.createTotpGraph
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.OptionalNavArgId
+import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.toPath
 
@@ -112,6 +117,10 @@ fun NavGraphBuilder.createCustomItemGraph(onNavigate: (BaseCustomItemNavigation)
                 navBackStack.savedStateHandle.remove<Int?>(INDEX_NAV_PARAMETER_KEY)
             }
 
+            val wifiSecurityType by navBackStack.savedStateHandle
+                .getStateFlow<Int?>(WIFI_SECURITY_TYPE_PARAMETER_KEY, null)
+                .collectAsStateWithLifecycle()
+
             CreateCustomItemScreen(
                 selectVault = selectVault.toOption().map(::ShareId),
                 selectTotp = Triple(
@@ -119,6 +128,7 @@ fun NavGraphBuilder.createCustomItemGraph(onNavigate: (BaseCustomItemNavigation)
                     second = navTotpSectionIndex.takeIf { value: Int? -> value != null && value >= 0 }.toOption(),
                     third = navTotpIndex.takeIf { value: Int? -> value != null && value >= 0 }.toOption()
                 ),
+                selectWifiSecurityType = wifiSecurityType.toOption().map { WifiSecurityType.fromId(it) },
                 onNavigate = onNavigate
             )
         }
@@ -169,6 +179,13 @@ fun NavGraphBuilder.createCustomItemGraph(onNavigate: (BaseCustomItemNavigation)
                 )
             }
         )
+        bottomSheet(SelectWifiSecurityTypeNavItem) {
+            SelectWifiSecurityTypeBottomsheet(
+                onSelect = {
+                    onNavigate(BaseCustomItemNavigation.WifiSecurityTypeSelected(it))
+                }
+            )
+        }
     }
 }
 

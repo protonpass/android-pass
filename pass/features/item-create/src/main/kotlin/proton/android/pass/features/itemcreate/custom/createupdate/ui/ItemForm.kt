@@ -210,7 +210,8 @@ fun ItemForm(
                         isDetail = false,
                         itemColors = passItemColors(ItemCategory.Custom),
                         onEvent = { onEvent(ItemContentEvent.OnAttachmentEvent(it)) }
-                )}
+                    )
+                }
             }
             if (isCurrentStickyVisible) {
                 item { Spacer(modifier = Modifier.height(48.dp)) }

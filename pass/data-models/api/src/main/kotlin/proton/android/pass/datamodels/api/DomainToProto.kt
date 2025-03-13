@@ -243,7 +243,7 @@ fun ItemContents.serializeToProto(
                     .toBuilder()
                     .setSsid(ssid)
                     .setPassword(encryptionContext.decrypt(password.encrypted))
-                    .setSecurityValue(wifiSecurity.id)
+                    .setSecurityValue(wifiSecurityType.id)
                     .clearSections()
                     .addAllSections(
                         sectionContentList.map {

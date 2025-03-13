@@ -28,11 +28,13 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.WifiSecurityType
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.customFieldBottomSheetGraph
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
 import proton.android.pass.features.itemcreate.common.customsection.ExtraSectionNavigation
 import proton.android.pass.features.itemcreate.common.customsection.extraSectionGraph
 import proton.android.pass.features.itemcreate.custom.createupdate.ui.UpdateCustomItemScreen
+import proton.android.pass.features.itemcreate.custom.selectwifisecuritytype.navigation.WIFI_SECURITY_TYPE_PARAMETER_KEY
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameNavigation
 import proton.android.pass.features.itemcreate.dialogs.customfield.customFieldNameDialogGraph
 import proton.android.pass.features.itemcreate.totp.INDEX_NAV_PARAMETER_KEY
@@ -81,12 +83,18 @@ fun NavGraphBuilder.updateCustomItemGraph(onNavigate: (BaseCustomItemNavigation)
             LaunchedEffect(navTotpIndex) {
                 navBackStack.savedStateHandle.remove<Int?>(INDEX_NAV_PARAMETER_KEY)
             }
+
+            val wifiSecurityType by navBackStack.savedStateHandle
+                .getStateFlow<Int?>(WIFI_SECURITY_TYPE_PARAMETER_KEY, null)
+                .collectAsStateWithLifecycle()
+
             UpdateCustomItemScreen(
                 selectTotp = Triple(
                     first = navTotpUri.toOption(),
                     second = navTotpSectionIndex.takeIf { value: Int? -> value != null && value >= 0 }.toOption(),
                     third = navTotpIndex.takeIf { value: Int? -> value != null && value >= 0 }.toOption()
                 ),
+                selectWifiSecurityType = wifiSecurityType.toOption().map { WifiSecurityType.fromId(it) },
                 onNavigate = onNavigate
             )
         }

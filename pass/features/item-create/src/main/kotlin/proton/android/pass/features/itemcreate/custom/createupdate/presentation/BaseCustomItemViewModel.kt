@@ -51,6 +51,7 @@ import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.WifiSecurityType
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
@@ -80,6 +81,9 @@ sealed interface BaseCustomItemCommonIntent : BaseItemFormIntent {
 
     @JvmInline
     value class OnSSIDChanged(val value: String) : BaseCustomItemCommonIntent
+
+    @JvmInline
+    value class OnWifiSecurityTypeChanged(val value: Int) : BaseCustomItemCommonIntent
 
     @JvmInline
     value class OnPasswordChanged(val value: String) : BaseCustomItemCommonIntent
@@ -128,6 +132,8 @@ sealed interface BaseCustomItemCommonIntent : BaseItemFormIntent {
         val sectionIndex: Option<Int>,
         val index: Int
     ) : BaseCustomItemCommonIntent
+
+    data class OnReceiveWifiSecurityType(val type: WifiSecurityType) : BaseCustomItemCommonIntent
 }
 
 @Suppress("TooManyFunctions", "LargeClass")
@@ -182,6 +188,8 @@ abstract class BaseCustomItemViewModel(
             is BaseCustomItemCommonIntent.OnPrivateKeyChanged -> onPrivateKeyChange(intent.value)
             is BaseCustomItemCommonIntent.OnPublicKeyChanged -> onPublicKeyChange(intent.value)
             is BaseCustomItemCommonIntent.OnSSIDChanged -> onSSIDChange(intent.value)
+            is BaseCustomItemCommonIntent.OnWifiSecurityTypeChanged ->
+                onWifiSecurityTypeChange(intent.value)
             is BaseCustomItemCommonIntent.OnPasswordFocusedChanged ->
                 onPasswordFocusedChange(intent.isFocused)
 
@@ -191,7 +199,14 @@ abstract class BaseCustomItemViewModel(
             BaseCustomItemCommonIntent.PasteTOTPSecret -> onPasteTOTPSecret()
             is BaseCustomItemCommonIntent.OnReceiveTotp ->
                 onReceiveTotp(intent.uri, intent.sectionIndex, intent.index)
+            is BaseCustomItemCommonIntent.OnReceiveWifiSecurityType ->
+                onReceiveWifiSecurityType(intent.type)
         }
+    }
+
+    protected fun onReceiveWifiSecurityType(type: WifiSecurityType) {
+        onUserEditedContent()
+        onWifiSecurityTypeChange(type.id)
     }
 
     private fun onReceiveTotp(
@@ -625,6 +640,12 @@ abstract class BaseCustomItemViewModel(
     private fun onSSIDChange(value: String) {
         val updatedStaticFields = (itemFormState.itemStaticFields as ItemStaticFields.WifiNetwork)
             .copy(ssid = value)
+        itemFormState = itemFormState.copy(itemStaticFields = updatedStaticFields)
+    }
+
+    private fun onWifiSecurityTypeChange(value: Int) {
+        val updatedStaticFields = (itemFormState.itemStaticFields as ItemStaticFields.WifiNetwork)
+            .copy(wifiSecurityType = WifiSecurityType.fromId(value))
         itemFormState = itemFormState.copy(itemStaticFields = updatedStaticFields)
     }
 

@@ -54,5 +54,11 @@ fun WifiNetworkContent(
                 onEvent(ItemContentEvent.OnFieldFocusChange(FieldChange.Password, it))
             }
         )
+        PassDivider()
+        WifiSecurityInput(
+            wifiSecurityType = itemStaticFields.wifiSecurityType,
+            isEditAllowed = isEditAllowed,
+            onClick = { onEvent(ItemContentEvent.OnOpenWifiSecurityType(it)) }
+        )
     }
 }

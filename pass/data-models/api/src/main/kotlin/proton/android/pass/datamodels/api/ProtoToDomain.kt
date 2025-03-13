@@ -30,6 +30,7 @@ import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.PasskeyCreationData
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.PersonalDetails
+import proton.android.pass.domain.WifiSecurity
 import proton.android.pass.domain.WorkDetails
 import proton.android.pass.domain.entity.AppName
 import proton.android.pass.domain.entity.PackageInfo
@@ -187,6 +188,15 @@ private fun createWifiNetworkItemType(parsed: ItemV1.Item, context: EncryptionCo
     ItemType.WifiNetwork(
         ssid = parsed.content.wifi.ssid,
         password = context.encrypt(parsed.content.wifi.password),
+        wifiSecurity = when (parsed.content.wifi.security) {
+            ItemV1.WifiSecurity.WPA -> WifiSecurity.WPA
+            ItemV1.WifiSecurity.WPA2 -> WifiSecurity.WPA2
+            ItemV1.WifiSecurity.WPA3 -> WifiSecurity.WPA3
+            ItemV1.WifiSecurity.WEP -> WifiSecurity.WEP
+            ItemV1.WifiSecurity.UnspecifiedWifiSecurity,
+            ItemV1.WifiSecurity.UNRECOGNIZED,
+            null -> WifiSecurity.Unknown
+        },
         customFields = parsed.extraFieldsList.map { field ->
             field.toDomain(context)
         },

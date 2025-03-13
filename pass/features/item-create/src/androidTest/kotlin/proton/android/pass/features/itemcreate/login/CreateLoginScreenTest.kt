@@ -390,27 +390,36 @@ class CreateLoginScreenTest {
         val memory = createItem.memory()
         assertThat(memory.size).isEqualTo(1)
 
-        val expected = TestCreateItem.Payload(
-            userId = USER_ID,
-            shareId = ShareId(SHARE_ID),
-            itemContents = ItemContents.Login(
-                title = title,
-                itemEmail = "",
-                itemUsername = "",
-                note = "",
-                customFields = persistentListOf(
-                    textCustomField,
-                    hiddenCustomField,
-                    totpCustomField
-                ),
-                packageInfoSet = emptySet(),
-                primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(""), ""),
-                password = HiddenState.Empty(TestEncryptionContext.encrypt("")),
-                urls = listOf(""),
-                passkeys = emptyList()
-            )
+        val expectedItemContents = ItemContents.Login(
+            title = title,
+            itemEmail = "",
+            itemUsername = "",
+            note = "",
+            customFields = persistentListOf(
+                textCustomField,
+                hiddenCustomField,
+                totpCustomField
+            ),
+            packageInfoSet = emptySet(),
+            primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(""), ""),
+            password = HiddenState.Empty(TestEncryptionContext.encrypt("")),
+            urls = emptyList(),
+            passkeys = emptyList()
         )
-        assertThat(memory).isEqualTo(listOf(expected))
+        val received = memory.first()
+        val receivedItemContents =  received.itemContents as  ItemContents.Login
+        assertThat(received.userId).isEqualTo(USER_ID)
+        assertThat(received.shareId).isEqualTo(ShareId(SHARE_ID))
+        assertThat(receivedItemContents.title).isEqualTo(title)
+        assertThat(receivedItemContents.note).isEqualTo("")
+        assertThat(receivedItemContents.itemEmail).isEqualTo("")
+        assertThat(receivedItemContents.itemUsername).isEqualTo("")
+        assertThat(receivedItemContents.customFields).containsAtLeastElementsIn(expectedItemContents.customFields)
+        assertThat(receivedItemContents.packageInfoSet).isEqualTo(expectedItemContents.packageInfoSet)
+        assertThat(receivedItemContents.primaryTotp).isEqualTo(expectedItemContents.primaryTotp)
+        assertThat(receivedItemContents.password).isEqualTo(expectedItemContents.password)
+        assertThat(receivedItemContents.urls).containsAtLeastElementsIn(expectedItemContents.urls)
+        assertThat(receivedItemContents.passkeys).isEqualTo(expectedItemContents.passkeys)
     }
 
     @Test

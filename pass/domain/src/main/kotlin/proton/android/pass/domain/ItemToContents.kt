@@ -39,6 +39,7 @@ fun toItemContents(
     )
 }
 
+@Suppress("UNCHECKED_CAST")
 fun <T : ItemContents> Item.toItemContents(decrypt: (String) -> String): T = when (val type = this.itemType) {
     is ItemType.Alias -> createAlias(decrypt, title, note, type, flags.isAliasDisabled())
     is ItemType.Login -> createLogin(decrypt, title, note, type)

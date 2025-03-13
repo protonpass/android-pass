@@ -50,7 +50,6 @@ import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
-import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.WifiSecurityType
 import proton.android.pass.features.itemcreate.ItemCreate
@@ -183,7 +182,7 @@ class CreateCustomItemViewModel @Inject constructor(
         val (fields, staticFields) = encryptionContextProvider.withEncryptionContext {
             val fields = templateType.fields.map {
                 UICustomFieldContent.createCustomField(
-                    type = if (it.isHidden) CustomFieldType.Hidden else CustomFieldType.Text,
+                    type = it.type,
                     label = context.getString(it.nameResId),
                     encryptionContext = this
                 )

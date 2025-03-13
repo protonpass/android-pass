@@ -68,7 +68,6 @@ import proton.android.pass.features.itemcreate.custom.createupdate.presentation.
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.FieldIdentifier
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
-import proton.android.pass.log.api.PassLogger
 
 @Composable
 fun CreateCustomItemScreen(
@@ -92,7 +91,6 @@ fun CreateCustomItemScreen(
         }
     }
 
-    PassLogger.i("VicLog", selectWifiSecurityType.toString())
     LaunchedEffect(selectWifiSecurityType) {
         if (selectWifiSecurityType is Some) {
             viewModel.processIntent(OnReceiveWifiSecurityType(selectWifiSecurityType.value))

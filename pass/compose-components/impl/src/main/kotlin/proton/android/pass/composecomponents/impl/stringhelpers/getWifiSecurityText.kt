@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,22 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.alias
+package proton.android.pass.composecomponents.impl.stringhelpers
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.domain.WifiSecurityType
 
 @Composable
-internal fun AliasSelector(
-    modifier: Modifier = Modifier,
-    contentText: String,
-    enabled: Boolean,
-    onClick: () -> Unit
-) {
-    Selector(
-        modifier = modifier,
-        text = contentText,
-        enabled = enabled,
-        onClick = onClick
-    )
+fun getWifiSecurityTypeText(it: WifiSecurityType) = when (it) {
+    WifiSecurityType.Unknown -> stringResource(R.string.wifi_security_unspecified)
+    WifiSecurityType.WPA -> stringResource(R.string.wifi_security_wpa)
+    WifiSecurityType.WPA2 -> stringResource(R.string.wifi_security_wpa2)
+    WifiSecurityType.WPA3 -> stringResource(R.string.wifi_security_wpa3)
+    WifiSecurityType.WEP -> stringResource(R.string.wifi_security_wep)
 }

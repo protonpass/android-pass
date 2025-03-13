@@ -36,6 +36,7 @@ import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailsHiddenFieldRow
+import proton.android.pass.composecomponents.impl.stringhelpers.getWifiSecurityTypeText
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.HiddenState
@@ -103,17 +104,10 @@ fun PassWifiNetworkMainSection(
             }
         )
         PassDivider()
-        val wifiSecurityTypeSubtitle = when (contents.wifiSecurityType) {
-            WifiSecurityType.Unknown -> ""
-            WifiSecurityType.WPA -> stringResource(R.string.wifi_security_wpa)
-            WifiSecurityType.WPA2 -> stringResource(R.string.wifi_security_wpa2)
-            WifiSecurityType.WPA3 -> stringResource(R.string.wifi_security_wpa3)
-            WifiSecurityType.WEP -> stringResource(R.string.wifi_security_wep)
-        }
         PassItemDetailFieldRow(
-            icon = CoreR.drawable.ic_proton_text_align_left,
+            icon = CoreR.drawable.ic_proton_key,
             title = stringResource(R.string.item_details_wifi_network_label_security),
-            subtitle = wifiSecurityTypeSubtitle,
+            subtitle = getWifiSecurityTypeText(contents.wifiSecurityType),
             itemColors = itemColors,
             itemDiffType = itemDiffs.wifiSecurity
         )
@@ -129,7 +123,7 @@ fun PassWifiNetworkMainSectionPreview(@PreviewParameter(ThemePreviewProvider::cl
                 contents = ItemContents.WifiNetwork(
                     ssid = "SSID",
                     password = HiddenState.Empty(""),
-                    wifiSecurityType = WifiSecurityType.Unknown,
+                    wifiSecurityType = WifiSecurityType.WPA,
                     note = "",
                     title = "",
                     customFieldList = emptyList(),

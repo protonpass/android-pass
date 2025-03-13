@@ -308,7 +308,6 @@
 
     <!-- WiFi Network Fields -->
     <string name="template_wifi_network_field_ssid">SSID</string>
-    <string name="template_wifi_network_field_security_type">Security Type</string>
     <string name="template_wifi_network_field_note">Note</string>
 
     <!-- Bank Account Fields -->

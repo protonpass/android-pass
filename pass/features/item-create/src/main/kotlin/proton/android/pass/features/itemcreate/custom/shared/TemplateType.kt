@@ -21,6 +21,7 @@ package proton.android.pass.features.itemcreate.custom.shared
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import proton.android.pass.features.itemcreate.R
+import proton.android.pass.features.itemcreate.custom.shared.TemplateType.entries
 import me.proton.core.presentation.compose.R as CoreR
 
 data class Field(@StringRes val nameResId: Int, val isHidden: Boolean)
@@ -103,7 +104,6 @@ enum class TemplateType(
         titleResId = R.string.template_item_wifi_network,
         iconResId = CoreR.drawable.ic_proton_shield_2_bolt,
         fields = listOf(
-            Field(R.string.template_wifi_network_field_security_type, false),
             Field(R.string.template_wifi_network_field_note, false)
         )
     ),

@@ -254,6 +254,7 @@ sealed class ItemContents {
         override val note: String,
         val ssid: String,
         val password: HiddenState,
+        val wifiSecurity: WifiSecurity,
         val customFieldList: List<CustomFieldContent>,
         val sectionContentList: List<ExtraSectionContent>
     ) : ItemContents() {

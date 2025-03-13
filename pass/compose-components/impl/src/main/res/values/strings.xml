@@ -200,6 +200,7 @@
 
     <string name="item_details_wifi_network_label_ssid">SSID</string>
     <string name="item_details_wifi_network_label_password">Password</string>
+    <string name="item_details_wifi_network_label_security">Security</string>
     <string name="item_details_ssh_key_label_public_key">Public key</string>
     <string name="item_details_ssh_key_label_private_key">Private key</string>
 
@@ -314,5 +315,10 @@
     </plurals>
 
     <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
+
+    <string name="wifi_security_wpa" translatable="false">WPA</string>
+    <string name="wifi_security_wpa2" translatable="false">WPA2</string>
+    <string name="wifi_security_wpa3" translatable="false">WPA3</string>
+    <string name="wifi_security_wep" translatable="false">WEP</string>
 
 </resources>

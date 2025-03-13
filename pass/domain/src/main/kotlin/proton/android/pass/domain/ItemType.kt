@@ -160,6 +160,14 @@ data class ExtraSection(
     val customFields: List<CustomField>
 )
 
+enum class WifiSecurity(val id: Int) {
+    Unknown(0),
+    WPA(1),
+    WPA2(2),
+    WPA3(3),
+    WEP(4)
+}
+
 @Serializable
 sealed interface ItemType {
 
@@ -210,6 +218,7 @@ sealed interface ItemType {
     data class WifiNetwork(
         val ssid: String,
         val password: EncryptedString,
+        val wifiSecurity: WifiSecurity,
         val customFields: List<CustomField>,
         val extraSections: List<ExtraSection>
     ) : ItemType

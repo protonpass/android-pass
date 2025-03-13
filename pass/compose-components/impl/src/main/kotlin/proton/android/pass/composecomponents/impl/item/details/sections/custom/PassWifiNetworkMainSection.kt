@@ -40,8 +40,9 @@ import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.ItemSection
+import proton.android.pass.domain.WifiSecurity
 import proton.android.pass.domain.items.ItemCategory
 import me.proton.core.presentation.R as CoreR
 
@@ -101,6 +102,21 @@ fun PassWifiNetworkMainSection(
                 )
             }
         )
+        PassDivider()
+        val wifiSecuritySubtitle = when (contents.wifiSecurity) {
+            WifiSecurity.Unknown -> ""
+            WifiSecurity.WPA -> stringResource(R.string.wifi_security_wpa)
+            WifiSecurity.WPA2 -> stringResource(R.string.wifi_security_wpa2)
+            WifiSecurity.WPA3 -> stringResource(R.string.wifi_security_wpa3)
+            WifiSecurity.WEP -> stringResource(R.string.wifi_security_wep)
+        }
+        PassItemDetailFieldRow(
+            icon = CoreR.drawable.ic_proton_text_align_left,
+            title = stringResource(R.string.item_details_wifi_network_label_security),
+            subtitle = wifiSecuritySubtitle,
+            itemColors = itemColors,
+            itemDiffType = itemDiffs.wifiSecurity
+        )
     }
 }
 
@@ -113,6 +129,7 @@ fun PassWifiNetworkMainSectionPreview(@PreviewParameter(ThemePreviewProvider::cl
                 contents = ItemContents.WifiNetwork(
                     ssid = "SSID",
                     password = HiddenState.Empty(""),
+                    wifiSecurity = WifiSecurity.Unknown,
                     note = "",
                     title = "",
                     customFieldList = emptyList(),

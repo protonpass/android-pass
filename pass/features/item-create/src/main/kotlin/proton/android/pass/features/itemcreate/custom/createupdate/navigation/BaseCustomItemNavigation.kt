@@ -22,6 +22,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.WifiSecurityType
 import proton.android.pass.domain.attachments.AttachmentId
 import java.net.URI
 
@@ -85,5 +86,11 @@ sealed interface BaseCustomItemNavigation {
     data object TotpCancel : BaseCustomItemNavigation
 
     data class OpenImagePicker(val sectionIndex: Option<Int>, val index: Int) : BaseCustomItemNavigation
+
+    @JvmInline
+    value class OpenWifiSecurityTypeSelector(val wifiSecurityType: WifiSecurityType) : BaseCustomItemNavigation
+
+    @JvmInline
+    value class WifiSecurityTypeSelected(val wifiSecurityType: WifiSecurityType) : BaseCustomItemNavigation
 
 }

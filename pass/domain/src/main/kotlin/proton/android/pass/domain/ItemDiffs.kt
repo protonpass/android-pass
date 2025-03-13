@@ -165,6 +165,7 @@ sealed interface ItemDiffs {
         override val note: ItemDiffType = ItemDiffType.None,
         val ssid: ItemDiffType = ItemDiffType.None,
         val password: ItemDiffType = ItemDiffType.None,
+        val wifiSecurity: ItemDiffType = ItemDiffType.None,
         override val customFields: List<ItemDiffType> = emptyList(),
         override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap(),
         private val extraCustomFields: List<List<ItemDiffType>> = emptyList()

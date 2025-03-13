@@ -267,6 +267,7 @@ private fun createWifiNetWork(
     note = encryptionContext.decrypt(note),
     ssid = type.ssid,
     password = concealedOrEmpty(type.password, encryptionContext),
+    wifiSecurity = type.wifiSecurity,
     customFieldList = type.customFields.mapNotNull { it.toContent(encryptionContext, true) },
     sectionContentList = type.extraSections.map { it.toContent(encryptionContext) }
 )

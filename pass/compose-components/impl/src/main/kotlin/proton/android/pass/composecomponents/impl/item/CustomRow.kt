@@ -37,7 +37,7 @@ import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.badge.CircledBadge
 import proton.android.pass.composecomponents.impl.badge.OverlayBadge
-import proton.android.pass.composecomponents.impl.item.icon.CustomIcon
+import proton.android.pass.composecomponents.impl.item.icon.CustomItemIcon
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.ExtraSectionContent
 import proton.android.pass.domain.ItemContents
@@ -100,7 +100,7 @@ fun CustomRow(
                             backgroundColor = PassTheme.colors.interactionNormMajor1
                         )
                     },
-                    content = { CustomIcon() }
+                    content = { CustomItemIcon() }
                 )
 
                 is ItemSelectionModeState.InSelectionMode -> {
@@ -117,7 +117,7 @@ fun CustomRow(
                                     backgroundColor = PassTheme.colors.interactionNormMajor1
                                 )
                             },
-                            content = { CustomIcon(enabled = isEnabled) }
+                            content = { CustomItemIcon(enabled = isEnabled) }
                         )
                     }
                 }

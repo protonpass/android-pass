@@ -54,7 +54,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAct
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
-import proton.android.pass.composecomponents.impl.item.icon.CustomIcon
+import proton.android.pass.composecomponents.impl.item.icon.CustomItemIcon
 import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
@@ -670,7 +670,7 @@ fun HomeScreen(
                                 is ItemContents.Identity -> IdentityIcon()
                                 is ItemContents.WifiNetwork,
                                 is ItemContents.SSHKey,
-                                is ItemContents.Custom -> CustomIcon()
+                                is ItemContents.Custom -> CustomItemIcon()
                                 is ItemContents.Unknown -> {}
                             }
                         }

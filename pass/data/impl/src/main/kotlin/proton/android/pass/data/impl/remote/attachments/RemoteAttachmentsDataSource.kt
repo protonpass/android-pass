@@ -32,7 +32,11 @@ import proton.android.pass.domain.attachments.PendingAttachmentId
 
 interface RemoteAttachmentsDataSource {
 
-    suspend fun createPendingFile(userId: UserId, metadata: EncryptedString): String
+    suspend fun createPendingFile(
+        userId: UserId,
+        metadata: EncryptedString,
+        chunkCount: Int
+    ): String
 
     suspend fun updatePendingFile(
         userId: UserId,

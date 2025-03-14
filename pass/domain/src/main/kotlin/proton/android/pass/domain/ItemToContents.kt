@@ -201,6 +201,7 @@ private fun createWifiNetWork(
     note = decrypt(note),
     ssid = type.ssid,
     password = concealedOrEmpty(type.password, decrypt),
+    wifiSecurityType = type.wifiSecurityType,
     customFieldList = type.customFields.mapNotNull { it.toContent(decrypt, true) },
     sectionContentList = type.extraSections.map { it.toContent(decrypt) }
 )

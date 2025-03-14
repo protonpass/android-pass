@@ -38,7 +38,7 @@ import proton.android.pass.composecomponents.impl.item.details.titles.PassItemDe
 import proton.android.pass.composecomponents.impl.item.details.titles.PassItemDetailTitle
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
-import proton.android.pass.composecomponents.impl.item.icon.CustomIcon
+import proton.android.pass.composecomponents.impl.item.icon.CustomItemIcon
 import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
@@ -198,7 +198,7 @@ internal fun PassItemDetailTitleRow(
                     ).also(onEvent)
                 }
             ) {
-                CustomIcon(
+                CustomItemIcon(
                     size = 60,
                     shape = PassTheme.shapes.squircleMediumLargeShape
                 )

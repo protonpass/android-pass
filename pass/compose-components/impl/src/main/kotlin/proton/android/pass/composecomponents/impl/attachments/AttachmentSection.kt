@@ -59,7 +59,7 @@ fun AttachmentSection(
     isDetail: Boolean,
     itemColors: PassItemColors,
     itemDiffs: Map<AttachmentId, ItemDiffType> = emptyMap(),
-    onEvent: (AttachmentContentEvent) -> Unit,
+    onEvent: (AttachmentContentEvent) -> Unit
 ) {
     if (!attachmentsState.hasAnyAttachment && isDetail) return
     Column(
@@ -89,7 +89,7 @@ fun AttachmentSection(
             attachmentsState.attachmentsList.forEachIndexed { index, attachment ->
                 AttachmentRow(
                     innerModifier = Modifier
-                        .contentDiff(itemDiffType = itemDiffs[attachment.id]?: ItemDiffType.None)
+                        .contentDiff(itemDiffType = itemDiffs[attachment.id] ?: ItemDiffType.None)
                         .applyIf(
                             condition = isDetail,
                             ifTrue = { padding(start = Spacing.medium) },

@@ -85,6 +85,7 @@ internal fun PassAliasItemDetailSections(
                 attachmentsState = attachmentsState,
                 isDetail = true,
                 itemColors = itemColors,
+                itemDiffs = itemDiffs.attachments,
                 onEvent = { onEvent(OnAttachmentEvent(it)) }
             )
         }

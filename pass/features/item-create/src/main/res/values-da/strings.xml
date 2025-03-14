@@ -35,7 +35,7 @@
   <string name="field_website_address_hint">https://</string>
   <string name="field_website_add_another">Tilføj</string>
   <string name="sticky_button_generate_password" comment="Sticky button on the Create login screen. When tapped, the Generate password bottomsheet is shown">Generér ny adgangskode</string>
-  <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">Hide My Email</string>
+  <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">Skjul min e-mail</string>
   <string name="sticky_button_use_account_email" comment="Sticky button on the Create login screen. When tapped, the current user email is autofilled">Brug %s</string>
   <string name="create_login_item_creation_error">Kunne ikke oprette login</string>
   <string name="create_login_item_update_error">Kunne ikke opdatere login</string>
@@ -47,9 +47,9 @@
   <string name="login_created">Login oprettet</string>
   <string name="bottomsheet_modify_alias_title">Tilpas alias</string>
   <string name="bottomsheet_custom_field_type_text">Tekst</string>
-  <string name="bottomsheet_custom_field_type_text_content_description">Brugerdefineret tekstfelt</string>
   <string name="bottomsheet_custom_field_type_hidden">Skjult</string>
   <string name="bottomsheet_custom_field_type_totp">2FA hemmelig nøgle (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_date">Date</string>
   <string name="bottomsheet_custom_field_option_edit">Redigér navn</string>
   <string name="bottomsheet_custom_field_option_remove">Fjern felt</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Fjern brugerdefineret felt</string>
@@ -57,6 +57,7 @@
   <string name="custom_field_hidden_placeholder">Tilføj skjult tekst</string>
   <string name="custom_field_hidden_icon_content_description">Ikon for skjult brugerdefineret felt</string>
   <string name="custom_field_text_placeholder">Tilføj tekst</string>
+  <string name="custom_field_date_placeholder">Add date</string>
   <string name="custom_field_dialog_title">Navn på brugerdefineret felt</string>
   <string name="custom_field_dialog_body">Giv dit brugerdefinerede felt et navn</string>
   <string name="custom_field_dialog_placeholder">F.eks. bruger-ID, pinkode</string>
@@ -128,9 +129,9 @@
   <string name="identity_field_city_title">By</string>
   <string name="identity_field_state_or_province_title">Stat eller provins</string>
   <string name="identity_field_country_or_region_title">Land eller region</string>
-  <string name="identity_field_social_security_number_title">CPR-nummer (personnummer)</string>
+  <string name="identity_field_social_security_number_title">Personnummer</string>
   <string name="identity_field_passport_number_title">Pasnummer</string>
-  <string name="identity_field_license_number_title">Licensnummer</string>
+  <string name="identity_field_license_number_title">Kørekortnummer</string>
   <string name="identity_field_website_title">Websted</string>
   <string name="identity_field_xhandle_title">X-brugernavn</string>
   <string name="identity_field_company_title">Firma</string>
@@ -148,7 +149,7 @@
   <string name="identity_field_yahoo_title">Yahoo - brugernavn</string>
   <string name="identity_field_instagram_title">Instagram-brugernavn</string>
   <string name="identity_field_personal_website_title">Personlig webstedsadresse</string>
-  <string name="identity_field_work_phone_number_title">Arbejdstelefon nr.</string>
+  <string name="identity_field_work_phone_number_title">Arbejdstelefonnummer</string>
   <string name="identity_field_work_email_title">Arbejdsmail-adresse</string>
   <string name="identity_add_field_first_name">Fornavn</string>
   <string name="identity_add_field_middle_name">Mellemnavn</string>
@@ -163,7 +164,7 @@
   <string name="identity_add_field_yahoo">Yahoo - brugernavn</string>
   <string name="identity_add_field_instagram">Instagram-brugernavn</string>
   <string name="identity_add_field_personal_website">Personlig webstedsadresse</string>
-  <string name="identity_add_field_work_phone_number">Arbejdstelefon nr.</string>
+  <string name="identity_add_field_work_phone_number">Arbejdstelefonnummer</string>
   <string name="identity_add_field_work_email_address">Arbejdsmail-adresse</string>
   <string name="identity_add_field_custom_field">Brugerdefineret felt</string>
   <string name="identity_section_personal_details">Personlige oplysninger</string>
@@ -194,7 +195,7 @@
   <string name="camera_permission_open_settings">Åbn Indstillinger</string>
   <!--  TOTP limit  -->
   <string name="mfa_limit_reached">2FA-grænse nået</string>
-  <string name="upgrade">Opgrader</string>
+  <string name="upgrade">Opgradér</string>
   <string name="mfa_icon_content_description">2FA-ikon</string>
   <string name="create_alias_content_limit_banner">Du har nået grænsen for, hvor mange aliasser du kan oprette. Opret et ubegrænset antal aliasser, når du opgraderer dit abonnement.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Appen skal opdateres for at kunne redigere dette element.</string>
@@ -267,7 +268,6 @@
   <string name="template_ssh_key_field_note">Note</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_ssid">SSID</string>
-  <string name="template_wifi_network_field_security_type">Sikkerhedstype</string>
   <string name="template_wifi_network_field_note">Note</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Banknavn</string>
@@ -276,7 +276,7 @@
   <string name="template_bank_account_field_account_type">Kontotype</string>
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
-  <string name="template_bank_account_field_holder_name">Holder Name</string>
+  <string name="template_bank_account_field_holder_name">Indehavers navn</string>
   <string name="template_bank_account_field_note">Note</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">Wallet-navn</string>
@@ -291,20 +291,20 @@
   <string name="template_driver_license_field_issuing_state_country">Stat/Land</string>
   <string name="template_driver_license_field_expiry_date">Udløbsdato</string>
   <string name="template_driver_license_field_date_of_birth">Fødselsdato</string>
-  <string name="template_driver_license_field_class">Class</string>
+  <string name="template_driver_license_field_class">Klasse</string>
   <string name="template_driver_license_field_note">Note</string>
   <!-- Medical Record Fields -->
-  <string name="template_medical_record_field_patient_name">Navn på patient</string>
+  <string name="template_medical_record_field_patient_name">Patientnavn</string>
   <string name="template_medical_record_field_record_number">Record Number</string>
-  <string name="template_medical_record_field_medical_conditions">Medical Conditions</string>
-  <string name="template_medical_record_field_medications">Medications</string>
+  <string name="template_medical_record_field_medical_conditions">Medicinske forhold</string>
+  <string name="template_medical_record_field_medications">Medicin</string>
   <string name="template_medical_record_field_doctor">Praktiserende læge</string>
   <string name="template_medical_record_field_hospital">Hospital</string>
   <string name="template_medical_record_field_note">Note</string>
   <!-- Membership Fields -->
   <string name="template_membership_field_organization_name">Navn på organisation</string>
   <string name="template_membership_field_membership_id">Medlem-ID</string>
-  <string name="template_membership_field_member_name">Navn på medlem</string>
+  <string name="template_membership_field_member_name">Medlemsnavn</string>
   <string name="template_membership_field_expiry_date">Udløbsdato</string>
   <string name="template_membership_field_tier_level">Tier/Level</string>
   <string name="template_membership_field_note">Note</string>
@@ -314,7 +314,7 @@
   <string name="template_passport_field_country">Land</string>
   <string name="template_passport_field_expiry_date">Udløbsdato</string>
   <string name="template_passport_field_date_of_birth">Fødselsdato</string>
-  <string name="template_passport_field_issuing_authority">Myndighed</string>
+  <string name="template_passport_field_issuing_authority">Udstedende myndighed</string>
   <string name="template_passport_field_note">Note</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Programnavn</string>
@@ -325,8 +325,8 @@
   <string name="template_reward_program_field_note">Note</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">Fulde navn</string>
-  <string name="template_social_security_number_field_ssn">CPR-nummer (personnummer)</string>
-  <string name="template_social_security_number_field_issuing_country">Issuing Country</string>
+  <string name="template_social_security_number_field_ssn">Personnummer</string>
+  <string name="template_social_security_number_field_issuing_country">Udstedende land</string>
   <string name="template_social_security_number_field_note">Note</string>
   <string name="template_header_technology">Teknologi</string>
   <string name="template_header_finance">Finans</string>
@@ -347,7 +347,9 @@
   <string name="create_custom_item_item_creation_success">Brugerdefineret element oprettet</string>
   <string name="update_custom_item_item_creation_success">Brugerdefineret element opdateret</string>
   <string name="update_custom_item_item_creation_error">Kunne ikke opdatere brugerdefineret element</string>
+  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <!-- Cannot create items dialog -->
-  <string name="cannot_create_items_dialog_title">Cannot create items</string>
-  <string name="cannot_create_items_dialog_message">You don\'t have any vaults with editor or admin access. Try creating one in the main app or ask your organization\'s administrator for support.</string>
+  <string name="cannot_create_items_dialog_title">Kan ikke oprette elementer</string>
+  <string name="cannot_create_items_dialog_message">Du har ikke nogen bokse med redaktør- eller administratoradgang. Prøv at oprette en i hovedappen, eller spørg din organisations administrator om hjælp.</string>
+  <string name="wifi_security_type_field_label">Security type</string>
 </resources>

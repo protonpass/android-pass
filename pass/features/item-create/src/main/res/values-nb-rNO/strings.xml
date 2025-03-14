@@ -47,9 +47,9 @@
   <string name="login_created">Pålogging opprettet</string>
   <string name="bottomsheet_modify_alias_title">Modifiser alias</string>
   <string name="bottomsheet_custom_field_type_text">Tekst</string>
-  <string name="bottomsheet_custom_field_type_text_content_description">Tilpasset tekstfelt</string>
   <string name="bottomsheet_custom_field_type_hidden">Skjult</string>
   <string name="bottomsheet_custom_field_type_totp">2FA-hemmelig nøkkel (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_date">Date</string>
   <string name="bottomsheet_custom_field_option_edit">Rediger navn</string>
   <string name="bottomsheet_custom_field_option_remove">Fjern felt</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Fjern tilpasset felt</string>
@@ -57,6 +57,7 @@
   <string name="custom_field_hidden_placeholder">Legg til skjult tekst</string>
   <string name="custom_field_hidden_icon_content_description">Ikon for skjult tilpasset felt</string>
   <string name="custom_field_text_placeholder">Legg til tekst</string>
+  <string name="custom_field_date_placeholder">Add date</string>
   <string name="custom_field_dialog_title">Navn på tilpasset felt</string>
   <string name="custom_field_dialog_body">Gi det tilpassede feltet et navn</string>
   <string name="custom_field_dialog_placeholder">F.eks., Bruker-ID, PIN</string>
@@ -267,7 +268,6 @@
   <string name="template_ssh_key_field_note">Notat</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_ssid">SSID</string>
-  <string name="template_wifi_network_field_security_type">Sikkerhetstype</string>
   <string name="template_wifi_network_field_note">Notat</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Banknavn</string>
@@ -347,7 +347,9 @@
   <string name="create_custom_item_item_creation_success">Tilpasset element opprettet</string>
   <string name="update_custom_item_item_creation_success">Tilpasset element oppdatert</string>
   <string name="update_custom_item_item_creation_error">Kunne ikke oppdatere tilpasset element</string>
+  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Kan ikke opprette elementer</string>
   <string name="cannot_create_items_dialog_message">Du har ingen hvelv med redigerings- eller administratortilgang. Prøv å opprette en i hovedappen, eller be organisasjonens administrator om støtte.</string>
+  <string name="wifi_security_type_field_label">Security type</string>
 </resources>

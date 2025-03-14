@@ -43,10 +43,10 @@
   <string name="share_permissions_title">Estableix el nivell d`accés</string>
   <string name="sharing_reject_invitation">Rebutja la invitació</string>
   <string name="sharing_vault_invitation_title">Invitació a una caixa forta compartida</string>
-  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s vol compartir una caixa forta amb vosaltres.</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s vol posar a la vostra disposició una caixa forta compartida.</string>
   <string name="sharing_vault_invitation_accept">Uniu-vos a la caixa forta compartida</string>
   <string name="sharing_item_invitation_title">Invitació a un element compartit</string>
-  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s vol compartir un element amb vosaltres.</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s vol posar a la vostra disposició un element compartit.</string>
   <string name="sharing_item_invitation_accept">Accepta i mostra l\'element</string>
   <string name="sharing_invite_more">Convideu més persones...</string>
   <string name="sharing_snackbar_invite_accepted">Invitació acceptada</string>

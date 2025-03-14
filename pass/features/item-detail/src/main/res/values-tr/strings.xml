@@ -114,8 +114,8 @@
     <item quantity="other">%1$s iletme</item>
   </plurals>
   <plurals name="alias_replies_count">
-    <item quantity="one">%1$s yanıt</item>
-    <item quantity="other">%1$s yanıt</item>
+    <item quantity="one">%1$s yanıtlama</item>
+    <item quantity="other">%1$s yanıtlama</item>
   </plurals>
   <plurals name="alias_blocks_count">
     <item quantity="one">%1$s engelleme</item>

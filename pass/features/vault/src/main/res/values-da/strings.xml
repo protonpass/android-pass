@@ -15,7 +15,7 @@
   <string name="vault_delete_dialog_title">Slet boks</string>
   <string name="vault_delete_dialog_body">Dette vil permanent slette boksen __VAULT_NAME__ og alt dens indhold. Indtast boksens navn for at bekræfte sletningen.</string>
   <string name="vault_delete_dialog_placeholder">Boksnavn</string>
-  <string name="vault_delete_dialog_cancel_action">Annullér</string>
+  <string name="vault_delete_dialog_cancel_action">Annuller</string>
   <string name="vault_delete_dialog_delete_action">Slet</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Denne boks indeholder %1$s. Hvis du sletter den, fjernes adgangen for alle andre brugere.</string>
   <string name="vault_leave_dialog_title">Forlad boks</string>

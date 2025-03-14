@@ -39,8 +39,8 @@
   <string name="login_item_monitor_widget_weak_pass_subtitle">Ta račun je ranljiv, obiščite storitev in spremenite geslo.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d druga prijava uporablja isto geslo</item>
-    <item quantity="two">%d drugi prijavi uporabljata isto geslo</item>
-    <item quantity="few">%d druge prijave uporabljajo isto geslo</item>
+    <item quantity="two">%d drugih prijav uporablja isto geslo</item>
+    <item quantity="few">%d drugih prijav uporablja isto geslo</item>
     <item quantity="other">%d drugih prijav uporablja isto geslo</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Nastavite 2FA za večjo varnost</string>

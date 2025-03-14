@@ -15,7 +15,7 @@
     <item quantity="one">Ви збираєтеся назавжди видалити псевдонім %d</item>
     <item quantity="few">Ви збираєтеся назавжди видалити псевдоніми %d</item>
     <item quantity="many">Ви збираєтеся назавжди видалити псевдонімів %d</item>
-    <item quantity="other">Ви збираєтеся назавжди видалити псевдоніми %d</item>
+    <item quantity="other">Ви збираєтеся назавжди видалити псевдонімів %d</item>
   </plurals>
   <string name="bulk_delete_alias_subtitle">Зверніть увагу, що після видалення псевдоніми не можна відновити</string>
   <string name="bulk_delete_alias_confirm">Зрозуміло, вони мені ніколи не знадобляться</string>

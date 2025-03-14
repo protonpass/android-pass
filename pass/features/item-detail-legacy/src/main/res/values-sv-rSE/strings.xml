@@ -19,7 +19,7 @@
   <string name="email_copied_to_clipboard">E-postadress kopierad</string>
   <string name="username_copied_to_clipboard">Användarnamn kopierat</string>
   <string name="password_copied_to_clipboard">Lösenord kopierat</string>
-  <string name="website_copied_to_clipboard">Webbplats kopierad</string>
+  <string name="website_copied_to_clipboard">Webbadress kopierad</string>
   <string name="totp_copied_to_clipboard">TOTP kopierat</string>
   <string name="field_copied_to_clipboard">Fält kopierat</string>
   <string name="move_item_to_trash_message">Objekt flyttat till papperskorg</string>

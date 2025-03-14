@@ -24,7 +24,7 @@
   <string name="configure_extra_password_description">當您登入及從其他 Proton 應用切換至線上 Proton Pass 時，需要輸入此第二密碼。</string>
   <string name="configure_extra_password_warning">注意：如果你忘記這組密碼，您將無法存取你的 Pass 帳戶</string>
   <string name="configure_extra_password_mismatch">密碼不一致</string>
-  <string name="extra_password_options_remove">移除</string>
+  <string name="extra_password_options_remove">刪除</string>
   <string name="info_extra_password_title">第二密碼</string>
   <string name="info_extra_password_body">使用第二密碼來保護 Proton Pass</string>
   <string name="info_extra_password_button">設定第二密碼</string>

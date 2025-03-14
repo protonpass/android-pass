@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="upsell_monitor_title">Bleib online geschützter</string>
-  <string name="upsell_dark_web_monitoring_subtitle">Dark Web-Überwachung ist mit einem kostenpflichtigen Plan verfügbar. Upgrade für sofortigen Zugriff.</string>
+  <string name="upsell_dark_web_monitoring_subtitle">Dark Web-Überwachung ist mit einem kostenpflichtigen Abonnement verfügbar. Upgrade für sofortigen Zugriff.</string>
   <string name="upsell_missing_2fa_subtitle">Sieh dir eine Liste von Websites an, auf denen du einen zweiten Authentifizierungsfaktor zum Schutz deiner Online-Präsenz hinzufügen kannst. Upgrade für sofortigen Zugriff.</string>
   <string name="upsell_sentinel_subtitle">Schalte erweiterte Sicherheitsfunktionen und detaillierte Protokolle zum Schutz deiner Online-Präsenz frei.</string>
   <string name="upsell_paid_feature_file_attachments">Dateianhänge</string>

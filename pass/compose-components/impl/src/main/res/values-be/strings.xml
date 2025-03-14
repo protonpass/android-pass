@@ -17,8 +17,8 @@
   <plurals name="item_list_header_results">
     <item quantity="one">вынік</item>
     <item quantity="few">вынікі</item>
-    <item quantity="many">вынікаў</item>
-    <item quantity="other">вынікаў</item>
+    <item quantity="many">вынікі</item>
+    <item quantity="other">вынікі</item>
   </plurals>
   <string name="item_list_header_identities_type">Ідэнтычнасці</string>
   <string name="item_list_header_custom_type">Карыстальніцкія элементы</string>
@@ -203,6 +203,7 @@
   <string name="item_details_shared_section_more_info_share_id">Ідэнтыфікатар сховішча</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
   <string name="item_details_wifi_network_label_password">Пароль</string>
+  <string name="item_details_wifi_network_label_security">Security</string>
   <string name="item_details_ssh_key_label_public_key">Публічны ключ</string>
   <string name="item_details_ssh_key_label_private_key">Прыватны ключ</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Дадзеная версія праграмы больш не падтрымліваецца. Абнавіце праграму да апошняй версіі.</string>
@@ -218,7 +219,7 @@
   <string name="email_address_invalid">Памылковы адрас электроннай пошты</string>
   <string name="password">Пароль</string>
   <!-- Tooltips -->
-  <string name="tooltip_dismiss_button_content_description">Кнопка ігнараваць гэту параду і не паказваць яе зноў</string>
+  <string name="tooltip_dismiss_button_content_description">Кнопка, каб адхіліць гэту параду і не паказваць яе зноў</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
     <item quantity="one">%d год</item>
@@ -234,15 +235,15 @@
   </plurals>
   <plurals name="time_unit_weeks">
     <item quantity="one">%d тыдзень</item>
-    <item quantity="few">%d тыдні</item>
-    <item quantity="many">%d тыдняў</item>
-    <item quantity="other">%d тыдняў</item>
+    <item quantity="few">%d тыдняў</item>
+    <item quantity="many">%d тыдні</item>
+    <item quantity="other">%d тыдні</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d дзень</item>
-    <item quantity="few">%d дні</item>
-    <item quantity="many">%d дзён</item>
-    <item quantity="other">%d дзён</item>
+    <item quantity="few">%d дзён</item>
+    <item quantity="many">%d дні</item>
+    <item quantity="other">%d дні</item>
   </plurals>
   <plurals name="time_unit_hours">
     <item quantity="one">%d гадзіна</item>
@@ -252,13 +253,13 @@
   </plurals>
   <plurals name="time_unit_minutes">
     <item quantity="one">%d хвіліна</item>
-    <item quantity="few">%d хвіліны</item>
-    <item quantity="many">%d хвілін</item>
-    <item quantity="other">%d хвілін</item>
+    <item quantity="few">%d хв</item>
+    <item quantity="many">%d хв</item>
+    <item quantity="other">%d хв</item>
   </plurals>
   <plurals name="time_unit_seconds">
     <item quantity="one">%d секунда</item>
-    <item quantity="few">%d секунды</item>
+    <item quantity="few">%d секунд</item>
     <item quantity="many">%d секунд</item>
     <item quantity="other">%d секунд</item>
   </plurals>
@@ -290,8 +291,8 @@
   <plurals name="simple_login_widget_pending_aliases_message">
     <item quantity="one">Мы выявілі, што ў вас ёсць %d псеўданім, які прысутнічае ў SimpleLogin, але адсутнічае ў Proton Pass. Магчыма, што вы хочаце імпартаваць яго?</item>
     <item quantity="few">Мы выявілі, што ў вас ёсць %d псеўданімы, якія прысутнічаюць у SimpleLogin, але адсутнічаюць у Proton Pass. Магчыма, што вы хочаце імпартаваць іх?</item>
-    <item quantity="many">Мы выявілі, што ў вас ёсць %d псеўданімаў, якія прысутнічаюць у SimpleLogin, але адсутнічаюць у Proton Pass. Магчыма, што вы хочаце імпартаваць іх?</item>
-    <item quantity="other">Мы выявілі, што ў вас ёсць %d псеўданімаў, якія прысутнічаюць у SimpleLogin, але адсутнічаюць у Proton Pass. Магчыма, што вы хочаце імпартаваць іх?</item>
+    <item quantity="many">Мы выявілі, што ў вас ёсць %d псеўданімы, якія прысутнічаюць у SimpleLogin, але адсутнічаюць у Proton Pass. Магчыма, што вы хочаце імпартаваць іх?</item>
+    <item quantity="other">Мы выявілі, што ў вас ёсць %d псеўданімы, якія прысутнічаюць у SimpleLogin, але адсутнічаюць у Proton Pass. Магчыма, што вы хочаце імпартаваць іх?</item>
   </plurals>
   <string name="simple_login_widget_action">Сінхранізаваць псеўданімы</string>
   <!-- Verification codes -->
@@ -304,7 +305,7 @@
   <string name="field_display_name_title">Бачнае імя</string>
   <!-- Attachments -->
   <plurals name="attachment_file_amount">
-    <item quantity="one">%1$s файл</item>
+    <item quantity="one">Тып файла: %1$s</item>
     <item quantity="few">%1$s файлы</item>
     <item quantity="many">%1$s файлаў</item>
     <item quantity="other">%1$s файлаў</item>
@@ -323,15 +324,16 @@
     <item quantity="other">%d абагуленых элементаў</item>
   </plurals>
   <plurals name="users_count">
-    <item quantity="one">%d карыстальнік</item>
-    <item quantity="few">%d карыстальнікі</item>
-    <item quantity="many">%d карыстальнікаў</item>
-    <item quantity="other">%d карыстальнікаў</item>
+    <item quantity="one">%d карыстальніка</item>
+    <item quantity="few">%d карыстальнікаў</item>
+    <item quantity="many">%d карыстальнікі</item>
+    <item quantity="other">%d карыстальнікі</item>
   </plurals>
   <plurals name="members_count">
     <item quantity="one">%d удзельнік</item>
-    <item quantity="few">%d удзельнікі</item>
-    <item quantity="many">%d удзельнікаў</item>
-    <item quantity="other">%d удзельнікаў</item>
+    <item quantity="few">%d удзельнікаў</item>
+    <item quantity="many">%d удзельнікі</item>
+    <item quantity="other">%d удзельнікі</item>
   </plurals>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">дд ММММ гггг</string>
 </resources>

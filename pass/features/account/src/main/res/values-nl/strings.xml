@@ -25,7 +25,7 @@
   <string name="account_settings_list_item_extra_password_active">Actief</string>
   <string name="account_settings_list_item_extra_password_description">Het extra wachtwoord is vereist om Pass te gebruiken. Het werkt als een extra wachtwoord bovenop uw Proton wachtwoord.</string>
   <string name="account_settings_list_item_security_keys_hint_not_set">Niet ingesteld</string>
-  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s </string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
     <item quantity="one">%d beveiligingssleutel ingesteld</item>
     <item quantity="other">%d beveiligingssleutels ingesteld</item>

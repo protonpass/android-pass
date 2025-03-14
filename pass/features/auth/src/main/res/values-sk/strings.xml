@@ -23,7 +23,7 @@
     <item quantity="one">Nesprávny PIN kód. Zostáva %d pokus.</item>
     <item quantity="few">Nesprávny PIN kód. Zostávajú %d pokusy.</item>
     <item quantity="many">Nesprávny PIN kód. Zostáva %d pokusov.</item>
-    <item quantity="other">Nesprávny PIN kód. Zostáva %d pokusov.</item>
+    <item quantity="other">Nesprávny PIN kód. Zostávajú %d pokusy.</item>
   </plurals>
   <string name="auth_unlock_app_title">Odomknúť Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Zadajte hlavné heslo pre %s</string>

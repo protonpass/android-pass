@@ -57,7 +57,7 @@
     <item quantity="few">You have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to sync them?</item>
     <item quantity="other">You have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to sync them?</item>
   </plurals>
-  <string name="sl_sync_banner_settings">Sync aliases ›</string>
+  <string name="sl_sync_banner_settings">Sinhroniziranje vzdevkov ›</string>
   <string name="sl_sync_banner_note">Once synced, deleting aliases in Pass will also delete them in SimpleLogin.</string>
   <string name="home_notification_permission_banner_title">Pridobite pomembne posodobitve</string>
   <string name="home_notification_permission_banner_text">Omogočite potisna obvestila, da boste obveščeni, ko drugi delijo trezor z vami.</string>
@@ -89,9 +89,9 @@
   <string name="vault_drawer_vaults_title">Trezorji</string>
   <plurals name="vault_drawer_vaults_item_count">
     <item quantity="one">%d predmet</item>
-    <item quantity="two">%d predmeta</item>
-    <item quantity="few">%d predmeti</item>
-    <item quantity="other">%d predmetov</item>
+    <item quantity="two">%d items</item>
+    <item quantity="few">%d items</item>
+    <item quantity="other">%d items</item>
   </plurals>
   <string name="vault_drawer_create_vault">Ustvari nov trezor</string>
   <string name="vault_drawer_item_trash">Smetnjak</string>

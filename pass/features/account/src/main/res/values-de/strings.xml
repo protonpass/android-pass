@@ -21,7 +21,7 @@
   <string name="account_settings_list_item_password_hint_grace">Passwortzurücksetzung ausstehend</string>
   <string name="account_settings_list_item_password_hint_insecure">Passwortzurücksetzung bereit</string>
   <string name="account_settings_list_item_extra_password_header">Zusätzliches Passwort für Proton Pass</string>
-  <string name="account_settings_list_item_extra_password_header_set">Separates Passwort für Proton Pass festlegen</string>
+  <string name="account_settings_list_item_extra_password_header_set">Zusätzliches Passwort für Proton Pass festlegen</string>
   <string name="account_settings_list_item_extra_password_active">Aktiv</string>
   <string name="account_settings_list_item_extra_password_description">Das zusätzliche Passwort wird für die Verwendung von Pass benötigt. Es dient als zusätzliches Passwort zu deinem Proton-Passwort.</string>
   <string name="account_settings_list_item_security_keys_hint_not_set">Nicht festgelegt</string>

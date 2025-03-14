@@ -8,11 +8,11 @@
   <string name="on_boarding_fingerprint_button">Включить блокировку по отпечатку пальца</string>
   <string name="on_boarding_last_page_content">Перестаньте раскрывать свой настоящий адрес электронной почты. Вместо этого скрывайте его с помощью псевдонимов электронной почты - в этом заключается уникальность Proton Pass.</string>
   <string name="on_boarding_last_page_title">Контролируйте, что попадает в ваши входящие</string>
-  <string name="on_boarding_last_page_button">Начать пользоваться Proton Pass</string>
+  <string name="on_boarding_last_page_button">Начать использовать Proton Pass</string>
   <string name="on_boarding_skip">Не сейчас</string>
   <string name="on_boarding_tutorial">Посмотрите короткое видео о том, как пользоваться Proton Pass</string>
-  <string name="on_boarding_pending_invite_content">По причинам безопасности, ваш доступ должен быть подтверждён.</string>
-  <string name="on_boarding_pending_invite_title">Pending access to the shared data</string>
+  <string name="on_boarding_pending_invite_content">По соображениям безопасности ваш доступ должен быть подтверждён.</string>
+  <string name="on_boarding_pending_invite_title">Ожидание доступа к общим данным</string>
   <string name="on_boarding_pending_invite_button">Узнайте больше о Proton Pass</string>
   <string name="error_biometry_failed_to_start">Не смог запустить биометрическую аутентификацию</string>
   <string name="error_biometry_failed_to_authenticate">Сбой аутентификации</string>

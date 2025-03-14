@@ -12,7 +12,7 @@
   <string name="on_boarding_skip">Ei nyt</string>
   <string name="on_boarding_tutorial">Katso lyhyt video Proton Passin käytöstä</string>
   <string name="on_boarding_pending_invite_content">Turvallisuussyistä pääsysi on vahvistettava.</string>
-  <string name="on_boarding_pending_invite_title">Odotetaan käyttöoikeutta jaettuihin tietoihin</string>
+  <string name="on_boarding_pending_invite_title">Odotetaan jaettujen tietojen käyttöoikeutta</string>
   <string name="on_boarding_pending_invite_button">Lue lisää Proton Passista</string>
   <string name="error_biometry_failed_to_start">Biometristä todennusta ei voitu käynnistää</string>
   <string name="error_biometry_failed_to_authenticate">Tunnistautuminen epäonnistui</string>
@@ -27,5 +27,5 @@
   <string name="onboarding_slide_3_subtitle">Share passwords and sensitive information securely and effortlessly.</string>
   <string name="onboarding_slide_4_subtitle">Saat hälytyksiä, jos sähköpostiosoitteesi löytyy pimeästä verkosta.</string>
   <string name="create_an_account_button">Luo tili</string>
-  <string name="sign_in_button">Kirjaudu</string>
+  <string name="sign_in_button">Kirjaudu sisään</string>
 </resources>

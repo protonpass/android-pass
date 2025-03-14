@@ -7,7 +7,7 @@
   <string name="alias_dialog_move_to_trash_title">要丟進垃圾桶嗎？</string>
   <string name="alias_dialog_move_to_trash_content">若別名移至垃圾桶，將會停止轉寄電子郵件到信箱。</string>
   <string name="alias_dialog_move_to_trash_confirm">確認</string>
-  <string name="delete_alias_confirm">Delete it, I will never need it</string>
+  <string name="delete_alias_confirm">刪除，我將不再使用</string>
   <string name="delete_alias_title">刪除 %s</string>
   <string name="delete_alias_enabled_subtitle">"Please note once deleted, the alias can't be restored. Maybe you want to disable the alias instead? "</string>
   <string name="delete_alias_disabled_subtitle">Please note once deleted, the alias can\'t be restored. The alias is already disabled and won’t forward emails to your mailbox.</string>
@@ -15,6 +15,6 @@
     <item quantity="other">You\'re about to permanently delete %d aliases</item>
   </plurals>
   <string name="bulk_delete_alias_subtitle">Please note once deleted, the aliases can\'t be restored</string>
-  <string name="bulk_delete_alias_confirm">Understood, I will never need them</string>
+  <string name="bulk_delete_alias_confirm">了解，我將不再需要這些項目</string>
   <string name="delete_alias_disable">停用別名</string>
 </resources>

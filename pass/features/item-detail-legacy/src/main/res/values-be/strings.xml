@@ -95,7 +95,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Вам толькі дазволена рэдагаваць элементы ў сваіх больш старых сховішчах. Палепшыце свой бягучы тарыфны план, каб рэдагаваць гэты элемент.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Вы не можаце рэдагаваць гэты элемент, бо ён знаходзіцца ў сметніцы. Дастаньце яго адтуль, а потым паўтарыце спробу.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Немагчыма абагуліць</string>
-  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">У вас не дастаткова правоў, каб выканаць гэта дзеянне.</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">У вас недастаткова правоў, каб выканаць гэта дзеянне.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Вы дасягнулі максімальнай колькасці абагуленняў сховішчаў. Для таго, каб абагуліць больш сховішчаў, палепшыце свой бягучы тарыфны план.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Вы не можаце абагуліць гэты элемент, бо ён знаходзіцца ў сметніцы. Дастаньце яго адтуль, а потым паўтарыце спробу.</string>
   <string name="password_score_vulnerable">Уразлівы</string>

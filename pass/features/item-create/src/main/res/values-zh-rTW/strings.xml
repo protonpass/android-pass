@@ -20,7 +20,7 @@
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">生成一個安全密碼</string>
   <!-- Create Login -->
   <string name="field_email_title">電子郵件位址</string>
-  <string name="field_email_hint">加入電郵位址</string>
+  <string name="field_email_hint">添加電子郵件地址</string>
   <string name="field_email_error">無效的電子郵件位址</string>
   <string name="field_email_tooltip_title">Add username field</string>
   <string name="field_email_tooltip_description">Tap here to add a field for a username.</string>
@@ -47,9 +47,9 @@
   <string name="login_created">登入已創建</string>
   <string name="bottomsheet_modify_alias_title">變更別名</string>
   <string name="bottomsheet_custom_field_type_text">文字</string>
-  <string name="bottomsheet_custom_field_type_text_content_description">輸入自訂欄位</string>
   <string name="bottomsheet_custom_field_type_hidden">隱藏</string>
   <string name="bottomsheet_custom_field_type_totp">雙重驗證一次性驗證碼金鑰(TOTP)</string>
+  <string name="bottomsheet_custom_field_type_date">Date</string>
   <string name="bottomsheet_custom_field_option_edit">編輯名稱</string>
   <string name="bottomsheet_custom_field_option_remove">移除欄位</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">移除自訂欄位</string>
@@ -57,6 +57,7 @@
   <string name="custom_field_hidden_placeholder">新增隱藏文件</string>
   <string name="custom_field_hidden_icon_content_description">隱藏自訂的欄位圖示</string>
   <string name="custom_field_text_placeholder">新增文字</string>
+  <string name="custom_field_date_placeholder">Add date</string>
   <string name="custom_field_dialog_title">自訂欄位的名稱</string>
   <string name="custom_field_dialog_body">提供自訂欄位名稱</string>
   <string name="custom_field_dialog_placeholder">例如: 使用者ID、PIN碼</string>
@@ -92,7 +93,7 @@
   <string name="alias_created">已創建別名</string>
   <string name="cannot_retrieve_alias_options">無法提取別名選項</string>
   <string name="alias_mailbox_dialog_title">轉寄至</string>
-  <string name="sl_note_info_title">What is a SimpleLogin note?</string>
+  <string name="sl_note_info_title">什麼是SimpleLogin筆記？</string>
   <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">In Pass, an item note is encrypted with the item encryption key and only users who have access to the item can view the note.</string>
   <string name="sl_note_info_message_part2">Not even Proton or SimpleLogin can see it.</string>
   <string name="sl_note_info_message_part3">SimpleLogin note is stored together in the same location with alias address and while it is protected by encryption at rest, it isn\'t E2E encrypted meaning anyone who has access to SimpleLogin database can read it.</string>
@@ -109,7 +110,7 @@
   <string name="field_card_pin_title">PIN碼</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">到期日</string>
-  <string name="field_card_expiration_date_hint">MM/YY</string>
+  <string name="field_card_expiration_date_hint">月份/年分</string>
   <string name="field_card_expiration_date_error">輸入標準日期 月份/年份 格式</string>
   <string name="create_credit_card_item_creation_error">無法創建信用卡</string>
   <string name="create_credit_card_item_creation_success">信用卡已創建</string>
@@ -181,7 +182,7 @@
   <string name="update_identity_item_creation_error">Could not update identity</string>
   <!--  Common create items  -->
   <string name="title_create">創建</string>
-  <string name="changes_saved">更改保存。</string>
+  <string name="changes_saved">更改已保存</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">雙重驗證一次性驗證碼金鑰(TOTP)</string>
   <string name="totp_create_login_field_invalid">非正確的雙重驗證碼 (TOTP)</string>
@@ -201,17 +202,17 @@
   <string name="remove_passkey_dialog_title">要移除這個密碼金鑰嗎?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">You are about to remove the passkey for user \'%1$s\' for \'%2$s\'. Are you sure?</string>
   <!-- Attachments -->
-  <string name="banner_title_attachments">Attachments</string>
+  <string name="banner_title_attachments">附件</string>
   <string name="banner_body_attachments">You can attach files to items for a better organization</string>
   <string name="open_with">Open with:</string>
   <string name="open_attachments_error">Could not open attachment</string>
   <string name="upload_attachments_error">Could not upload attachment</string>
-  <string name="banner_advanced_options_title">Did you know?</string>
+  <string name="banner_advanced_options_title">您知道嗎？</string>
   <string name="banner_advanced_options_subtitle">Tap the gear icon to customize the alias the way you want.</string>
-  <string name="banner_custom_domain_title">Did you know?</string>
+  <string name="banner_custom_domain_title">您知道嗎？</string>
   <string name="banner_custom_domain_subtitle">By adding your domain, you can create aliases like hi@my-domain.com.</string>
-  <string name="banner_custom_domain_button">Add domain</string>
-  <string name="banner_mailbox_title">Did you know?</string>
+  <string name="banner_custom_domain_button">加入網域</string>
+  <string name="banner_mailbox_title">您知道嗎？</string>
   <string name="banner_mailbox_subtitle">Share aliases with others by adding their inbox as an additional mailbox.</string>
   <string name="banner_mailbox_button">Add mailbox</string>
   <!-- Suffix -->
@@ -221,7 +222,7 @@
   <!-- Templates -->
   <string name="template_item_api_credential">API Credential</string>
   <string name="template_item_database">Database</string>
-  <string name="template_item_server">Server</string>
+  <string name="template_item_server">伺服器</string>
   <string name="template_item_software_license">Software License</string>
   <string name="template_item_ssh_key">SSH Key</string>
   <string name="template_item_wifi_network">WiFi Network</string>
@@ -230,69 +231,68 @@
   <string name="template_item_driver_license">Driver License</string>
   <string name="template_item_medical_record">Medical Record</string>
   <string name="template_item_membership">Membership</string>
-  <string name="template_item_passport">Passport</string>
+  <string name="template_item_passport">護照</string>
   <string name="template_item_reward_program">Reward Program</string>
   <string name="template_item_social_security_number">Social Security Number</string>
   <!-- API Credential Fields -->
   <string name="template_api_credential_field_api_key">API Key</string>
   <string name="template_api_credential_field_secret">Secret</string>
   <string name="template_api_credential_field_expiry_date">Expiry Date</string>
-  <string name="template_api_credential_field_permissions">Permissions</string>
-  <string name="template_api_credential_field_note">Note</string>
+  <string name="template_api_credential_field_permissions">權限</string>
+  <string name="template_api_credential_field_note">備注</string>
   <!-- Database Fields -->
-  <string name="template_database_field_host">Host</string>
-  <string name="template_database_field_port">Port</string>
-  <string name="template_database_field_username">Username</string>
-  <string name="template_database_field_password">Password</string>
+  <string name="template_database_field_host">主機</string>
+  <string name="template_database_field_port">連接埠</string>
+  <string name="template_database_field_username">使用者名稱</string>
+  <string name="template_database_field_password">密碼</string>
   <string name="template_database_field_database_type">Database Type</string>
-  <string name="template_database_field_note">Note</string>
+  <string name="template_database_field_note">備注</string>
   <!-- Server Fields -->
-  <string name="template_server_field_ip_address">IP Address</string>
+  <string name="template_server_field_ip_address">IP 位址</string>
   <string name="template_server_field_hostname">Hostname</string>
   <string name="template_server_field_os">Operating System</string>
-  <string name="template_server_field_username">Username</string>
-  <string name="template_server_field_password">Password</string>
-  <string name="template_server_field_note">Note</string>
+  <string name="template_server_field_username">使用者名稱</string>
+  <string name="template_server_field_password">密碼</string>
+  <string name="template_server_field_note">備注</string>
   <!-- Software License Fields -->
   <string name="template_software_license_field_license_key">License Key</string>
   <string name="template_software_license_field_product">Product</string>
   <string name="template_software_license_field_expiry_date">Expiry Date</string>
-  <string name="template_software_license_field_owner">Owner</string>
-  <string name="template_software_license_field_note">Note</string>
+  <string name="template_software_license_field_owner">擁有者</string>
+  <string name="template_software_license_field_note">備注</string>
   <!-- SSH Key Fields -->
   <string name="template_ssh_key_field_private_key">Private Key</string>
   <string name="template_ssh_key_field_public_key">Public Key</string>
-  <string name="template_ssh_key_field_username">Username</string>
-  <string name="template_ssh_key_field_host">Host</string>
-  <string name="template_ssh_key_field_note">Note</string>
+  <string name="template_ssh_key_field_username">使用者名稱</string>
+  <string name="template_ssh_key_field_host">主機</string>
+  <string name="template_ssh_key_field_note">備注</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_ssid">SSID</string>
-  <string name="template_wifi_network_field_security_type">Security Type</string>
-  <string name="template_wifi_network_field_note">Note</string>
+  <string name="template_wifi_network_field_note">備注</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Bank Name</string>
   <string name="template_bank_account_field_account_number">Account Number</string>
   <string name="template_bank_account_field_routing_number">Routing Number</string>
   <string name="template_bank_account_field_account_type">Account Type</string>
-  <string name="template_bank_account_field_iban">IBAN</string>
+  <string name="template_bank_account_field_iban">國際銀行帳號</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
   <string name="template_bank_account_field_holder_name">Holder Name</string>
-  <string name="template_bank_account_field_note">Note</string>
+  <string name="template_bank_account_field_note">備注</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">Wallet Name</string>
-  <string name="template_crypto_wallet_field_address">Address</string>
+  <string name="template_crypto_wallet_field_address">地址</string>
   <string name="template_crypto_wallet_field_private_key">Private Key</string>
   <string name="template_crypto_wallet_field_seed_phrase">Seed Phrase</string>
-  <string name="template_crypto_wallet_field_network">Network</string>
-  <string name="template_crypto_wallet_field_note">Note</string>
+  <string name="template_crypto_wallet_field_network">網路</string>
+  <string name="template_crypto_wallet_field_note">備注</string>
   <!-- Driver License Fields -->
-  <string name="template_driver_license_field_full_name">Full Name</string>
+  <string name="template_driver_license_field_full_name">全名</string>
   <string name="template_driver_license_field_license_number">License Number</string>
   <string name="template_driver_license_field_issuing_state_country">Issuing State/Country</string>
   <string name="template_driver_license_field_expiry_date">Expiry Date</string>
   <string name="template_driver_license_field_date_of_birth">Date of Birth</string>
   <string name="template_driver_license_field_class">Class</string>
-  <string name="template_driver_license_field_note">Note</string>
+  <string name="template_driver_license_field_note">備注</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Patient Name</string>
   <string name="template_medical_record_field_record_number">Record Number</string>
@@ -300,37 +300,37 @@
   <string name="template_medical_record_field_medications">Medications</string>
   <string name="template_medical_record_field_doctor">Doctor</string>
   <string name="template_medical_record_field_hospital">Hospital</string>
-  <string name="template_medical_record_field_note">Note</string>
+  <string name="template_medical_record_field_note">備注</string>
   <!-- Membership Fields -->
   <string name="template_membership_field_organization_name">Organization Name</string>
   <string name="template_membership_field_membership_id">Membership ID</string>
   <string name="template_membership_field_member_name">Member Name</string>
   <string name="template_membership_field_expiry_date">Expiry Date</string>
   <string name="template_membership_field_tier_level">Tier/Level</string>
-  <string name="template_membership_field_note">Note</string>
+  <string name="template_membership_field_note">備注</string>
   <!-- Passport Fields -->
-  <string name="template_passport_field_full_name">Full Name</string>
+  <string name="template_passport_field_full_name">全名</string>
   <string name="template_passport_field_passport_number">Passport Number</string>
-  <string name="template_passport_field_country">Country</string>
+  <string name="template_passport_field_country">國家</string>
   <string name="template_passport_field_expiry_date">Expiry Date</string>
   <string name="template_passport_field_date_of_birth">Date of Birth</string>
   <string name="template_passport_field_issuing_authority">Issuing Authority</string>
-  <string name="template_passport_field_note">Note</string>
+  <string name="template_passport_field_note">備注</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Program Name</string>
   <string name="template_reward_program_field_member_id">Member ID</string>
   <string name="template_reward_program_field_points_balance">Points Balance</string>
   <string name="template_reward_program_field_expiry_date">Expiry Date</string>
   <string name="template_reward_program_field_tier_status">Tier/Status</string>
-  <string name="template_reward_program_field_note">Note</string>
+  <string name="template_reward_program_field_note">備注</string>
   <!-- Social Security Number Fields -->
-  <string name="template_social_security_number_field_full_name">Full Name</string>
+  <string name="template_social_security_number_field_full_name">全名</string>
   <string name="template_social_security_number_field_ssn">Social Security Number</string>
   <string name="template_social_security_number_field_issuing_country">Issuing Country</string>
-  <string name="template_social_security_number_field_note">Note</string>
-  <string name="template_header_technology">Technology</string>
-  <string name="template_header_finance">Finance</string>
-  <string name="template_header_personal">Finance</string>
+  <string name="template_social_security_number_field_note">備注</string>
+  <string name="template_header_technology">技術</string>
+  <string name="template_header_finance">金融</string>
+  <string name="template_header_personal">金融</string>
   <string name="button_start_from_scratch">Start from scratch</string>
   <string name="select_template_title">Custom item</string>
   <!-- Custom item screen -->
@@ -347,7 +347,9 @@
   <string name="create_custom_item_item_creation_success">Custom item created</string>
   <string name="update_custom_item_item_creation_success">Custom item updated</string>
   <string name="update_custom_item_item_creation_error">Could not update custom item</string>
+  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Cannot create items</string>
   <string name="cannot_create_items_dialog_message">You don\'t have any vaults with editor or admin access. Try creating one in the main app or ask your organization\'s administrator for support.</string>
+  <string name="wifi_security_type_field_label">Security type</string>
 </resources>

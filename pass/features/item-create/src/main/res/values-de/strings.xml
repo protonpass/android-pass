@@ -47,9 +47,9 @@
   <string name="login_created">Login erstellt</string>
   <string name="bottomsheet_modify_alias_title">Alias bearbeiten</string>
   <string name="bottomsheet_custom_field_type_text">Text</string>
-  <string name="bottomsheet_custom_field_type_text_content_description">Benutzerdefiniertes Textfeld</string>
   <string name="bottomsheet_custom_field_type_hidden">Versteckt</string>
   <string name="bottomsheet_custom_field_type_totp">Geheimer 2FA-Schlüssel (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_date">Datum</string>
   <string name="bottomsheet_custom_field_option_edit">Name bearbeiten</string>
   <string name="bottomsheet_custom_field_option_remove">Feld entfernen</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Benutzerdefiniertes Feld entfernen</string>
@@ -57,6 +57,7 @@
   <string name="custom_field_hidden_placeholder">Versteckten Text hinzufügen</string>
   <string name="custom_field_hidden_icon_content_description">Verstecktes benutzerdefiniertes Feld-Symbol</string>
   <string name="custom_field_text_placeholder">Text hinzufügen</string>
+  <string name="custom_field_date_placeholder">Datum hinzufügen</string>
   <string name="custom_field_dialog_title">Name des benutzerdefinierten Feldes</string>
   <string name="custom_field_dialog_body">Gib deinem benutzerdefinierten Feld einen Namen</string>
   <string name="custom_field_dialog_placeholder">z.B. Benutzer-ID, PIN</string>
@@ -100,11 +101,11 @@
   <!-- Create note -->
   <string name="note_hint">Notiz</string>
   <!-- Create Credit Card -->
-  <string name="field_cardholder_name_title">Name des Karteninhabers</string>
+  <string name="field_cardholder_name_title">Vollständiger Name</string>
   <string name="field_cardholder_name_hint">Vollständiger Name</string>
   <string name="field_card_number_title">Kartennummer</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>
-  <string name="field_card_cvv_title">Sicherheitscode</string>
+  <string name="field_card_cvv_title">Kartenprüfnummer</string>
   <string name="field_card_cvv_hint">123</string>
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
@@ -120,18 +121,18 @@
   <string name="credit_card_item_update_error">Fehler beim Aktualisieren der Kreditkarte.</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Vollständiger Name</string>
-  <string name="identity_field_email_title">E‐Mail‐Adresse</string>
+  <string name="identity_field_email_title">E-Mail-Adresse</string>
   <string name="identity_field_phone_number_title">Telefonnummer</string>
   <string name="identity_field_organization_title">Organisation</string>
   <string name="identity_field_street_address_title">Straße, Postfach</string>
   <string name="identity_field_zip_or_postal_code_title">Postleitzahl</string>
-  <string name="identity_field_city_title">Stadt</string>
+  <string name="identity_field_city_title">Ort</string>
   <string name="identity_field_state_or_province_title">Bundesland</string>
   <string name="identity_field_country_or_region_title">Land oder Region</string>
   <string name="identity_field_social_security_number_title">Sozialversicherungsnummer</string>
-  <string name="identity_field_passport_number_title">Reisepassnummer</string>
+  <string name="identity_field_passport_number_title">Passnummer</string>
   <string name="identity_field_license_number_title">Lizenznummer</string>
-  <string name="identity_field_website_title">Website</string>
+  <string name="identity_field_website_title">Webseite</string>
   <string name="identity_field_xhandle_title">X-Benutzername</string>
   <string name="identity_field_company_title">Unternehmen</string>
   <string name="identity_field_job_title_title">Berufsbezeichnung</string>
@@ -166,10 +167,10 @@
   <string name="identity_add_field_work_phone_number">Geschäftliche Telefonnummer</string>
   <string name="identity_add_field_work_email_address">Geschäftliche E-Mail-Adresse</string>
   <string name="identity_add_field_custom_field">Benutzerdefiniertes Feld</string>
-  <string name="identity_section_personal_details">Persönliche Details</string>
+  <string name="identity_section_personal_details">Angaben zur Person</string>
   <string name="identity_section_address_details">Adressdetails</string>
   <string name="identity_section_contact_details">Kontaktdetails</string>
-  <string name="identity_section_work_details">Geschäftliche Details</string>
+  <string name="identity_section_work_details">Angaben zur Arbeit</string>
   <string name="identity_bottomsheet_add_field">Feld hinzufügen</string>
   <string name="create_identity_init_error">Problem beim Abrufen von Angaben zur Identität</string>
   <string name="update_identity_attachments_init_error">Fehler beim Abrufen der Identität-Anhänge.</string>
@@ -206,12 +207,12 @@
   <string name="open_with">Öffnen mit:</string>
   <string name="open_attachments_error">Der Anhang konnte nicht geöffnet werden</string>
   <string name="upload_attachments_error">Hochladen des Anhangs der Nachricht fehlgeschlagen</string>
-  <string name="banner_advanced_options_title">Wusstest du?</string>
+  <string name="banner_advanced_options_title">Schon gewusst?</string>
   <string name="banner_advanced_options_subtitle">Tippe auf das Zahnrad-Symbol, um den Alias nach deinen Wünschen zu gestalten.</string>
-  <string name="banner_custom_domain_title">Wusstest du?</string>
+  <string name="banner_custom_domain_title">Schon gewusst?</string>
   <string name="banner_custom_domain_subtitle">Wenn du deine Domain hinzufügst, kannst du Aliase wie hallo@mein-domain.de erstellen.</string>
   <string name="banner_custom_domain_button">Domain hinzufügen</string>
-  <string name="banner_mailbox_title">Wusstest du?</string>
+  <string name="banner_mailbox_title">Schon gewusst?</string>
   <string name="banner_mailbox_subtitle">Gib Aliase für andere Personen frei, indem du deren Posteingang als zusätzliches Postfach hinzufügst.</string>
   <string name="banner_mailbox_button">Postfach hinzufügen</string>
   <!-- Suffix -->
@@ -267,7 +268,6 @@
   <string name="template_ssh_key_field_note">Notiz</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_ssid">SSID</string>
-  <string name="template_wifi_network_field_security_type">Sicherheitstyp</string>
   <string name="template_wifi_network_field_note">Notiz</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Bankname</string>
@@ -347,7 +347,9 @@
   <string name="create_custom_item_item_creation_success">Benutzerdefinierter Eintrag erstellt</string>
   <string name="update_custom_item_item_creation_success">Benutzerdefinierter Eintrag aktualisiert</string>
   <string name="update_custom_item_item_creation_error">Benutzerdefinierter Eintrag konnte nicht aktualisiert werden</string>
+  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">TT MMMM JJJJ</string>
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Kann keine Einträge erstellen</string>
   <string name="cannot_create_items_dialog_message">Du hast keine Tresore mit Bearbeitungs- oder Admin-Zugang. Versuche, einen in der Hauptanwendung zu erstellen, oder bitte den Administrator deiner Organisation um Unterstützung.</string>
+  <string name="wifi_security_type_field_label">Sicherheitstyp</string>
 </resources>

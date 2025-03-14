@@ -38,7 +38,7 @@
   <string name="login_item_monitor_widget_weak_pass_title">弱いパスワード</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">このアカウントは脆弱です。サービスにアクセスしてパスワードを変更してください。</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
-    <item quantity="other">%d 件の他のログインで同じパスワードが使用されています</item>
+    <item quantity="other">%d件の他のログインで同じパスワードが使用されています</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">2要素認証を設定するとより安全になります</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">このサービスは 2FA を提供します。アカウントのセキュリティを強化するには、これを有効にしてください。</string>
@@ -109,13 +109,13 @@
   <string name="field_detail_display_name_title">表示名</string>
   <string name="display_name_section_description">このエイリアスからメールを送る際の表示名</string>
   <plurals name="alias_forwards_count">
-    <item quantity="other">%1$s個の転送</item>
+    <item quantity="other">%1$s件の転送</item>
   </plurals>
   <plurals name="alias_replies_count">
-    <item quantity="other">%1$s個の返信</item>
+    <item quantity="other">%1$s件の返信</item>
   </plurals>
   <plurals name="alias_blocks_count">
-    <item quantity="other">%1$s個のブロック</item>
+    <item quantity="other">%1$s件のブロック</item>
   </plurals>
   <string name="open_with">開く：</string>
   <string name="open_attachments_error">添付ファイルを開くことができませんでした</string>

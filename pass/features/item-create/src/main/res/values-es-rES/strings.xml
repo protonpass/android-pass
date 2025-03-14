@@ -47,9 +47,9 @@
   <string name="login_created">Inicio de sesión creado</string>
   <string name="bottomsheet_modify_alias_title">Modificar alias</string>
   <string name="bottomsheet_custom_field_type_text">Texto</string>
-  <string name="bottomsheet_custom_field_type_text_content_description">Campo personalizado de texto</string>
   <string name="bottomsheet_custom_field_type_hidden">Oculto</string>
   <string name="bottomsheet_custom_field_type_totp">Clave secreta 2FA (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_date">Fecha</string>
   <string name="bottomsheet_custom_field_option_edit">Editar el nombre</string>
   <string name="bottomsheet_custom_field_option_remove">Eliminar el campo</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Eliminar el campo personalizado</string>
@@ -57,6 +57,7 @@
   <string name="custom_field_hidden_placeholder">Añadir texto oculto</string>
   <string name="custom_field_hidden_icon_content_description">Icono de campo personalizado oculto</string>
   <string name="custom_field_text_placeholder">Añadir texto</string>
+  <string name="custom_field_date_placeholder">Añadir una fecha</string>
   <string name="custom_field_dialog_title">Nombre de campo personalizado</string>
   <string name="custom_field_dialog_body">Da un nombre a tu campo personalizado.</string>
   <string name="custom_field_dialog_placeholder">P. ej.: ID de usuario, código PIN</string>
@@ -199,7 +200,7 @@
   <string name="create_alias_content_limit_banner">Has alcanzado el límite de alias que puedes crear. Crea alias ilimitados al actualizar tu suscripción.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">La aplicación necesita actualizarse para editar este elemento.</string>
   <string name="remove_passkey_dialog_title">¿Eliminar esta clave de acceso?</string>
-  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Estás a punto de eliminar la clave de acceso de «%1$s» para «%2$s». ¿Estás seguro?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Estás a punto de borrar la clave de acceso de «%1$s» para «%2$s». ¿Estás seguro?</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Archivos adjuntos</string>
   <string name="banner_body_attachments">Puedes adjuntar archivos a los elementos para una mejor organización.</string>
@@ -267,7 +268,6 @@
   <string name="template_ssh_key_field_note">Nota</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_ssid">SSID</string>
-  <string name="template_wifi_network_field_security_type">Tipo de seguridad</string>
   <string name="template_wifi_network_field_note">Nota</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Nombre del banco</string>
@@ -347,7 +347,9 @@
   <string name="create_custom_item_item_creation_success">Elemento personalizado creado</string>
   <string name="update_custom_item_item_creation_success">Elemento personalizado actualizado</string>
   <string name="update_custom_item_item_creation_error">No se ha podido actualizar el elemento personalizado.</string>
+  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd MMM aaaa</string>
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">No se pueden crear los elementos</string>
   <string name="cannot_create_items_dialog_message">No tienes ninguna caja fuerte con permiso de editor o de administrador. Intenta crear una en la aplicación principal o solicita ayuda al administrador de tu organización.</string>
+  <string name="wifi_security_type_field_label">Tipo de seguridad</string>
 </resources>

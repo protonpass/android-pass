@@ -22,7 +22,7 @@
   <string name="sharing_can_manage">Admin</string>
   <string name="sharing_can_view_description">Dapat melihat item dalam brankas ini.</string>
   <string name="sharing_can_edit_description">Dapat membuat, menyunting, menghapus, dan mengekspor item dalam brankas ini.</string>
-  <string name="sharing_can_manage_description">Dapat memberikan dan mencabut izin akses ke brankas ini.</string>
+  <string name="sharing_can_manage_description">Dapat memberikan dan menghilangkan akses ke brankas ini.</string>
   <plurals name="sharing_item_count">
     <item quantity="other">%d item</item>
   </plurals>

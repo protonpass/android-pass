@@ -112,10 +112,10 @@
   <string name="field_detail_display_name_title">Nazwa wyświetlana</string>
   <string name="display_name_section_description">Nazwa wyświetlana podczas wysyłania wiadomości z tego aliasu.</string>
   <plurals name="alias_forwards_count">
-    <item quantity="one">%1$s forward</item>
-    <item quantity="few">%1$s forwards</item>
-    <item quantity="many">%1$s forwards</item>
-    <item quantity="other">%1$s forwards</item>
+    <item quantity="one">Przekierowano %1$s</item>
+    <item quantity="few">Przekierowano %1$s</item>
+    <item quantity="many">Przekierowano %1$s</item>
+    <item quantity="other">Przekierowano %1$s</item>
   </plurals>
   <plurals name="alias_replies_count">
     <item quantity="one">%1$s odpowiedź</item>
@@ -124,10 +124,10 @@
     <item quantity="other">%1$s odpowiedzi</item>
   </plurals>
   <plurals name="alias_blocks_count">
-    <item quantity="one">%1$s block</item>
-    <item quantity="few">%1$s blocks</item>
-    <item quantity="many">%1$s blocks</item>
-    <item quantity="other">%1$s blocks</item>
+    <item quantity="one">Zablokowano %1$s</item>
+    <item quantity="few">Zablokowano %1$s</item>
+    <item quantity="many">Zablokowano %1$s</item>
+    <item quantity="other">Zablokowano %1$s</item>
   </plurals>
   <string name="open_with">Otwórz za pomocą:</string>
   <string name="open_attachments_error">Nie można otworzyć załącznika</string>

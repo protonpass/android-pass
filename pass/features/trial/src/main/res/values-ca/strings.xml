@@ -7,8 +7,8 @@
   <string name="trial_feature_4">Camps personalitzats</string>
   <string name="trial_button_text">Millora ara</string>
   <plurals name="trial_days_left">
-    <item quantity="one">Queda %d dia per provar les característiques prèmium</item>
-    <item quantity="other">Queden %d dies per provar les característiques prèmium</item>
+    <item quantity="one">Queda %d dia per provar les característiques prèmium.</item>
+    <item quantity="other">Queden %d dies per provar les característiques prèmium.</item>
   </plurals>
   <string name="trial_learn_more">Més informació</string>
 </resources>

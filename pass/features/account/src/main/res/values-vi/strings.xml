@@ -16,7 +16,7 @@
   <string name="manage_subscription_icon_content_description">Nút quản lý gói đăng ký</string>
   <string name="account_settings_list_item_password_header">Đổi mật khẩu</string>
   <string name="account_settings_list_item_recovery_header">Email khôi phục</string>
-  <string name="account_settings_list_item_security_keys"/>
+  <string name="account_settings_list_item_security_keys">Khóa bảo mật</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Chưa đặt</string>
   <string name="account_settings_list_item_password_hint_grace">Đang chờ đặt lại mật khẩu</string>
   <string name="account_settings_list_item_password_hint_insecure">Đã sẵn sàng đặt lại mật khẩu</string>

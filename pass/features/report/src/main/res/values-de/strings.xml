@@ -40,7 +40,7 @@
   <string name="sharing_tip_vault_sharing_guide">Hast du Probleme mit der Tresorfreigabe? Lese unseren Leitfaden.</string>
   <string name="sharing_tip_secure_links_guide">Hast du Probleme mit sicheren Links? Lese unseren Leitfaden.</string>
   <string name="sync_tip_force_refresh">Ist dein Bildschirm leer? Versuche, eine Synchronisation zu erzwingen.</string>
-  <string name="send_logs_label">Logs senden</string>
+  <string name="send_logs_label">Protokolle senden</string>
   <string name="report_sending_success">Der Bericht wurde erfolgreich gesendet.</string>
   <string name="report_sending_error">Der Bericht konnte nicht gesendet werden.</string>
   <string name="tips_passkey_check_guide">Wenn du Probleme hast, lies unseren Leitfaden.</string>

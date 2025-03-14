@@ -16,7 +16,7 @@
   <string name="item_list_header_credit_cards_type">Kredi kartları</string>
   <plurals name="item_list_header_results">
     <item quantity="one">sonuç</item>
-    <item quantity="other">sonuçlar</item>
+    <item quantity="other">sonuç</item>
   </plurals>
   <string name="item_list_header_identities_type">Kimlikler</string>
   <string name="item_list_header_custom_type">Özel ögeler</string>
@@ -96,7 +96,7 @@
   <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
     <item quantity="one">1 öge</item>
-    <item quantity="other">%d öge</item>
+    <item quantity="other">%d öğe</item>
   </plurals>
   <!-- Confirm close dialog -->
   <string name="confirm_close_dialog_title">Değişiklikler yok sayılsın mı?</string>
@@ -199,6 +199,7 @@
   <string name="item_details_shared_section_more_info_share_id">Kasa kimliği</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
   <string name="item_details_wifi_network_label_password">Parola</string>
+  <string name="item_details_wifi_network_label_security">Güvenlik</string>
   <string name="item_details_ssh_key_label_public_key">Herkese açık anahtar</string>
   <string name="item_details_ssh_key_label_private_key">Kişisel anahtar</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Uygulamanın bu sürümü artık desteklenmiyor. Lütfen uygulamanızı güncelleyin.</string>
@@ -293,8 +294,8 @@
   <string name="options_menu_content_description">Seçenekler menüsü</string>
   <!-- Items -->
   <plurals name="shared_items_count">
-    <item quantity="one">%d öge paylaşılmış</item>
-    <item quantity="other">%d öge paylaşılmış</item>
+    <item quantity="one">%d paylaşılmış öge</item>
+    <item quantity="other">%d paylaşılmış öge</item>
   </plurals>
   <plurals name="users_count">
     <item quantity="one">%d kullanıcı</item>
@@ -304,4 +305,5 @@
     <item quantity="one">%d üye</item>
     <item quantity="other">%d üye</item>
   </plurals>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
 </resources>

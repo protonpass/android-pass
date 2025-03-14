@@ -199,6 +199,7 @@
   <string name="item_details_shared_section_more_info_share_id">Αναγνωριστικό κρύπτης</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
   <string name="item_details_wifi_network_label_password">Κωδικός πρόσβασης</string>
+  <string name="item_details_wifi_network_label_security">Ασφάλεια</string>
   <string name="item_details_ssh_key_label_public_key">Δημόσιο κλειδί</string>
   <string name="item_details_ssh_key_label_private_key">Ιδιωτικό κλειδί</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Αυτή η έκδοση της εφαρμογής δεν υποστηρίζεται πλέον, παρακαλούμε ενημερώστε την εφαρμογή σας.</string>
@@ -210,7 +211,7 @@
   <string name="dialog_upgrade_plan_action_confirm">Αναβάθμιση</string>
   <string name="dialog_upgrade_plan_action_cancel">Όχι τώρα</string>
   <!-- Words -->
-  <string name="email_address">Διεύθυνση ηλεκτρονικού ταχυδρομείου</string>
+  <string name="email_address">Διεύθυνση ηλ. ταχυδρομείου</string>
   <string name="email_address_invalid">Μη έγκυρη διεύθυνση email</string>
   <string name="password">Κωδικός πρόσβασης</string>
   <!-- Tooltips -->
@@ -221,7 +222,7 @@
     <item quantity="other">%d έτη</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="one">%d μήνας</item>
+    <item quantity="one">%d μήνα</item>
     <item quantity="other">%d μήνες</item>
   </plurals>
   <plurals name="time_unit_weeks">
@@ -304,4 +305,5 @@
     <item quantity="one">%d μέλος</item>
     <item quantity="other">%d μέλη</item>
   </plurals>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">ηη ΜΜΜΜ εεεε</string>
 </resources>

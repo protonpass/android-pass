@@ -42,7 +42,7 @@
   <string name="secure_links_list_title">Secure links</string>
   <string name="secure_links_list_empty_title">No secure links</string>
   <string name="secure_links_list_empty_subtitle">You can start creating secure links from an item details sharing options</string>
-  <string name="secure_links_list_expiration_description">Expires in %s</string>
+  <string name="secure_links_list_expiration_description">於 %s 到期</string>
   <string name="secure_links_list_expired_description">已過期</string>
   <plurals name="secure_links_list_viewed_times_description">
     <item quantity="other">%d views</item>
@@ -52,7 +52,7 @@
   <!--Shared-->
   <string name="secure_links_shared_action_copy_link">複製連結</string>
   <string name="secure_links_shared_action_share_link">分享連結</string>
-  <string name="secure_links_shared_action_delete_link">Remove link</string>
+  <string name="secure_links_shared_action_delete_link">移除連結</string>
   <string name="secure_links_shared_action_delete_link_inactive">Remove inactive link</string>
   <string name="secure_links_shared_action_delete_links_inactive">Remove all inactive links</string>
   <string name="secure_links_shared_snackbar_message_link_copied">安全加密鏈結已複製</string>

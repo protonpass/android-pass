@@ -86,8 +86,8 @@
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">Holvit</string>
   <plurals name="vault_drawer_vaults_item_count">
-    <item quantity="one">%d kohde</item>
-    <item quantity="other">%d kohdetta</item>
+    <item quantity="one">%d kohdetta</item>
+    <item quantity="other">%d items</item>
   </plurals>
   <string name="vault_drawer_create_vault">Luo holvi</string>
   <string name="vault_drawer_item_trash">Roskakori</string>
@@ -158,7 +158,7 @@
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
     <item quantity="one">Haluatko varmasti poistaa kohteen? Tätä ei ole mahdollista kumota.</item>
-    <item quantity="other">Haluatko varmasti poistaa %d kohdetta? Tätä ei ole mahdollista kumota.</item>
+    <item quantity="other">Haluatko varmasti poistaa %d kohdetta? Tätä ei voi kumota.</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_shared_warning_message">
     <item quantity="one">%d kohde on tällä hetkellä jaettuna. Sen poistaminen poistaa pääsyn kaikilta muilta käyttäjiltä.</item>

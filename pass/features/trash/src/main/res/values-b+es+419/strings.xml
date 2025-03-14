@@ -12,8 +12,8 @@
   <string name="delete_alias_enabled_subtitle">"Tome nota que una vez eliminado, el alias no puede ser restaurado. ¿Quizás desea desactivarlo en su lugar? "</string>
   <string name="delete_alias_disabled_subtitle">Tome nota que una vez eliminado, el alias no puede ser restaurado. El alias ya está desactivado y no reenviará correos a su buzón.</string>
   <plurals name="bulk_delete_alias_title">
-    <item quantity="one">Está por eliminar permanentemente %d alias</item>
-    <item quantity="other">Está por eliminar permanentemente %d alias</item>
+    <item quantity="one">Está por eliminar %d alias permanentemente</item>
+    <item quantity="other">Está por eliminar %d alias permanentemente</item>
   </plurals>
   <string name="bulk_delete_alias_subtitle">Tome nota que una vez eliminados, los alias no pueden ser restaurados</string>
   <string name="bulk_delete_alias_confirm">Entendido, no los necesitaré más</string>

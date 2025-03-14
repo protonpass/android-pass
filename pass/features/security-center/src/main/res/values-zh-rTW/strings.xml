@@ -18,8 +18,8 @@
   -->
 <resources>
   <!-- Home screen -->
-  <string name="security_center_home_top_bar_title">Pass Monitor</string>
-  <string name="security_center_home_dark_web_monitoring_title">暗網監控</string>
+  <string name="security_center_home_top_bar_title">Pass 監控</string>
+  <string name="security_center_home_dark_web_monitoring_title">暗網監測</string>
   <string name="security_center_home_widget_breaches_title">已偵測到外洩</string>
   <string name="security_center_home_widget_breaches_subtitle">Your email address was leaked in at least 1 data breach.</string>
   <string name="security_center_home_widget_no_breaches_subtitle">Get notified if your email, password or other personal data was leaked.</string>
@@ -33,7 +33,7 @@
   <string name="security_center_home_row_reused_passwords_title">重複使用的密碼</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Generate unique passwords</string>
   <string name="security_center_home_row_missing_tfa_title">未啟用雙重驗證</string>
-  <string name="security_center_home_row_missing_tfa_subtitle">為更好安全設定雙重驗證</string>
+  <string name="security_center_home_row_missing_tfa_subtitle">設定二步驟驗證以強化帳戶安全</string>
   <string name="security_center_home_row_excludes_items_title">Excluded from monitoring</string>
   <string name="security_center_home_row_excludes_items_subtitle">These items remain at risk</string>
   <string name="security_center_get_breaches_error">Could not load breaches</string>
@@ -60,7 +60,7 @@
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">排除的物品</string>
   <!-- Dark web monitor -->
-  <string name="security_center_dark_web_monitor_top_bar_title">暗網監控</string>
+  <string name="security_center_dark_web_monitor_top_bar_title">暗網監測</string>
   <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Last check: %s</string>
   <string name="security_center_dark_web_monitor_custom_emails_title">自訂電子郵件信箱</string>
   <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Not verified</string>
@@ -74,7 +74,7 @@
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Error loading custom email addresses</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Could not get email addresses</string>
-  <string name="security_center_dark_web_monitor_custom_email_option_remove">移除</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_remove">刪除</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">Latest breach on %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
     <item quantity="other">Found in %s breaches</item>
@@ -95,7 +95,7 @@
   <string name="security_center_custom_email_email_address_placeholder">電子郵件位址</string>
   <string name="security_center_custom_email_invalid_address">無效的電子郵件位址</string>
   <string name="security_center_custom_email_continue">下一步</string>
-  <string name="security_center_custom_email_already_verified">Email already verified</string>
+  <string name="security_center_custom_email_already_verified">電子郵件已驗證</string>
   <string name="security_center_custom_email_error_adding">Error adding the email address</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_email_title">確認您的電子郵件</string>
@@ -103,7 +103,7 @@
   <string name="security_center_verify_email_snackbar_message_resend_code_success">A new verification has been sent, please check your inbox.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">There was an error sending the verification code. Please try again later.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Too many invalid verifications. Removing custom email.</string>
-  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Invalid verification code</string>
+  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">無效的驗證碼</string>
   <string name="security_center_verify_email_snackbar_message_verification_error">There was an error verifying the email. Please try again later.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">為已偵測到外洩</string>

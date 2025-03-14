@@ -59,7 +59,7 @@
   <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Transferir los alias</string>
   <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">Al buzón</string>
   <string name="simple_login_sync_mailbox_delete_action_delete">Eliminar el buzón</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Transferir y eliminar buzón de correo</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Transferir y eliminar el buzón</string>
   <string name="simple_login_sync_mailbox_delete_message_delete_error">Se ha producido un error al eliminar el buzón.</string>
   <string name="simple_login_sync_mailbox_delete_message_delete_success">Se ha eliminado el buzón.</string>
   <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Transferir los alias a</string>

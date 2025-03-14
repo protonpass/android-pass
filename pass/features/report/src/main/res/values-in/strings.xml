@@ -25,7 +25,7 @@
   <string name="categories_title">Masalah apa yang Anda hadapi?</string>
   <string name="report_toolbar_title">Laporkan masalah</string>
   <string name="send_report_button">Kirim laporan</string>
-  <string name="cancel_tips_button">Batal</string>
+  <string name="cancel_tips_button">Batalkan</string>
   <string name="contact_us_button">Hubungi kami</string>
   <string name="hint_tips_screen">Tidak membantu?</string>
   <string name="report_reason_autofill">Pengisian otomatis</string>

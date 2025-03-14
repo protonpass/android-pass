@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="biometric_prompt_title">App låst</string>
-  <string name="biometric_prompt_title_setup">Konfiguration av biometri</string>
+  <string name="biometric_prompt_title_setup">Biometrisk inställning</string>
   <string name="biometric_prompt_subtitle">Lås upp med ditt enhetslås</string>
   <string name="biometric_prompt_cancel">Avbryt</string>
 </resources>

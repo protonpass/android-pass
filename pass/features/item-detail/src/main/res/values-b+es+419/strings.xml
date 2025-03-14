@@ -38,8 +38,8 @@
   <string name="login_item_monitor_widget_weak_pass_title">Contraseña débil</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Esta cuenta es vulnerable. Visite el servicio y cambie la contraseña.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
-    <item quantity="one">%d otro inicio de sesión usa la misma contraseña.</item>
-    <item quantity="other">Otros %d inicios de sesión usan la misma contraseña.</item>
+    <item quantity="one">otro (%d) inicio de sesión usa la misma contraseña.</item>
+    <item quantity="other">otros %d inicios de sesión usan la misma contraseña.</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Configure la 2FA para más seguridad</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Este servicio ofrece 2FA. Actívelo para agregar seguridad a la cuenta.</string>

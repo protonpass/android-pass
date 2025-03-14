@@ -8,7 +8,7 @@
   <string name="autofill_dialog_associate_and_autofill">Utilizar siempre</string>
   <string name="autofill_dialog_just_autofill">Utilizar una vez</string>
   <string name="autofill_dialog_cancel">Cancelar</string>
-  <string name="autofill_notification_copy_to_clipboard">El TOTP ha sido copiado al portapapeles.</string>
+  <string name="autofill_notification_copy_to_clipboard">El código TOTP ha sido copiado al portapapeles.</string>
   <string name="autofill_dialog_associate_title">¿Utilizar el inicio de sesión?</string>
   <string name="autofill_user_logged_out">Se ha cerrado la sesión. Inicia sesión de nuevo abriendo la aplicación.</string>
   <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Rellenar los datos de la tarjeta automáticamente</string>

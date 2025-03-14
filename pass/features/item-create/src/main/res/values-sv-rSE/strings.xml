@@ -4,7 +4,7 @@
   <string name="action_save">Spara</string>
   <string name="action_remove">Ta bort</string>
   <!-- Create item bottomsheet -->
-  <string name="action_login">Logga in</string>
+  <string name="action_login">Inloggning</string>
   <string name="action_alias">Alias</string>
   <string name="action_note">Anteckning</string>
   <string name="action_credit_card">Kreditkort</string>
@@ -35,7 +35,7 @@
   <string name="field_website_address_hint">https://</string>
   <string name="field_website_add_another">Lägg till</string>
   <string name="sticky_button_generate_password" comment="Sticky button on the Create login screen. When tapped, the Generate password bottomsheet is shown">Generera ett nytt lösenord</string>
-  <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">Hide My Email</string>
+  <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">Hide-my-email</string>
   <string name="sticky_button_use_account_email" comment="Sticky button on the Create login screen. When tapped, the current user email is autofilled">Använd %s</string>
   <string name="create_login_item_creation_error">Kunde inte skapa inloggning</string>
   <string name="create_login_item_update_error">Kunde inte uppdatera inloggning</string>
@@ -47,9 +47,9 @@
   <string name="login_created">Inloggning skapad</string>
   <string name="bottomsheet_modify_alias_title">Modifiera alias</string>
   <string name="bottomsheet_custom_field_type_text">Text</string>
-  <string name="bottomsheet_custom_field_type_text_content_description">Anpassat textfält</string>
   <string name="bottomsheet_custom_field_type_hidden">Dolt</string>
   <string name="bottomsheet_custom_field_type_totp">Hemlig nyckel för 2FA (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_date">Datum</string>
   <string name="bottomsheet_custom_field_option_edit">Redigera namn</string>
   <string name="bottomsheet_custom_field_option_remove">Ta bort fält</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Ta bort anpassat fält</string>
@@ -57,18 +57,19 @@
   <string name="custom_field_hidden_placeholder">Lägg till dold text</string>
   <string name="custom_field_hidden_icon_content_description">Ikon för dolt anpassat fält</string>
   <string name="custom_field_text_placeholder">Lägga till text</string>
+  <string name="custom_field_date_placeholder">Lägg till datum</string>
   <string name="custom_field_dialog_title">Anpassat fältnamn</string>
   <string name="custom_field_dialog_body">Ge ditt anpassade fält ett namn</string>
   <string name="custom_field_dialog_placeholder">T.ex. användar-ID, PIN</string>
   <string name="custom_section_dialog_title">Ange en rubrik för sektion</string>
-  <string name="custom_section_dialog_placeholder">Rubrik</string>
+  <string name="custom_section_dialog_placeholder">Titel</string>
   <string name="custom_field_options_content_description">Alternativ för anpassat fält</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">Kunde inte skapa anteckning</string>
   <string name="create_note_item_update_error">Kunde inte uppdatera anteckning</string>
   <string name="create_note_init_error">Problem att hämta anteckningsdetaljer</string>
   <string name="update_note_attachments_init_error">Problem att hämta anteckningsbilagor</string>
-  <string name="note_link_attachments_error">Misslyckades att länka eller avlänka bilagor för anteckningen</string>
+  <string name="note_link_attachments_error">Misslyckades att länka eller avlänka bilagor för inloggningen</string>
   <string name="note_rename_attachments_error">Misslyckades att byta namn på anteckningsbilagor</string>
   <string name="note_created">Anteckning skapad</string>
   <!-- Create Alias -->
@@ -149,7 +150,7 @@
   <string name="identity_field_instagram_title">Instagram-användarnamn</string>
   <string name="identity_field_personal_website_title">Personlig webbplats-URL</string>
   <string name="identity_field_work_phone_number_title">Telefonnummer arbete</string>
-  <string name="identity_field_work_email_title">E-post arbete</string>
+  <string name="identity_field_work_email_title">E-postadress arbete</string>
   <string name="identity_add_field_first_name">Förnamn</string>
   <string name="identity_add_field_middle_name">Mellannamn</string>
   <string name="identity_add_field_last_name">Efternamn</string>
@@ -164,7 +165,7 @@
   <string name="identity_add_field_instagram">Instagram-användarnamn</string>
   <string name="identity_add_field_personal_website">Personlig webbplats-URL</string>
   <string name="identity_add_field_work_phone_number">Telefonnummer arbete</string>
-  <string name="identity_add_field_work_email_address">E-post arbete</string>
+  <string name="identity_add_field_work_email_address">E-postadress arbete</string>
   <string name="identity_add_field_custom_field">Anpassat fält</string>
   <string name="identity_section_personal_details">Personliga detaljer</string>
   <string name="identity_section_address_details">Adressuppgifter</string>
@@ -189,7 +190,7 @@
   <string name="close_scree_icon_content_description">Knapp för “Stäng skärm“</string>
   <string name="totp_paste_code_action">Klistra in kod</string>
   <string name="totp_scan_code_action">Skanna kod</string>
-  <string name="field_cannot_be_empty">Fältet kan inte vara tomt</string>
+  <string name="field_cannot_be_empty">Detta fält kan inte vara tomt</string>
   <string name="camera_permission_explanation">Tillåtelse för kamera krävs för att denna funktion ska vara tillgänglig.</string>
   <string name="camera_permission_open_settings">Öppna inställningar</string>
   <!--  TOTP limit  -->
@@ -199,7 +200,7 @@
   <string name="create_alias_content_limit_banner">Du har nått gränsen för alias du kan skapa. Skapa ett obegränsat antal alias när du uppgraderar din prenumeration.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Appen måste uppdateras för att redigera detta objekt</string>
   <string name="remove_passkey_dialog_title">Ta bort denna passkey?</string>
-  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Du håller på att ta bort passkey för användare \'%1$s\' för \'%2$s\'. Är du säker?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Du håller på att ta bort en passkey för användaren \'%1$s\' för \'%2$s\'. Är du säker?</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Bilagor</string>
   <string name="banner_body_attachments">Du kan bifoga filer till objekt för en bättre organisering</string>
@@ -219,7 +220,7 @@
   <string name="suffix_subtitle_public_domain">Offentlig domän</string>
   <string name="suffix_subtitle_private_domain">Din domän</string>
   <!-- Templates -->
-  <string name="template_item_api_credential">API-behörighet</string>
+  <string name="template_item_api_credential">API-uppgifter</string>
   <string name="template_item_database">Databas</string>
   <string name="template_item_server">Server</string>
   <string name="template_item_software_license">Programvarulicens</string>
@@ -267,7 +268,6 @@
   <string name="template_ssh_key_field_note">Anteckning</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_ssid">SSID</string>
-  <string name="template_wifi_network_field_security_type">Säkerhetstyp</string>
   <string name="template_wifi_network_field_note">Anteckning</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Banknamn</string>
@@ -306,7 +306,7 @@
   <string name="template_membership_field_membership_id">Medlemskaps-ID</string>
   <string name="template_membership_field_member_name">Medlemsnamn</string>
   <string name="template_membership_field_expiry_date">Utgångsdatum</string>
-  <string name="template_membership_field_tier_level">Tier/Level</string>
+  <string name="template_membership_field_tier_level">Nivå</string>
   <string name="template_membership_field_note">Anteckning</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">Fullständigt namn</string>
@@ -340,14 +340,16 @@
   <string name="add_private_key_placeholder">Lägg till privat nyckel</string>
   <string name="add_ssid_placeholder">Lägg till SSID</string>
   <string name="create_custom_item_init_error">Problem att hämta anpassade objektdetaljer</string>
-  <string name="update_custom_item_attachments_init_error">Problem retrieving custom item attachments</string>
+  <string name="update_custom_item_attachments_init_error">Problem att hämta anpassade objektbilagor</string>
   <string name="custom_item_link_attachments_error">Failed to link or unlink attachments to the custom item</string>
-  <string name="custom_item_rename_attachments_error">Failed to rename custom item attachments</string>
+  <string name="custom_item_rename_attachments_error">Misslyckades att byta namn på objektbilagor</string>
   <string name="create_custom_item_item_creation_error">Kunde inte skapa anpassat objekt</string>
   <string name="create_custom_item_item_creation_success">Anpassat objekt skapat</string>
   <string name="update_custom_item_item_creation_success">Anpassat objekt uppdaterat</string>
   <string name="update_custom_item_item_creation_error">Kunde inte uppdatera anpassat objekt</string>
+  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Kan inte skapa objekt</string>
   <string name="cannot_create_items_dialog_message">Du har inga valv med redigerings- eller administratörsåtkomst. Prova skapa ett i huvudappen eller be din organisations administratör om support.</string>
+  <string name="wifi_security_type_field_label">Säkerhetstyp</string>
 </resources>

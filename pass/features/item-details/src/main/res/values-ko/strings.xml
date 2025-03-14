@@ -69,9 +69,9 @@
   <string name="item_details_snackbar_message_x_handle_copied">X 핸들 복사됨</string>
   <string name="item_details_snackbar_message_yahoo_copied">Yahoo 복사됨</string>
   <string name="item_details_snackbar_message_zip_or_postal_code_copied">우편 번호 복사됨</string>
-  <string name="item_details_snackbar_message_public_key_copied">Public key copied</string>
-  <string name="item_details_snackbar_message_private_key_copied">Private key copied</string>
-  <string name="item_details_snackbar_message_ssid_copied">SSID copied</string>
+  <string name="item_details_snackbar_message_public_key_copied">공개 키가 복사되었습니다</string>
+  <string name="item_details_snackbar_message_private_key_copied">비공개 키가 복사되었습니다</string>
+  <string name="item_details_snackbar_message_ssid_copied">SSID가 복사되었습니다</string>
   <string name="open_with">열기:</string>
   <string name="open_attachments_error">첨부파일을 열 수 없습니다</string>
 </resources>

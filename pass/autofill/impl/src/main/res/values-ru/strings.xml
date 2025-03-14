@@ -8,7 +8,7 @@
   <string name="autofill_dialog_associate_and_autofill">Использовать всегда</string>
   <string name="autofill_dialog_just_autofill">Использовать один раз</string>
   <string name="autofill_dialog_cancel">Отменить</string>
-  <string name="autofill_notification_copy_to_clipboard">TOTP has been copied to clipboard</string>
+  <string name="autofill_notification_copy_to_clipboard">TOTP скопирован в буфер обмена</string>
   <string name="autofill_dialog_associate_title">Использовать имя пользователя?</string>
   <string name="autofill_user_logged_out">Был произведён выход из учётной записи. Пожалуйста, войдите снова, открыв приложение.</string>
   <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Автозаполнение данных карты</string>

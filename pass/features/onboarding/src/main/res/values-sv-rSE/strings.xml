@@ -2,7 +2,7 @@
 <resources>
   <string name="on_boarding_autofill_content">Låt Proton Pass fylla i inloggningsuppgifter åt dig. Inget att skriva eller kopiera och klistra in.</string>
   <string name="on_boarding_autofill_title">Logga in på appar omedelbart</string>
-  <string name="on_boarding_autofill_button">Autofyll med Proton Pass</string>
+  <string name="on_boarding_autofill_button">Fyll automatiskt med Proton Pass</string>
   <string name="on_boarding_fingerprint_content">Ställ in Proton Pass för att låsa upp med ditt fingeravtryck så att bara du har åtkomst.</string>
   <string name="on_boarding_fingerprint_title">Skydda dina mest känsliga data</string>
   <string name="on_boarding_fingerprint_button">Aktivera fingeravtryckslås</string>

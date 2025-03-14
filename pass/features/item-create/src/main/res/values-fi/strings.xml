@@ -47,9 +47,9 @@
   <string name="login_created">Kirjautumistieto luotiin</string>
   <string name="bottomsheet_modify_alias_title">Muokkaa aliasta</string>
   <string name="bottomsheet_custom_field_type_text">Teksti</string>
-  <string name="bottomsheet_custom_field_type_text_content_description">Mukautettu tekstikenttä</string>
   <string name="bottomsheet_custom_field_type_hidden">Piilotettu</string>
   <string name="bottomsheet_custom_field_type_totp">2FA-salaisuus (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_date">Date</string>
   <string name="bottomsheet_custom_field_option_edit">Muokkaa nimeä</string>
   <string name="bottomsheet_custom_field_option_remove">Poista kenttä</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Poista mukautettu kenttä</string>
@@ -57,6 +57,7 @@
   <string name="custom_field_hidden_placeholder">Lisää piilotettu teksti</string>
   <string name="custom_field_hidden_icon_content_description">Mukautetun piilotetun kentän kuvake</string>
   <string name="custom_field_text_placeholder">Lisää teksti</string>
+  <string name="custom_field_date_placeholder">Add date</string>
   <string name="custom_field_dialog_title">Mukautetun kentän nimi</string>
   <string name="custom_field_dialog_body">Nimeä mukautettu kenttä</string>
   <string name="custom_field_dialog_placeholder">Esim. käyttäjätunnus, PIN</string>
@@ -221,7 +222,7 @@
   <!-- Templates -->
   <string name="template_item_api_credential">API Credential</string>
   <string name="template_item_database">Database</string>
-  <string name="template_item_server">Server</string>
+  <string name="template_item_server">Palvelin</string>
   <string name="template_item_software_license">Software License</string>
   <string name="template_item_ssh_key">SSH Key</string>
   <string name="template_item_wifi_network">WiFi Network</string>
@@ -230,69 +231,68 @@
   <string name="template_item_driver_license">Driver License</string>
   <string name="template_item_medical_record">Medical Record</string>
   <string name="template_item_membership">Membership</string>
-  <string name="template_item_passport">Passport</string>
+  <string name="template_item_passport">Passi</string>
   <string name="template_item_reward_program">Reward Program</string>
   <string name="template_item_social_security_number">Social Security Number</string>
   <!-- API Credential Fields -->
   <string name="template_api_credential_field_api_key">API Key</string>
   <string name="template_api_credential_field_secret">Secret</string>
   <string name="template_api_credential_field_expiry_date">Expiry Date</string>
-  <string name="template_api_credential_field_permissions">Permissions</string>
-  <string name="template_api_credential_field_note">Note</string>
+  <string name="template_api_credential_field_permissions">Käyttöoikeudet</string>
+  <string name="template_api_credential_field_note">Muistiinpano</string>
   <!-- Database Fields -->
-  <string name="template_database_field_host">Host</string>
-  <string name="template_database_field_port">Port</string>
-  <string name="template_database_field_username">Username</string>
-  <string name="template_database_field_password">Password</string>
+  <string name="template_database_field_host">Isäntä</string>
+  <string name="template_database_field_port">Portti</string>
+  <string name="template_database_field_username">Käyttäjätunnus</string>
+  <string name="template_database_field_password">Salasana</string>
   <string name="template_database_field_database_type">Database Type</string>
-  <string name="template_database_field_note">Note</string>
+  <string name="template_database_field_note">Muistiinpano</string>
   <!-- Server Fields -->
-  <string name="template_server_field_ip_address">IP Address</string>
+  <string name="template_server_field_ip_address">IP-osoite</string>
   <string name="template_server_field_hostname">Hostname</string>
   <string name="template_server_field_os">Operating System</string>
-  <string name="template_server_field_username">Username</string>
-  <string name="template_server_field_password">Password</string>
-  <string name="template_server_field_note">Note</string>
+  <string name="template_server_field_username">Käyttäjätunnus</string>
+  <string name="template_server_field_password">Salasana</string>
+  <string name="template_server_field_note">Muistiinpano</string>
   <!-- Software License Fields -->
   <string name="template_software_license_field_license_key">License Key</string>
-  <string name="template_software_license_field_product">Product</string>
+  <string name="template_software_license_field_product">Tuote</string>
   <string name="template_software_license_field_expiry_date">Expiry Date</string>
-  <string name="template_software_license_field_owner">Owner</string>
-  <string name="template_software_license_field_note">Note</string>
+  <string name="template_software_license_field_owner">Omistaja</string>
+  <string name="template_software_license_field_note">Muistiinpano</string>
   <!-- SSH Key Fields -->
   <string name="template_ssh_key_field_private_key">Private Key</string>
   <string name="template_ssh_key_field_public_key">Public Key</string>
-  <string name="template_ssh_key_field_username">Username</string>
-  <string name="template_ssh_key_field_host">Host</string>
-  <string name="template_ssh_key_field_note">Note</string>
+  <string name="template_ssh_key_field_username">Käyttäjätunnus</string>
+  <string name="template_ssh_key_field_host">Isäntä</string>
+  <string name="template_ssh_key_field_note">Muistiinpano</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_ssid">SSID</string>
-  <string name="template_wifi_network_field_security_type">Security Type</string>
-  <string name="template_wifi_network_field_note">Note</string>
+  <string name="template_wifi_network_field_note">Muistiinpano</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Bank Name</string>
   <string name="template_bank_account_field_account_number">Account Number</string>
   <string name="template_bank_account_field_routing_number">Routing Number</string>
-  <string name="template_bank_account_field_account_type">Account Type</string>
+  <string name="template_bank_account_field_account_type">Tilin tyyppi</string>
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
   <string name="template_bank_account_field_holder_name">Holder Name</string>
-  <string name="template_bank_account_field_note">Note</string>
+  <string name="template_bank_account_field_note">Muistiinpano</string>
   <!-- Crypto Wallet Fields -->
-  <string name="template_crypto_wallet_field_wallet_name">Wallet Name</string>
-  <string name="template_crypto_wallet_field_address">Address</string>
+  <string name="template_crypto_wallet_field_wallet_name">Lompakon nimi</string>
+  <string name="template_crypto_wallet_field_address">Osoite</string>
   <string name="template_crypto_wallet_field_private_key">Private Key</string>
   <string name="template_crypto_wallet_field_seed_phrase">Seed Phrase</string>
-  <string name="template_crypto_wallet_field_network">Network</string>
-  <string name="template_crypto_wallet_field_note">Note</string>
+  <string name="template_crypto_wallet_field_network">Verkko</string>
+  <string name="template_crypto_wallet_field_note">Muistiinpano</string>
   <!-- Driver License Fields -->
-  <string name="template_driver_license_field_full_name">Full Name</string>
+  <string name="template_driver_license_field_full_name">Koko nimi</string>
   <string name="template_driver_license_field_license_number">License Number</string>
   <string name="template_driver_license_field_issuing_state_country">Issuing State/Country</string>
   <string name="template_driver_license_field_expiry_date">Expiry Date</string>
   <string name="template_driver_license_field_date_of_birth">Date of Birth</string>
   <string name="template_driver_license_field_class">Class</string>
-  <string name="template_driver_license_field_note">Note</string>
+  <string name="template_driver_license_field_note">Muistiinpano</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Patient Name</string>
   <string name="template_medical_record_field_record_number">Record Number</string>
@@ -300,42 +300,42 @@
   <string name="template_medical_record_field_medications">Medications</string>
   <string name="template_medical_record_field_doctor">Doctor</string>
   <string name="template_medical_record_field_hospital">Hospital</string>
-  <string name="template_medical_record_field_note">Note</string>
+  <string name="template_medical_record_field_note">Muistiinpano</string>
   <!-- Membership Fields -->
   <string name="template_membership_field_organization_name">Organization Name</string>
   <string name="template_membership_field_membership_id">Membership ID</string>
   <string name="template_membership_field_member_name">Member Name</string>
   <string name="template_membership_field_expiry_date">Expiry Date</string>
   <string name="template_membership_field_tier_level">Tier/Level</string>
-  <string name="template_membership_field_note">Note</string>
+  <string name="template_membership_field_note">Muistiinpano</string>
   <!-- Passport Fields -->
-  <string name="template_passport_field_full_name">Full Name</string>
+  <string name="template_passport_field_full_name">Koko nimi</string>
   <string name="template_passport_field_passport_number">Passport Number</string>
-  <string name="template_passport_field_country">Country</string>
+  <string name="template_passport_field_country">Maa</string>
   <string name="template_passport_field_expiry_date">Expiry Date</string>
   <string name="template_passport_field_date_of_birth">Date of Birth</string>
   <string name="template_passport_field_issuing_authority">Issuing Authority</string>
-  <string name="template_passport_field_note">Note</string>
+  <string name="template_passport_field_note">Muistiinpano</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Program Name</string>
   <string name="template_reward_program_field_member_id">Member ID</string>
   <string name="template_reward_program_field_points_balance">Points Balance</string>
   <string name="template_reward_program_field_expiry_date">Expiry Date</string>
   <string name="template_reward_program_field_tier_status">Tier/Status</string>
-  <string name="template_reward_program_field_note">Note</string>
+  <string name="template_reward_program_field_note">Muistiinpano</string>
   <!-- Social Security Number Fields -->
-  <string name="template_social_security_number_field_full_name">Full Name</string>
+  <string name="template_social_security_number_field_full_name">Koko nimi</string>
   <string name="template_social_security_number_field_ssn">Social Security Number</string>
   <string name="template_social_security_number_field_issuing_country">Issuing Country</string>
-  <string name="template_social_security_number_field_note">Note</string>
-  <string name="template_header_technology">Technology</string>
-  <string name="template_header_finance">Finance</string>
-  <string name="template_header_personal">Finance</string>
+  <string name="template_social_security_number_field_note">Muistiinpano</string>
+  <string name="template_header_technology">Teknologia</string>
+  <string name="template_header_finance">Talous</string>
+  <string name="template_header_personal">Talous</string>
   <string name="button_start_from_scratch">Start from scratch</string>
   <string name="select_template_title">Custom item</string>
   <!-- Custom item screen -->
-  <string name="add_custom_field_button">Add field</string>
-  <string name="add_section_button">Add section</string>
+  <string name="add_custom_field_button">Lisää kenttä</string>
+  <string name="add_section_button">Lisää osio</string>
   <string name="add_public_key_placeholder">Add public key</string>
   <string name="add_private_key_placeholder">Add private key</string>
   <string name="add_ssid_placeholder">Add SSID</string>
@@ -347,7 +347,9 @@
   <string name="create_custom_item_item_creation_success">Custom item created</string>
   <string name="update_custom_item_item_creation_success">Custom item updated</string>
   <string name="update_custom_item_item_creation_error">Could not update custom item</string>
+  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Cannot create items</string>
   <string name="cannot_create_items_dialog_message">You don\'t have any vaults with editor or admin access. Try creating one in the main app or ask your organization\'s administrator for support.</string>
+  <string name="wifi_security_type_field_label">Security type</string>
 </resources>

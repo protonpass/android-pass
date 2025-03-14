@@ -96,7 +96,7 @@
   <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
     <item quantity="one">1 élément</item>
-    <item quantity="other">%d éléments</item>
+    <item quantity="other">%d éléments</item>
   </plurals>
   <!-- Confirm close dialog -->
   <string name="confirm_close_dialog_title">Abandonner les modifications ?</string>
@@ -199,6 +199,7 @@
   <string name="item_details_shared_section_more_info_share_id">ID du coffre-fort</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
   <string name="item_details_wifi_network_label_password">Mot de passe</string>
+  <string name="item_details_wifi_network_label_security">Security</string>
   <string name="item_details_ssh_key_label_public_key">Clé publique</string>
   <string name="item_details_ssh_key_label_private_key">Clé privée</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Cette version de l\'application n\'est plus prise en charge. Veuillez la mettre à jour.</string>
@@ -230,7 +231,7 @@
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d jour</item>
-    <item quantity="other">%d jours</item>
+    <item quantity="other">%d jours</item>
   </plurals>
   <plurals name="time_unit_hours">
     <item quantity="one">%d heure</item>
@@ -238,7 +239,7 @@
   </plurals>
   <plurals name="time_unit_minutes">
     <item quantity="one">%d minute</item>
-    <item quantity="other">%d minutes</item>
+    <item quantity="other">%d minutes</item>
   </plurals>
   <plurals name="time_unit_seconds">
     <item quantity="one">%d seconde</item>
@@ -269,7 +270,7 @@
   <string name="simple_login_widget_title">Activer la synchronisation avec SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
     <item quantity="one">Nous avons détecté que vous possédez l\'alias %d qui est présent dans SimpleLogin mais manquant dans Proton Pass. Souhaitez-vous l\'importer ?</item>
-    <item quantity="other">Nous avons détecté que vous avez %d alias qui sont présents dans SimpleLogin mais manquants dans Proton Pass. Souhaitez-vous les importer ?</item>
+    <item quantity="other">Nous avons détecté que vous possédez %d alias qui sont présents dans SimpleLogin mais manquants dans Proton Pass. Souhaitez-vous les importer ?</item>
   </plurals>
   <string name="simple_login_widget_action">Synchroniser les alias</string>
   <!-- Verification codes -->
@@ -304,4 +305,5 @@
     <item quantity="one">%d membre</item>
     <item quantity="other">%d membres</item>
   </plurals>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
 </resources>

@@ -27,7 +27,7 @@
   <string name="security_center_home_row_data_breaches_title">Alerta da Dark Web</string>
   <string name="security_center_home_row_data_breaches_subtitle">Violações detectadas</string>
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
-  <string name="security_center_home_row_sentinel_subtitle">Programa avançado de proteção de contas</string>
+  <string name="security_center_home_row_sentinel_subtitle">Programa avançado de proteção de conta</string>
   <string name="security_center_home_row_insecure_passwords_title">Senhas fracas</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">Altere suas senhas</string>
   <string name="security_center_home_row_reused_passwords_title">Senhas reutilizadas</string>

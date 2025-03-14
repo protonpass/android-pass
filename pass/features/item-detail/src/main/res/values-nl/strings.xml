@@ -114,8 +114,8 @@
     <item quantity="other">%1$s doorgestuurd</item>
   </plurals>
   <plurals name="alias_replies_count">
-    <item quantity="one">%1$s antwoord</item>
-    <item quantity="other">%1$s antwoorden</item>
+    <item quantity="one">%1$s reactie</item>
+    <item quantity="other">%1$s reacties</item>
   </plurals>
   <plurals name="alias_blocks_count">
     <item quantity="one">%1$s blok</item>

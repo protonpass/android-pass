@@ -21,7 +21,7 @@
   <string name="item_options_alias_trash_dialog_message">Aliasse im Papierkorb werden weiterhin E-Mails weiterleiten. Wenn du keine E-Mails mehr an diese Adresse erhalten willst, deaktiviere ihn stattdessen.</string>
   <string name="item_options_alias_trash_dialog_checkbox_text">Nicht erneut erinnern</string>
   <string name="item_options_alias_trash_dialog_button_text_disable">Stattdessen deaktivieren</string>
-  <string name="item_options_alias_trash_dialog_button_text_trash">In den Papierkorb verschieben</string>
+  <string name="item_options_alias_trash_dialog_button_text_trash">In Papierkorb verschieben</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">Fehler beim Deaktivieren des Alias.</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">Alias deaktiviert</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">Fehler beim Verschieben des Alias in den Papierkorb.</string>

@@ -73,8 +73,8 @@
   <string name="move_to_trash_item_detail_bottom_sheet">移至垃圾桶</string>
   <string name="migrate_item_detail_bottom_sheet">移動到另一個保管庫</string>
   <!-- More info -->
-  <string name="date_today">Today %s</string>
-  <string name="date_yesterday">Yesterday %s</string>
+  <string name="date_today">今天%s</string>
+  <string name="date_yesterday">昨天%s</string>
   <!--
     Pattern used when displaying a date in the same year as we are.
     It would translate to
@@ -104,7 +104,7 @@
   <string name="passkey_detail_bottomsheet_key">金鑰</string>
   <string name="passkey_detail_bottomsheet_created">已創建</string>
   <string name="activity_in_last_two_weeks">Activity in the last 14 days</string>
-  <string name="contacts">Contacts</string>
+  <string name="contacts">通訊錄</string>
   <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
   <string name="field_detail_display_name_title">顯示名稱</string>
   <string name="display_name_section_description">The display name when sending an email from this alias.</string>
@@ -119,6 +119,6 @@
   </plurals>
   <string name="open_with">Open with:</string>
   <string name="open_attachments_error">Could not open attachment</string>
-  <string name="banner_contacts_title">Did you know?</string>
+  <string name="banner_contacts_title">您知道嗎？</string>
   <string name="banner_contacts_subtitle">Every time your alias receives an email from someone, a new contact is automatically created.</string>
 </resources>

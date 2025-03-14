@@ -25,7 +25,7 @@
   <string name="secure_links_create_row_expiration_options_seven_days">7 dias</string>
   <string name="secure_links_create_row_expiration_options_fourteen_days">14 dias</string>
   <string name="secure_links_create_row_expiration_options_thirty_days">30 dias</string>
-  <string name="secure_links_create_row_max_views_title">Restringir números de visualizações</string>
+  <string name="secure_links_create_row_max_views_title">Restringir número de visualizações</string>
   <string name="secure_links_create_row_max_views_subtitle">Máximo de visualizações: %d</string>
   <string name="secure_links_create_button_generate">Gerar link seguro</string>
   <string name="secure_links_create_snackbar_message_error">Houve um erro ao criar este link seguro</string>

@@ -65,7 +65,7 @@
   <string name="profile_less_than_a_minute">Kurang dari satu menit</string>
   <string name="account_switcher_manage_account">Kelola akun</string>
   <string name="account_switcher_sign_in">Masuk</string>
-  <string name="account_switcher_sign_out">Keluar dari akun</string>
+  <string name="account_switcher_sign_out">Keluar</string>
   <string name="account_switcher_switch_to">Ganti ke</string>
   <string name="account_switcher_add_account">Tambahkan akun</string>
   <string name="account_switcher_remove">Hapus</string>
@@ -76,7 +76,7 @@
   <string name="filtered_by_credit_cards">Difilter berdasarkan kartu kredit. Item dalam sampah tidak ditampilkan</string>
   <string name="filtered_by_identities">Difilter berdasarkan identitas. Item dalam sampah tidak ditampilkan</string>
   <string name="filtered_by_custom_items">Difilter berdasarkan item khusus. Item dalam sampah tidak ditampilkan</string>
-  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Anda perlu beralih ke %1$s untuk mengelola</string>
+  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Anda perlu untuk beralih ke %1$s untuk mengelola hal ini</string>
   <string name="account_switch_confirmation_title">Kelola akun</string>
   <string name="account_switch_confirmation_confirm">Alihkan dan kelola</string>
   <string name="profile_storage_data_title">Penyimpanan</string>

@@ -19,7 +19,7 @@
   <string name="email_copied_to_clipboard">Адресу електронної пошти скопійовано</string>
   <string name="username_copied_to_clipboard">Ім\'я користувача скопійовано</string>
   <string name="password_copied_to_clipboard">Пароль скопійовано</string>
-  <string name="website_copied_to_clipboard">Web address copied</string>
+  <string name="website_copied_to_clipboard">Вебсайт скопійовано</string>
   <string name="totp_copied_to_clipboard">TOTP скопійовано</string>
   <string name="field_copied_to_clipboard">Поле скопійовано</string>
   <string name="move_item_to_trash_message">Елемент переміщено до смітника</string>
@@ -46,7 +46,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Налаштуйте 2FA для більшої безпеки</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Цей сервіс пропонує 2FA. Увімкніть це для додаткової безпеки облікового запису.</string>
   <string name="login_item_reused_passwords_subtitle">Записи входу з ваших сховищ, які використовують цей пароль.</string>
-  <string name="field_email">Адреса електронної пошти</string>
+  <string name="field_email">Адреса е-пошти</string>
   <string name="field_username">Ім\'я користувача</string>
   <string name="field_username_or_email">Ім\'я користувача або адреса е-пошти</string>
   <string name="field_password">Пароль</string>
@@ -120,7 +120,7 @@
   <plurals name="alias_replies_count">
     <item quantity="one">%1$s відповідь</item>
     <item quantity="few">%1$s відповіді</item>
-    <item quantity="many">%1$s відповідей</item>
+    <item quantity="many">%1$s відповіді</item>
     <item quantity="other">%1$s відповідей</item>
   </plurals>
   <plurals name="alias_blocks_count">

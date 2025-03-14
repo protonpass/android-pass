@@ -26,6 +26,6 @@
   <string name="onboarding_slide_2_subtitle">Verwende Hide-My-Email-Aliasnamen gegen Phishing-Bedrohungen.</string>
   <string name="onboarding_slide_3_subtitle">Gib Passwörter und vertrauliche Informationen sicher und mühelos weiter.</string>
   <string name="onboarding_slide_4_subtitle">Erhalte Warnungen, wenn deine E-Mail-Adresse im Dark Web gefunden wird.</string>
-  <string name="create_an_account_button">Erstelle ein Konto</string>
+  <string name="create_an_account_button">Konto erstellen</string>
   <string name="sign_in_button">Anmelden</string>
 </resources>

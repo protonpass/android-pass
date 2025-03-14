@@ -25,9 +25,9 @@
   <string name="sharing_can_manage_description">Lahko odobri in prekliče dostop do tega trezorja.</string>
   <plurals name="sharing_item_count">
     <item quantity="one">%d predmet</item>
-    <item quantity="two">%d predmeta</item>
-    <item quantity="few">%d predmeti</item>
-    <item quantity="other">%d predmetov</item>
+    <item quantity="two">%d items</item>
+    <item quantity="few">%d items</item>
+    <item quantity="other">%d items</item>
   </plurals>
   <plurals name="sharing_member_count">
     <item quantity="one">%d član</item>
@@ -46,9 +46,9 @@
   <string name="share_with_email_email_already_added">You have already added this email address</string>
   <string name="share_permissions_title">Nastavite raven dostopa</string>
   <string name="sharing_reject_invitation">Zavrni povabilo</string>
-  <string name="sharing_vault_invitation_title">Shared vault invitation</string>
+  <string name="sharing_vault_invitation_title">Vabilo v skupni trezor</string>
   <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
-  <string name="sharing_vault_invitation_accept">Join shared vault</string>
+  <string name="sharing_vault_invitation_accept">Pridružite se skupnemu trezorju</string>
   <string name="sharing_item_invitation_title">Shared item invitation</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
   <string name="sharing_item_invitation_accept">Accept and view the item</string>
@@ -72,10 +72,10 @@
   <string name="sharing_snackbar_fetch_pending_invites_error">There was an error fetching pending invites</string>
   <string name="share_summary_title">Preglejte in delite</string>
   <string name="share_summary_share_vault">Skupni trezor</string>
-  <string name="share_summary_share_item">Share item</string>
+  <string name="share_summary_share_item">Daj predmet v skupno rabo</string>
   <string name="share_summary_vault_title">Trezor</string>
   <string name="share_summary_item_title">Predmet</string>
-  <string name="share_summary_access_level_title">Access level</string>
+  <string name="share_summary_access_level_title">Raven dostopa</string>
   <string name="share_manage_vault_share_with_more_people">Delite z več ljudmi</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d ostane povabilo</item>
@@ -85,9 +85,9 @@
   </plurals>
   <plurals name="share_manage_vault_item_count">
     <item quantity="one">%d predmet</item>
-    <item quantity="two">%d predmeta</item>
-    <item quantity="few">%d predmeti</item>
-    <item quantity="other">%d predmetov</item>
+    <item quantity="two">%d items</item>
+    <item quantity="few">%d items</item>
+    <item quantity="other">%d items</item>
   </plurals>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Povabilo poslano.</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Ustvarjanje računa v teku</string>

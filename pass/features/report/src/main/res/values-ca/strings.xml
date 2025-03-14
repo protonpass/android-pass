@@ -32,7 +32,7 @@
   <string name="report_reason_sharing">S\'està compartint</string>
   <string name="report_reason_sync">Sincronitza</string>
   <string name="report_reason_passkeys">Claus d\'accés</string>
-  <string name="report_reason_other">Altre</string>
+  <string name="report_reason_other">Altres</string>
   <string name="tips_title">Solucions ràpides per %1$s</string>
   <string name="tips_subtitle">Aquests consells podrien ajudar-us a resoldre el vostre problema més ràpid.</string>
   <string name="autofill_tip_restart">Proveu de desactivar i activar la funció d\'emplenament automàtic.</string>

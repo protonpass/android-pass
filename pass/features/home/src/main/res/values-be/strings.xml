@@ -91,7 +91,7 @@
     <item quantity="one">%d элемент</item>
     <item quantity="few">%d элементы</item>
     <item quantity="many">%d элементаў</item>
-    <item quantity="other">%d элементаў</item>
+    <item quantity="other">%d элементы</item>
   </plurals>
   <string name="vault_drawer_create_vault">Стварыць сховішча</string>
   <string name="vault_drawer_item_trash">Сметніца</string>
@@ -149,7 +149,7 @@
   <plurals name="alert_confirm_restore_items_message">
     <item quantity="one">Вы сапраўды хочаце аднавіць элемент, які знаходзіцца ў сметніцы?</item>
     <item quantity="few">Вы сапраўды хочаце аднавіць %d элементы, якія знаходзяцца ў сметніцы?</item>
-    <item quantity="many">Вы сапраўды хочаце аднавіць %d элементаў, якія знаходзяцца ў сметніцы?</item>
+    <item quantity="many">Вы сапраўды хочаце аднавіць %d элементы, якія знаходзяцца ў сметніцы?</item>
     <item quantity="other">Вы сапраўды хочаце аднавіць %d элементаў, якія знаходзяцца ў сметніцы?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_title">

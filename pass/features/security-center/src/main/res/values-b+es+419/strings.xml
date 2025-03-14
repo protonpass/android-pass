@@ -80,7 +80,7 @@
   <string name="security_center_dark_web_monitor_latest_breach_on">Última vulneración en %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
     <item quantity="one">Encontrada en %s vulneración</item>
-    <item quantity="other">Encontrado en %s vulneraciones</item>
+    <item quantity="other">Encontrada en %s vulneraciones</item>
   </plurals>
   <string name="security_center_dark_web_monitor_found_in_breaches">No se detectaron vulneraciones.</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Direcciones de Proton</string>

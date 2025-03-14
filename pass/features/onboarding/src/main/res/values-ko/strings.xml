@@ -26,6 +26,6 @@
   <string name="onboarding_slide_2_subtitle">피싱 위협에 대해 Hide-My-Email 별칭을 사용하세요.</string>
   <string name="onboarding_slide_3_subtitle">비밀번호와 민감한 정보를 안전하고 쉽게 공유하세요.</string>
   <string name="onboarding_slide_4_subtitle">내 이메일이 다크 웹에서 발견될 때 알림을 받아보세요.</string>
-  <string name="create_an_account_button">계정 생성</string>
+  <string name="create_an_account_button">계정 만들기</string>
   <string name="sign_in_button">로그인</string>
 </resources>

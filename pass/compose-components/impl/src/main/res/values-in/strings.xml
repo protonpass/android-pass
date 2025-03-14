@@ -23,7 +23,7 @@
   <string name="item_list_header_shared_by_me">Dibagikan oleh saya</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Konfirmasi</string>
-  <string name="bottomsheet_cancel_button">Batal</string>
+  <string name="bottomsheet_cancel_button">Batalkan</string>
   <string name="bottomsheet_move_to_trash">Pindahkan ke sampah</string>
   <string name="bottomsheet_pin_item">Sematkan</string>
   <string name="bottomsheet_unpin_item">Lepas sematan</string>
@@ -44,7 +44,7 @@
   <string name="action_view_details">Lihat rincian</string>
   <string name="action_see_all">Lihat semua</string>
   <string name="action_confirm">Konfirmasi</string>
-  <string name="action_cancel">Batal</string>
+  <string name="action_cancel">Batalkan</string>
   <string name="action_continue">Lanjutkan</string>
   <string name="action_retry">Coba lagi</string>
   <string name="action_edit">Sunting</string>
@@ -99,7 +99,7 @@
   <!-- Confirm close dialog -->
   <string name="confirm_close_dialog_title">Batalkan perubahan?</string>
   <string name="confirm_close_dialog_message">Anda memiliki perubahan yang belum disimpan. Apakah Anda yakin untuk membatalkan perubahan ini?</string>
-  <string name="confirm_close_dialog_close_button">Batalkan</string>
+  <string name="confirm_close_dialog_close_button">Buang</string>
   <!-- Upgrade -->
   <string name="upgrade">Tingkatkan</string>
   <!-- Advanced options -->
@@ -142,7 +142,7 @@
   <string name="item_details_alias_section_mailboxes_title">Meneruskan ke</string>
   <string name="item_details_credit_card_section_cardholder_title">Nama pada kartu</string>
   <string name="item_details_credit_card_section_card_number_title">Nomor kartu</string>
-  <string name="item_details_credit_card_section_expiration_date_title">Waktu kedaluwarsa</string>
+  <string name="item_details_credit_card_section_expiration_date_title">Tanggal kedaluwarsa</string>
   <string name="item_details_credit_card_section_cvv_title">Kode keamanan</string>
   <string name="item_details_credit_card_section_pin_title">Kode PIN</string>
   <string name="item_details_login_section_email_title">Alamat email</string>
@@ -159,7 +159,7 @@
   <string name="item_details_identity_section_personal_gender_title">Jenis kelamin</string>
   <string name="item_details_identity_section_personal_phone_title">Nomor telepon</string>
   <string name="item_details_identity_section_personal_birthday_title">Tanggal lahir</string>
-  <string name="item_details_identity_section_address_title">Detail alamat</string>
+  <string name="item_details_identity_section_address_title">Rincian alamat</string>
   <string name="item_details_identity_section_address_organization_title">Organisasi</string>
   <string name="item_details_identity_section_address_street_address_title">Alamat jalan, P.O. Box</string>
   <string name="item_details_identity_section_address_floor_title">Lantai</string>
@@ -172,7 +172,7 @@
   <string name="item_details_identity_section_contact_social_security_number_title">Nomor jaminan sosial</string>
   <string name="item_details_identity_section_contact_passport_number_title">Nomor paspor</string>
   <string name="item_details_identity_section_contact_license_number_title">Nomor lisensi</string>
-  <string name="item_details_identity_section_contact_website_title">Situs web</string>
+  <string name="item_details_identity_section_contact_website_title">Situs Web</string>
   <string name="item_details_identity_section_contact_x_handle_title">Akun X</string>
   <string name="item_details_identity_section_contact_secondary_phone_number_title">Nomor telepon kedua</string>
   <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
@@ -196,9 +196,10 @@
   <string name="item_details_shared_section_more_info_item_id">ID item</string>
   <string name="item_details_shared_section_more_info_share_id">ID brankas</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
-  <string name="item_details_wifi_network_label_password">Password</string>
-  <string name="item_details_ssh_key_label_public_key">Public key</string>
-  <string name="item_details_ssh_key_label_private_key">Private key</string>
+  <string name="item_details_wifi_network_label_password">Kata sandi</string>
+  <string name="item_details_wifi_network_label_security">Security</string>
+  <string name="item_details_ssh_key_label_public_key">Kunci publik</string>
+  <string name="item_details_ssh_key_label_private_key">Kunci pribadi</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Versi aplikasi ini sudah tidak lagi didukung. Silakan perbarui aplikasi Anda.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Passkey</string>
@@ -258,7 +259,7 @@
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Aktifkan sinkronisasi SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="other">Kami mendeteksi bahwa Anda memiliki %d alias yang terdapat SimpleLogin namun tidak ada pada Proton Pass. Apakah Anda ingin mengimpor alias ini?</item>
+    <item quantity="other">Kami mendeteksi bahwa Anda memiliki %d alias yang terdapat pada SimpleLogin namun tidak ada pada Proton Pass. Apakah Anda ingin mengimpor alias ini?</item>
   </plurals>
   <string name="simple_login_widget_action">Sinkronkan alias</string>
   <!-- Verification codes -->
@@ -289,4 +290,5 @@
   <plurals name="members_count">
     <item quantity="other">%d anggota</item>
   </plurals>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
 </resources>

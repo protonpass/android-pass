@@ -17,8 +17,8 @@
   <plurals name="item_list_header_results">
     <item quantity="one">výsledok</item>
     <item quantity="few">výsledky</item>
-    <item quantity="many">výsledkov</item>
-    <item quantity="other">výsledkov</item>
+    <item quantity="many">výsledky</item>
+    <item quantity="other">výsledky</item>
   </plurals>
   <string name="item_list_header_identities_type">Identity</string>
   <string name="item_list_header_custom_type">Vlastné položky</string>
@@ -203,6 +203,7 @@
   <string name="item_details_shared_section_more_info_share_id">ID trezoru</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
   <string name="item_details_wifi_network_label_password">Heslo</string>
+  <string name="item_details_wifi_network_label_security">Security</string>
   <string name="item_details_ssh_key_label_public_key">Verejný kľúč</string>
   <string name="item_details_ssh_key_label_private_key">Súkromný kľúč</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Verzia aplikácie už nie je podporovaná, aktualizujte ju.</string>
@@ -229,14 +230,14 @@
   <plurals name="time_unit_months">
     <item quantity="one">%d mesiac</item>
     <item quantity="few">%d mesiace</item>
-    <item quantity="many">%d mesiacov</item>
+    <item quantity="many">%d mesiace</item>
     <item quantity="other">%d mesiacov</item>
   </plurals>
   <plurals name="time_unit_weeks">
     <item quantity="one">%d týždeň</item>
-    <item quantity="few">%d týždne</item>
-    <item quantity="many">%d týždňov</item>
-    <item quantity="other">%d týždňov</item>
+    <item quantity="few">%d týždňov</item>
+    <item quantity="many">%d týždne</item>
+    <item quantity="other">%d týždne</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d deň</item>
@@ -245,14 +246,14 @@
     <item quantity="other">%d dní</item>
   </plurals>
   <plurals name="time_unit_hours">
-    <item quantity="one">%d hodina</item>
-    <item quantity="few">%d hodín</item>
-    <item quantity="many">%d hodiny</item>
+    <item quantity="one">%d hodiny</item>
+    <item quantity="few">%d hodiny</item>
+    <item quantity="many">%d hodín</item>
     <item quantity="other">%d hodín</item>
   </plurals>
   <plurals name="time_unit_minutes">
     <item quantity="one">%d minúta</item>
-    <item quantity="few">%d minúty</item>
+    <item quantity="few">%d minút</item>
     <item quantity="many">%d minút</item>
     <item quantity="other">%d minút</item>
   </plurals>
@@ -260,13 +261,13 @@
     <item quantity="one">%d sekunda</item>
     <item quantity="few">%d sekúnd</item>
     <item quantity="many">%d sekundy</item>
-    <item quantity="other">%d sekúnd</item>
+    <item quantity="other">%d sekundy</item>
   </plurals>
   <plurals name="aliases_count">
     <item quantity="one">%d alias</item>
     <item quantity="few">%d aliasy</item>
     <item quantity="many">%d aliasov</item>
-    <item quantity="other">%d aliasov</item>
+    <item quantity="other">%d aliasy</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Poznámka skopírovaná</string>
@@ -288,10 +289,10 @@
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Zapnúť SimpleLogin synchronizáciu</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="one">Zistili sme, že máte %d alias, ktorý je prítomný v SimpleLogin, ale chýba v Proton Pass. Chcete ho naimportovať?</item>
-    <item quantity="few">Zistili sme, že máte %d aliasy, ktoré sú prítomné v SimpleLogin, ale chýbajú v Proton Pass. Chcete ich naimportovať?</item>
-    <item quantity="many">Zistili sme, že máte %d aliasov, ktoré sú prítomné v SimpleLogin, ale chýbajú v Proton Pass. Chcete ich naimportovať?</item>
-    <item quantity="other">Zistili sme, že máte %d aliasov, ktoré sú prítomné v SimpleLogin, ale chýbajú v Proton Pass. Chcete ich naimportovať?</item>
+    <item quantity="one">Zistili sme, že máte %d alias, ktorý je prítomný sa nachádza v SimpleLogin, ale chýba v Proton Pass. Chcete ho naimportovať?</item>
+    <item quantity="few">Zistili sme, že máte %d aliasy, ktoré sa nachádzajú v SimpleLogin, ale chýbajú v Proton Pass. Chcete ich naimportovať?</item>
+    <item quantity="many">Zistili sme, že máte %d aliasy, ktoré sú prítomné v SimpleLogin, ale chýbajú v Proton Pass. Chcete ich naimportovať?</item>
+    <item quantity="other">Zistili sme, že máte %d aliasov, ktoré sa nachádzajú v SimpleLogin, ale chýbajú v Proton Pass. Chcete ich naimportovať?</item>
   </plurals>
   <string name="simple_login_widget_action">Synchronizovať aliasy</string>
   <!-- Verification codes -->
@@ -326,12 +327,13 @@
     <item quantity="one">%d používateľ</item>
     <item quantity="few">%d používatelia</item>
     <item quantity="many">%d používateľov</item>
-    <item quantity="other">%d používateľov</item>
+    <item quantity="other">%d používatelia</item>
   </plurals>
   <plurals name="members_count">
     <item quantity="one">%d člen</item>
-    <item quantity="few">%d členovia</item>
-    <item quantity="many">%d členov</item>
-    <item quantity="other">%d členov</item>
+    <item quantity="few">%d členov</item>
+    <item quantity="many">%d členovia</item>
+    <item quantity="other">%d členovia</item>
   </plurals>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
 </resources>

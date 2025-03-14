@@ -29,5 +29,6 @@ enum class AttachmentSnackbarMessages(
     override val isClipboard: Boolean = false
 ) : SnackbarMessage {
     OpenAttachmentsError(R.string.open_attachments_error, SnackbarType.ERROR),
+    AttachmentSizeExceededError(R.string.attachment_size_exceeded_error, SnackbarType.ERROR),
     UploadAttachmentsError(R.string.upload_attachments_error, SnackbarType.ERROR)
 }

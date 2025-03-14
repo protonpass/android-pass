@@ -31,5 +31,6 @@ data class UserAccessData(
     val canManageSimpleLoginAliases: Boolean,
     val storageAllowed: Boolean,
     val storageUsed: Long,
-    val storageQuota: Long
+    val storageQuota: Long,
+    val storageMaxFileSize: Long
 )

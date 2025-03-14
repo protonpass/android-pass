@@ -103,7 +103,7 @@
   <string name="confirm_close_dialog_message">Du har ikke-gemte ændringer, er du sikker på, at du vil kassere dem?</string>
   <string name="confirm_close_dialog_close_button">Kassér</string>
   <!-- Upgrade -->
-  <string name="upgrade">Opgrader</string>
+  <string name="upgrade">Opgradér</string>
   <!-- Advanced options -->
   <string name="show_advanced_options">Avancerede indstillinger</string>
   <string name="hide_advanced_options">Skjul avancerede indstillinger</string>
@@ -199,6 +199,7 @@
   <string name="item_details_shared_section_more_info_share_id">Boks-ID</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
   <string name="item_details_wifi_network_label_password">Adgangskode</string>
+  <string name="item_details_wifi_network_label_security">Security</string>
   <string name="item_details_ssh_key_label_public_key">Offentlig nøgle</string>
   <string name="item_details_ssh_key_label_private_key">Privat nøgle</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Denne app-version understøttes ikke længere, opdater venligst din app.</string>
@@ -251,7 +252,7 @@
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Note kopieret</string>
   <string name="snack_bar_message_item_migration_error">Der opstod en fejl ved flytningen af dette element</string>
-  <string name="snack_bar_message_item_monitor_excluded_success">Elementet er udelukket fra overvågning</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">Element undtaget fra monitorering</string>
   <string name="snack_bar_message_item_monitor_excluded_error">Der opstod en fejl ved udelukkelse af element fra overvågning</string>
   <string name="snack_bar_message_item_monitor_included_success">Elementet er medtaget i overvågningen</string>
   <string name="snack_bar_message_item_monitor_included_error">Der opstod en fejl ved medtagelse af element i overvågning</string>
@@ -304,4 +305,5 @@
     <item quantity="one">%d medlem</item>
     <item quantity="other">%d medlemmer</item>
   </plurals>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
 </resources>

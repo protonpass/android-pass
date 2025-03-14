@@ -21,11 +21,11 @@
   <string name="onboarding_slide_1_title">All your passwords.</string>
   <string name="onboarding_slide_2_title">Protect your inbox.</string>
   <string name="onboarding_slide_3_title">Stay Informed.</string>
-  <string name="onboarding_slide_4_title">Secure sharing.</string>
+  <string name="onboarding_slide_4_title">Chia sẻ bảo mật.</string>
   <string name="onboarding_slide_1_subtitle">Securely in one place and protected by the most trusted name in privacy.</string>
   <string name="onboarding_slide_2_subtitle">Use Hide-My-Email aliases against phishing threats.</string>
   <string name="onboarding_slide_3_subtitle">Share passwords and sensitive information securely and effortlessly.</string>
   <string name="onboarding_slide_4_subtitle">Get alerts when your email is found on the Dark web.</string>
-  <string name="create_an_account_button">Create an account</string>
-  <string name="sign_in_button">Sign in</string>
+  <string name="create_an_account_button">Tạo một tài khoản</string>
+  <string name="sign_in_button">Dăng nhập</string>
 </resources>

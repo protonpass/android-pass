@@ -64,7 +64,7 @@
   <!-- Credit card details -->
   <string name="credit_card_cardholder_field_name">Name des Karteninhabers</string>
   <string name="credit_card_number_field_name">Kartennummer</string>
-  <string name="credit_card_cvv_field_name">Sicherheitscode</string>
+  <string name="credit_card_cvv_field_name">Kartenprüfnummer</string>
   <string name="credit_card_pin_field_name">PIN-Code</string>
   <string name="credit_card_expiration_date_field_name">Ablaufdatum</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Name des Karteninhabers in die Zwischenablage kopiert</string>

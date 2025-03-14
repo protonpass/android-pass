@@ -30,7 +30,7 @@
   <string name="item_details_forbidden_actions_share_trash">Вы не можете поделиться этим предметом, потому что он в корзине. Пожалуйста, уберите его из корзины, прежде чем его изменять.</string>
   <!-- Item details leave item -->
   <string name="item_details_leave_dialog_title">Leave this Item?</string>
-  <string name="item_details_leave_dialog_message">You will lose access to this item and its details. Do you want to continue?</string>
+  <string name="item_details_leave_dialog_message">Вы потеряете доступ к этому элементу и информации о нем. Вы хотите продолжить?</string>
   <string name="item_details_leave_item_message_error">There was an error leaving the item</string>
   <string name="item_details_leave_item_message_success">Item successfully left</string>
   <string name="item_details_snackbar_message_alias_copied">Псевдоним скопирован</string>

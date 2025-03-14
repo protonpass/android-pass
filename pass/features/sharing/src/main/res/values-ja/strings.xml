@@ -33,7 +33,7 @@
   <string name="shared_via_title">共有されました</string>
   <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">アイテム共有中: %s</string>
   <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">保管庫共有中: %s</string>
-  <string name="share_with_title">と共有</string>
+  <string name="share_with_title">と共有する</string>
   <string name="share_with_email_hint">メールアドレス</string>
   <string name="share_with_email_error">無効なメールアドレスです</string>
   <string name="share_with_email_cannot_invite_outside_org">組織外の人を招待することはできません。詳細については管理者にお問い合わせください。</string>
@@ -42,7 +42,7 @@
   <string name="sharing_reject_invitation">招待を拒否する</string>
   <string name="sharing_vault_invitation_title">共有済み保管庫の招待</string>
   <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%sがあなたに保管庫を共有したいようです。</string>
-  <string name="sharing_vault_invitation_accept">共有された保管庫に参加</string>
+  <string name="sharing_vault_invitation_accept">共有保管庫に参加する</string>
   <string name="sharing_item_invitation_title">共有済みのアイテム招待</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%sがあなたにアイテムを共有したいようです。</string>
   <string name="sharing_item_invitation_accept">承諾してアイテムを閲覧</string>
@@ -69,7 +69,7 @@
   <string name="share_summary_share_item">アイテムを共有</string>
   <string name="share_summary_vault_title">保管庫</string>
   <string name="share_summary_item_title">アイテム</string>
-  <string name="share_summary_access_level_title">アクセス権限</string>
+  <string name="share_summary_access_level_title">アクセスレベル</string>
   <string name="share_manage_vault_share_with_more_people">より多くの人たちと共有する</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="other">%d 件の招待が残っています</item>
@@ -122,7 +122,7 @@
   <string name="share_with_remove_email_content_description">メールを削除</string>
   <string name="share_with_user_shared_title">他のProton Passユーザーと</string>
   <string name="share_with_user_shared_description">永続的な共有に便利です。</string>
-  <string name="share_with_manage_shared_item_title">アクセスを管理</string>
+  <string name="share_with_manage_shared_item_title">アクセス管理</string>
   <string name="share_with_manage_shared_item_description">メンバーと権限の概要を表示します。</string>
   <string name="share_with_secure_link_shared_title">安全なリンク経由</string>
   <string name="share_with_secure_link_shared_description">一度限りの共有のために。</string>

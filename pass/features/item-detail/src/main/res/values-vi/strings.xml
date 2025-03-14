@@ -19,7 +19,7 @@
   <string name="email_copied_to_clipboard">Đã sao chép địa chỉ email</string>
   <string name="username_copied_to_clipboard">Đã sao chép tên đăng nhập</string>
   <string name="password_copied_to_clipboard">Đã sao chép mật khẩu</string>
-  <string name="website_copied_to_clipboard">Website copied</string>
+  <string name="website_copied_to_clipboard">Đã sao chép trang web</string>
   <string name="totp_copied_to_clipboard">Đã sao chép mã TOTP</string>
   <string name="field_copied_to_clipboard">Đã sao chép trường</string>
   <string name="move_item_to_trash_message">Đã chuyển nội dung vào thùng rác</string>
@@ -40,7 +40,7 @@
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="other">%d lần đăng nhập khác sử dụng cùng mật khẩu</item>
   </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">Thiết lập 2FA để an toàn hơn</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Thiết lập xác minh 2 bước để an toàn hơn</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Dịch vụ này hỗ trợ mã bí mật 2FA. Hãy khởi tạo nó để tăng cường bảo mật cho tài khoản của bạn.</string>
   <string name="login_item_reused_passwords_subtitle">Các nội dung khác sử dụng cùng mật khẩu này.</string>
   <string name="field_email">Địa chỉ email</string>

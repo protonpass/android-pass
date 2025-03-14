@@ -38,15 +38,15 @@
   <string name="login_item_monitor_widget_weak_pass_title">Слабкий пароль</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Цей обліковий запис вразливий, відвідайте сервіс та змініть ваш пароль.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
-    <item quantity="one">%d запис входу використовує той самий пароль</item>
-    <item quantity="few">%d записи входу використовують той самий пароль</item>
-    <item quantity="many">%d записів входу використовують той самий пароль</item>
-    <item quantity="other">%d записів входу використовують той самий пароль</item>
+    <item quantity="one">%d обліковий запис використовує той самий пароль</item>
+    <item quantity="few">%d облікових записів використовують той самий пароль</item>
+    <item quantity="many">%d облікових записів використовують той самий пароль</item>
+    <item quantity="other">%d облікових записів використовують той самий пароль</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Налаштуйте 2FA для більшої безпеки</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Цей сервіс пропонує 2FA. Увімкніть це для додаткової безпеки облікового запису.</string>
   <string name="login_item_reused_passwords_subtitle">Записи входу з ваших сховищ, які використовують цей пароль.</string>
-  <string name="field_email">Адреса електронної пошти</string>
+  <string name="field_email">Адреса е-пошти</string>
   <string name="field_username">Ім\'я користувача</string>
   <string name="field_username_or_email">Ім\'я користувача або адреса е-пошти</string>
   <string name="field_password">Пароль</string>
@@ -113,21 +113,21 @@
   <string name="display_name_section_description">Ім\'я, яке показуватиметься під час надсилання електронного листа з цього псевдоніму.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s пересилання</item>
-    <item quantity="few">%1$s пересилань</item>
-    <item quantity="many">%1$s пересилань</item>
+    <item quantity="few">%1$s пересилання</item>
+    <item quantity="many">%1$s пересилання</item>
     <item quantity="other">%1$s пересилання</item>
   </plurals>
   <plurals name="alias_replies_count">
     <item quantity="one">%1$s відповідь</item>
     <item quantity="few">%1$s відповіді</item>
-    <item quantity="many">%1$s відповідей</item>
-    <item quantity="other">%1$s відповіді</item>
+    <item quantity="many">%1$s відповіді</item>
+    <item quantity="other">%1$s відповідей</item>
   </plurals>
   <plurals name="alias_blocks_count">
     <item quantity="one">%1$s блок</item>
     <item quantity="few">%1$s блоки</item>
     <item quantity="many">%1$s блоків</item>
-    <item quantity="other">%1$s блоки</item>
+    <item quantity="other">%1$s блоків</item>
   </plurals>
   <string name="open_with">Відкрити з:</string>
   <string name="open_attachments_error">Не вдалося відкрити файл</string>

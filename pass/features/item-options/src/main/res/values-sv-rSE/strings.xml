@@ -25,5 +25,5 @@
   <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">Det uppstod ett fel vid inaktivering av aliaset</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">Alias inaktiverad</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">Det var ett fel vid flytten av aliaset till papperskorgen</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">Alias flyttat till papperskorg</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">Alias flyttad till papperskorg</string>
 </resources>

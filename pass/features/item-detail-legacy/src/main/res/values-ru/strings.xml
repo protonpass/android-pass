@@ -4,7 +4,7 @@
   <string name="action_copy">Копировать</string>
   <!-- Detail -->
   <string name="detail_init_error">Проблема с получением сведений об элементе</string>
-  <string name="top_bar_edit_button_text">Изменить</string>
+  <string name="top_bar_edit_button_text">Редактировать</string>
   <!-- Alias details -->
   <string name="field_alias_title">Адрес псевдонима</string>
   <string name="field_alias_disabled_title">Адрес псевдонима (отключен)</string>
@@ -22,7 +22,7 @@
   <string name="website_copied_to_clipboard">Веб-адрес скопирован</string>
   <string name="totp_copied_to_clipboard">TOTP скопирован</string>
   <string name="field_copied_to_clipboard">Поле скопировано</string>
-  <string name="move_item_to_trash_message">Элемент перемещен в корзину</string>
+  <string name="move_item_to_trash_message">Элемент перемещён в Корзину</string>
   <string name="error_move_item_to_trash_message">Ошибка при перемещении в корзину</string>
   <string name="item_permanently_deleted_message">Элемент удален окончательно</string>
   <string name="item_permanently_deleted_message_error">Ошибка удаления элемента</string>
@@ -46,7 +46,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Настройте двухфакторную идентификацию для повышения безопасности</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Эта служба предлагает двухфакторную аутентификацию. Включите ее, чтобы обеспечить дополнительную безопасность аккаунта.</string>
   <string name="login_item_reused_passwords_subtitle">Элементы из ваших хранилищ, которые используют этот пароль.</string>
-  <string name="field_email">Адрес электронной почты</string>
+  <string name="field_email">Адрес эл. почты</string>
   <string name="field_username">Имя пользователя</string>
   <string name="field_username_or_email">Имя пользователя или адрес электронной почты</string>
   <string name="field_password">Пароль</string>
@@ -110,7 +110,7 @@
   <string name="contacts">Контакты</string>
   <string name="contacts_section_description">Чтобы скрыть свой личный адрес электронной почты, вы можете создать контакт псевдонима, который будет маскировать ваш адрес.</string>
   <string name="field_detail_display_name_title">Отображаемое имя</string>
-  <string name="display_name_section_description">The display name when sending an email from this alias.</string>
+  <string name="display_name_section_description">Отображаемое имя при отправке электронной почты с этого псевдонима.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s пересылка</item>
     <item quantity="few">%1$s пересылки</item>

@@ -61,7 +61,7 @@
   <string name="empty_list_open_extension">Besök webbtillägg</string>
   <string name="empty_list_create_item_button">Skapa nytt objekt</string>
   <!-- Field -->
-  <string name="field_title_title">Rubrik</string>
+  <string name="field_title_title">Titel</string>
   <string name="field_title_hint">Ingen rubrik</string>
   <string name="field_title_required">Rubrik krävs</string>
   <string name="small_cross_icon_content_description">Liten kryss-ikon</string>
@@ -109,7 +109,7 @@
   <string name="hide_advanced_options">Dölj avancerade alternativ</string>
   <!-- Labels -->
   <string name="label_password_strength_strong">Starkt</string>
-  <string name="label_password_strength_vulnerable">Sårbart</string>
+  <string name="label_password_strength_vulnerable">Sårbar</string>
   <string name="label_password_strength_weak">Svagt</string>
   <!-- Pinning -->
   <string name="pinning_carousel_see_all">Se alla</string>
@@ -185,7 +185,7 @@
   <string name="item_details_identity_section_work_title">Arbetsdetaljer</string>
   <string name="item_details_identity_section_work_company_title">Företag</string>
   <string name="item_details_identity_section_work_occupation_title">Yrke</string>
-  <string name="item_details_identity_section_work_email_title">E-post arbete</string>
+  <string name="item_details_identity_section_work_email_title">E-postadress arbete</string>
   <string name="item_details_identity_section_work_phone_number_title">Telefonnummer arbete</string>
   <string name="item_details_identity_section_work_personal_website_title">Personlig webbplats</string>
   <string name="item_details_shared_section_note_title">Anteckning</string>
@@ -199,6 +199,7 @@
   <string name="item_details_shared_section_more_info_share_id">Valv-ID</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
   <string name="item_details_wifi_network_label_password">Lösenord</string>
+  <string name="item_details_wifi_network_label_security">Säkerhet</string>
   <string name="item_details_ssh_key_label_public_key">Offentlig nyckel</string>
   <string name="item_details_ssh_key_label_private_key">Privat nyckel</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Appversionen stöds inte längre, uppdatera din app.</string>
@@ -278,7 +279,7 @@
   <string name="verification_code_suggestion_subject_new_email_address">Bekräfta din e-postadress för Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Bekräfta din brevlåda</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Om du inte kan hitta sådan e-post kan du %s.</string>
-  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">begär en ny kod</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">begära en ny kod</string>
   <string name="field_display_name_title">Visningsnamn</string>
   <!-- Attachments -->
   <plurals name="attachment_file_amount">
@@ -304,4 +305,5 @@
     <item quantity="one">%d medlem</item>
     <item quantity="other">%d medlemmar</item>
   </plurals>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
 </resources>

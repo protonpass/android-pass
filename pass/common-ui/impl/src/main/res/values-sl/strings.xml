@@ -23,7 +23,7 @@
   <string name="bottomsheet_no_actions">No actions available</string>
   <string name="snackbar_item_move_to_trash_success">Predmet je premaknjen v smetnjak</string>
   <string name="snackbar_item_move_to_trash_error">Ni bilo mogoče premakniti v smetnjak</string>
-  <string name="snackbar_item_copy_email_success">Email copied to clipboard</string>
+  <string name="snackbar_item_copy_email_success">E-poštni naslov kopiran v odložišče</string>
   <string name="snackbar_item_copy_username_success">​Uporabniško ime kopirano v odložišče</string>
   <string name="snackbar_item_copy_password_success">Geslo je kopirano v odložišče.</string>
 </resources>

@@ -199,6 +199,7 @@
   <string name="item_details_shared_section_more_info_share_id">Kluis-ID</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
   <string name="item_details_wifi_network_label_password">Wachtwoord</string>
+  <string name="item_details_wifi_network_label_security">Beveiliging</string>
   <string name="item_details_ssh_key_label_public_key">Publieke sleutel</string>
   <string name="item_details_ssh_key_label_private_key">Privé-sleutel</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">De app versie wordt niet meer ondersteund. Update uw app alstublieft.</string>
@@ -304,4 +305,5 @@
     <item quantity="one">%d lid</item>
     <item quantity="other">%d leden</item>
   </plurals>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
 </resources>

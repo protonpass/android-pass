@@ -77,7 +77,7 @@
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Fejl ved indlæsning af brugerdefinerede e-mailadresser</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Kunne ikke hente e-mailadresser</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Fjern</string>
-  <string name="security_center_dark_web_monitor_latest_breach_on">Seneste databrud %s</string>
+  <string name="security_center_dark_web_monitor_latest_breach_on">Seneste databrud på %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
     <item quantity="one">Fundet i %s brud</item>
     <item quantity="other">Fundet i %s brud</item>
@@ -96,7 +96,7 @@
   <!-- Add custom email monitoring -->
   <string name="security_center_custom_email_top_bar_title">Brugertilpasset e-mail-overvågning</string>
   <string name="security_center_custom_email_email_address_placeholder">E-mailadresse</string>
-  <string name="security_center_custom_email_invalid_address">Ugyldig adresse</string>
+  <string name="security_center_custom_email_invalid_address">Ugyldig e-mailadresse</string>
   <string name="security_center_custom_email_continue">Fortsæt</string>
   <string name="security_center_custom_email_already_verified">E-mail er allerede bekræftet</string>
   <string name="security_center_custom_email_error_adding">Fejl ved tilføjelse af e-mailadressen</string>
@@ -135,7 +135,7 @@
   <string name="security_center_report_resolve_confirmation_dialog_message">Alle aktuelle databrud vil markeres som afhjulpet. Ved fremtidige databrud vil du blive underrettet.</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Proton-adresser</string>
-  <string name="security_center_proton_list_no_breaches_detected">Ingen brud registreret</string>
+  <string name="security_center_proton_list_no_breaches_detected">Ingen databrud registreret</string>
   <string name="security_center_proton_list_excluded_from_monitoring">Undtaget fra monitorering</string>
   <string name="security_center_proton_list_error">Kunne ikke indlæse adresser</string>
   <string name="security_center_proton_list_included_in_monitoring">Aktivér monitorering for at få besked, hvis dine Proton-adresser er blevet lækket.</string>
@@ -157,7 +157,7 @@
   <string name="security_center_alias_list_error">Kunne ikke indlæse adresser</string>
   <string name="security_center_alias_list_included_in_monitoring">Aktivér monitorering for at få besked, hvis dine hide-my-email-aliasser bliver lækket.</string>
   <string name="security_center_alias_list_monitored">Overvåget</string>
-  <string name="security_center_alias_list_custom_email_message">Aliasser med brugerdefinerede domæner overvåges ikke, så tilføj dem som en brugerdefineret e-mail til overvågning.</string>
+  <string name="security_center_alias_list_custom_email_message">Aliasser med brugerdefinerede domæner monitoreres ikke, tilføj dem som en brugerdefineret e-mail til monitorering.</string>
   <string name="security_center_alias_list_options_menu">Menu med indstillinger for alias-skærm</string>
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Datasikkerhed</string>

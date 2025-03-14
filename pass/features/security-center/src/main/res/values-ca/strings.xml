@@ -27,7 +27,7 @@
   <string name="security_center_home_row_data_breaches_title">Alerta del web fosc</string>
   <string name="security_center_home_row_data_breaches_subtitle">S\'han detectat infraccions</string>
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
-  <string name="security_center_home_row_sentinel_subtitle">Programa de protecció avançada de comptes</string>
+  <string name="security_center_home_row_sentinel_subtitle">Programa avançat de protecció de comptes</string>
   <string name="security_center_home_row_insecure_passwords_title">Contrasenyes febles</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">Canvieu les vostres contrasenyes</string>
   <string name="security_center_home_row_reused_passwords_title">Contrasenyes reutilitzades</string>
@@ -52,7 +52,7 @@
   <string name="security_center_weak_pass_top_bar_subtitle">Les contrasenyes febles són més fàcils d\'endevinar. Genereu contrasenyes robustes per mantenir el compte segur.</string>
   <!-- Reused passwords screen -->
   <string name="security_center_reused_pass_top_bar_title">Contrasenyes reutilitzades</string>
-  <string name="security_center_reused_pass_top_bar_subtitle">Genereu contrasenyes úniques per a cada compte per augmentar la vostra seguretat.</string>
+  <string name="security_center_reused_pass_top_bar_subtitle">Genereu contrasenyes úniques per a cada compte per a augmentar la seguretat.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Reutilitzat %1$d vegades</string>
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">A2F inactiva</string>

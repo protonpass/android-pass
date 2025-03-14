@@ -43,7 +43,7 @@
     <item quantity="other">密碼錯誤。剩餘 %d 次嘗試</item>
   </plurals>
   <plurals name="auth_attempts_remaining">
-    <item quantity="other">%d attempts remaining</item>
+    <item quantity="other">剩餘 %d 次嘗試機會</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Too many failed pin attempts. All your users are being logged out.</string>
   <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>

@@ -3,7 +3,7 @@
   <plurals name="migrate_item_confirm_title_bottom_sheet">
     <item quantity="one">Перемістити %d елемент до наступного сховища?</item>
     <item quantity="few">Перемістити %d елементи до наступних сховищ?</item>
-    <item quantity="many">Перемістити %d елементів до наступних сховищ?</item>
+    <item quantity="many">Перемістити %d елементи до наступних сховищ?</item>
     <item quantity="other">Перемістити %d елементів до наступних сховищ?</item>
   </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Перемістити всі елементи до цього сховища?</string>

@@ -60,7 +60,7 @@
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">Виключені елементи</string>
   <!-- Dark web monitor -->
-  <string name="security_center_dark_web_monitor_top_bar_title">Моніторинг Темного Вебу</string>
+  <string name="security_center_dark_web_monitor_top_bar_title">Відстеження Dark Web</string>
   <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Остання перевірка: %s</string>
   <string name="security_center_dark_web_monitor_custom_emails_title">Власні адреси е-пошти</string>
   <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Не підтверджено</string>
@@ -76,7 +76,7 @@
     <item quantity="one">Виявлено %d витік</item>
     <item quantity="few">Виявлено %d витоки</item>
     <item quantity="many">Виявлено %d витоків</item>
-    <item quantity="other">Виявлено %d витоки</item>
+    <item quantity="other">Виявлено %d витоків</item>
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Помилка завантаження користувацьких адрес електронної пошти</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Не вдалося отримати адреси електронної пошти</string>
@@ -88,7 +88,7 @@
     <item quantity="many">Знайдено в %s витоках</item>
     <item quantity="other">Знайдено в %s витоках</item>
   </plurals>
-  <string name="security_center_dark_web_monitor_found_in_breaches">Витоків не виявлено</string>
+  <string name="security_center_dark_web_monitor_found_in_breaches">Порушень не виявлено</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Адреси Proton</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Псевдоніми Hide-my-email</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving Proton addresses</string>
@@ -130,7 +130,7 @@
   <string name="security_center_report_detail_your_exposed_information">Ваша викрита інформація</string>
   <string name="security_center_report_detail_subtitle">Ваша інформація була виявлена і знайдена на __DATE__.</string>
   <string name="security_center_report_detail_details">Подробиці</string>
-  <string name="security_center_report_detail_email_address">Адреса електронної пошти</string>
+  <string name="security_center_report_detail_email_address">Адреса е-пошти</string>
   <string name="security_center_report_detail_password">Пароль</string>
   <string name="security_center_report_detail_recommended_actions">Рекомендовані дії</string>
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">Витік інформації стався з %s. Інформація вашого облікового запису Proton залишається захищеною та зашифрованою.</string>

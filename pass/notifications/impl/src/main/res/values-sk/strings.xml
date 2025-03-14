@@ -7,5 +7,5 @@
   <string name="new_item_invite_notification_title">Dostali ste pozvánku k novej položke</string>
   <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s chce s vami zdieľať položku.</string>
   <string name="new_vault_invite_notification_title">Dostali ste pozvánku do nového trezora</string>
-  <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s chce s vami zdieľať trezor.</string>
+  <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s s vami chce zdieľať trezor.</string>
 </resources>

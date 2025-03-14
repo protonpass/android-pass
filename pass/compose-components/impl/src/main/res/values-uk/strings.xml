@@ -17,12 +17,12 @@
   <plurals name="item_list_header_results">
     <item quantity="one">результат</item>
     <item quantity="few">результати</item>
-    <item quantity="many">результатів</item>
-    <item quantity="other">результатів</item>
+    <item quantity="many">результати</item>
+    <item quantity="other">результати</item>
   </plurals>
   <string name="item_list_header_identities_type">Особисті дані</string>
   <string name="item_list_header_custom_type">Custom items</string>
-  <string name="item_list_header_shared_with_me">Поширено для мене</string>
+  <string name="item_list_header_shared_with_me">Поділилися зі мною</string>
   <string name="item_list_header_shared_by_me">Поширено мною</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Підтвердити</string>
@@ -49,7 +49,7 @@
   <string name="action_confirm">Підтвердити</string>
   <string name="action_cancel">Скасувати</string>
   <string name="action_continue">Продовжити</string>
-  <string name="action_retry">Повторити</string>
+  <string name="action_retry">Повторити спробу</string>
   <string name="action_edit">Змінити</string>
   <string name="action_add">Додати</string>
   <string name="action_delete">Видалити</string>
@@ -145,13 +145,13 @@
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Адреса псевдоніма</string>
   <string name="item_details_alias_section_alias_disabled_title">Адреса псевдоніма (вимкнено)</string>
-  <string name="item_details_alias_section_mailboxes_title">Переслати до</string>
+  <string name="item_details_alias_section_mailboxes_title">Пересилання на</string>
   <string name="item_details_credit_card_section_cardholder_title">Ім\'я на картці</string>
   <string name="item_details_credit_card_section_card_number_title">Номер картки</string>
   <string name="item_details_credit_card_section_expiration_date_title">Термін дії</string>
   <string name="item_details_credit_card_section_cvv_title">Код безпеки</string>
   <string name="item_details_credit_card_section_pin_title">PIN-код</string>
-  <string name="item_details_login_section_email_title">Адреса електронної пошти</string>
+  <string name="item_details_login_section_email_title">Адреса е-пошти</string>
   <string name="item_details_login_section_username_title">Ім\'я користувача</string>
   <string name="item_details_login_section_password_title">Пароль</string>
   <string name="item_details_login_section_primary_totp_title">Токен 2FA (TOTP)</string>
@@ -161,7 +161,7 @@
   <string name="item_details_identity_section_personal_middle_name_title">Середнє ім\'я</string>
   <string name="item_details_identity_section_personal_last_name_title">Прізвище</string>
   <string name="item_details_identity_section_personal_full_name_title">Повне ім\'я</string>
-  <string name="item_details_identity_section_personal_email_title">Адреса пошти</string>
+  <string name="item_details_identity_section_personal_email_title">Адреса електронної пошти</string>
   <string name="item_details_identity_section_personal_gender_title">Стать</string>
   <string name="item_details_identity_section_personal_phone_title">Номер телефону</string>
   <string name="item_details_identity_section_personal_birthday_title">День народження</string>
@@ -192,7 +192,7 @@
   <string name="item_details_identity_section_work_email_title">Робоча адреса електронної пошти</string>
   <string name="item_details_identity_section_work_phone_number_title">Номер робочого телефону</string>
   <string name="item_details_identity_section_work_personal_website_title">Персональний вебсайт</string>
-  <string name="item_details_shared_section_note_title">Примітка</string>
+  <string name="item_details_shared_section_note_title">Нотатка</string>
   <string name="item_details_shared_section_item_history_last_autofill_title">Останнє автозаповнення</string>
   <string name="item_details_shared_section_item_history_created_title">Створено</string>
   <string name="item_details_shared_section_item_history_modified_times_title">Змінено (%d)</string>
@@ -202,7 +202,8 @@
   <string name="item_details_shared_section_more_info_item_id">ID елемента</string>
   <string name="item_details_shared_section_more_info_share_id">ID сховища</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
-  <string name="item_details_wifi_network_label_password">Password</string>
+  <string name="item_details_wifi_network_label_password">Пароль</string>
+  <string name="item_details_wifi_network_label_security">Security</string>
   <string name="item_details_ssh_key_label_public_key">Public key</string>
   <string name="item_details_ssh_key_label_private_key">Private key</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Поточна версія програми більше не підтримується, будь ласка, оновіть програму.</string>
@@ -234,25 +235,25 @@
   </plurals>
   <plurals name="time_unit_weeks">
     <item quantity="one">%d тиждень</item>
-    <item quantity="few">%d тижні</item>
-    <item quantity="many">%d тижнів</item>
-    <item quantity="other">%d тижнів</item>
+    <item quantity="few">%d тижнів</item>
+    <item quantity="many">%d тижні</item>
+    <item quantity="other">%d тижні</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d день</item>
-    <item quantity="few">%d днів</item>
-    <item quantity="many">%d дні</item>
-    <item quantity="other">%d дні</item>
+    <item quantity="few">%d дні</item>
+    <item quantity="many">%d днів</item>
+    <item quantity="other">%d днів</item>
   </plurals>
   <plurals name="time_unit_hours">
     <item quantity="one">%d година</item>
-    <item quantity="few">%d годин</item>
-    <item quantity="many">%d години</item>
-    <item quantity="other">%d години</item>
+    <item quantity="few">%d години</item>
+    <item quantity="many">%d годин</item>
+    <item quantity="other">%d годин</item>
   </plurals>
   <plurals name="time_unit_minutes">
     <item quantity="one">%d хвилина</item>
-    <item quantity="few">%d хвилини</item>
+    <item quantity="few">%d хвилин</item>
     <item quantity="many">%d хвилин</item>
     <item quantity="other">%d хвилин</item>
   </plurals>
@@ -288,14 +289,14 @@
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Увімкнути синхронізацію SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="one">Ми виявили, що у вас є псевдонім %d, який присутній у SimpleLogin, але відсутній у Proton Pass. Бажаєте його імпортувати?</item>
-    <item quantity="few">Ми виявили, що у вас є псевдоніми %d, які присутні в SimpleLogin, але відсутні в Proton Pass. Бажаєте їх імпортувати?</item>
-    <item quantity="many">Ми виявили, що у вас є псевдонімів %d, які присутні в SimpleLogin, але відсутні в Proton Pass. Бажаєте їх імпортувати?</item>
-    <item quantity="other">Ми виявили, що у вас є псевдоніми %d, які присутні в SimpleLogin, але відсутні в Proton Pass. Бажаєте їх імпортувати?</item>
+    <item quantity="one">Ми виявили, що у вас є %d псевдонім, який присутній у SimpleLogin, але відсутній у Proton Pass. Бажаєте імпортувати його?</item>
+    <item quantity="few">Ми виявили, що у вас є %d псевдоніми, які присутні у SimpleLogin, але відсутній у Proton Pass. Бажаєте імпортувати його?</item>
+    <item quantity="many">Ми виявили, що у вас є %d псевдонімів, які присутні у SimpleLogin, але відсутній у Proton Pass. Бажаєте імпортувати його?</item>
+    <item quantity="other">Ми виявили, що у вас є %d псевдонімів, які присутні у SimpleLogin, але відсутній у Proton Pass. Бажаєте імпортувати його?</item>
   </plurals>
   <string name="simple_login_widget_action">Синхронізувати псевдоніми</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_not_received">Не отримали код?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Будь ласка, перевірте у Спамі наявність листа з назвою “%s“</string>
   <string name="verification_code_suggestion_subject_new_email_address">Будь ласка, підтвердьте свою адресу електронної пошти для отримання Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Будь ласка, підтвердьте поштову скриньку</string>
@@ -306,14 +307,14 @@
   <plurals name="attachment_file_amount">
     <item quantity="one">%1$s файл</item>
     <item quantity="few">%1$s файлів</item>
-    <item quantity="many">%1$s файлів</item>
+    <item quantity="many">%1$s файли</item>
     <item quantity="other">%1$s файли</item>
   </plurals>
   <string name="attachment_title">Вкладення</string>
   <string name="attachment_no_files">Вивантажуйте файли зі свого пристрою</string>
   <string name="attachment_add_file">Вкласти файл</string>
   <string name="attachment_row_upload_failed">Помилка вивантаження</string>
-  <string name="attachment_row_retry">Повторити</string>
+  <string name="attachment_row_retry">Повторити спробу</string>
   <string name="options_menu_content_description">Меню параметрів</string>
   <!-- Items -->
   <plurals name="shared_items_count">
@@ -323,15 +324,16 @@
     <item quantity="other">%d shared items</item>
   </plurals>
   <plurals name="users_count">
-    <item quantity="one">%d user</item>
-    <item quantity="few">%d users</item>
-    <item quantity="many">%d users</item>
-    <item quantity="other">%d users</item>
+    <item quantity="one">%d користувач</item>
+    <item quantity="few">%d користувачів</item>
+    <item quantity="many">%d користувачі</item>
+    <item quantity="other">%d користувачів</item>
   </plurals>
   <plurals name="members_count">
-    <item quantity="one">%d member</item>
-    <item quantity="few">%d members</item>
-    <item quantity="many">%d members</item>
-    <item quantity="other">%d members</item>
+    <item quantity="one">%d учасник</item>
+    <item quantity="few">%d учасники</item>
+    <item quantity="many">%d учасники</item>
+    <item quantity="other">%d учасники</item>
   </plurals>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
 </resources>

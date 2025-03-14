@@ -38,9 +38,9 @@
   <string name="login_item_monitor_widget_weak_pass_title">Mật khẩu yếu</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Tài khoản này không an toàn, hãy tới dịch vụ và thay đổi mật khẩu.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
-    <item quantity="other">%d other logins use the same password</item>
+    <item quantity="other">%d lần đăng nhập khác sử dụng cùng mật khẩu</item>
   </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">Thiết lập 2FA để an toàn hơn</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Thiết lập xác minh 2 bước để an toàn hơn</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Dịch vụ này hỗ trợ mã bí mật 2FA. Hãy khởi tạo nó để tăng cường bảo mật cho tài khoản của bạn.</string>
   <string name="login_item_reused_passwords_subtitle">Các nội dung khác sử dụng cùng mật khẩu này.</string>
   <string name="field_email">Địa chỉ email</string>
@@ -73,8 +73,8 @@
   <string name="move_to_trash_item_detail_bottom_sheet">Chuyển vào thùng rác</string>
   <string name="migrate_item_detail_bottom_sheet">Chuyển đến kho lưu trữ khác</string>
   <!-- More info -->
-  <string name="date_today">Today %s</string>
-  <string name="date_yesterday">Yesterday %s</string>
+  <string name="date_today">Hôm nay %s</string>
+  <string name="date_yesterday">Hôm qua %s</string>
   <!--
     Pattern used when displaying a date in the same year as we are.
     It would translate to
@@ -109,13 +109,13 @@
   <string name="field_detail_display_name_title">Tên hiển thị</string>
   <string name="display_name_section_description">Tên hiển thị khi gửi email từ bí danh này.</string>
   <plurals name="alias_forwards_count">
-    <item quantity="other">%1$s forwards</item>
+    <item quantity="other">%1$s chuyển tiếp</item>
   </plurals>
   <plurals name="alias_replies_count">
-    <item quantity="other">%1$s replies</item>
+    <item quantity="other">%1$s phản hồi</item>
   </plurals>
   <plurals name="alias_blocks_count">
-    <item quantity="other">%1$s blocks</item>
+    <item quantity="other">%1$s khối</item>
   </plurals>
   <string name="open_with">Mở bằng:</string>
   <string name="open_attachments_error">Could not open attachment</string>

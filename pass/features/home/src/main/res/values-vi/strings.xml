@@ -167,10 +167,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Lỗi khi gỡ ghim một số nội dung</string>
   <string name="home_snackbar_items_unpinned_error">Lỗi khi gỡ ghim nội dung</string>
   <string name="home_snackbar_items_alias_enabled_success">Đã bật bí danh thành công</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Lỗi khi kích hoạt một số bí danh</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
   <string name="home_snackbar_items_alias_enabled_error">Lỗi khi bật bí danh</string>
   <string name="home_snackbar_items_alias_disabled_success">Đã tắt bí danh thành công</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Lỗi khi vô hiệu hóa một số bí danh</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
   <string name="home_snackbar_items_alias_disabled_error">Lỗi khi tắt bí danh</string>
   <string name="bulk_action_unpin">Bỏ ghim</string>
   <string name="bulk_action_pin">Ghim</string>

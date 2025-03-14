@@ -23,7 +23,7 @@
   <string name="configure_extra_password_repeat_extra_password">Повторіть пароль</string>
   <string name="configure_extra_password_description">Цей пароль буде запитано під час входу в систему та при переході з іншого додатку Proton до Proton Pass на сайті.</string>
   <string name="configure_extra_password_warning">Увага: Ви не зможете отримати доступ до свого облікового запису Pass, якщо втратите цей пароль.</string>
-  <string name="configure_extra_password_mismatch">Паролі відрізняються</string>
+  <string name="configure_extra_password_mismatch">2 паролі відрізняються</string>
   <string name="extra_password_options_remove">Вилучити</string>
   <string name="info_extra_password_title">Додатковий пароль</string>
   <string name="info_extra_password_body">Захистіть Proton Pass додатковим паролем.</string>

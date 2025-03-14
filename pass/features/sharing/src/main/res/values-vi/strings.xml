@@ -69,7 +69,7 @@
   <string name="share_summary_share_item">Chia sẻ mục</string>
   <string name="share_summary_vault_title">Kho lưu trữ</string>
   <string name="share_summary_item_title">Mục</string>
-  <string name="share_summary_access_level_title">Access level</string>
+  <string name="share_summary_access_level_title">Cấp độ truy cập</string>
   <string name="share_manage_vault_share_with_more_people">Chia sẽ với nhiều người hơn</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="other">%d lời mời còn lại</item>
@@ -83,8 +83,8 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Lời mời</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Thành viên</string>
   <string name="share_manage_vault_current_user_indicator">Bạn</string>
-  <string name="share_role_viewer">Viewer</string>
-  <string name="share_role_editor">Editor</string>
+  <string name="share_role_viewer">Người xem</string>
+  <string name="share_role_editor">Trình chỉnh sửa</string>
   <string name="share_role_admin">Quản trị viên</string>
   <string name="share_role_owner">Chủ sở hữu</string>
   <string name="sharing_bottomsheet_transfer_ownership">Chuyển quyền sở hữu</string>

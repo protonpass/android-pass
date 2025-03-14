@@ -52,8 +52,8 @@
   <string name="home_drawer_all_items">Tots els elements</string>
   <string name="sl_sync_banner_title">Sincronitzeu els vostres àlies de SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
-    <item quantity="one">Teniu %d àlies en SimpleLogin que no apareix en Proton Pass. Voleu sincronitzar-lo?</item>
-    <item quantity="other">Teniu %d àlies en SimpleLogin que no apareixen en Proton Pass. Voleu sincronitzar-los?</item>
+    <item quantity="one">Teniu %d àlies en SimpleLogin però no apareix en Proton Pass. Voleu sincronitzar-lo?</item>
+    <item quantity="other">Teniu %d àlies en SimpleLogin però no apareix en Proton Pass. Voleu sincronitzar-los?</item>
   </plurals>
   <string name="sl_sync_banner_settings">Sincronitza els àlies ›</string>
   <string name="sl_sync_banner_note">Un cop sincronitzats, eliminar els àlies a Pass també els eliminarà a SimpleLogin.</string>
@@ -142,7 +142,7 @@
   </plurals>
   <plurals name="alert_confirm_restore_items_message">
     <item quantity="one">Segur que voleu restaurar l\'element de la paperera?</item>
-    <item quantity="other">Segur que voleu restaurar els %d elements de la paperera?</item>
+    <item quantity="other">Esteu segur que voleu restaurar els %d elements de la paperera?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_title">
     <item quantity="one">Voleu moure %d element a la paperera?</item>
@@ -150,7 +150,7 @@
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
     <item quantity="one">Segur que voleu moure l\'element a la paperera?</item>
-    <item quantity="other">Segur que voleu moure %d elements a la paperera?</item>
+    <item quantity="other">Esteu segur que voleu moure %d elements a la paperera?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="one">Voleu suprimir permanentment %d element?</item>
@@ -158,7 +158,7 @@
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
     <item quantity="one">Segur que voleu eliminar l\'element? Aquesta acció és irreversible.</item>
-    <item quantity="other">Segur que voleu eliminar els %d elements? Aquesta acció és irreversible.</item>
+    <item quantity="other">Esteu segur que voleu eliminar els %d elements? Aquesta acció és irreversible</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_shared_warning_message">
     <item quantity="one">%d element està compartit actualment. Eliminar-lo suprimirà l\'accés per a tots els altres usuaris.</item>

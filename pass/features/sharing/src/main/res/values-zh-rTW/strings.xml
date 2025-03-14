@@ -29,7 +29,7 @@
   <plurals name="sharing_member_count">
     <item quantity="other">%d 位成員</item>
   </plurals>
-  <string name="sharing_member_count_header">Members</string>
+  <string name="sharing_member_count_header">成員</string>
   <string name="shared_via_title">Shared via</string>
   <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Item sharing: %s</string>
   <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Vault sharing: %s</string>
@@ -40,9 +40,9 @@
   <string name="share_with_email_email_already_added">You have already added this email address</string>
   <string name="share_permissions_title">設定存取層級</string>
   <string name="sharing_reject_invitation">婉拒邀請</string>
-  <string name="sharing_vault_invitation_title">Shared vault invitation</string>
+  <string name="sharing_vault_invitation_title">分享保管庫邀請函</string>
   <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
-  <string name="sharing_vault_invitation_accept">Join shared vault</string>
+  <string name="sharing_vault_invitation_accept">加入共享的保管庫</string>
   <string name="sharing_item_invitation_title">Shared item invitation</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
   <string name="sharing_item_invitation_accept">Accept and view the item</string>
@@ -66,10 +66,10 @@
   <string name="sharing_snackbar_fetch_pending_invites_error">There was an error fetching pending invites</string>
   <string name="share_summary_title">審閱並分享</string>
   <string name="share_summary_share_vault">分享保險庫</string>
-  <string name="share_summary_share_item">Share item</string>
+  <string name="share_summary_share_item">分享項目</string>
   <string name="share_summary_vault_title">保管庫</string>
   <string name="share_summary_item_title">項目</string>
-  <string name="share_summary_access_level_title">Access level</string>
+  <string name="share_summary_access_level_title">存取層級</string>
   <string name="share_manage_vault_share_with_more_people">分享給更多人</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="other">剩下邀請%d</item>
@@ -83,8 +83,8 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">邀請</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">成員</string>
   <string name="share_manage_vault_current_user_indicator">您</string>
-  <string name="share_role_viewer">Viewer</string>
-  <string name="share_role_editor">Editor</string>
+  <string name="share_role_viewer">檢視者</string>
+  <string name="share_role_editor">編輯者</string>
   <string name="share_role_admin">管理員</string>
   <string name="share_role_owner">擁有者</string>
   <string name="sharing_bottomsheet_transfer_ownership">轉移所有權</string>
@@ -118,12 +118,12 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">升級以創建更多保管庫</string>
   <string name="sharing_from_item_vault_limit_reached">您已達到保管庫上限</string>
   <string name="share_with_suggestions_title">建議</string>
-  <string name="share_with_recents_title">Recent</string>
+  <string name="share_with_recents_title">最近</string>
   <string name="share_with_remove_email_content_description">移除電子郵件</string>
   <string name="share_with_user_shared_title">With other Proton Pass users</string>
-  <string name="share_with_user_shared_description">Useful for permanent sharing.</string>
-  <string name="share_with_manage_shared_item_title">Manage access</string>
-  <string name="share_with_manage_shared_item_description">See member and permission overview.</string>
+  <string name="share_with_user_shared_description">永久共用.</string>
+  <string name="share_with_manage_shared_item_title">管理存取權限</string>
+  <string name="share_with_manage_shared_item_description">檢視共用對像及權限.</string>
   <string name="share_with_secure_link_shared_title">Via a secure link</string>
   <string name="share_with_secure_link_shared_description">For one-off sharing.</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">替全部成員設置存取層級</string>

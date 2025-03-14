@@ -35,7 +35,7 @@
   <string name="security_center_home_row_missing_tfa_title">2FA tidak aktif</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Atur 2FA untuk keamanan yang lebih</string>
   <string name="security_center_home_row_excludes_items_title">Dikecualikan dari pemantauan</string>
-  <string name="security_center_home_row_excludes_items_subtitle">Item berikut tetap berisiko</string>
+  <string name="security_center_home_row_excludes_items_subtitle">Item berikut ini akan tetap terpapar risiko</string>
   <string name="security_center_get_breaches_error">Kebocoran tidak dapat dimuat</string>
   <string name="security_center_home_section_password_health">Kesehatan Kata Sandi</string>
   <!-- Sentinel bottom sheet -->
@@ -98,7 +98,7 @@
   <string name="security_center_custom_email_already_verified">Email sudah diverifikasi</string>
   <string name="security_center_custom_email_error_adding">Terdapat kesalahan dalam menambahkan alamat email</string>
   <!-- Verify email monitoring -->
-  <string name="security_center_verify_email_title">Konfirmasikan email Anda</string>
+  <string name="security_center_verify_email_title">Konfirmasi surel Anda</string>
   <string name="security_center_verify_email_subtitle">Kami telah mengirimkan kode verifikasi ke %s. Masukkan kode tersebut pada kolom di bawah ini:</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">Email verifikasi baru telah terkirim. Silakan periksa kotak masuk Anda.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Terjadi kesalahan saat mengirim kode verifikasi. Silakan coba lagi nanti.</string>

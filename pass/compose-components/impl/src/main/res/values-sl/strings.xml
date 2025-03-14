@@ -16,9 +16,9 @@
   <string name="item_list_header_credit_cards_type">Plačilne kartice</string>
   <plurals name="item_list_header_results">
     <item quantity="one">rezultat</item>
-    <item quantity="two">rezultata</item>
+    <item quantity="two">rezultati</item>
     <item quantity="few">rezultati</item>
-    <item quantity="other">rezultatov</item>
+    <item quantity="other">rezultati</item>
   </plurals>
   <string name="item_list_header_identities_type">Identitete</string>
   <string name="item_list_header_custom_type">Custom items</string>
@@ -98,9 +98,9 @@
   <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
     <item quantity="one">1 predmet</item>
-    <item quantity="two">%d predmeta</item>
-    <item quantity="few">%d predmeti</item>
-    <item quantity="other">%d predmetov</item>
+    <item quantity="two">%d predmeti</item>
+    <item quantity="few">%d predmeta</item>
+    <item quantity="other">%d predmeta</item>
   </plurals>
   <!-- Confirm close dialog -->
   <string name="confirm_close_dialog_title">Zavrzi spremembe?</string>
@@ -202,7 +202,8 @@
   <string name="item_details_shared_section_more_info_item_id">ID predmeta</string>
   <string name="item_details_shared_section_more_info_share_id">ID trezorja</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
-  <string name="item_details_wifi_network_label_password">Password</string>
+  <string name="item_details_wifi_network_label_password">Geslo</string>
+  <string name="item_details_wifi_network_label_security">Security</string>
   <string name="item_details_ssh_key_label_public_key">Public key</string>
   <string name="item_details_ssh_key_label_private_key">Private key</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Ta različica ni več podprta, zato priporočamo posodobitev aplikacije.</string>
@@ -221,52 +222,52 @@
   <string name="tooltip_dismiss_button_content_description">Gumb za zavrnitev namiga in preprečitev njegovega ponovnega prikaza</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
-    <item quantity="one">%d year</item>
-    <item quantity="two">%d years</item>
-    <item quantity="few">%d years</item>
-    <item quantity="other">%d years</item>
+    <item quantity="one">%d leto</item>
+    <item quantity="two">%d leta</item>
+    <item quantity="few">%d leti</item>
+    <item quantity="other">%d leta</item>
   </plurals>
   <plurals name="time_unit_months">
     <item quantity="one">%d mesec</item>
-    <item quantity="two">%d months</item>
-    <item quantity="few">%d months</item>
-    <item quantity="other">%d months</item>
+    <item quantity="two">%d meseca</item>
+    <item quantity="few">%d meseci</item>
+    <item quantity="other">%d mesecev</item>
   </plurals>
   <plurals name="time_unit_weeks">
-    <item quantity="one">%d week</item>
-    <item quantity="two">%d weeks</item>
-    <item quantity="few">%d weeks</item>
-    <item quantity="other">%d weeks</item>
+    <item quantity="one">%d teden</item>
+    <item quantity="two">%d tedna</item>
+    <item quantity="few">%d tedni</item>
+    <item quantity="other">%d tednov</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d dan</item>
-    <item quantity="two">%d dneva</item>
-    <item quantity="few">%d dnevi</item>
-    <item quantity="other">%d dni</item>
+    <item quantity="two">%d dni</item>
+    <item quantity="few">%d dni</item>
+    <item quantity="other">%d dnevi</item>
   </plurals>
   <plurals name="time_unit_hours">
     <item quantity="one">%d ura</item>
-    <item quantity="two">%d uri</item>
-    <item quantity="few">%d ure</item>
-    <item quantity="other">%d ur</item>
+    <item quantity="two">%d ure</item>
+    <item quantity="few">%d uri</item>
+    <item quantity="other">%d uri</item>
   </plurals>
   <plurals name="time_unit_minutes">
     <item quantity="one">%d minuta</item>
     <item quantity="two">%d minuti</item>
     <item quantity="few">%d minute</item>
-    <item quantity="other">%d minut</item>
+    <item quantity="other">%d minute</item>
   </plurals>
   <plurals name="time_unit_seconds">
     <item quantity="one">%d sekunda</item>
-    <item quantity="two">%d sekundi</item>
-    <item quantity="few">%d sekunde</item>
-    <item quantity="other">%d sekund</item>
+    <item quantity="two">%d sekunde</item>
+    <item quantity="few">%d sekundi</item>
+    <item quantity="other">%d sekundi</item>
   </plurals>
   <plurals name="aliases_count">
-    <item quantity="one">%d alias</item>
-    <item quantity="two">%d aliases</item>
-    <item quantity="few">%d aliases</item>
-    <item quantity="other">%d aliases</item>
+    <item quantity="one">%d vzdevek</item>
+    <item quantity="two">%d vzdevka</item>
+    <item quantity="few">%d vzdevki</item>
+    <item quantity="other">%d vzdevkov</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Opomba je kopirana</string>
@@ -295,19 +296,19 @@
   </plurals>
   <string name="simple_login_widget_action">Sinhroniziranje vzdevkov</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_not_received">Niste prejeli kode?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Please check in your Spam for an email called “%s“</string>
   <string name="verification_code_suggestion_subject_new_email_address">Please confirm your email address for Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Please confirm your mailbox</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">If you can\'t find such email, you can %s.</string>
-  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">request a new code</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">zahtevajte novo kodo</string>
   <string name="field_display_name_title">Prikazno ime</string>
   <!-- Attachments -->
   <plurals name="attachment_file_amount">
-    <item quantity="one">%1$s file</item>
+    <item quantity="one">Datoteka %1$s</item>
     <item quantity="two">%1$s files</item>
-    <item quantity="few">%1$s files</item>
-    <item quantity="other">%1$s files</item>
+    <item quantity="few">%1$s datotek</item>
+    <item quantity="other">%1$s datoteke</item>
   </plurals>
   <string name="attachment_title">Priponke</string>
   <string name="attachment_no_files">Upload files from your device</string>
@@ -323,15 +324,16 @@
     <item quantity="other">%d shared items</item>
   </plurals>
   <plurals name="users_count">
-    <item quantity="one">%d user</item>
-    <item quantity="two">%d users</item>
-    <item quantity="few">%d users</item>
-    <item quantity="other">%d users</item>
+    <item quantity="one">%d uporabnik</item>
+    <item quantity="two">%d uporabnikov</item>
+    <item quantity="few">%d uporabnika</item>
+    <item quantity="other">%d uporabnika</item>
   </plurals>
   <plurals name="members_count">
-    <item quantity="one">%d member</item>
-    <item quantity="two">%d members</item>
-    <item quantity="few">%d members</item>
-    <item quantity="other">%d members</item>
+    <item quantity="one">%d član</item>
+    <item quantity="two">%d člana</item>
+    <item quantity="few">%d člani</item>
+    <item quantity="other">%d članov</item>
   </plurals>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
 </resources>

@@ -42,7 +42,7 @@
   <string name="item_details_snackbar_message_county_copied">Ο νομός αντιγράφηκε</string>
   <string name="item_details_snackbar_message_custom_field_copied">Το προσαρμοσμένο πεδίο αντιγράφηκε</string>
   <string name="item_details_snackbar_message_cvv_copied">Ο αριθμός επαλήθευσης αντιγράφηκε</string>
-  <string name="item_details_snackbar_message_email_copied">Έγινε αντιγραφή διεύθυνσης ηλεκτρονικού ταχυδρομείου</string>
+  <string name="item_details_snackbar_message_email_copied">Η διεύθυνση ηλεκτρονικού ταχυδρομείου αντιγράφηκε</string>
   <string name="item_details_snackbar_message_facebook_copied">Το Facebook αντιγράφηκε</string>
   <string name="item_details_snackbar_message_first_name_copied">Το όνομα αντιγράφηκε</string>
   <string name="item_details_snackbar_message_floor_copied">Ο όροφος αντιγράφηκε</string>

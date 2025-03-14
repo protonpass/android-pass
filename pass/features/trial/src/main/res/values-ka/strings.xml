@@ -7,7 +7,7 @@
   <string name="trial_feature_4">კონფიგურირებადი ველები</string>
   <string name="trial_button_text">ტარიფის განახლება</string>
   <plurals name="trial_days_left">
-    <item quantity="one">თქვენი სატესტო პერიოდიდან დარჩენილია %d დღე</item>
+    <item quantity="one">ფასიანი ფუნქციების საცდელად დაგრჩათ %d დღე</item>
     <item quantity="other">ფასიანი ფუნქციების საცდელად დაგრჩათ %d დღე</item>
   </plurals>
   <string name="trial_learn_more">გაიგეთ მეტი</string>

@@ -25,7 +25,7 @@
   <string name="sharing_can_manage_description">Kan innvilge og oppheve tilgang til dette hvelvet.</string>
   <plurals name="sharing_item_count">
     <item quantity="one">%d element</item>
-    <item quantity="other">%d elementer</item>
+    <item quantity="other">%d items</item>
   </plurals>
   <plurals name="sharing_member_count">
     <item quantity="one">%d medlem</item>
@@ -79,7 +79,7 @@
   </plurals>
   <plurals name="share_manage_vault_item_count">
     <item quantity="one">%d element</item>
-    <item quantity="other">%d elementer</item>
+    <item quantity="other">%d items</item>
   </plurals>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Invitasjon sendt</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Venter på opprettelse av konto</string>

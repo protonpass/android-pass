@@ -87,7 +87,7 @@
   <string name="vault_drawer_vaults_title">Coffres-forts</string>
   <plurals name="vault_drawer_vaults_item_count">
     <item quantity="one">%d élément</item>
-    <item quantity="other">%d éléments</item>
+    <item quantity="other">%d éléments</item>
   </plurals>
   <string name="vault_drawer_create_vault">Créer un coffre-fort</string>
   <string name="vault_drawer_item_trash">Corbeille</string>

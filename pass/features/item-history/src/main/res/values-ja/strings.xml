@@ -25,7 +25,7 @@
   <string name="item_history_restore_tab_title_current">現在</string>
   <string name="item_history_timeline_title">履歴</string>
   <string name="item_history_timeline_node_child_title">修正済み</string>
-  <string name="item_history_timeline_node_leaf_title">作成済み</string>
+  <string name="item_history_timeline_node_leaf_title">作成日時</string>
   <string name="item_history_timeline_node_root_title">現在のバージョン</string>
   <string name="item_history_timeline_snackbar_message_error">アイテムのリビジョンの取得中にエラーが発生しました</string>
   <string name="reset_history_bottomsheet_option">履歴をリセット</string>

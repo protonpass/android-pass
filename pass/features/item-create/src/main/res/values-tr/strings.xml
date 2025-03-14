@@ -47,9 +47,9 @@
   <string name="login_created">Oturum açma kaydı oluşturuldu</string>
   <string name="bottomsheet_modify_alias_title">Takma adı düzenle</string>
   <string name="bottomsheet_custom_field_type_text">Metin</string>
-  <string name="bottomsheet_custom_field_type_text_content_description">Metin özel alanı</string>
   <string name="bottomsheet_custom_field_type_hidden">Gizli</string>
   <string name="bottomsheet_custom_field_type_totp">İki adımlı doğrulama gizli anahtarı (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_date">Tarih</string>
   <string name="bottomsheet_custom_field_option_edit">Adı düzenle</string>
   <string name="bottomsheet_custom_field_option_remove">Alanı kaldır</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Özel alanı kaldır</string>
@@ -57,6 +57,7 @@
   <string name="custom_field_hidden_placeholder">Gizli metin ekle</string>
   <string name="custom_field_hidden_icon_content_description">Gizli özel alan simgesi</string>
   <string name="custom_field_text_placeholder">Metin ekle</string>
+  <string name="custom_field_date_placeholder">Tarih ekle</string>
   <string name="custom_field_dialog_title">Özel alan adı</string>
   <string name="custom_field_dialog_body">Özel alanınıza bir ad verin</string>
   <string name="custom_field_dialog_placeholder">Kullanıcı kimliği, PIN kodu gibi</string>
@@ -267,7 +268,6 @@
   <string name="template_ssh_key_field_note">Not</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_ssid">Ağ adı</string>
-  <string name="template_wifi_network_field_security_type">Güvenlik türü</string>
   <string name="template_wifi_network_field_note">Not</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Banka adı</string>
@@ -347,7 +347,9 @@
   <string name="create_custom_item_item_creation_success">Özel öge oluşturuldu</string>
   <string name="update_custom_item_item_creation_success">Özel öge güncellendi</string>
   <string name="update_custom_item_item_creation_error">Özel öge güncellenemedi</string>
+  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Ögeler oluşturulamadı</string>
   <string name="cannot_create_items_dialog_message">Düzenleyicisi veya yöneticisi olduğunuz herhangi bir kasa yok. Ana uygulamadan bir kasa oluşturmayı deneyin veya kuruluşunuzun yöneticisinden destek isteyin.</string>
+  <string name="wifi_security_type_field_label">Güvenlik türü</string>
 </resources>

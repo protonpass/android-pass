@@ -16,7 +16,7 @@
   <string name="item_list_header_credit_cards_type">Kreditkarten</string>
   <plurals name="item_list_header_results">
     <item quantity="one">Ergebnis</item>
-    <item quantity="other">Ergebnisse</item>
+    <item quantity="other">ergebnisse</item>
   </plurals>
   <string name="item_list_header_identities_type">Identitäten</string>
   <string name="item_list_header_custom_type">Benutzerdefinierte Einträge</string>
@@ -46,7 +46,7 @@
   <string name="action_see_all">Alle ansehen</string>
   <string name="action_confirm">Bestätigen</string>
   <string name="action_cancel">Abbrechen</string>
-  <string name="action_continue">Fortfahren</string>
+  <string name="action_continue">Weiter</string>
   <string name="action_retry">Erneut versuchen</string>
   <string name="action_edit">Bearbeiten</string>
   <string name="action_add">Hinzufügen</string>
@@ -173,7 +173,7 @@
   <string name="item_details_identity_section_contact_title">Kontaktdetails</string>
   <string name="item_details_identity_section_contact_social_security_number_title">Sozialversicherungsnummer</string>
   <string name="item_details_identity_section_contact_passport_number_title">Passnummer</string>
-  <string name="item_details_identity_section_contact_license_number_title">Autokennzeichen</string>
+  <string name="item_details_identity_section_contact_license_number_title">Lizenznummer</string>
   <string name="item_details_identity_section_contact_website_title">Webseite</string>
   <string name="item_details_identity_section_contact_x_handle_title">X-Benutzername</string>
   <string name="item_details_identity_section_contact_secondary_phone_number_title">Weitere Telefonnummer</string>
@@ -199,6 +199,7 @@
   <string name="item_details_shared_section_more_info_share_id">Tresor-ID</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
   <string name="item_details_wifi_network_label_password">Passwort</string>
+  <string name="item_details_wifi_network_label_security">Sicherheit</string>
   <string name="item_details_ssh_key_label_public_key">Öffentlicher Schlüssel</string>
   <string name="item_details_ssh_key_label_private_key">Privater Schlüssel</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Die App-Version wird nicht mehr unterstützt, bitte aktualisiere deine App.</string>
@@ -252,12 +253,12 @@
   <string name="snack_bar_message_item_note_copied">Notiz kopiert</string>
   <string name="snack_bar_message_item_migration_error">Fehler beim Migrieren dieses Eintrags.</string>
   <string name="snack_bar_message_item_monitor_excluded_success">Eintrag erfolgreich von der Überwachung ausgeschlossen.</string>
-  <string name="snack_bar_message_item_monitor_excluded_error">Fehler beim Ausschließen des Eintrags aus der Überwachung.</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">Es gab einen Fehler beim Ausschließen des Eintrags aus der Überwachung.</string>
   <string name="snack_bar_message_item_monitor_included_success">Eintrag erfolgreich in die Überwachung einbezogen.</string>
-  <string name="snack_bar_message_item_monitor_included_error">Fehler beim Einbeziehen des Eintrags in die Überwachung.</string>
-  <string name="snack_bar_message_item_pinned_success">Eintrag erfolgreich angeheftet.</string>
+  <string name="snack_bar_message_item_monitor_included_error">Es gab einen Fehler beim Einbeziehen des Eintrags in die Überwachung.</string>
+  <string name="snack_bar_message_item_pinned_success">Eintrag erfolgreich angeheftet</string>
   <string name="snack_bar_message_item_pinned_error">Fehler beim Anheften dieses Eintrags.</string>
-  <string name="snack_bar_message_item_unpinned_success">Eintrag erfolgreich losgelöst.</string>
+  <string name="snack_bar_message_item_unpinned_success">Eintrag erfolgreich losgelöst</string>
   <string name="snack_bar_message_item_unpinned_error">Fehler beim Loslösen dieses Eintrags.</string>
   <string name="snack_bar_message_item_trashed_success">Eintrag erfolgreich in den Papierkorb verschoben.</string>
   <string name="snack_bar_message_item_trashed_error">Fehler beim Verschieben des Eintrags in den Papierkorb.</string>
@@ -289,7 +290,7 @@
   <string name="attachment_no_files">Dateien von deinem Gerät hochladen</string>
   <string name="attachment_add_file">Datei anhängen</string>
   <string name="attachment_row_upload_failed">Hochladen fehlgeschlagen</string>
-  <string name="attachment_row_retry">Wiederholen</string>
+  <string name="attachment_row_retry">Erneut versuchen</string>
   <string name="options_menu_content_description">Optionsmenü</string>
   <!-- Items -->
   <plurals name="shared_items_count">
@@ -304,4 +305,5 @@
     <item quantity="one">%d Mitglied</item>
     <item quantity="other">%d Mitglieder</item>
   </plurals>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">TT MMMM JJJJ</string>
 </resources>

@@ -66,7 +66,7 @@
   <string name="simple_login_sync_mailbox_delete_warning">Huomaa, että poistettuja aliaksia ei voi palauttaa</string>
   <!-- Domain select screen -->
   <string name="simple_login_sync_domain_select_title">Oletusverkkotunnus</string>
-  <string name="simple_login_sync_domain_select_title_none">ei mitään</string>
+  <string name="simple_login_sync_domain_select_title_none">ei määritetty</string>
   <string name="simple_login_sync_domain_select_description_none">Verkkotunnusta ei ole</string>
   <string name="simple_login_sync_domain_select_description_custom">Sinun verkkotunnuksesi</string>
   <string name="simple_login_sync_domain_select_description_free">Julkinen verkkotunnus</string>

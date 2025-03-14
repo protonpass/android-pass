@@ -50,10 +50,10 @@
   <string name="action_edit">編輯</string>
   <string name="action_add">新增</string>
   <string name="action_delete">刪除</string>
-  <string name="action_make_default">Make default</string>
-  <string name="action_verify">Verify</string>
+  <string name="action_make_default">設為預設值</string>
+  <string name="action_verify">驗證</string>
   <string name="action_close">關閉</string>
-  <string name="action_update">Update</string>
+  <string name="action_update">更新</string>
   <!-- Empty list -->
   <string name="empty_list_title">加入您的第一個項目</string>
   <string name="empty_search_results_title">查無結果</string>
@@ -148,7 +148,7 @@
   <string name="item_details_login_section_email_title">電子郵件位址</string>
   <string name="item_details_login_section_username_title">使用者名稱</string>
   <string name="item_details_login_section_password_title">密碼</string>
-  <string name="item_details_login_section_primary_totp_title">雙重驗證憑證(TOTP)</string>
+  <string name="item_details_login_section_primary_totp_title">雙重驗證憑證(TOTP) </string>
   <string name="item_details_login_section_websites_title">網站</string>
   <string name="item_details_identity_section_personal_title">個人資訊</string>
   <string name="item_details_identity_section_personal_first_name_title">名</string>
@@ -163,7 +163,7 @@
   <string name="item_details_identity_section_address_organization_title">組織機構</string>
   <string name="item_details_identity_section_address_street_address_title">Street address, P.O. box</string>
   <string name="item_details_identity_section_address_floor_title">樓層</string>
-  <string name="item_details_identity_section_address_city_title">市區</string>
+  <string name="item_details_identity_section_address_city_title">市</string>
   <string name="item_details_identity_section_address_zip_or_postal_code_title">ZIP or postal code</string>
   <string name="item_details_identity_section_address_state_or_province_title">州或省</string>
   <string name="item_details_identity_section_address_county_title">縣/市</string>
@@ -188,15 +188,16 @@
   <string name="item_details_identity_section_work_personal_website_title">Personal website</string>
   <string name="item_details_shared_section_note_title">備注</string>
   <string name="item_details_shared_section_item_history_last_autofill_title">上次自動填滿</string>
-  <string name="item_details_shared_section_item_history_created_title">已創建</string>
+  <string name="item_details_shared_section_item_history_created_title">創建日期</string>
   <string name="item_details_shared_section_item_history_modified_times_title">Modified (%d)</string>
-  <string name="item_details_shared_section_item_history_button_view">查看項目歷史</string>
+  <string name="item_details_shared_section_item_history_button_view">歷史記錄</string>
   <string name="item_details_shared_section_more_info_header_title">更多資訊</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
   <string name="item_details_shared_section_more_info_item_id">項目 ID</string>
   <string name="item_details_shared_section_more_info_share_id">保管庫 ID</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
-  <string name="item_details_wifi_network_label_password">Password</string>
+  <string name="item_details_wifi_network_label_password">密碼</string>
+  <string name="item_details_wifi_network_label_security">Security</string>
   <string name="item_details_ssh_key_label_public_key">Public key</string>
   <string name="item_details_ssh_key_label_private_key">Private key</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
@@ -208,32 +209,32 @@
   <string name="dialog_upgrade_plan_action_confirm">升級</string>
   <string name="dialog_upgrade_plan_action_cancel">現在不要</string>
   <!-- Words -->
-  <string name="email_address">電子郵件地址</string>
-  <string name="email_address_invalid">Invalid email address</string>
+  <string name="email_address">電子郵件位址</string>
+  <string name="email_address_invalid">無效的電子郵件位址</string>
   <string name="password">密碼</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Button to dismiss this tooltip and not show it again</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
-    <item quantity="other">%d years</item>
+    <item quantity="other">%d 年</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="other">%d months</item>
+    <item quantity="other">%d個月</item>
   </plurals>
   <plurals name="time_unit_weeks">
-    <item quantity="other">%d weeks</item>
+    <item quantity="other">%d 週</item>
   </plurals>
   <plurals name="time_unit_days">
-    <item quantity="other">%d 天</item>
+    <item quantity="other">%d天</item>
   </plurals>
   <plurals name="time_unit_hours">
-    <item quantity="other">%d 小時</item>
+    <item quantity="other">%d小時</item>
   </plurals>
   <plurals name="time_unit_minutes">
-    <item quantity="other">%d 分鐘</item>
+    <item quantity="other">%d分鐘</item>
   </plurals>
   <plurals name="time_unit_seconds">
-    <item quantity="other">%d 秒</item>
+    <item quantity="other">%d秒</item>
   </plurals>
   <plurals name="aliases_count">
     <item quantity="other">%d aliases</item>
@@ -260,7 +261,7 @@
   <plurals name="simple_login_widget_pending_aliases_message">
     <item quantity="other">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
   </plurals>
-  <string name="simple_login_widget_action">Sync aliases</string>
+  <string name="simple_login_widget_action">同步別名</string>
   <!-- Verification codes -->
   <string name="verification_code_not_received">Haven\'t received the code?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Please check in your Spam for an email called “%s“</string>
@@ -273,7 +274,7 @@
   <plurals name="attachment_file_amount">
     <item quantity="other">%1$s 個檔案</item>
   </plurals>
-  <string name="attachment_title">Attachments</string>
+  <string name="attachment_title">附件</string>
   <string name="attachment_no_files">從你的裝置上傳檔案</string>
   <string name="attachment_add_file">附加檔案</string>
   <string name="attachment_row_upload_failed">上傳失敗</string>
@@ -284,9 +285,10 @@
     <item quantity="other">%d shared items</item>
   </plurals>
   <plurals name="users_count">
-    <item quantity="other">%d users</item>
+    <item quantity="other">%d 位使用者</item>
   </plurals>
   <plurals name="members_count">
-    <item quantity="other">%d members</item>
+    <item quantity="other">%d 位成員</item>
   </plurals>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
 </resources>

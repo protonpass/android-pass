@@ -20,10 +20,10 @@
   <string name="item_details_toolbar_content_description_menu_button">Knap til at vise udvalg i menuen</string>
   <string name="item_details_toolbar_content_description_share_button">Knap til at dele et element</string>
   <!-- Item details forbidden actions -->
-  <string name="item_details_forbidden_actions_edit_title">Kan ikke ændre</string>
-  <string name="item_details_forbidden_actions_edit_permission">Du kan ikke ændre dette element, fordi du ikke har de fornødne tilladelser til det.</string>
-  <string name="item_details_forbidden_actions_edit_trash">Du kan ikke ændre dette element, for det ligger i papirkurven. Flyt det ud af papirkurven, inden du ændrer det.</string>
-  <string name="item_details_forbidden_actions_edit_upgrade">Du kan kun ændre elementer i dine ældste bokse. Opgrader dit abonnement for at kunne ændre dette element.</string>
+  <string name="item_details_forbidden_actions_edit_title">Kan ikke redigere</string>
+  <string name="item_details_forbidden_actions_edit_permission">Du kan ikke redigere dette element, fordi du ikke har tilstrækkelige tilladelser til at gøre det.</string>
+  <string name="item_details_forbidden_actions_edit_trash">Du kan ikke redigere dette element, fordi det er i papirkurven. Flyt det ud af papirkurven, før du redigerer det.</string>
+  <string name="item_details_forbidden_actions_edit_upgrade">Du har kun tilladelse til at redigere elementer i dine ældste bokse. For at redigere dette element skal du opgradere dit nuværende abonnement.</string>
   <string name="item_details_forbidden_actions_share_title">Kan ikke dele</string>
   <string name="item_details_forbidden_actions_share_limit">Du har nået delingsgrænsen for bokse. Opgrader dit abonnement for at kunne dele flere bokse.</string>
   <string name="item_details_forbidden_actions_sharing_permission">Du har ikke nok tilladelser til at udføre denne handling.</string>

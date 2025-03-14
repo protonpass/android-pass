@@ -84,7 +84,7 @@
   <string name="security_center_dark_web_monitor_latest_breach_on">Zadnja kršitev dne %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
     <item quantity="one">Najdeno v %s kršitvi</item>
-    <item quantity="two">Najdeno v %s kršitvah</item>
+    <item quantity="two">Najdeno v %s kršitvi</item>
     <item quantity="few">Najdeno v %s kršitvah</item>
     <item quantity="other">Najdeno v %s kršitvah</item>
   </plurals>
@@ -112,7 +112,7 @@
   <string name="security_center_verify_email_snackbar_message_resend_code_success">Novo preverjanje je bilo poslano, preverite svoj nabiralnik.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Pri pošiljanju kode za preverjanje je prišlo do napake. Poskusite znova pozneje.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Preveč neveljavnih preverjanj. Odstranjevanje e-pošte po meri.</string>
-  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Invalid verification code</string>
+  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Neveljavna koda za preverjanje</string>
   <string name="security_center_verify_email_snackbar_message_verification_error">There was an error verifying the email. Please try again later.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Zaznane kršitve za</string>

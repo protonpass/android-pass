@@ -17,7 +17,7 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="bottomsheet_copy_email">メールをコピー</string>
+  <string name="bottomsheet_copy_email">メールをコピーする</string>
   <string name="bottomsheet_copy_password">パスワードをコピー</string>
   <string name="bottomsheet_copy_username">ユーザー名をコピー</string>
   <string name="bottomsheet_no_actions">操作は利用できません</string>

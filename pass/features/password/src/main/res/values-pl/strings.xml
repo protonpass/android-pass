@@ -13,8 +13,8 @@
   </plurals>
   <plurals name="word_count">
     <item quantity="one">%s słowo</item>
-    <item quantity="few">%s słowa</item>
-    <item quantity="many">%s słów</item>
+    <item quantity="few">%s słów</item>
+    <item quantity="many">%s słowa</item>
     <item quantity="other">%s słowa</item>
   </plurals>
   <string name="word_separator">Separator słów</string>

@@ -67,8 +67,8 @@
   <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Ajouter de nouvelles adresses e-mail personnalisées</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">Ajouter</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
-    <item quantity="one">Utilisation pour %d connexion</item>
-    <item quantity="other">Utilisation pour %d connexions</item>
+    <item quantity="one">Utilisé dans %d connexion</item>
+    <item quantity="other">Utilisé dans %d connexions</item>
   </plurals>
   <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
     <item quantity="one">%d fuite de données a été détectée.</item>

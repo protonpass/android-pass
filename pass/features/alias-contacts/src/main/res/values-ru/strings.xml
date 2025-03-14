@@ -24,10 +24,10 @@
   <string name="create_contact_title">Создать контакт</string>
   <string name="detail_contact_title">Контакты</string>
   <string name="email_input_error">Недействительный адрес электронной почты</string>
-  <string name="detail_contact_display_name" comment="sender email address">A contact is created for every email address that sends emails to or receives emails from %1$s</string>
+  <string name="detail_contact_display_name" comment="sender email address">Контакт создан для каждого адреса электронной почты, который отправляет или получает письма от %1$s</string>
   <string name="empty_alias_contacts_title">Контакты псевдонима</string>
   <string name="empty_alias_contacts_body">Чтобы скрыть свой личный адрес электронной почты, вы можете создать контакт с псевдонимом, который будет маскировать ваш адрес.</string>
-  <string name="empty_alias_contacts_learn_more">Подробнее</string>
+  <string name="empty_alias_contacts_learn_more">Узнать больше</string>
   <string name="unblock_button">Разблокировать контакт</string>
   <string name="block_button">Заблокировать контакт</string>
   <string name="contact_created_date" comment="date of creation">Создан %1$s назад</string>

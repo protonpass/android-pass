@@ -17,8 +17,8 @@
   <plurals name="item_list_header_results">
     <item quantity="one">výsledek</item>
     <item quantity="few">výsledky</item>
-    <item quantity="many">výsledků</item>
-    <item quantity="other">výsledků</item>
+    <item quantity="many">výsledky</item>
+    <item quantity="other">výsledky</item>
   </plurals>
   <string name="item_list_header_identities_type">Identity</string>
   <string name="item_list_header_custom_type">Vlastní položky</string>
@@ -203,6 +203,7 @@
   <string name="item_details_shared_section_more_info_share_id">ID trezoru</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
   <string name="item_details_wifi_network_label_password">Heslo</string>
+  <string name="item_details_wifi_network_label_security">Security</string>
   <string name="item_details_ssh_key_label_public_key">Veřejný klíč</string>
   <string name="item_details_ssh_key_label_private_key">Soukromý klíč</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Verze aplikace již není podporována, aktualizujte prosím svou aplikaci.</string>
@@ -234,15 +235,15 @@
   </plurals>
   <plurals name="time_unit_weeks">
     <item quantity="one">%d týden</item>
-    <item quantity="few">%d týdny</item>
-    <item quantity="many">%d týdnů</item>
-    <item quantity="other">%d týdnů</item>
+    <item quantity="few">%d týdnů</item>
+    <item quantity="many">%d týdny</item>
+    <item quantity="other">%d týdny</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d den</item>
-    <item quantity="few">%d dny</item>
-    <item quantity="many">%d dnů</item>
-    <item quantity="other">%d dnů</item>
+    <item quantity="few">%d dnů</item>
+    <item quantity="many">%d dny</item>
+    <item quantity="other">%d dny</item>
   </plurals>
   <plurals name="time_unit_hours">
     <item quantity="one">%d hodina</item>
@@ -252,13 +253,13 @@
   </plurals>
   <plurals name="time_unit_minutes">
     <item quantity="one">%d minuta</item>
-    <item quantity="few">%d minuty</item>
+    <item quantity="few">%d minut</item>
     <item quantity="many">%d minut</item>
     <item quantity="other">%d minut</item>
   </plurals>
   <plurals name="time_unit_seconds">
     <item quantity="one">%d sekunda</item>
-    <item quantity="few">%d sekundy</item>
+    <item quantity="few">%d sekund</item>
     <item quantity="many">%d sekund</item>
     <item quantity="other">%d sekund</item>
   </plurals>
@@ -289,9 +290,9 @@
   <string name="simple_login_widget_title">Zapnout synchronizaci se SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
     <item quantity="one">Zjistili jsme, že máte %d alias, který je přítomen v SimpleLogin, ale chybí v Proton Pass. Chcete jej importovat?</item>
-    <item quantity="few">Zjistili jsme, že máte %d aliasy, které jsou přítomné v SimpleLogin, ale chybí v Proton Pass. Chcete je importovat?</item>
-    <item quantity="many">Zjistili jsme, že máte %d aliasů, které jsou přítomné v SimpleLogin, ale chybí v Proton Pass. Chcete je importovat?</item>
-    <item quantity="other">Zjistili jsme, že máte %d aliasů, které jsou přítomné v SimpleLogin, ale chybí v Proton Pass. Chcete je importovat?</item>
+    <item quantity="few">Zjistili jsme, že máte %d aliasů, které jsou přítomné v SimpleLogin, ale chybí v Proton Pass. Chcete je importovat?</item>
+    <item quantity="many">Zjistili jsme, že máte %d aliasy, které jsou přítomné v SimpleLogin, ale chybí v Proton Pass. Chcete je importovat?</item>
+    <item quantity="other">Zjistili jsme, že máte %d aliasy, které jsou přítomné v SimpleLogin, ale chybí v Proton Pass. Chcete je importovat?</item>
   </plurals>
   <string name="simple_login_widget_action">Synchronizovat aliasy</string>
   <!-- Verification codes -->
@@ -323,15 +324,16 @@
     <item quantity="other">%d sdílených položek</item>
   </plurals>
   <plurals name="users_count">
-    <item quantity="one">%d uživatel</item>
-    <item quantity="few">%d uživatelé</item>
-    <item quantity="many">%d uživatelů</item>
-    <item quantity="other">%d uživatelů</item>
+    <item quantity="one">%d uživatele</item>
+    <item quantity="few">%d uživatelů</item>
+    <item quantity="many">%d uživatelé</item>
+    <item quantity="other">%d uživatelé</item>
   </plurals>
   <plurals name="members_count">
     <item quantity="one">%d člen</item>
-    <item quantity="few">%d členové</item>
-    <item quantity="many">%d členů</item>
-    <item quantity="other">%d členů</item>
+    <item quantity="few">%d členů</item>
+    <item quantity="many">%d členové</item>
+    <item quantity="other">%d členové</item>
   </plurals>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
 </resources>

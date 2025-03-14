@@ -32,7 +32,7 @@
   <string name="report_reason_sharing">Delning</string>
   <string name="report_reason_sync">Synkronisera</string>
   <string name="report_reason_passkeys">Passkeys</string>
-  <string name="report_reason_other">Annat</string>
+  <string name="report_reason_other">Övrigt</string>
   <string name="tips_title">Snabba åtgärder för %1$s</string>
   <string name="tips_subtitle">Dessa tips kan hjälpa dig att lösa ditt problem snabbare.</string>
   <string name="autofill_tip_restart">Testa inaktivera och aktivera autofylltjänsten</string>

@@ -3,7 +3,7 @@
   <string name="generate_password_copy">コピーして閉じる</string>
   <string name="password_copied_to_clipboard">パスワードをコピーしました</string>
   <string name="bottomsheet_generate_password_title">パスワードを生成する</string>
-  <string name="password_type">種類</string>
+  <string name="password_type">種別</string>
   <string name="special_characters">特殊文字 (!&amp;*)</string>
   <plurals name="character_count">
     <item quantity="other">%s 文字</item>
@@ -11,7 +11,7 @@
   <plurals name="word_count">
     <item quantity="other">%s 語</item>
   </plurals>
-  <string name="word_separator">単語の区切り</string>
+  <string name="word_separator">区切り文字</string>
   <string name="bottomsheet_option_capital_letters">英文字の大文字 (A−Z)</string>
   <string name="bottomsheet_option_capitalise">先頭を大文字にする</string>
   <string name="bottomsheet_option_include_numbers">数字を含める (0–9)</string>

@@ -7,10 +7,10 @@
   <string name="trial_feature_4">Настраиваемые поля</string>
   <string name="trial_button_text">Улучшить сейчас</string>
   <plurals name="trial_days_left">
-    <item quantity="one">Остался %d день, чтобы опробовать платные функции</item>
-    <item quantity="few">Осталось %d дня, чтобы опробовать платные функции</item>
-    <item quantity="many">Осталось %d дней, чтобы опробовать платные функции</item>
-    <item quantity="other">Осталось %d дня, чтобы опробовать платные функции</item>
+    <item quantity="one">Остался %d день, чтобы попробовать платные функции</item>
+    <item quantity="few">Остались %d дня, чтобы попробовать платные функции</item>
+    <item quantity="many">Остались %d дней, чтобы попробовать платные функции</item>
+    <item quantity="other">Остались %d дней, чтобы попробовать платные функции</item>
   </plurals>
-  <string name="trial_learn_more">Подробнее</string>
+  <string name="trial_learn_more">Узнать больше</string>
 </resources>

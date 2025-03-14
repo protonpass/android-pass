@@ -26,7 +26,7 @@
   <string name="item_history_timeline_title">Historik</string>
   <string name="item_history_timeline_node_child_title">Ændret</string>
   <string name="item_history_timeline_node_leaf_title">Oprettet</string>
-  <string name="item_history_timeline_node_root_title">Aktuel version</string>
+  <string name="item_history_timeline_node_root_title">Nuværende version</string>
   <string name="item_history_timeline_snackbar_message_error">Der opstod en fejl ved hentning af elementrevision</string>
   <string name="reset_history_bottomsheet_option">Nulstil historik</string>
   <string name="reset_history_dialog_title">Nulstil historik for dette element?</string>

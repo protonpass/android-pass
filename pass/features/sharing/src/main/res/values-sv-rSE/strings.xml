@@ -43,7 +43,7 @@
   <string name="share_permissions_title">Ställ in åtkomstnivå</string>
   <string name="sharing_reject_invitation">Avböj inbjudan</string>
   <string name="sharing_vault_invitation_title">Delad valvinbjudan</string>
-  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s vill dela ett objekt med dig.</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s vill dela ett valv med dig.</string>
   <string name="sharing_vault_invitation_accept">Gå med delat valv</string>
   <string name="sharing_item_invitation_title">Delad valvinbjudan</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s vill dela ett objekt med dig.</string>
@@ -61,7 +61,7 @@
   <string name="sharing_snackbar_invite_user_already_invited_error">Adress har redan blivit inbjuden</string>
   <string name="sharing_snackbar_get_vault_members_error">Kunde inte hämta valvmedlemmar</string>
   <string name="sharing_snackbar_change_permission_success">Behörigheter ändrade</string>
-  <string name="sharing_snackbar_change_permission_error">Kunde inte ändra behörigheter</string>
+  <string name="sharing_snackbar_change_permission_error">Kunde inte ändra behörigheterna</string>
   <string name="sharing_snackbar_remove_member_success">Medlem borttagen från valvet</string>
   <string name="sharing_snackbar_remove_member_error">Kunde inte ta bort från valvet</string>
   <string name="sharing_snackbar_fetch_member_error">Det gick inte hämta medlemmar</string>
@@ -100,15 +100,15 @@
   <string name="sharing_bottomsheet_resend_invite">Skicka inbjudan igen</string>
   <string name="sharing_bottomsheet_cancel_invite">Avbryt inbjudan</string>
   <string name="sharing_transfer_ownership_confirm_title">Överför ägarskap</string>
-  <string name="sharing_transfer_ownership_confirm_message">Vill du överföra äganderätten till detta valv till %s?</string>
+  <string name="sharing_transfer_ownership_confirm_message">Överföra äganderätten till detta valv till %s?</string>
   <string name="sharing_snackbar_cancel_invite_success">Inbjudan avbruten</string>
   <string name="sharing_snackbar_cancel_invite_error">Det gick inte avbryta inbjudan</string>
-  <string name="sharing_snackbar_resend_invite_success">Inbjudan skickad</string>
+  <string name="sharing_snackbar_resend_invite_success">Inbjudan skickad igen</string>
   <string name="sharing_snackbar_resend_invite_error">Det gick inte skicka inbjudan igen</string>
   <string name="sharing_snackbar_confirm_invite_success">Inbjudan bekräftad</string>
   <string name="sharing_snackbar_confirm_invite_error">Det gick bekräfta inbjudan</string>
   <string name="sharing_snackbar_too_many_invites_sent">Adress har bjudits in för många gånger</string>
-  <string name="sharing_snackbar_transfer_ownership_success">Ägandeskap överfört</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Äganderätt överförd</string>
   <string name="sharing_snackbar_transfer_ownership_error">Det gick inte överföra äganderätt</string>
   <string name="sharing_invites_info_dialog_title">Medlemsgräns</string>
   <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
@@ -137,5 +137,5 @@
   <string name="sharing_error_dialog_title">Okänt fel</string>
   <string name="sharing_error_dialog_message">Det uppstod ett fel när en inbjudan skulle skickas till detta valv.. Kontakta kundsupport om problemet kvarstår.</string>
   <string name="sharing_with_no_addresses_can_be_invited">Inga adresser kan bjudas in</string>
-  <string name="sharing_with_some_addresses_cannot_be_invited">Några adresser kan bjudas in</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">Några adresser kan inte bjudas in</string>
 </resources>

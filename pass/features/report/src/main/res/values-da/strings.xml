@@ -30,7 +30,7 @@
   <string name="hint_tips_screen">Virkede det ikke?</string>
   <string name="report_reason_autofill">Autofyld</string>
   <string name="report_reason_sharing">Deling</string>
-  <string name="report_reason_sync">Synkronisering</string>
+  <string name="report_reason_sync">Synk</string>
   <string name="report_reason_passkeys">Adgangsnøgler</string>
   <string name="report_reason_other">Andet</string>
   <string name="tips_title">Hurtige løsninger for %1$s</string>

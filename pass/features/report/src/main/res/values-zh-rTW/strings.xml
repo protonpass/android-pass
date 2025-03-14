@@ -26,13 +26,13 @@
   <string name="report_toolbar_title">回報問題</string>
   <string name="send_report_button">傳送回報</string>
   <string name="cancel_tips_button">取消</string>
-  <string name="contact_us_button">Contact us</string>
+  <string name="contact_us_button">聯絡我們</string>
   <string name="hint_tips_screen">無法運作？</string>
   <string name="report_reason_autofill">自動填入</string>
   <string name="report_reason_sharing">共享</string>
   <string name="report_reason_sync">同步</string>
-  <string name="report_reason_passkeys">Passkeys</string>
-  <string name="report_reason_other">Other</string>
+  <string name="report_reason_passkeys">密碼金鑰</string>
+  <string name="report_reason_other">其它</string>
   <string name="tips_title">Quick fixes for %1$s</string>
   <string name="tips_subtitle">These tips could help you solve your issue faster.</string>
   <string name="autofill_tip_restart">Try disabling and enabling the autofill service.</string>

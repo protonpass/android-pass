@@ -52,7 +52,7 @@
   <string name="home_drawer_all_items">모든 항목</string>
   <string name="sl_sync_banner_title">SimpleLogin에서 별칭 동기화</string>
   <plurals name="sl_sync_banner_text">
-    <item quantity="other">SimpleLogin에 %d개의 별칭이 존재하지만 Proton Pass에는 누락된 별칭이 있음이 발견되었어요. 해당 별명을 불러오시겠어요?</item>
+    <item quantity="other">SimpleLogin에 %d개의 별칭이 존재하지만 Proton Pass에는 누락된 별칭이 있음이 발견되었어요. 해당 별칭을 연동하시겠어요?</item>
   </plurals>
   <string name="sl_sync_banner_settings">별칭 동기화 ›</string>
   <string name="sl_sync_banner_note">한 번 연동하면, Pass에서 별칭 삭제 시 SimpleLogin에서도 삭제됩니다.</string>
@@ -150,7 +150,7 @@
     <item quantity="other">%d개 항목을 완전 삭제할까요?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
-    <item quantity="other">%d개 항목을 정말 삭제할까요? 이 동작은 되돌릴 수 없습니다.</item>
+    <item quantity="other">%d개 항목을 정말 삭제하시겠습니까? 이 작업은 영구적입니다.</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_shared_warning_message">
     <item quantity="other">%d개 항목이 현재 공유 중입니다. 휴지통에 항목을 이동하면 다른 사용자들과의 접근 권한도 상실됩니다.</item>

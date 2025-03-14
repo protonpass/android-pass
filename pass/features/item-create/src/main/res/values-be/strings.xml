@@ -47,9 +47,9 @@
   <string name="login_created">Запіс уваходу створаны</string>
   <string name="bottomsheet_modify_alias_title">Змяніць псеўданім</string>
   <string name="bottomsheet_custom_field_type_text">Тэкст</string>
-  <string name="bottomsheet_custom_field_type_text_content_description">Карыстальніцкае тэкставае поле</string>
   <string name="bottomsheet_custom_field_type_hidden">Схаванае</string>
   <string name="bottomsheet_custom_field_type_totp">Сакрэтны ключ 2ФА (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_date">Дата</string>
   <string name="bottomsheet_custom_field_option_edit">Рэдагаваць назву</string>
   <string name="bottomsheet_custom_field_option_remove">Выдаліць поле</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Выдаліць карыстальніцкае поле</string>
@@ -57,6 +57,7 @@
   <string name="custom_field_hidden_placeholder">Дадаць схаваны тэкст</string>
   <string name="custom_field_hidden_icon_content_description">Значок схаванага карыстальніцкага поля</string>
   <string name="custom_field_text_placeholder">Дадаць тэкст</string>
+  <string name="custom_field_date_placeholder">Дадаць дату</string>
   <string name="custom_field_dialog_title">Карыстальніцкая назва поля</string>
   <string name="custom_field_dialog_body">Дайце назву карыстальніцкаму полю</string>
   <string name="custom_field_dialog_placeholder">Напрыклад, ідэнтыфікатар карыстальніка або PIN</string>
@@ -267,7 +268,6 @@
   <string name="template_ssh_key_field_note">Нататка</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_ssid">SSID</string>
-  <string name="template_wifi_network_field_security_type">Тып бяспекі</string>
   <string name="template_wifi_network_field_note">Нататка</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Назва банка</string>
@@ -347,7 +347,9 @@
   <string name="create_custom_item_item_creation_success">Карыстальніцкі элемент створаны</string>
   <string name="update_custom_item_item_creation_success">Карыстальніцкі элемент абноўлены</string>
   <string name="update_custom_item_item_creation_error">Немагчыма абнавіць карыстальніцкі элемент</string>
+  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">дд ММММ гггг</string>
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Немагчыма стварыць элементы</string>
   <string name="cannot_create_items_dialog_message">У вас адсутнічаюць сховішчы з магчымасцю рэдагавання або доступам адміністратара. Паспрабуйце стварыць яго ў галоўнай праграме або папрасіце дапамагчы з гэтым адміністратара вашай арганізацыі.</string>
+  <string name="wifi_security_type_field_label">Security type</string>
 </resources>

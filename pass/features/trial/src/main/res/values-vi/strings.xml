@@ -7,7 +7,7 @@
   <string name="trial_feature_4">Trường tùy chỉnh</string>
   <string name="trial_button_text">Nâng cấp ngay</string>
   <plurals name="trial_days_left">
-    <item quantity="other">%d ngày còn lại để thử các tính năng nâng cao</item>
+    <item quantity="other">Thời gian dùng thử còn %d ngày</item>
   </plurals>
   <string name="trial_learn_more">Tìm hiểu thêm</string>
 </resources>

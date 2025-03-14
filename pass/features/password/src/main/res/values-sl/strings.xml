@@ -7,15 +7,15 @@
   <string name="special_characters">Posebni znaki (!&amp;*)</string>
   <plurals name="character_count">
     <item quantity="one">%s znak</item>
-    <item quantity="two">%s znaka</item>
-    <item quantity="few">%s znaki</item>
-    <item quantity="other">%s znakov</item>
+    <item quantity="two">%s znaki</item>
+    <item quantity="few">%s znaka</item>
+    <item quantity="other">%s znaki</item>
   </plurals>
   <plurals name="word_count">
     <item quantity="one">%s beseda</item>
-    <item quantity="two">%s besedi</item>
-    <item quantity="few">%s besede</item>
-    <item quantity="other">%s besed</item>
+    <item quantity="two">%s besed</item>
+    <item quantity="few">%s besed</item>
+    <item quantity="other">%s besede</item>
   </plurals>
   <string name="word_separator">Ločilo besed</string>
   <string name="bottomsheet_option_capital_letters">Velike črke (A-Z)</string>

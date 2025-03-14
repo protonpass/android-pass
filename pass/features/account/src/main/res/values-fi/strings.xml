@@ -24,7 +24,7 @@
   <string name="account_settings_list_item_extra_password_header_set">Aseta lisäsalasana Proton Passille</string>
   <string name="account_settings_list_item_extra_password_active">Käytössä</string>
   <string name="account_settings_list_item_extra_password_description">Lisäsalasana tarvitaan Passin käyttöön ja se vaaditaan Proton-tilisi salasanan lisäksi.</string>
-  <string name="account_settings_list_item_security_keys_hint_not_set">Ei asetettu</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">Ei määritetty</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
     <item quantity="one">%d suojausavain määritetty</item>

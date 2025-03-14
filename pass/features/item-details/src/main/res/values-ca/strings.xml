@@ -21,11 +21,11 @@
   <string name="item_details_toolbar_content_description_share_button">Botó per a compartir un element</string>
   <!-- Item details forbidden actions -->
   <string name="item_details_forbidden_actions_edit_title">No es pot editar.</string>
-  <string name="item_details_forbidden_actions_edit_permission">No podeu editar aquest element perquè no teniu prou permisos per fer-ho.</string>
+  <string name="item_details_forbidden_actions_edit_permission">No podeu editar aquest element perquè no teniu prou permisos per a fer-ho.</string>
   <string name="item_details_forbidden_actions_edit_trash">No podeu editar aquest element perquè és a la paperera. Si us plau, traieu-lo de la paperera abans d\'editar-lo.</string>
   <string name="item_details_forbidden_actions_edit_upgrade">Només podeu editar elements a les vostres caixes fortes més antigues. Per editar aquest element, milloreu el vostre pla actual.</string>
   <string name="item_details_forbidden_actions_share_title">No es pot compartir.</string>
-  <string name="item_details_forbidden_actions_share_limit">Heu assolit el límit de compartició de la caixa forta. Per compartir més caixes fortes, milloreu el vostre pla actual.</string>
+  <string name="item_details_forbidden_actions_share_limit">Heu assolit el límit de compartició de caixes fortes. Per a compartir més caixes fortes, milloreu el vostre pla actual.</string>
   <string name="item_details_forbidden_actions_sharing_permission">No té els permisos necessaris per realitzar l\'acció sol·licitada.</string>
   <string name="item_details_forbidden_actions_share_trash">No podeu compartir aquest element perquè és a la paperera. Traieu-lo de la paperera abans d\'editar-lo.</string>
   <!-- Item details leave item -->

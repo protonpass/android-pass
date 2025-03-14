@@ -87,7 +87,7 @@
   <string name="vault_drawer_vaults_title">საცავები</string>
   <plurals name="vault_drawer_vaults_item_count">
     <item quantity="one">%d ელემენტი</item>
-    <item quantity="other">%d ელემენტი</item>
+    <item quantity="other">%d items</item>
   </plurals>
   <string name="vault_drawer_create_vault">საცავის შექმნა</string>
   <string name="vault_drawer_item_trash">ნაგვის ყუთი</string>

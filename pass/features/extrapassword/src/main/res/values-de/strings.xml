@@ -17,7 +17,7 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="configure_extra_password_continue">Fortfahren</string>
+  <string name="configure_extra_password_continue">Weiter</string>
   <string name="configure_extra_password_title">Zusätzliches Passwort festlegen</string>
   <string name="configure_extra_password_enter_extra_password">Zusätzliches Passwort</string>
   <string name="configure_extra_password_repeat_extra_password">Passwort wiederholen</string>

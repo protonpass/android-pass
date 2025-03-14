@@ -9,7 +9,7 @@
   <plurals name="trial_days_left">
     <item quantity="one">У вас залишився %d день, щоб спробувати преміальні функції</item>
     <item quantity="few">У вас залишилося %d дні, щоб спробувати преміальні функції</item>
-    <item quantity="many">У вас залишилося %d днів, щоб спробувати преміальні функції</item>
+    <item quantity="many">У вас залишилося %d дні, щоб спробувати преміальні функції</item>
     <item quantity="other">У вас залишилося %d днів, щоб спробувати преміальні функції</item>
   </plurals>
   <string name="trial_learn_more">Докладніше</string>

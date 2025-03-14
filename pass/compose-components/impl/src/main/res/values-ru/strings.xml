@@ -22,8 +22,8 @@
   </plurals>
   <string name="item_list_header_identities_type">Личные данные</string>
   <string name="item_list_header_custom_type">Пользовательские элементы</string>
-  <string name="item_list_header_shared_with_me">Shared with me</string>
-  <string name="item_list_header_shared_by_me">Shared by me</string>
+  <string name="item_list_header_shared_with_me">В общем доступе со мной</string>
+  <string name="item_list_header_shared_by_me">Я поделился</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Подтвердить</string>
   <string name="bottomsheet_cancel_button">Отменить</string>
@@ -37,7 +37,7 @@
   <string name="bottomsheet_copy_item_note">Скопировать заметку</string>
   <string name="bottomsheet_delete_permanently">Удалить безвозвратно</string>
   <string name="bottomsheet_restore">Восстановить</string>
-  <string name="bottomsheet_leave">Leave</string>
+  <string name="bottomsheet_leave">Выйти</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Открыть меню действий с элементом</string>
   <string name="action_upgrade_now">Улучшить сейчас</string>
@@ -49,12 +49,12 @@
   <string name="action_confirm">Подтвердить</string>
   <string name="action_cancel">Отменить</string>
   <string name="action_continue">Продолжить</string>
-  <string name="action_retry">Повторите попытку</string>
+  <string name="action_retry">Повторить</string>
   <string name="action_edit">Редактировать</string>
   <string name="action_add">Добавить</string>
   <string name="action_delete">Удалить</string>
   <string name="action_make_default">Установить по умолчанию</string>
-  <string name="action_verify">Подтвердить</string>
+  <string name="action_verify">Проверить</string>
   <string name="action_close">Закрыть</string>
   <string name="action_update">Обновить</string>
   <!-- Empty list -->
@@ -63,7 +63,7 @@
   <string name="empty_list_open_extension">Посетить дополнение</string>
   <string name="empty_list_create_item_button">Создать новый элемент</string>
   <!-- Field -->
-  <string name="field_title_title">Заголовок</string>
+  <string name="field_title_title">Должность</string>
   <string name="field_title_hint">Без названия</string>
   <string name="field_title_required">Название обязательно</string>
   <string name="small_cross_icon_content_description">Иконка с маленьким крестом</string>
@@ -151,7 +151,7 @@
   <string name="item_details_credit_card_section_expiration_date_title">Срок действия</string>
   <string name="item_details_credit_card_section_cvv_title">Код безопасности</string>
   <string name="item_details_credit_card_section_pin_title">PIN-код</string>
-  <string name="item_details_login_section_email_title">Адрес электронной почты</string>
+  <string name="item_details_login_section_email_title">Адрес эл. почты</string>
   <string name="item_details_login_section_username_title">Имя пользователя</string>
   <string name="item_details_login_section_password_title">Пароль</string>
   <string name="item_details_login_section_primary_totp_title">Токен 2ФА (TOTP)</string>
@@ -161,7 +161,7 @@
   <string name="item_details_identity_section_personal_middle_name_title">Отчество</string>
   <string name="item_details_identity_section_personal_last_name_title">Фамилия</string>
   <string name="item_details_identity_section_personal_full_name_title">Полное имя</string>
-  <string name="item_details_identity_section_personal_email_title">Адрес электронной почты</string>
+  <string name="item_details_identity_section_personal_email_title">Адрес эл. почты</string>
   <string name="item_details_identity_section_personal_gender_title">Пол</string>
   <string name="item_details_identity_section_personal_phone_title">Номер телефона</string>
   <string name="item_details_identity_section_personal_birthday_title">День рождения</string>
@@ -192,7 +192,7 @@
   <string name="item_details_identity_section_work_email_title">Рабочий адрес электронной почты</string>
   <string name="item_details_identity_section_work_phone_number_title">Рабочий номер телефона</string>
   <string name="item_details_identity_section_work_personal_website_title">Личный сайт</string>
-  <string name="item_details_shared_section_note_title">Примечания</string>
+  <string name="item_details_shared_section_note_title">Заметка</string>
   <string name="item_details_shared_section_item_history_last_autofill_title">Последнее автозаполнение</string>
   <string name="item_details_shared_section_item_history_created_title">Создано</string>
   <string name="item_details_shared_section_item_history_modified_times_title">Изменено (%d)</string>
@@ -202,7 +202,8 @@
   <string name="item_details_shared_section_more_info_item_id">ID элемента</string>
   <string name="item_details_shared_section_more_info_share_id">ID хранилища</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
-  <string name="item_details_wifi_network_label_password">Password</string>
+  <string name="item_details_wifi_network_label_password">Пароль</string>
+  <string name="item_details_wifi_network_label_security">Security</string>
   <string name="item_details_ssh_key_label_public_key">Public key</string>
   <string name="item_details_ssh_key_label_private_key">Private key</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Версия приложения больше не поддерживается, пожалуйста, обновите приложение.</string>
@@ -211,7 +212,7 @@
   <!-- Upgrade -->
   <string name="dialog_upgrade_plan_title">Улучшить план?</string>
   <string name="dialog_upgrade_plan_message">Эта функция недоступна пользователям бесплатного тарифа. Если вы хотите воспользоваться этой функцией, а также другими классными возможностями, перейдите на новый тариф и попробуйте!</string>
-  <string name="dialog_upgrade_plan_action_confirm">Сменить тариф</string>
+  <string name="dialog_upgrade_plan_action_confirm">Повысить</string>
   <string name="dialog_upgrade_plan_action_cancel">Не сейчас</string>
   <!-- Words -->
   <string name="email_address">Адрес эл. почты</string>
@@ -227,34 +228,34 @@
     <item quantity="other">%d лет</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="one">%d месяц</item>
+    <item quantity="one">%d месяц</item>
     <item quantity="few">%d месяца</item>
     <item quantity="many">%d месяцев</item>
     <item quantity="other">%d месяцев</item>
   </plurals>
   <plurals name="time_unit_weeks">
     <item quantity="one">%d неделя</item>
-    <item quantity="few">%d недели</item>
-    <item quantity="many">%d недель</item>
-    <item quantity="other">%d недель</item>
+    <item quantity="few">%d недель</item>
+    <item quantity="many">%d недели</item>
+    <item quantity="other">%d недели</item>
   </plurals>
   <plurals name="time_unit_days">
-    <item quantity="one">%d день</item>
-    <item quantity="few">%d дней</item>
-    <item quantity="many">%d дня</item>
-    <item quantity="other">%d дня</item>
+    <item quantity="one">%d день</item>
+    <item quantity="few">%d дня</item>
+    <item quantity="many">%d дня</item>
+    <item quantity="other">%d дня</item>
   </plurals>
   <plurals name="time_unit_hours">
     <item quantity="one">%d час</item>
-    <item quantity="few">%d часов</item>
-    <item quantity="many">%d часа</item>
-    <item quantity="other">%d часа</item>
+    <item quantity="few">%d часа</item>
+    <item quantity="many">%d часов</item>
+    <item quantity="other">%d часов</item>
   </plurals>
   <plurals name="time_unit_minutes">
     <item quantity="one">%d минута</item>
-    <item quantity="few">%d минуты</item>
-    <item quantity="many">%d минуты</item>
-    <item quantity="other">%d минуты</item>
+    <item quantity="few">%d мин</item>
+    <item quantity="many">%d мин</item>
+    <item quantity="other">%d мин</item>
   </plurals>
   <plurals name="time_unit_seconds">
     <item quantity="one">%d секунда</item>
@@ -286,12 +287,12 @@
   <string name="snack_bar_message_item_delete_success">Элемент успешно удален.</string>
   <string name="snack_bar_message_item_delete_error">Произошла ошибка при удалении этого элемента</string>
   <!-- Simple Login -->
-  <string name="simple_login_widget_title">Включить синхронизацию с SimpleLogin</string>
+  <string name="simple_login_widget_title">Включить синхронизацию SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
     <item quantity="one">Мы обнаружили, что у вас есть %d псевдоним, который присутствуют в SimpleLogin, но отсутствуют в Proton Pass. Не хотите ли вы импортировать его?</item>
     <item quantity="few">Мы обнаружили, что у вас есть %d псевдонима, которые присутствуют в SimpleLogin, но отсутствуют в Proton Pass. Вы хотите их импортировать?</item>
     <item quantity="many">Мы обнаружили, что у вас есть %d псевдонимов, которые присутствуют в SimpleLogin, но отсутствуют в Proton Pass. Вы хотите их импортировать?</item>
-    <item quantity="other">Мы обнаружили, что у вас есть %d псевдонимов, которые присутствуют в SimpleLogin, но отсутствуют в Proton Pass. Вы хотите их импортировать?</item>
+    <item quantity="other">Мы обнаружили, что у вас есть %d псевдонима, которые присутствуют в SimpleLogin, но отсутствуют в Proton Pass. Вы хотите их импортировать?</item>
   </plurals>
   <string name="simple_login_widget_action">Синхронизировать псевдонимы</string>
   <!-- Verification codes -->
@@ -324,9 +325,9 @@
   </plurals>
   <plurals name="users_count">
     <item quantity="one">%d пользователь</item>
-    <item quantity="few">%d пользователя</item>
-    <item quantity="many">%d пользователей</item>
-    <item quantity="other">%d пользователей</item>
+    <item quantity="few">%d пользователей</item>
+    <item quantity="many">%d пользователя</item>
+    <item quantity="other">%d пользователя</item>
   </plurals>
   <plurals name="members_count">
     <item quantity="one">%d участник</item>
@@ -334,4 +335,5 @@
     <item quantity="many">%d участников</item>
     <item quantity="other">%d участников</item>
   </plurals>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
 </resources>

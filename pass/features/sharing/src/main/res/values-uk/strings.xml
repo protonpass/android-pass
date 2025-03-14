@@ -75,7 +75,7 @@
   <string name="share_summary_share_item">Спільний доступ до елемента</string>
   <string name="share_summary_vault_title">Сховище</string>
   <string name="share_summary_item_title">Елемент</string>
-  <string name="share_summary_access_level_title">Access level</string>
+  <string name="share_summary_access_level_title">Рівень доступу</string>
   <string name="share_manage_vault_share_with_more_people">Поділитися з іншими людьми</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">Залишилось %d запрошення</item>
@@ -95,8 +95,8 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Запрошення</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Учасники</string>
   <string name="share_manage_vault_current_user_indicator">Ви</string>
-  <string name="share_role_viewer">Viewer</string>
-  <string name="share_role_editor">Editor</string>
+  <string name="share_role_viewer">Користувач</string>
+  <string name="share_role_editor">Редактор</string>
   <string name="share_role_admin">Адміністратор</string>
   <string name="share_role_owner">Власник</string>
   <string name="sharing_bottomsheet_transfer_ownership">Передати право власності</string>

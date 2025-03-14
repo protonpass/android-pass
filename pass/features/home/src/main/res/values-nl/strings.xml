@@ -53,7 +53,7 @@
   <string name="sl_sync_banner_title">Synchroniseer uw aliassen van SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">U heeft %d alias die aanwezig is in SimpleLogin, maar ontbreekt in Proton pass. Wilt u deze synchroniseren?</item>
-    <item quantity="other">U heeft %d aliassen die aanwezig zijn in SimpleLogin, maar ontbreekt in Proton pass. Wilt u ze synchroniseren?</item>
+    <item quantity="other">U heeft %d aliassen die aanwezig zijn in SimpleLogin, maar ontbreekt in Proton pass. Wilt u deze synchroniseren?</item>
   </plurals>
   <string name="sl_sync_banner_settings">Synchroniseer aliassen ›</string>
   <string name="sl_sync_banner_note">Eenmaal gesynchroniseerd, zal het verwijderen van aliassen in Pass ze ook verwijderen in SimpleLogin.</string>
@@ -62,7 +62,7 @@
   <string name="home_notification_permission_banner_settings">Toestemming geven ›</string>
   <string name="home_invite_banner_title">Kluis gedeeld met u</string>
   <string name="home_invite_banner_subtitle">U wordt uitgenodigd tot een gedeelte kluis. Klik voor meer details.</string>
-  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s wil een item met u delen.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s wil een item delen met u.</string>
   <string name="home_item_invite_banner_subtitle">Tik voor details.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Wachtwoord kopiëren</string>
@@ -141,8 +141,8 @@
     <item quantity="other">%d items herstellen?</item>
   </plurals>
   <plurals name="alert_confirm_restore_items_message">
-    <item quantity="one">Weet u zeker dat u het weggegooide item wilt herstellen?</item>
-    <item quantity="other">Weet u zeker dat u de %d items die naar de prullenbak zijn verwijderd wilt herstellen?</item>
+    <item quantity="one">Weet u zeker dat u verwijderde item wilt herstellen?</item>
+    <item quantity="other">Weet u zeker dat u de %d verwijderde items wilt herstellen?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_title">
     <item quantity="one">%d item naar prullenbak verplaatsen?</item>
@@ -153,7 +153,7 @@
     <item quantity="other">Weet u zeker dat u %d items naar de prullenbak wilt verplaatsen?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
-    <item quantity="one">Permanent %d item verwijderen?</item>
+    <item quantity="one">%d item permanent verwijderen?</item>
     <item quantity="other">%d items permanent verwijderen?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_message">

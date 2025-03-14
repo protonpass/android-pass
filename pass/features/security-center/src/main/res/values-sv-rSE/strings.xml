@@ -33,7 +33,7 @@
   <string name="security_center_home_row_reused_passwords_title">Återanvända lösenord</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Generera unika lösenord</string>
   <string name="security_center_home_row_missing_tfa_title">Inaktiv 2FA</string>
-  <string name="security_center_home_row_missing_tfa_subtitle">Konfigurera 2FA för mer säkerhet</string>
+  <string name="security_center_home_row_missing_tfa_subtitle">Ställ in 2FA för mer säkerhet</string>
   <string name="security_center_home_row_excludes_items_title">Exkluderat från övervakning</string>
   <string name="security_center_home_row_excludes_items_subtitle">Dessa objekt är fortfarande i fara</string>
   <string name="security_center_get_breaches_error">Kunde inte ladda intrång</string>

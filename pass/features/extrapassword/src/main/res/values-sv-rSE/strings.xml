@@ -18,8 +18,8 @@
   -->
 <resources>
   <string name="configure_extra_password_continue">Fortsätt</string>
-  <string name="configure_extra_password_title">Ställ in extralösenord</string>
-  <string name="configure_extra_password_enter_extra_password">Extralösenord</string>
+  <string name="configure_extra_password_title">Ställ in extra lösenord</string>
+  <string name="configure_extra_password_enter_extra_password">Extra lösenord</string>
   <string name="configure_extra_password_repeat_extra_password">Upprepa lösenord</string>
   <string name="configure_extra_password_description">Du kommer att bli tillfrågad om detta lösenord vid inloggning och när du byter från en annan Proton-app till Proton Pass på webben.</string>
   <string name="configure_extra_password_warning">Varning: Du kommer inte att kunna komma åt ditt Pass-konto om du tappar bort detta lösenord.</string>

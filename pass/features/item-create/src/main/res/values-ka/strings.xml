@@ -47,9 +47,9 @@
   <string name="login_created">შესვლის ჩანაწერი შეიქმნა</string>
   <string name="bottomsheet_modify_alias_title">ფსევდონიმის ჩასწორება</string>
   <string name="bottomsheet_custom_field_type_text">ტექსტი</string>
-  <string name="bottomsheet_custom_field_type_text_content_description">ტექსტური ხელით მითითებული ველი</string>
   <string name="bottomsheet_custom_field_type_hidden">დამალული</string>
   <string name="bottomsheet_custom_field_type_totp">2FA საიდუმლო გასაღები (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_date">Date</string>
   <string name="bottomsheet_custom_field_option_edit">სახელის ჩასწორება</string>
   <string name="bottomsheet_custom_field_option_remove">ველის წაშლა</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">ხელით მითითებული ველის წაშლა</string>
@@ -57,6 +57,7 @@
   <string name="custom_field_hidden_placeholder">ფარული ტექსტის დამატება</string>
   <string name="custom_field_hidden_icon_content_description">დამალული ხელით მითითებული ველის ხატულა</string>
   <string name="custom_field_text_placeholder">ტექსტის დამატება</string>
+  <string name="custom_field_date_placeholder">Add date</string>
   <string name="custom_field_dialog_title">არასტანდარტული ველის სახელი</string>
   <string name="custom_field_dialog_body">დაარქვით თქვენს მიერ შექმნილ ველს სახელი</string>
   <string name="custom_field_dialog_placeholder">მაგ: მომხმარებლის ID, PIN-კოდი</string>
@@ -216,7 +217,7 @@
   <string name="banner_mailbox_button">საფოსტო ყუთის დამატება</string>
   <!-- Suffix -->
   <string name="suffix_subtitle_premium_domain">ფასიანი დომენი</string>
-  <string name="suffix_subtitle_public_domain">საჯარო დომენი</string>
+  <string name="suffix_subtitle_public_domain">საყოველთაო კუთვნილება</string>
   <string name="suffix_subtitle_private_domain">თქვენი დომენი</string>
   <!-- Templates -->
   <string name="template_item_api_credential">API-ის ავტორიზაციის დეტალები</string>
@@ -267,7 +268,6 @@
   <string name="template_ssh_key_field_note">შენიშვნა</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_ssid">SSID</string>
-  <string name="template_wifi_network_field_security_type">უსაფრთხოების ტიპი</string>
   <string name="template_wifi_network_field_note">შენიშვნა</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">ბანკის სახელი</string>
@@ -347,7 +347,9 @@
   <string name="create_custom_item_item_creation_success">მორგებული ელემენტი შეიქმნა</string>
   <string name="update_custom_item_item_creation_success">მორგებული ელემენტი განახლდა</string>
   <string name="update_custom_item_item_creation_error">მორგებული ელემენტის განახლება შეუძლებელია</string>
+  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">ელემენტების შექმნა შეუძლებელია</string>
   <string name="cannot_create_items_dialog_message">You don\'t have any vaults with editor or admin access. Try creating one in the main app or ask your organization\'s administrator for support.</string>
+  <string name="wifi_security_type_field_label">Security type</string>
 </resources>

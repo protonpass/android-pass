@@ -25,7 +25,7 @@
   <string name="account_settings_list_item_extra_password_active">Actif</string>
   <string name="account_settings_list_item_extra_password_description">Ce mot de passe supplémentaire vous sera demandé pour utiliser Pass. Il fonctionne comme un mot de passe supplémentaire en plus de votre mot de passe Proton.</string>
   <string name="account_settings_list_item_security_keys_hint_not_set">Non défini</string>
-  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s </string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
     <item quantity="one">%d clé de sécurité configurée</item>
     <item quantity="other">%d clés de sécurité configurées</item>

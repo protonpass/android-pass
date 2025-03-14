@@ -19,7 +19,7 @@
 <resources>
   <!--Create screen-->
   <string name="secure_links_create_title">Del sikkert link</string>
-  <string name="secure_links_create_row_expiration_title">Linket udløber efter</string>
+  <string name="secure_links_create_row_expiration_title">Link udløber efter</string>
   <string name="secure_links_create_row_expiration_options_one_hour">1 time</string>
   <string name="secure_links_create_row_expiration_options_one_day">1 dag</string>
   <string name="secure_links_create_row_expiration_options_seven_days">7 dage</string>

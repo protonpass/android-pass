@@ -47,9 +47,9 @@
   <string name="login_created">ログイン情報が作成されました</string>
   <string name="bottomsheet_modify_alias_title">エイリアスを変更</string>
   <string name="bottomsheet_custom_field_type_text">テキスト</string>
-  <string name="bottomsheet_custom_field_type_text_content_description">テキストのカスタムフィールド</string>
   <string name="bottomsheet_custom_field_type_hidden">非表示</string>
   <string name="bottomsheet_custom_field_type_totp">2FA 秘密鍵 (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_date">Date</string>
   <string name="bottomsheet_custom_field_option_edit">名前を編集</string>
   <string name="bottomsheet_custom_field_option_remove">フィールドを削除</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">カスタム フィールドを削除</string>
@@ -57,6 +57,7 @@
   <string name="custom_field_hidden_placeholder">非表示テキストを追加</string>
   <string name="custom_field_hidden_icon_content_description">非表示のカスタムフィールドアイコン</string>
   <string name="custom_field_text_placeholder">テキストを追加</string>
+  <string name="custom_field_date_placeholder">Add date</string>
   <string name="custom_field_dialog_title">カスタムフィールドの名前</string>
   <string name="custom_field_dialog_body">カスタムフィールドに名前を付ける</string>
   <string name="custom_field_dialog_placeholder">例: ユーザーID、PIN</string>
@@ -92,7 +93,7 @@
   <string name="alias_created">作成されたエイリアス</string>
   <string name="cannot_retrieve_alias_options">エイリアス オプションを取得できません</string>
   <string name="alias_mailbox_dialog_title">転送先</string>
-  <string name="sl_note_info_title">SimpleLoginノートとは？</string>
+  <string name="sl_note_info_title">SimpleLogin のメモとは？</string>
   <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">Passでは、アイテムノートはアイテム暗号化キーで暗号化され、ノートを閲覧することができるのはアクセス権を持っているユーザーだけです。</string>
   <string name="sl_note_info_message_part2">ProtonやSimpleLoginでさえ、閲覧することはできません。</string>
   <string name="sl_note_info_message_part3">SimpleLoginのメモはエイリアスアドレスと同じ場所に保存されており、保存時の暗号化によって保護されていますが、エンドツーエンドの暗号化はされていません。つまり、SimpleLoginのデータベースにアクセスできる人は誰でもそれを読むことができます。</string>
@@ -123,14 +124,14 @@
   <string name="identity_field_email_title">メール</string>
   <string name="identity_field_phone_number_title">電話番号</string>
   <string name="identity_field_organization_title">組織</string>
-  <string name="identity_field_street_address_title">番地、私書箱</string>
+  <string name="identity_field_street_address_title">番地住所、宅配ボックス</string>
   <string name="identity_field_zip_or_postal_code_title">郵便番号</string>
   <string name="identity_field_city_title">市</string>
   <string name="identity_field_state_or_province_title">都道府県</string>
   <string name="identity_field_country_or_region_title">国または地域</string>
   <string name="identity_field_social_security_number_title">社会保障番号</string>
   <string name="identity_field_passport_number_title">パスポート番号</string>
-  <string name="identity_field_license_number_title">ライセンスナンバー</string>
+  <string name="identity_field_license_number_title">免許証番号</string>
   <string name="identity_field_website_title">ウェブサイト</string>
   <string name="identity_field_xhandle_title">Xハンドル</string>
   <string name="identity_field_company_title">会社</string>
@@ -140,7 +141,7 @@
   <string name="identity_field_middle_name_title">ミドルネーム</string>
   <string name="identity_field_birthdate_title">生年月日</string>
   <string name="identity_field_gender_title">性別</string>
-  <string name="identity_field_floor_title">階数</string>
+  <string name="identity_field_floor_title">フロア</string>
   <string name="identity_field_county_title">国名</string>
   <string name="identity_field_linkedin_title">Linkedin</string>
   <string name="identity_field_reddit_title">Redditユーザーネーム</string>
@@ -155,7 +156,7 @@
   <string name="identity_add_field_last_name">姓</string>
   <string name="identity_add_field_birthdate">生年月日</string>
   <string name="identity_add_field_gender">性別</string>
-  <string name="identity_add_field_floor">階数</string>
+  <string name="identity_add_field_floor">フロア</string>
   <string name="identity_add_field_county">国名</string>
   <string name="identity_add_field_linkedin">Linkedin</string>
   <string name="identity_add_field_reddit">Redditユーザーネーム</string>
@@ -166,8 +167,8 @@
   <string name="identity_add_field_work_phone_number">職場の電話番号</string>
   <string name="identity_add_field_work_email_address">仕事用メールアドレス</string>
   <string name="identity_add_field_custom_field">カスタムフィールド</string>
-  <string name="identity_section_personal_details">個人の詳細</string>
-  <string name="identity_section_address_details">住所の詳細</string>
+  <string name="identity_section_personal_details">個人情報の詳細</string>
+  <string name="identity_section_address_details">アドレスの詳細</string>
   <string name="identity_section_contact_details">連絡先の詳細</string>
   <string name="identity_section_work_details">仕事の詳細</string>
   <string name="identity_bottomsheet_add_field">フィールドを追加</string>
@@ -267,7 +268,6 @@
   <string name="template_ssh_key_field_note">メモ</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_ssid">SSID</string>
-  <string name="template_wifi_network_field_security_type">セキュリティの種類</string>
   <string name="template_wifi_network_field_note">メモ</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">銀行名</string>
@@ -280,7 +280,7 @@
   <string name="template_bank_account_field_note">メモ</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">ウォレット名</string>
-  <string name="template_crypto_wallet_field_address">アドレス</string>
+  <string name="template_crypto_wallet_field_address">住所</string>
   <string name="template_crypto_wallet_field_private_key">秘密鍵</string>
   <string name="template_crypto_wallet_field_seed_phrase">シードフレーズ</string>
   <string name="template_crypto_wallet_field_network">ネットワーク</string>
@@ -347,7 +347,9 @@
   <string name="create_custom_item_item_creation_success">カスタムアイテムを作成しました</string>
   <string name="update_custom_item_item_creation_success">カスタムアイテムを更新しました</string>
   <string name="update_custom_item_item_creation_error">カスタムアイテムを更新できませんでした</string>
+  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">アイテムを作成できません</string>
   <string name="cannot_create_items_dialog_message">編集者または管理者権限を持つ保管庫がありません。メインアプリで作成するか、組織の管理者にサポートを依頼してください。</string>
+  <string name="wifi_security_type_field_label">Security type</string>
 </resources>

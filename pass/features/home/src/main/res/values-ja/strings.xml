@@ -47,14 +47,14 @@
   <string name="home_autofill_banner_text">ワンタップでユーザー名とパスワードが即座に入力されます。</string>
   <string name="home_autofill_banner_settings">自動入力を有効にする ›</string>
   <string name="home_trial_banner_title">無料トライアルをお楽しみください</string>
-  <string name="home_trial_banner_text">プレミアム機能を 7 日間無料でお試しいただけます。Proton Passの最初の週に限ります。</string>
+  <string name="home_trial_banner_text">期間限定で利用可能なすべての限定機能をチェックする</string>
   <string name="home_trial_banner_settings">もっと詳しく ›</string>
   <string name="home_drawer_all_items">すべてのアイテム</string>
   <string name="sl_sync_banner_title">SimpleLoginからエイリアスを同期</string>
   <plurals name="sl_sync_banner_text">
-    <item quantity="other">SimpleLoginにProton Passにはない%d個のエイリアスが存在しています。同期しますか？</item>
+    <item quantity="other">SimpleLogin に存在し Proton Pass に存在しないエイリアスが、%d 件あります。インポートしますか？</item>
   </plurals>
-  <string name="sl_sync_banner_settings">エイリアスを同期</string>
+  <string name="sl_sync_banner_settings">エイリアスを同期する ›</string>
   <string name="sl_sync_banner_note">一度同期すると、Passからエイリアスを削除すると、SimpleLoginからも削除されます</string>
   <string name="home_notification_permission_banner_title">重要な最新情報を入手する</string>
   <string name="home_notification_permission_banner_text">プッシュ通知を有効にすると、他の人があなたと保管庫を共有したときに通知されます。</string>
@@ -75,7 +75,7 @@
   <!-- Clipboard -->
   <string name="alias_copied_to_clipboard">コピーされたエイリアス</string>
   <string name="note_copied_to_clipboard">メモをコピーしました</string>
-  <string name="full_name_copied_to_clipboard">フルネームがコピーされました</string>
+  <string name="full_name_copied_to_clipboard">氏名をコピーしました</string>
   <string name="email_copied_to_clipboard">メールアドレスをコピーしました</string>
   <string name="username_copied_to_clipboard">ユーザー名をコピーしました</string>
   <string name="password_copied_to_clipboard">パスワードをコピーしました</string>
@@ -85,7 +85,7 @@
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">保管庫</string>
   <plurals name="vault_drawer_vaults_item_count">
-    <item quantity="other">%d個のアイテム</item>
+    <item quantity="other">%d 個のアイテム</item>
   </plurals>
   <string name="vault_drawer_create_vault">保管庫を作成</string>
   <string name="vault_drawer_item_trash">ごみ箱</string>
@@ -172,8 +172,8 @@
   <string name="home_snackbar_items_alias_disabled_success">エイリアスは正しく無効化されました</string>
   <string name="home_snackbar_items_alias_disabled_partial_success">一部のエイリアスを無効化する際にエラーが発生しました</string>
   <string name="home_snackbar_items_alias_disabled_error">エイリアスの無効化でエラーが発生しました</string>
-  <string name="bulk_action_unpin">ピンを解除</string>
-  <string name="bulk_action_pin">ピン</string>
+  <string name="bulk_action_unpin">ピン留めを解除</string>
+  <string name="bulk_action_pin">ピン留めする</string>
   <string name="bulk_action_enable_alias">エイリアスを有効化</string>
   <string name="bulk_action_disable_alias">エイリアスを無効化</string>
 </resources>

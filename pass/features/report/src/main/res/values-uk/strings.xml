@@ -32,7 +32,7 @@
   <string name="report_reason_sharing">Поширення</string>
   <string name="report_reason_sync">Синхронізувати</string>
   <string name="report_reason_passkeys">Ключі доступу</string>
-  <string name="report_reason_other">Інші</string>
+  <string name="report_reason_other">Інше</string>
   <string name="tips_title">Швидкі виправлення для %1$s</string>
   <string name="tips_subtitle">Ці поради допоможуть вам розв\'язати проблему швидше.</string>
   <string name="autofill_tip_restart">Спробуйте вимкнути та увімкнути службу автозаповнення.</string>

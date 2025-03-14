@@ -8,7 +8,7 @@
   <string name="alias_dialog_move_to_trash_content">Če vzdevek premaknete v smetnjak, bo prenehal posredovati e-pošto v vaš nabiralnik.</string>
   <string name="alias_dialog_move_to_trash_confirm">Potrdi</string>
   <string name="delete_alias_confirm">Delete it, I will never need it</string>
-  <string name="delete_alias_title">Delete %s</string>
+  <string name="delete_alias_title">Izbriši %s</string>
   <string name="delete_alias_enabled_subtitle">"Please note once deleted, the alias can't be restored. Maybe you want to disable the alias instead? "</string>
   <string name="delete_alias_disabled_subtitle">Please note once deleted, the alias can\'t be restored. The alias is already disabled and won’t forward emails to your mailbox.</string>
   <plurals name="bulk_delete_alias_title">

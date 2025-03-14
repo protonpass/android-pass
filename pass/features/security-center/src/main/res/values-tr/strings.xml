@@ -20,12 +20,12 @@
   <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Pass izleyicisi</string>
   <string name="security_center_home_dark_web_monitoring_title">Karanlık ağ izleme</string>
-  <string name="security_center_home_widget_breaches_title">Veriler ele geçirilmiş</string>
-  <string name="security_center_home_widget_breaches_subtitle">E-posta adresiniz en az 1 verilerin ele geçirilmesi olayında açığa çıkmış.</string>
+  <string name="security_center_home_widget_breaches_title">Veri sızıntısı bulundu</string>
+  <string name="security_center_home_widget_breaches_subtitle">E-posta adresiniz en az 1 veri sızıntısında açığa çıkmış.</string>
   <string name="security_center_home_widget_no_breaches_subtitle">E-posta adresiniz, parolanız veya diğer kişisel verileriniz açığa çıktığında bildirim alın.</string>
-  <string name="security_center_home_row_no_data_breaches_subtitle">Herhangi bir veri ele geçirilmemiş</string>
+  <string name="security_center_home_row_no_data_breaches_subtitle">Herhangi bir veri sızıntısı yok</string>
   <string name="security_center_home_row_data_breaches_title">Karanlık ağ uyarısı</string>
-  <string name="security_center_home_row_data_breaches_subtitle">Veriler ele geçirilmiş</string>
+  <string name="security_center_home_row_data_breaches_subtitle">Veri sızıntısı bulundu</string>
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
   <string name="security_center_home_row_sentinel_subtitle">Gelişmiş hesap koruma programı</string>
   <string name="security_center_home_row_insecure_passwords_title">Zayıf parolalar</string>
@@ -36,7 +36,7 @@
   <string name="security_center_home_row_missing_tfa_subtitle">Güvenliği artırmak için iki adımlı doğrulamayı açın</string>
   <string name="security_center_home_row_excludes_items_title">İzlemeye katılmayan</string>
   <string name="security_center_home_row_excludes_items_subtitle">Bu ögeler risk altında</string>
-  <string name="security_center_get_breaches_error">Verilerin ele geçirilmesi olayları yüklenemedi</string>
+  <string name="security_center_get_breaches_error">Veri sızıntıları yüklenemedi</string>
   <string name="security_center_home_section_password_health">Parola sağlığı</string>
   <!-- Sentinel bottom sheet -->
   <string name="security_center_sentinel_title">Proton Sentinel</string>
@@ -71,18 +71,18 @@
     <item quantity="other">%d oturum açma kaydında kullanılmış</item>
   </plurals>
   <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
-    <item quantity="one">%d verilerin ele geçirilmesi olayı bulundu</item>
-    <item quantity="other">%d verilerin ele geçirilmesi olayı bulundu</item>
+    <item quantity="one">%d veri sızıntısı bulundu</item>
+    <item quantity="other">%d veri sızıntısı bulundu</item>
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Özel e-posta adresleri yüklenirken sorun çıktı</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">E-posta adresleri alınamadı</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Kaldır</string>
-  <string name="security_center_dark_web_monitor_latest_breach_on">Verilerin son ele geçirilmesi: %s</string>
+  <string name="security_center_dark_web_monitor_latest_breach_on">Son veri sızıntısı: %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
-    <item quantity="one">%s verilerin ele geçirilmesi olayında bulundu</item>
-    <item quantity="other">%s verilerin ele geçirilmesi olayında bulundu</item>
+    <item quantity="one">%s veri sızıntısında bulundu</item>
+    <item quantity="other">%s veri sızıntısında bulundu</item>
   </plurals>
-  <string name="security_center_dark_web_monitor_found_in_breaches">Herhangi bir verilerin ele geçirilmesi olayı yok</string>
+  <string name="security_center_dark_web_monitor_found_in_breaches">Herhangi bir veri sızıntısı yok</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Proton adresleri</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email takma adları</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Proton adresleri alınırken sorun çıktı</string>
@@ -109,33 +109,33 @@
   <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Doğrulama kodu geçersiz</string>
   <string name="security_center_verify_email_snackbar_message_verification_error">E-posta doğrulanırken bir sorun çıktı. Lütfen bir süre sonra yeniden deneyin.</string>
   <!-- Verify email monitoring -->
-  <string name="security_center_verify_report_title_detected">Şunun verileri ele geçirilmiş</string>
-  <string name="security_center_verify_report_title_none">Şunun için herhangi bir verilerin ele geçirilme olayı yok</string>
+  <string name="security_center_verify_report_title_detected">Şunun için veri sızıntıları bulundu</string>
+  <string name="security_center_verify_report_title_none">Şunun için veri sızıntısı yok</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Şurada kullanılmış</string>
-  <string name="security_center_email_report_breaches_header">Verilerin ele geçirilmesi</string>
-  <string name="security_center_email_report_resolved_breaches_header">Çözümlenmiş verileri ele geçirme olayları</string>
+  <string name="security_center_email_report_breaches_header">Veri sızıntıları</string>
+  <string name="security_center_email_report_resolved_breaches_header">Çözümlenmiş veri sızıntılarıı</string>
   <string name="security_center_email_report_mark_as_resolved">Çözümlenmiş olarak işaretle</string>
-  <string name="security_center_email_report_snackbar_marked_as_resolved_success">Verileri ele geçirme olayı çözümlenmiş olarak işaretlendi</string>
+  <string name="security_center_email_report_snackbar_marked_as_resolved_success">Veri sızıntısı çözümlenmiş olarak işaretlendi</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_error">Çözümlenmiş olarak işaretlenemedi</string>
-  <string name="security_center_email_report_snackbar_get_breaches_error">Verilerin ele geçirilmesi olayları yüklenemedi</string>
-  <string name="security_center_email_report_options_menu">Verilerin ele geçirilmesi raporu ayarları menüsü</string>
+  <string name="security_center_email_report_snackbar_get_breaches_error">Veri sızıntıları yüklenemedi</string>
+  <string name="security_center_email_report_options_menu">Veri sızıntısı raporu ayarları menüsü</string>
   <!-- Breach report detail-->
   <string name="security_center_report_detail_your_exposed_information">Açığa çıkmış bilgileriniz</string>
-  <string name="security_center_report_detail_subtitle">Bilgileriniz __DATE__ tarihindeki verilerin ele geçirilmesi olayında görülmüş</string>
+  <string name="security_center_report_detail_subtitle">Bilgileriniz __DATE__ tarihindeki veri sızıntısında açığa çıkmış</string>
   <string name="security_center_report_detail_details">Ayrıntılar</string>
   <string name="security_center_report_detail_email_address">E-posta adresi</string>
   <string name="security_center_report_detail_password">Parola</string>
   <string name="security_center_report_detail_recommended_actions">Önerilen işlemler</string>
-  <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">Bilgiler %s üzerinden açığa çıkmış. Proton hesap bilgileriniz güvende ve şifrelenmiş olarak kalır.</string>
+  <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">Bilgiler %s üzerinden sızdırılmış. Proton hesap bilgileriniz güvende ve şifrelenmiş olarak kalır.</string>
   <string name="security_center_report_detail_learn_more">Ayrıntılı bilgi alın</string>
-  <string name="security_center_report_detail_snackbar_error">Verilerin ele geçirilmesi olayı ayrıntıları yüklenemedi</string>
+  <string name="security_center_report_detail_snackbar_error">Veri sızıntısı ayrıntıları yüklenemedi</string>
   <string name="security_center_report_detail_excluded_from_monitoring">İzlemeye katılmayan</string>
-  <string name="security_center_report_resolve_confirmation_dialog_title">Tüm verilerin ele geçirilmesi olayları çözümlenmiş olarak işaretlensin mi?</string>
-  <string name="security_center_report_resolve_confirmation_dialog_message">Tüm verilerin ele geçirilmesi olayları çözümlenmiş olarak işaretlenecek. Gelecekte ortaya çıkabilecek verilerin ele geçirilmesi olayları size bildirilecek.</string>
+  <string name="security_center_report_resolve_confirmation_dialog_title">Tüm veri sızıntıları çözümlenmiş olarak işaretlensin mi?</string>
+  <string name="security_center_report_resolve_confirmation_dialog_message">Tüm veri sızıntıları çözümlenmiş olarak işaretlenecek. Gelecekte olabilecek veri sızıntıları size bildirilecek.</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Proton adresleri</string>
-  <string name="security_center_proton_list_no_breaches_detected">Herhangi bir veri ele geçirilmemiş</string>
+  <string name="security_center_proton_list_no_breaches_detected">Herhangi bir veri sızıntısı yok</string>
   <string name="security_center_proton_list_excluded_from_monitoring">İzlemeye katılmayan</string>
   <string name="security_center_proton_list_error">Adresler yüklenemedi</string>
   <string name="security_center_proton_list_included_in_monitoring">Proton adreslerinizin sızdırılması durumunda bildirim almak için izlemeyi açın.</string>

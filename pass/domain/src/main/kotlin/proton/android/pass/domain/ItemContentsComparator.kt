@@ -112,6 +112,7 @@ private fun areWifiNetworkItemEqual(
 ) = a.title == b.title &&
     a.note == b.note &&
     a.ssid == b.ssid &&
+    a.wifiSecurityType == b.wifiSecurityType &&
     a.password.compareDecrypted(b.password, decrypt) == 0 &&
     a.customFieldList.compareDecrypted(b.customFieldList, decrypt) == 0 &&
     a.sectionContentList.compareSections(b.sectionContentList, decrypt) == 0

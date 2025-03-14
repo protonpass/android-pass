@@ -40,7 +40,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.pin
 import proton.android.pass.composecomponents.impl.bottomsheet.unpin
 import proton.android.pass.composecomponents.impl.bottomsheet.viewHistory
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
-import proton.android.pass.composecomponents.impl.item.icon.CustomIcon
+import proton.android.pass.composecomponents.impl.item.icon.CustomItemIcon
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -65,7 +65,7 @@ internal fun CustomItemOptionsBottomSheetContents(
     Column(modifier.bottomSheet()) {
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = itemUiModel.contents.title) },
-            leftIcon = { CustomIcon() }
+            leftIcon = { CustomItemIcon() }
         )
 
         buildList {

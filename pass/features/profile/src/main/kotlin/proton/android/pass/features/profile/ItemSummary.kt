@@ -45,7 +45,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
-import proton.android.pass.composecomponents.impl.item.icon.CustomIcon
+import proton.android.pass.composecomponents.impl.item.icon.CustomItemIcon
 import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.MFAIcon
@@ -130,7 +130,7 @@ private fun ItemTypeBox(
             SummaryItemType.Alias -> AliasIcon(shape = CircleShape)
             SummaryItemType.MFA -> MFAIcon(shape = CircleShape)
             SummaryItemType.Identity -> IdentityIcon(shape = CircleShape)
-            SummaryItemType.Custom -> CustomIcon(shape = CircleShape)
+            SummaryItemType.Custom -> CustomItemIcon(shape = CircleShape)
         }
         Spacer(modifier = Modifier.width(10.dp))
         Text(

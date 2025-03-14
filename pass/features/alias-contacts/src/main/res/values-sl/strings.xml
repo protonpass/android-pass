@@ -57,9 +57,9 @@
   <string name="snackbar_contact_block_error">Could not block contact</string>
   <string name="snackbar_contact_unblock_success">Contact unblocked</string>
   <string name="snackbar_contact_unblock_error">Could not unblock contact</string>
-  <string name="snackbar_delete_contact_success">Contact deleted</string>
+  <string name="snackbar_delete_contact_success">Stik izbrisan</string>
   <string name="snackbar_delete_contact_error">Could not delete contact</string>
-  <string name="snackbar_email_copied_success">Email copied to clipboard</string>
+  <string name="snackbar_email_copied_success">E-poštni naslov kopiran v odložišče</string>
   <string name="contact_option_send_email">Pošlji sporočilo</string>
   <string name="contact_option_copy_address">Copy forwarding address</string>
   <string name="contact_option_block_contact">Block contact</string>

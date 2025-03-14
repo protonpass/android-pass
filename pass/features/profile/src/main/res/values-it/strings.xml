@@ -54,16 +54,16 @@
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Il tuo dispositivo non supporta le passkey</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Verifica del supporto per le passkey non riuscita</string>
   <plurals name="profile_after_days">
-    <item quantity="one">%d giorno</item>
-    <item quantity="other">%d giorni</item>
+    <item quantity="one">Dopo %d giorno</item>
+    <item quantity="other">Dopo %d giorni</item>
   </plurals>
   <plurals name="profile_after_minutes">
-    <item quantity="one">%d minuto</item>
-    <item quantity="other">%d minuti</item>
+    <item quantity="one">Dopo %d minuto</item>
+    <item quantity="other">Dopo %d minuti</item>
   </plurals>
   <plurals name="profile_after_hours">
-    <item quantity="one">%d ora</item>
-    <item quantity="other">%d ore</item>
+    <item quantity="one">Dopo %d ora</item>
+    <item quantity="other">Dopo %d ore</item>
   </plurals>
   <string name="profile_less_than_a_minute">Meno di un minuto</string>
   <string name="account_switcher_manage_account">Gestisci l\'account</string>
@@ -83,5 +83,5 @@
   <string name="account_switch_confirmation_title">Gestisci l\'account</string>
   <string name="account_switch_confirmation_confirm">Passa e gestisci</string>
   <string name="profile_storage_data_title">Archiviazione</string>
-  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s / %2$s</string>
+  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s di %2$s</string>
 </resources>

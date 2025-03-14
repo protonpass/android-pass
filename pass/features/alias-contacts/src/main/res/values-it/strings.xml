@@ -34,15 +34,15 @@
   <string name="no_activity_contact">Nessuna attività negli ultimi 14 giorni.</string>
   <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">negli ultimi 14 giorni.</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d inoltrato</item>
+    <item quantity="one">%1$d inoltrati</item>
     <item quantity="other">%1$d inoltrati</item>
   </plurals>
   <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d inviato</item>
+    <item quantity="one">%1$d inviati</item>
     <item quantity="other">%1$d inviati</item>
   </plurals>
   <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d bloccato</item>
+    <item quantity="one">%1$d bloccati</item>
     <item quantity="other">%1$d bloccati</item>
   </plurals>
   <string name="blocked_addresses_subtitle">Indirizzi bloccati</string>

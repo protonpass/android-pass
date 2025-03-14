@@ -73,8 +73,8 @@
   <string name="move_to_trash_item_detail_bottom_sheet">ごみ箱に移動</string>
   <string name="migrate_item_detail_bottom_sheet">別の保管庫に移動</string>
   <!-- More info -->
-  <string name="date_today">今日%s</string>
-  <string name="date_yesterday">昨日%s</string>
+  <string name="date_today">今日 %s</string>
+  <string name="date_yesterday">昨日 %s</string>
   <!--
     Pattern used when displaying a date in the same year as we are.
     It would translate to

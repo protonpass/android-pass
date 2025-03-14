@@ -21,7 +21,7 @@
   <string name="upsell_dark_web_monitoring_subtitle">다크 웹 모니터링은 유료 요금제에서 이용할 수 있습니다. 업그레이드하는 즉시 접근할 수 있습니다.</string>
   <string name="upsell_missing_2fa_subtitle">온라인 신원 보호를 위해 2단계 인증 요소를 추가할 수 있는 사이트 목록을 확인하세요. 즉각적인 접근을 위해 업그레이드하세요.</string>
   <string name="upsell_sentinel_subtitle">고급 보안 기능과 상세한 로그를 잠금 해제하여 온라인 신원을 보호하세요.</string>
-  <string name="upsell_paid_feature_file_attachments">파일 첨부</string>
+  <string name="upsell_paid_feature_file_attachments">첨부 파일</string>
   <string name="upsell_paid_feature_dark_web_monitoring">다크 웹 모니터링</string>
   <string name="upsell_paid_feature_sentinel">Proton Sentinel</string>
   <string name="upsell_paid_feature_authenticator">2단계 인증기 내장</string>
@@ -35,7 +35,7 @@
   <string name="upsell_paid_feature_advance_alias_management_subtitle">고급 별칭 관리가 유료 요금제에서 지원됩니다. 업그레이드하여 즉시 이용하세요.</string>
   <string name="upsell_paid_feature_item_sharing_title">빠르게 항목 공유하기</string>
   <string name="upsell_paid_feature_item_sharing_subtitle">지금 바로 업그레이드해서 다른 Pass 유저와 항목을 공유하세요. 다른 프리미엄 기능도 있습니다:</string>
-  <string name="upsell_paid_feature_file_attachments_title">파일 첨부</string>
+  <string name="upsell_paid_feature_file_attachments_title">첨부 파일</string>
   <string name="upsell_button_upgrade">Pass Plus 구매하기</string>
   <string name="upsell_button_upgrade_essentials">Pass Business 구매</string>
 </resources>

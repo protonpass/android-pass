@@ -9,13 +9,13 @@
     <item quantity="one">%s znak</item>
     <item quantity="few">%s znaky</item>
     <item quantity="many">%s znakov</item>
-    <item quantity="other">%s znakov</item>
+    <item quantity="other">%s znaky</item>
   </plurals>
   <plurals name="word_count">
     <item quantity="one">%s slovo</item>
     <item quantity="few">%s slová</item>
-    <item quantity="many">%s slov</item>
-    <item quantity="other">%s slov</item>
+    <item quantity="many">%s slová</item>
+    <item quantity="other">%s slová</item>
   </plurals>
   <string name="word_separator">Oddeľovač slov</string>
   <string name="bottomsheet_option_capital_letters">Veľké písmená (A-Z)</string>

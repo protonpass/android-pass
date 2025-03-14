@@ -34,7 +34,7 @@
   <string name="bottomsheet_copy_item_note">Sao chép ghi chú</string>
   <string name="bottomsheet_delete_permanently">Xóa vĩnh viễn</string>
   <string name="bottomsheet_restore">Khôi phục</string>
-  <string name="bottomsheet_leave">Leave</string>
+  <string name="bottomsheet_leave">Thoát</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Mở menu hành động mục</string>
   <string name="action_upgrade_now">Nâng cấp ngay</string>
@@ -124,7 +124,7 @@
     Pattern used when displaying a date in the same year as we are.
     It would translate to 12 Feb 12:34
     -->
-  <string name="date_full_date_format_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale"/>
+  <string name="date_full_date_format_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL HH:mm</string>
   <!--
     Pattern used when displaying a date including the year.
     It would translate to
@@ -135,7 +135,7 @@
    Pattern used when displaying a date including the year.
    It would translate to 12 Feb 2023 12:34
    -->
-  <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale"/>
+  <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Địa chỉ bí danh</string>
   <string name="item_details_alias_section_alias_disabled_title">Địa chỉ bí danh (đã tắt)</string>
@@ -196,7 +196,8 @@
   <string name="item_details_shared_section_more_info_item_id">Item ID</string>
   <string name="item_details_shared_section_more_info_share_id">Vault ID</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
-  <string name="item_details_wifi_network_label_password">Password</string>
+  <string name="item_details_wifi_network_label_password">Mật khẩu</string>
+  <string name="item_details_wifi_network_label_security">Security</string>
   <string name="item_details_ssh_key_label_public_key">Public key</string>
   <string name="item_details_ssh_key_label_private_key">Private key</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Phiên bản ứng dụng nay không còn được hỗ trợ, vui lòng cập nhật.</string>
@@ -260,9 +261,9 @@
   <plurals name="simple_login_widget_pending_aliases_message">
     <item quantity="other">Chúng tôi nhận thấy bạn có %d bí danh trong SimpleLogin nhưng chưa có trong Proton Pass. Bạn muốn nhập chúng vào không?</item>
   </plurals>
-  <string name="simple_login_widget_action"/>
+  <string name="simple_login_widget_action">Đồng bộ bí danh</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_not_received">Chưa nhận được mã?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Vui lòng kiểm tra trong thư mục Spam của bạn để tìm email có tên “%s“</string>
   <string name="verification_code_suggestion_subject_new_email_address">Vui lòng xác minh địa chỉ email của bạn cho Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Vui lòng xác minh hộp thư của bạn</string>
@@ -277,16 +278,17 @@
   <string name="attachment_no_files">Tải lên tệp từ thiết bị của bạn</string>
   <string name="attachment_add_file">Đính kèm một tệp</string>
   <string name="attachment_row_upload_failed">Upload failed</string>
-  <string name="attachment_row_retry">Retry</string>
+  <string name="attachment_row_retry">Thử lại</string>
   <string name="options_menu_content_description">Options menu</string>
   <!-- Items -->
   <plurals name="shared_items_count">
     <item quantity="other">%d shared items</item>
   </plurals>
   <plurals name="users_count">
-    <item quantity="other">%d users</item>
+    <item quantity="other">Người dùng %d</item>
   </plurals>
   <plurals name="members_count">
-    <item quantity="other">%d members</item>
+    <item quantity="other">%d thành viên</item>
   </plurals>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
 </resources>

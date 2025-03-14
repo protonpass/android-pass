@@ -19,8 +19,8 @@
   <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Create items with fully customized fields</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Сгенерировать надежный пароль</string>
   <!-- Create Login -->
-  <string name="field_email_title">Адрес электронной почты</string>
-  <string name="field_email_hint">Добавить адрес эл. почты</string>
+  <string name="field_email_title">Адрес эл. почты</string>
+  <string name="field_email_hint">Добавить адрес электронной почты</string>
   <string name="field_email_error">Недействительный адрес электронной почты</string>
   <string name="field_email_tooltip_title">Добавить поле имени пользователя</string>
   <string name="field_email_tooltip_description">Коснитесь здесь, чтобы добавить поле для имени пользователя.</string>
@@ -35,7 +35,7 @@
   <string name="field_website_address_hint">https://</string>
   <string name="field_website_add_another">Добавить</string>
   <string name="sticky_button_generate_password" comment="Sticky button on the Create login screen. When tapped, the Generate password bottomsheet is shown">Сгенерировать новый пароль</string>
-  <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">Hide-my-email</string>
+  <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">Скрыть мою почту</string>
   <string name="sticky_button_use_account_email" comment="Sticky button on the Create login screen. When tapped, the current user email is autofilled">Использовать %s</string>
   <string name="create_login_item_creation_error">Не могу создать логин</string>
   <string name="create_login_item_update_error">Не могу обновить логин</string>
@@ -47,9 +47,9 @@
   <string name="login_created">Логин создан</string>
   <string name="bottomsheet_modify_alias_title">Изменить псевдоним</string>
   <string name="bottomsheet_custom_field_type_text">Текст</string>
-  <string name="bottomsheet_custom_field_type_text_content_description">Текстовое настраиваемое поле</string>
   <string name="bottomsheet_custom_field_type_hidden">Скрыто</string>
   <string name="bottomsheet_custom_field_type_totp">Секретный ключ двухфакторной аутентификации (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_date">Date</string>
   <string name="bottomsheet_custom_field_option_edit">Изменить имя</string>
   <string name="bottomsheet_custom_field_option_remove">Удалить поле</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Удалить пользовательское поле</string>
@@ -57,11 +57,12 @@
   <string name="custom_field_hidden_placeholder">Добавить скрытый текст</string>
   <string name="custom_field_hidden_icon_content_description">Иконка скрытого настраиваемого поля</string>
   <string name="custom_field_text_placeholder">Добавить текст</string>
+  <string name="custom_field_date_placeholder">Add date</string>
   <string name="custom_field_dialog_title">Название настраиваемого поля</string>
   <string name="custom_field_dialog_body">Дайте имя настраиваемому полю</string>
   <string name="custom_field_dialog_placeholder">Например, Идентификатор пользователя или PIN</string>
   <string name="custom_section_dialog_title">Ввести заголовок раздела</string>
-  <string name="custom_section_dialog_placeholder">Заголовок</string>
+  <string name="custom_section_dialog_placeholder">Должность</string>
   <string name="custom_field_options_content_description">Варианты для настраиваемого поля</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">Не удалось создать заметку</string>
@@ -201,7 +202,7 @@
   <string name="remove_passkey_dialog_title">Удалить этот ключ доступа?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Вы собираетесь удалить ключ доступа для пользователя \'%1$s\' для \'%2$s\'. Вы уверены?</string>
   <!-- Attachments -->
-  <string name="banner_title_attachments">Attachments</string>
+  <string name="banner_title_attachments">Вложения</string>
   <string name="banner_body_attachments">You can attach files to items for a better organization</string>
   <string name="open_with">Открыть с помощью:</string>
   <string name="open_attachments_error">Could not open attachment</string>
@@ -237,62 +238,61 @@
   <string name="template_api_credential_field_api_key">API Key</string>
   <string name="template_api_credential_field_secret">Secret</string>
   <string name="template_api_credential_field_expiry_date">Expiry Date</string>
-  <string name="template_api_credential_field_permissions">Permissions</string>
-  <string name="template_api_credential_field_note">Note</string>
+  <string name="template_api_credential_field_permissions">Разрешения</string>
+  <string name="template_api_credential_field_note">Заметка</string>
   <!-- Database Fields -->
-  <string name="template_database_field_host">Host</string>
-  <string name="template_database_field_port">Port</string>
-  <string name="template_database_field_username">Username</string>
-  <string name="template_database_field_password">Password</string>
+  <string name="template_database_field_host">Хост</string>
+  <string name="template_database_field_port">Порт</string>
+  <string name="template_database_field_username">Имя пользователя</string>
+  <string name="template_database_field_password">Пароль</string>
   <string name="template_database_field_database_type">Database Type</string>
-  <string name="template_database_field_note">Note</string>
+  <string name="template_database_field_note">Заметка</string>
   <!-- Server Fields -->
-  <string name="template_server_field_ip_address">IP Address</string>
+  <string name="template_server_field_ip_address">IP-адрес</string>
   <string name="template_server_field_hostname">Hostname</string>
   <string name="template_server_field_os">Operating System</string>
-  <string name="template_server_field_username">Username</string>
-  <string name="template_server_field_password">Password</string>
-  <string name="template_server_field_note">Note</string>
+  <string name="template_server_field_username">Имя пользователя</string>
+  <string name="template_server_field_password">Пароль</string>
+  <string name="template_server_field_note">Заметка</string>
   <!-- Software License Fields -->
   <string name="template_software_license_field_license_key">License Key</string>
-  <string name="template_software_license_field_product">Product</string>
+  <string name="template_software_license_field_product">Продукт</string>
   <string name="template_software_license_field_expiry_date">Expiry Date</string>
-  <string name="template_software_license_field_owner">Owner</string>
-  <string name="template_software_license_field_note">Note</string>
+  <string name="template_software_license_field_owner">Владелец</string>
+  <string name="template_software_license_field_note">Заметка</string>
   <!-- SSH Key Fields -->
   <string name="template_ssh_key_field_private_key">Private Key</string>
   <string name="template_ssh_key_field_public_key">Public Key</string>
-  <string name="template_ssh_key_field_username">Username</string>
-  <string name="template_ssh_key_field_host">Host</string>
-  <string name="template_ssh_key_field_note">Note</string>
+  <string name="template_ssh_key_field_username">Имя пользователя</string>
+  <string name="template_ssh_key_field_host">Хост</string>
+  <string name="template_ssh_key_field_note">Заметка</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_ssid">SSID</string>
-  <string name="template_wifi_network_field_security_type">Security Type</string>
-  <string name="template_wifi_network_field_note">Note</string>
+  <string name="template_wifi_network_field_note">Заметка</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Bank Name</string>
   <string name="template_bank_account_field_account_number">Account Number</string>
   <string name="template_bank_account_field_routing_number">Routing Number</string>
-  <string name="template_bank_account_field_account_type">Account Type</string>
+  <string name="template_bank_account_field_account_type">Тип аккаунта</string>
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
   <string name="template_bank_account_field_holder_name">Holder Name</string>
-  <string name="template_bank_account_field_note">Note</string>
+  <string name="template_bank_account_field_note">Заметка</string>
   <!-- Crypto Wallet Fields -->
-  <string name="template_crypto_wallet_field_wallet_name">Wallet Name</string>
-  <string name="template_crypto_wallet_field_address">Address</string>
+  <string name="template_crypto_wallet_field_wallet_name">Название кошелька</string>
+  <string name="template_crypto_wallet_field_address">Адрес</string>
   <string name="template_crypto_wallet_field_private_key">Private Key</string>
   <string name="template_crypto_wallet_field_seed_phrase">Seed Phrase</string>
-  <string name="template_crypto_wallet_field_network">Network</string>
-  <string name="template_crypto_wallet_field_note">Note</string>
+  <string name="template_crypto_wallet_field_network">Сеть</string>
+  <string name="template_crypto_wallet_field_note">Заметка</string>
   <!-- Driver License Fields -->
-  <string name="template_driver_license_field_full_name">Full Name</string>
+  <string name="template_driver_license_field_full_name">Полное имя</string>
   <string name="template_driver_license_field_license_number">License Number</string>
   <string name="template_driver_license_field_issuing_state_country">Issuing State/Country</string>
   <string name="template_driver_license_field_expiry_date">Expiry Date</string>
   <string name="template_driver_license_field_date_of_birth">Date of Birth</string>
   <string name="template_driver_license_field_class">Class</string>
-  <string name="template_driver_license_field_note">Note</string>
+  <string name="template_driver_license_field_note">Заметка</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Patient Name</string>
   <string name="template_medical_record_field_record_number">Record Number</string>
@@ -300,34 +300,34 @@
   <string name="template_medical_record_field_medications">Medications</string>
   <string name="template_medical_record_field_doctor">Doctor</string>
   <string name="template_medical_record_field_hospital">Hospital</string>
-  <string name="template_medical_record_field_note">Note</string>
+  <string name="template_medical_record_field_note">Заметка</string>
   <!-- Membership Fields -->
   <string name="template_membership_field_organization_name">Organization Name</string>
   <string name="template_membership_field_membership_id">Membership ID</string>
   <string name="template_membership_field_member_name">Member Name</string>
   <string name="template_membership_field_expiry_date">Expiry Date</string>
   <string name="template_membership_field_tier_level">Tier/Level</string>
-  <string name="template_membership_field_note">Note</string>
+  <string name="template_membership_field_note">Заметка</string>
   <!-- Passport Fields -->
-  <string name="template_passport_field_full_name">Full Name</string>
+  <string name="template_passport_field_full_name">Полное имя</string>
   <string name="template_passport_field_passport_number">Passport Number</string>
-  <string name="template_passport_field_country">Country</string>
+  <string name="template_passport_field_country">Страна</string>
   <string name="template_passport_field_expiry_date">Expiry Date</string>
   <string name="template_passport_field_date_of_birth">Date of Birth</string>
   <string name="template_passport_field_issuing_authority">Issuing Authority</string>
-  <string name="template_passport_field_note">Note</string>
+  <string name="template_passport_field_note">Заметка</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Program Name</string>
   <string name="template_reward_program_field_member_id">Member ID</string>
   <string name="template_reward_program_field_points_balance">Points Balance</string>
   <string name="template_reward_program_field_expiry_date">Expiry Date</string>
   <string name="template_reward_program_field_tier_status">Tier/Status</string>
-  <string name="template_reward_program_field_note">Note</string>
+  <string name="template_reward_program_field_note">Заметка</string>
   <!-- Social Security Number Fields -->
-  <string name="template_social_security_number_field_full_name">Full Name</string>
-  <string name="template_social_security_number_field_ssn">Social Security Number</string>
+  <string name="template_social_security_number_field_full_name">Полное имя</string>
+  <string name="template_social_security_number_field_ssn">Номер социального страхования</string>
   <string name="template_social_security_number_field_issuing_country">Issuing Country</string>
-  <string name="template_social_security_number_field_note">Note</string>
+  <string name="template_social_security_number_field_note">Заметка</string>
   <string name="template_header_technology">Технологии</string>
   <string name="template_header_finance">Финансы</string>
   <string name="template_header_personal">Финансы</string>
@@ -347,7 +347,9 @@
   <string name="create_custom_item_item_creation_success">Пользовательский элемент создан</string>
   <string name="update_custom_item_item_creation_success">Пользовательский элемент обновлен</string>
   <string name="update_custom_item_item_creation_error">Не удалось обновить пользовательский элемент</string>
+  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Cannot create items</string>
   <string name="cannot_create_items_dialog_message">You don\'t have any vaults with editor or admin access. Try creating one in the main app or ask your organization\'s administrator for support.</string>
+  <string name="wifi_security_type_field_label">Security type</string>
 </resources>

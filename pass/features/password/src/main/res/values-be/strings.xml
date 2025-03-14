@@ -7,15 +7,15 @@
   <string name="special_characters">Спецыяльныя сімвалы (!&amp;*)</string>
   <plurals name="character_count">
     <item quantity="one">%s сімвал</item>
-    <item quantity="few">%s сімвалы</item>
-    <item quantity="many">%s сімвалаў</item>
-    <item quantity="other">%s сімвалаў</item>
+    <item quantity="few">%s сімвалы(аў)</item>
+    <item quantity="many">%s сімвалы(аў)</item>
+    <item quantity="other">%s сімвалы(аў)</item>
   </plurals>
   <plurals name="word_count">
     <item quantity="one">%s слова</item>
     <item quantity="few">%s словы</item>
-    <item quantity="many">%s слоў</item>
-    <item quantity="other">%s слоў</item>
+    <item quantity="many">%s словы</item>
+    <item quantity="other">%s словы</item>
   </plurals>
   <string name="word_separator">Раздзяляльнік слоў</string>
   <string name="bottomsheet_option_capital_letters">Вялікія літары (A-Z)</string>

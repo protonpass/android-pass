@@ -199,6 +199,7 @@
   <string name="item_details_shared_section_more_info_share_id">ID de la caja fuerte</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
   <string name="item_details_wifi_network_label_password">Contraseña</string>
+  <string name="item_details_wifi_network_label_security">Seguridad</string>
   <string name="item_details_ssh_key_label_public_key">Clave pública</string>
   <string name="item_details_ssh_key_label_private_key">Clave privada</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">La versión de la aplicación ya no es compatible. Actualiza tu aplicación.</string>
@@ -253,7 +254,7 @@
   <string name="snack_bar_message_item_migration_error">Se ha producido un error al migrar este elemento.</string>
   <string name="snack_bar_message_item_monitor_excluded_success">El elemento ha sido excluido del monitoreo.</string>
   <string name="snack_bar_message_item_monitor_excluded_error">Se ha producido un error al excluir un elemento del monitoreo.</string>
-  <string name="snack_bar_message_item_monitor_included_success">El elemento ha sido incluido en el monitoreo.</string>
+  <string name="snack_bar_message_item_monitor_included_success">Se ha incluido el elemento en el monitoreo.</string>
   <string name="snack_bar_message_item_monitor_included_error">Se ha producido un error al incluir un elemento en el monitoreo.</string>
   <string name="snack_bar_message_item_pinned_success">Se ha anclado el elemento.</string>
   <string name="snack_bar_message_item_pinned_error">Se ha producido un error al anclar este elemento.</string>
@@ -304,4 +305,5 @@
     <item quantity="one">%d miembro</item>
     <item quantity="other">%d miembros</item>
   </plurals>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd MMM aaaa</string>
 </resources>

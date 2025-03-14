@@ -9,7 +9,7 @@
   <string name="profile_option_import_export">Importera/exportera</string>
   <string name="profile_option_tutorial">Hur man använder Proton Pass</string>
   <string name="profile_option_rating">Betygsätt app</string>
-  <string name="profile_option_autofill">Autofyll</string>
+  <string name="profile_option_autofill">Fyll automatiskt</string>
   <string name="profile_option_autofill_subtitle">Fyll i dina användarnamn och lösenord automatiskt.</string>
   <string name="profile_option_secure_links">Säkra länkar</string>
   <string name="profile_option_alias_management">Aliashantering</string>

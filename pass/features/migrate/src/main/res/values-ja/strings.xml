@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <plurals name="migrate_item_confirm_title_bottom_sheet">
-    <item quantity="other">%d 件のアイテムを次の保管庫に移動しますか？</item>
+    <item quantity="other">%d件のアイテムを次の保管庫に移動しますか？</item>
   </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">すべてのアイテムを次の保管庫に移動しますか？</string>
   <string name="migrate_item_confirm_confirm_button">移動</string>

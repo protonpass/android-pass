@@ -24,14 +24,14 @@
   <string name="sharing_can_edit_description">Voi luoda, muokata, poistaa ja viedä holvin kohteita.</string>
   <string name="sharing_can_manage_description">Voi myöntää ja mitätöidä holvin käyttöoikeuksia.</string>
   <plurals name="sharing_item_count">
-    <item quantity="one">%d kohde</item>
+    <item quantity="one">%d kohdetta</item>
     <item quantity="other">%d kohdetta</item>
   </plurals>
   <plurals name="sharing_member_count">
     <item quantity="one">%d jäsen</item>
     <item quantity="other">%d jäsentä</item>
   </plurals>
-  <string name="sharing_member_count_header">Jäsentä</string>
+  <string name="sharing_member_count_header">Jäsenet</string>
   <string name="shared_via_title">Jaettu käyttäen</string>
   <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Kohteen jakaminen: %s</string>
   <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Holvin jakaminen: %s</string>
@@ -78,7 +78,7 @@
     <item quantity="other">%d kutsua jäljellä</item>
   </plurals>
   <plurals name="share_manage_vault_item_count">
-    <item quantity="one">%d kohde</item>
+    <item quantity="one">%d kohdetta</item>
     <item quantity="other">%d kohdetta</item>
   </plurals>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Kutsu on lähetetty</string>

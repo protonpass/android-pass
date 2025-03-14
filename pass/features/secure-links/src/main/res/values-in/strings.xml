@@ -19,7 +19,7 @@
 <resources>
   <!--Create screen-->
   <string name="secure_links_create_title">Bagikan tautan aman</string>
-  <string name="secure_links_create_row_expiration_title">Tautan kedaluwarsa setelah</string>
+  <string name="secure_links_create_row_expiration_title">Tautan akan kedaluwarsa setelah</string>
   <string name="secure_links_create_row_expiration_options_one_hour">1 jam</string>
   <string name="secure_links_create_row_expiration_options_one_day">1 hari</string>
   <string name="secure_links_create_row_expiration_options_seven_days">7 hari</string>

@@ -110,8 +110,8 @@
   <string name="field_detail_display_name_title">Nom d\'affichage</string>
   <string name="display_name_section_description">Il s\'agit du nom d\'affichage lors de l\'envoi d\'un message depuis cet alias.</string>
   <plurals name="alias_forwards_count">
-    <item quantity="one">%1$s transfert</item>
-    <item quantity="other">%1$s transferts</item>
+    <item quantity="one">%1$s transféré</item>
+    <item quantity="other">%1$s transférés</item>
   </plurals>
   <plurals name="alias_replies_count">
     <item quantity="one">%1$s réponse</item>

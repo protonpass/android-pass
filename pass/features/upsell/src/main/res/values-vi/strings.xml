@@ -25,7 +25,7 @@
   <string name="upsell_paid_feature_dark_web_monitoring">Theo dõi Dark Web</string>
   <string name="upsell_paid_feature_sentinel">Proton Sentinel</string>
   <string name="upsell_paid_feature_authenticator">Trình xác thực 2 bước được tích hợp</string>
-  <string name="upsell_paid_feature_unlimited_aliases">Không giới hạn bí danh Hide-my-email</string>
+  <string name="upsell_paid_feature_unlimited_aliases">Không giới hạn bí danh hide-my-email</string>
   <string name="upsell_paid_feature_vault_sharing">Chia sẻ kho lưu trữ (tối đa 10 người dùng)</string>
   <string name="upsell_paid_feature_secure_links">Các liên kết bảo mật</string>
   <string name="upsell_paid_feature_advance_alias_management">Quản lý bí danh nâng cao</string>

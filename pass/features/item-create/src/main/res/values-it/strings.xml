@@ -47,9 +47,9 @@
   <string name="login_created">Login creato</string>
   <string name="bottomsheet_modify_alias_title">Modifica l\'alias</string>
   <string name="bottomsheet_custom_field_type_text">Testo</string>
-  <string name="bottomsheet_custom_field_type_text_content_description">Testo campo personalizzato</string>
   <string name="bottomsheet_custom_field_type_hidden">Nascosto</string>
   <string name="bottomsheet_custom_field_type_totp">Chiave segreta 2FA (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_date">Data</string>
   <string name="bottomsheet_custom_field_option_edit">Modifica il nome</string>
   <string name="bottomsheet_custom_field_option_remove">Rimuovi il campo</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Rimuovi il campo personalizzato</string>
@@ -57,6 +57,7 @@
   <string name="custom_field_hidden_placeholder">Aggiungi testo nascosto</string>
   <string name="custom_field_hidden_icon_content_description">Icona campo personalizzato nascosto</string>
   <string name="custom_field_text_placeholder">Aggiungi testo</string>
+  <string name="custom_field_date_placeholder">Aggiungi data</string>
   <string name="custom_field_dialog_title">Nome del campo personalizzato</string>
   <string name="custom_field_dialog_body">Aggiungi un nome al campo personalizzato</string>
   <string name="custom_field_dialog_placeholder">Es. ID utente o PIN</string>
@@ -267,7 +268,6 @@
   <string name="template_ssh_key_field_note">Nota</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_ssid">SSID</string>
-  <string name="template_wifi_network_field_security_type">Tipo di sicurezza</string>
   <string name="template_wifi_network_field_note">Nota</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Nome banca</string>
@@ -347,7 +347,9 @@
   <string name="create_custom_item_item_creation_success">Elemento personalizzato creato</string>
   <string name="update_custom_item_item_creation_success">Elemento personalizzato aggiornato</string>
   <string name="update_custom_item_item_creation_error">Impossibile aggiornare l\'elemento personalizzato</string>
+  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">gg/MMMM/yyyy</string>
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Impossibile creare elementi</string>
   <string name="cannot_create_items_dialog_message">Non hai alcuna cassaforte con accesso da editor o amministratore. Prova a crearne una nell\'app principale o chiedi supporto all\'amministratore della tua organizzazione.</string>
+  <string name="wifi_security_type_field_label">Sicurezza Wi-Fi</string>
 </resources>

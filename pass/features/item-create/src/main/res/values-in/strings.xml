@@ -35,7 +35,7 @@
   <string name="field_website_address_hint">https://</string>
   <string name="field_website_add_another">Tambah</string>
   <string name="sticky_button_generate_password" comment="Sticky button on the Create login screen. When tapped, the Generate password bottomsheet is shown">Hasilkan kata sandi baru</string>
-  <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">Hide my email</string>
+  <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">Hide-my-email</string>
   <string name="sticky_button_use_account_email" comment="Sticky button on the Create login screen. When tapped, the current user email is autofilled">Gunakan %s</string>
   <string name="create_login_item_creation_error">Entri masuk tidak dapat dihasilkan</string>
   <string name="create_login_item_update_error">Entri masuk tidak dapat diperbarui</string>
@@ -47,9 +47,9 @@
   <string name="login_created">Entri masuk dihasilkan</string>
   <string name="bottomsheet_modify_alias_title">Sesuaikan alias</string>
   <string name="bottomsheet_custom_field_type_text">Teks</string>
-  <string name="bottomsheet_custom_field_type_text_content_description">Kolom khusus teks</string>
   <string name="bottomsheet_custom_field_type_hidden">Tersembunyi</string>
   <string name="bottomsheet_custom_field_type_totp">Kunci rahasia 2FA (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_date">Tanggal</string>
   <string name="bottomsheet_custom_field_option_edit">Sunting nama</string>
   <string name="bottomsheet_custom_field_option_remove">Hapus kolom</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Hapus kolom khusus</string>
@@ -57,6 +57,7 @@
   <string name="custom_field_hidden_placeholder">Tambahkan teks tersembunyi</string>
   <string name="custom_field_hidden_icon_content_description">Ikon kolom khusus tersembunyi</string>
   <string name="custom_field_text_placeholder">Tambahkan teks</string>
+  <string name="custom_field_date_placeholder">Tambah tanggal</string>
   <string name="custom_field_dialog_title">Nama kolom khusus</string>
   <string name="custom_field_dialog_body">Beri nama pada kolom khusus Anda</string>
   <string name="custom_field_dialog_placeholder">Misalnya, ID Pengguna, PIN</string>
@@ -131,7 +132,7 @@
   <string name="identity_field_social_security_number_title">Nomor jaminan sosial</string>
   <string name="identity_field_passport_number_title">Nomor paspor</string>
   <string name="identity_field_license_number_title">Nomor SIM</string>
-  <string name="identity_field_website_title">Situs web</string>
+  <string name="identity_field_website_title">Situs Web</string>
   <string name="identity_field_xhandle_title">Akun X</string>
   <string name="identity_field_company_title">Perusahaan</string>
   <string name="identity_field_job_title_title">Jabatan</string>
@@ -199,7 +200,7 @@
   <string name="create_alias_content_limit_banner">Anda telah mencapai batas jumlah alias yang dapat Anda buat. Dapatkan kemampuan untuk membuat alias tanpa batasan jumlah dengan meningkatkan paket langganan Anda.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Aplikasi perlu diperbarui untuk menyunting item ini</string>
   <string name="remove_passkey_dialog_title">Hapus kunci sandi ini?</string>
-  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Anda akan menghapus kunci sandi untuk pengguna \'%1$s\' untuk \'%2$s\'. Apakah Anda yakin?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Anda akan menghapus passkey situs \'%2$s\' milik pengguna \'%1$s\'. Apakah Anda yakin?</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Lampiran</string>
   <string name="banner_body_attachments">Anda dapat melampirkan item ke berkas untuk pengelolaan yang lebih baik</string>
@@ -242,16 +243,16 @@
   <!-- Database Fields -->
   <string name="template_database_field_host">Host</string>
   <string name="template_database_field_port">Port</string>
-  <string name="template_database_field_username">Nama Pengguna</string>
-  <string name="template_database_field_password">Kata Sandi</string>
+  <string name="template_database_field_username">Nama pengguna</string>
+  <string name="template_database_field_password">Kata sandi</string>
   <string name="template_database_field_database_type">Jenis Basis Data</string>
   <string name="template_database_field_note">Catatan</string>
   <!-- Server Fields -->
   <string name="template_server_field_ip_address">Alamat IP</string>
   <string name="template_server_field_hostname">Nama Host</string>
   <string name="template_server_field_os">Sistem Operasi</string>
-  <string name="template_server_field_username">Nama Pengguna</string>
-  <string name="template_server_field_password">Kata Sandi</string>
+  <string name="template_server_field_username">Nama pengguna</string>
+  <string name="template_server_field_password">Kata sandi</string>
   <string name="template_server_field_note">Catatan</string>
   <!-- Software License Fields -->
   <string name="template_software_license_field_license_key">Kunci Lisensi</string>
@@ -267,7 +268,6 @@
   <string name="template_ssh_key_field_note">Catatan</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_ssid">SSID</string>
-  <string name="template_wifi_network_field_security_type">Jenis Keamanan</string>
   <string name="template_wifi_network_field_note">Catatan</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Nama Bank</string>
@@ -306,7 +306,7 @@
   <string name="template_membership_field_membership_id">ID Keanggotaan</string>
   <string name="template_membership_field_member_name">Nama Anggota</string>
   <string name="template_membership_field_expiry_date">Tanggal Kedaluwarsa</string>
-  <string name="template_membership_field_tier_level">Tier/Level</string>
+  <string name="template_membership_field_tier_level">Tingkat/Level Keanggotaan</string>
   <string name="template_membership_field_note">Catatan</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">Nama Lengkap</string>
@@ -336,9 +336,9 @@
   <!-- Custom item screen -->
   <string name="add_custom_field_button">Tambahkan kolom</string>
   <string name="add_section_button">Tambahkan bagian</string>
-  <string name="add_public_key_placeholder">Add public key</string>
-  <string name="add_private_key_placeholder">Add private key</string>
-  <string name="add_ssid_placeholder">Add SSID</string>
+  <string name="add_public_key_placeholder">Tambah kunci publik</string>
+  <string name="add_private_key_placeholder">Tambah kunci privat</string>
+  <string name="add_ssid_placeholder">Tambah SSID</string>
   <string name="create_custom_item_init_error">Terdapat masalah mendapatkan detail item khusus</string>
   <string name="update_custom_item_attachments_init_error">Terdapat masalah mendapatkan lampiran item khusus</string>
   <string name="custom_item_link_attachments_error">Gagal menautkan atau menghapus tautan lampiran ke item khusus</string>
@@ -347,7 +347,9 @@
   <string name="create_custom_item_item_creation_success">Item khusus dibuat</string>
   <string name="update_custom_item_item_creation_success">Item khusus diperbarui</string>
   <string name="update_custom_item_item_creation_error">Tidak dapat memperbarui item khusus</string>
+  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Tidak dapat membuat item</string>
-  <string name="cannot_create_items_dialog_message">You don\'t have any vaults with editor or admin access. Try creating one in the main app or ask your organization\'s administrator for support.</string>
+  <string name="cannot_create_items_dialog_message">Anda tidak memiliki brankas dengan akses editor atau admin. Cobalah untuk membuat brankas baru pada aplikasi utama atau mintalah dukungan kepada administrator organisasi Anda.</string>
+  <string name="wifi_security_type_field_label">Security type</string>
 </resources>

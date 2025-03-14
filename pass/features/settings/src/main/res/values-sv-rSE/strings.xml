@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="title_settings">Inställningar</string>
-  <string name="settings_autofill_section_title">Autofyll</string>
-  <string name="settings_autofill_preference_title">Autofyll</string>
+  <string name="settings_autofill_section_title">Fyll automatiskt</string>
+  <string name="settings_autofill_preference_title">Fyll automatiskt</string>
   <string name="settings_autofill_preference_description">För snabba och enkla inloggningar, låt Proton Pass fylla i dina användarnamn och lösenord.</string>
   <string name="settings_authentication_section_title">Autentisering</string>
   <string name="settings_authentication_preference_title">Fingeravtryckslås</string>

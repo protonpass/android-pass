@@ -17,11 +17,11 @@
   <plurals name="item_list_header_results">
     <item quantity="one">wynik</item>
     <item quantity="few">wyniki</item>
-    <item quantity="many">wyników</item>
-    <item quantity="other">wyników</item>
+    <item quantity="many">wyniki</item>
+    <item quantity="other">wyniki</item>
   </plurals>
   <string name="item_list_header_identities_type">Tożsamości</string>
-  <string name="item_list_header_custom_type">Custom items</string>
+  <string name="item_list_header_custom_type">Niestandardowe elementy</string>
   <string name="item_list_header_shared_with_me">Udostępnione dla mnie</string>
   <string name="item_list_header_shared_by_me">Udostępnione przez Ciebie</string>
   <!-- Bottomsheets -->
@@ -202,9 +202,10 @@
   <string name="item_details_shared_section_more_info_item_id">Identyfikator elementu</string>
   <string name="item_details_shared_section_more_info_share_id">Identyfikator sejfu</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
-  <string name="item_details_wifi_network_label_password">Password</string>
-  <string name="item_details_ssh_key_label_public_key">Public key</string>
-  <string name="item_details_ssh_key_label_private_key">Private key</string>
+  <string name="item_details_wifi_network_label_password">Hasło</string>
+  <string name="item_details_wifi_network_label_security">Security</string>
+  <string name="item_details_ssh_key_label_public_key">Klucz publiczny</string>
+  <string name="item_details_ssh_key_label_private_key">Klucz prywatny</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Wersja aplikacji nie jest obsługiwana. Zaktualizuj aplikację.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Klucz dostępu</string>
@@ -234,32 +235,32 @@
   </plurals>
   <plurals name="time_unit_weeks">
     <item quantity="one">%d tydzień</item>
-    <item quantity="few">%d tygodnie</item>
-    <item quantity="many">%d tygodni</item>
-    <item quantity="other">%d tygodnia</item>
+    <item quantity="few">%d tygodni</item>
+    <item quantity="many">%d tygodnie</item>
+    <item quantity="other">%d tygodnie</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d dzień</item>
-    <item quantity="few">%d dni</item>
+    <item quantity="few">%d dnia</item>
     <item quantity="many">%d dni</item>
-    <item quantity="other">%d dnia</item>
+    <item quantity="other">%d dni</item>
   </plurals>
   <plurals name="time_unit_hours">
-    <item quantity="one">%d godzina</item>
+    <item quantity="one">%d godzinę</item>
     <item quantity="few">%d godziny</item>
     <item quantity="many">%d godzin</item>
-    <item quantity="other">%d godziny</item>
+    <item quantity="other">%d godzin</item>
   </plurals>
   <plurals name="time_unit_minutes">
-    <item quantity="one">%d minuta</item>
-    <item quantity="few">%d minuty</item>
+    <item quantity="one">%d minutę</item>
+    <item quantity="few">%d minut</item>
     <item quantity="many">%d minut</item>
-    <item quantity="other">%d minuty</item>
+    <item quantity="other">%d minut</item>
   </plurals>
   <plurals name="time_unit_seconds">
-    <item quantity="one">%d sekunda</item>
-    <item quantity="few">%d sekundy</item>
-    <item quantity="many">%d sekund</item>
+    <item quantity="one">%d sekundę</item>
+    <item quantity="few">%d sekund</item>
+    <item quantity="many">%d sekundy</item>
     <item quantity="other">%d sekundy</item>
   </plurals>
   <plurals name="aliases_count">
@@ -289,13 +290,13 @@
   <string name="simple_login_widget_title">Włącz synchronizację SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
     <item quantity="one">Masz %d alias SimpleLogin, który nie jest widoczny w Proton Pass. Czy chcesz go zaimportować?</item>
-    <item quantity="few">Masz %d aliasy SimpleLogin, które nie są widoczne w Proton Pass. Czy chcesz je zaimportować?</item>
-    <item quantity="many">Masz %d aliasów SimpleLogin, które nie są widoczne w Proton Pass. Czy chcesz je zaimportować?</item>
+    <item quantity="few">Masz %d aliasów SimpleLogin, które nie są widoczne w Proton Pass. Czy chcesz je zaimportować?</item>
+    <item quantity="many">Masz %d aliasy SimpleLogin, które nie są widoczne w Proton Pass. Czy chcesz je zaimportować?</item>
     <item quantity="other">Masz %d aliasów SimpleLogin, które nie są widoczne w Proton Pass. Czy chcesz je zaimportować?</item>
   </plurals>
   <string name="simple_login_widget_action">Synchronizuj aliasy</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_not_received">Nie otrzymano kodu?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Sprawdź folder Spam w poszukiwaniu wiadomości \"%s\"</string>
   <string name="verification_code_suggestion_subject_new_email_address">Potwierdź adres e-mail Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Potwierdź skrzynkę pocztową</string>
@@ -323,15 +324,16 @@
     <item quantity="other">%d shared items</item>
   </plurals>
   <plurals name="users_count">
-    <item quantity="one">%d użytkownik</item>
+    <item quantity="one">%d użytkownika</item>
     <item quantity="few">%d użytkowników</item>
     <item quantity="many">%d użytkowników</item>
     <item quantity="other">%d użytkowników</item>
   </plurals>
   <plurals name="members_count">
-    <item quantity="one">%d member</item>
-    <item quantity="few">%d members</item>
-    <item quantity="many">%d members</item>
-    <item quantity="other">%d members</item>
+    <item quantity="one">%d członek</item>
+    <item quantity="few">%d użytkowników</item>
+    <item quantity="many">%d użytkowników</item>
+    <item quantity="other">%d użytkowników</item>
   </plurals>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
 </resources>

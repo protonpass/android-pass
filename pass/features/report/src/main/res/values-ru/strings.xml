@@ -25,14 +25,14 @@
   <string name="categories_title">В чем ваша проблема?</string>
   <string name="report_toolbar_title">Сообщить о проблеме</string>
   <string name="send_report_button">Отправить отчёт</string>
-  <string name="cancel_tips_button">Отмена</string>
+  <string name="cancel_tips_button">Отменить</string>
   <string name="contact_us_button">Связаться с нами</string>
   <string name="hint_tips_screen">Не работает?</string>
   <string name="report_reason_autofill">Автозаполнение</string>
   <string name="report_reason_sharing">Совместное использование</string>
   <string name="report_reason_sync">Синхронизировать</string>
   <string name="report_reason_passkeys">Ключи доступа</string>
-  <string name="report_reason_other">Другое</string>
+  <string name="report_reason_other">Другая</string>
   <string name="tips_title">Быстрые исправления для %1$s</string>
   <string name="tips_subtitle">Эти советы могут помочь быстрее решить вашу проблему.</string>
   <string name="autofill_tip_restart">Попробуйте отключить и включить службу автозаполнения.</string>

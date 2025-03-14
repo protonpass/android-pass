@@ -40,7 +40,7 @@
   <string name="sharing_tip_vault_sharing_guide">Está tendo problemas com o compartilhamento do cofre? Consulte nosso guia.</string>
   <string name="sharing_tip_secure_links_guide">Está tendo problemas com links seguros? Consulte nosso guia.</string>
   <string name="sync_tip_force_refresh">Sua tela está vazia? Tente fazer uma sincronização forçada.</string>
-  <string name="send_logs_label">Enviar registros</string>
+  <string name="send_logs_label">Enviar registos</string>
   <string name="report_sending_success">O relatório foi enviado.</string>
   <string name="report_sending_error">Não foi possível enviar o relatório.</string>
   <string name="tips_passkey_check_guide">Se você tiver algum problema, consulte nosso guia.</string>

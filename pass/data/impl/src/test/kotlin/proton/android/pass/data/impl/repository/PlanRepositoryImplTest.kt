@@ -194,7 +194,8 @@ internal class PlanRepositoryImplTest {
                     manageAlias = false,
                     storageAllowed = false,
                     storageQuota = 100,
-                    storageUsed = 1
+                    storageUsed = 1,
+                    storageMaxFileSize = 1_048_576
                 ),
                 pendingInvites = pendingInvites,
                 waitingNewUserInvites = waitingNewUserInvites,
@@ -225,7 +226,8 @@ internal class PlanRepositoryImplTest {
                 canManageSimpleLoginAliases = userAccessResponse.accessResponse.planResponse.manageAlias,
                 storageAllowed = userAccessResponse.accessResponse.planResponse.storageAllowed,
                 storageQuota = userAccessResponse.accessResponse.planResponse.storageQuota,
-                storageUsed = userAccessResponse.accessResponse.planResponse.storageUsed
+                storageUsed = userAccessResponse.accessResponse.planResponse.storageUsed,
+                storageMaxFileSize = userAccessResponse.accessResponse.planResponse.storageMaxFileSize
             )
         )
 

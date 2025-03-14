@@ -100,7 +100,8 @@ class ObserveAppNeedsUpdateImplTest {
                 canManageSimpleLoginAliases = false,
                 storageAllowed = false,
                 storageQuota = 100,
-                storageUsed = 1
+                storageUsed = 1,
+                storageMaxFileSize = 1_048_576
             )
         }
         userAccessDataRepository.sendValue(value)

@@ -45,7 +45,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTit
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
-import proton.android.pass.composecomponents.impl.item.icon.CustomIcon
+import proton.android.pass.composecomponents.impl.item.icon.CustomItemIcon
 import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
@@ -208,7 +208,7 @@ private fun createIdentity(onClick: () -> Unit) = createItem(
 private fun createCustom(onClick: () -> Unit) = createItem(
     title = { BottomSheetItemTitle(text = stringResource(id = R.string.action_custom)) },
     subtitleResId = R.string.item_type_custom_description,
-    leftIcon = { CustomIcon() },
+    leftIcon = { CustomItemIcon() },
     onClick = onClick
 )
 

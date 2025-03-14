@@ -75,7 +75,8 @@ class UserAccessDataRepositoryImpl @Inject constructor(
         canManageSimpleLoginAliases = accessResponse.planResponse.manageAlias,
         storageAllowed = accessResponse.planResponse.storageAllowed,
         storageUsed = accessResponse.planResponse.storageUsed,
-        storageQuota = accessResponse.planResponse.storageQuota
+        storageQuota = accessResponse.planResponse.storageQuota,
+        storageMaxFileSize = accessResponse.planResponse.storageMaxFileSize
     )
 
     private fun UserAccessDataEntity.toDomain() = UserAccessData(
@@ -91,7 +92,8 @@ class UserAccessDataRepositoryImpl @Inject constructor(
         canManageSimpleLoginAliases = canManageSimpleLoginAliases,
         storageAllowed = storageAllowed,
         storageUsed = storageUsed,
-        storageQuota = storageQuota
+        storageQuota = storageQuota,
+        storageMaxFileSize = storageMaxFileSize
     )
 
     private fun UserAccessData.toEntity(userId: UserId) = UserAccessDataEntity(
@@ -107,6 +109,7 @@ class UserAccessDataRepositoryImpl @Inject constructor(
         canManageSimpleLoginAliases = canManageSimpleLoginAliases,
         storageAllowed = storageAllowed,
         storageUsed = storageUsed,
-        storageQuota = storageQuota
+        storageQuota = storageQuota,
+        storageMaxFileSize = storageMaxFileSize
     )
 }

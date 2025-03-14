@@ -38,6 +38,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.data.api.errors.FileSizeExceededError
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
@@ -53,6 +54,7 @@ import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.DraftAttachment
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.R
+import proton.android.pass.features.itemcreate.common.attachments.AttachmentSnackbarMessages.AttachmentSizeExceededError
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentSnackbarMessages.OpenAttachmentsError
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentSnackbarMessages.UploadAttachmentsError
 import proton.android.pass.log.api.PassLogger
@@ -148,9 +150,12 @@ class AttachmentsHandlerImpl @Inject constructor(
                 PassLogger.i(TAG, "Attachment uploaded: $uri")
             }
             .onFailure {
+                when (it) {
+                    is FileSizeExceededError -> snackbarDispatcher(AttachmentSizeExceededError)
+                    else -> snackbarDispatcher(UploadAttachmentsError)
+                }
                 PassLogger.w(TAG, "Could not upload attachment: $uri")
                 PassLogger.w(TAG, it)
-                snackbarDispatcher(UploadAttachmentsError)
             }
     }
 

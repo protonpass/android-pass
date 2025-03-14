@@ -77,6 +77,7 @@ import proton.android.pass.log.api.PassLogger
 import java.io.File
 import java.net.URI
 import javax.inject.Inject
+import kotlin.math.ceil
 import kotlin.math.max
 
 class AttachmentRepositoryImpl @Inject constructor(
@@ -110,10 +111,8 @@ class AttachmentRepositoryImpl @Inject constructor(
                 encrypt(fileMetadata.toByteArray(), EncryptionTag.FileData)
             }
         val encodedMetadata = Base64.encodeBase64String(encryptedMetadata.array)
-
-        val chunks = (metadata.size + CHUNK_SIZE - 1) / CHUNK_SIZE
-
-        val id = remote.createPendingFile(userId, encodedMetadata, chunks.toInt())
+        val chunks = ceil(metadata.size.toDouble() / CHUNK_SIZE).toInt()
+        val id = remote.createPendingFile(userId, encodedMetadata, chunks)
             .let(::PendingAttachmentId)
         pendingAttachmentLinkRepository.addToLink(id, fileKey)
         return id

@@ -26,7 +26,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -41,24 +40,24 @@ import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDet
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsSource
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.domain.toItemContents
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
+import proton.android.pass.data.api.usecases.attachments.ObserveAllItemRevisionAttachments
 import proton.android.pass.data.api.usecases.attachments.RestoreAttachments
 import proton.android.pass.data.api.usecases.attachments.SetAttachmentToBeUnlinked
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.api.usecases.items.RestoreItemRevision
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.features.item.history.navigation.ItemHistoryRevisionNavArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -82,7 +81,8 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     private val itemDetailsHandler: ItemDetailsHandler,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val getItemById: GetItemById
+    private val getItemById: GetItemById,
+    private val observeAllItemRevisionAttachments: ObserveAllItemRevisionAttachments
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -132,18 +132,18 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     }
 
     private val revisionItemDiffsFlow = combine(
-        revisionItemFlow.map { revisionItem -> revisionItem.itemType.category },
+        revisionItemFlow,
+        currentItemFlow,
         revisionItemContentsFlow,
         currentItemContentsFlow,
-        flowOf(emptyList<Attachment>()),
-        flowOf(emptyList<Attachment>())
-    ) { itemCategory, baseItemContents, otherItemContents, baseAttachments, otherAttachments ->
+        observeAllItemRevisionAttachments(shareId, itemId)
+    ) { revisionItem, currentItem, baseItemContents, otherItemContents, attachments ->
         itemDetailsHandler.updateItemDetailsDiffs(
-            itemCategory = itemCategory,
+            itemCategory = revisionItem.itemType.category,
             baseItemContents = baseItemContents,
             otherItemContents = otherItemContents,
-            baseAttachments = baseAttachments,
-            otherAttachments = otherAttachments
+            baseAttachments = attachments.filter { it.existsForRevision(revisionItem.revision) },
+            otherAttachments = attachments.filter { it.existsForRevision(currentItem.revision) }
         )
     }
 
@@ -161,18 +161,18 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     }
 
     private val currentItemDiffsFlow = combine(
-        currentItemFlow.map { currentItem -> currentItem.itemType.category },
+        currentItemFlow,
+        revisionItemFlow,
         currentItemContentsFlow,
         revisionItemContentsFlow,
-        flowOf(emptyList<Attachment>()),
-        flowOf(emptyList<Attachment>())
-    ) { itemCategory, baseItemContents, otherItemContents, baseAttachments, otherAttachments ->
+        observeAllItemRevisionAttachments(shareId, itemId)
+    ) { currentItem, revisionItem, baseItemContents, otherItemContents, attachments ->
         itemDetailsHandler.updateItemDetailsDiffs(
-            itemCategory = itemCategory,
+            itemCategory = currentItem.itemType.category,
             baseItemContents = baseItemContents,
             otherItemContents = otherItemContents,
-            baseAttachments = baseAttachments,
-            otherAttachments = otherAttachments
+            baseAttachments = attachments.filter { it.existsForRevision(currentItem.revision) },
+            otherAttachments = attachments.filter { it.existsForRevision(revisionItem.revision) }
         )
     }
 

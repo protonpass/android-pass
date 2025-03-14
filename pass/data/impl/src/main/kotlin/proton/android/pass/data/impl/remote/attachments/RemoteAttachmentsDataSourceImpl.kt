@@ -51,10 +51,10 @@ class RemoteAttachmentsDataSourceImpl @Inject constructor(
         metadata: EncryptedString,
         chunkCount: Int
     ): String = api.get<PasswordManagerApi>(userId)
-            .invoke { createPendingFile(CreatePendingFileRequest(metadata, chunkCount)) }
-            .valueOrThrow
-            .file
-            .fileID
+        .invoke { createPendingFile(CreatePendingFileRequest(metadata, chunkCount)) }
+        .valueOrThrow
+        .file
+        .fileID
 
     override suspend fun updatePendingFile(
         userId: UserId,

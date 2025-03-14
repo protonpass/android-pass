@@ -86,7 +86,8 @@ class OnBoardingScreenTest {
             canManageSimpleLoginAliases = false,
             storageQuota = 100,
             storageUsed = 1,
-            storageAllowed = false
+            storageAllowed = false,
+            storageMaxFileSize = 1_048_576
         ).also(observeUserAccessData::sendValue)
     }
 

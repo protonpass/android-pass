@@ -24,7 +24,7 @@
   <string name="simple_login_sync_management_domain_option_blank">Не вибрано</string>
   <string name="simple_login_sync_management_mailboxes_label">Поштові скриньки</string>
   <string name="simple_login_sync_management_mailboxes_description">Поштова скринька - це місце, куди пересилаються листи, надіслані на псевдонім. Це ваша звичайна поштова скринька, наприклад, Gmail, Outlook, Proton Mail тощо.</string>
-  <string name="simple_login_sync_management_mailbox_default">За замовчуванням</string>
+  <string name="simple_login_sync_management_mailbox_default">Типовий</string>
   <string name="simple_login_sync_management_mailbox_unverified">Непідтверджена поштова скринька</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">Unverified mailbox change</string>
   <string name="simple_login_sync_management_vault_title">Синхронізація SimpleLogin</string>
@@ -66,7 +66,7 @@
   <string name="simple_login_sync_mailbox_delete_warning">Зверніть увагу, що після видалення псевдоніми не можна відновити</string>
   <!-- Domain select screen -->
   <string name="simple_login_sync_domain_select_title">Домен за замовчуванням</string>
-  <string name="simple_login_sync_domain_select_title_none">нічого</string>
+  <string name="simple_login_sync_domain_select_title_none">без блокування</string>
   <string name="simple_login_sync_domain_select_description_none">Домен відсутній</string>
   <string name="simple_login_sync_domain_select_description_custom">Ваш домен</string>
   <string name="simple_login_sync_domain_select_description_free">Публічний домен</string>

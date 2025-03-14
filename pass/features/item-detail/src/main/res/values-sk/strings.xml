@@ -38,10 +38,10 @@
   <string name="login_item_monitor_widget_weak_pass_title">Slabé heslo</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Tento účet je zraniteľný. Navštívte službu a zmeňte si heslo.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
-    <item quantity="one">%d iné prihlásenie už používa rovnaké heslo</item>
-    <item quantity="few">%d iné prihlasovania už používajú rovnaké heslo</item>
+    <item quantity="one">%d iné prihlásenie používa rovnaké heslo</item>
+    <item quantity="few">%d iné prihlásenia už používajú rovnaké heslo</item>
     <item quantity="many">%d iných prihlasovaní už používa rovnaké heslo</item>
-    <item quantity="other">%d iných prihlásení používa rovnaké heslo</item>
+    <item quantity="other">%d iných prihlasovaní už používa rovnaké heslo</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Nastavte 2FA na zvýšenie bezpečnosti</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Táto služba ponúka 2FA. Aktiváciou tejto funkcie zvýšite bezpečnosť účtu.</string>

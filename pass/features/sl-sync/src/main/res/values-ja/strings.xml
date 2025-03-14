@@ -21,10 +21,10 @@
   <string name="simple_login_sync_management_title">エイリアス管理</string>
   <string name="simple_login_sync_management_domain_label">ドメイン</string>
   <string name="simple_login_sync_management_domain_title">エイリアスのデフォルトドメイン</string>
-  <string name="simple_login_sync_management_domain_option_blank">選択されていません</string>
+  <string name="simple_login_sync_management_domain_option_blank">未選択</string>
   <string name="simple_login_sync_management_mailboxes_label">メールボックス</string>
   <string name="simple_login_sync_management_mailboxes_description">メールボックスは、エイリアスに送信されたメールが転送される場所です。通常のメールボックス、例えばGmail、Outlook、Proton Mailなどです。</string>
-  <string name="simple_login_sync_management_mailbox_default">デフォルト</string>
+  <string name="simple_login_sync_management_mailbox_default">既定</string>
   <string name="simple_login_sync_management_mailbox_unverified">認証されていないメールボックス</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">未確認メールボックスの変更</string>
   <string name="simple_login_sync_management_vault_title">SimpleLogin 同期</string>
@@ -45,7 +45,7 @@
   <string name="simple_login_sync_mailbox_change_email_already_in_use_message_error">メールアドレスはすでに使用されています</string>
   <!-- Mailbox verify screen -->
   <string name="simple_login_sync_mailbox_verify_title">メールボックスを確認する</string>
-  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">%sに認証コードを送りました。以下に入力してください：</string>
+  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">確認コードを %s に送信しました。以下に入力してください。</string>
   <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">あなたのメールアドレス</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_code_error">無効なメールボックス認証コードです</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">無効なメールボックス認証コードが制限に達しました、メールボックスは削除されました</string>
@@ -66,7 +66,7 @@
   <string name="simple_login_sync_mailbox_delete_warning">一度削除すると、エイリアスを復元することはできないことにご注意ください。</string>
   <!-- Domain select screen -->
   <string name="simple_login_sync_domain_select_title">デフォルトドメイン</string>
-  <string name="simple_login_sync_domain_select_title_none">ノート</string>
+  <string name="simple_login_sync_domain_select_title_none">なし</string>
   <string name="simple_login_sync_domain_select_description_none">ドメインがありません</string>
   <string name="simple_login_sync_domain_select_description_custom">あなたのドメイン</string>
   <string name="simple_login_sync_domain_select_description_free">公開ドメイン</string>

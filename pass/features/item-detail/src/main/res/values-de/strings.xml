@@ -38,8 +38,8 @@
   <string name="login_item_monitor_widget_weak_pass_title">Schwaches Kennwort</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Dieses Konto ist angreifbar, besuche den Dienst und ändere dein Passwort.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
-    <item quantity="one">%d anderes Login verwendet das gleiche Passwort</item>
-    <item quantity="other">%d andere Logins verwenden das gleiche Passwort</item>
+    <item quantity="one">%d andere Anmeldung verwendet das gleiche Passwort.</item>
+    <item quantity="other">%d andere Anmeldungen verwenden das gleiche Passwort.</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Richte 2FA für mehr Sicherheit ein</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Dieser Dienst unterstützt 2FA. Aktiviere sie für zusätzliche Kontosicherheit.</string>
@@ -64,7 +64,7 @@
   <!-- Credit card details -->
   <string name="credit_card_cardholder_field_name">Name des Karteninhabers</string>
   <string name="credit_card_number_field_name">Kartennummer</string>
-  <string name="credit_card_cvv_field_name">Sicherheitscode</string>
+  <string name="credit_card_cvv_field_name">Kartenprüfnummer</string>
   <string name="credit_card_pin_field_name">PIN-Code</string>
   <string name="credit_card_expiration_date_field_name">Ablaufdatum</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Name des Karteninhabers in die Zwischenablage kopiert</string>
@@ -110,16 +110,16 @@
   <string name="field_detail_display_name_title">Anzeigename</string>
   <string name="display_name_section_description">Der Anzeigename, wenn eine E-Mail von diesem Alias versendet wird.</string>
   <plurals name="alias_forwards_count">
-    <item quantity="one">%1$s Weitergeleiteter</item>
-    <item quantity="other">%1$s Weitergeleitete</item>
+    <item quantity="one">%1$s weitergeleitet</item>
+    <item quantity="other">%1$s weitergeleitet</item>
   </plurals>
   <plurals name="alias_replies_count">
     <item quantity="one">%1$s Antwort</item>
     <item quantity="other">%1$s Antworten</item>
   </plurals>
   <plurals name="alias_blocks_count">
-    <item quantity="one">%1$s Blockierter</item>
-    <item quantity="other">%1$s Blockierte</item>
+    <item quantity="one">%1$s blockiert</item>
+    <item quantity="other">%1$s blockiert</item>
   </plurals>
   <string name="open_with">Öffnen mit:</string>
   <string name="open_attachments_error">Der Anhang konnte nicht geöffnet werden</string>

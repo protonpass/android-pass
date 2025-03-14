@@ -92,14 +92,14 @@
   <string name="vault_drawer_all_vaults">Semua brankas</string>
   <!-- Vault management -->
   <string name="vault_delete_dialog_title">Hapus brankas</string>
-  <string name="vault_delete_dialog_cancel_action">Batal</string>
+  <string name="vault_delete_dialog_cancel_action">Batalkan</string>
   <string name="vault_delete_dialog_delete_action">Hapus</string>
   <string name="snackbar_delete_vault_success">Brankas dihapus</string>
   <string name="snackbar_delete_vault_error">Brankas tidak dihapus</string>
   <!-- Search top bar -->
   <string name="search_topbar_placeholder_all_items">Cari dalam semua item…</string>
   <string name="search_topbar_placeholder_all_vaults">Cari di seluruh brankas…</string>
-  <string name="search_topbar_placeholder_vault">Cari di %s…</string>
+  <string name="search_topbar_placeholder_vault">Cari di %s...</string>
   <string name="search_topbar_placeholder_trash">Cari di Sampah…</string>
   <string name="search_topbar_placeholder_pinning">Cari di Tersemat…</string>
   <string name="search_topbar_placeholder_shared_by_me">Cari di Dibagikan dengan saya…</string>

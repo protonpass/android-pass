@@ -110,8 +110,8 @@
   <string name="field_detail_display_name_title">Visningsnamn</string>
   <string name="display_name_section_description">Visningsnamnet när du skickar ett e-postmeddelande från detta alias.</string>
   <plurals name="alias_forwards_count">
-    <item quantity="one">%1$s vidarebefordrad</item>
-    <item quantity="other">%1$s vidarebefordrade</item>
+    <item quantity="one">%1$s vidarebefordran</item>
+    <item quantity="other">%1$s vidarebefordringar</item>
   </plurals>
   <plurals name="alias_replies_count">
     <item quantity="one">%1$s svar</item>

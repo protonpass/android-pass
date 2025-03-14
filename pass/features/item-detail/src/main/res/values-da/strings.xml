@@ -38,8 +38,8 @@
   <string name="login_item_monitor_widget_weak_pass_title">Svag adgangskode</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Denne konto er sårbar. Besøg tjenesten og skift din adgangskode.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
-    <item quantity="one">%d anden indlogning bruger samme adgangskode</item>
-    <item quantity="other">%d andre indlogninger bruger samme adgangskode</item>
+    <item quantity="one">%d andet login bruger samme adgangskode</item>
+    <item quantity="other">%d andre logins bruger samme adgangskode</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Indstil 2FA for mere sikkerhed</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Denne tjeneste tilbyder 2FA. Aktivér det for at få ekstra kontosikkerhed.</string>

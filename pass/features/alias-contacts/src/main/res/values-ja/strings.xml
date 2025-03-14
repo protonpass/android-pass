@@ -23,11 +23,11 @@
   <string name="snackbar_contact_create_error">連絡先の作成に失敗しました</string>
   <string name="create_contact_title">連絡先を作成</string>
   <string name="detail_contact_title">連絡先</string>
-  <string name="email_input_error">無効なメールアドレス</string>
+  <string name="email_input_error">無効なメールアドレスです</string>
   <string name="detail_contact_display_name" comment="sender email address">連絡先は、%1$sにメールを送信または受信するすべてのメールアドレスに対して作成されます。</string>
   <string name="empty_alias_contacts_title">エイリアスの連絡先</string>
   <string name="empty_alias_contacts_body">個人メールアドレスを隠すために、アドレスを隠すエイリアス連絡先を作成することができます。</string>
-  <string name="empty_alias_contacts_learn_more">もっと詳しく</string>
+  <string name="empty_alias_contacts_learn_more">より詳しく</string>
   <string name="unblock_button">連絡先のブロックを解除</string>
   <string name="block_button">連絡先をブロック</string>
   <string name="contact_created_date" comment="date of creation">%1$s日前に作成</string>

@@ -120,5 +120,5 @@
   <string name="open_with">열기:</string>
   <string name="open_attachments_error">첨부파일을 열 수 없습니다</string>
   <string name="banner_contacts_title">알고 계셨나요?</string>
-  <string name="banner_contacts_subtitle">별칭이 누군가로부터 이메일을 받으면 새 연락처가 자동으로 생성됩니다.</string>
+  <string name="banner_contacts_subtitle">별칭이 누군가로부터 이메일을 받을 때마다, 새로운 연락처가 자동으로 생성됩니다.</string>
 </resources>

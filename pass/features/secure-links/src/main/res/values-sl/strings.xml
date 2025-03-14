@@ -45,7 +45,7 @@
   <string name="secure_links_list_title">Varne povezave</string>
   <string name="secure_links_list_empty_title">No secure links</string>
   <string name="secure_links_list_empty_subtitle">You can start creating secure links from an item details sharing options</string>
-  <string name="secure_links_list_expiration_description">Expires in %s</string>
+  <string name="secure_links_list_expiration_description">Poteče čez %s</string>
   <string name="secure_links_list_expired_description">Poteklo</string>
   <plurals name="secure_links_list_viewed_times_description">
     <item quantity="one">%d view</item>

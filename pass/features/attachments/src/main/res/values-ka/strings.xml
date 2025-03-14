@@ -28,11 +28,11 @@
   <string name="camera_permission_explanation">ამ ფუნქციას კამერასთან წვდომა სჭირდება.</string>
   <string name="camera_permission_open_settings">მორგების ფანჯრის გახსნა</string>
   <string name="delete_all_attachments_title">წავშალო ყველა მიმაგრებული ფაილი?</string>
-  <string name="delete_all_attachments_subtitle">ეს ქმედება შეუქცევადია</string>
+  <string name="delete_all_attachments_subtitle">ეს ქმედება არ შეიძლება, დაბრუნდეს</string>
   <string name="delete_all_attachments_confirm">ყველას წაშლა</string>
   <string name="rename_attachment_dialog_title">ფაილის სახელის გადარქმევა</string>
   <string name="storage_full_title">თქვენი საცავი, თითქმის, სავსეა.</string>
   <string name="storage_full_body">ასწიეთ ტარიფი მეტი საცავის მისაღებად.</string>
-  <string name="storage_full_upgrade">ტარიფის აწევა</string>
+  <string name="storage_full_upgrade">გაუმჯობესება</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s %2$s-დან</string>
 </resources>

@@ -33,7 +33,7 @@
   <string name="security_center_home_row_reused_passwords_title">Các mật khẩu tái sử dụng</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Tạo các mật khẩu không trùng lặp</string>
   <string name="security_center_home_row_missing_tfa_title">Không có bảo mật 2 yếu tố</string>
-  <string name="security_center_home_row_missing_tfa_subtitle">Thiết lập 2FA để an toàn hơn</string>
+  <string name="security_center_home_row_missing_tfa_subtitle">Thiết lập xác minh 2 bước để an toàn hơn</string>
   <string name="security_center_home_row_excludes_items_title">Đã bỏ qua theo dõi</string>
   <string name="security_center_home_row_excludes_items_subtitle">Các nội dung này có nguy cơ không an toàn</string>
   <string name="security_center_get_breaches_error">Không thể tải data rò rỉ</string>

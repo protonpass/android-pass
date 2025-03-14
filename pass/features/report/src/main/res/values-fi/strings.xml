@@ -18,9 +18,9 @@
   -->
 <resources>
   <string name="description_field_label">Mikä on ongelmana?</string>
-  <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
-  <string name="email_field_label">Sähköposti</string>
-  <string name="email_field_hint">sähköposti</string>
+  <string name="description_field_hint">Kuvaile ongelma mahdollisimman yksityiskohtaisesti. Jos tapahtui virhe, kerro meille mitä siinä luki.</string>
+  <string name="email_field_label">Sähköpostiosoite</string>
+  <string name="email_field_hint">sähköpostiosoite</string>
   <string name="attach_image_button">Liitä kuva</string>
   <string name="categories_title">Mikä on ongelmana?</string>
   <string name="report_toolbar_title">Ilmoita ongelmasta</string>
@@ -28,9 +28,9 @@
   <string name="cancel_tips_button">Peruuta</string>
   <string name="contact_us_button">Ota yhteyttä</string>
   <string name="hint_tips_screen">Eikö ratkaisu toiminut?</string>
-  <string name="report_reason_autofill">Automaattitäyttö</string>
+  <string name="report_reason_autofill">Automaattitäytä</string>
   <string name="report_reason_sharing">Jakaminen</string>
-  <string name="report_reason_sync">Synkronointi</string>
+  <string name="report_reason_sync">Synkronoi</string>
   <string name="report_reason_passkeys">Pääsyavaimet</string>
   <string name="report_reason_other">Muu</string>
   <string name="tips_title">Pikaratkaisuja: %1$s</string>

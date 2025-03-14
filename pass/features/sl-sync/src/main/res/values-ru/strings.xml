@@ -63,7 +63,7 @@
   <string name="simple_login_sync_mailbox_delete_message_delete_error">Произошла ошибка при удалении почтового ящика</string>
   <string name="simple_login_sync_mailbox_delete_message_delete_success">Почтовый ящик успешно удален</string>
   <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Перенести псевдонимы в</string>
-  <string name="simple_login_sync_mailbox_delete_warning">Please note that once deleted, aliases can\'t be restored</string>
+  <string name="simple_login_sync_mailbox_delete_warning">Обратите внимание, что после удаления псевдонимы не могут быть восстановлены.</string>
   <!-- Domain select screen -->
   <string name="simple_login_sync_domain_select_title">Домен по умолчанию</string>
   <string name="simple_login_sync_domain_select_title_none">ничего</string>

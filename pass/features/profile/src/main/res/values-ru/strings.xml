@@ -24,8 +24,8 @@
   <string name="app_lock_immediately">Немедленно</string>
   <string name="app_lock_one_minute">Через 1 минуту</string>
   <string name="app_lock_two_minutes">Через 2 минуты</string>
-  <string name="app_lock_five_minutes">Через 5 минут</string>
-  <string name="app_lock_ten_minutes">Через 10 минут</string>
+  <string name="app_lock_five_minutes">Через 5 минуты</string>
+  <string name="app_lock_ten_minutes">Через 10 минуты</string>
   <string name="app_lock_one_hour">Через 1 час</string>
   <string name="app_lock_four_hours">Через 4 часа</string>
   <string name="profile_account_plan_name_trial">Пробная версия Pass Plus</string>
@@ -56,25 +56,25 @@
   <plurals name="profile_after_days">
     <item quantity="one">Через %d день</item>
     <item quantity="few">Через %d дня</item>
-    <item quantity="many">Через %d дня</item>
+    <item quantity="many">Через %d дней</item>
     <item quantity="other">Через %d дней</item>
   </plurals>
   <plurals name="profile_after_minutes">
     <item quantity="one">Через %d минуту</item>
     <item quantity="few">Через %d минуты</item>
-    <item quantity="many">Через %d минуты</item>
+    <item quantity="many">Через %d минут</item>
     <item quantity="other">Через %d минут</item>
   </plurals>
   <plurals name="profile_after_hours">
     <item quantity="one">Через %d час</item>
     <item quantity="few">Через %d часа</item>
-    <item quantity="many">Через %d часа</item>
+    <item quantity="many">Через %d часов</item>
     <item quantity="other">Через %d часов</item>
   </plurals>
   <string name="profile_less_than_a_minute">Меньше минуты</string>
   <string name="account_switcher_manage_account">Управление аккаунтом</string>
   <string name="account_switcher_sign_in">Войти</string>
-  <string name="account_switcher_sign_out">Bыйти</string>
+  <string name="account_switcher_sign_out">Выйти</string>
   <string name="account_switcher_switch_to">Переключить на</string>
   <string name="account_switcher_add_account">Добавить аккаунт</string>
   <string name="account_switcher_remove">Удалить</string>
@@ -85,9 +85,9 @@
   <string name="filtered_by_credit_cards">Фильтруется по кредитным картам. Удаленные элементы не отображаются</string>
   <string name="filtered_by_identities">Фильтруется по личным данным. Удаленные элементы не отображаются</string>
   <string name="filtered_by_custom_items">Отфильтровано по пользовательским элементам. Удаленные элементы не отображаются</string>
-  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">You need to switch to %1$s in order to manage it</string>
-  <string name="account_switch_confirmation_title">Manage account</string>
-  <string name="account_switch_confirmation_confirm">Switch and manage</string>
+  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Вам нужно переключиться на %1$s, чтобы этим управлять</string>
+  <string name="account_switch_confirmation_title">Управление аккаунтом</string>
+  <string name="account_switch_confirmation_confirm">Переключить и управлять</string>
   <string name="profile_storage_data_title">Хранилище</string>
   <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s из %2$s</string>
 </resources>

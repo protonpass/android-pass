@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="trial_title">Tu regalo de bienvenida</string>
-  <string name="trial_subtitle">Disfruta de una gestión de contraseñas de nivel superior</string>
+  <string name="trial_subtitle">Para una gestión de contraseñas de nivel superior:</string>
   <string name="trial_feature_1">20 cajas fuertes</string>
   <string name="trial_feature_3">Autenticador de 2FA integrado</string>
   <string name="trial_feature_4">Campos personalizados</string>

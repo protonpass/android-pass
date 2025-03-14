@@ -80,8 +80,8 @@
   <string name="simple_login_sync_mailbox_options_snackbar_default_success">Predvolená poštová schránka bola úspešne aktualizovaná</string>
   <string name="simple_login_sync_mailbox_change_email_option">Zmeniť poštovú schránku</string>
   <string name="simple_login_sync_mailbox_cancel_change_email_option">Zrušiť zmenu poštovej schránky</string>
-  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">Pri zrušení zmeny poštovej schránky došlo k chybe</string>
-  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">Zrušená zmena poštovej schránky</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">Počas rušenia zmeny poštovej schránky došlo k chybe</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">Zmena poštovej schránky zrušená</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Predvolený SL trezor</string>
   <string name="simple_login_sync_shared_default_vault_description">Aliasy SimpleLogin budú importované do tohto trezora.</string>

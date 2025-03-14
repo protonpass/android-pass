@@ -15,7 +15,7 @@
   <string name="vault_delete_dialog_title">Hapus brankas</string>
   <string name="vault_delete_dialog_body">Tindakan ini akan menghapus brankas __VAULT_NAME__ beserta seluruh isinya secara permanen. Masukkan nama brankas untuk mengonfirmasi penghapusan.</string>
   <string name="vault_delete_dialog_placeholder">Nama brankas</string>
-  <string name="vault_delete_dialog_cancel_action">Batal</string>
+  <string name="vault_delete_dialog_cancel_action">Batalkan</string>
   <string name="vault_delete_dialog_delete_action">Hapus</string>
   <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Brankas ini mengandung %1$s. Dengan menghapus brankas ini, izin akses bagi seluruh pengguna lainnya akan dihapus.</string>
   <string name="vault_leave_dialog_title">Tinggalkan brankas</string>

@@ -28,7 +28,7 @@
   <string name="home_empty_vault_create_alias">Створити псевдонім Hide-my-email</string>
   <string name="home_empty_vault_create_note">Створити нотатку</string>
   <string name="home_empty_vault_create_credit_card">Створити банківську картку</string>
-  <string name="home_empty_vault_create_identity">Створити особисті дані</string>
+  <string name="home_empty_vault_create_identity">Створити ідентичність</string>
   <string name="home_empty_vault_create_custom_item">Create a custom item</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Помилка завантаження елементів</string>
   <string name="error_refreshing">Помилка під час оновлення</string>
@@ -53,11 +53,11 @@
   <string name="sl_sync_banner_title">Синхронізуйте свої псевдоніми з SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">У вас є псевдонім %d, який присутній у SimpleLogin, але відсутній у Proton Pass. Бажаєте синхронізувати його?</item>
-    <item quantity="few">У вас є псевдоніми %d, які присутні в SimpleLogin, але відсутні в Proton Pass. Бажаєте їх синхронізувати?</item>
-    <item quantity="many">У вас є псевдонімів %d, які присутні в SimpleLogin, але відсутні в Proton Pass. Бажаєте їх синхронізувати?</item>
-    <item quantity="other">У вас є псевдоніми %d, які присутні в SimpleLogin, але відсутні в Proton Pass. Бажаєте їх синхронізувати?</item>
+    <item quantity="few">У вас є  %d псевдоніми, які присутні у SimpleLogin, але відсутні у Proton Pass. Бажаєте синхронізувати їх?</item>
+    <item quantity="many">У вас є  %d псевдоніми, які присутні у SimpleLogin, але відсутні у Proton Pass. Бажаєте синхронізувати їх?</item>
+    <item quantity="other">У вас є  %d псевдоніми, які присутні у SimpleLogin, але відсутні у Proton Pass. Бажаєте синхронізувати їх?</item>
   </plurals>
-  <string name="sl_sync_banner_settings">Синхронізувати псевдоніми ›</string>
+  <string name="sl_sync_banner_settings">Синхронізувати псевдонімів ›</string>
   <string name="sl_sync_banner_note">Після синхронізації, видалення псевдонімів у Pass також видалить їх у SimpleLogin.</string>
   <string name="home_notification_permission_banner_title">Отримувати важливі оновлення</string>
   <string name="home_notification_permission_banner_text">Увімкніть push-сповіщення, щоб знати коли інші надають вам спільний доступ до сховища.</string>
@@ -77,7 +77,7 @@
   <string name="bottomsheet_copy_full_name">Копіювати повне ім\'я</string>
   <!-- Clipboard -->
   <string name="alias_copied_to_clipboard">Псевдонім скопійовано</string>
-  <string name="note_copied_to_clipboard">Нотатку скопійовано</string>
+  <string name="note_copied_to_clipboard">Вміст нотатки скопійовано</string>
   <string name="full_name_copied_to_clipboard">Повне ім\'я скопійовано</string>
   <string name="email_copied_to_clipboard">Адресу електронної пошти скопійовано</string>
   <string name="username_copied_to_clipboard">Ім\'я користувача скопійовано</string>
@@ -90,12 +90,12 @@
   <plurals name="vault_drawer_vaults_item_count">
     <item quantity="one">%d елемент</item>
     <item quantity="few">%d елементи</item>
-    <item quantity="many">%d елементи</item>
-    <item quantity="other">%d елементи</item>
+    <item quantity="many">%d елементів</item>
+    <item quantity="other">%d елементів</item>
   </plurals>
   <string name="vault_drawer_create_vault">Створити сховище</string>
   <string name="vault_drawer_item_trash">Смітник</string>
-  <string name="vault_drawer_all_vaults">Всі сховища</string>
+  <string name="vault_drawer_all_vaults">Усі сховища</string>
   <!-- Vault management -->
   <string name="vault_delete_dialog_title">Видалити сховище</string>
   <string name="vault_delete_dialog_cancel_action">Скасувати</string>
@@ -112,14 +112,14 @@
   <string name="search_topbar_placeholder_shared_with_me">Пошук в Поширено мені...</string>
   <string name="item_type_filter_list_icon_content_description">Піктограма типу елемента</string>
   <string name="item_type_filter_all">Всі</string>
-  <string name="item_type_filter_login">Вхід</string>
+  <string name="item_type_filter_login">Запис входу</string>
   <string name="item_type_filter_alias">Псевдонім</string>
   <string name="item_type_filter_note">Нотатка</string>
   <string name="item_type_filter_credit_card">Картка</string>
   <string name="item_type_filter_identity">Ідентичність</string>
   <string name="item_type_filter_custom">Custom item</string>
   <string name="item_type_filter_login_totp">Вхід з TOTP</string>
-  <string name="item_type_filter_items_shared_with_me">Поширено для мене</string>
+  <string name="item_type_filter_items_shared_with_me">Поділилися зі мною</string>
   <string name="item_type_filter_items_shared_by_me">Поширено мною</string>
   <!-- Trash -->
   <string name="trash_empty_list_title">Смітник порожній</string>
@@ -172,9 +172,9 @@
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
     <item quantity="one">Ви впевнені, що хочете видалити позицію? Не підлягає відновленню.</item>
-    <item quantity="few">Ви впевнені, що хочете видалити дані %d позиції? Ця дія незворотна.</item>
-    <item quantity="many">Ви впевнені, що хочете видалити дані %d позиції? Ця дія незворотна</item>
-    <item quantity="other">Ви впевнені, що хочете видалити дані %d позиції? Не підлягає відновленню</item>
+    <item quantity="few">Ви впевнені, що хочете видалити %d елементи? Не підлягає відновленню.</item>
+    <item quantity="many">Ви впевнені, що хочете видалити %d елементи? Не підлягає відновленню.</item>
+    <item quantity="other">Ви впевнені, що хочете видалити %d елементів? Не підлягає відновленню.</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_shared_warning_message">
     <item quantity="one">%d item is currently shared. Deleting it will remove access for all other users.</item>
@@ -194,10 +194,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Помилка відкріплення деяких елементів</string>
   <string name="home_snackbar_items_unpinned_error">Помилка відкріплення елементів</string>
   <string name="home_snackbar_items_alias_enabled_success">Псевдонім успішно ввімкнений</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Помилка при увімкненні деяких псевдонімів</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
   <string name="home_snackbar_items_alias_enabled_error">Помилка увімкнення псевдонімів</string>
   <string name="home_snackbar_items_alias_disabled_success">Псевдонім успішно вимкнений</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Помилка при вимкненні деяких псевдонімів</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
   <string name="home_snackbar_items_alias_disabled_error">Помилка вимкнення псевдонімів</string>
   <string name="bulk_action_unpin">Відкріпити</string>
   <string name="bulk_action_pin">Прикріпити</string>

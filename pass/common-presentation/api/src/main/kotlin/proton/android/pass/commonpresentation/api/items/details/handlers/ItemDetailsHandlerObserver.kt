@@ -166,28 +166,14 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
 
         val diffMap = mutableMapOf<AttachmentId, ItemDiffType>()
 
-        baseAttachmentsMap.forEach { (attachmentId, baseAttachment) ->
-            val otherAttachment = otherAttachmentsMap[attachmentId]
-
+        baseAttachmentsMap.keys.forEach { attachmentId ->
             when {
-                otherAttachment == null -> {
-                    // The attachment was removed
+                otherAttachmentsMap[attachmentId] == null ->
                     diffMap[attachmentId] = ItemDiffType.Field
-                }
-
-                baseAttachment != otherAttachment -> {
-                    // The attachment was modified
-                    diffMap[attachmentId] = calculateAttachmentDiffType(baseAttachment, otherAttachment)
-                }
-
-                else -> {
-                    // No change
-                    diffMap[attachmentId] = ItemDiffType.None
-                }
+                else -> diffMap[attachmentId] =
+                    ItemDiffType.None
             }
         }
-
-        // Check for newly added attachments
         otherAttachmentsMap.keys
             .filterNot { it in baseAttachmentsMap }
             .forEach { newAttachmentId ->
@@ -196,12 +182,6 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
 
         return diffMap
     }
-
-    private fun calculateAttachmentDiffType(baseAttachment: Attachment, otherAttachment: Attachment): ItemDiffType =
-        when {
-            baseAttachment.name != otherAttachment.name -> ItemDiffType.Content
-            else -> ItemDiffType.None
-        }
 
     protected fun updateHiddenStateValue(
         hiddenState: HiddenState,

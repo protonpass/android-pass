@@ -45,8 +45,11 @@ import proton.android.pass.composecomponents.impl.attachments.AttachmentContentE
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
+import proton.android.pass.composecomponents.impl.item.details.modifiers.contentDiff
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.ItemDiffType
+import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.items.ItemCategory
 
 @Composable
@@ -55,7 +58,8 @@ fun AttachmentSection(
     attachmentsState: AttachmentsState,
     isDetail: Boolean,
     itemColors: PassItemColors,
-    onEvent: (AttachmentContentEvent) -> Unit
+    itemDiffs: Map<AttachmentId, ItemDiffType> = emptyMap(),
+    onEvent: (AttachmentContentEvent) -> Unit,
 ) {
     if (!attachmentsState.hasAnyAttachment && isDetail) return
     Column(
@@ -85,6 +89,7 @@ fun AttachmentSection(
             attachmentsState.attachmentsList.forEachIndexed { index, attachment ->
                 AttachmentRow(
                     innerModifier = Modifier
+                        .contentDiff(itemDiffType = itemDiffs[attachment.id]?: ItemDiffType.None)
                         .applyIf(
                             condition = isDetail,
                             ifTrue = { padding(start = Spacing.medium) },

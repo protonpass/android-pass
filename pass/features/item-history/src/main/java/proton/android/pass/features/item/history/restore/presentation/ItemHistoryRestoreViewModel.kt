@@ -32,9 +32,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import proton.android.pass.common.api.FlowUtils.oneShot
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsSource
@@ -74,6 +71,7 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     openItemRevision: OpenItemRevision,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    observeAllItemRevisionAttachments: ObserveAllItemRevisionAttachments,
     private val restoreItemRevision: RestoreItemRevision,
     private val restoreAttachments: RestoreAttachments,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
@@ -81,8 +79,7 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     private val itemDetailsHandler: ItemDetailsHandler,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val getItemById: GetItemById,
-    private val observeAllItemRevisionAttachments: ObserveAllItemRevisionAttachments
+    private val getItemById: GetItemById
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -147,11 +144,13 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         )
     }
 
-    private val revisionItemContentsUpdateOptionFlow = MutableStateFlow<Option<ItemContents>>(None)
+    private val revealedRevisionHiddenFieldsFlow = MutableStateFlow(
+        emptyMap<ItemSection, Set<ItemDetailsFieldType.Hidden>>()
+    )
 
     private val revisionItemDetailsStateFlow = revisionItemFlow.flatMapLatest { item ->
         createItemDetailsStateFlow(
-            itemContentsUpdateOptionFlow = revisionItemContentsUpdateOptionFlow,
+            revealedHiddenFieldsFlow = revealedRevisionHiddenFieldsFlow,
             itemDetailStateFlow = itemDetailsHandler.observeItemDetails(
                 item = item,
                 source = ItemDetailsSource.REVISION
@@ -176,11 +175,13 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         )
     }
 
-    private val currentItemContentsUpdateOptionFlow = MutableStateFlow<Option<ItemContents>>(None)
+    private val revealedCurrentHiddenFieldsFlow = MutableStateFlow(
+        emptyMap<ItemSection, Set<ItemDetailsFieldType.Hidden>>()
+    )
 
     private val currentItemDetailsStateFlow = currentItemFlow.flatMapLatest { item ->
         createItemDetailsStateFlow(
-            itemContentsUpdateOptionFlow = currentItemContentsUpdateOptionFlow,
+            revealedHiddenFieldsFlow = revealedCurrentHiddenFieldsFlow,
             itemDetailStateFlow = itemDetailsHandler.observeItemDetails(
                 item = item,
                 source = ItemDetailsSource.REVISION
@@ -211,20 +212,22 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     )
 
     private fun createItemDetailsStateFlow(
-        itemContentsUpdateOptionFlow: Flow<Option<ItemContents>>,
+        revealedHiddenFieldsFlow: Flow<Map<ItemSection, Set<ItemDetailsFieldType.Hidden>>>,
         itemDetailStateFlow: Flow<ItemDetailState>,
         itemDiffsFlow: Flow<ItemDiffs>
     ) = combine(
-        itemContentsUpdateOptionFlow,
+        revealedHiddenFieldsFlow,
         itemDetailStateFlow,
         itemDiffsFlow
-    ) { itemContentsUpdateOption, itemDetailState, itemDiffs ->
-        when (itemContentsUpdateOption) {
-            None -> itemDetailState.itemContents
-            is Some -> itemContentsUpdateOption.value
-        }.let { itemContents ->
-            itemDetailState.update(itemContents = itemContents, itemDiffs = itemDiffs)
-        }
+    ) { revealedHiddenFields, itemDetailState, itemDiffs ->
+        itemDetailState.update(
+            itemDiffs = itemDiffs,
+            itemContents = itemDetailsHandler.updateItemDetailsContent(
+                revealedHiddenFields = revealedHiddenFields,
+                itemCategory = itemDetailState.itemCategory,
+                itemContents = itemDetailState.itemContents
+            )
+        )
     }
 
     internal fun onEventConsumed(event: ItemHistoryRestoreEvent) {
@@ -247,36 +250,44 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         selection: ItemHistoryRestoreSelection,
         isVisible: Boolean,
         hiddenFieldType: ItemDetailsFieldType.Hidden,
-        hiddenFieldSection: ItemSection
+        itemSection: ItemSection
     ) {
-        when (val stateValue = state.value) {
+        when (state.value) {
             ItemHistoryRestoreState.Initial -> return
             is ItemHistoryRestoreState.ItemDetails -> {
                 when (selection) {
                     ItemHistoryRestoreSelection.Revision -> {
-                        /*itemDetailsHandler.updateItemDetailsContent(
-                            isVisible = isVisible,
-                            hiddenState = hiddenState,
-                            hiddenFieldType = hiddenFieldType,
-                            hiddenFieldSection = hiddenFieldSection,
-                            itemCategory = stateValue.revisionItemDetailState.itemCategory,
-                            itemContents = stateValue.revisionItemDetailState.itemContents
-                        ).also { updatedItemContents ->
-                            revisionItemContentsUpdateOptionFlow.update { updatedItemContents.some() }
-                        }*/
+                        if (isVisible) {
+                            revealedRevisionHiddenFieldsFlow.update {
+                                it.toMutableMap().apply {
+                                    this[itemSection] = (this[itemSection] ?: emptySet()) + hiddenFieldType
+                                }
+                            }
+                        } else {
+                            revealedRevisionHiddenFieldsFlow.update {
+                                it.toMutableMap().apply {
+                                    this[itemSection] = (this[itemSection] ?: emptySet()) - hiddenFieldType
+                                    if (this[itemSection]?.isEmpty() == true) remove(itemSection)
+                                }
+                            }
+                        }
                     }
 
                     ItemHistoryRestoreSelection.Current -> {
-                        /*itemDetailsHandler.updateItemDetailsContent(
-                            isVisible = isVisible,
-                            hiddenState = hiddenState,
-                            hiddenFieldType = hiddenFieldType,
-                            hiddenFieldSection = hiddenFieldSection,
-                            itemCategory = stateValue.currentItemDetailState.itemCategory,
-                            itemContents = stateValue.currentItemDetailState.itemContents
-                        ).also { updatedItemContents ->
-                            currentItemContentsUpdateOptionFlow.update { updatedItemContents.some() }
-                        }*/
+                        if (isVisible) {
+                            revealedCurrentHiddenFieldsFlow.update {
+                                it.toMutableMap().apply {
+                                    this[itemSection] = (this[itemSection] ?: emptySet()) + hiddenFieldType
+                                }
+                            }
+                        } else {
+                            revealedCurrentHiddenFieldsFlow.update {
+                                it.toMutableMap().apply {
+                                    this[itemSection] = (this[itemSection] ?: emptySet()) - hiddenFieldType
+                                    if (this[itemSection]?.isEmpty() == true) remove(itemSection)
+                                }
+                            }
+                        }
                     }
                 }
             }

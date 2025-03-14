@@ -21,10 +21,12 @@ package proton.android.pass.data.impl.repositories
 import FileV1
 import android.content.Context
 import android.net.Uri
+import androidx.core.net.toUri
 import dagger.hilt.android.qualifiers.ApplicationContext
 import fileMetadata
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.isActive
@@ -43,8 +45,10 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.crypto.GetItemKey
+import proton.android.pass.data.api.errors.FileSizeExceededError
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
+import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.impl.crypto.ReencryptAttachment
 import proton.android.pass.data.impl.crypto.ReencryptedKey
 import proton.android.pass.data.impl.crypto.ReencryptedMetadata
@@ -85,21 +89,32 @@ class AttachmentRepositoryImpl @Inject constructor(
     private val fileTypeDetector: FileTypeDetector,
     private val fileUriGenerator: FileUriGenerator,
     private val reencryptAttachment: ReencryptAttachment,
+    private val userAccessDataRepository: UserAccessDataRepository,
     private val getItemKey: GetItemKey
 ) : AttachmentRepository {
 
     override suspend fun createPendingAttachment(userId: UserId, metadata: FileMetadata): PendingAttachmentId {
+        val userAccessData = userAccessDataRepository.observe(userId).first()
+            ?: throw IllegalStateException("Cannot retrieve user access data")
+        if (metadata.size >= userAccessData.storageMaxFileSize) {
+            throw FileSizeExceededError()
+        }
         val fileMetadata = fileMetadata {
             this.name = metadata.name
             this.mimeType = metadata.mimeType
         }
+
         val fileKey = EncryptionKey.generate()
         val encryptedMetadata =
             encryptionContextProvider.withEncryptionContextSuspendable(fileKey.clone()) {
                 encrypt(fileMetadata.toByteArray(), EncryptionTag.FileData)
             }
         val encodedMetadata = Base64.encodeBase64String(encryptedMetadata.array)
-        val id = remote.createPendingFile(userId, encodedMetadata).let(::PendingAttachmentId)
+
+        val chunks = (metadata.size + CHUNK_SIZE - 1) / CHUNK_SIZE
+
+        val id = remote.createPendingFile(userId, encodedMetadata, chunks.toInt())
+            .let(::PendingAttachmentId)
         pendingAttachmentLinkRepository.addToLink(id, fileKey)
         return id
     }
@@ -136,7 +151,7 @@ class AttachmentRepositoryImpl @Inject constructor(
         val fileKey: EncryptionKey =
             pendingAttachmentLinkRepository.getToLinkKey(pendingAttachmentId)
                 ?: throw IllegalStateException("No encryption key found for attachment $pendingAttachmentId")
-        val contentUri: Uri = Uri.parse(uri.toString())
+        val contentUri: Uri = uri.toString().toUri()
         withContext(appDispatchers.io) {
             encryptionContextProvider.withEncryptionContextSuspendable(fileKey) {
                 context.contentResolver.openInputStream(contentUri)?.use { inputStream ->
@@ -474,7 +489,7 @@ class AttachmentRepositoryImpl @Inject constructor(
         if (existingFileUri != null) return existingFileUri
 
         val uri: URI = fileUriGenerator.generate(fileType)
-        val contentUri = Uri.parse(uri.toString())
+        val contentUri = uri.toString().toUri()
 
         withContext(appDispatchers.io) {
             runCatching {

@@ -61,7 +61,9 @@ data class UserAccessDataEntity(
     @ColumnInfo(name = Columns.STORAGE_USED, defaultValue = "0")
     val storageUsed: Long,
     @ColumnInfo(name = Columns.STORAGE_QUOTA, defaultValue = "0")
-    val storageQuota: Long
+    val storageQuota: Long,
+    @ColumnInfo(name = Columns.STORAGE_MAX_FILE_SIZE, defaultValue = "0")
+    val storageMaxFileSize: Long
 ) {
     object Columns {
         const val USER_ID = "user_id"
@@ -77,6 +79,7 @@ data class UserAccessDataEntity(
         const val STORAGE_ALLOWED = "storage_allowed"
         const val STORAGE_USED = "storage_used"
         const val STORAGE_QUOTA = "storage_quota"
+        const val STORAGE_MAX_FILE_SIZE = "storage_max_file_size"
     }
 
     companion object {

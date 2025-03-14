@@ -26,11 +26,12 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.requests.attachments.CreatePendingFileRequest
 import proton.android.pass.data.impl.requests.attachments.LinkPendingFileRequest
 import proton.android.pass.data.impl.requests.attachments.LinkPendingFilesRequest
-import proton.android.pass.data.impl.requests.attachments.PendingFileRequest
 import proton.android.pass.data.impl.requests.attachments.RestoreOldFileRequest
 import proton.android.pass.data.impl.requests.attachments.UpdateFileMetadataRequest
+import proton.android.pass.data.impl.requests.attachments.UpdatePendingFileRequest
 import proton.android.pass.data.impl.responses.attachments.FileApiModel
 import proton.android.pass.data.impl.responses.attachments.FileResult
 import proton.android.pass.data.impl.responses.attachments.FilesApiModel
@@ -45,9 +46,12 @@ class RemoteAttachmentsDataSourceImpl @Inject constructor(
     private val api: ApiProvider
 ) : RemoteAttachmentsDataSource {
 
-    override suspend fun createPendingFile(userId: UserId, metadata: EncryptedString): String =
-        api.get<PasswordManagerApi>(userId)
-            .invoke { createPendingFile(PendingFileRequest(metadata)) }
+    override suspend fun createPendingFile(
+        userId: UserId,
+        metadata: EncryptedString,
+        chunkCount: Int
+    ): String = api.get<PasswordManagerApi>(userId)
+            .invoke { createPendingFile(CreatePendingFileRequest(metadata, chunkCount)) }
             .valueOrThrow
             .file
             .fileID
@@ -57,7 +61,12 @@ class RemoteAttachmentsDataSourceImpl @Inject constructor(
         pendingAttachmentId: PendingAttachmentId,
         metadata: EncryptedString
     ): String = api.get<PasswordManagerApi>(userId)
-        .invoke { updatePendingFileMetadata(pendingAttachmentId.id, PendingFileRequest(metadata)) }
+        .invoke {
+            updatePendingFileMetadata(
+                fileId = pendingAttachmentId.id,
+                request = UpdatePendingFileRequest(metadata)
+            )
+        }
         .valueOrThrow
         .file
         .fileID

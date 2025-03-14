@@ -22,7 +22,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PendingFileRequest(
+data class UpdatePendingFileRequest(
     @SerialName("Metadata")
     val metadata: String
 )

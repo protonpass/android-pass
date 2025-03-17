@@ -49,13 +49,14 @@ fun CustomContent(
                 iconBackgroundColor = PassTheme.colors.interactionNormMinor1,
                 selectedVault = itemSharedProperties.selectedVault.value(),
                 showVaultSelector = itemSharedProperties.shouldShowVaultSelector,
+                showUpgrade = !itemSharedProperties.canCreateItem,
                 onCloseClick = { onEvent(ItemContentEvent.Up) },
                 onActionClick = {
                     itemSharedProperties.selectedShareId.value()?.let {
                         onEvent(ItemContentEvent.Submit(it))
                     }
                 },
-                onUpgrade = { },
+                onUpgrade = { onEvent(ItemContentEvent.OnUpgrade) },
                 onVaultSelectorClick = {
                     itemSharedProperties.selectedShareId.value()?.let {
                         onEvent(ItemContentEvent.OnVaultSelect(it))

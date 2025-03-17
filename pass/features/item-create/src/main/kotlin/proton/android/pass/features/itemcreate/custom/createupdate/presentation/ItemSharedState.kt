@@ -39,7 +39,7 @@ data class ItemSharedUiState(
     val validationErrors: PersistentSet<ItemValidationErrors>,
     val isItemSaved: ItemSavedState,
     val focusedField: Option<FieldIdentifier>,
-    val canUseCustomFields: Boolean,
+    val canCreateItem: Boolean,
     val displayFileAttachmentsOnboarding: Boolean,
     val isFileAttachmentsEnabled: Boolean,
     val attachmentsState: AttachmentsState
@@ -55,7 +55,7 @@ data class ItemSharedUiState(
             validationErrors = persistentSetOf(),
             isItemSaved = ItemSavedState.Unknown,
             focusedField = None,
-            canUseCustomFields = false,
+            canCreateItem = false,
             displayFileAttachmentsOnboarding = false,
             isFileAttachmentsEnabled = false,
             attachmentsState = AttachmentsState.Initial

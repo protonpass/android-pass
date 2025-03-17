@@ -39,6 +39,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
+import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
@@ -80,6 +81,7 @@ class UpdateCustomItemViewModel @Inject constructor(
     private val renameAttachments: RenameAttachments,
     private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
     private val totpManager: TotpManager,
+    canPerformPaidAction: CanPerformPaidAction,
     linkAttachmentsToItem: LinkAttachmentsToItem,
     userPreferencesRepository: UserPreferencesRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
@@ -88,6 +90,7 @@ class UpdateCustomItemViewModel @Inject constructor(
     appDispatchers: AppDispatchers,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCustomItemViewModel(
+    canPerformPaidAction = canPerformPaidAction,
     linkAttachmentsToItem = linkAttachmentsToItem,
     attachmentsHandler = attachmentsHandler,
     snackbarDispatcher = snackbarDispatcher,

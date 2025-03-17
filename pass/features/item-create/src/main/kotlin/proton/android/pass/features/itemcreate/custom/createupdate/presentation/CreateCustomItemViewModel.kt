@@ -46,6 +46,7 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
@@ -85,6 +86,7 @@ class CreateCustomItemViewModel @Inject constructor(
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
+    canPerformPaidAction: CanPerformPaidAction,
     linkAttachmentsToItem: LinkAttachmentsToItem,
     attachmentsHandler: AttachmentsHandler,
     userPreferencesRepository: UserPreferencesRepository,
@@ -97,6 +99,7 @@ class CreateCustomItemViewModel @Inject constructor(
     appDispatchers: AppDispatchers,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCustomItemViewModel(
+    canPerformPaidAction = canPerformPaidAction,
     linkAttachmentsToItem = linkAttachmentsToItem,
     snackbarDispatcher = snackbarDispatcher,
     attachmentsHandler = attachmentsHandler,

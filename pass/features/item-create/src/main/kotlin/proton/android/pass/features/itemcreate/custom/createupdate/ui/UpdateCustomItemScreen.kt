@@ -114,6 +114,7 @@ fun UpdateCustomItemScreen(
             onEvent = {
                 when (it) {
                     ItemContentEvent.Up -> onExit()
+                    ItemContentEvent.OnUpgrade -> onNavigate(BaseCustomItemNavigation.Upgrade)
 
                     is ItemContentEvent.OnFieldValueChange -> when (it.field) {
                         FieldChange.Password ->

@@ -104,11 +104,8 @@ interface ItemSharedProperties {
     val focusedField: Option<FieldIdentifier>
         get() = sharedState.focusedField
 
-    val canUseCustomFields: Boolean
-        get() = sharedState.canUseCustomFields
-
-    val hasReceivedItem: Boolean
-        get() = false
+    val canCreateItem: Boolean
+        get() = sharedState.canCreateItem
 
     val showFileAttachments: Boolean
         get() = sharedState.showFileAttachments
@@ -125,7 +122,7 @@ val EMPTY_SHARED_STATE = ItemSharedUiState(
     isItemSaved = ItemSavedState.Unknown,
     isLoadingState = IsLoadingState.NotLoading,
     validationErrors = persistentSetOf(),
-    canUseCustomFields = false,
+    canCreateItem = false,
     displayFileAttachmentsOnboarding = false,
     isFileAttachmentsEnabled = false,
     focusedField = None,

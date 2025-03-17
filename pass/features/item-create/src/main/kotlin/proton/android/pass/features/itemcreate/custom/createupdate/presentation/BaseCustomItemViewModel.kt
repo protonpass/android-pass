@@ -46,6 +46,7 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.Item
@@ -148,6 +149,7 @@ abstract class BaseCustomItemViewModel(
     private val clipboardManager: ClipboardManager,
     private val totpManager: TotpManager,
     private val appDispatchers: AppDispatchers,
+    private val canPerformPaidAction: CanPerformPaidAction,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -770,10 +772,11 @@ abstract class BaseCustomItemViewModel(
         validationErrorsState,
         isItemSavedState,
         focusedFieldState,
+        canPerformPaidAction(),
         featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
         attachmentsHandler.attachmentState
-    ) { isLoading, hasEdited, errors, savedState, lastAddedField,
+    ) { isLoading, hasEdited, errors, savedState, lastAddedField, canPerformPaidAction,
         isFileAttachmentsEnabled, displayFileAttachmentsOnboarding, attachmentsState ->
         ItemSharedUiState(
             isLoadingState = isLoading,
@@ -781,7 +784,7 @@ abstract class BaseCustomItemViewModel(
             validationErrors = errors.toPersistentSet(),
             isItemSaved = savedState,
             focusedField = lastAddedField,
-            canUseCustomFields = true,
+            canCreateItem = canPerformPaidAction,
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
             isFileAttachmentsEnabled = isFileAttachmentsEnabled,
             attachmentsState = attachmentsState

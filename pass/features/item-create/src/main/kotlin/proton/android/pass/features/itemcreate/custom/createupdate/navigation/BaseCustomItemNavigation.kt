@@ -66,6 +66,8 @@ sealed interface BaseCustomItemNavigation {
 
     data object UpsellAttachments : BaseCustomItemNavigation
 
+    data object Upgrade : BaseCustomItemNavigation
+
     @JvmInline
     value class DeleteAllAttachments(val attachmentIds: Set<AttachmentId>) : BaseCustomItemNavigation
 

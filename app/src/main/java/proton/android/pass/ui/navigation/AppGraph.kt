@@ -1403,6 +1403,7 @@ fun NavGraphBuilder.appGraph(
         when (it) {
             BaseCustomItemNavigation.CloseScreen -> appNavigator.navigateBack()
             BaseCustomItemNavigation.DismissBottomsheet -> dismissBottomSheet {}
+            BaseCustomItemNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
             is CreateCustomItemNavigation.ItemCreated -> appNavigator.navigateBack()
             is CreateCustomItemNavigation.SelectVault -> appNavigator.navigate(
                 destination = SelectVaultBottomsheet,

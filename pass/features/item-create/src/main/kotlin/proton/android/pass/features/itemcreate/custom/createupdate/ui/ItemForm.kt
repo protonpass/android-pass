@@ -182,22 +182,20 @@ fun ItemForm(
                     onEvent = onEvent
                 )
             }
-            if (itemSharedProperties.canUseCustomFields) {
-                item {
-                    Column(
-                        modifier = Modifier.padding(
-                            vertical = Spacing.small,
-                            horizontal = Spacing.medium
-                        ),
-                        verticalArrangement = Arrangement.spacedBy(Spacing.medium)
-                    ) {
-                        PassDivider()
-                        AddSectionButton(
-                            isEnabled = itemSharedProperties.isFormEnabled,
-                            passItemColors = passItemColors(ItemCategory.Custom),
-                            onClick = { onEvent(ItemContentEvent.OnAddSection) }
-                        )
-                    }
+            item {
+                Column(
+                    modifier = Modifier.padding(
+                        vertical = Spacing.small,
+                        horizontal = Spacing.medium
+                    ),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+                ) {
+                    PassDivider()
+                    AddSectionButton(
+                        isEnabled = itemSharedProperties.isFormEnabled,
+                        passItemColors = passItemColors(ItemCategory.Custom),
+                        onClick = { onEvent(ItemContentEvent.OnAddSection) }
+                    )
                 }
             }
             if (itemSharedProperties.showFileAttachments) {

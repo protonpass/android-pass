@@ -77,4 +77,7 @@ sealed interface ItemContentEvent {
 
     @JvmInline
     value class OnOpenWifiSecurityType(val wifiSecurityType: WifiSecurityType) : ItemContentEvent
+
+    data object OnUpgrade : ItemContentEvent
+
 }

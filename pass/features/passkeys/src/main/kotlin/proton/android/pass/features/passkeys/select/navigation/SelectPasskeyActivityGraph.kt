@@ -58,10 +58,12 @@ fun NavGraphBuilder.selectPasskeyActivityGraph(
         navigation = {
             when (it) {
                 is AuthNavigation.CloseScreen -> onNavigate(SelectPasskeyNavigation.Cancel)
-                is AuthNavigation.Success -> when (actionAfterAuth) {
-                    SelectPasskeyActionAfterAuth.SelectItem -> appNavigator.navigate(SelectItem)
-                    SelectPasskeyActionAfterAuth.EmitEvent -> {
-                        onEvent(SelectPasskeyEvent.OnAuthPerformed)
+                is AuthNavigation.Success -> dismissBottomSheet {
+                    when (actionAfterAuth) {
+                        SelectPasskeyActionAfterAuth.SelectItem -> appNavigator.navigate(SelectItem)
+                        SelectPasskeyActionAfterAuth.EmitEvent -> {
+                            onEvent(SelectPasskeyEvent.OnAuthPerformed)
+                        }
                     }
                 }
 

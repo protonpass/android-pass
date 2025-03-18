@@ -142,7 +142,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                     selectedAutofillItem != null ->
                         onEvent(AutofillEvent.AutofillSuggestionSelected(selectedAutofillItem))
 
-                    else -> appNavigator.navigate(SelectItem)
+                    else -> dismissBottomSheet { appNavigator.navigate(SelectItem) }
                 }
 
                 AuthNavigation.Dismissed -> onNavigate(AutofillNavigation.Cancel)

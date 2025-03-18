@@ -110,6 +110,10 @@ android {
         }
     }
 
+    androidResources {
+        generateLocaleConfig = true
+    }
+
     testOptions {
         execution = "ANDROIDX_TEST_ORCHESTRATOR"
     }

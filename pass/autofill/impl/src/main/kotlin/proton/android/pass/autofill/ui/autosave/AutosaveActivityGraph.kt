@@ -61,7 +61,9 @@ fun NavGraphBuilder.autosaveActivityGraph(
         navigation = {
             when (it) {
                 is AuthNavigation.CloseScreen -> onNavigate(AutosaveNavigation.Cancel)
-                is AuthNavigation.Success -> appNavigator.navigate(CreateLoginNavItem)
+                is AuthNavigation.Success -> dismissBottomSheet {
+                    appNavigator.navigate(CreateLoginNavItem)
+                }
                 AuthNavigation.Dismissed -> onNavigate(AutosaveNavigation.Cancel)
                 AuthNavigation.Failed -> onNavigate(AutosaveNavigation.Cancel)
                 is AuthNavigation.ForceSignOut ->

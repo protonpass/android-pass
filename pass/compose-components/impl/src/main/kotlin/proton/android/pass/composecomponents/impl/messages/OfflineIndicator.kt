@@ -26,11 +26,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.CloudOff
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,8 +39,10 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
 import me.proton.core.compose.theme.textWeak
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.composecomponents.impl.icon.Icon
 
 @Composable
 fun OfflineIndicator(modifier: Modifier = Modifier) {
@@ -55,12 +54,12 @@ fun OfflineIndicator(modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(
+        Icon.Default(
             modifier = Modifier.padding(vertical = 2.dp),
-            imageVector = Icons.Outlined.CloudOff,
-            contentDescription = null
+            id = R.drawable.ic_cloud_off,
+            tint = ProtonTheme.colors.iconNorm
         )
-        Spacer(modifier = Modifier.width(12.dp))
+        Spacer(modifier = Modifier.width(Spacing.small))
         Text(
             text = stringResource(R.string.indicator_no_network),
             style = ProtonTheme.typography.defaultSmallNorm

@@ -163,29 +163,25 @@ internal class AuthViewModelTest {
         }
 
     @Test
-    internal fun `GIVEN biometrics are not available WHEN requesting biometrics THEN emits Success event`() = runTest {
+    internal fun `GIVEN biometrics are not available WHEN requesting biometrics THEN emits no event`() = runTest {
         biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
 
         viewModel.onBiometricsRequired(ClassHolder(None))
 
         viewModel.state.test {
-            assertThat(awaitItem().event).isEqualTo(
-                AuthEvent.Success(AuthOrigin.AUTO_LOCK).some()
-            )
+            assertThat(awaitItem().event).isEqualTo(None)
         }
     }
 
     @Test
-    internal fun `GIVEN biometrics are not enrolled WHEN requesting biometrics THEN emits Success event`() = runTest {
+    internal fun `GIVEN biometrics are not enrolled WHEN requesting biometrics THEN emits no event`() = runTest {
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
         biometryManager.setBiometryStatus(BiometryStatus.NotEnrolled)
 
         viewModel.onBiometricsRequired(ClassHolder(None))
 
         viewModel.state.test {
-            assertThat(awaitItem().event).isEqualTo(
-                AuthEvent.Success(AuthOrigin.AUTO_LOCK).some()
-            )
+            assertThat(awaitItem().event).isEqualTo(None)
         }
     }
 

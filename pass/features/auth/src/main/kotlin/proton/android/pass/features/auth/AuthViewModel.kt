@@ -504,24 +504,18 @@ class AuthViewModel @Inject constructor(
     }
 
     internal fun onBiometricsRequired(contextHolder: ClassHolder<Context>) = viewModelScope.launch {
-        val newAuthEvent = when (biometryManager.getBiometryStatus()) {
+        when (biometryManager.getBiometryStatus()) {
             BiometryStatus.NotAvailable,
-            BiometryStatus.NotEnrolled -> AuthEvent.Success(origin)
+            BiometryStatus.NotEnrolled -> {}
 
             BiometryStatus.CanAuthenticate -> {
                 val biometricLockState = preferenceRepository.getAppLockState().first()
-                if (biometricLockState == AppLockState.Enabled) {
-                    // If there is biometry available, and the user has it enabled, perform auth
-                    openBiometrics(contextHolder)
-                    return@launch
+                when (biometricLockState) {
+                    AppLockState.Enabled -> openBiometrics(contextHolder)
+                    AppLockState.Disabled -> updateAuthEventFlow(AuthEvent.Success(origin))
                 }
-                // If there is biometry available, but the user does not have it enabled
-                // we should proceed
-                AuthEvent.Success(origin)
             }
         }
-
-        updateAuthEventFlow(newAuthEvent)
     }
 
     private suspend fun openBiometrics(contextHolder: ClassHolder<Context>) {

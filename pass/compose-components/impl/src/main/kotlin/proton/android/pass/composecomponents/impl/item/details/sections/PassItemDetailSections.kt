@@ -147,6 +147,7 @@ internal fun PassItemDetailSections(
             itemId = itemId,
             shareId = shareId,
             contents = itemContents,
+            svgQR = svgQR,
             customFieldTotps = customFieldTotps.toImmutableMap(),
             itemColors = itemColors,
             itemDiffs = itemDiffs,

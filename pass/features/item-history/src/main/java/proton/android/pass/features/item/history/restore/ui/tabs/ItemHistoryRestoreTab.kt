@@ -98,6 +98,9 @@ internal fun ItemHistoryRestoreTab(
                         // We do nothing since we don't allow attachment management from restore screen
                     }
                 }
+                is PassItemDetailsUiEvent.OnWifiNetworkQRClick ->
+                    ItemHistoryRestoreUiEvent.OnWifiNetworkQRClick(rawSvg = uiEvent.rawSvg)
+                        .also(onEvent)
             }
         },
         shouldDisplayItemHistorySection = false,

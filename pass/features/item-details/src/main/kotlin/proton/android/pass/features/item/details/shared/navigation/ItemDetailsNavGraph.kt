@@ -27,6 +27,8 @@ import proton.android.pass.features.item.details.detailleave.navigation.ItemDeta
 import proton.android.pass.features.item.details.detailleave.ui.ItemDetailsLeaveDialog
 import proton.android.pass.features.item.details.detailmenu.navigation.ItemDetailsMenuNavItem
 import proton.android.pass.features.item.details.detailmenu.ui.ItemDetailsMenuBottomSheet
+import proton.android.pass.features.item.details.qrviewer.navigation.QRViewerNavItem
+import proton.android.pass.features.item.details.qrviewer.ui.QRViewerDialog
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.dialog
@@ -47,6 +49,10 @@ fun NavGraphBuilder.itemDetailsNavGraph(onNavigated: (ItemDetailsNavDestination)
 
     dialog(navItem = ItemDetailsLeaveNavItem) {
         ItemDetailsLeaveDialog(onNavigated = onNavigated)
+    }
+
+    dialog(navItem = QRViewerNavItem) {
+        QRViewerDialog(onNavigated = onNavigated)
     }
 
 }

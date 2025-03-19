@@ -589,6 +589,24 @@ class HomeViewModel @Inject constructor(
     private val bottomSheetItemActionFlow: MutableStateFlow<BottomSheetItemAction> =
         MutableStateFlow(BottomSheetItemAction.None)
 
+    data class HomeFeatures(
+        val isSLAliasSyncEnabled: Boolean,
+        val isItemSharingEnabled: Boolean,
+        val isCustomItemEnabled: Boolean
+    )
+
+    private val homeFeaturesFlow: Flow<HomeFeatures> = combine(
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC),
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1),
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1)
+    ) { isSLAliasSyncEnabled, isItemSharingEnabled, isCustomItemEnabled ->
+        HomeFeatures(
+            isSLAliasSyncEnabled = isSLAliasSyncEnabled,
+            isItemSharingEnabled = isItemSharingEnabled,
+            isCustomItemEnabled = isCustomItemEnabled
+        )
+    }
+
     internal val homeUiState: StateFlow<HomeUiState> = combineN(
         homeListUiStateFlow,
         searchUiStateFlow,
@@ -596,22 +614,20 @@ class HomeViewModel @Inject constructor(
         navEventState,
         pinningUiStateFlow,
         bottomSheetItemActionFlow,
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC),
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1),
         preferencesRepository.observeAliasTrashDialogStatusPreference(),
         observeCanCreateItems(),
-        observeHasShares()
+        observeHasShares(),
+        homeFeaturesFlow
     ) { homeListUiState,
         searchUiState,
         userPlan,
         navEvent,
         pinningUiState,
         bottomSheetItemAction,
-        isSLAliasSyncEnabled,
-        isItemSharingEnabled,
         aliasTrashDialogStatusPreference,
         canCreateItems,
-        hasShares ->
+        hasShares,
+        homeFeatures ->
         HomeUiState(
             homeListUiState = homeListUiState,
             searchUiState = searchUiState,
@@ -620,8 +636,9 @@ class HomeViewModel @Inject constructor(
             navEvent = navEvent,
             action = bottomSheetItemAction,
             isFreePlan = userPlan.map { plan -> plan.isFreePlan }.getOrNull() ?: true,
-            isSLAliasSyncEnabled = isSLAliasSyncEnabled,
-            isItemSharingEnabled = isItemSharingEnabled,
+            isSLAliasSyncEnabled = homeFeatures.isSLAliasSyncEnabled,
+            isItemSharingEnabled = homeFeatures.isItemSharingEnabled,
+            isCustomItemEnabled = homeFeatures.isCustomItemEnabled,
             aliasTrashDialogStatusPreference = aliasTrashDialogStatusPreference,
             canCreateItems = canCreateItems,
             hasShares = hasShares

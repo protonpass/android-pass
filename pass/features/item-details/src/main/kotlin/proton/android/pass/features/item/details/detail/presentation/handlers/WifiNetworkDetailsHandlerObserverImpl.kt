@@ -27,8 +27,10 @@ import kotlinx.coroutines.flow.onStart
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
+import proton.android.pass.commonrust.api.WifiNetworkQRGenerator
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -45,6 +47,7 @@ import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
 class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
+    private val wifiNetworkQRGenerator: WifiNetworkQRGenerator,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val totpManager: TotpManager
 ) : ItemDetailsHandlerObserver<ItemContents.WifiNetwork>() {
@@ -71,7 +74,14 @@ class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
             itemShare = share,
             itemShareCount = item.shareCount,
             attachmentsState = attachmentsState,
-            customFieldTotps = customFieldsTotps
+            customFieldTotps = customFieldsTotps,
+            svgQR = wifiNetworkQRGenerator.generateQr(
+                ssid = itemContents.ssid,
+                password = encryptionContextProvider.withEncryptionContextSuspendable {
+                    decrypt(itemContents.password.encrypted)
+                },
+                wifiSecurity = itemContents.wifiSecurityType
+            ).getOrNull().toOption()
         )
     }
 

@@ -279,7 +279,8 @@ sealed interface ItemDetailState {
         override val itemDiffs: ItemDiffs.WifiNetwork,
         override val itemShareCount: Int,
         override val attachmentsState: AttachmentsState,
-        val customFieldTotps: Map<Pair<Option<Int>, Int>, Totp>
+        val customFieldTotps: Map<Pair<Option<Int>, Int>, Totp>,
+        val svgQR: Option<String>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.WifiNetwork

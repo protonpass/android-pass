@@ -24,7 +24,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.domain.attachments.DraftAttachment
@@ -63,22 +62,23 @@ class DraftAttachmentRepositoryImpl @Inject constructor() : DraftAttachmentRepos
 
     override fun getAll(): List<DraftAttachment> = draftAttachmentsStateFlow.value.values.toList()
 
-    override fun observeNew(): Flow<DraftAttachment> {
-        val seenUris = mutableSetOf<URI>()
-        return draftAttachmentsStateFlow
-            .map { currentMap ->
-                currentMap.filterKeys { it !in seenUris }
-            }
-            .onEach { newEntries ->
-                seenUris.addAll(newEntries.keys)
-            }
-            .flatMapConcat { newEntries ->
-                flow {
-                    for (state in newEntries.values) {
-                        emit(state)
-                    }
+    override fun observeNew(): Flow<DraftAttachment> = draftAttachmentsStateFlow
+        .pairwise()
+        .flatMapConcat { (previousMap, currentMap) ->
+            val newUris = currentMap.keys - previousMap.keys
+            flow {
+                for (uri in newUris) {
+                    currentMap[uri]?.let { emit(it) }
                 }
             }
+        }
+
+    fun <T> Flow<T>.pairwise(): Flow<Pair<T, T>> = flow {
+        var previous: T? = null
+        collect { value ->
+            previous?.let { emit(it to value) }
+            previous = value
+        }
     }
 
     override fun remove(uri: URI): Boolean {

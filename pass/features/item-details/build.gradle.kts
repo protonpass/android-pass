@@ -79,6 +79,7 @@ dependencies {
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.totp.api)
 
+    implementation(libs.androidsvg)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.ui)

@@ -144,6 +144,10 @@ fun ItemDetailsScreen(
                         is AttachmentContentEvent.OnDraftAttachmentOptions ->
                             throw IllegalStateException("Action not allowed: $uiEvent")
                     }
+
+                is ItemDetailsUiEvent.OnWifiNetworkQRClick ->
+                    ItemDetailsNavDestination.WifiNetworkQRClick(uiEvent.rawSvg)
+                        .also(onNavigated)
             }
         }
     )

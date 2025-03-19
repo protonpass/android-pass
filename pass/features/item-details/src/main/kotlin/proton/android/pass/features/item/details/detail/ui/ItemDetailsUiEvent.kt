@@ -23,8 +23,8 @@ import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetai
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.HiddenState
-import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.ItemCategory
@@ -97,4 +97,8 @@ internal sealed interface ItemDetailsUiEvent {
     value class OnAttachmentEvent(
         internal val attachmentContentEvent: AttachmentContentEvent
     ) : ItemDetailsUiEvent
+
+    @JvmInline
+    value class OnWifiNetworkQRClick(val rawSvg: String) : ItemDetailsUiEvent
+
 }

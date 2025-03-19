@@ -58,4 +58,7 @@ sealed interface PassItemDetailsUiEvent {
     @JvmInline
     value class OnAttachmentEvent(val attachmentContentEvent: AttachmentContentEvent) : PassItemDetailsUiEvent
 
+    @JvmInline
+    value class OnWifiNetworkQRClick(val rawSvg: String) : PassItemDetailsUiEvent
+
 }

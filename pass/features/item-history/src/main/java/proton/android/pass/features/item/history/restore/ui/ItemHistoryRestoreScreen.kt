@@ -93,6 +93,8 @@ fun ItemHistoryRestoreScreen(
                         website = uiEvent.linkUrl
                     )
                 }
+                is ItemHistoryRestoreUiEvent.OnWifiNetworkQRClick ->
+                    onNavigated(ItemHistoryNavDestination.WifiNetworkQR(uiEvent.rawSvg))
             }
         }
     )

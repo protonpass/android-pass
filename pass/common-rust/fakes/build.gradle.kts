@@ -49,6 +49,7 @@ dependencies {
     api(projects.pass.commonRust.api)
 
     implementation(projects.pass.common.api)
+    implementation(projects.pass.domain)
 
     implementation(libs.kotlinx.coroutines.core)
 

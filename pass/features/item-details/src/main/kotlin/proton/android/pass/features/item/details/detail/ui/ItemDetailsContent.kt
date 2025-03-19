@@ -132,6 +132,9 @@ internal fun ItemDetailsContent(
                         is PassItemDetailsUiEvent.OnAttachmentEvent -> ItemDetailsUiEvent.OnAttachmentEvent(
                             attachmentContentEvent = uiEvent.attachmentContentEvent
                         )
+
+                        is PassItemDetailsUiEvent.OnWifiNetworkQRClick ->
+                            ItemDetailsUiEvent.OnWifiNetworkQRClick(uiEvent.rawSvg)
                     }.also(onEvent)
                 }
             )

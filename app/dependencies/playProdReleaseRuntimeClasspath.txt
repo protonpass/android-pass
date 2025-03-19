@@ -368,7 +368,7 @@ me.proton.core:util-android-device:30.3.1
 me.proton.core:util-android-sentry:30.3.1
 me.proton.core:util-android-shared-preferences:30.3.1
 me.proton.core:util-kotlin:30.3.1
-me.proton.pass.common:lib:0.11.2
+me.proton.pass.common:lib:0.16.0
 net.java.dev.jna:jna:5.15.0
 org.checkerframework:checker-qual:3.12.0
 org.jetbrains.kotlin:kotlin-android-extensions-runtime:2.0.21

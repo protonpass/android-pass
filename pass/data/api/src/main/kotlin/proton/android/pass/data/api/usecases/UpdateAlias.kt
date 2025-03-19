@@ -28,7 +28,7 @@ import proton.android.pass.domain.ItemContents
 
 data class UpdateAliasContent(
     val mailboxes: Option<List<AliasMailbox>>,
-    val itemData: Option<ItemContents.Alias>,
+    val itemData: ItemContents.Alias,
     private val slNoteOption: Option<String>,
     private val displayNameOption: Option<String>
 ) {

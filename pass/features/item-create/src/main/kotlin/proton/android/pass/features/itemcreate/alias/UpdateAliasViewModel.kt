@@ -126,7 +126,6 @@ class UpdateAliasViewModel @Inject constructor(
 
     private var itemOption: Option<Item> = None
 
-    private var itemDataChanged = false
     private var mailboxesChanged = false
     private var isSLNoteChanged = false
     private var isDisplayNameChanged = false
@@ -198,7 +197,6 @@ class UpdateAliasViewModel @Inject constructor(
     override fun onNoteChange(value: String) {
         super.onNoteChange(value)
         isApplyButtonEnabledState.update { IsButtonEnabled.Enabled }
-        itemDataChanged = true
     }
 
     override fun onSLNoteChange(newSLNote: String) {
@@ -221,7 +219,6 @@ class UpdateAliasViewModel @Inject constructor(
                 .apply { remove(AliasItemValidationErrors.BlankTitle) }
         }
         isApplyButtonEnabledState.update { IsButtonEnabled.Enabled }
-        itemDataChanged = true
     }
 
     private fun onAliasDetails(aliasDetails: AliasDetails, item: Item) {
@@ -351,13 +348,6 @@ class UpdateAliasViewModel @Inject constructor(
     }
 
     private fun canUpdateAlias(): Boolean {
-        val noChangesDetected =
-            !itemDataChanged && !mailboxesChanged && !isSLNoteChanged && !isDisplayNameChanged
-        if (noChangesDetected) {
-            PassLogger.i(TAG, "No changes detected")
-            return false
-        }
-
         val aliasItemValidationErrors = aliasItemFormState.validate(
             allowEmptyTitle = false,
             aliasPrefixValidator = aliasPrefixValidator
@@ -378,13 +368,9 @@ class UpdateAliasViewModel @Inject constructor(
             Some(selectedMailboxes)
         } else None
 
-        val itemData = if (itemDataChanged) {
-            Some(aliasItemFormState.toItemContents())
-        } else None
-
         return UpdateAliasContent(
             mailboxes = mailboxes,
-            itemData = itemData,
+            itemData = aliasItemFormState.toItemContents(),
             slNoteOption = aliasItemFormState.slNote
                 .takeIf { isSLNoteChanged }
                 .toOption(),

@@ -20,6 +20,7 @@ package proton.android.pass.data.impl.usecases.attachments
 
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.data.api.errors.FileSizeExceededError
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
@@ -64,11 +65,15 @@ class UploadAttachmentImpl @Inject constructor(
                 draftAttachmentRepository.update(success)
             }.onFailure { throw it }
         }.onFailure {
-            val error = DraftAttachment.Error(
-                metadata = metadata,
-                errorMessage = it.message ?: "Unknown error"
-            )
-            draftAttachmentRepository.update(error)
+            when (it) {
+                is FileSizeExceededError -> draftAttachmentRepository.remove(metadata.uri)
+                else -> draftAttachmentRepository.update(
+                    DraftAttachment.Error(
+                        metadata = metadata,
+                        errorMessage = it.message ?: "Unknown error"
+                    )
+                )
+            }
             throw it
         }
     }

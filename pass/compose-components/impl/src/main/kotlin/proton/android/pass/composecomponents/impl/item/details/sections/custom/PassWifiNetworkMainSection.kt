@@ -144,7 +144,7 @@ fun PassWifiNetworkMainSection(
                 )
                 Text.Body1Regular(
                     text = stringResource(R.string.show_network_qr_code),
-                    color = itemColors.norm
+                    color = itemColors.majorSecondary
                 )
             }
         }

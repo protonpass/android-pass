@@ -68,4 +68,6 @@ internal sealed interface ItemHistoryRestoreUiEvent {
     @JvmInline
     value class OnLinkClick(val linkUrl: String) : ItemHistoryRestoreUiEvent
 
+    @JvmInline
+    value class OnWifiNetworkQRClick(val rawSvg: String) : ItemHistoryRestoreUiEvent
 }

@@ -80,6 +80,8 @@ showkase = "1.0.2"
 # Squareup
 leakCanary = "2.14"
 retrofit = "2.9.0"
+# SVG
+androidsvg = "1.4"
 # Test
 junit = "4.13.2"
 testParameterInjector = "1.16"
@@ -294,6 +296,9 @@ showkaseProcessor = { module = "com.airbnb.android:showkase-processor", version.
 leakCanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary" }
 plumber = { module = "com.squareup.leakcanary:plumber-android", version.ref = "leakCanary" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+
+# SVG
+androidsvg = { module = "com.caverock:androidsvg-aar", version.ref = "androidsvg" }
 
 # Test
 androidx-benchmark-macro = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "androidx-benchmark" }

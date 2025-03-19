@@ -79,4 +79,7 @@ sealed interface ItemDetailsNavDestination {
 
     @JvmInline
     value class LeaveItemShare(val shareId: ShareId) : ItemDetailsNavDestination
+
+    @JvmInline
+    value class WifiNetworkQRClick(val rawSVG: String) : ItemDetailsNavDestination
 }

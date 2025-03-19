@@ -49,6 +49,7 @@ internal fun PassWifiNetworkItemDetailSections(
     shareId: ShareId,
     contents: ItemContents.WifiNetwork,
     customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, Totp>,
+    svgQR: Option<String>,
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs.WifiNetwork,
     lastAutofillOption: Option<Instant>,
@@ -61,12 +62,13 @@ internal fun PassWifiNetworkItemDetailSections(
     attachmentsState: AttachmentsState,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
-    return Column(
+    Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
         PassWifiNetworkMainSection(
             contents = contents,
+            svgQR = svgQR,
             itemColors = itemColors,
             itemDiffs = itemDiffs,
             onEvent = onEvent

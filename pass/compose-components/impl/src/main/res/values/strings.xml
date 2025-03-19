@@ -322,4 +322,6 @@
     <string name="wifi_security_wpa3" translatable="false">WPA3</string>
     <string name="wifi_security_wep" translatable="false">WEP</string>
 
+    <string name="show_network_qr_code">Show Network QR Code</string>
+
 </resources>

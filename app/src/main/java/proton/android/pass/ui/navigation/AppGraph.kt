@@ -71,6 +71,7 @@ import proton.android.pass.features.item.details.detail.navigation.ItemDetailsNa
 import proton.android.pass.features.item.details.detailforbidden.navigation.ItemDetailsForbiddenNavItem
 import proton.android.pass.features.item.details.detailleave.navigation.ItemDetailsLeaveNavItem
 import proton.android.pass.features.item.details.detailmenu.navigation.ItemDetailsMenuNavItem
+import proton.android.pass.features.item.details.qrviewer.navigation.QRViewerNavItem
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
 import proton.android.pass.features.item.details.shared.navigation.itemDetailsNavGraph
 import proton.android.pass.features.item.history.confirmreset.navigation.ConfirmResetHistoryDialogNavItem
@@ -1878,6 +1879,11 @@ fun NavGraphBuilder.appGraph(
                         )
                     )
                 }
+
+                is ItemDetailsNavDestination.WifiNetworkQRClick -> appNavigator.navigate(
+                    destination = QRViewerNavItem,
+                    route = QRViewerNavItem.createNavRoute(itemDetailsNavDestination.rawSVG)
+                )
             }
         }
     )
@@ -1932,6 +1938,11 @@ fun NavGraphBuilder.appGraph(
                         shareId = itemHistoryNavDestination.shareId,
                         itemId = itemHistoryNavDestination.itemId
                     )
+                )
+
+                is ItemHistoryNavDestination.WifiNetworkQR -> appNavigator.navigate(
+                    destination = QRViewerNavItem,
+                    route = QRViewerNavItem.createNavRoute(itemHistoryNavDestination.rawSVG)
                 )
             }
         }

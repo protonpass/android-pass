@@ -18,25 +18,39 @@
 
 package proton.android.pass.composecomponents.impl.item.details.sections.custom
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.form.PassDivider
+import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
+import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent.OnWifiNetworkQRClick
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailsHiddenFieldRow
 import proton.android.pass.composecomponents.impl.stringhelpers.getWifiSecurityTypeText
+import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.HiddenState
@@ -53,6 +67,7 @@ private const val HIDDEN_PRIVATE_KEY_TEXT_LENGTH = 12
 fun PassWifiNetworkMainSection(
     modifier: Modifier = Modifier,
     contents: ItemContents.WifiNetwork,
+    svgQR: Option<String>,
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs.WifiNetwork,
     onEvent: (PassItemDetailsUiEvent) -> Unit
@@ -111,6 +126,28 @@ fun PassWifiNetworkMainSection(
             itemColors = itemColors,
             itemDiffType = itemDiffs.wifiSecurity
         )
+        if (svgQR is Some) {
+            PassDivider()
+            Row(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = { onEvent(OnWifiNetworkQRClick(svgQR.value)) })
+                    .padding(all = Spacing.medium)
+                    .padding(vertical = Spacing.small),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
+            ) {
+                Icon.Default(
+                    modifier = Modifier.size(24.dp),
+                    id = R.drawable.ic_qr_code,
+                    tint = itemColors.norm
+                )
+                Text.Body1Regular(
+                    text = stringResource(R.string.show_network_qr_code),
+                    color = itemColors.norm
+                )
+            }
+        }
     }
 }
 
@@ -129,6 +166,7 @@ fun PassWifiNetworkMainSectionPreview(@PreviewParameter(ThemePreviewProvider::cl
                     customFieldList = emptyList(),
                     sectionContentList = emptyList()
                 ),
+                svgQR = Some(""),
                 itemColors = passItemColors(ItemCategory.WifiNetwork),
                 itemDiffs = ItemDiffs.WifiNetwork(),
                 onEvent = {}

@@ -33,4 +33,6 @@ fun TotpException.toTotpUriException(): TotpUriException = when (this) {
     is TotpException.NotTotpUri -> TotpUriException.NotTotpUri(message.orEmpty())
     is TotpException.SecretParseException -> TotpUriException.SecretParseException(message.orEmpty())
     is TotpException.UrlParseException -> TotpUriException.UrlParseException(message.orEmpty())
+    is TotpException.InvalidDigitsException -> TotpUriException.InvalidDigitsException(message.orEmpty())
+    is TotpException.InvalidPeriodException -> TotpUriException.InvalidPeriodException(message.orEmpty())
 }

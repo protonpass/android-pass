@@ -29,4 +29,6 @@ sealed class TotpUriException(message: String) : IllegalArgumentException(messag
     class EmptySecret(message: String) : TotpUriException(message)
     class NoQueries(message: String) : TotpUriException(message)
     class SecretParseException(message: String) : TotpUriException(message)
+    class InvalidDigitsException(message: String) : TotpUriException(message)
+    class InvalidPeriodException(message: String) : TotpUriException(message)
 }

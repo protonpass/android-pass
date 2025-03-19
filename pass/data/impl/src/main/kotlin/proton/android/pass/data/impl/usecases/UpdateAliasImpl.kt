@@ -30,7 +30,6 @@ import proton.android.pass.data.api.usecases.UpdateAliasContent
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.Item
-import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.areItemContentsEqual
 import proton.android.pass.domain.toItemContents
 import proton.android.pass.log.api.PassLogger
@@ -78,23 +77,10 @@ class UpdateAliasImpl @Inject constructor(
             aliasRepository.updateAliasName(userId, item.shareId, item.id, content.displayName)
         }
 
-        return if (content.itemData is Some) {
-            val itemData = (content.itemData as Some<ItemContents.Alias>).value
-            updateItemContent(userId, item, itemData)
-        } else {
-            item
-        }
-    }
-
-    private suspend fun updateItemContent(
-        userId: UserId,
-        item: Item,
-        content: ItemContents.Alias
-    ): Item {
         val hasContentsChanged = encryptionContextProvider.withEncryptionContextSuspendable {
             !areItemContentsEqual(
                 a = item.toItemContents { decrypt(it) },
-                b = content,
+                b = content.itemData,
                 decrypt = { decrypt(it) }
             )
         }
@@ -104,7 +90,7 @@ class UpdateAliasImpl @Inject constructor(
                 pendingAttachmentLinkRepository.getAllToUnLink().isNotEmpty()
 
         return if (hasContentsChanged || hasPendingAttachments) {
-            updateItem(userId, item.shareId, item, content)
+            updateItem(userId, item.shareId, item, content.itemData)
         } else {
             item
         }

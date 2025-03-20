@@ -189,7 +189,14 @@ class LauncherViewModel @Inject constructor(
 
     internal fun signIn(userId: UserId? = null) = viewModelScope.launch {
         val account = userId?.let { getAccountOrNull(it) }
-        PassLogger.i(TAG, "Signing in: $userId")
+        PassLogger.i(
+            TAG,
+            if (userId == null) {
+                "Signing in without a specific userId"
+            } else {
+                "Signing in with userId: $userId "
+            }
+        )
         authOrchestrator.startLoginWorkflow(account?.username)
     }
 
@@ -267,36 +274,38 @@ class LauncherViewModel @Inject constructor(
         }
     }
 
-    @Suppress("ReturnCount")
-    private fun getState(accounts: List<Account>): AccountState {
-
-        // Check the case where there are either no accounts or all accounts are not ready
-        if (accounts.isEmpty()) {
-            PassLogger.i(TAG, "On AccountNeeded has no accounts")
-            return AccountState.AccountNeeded
+    private fun getState(accounts: List<Account>): AccountState = when {
+        accounts.isEmpty() -> {
+            PassLogger.i(TAG, "Account needed: no accounts found")
+            AccountState.AccountNeeded
         }
 
-        if (accounts.all { it.isDisabled() }) {
-            PassLogger.i(TAG, "On AccountNeeded has accounts states: ${accounts.map { it.state }}")
-            return AccountState.AccountNeeded
+        accounts.all { it.isDisabled() } -> {
+            PassLogger.i(TAG, "Account needed: all disabled")
+            AccountState.AccountNeeded
         }
 
-        // Check the case where at least one account is ready
-        if (accounts.any { it.isReady() }) {
+        accounts.any { it.isReady() } -> {
             accounts.firstOrNull { it.isReady() }?.let {
-                PassLogger.i(TAG, "SessionID=${it.sessionId?.id}")
+                PassLogger.i(TAG, "Primary exists: ${it.toLogString()}")
             }
-            return AccountState.PrimaryExist
+            AccountState.PrimaryExist
         }
 
-        // Check if we are in the case where an account needs a step
-        if (accounts.any { it.isStepNeeded() }) {
-            return AccountState.StepNeeded
+        accounts.any { it.isStepNeeded() } -> {
+            PassLogger.i(TAG, "Step needed: ${accounts.toLogString()}")
+            AccountState.StepNeeded
         }
 
-        // Base case
-        return AccountState.Processing
+        else -> {
+            PassLogger.i(TAG, "Processing accounts: ${accounts.toLogString()}}")
+            AccountState.Processing
+        }
     }
+
+    private fun Account.toLogString(): String = "UserId=$userId, SessionId=${sessionId?.id ?: "null"}, State=$state"
+
+    private fun List<Account>.toLogString(): String = joinToString { it.toLogString() }
 
     private suspend fun getAccountOrNull(it: UserId) = accountManager.getAccount(it).firstOrNull()
 

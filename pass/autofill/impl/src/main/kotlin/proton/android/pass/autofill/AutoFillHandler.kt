@@ -117,7 +117,7 @@ object AutoFillHandler {
         )
         val assistInfo = when (shouldAutofill) {
             is ShouldAutofillResult.No -> {
-                PassLogger.i(TAG, "Should not autofill")
+                PassLogger.i(TAG, "Should not autofill, reason: ${shouldAutofill.reason}")
                 return None
             }
 
@@ -205,20 +205,17 @@ object AutoFillHandler {
         windowNode: WindowNode
     ): ShouldAutofillResult {
         if (isSelfAutofill(context, windowNode)) {
-            PassLogger.d(TAG, "Do not self autofill")
-            return ShouldAutofillResult.No
+            return ShouldAutofillResult.No("Do not self autofill")
         }
 
         val currentUser = accountManager.getPrimaryUserId().first()
         if (currentUser == null) {
-            PassLogger.d(TAG, "No user found")
-            return ShouldAutofillResult.No
+            return ShouldAutofillResult.No("No user found")
         }
         val requestFlags: List<RequestFlags> = RequestFlags.fromValue(request.flags)
         val extractionResult = NodeExtractor(requestFlags).extract(windowNode.rootViewNode)
         if (extractionResult.fields.isEmpty()) {
-            PassLogger.d(TAG, "No fields found")
-            return ShouldAutofillResult.No
+            return ShouldAutofillResult.No("No fields found")
         }
         PassLogger.d(TAG, "Fields found: ${extractionResult.fields.map { it.type }.joinToString()}")
 
@@ -228,8 +225,12 @@ object AutoFillHandler {
         val focusedCluster = clusteredNodes.focused()
 
         if (focusedCluster == NodeCluster.Empty) {
-            PassLogger.d(TAG, "No focused cluster found")
-            return ShouldAutofillResult.No
+            return if (clusteredNodes.size > 1) {
+                val type = clusteredNodes.firstOrNull()?.type()
+                ShouldAutofillResult.No("Cluster of type: $type found, but not focused")
+            } else {
+                ShouldAutofillResult.No("No clusters found")
+            }
         }
 
         val assistInfo = AssistInfo(
@@ -259,7 +260,7 @@ object AutoFillHandler {
     }
 
     sealed interface ShouldAutofillResult {
-        data object No : ShouldAutofillResult
+        data class No(val reason: String) : ShouldAutofillResult
         data class Yes(val assistInfo: AssistInfo) : ShouldAutofillResult
     }
 }

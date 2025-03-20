@@ -130,12 +130,12 @@ private fun getMemory(context: Context): String {
 }
 
 private fun totalStorage(): Long {
-    val statFs = StatFs(Environment.getRootDirectory().absolutePath)
+    val statFs = StatFs(Environment.getDataDirectory().absolutePath)
     return statFs.blockCountLong * statFs.blockSizeLong
 }
 
 private fun freeStorage(): Long {
-    val statFs = StatFs(Environment.getRootDirectory().absolutePath)
+    val statFs = StatFs(Environment.getDataDirectory().absolutePath)
     return statFs.freeBlocksLong * statFs.blockSizeLong
 }
 

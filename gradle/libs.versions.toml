@@ -42,7 +42,7 @@ coil = "2.2.2"
 # Compose marker
 compose-stable-marker = "1.0.5"
 # Core
-core = "30.3.1"
+core = "30.4.3"
 # Dagger
 dagger = "2.49"
 # Google

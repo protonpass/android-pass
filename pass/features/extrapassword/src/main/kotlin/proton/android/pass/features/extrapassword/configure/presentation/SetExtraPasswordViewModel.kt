@@ -65,18 +65,18 @@ class SetExtraPasswordViewModel @Inject constructor(
     internal fun getExtraPasswordState(): SetExtraPasswordState = mutableExtraPasswordState
 
     internal fun onExtraPasswordValueChanged(value: String) {
-        val password = value.clean()
+        val password = value.sanitise()
         validationErrorFlow.update { None }
         mutableExtraPasswordState = mutableExtraPasswordState.copy(password = password)
     }
 
     internal fun onExtraPasswordRepeatValueChanged(value: String) {
-        val password = value.clean()
+        val password = value.sanitise()
         validationErrorFlow.update { None }
         mutableExtraPasswordState = mutableExtraPasswordState.copy(repeatPassword = password)
     }
 
-    private fun String.clean() = replace("\n", "").trim()
+    private fun String.sanitise() = replace("\n", "")
 
     internal fun submit() {
         val password = mutableExtraPasswordState.password

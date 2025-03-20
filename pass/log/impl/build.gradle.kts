@@ -57,6 +57,8 @@ fun DependencyHandlerScope.addFdroidSpecialLib(
 
 dependencies {
     api(projects.pass.log.api)
+    
+    implementation(projects.pass.common.api)
 
     addFdroidSpecialLib(
         default = projects.pass.tracing.impl,

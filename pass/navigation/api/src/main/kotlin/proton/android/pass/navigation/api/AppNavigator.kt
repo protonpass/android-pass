@@ -71,7 +71,7 @@ class AppNavigator(
             )
             return
         }
-        PassLogger.i(TAG, "Navigating to $destinationRoute")
+        PassLogger.i(TAG, "Navigating to ${destination.route}")
 
         when {
             destination.isTopLevel -> navController.navigate(destinationRoute) {

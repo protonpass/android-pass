@@ -117,7 +117,6 @@ class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
                 PassLogger.w(TAG, it)
             }
             DisposableEffect(state) {
-                PassLogger.i(TAG, "Account state: $state")
                 when (state.accountState) {
                     AccountNeeded -> {
                         if (!state.isNewLoginFlowEnabled) launcherViewModel.onAccountNeeded()

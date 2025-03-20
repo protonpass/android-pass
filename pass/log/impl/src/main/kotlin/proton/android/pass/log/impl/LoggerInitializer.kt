@@ -50,6 +50,7 @@ import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.util.kotlin.CoreLogger
 import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.common.api.FileSizeUtil.toHumanReadableSize
 import proton.android.pass.log.api.LogFileUri
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.tracing.impl.SentryInitializer
@@ -112,7 +113,7 @@ private fun deviceInfo(context: Context, appConfig: AppConfig) {
 private fun getStorage(): String {
     val free = freeStorage()
     val total = totalStorage()
-    return "Free: ${bytesToHuman(free)} | Total: ${bytesToHuman(total)}"
+    return "Free: ${toHumanReadableSize(free)} | Total: ${toHumanReadableSize(total)}"
 }
 
 private fun getMemory(context: Context): String {
@@ -121,12 +122,11 @@ private fun getMemory(context: Context): String {
         ?: return "UNAVAILABLE"
     activityManager.getMemoryInfo(mi)
 
-    val availableMegs: Double = mi.availMem.toDouble() / 0x100000L
-    val totalMegs: Double = mi.totalMem.toDouble() / 0x100000L
     val fractionAvail: Double = mi.availMem.toDouble() / mi.totalMem.toDouble()
     val percentAvail: Double = fractionAvail * 100
 
-    return "Available: ${floatForm(availableMegs)} MB / ${floatForm(totalMegs)} MB (${floatForm(percentAvail)}% used)"
+    return "Available: ${toHumanReadableSize(mi.availMem)} / ${toHumanReadableSize(mi.totalMem)}" +
+        " (${floatForm(percentAvail)}% used)"
 }
 
 private fun totalStorage(): Long {
@@ -140,24 +140,5 @@ private fun freeStorage(): Long {
 }
 
 private fun floatForm(d: Double) = DecimalFormat("#.##").format(d)
-
-private fun bytesToHuman(size: Long): String {
-    val kb = (1 * 1024).toLong()
-    val mb = kb * 1024
-    val gb = mb * 1024
-    val tb = gb * 1024
-    val pb = tb * 1024
-    val eb = pb * 1024
-
-    return when {
-        size < kb -> floatForm(size.toDouble()) + " byte"
-        size in kb until mb -> floatForm(size.toDouble() / kb) + " KB"
-        size in mb until gb -> floatForm(size.toDouble() / mb) + " MB"
-        size in gb until tb -> floatForm(size.toDouble() / gb) + " GB"
-        size in tb until pb -> floatForm(size.toDouble() / tb) + " TB"
-        size in pb until eb -> floatForm(size.toDouble() / pb) + " PB"
-        else -> floatForm(size.toDouble() / eb) + " EB"
-    }
-}
 
 private const val TAG = "DEVICE_INFO"

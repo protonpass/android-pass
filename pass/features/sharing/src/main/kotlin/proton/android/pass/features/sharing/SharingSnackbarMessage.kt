@@ -26,7 +26,7 @@ enum class SharingSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
     InviteAccepted(R.string.sharing_snackbar_invite_accepted, SnackbarType.SUCCESS),
     InviteAcceptError(R.string.sharing_snackbar_invite_accept_error, SnackbarType.ERROR),
     InviteAcceptErrorCannotCreateMoreVaults(

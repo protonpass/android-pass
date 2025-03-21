@@ -27,7 +27,7 @@ internal enum class SecurityCenterReportSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
 
     BreachResolvedSuccessfully(
         id = R.string.security_center_email_report_snackbar_marked_as_resolved_success,

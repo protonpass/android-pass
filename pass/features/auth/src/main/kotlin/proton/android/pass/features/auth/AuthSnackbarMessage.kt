@@ -26,7 +26,7 @@ enum class AuthSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
     AuthExtraPasswordError(R.string.auth_extra_password_error, SnackbarType.ERROR),
     AuthTooManyAttemptsError(R.string.auth_extra_password_too_many_attempts, SnackbarType.ERROR)
 }

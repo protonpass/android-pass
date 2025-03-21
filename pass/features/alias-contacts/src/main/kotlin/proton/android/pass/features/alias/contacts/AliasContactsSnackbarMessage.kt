@@ -27,7 +27,7 @@ enum class AliasContactsSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
     ContactCreateSuccess(R.string.snackbar_contact_create_success, SnackbarType.SUCCESS),
     ContactCreateError(R.string.snackbar_contact_create_error, SnackbarType.ERROR),
     ContactBlockSuccess(R.string.snackbar_contact_block_success, SnackbarType.SUCCESS),

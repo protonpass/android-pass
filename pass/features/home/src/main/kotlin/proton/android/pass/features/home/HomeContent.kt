@@ -305,7 +305,7 @@ internal fun HomeContent(
                 onItemMenuClick = { onEvent(HomeUiEvent.ItemMenuClick(it)) },
                 onItemLongClick = {
                     val readOnly = uiState.isSelectedVaultReadOnly()
-                    if (!readOnly && !isPinningOrSearch) {
+                    if (!readOnly) {
                         onEvent(HomeUiEvent.SelectItem(it))
                     }
                 },

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="account_title">账号</string>
+  <string name="account_recovery_title">账户与恢复</string>
+  <string name="account_username_label">用户名</string>
+  <string name="account_subscription_label">订阅套餐</string>
+  <string name="account_permanently_delete_warning">这将永久删除您的账户及其所有数据。您将无法重新激活该账户。</string>
+  <string name="account_delete_account">删除账号</string>
+  <string name="account_delete_account_icon_content_description">删除账号按钮</string>
+  <string name="account_sign_out">退出账户</string>
+  <string name="account_sign_out_icon_content_description">退出账户按钮</string>
+  <string name="account_manage_account">管理账户</string>
+  <string name="account_manage_account_icon_content_description">管理帐户按钮</string>
+  <string name="account_manage_subscription">管理订阅</string>
+  <string name="account_get_user_info_error">无法获取用户信息</string>
+  <string name="manage_subscription_icon_content_description">管理订阅按钮</string>
+  <string name="account_settings_list_item_password_header">更改密码</string>
+  <string name="account_settings_list_item_recovery_header">恢复邮箱</string>
+  <string name="account_settings_list_item_security_keys">安全密钥</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">尚未设置</string>
+  <string name="account_settings_list_item_password_hint_grace">密码重置等待中</string>
+  <string name="account_settings_list_item_password_hint_insecure">密码重置准备就绪</string>
+  <string name="account_settings_list_item_extra_password_header">Proton Pass 额外密码</string>
+  <string name="account_settings_list_item_extra_password_header_set">为 Proton Pass 设置额外密码</string>
+  <string name="account_settings_list_item_extra_password_active">启用</string>
+  <string name="account_settings_list_item_extra_password_description">使用Pass功能需要设置额外密码。这相当于在您原有的Proton账户密码之上，新增了一重安全保障。</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">尚未设置</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
+  <plurals name="account_settings_list_item_security_keys_hint_many">
+    <item quantity="other">%d 安全密钥已设置</item>
+  </plurals>
+</resources>

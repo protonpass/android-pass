@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">标题 (A-Z)</string>
+  <string name="sort_by_title_desc">标题 (Z-A)</string>
+  <string name="sort_by_creation_asc">从旧到新</string>
+  <string name="sort_by_creation_desc">从新到旧</string>
+  <string name="sort_by_modification_date">最近使用</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">全部</string>
+  <string name="item_list_header_pinned_search_results">置顶</string>
+  <string name="item_list_header_logins_type">登录</string>
+  <string name="item_list_header_logins_totp_type">使用 TOTP 登录</string>
+  <string name="item_list_header_aliases_type">别名</string>
+  <string name="item_list_header_notes_type">备注</string>
+  <string name="item_list_header_credit_cards_type">信用卡</string>
+  <plurals name="item_list_header_results">
+    <item quantity="other">结果</item>
+  </plurals>
+  <string name="item_list_header_identities_type">身份信息</string>
+  <string name="item_list_header_custom_type">自定义项目</string>
+  <string name="item_list_header_shared_with_me">与我分享</string>
+  <string name="item_list_header_shared_by_me">由我分享</string>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">确认</string>
+  <string name="bottomsheet_cancel_button">取消</string>
+  <string name="bottomsheet_move_to_trash">移至回收站</string>
+  <string name="bottomsheet_pin_item">固定</string>
+  <string name="bottomsheet_unpin_item">取消固定</string>
+  <string name="bottomsheet_view_item_history">查看历史记录</string>
+  <string name="bottomsheet_monitor_exclude">移除监控</string>
+  <string name="bottomsheet_monitor_include">纳入监控</string>
+  <string name="bottomsheet_migrate_item">移至另一个保险库</string>
+  <string name="bottomsheet_copy_item_note">复制笔记</string>
+  <string name="bottomsheet_delete_permanently">永久删除</string>
+  <string name="bottomsheet_restore">恢复</string>
+  <string name="bottomsheet_leave">退出</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">打开操作菜单</string>
+  <string name="action_upgrade_now">立即升级账户</string>
+  <string name="action_not_now">以后再说</string>
+  <string name="action_learn_more">了解详情</string>
+  <string name="action_enable">启用</string>
+  <string name="action_view_details">查看详情</string>
+  <string name="action_see_all">查看全部</string>
+  <string name="action_confirm">确认</string>
+  <string name="action_cancel">取消</string>
+  <string name="action_continue">继续</string>
+  <string name="action_retry">重试</string>
+  <string name="action_edit">编辑</string>
+  <string name="action_add">添加</string>
+  <string name="action_delete">删除</string>
+  <string name="action_make_default">设为默认</string>
+  <string name="action_verify">验证</string>
+  <string name="action_close">关闭</string>
+  <string name="action_update">更新</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">添加您的第一个项目</string>
+  <string name="empty_search_results_title">未找到结果</string>
+  <string name="empty_list_open_extension">访问浏览器扩展</string>
+  <string name="empty_list_create_item_button">创建新项目</string>
+  <!-- Field -->
+  <string name="field_title_title">标题</string>
+  <string name="field_title_hint">未命名</string>
+  <string name="field_title_required">需要标题</string>
+  <string name="small_cross_icon_content_description">小图标</string>
+  <string name="field_note_title">笔记</string>
+  <string name="field_note_hint">添加笔记</string>
+  <string name="linked_apps_title">关联应用</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">无网络连接</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">没有软件图标</string>
+  <string name="add_item_icon_content_description">添加项目图标</string>
+  <string name="navigate_back_icon_content_description">返回导航栏</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">保险库</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">列表项目</string>
+  <string name="bottom_bar_add_item_icon_content_description">添加项目</string>
+  <string name="bottom_bar_profile_icon_content_description">收藏</string>
+  <string name="bottom_bar_security_center_icon_content_description">安全中心</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">今天</string>
+  <string name="most_recent_yesterday">昨天</string>
+  <string name="most_recent_this_week">本周</string>
+  <string name="most_recent_last_two_weeks">最近两周</string>
+  <string name="most_recent_last_30_days">上个月</string>
+  <string name="most_recent_last_60_days">最近 60 天</string>
+  <string name="most_recent_last_90_days">最近 90 天</string>
+  <string name="most_recent_within_the_last_year">一年内</string>
+  <string name="most_recent_more_than_1_year">超过1年未修改</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">搜索图标</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="other">%d 项</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">放弃更改？</string>
+  <string name="confirm_close_dialog_message">您有未保存的更改，您确定要放弃它们吗？</string>
+  <string name="confirm_close_dialog_close_button">放弃</string>
+  <!-- Upgrade -->
+  <string name="upgrade">升级</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">高级选项</string>
+  <string name="hide_advanced_options">隐藏高级选项</string>
+  <!-- Labels -->
+  <string name="label_password_strength_strong">强</string>
+  <string name="label_password_strength_vulnerable">极弱</string>
+  <string name="label_password_strength_weak">弱</string>
+  <!-- Pinning -->
+  <string name="pinning_carousel_see_all">查看全部</string>
+  <!-- Dates -->
+  <string name="date_today" comment="Pattern to display today's date and time. (e.g. Today 10:25)">今天 %s</string>
+  <string name="date_yesterday" comment="Pattern to display yesterday's date and time. (e.g. Yesterday 10:25)">昨天 %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to 12 Feb 12:34
+    -->
+  <string name="date_full_date_format_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <!--
+   Pattern used when displaying a date including the year.
+   It would translate to 12 Feb 2023 12:34
+   -->
+  <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
+  <!-- Items -->
+  <string name="item_details_alias_section_alias_title">别名地址</string>
+  <string name="item_details_alias_section_alias_disabled_title">别名地址 ( 已禁用 )</string>
+  <string name="item_details_alias_section_mailboxes_title">转发至</string>
+  <string name="item_details_credit_card_section_cardholder_title">持卡人姓名</string>
+  <string name="item_details_credit_card_section_card_number_title">卡号</string>
+  <string name="item_details_credit_card_section_expiration_date_title">有效期至</string>
+  <string name="item_details_credit_card_section_cvv_title">安全码</string>
+  <string name="item_details_credit_card_section_pin_title">PIN 码</string>
+  <string name="item_details_login_section_email_title">邮箱地址</string>
+  <string name="item_details_login_section_username_title">用户名</string>
+  <string name="item_details_login_section_password_title">密码</string>
+  <string name="item_details_login_section_primary_totp_title">双因素认证密钥 (TOTP)</string>
+  <string name="item_details_login_section_websites_title">网站</string>
+  <string name="item_details_identity_section_personal_title">个人资料</string>
+  <string name="item_details_identity_section_personal_first_name_title">名</string>
+  <string name="item_details_identity_section_personal_middle_name_title">中间名</string>
+  <string name="item_details_identity_section_personal_last_name_title">姓</string>
+  <string name="item_details_identity_section_personal_full_name_title">全名</string>
+  <string name="item_details_identity_section_personal_email_title">邮箱地址</string>
+  <string name="item_details_identity_section_personal_gender_title">性别</string>
+  <string name="item_details_identity_section_personal_phone_title">电话号码</string>
+  <string name="item_details_identity_section_personal_birthday_title">生日</string>
+  <string name="item_details_identity_section_address_title">地址详情</string>
+  <string name="item_details_identity_section_address_organization_title">机构</string>
+  <string name="item_details_identity_section_address_street_address_title">街道地址，邮政编号</string>
+  <string name="item_details_identity_section_address_floor_title">楼层</string>
+  <string name="item_details_identity_section_address_city_title">城市 / 区县</string>
+  <string name="item_details_identity_section_address_zip_or_postal_code_title">邮编</string>
+  <string name="item_details_identity_section_address_state_or_province_title">省、自治区或直辖市</string>
+  <string name="item_details_identity_section_address_county_title">县市</string>
+  <string name="item_details_identity_section_address_country_or_region_title">国家或地区</string>
+  <string name="item_details_identity_section_contact_title">联系人详情</string>
+  <string name="item_details_identity_section_contact_social_security_number_title">社会保障号码</string>
+  <string name="item_details_identity_section_contact_passport_number_title">护照号码</string>
+  <string name="item_details_identity_section_contact_license_number_title">许可编号</string>
+  <string name="item_details_identity_section_contact_website_title">网站</string>
+  <string name="item_details_identity_section_contact_x_handle_title">X-用户名</string>
+  <string name="item_details_identity_section_contact_secondary_phone_number_title">辅助电话号码</string>
+  <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
+  <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
+  <string name="item_details_identity_section_contact_facebook_title">Facebook</string>
+  <string name="item_details_identity_section_contact_yahoo_title">Yahoo</string>
+  <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
+  <string name="item_details_identity_section_work_title">工作详情</string>
+  <string name="item_details_identity_section_work_company_title">公司</string>
+  <string name="item_details_identity_section_work_occupation_title">职位</string>
+  <string name="item_details_identity_section_work_email_title">工作邮箱地址</string>
+  <string name="item_details_identity_section_work_phone_number_title">工作电话号码</string>
+  <string name="item_details_identity_section_work_personal_website_title">个人网站</string>
+  <string name="item_details_shared_section_note_title">注释</string>
+  <string name="item_details_shared_section_item_history_last_autofill_title">最后自动填充</string>
+  <string name="item_details_shared_section_item_history_created_title">创建</string>
+  <string name="item_details_shared_section_item_history_modified_times_title">修改 ( %d )</string>
+  <string name="item_details_shared_section_item_history_button_view">查看项目历史</string>
+  <string name="item_details_shared_section_more_info_header_title">更多信息</string>
+  <string name="item_details_shared_section_more_info_header_icon_content_description">更多项目信息图标</string>
+  <string name="item_details_shared_section_more_info_item_id">项目 ID</string>
+  <string name="item_details_shared_section_more_info_share_id">保险库 ID</string>
+  <string name="item_details_wifi_network_label_ssid">SSID</string>
+  <string name="item_details_wifi_network_label_password">密码</string>
+  <string name="item_details_wifi_network_label_security">安全性</string>
+  <string name="item_details_ssh_key_label_public_key">公钥</string>
+  <string name="item_details_ssh_key_label_private_key">私钥</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">该应用程序版本已不再支持，请更新您的应用程序。</string>
+  <!-- Passkeys -->
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">通行密钥</string>
+  <!-- Upgrade -->
+  <string name="dialog_upgrade_plan_title">升级计划?</string>
+  <string name="dialog_upgrade_plan_message">此功能不适用于免费用户。如果您想享受此功能和其他很酷的功能，请升级您的计划并尝试一下！</string>
+  <string name="dialog_upgrade_plan_action_confirm">升级账户</string>
+  <string name="dialog_upgrade_plan_action_cancel">以后再说</string>
+  <!-- Words -->
+  <string name="email_address">邮箱地址</string>
+  <string name="email_address_invalid">无效邮件地址</string>
+  <string name="password">密码</string>
+  <!-- Tooltips -->
+  <string name="tooltip_dismiss_button_content_description">此按钮用于取消该工具提示，并且不再显示该提示</string>
+  <!-- Time units -->
+  <plurals name="time_unit_years">
+    <item quantity="other">%d 年</item>
+  </plurals>
+  <plurals name="time_unit_months">
+    <item quantity="other">%d 个月</item>
+  </plurals>
+  <plurals name="time_unit_weeks">
+    <item quantity="other">%d 周</item>
+  </plurals>
+  <plurals name="time_unit_days">
+    <item quantity="other">%d天</item>
+  </plurals>
+  <plurals name="time_unit_hours">
+    <item quantity="other">%d 小时</item>
+  </plurals>
+  <plurals name="time_unit_minutes">
+    <item quantity="other">%d 分钟</item>
+  </plurals>
+  <plurals name="time_unit_seconds">
+    <item quantity="other">%d 秒</item>
+  </plurals>
+  <plurals name="aliases_count">
+    <item quantity="other">%d 个别名</item>
+  </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">笔记已复制</string>
+  <string name="snack_bar_message_item_migration_error">迁移此项目时出现问题</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">成功排除监视的项目</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">排除监视的项目时出错</string>
+  <string name="snack_bar_message_item_monitor_included_success">成功将项目纳入监视</string>
+  <string name="snack_bar_message_item_monitor_included_error">将项目纳入监视时出错</string>
+  <string name="snack_bar_message_item_pinned_success">项目成功固定</string>
+  <string name="snack_bar_message_item_pinned_error">固定此项目时出现问题</string>
+  <string name="snack_bar_message_item_unpinned_success">项目成功取消固定</string>
+  <string name="snack_bar_message_item_unpinned_error">取消此项目的固定时出现问题</string>
+  <string name="snack_bar_message_item_trashed_success">项目销毁成功</string>
+  <string name="snack_bar_message_item_trashed_error">销毁此项目时出现问题</string>
+  <string name="snack_bar_message_item_restore_success">项目恢复成功</string>
+  <string name="snack_bar_message_item_restore_error">恢复此项目时出现问题</string>
+  <string name="snack_bar_message_item_delete_success">项目已成功删除</string>
+  <string name="snack_bar_message_item_delete_error">删除此项目时出现问题</string>
+  <!-- Simple Login -->
+  <string name="simple_login_widget_title">启用 SimpleLogin 同步</string>
+  <plurals name="simple_login_widget_pending_aliases_message">
+    <item quantity="other">我们检测到您有 %d 个别名，这些别名在 SimpleLogin 中存在，但在 Proton Pass 中缺失。您想导入它们吗？</item>
+  </plurals>
+  <string name="simple_login_widget_action">同步别名</string>
+  <!-- Verification codes -->
+  <string name="verification_code_not_received">还没有收到验证码？</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">请在您的垃圾邮件中检查一封名为 “%s” 的电子邮件</string>
+  <string name="verification_code_suggestion_subject_new_email_address">请确认您的 Proton Pass 邮箱地址</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">请确认您的邮箱</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">如果您找不到此类邮件，您可以 %s。</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">重新发送验证码</string>
+  <string name="field_display_name_title">显示称呼</string>
+  <!-- Attachments -->
+  <plurals name="attachment_file_amount">
+    <item quantity="other">%1$s 个文件</item>
+  </plurals>
+  <string name="attachment_title">附件</string>
+  <string name="attachment_no_files">从您的设备上传文件</string>
+  <string name="attachment_add_file">添加文件</string>
+  <string name="attachment_row_upload_failed">上传失败</string>
+  <string name="attachment_row_retry">重试</string>
+  <string name="options_menu_content_description">选项菜单</string>
+  <!-- Items -->
+  <plurals name="shared_items_count">
+    <item quantity="other">%d 已共享的项目</item>
+  </plurals>
+  <plurals name="users_count">
+    <item quantity="other">用户 %d</item>
+  </plurals>
+  <plurals name="members_count">
+    <item quantity="other">%d 位成员</item>
+  </plurals>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
+  <string name="show_network_qr_code">显示网络二维码</string>
+</resources>

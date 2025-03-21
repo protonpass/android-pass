@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="item_details_snackbar_message_alias_copied">Alias kopioitiin</string>
+  <string name="item_details_snackbar_message_birthdate_copied">Syntymäpäivä kopioitiin</string>
+  <string name="item_details_snackbar_message_card_number_copied">Kortin numero kopioitiin</string>
+  <string name="item_details_snackbar_message_city_copied">Kaupunki kopioitiin</string>
+  <string name="item_details_snackbar_message_company_copied">Yritys kopioitiin</string>
+  <string name="item_details_snackbar_message_country_or_region_copied">Maa tai alue kopioitiin</string>
+  <string name="item_details_snackbar_message_county_copied">Piirikunta kopioitiin</string>
+  <string name="item_details_snackbar_message_custom_field_copied">Mukautettu kenttä kopioitiin</string>
+  <string name="item_details_snackbar_message_cvv_copied">Turvakoodi kopioitiin</string>
+  <string name="item_details_snackbar_message_email_copied">Sähköpostiosoite kopioitiin</string>
+  <string name="item_details_snackbar_message_facebook_copied">Facebook kopioitiin</string>
+  <string name="item_details_snackbar_message_first_name_copied">Etunimi kopioitiin</string>
+  <string name="item_details_snackbar_message_floor_copied">Kerros kopioitiin</string>
+  <string name="item_details_snackbar_message_full_name_copied">Koko nimi kopioitiin</string>
+  <string name="item_details_snackbar_message_gender_copied">Sukupuoli kopioitiin</string>
+  <string name="item_details_snackbar_message_instagram_copied">Instagram kopioitiin</string>
+  <string name="item_details_snackbar_message_last_name_copied">Sukunimi kopioitiin</string>
+  <string name="item_details_snackbar_message_license_number_copied">Ajokortin numero kopioitiin</string>
+  <string name="item_details_snackbar_message_linkedin_copied">LinkedIn kopioitiin</string>
+  <string name="item_details_snackbar_message_middle_name_copied">Toinen nimi kopioitiin</string>
+  <string name="item_details_snackbar_message_occupation_copied">Ammatti kopioitiin</string>
+  <string name="item_details_snackbar_message_organization_copied">Organisaatio kopioitiin</string>
+  <string name="item_details_snackbar_message_passport_number_copied">Passin numero kopioitiin</string>
+  <string name="item_details_snackbar_message_password_copied">Salasana kopioitiin</string>
+  <string name="item_details_snackbar_message_phone_number_copied">Puhelinnumero kopioitiin</string>
+  <string name="item_details_snackbar_message_pin_copied">PIN-koodi kopioitiin</string>
+  <string name="item_details_snackbar_message_reddit_copied">Reddit-tunnus kopioitiin</string>
+  <string name="item_details_snackbar_message_social_security_number_copied">Henkilötunnus kopioitiin</string>
+  <string name="item_details_snackbar_message_state_or_province_copied">Osavaltio tai maakunta kopioitiin</string>
+  <string name="item_details_snackbar_message_street_address_copied">Katuosoite kopioitiin</string>
+  <string name="item_details_snackbar_message_totp_copied">TOTP-koodi kopioitiin</string>
+  <string name="item_details_snackbar_message_username_copied">Käyttäjätunnus kopioitiin</string>
+  <string name="item_details_snackbar_message_website_copied">Verkkosivuston URL-osoite kopioitiin</string>
+  <string name="item_details_snackbar_message_x_handle_copied">X-tunnus kopioitiin</string>
+  <string name="item_details_snackbar_message_yahoo_copied">Yahoo-tunnus kopioitiin</string>
+  <string name="item_details_snackbar_message_zip_or_postal_code_copied">Postinumero kopioitiin</string>
+  <string name="item_details_snackbar_message_public_key_copied">Public key copied</string>
+  <string name="item_details_snackbar_message_private_key_copied">Private key copied</string>
+  <string name="item_details_snackbar_message_ssid_copied">SSID copied</string>
+  <string name="open_with">Avaa käyttäen:</string>
+  <string name="open_attachments_error">Liitettä ei voitu avata</string>
+</resources>

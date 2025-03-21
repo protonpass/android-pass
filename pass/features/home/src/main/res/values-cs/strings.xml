@@ -147,7 +147,7 @@
     <item quantity="other">Obnovit %d položek?</item>
   </plurals>
   <plurals name="alert_confirm_restore_items_message">
-    <item quantity="one">Jste si jisti, že chcete obnovit položku z koše?</item>
+    <item quantity="one">Opravdu chcete obnovit položku z koše?</item>
     <item quantity="few">Opravdu chcete obnovit %d položky z koše?</item>
     <item quantity="many">Opravdu chcete obnovit %d položek z koše?</item>
     <item quantity="other">Opravdu chcete obnovit %d položek z koše?</item>
@@ -171,7 +171,7 @@
     <item quantity="other">Trvale smazat %d položek?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
-    <item quantity="one">Jste si jisti, že chcete smazat položku? Tato akce je nevratná.</item>
+    <item quantity="one">Opravdu chcete smazat položku? Tato akce je nevratná.</item>
     <item quantity="few">Opravdu chcete smazat %d položky? Tato akce je nevratná.</item>
     <item quantity="many">Opravdu chcete smazat %d položek? Tato akce je nevratná.</item>
     <item quantity="other">Opravdu chcete smazat %d položek? Tato akce je nevratná.</item>

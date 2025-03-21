@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="select_item_only_searching_in_oldest_vaults">您的计划仅允许使用最早的保险库中的项目。</string>
+  <string name="error_credentials_not_found">未找到账户信息</string>
+  <!-- Placeholder will contain the domain / app name we are trying to autofill -->
+  <string name="select_item_suggestions_for_placeholder">%s 的补全建议</string>
+  <string name="error_loading_items">加载项目失败</string>
+  <string name="topbar_search_query">在所有的保险库中搜索…</string>
+  <string name="topbar_search_pinned_items">在 Pin 中搜索…</string>
+  <string name="topbar_search_query_oldest_vaults">搜索您最早的保险库……</string>
+  <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">搜索…</string>
+  <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">所有帐户(%1$s)</string>
+</resources>

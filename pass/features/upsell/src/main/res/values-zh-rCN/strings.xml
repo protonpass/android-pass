@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="upsell_monitor_title">安全上网</string>
+  <string name="upsell_dark_web_monitoring_subtitle">Dark Web Monitoring 通过付费计划提供。升级后可立即访问。</string>
+  <string name="upsell_missing_2fa_subtitle">查看可添加第二身份验证因素的网站列表，以保护您的在线形象。升级后可立即访问。</string>
+  <string name="upsell_sentinel_subtitle">解锁高级安全功能和详细日志，保护您的在线形象。</string>
+  <string name="upsell_paid_feature_file_attachments">附件文件</string>
+  <string name="upsell_paid_feature_dark_web_monitoring">Dark Web Monitoring</string>
+  <string name="upsell_paid_feature_sentinel">Proton Sentinel</string>
+  <string name="upsell_paid_feature_authenticator">内置双因素认证验证器</string>
+  <string name="upsell_paid_feature_unlimited_aliases">无限 Hide-my-email 别名</string>
+  <string name="upsell_paid_feature_vault_sharing">保险库共享 ( 最多10人 )</string>
+  <string name="upsell_paid_feature_secure_links">安全链接</string>
+  <string name="upsell_paid_feature_advance_alias_management">高级别名管理</string>
+  <string name="upsell_paid_feature_authenticator_essential">可要求机构全员开启双重验证</string>
+  <string name="upsell_paid_feature_sso_essential">集成单点登录(即将推出)</string>
+  <string name="upsell_paid_feature_advance_alias_management_title">管理您的别名</string>
+  <string name="upsell_paid_feature_advance_alias_management_subtitle">付费计划可提供高级别名管理。升级后可立即使用。</string>
+  <string name="upsell_paid_feature_item_sharing_title">快速分享项目</string>
+  <string name="upsell_paid_feature_item_sharing_subtitle">立即升级，与任何 Pass 用户共享项目，并享受其他高级功能：</string>
+  <string name="upsell_paid_feature_file_attachments_title">附件文件</string>
+  <string name="upsell_button_upgrade">获取 Pass Plus</string>
+  <string name="upsell_button_upgrade_essentials">获取 Pass Business</string>
+</resources>

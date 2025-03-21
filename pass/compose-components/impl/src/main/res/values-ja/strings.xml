@@ -197,14 +197,14 @@
   <string name="item_details_shared_section_more_info_share_id">保管庫 ID</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
   <string name="item_details_wifi_network_label_password">パスワード</string>
-  <string name="item_details_wifi_network_label_security">Security</string>
+  <string name="item_details_wifi_network_label_security">セキュリティ</string>
   <string name="item_details_ssh_key_label_public_key">公開鍵</string>
   <string name="item_details_ssh_key_label_private_key">秘密鍵</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">アプリのバージョンはサポートされなくなりました。アプリを更新してください。</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">パスキー</string>
   <!-- Upgrade -->
-  <string name="dialog_upgrade_plan_title">プランをアップグレード?</string>
+  <string name="dialog_upgrade_plan_title">プランをアップグレードしますか？</string>
   <string name="dialog_upgrade_plan_message">この機能は無料プランのユーザーにはご利用いただけません。他の便利な機能とともにこの機能を楽しみたい場合は、プランをアップグレードしてお試しください。</string>
   <string name="dialog_upgrade_plan_action_confirm">アップグレード</string>
   <string name="dialog_upgrade_plan_action_cancel">後で</string>
@@ -264,7 +264,7 @@
   <string name="simple_login_widget_action">エイリアスを同期する</string>
   <!-- Verification codes -->
   <string name="verification_code_not_received">コードを受け取っていませんか?</string>
-  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">スパムフォルダに\"%s\"という件名のメールがないか確認してください</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">迷惑メールフォルダに\"%s\"という件名のメールがないか確認してください</string>
   <string name="verification_code_suggestion_subject_new_email_address">Proton Passのメールアドレスを確認してください</string>
   <string name="verification_code_suggestion_subject_new_mailbox">受信箱を確認してください</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">メールが見つからない場合、%sできます。</string>
@@ -285,10 +285,11 @@
     <item quantity="other">%d個の共有アイテム</item>
   </plurals>
   <plurals name="users_count">
-    <item quantity="other">%d名のユーザー</item>
+    <item quantity="other">%d人のユーザー</item>
   </plurals>
   <plurals name="members_count">
     <item quantity="other">%d 人のメンバー</item>
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
+  <string name="show_network_qr_code">Show Network QR Code</string>
 </resources>

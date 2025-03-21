@@ -95,7 +95,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Ви можете редагувати елементи лише в найстаріших сховищах. Щоб редагувати цей пункт, будь ласка, поновіть свій поточний тарифний план.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Ви не можете редагувати цей елемент, оскільки він знаходиться у смітнику. Будь ласка, вилучіть його зі смітника перед редагуванням.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Не може поширювати</string>
-  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">You don\'t have enough permissions to perform this action.</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">У вас недостатньо дозволів для виконання цієї дії.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Ви досягли ліміту спільного доступу до сховища. Щоб отримати доступ до більшої кількості сховищ, будь ласка, оновіть свій поточний тарифний план.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Ви не можете поділитися цим елементом, тому що він в смітнику. Витягніть його зі смітника, перш ніж ділитися ним.</string>
   <string name="password_score_vulnerable">Вразливий</string>
@@ -131,6 +131,6 @@
   </plurals>
   <string name="open_with">Відкрити з:</string>
   <string name="open_attachments_error">Не вдалося відкрити файл</string>
-  <string name="banner_contacts_title">Did you know?</string>
-  <string name="banner_contacts_subtitle">Every time your alias receives an email from someone, a new contact is automatically created.</string>
+  <string name="banner_contacts_title">Чи знали ви?</string>
+  <string name="banner_contacts_subtitle">Щоразу, коли ваш псевдонім отримує лист від когось, автоматично створюється новий контакт.</string>
 </resources>

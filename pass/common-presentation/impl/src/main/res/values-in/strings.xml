@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="item_details_snackbar_message_alias_copied">Alias disalin</string>
+  <string name="item_details_snackbar_message_birthdate_copied">Tanggal lahir disalin</string>
+  <string name="item_details_snackbar_message_card_number_copied">Nomor kartu disalin</string>
+  <string name="item_details_snackbar_message_city_copied">Kota disalin</string>
+  <string name="item_details_snackbar_message_company_copied">Perusahaan disalin</string>
+  <string name="item_details_snackbar_message_country_or_region_copied">Negara atau wilayah disalin</string>
+  <string name="item_details_snackbar_message_county_copied">Daerah disalin</string>
+  <string name="item_details_snackbar_message_custom_field_copied">Kolom khusus disalin</string>
+  <string name="item_details_snackbar_message_cvv_copied">Kode keamanan disalin</string>
+  <string name="item_details_snackbar_message_email_copied">Alamat email disalin</string>
+  <string name="item_details_snackbar_message_facebook_copied">Facebook disalin</string>
+  <string name="item_details_snackbar_message_first_name_copied">Nama pertama disalin</string>
+  <string name="item_details_snackbar_message_floor_copied">Lantai disalin</string>
+  <string name="item_details_snackbar_message_full_name_copied">Nama lengkap disalin</string>
+  <string name="item_details_snackbar_message_gender_copied">Jenis kelamin disalin</string>
+  <string name="item_details_snackbar_message_instagram_copied">Instagram disalin</string>
+  <string name="item_details_snackbar_message_last_name_copied">Nama terakhir disalin</string>
+  <string name="item_details_snackbar_message_license_number_copied">Nomor lisensi disalin</string>
+  <string name="item_details_snackbar_message_linkedin_copied">LinkedIn disalin</string>
+  <string name="item_details_snackbar_message_middle_name_copied">Nama tengah disalin</string>
+  <string name="item_details_snackbar_message_occupation_copied">Pekerjaan disalin</string>
+  <string name="item_details_snackbar_message_organization_copied">Organisasi disalin</string>
+  <string name="item_details_snackbar_message_passport_number_copied">Nomor paspor disalin</string>
+  <string name="item_details_snackbar_message_password_copied">Kata sandi disalin</string>
+  <string name="item_details_snackbar_message_phone_number_copied">Nomor telepon disalin</string>
+  <string name="item_details_snackbar_message_pin_copied">Kode PIN disalin</string>
+  <string name="item_details_snackbar_message_reddit_copied">Reddit disalin</string>
+  <string name="item_details_snackbar_message_social_security_number_copied">Nomor jaminan sosial disalin</string>
+  <string name="item_details_snackbar_message_state_or_province_copied">Negara bagian atau provinsi disalin</string>
+  <string name="item_details_snackbar_message_street_address_copied">Alamat jalan disalin</string>
+  <string name="item_details_snackbar_message_totp_copied">TOTP disalin</string>
+  <string name="item_details_snackbar_message_username_copied">Nama pengguna disalin</string>
+  <string name="item_details_snackbar_message_website_copied">URL situs web disalin</string>
+  <string name="item_details_snackbar_message_x_handle_copied">Nama pengguna X disalin</string>
+  <string name="item_details_snackbar_message_yahoo_copied">Yahoo disalin</string>
+  <string name="item_details_snackbar_message_zip_or_postal_code_copied">ZIP atau kode pos disalin</string>
+  <string name="item_details_snackbar_message_public_key_copied">Kunci publik disalin</string>
+  <string name="item_details_snackbar_message_private_key_copied">Kunci privat disalin</string>
+  <string name="item_details_snackbar_message_ssid_copied">SSID disalin</string>
+  <string name="open_with">Buka dengan:</string>
+  <string name="open_attachments_error">Gagal membuka lampiran</string>
+</resources>

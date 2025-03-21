@@ -108,7 +108,7 @@
   <string name="sharing_snackbar_transfer_ownership_error">所有権移転エラー</string>
   <string name="sharing_invites_info_dialog_title">メンバー数制限</string>
   <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
-    <item quantity="other">この保管庫には %1$d 人までのメンバーを招待できます。まだ %2$d 招待が残っています。</item>
+    <item quantity="other">この保管庫には %1$d 人までのメンバーを招待できます。まだ %2$d 件の招待が残っています。</item>
   </plurals>
   <string name="sharing_limit_reached">この保管庫は、メンバーおよび招待の制限に達しました。</string>
   <string name="sharing_invites_info_upgrade_text">今すぐアップグレードして、さらに招待しよう。</string>

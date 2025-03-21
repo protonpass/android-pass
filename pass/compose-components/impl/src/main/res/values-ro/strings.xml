@@ -226,8 +226,8 @@
   </plurals>
   <plurals name="time_unit_months">
     <item quantity="one">%d lună</item>
-    <item quantity="few">%d de luni</item>
-    <item quantity="other">%d luni</item>
+    <item quantity="few">%d luni</item>
+    <item quantity="other">%d de luni</item>
   </plurals>
   <plurals name="time_unit_weeks">
     <item quantity="one">%d săptămână</item>
@@ -321,4 +321,5 @@
     <item quantity="other">%d de membri</item>
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">zz LLLL aaaa</string>
+  <string name="show_network_qr_code">Afișare cod QR rețea</string>
 </resources>

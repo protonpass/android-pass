@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="item_details_snackbar_message_alias_copied">别名已复制</string>
+  <string name="item_details_snackbar_message_birthdate_copied">出生日期已复制</string>
+  <string name="item_details_snackbar_message_card_number_copied">卡号已复制</string>
+  <string name="item_details_snackbar_message_city_copied">生日已复制</string>
+  <string name="item_details_snackbar_message_company_copied">公司已复制</string>
+  <string name="item_details_snackbar_message_country_or_region_copied">国家或地区已复制</string>
+  <string name="item_details_snackbar_message_county_copied">国家已复制</string>
+  <string name="item_details_snackbar_message_custom_field_copied">自定义字段已复制</string>
+  <string name="item_details_snackbar_message_cvv_copied">安全代码已复制</string>
+  <string name="item_details_snackbar_message_email_copied">电子邮件地址已复制</string>
+  <string name="item_details_snackbar_message_facebook_copied">Facebook 已复制</string>
+  <string name="item_details_snackbar_message_first_name_copied">名字已复制</string>
+  <string name="item_details_snackbar_message_floor_copied">楼层已复制</string>
+  <string name="item_details_snackbar_message_full_name_copied">全名已复制</string>
+  <string name="item_details_snackbar_message_gender_copied">性别已复制</string>
+  <string name="item_details_snackbar_message_instagram_copied">Instagram 已复制</string>
+  <string name="item_details_snackbar_message_last_name_copied">姓氏已复制</string>
+  <string name="item_details_snackbar_message_license_number_copied">许可证号已复制</string>
+  <string name="item_details_snackbar_message_linkedin_copied">LinkedIn已复制</string>
+  <string name="item_details_snackbar_message_middle_name_copied">中间名已复制</string>
+  <string name="item_details_snackbar_message_occupation_copied">职业已复制</string>
+  <string name="item_details_snackbar_message_organization_copied">组织已复制</string>
+  <string name="item_details_snackbar_message_passport_number_copied">护照号码已复制</string>
+  <string name="item_details_snackbar_message_password_copied">密码已复制</string>
+  <string name="item_details_snackbar_message_phone_number_copied">电话号码已复制</string>
+  <string name="item_details_snackbar_message_pin_copied">PIN 码已复制</string>
+  <string name="item_details_snackbar_message_reddit_copied">Reddit 已复制</string>
+  <string name="item_details_snackbar_message_social_security_number_copied">社会安全代码已复制</string>
+  <string name="item_details_snackbar_message_state_or_province_copied">州或省已复制</string>
+  <string name="item_details_snackbar_message_street_address_copied">街道地址已复制</string>
+  <string name="item_details_snackbar_message_totp_copied">TOTP 已复制</string>
+  <string name="item_details_snackbar_message_username_copied">用户名已复制</string>
+  <string name="item_details_snackbar_message_website_copied">网址已复制</string>
+  <string name="item_details_snackbar_message_x_handle_copied">X 用户名已复制</string>
+  <string name="item_details_snackbar_message_yahoo_copied">Yahoo 已复制</string>
+  <string name="item_details_snackbar_message_zip_or_postal_code_copied">邮政编码已复制</string>
+  <string name="item_details_snackbar_message_public_key_copied">公钥已复制</string>
+  <string name="item_details_snackbar_message_private_key_copied">私钥已复制</string>
+  <string name="item_details_snackbar_message_ssid_copied">SSID 已复制</string>
+  <string name="open_with">打开方式：</string>
+  <string name="open_attachments_error">无法打开附件</string>
+</resources>

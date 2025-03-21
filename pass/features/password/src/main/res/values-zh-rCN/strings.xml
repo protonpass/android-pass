@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_password_copy">复制并关闭</string>
+  <string name="password_copied_to_clipboard">密码已复制</string>
+  <string name="bottomsheet_generate_password_title">生成密码</string>
+  <string name="password_type">类型</string>
+  <string name="special_characters">特殊字符(!&amp;*)</string>
+  <plurals name="character_count">
+    <item quantity="other">%s 个字符</item>
+  </plurals>
+  <plurals name="word_count">
+    <item quantity="other">%s 个单词</item>
+  </plurals>
+  <string name="word_separator">单词分隔符</string>
+  <string name="bottomsheet_option_capital_letters">大写字母（A–Z）</string>
+  <string name="bottomsheet_option_capitalise">大写</string>
+  <string name="bottomsheet_option_include_numbers">包括数字 (0–9)</string>
+  <string name="bottomsheet_option_word_separator_hyphens">连字符 ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">空格</string>
+  <string name="bottomsheet_option_word_separator_periods">句点 ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">逗号（，）</string>
+  <string name="bottomsheet_option_word_separator_underscores">下划线 ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">数字</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">数字和符号</string>
+  <string name="regenerate_password_icon_content_description">重新生成密码按钮</string>
+  <string name="password_mode_memorable">好记的密码</string>
+  <string name="password_mode_random">随机密码</string>
+  <string name="password_mode_icon">密码模式图标</string>
+  <string name="password_words_separator_icon">密码单词分隔符</string>
+</resources>

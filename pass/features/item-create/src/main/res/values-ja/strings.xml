@@ -35,7 +35,7 @@
   <string name="field_website_address_hint">https://</string>
   <string name="field_website_add_another">追加</string>
   <string name="sticky_button_generate_password" comment="Sticky button on the Create login screen. When tapped, the Generate password bottomsheet is shown">新しいパスワードを生成</string>
-  <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">自分のメールを隠す</string>
+  <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">メールを非表示</string>
   <string name="sticky_button_use_account_email" comment="Sticky button on the Create login screen. When tapped, the current user email is autofilled">%s を使用</string>
   <string name="create_login_item_creation_error">ログイン情報を作成できませんでした</string>
   <string name="create_login_item_update_error">ログイン情報を更新できませんでした</string>
@@ -49,7 +49,7 @@
   <string name="bottomsheet_custom_field_type_text">テキスト</string>
   <string name="bottomsheet_custom_field_type_hidden">非表示</string>
   <string name="bottomsheet_custom_field_type_totp">2FA 秘密鍵 (TOTP)</string>
-  <string name="bottomsheet_custom_field_type_date">Date</string>
+  <string name="bottomsheet_custom_field_type_date">日付</string>
   <string name="bottomsheet_custom_field_option_edit">名前を編集</string>
   <string name="bottomsheet_custom_field_option_remove">フィールドを削除</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">カスタム フィールドを削除</string>
@@ -57,7 +57,7 @@
   <string name="custom_field_hidden_placeholder">非表示テキストを追加</string>
   <string name="custom_field_hidden_icon_content_description">非表示のカスタムフィールドアイコン</string>
   <string name="custom_field_text_placeholder">テキストを追加</string>
-  <string name="custom_field_date_placeholder">Add date</string>
+  <string name="custom_field_date_placeholder">日付を追加</string>
   <string name="custom_field_dialog_title">カスタムフィールドの名前</string>
   <string name="custom_field_dialog_body">カスタムフィールドに名前を付ける</string>
   <string name="custom_field_dialog_placeholder">例: ユーザーID、PIN</string>
@@ -94,7 +94,7 @@
   <string name="cannot_retrieve_alias_options">エイリアス オプションを取得できません</string>
   <string name="alias_mailbox_dialog_title">転送先</string>
   <string name="sl_note_info_title">SimpleLogin のメモとは？</string>
-  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">Passでは、アイテムノートはアイテム暗号化キーで暗号化され、ノートを閲覧することができるのはアクセス権を持っているユーザーだけです。</string>
+  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">Passでは、アイテムのメモはアイテム暗号化キーで暗号化され、メモを閲覧することができるのはアクセス権を持っているユーザーだけです。</string>
   <string name="sl_note_info_message_part2">ProtonやSimpleLoginでさえ、閲覧することはできません。</string>
   <string name="sl_note_info_message_part3">SimpleLoginのメモはエイリアスアドレスと同じ場所に保存されており、保存時の暗号化によって保護されていますが、エンドツーエンドの暗号化はされていません。つまり、SimpleLoginのデータベースにアクセスできる人は誰でもそれを読むことができます。</string>
   <string name="sl_note_info_content_description">SLノートの情報ダイアログを表示</string>
@@ -207,6 +207,7 @@
   <string name="open_with">開く：</string>
   <string name="open_attachments_error">添付ファイルを開くことができませんでした</string>
   <string name="upload_attachments_error">添付ファイルのアップロードに失敗しました</string>
+  <string name="attachment_size_exceeded_error">The selected file exceeds the size limit. Please choose a file smaller than 100MB.</string>
   <string name="banner_advanced_options_title">ご存知ですか？</string>
   <string name="banner_advanced_options_subtitle">歯車アイコンをタップして、エイリアスを好きなようにカスタマイズします。</string>
   <string name="banner_custom_domain_title">ご存知ですか？</string>
@@ -351,5 +352,5 @@
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">アイテムを作成できません</string>
   <string name="cannot_create_items_dialog_message">編集者または管理者権限を持つ保管庫がありません。メインアプリで作成するか、組織の管理者にサポートを依頼してください。</string>
-  <string name="wifi_security_type_field_label">Security type</string>
+  <string name="wifi_security_type_field_label">セキュリティの種類</string>
 </resources>

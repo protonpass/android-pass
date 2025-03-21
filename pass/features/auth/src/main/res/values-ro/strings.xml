@@ -20,9 +20,9 @@
   <string name="enter_your_pin_code">Introduceți codul PIN</string>
   <string name="unlock">Deblocare</string>
   <plurals name="enter_your_pin_code_error">
-    <item quantity="one">PIN incorect. A mai rămas %d încercare.</item>
-    <item quantity="few">PIN incorect, %d încercări rămase.</item>
-    <item quantity="other">PIN incorect, %d de încercări rămase.</item>
+    <item quantity="one">PIN incorect. Încercări rămase: %d.</item>
+    <item quantity="few">PIN incorect. Încercări rămase: %d.</item>
+    <item quantity="other">PIN incorect. Încercări rămase: %d.</item>
   </plurals>
   <string name="auth_unlock_app_title">Deblocare Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Introduceți parola principală pentru [%s]</string>

@@ -91,7 +91,7 @@
   <string name="security_center_dark_web_monitor_found_in_breaches">Порушень не виявлено</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Адреси Proton</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Псевдоніми Hide-my-email</string>
-  <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving Proton addresses</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Помилка при отриманні адрес Proton</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Error retrieving Hide-my-email aliases</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Не підлягає моніторингу</string>
   <string name="security_center_dark_web_monitor_see_all">Переглянути все</string>

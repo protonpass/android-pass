@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="item_details_snackbar_message_alias_copied">Vzdevek je kopiran</string>
+  <string name="item_details_snackbar_message_birthdate_copied">Rojstni datum kopiran</string>
+  <string name="item_details_snackbar_message_card_number_copied">Številka kartice je kopirana</string>
+  <string name="item_details_snackbar_message_city_copied">Mesto kopirano</string>
+  <string name="item_details_snackbar_message_company_copied">Podjetje kopirano</string>
+  <string name="item_details_snackbar_message_country_or_region_copied">Država ali regija je kopirana</string>
+  <string name="item_details_snackbar_message_county_copied">Okrožje kopirano</string>
+  <string name="item_details_snackbar_message_custom_field_copied">Polje po meri je kopirano</string>
+  <string name="item_details_snackbar_message_cvv_copied">Varnostna koda je kopirana</string>
+  <string name="item_details_snackbar_message_email_copied">E-poštni naslov je kopiran</string>
+  <string name="item_details_snackbar_message_facebook_copied">Facebook je kopiran</string>
+  <string name="item_details_snackbar_message_first_name_copied">Ime je kopirano</string>
+  <string name="item_details_snackbar_message_floor_copied">Nadstropje kopirano</string>
+  <string name="item_details_snackbar_message_full_name_copied">Ime in priimek kopirana</string>
+  <string name="item_details_snackbar_message_gender_copied">Spol kopiran</string>
+  <string name="item_details_snackbar_message_instagram_copied">Instagram kopiran</string>
+  <string name="item_details_snackbar_message_last_name_copied">Priimek kopiran</string>
+  <string name="item_details_snackbar_message_license_number_copied">Številka licence je kopirana</string>
+  <string name="item_details_snackbar_message_linkedin_copied">LinkedIn kopiran</string>
+  <string name="item_details_snackbar_message_middle_name_copied">Srednje ime je kopirano</string>
+  <string name="item_details_snackbar_message_occupation_copied">Poklic kopiran</string>
+  <string name="item_details_snackbar_message_organization_copied">Organizacija je kopirana</string>
+  <string name="item_details_snackbar_message_passport_number_copied">Številka potnega lista je kopirana</string>
+  <string name="item_details_snackbar_message_password_copied">Geslo je bilo kopirano</string>
+  <string name="item_details_snackbar_message_phone_number_copied">Telefonska številka je kopirana</string>
+  <string name="item_details_snackbar_message_pin_copied">PIN koda je kopirana</string>
+  <string name="item_details_snackbar_message_reddit_copied">Reddit kopiran</string>
+  <string name="item_details_snackbar_message_social_security_number_copied">Številka socialnega zavarovanja je kopirana</string>
+  <string name="item_details_snackbar_message_state_or_province_copied">Država ali provinca kopirana</string>
+  <string name="item_details_snackbar_message_street_address_copied">Naslov je kopiran</string>
+  <string name="item_details_snackbar_message_totp_copied">TOTP je kopiran</string>
+  <string name="item_details_snackbar_message_username_copied">Uporabniško ime je kopirano</string>
+  <string name="item_details_snackbar_message_website_copied">Naslov spletne strani (URL) je kopiran</string>
+  <string name="item_details_snackbar_message_x_handle_copied">X handle copied</string>
+  <string name="item_details_snackbar_message_yahoo_copied">Yahoo kopiran</string>
+  <string name="item_details_snackbar_message_zip_or_postal_code_copied">Poštna številka je kopirana</string>
+  <string name="item_details_snackbar_message_public_key_copied">Public key copied</string>
+  <string name="item_details_snackbar_message_private_key_copied">Private key copied</string>
+  <string name="item_details_snackbar_message_ssid_copied">SSID copied</string>
+  <string name="open_with">Odpri z:</string>
+  <string name="open_attachments_error">Could not open attachment</string>
+</resources>

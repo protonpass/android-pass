@@ -27,7 +27,7 @@ internal enum class SimpleLoginSyncDomainSelectSnackBarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
 
     FetchAliasDomainError(
         id = R.string.simple_login_sync_domain_select_snackbar_alias_domain_fetch_error,

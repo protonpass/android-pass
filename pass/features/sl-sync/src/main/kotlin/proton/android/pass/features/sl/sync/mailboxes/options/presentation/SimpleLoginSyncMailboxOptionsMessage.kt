@@ -28,7 +28,7 @@ internal enum class SimpleLoginSyncMailboxOptionsMessage(
     override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
 
     MailboxOptionsError(
         id = R.string.simple_login_sync_mailbox_options_snackbar_options_error,

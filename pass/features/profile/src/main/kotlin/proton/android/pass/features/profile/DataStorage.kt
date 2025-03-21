@@ -51,7 +51,7 @@ import me.proton.core.presentation.R as CoreR
 internal fun DataStorage(
     modifier: Modifier = Modifier,
     state: DataStorageState,
-    onClick: () -> Unit
+    onClick: (Boolean) -> Unit
 ) {
     if (state.shouldDisplay) {
         Row(
@@ -90,7 +90,7 @@ internal fun DataStorage(
                 Text.Body2Weak(
                     modifier = Modifier.applyIf(
                         condition = percentage >= HIGH_THRESHOLD,
-                        ifTrue = { clickable { onClick() } }
+                        ifTrue = { clickable { onClick(state.canUpgrade) } }
                     ),
                     text = "$amount (${String.format(Locale.getDefault(), "%.1f", percentage)}%)",
                     color = if (percentage < LOW_THRESHOLD) ProtonTheme.colors.textWeak else color
@@ -138,6 +138,7 @@ fun DataStoragePreview(@PreviewParameter(ThemeDataStorageProvider::class) input:
             DataStorage(
                 state = DataStorageState(
                     shouldDisplay = true,
+                    canUpgrade = true,
                     used = input.second.toLong(),
                     quota = 1 * 1024
                 ),

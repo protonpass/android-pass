@@ -27,7 +27,7 @@ enum class InternalDrawerSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-): SnackbarMessage {
+): SnackbarMessage.StructuredMessage {
     PreferencesCleared(R.string.snackbar_preferences_cleared_success, SnackbarType.SUCCESS),
     PreferencesClearError(R.string.snackbar_preferences_cleared_error, SnackbarType.ERROR)
 }

@@ -27,7 +27,7 @@ internal enum class SecureLinksSharedSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
 
     LinkCopied(
         id = R.string.secure_links_shared_snackbar_message_link_copied,

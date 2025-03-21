@@ -27,7 +27,7 @@ internal enum class ItemOptionsSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
     SentToTrashSuccess(
         id = R.string.snackbar_item_move_to_trash_success,
         type = SnackbarType.SUCCESS

@@ -66,6 +66,7 @@ sealed interface ProfileUiEvent {
 
     data object OnMFACountClick : ProfileUiEvent
 
-    data object OnStorageFullClick : ProfileUiEvent
+    @JvmInline
+    value class OnStorageFullClick(val canUpgrade: Boolean) : ProfileUiEvent
 
 }

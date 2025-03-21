@@ -207,6 +207,7 @@
   <string name="open_with">Abrir con:</string>
   <string name="open_attachments_error">Error al abrir el archivo adjunto</string>
   <string name="upload_attachments_error">Error al cargar el archivo adjunto del mensaje</string>
+  <string name="attachment_size_exceeded_error">El archivo seleccionado excede el límite de tamaño. Elija un archivo menor de 100 MB.</string>
   <string name="banner_advanced_options_title">¿Lo sabía?</string>
   <string name="banner_advanced_options_subtitle">Pulse el ícono de engranaje para personalizar el alias como desee.</string>
   <string name="banner_custom_domain_title">¿Lo sabía?</string>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="title_settings">设置</string>
+  <string name="settings_autofill_section_title">自动填充</string>
+  <string name="settings_autofill_preference_title">自动填充</string>
+  <string name="settings_autofill_preference_description">让 Proton Pass 为您填写用户名和密码，实现快速、简便的登录。</string>
+  <string name="settings_authentication_section_title">身份验证</string>
+  <string name="settings_authentication_preference_title">指纹锁</string>
+  <string name="settings_authentication_preference_description_enabled">使用您的指纹快速安全地打开应用程序。</string>
+  <string name="settings_authentication_preference_description_no_fingerprint">由于该设备上没有登记指纹，因此无法使用指纹与应用程序进行交互。</string>
+  <string name="settings_appearance_preference_title">主题</string>
+  <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">跟随系统</string>
+  <string name="settings_appearance_preference_subtitle_light">浅色模式</string>
+  <string name="settings_appearance_preference_subtitle_dark">深色模式</string>
+  <string name="settings_fingerprint_lock_enabled">指纹锁已启用</string>
+  <string name="settings_error_performing_operation">执行操作出错</string>
+  <string name="settings_option_clipboard">剪贴板</string>
+  <string name="settings_application_section_title">应用程序</string>
+  <string name="settings_option_view_logs">查看日志</string>
+  <string name="settings_option_force_sync">强制同步</string>
+  <string name="settings_about_section_title">关于</string>
+  <string name="settings_option_privacy_policy">隐私协议</string>
+  <string name="settings_option_terms_of_service">服务条款</string>
+  <string name="settings_privacy_section_title">隐私</string>
+  <string name="settings_use_favicons_preference_title">使用网页图标</string>
+  <string name="settings_use_favicons_preference_subtitle">决定是否要查看您项目上的网站图标。</string>
+  <string name="settings_allow_screenshots_preference_title">允许截图</string>
+  <string name="settings_allow_screenshots_preference_subtitle">如果启用，您就可以对应用程序进行截图。</string>
+  <string name="settings_clear_icon_cache_success">图标缓存已清除</string>
+  <string name="settings_clear_icon_cache_error">无法清除图标缓存</string>
+  <string name="settings_share_telemetry">分享匿名使用情况</string>
+  <string name="settings_share_crashes">分享匿名崩溃报告</string>
+  <string name="settings_preference_updated">您的首选项已更新</string>
+  <string name="settings_display_section_title">显示</string>
+  <string name="settings_preference_display_username">用户名字段始终可见</string>
+  <string name="settings_preference_display_autofill_pinning">自动填充固定始终可见</string>
+  <string name="view_logs_title">查看日志</string>
+  <string name="clipboard_bottomsheet_title">剪贴板</string>
+  <string name="clipboard_option_clear_clipboard_label">清空剪贴板</string>
+  <string name="clipboard_option_copy_totp_code">复制身份验证码</string>
+  <string name="clipboard_option_copy_totp_code_hint">使用自动填充时自动复制验证码。</string>
+  <string name="clipboard_option_clear_clipboard_never">从不</string>
+  <string name="clipboard_option_clear_clipboard_after_60_seconds">1分钟后</string>
+  <string name="clipboard_option_clear_clipboard_after_180_seconds">3 分钟后</string>
+  <string name="settings_use_digital_asset_link_preference_title">启用数字资产链接</string>
+  <string name="settings_use_digital_asset_link_preference_subtitle">在 Android 应用程序和网站之间建立网站所有权验证。</string>
+</resources>

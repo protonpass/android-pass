@@ -16,7 +16,7 @@
   <string name="item_list_header_credit_cards_type">Maksukortit</string>
   <plurals name="item_list_header_results">
     <item quantity="one">tulos</item>
-    <item quantity="other">tulokset</item>
+    <item quantity="other">tulosta</item>
   </plurals>
   <string name="item_list_header_identities_type">Identiteetit</string>
   <string name="item_list_header_custom_type">Custom items</string>
@@ -306,4 +306,5 @@
     <item quantity="other">%d jäsentä</item>
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
+  <string name="show_network_qr_code">Show Network QR Code</string>
 </resources>

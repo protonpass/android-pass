@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="item_options_alias_trash_dialog_title">Siirrä roskakoriin</string>
-  <string name="item_options_alias_trash_dialog_message">Roskakorissa olevat aliakset jatkavat sähköpostien välittämistä. Jos haluat lopettaa sähköpostien vastaanottamisen tähän osoitteeseen, poista se sen sijaan käytöstä.</string>
+  <string name="item_options_alias_trash_dialog_message">Roskakorissa olevat aliakset välittävät viestejä edelleen. Lopeta viestien vastaanottaminen tällä osoitteella poistamalla alias käytöstä.</string>
   <string name="item_options_alias_trash_dialog_checkbox_text">Älä muistuta uudelleen</string>
   <string name="item_options_alias_trash_dialog_button_text_disable">Poista käytöstä sen sijaan</string>
   <string name="item_options_alias_trash_dialog_button_text_trash">Siirrä roskakoriin</string>

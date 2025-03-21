@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="item_history_restore_action">还原</string>
+  <string name="item_history_restore_confirmation_dialog_title">恢复此版本?</string>
+  <string name="item_history_restore_confirmation_dialog_message" comment="The item will be reverted to a version from an specific date, for instance: Your current item will revert to the version from 19 February 2024 at 09:30">您当前的项目将恢复为 %1$s 的版本</string>
+  <string name="item_history_restore_snackbar_message_error">恢复项目修改时出错</string>
+  <string name="item_history_restore_snackbar_message_success">项目修改已成功恢复</string>
+  <string name="item_history_restore_tab_title_current">当前的</string>
+  <string name="item_history_timeline_title">历史</string>
+  <string name="item_history_timeline_node_child_title">修改日期</string>
+  <string name="item_history_timeline_node_leaf_title">创建</string>
+  <string name="item_history_timeline_node_root_title">当前版本</string>
+  <string name="item_history_timeline_snackbar_message_error">获取商品版本时出错</string>
+  <string name="reset_history_bottomsheet_option">重置历史记录</string>
+  <string name="reset_history_dialog_title">重置此项目的历史记录？</string>
+  <string name="reset_history_dialog_body">重置历史记录将永久删除所有过去的版本，且无法撤销。</string>
+  <string name="reset_history_action">重置</string>
+  <string name="reset_history_dialog_snackbar_message_error">重置时出现错误</string>
+  <string name="reset_history_dialog_snackbar_message_success">重置项目历史记录</string>
+</resources>

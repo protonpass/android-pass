@@ -73,17 +73,17 @@
     <item quantity="other">Выкарыстоўваецца ў %d запісах уваходу</item>
   </plurals>
   <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
-    <item quantity="one">Выяўлена %d уцечка</item>
-    <item quantity="few">Выяўлены %d уцечкі</item>
-    <item quantity="many">Выяўлены %d уцечак</item>
-    <item quantity="other">Выяўлены %d уцечкі</item>
+    <item quantity="one">Выяўлена %d парушэнне</item>
+    <item quantity="few">Выяўлены %d парушэнні</item>
+    <item quantity="many">Выяўлена %d парушэнняў</item>
+    <item quantity="other">Выяўлена %d парушэнняў</item>
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Памылка загрузкі карыстальніцкіх адрасоў электроннай пошты</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Немагчыма атрымаць адрасы электроннай пошты</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Выдаліць</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">Апошняе парушэнне ў %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
-    <item quantity="one">Знойдзена ў %s парушэнні</item>
+    <item quantity="one">Знойдзены ў %s парушэнні</item>
     <item quantity="few">Знойдзена ў %s парушэннях</item>
     <item quantity="many">Знойдзена ў %s парушэннях</item>
     <item quantity="other">Знойдзена ў %s парушэннях</item>

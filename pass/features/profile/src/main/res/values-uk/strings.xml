@@ -84,7 +84,7 @@
   <string name="filtered_by_notes">Відфільтровано за нотатками. Видалені елементи не показуються</string>
   <string name="filtered_by_credit_cards">Відфільтровано за кредитними картками. Видалені товари не показуються</string>
   <string name="filtered_by_identities">Відфільтровано за особами. Видалені елементи не показуються</string>
-  <string name="filtered_by_custom_items">Filtered by custom items. Trashed items aren\'t shown</string>
+  <string name="filtered_by_custom_items">Відфільтровано за власними елементами. Видалені елементи не показуються</string>
   <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Щоб керувати ним, вам потрібно перейти на %1$s</string>
   <string name="account_switch_confirmation_title">Керування обліковим записом</string>
   <string name="account_switch_confirmation_confirm">Перемикання і керування</string>

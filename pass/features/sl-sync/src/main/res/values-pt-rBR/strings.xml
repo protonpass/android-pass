@@ -23,7 +23,7 @@
   <string name="simple_login_sync_management_domain_title">Domínio padrão para aliases</string>
   <string name="simple_login_sync_management_domain_option_blank">Não selecionado</string>
   <string name="simple_login_sync_management_mailboxes_label">Caixas de correio</string>
-  <string name="simple_login_sync_management_mailboxes_description">A caixa de correio é para onde os e-mails enviados para um alias são encaminhados. É a sua caixa de correio normal, por exemplo, Gmail, Outlook, Proton Mail, etc.</string>
+  <string name="simple_login_sync_management_mailboxes_description">A caixa de correio é para onde os e-mails enviados para um endereço alternativo são encaminhados. É a sua caixa de correio normal, por exemplo, Gmail, Outlook, Proton Mail, etc.</string>
   <string name="simple_login_sync_management_mailbox_default">Padrão</string>
   <string name="simple_login_sync_management_mailbox_unverified">Caixa de correio não verificada</string>
   <string name="simple_login_sync_management_mailbox_unverified_change">Alteração da caixa de correio não verificada</string>

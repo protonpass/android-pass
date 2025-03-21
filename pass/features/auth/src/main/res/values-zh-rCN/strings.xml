@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="enter_your_pin_code">输入 PIN 码</string>
+  <string name="unlock">解锁</string>
+  <plurals name="enter_your_pin_code_error">
+    <item quantity="other">PIN 码无效，剩余 %d 次尝试。</item>
+  </plurals>
+  <string name="auth_unlock_app_title">解锁 Proton Pass</string>
+  <string name="auth_unlock_app_subtitle">请输入 %s 的主密码</string>
+  <string name="auth_unlock_app_extra_password_subtitle">输入 %s 的额外密码</string>
+  <string name="auth_unlock_app_subtitle_account_switch">输入主密码：</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">输入额外密码：</string>
+  <string name="auth_master_password_label">主密码</string>
+  <string name="auth_action_reveal_password">显示主密码</string>
+  <string name="auth_action_conceal_password">隐藏主密码</string>
+  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">输入 PIN 码</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">改用指纹验证</string>
+  <string name="auth_unlock_button">解锁</string>
+  <string name="auth_error_empty_password">密码不能为空</string>
+  <string name="auth_error_pin_cannot_be_empty">PIN 码不能为空</string>
+  <string name="auth_extra_password_label">输入您的额外密码</string>
+  <string name="auth_extra_password_error">使用额外密码验证时出错</string>
+  <string name="auth_extra_password_too_many_attempts">登录失败次数过多，您已退出登录。</string>
+  <string name="auth_error_wrong_password_no_attempts">密码错误</string>
+  <plurals name="auth_error_wrong_password">
+    <item quantity="other">密码错误。剩余 %d 次尝试。</item>
+  </plurals>
+  <plurals name="auth_attempts_remaining">
+    <item quantity="other">剩余 %d 次尝试</item>
+  </plurals>
+  <string name="auth_pin_too_many_attempts">PIN 码尝试失败次数过多，所有用户将被强制退出登录。</string>
+  <string name="auth_pin_too_many_attempts_dismiss">PIN 码尝试失败次数过多</string>
+</resources>

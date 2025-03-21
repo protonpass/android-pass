@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <plurals name="migrate_item_confirm_title_bottom_sheet">
+    <item quantity="other">将 %d 项移动到以下保险库？</item>
+  </plurals>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">将所有项目移动到以下保险库吗？</string>
+  <string name="migrate_item_confirm_confirm_button">移动</string>
+  <string name="migrate_item_success_snackbar">项目已移动</string>
+  <string name="migrate_item_error_snackbar">移动项目时发生错误</string>
+  <string name="migrate_item_some_not_migrated_error_snackbar">移动部分项目时发生错误</string>
+  <string name="migrate_item_warning_history">在保险库之间移动项目时，我们将最多保留对每个项目进行 50 此修改。</string>
+  <string name="migrate_item_warning_secure_link">当项目被转移到另一个保险库时，其安全链接将被移除</string>
+  <string name="migrate_all_items_success_snackbar">所有项目已移动</string>
+  <string name="migrate_all_items_error_snackbar">移动所有保险库项目时出错</string>
+  <string name="migrate_init_error_snackbar">无法准备迁移画面</string>
+  <string name="migrate_disabled_vault_reason_no_permission">您不能在此保险库中创建项目</string>
+  <string name="migrate_disabled_vault_reason_same_vault">不能将项目移动到同一保险库</string>
+  <plurals name="migrate_items_shared_warning_title">
+    <item quantity="other">将 %d 项移动到另一个保险库？</item>
+  </plurals>
+  <string name="migrate_item_shared_warning_message">此项目目前是共享的。将其移动到另一个保险库将取消所有其他用户的访问权限。</string>
+  <plurals name="migrate_items_shared_warning_message">
+    <item quantity="other">%d 个项目目前是共享的。将它们移到另一个保险库将取消所有其他用户的访问权限。</item>
+  </plurals>
+</resources>

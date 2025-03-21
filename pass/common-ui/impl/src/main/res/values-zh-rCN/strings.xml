@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="bottomsheet_copy_email">复制电子邮件</string>
+  <string name="bottomsheet_copy_password">复制密码</string>
+  <string name="bottomsheet_copy_username">复制用户名</string>
+  <string name="bottomsheet_no_actions">无可用操作</string>
+  <string name="snackbar_item_move_to_trash_success">项目已经移至回收站</string>
+  <string name="snackbar_item_move_to_trash_error">无法移至回收站</string>
+  <string name="snackbar_item_copy_email_success">电子邮件已复制到剪贴板</string>
+  <string name="snackbar_item_copy_username_success">用户名已复制到剪贴板</string>
+  <string name="snackbar_item_copy_password_success">密码已复制到剪贴板</string>
+</resources>

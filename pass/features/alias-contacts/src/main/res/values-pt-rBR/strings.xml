@@ -59,7 +59,7 @@
   <string name="contact_option_block_contact">Bloquear contato</string>
   <string name="contact_option_unblock_contact">Desbloquear contato</string>
   <string name="contact_option_delete">Excluir</string>
-  <string name="alias_contacts_bottomsheet_title">Contatos de alias</string>
+  <string name="alias_contacts_bottomsheet_title">Contatos de endereço alternativo</string>
   <string name="alias_contacts_bottomsheet_subtitle">Para manter seu endereço de e-mail pessoal oculto, você pode criar um contato alias que oculte seu endereço.</string>
   <string name="alias_contacts_explanation">Veja como funciona:</string>
   <string name="alias_contacts_bottomsheet_section_1">Digite o endereço para o qual você deseja enviar um e-mail.</string>

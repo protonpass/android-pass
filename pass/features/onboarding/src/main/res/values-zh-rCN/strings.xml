@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="on_boarding_autofill_content">让 Proton Pass 为您填写登录信息。无需打字或复制粘贴。</string>
+  <string name="on_boarding_autofill_title">瞬间登录各类应用</string>
+  <string name="on_boarding_autofill_button">使用 Proton Pass 自动填充</string>
+  <string name="on_boarding_fingerprint_content">将 Proton Pass 设置为使用指纹解锁，这样只有您才能访问。</string>
+  <string name="on_boarding_fingerprint_title">保护您最敏感的数据</string>
+  <string name="on_boarding_fingerprint_button">启用指纹锁</string>
+  <string name="on_boarding_last_page_content">不要再分享您的真实电子邮件地址。相反，用电子邮件别名来隐藏它——Proton Pass 独家秘诀。</string>
+  <string name="on_boarding_last_page_title">控制收件箱中的内容</string>
+  <string name="on_boarding_last_page_button">开始使用 Proton Pass</string>
+  <string name="on_boarding_skip">以后再说</string>
+  <string name="on_boarding_tutorial">观看如何使用 Proton Pass 的简短视频</string>
+  <string name="on_boarding_pending_invite_content">出于安全原因，需要确认您的访问权限.</string>
+  <string name="on_boarding_pending_invite_title">等待访问共享数据</string>
+  <string name="on_boarding_pending_invite_button">了解更多关于 Proton Pass 的信息</string>
+  <string name="error_biometry_failed_to_start">无法启动生物识别身份验证</string>
+  <string name="error_biometry_failed_to_authenticate">身份验证失败</string>
+  <string name="settings_fingerprint_lock_enabled">指纹锁已启用</string>
+  <string name="error_performing_operation">执行操作出错</string>
+  <string name="onboarding_slide_1_title">您所有的密码。</string>
+  <string name="onboarding_slide_2_title">保护您的收件箱。</string>
+  <string name="onboarding_slide_3_title">随时了解信息。</string>
+  <string name="onboarding_slide_4_title">安全共享。</string>
+  <string name="onboarding_slide_1_subtitle">安全地集中在一处，并受到最值得信赖的隐私保护。</string>
+  <string name="onboarding_slide_2_subtitle">使用 Hide-My-Email 别名应对网络钓鱼威胁。</string>
+  <string name="onboarding_slide_3_subtitle">安全、轻松地共享密码和敏感信息。</string>
+  <string name="onboarding_slide_4_subtitle">当您的电子邮件在暗网上被发现时将获得警报。</string>
+  <string name="create_an_account_button">创建账号</string>
+  <string name="sign_in_button">登录</string>
+</resources>

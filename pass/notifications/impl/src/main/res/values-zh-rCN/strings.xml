@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="updates_notification_channel_name">更新</string>
+  <string name="autofill_notification_channel_name">自动填充</string>
+  <string name="autofill_notification_copy_to_clipboard_title">TOTP码</string>
+  <string name="autofill_notification_copy_to_clipboard_body">TOTP已复制到剪贴板</string>
+  <string name="new_item_invite_notification_title">收到新项目邀请</string>
+  <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s 希望与您分享一个项目。</string>
+  <string name="new_vault_invite_notification_title">收到新保险库邀请</string>
+  <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s 想和您分享一个保险库。</string>
+</resources>

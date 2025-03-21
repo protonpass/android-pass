@@ -17,8 +17,8 @@
   <plurals name="item_list_header_results">
     <item quantity="one">výsledok</item>
     <item quantity="few">výsledky</item>
-    <item quantity="many">výsledky</item>
-    <item quantity="other">výsledky</item>
+    <item quantity="many">výsledkov</item>
+    <item quantity="other">výsledkov</item>
   </plurals>
   <string name="item_list_header_identities_type">Identity</string>
   <string name="item_list_header_custom_type">Vlastné položky</string>
@@ -203,7 +203,7 @@
   <string name="item_details_shared_section_more_info_share_id">ID trezoru</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
   <string name="item_details_wifi_network_label_password">Heslo</string>
-  <string name="item_details_wifi_network_label_security">Security</string>
+  <string name="item_details_wifi_network_label_security">Zabezpečenie</string>
   <string name="item_details_ssh_key_label_public_key">Verejný kľúč</string>
   <string name="item_details_ssh_key_label_private_key">Súkromný kľúč</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Verzia aplikácie už nie je podporovaná, aktualizujte ju.</string>
@@ -336,4 +336,5 @@
     <item quantity="other">%d členovia</item>
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
+  <string name="show_network_qr_code">Show Network QR Code</string>
 </resources>

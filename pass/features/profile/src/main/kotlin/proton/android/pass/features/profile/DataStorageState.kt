@@ -20,12 +20,14 @@ package proton.android.pass.features.profile
 
 data class DataStorageState(
     val shouldDisplay: Boolean,
+    val canUpgrade: Boolean,
     val used: Long,
     val quota: Long
 ) {
     companion object {
         val Initial = DataStorageState(
             shouldDisplay = false,
+            canUpgrade = false,
             used = 0,
             quota = 0
         )

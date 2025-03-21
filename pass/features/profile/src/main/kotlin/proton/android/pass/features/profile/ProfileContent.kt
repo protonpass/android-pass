@@ -116,7 +116,7 @@ internal fun ProfileContent(
                         .padding(horizontal = Spacing.medium)
                         .padding(bottom = Spacing.medium),
                     state = state.dataStorageState,
-                    onClick = { onEvent(ProfileUiEvent.OnStorageFullClick) }
+                    onClick = { onEvent(ProfileUiEvent.OnStorageFullClick(it)) }
                 )
 
                 ItemSummary(

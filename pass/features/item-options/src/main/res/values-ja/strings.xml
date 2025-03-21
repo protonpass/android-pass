@@ -19,7 +19,7 @@
 <resources>
   <string name="item_options_alias_trash_dialog_title">ゴミ箱に移動</string>
   <string name="item_options_alias_trash_dialog_message">ゴミ箱にあるエイリアスは引き続きメールを転送します。このアドレスでメールの受信を停止したい場合は、代わりに無効にしてください。</string>
-  <string name="item_options_alias_trash_dialog_checkbox_text">再度リマインドしない</string>
+  <string name="item_options_alias_trash_dialog_checkbox_text">次回から通知しない</string>
   <string name="item_options_alias_trash_dialog_button_text_disable">代わりに無効化</string>
   <string name="item_options_alias_trash_dialog_button_text_trash">ごみ箱に移動</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">エイリアスの無効化にエラーが発生しました</string>

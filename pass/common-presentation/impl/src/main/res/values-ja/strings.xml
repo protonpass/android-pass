@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="item_details_snackbar_message_alias_copied">エイリアスをコピーしました</string>
+  <string name="item_details_snackbar_message_birthdate_copied">生年月日をコピーしました</string>
+  <string name="item_details_snackbar_message_card_number_copied">カード番号をコピーしました</string>
+  <string name="item_details_snackbar_message_city_copied">都市をコピーしました</string>
+  <string name="item_details_snackbar_message_company_copied">会社名をコピーしました</string>
+  <string name="item_details_snackbar_message_country_or_region_copied">国または地域をコピーしました</string>
+  <string name="item_details_snackbar_message_county_copied">国をコピーしました</string>
+  <string name="item_details_snackbar_message_custom_field_copied">カスタムフィールドをコピーしました</string>
+  <string name="item_details_snackbar_message_cvv_copied">認証番号をコピーしました</string>
+  <string name="item_details_snackbar_message_email_copied">メールアドレスをコピーしました</string>
+  <string name="item_details_snackbar_message_facebook_copied">Facebook をコピーしました</string>
+  <string name="item_details_snackbar_message_first_name_copied">名前をコピーしました</string>
+  <string name="item_details_snackbar_message_floor_copied">フロアをコピーしました</string>
+  <string name="item_details_snackbar_message_full_name_copied">氏名をコピーしました</string>
+  <string name="item_details_snackbar_message_gender_copied">性別をコピーしました</string>
+  <string name="item_details_snackbar_message_instagram_copied">Instagramをコピーしました</string>
+  <string name="item_details_snackbar_message_last_name_copied">苗字をコピーしました</string>
+  <string name="item_details_snackbar_message_license_number_copied">ライセンス番号をコピーしました</string>
+  <string name="item_details_snackbar_message_linkedin_copied">LinkedInをコピーしました</string>
+  <string name="item_details_snackbar_message_middle_name_copied">ミドルネームをコピーしました</string>
+  <string name="item_details_snackbar_message_occupation_copied">職業をコピーしました</string>
+  <string name="item_details_snackbar_message_organization_copied">組織をコピーしました</string>
+  <string name="item_details_snackbar_message_passport_number_copied">パスポート番号をコピーしました</string>
+  <string name="item_details_snackbar_message_password_copied">パスワードをコピーしました</string>
+  <string name="item_details_snackbar_message_phone_number_copied">電話番号をコピーしました</string>
+  <string name="item_details_snackbar_message_pin_copied">PIN コードをコピーしました</string>
+  <string name="item_details_snackbar_message_reddit_copied">Reddit をコピーしました</string>
+  <string name="item_details_snackbar_message_social_security_number_copied">社会保障番号をコピーしました</string>
+  <string name="item_details_snackbar_message_state_or_province_copied">都道府県をコピーしました</string>
+  <string name="item_details_snackbar_message_street_address_copied">通り、番地をコピーしました。</string>
+  <string name="item_details_snackbar_message_totp_copied">TOTP をコピーしました</string>
+  <string name="item_details_snackbar_message_username_copied">ユーザー名をコピーしました</string>
+  <string name="item_details_snackbar_message_website_copied">ウェブサイトURLをコピーしました</string>
+  <string name="item_details_snackbar_message_x_handle_copied">X（旧Twitter）をコピーしました</string>
+  <string name="item_details_snackbar_message_yahoo_copied">Yahoo をコピーしました</string>
+  <string name="item_details_snackbar_message_zip_or_postal_code_copied">郵便番号をコピーしました</string>
+  <string name="item_details_snackbar_message_public_key_copied">公開鍵をコピーしました</string>
+  <string name="item_details_snackbar_message_private_key_copied">秘密鍵をコピーしました</string>
+  <string name="item_details_snackbar_message_ssid_copied">SSID をコピーしました</string>
+  <string name="open_with">開く：</string>
+  <string name="open_attachments_error">添付ファイルを開くことができませんでした</string>
+</resources>

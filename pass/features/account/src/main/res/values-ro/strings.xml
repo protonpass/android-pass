@@ -27,8 +27,8 @@
   <string name="account_settings_list_item_security_keys_hint_not_set">Nesetat</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
-    <item quantity="one">%d cheie de securitate setată</item>
-    <item quantity="few">%d chei de securitate setate</item>
-    <item quantity="other">%d de chei de securitate setate</item>
+    <item quantity="one">Chei de securitate setate: %d</item>
+    <item quantity="few">Chei de securitate setate: %d</item>
+    <item quantity="other">Chei de securitate setate: %d</item>
   </plurals>
 </resources>

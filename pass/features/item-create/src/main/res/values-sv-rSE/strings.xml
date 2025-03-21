@@ -207,6 +207,7 @@
   <string name="open_with">Öppna med:</string>
   <string name="open_attachments_error">Kunde inte öppna bilaga</string>
   <string name="upload_attachments_error">Kunde inte ladda upp bilaga</string>
+  <string name="attachment_size_exceeded_error">Den valda filen överskrider storleksgränsen. Välj en fil som är mindre än 100 Mb.</string>
   <string name="banner_advanced_options_title">Visste du att?</string>
   <string name="banner_advanced_options_subtitle">Tryck på kugghjulsikonen för att anpassa aliaset så som du vill ha det.</string>
   <string name="banner_custom_domain_title">Visste du att?</string>

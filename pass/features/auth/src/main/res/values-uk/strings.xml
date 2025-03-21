@@ -34,7 +34,7 @@
   <string name="auth_action_reveal_password">Показати основний пароль</string>
   <string name="auth_action_conceal_password">Приховати основний пароль</string>
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Введіть PIN-код натомість</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Use fingerprint instead</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Натомість скористайтесь відбитком пальця</string>
   <string name="auth_unlock_button">Розблокувати</string>
   <string name="auth_error_empty_password">Потрібно ввести пароль</string>
   <string name="auth_error_pin_cannot_be_empty">Потрібно ввести PIN-код</string>
@@ -55,5 +55,5 @@
     <item quantity="other">Залишилося %d спроб</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Забагато невдалих спроб вводу Pin-коду. Усі ваші користувачі вийшли із системи.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Забагато невдалих спроб введення PIN-коду</string>
 </resources>

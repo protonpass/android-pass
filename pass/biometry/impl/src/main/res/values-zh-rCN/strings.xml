@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="biometric_prompt_title">应用已锁定</string>
+  <string name="biometric_prompt_title_setup">生物识别设置</string>
+  <string name="biometric_prompt_subtitle">通过设备锁解锁</string>
+  <string name="biometric_prompt_cancel">取消</string>
+</resources>

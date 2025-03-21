@@ -197,7 +197,7 @@
   <string name="item_details_shared_section_more_info_share_id">ID brankas</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
   <string name="item_details_wifi_network_label_password">Kata sandi</string>
-  <string name="item_details_wifi_network_label_security">Security</string>
+  <string name="item_details_wifi_network_label_security">Keamanan</string>
   <string name="item_details_ssh_key_label_public_key">Kunci publik</string>
   <string name="item_details_ssh_key_label_private_key">Kunci pribadi</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Versi aplikasi ini sudah tidak lagi didukung. Silakan perbarui aplikasi Anda.</string>
@@ -291,4 +291,5 @@
     <item quantity="other">%d anggota</item>
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
+  <string name="show_network_qr_code">Tampilkan Kode QR Jaringan</string>
 </resources>

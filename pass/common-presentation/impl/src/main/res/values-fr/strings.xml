@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="item_details_snackbar_message_alias_copied">L\'alias a été copié.</string>
+  <string name="item_details_snackbar_message_birthdate_copied">La date de naissance a été copiée.</string>
+  <string name="item_details_snackbar_message_card_number_copied">Le numéro de la carte a été copié.</string>
+  <string name="item_details_snackbar_message_city_copied">La ville a été copiée.</string>
+  <string name="item_details_snackbar_message_company_copied">L\'entreprise a été copiée.</string>
+  <string name="item_details_snackbar_message_country_or_region_copied">Le pays ou la région a été copié.</string>
+  <string name="item_details_snackbar_message_county_copied">La région a été copiée.</string>
+  <string name="item_details_snackbar_message_custom_field_copied">Le champ personnalisé a été copié.</string>
+  <string name="item_details_snackbar_message_cvv_copied">Le code de sécurité a été copié.</string>
+  <string name="item_details_snackbar_message_email_copied">L\'adresse e-mail a été copiée.</string>
+  <string name="item_details_snackbar_message_facebook_copied">Le compte Facebook a été copié.</string>
+  <string name="item_details_snackbar_message_first_name_copied">Le prénom a été copié.</string>
+  <string name="item_details_snackbar_message_floor_copied">L\'étage a été copié.</string>
+  <string name="item_details_snackbar_message_full_name_copied">Le nom complet a été copié.</string>
+  <string name="item_details_snackbar_message_gender_copied">Le genre a été copié.</string>
+  <string name="item_details_snackbar_message_instagram_copied">Le compte Instagram a été copié.</string>
+  <string name="item_details_snackbar_message_last_name_copied">Le nom a été copié.</string>
+  <string name="item_details_snackbar_message_license_number_copied">Le numéro de licence a été copié.</string>
+  <string name="item_details_snackbar_message_linkedin_copied">Le compte LinkedIn a été copié.</string>
+  <string name="item_details_snackbar_message_middle_name_copied">Le deuxième prénom a été copié.</string>
+  <string name="item_details_snackbar_message_occupation_copied">La profession a été copiée.</string>
+  <string name="item_details_snackbar_message_organization_copied">L\'organisation a été copiée.</string>
+  <string name="item_details_snackbar_message_passport_number_copied">Le numéro de passeport a été copié.</string>
+  <string name="item_details_snackbar_message_password_copied">Le mot de passe a été copié.</string>
+  <string name="item_details_snackbar_message_phone_number_copied">Le numéro de téléphone a été copié.</string>
+  <string name="item_details_snackbar_message_pin_copied">Le code PIN a été copié.</string>
+  <string name="item_details_snackbar_message_reddit_copied">Le compte Reddit a été copié.</string>
+  <string name="item_details_snackbar_message_social_security_number_copied">Le numéro de sécurité sociale a été copié.</string>
+  <string name="item_details_snackbar_message_state_or_province_copied">L\'état ou la province a été copié.</string>
+  <string name="item_details_snackbar_message_street_address_copied">L\'adresse postale a été copiée.</string>
+  <string name="item_details_snackbar_message_totp_copied">Le mot de passe à usage unique basé sur le temps (TOTP) a été copié.</string>
+  <string name="item_details_snackbar_message_username_copied">Le nom d\'utilisateur a été copié.</string>
+  <string name="item_details_snackbar_message_website_copied">L\'URL du site internet a été copiée.</string>
+  <string name="item_details_snackbar_message_x_handle_copied">Le compte X a été copié.</string>
+  <string name="item_details_snackbar_message_yahoo_copied">Le compte Yahoo a été copié.</string>
+  <string name="item_details_snackbar_message_zip_or_postal_code_copied">Le code postal a été copié.</string>
+  <string name="item_details_snackbar_message_public_key_copied">La clé publique a été copiée.</string>
+  <string name="item_details_snackbar_message_private_key_copied">La clé privée a été copiée.</string>
+  <string name="item_details_snackbar_message_ssid_copied">Le SSID a été copié.</string>
+  <string name="open_with">Ouvrir avec :</string>
+  <string name="open_attachments_error">La pièce jointe n\'a pu être ouverte.</string>
+</resources>

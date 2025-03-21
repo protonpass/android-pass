@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="add_attachment_take_a_photo">拍摄照片</string>
+  <string name="add_attachment_choose_a_photo_or_video">选择照片或视频</string>
+  <string name="add_attachment_choose_a_file">选择文件</string>
+  <string name="attachment_options_rename">重命名</string>
+  <string name="attachment_options_delete">刪除</string>
+  <string name="file_picker_open_error">无法打开文件选择器</string>
+  <string name="media_picker_open_error">无法打开媒体播放器</string>
+  <string name="camera_open_error">无法打开摄像头</string>
+  <string name="camera_permission_explanation">此功能需要相机权限才能使用.</string>
+  <string name="camera_permission_open_settings">打开设置</string>
+  <string name="delete_all_attachments_title">删除所有附件？</string>
+  <string name="delete_all_attachments_subtitle">此操作无法撤销</string>
+  <string name="delete_all_attachments_confirm">删除全部</string>
+  <string name="rename_attachment_dialog_title">重命名文件</string>
+  <string name="storage_full_title">您的存储空间即将用尽</string>
+  <string name="storage_full_body">升级以增加存储容量。</string>
+  <string name="storage_full_upgrade">升级</string>
+  <string name="storage_full_amount" comment="This will show 20MB of 100MB">已使用 %1$s ，共 %2$s</string>
+</resources>

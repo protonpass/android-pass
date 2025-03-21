@@ -207,6 +207,7 @@
   <string name="open_with">გახსნა პროგრამით:</string>
   <string name="open_attachments_error">მიმაგრებული ფაილის გახსნა შეუძლებელია</string>
   <string name="upload_attachments_error">მიმაგრებული ფაილის ატვირთვა შეუძლებელია</string>
+  <string name="attachment_size_exceeded_error">The selected file exceeds the size limit. Please choose a file smaller than 100MB.</string>
   <string name="banner_advanced_options_title">იცოდით?</string>
   <string name="banner_advanced_options_subtitle">დაატყაპუნეთ კბილანას ხატულაზე, რომ მოირგოთ ფსევდონიმი თქვენი სურვილისამებრ.</string>
   <string name="banner_custom_domain_title">იცოდით?</string>

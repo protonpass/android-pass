@@ -207,6 +207,7 @@
   <string name="open_with">Apri con:</string>
   <string name="open_attachments_error">Impossibile aprire l\'allegato</string>
   <string name="upload_attachments_error">Impossibile caricare l\'allegato</string>
+  <string name="attachment_size_exceeded_error">Il file selezionato supera il limite di dimensione. Scegli un file di dimensioni inferiori a 100MB.</string>
   <string name="banner_advanced_options_title">Lo sapevi?</string>
   <string name="banner_advanced_options_subtitle">Tocca l\'icona dell\'ingranaggio per personalizzare l\'alias come preferisci.</string>
   <string name="banner_custom_domain_title">Lo sapevi?</string>

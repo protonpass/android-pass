@@ -86,11 +86,11 @@
   <string name="security_center_dark_web_monitor_proton_addresses">Endereço da Proton</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Aliases do hide-my-email</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Erro ao recuperar o endereço da Proton</string>
-  <string name="security_center_dark_web_monitor_alias_addresses_error">Erro ao recuperar o aliases de Hide-my-email</string>
+  <string name="security_center_dark_web_monitor_alias_addresses_error">Erro ao recuperar os endereços alternativos de Hide-my-email</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Não monitorado</string>
   <string name="security_center_dark_web_monitor_see_all">Ver tudo</string>
   <string name="security_center_dark_web_monitor_no_proton_addresses">Sem endereços da Proton</string>
-  <string name="security_center_dark_web_monitor_no_aliases">Nenhum alias</string>
+  <string name="security_center_dark_web_monitor_no_aliases">Nenhum endereço alternativo</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Ocorreu um erro ao enviar o código de verificação. Tente novamente mais tarde.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Houve um erro ao remover o e-mail. Tente novamente mais tarde.</string>
   <!-- Add custom email monitoring -->
@@ -157,8 +157,8 @@
   <string name="security_center_alias_list_error">Não foi possível carregar os endereços.</string>
   <string name="security_center_alias_list_included_in_monitoring">Ative o monitoramento para ser notificado se seus aliases do Hide-my-email forem vazados.</string>
   <string name="security_center_alias_list_monitored">Monitorado</string>
-  <string name="security_center_alias_list_custom_email_message">Os e-mails aliases com domínios personalizados não são monitorados, adicione-os como um e-mail personalizado para monitoramento.</string>
-  <string name="security_center_alias_list_options_menu">Menu de opções de tela de alias</string>
+  <string name="security_center_alias_list_custom_email_message">Os endereços alternativos com domínios personalizados não são monitorados, adicione-os como um e-mail personalizado para monitoramento.</string>
+  <string name="security_center_alias_list_options_menu">Menu de opções de tela de endereço alternativo</string>
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Segurança de dados</string>
   <string name="dark_web_help_dialog_subtitle">A Proton nunca compartilha suas informações com terceiros. Esses dados são provenientes de investigações sobre a aparição de domínios da Proton na dark web.</string>

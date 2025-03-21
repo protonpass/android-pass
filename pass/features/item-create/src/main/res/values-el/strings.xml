@@ -207,6 +207,7 @@
   <string name="open_with">Άνοιγμα με:</string>
   <string name="open_attachments_error">Δεν ήταν δυνατό το άνοιγμα του συνημμένου</string>
   <string name="upload_attachments_error">Αποτυχία ανεβάσματος συνημμένου για το μήνυμα</string>
+  <string name="attachment_size_exceeded_error">Το επιλεγμένο αρχείο υπερβαίνει το όριο μεγέθους. Παρακαλούμε επιλέξτε ένα αρχείο μικρότερο από 100MB.</string>
   <string name="banner_advanced_options_title">Γνωρίζετε;</string>
   <string name="banner_advanced_options_subtitle">Πατήστε το εικονίδιο με το γρανάζι για να προσαρμόσετε το ψευδώνυμο με τον τρόπο που θέλετε.</string>
   <string name="banner_custom_domain_title">Γνωρίζετε;</string>

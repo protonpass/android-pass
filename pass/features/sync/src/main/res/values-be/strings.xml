@@ -20,9 +20,9 @@
   <string name="sync_item_empty">Пустое сховішча</string>
   <plurals name="sync_item_count">
     <item quantity="one">Спампаваны %d элемент</item>
-    <item quantity="few">Спампаваны %d элементы</item>
-    <item quantity="many">Спампаваны %d элементаў</item>
-    <item quantity="other">Спампаваны %d элементаў</item>
+    <item quantity="few">Спампавана %d элементы</item>
+    <item quantity="many">Спампавана %d элементаў</item>
+    <item quantity="other">Спампавана %d элементаў</item>
   </plurals>
   <plurals name="sync_finished_item_count">
     <item quantity="one">%d элемент сінхранізаваны</item>

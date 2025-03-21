@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="configure_extra_password_continue">继续</string>
+  <string name="configure_extra_password_title">设置额外密码</string>
+  <string name="configure_extra_password_enter_extra_password">额外密码</string>
+  <string name="configure_extra_password_repeat_extra_password">再次输入密码</string>
+  <string name="configure_extra_password_description">在登录以及从其他 Proton 应用切换至网页版 Proton Pass 的过程中，系统都会要求您输入该密码。</string>
+  <string name="configure_extra_password_warning">警告：如果丢失此密码，您将无法访问Pass账户。</string>
+  <string name="configure_extra_password_mismatch">密码不匹配</string>
+  <string name="extra_password_options_remove">注销</string>
+  <string name="info_extra_password_title">额外密码</string>
+  <string name="info_extra_password_body">使用额外密码保护 Proton Pass。</string>
+  <string name="info_extra_password_button">设置额外密码</string>
+  <string name="configure_extra_password_cannot_be_blank">密码不能为空</string>
+  <string name="configure_extra_password_password_too_short">额外密码必须至少有 8 个字符</string>
+  <string name="confirm_extra_password_title">设置额外密码</string>
+  <string name="confirm_extra_password_body">您将被注销，且需要重新在所有其他设备上进行登录。</string>
+  <string name="confirm_extra_password_error">无法设置额外密码</string>
+  <string name="confirm_extra_password_success">额外密码已设置</string>
+</resources>

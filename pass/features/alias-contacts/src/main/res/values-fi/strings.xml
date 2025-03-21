@@ -54,7 +54,7 @@
   <string name="snackbar_delete_contact_success">Yhteystieto poistettiin</string>
   <string name="snackbar_delete_contact_error">Yhteystietoa ei voitu poistaa</string>
   <string name="snackbar_email_copied_success">Sähköpostiosoite kopioitiin leikepöydälle</string>
-  <string name="contact_option_send_email">Lähetä sähköposti</string>
+  <string name="contact_option_send_email">Lähetä viesti</string>
   <string name="contact_option_copy_address">Kopioi välitysosoite</string>
   <string name="contact_option_block_contact">Estä yhteystieto</string>
   <string name="contact_option_unblock_contact">Salli yhteystieto</string>
@@ -62,7 +62,7 @@
   <string name="alias_contacts_bottomsheet_title">Aliasyhteystiedot</string>
   <string name="alias_contacts_bottomsheet_subtitle">Pitääksesi henkilökohtaisen sähköpostiosoitteesi piilossa voit luoda aliasyhteystiedon, joka naamioi osoitteesi.</string>
   <string name="alias_contacts_explanation">Näin se toimii:</string>
-  <string name="alias_contacts_bottomsheet_section_1">Syötä osoite, johon haluat lähettää sähköpostia.</string>
-  <string name="alias_contacts_bottomsheet_section_2">Proton Pass luo välitysosoitteen (jota kutsutaan myös käänteiseksi aliakseksi).</string>
-  <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">Lähetä sähköpostia tähän osoitteeseen, ja se näyttää tulevan osoitteesta</string>
+  <string name="alias_contacts_bottomsheet_section_1">Syötä osoite, johon haluat välittää viestit.</string>
+  <string name="alias_contacts_bottomsheet_section_2">Proton Pass luo välitysosoitteen (jota kutsutaan myös käänteisaliakseksi).</string>
+  <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">Lähetä viesti tähän osoitteeseen, niin se näyttää saapuneen osoitteesta</string>
 </resources>

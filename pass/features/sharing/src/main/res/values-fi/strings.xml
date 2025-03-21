@@ -24,7 +24,7 @@
   <string name="sharing_can_edit_description">Voi luoda, muokata, poistaa ja viedä holvin kohteita.</string>
   <string name="sharing_can_manage_description">Voi myöntää ja mitätöidä holvin käyttöoikeuksia.</string>
   <plurals name="sharing_item_count">
-    <item quantity="one">%d kohdetta</item>
+    <item quantity="one">%d kohde</item>
     <item quantity="other">%d kohdetta</item>
   </plurals>
   <plurals name="sharing_member_count">
@@ -43,10 +43,10 @@
   <string name="share_permissions_title">Aseta käyttöoikeustaso</string>
   <string name="sharing_reject_invitation">Kieltäydy kutsusta</string>
   <string name="sharing_vault_invitation_title">Kutsu jaettuun holviin</string>
-  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s haluaa jakaa holvin kanssasi.</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s haluaa jakaa sinulle holvin.</string>
   <string name="sharing_vault_invitation_accept">Liity jaettuun holviin</string>
   <string name="sharing_item_invitation_title">Kutsu jaettuun kohteeseen</string>
-  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s haluaa jakaa kohteen kanssasi.</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s haluaa jakaa sinulle kohteen.</string>
   <string name="sharing_item_invitation_accept">Hyväksy ja tarkastele kohdetta</string>
   <string name="sharing_invite_more">Kutsu lisää…</string>
   <string name="sharing_snackbar_invite_accepted">Kutsu hyväksytty</string>
@@ -78,7 +78,7 @@
     <item quantity="other">%d kutsua jäljellä</item>
   </plurals>
   <plurals name="share_manage_vault_item_count">
-    <item quantity="one">%d kohdetta</item>
+    <item quantity="one">%d kohde</item>
     <item quantity="other">%d kohdetta</item>
   </plurals>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Kutsu on lähetetty</string>

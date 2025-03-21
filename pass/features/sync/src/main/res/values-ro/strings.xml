@@ -19,14 +19,14 @@
 <resources>
   <string name="sync_item_empty">Seif gol</string>
   <plurals name="sync_item_count">
-    <item quantity="one">S-a descărcat %d articol</item>
-    <item quantity="few">S-au descărcat %d articole</item>
-    <item quantity="other">S-au descărcat %d de articole</item>
+    <item quantity="one">Articole descărcate: %d</item>
+    <item quantity="few">Articole descărcate: %d</item>
+    <item quantity="other">Articole descărcate: %d</item>
   </plurals>
   <plurals name="sync_finished_item_count">
-    <item quantity="one">S-a sincronizat %d articol</item>
-    <item quantity="few">S-au sincronizat %d articole</item>
-    <item quantity="other">S-au sincronizat %d de articole</item>
+    <item quantity="one">Articole sincronizate: %d</item>
+    <item quantity="few">Articole sincronizate: %d</item>
+    <item quantity="other">Articole sincronizate: %d</item>
   </plurals>
   <string name="sync_progress_item_count">Se descarcă %1$d din %2$d articole</string>
   <string name="sync_dialog_title">Se sincronizează articolele…</string>

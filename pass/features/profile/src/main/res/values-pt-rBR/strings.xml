@@ -74,7 +74,7 @@
   <string name="account_switcher_remove">Remover</string>
   <string name="filtered_by_logins">Filtrado por inícios de sessão. Os itens descartados não são exibidos</string>
   <string name="filtered_by_logins_with_mfa">Filtrado por inícios de sessão com TOTP. Os itens descartados não são exibidos</string>
-  <string name="filtered_by_aliases">Filtrado por aliases. Os itens descartados não são exibidos</string>
+  <string name="filtered_by_aliases">Filtrado por endereços alternativos. Os itens descartados não são exibidos</string>
   <string name="filtered_by_notes">Filtrado por notas. Os itens descartados não são exibidos</string>
   <string name="filtered_by_credit_cards">Filtrado por cartões de crédito. Os itens descartados não são exibidos</string>
   <string name="filtered_by_identities">Filtrado por identidades. Os itens descartados não são exibidos</string>

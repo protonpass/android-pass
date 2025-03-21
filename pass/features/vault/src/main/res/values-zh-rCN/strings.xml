@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="snackbar_create_vault_success">保险库已创建</string>
+  <string name="snackbar_create_vault_error">未创建保险库</string>
+  <string name="snackbar_cannot_create_more_vaults_error">无法创建更多保险库</string>
+  <string name="snackbar_edit_vault_success">保险库已编辑</string>
+  <string name="snackbar_edit_vault_error">保险库未编辑</string>
+  <string name="snackbar_delete_vault_success">保险库已删除</string>
+  <string name="snackbar_delete_vault_error">保险库未删除</string>
+  <string name="snackbar_leave_vault_success">剩余保险库</string>
+  <string name="snackbar_leave_vault_error">无法离开保险库</string>
+  <string name="snackbar_retrieve_vault_error">未找到保险库</string>
+  <string name="snackbar_find_vault_error">找不到选定的保险库</string>
+  <string name="snackbar_get_vault_list_error">无法加载保险库列表</string>
+  <string name="vault_delete_dialog_title">删除保管库</string>
+  <string name="vault_delete_dialog_body">这将永久删除保险库 __VAULT_NAME__ 及其所有内容。输入保险库名称以确认删除。</string>
+  <string name="vault_delete_dialog_placeholder">保险库名称</string>
+  <string name="vault_delete_dialog_cancel_action">取消</string>
+  <string name="vault_delete_dialog_delete_action">刪除</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">此保险库包含 %1$s。删除它将删除所有其他用户的访问权限。</string>
+  <string name="vault_leave_dialog_title">离开保险库</string>
+  <string name="vault_leave_dialog_body">这将删除您对保险库 __VAULT_NAME__ 及其所有内容的访问权限。您确定要离开吗？</string>
+  <string name="vault_leave_dialog_cancel_action">取消</string>
+  <string name="vault_leave_dialog_leave_action">离开</string>
+  <string name="bottomsheet_close_icon_content_description">关闭创建保险库</string>
+  <string name="bottomsheet_create_vault_button">创建保险库</string>
+  <string name="bottomsheet_edit_vault_button">保存</string>
+  <string name="bottomsheet_cannot_create_more_vaults">您已达到可以创建的保险库的限制。升级订阅时创建无限的保险库。</string>
+  <string name="bottomsheet_cannot_select_not_primary_vault">要与其他保险库交互，您需要升级您的账户。</string>
+  <string name="bottomsheet_upgrade_now">立即升级账户</string>
+  <string name="bottomsheet_edit">更改</string>
+  <string name="bottomsheet_migrate">将所有项目移至另一个保险库</string>
+  <string name="bottomsheet_delete_vault">删除保险库</string>
+  <string name="bottomsheet_share_vault">分享</string>
+  <string name="bottomsheet_leave_vault">离开保险库</string>
+  <string name="bottomsheet_view_members">查看成员</string>
+  <string name="bottomsheet_manage_access">管理权限</string>
+  <string name="bottomsheet_select_vault_read_only">您只能查看</string>
+  <string name="bottomsheet_select_vault_only_oldest_vaults">您只能在最早的保险库中创建项目</string>
+  <string name="vault_title">保险库</string>
+</resources>

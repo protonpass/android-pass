@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="sharing_can_view">查看者</string>
+  <string name="sharing_can_edit">编辑者</string>
+  <string name="sharing_can_manage">管理员</string>
+  <string name="sharing_can_view_description">可查看此保险库中的项目.</string>
+  <string name="sharing_can_edit_description">可创建、编辑删除和导出此保险库中的项目.</string>
+  <string name="sharing_can_manage_description">可授予和撤销对此保险库的访问权限.</string>
+  <plurals name="sharing_item_count">
+    <item quantity="other">%d 项</item>
+  </plurals>
+  <plurals name="sharing_member_count">
+    <item quantity="other">%d 个成员</item>
+  </plurals>
+  <string name="sharing_member_count_header">成员</string>
+  <string name="shared_via_title">共享方式</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">项目共享：%s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">保险库共享：%s</string>
+  <string name="share_with_title">分享给</string>
+  <string name="share_with_email_hint">邮箱地址</string>
+  <string name="share_with_email_error">邮箱地址无效</string>
+  <string name="share_with_email_cannot_invite_outside_org">您不能邀请组织外的人员，请联系管理员获取更多信息</string>
+  <string name="share_with_email_email_already_added">您已经添加了此电子邮件地址</string>
+  <string name="share_permissions_title">设置访问级别</string>
+  <string name="sharing_reject_invitation">拒绝邀请</string>
+  <string name="sharing_vault_invitation_title">共享保险库邀请</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s 想和您分享一个保险库。</string>
+  <string name="sharing_vault_invitation_accept">加入共享保险库</string>
+  <string name="sharing_item_invitation_title">共享项目邀请</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s 希望与您分享一个项目。</string>
+  <string name="sharing_item_invitation_accept">接受并查看项目</string>
+  <string name="sharing_invite_more">邀请更多…</string>
+  <string name="sharing_snackbar_invite_accepted">邀请已接受</string>
+  <string name="sharing_snackbar_invite_accept_error">接受邀请时出错</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">由于您已达到保险库上限，因此无法接受邀请</string>
+  <string name="sharing_snackbar_invite_rejected">邀请已拒绝</string>
+  <string name="sharing_snackbar_invite_reject_error">拒绝邀请时出错</string>
+  <string name="sharing_snackbar_invite_sent_success">已发出邀请</string>
+  <string name="sharing_snackbar_invite_sent_error">无法发送邀请</string>
+  <string name="sharing_snackbar_invite_new_users_error">无法向新用户发送邀请</string>
+  <string name="sharing_snackbar_invite_free_user_error">只允许向付费用户发送项目邀请</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">地址已被邀请</string>
+  <string name="sharing_snackbar_get_vault_members_error">无法获得保险库成员</string>
+  <string name="sharing_snackbar_change_permission_success">权限已更改</string>
+  <string name="sharing_snackbar_change_permission_error">无法更改权限</string>
+  <string name="sharing_snackbar_remove_member_success">成员已从保险库中移除</string>
+  <string name="sharing_snackbar_remove_member_error">无法从保险库中移除</string>
+  <string name="sharing_snackbar_fetch_member_error">获取成员时出错</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">获取待处理邀请时出错</string>
+  <string name="share_summary_title">回顾与分享</string>
+  <string name="share_summary_share_vault">共享保险库</string>
+  <string name="share_summary_share_item">共享项目</string>
+  <string name="share_summary_vault_title">保险库</string>
+  <string name="share_summary_item_title">项目</string>
+  <string name="share_summary_access_level_title">访问级别</string>
+  <string name="share_manage_vault_share_with_more_people">共享给更多人</string>
+  <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
+    <item quantity="other">%d 剩余邀请</item>
+  </plurals>
+  <plurals name="share_manage_vault_item_count">
+    <item quantity="other">%d 项</item>
+  </plurals>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">已发出邀请</string>
+  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">待创建的账户</string>
+  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">确认访问</string>
+  <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">邀请</string>
+  <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">成员</string>
+  <string name="share_manage_vault_current_user_indicator">你</string>
+  <string name="share_role_viewer">查看者</string>
+  <string name="share_role_editor">编辑者</string>
+  <string name="share_role_admin">管理员</string>
+  <string name="share_role_owner">所有者</string>
+  <string name="sharing_bottomsheet_transfer_ownership">转移所有权</string>
+  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">您不能转移您最后拥有的保险库。</string>
+  <string name="sharing_bottomsheet_remove_access">撤销访问</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">可以授予和撤销对此项目的访问权限。</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">可以编辑和删除此项目。</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">可以查看此项目。</string>
+  <string name="sharing_bottomsheet_resend_invite">重新发送邀请</string>
+  <string name="sharing_bottomsheet_cancel_invite">取消邀请</string>
+  <string name="sharing_transfer_ownership_confirm_title">转移所有权</string>
+  <string name="sharing_transfer_ownership_confirm_message">将此保险库的所有权转移给 %s？</string>
+  <string name="sharing_snackbar_cancel_invite_success">邀请已取消</string>
+  <string name="sharing_snackbar_cancel_invite_error">取消邀请时出错</string>
+  <string name="sharing_snackbar_resend_invite_success">重新发送邀请</string>
+  <string name="sharing_snackbar_resend_invite_error">重新发送邀请时出错</string>
+  <string name="sharing_snackbar_confirm_invite_success">邀请已确认</string>
+  <string name="sharing_snackbar_confirm_invite_error">确认邀请时出错</string>
+  <string name="sharing_snackbar_too_many_invites_sent">地址已被邀请太多次</string>
+  <string name="sharing_snackbar_transfer_ownership_success">所有权已转让</string>
+  <string name="sharing_snackbar_transfer_ownership_error">转让所有权时出错</string>
+  <string name="sharing_invites_info_dialog_title">成员上限</string>
+  <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
+    <item quantity="other">这个保险库最多可以有 %1$d 成员。您还剩下了 %2$d 个邀请。</item>
+  </plurals>
+  <string name="sharing_limit_reached">该保险库已达到成员和邀请上限。</string>
+  <string name="sharing_invites_info_upgrade_text">立即升级以邀请更多。</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">分享</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">分享此保险库</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">移至共享保险库</string>
+  <string name="sharing_from_item_vault_limit_reached_upgrade">升级以创建更多保险库</string>
+  <string name="sharing_from_item_vault_limit_reached">您已达到保险库上限</string>
+  <string name="share_with_suggestions_title">建议</string>
+  <string name="share_with_recents_title">最近使用</string>
+  <string name="share_with_remove_email_content_description">移除电子邮件地址</string>
+  <string name="share_with_user_shared_title">与其他 Proton Pass 用户联系</string>
+  <string name="share_with_user_shared_description">有利于永久共享。</string>
+  <string name="share_with_manage_shared_item_title">管理访问权限</string>
+  <string name="share_with_manage_shared_item_description">查看成员和权限概述。</string>
+  <string name="share_with_secure_link_shared_title">通过安全链接</string>
+  <string name="share_with_secure_link_shared_description">用于一次性共享。</string>
+  <string name="sharing_edit_permissions_set_access_level_all_members">设置所有成员的访问级别</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">设置 %s 的访问级别</string>
+  <string name="sharing_edit_permissions_remove_user">移除用户</string>
+  <string name="sharing_error_dialog_title">未知错误</string>
+  <string name="sharing_error_dialog_message">为该保险库发送邀请时出现错误。如果问题仍然存在，请联系客户支持服务。</string>
+  <string name="sharing_with_no_addresses_can_be_invited">无地址可邀</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">某些地址无法邀请</string>
+</resources>

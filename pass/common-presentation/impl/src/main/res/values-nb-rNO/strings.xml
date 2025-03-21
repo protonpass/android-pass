@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="item_details_snackbar_message_alias_copied">Alias kopiert</string>
+  <string name="item_details_snackbar_message_birthdate_copied">Fødselsdato kopiert</string>
+  <string name="item_details_snackbar_message_card_number_copied">Kortnummer kopiert</string>
+  <string name="item_details_snackbar_message_city_copied">By kopiert</string>
+  <string name="item_details_snackbar_message_company_copied">Firma kopiert</string>
+  <string name="item_details_snackbar_message_country_or_region_copied">Land eller region kopiert</string>
+  <string name="item_details_snackbar_message_county_copied">Fylke kopiert</string>
+  <string name="item_details_snackbar_message_custom_field_copied">Tilpasset felt kopiert</string>
+  <string name="item_details_snackbar_message_cvv_copied">Sikkerhetskode kopiert</string>
+  <string name="item_details_snackbar_message_email_copied">E-postadressen er kopiert</string>
+  <string name="item_details_snackbar_message_facebook_copied">Facebook kopiert</string>
+  <string name="item_details_snackbar_message_first_name_copied">Fornavn kopiert</string>
+  <string name="item_details_snackbar_message_floor_copied">Etasje kopiert</string>
+  <string name="item_details_snackbar_message_full_name_copied">Fullt navn kopiert</string>
+  <string name="item_details_snackbar_message_gender_copied">Kjønn kopiert</string>
+  <string name="item_details_snackbar_message_instagram_copied">Instagram kopiert</string>
+  <string name="item_details_snackbar_message_last_name_copied">Etternavn kopiert</string>
+  <string name="item_details_snackbar_message_license_number_copied">Førerkortnummer kopiert</string>
+  <string name="item_details_snackbar_message_linkedin_copied">LinkedIn kopiert</string>
+  <string name="item_details_snackbar_message_middle_name_copied">Mellomnavn kopiert</string>
+  <string name="item_details_snackbar_message_occupation_copied">Yrke kopiert</string>
+  <string name="item_details_snackbar_message_organization_copied">Organisasjon kopiert</string>
+  <string name="item_details_snackbar_message_passport_number_copied">Passnummer kopiert</string>
+  <string name="item_details_snackbar_message_password_copied">Passord kopiert</string>
+  <string name="item_details_snackbar_message_phone_number_copied">Telefonnummer kopiert</string>
+  <string name="item_details_snackbar_message_pin_copied">PIN-kode kopiert</string>
+  <string name="item_details_snackbar_message_reddit_copied">Reddit kopiert</string>
+  <string name="item_details_snackbar_message_social_security_number_copied">Personnummer kopiert</string>
+  <string name="item_details_snackbar_message_state_or_province_copied">Delstat eller provins kopiert</string>
+  <string name="item_details_snackbar_message_street_address_copied">Gateadresse kopiert</string>
+  <string name="item_details_snackbar_message_totp_copied">TOTP-kopiert</string>
+  <string name="item_details_snackbar_message_username_copied">Brukernavn kopiert</string>
+  <string name="item_details_snackbar_message_website_copied">Nettstedadresse kopiert</string>
+  <string name="item_details_snackbar_message_x_handle_copied">X-brukernavn kopiert</string>
+  <string name="item_details_snackbar_message_yahoo_copied">Yahoo kopiert</string>
+  <string name="item_details_snackbar_message_zip_or_postal_code_copied">Postnummer kopiert</string>
+  <string name="item_details_snackbar_message_public_key_copied">Offentlig nøkkel kopiert</string>
+  <string name="item_details_snackbar_message_private_key_copied">Privat nøkkel kopiert</string>
+  <string name="item_details_snackbar_message_ssid_copied">SSID kopiert</string>
+  <string name="open_with">Åpne med:</string>
+  <string name="open_attachments_error">Kunne ikke åpne vedlegg</string>
+</resources>

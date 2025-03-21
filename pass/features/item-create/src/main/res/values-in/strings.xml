@@ -207,6 +207,7 @@
   <string name="open_with">Buka dengan:</string>
   <string name="open_attachments_error">Gagal membuka lampiran</string>
   <string name="upload_attachments_error">Gagal mengunggah lampiran</string>
+  <string name="attachment_size_exceeded_error">Berkas yang dipilih melebihi batas ukuran berkas. Silakan pilih berkas yang lebih kecil dari 100 MB.</string>
   <string name="banner_advanced_options_title">Tahukah Anda?</string>
   <string name="banner_advanced_options_subtitle">Ketuk ikon gerigi untuk menyesuaikan alias sesuai keinginan Anda.</string>
   <string name="banner_custom_domain_title">Tahukah Anda?</string>
@@ -351,5 +352,5 @@
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Tidak dapat membuat item</string>
   <string name="cannot_create_items_dialog_message">Anda tidak memiliki brankas dengan akses editor atau admin. Cobalah untuk membuat brankas baru pada aplikasi utama atau mintalah dukungan kepada administrator organisasi Anda.</string>
-  <string name="wifi_security_type_field_label">Security type</string>
+  <string name="wifi_security_type_field_label">Jenis keamanan</string>
 </resources>

@@ -306,4 +306,5 @@
     <item quantity="other">%d Mitglieder</item>
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">TT MMMM JJJJ</string>
+  <string name="show_network_qr_code">QR-Code des Netzwerks anzeigen</string>
 </resources>

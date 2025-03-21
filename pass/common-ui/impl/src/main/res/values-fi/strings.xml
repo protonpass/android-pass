@@ -20,7 +20,7 @@
   <string name="bottomsheet_copy_email">Kopioi sähköpostiosoite</string>
   <string name="bottomsheet_copy_password">Kopioi salasana</string>
   <string name="bottomsheet_copy_username">Kopioi käyttäjätunnus</string>
-  <string name="bottomsheet_no_actions">Toimintoja ei ole saatavilla</string>
+  <string name="bottomsheet_no_actions">Toimintoja ei ole käytettävissä</string>
   <string name="snackbar_item_move_to_trash_success">Kohde siirrettiin roskakoriin</string>
   <string name="snackbar_item_move_to_trash_error">Ei voitu siirtää roskakoriin</string>
   <string name="snackbar_item_copy_email_success">Sähköpostiosoite kopioitiin leikepöydälle</string>

@@ -6,6 +6,18 @@
 
 ### Other
 
+## 1.30.2 (2025-03-21)
+
+### Fixes :bug:
+
+- Bug fixes and improvements.
+
+### Other
+
+- Support per-app language preference.
+- Updated translations.
+- Updated core libraries.
+
 ## 1.30.1 (2025-03-07)
 
 ### Fixes :bug:

@@ -27,7 +27,7 @@ enum class DetailSnackbarMessages(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
     InitError(R.string.detail_init_error, SnackbarType.ERROR),
     AliasCopiedToClipboard(R.string.alias_copied_to_clipboard, SnackbarType.NORM, true),
     EmailCopiedToClipboard(R.string.email_copied_to_clipboard, SnackbarType.NORM, true),

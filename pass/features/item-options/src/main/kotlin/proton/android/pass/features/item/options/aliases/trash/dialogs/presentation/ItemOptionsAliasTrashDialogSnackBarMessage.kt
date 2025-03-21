@@ -28,7 +28,7 @@ internal enum class ItemOptionsAliasTrashDialogSnackBarMessage(
     override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
 
     DisableAliasError(
         id = R.string.item_options_alias_trash_dialog_snackbar_message_disable_error,

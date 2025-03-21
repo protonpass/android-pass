@@ -27,7 +27,7 @@ internal enum class ItemDetailsSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
 
     AliasCopied(
         id = R.string.item_details_snackbar_message_alias_copied,

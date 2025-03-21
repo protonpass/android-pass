@@ -27,7 +27,7 @@ enum class ReportSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
     ReportSendingSuccess(R.string.report_sending_success, SnackbarType.SUCCESS),
     ReportSendingError(R.string.report_sending_error, SnackbarType.ERROR)
 }

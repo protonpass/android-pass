@@ -27,7 +27,7 @@ internal enum class SimpleLoginSyncSnackBarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
 
     EnableSyncError(
         id = R.string.simple_login_sync_enable_snackbar_error,

@@ -21,10 +21,19 @@ package proton.android.pass.notifications.api
 import androidx.compose.runtime.Stable
 
 @Stable
-interface SnackbarMessage {
-    val id: Int
+sealed interface SnackbarMessage {
     val type: SnackbarType
-    val isClipboard: Boolean
+
+    @Stable
+    interface StructuredMessage : SnackbarMessage {
+        val id: Int
+        val isClipboard: Boolean
+    }
+
+    @Stable
+    interface SimpleMessage : SnackbarMessage {
+        val message: String
+    }
 }
 
 enum class SnackbarType {

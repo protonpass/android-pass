@@ -27,7 +27,7 @@ internal enum class SecurityCenterBreachSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
 
     GetBreachDetailsError(
         id = R.string.security_center_report_detail_snackbar_error,

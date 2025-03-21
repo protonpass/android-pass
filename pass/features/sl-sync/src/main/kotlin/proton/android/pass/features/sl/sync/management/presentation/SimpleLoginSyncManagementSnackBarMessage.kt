@@ -27,7 +27,7 @@ internal enum class SimpleLoginSyncManagementSnackBarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
 
     FetchAliasDetailsError(
         id = R.string.simple_login_sync_management_snackbar_alias_details_fetch_error,

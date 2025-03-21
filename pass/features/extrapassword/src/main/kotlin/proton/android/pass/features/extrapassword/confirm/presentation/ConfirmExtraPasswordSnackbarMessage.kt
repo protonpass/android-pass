@@ -27,7 +27,7 @@ enum class ConfirmExtraPasswordSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
     ConfirmExtraPasswordError(R.string.confirm_extra_password_error, SnackbarType.ERROR),
     ConfirmExtraPasswordSuccess(R.string.confirm_extra_password_success, SnackbarType.SUCCESS)
 }

@@ -27,7 +27,7 @@ internal enum class SecurityCenterCustomEmailSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
 
     EmailAlreadyVerified(
         id = R.string.security_center_custom_email_already_verified,

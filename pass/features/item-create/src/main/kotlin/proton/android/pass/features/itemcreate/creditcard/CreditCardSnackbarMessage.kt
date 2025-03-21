@@ -9,7 +9,7 @@ enum class CreditCardSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
     ItemCreationError(R.string.create_credit_card_item_creation_error, SnackbarType.ERROR),
     ItemCreated(R.string.create_credit_card_item_creation_success, SnackbarType.SUCCESS),
     InitError(R.string.credit_card_init_error, SnackbarType.ERROR),

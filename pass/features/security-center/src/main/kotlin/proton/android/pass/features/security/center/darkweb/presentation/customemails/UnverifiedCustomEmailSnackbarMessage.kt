@@ -27,7 +27,7 @@ internal enum class UnverifiedCustomEmailSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
 
     ResendCodeError(
         id = R.string.security_center_custom_email_bottomsheet_snackbar_message_resend_code_error,

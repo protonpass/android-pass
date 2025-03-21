@@ -27,7 +27,7 @@ internal enum class SecureLinksListSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
 
     LinksFetchingError(
         id = R.string.secure_links_list_snackbar_message_links_fetch_error,

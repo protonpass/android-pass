@@ -26,7 +26,7 @@ enum class EnterPinSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
     PinTooManyAttemptsError(R.string.auth_pin_too_many_attempts, SnackbarType.ERROR),
     PinTooManyAttemptsDismissError(R.string.auth_pin_too_many_attempts_dismiss, SnackbarType.ERROR)
 }

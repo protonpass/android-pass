@@ -26,6 +26,6 @@ enum class GeneratePasswordSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
     CopiedToClipboard(R.string.password_copied_to_clipboard, SnackbarType.NORM, isClipboard = true)
 }

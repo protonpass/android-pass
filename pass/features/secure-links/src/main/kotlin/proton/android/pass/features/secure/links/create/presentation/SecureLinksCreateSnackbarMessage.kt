@@ -27,7 +27,7 @@ internal enum class SecureLinksCreateSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
 
     GenerateSecureLinkError(
         id = R.string.secure_links_create_snackbar_message_error,

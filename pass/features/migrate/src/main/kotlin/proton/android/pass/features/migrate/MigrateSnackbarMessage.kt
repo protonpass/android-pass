@@ -26,7 +26,7 @@ enum class MigrateSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
     ItemMigrated(R.string.migrate_item_success_snackbar, SnackbarType.SUCCESS),
     ItemNotMigrated(R.string.migrate_item_error_snackbar, SnackbarType.ERROR),
     SomeItemsNotMigrated(R.string.migrate_item_some_not_migrated_error_snackbar, SnackbarType.ERROR),

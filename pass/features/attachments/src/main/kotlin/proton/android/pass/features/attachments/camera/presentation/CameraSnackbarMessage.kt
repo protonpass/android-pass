@@ -27,6 +27,6 @@ enum class CameraSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
     CouldNotOpenCamera(R.string.camera_open_error, SnackbarType.ERROR)
 }

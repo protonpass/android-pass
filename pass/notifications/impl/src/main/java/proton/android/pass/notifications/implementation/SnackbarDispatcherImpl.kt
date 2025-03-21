@@ -57,7 +57,9 @@ class SnackbarDispatcherImpl @Inject constructor() : SnackbarDispatcher {
         snackbarState.update { None }
     }
 
-    private fun shouldDisplay(snackbarMessage: SnackbarMessage): Boolean =
-        !(snackbarMessage.isClipboard && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+    private fun shouldDisplay(snackbarMessage: SnackbarMessage): Boolean {
+        if (snackbarMessage !is SnackbarMessage.StructuredMessage) return true
+        return !(snackbarMessage.isClipboard && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+    }
 
 }

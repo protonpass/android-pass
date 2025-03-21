@@ -27,7 +27,7 @@ internal enum class SimpleLoginSyncMailboxVerifyMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
 
     VerifyCodeError(
         id = R.string.simple_login_sync_mailbox_verify_message_verification_code_error,

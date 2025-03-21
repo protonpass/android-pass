@@ -26,6 +26,6 @@ enum class AccountSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
     GetUserInfoError(R.string.account_get_user_info_error, SnackbarType.ERROR)
 }

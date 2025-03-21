@@ -26,7 +26,7 @@ enum class SettingsSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
     ErrorPerformingOperation(R.string.settings_error_performing_operation, SnackbarType.ERROR),
     ClearIconCacheSuccess(R.string.settings_clear_icon_cache_success, SnackbarType.SUCCESS),
     ClearIconCacheError(R.string.settings_clear_icon_cache_error, SnackbarType.ERROR),

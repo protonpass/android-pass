@@ -31,13 +31,26 @@ fun SnackBarLaunchedEffect(
     onSnackBarMessageDelivered: () -> Unit
 ) {
     snackBarMessage ?: return
-    val snackBarMessageLocale = stringResource(id = snackBarMessage.id)
-    LaunchedEffect(snackBarMessage) {
-        passSnackBarHostState.showSnackbar(
-            snackBarMessage.type,
-            snackBarMessageLocale
-        )
-        onSnackBarMessageDelivered()
+    when (snackBarMessage) {
+        is SnackbarMessage.SimpleMessage -> {
+            LaunchedEffect(snackBarMessage) {
+                passSnackBarHostState.showSnackbar(
+                    snackBarMessage.type,
+                    snackBarMessage.message
+                )
+                onSnackBarMessageDelivered()
+            }
+        }
+        is SnackbarMessage.StructuredMessage -> {
+            val snackBarMessageLocale = stringResource(id = snackBarMessage.id)
+            LaunchedEffect(snackBarMessage) {
+                passSnackBarHostState.showSnackbar(
+                    snackBarMessage.type,
+                    snackBarMessageLocale
+                )
+                onSnackBarMessageDelivered()
+            }
+        }
     }
 }
 

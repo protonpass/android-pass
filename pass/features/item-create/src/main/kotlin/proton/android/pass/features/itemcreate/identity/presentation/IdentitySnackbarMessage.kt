@@ -27,7 +27,7 @@ internal enum class IdentitySnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
     InitError(R.string.create_identity_init_error, SnackbarType.ERROR),
     ItemCreationError(R.string.create_identity_item_creation_error, SnackbarType.ERROR),
     ItemCreated(R.string.create_identity_item_creation_success, SnackbarType.SUCCESS),

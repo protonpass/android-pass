@@ -27,7 +27,7 @@ internal enum class ItemDetailsLeaveMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
     LeaveItemError(
         id = R.string.item_details_leave_item_message_error,
         type = SnackbarType.ERROR

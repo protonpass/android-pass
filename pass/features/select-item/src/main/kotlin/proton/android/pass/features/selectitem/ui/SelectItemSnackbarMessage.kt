@@ -27,7 +27,7 @@ enum class SelectItemSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
     LoadItemsError(R.string.error_loading_items, SnackbarType.ERROR)
 }
 

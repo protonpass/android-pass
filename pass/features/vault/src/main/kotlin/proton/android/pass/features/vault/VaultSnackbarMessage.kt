@@ -26,7 +26,7 @@ enum class VaultSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
     EditVaultSuccess(R.string.snackbar_edit_vault_success, SnackbarType.SUCCESS),
     EditVaultError(R.string.snackbar_edit_vault_error, SnackbarType.ERROR),
     DeleteVaultSuccess(R.string.snackbar_delete_vault_success, SnackbarType.SUCCESS),

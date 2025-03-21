@@ -27,7 +27,7 @@ internal enum class ConfirmResetHistorySnackBarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-) : SnackbarMessage {
+) : SnackbarMessage.StructuredMessage {
 
     ResetHistoryError(
         id = R.string.reset_history_dialog_snackbar_message_error,

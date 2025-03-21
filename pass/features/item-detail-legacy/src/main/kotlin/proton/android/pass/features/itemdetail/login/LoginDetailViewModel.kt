@@ -39,6 +39,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.core.network.domain.ApiException
 import proton.android.pass.biometry.AuthOverrideState
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.FlowUtils.oneShot
@@ -123,6 +124,8 @@ import proton.android.pass.features.itemdetail.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.notifications.api.SnackbarMessage
+import proton.android.pass.notifications.api.SnackbarType
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.securitycenter.api.passwords.DuplicatedPasswordChecker
@@ -913,7 +916,12 @@ class LoginDetailViewModel @Inject constructor(
             }.onFailure {
                 PassLogger.w(TAG, "Could not open attachment: ${attachment.id}")
                 PassLogger.w(TAG, it)
-                snackbarDispatcher(DetailSnackbarMessages.OpenAttachmentsError)
+                val message = if (it is ApiException && !it.message.isNullOrBlank()) {
+                    SnackbarMessage.SimpleMessage(it.message.orEmpty(), SnackbarType.ERROR)
+                } else {
+                    DetailSnackbarMessages.OpenAttachmentsError
+                }
+                snackbarDispatcher(message)
             }
             loadingAttachmentsState.update { it - attachment.id }
         }

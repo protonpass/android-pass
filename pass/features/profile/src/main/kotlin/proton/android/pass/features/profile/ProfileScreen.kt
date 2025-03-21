@@ -139,7 +139,11 @@ fun ProfileScreen(
                 ProfileUiEvent.OnMFACountClick -> viewModel.onMFACountClick()
                 ProfileUiEvent.OnNoteCountClick -> viewModel.onNoteCountClick()
                 ProfileUiEvent.OnCustomItemCountClick -> viewModel.onCustomItemCountClick()
-                ProfileUiEvent.OnStorageFullClick -> onNavigateEvent(ProfileNavigation.StorageFull)
+                is ProfileUiEvent.OnStorageFullClick -> if (it.canUpgrade) {
+                    onNavigateEvent(ProfileNavigation.StorageFull)
+                } else {
+                    openWebsite(context, UPGRADE_OVER_QUOTA)
+                }
             }
         }
     )
@@ -154,3 +158,6 @@ const val PASS_IMPORT = "https://proton.me/support/pass-import"
 
 @VisibleForTesting
 const val PASS_TUTORIAL = "https://www.youtube.com/watch?v=Nm4DCAjePOM"
+
+@VisibleForTesting
+const val UPGRADE_OVER_QUOTA = "https://account.proton.me/pass/dashboard"

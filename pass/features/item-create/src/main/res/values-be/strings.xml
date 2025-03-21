@@ -207,6 +207,7 @@
   <string name="open_with">Адкрыць праз:</string>
   <string name="open_attachments_error">Немагчыма адкрыць далучэнне</string>
   <string name="upload_attachments_error">Немагчыма запампаваць далучэнне</string>
+  <string name="attachment_size_exceeded_error">Памер выбранага файла перавысіў абмежаванне. Выберыце файл менш за 100 МБ.</string>
   <string name="banner_advanced_options_title">Ці ведалі вы што?</string>
   <string name="banner_advanced_options_subtitle">Націсніце значок шасцярэнькі, каб наладзіць псеўданім пад свае патрабаванні.</string>
   <string name="banner_custom_domain_title">Ці ведалі вы што?</string>
@@ -351,5 +352,5 @@
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Немагчыма стварыць элементы</string>
   <string name="cannot_create_items_dialog_message">У вас адсутнічаюць сховішчы з магчымасцю рэдагавання або доступам адміністратара. Паспрабуйце стварыць яго ў галоўнай праграме або папрасіце дапамагчы з гэтым адміністратара вашай арганізацыі.</string>
-  <string name="wifi_security_type_field_label">Security type</string>
+  <string name="wifi_security_type_field_label">Тып бяспекі</string>
 </resources>

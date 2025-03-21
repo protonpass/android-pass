@@ -34,13 +34,13 @@
   <string name="no_activity_contact">過去 14 日間にアクティビティはありません。</string>
   <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">過去 14 日間の</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="other">%1$d個の転送</item>
+    <item quantity="other">%1$d件の転送</item>
   </plurals>
   <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="other">%1$d個の送信済み</item>
+    <item quantity="other">%1$d件の送信済み</item>
   </plurals>
   <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="other">%1$d個のブロック済み</item>
+    <item quantity="other">%1$d件のブロック済み</item>
   </plurals>
   <string name="blocked_addresses_subtitle">ブロックされたアドレス</string>
   <string name="forwarding_addresses_subtitle">アドレスを転送する</string>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="item_details_snackbar_message_alias_copied">Alias skopírovaný</string>
+  <string name="item_details_snackbar_message_birthdate_copied">Dátum narodenia skopírovaný</string>
+  <string name="item_details_snackbar_message_card_number_copied">Číslo platobnej karty skopírované</string>
+  <string name="item_details_snackbar_message_city_copied">Mesto skopírované</string>
+  <string name="item_details_snackbar_message_company_copied">Spoločnosť skopírovaná</string>
+  <string name="item_details_snackbar_message_country_or_region_copied">Krajina alebo región skopírované</string>
+  <string name="item_details_snackbar_message_county_copied">Okres skopírovaný</string>
+  <string name="item_details_snackbar_message_custom_field_copied">Vlastné pole skopírované</string>
+  <string name="item_details_snackbar_message_cvv_copied">Bezpečnostný kód (CVV) skopírovaný</string>
+  <string name="item_details_snackbar_message_email_copied">Emailová adresa skopírovaná</string>
+  <string name="item_details_snackbar_message_facebook_copied">Facebook skopírovaný</string>
+  <string name="item_details_snackbar_message_first_name_copied">Krstné meno skopírované</string>
+  <string name="item_details_snackbar_message_floor_copied">Poschodie skopírované</string>
+  <string name="item_details_snackbar_message_full_name_copied">Celé meno skopírované</string>
+  <string name="item_details_snackbar_message_gender_copied">Pohlavie skopírované</string>
+  <string name="item_details_snackbar_message_instagram_copied">Instagram skopírovaný</string>
+  <string name="item_details_snackbar_message_last_name_copied">Priezvisko skopírované</string>
+  <string name="item_details_snackbar_message_license_number_copied">Číslo licencie skopírované</string>
+  <string name="item_details_snackbar_message_linkedin_copied">LinkedIn skopírovaný</string>
+  <string name="item_details_snackbar_message_middle_name_copied">Stredné meno skopírované</string>
+  <string name="item_details_snackbar_message_occupation_copied">Pracovná pozícia skopírovaná</string>
+  <string name="item_details_snackbar_message_organization_copied">Organizácia skopírovaná</string>
+  <string name="item_details_snackbar_message_passport_number_copied">Číslo pasu skopírované</string>
+  <string name="item_details_snackbar_message_password_copied">Heslo skopírované</string>
+  <string name="item_details_snackbar_message_phone_number_copied">Telefónne číslo skopírované</string>
+  <string name="item_details_snackbar_message_pin_copied">PIN kód skopírovaný</string>
+  <string name="item_details_snackbar_message_reddit_copied">Reddit skopírovaný</string>
+  <string name="item_details_snackbar_message_social_security_number_copied">Číslo poistenca sociálnej poisťovne skopírované</string>
+  <string name="item_details_snackbar_message_state_or_province_copied">Kraj alebo región skopírovaný</string>
+  <string name="item_details_snackbar_message_street_address_copied">Adresa ulice skopírovaná</string>
+  <string name="item_details_snackbar_message_totp_copied">TOTP skopírované</string>
+  <string name="item_details_snackbar_message_username_copied">Požívateľské meno skopírované</string>
+  <string name="item_details_snackbar_message_website_copied">URL webovej stránky skopírovaná</string>
+  <string name="item_details_snackbar_message_x_handle_copied">Meno v sieti X skopírované</string>
+  <string name="item_details_snackbar_message_yahoo_copied">Yahoo skopírované</string>
+  <string name="item_details_snackbar_message_zip_or_postal_code_copied">PSČ skopírované</string>
+  <string name="item_details_snackbar_message_public_key_copied">Verejný kľúč skopírovaný</string>
+  <string name="item_details_snackbar_message_private_key_copied">Súkromný kľúč skopírovaný</string>
+  <string name="item_details_snackbar_message_ssid_copied">SSID skopírované</string>
+  <string name="open_with">Otvoriť pomocou:</string>
+  <string name="open_attachments_error">Prílohu sa nepodarilo otvoriť</string>
+</resources>

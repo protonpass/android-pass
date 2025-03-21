@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="sync_item_empty">空保险库</string>
+  <plurals name="sync_item_count">
+    <item quantity="other">已下载 %d 个项目</item>
+  </plurals>
+  <plurals name="sync_finished_item_count">
+    <item quantity="other">%d 项目已同步</item>
+  </plurals>
+  <string name="sync_progress_item_count">下载 %2$d 个项目中的 %1$d 个</string>
+  <string name="sync_dialog_title">同步项目中…</string>
+  <string name="sync_dialog_title_error">同步失败</string>
+  <string name="sync_dialog_title_success">同步已完成</string>
+  <string name="sync_dialog_subtitle">我们正在下载和解密您的项目。这可能需要几分钟时间。</string>
+  <string name="sync_dialog_subtitle_error">下载和解密您的项目时出现错误。请重试。</string>
+  <string name="sync_dialog_subtitle_success">您的项目已成功下载并解密。</string>
+  <string name="sync_item_not_started">未开始</string>
+  <string name="sync_item_failed">同步失败</string>
+  <string name="sync_dialog_title_inserting">插入项目…</string>
+  <string name="sync_dialog_subtitle_inserting">完成最后一步，就快成功了</string>
+</resources>

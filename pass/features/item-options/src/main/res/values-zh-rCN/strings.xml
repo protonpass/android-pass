@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="item_options_alias_trash_dialog_title">移至回收站</string>
+  <string name="item_options_alias_trash_dialog_message">回收站中的别名将继续转发电子邮件。如果您想停止接收该地址的电子邮件，请禁用它。</string>
+  <string name="item_options_alias_trash_dialog_checkbox_text">不再提醒我</string>
+  <string name="item_options_alias_trash_dialog_button_text_disable">改为禁用</string>
+  <string name="item_options_alias_trash_dialog_button_text_trash">移至回收站</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">禁用别名时发生错误</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">已禁用别名</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">移动别名到回收站时出错</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">别名已移动到回收站</string>
+</resources>

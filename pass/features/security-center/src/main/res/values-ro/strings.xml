@@ -67,14 +67,14 @@
   <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Adăugare adresă de e-mail cu domeniu personal</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">Adăugare</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
-    <item quantity="one">Folosit la %d conectare</item>
-    <item quantity="few">Folosit la %d conectări</item>
-    <item quantity="other">Folosit la %d de conectări</item>
+    <item quantity="one">Folosită la %d conectare</item>
+    <item quantity="few">Folosită la %d conectare</item>
+    <item quantity="other">Folosită la %d conectare</item>
   </plurals>
   <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
-    <item quantity="one">%d divulgare detectată</item>
-    <item quantity="few">%d divulgări detectate</item>
-    <item quantity="other">%d de divulgări detectate</item>
+    <item quantity="one">Divulgări detectate: %d</item>
+    <item quantity="few">Divulgări detectate: %d</item>
+    <item quantity="other">Divulgări detectate: %d</item>
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Eroare încărcare adrese de e-mail cu domeniu personal.</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Nu s-au putut obține adresele de e-mail</string>

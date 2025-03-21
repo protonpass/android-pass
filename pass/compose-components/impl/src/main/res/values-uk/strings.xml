@@ -21,7 +21,7 @@
     <item quantity="other">результати</item>
   </plurals>
   <string name="item_list_header_identities_type">Особисті дані</string>
-  <string name="item_list_header_custom_type">Custom items</string>
+  <string name="item_list_header_custom_type">Власні елементи</string>
   <string name="item_list_header_shared_with_me">Поділилися зі мною</string>
   <string name="item_list_header_shared_by_me">Поширено мною</string>
   <!-- Bottomsheets -->
@@ -203,9 +203,9 @@
   <string name="item_details_shared_section_more_info_share_id">ID сховища</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
   <string name="item_details_wifi_network_label_password">Пароль</string>
-  <string name="item_details_wifi_network_label_security">Security</string>
-  <string name="item_details_ssh_key_label_public_key">Public key</string>
-  <string name="item_details_ssh_key_label_private_key">Private key</string>
+  <string name="item_details_wifi_network_label_security">Безпека</string>
+  <string name="item_details_ssh_key_label_public_key">Відкритий ключ</string>
+  <string name="item_details_ssh_key_label_private_key">Приватний ключ</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Поточна версія програми більше не підтримується, будь ласка, оновіть програму.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Ключ доступу</string>
@@ -318,10 +318,10 @@
   <string name="options_menu_content_description">Меню параметрів</string>
   <!-- Items -->
   <plurals name="shared_items_count">
-    <item quantity="one">%d shared item</item>
-    <item quantity="few">%d shared items</item>
-    <item quantity="many">%d shared items</item>
-    <item quantity="other">%d shared items</item>
+    <item quantity="one">%d спільний елемент</item>
+    <item quantity="few">%d спільні елементи</item>
+    <item quantity="many">%d спільних елементів</item>
+    <item quantity="other">%d спільних елементів</item>
   </plurals>
   <plurals name="users_count">
     <item quantity="one">%d користувач</item>
@@ -335,5 +335,6 @@
     <item quantity="many">%d учасники</item>
     <item quantity="other">%d учасники</item>
   </plurals>
-  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">дд ММММ рррр</string>
+  <string name="show_network_qr_code">Show Network QR Code</string>
 </resources>

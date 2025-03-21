@@ -306,4 +306,5 @@
     <item quantity="other">%d μέλη</item>
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">ηη ΜΜΜΜ εεεε</string>
+  <string name="show_network_qr_code">Εμφάνιση κωδικού QR του δικτύου</string>
 </resources>

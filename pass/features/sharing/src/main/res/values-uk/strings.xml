@@ -37,8 +37,8 @@
   </plurals>
   <string name="sharing_member_count_header">Учасники</string>
   <string name="shared_via_title">Поширено через</string>
-  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Item sharing: %s</string>
-  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Vault sharing: %s</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Спільний доступ до елемента: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Спільний доступ до сховища: %s</string>
   <string name="share_with_title">Поділитися з</string>
   <string name="share_with_email_hint">Адреса електронної пошти</string>
   <string name="share_with_email_error">Недійсна адреса електронної пошти</string>
@@ -60,9 +60,9 @@
   <string name="sharing_snackbar_invite_reject_error">Помилка відхилення запрошення</string>
   <string name="sharing_snackbar_invite_sent_success">Запрошення надіслано</string>
   <string name="sharing_snackbar_invite_sent_error">Не вдалося надіслати запрошення</string>
-  <string name="sharing_snackbar_invite_new_users_error">Cannot send invites to new users</string>
-  <string name="sharing_snackbar_invite_free_user_error">Item invites are only allowed to be sent to paid users</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">Address has already been invited</string>
+  <string name="sharing_snackbar_invite_new_users_error">Не вдається надіслати запрошення новим користувачам</string>
+  <string name="sharing_snackbar_invite_free_user_error">Запрошення до елемента дозволено надсилати лише платним користувачам</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">Адреса вже запрошена</string>
   <string name="sharing_snackbar_get_vault_members_error">Не вдалося отримати інформацію про учасників сховища</string>
   <string name="sharing_snackbar_change_permission_success">Дозволи змінено</string>
   <string name="sharing_snackbar_change_permission_error">Не вдалося змінити дозволи</string>
@@ -103,7 +103,7 @@
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Не можна передати власність вашого останнього сховища.</string>
   <string name="sharing_bottomsheet_remove_access">Відкликати доступ</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Може надавати та відкликати доступ до цього елементу.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Може редагувати й видаляти цей елемент.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Можна переглянути цей елемент.</string>
   <string name="sharing_bottomsheet_resend_invite">Повторно надіслати запрошення</string>
   <string name="sharing_bottomsheet_cancel_invite">Скасувати запрошення</string>

@@ -18,7 +18,7 @@
   <string name="home_empty_vault_cc_title">Maksukortteja ei löytynyt</string>
   <string name="home_empty_vault_cc_subtitle">Aloita luomalla ensimmäinen maksukorttikohteesi.</string>
   <string name="home_empty_shared_items_title">Jaettuja kohteita ei löytynyt</string>
-  <string name="home_empty_shared_items_with_me_subtitle">Kohteita ei ole jaettu kanssasi.</string>
+  <string name="home_empty_shared_items_with_me_subtitle">Sinulle ei ole jaettu kohteita.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Et ole jakanut kohteita.</string>
   <string name="home_empty_no_vaults_title">You don\'t have any vault</string>
   <string name="home_empty_no_vaults_subtitle">Please, contact your organization support team.</string>
@@ -42,7 +42,7 @@
   <string name="home_snackbar_items_move_to_trash_success">Kohteet siirrettiin roskakoriin</string>
   <string name="home_snackbar_items_move_to_trash_error">Kohteita ei voitu siirtää roskakoriin</string>
   <string name="home_toast_items_selected_read_only">Vain luku -kohteita ei voida valita</string>
-  <string name="home_toast_items_selected_shared_with_me">Kanssasi jaettuja tiedostoja ei voi valita</string>
+  <string name="home_toast_items_selected_shared_with_me">Sinulle jaettuja tiedostoja ei voida valita</string>
   <string name="home_autofill_banner_title">Nauti automaattitäytön taiasta</string>
   <string name="home_autofill_banner_text">Vain yksi napautus ja käyttäjätunnuksesi ja salasanasi on täytetty.</string>
   <string name="home_autofill_banner_settings">Ota automaattitäyttö käyttöön ›</string>
@@ -62,7 +62,7 @@
   <string name="home_notification_permission_banner_settings">Myönnä käyttöoikeus ›</string>
   <string name="home_invite_banner_title">Sinulle on jaettu holvi</string>
   <string name="home_invite_banner_subtitle">Sinut on kutsuttu jaettuun holviin. Näytä tiedot napauttamalla.</string>
-  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s haluaa jakaa kohteen kanssasi.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s haluaa jakaa sinulle kohteen.</string>
   <string name="home_item_invite_banner_subtitle">Lisätietoja napauttamalla.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopioi salasana</string>

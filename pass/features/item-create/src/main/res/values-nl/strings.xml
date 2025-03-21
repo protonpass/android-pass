@@ -207,6 +207,7 @@
   <string name="open_with">Openen met</string>
   <string name="open_attachments_error">Kon bijlage niet openen</string>
   <string name="upload_attachments_error">Kon bijlage niet opladen</string>
+  <string name="attachment_size_exceeded_error">Het geselecteerde bestand overschrijdt de maximale grootte. Kies een bestand kleiner dan 100MB.</string>
   <string name="banner_advanced_options_title">Wist u dat?</string>
   <string name="banner_advanced_options_subtitle">Tik op het tandwielpictogram om de alias aan te passen.</string>
   <string name="banner_custom_domain_title">Wist u dat?</string>

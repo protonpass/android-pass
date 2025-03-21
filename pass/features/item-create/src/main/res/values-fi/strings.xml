@@ -207,6 +207,7 @@
   <string name="open_with">Avaa käyttäen:</string>
   <string name="open_attachments_error">Liitettä ei voitu avata</string>
   <string name="upload_attachments_error">Liitettä ei voitu lähettää</string>
+  <string name="attachment_size_exceeded_error">The selected file exceeds the size limit. Please choose a file smaller than 100MB.</string>
   <string name="banner_advanced_options_title">Tiesitkö?</string>
   <string name="banner_advanced_options_subtitle">Tap the gear icon to customize the alias the way you want.</string>
   <string name="banner_custom_domain_title">Tiesitkö?</string>

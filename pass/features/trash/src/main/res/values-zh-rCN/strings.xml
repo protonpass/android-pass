@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="bottomsheet_delete_permanently">永久删除</string>
+  <string name="alert_confirm_delete_item_dialog_title">确定永久删除？</string>
+  <string name="alert_confirm_delete_item_dialog_message">此操作不可逆。</string>
+  <string name="alert_confirm_delete_item_dialog_shared_warning_message">此项目目前是共享的。删除该项目将取消所有其他用户的访问权限。</string>
+  <string name="alias_dialog_move_to_trash_title">移至回收站?</string>
+  <string name="alias_dialog_move_to_trash_content">如果您将别名移至回收站，它将停止将电子邮件转发到您的邮箱。</string>
+  <string name="alias_dialog_move_to_trash_confirm">确定</string>
+  <string name="delete_alias_confirm">删除它，我永远不需要它</string>
+  <string name="delete_alias_title">刪除 %s</string>
+  <string name="delete_alias_enabled_subtitle">"请注意，别名一旦删除将无法恢复。建议您改为禁用该别名？ "</string>
+  <string name="delete_alias_disabled_subtitle">请注意，一旦删除，别名将无法恢复。该别名已被禁用，不会将电子邮件转发到您的邮箱。</string>
+  <plurals name="bulk_delete_alias_title">
+    <item quantity="other">您即将永久删除 %d 个别名</item>
+  </plurals>
+  <string name="bulk_delete_alias_subtitle">请注意，一旦删除，别名将无法恢复</string>
+  <string name="bulk_delete_alias_confirm">明白了，我永远不再需要它们</string>
+  <string name="delete_alias_disable">禁用别名</string>
+</resources>

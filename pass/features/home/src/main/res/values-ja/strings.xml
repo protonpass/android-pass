@@ -7,8 +7,8 @@
   <string name="home_empty_vault_login_subtitle">最初のログインアイテムを作成して始めましょう</string>
   <string name="home_empty_vault_aliases_title">エイリアスが見つかりません</string>
   <string name="home_empty_vault_aliases_subtitle">最初のエイリアスを作成して始めましょう</string>
-  <string name="home_empty_vault_notes_title">ノートが見つかりません</string>
-  <string name="home_empty_vault_notes_subtitle">最初のノートを作成して始めましょう</string>
+  <string name="home_empty_vault_notes_title">メモが見つかりません</string>
+  <string name="home_empty_vault_notes_subtitle">最初のメモを作成して始めましょう</string>
   <string name="home_empty_vault_logins_mfa_title">TOTPでのログインが見つかりません</string>
   <string name="home_empty_vault_logins_mfa_subtitle">最初のTOTPログインを作成して始めましょう</string>
   <string name="home_empty_vault_identity_title">ユーザー情報が見つかりません</string>

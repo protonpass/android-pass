@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="profile_screen_title">收藏</string>
+  <string name="profile_option_settings">设置</string>
+  <string name="profile_option_account">账号</string>
+  <string name="profile_help_center">帮助中心</string>
+  <string name="profile_security">安全</string>
+  <string name="profile_option_feedback">意见反馈</string>
+  <string name="profile_option_import_export">导入/导出</string>
+  <string name="profile_option_tutorial">如何使用 Proton Pass</string>
+  <string name="profile_option_rating">为应用评分</string>
+  <string name="profile_option_autofill">自动填充</string>
+  <string name="profile_option_autofill_subtitle">自动填写您的用户名和密码。</string>
+  <string name="profile_option_secure_links">安全链接</string>
+  <string name="profile_option_alias_management">别名管理</string>
+  <string name="profile_error_biometry_failed_to_start">无法启动生物识别身份验证</string>
+  <string name="profile_error_biometry_failed_to_authenticate">身份验证失败</string>
+  <string name="profile_fingerprint_lock_enabled">启用指纹锁</string>
+  <string name="profile_fingerprint_lock_disabled">禁用指纹锁</string>
+  <string name="profile_app_version_copied_to_clipboard">应用版本已复制</string>
+  <string name="feedback_option_reddit">在 Reddit 上查看 Proton</string>
+  <string name="feedback_option_mail">联系我们</string>
+  <string name="feedback_option_vote_new_features">为新功能投票</string>
+  <string name="app_lock_immediately">即刻</string>
+  <string name="app_lock_one_minute">1分钟后</string>
+  <string name="app_lock_two_minutes">2 分钟后</string>
+  <string name="app_lock_five_minutes">5 分钟后</string>
+  <string name="app_lock_ten_minutes">10 分钟后</string>
+  <string name="app_lock_one_hour">1小时后</string>
+  <string name="app_lock_four_hours">4小时后</string>
+  <string name="profile_account_plan_name_trial">Pass Plus 试用</string>
+  <string name="app_lock_config_none">无</string>
+  <string name="app_lock_config_biometric">生物识别</string>
+  <string name="app_lock_config_pin_code">PIN 码</string>
+  <string name="app_lock_config_app_lock_time">自动锁定</string>
+  <string name="app_lock_config_password">密码</string>
+  <string name="app_lock_config_use_system_lock_when_biometric_fails">当生物识别失败时使用系统锁</string>
+  <string name="configure_pin_set_pin_code">设置 PIN 码</string>
+  <string name="configure_pin_unlock_the_app_with_this_code">使用此代码解锁应用程序</string>
+  <string name="configure_pin_enter_pin_code">输入 PIN 码</string>
+  <string name="configure_pin_repeat_pin_code">确认 PIN 码</string>
+  <string name="configure_pin_continue">继续</string>
+  <string name="configure_pin_pin_does_not_match">两次输入的 PIN 码不一致</string>
+  <string name="configure_pin_pin_too_short">PIN 码过短</string>
+  <string name="configure_pin_pin_cannot_be_blank">PIN 码不能为空</string>
+  <string name="configure_pin_pin_lock_enabled">PIN 码已启用</string>
+  <string name="configure_pin_pin_lock_disabled">PIN 码已停用</string>
+  <string name="profile_option_lock_with">锁定方式</string>
+  <string name="profile_option_unlock_with">解锁方式</string>
+  <string name="profile_option_change_pin_code">更改 PIN 码</string>
+  <string name="profile_passkey_support_section_title">通行密钥</string>
+  <string name="profile_passkey_support_subtitle_supported">通行密钥已支持</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">您的 Android 版本不支持密码。</string>
+  <string name="profile_passkey_support_subtitle_not_supported_credential_manager">您的设备不支持密钥</string>
+  <string name="profile_passkey_support_subtitle_not_supported_unknown">无法检查密钥是否支持</string>
+  <plurals name="profile_after_days">
+    <item quantity="other">%d 天后</item>
+  </plurals>
+  <plurals name="profile_after_minutes">
+    <item quantity="other">%d 分钟后</item>
+  </plurals>
+  <plurals name="profile_after_hours">
+    <item quantity="other">%d 小时后</item>
+  </plurals>
+  <string name="profile_less_than_a_minute">少于一分钟</string>
+  <string name="account_switcher_manage_account">管理账户</string>
+  <string name="account_switcher_sign_in">登录</string>
+  <string name="account_switcher_sign_out">登出</string>
+  <string name="account_switcher_switch_to">切换为</string>
+  <string name="account_switcher_add_account">添加帐户</string>
+  <string name="account_switcher_remove">注销</string>
+  <string name="filtered_by_logins">通过登录过滤。不显示回收站中的项目</string>
+  <string name="filtered_by_logins_with_mfa">通过使用 TOTP 登录进行过滤。不显示回收站中的项目</string>
+  <string name="filtered_by_aliases">通过别名过滤。不显示回收站中的项目</string>
+  <string name="filtered_by_notes">按备注筛选。不显示回收站中的项目</string>
+  <string name="filtered_by_credit_cards">通过信用卡过滤。不显示回收站中的项目</string>
+  <string name="filtered_by_identities">按身份过滤。不显示回收站中的项目</string>
+  <string name="filtered_by_custom_items">按自定义物品筛选。不显示已丢弃的物品</string>
+  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">您需要切换到 %1$s 才能管理它</string>
+  <string name="account_switch_confirmation_title">管理账户</string>
+  <string name="account_switch_confirmation_confirm">转换和管理</string>
+  <string name="profile_storage_data_title">存储空间</string>
+  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">共 %2$s ，已使用 %1$s</string>
+</resources>

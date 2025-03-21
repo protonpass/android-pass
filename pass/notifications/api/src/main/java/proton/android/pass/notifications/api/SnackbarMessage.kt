@@ -31,9 +31,10 @@ sealed interface SnackbarMessage {
     }
 
     @Stable
-    interface SimpleMessage : SnackbarMessage {
-        val message: String
-    }
+    data class SimpleMessage(
+        val message: String,
+        override val type: SnackbarType
+    ) : SnackbarMessage
 }
 
 enum class SnackbarType {

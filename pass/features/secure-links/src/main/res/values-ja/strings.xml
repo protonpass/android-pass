@@ -31,7 +31,7 @@
   <string name="secure_links_create_snackbar_message_error">セキュアリンクの生成にエラーが発生しました</string>
   <!--Overview screen-->
   <string name="secure_links_overview_widget_expiration_title">有効期限：</string>
-  <string name="secure_links_overview_widget_max_views_title">表示できる：</string>
+  <string name="secure_links_overview_widget_max_views_title">閲覧可能：</string>
   <string name="secure_links_overview_widget_open_times_title">開いた：</string>
   <plurals name="secure_links_overview_widget_max_views_limited">
     <item quantity="other">%d 回</item>

@@ -28,8 +28,8 @@
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
     <item quantity="one">Зададзены %d ключ бяспекі</item>
-    <item quantity="few">Зададзены %d ключы бяспекі</item>
-    <item quantity="many">Зададзены %d ключоў бяспекі</item>
-    <item quantity="other">Зададзены %d ключоў бяспекі</item>
+    <item quantity="few">Зададзена %d ключы бяспекі</item>
+    <item quantity="many">Зададзена %d ключоў бяспекі</item>
+    <item quantity="other">Зададзена %d ключоў бяспекі</item>
   </plurals>
 </resources>

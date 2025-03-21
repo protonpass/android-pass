@@ -16,7 +16,7 @@
   <string name="item_list_header_credit_cards_type">Plačilne kartice</string>
   <plurals name="item_list_header_results">
     <item quantity="one">rezultat</item>
-    <item quantity="two">rezultati</item>
+    <item quantity="two">rezultata</item>
     <item quantity="few">rezultati</item>
     <item quantity="other">rezultati</item>
   </plurals>
@@ -336,4 +336,5 @@
     <item quantity="other">%d članov</item>
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
+  <string name="show_network_qr_code">Show Network QR Code</string>
 </resources>

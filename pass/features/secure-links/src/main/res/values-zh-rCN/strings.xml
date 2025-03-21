@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!--Create screen-->
+  <string name="secure_links_create_title">分享安全链接</string>
+  <string name="secure_links_create_row_expiration_title">链接过期时间</string>
+  <string name="secure_links_create_row_expiration_options_one_hour">1 小时</string>
+  <string name="secure_links_create_row_expiration_options_one_day">1 天</string>
+  <string name="secure_links_create_row_expiration_options_seven_days">7 天</string>
+  <string name="secure_links_create_row_expiration_options_fourteen_days">14 天</string>
+  <string name="secure_links_create_row_expiration_options_thirty_days">30 天</string>
+  <string name="secure_links_create_row_max_views_title">限制浏览次数</string>
+  <string name="secure_links_create_row_max_views_subtitle">最大视图数量： %d</string>
+  <string name="secure_links_create_button_generate">生成安全链接</string>
+  <string name="secure_links_create_snackbar_message_error">生成安全链接时出错</string>
+  <!--Overview screen-->
+  <string name="secure_links_overview_widget_expiration_title">过期时间：</string>
+  <string name="secure_links_overview_widget_max_views_title">可以查看：</string>
+  <string name="secure_links_overview_widget_open_times_title">已打开：</string>
+  <plurals name="secure_links_overview_widget_max_views_limited">
+    <item quantity="other">%d 次</item>
+  </plurals>
+  <string name="secure_links_overview_widget_max_views_unlimited">无限制</string>
+  <string name="secure_links_overview_button_view_all_links">查看您所有的安全链接</string>
+  <!--List screen-->
+  <string name="secure_links_list_title">安全链接</string>
+  <string name="secure_links_list_empty_title">无安全链接</string>
+  <string name="secure_links_list_empty_subtitle">您可以从项目详情共享选项开始创建安全链接</string>
+  <string name="secure_links_list_expiration_description">在 %s 过期</string>
+  <string name="secure_links_list_expired_description">已失效</string>
+  <plurals name="secure_links_list_viewed_times_description">
+    <item quantity="other">%d 次查看</item>
+  </plurals>
+  <string name="secure_links_list_snackbar_message_links_fetch_error">获取安全链接时出错</string>
+  <string name="secure_links_list_header_title_inactive">非活动链接</string>
+  <!--Shared-->
+  <string name="secure_links_shared_action_copy_link">复制链接</string>
+  <string name="secure_links_shared_action_share_link">共享链接</string>
+  <string name="secure_links_shared_action_delete_link">移除链接</string>
+  <string name="secure_links_shared_action_delete_link_inactive">删除非活动链接</string>
+  <string name="secure_links_shared_action_delete_links_inactive">移除所有不活动链接</string>
+  <string name="secure_links_shared_snackbar_message_link_copied">已复制安全链接</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">安全链接删除已取消</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_error">删除安全链接时出错</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">已取消删除不活动的安全链接</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">删除非活动安全链接时出错</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="autofill_authenticate_prompt">从 Proton Pass 获取</string>
+  <string name="error_loading_items">加载项目失败</string>
+  <string name="inline_suggestions_open_app">打开 Proton Pass</string>
+  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">升级解锁自动填充</string>
+  <string name="autofill_associate_web_app_name_dialog_title">在此应用或网站中使用“%s”的登录凭据。</string>
+  <string name="autofill_dialog_associate_and_autofill">始终使用</string>
+  <string name="autofill_dialog_just_autofill">使用一次</string>
+  <string name="autofill_dialog_cancel">取消</string>
+  <string name="autofill_notification_copy_to_clipboard">TOTP已复制到剪贴板</string>
+  <string name="autofill_dialog_associate_title">使用已保存账号？</string>
+  <string name="autofill_user_logged_out">您的登录状态已失效。请打开应用重新登录。</string>
+  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">自动填充卡片信息</string>
+  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">自动填充信用卡信息是一项付费功能。如果您希望Proton Pass在应用和网站中自动填写您的信用卡信息，请升级至付费套餐。</string>
+  <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">确认您的操作</string>
+  <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">您即将在当前应用打开的网站中自动填充登录凭据。自动填充后，该应用将可能获取您的凭据——请仅在完全信任该应用的情况下执行此操作。</string>
+  <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">自动填充</string>
+</resources>

@@ -35,19 +35,19 @@
   <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">za posledních 14 dní.</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
     <item quantity="one">%1$d přeposláno</item>
-    <item quantity="few">%1$d přeposláno</item>
+    <item quantity="few">%1$d přeposlány</item>
     <item quantity="many">%1$d přeposláno</item>
     <item quantity="other">%1$d přeposláno</item>
   </plurals>
   <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d odesláno</item>
-    <item quantity="few">%1$d odesláno</item>
+    <item quantity="one">%1$d odeslán</item>
+    <item quantity="few">%1$d odeslány</item>
     <item quantity="many">%1$d odesláno</item>
     <item quantity="other">%1$d odesláno</item>
   </plurals>
   <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d blokováno</item>
-    <item quantity="few">%1$d blokováno</item>
+    <item quantity="one">%1$d blokován</item>
+    <item quantity="few">%1$d blokovány</item>
     <item quantity="many">%1$d blokováno</item>
     <item quantity="other">%1$d blokováno</item>
   </plurals>

@@ -18,7 +18,7 @@
   -->
 <resources>
   <!-- Home screen -->
-  <string name="security_center_home_top_bar_title">Pass-valvonta</string>
+  <string name="security_center_home_top_bar_title">Pass Monitor</string>
   <string name="security_center_home_dark_web_monitoring_title">Pimeän verkon valvonta</string>
   <string name="security_center_home_widget_breaches_title">Tietomurto havaittiin</string>
   <string name="security_center_home_widget_breaches_subtitle">Sähköpostiosoitteesi on paljastunut ainakin yhdessä tietomurrossa.</string>

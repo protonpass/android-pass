@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="item_details_snackbar_message_alias_copied">Псевдоним скопирован</string>
+  <string name="item_details_snackbar_message_birthdate_copied">Дата рождения скопирована</string>
+  <string name="item_details_snackbar_message_card_number_copied">Номер карты скопирован</string>
+  <string name="item_details_snackbar_message_city_copied">Город скопирован</string>
+  <string name="item_details_snackbar_message_company_copied">Компания скопирована</string>
+  <string name="item_details_snackbar_message_country_or_region_copied">Страна или регион скопированы</string>
+  <string name="item_details_snackbar_message_county_copied">Область скопирована</string>
+  <string name="item_details_snackbar_message_custom_field_copied">Настраиваемое поле скопировано</string>
+  <string name="item_details_snackbar_message_cvv_copied">Код безопасности скопирован</string>
+  <string name="item_details_snackbar_message_email_copied">Адрес электронной почты скопирован</string>
+  <string name="item_details_snackbar_message_facebook_copied">Facebook скопирован</string>
+  <string name="item_details_snackbar_message_first_name_copied">Имя скопировано</string>
+  <string name="item_details_snackbar_message_floor_copied">Этаж скопирован</string>
+  <string name="item_details_snackbar_message_full_name_copied">Полное имя скопировано</string>
+  <string name="item_details_snackbar_message_gender_copied">Пол скопирован</string>
+  <string name="item_details_snackbar_message_instagram_copied">Instagram скопирован</string>
+  <string name="item_details_snackbar_message_last_name_copied">Фамилия скопирована</string>
+  <string name="item_details_snackbar_message_license_number_copied">Номер лицензии скопирован</string>
+  <string name="item_details_snackbar_message_linkedin_copied">LinkedIn скопирован</string>
+  <string name="item_details_snackbar_message_middle_name_copied">Отчество скопировано</string>
+  <string name="item_details_snackbar_message_occupation_copied">Род занятий скопирован</string>
+  <string name="item_details_snackbar_message_organization_copied">Организация скопирована</string>
+  <string name="item_details_snackbar_message_passport_number_copied">Номер паспорта скопирован</string>
+  <string name="item_details_snackbar_message_password_copied">Пароль скопирован</string>
+  <string name="item_details_snackbar_message_phone_number_copied">Номер телефона скопирован</string>
+  <string name="item_details_snackbar_message_pin_copied">PIN-код скопирован</string>
+  <string name="item_details_snackbar_message_reddit_copied">Reddit скопирован</string>
+  <string name="item_details_snackbar_message_social_security_number_copied">Номер социального страхования скопирован</string>
+  <string name="item_details_snackbar_message_state_or_province_copied">Штат или провинция скопированы</string>
+  <string name="item_details_snackbar_message_street_address_copied">Адрес улицы скопирован</string>
+  <string name="item_details_snackbar_message_totp_copied">TOTP скопирован</string>
+  <string name="item_details_snackbar_message_username_copied">Имя пользователя скопировано</string>
+  <string name="item_details_snackbar_message_website_copied">URL веб-сайта скопирован</string>
+  <string name="item_details_snackbar_message_x_handle_copied">Дескриптор X скопирован</string>
+  <string name="item_details_snackbar_message_yahoo_copied">Yahoo скопирован</string>
+  <string name="item_details_snackbar_message_zip_or_postal_code_copied">Zip или почтовый индекс скопированы</string>
+  <string name="item_details_snackbar_message_public_key_copied">Public key copied</string>
+  <string name="item_details_snackbar_message_private_key_copied">Private key copied</string>
+  <string name="item_details_snackbar_message_ssid_copied">SSID copied</string>
+  <string name="open_with">Открыть с помощью:</string>
+  <string name="open_attachments_error">Could not open attachment</string>
+</resources>

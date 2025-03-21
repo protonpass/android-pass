@@ -27,6 +27,6 @@
   <string name="account_settings_list_item_security_keys_hint_not_set">未設定</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
-    <item quantity="other">セキュリティーキーセット%d</item>
+    <item quantity="other">%d個のセキュリティーキーが設定されました</item>
   </plurals>
 </resources>

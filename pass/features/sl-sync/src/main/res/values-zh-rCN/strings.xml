@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- Management screen -->
+  <string name="simple_login_sync_management_title">别名管理</string>
+  <string name="simple_login_sync_management_domain_label">域名</string>
+  <string name="simple_login_sync_management_domain_title">别名的默认域</string>
+  <string name="simple_login_sync_management_domain_option_blank">未选中</string>
+  <string name="simple_login_sync_management_mailboxes_label">邮箱</string>
+  <string name="simple_login_sync_management_mailboxes_description">邮箱是转发发送给别名电子邮件的地方。这是您常用的邮箱，如 Gmail、Outlook、Proton Mail 等。</string>
+  <string name="simple_login_sync_management_mailbox_default">默认</string>
+  <string name="simple_login_sync_management_mailbox_unverified">未经验证的邮箱</string>
+  <string name="simple_login_sync_management_mailbox_unverified_change">未经验证的邮箱变更</string>
+  <string name="simple_login_sync_management_vault_title">SimpleLogin 同步</string>
+  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">获取 SL 别名详细信息时出现错误</string>
+  <string name="simple_login_sync_management_mailboxes_title">别名默认邮箱地址</string>
+  <string name="simple_login_sync_management_dialog_title_domains">别名的默认域名</string>
+  <string name="simple_login_sync_management_dialog_title_mailboxes">别名默认邮箱地址</string>
+  <!-- Settings screen -->
+  <string name="simple_login_sync_settings_title">同步别名</string>
+  <string name="simple_login_sync_enable_snackbar_error">启用 SimpleLogin 别名同步时出错</string>
+  <string name="simple_login_sync_enable_snackbar_success">SimpleLogin 别名同步已成功启用</string>
+  <!-- Mailbox create screen -->
+  <string name="simple_login_sync_mailbox_create_title">添加邮箱</string>
+  <string name="simple_login_sync_mailbox_create_message_error">添加邮箱时出错</string>
+  <!-- Mailbox change screen -->
+  <string name="simple_login_sync_mailbox_change_title">更改邮箱</string>
+  <string name="simple_login_sync_mailbox_change_message_error">更改邮箱时出错</string>
+  <string name="simple_login_sync_mailbox_change_email_already_in_use_message_error">邮箱已被使用</string>
+  <!-- Mailbox verify screen -->
+  <string name="simple_login_sync_mailbox_verify_title">确认您的邮箱</string>
+  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">我们向 %s 发生了验证码，请在下面输入：</string>
+  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">您的邮箱地址</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">无效邮箱验证码</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">达到无效邮箱验证码限制，邮箱已删除</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_error">验证邮箱时出错</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_success">邮箱验证成功</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">发送验证码时出错</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">验证码已成功发送</string>
+  <!-- Mailbox delete screen -->
+  <string name="simple_login_sync_mailbox_delete_title">删除邮箱</string>
+  <string name="simple_login_sync_mailbox_delete_subtitle">使用邮箱 %s 的所有别名也将被删除。要继续接收邮件，请将这些别名转移至其他邮箱：</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">转移别名</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">转到邮箱</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete">删除邮箱</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">转移并删除邮箱</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_error">删除邮箱时出错</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_success">邮箱已成功删除</string>
+  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">转移别名至</string>
+  <string name="simple_login_sync_mailbox_delete_warning">请注意，别名一旦删除将无法恢复</string>
+  <!-- Domain select screen -->
+  <string name="simple_login_sync_domain_select_title">默认域名</string>
+  <string name="simple_login_sync_domain_select_title_none">无</string>
+  <string name="simple_login_sync_domain_select_description_none">没有域名</string>
+  <string name="simple_login_sync_domain_select_description_custom">你的域名</string>
+  <string name="simple_login_sync_domain_select_description_free">公共域名</string>
+  <string name="simple_login_sync_domain_select_description_premium">高级域名</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">获取 SL 别名域时出现错误</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">更新 SL 别名域时出现错误</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SL 别名域成功更新</string>
+  <!-- Mailbox options screen -->
+  <string name="simple_login_sync_mailbox_options_snackbar_options_error">无法显示邮箱选项</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_error">更新默认邮箱时出现错误</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_success">成功更新默认邮箱</string>
+  <string name="simple_login_sync_mailbox_change_email_option">更改邮箱</string>
+  <string name="simple_login_sync_mailbox_cancel_change_email_option">取消邮箱更改</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">取消邮箱更改时出现错误</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">取消邮箱更改</string>
+  <!-- Shared -->
+  <string name="simple_login_sync_shared_default_vault_title">默认 SL 保险库</string>
+  <string name="simple_login_sync_shared_default_vault_description">SimpleLogin 别名将被导入此保险库。</string>
+</resources>

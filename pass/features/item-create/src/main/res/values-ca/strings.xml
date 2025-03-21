@@ -207,6 +207,7 @@
   <string name="open_with">Obre amb:</string>
   <string name="open_attachments_error">No s\'ha pogut obrir el adjunt.</string>
   <string name="upload_attachments_error">No s\'ha pogut carregar l\'adjunt.</string>
+  <string name="attachment_size_exceeded_error">El fitxer seleccionat supera el límit de mida. Trieu un fitxer de menys de 100 MB.</string>
   <string name="banner_advanced_options_title">Ho sabíeu?</string>
   <string name="banner_advanced_options_subtitle">Toqueu la icona d\'engranatge per a personalitzar l\'àlies com vulgueu.</string>
   <string name="banner_custom_domain_title">Ho sabíeu?</string>
@@ -351,5 +352,5 @@
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">No es pot crear els elements.</string>
   <string name="cannot_create_items_dialog_message">No teniu cap caixa forta amb permisos d\'editor o administrador. Creeu una a l\'aplicació principal o demaneu assistència a l\'administrador de la vostra organització.</string>
-  <string name="wifi_security_type_field_label">Security type</string>
+  <string name="wifi_security_type_field_label">Tipus de seguretat</string>
 </resources>

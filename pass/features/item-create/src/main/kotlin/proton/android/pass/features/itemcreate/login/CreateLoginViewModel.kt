@@ -275,7 +275,9 @@ class CreateLoginViewModel @Inject constructor(
                 origin = passkeyData.origin,
                 request = passkeyData.request
             ).some()
-            websites.add(passkeyData.origin)
+            if (!websites.contains(passkeyData.origin)) {
+                websites.add(passkeyData.origin)
+            }
             createPasskeyStateFlow.update {
                 CreatePasskeyState(
                     domain = passkeyData.domain,

@@ -37,7 +37,6 @@ import proton.android.pass.features.itemcreate.dialogs.customfield.customFieldNa
 import proton.android.pass.features.itemcreate.login.bottomsheet.aliasoptions.CLEAR_ALIAS_NAV_PARAMETER_KEY
 import proton.android.pass.features.itemcreate.login.bottomsheet.aliasoptions.aliasOptionsBottomSheetGraph
 import proton.android.pass.features.itemcreate.totp.INDEX_NAV_PARAMETER_KEY
-import proton.android.pass.features.itemcreate.totp.SECTION_INDEX_NAV_PARAMETER_KEY
 import proton.android.pass.features.itemcreate.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.features.itemcreate.totp.createTotpGraph
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -148,10 +147,9 @@ fun NavGraphBuilder.createLoginGraph(
             }
         }
         createTotpGraph(
-            onSuccess = { totp, sectionIndex, index ->
+            onSuccess = { totp, _, index ->
                 val values = buildMap<String, Any> {
                     put(TOTP_NAV_PARAMETER_KEY, totp)
-                    sectionIndex?.let { put(SECTION_INDEX_NAV_PARAMETER_KEY, it) }
                     index?.let { put(INDEX_NAV_PARAMETER_KEY, it) }
                 }
                 onNavigate(BaseLoginNavigation.TotpSuccess(values))

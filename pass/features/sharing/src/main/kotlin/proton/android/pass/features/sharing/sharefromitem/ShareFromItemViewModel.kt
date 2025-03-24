@@ -93,7 +93,7 @@ class ShareFromItemViewModel @Inject constructor(
         item,
         share,
         isNewCryptoEnabled,
-        organizationSharingPolicyOption ->
+        organizationSharingPolicy ->
         ShareFromItemUiState(
             shareId = shareId,
             itemId = itemId,
@@ -103,7 +103,7 @@ class ShareFromItemViewModel @Inject constructor(
             isNewCryptoEnabled = isNewCryptoEnabled,
             itemOption = item.some(),
             shareOption = share.some(),
-            organizationSharingPolicyOption = organizationSharingPolicyOption
+            organizationSharingPolicy = organizationSharingPolicy
         )
     }.stateIn(
         scope = viewModelScope,

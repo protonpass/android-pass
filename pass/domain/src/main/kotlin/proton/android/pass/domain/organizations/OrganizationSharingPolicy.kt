@@ -33,4 +33,15 @@ data class OrganizationSharingPolicy(
         OrganizationSecureLinkMode.Disabled -> false
     }
 
+    val hasAnySharingOptionAllowed: Boolean = canShareItems || canShareSecureLinks
+
+    companion object {
+
+        val Default = OrganizationSharingPolicy(
+            itemShareMode = OrganizationItemShareMode.Enabled,
+            secureLinkMode = OrganizationSecureLinkMode.Enabled
+        )
+
+    }
+
 }

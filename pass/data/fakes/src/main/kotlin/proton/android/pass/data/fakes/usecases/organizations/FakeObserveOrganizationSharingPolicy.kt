@@ -20,8 +20,6 @@ package proton.android.pass.data.fakes.usecases.organizations
 
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.common.api.FlowUtils.testFlow
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.some
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSharingPolicy
 import proton.android.pass.domain.organizations.OrganizationSharingPolicy
 import javax.inject.Inject
@@ -30,12 +28,12 @@ import javax.inject.Singleton
 @Singleton
 class FakeObserveOrganizationSharingPolicy @Inject constructor() : ObserveOrganizationSharingPolicy {
 
-    private val organizationSharingPolicyOptionFlow = testFlow<Option<OrganizationSharingPolicy>>()
+    private val organizationSharingPolicyOptionFlow = testFlow<OrganizationSharingPolicy>()
 
     fun emitValue(organizationSharingPolicy: OrganizationSharingPolicy) {
-        organizationSharingPolicyOptionFlow.tryEmit(organizationSharingPolicy.some())
+        organizationSharingPolicyOptionFlow.tryEmit(organizationSharingPolicy)
     }
 
-    override fun invoke(): Flow<Option<OrganizationSharingPolicy>> = organizationSharingPolicyOptionFlow
+    override fun invoke(): Flow<OrganizationSharingPolicy> = organizationSharingPolicyOptionFlow
 
 }

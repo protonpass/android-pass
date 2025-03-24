@@ -96,7 +96,7 @@ fun NavGraphBuilder.autosaveActivityGraph(
             }
             val prefix = CustomFieldPrefix.fromLogin(backDestination)
             when (it) {
-                BaseLoginNavigation.CloseScreen -> onNavigate(AutosaveNavigation.Cancel)
+                BaseLoginNavigation.CloseScreen -> appNavigator.navigateBack()
                 BaseLoginNavigation.DismissBottomsheet -> dismissBottomSheet {}
                 is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
                     destination = CreateAliasBottomSheet,

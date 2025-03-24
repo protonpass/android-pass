@@ -20,48 +20,35 @@ package proton.android.pass.features.security.center.breachdetail.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.body3Norm
-import proton.android.pass.domain.breach.BreachEmail
+import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.security.center.R
 
 @Composable
-internal fun Details(modifier: Modifier = Modifier, breachEmail: BreachEmail) {
+internal fun Details(modifier: Modifier = Modifier, passwordLastChars: String) {
     Column(
-        modifier = modifier, verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
-        if (breachEmail.email.isNotBlank() || !breachEmail.passwordLastChars.isNullOrBlank()) {
-            Text(
-                text = stringResource(R.string.security_center_report_detail_details),
-                style = ProtonTheme.typography.body1Medium
+        Text.Body1Medium(
+            text = stringResource(R.string.security_center_report_detail_details)
+        )
+
+        Column(
+            verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
+        ) {
+            Text.Body3Regular(
+                text = stringResource(R.string.security_center_report_detail_password),
+                color = PassTheme.colors.textWeak
             )
-            breachEmail.email.takeIf { it.isNotBlank() }?.let { email ->
-                Column {
-                    Text(
-                        text = stringResource(R.string.security_center_report_detail_email_address),
-                        style = PassTheme.typography.body3Norm()
-                    )
-                    Text(text = email, style = ProtonTheme.typography.body1Regular)
-                }
-            }
-            breachEmail.passwordLastChars?.let { password ->
-                Column {
-                    Text(
-                        text = stringResource(R.string.security_center_report_detail_password),
-                        style = PassTheme.typography.body3Norm()
-                    )
-                    Text(
-                        text = password,
-                        style = ProtonTheme.typography.body1Regular
-                    )
-                }
-            }
+
+            Text.Body1Regular(
+                text = passwordLastChars
+            )
         }
     }
 }

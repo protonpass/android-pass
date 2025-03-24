@@ -25,6 +25,9 @@ import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.features.attachments.addattachment.navigation.AddAttachmentNavItem
 import proton.android.pass.features.attachments.addattachment.navigation.AddAttachmentNavigation
 import proton.android.pass.features.attachments.addattachment.ui.AddAttachmentBottomsheet
+import proton.android.pass.features.attachments.attachmentoptionsondetail.navigation.AttachmentOptionsOnDetailNavItem
+import proton.android.pass.features.attachments.attachmentoptionsondetail.navigation.AttachmentOptionsOnDetailNavigation
+import proton.android.pass.features.attachments.attachmentoptionsondetail.ui.AttachmentOptionsOnDetailBottomsheet
 import proton.android.pass.features.attachments.attachmentoptionsonedit.navigation.AttachmentOptionsOnEditNavItem
 import proton.android.pass.features.attachments.attachmentoptionsonedit.navigation.AttachmentOptionsOnEditNavigation
 import proton.android.pass.features.attachments.attachmentoptionsonedit.ui.AttachmentOptionsOnEditBottomsheet
@@ -90,6 +93,16 @@ fun NavGraphBuilder.attachmentsGraph(onNavigate: (AttachmentsNavigation) -> Unit
 
                     is AttachmentOptionsOnEditNavigation.OpenRenameDraftAttachment ->
                         onNavigate(AttachmentsNavigation.OpenRenameDraftAttachment(it.uri))
+                }
+            }
+        )
+    }
+    bottomSheet(navItem = AttachmentOptionsOnDetailNavItem) {
+        AttachmentOptionsOnDetailBottomsheet(
+            onNavigate = {
+                when (it) {
+                    AttachmentOptionsOnDetailNavigation.CloseBottomsheet ->
+                        onNavigate(AttachmentsNavigation.CloseBottomsheet)
                 }
             }
         )

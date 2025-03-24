@@ -6,6 +6,13 @@
 
 ### Other
 
+## 1.30.3 (2025-03-24)
+
+### Fixes :bug:
+
+- Fix custom fields in login items.
+- Fix custom fields during autosave.
+
 ## 1.30.2 (2025-03-21)
 
 ### Fixes :bug:

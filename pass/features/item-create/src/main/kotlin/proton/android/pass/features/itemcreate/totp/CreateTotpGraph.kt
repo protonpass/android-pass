@@ -21,6 +21,7 @@ package proton.android.pass.features.itemcreate.totp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import proton.android.pass.common.api.Option
+import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
 import proton.android.pass.features.itemcreate.totp.camera.CameraPreviewTotp
 import proton.android.pass.features.itemcreate.totp.photopicker.PhotoPickerTotpScreen
 import proton.android.pass.navigation.api.NavItem
@@ -32,8 +33,8 @@ const val TOTP_NAV_PARAMETER_KEY = "totp_nav_parameter_key"
 const val SECTION_INDEX_NAV_PARAMETER_KEY = "section_index_nav_parameter_key"
 const val INDEX_NAV_PARAMETER_KEY = "index_nav_parameter_key"
 
-object CameraTotpNavItem : NavItem(
-    baseRoute = "totp/camera",
+data class CameraTotpNavItem(val prefix: CustomFieldPrefix) : NavItem(
+    baseRoute = "$prefix/totp/camera",
     optionalArgIds = listOf(
         TotpOptionalNavArgId.TotpSectionIndexField,
         TotpOptionalNavArgId.TotpIndexField
@@ -49,8 +50,8 @@ object CameraTotpNavItem : NavItem(
     }
 }
 
-object PhotoPickerTotpNavItem : NavItem(
-    baseRoute = "totp/photopicker",
+data class PhotoPickerTotpNavItem(val prefix: CustomFieldPrefix) : NavItem(
+    baseRoute = "$prefix/totp/photopicker",
     optionalArgIds = listOf(
         TotpOptionalNavArgId.TotpSectionIndexField,
         TotpOptionalNavArgId.TotpIndexField
@@ -78,11 +79,12 @@ enum class TotpOptionalNavArgId : OptionalNavArgId {
 }
 
 fun NavGraphBuilder.createTotpGraph(
+    prefix: CustomFieldPrefix,
     onSuccess: (String, Int?, Int?) -> Unit,
     onCloseTotp: () -> Unit,
     onOpenImagePicker: (Int?, Int?) -> Unit
 ) {
-    composable(CameraTotpNavItem) { backStackEntry ->
+    composable(CameraTotpNavItem(prefix)) { backStackEntry ->
         val totpSectionIndexField =
             backStackEntry.arguments?.getInt(TotpOptionalNavArgId.TotpSectionIndexField.key)
                 .takeIf { a: Int? -> a != null && a >= 0 }
@@ -97,7 +99,7 @@ fun NavGraphBuilder.createTotpGraph(
             onClosePreview = onCloseTotp
         )
     }
-    composable(PhotoPickerTotpNavItem) { backStackEntry ->
+    composable(PhotoPickerTotpNavItem(prefix)) { backStackEntry ->
         val totpSectionIndexField =
             backStackEntry.arguments?.getInt(TotpOptionalNavArgId.TotpSectionIndexField.key)
                 .takeIf { a: Int? -> a != null && a >= 0 }

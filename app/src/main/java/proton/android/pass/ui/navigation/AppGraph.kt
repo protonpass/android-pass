@@ -835,6 +835,7 @@ fun NavGraphBuilder.appGraph(
                 appNavigator.hasDestinationInStack(EditLoginNavItem) -> EditLoginNavItem
                 else -> null
             }
+            val prefix = CustomFieldPrefix.fromLogin(backDestination)
             when (it) {
                 BaseLoginNavigation.CloseScreen -> appNavigator.navigateBack()
                 BaseLoginNavigation.DismissBottomsheet -> dismissBottomSheet {}
@@ -886,8 +887,8 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 is BaseLoginNavigation.ScanTotp -> appNavigator.navigate(
-                    destination = CameraTotpNavItem,
-                    route = CameraTotpNavItem.createNavRoute(None, it.index)
+                    destination = CameraTotpNavItem(prefix),
+                    route = CameraTotpNavItem(prefix).createNavRoute(None, it.index)
                 )
 
                 BaseLoginNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
@@ -916,7 +917,6 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 BaseLoginNavigation.AddCustomField -> {
-                    val prefix = CustomFieldPrefix.fromLogin(backDestination)
                     appNavigator.navigate(
                         destination = AddCustomFieldBottomSheetNavItem(prefix),
                         route = AddCustomFieldBottomSheetNavItem(prefix).buildRoute(sectionIndex = None)
@@ -964,8 +964,8 @@ fun NavGraphBuilder.appGraph(
 
                 is BaseLoginNavigation.OpenImagePicker -> {
                     appNavigator.navigate(
-                        destination = PhotoPickerTotpNavItem,
-                        route = PhotoPickerTotpNavItem.createNavRoute(None, it.index),
+                        destination = PhotoPickerTotpNavItem(prefix),
+                        route = PhotoPickerTotpNavItem(prefix).createNavRoute(None, it.index),
                         backDestination = backDestination
                     )
                 }
@@ -1401,6 +1401,7 @@ fun NavGraphBuilder.appGraph(
             appNavigator.hasDestinationInStack(UpdateCustomItemNavItem) -> UpdateCustomItemNavItem
             else -> null
         }
+        val prefix = CustomFieldPrefix.fromCustomItem(backDestination)
         when (it) {
             BaseCustomItemNavigation.CloseScreen -> appNavigator.navigateBack()
             BaseCustomItemNavigation.DismissBottomsheet -> dismissBottomSheet {}
@@ -1518,13 +1519,13 @@ fun NavGraphBuilder.appGraph(
             )
 
             is BaseCustomItemNavigation.OpenTOTPScanner -> appNavigator.navigate(
-                destination = CameraTotpNavItem,
-                route = CameraTotpNavItem.createNavRoute(it.sectionIndex, it.index.some())
+                destination = CameraTotpNavItem(prefix),
+                route = CameraTotpNavItem(prefix).createNavRoute(it.sectionIndex, it.index.some())
             )
 
             is BaseCustomItemNavigation.OpenImagePicker -> appNavigator.navigate(
-                destination = PhotoPickerTotpNavItem,
-                route = PhotoPickerTotpNavItem.createNavRoute(it.sectionIndex, it.index.some()),
+                destination = PhotoPickerTotpNavItem(prefix),
+                route = PhotoPickerTotpNavItem(prefix).createNavRoute(it.sectionIndex, it.index.some()),
                 backDestination = backDestination
             )
 

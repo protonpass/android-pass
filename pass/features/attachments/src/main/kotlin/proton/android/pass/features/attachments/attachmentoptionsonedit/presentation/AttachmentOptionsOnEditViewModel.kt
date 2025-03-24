@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.attachments.attachmentoptions.presentation
+package proton.android.pass.features.attachments.attachmentoptionsonedit.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -29,8 +29,8 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
-import proton.android.pass.data.api.usecases.attachments.SetAttachmentToBeUnlinked
 import proton.android.pass.data.api.usecases.attachments.RemoveDraftAttachment
+import proton.android.pass.data.api.usecases.attachments.SetAttachmentToBeUnlinked
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
@@ -40,7 +40,7 @@ import java.net.URI
 import javax.inject.Inject
 
 @HiltViewModel
-class AttachmentOptionsViewModel @Inject constructor(
+class AttachmentOptionsOnEditViewModel @Inject constructor(
     private val setAttachmentToBeUnlinked: SetAttachmentToBeUnlinked,
     private val removeDraftAttachment: RemoveDraftAttachment,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -65,13 +65,13 @@ class AttachmentOptionsViewModel @Inject constructor(
         .map(NavParamEncoder::decode)
         .map(URI::create)
 
-    private val eventFlow = MutableStateFlow<AttachmentOptionsEvent>(AttachmentOptionsEvent.Idle)
+    private val eventFlow = MutableStateFlow<AttachmentOptionsOnEditEvent>(AttachmentOptionsOnEditEvent.Idle)
 
     val state = eventFlow
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
-            initialValue = AttachmentOptionsEvent.Idle
+            initialValue = AttachmentOptionsOnEditEvent.Idle
         )
 
     fun deleteAttachment() {
@@ -79,13 +79,13 @@ class AttachmentOptionsViewModel @Inject constructor(
             attachmentId is Some -> setAttachmentToBeUnlinked(attachmentId.value)
             uri is Some -> removeDraftAttachment(uri.value)
         }
-        eventFlow.update { AttachmentOptionsEvent.Close }
+        eventFlow.update { AttachmentOptionsOnEditEvent.Close }
     }
 
     fun renameAttachment() {
         when {
             shareId is Some && itemId is Some && attachmentId is Some -> eventFlow.update {
-                AttachmentOptionsEvent.OpenRenameAttachment(
+                AttachmentOptionsOnEditEvent.OpenRenameAttachment(
                     shareId = shareId.value,
                     itemId = itemId.value,
                     attachmentId = attachmentId.value
@@ -93,13 +93,13 @@ class AttachmentOptionsViewModel @Inject constructor(
             }
 
             uri is Some -> eventFlow.update {
-                AttachmentOptionsEvent.OpenRenameDraftAttachment(uri.value)
+                AttachmentOptionsOnEditEvent.OpenRenameDraftAttachment(uri.value)
             }
             else -> throw IllegalStateException("No attachment id or uri found")
         }
     }
 
-    fun onConsumeEvent(event: AttachmentOptionsEvent) {
-        eventFlow.compareAndSet(event, AttachmentOptionsEvent.Idle)
+    fun onConsumeEvent(event: AttachmentOptionsOnEditEvent) {
+        eventFlow.compareAndSet(event, AttachmentOptionsOnEditEvent.Idle)
     }
 }

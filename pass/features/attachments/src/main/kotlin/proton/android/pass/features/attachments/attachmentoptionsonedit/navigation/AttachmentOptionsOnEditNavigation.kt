@@ -16,23 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.attachments.attachmentoptions.navigation
+package proton.android.pass.features.attachments.attachmentoptionsonedit.navigation
 
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
 import java.net.URI
 
-sealed interface AttachmentOptionsNavigation {
-    data object CloseBottomsheet : AttachmentOptionsNavigation
+sealed interface AttachmentOptionsOnEditNavigation {
+    data object CloseBottomsheet : AttachmentOptionsOnEditNavigation
 
     data class OpenRenameAttachment(
         val shareId: ShareId,
         val itemId: ItemId,
         val attachmentId: AttachmentId
-    ) : AttachmentOptionsNavigation
+    ) : AttachmentOptionsOnEditNavigation
 
     @JvmInline
-    value class OpenRenameDraftAttachment(val uri: URI) : AttachmentOptionsNavigation
+    value class OpenRenameDraftAttachment(val uri: URI) : AttachmentOptionsOnEditNavigation
 
 }

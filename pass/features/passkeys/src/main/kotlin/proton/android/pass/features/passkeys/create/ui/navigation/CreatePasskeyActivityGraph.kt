@@ -33,6 +33,7 @@ import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation
 import proton.android.pass.features.itemcreate.alias.createAliasGraph
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.AddCustomFieldBottomSheetNavItem
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldOptionsBottomSheetNavItem
+import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
 import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
 import proton.android.pass.features.itemcreate.dialogs.cannotcreateitems.navigation.CannotCreateItemsNavDestination
 import proton.android.pass.features.itemcreate.dialogs.cannotcreateitems.navigation.CannotCreateItemsNavItem
@@ -42,6 +43,7 @@ import proton.android.pass.features.itemcreate.dialogs.customfield.EditCustomFie
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation
 import proton.android.pass.features.itemcreate.login.CreateLoginNavItem
 import proton.android.pass.features.itemcreate.login.CreateLoginNavigation
+import proton.android.pass.features.itemcreate.login.EditLoginNavItem
 import proton.android.pass.features.itemcreate.login.bottomsheet.aliasoptions.AliasOptionsBottomSheet
 import proton.android.pass.features.itemcreate.login.bottomsheet.aliasoptions.CLEAR_ALIAS_NAV_PARAMETER_KEY
 import proton.android.pass.features.itemcreate.login.createUpdateLoginGraph
@@ -161,6 +163,12 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
         showCreateAliasButton = true,
         canUseAttachments = false,
         onNavigate = {
+            val backDestination = when {
+                appNavigator.hasDestinationInStack(CreateLoginNavItem) -> CreateLoginNavItem
+                appNavigator.hasDestinationInStack(EditLoginNavItem) -> EditLoginNavItem
+                else -> null
+            }
+            val prefix = CustomFieldPrefix.fromLogin(backDestination)
             when (it) {
                 BaseLoginNavigation.CloseScreen -> appNavigator.navigateBack()
                 BaseLoginNavigation.DismissBottomsheet -> dismissBottomSheet {}
@@ -199,8 +207,8 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                 }
 
                 is BaseLoginNavigation.ScanTotp -> appNavigator.navigate(
-                    destination = CameraTotpNavItem,
-                    route = CameraTotpNavItem.createNavRoute(None, it.index)
+                    destination = CameraTotpNavItem(prefix),
+                    route = CameraTotpNavItem(prefix).createNavRoute(None, it.index)
                 )
 
                 BaseLoginNavigation.Upgrade -> onNavigate(CreatePasskeyNavigation.Upgrade)
@@ -268,8 +276,8 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                 // Updates cannot happen
                 is BaseLoginNavigation.OnUpdateLoginEvent -> {}
                 is BaseLoginNavigation.OpenImagePicker -> appNavigator.navigate(
-                    destination = PhotoPickerTotpNavItem,
-                    route = PhotoPickerTotpNavItem.createNavRoute(None, it.index),
+                    destination = PhotoPickerTotpNavItem(prefix),
+                    route = PhotoPickerTotpNavItem(prefix).createNavRoute(None, it.index),
                     backDestination = CreateLoginNavItem
                 )
 

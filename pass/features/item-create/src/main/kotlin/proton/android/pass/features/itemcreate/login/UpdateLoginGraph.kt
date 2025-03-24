@@ -110,6 +110,7 @@ fun NavGraphBuilder.updateLoginGraph(canUseAttachments: Boolean, onNavigate: (Ba
             }
         }
         createTotpGraph(
+            prefix = CustomFieldPrefix.UpdateLogin,
             onSuccess = { totp, sectionIndex, index ->
                 val values = buildMap<String, Any> {
                     put(TOTP_NAV_PARAMETER_KEY, totp)

@@ -52,6 +52,7 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.ShareType
 import proton.android.pass.features.itemdetail.ItemDetailNavigation
+import proton.android.pass.features.itemdetail.ItemDetailNavigation.OpenAttachmentOptions
 import proton.android.pass.features.itemdetail.ItemDetailTopBar
 import proton.android.pass.features.itemdetail.common.ItemDetailEvent
 import proton.android.pass.features.itemdetail.common.onEditClick
@@ -369,8 +370,15 @@ fun LoginDetail(
                                                 contextHolder = context.toClassHolder(),
                                                 attachment = event.attachment
                                             )
+                                        is AttachmentContentEvent.OnAttachmentOptions ->
+                                            onNavigate(
+                                                OpenAttachmentOptions(
+                                                    shareId = event.shareId,
+                                                    itemId = event.itemId,
+                                                    attachmentId = event.attachmentId
+                                                )
+                                            )
 
-                                        is AttachmentContentEvent.OnAttachmentOptions,
                                         AttachmentContentEvent.OnAddAttachment,
                                         AttachmentContentEvent.OnDeleteAllAttachments,
                                         AttachmentContentEvent.UpsellAttachments,

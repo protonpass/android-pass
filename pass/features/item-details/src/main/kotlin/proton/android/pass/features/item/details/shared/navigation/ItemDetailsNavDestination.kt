@@ -22,6 +22,7 @@ import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetai
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.items.ItemCategory
 
 sealed interface ItemDetailsNavDestination {
@@ -82,4 +83,10 @@ sealed interface ItemDetailsNavDestination {
 
     @JvmInline
     value class WifiNetworkQRClick(val rawSVG: String) : ItemDetailsNavDestination
+
+    data class OpenAttachmentOptions(
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val attachmentId: AttachmentId
+    ) : ItemDetailsNavDestination
 }

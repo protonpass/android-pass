@@ -20,41 +20,39 @@ package proton.android.pass.features.security.center.breachdetail.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.extension.toResource
-import proton.android.pass.domain.breach.BreachEmail
+import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.domain.breach.BreachAction
 import proton.android.pass.features.security.center.R
 
 @Composable
 internal fun RecommendedActions(
     modifier: Modifier = Modifier,
-    breachEmail: BreachEmail,
+    breachActions: List<BreachAction>,
     onOpenUrl: (String) -> Unit
 ) {
     Column(
-        modifier = modifier, verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
-        if (breachEmail.actions.isNotEmpty()) {
-            Text(
-                text = stringResource(R.string.security_center_report_detail_recommended_actions),
-                style = ProtonTheme.typography.body1Medium
-            )
-        }
+        Text.Body1Medium(
+            text = stringResource(R.string.security_center_report_detail_recommended_actions)
+        )
 
-
-        Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
-            breachEmail.actions.forEach { action ->
+        Column(
+            verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
+        ) {
+            breachActions.forEach { breachAction ->
                 RecommendedAction(
-                    text = action.name,
-                    icon = action.code.toResource(),
-                    url = action.url,
+                    text = breachAction.name,
+                    icon = breachAction.code.toResource(),
+                    url = breachAction.url,
                     onClick = {
-                        action.url?.let { onOpenUrl(it) }
+                        breachAction.url?.let { onOpenUrl(it) }
                     }
                 )
             }

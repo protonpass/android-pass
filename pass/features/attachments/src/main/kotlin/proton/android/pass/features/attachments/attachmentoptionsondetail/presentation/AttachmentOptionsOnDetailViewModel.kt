@@ -23,43 +23,52 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.toOption
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonui.api.require
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.files.api.CheckIfAttachmentExistsLocally
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import javax.inject.Inject
 
 @HiltViewModel
 class AttachmentOptionsOnDetailViewModel @Inject constructor(
+    checkIfAttachmentExistsLocally: CheckIfAttachmentExistsLocally,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
-    private val shareId: Option<ShareId> = savedStateHandleProvider.get()
-        .get<String>(CommonOptionalNavArgId.ShareId.key)
-        ?.let(::ShareId)
-        .toOption()
-    private val itemId: Option<ItemId> = savedStateHandleProvider.get()
-        .get<String>(CommonOptionalNavArgId.ItemId.key)
-        ?.let(::ItemId)
-        .toOption()
-    private val attachmentId: Option<AttachmentId> = savedStateHandleProvider.get()
-        .get<String>(CommonOptionalNavArgId.AttachmentId.key)
-        ?.let(::AttachmentId)
-        .toOption()
+    private val shareId: ShareId = savedStateHandleProvider.get()
+        .require<String>(CommonOptionalNavArgId.ShareId.key)
+        .let(::ShareId)
+    private val itemId: ItemId = savedStateHandleProvider.get()
+        .require<String>(CommonOptionalNavArgId.ItemId.key)
+        .let(::ItemId)
+    private val attachmentId: AttachmentId = savedStateHandleProvider.get()
+        .require<String>(CommonOptionalNavArgId.AttachmentId.key)
+        .let(::AttachmentId)
 
-    private val eventFlow = MutableStateFlow<AttachmentOptionsOnDetailEvent>(AttachmentOptionsOnDetailEvent.Idle)
+    private val eventFlow =
+        MutableStateFlow<AttachmentOptionsOnDetailEvent>(AttachmentOptionsOnDetailEvent.Idle)
 
-    val state = eventFlow
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
-            initialValue = AttachmentOptionsOnDetailEvent.Idle
+    val state: StateFlow<AttachmentOptionsOnDetailState> = combine(
+        eventFlow,
+        oneShot { checkIfAttachmentExistsLocally(shareId, itemId, attachmentId) }
+    ) { event, attachmentExists ->
+        AttachmentOptionsOnDetailState(
+            canDownload = !attachmentExists,
+            event = event
         )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
+        initialValue = AttachmentOptionsOnDetailState.Initial
+    )
 
     fun onConsumeEvent(event: AttachmentOptionsOnDetailEvent) {
         eventFlow.compareAndSet(event, AttachmentOptionsOnDetailEvent.Idle)

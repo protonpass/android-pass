@@ -37,20 +37,22 @@ fun AttachmentOptionsOnDetailBottomsheet(
 ) {
     val state by viewmodel.state.collectAsStateWithLifecycle()
 
-    LaunchedEffect(state) {
-        when (state) {
+    LaunchedEffect(state.event) {
+        when (state.event) {
             AttachmentOptionsOnDetailEvent.Close -> onNavigate(AttachmentOptionsOnDetailNavigation.CloseBottomsheet)
             AttachmentOptionsOnDetailEvent.Idle -> {}
         }
-        viewmodel.onConsumeEvent(state)
+        viewmodel.onConsumeEvent(state.event)
     }
 
     AttachmentOptionsOnDetailContent(
         modifier = modifier.bottomSheet(),
+        canDownload = state.canDownload,
         onEvent = {
             when (it) {
                 AttachmentOptionsOnDetailUIEvent.Download ->
                     viewmodel.download()
+
                 AttachmentOptionsOnDetailUIEvent.Share ->
                     viewmodel.share()
             }

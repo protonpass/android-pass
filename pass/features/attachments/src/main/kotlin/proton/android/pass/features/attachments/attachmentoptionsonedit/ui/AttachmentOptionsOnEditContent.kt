@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.attachments.attachmentoptions.ui
+package proton.android.pass.features.attachments.attachmentoptionsonedit.ui
 
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -37,10 +37,10 @@ import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
-fun AttachmentOptionsContent(modifier: Modifier = Modifier, onEvent: (AttachmentOptionsUIEvent) -> Unit) {
+fun AttachmentOptionsOnEditContent(modifier: Modifier = Modifier, onEvent: (AttachmentOptionsOnEditUIEvent) -> Unit) {
     val list = listOf(
-        renameFile { onEvent(AttachmentOptionsUIEvent.Rename) },
-        deleteFile { onEvent(AttachmentOptionsUIEvent.Delete) }
+        renameFile { onEvent(AttachmentOptionsOnEditUIEvent.Rename) },
+        deleteFile { onEvent(AttachmentOptionsOnEditUIEvent.Delete) }
     ).withDividers().toPersistentList()
     BottomSheetItemList(
         modifier = modifier,
@@ -97,7 +97,7 @@ private fun deleteFile(onClick: () -> Unit): BottomSheetItem = object : BottomSh
 fun AttachmentOptionsContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            AttachmentOptionsContent(
+            AttachmentOptionsOnEditContent(
                 onEvent = {}
             )
         }

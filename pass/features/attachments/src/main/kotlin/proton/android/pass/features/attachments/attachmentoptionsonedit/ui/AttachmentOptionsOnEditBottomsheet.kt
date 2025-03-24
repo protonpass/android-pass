@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.attachments.attachmentoptions.ui
+package proton.android.pass.features.attachments.attachmentoptionsonedit.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,46 +25,46 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.bottomSheet
-import proton.android.pass.features.attachments.attachmentoptions.navigation.AttachmentOptionsNavigation
-import proton.android.pass.features.attachments.attachmentoptions.presentation.AttachmentOptionsEvent
-import proton.android.pass.features.attachments.attachmentoptions.presentation.AttachmentOptionsViewModel
+import proton.android.pass.features.attachments.attachmentoptionsonedit.navigation.AttachmentOptionsOnEditNavigation
+import proton.android.pass.features.attachments.attachmentoptionsonedit.presentation.AttachmentOptionsOnEditEvent
+import proton.android.pass.features.attachments.attachmentoptionsonedit.presentation.AttachmentOptionsOnEditViewModel
 
 @Composable
-fun AttachmentOptionsBottomsheet(
+fun AttachmentOptionsOnEditBottomsheet(
     modifier: Modifier = Modifier,
-    viewmodel: AttachmentOptionsViewModel = hiltViewModel(),
-    onNavigate: (AttachmentOptionsNavigation) -> Unit
+    viewmodel: AttachmentOptionsOnEditViewModel = hiltViewModel(),
+    onNavigate: (AttachmentOptionsOnEditNavigation) -> Unit
 ) {
     val state by viewmodel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(state) {
         when (val event = state) {
-            is AttachmentOptionsEvent.OpenRenameAttachment ->
+            is AttachmentOptionsOnEditEvent.OpenRenameAttachment ->
                 onNavigate(
-                    AttachmentOptionsNavigation.OpenRenameAttachment(
+                    AttachmentOptionsOnEditNavigation.OpenRenameAttachment(
                         shareId = event.shareId,
                         itemId = event.itemId,
                         attachmentId = event.attachmentId
                     )
                 )
 
-            is AttachmentOptionsEvent.OpenRenameDraftAttachment ->
-                onNavigate(AttachmentOptionsNavigation.OpenRenameDraftAttachment(event.uri))
+            is AttachmentOptionsOnEditEvent.OpenRenameDraftAttachment ->
+                onNavigate(AttachmentOptionsOnEditNavigation.OpenRenameDraftAttachment(event.uri))
 
-            AttachmentOptionsEvent.Close -> onNavigate(AttachmentOptionsNavigation.CloseBottomsheet)
-            AttachmentOptionsEvent.Idle -> {}
+            AttachmentOptionsOnEditEvent.Close -> onNavigate(AttachmentOptionsOnEditNavigation.CloseBottomsheet)
+            AttachmentOptionsOnEditEvent.Idle -> {}
         }
         viewmodel.onConsumeEvent(state)
     }
 
-    AttachmentOptionsContent(
+    AttachmentOptionsOnEditContent(
         modifier = modifier.bottomSheet(),
         onEvent = {
             when (it) {
-                AttachmentOptionsUIEvent.Delete ->
+                AttachmentOptionsOnEditUIEvent.Delete ->
                     viewmodel.deleteAttachment()
 
-                AttachmentOptionsUIEvent.Rename ->
+                AttachmentOptionsOnEditUIEvent.Rename ->
                     viewmodel.renameAttachment()
             }
         }

@@ -25,9 +25,9 @@ import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.features.attachments.addattachment.navigation.AddAttachmentNavItem
 import proton.android.pass.features.attachments.addattachment.navigation.AddAttachmentNavigation
 import proton.android.pass.features.attachments.addattachment.ui.AddAttachmentBottomsheet
-import proton.android.pass.features.attachments.attachmentoptions.navigation.AttachmentOptionsNavItem
-import proton.android.pass.features.attachments.attachmentoptions.navigation.AttachmentOptionsNavigation
-import proton.android.pass.features.attachments.attachmentoptions.ui.AttachmentOptionsBottomsheet
+import proton.android.pass.features.attachments.attachmentoptionsonedit.navigation.AttachmentOptionsOnEditNavItem
+import proton.android.pass.features.attachments.attachmentoptionsonedit.navigation.AttachmentOptionsOnEditNavigation
+import proton.android.pass.features.attachments.attachmentoptionsonedit.ui.AttachmentOptionsOnEditBottomsheet
 import proton.android.pass.features.attachments.camera.navigation.CameraNavItem
 import proton.android.pass.features.attachments.camera.navigation.CameraNavigation
 import proton.android.pass.features.attachments.camera.ui.CameraScreen
@@ -72,14 +72,14 @@ fun NavGraphBuilder.attachmentsGraph(onNavigate: (AttachmentsNavigation) -> Unit
             }
         )
     }
-    bottomSheet(navItem = AttachmentOptionsNavItem) {
-        AttachmentOptionsBottomsheet(
+    bottomSheet(navItem = AttachmentOptionsOnEditNavItem) {
+        AttachmentOptionsOnEditBottomsheet(
             onNavigate = {
                 when (it) {
-                    AttachmentOptionsNavigation.CloseBottomsheet ->
+                    AttachmentOptionsOnEditNavigation.CloseBottomsheet ->
                         onNavigate(AttachmentsNavigation.CloseBottomsheet)
 
-                    is AttachmentOptionsNavigation.OpenRenameAttachment ->
+                    is AttachmentOptionsOnEditNavigation.OpenRenameAttachment ->
                         onNavigate(
                             AttachmentsNavigation.OpenRenameAttachment(
                                 shareId = it.shareId,
@@ -88,7 +88,7 @@ fun NavGraphBuilder.attachmentsGraph(onNavigate: (AttachmentsNavigation) -> Unit
                             )
                         )
 
-                    is AttachmentOptionsNavigation.OpenRenameDraftAttachment ->
+                    is AttachmentOptionsOnEditNavigation.OpenRenameDraftAttachment ->
                         onNavigate(AttachmentsNavigation.OpenRenameDraftAttachment(it.uri))
                 }
             }

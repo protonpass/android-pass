@@ -16,9 +16,26 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.attachments.attachmentoptions.ui
+package proton.android.pass.features.attachments.attachmentoptionsonedit.presentation
 
-sealed interface AttachmentOptionsUIEvent {
-    data object Rename : AttachmentOptionsUIEvent
-    data object Delete : AttachmentOptionsUIEvent
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.AttachmentId
+import java.net.URI
+
+sealed interface AttachmentOptionsOnEditEvent {
+
+    data object Idle : AttachmentOptionsOnEditEvent
+
+    data object Close : AttachmentOptionsOnEditEvent
+
+    data class OpenRenameAttachment(
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val attachmentId: AttachmentId
+    ) : AttachmentOptionsOnEditEvent
+
+    @JvmInline
+    value class OpenRenameDraftAttachment(val uri: URI) : AttachmentOptionsOnEditEvent
+
 }

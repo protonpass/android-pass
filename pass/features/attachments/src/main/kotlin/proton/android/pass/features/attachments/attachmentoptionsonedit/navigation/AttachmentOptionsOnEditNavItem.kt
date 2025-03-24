@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.attachments.attachmentoptions.navigation
+package proton.android.pass.features.attachments.attachmentoptionsonedit.navigation
 
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -28,8 +28,8 @@ import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.navigation.api.toPath
 import java.net.URI
 
-data object AttachmentOptionsNavItem : NavItem(
-    baseRoute = "attachmentoptions/bottomsheet",
+data object AttachmentOptionsOnEditNavItem : NavItem(
+    baseRoute = "attachmentoptionsonedit/bottomsheet",
     navItemType = NavItemType.Bottomsheet,
     optionalArgIds = listOf(
         CommonOptionalNavArgId.ShareId,

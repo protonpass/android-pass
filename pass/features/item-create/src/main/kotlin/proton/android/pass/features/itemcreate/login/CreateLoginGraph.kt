@@ -147,6 +147,7 @@ fun NavGraphBuilder.createLoginGraph(
             }
         }
         createTotpGraph(
+            prefix = CustomFieldPrefix.CreateLogin,
             onSuccess = { totp, _, index ->
                 val values = buildMap<String, Any> {
                     put(TOTP_NAV_PARAMETER_KEY, totp)

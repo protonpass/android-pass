@@ -319,8 +319,7 @@ class LoginDetailViewModel @Inject constructor(
                 startObservingTotpCustomFields(isPaid, itemUiModel)
 
                 val canShareVault = details.vault
-                    ?.let { vault -> canShareShare(vault.shareId).value }
-                    ?: false
+                    ?.let { vault -> canShareShare(vault.shareId).value } == true
 
                 val shareClickAction = when {
                     isPaid && canShareVault -> ShareClickAction.Share

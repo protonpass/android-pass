@@ -21,9 +21,7 @@ package proton.android.pass.data.impl.usecases.organization
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapLatest
 import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.some
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSharingPolicy
 import proton.android.pass.domain.OrganizationSettings
@@ -34,14 +32,14 @@ class ObserveOrganizationSharingPolicyImpl @Inject constructor(
     private val observeOrganizationSettings: ObserveOrganizationSettings
 ) : ObserveOrganizationSharingPolicy {
 
-    override fun invoke(): Flow<Option<OrganizationSharingPolicy>> = observeOrganizationSettings()
+    override fun invoke(): Flow<OrganizationSharingPolicy> = observeOrganizationSettings()
         .mapLatest { organizationSettingsOption ->
             when (organizationSettingsOption) {
-                is None -> None
+                is None -> OrganizationSharingPolicy.Default
                 is Some -> {
                     when (val organizationSettings = organizationSettingsOption.value) {
-                        OrganizationSettings.NotAnOrganization -> None
-                        is OrganizationSettings.Organization -> organizationSettings.sharingPolicy.some()
+                        OrganizationSettings.NotAnOrganization -> OrganizationSharingPolicy.Default
+                        is OrganizationSettings.Organization -> organizationSettings.sharingPolicy
                     }
                 }
             }

@@ -40,6 +40,7 @@ import proton.android.pass.features.itemcreate.dialogs.customfield.customFieldNa
 import proton.android.pass.features.itemcreate.totp.INDEX_NAV_PARAMETER_KEY
 import proton.android.pass.features.itemcreate.totp.SECTION_INDEX_NAV_PARAMETER_KEY
 import proton.android.pass.features.itemcreate.totp.TOTP_NAV_PARAMETER_KEY
+import proton.android.pass.features.itemcreate.totp.createTotpGraph
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
@@ -126,6 +127,26 @@ fun NavGraphBuilder.updateCustomItemGraph(onNavigate: (BaseCustomItemNavigation)
                     onNavigate(BaseCustomItemNavigation.RemoveSection)
             }
         }
+        createTotpGraph(
+            prefix = CustomFieldPrefix.UpdateCustomItem,
+            onSuccess = { totp, sectionIndex, index ->
+                val values = buildMap<String, Any> {
+                    put(TOTP_NAV_PARAMETER_KEY, totp)
+                    sectionIndex?.let { put(SECTION_INDEX_NAV_PARAMETER_KEY, it) }
+                    index?.let { put(INDEX_NAV_PARAMETER_KEY, it) }
+                }
+                onNavigate(BaseCustomItemNavigation.TotpSuccess(values))
+            },
+            onCloseTotp = { onNavigate(BaseCustomItemNavigation.TotpCancel) },
+            onOpenImagePicker = { sectionIndex, index ->
+                onNavigate(
+                    BaseCustomItemNavigation.OpenImagePicker(
+                        sectionIndex = sectionIndex.toOption(),
+                        index = index ?: -1
+                    )
+                )
+            }
+        )
     }
 }
 

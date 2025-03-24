@@ -28,12 +28,14 @@ import proton.android.pass.features.auth.authGraph
 import proton.android.pass.features.itemcreate.alias.CreateAliasBottomSheet
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.AddCustomFieldBottomSheetNavItem
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldOptionsBottomSheetNavItem
+import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
 import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameDialogNavItem
 import proton.android.pass.features.itemcreate.dialogs.customfield.EditCustomFieldNameDialogNavItem
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation
 import proton.android.pass.features.itemcreate.login.CreateLoginNavItem
 import proton.android.pass.features.itemcreate.login.CreateLoginNavigation
+import proton.android.pass.features.itemcreate.login.EditLoginNavItem
 import proton.android.pass.features.itemcreate.login.InitialCreateLoginUiState
 import proton.android.pass.features.itemcreate.login.createUpdateLoginGraph
 import proton.android.pass.features.itemcreate.totp.CameraTotpNavItem
@@ -87,6 +89,12 @@ fun NavGraphBuilder.autosaveActivityGraph(
         showCreateAliasButton = false,
         canUseAttachments = false,
         onNavigate = {
+            val backDestination = when {
+                appNavigator.hasDestinationInStack(CreateLoginNavItem) -> CreateLoginNavItem
+                appNavigator.hasDestinationInStack(EditLoginNavItem) -> EditLoginNavItem
+                else -> null
+            }
+            val prefix = CustomFieldPrefix.fromLogin(backDestination)
             when (it) {
                 BaseLoginNavigation.CloseScreen -> onNavigate(AutosaveNavigation.Cancel)
                 BaseLoginNavigation.DismissBottomsheet -> dismissBottomSheet {}
@@ -122,8 +130,8 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 }
 
                 is BaseLoginNavigation.ScanTotp -> appNavigator.navigate(
-                    destination = CameraTotpNavItem,
-                    route = CameraTotpNavItem.createNavRoute(None, it.index)
+                    destination = CameraTotpNavItem(prefix),
+                    route = CameraTotpNavItem(prefix).createNavRoute(None, it.index)
                 )
 
                 BaseLoginNavigation.Upgrade -> onNavigate(AutosaveNavigation.Upgrade)
@@ -174,8 +182,8 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 BaseLoginNavigation.DeleteAlias -> {}
                 is BaseLoginNavigation.EditAlias -> {}
                 is BaseLoginNavigation.OpenImagePicker -> appNavigator.navigate(
-                    destination = PhotoPickerTotpNavItem,
-                    route = PhotoPickerTotpNavItem.createNavRoute(None, it.index),
+                    destination = PhotoPickerTotpNavItem(prefix),
+                    route = PhotoPickerTotpNavItem(prefix).createNavRoute(None, it.index),
                     backDestination = CreateLoginNavItem
                 )
 

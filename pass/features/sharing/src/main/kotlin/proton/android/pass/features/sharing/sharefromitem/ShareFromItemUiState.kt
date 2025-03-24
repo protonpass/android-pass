@@ -50,7 +50,7 @@ internal data class ShareFromItemUiState(
     private val isItemSharingAvailable: Boolean,
     private val itemOption: Option<Item>,
     private val shareOption: Option<Share>,
-    private val organizationSharingPolicyOption: Option<OrganizationSharingPolicy>
+    private val organizationSharingPolicy: OrganizationSharingPolicy
 ) {
 
     private val isSharedItem: Boolean = when (itemOption) {
@@ -63,15 +63,9 @@ internal data class ShareFromItemUiState(
         is Some -> shareOption.value.shared
     }
 
-    private val isItemSharingAllowedByOrganization = when (organizationSharingPolicyOption) {
-        None -> true
-        is Some -> organizationSharingPolicyOption.value.canShareItems
-    }
+    private val isItemSharingAllowedByOrganization = organizationSharingPolicy.canShareItems
 
-    private val isSecureLinkSharingAllowedByOrganization = when (organizationSharingPolicyOption) {
-        None -> true
-        is Some -> organizationSharingPolicyOption.value.canShareSecureLinks
-    }
+    private val isSecureLinkSharingAllowedByOrganization = organizationSharingPolicy.canShareSecureLinks
 
     internal val isSingleSharingAvailable: Boolean = when (itemOption) {
         None -> false
@@ -131,7 +125,7 @@ internal data class ShareFromItemUiState(
             isNewCryptoEnabled = false,
             itemOption = None,
             shareOption = None,
-            organizationSharingPolicyOption = None
+            organizationSharingPolicy = OrganizationSharingPolicy.Default
         )
 
     }

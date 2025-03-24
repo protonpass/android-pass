@@ -38,8 +38,8 @@ data class OrganizationSharingPolicy(
     companion object {
 
         val Default = OrganizationSharingPolicy(
-            itemShareMode = OrganizationItemShareMode.Enabled,
-            secureLinkMode = OrganizationSecureLinkMode.Enabled
+            itemShareMode = OrganizationItemShareMode.Disabled,
+            secureLinkMode = OrganizationSecureLinkMode.Disabled
         )
 
     }

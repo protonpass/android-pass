@@ -269,8 +269,23 @@ object Text {
         color: Color = ProtonTheme.colors.textWeak,
         textAlign: TextAlign = TextAlign.Start
     ) {
+        Body3Weak(
+            annotatedText = text.asAnnotatedString(),
+            modifier = modifier,
+            color = color,
+            textAlign = textAlign
+        )
+    }
+
+    @Composable
+    fun Body3Weak(
+        annotatedText: AnnotatedString,
+        modifier: Modifier = Modifier,
+        color: Color = ProtonTheme.colors.textWeak,
+        textAlign: TextAlign = TextAlign.Start
+    ) {
         Text(
-            text = text,
+            text = annotatedText,
             style = PassTheme.typography.body3Weak().copy(color = color),
             modifier = modifier,
             textAlign = textAlign

@@ -40,33 +40,52 @@ internal fun SecurityCenterBreachDetailBSContent(
     modifier: Modifier = Modifier,
     state: SecurityCenterBreachDetailState,
     onOpenUrl: (String) -> Unit
-) {
+) = with(state) {
     Column(
         modifier = modifier
             .fillMaxWidth()
             .background(color = PassTheme.colors.backgroundNorm)
-            .bottomSheet(Spacing.medium)
+            .bottomSheet(horizontalPadding = Spacing.medium)
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.mediumLarge)
     ) {
-        if (state.isLoading) {
+        if (isLoading) {
             CircularProgressIndicator(
                 modifier = Modifier
                     .size(48.dp)
                     .align(Alignment.CenterHorizontally)
             )
         } else {
-            state.breachEmail?.let { breachEmail ->
-                BreachDetailHeader(breachEmail = breachEmail)
-                ExposedData(breachEmail = breachEmail)
-                Details(breachEmail = breachEmail)
-                RecommendedActions(
-                    breachEmail = breachEmail,
+            breachEmail?.let { breachEmail ->
+                BreachDetailHeader(
+                    isResolved = breachEmail.isResolved,
+                    name = breachEmail.name,
+                    publishedAt = breachEmail.publishedAt
+                )
+
+                if (breachEmail.exposedData.isNotEmpty()) {
+                    ExposedData(exposedDataList = breachEmail.exposedData)
+                }
+
+                breachEmail.copy(passwordLastChars = "12345678")
+                    .passwordLastChars
+                    ?.takeIf { it.isNotBlank() }
+                    ?.let { passwordLastChars ->
+                        Details(passwordLastChars = passwordLastChars)
+                    }
+
+                if (breachEmail.actions.isNotEmpty()) {
+                    RecommendedActions(
+                        breachActions = breachEmail.actions,
+                        onOpenUrl = onOpenUrl
+                    )
+                }
+
+                Footer(
+                    name = breachEmail.name,
                     onOpenUrl = onOpenUrl
                 )
-                Footer(name = breachEmail.name, onOpenUrl = onOpenUrl)
             }
         }
     }
 }
-

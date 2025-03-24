@@ -22,6 +22,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.files.api.CheckIfAttachmentExistsLocally
 import proton.android.pass.files.api.DirectoryCleaner
 import proton.android.pass.files.api.FileUriGenerator
 import javax.inject.Singleton
@@ -35,4 +36,9 @@ abstract class FilesModule {
 
     @[Binds Singleton]
     abstract fun bindDirectoryCleaner(impl: DirectoryCleanerImpl): DirectoryCleaner
+
+    @[Binds Singleton]
+    abstract fun bindCheckIfAttachmentExistsLocally(
+        impl: CheckIfAttachmentExistsLocallyImpl
+    ): CheckIfAttachmentExistsLocally
 }

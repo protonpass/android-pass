@@ -36,6 +36,7 @@ dependencies {
     implementation(projects.pass.data.api)
     implementation(projects.pass.domain)
 
+    implementation(libs.core.accountManager.domain)
     implementation(libs.core.utilKotlin)
     implementation(libs.kotlinx.coroutines.core)
 

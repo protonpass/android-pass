@@ -60,7 +60,6 @@ fun AttachmentList(
                 isLoading = attachmentsState.loadingAttachments.contains(attachment.id),
                 isEnabled = attachmentsState.isEnabled,
                 isError = false,
-                hasOptions = true,
                 onOptionsClick = {
                     onEvent(
                         OnAttachmentEvent(
@@ -90,7 +89,6 @@ fun AttachmentList(
                 ),
                 filename = metadata.name,
                 attachmentType = metadata.attachmentType,
-                hasOptions = true,
                 size = metadata.size,
                 createTime = metadata.createTime,
                 isLoading = attachmentsState.loadingDraftAttachments.contains(metadata.uri),

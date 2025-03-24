@@ -48,6 +48,7 @@ import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareType
 import proton.android.pass.features.itemdetail.ItemDetailNavigation
+import proton.android.pass.features.itemdetail.ItemDetailNavigation.OpenAttachmentOptions
 import proton.android.pass.features.itemdetail.ItemDetailTopBar
 import proton.android.pass.features.itemdetail.common.ItemDetailEvent
 import proton.android.pass.features.itemdetail.common.onEditClick
@@ -239,7 +240,13 @@ fun NoteDetail(
                                         attachment = it.attachment
                                     )
 
-                                is AttachmentContentEvent.OnAttachmentOptions,
+                                is AttachmentContentEvent.OnAttachmentOptions -> onNavigate(
+                                    OpenAttachmentOptions(
+                                        shareId = it.shareId,
+                                        itemId = it.itemId,
+                                        attachmentId = it.attachmentId
+                                    )
+                                )
                                 AttachmentContentEvent.OnAddAttachment,
                                 AttachmentContentEvent.OnDeleteAllAttachments,
                                 AttachmentContentEvent.UpsellAttachments,

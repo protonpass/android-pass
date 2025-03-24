@@ -24,6 +24,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -62,5 +63,13 @@ class AttachmentOptionsOnDetailViewModel @Inject constructor(
 
     fun onConsumeEvent(event: AttachmentOptionsOnDetailEvent) {
         eventFlow.compareAndSet(event, AttachmentOptionsOnDetailEvent.Idle)
+    }
+
+    fun download() {
+        eventFlow.update { AttachmentOptionsOnDetailEvent.Close }
+    }
+
+    fun share() {
+        eventFlow.update { AttachmentOptionsOnDetailEvent.Close }
     }
 }

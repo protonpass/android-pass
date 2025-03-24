@@ -77,7 +77,6 @@ import proton.android.pass.features.itemcreate.identity.navigation.createIdentit
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation
 import proton.android.pass.features.itemcreate.login.CreateLoginNavItem
 import proton.android.pass.features.itemcreate.login.CreateLoginNavigation
-import proton.android.pass.features.itemcreate.login.EditLoginNavItem
 import proton.android.pass.features.itemcreate.login.InitialCreateLoginUiState
 import proton.android.pass.features.itemcreate.login.bottomsheet.aliasoptions.AliasOptionsBottomSheet
 import proton.android.pass.features.itemcreate.login.bottomsheet.aliasoptions.CLEAR_ALIAS_NAV_PARAMETER_KEY
@@ -235,12 +234,6 @@ fun NavGraphBuilder.autofillActivityGraph(
         showCreateAliasButton = true,
         canUseAttachments = false,
         onNavigate = {
-            val backDestination = when {
-                appNavigator.hasDestinationInStack(CreateLoginNavItem) -> CreateLoginNavItem
-                appNavigator.hasDestinationInStack(EditLoginNavItem) -> EditLoginNavItem
-                else -> null
-            }
-            val prefix = CustomFieldPrefix.fromLogin(backDestination)
             when (it) {
                 BaseLoginNavigation.CloseScreen -> appNavigator.navigateBack()
                 BaseLoginNavigation.DismissBottomsheet -> dismissBottomSheet {}
@@ -279,8 +272,9 @@ fun NavGraphBuilder.autofillActivityGraph(
                 }
 
                 is BaseLoginNavigation.ScanTotp -> appNavigator.navigate(
-                    destination = CameraTotpNavItem(prefix),
-                    route = CameraTotpNavItem(prefix).createNavRoute(None, it.index)
+                    destination = CameraTotpNavItem(CustomFieldPrefix.CreateLogin),
+                    route = CameraTotpNavItem(CustomFieldPrefix.CreateLogin)
+                        .createNavRoute(None, it.index)
                 )
 
                 BaseLoginNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
@@ -348,8 +342,9 @@ fun NavGraphBuilder.autofillActivityGraph(
                 // Updates cannot happen
                 is BaseLoginNavigation.OnUpdateLoginEvent -> {}
                 is BaseLoginNavigation.OpenImagePicker -> appNavigator.navigate(
-                    destination = PhotoPickerTotpNavItem(prefix),
-                    route = PhotoPickerTotpNavItem(prefix).createNavRoute(None, it.index),
+                    destination = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateLogin),
+                    route = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateLogin)
+                        .createNavRoute(None, it.index),
                     backDestination = CreateLoginNavItem
                 )
 

@@ -26,11 +26,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -40,6 +38,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.composecomponents.impl.text.Text
 
 @Composable
 internal fun RecommendedAction(
@@ -52,27 +51,29 @@ internal fun RecommendedAction(
     Row(
         modifier = modifier
             .roundedContainer(
-                backgroundColor = Color.Transparent,
-                borderColor = PassTheme.colors.inputBorderNorm
+                backgroundColor = PassTheme.colors.inputBackgroundNorm,
+                borderColor = PassTheme.colors.inputBackgroundNorm
             )
             .applyIf(
                 condition = url != null,
                 ifTrue = { clickable(onClick = onClick) }
             )
             .fillMaxWidth()
-            .padding(Spacing.medium),
+            .padding(all = Spacing.medium),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.small)
+        horizontalArrangement = Arrangement.spacedBy(space = Spacing.small)
     ) {
         Icon(
             painter = painterResource(icon),
             contentDescription = null,
-            tint = PassTheme.colors.loginInteractionNormMajor2
+            tint = PassTheme.colors.interactionNormMajor2
         )
-        Text(
+
+        Text.Body2Regular(
             modifier = Modifier.weight(1f),
             text = text
         )
+
         if (url != null) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_proton_arrow_out_square),
@@ -82,11 +83,12 @@ internal fun RecommendedAction(
     }
 }
 
-
-@Preview
-@Composable
-fun RecommendedActionPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
+@[Preview Composable]
+internal fun RecommendedActionPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
     val url = if (input.second) "test.url" else null
+
     PassTheme(isDark = input.first) {
         Surface {
             RecommendedAction(

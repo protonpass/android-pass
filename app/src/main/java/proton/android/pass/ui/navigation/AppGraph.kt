@@ -39,6 +39,7 @@ import proton.android.pass.features.alias.contacts.onboarding.navigation.OnBoard
 import proton.android.pass.features.alias.contacts.options.navigation.OptionsAliasContactNavItem
 import proton.android.pass.features.attachments.AttachmentsNavigation
 import proton.android.pass.features.attachments.addattachment.navigation.AddAttachmentNavItem
+import proton.android.pass.features.attachments.attachmentoptionsondetail.navigation.AttachmentOptionsOnDetailNavItem
 import proton.android.pass.features.attachments.attachmentoptionsonedit.navigation.AttachmentOptionsOnEditNavItem
 import proton.android.pass.features.attachments.attachmentsGraph
 import proton.android.pass.features.attachments.camera.navigation.CameraNavItem
@@ -1747,7 +1748,14 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
-                is ItemDetailNavigation.OpenAttachmentOptions -> TODO()
+                is ItemDetailNavigation.OpenAttachmentOptions -> appNavigator.navigate(
+                    destination = AttachmentOptionsOnDetailNavItem,
+                    route = AttachmentOptionsOnDetailNavItem.createNavRoute(
+                        shareId = it.shareId,
+                        itemId = it.itemId,
+                        attachmentId = it.attachmentId
+                    )
+                )
             }
         }
     )
@@ -1897,7 +1905,14 @@ fun NavGraphBuilder.appGraph(
                     route = QRViewerNavItem.createNavRoute(itemDetailsNavDestination.rawSVG)
                 )
 
-                is ItemDetailsNavDestination.OpenAttachmentOptions -> TODO()
+                is ItemDetailsNavDestination.OpenAttachmentOptions -> appNavigator.navigate(
+                    destination = AttachmentOptionsOnDetailNavItem,
+                    route = AttachmentOptionsOnDetailNavItem.createNavRoute(
+                        shareId = itemDetailsNavDestination.shareId,
+                        itemId = itemDetailsNavDestination.itemId,
+                        attachmentId = itemDetailsNavDestination.attachmentId
+                    )
+                )
             }
         }
     )

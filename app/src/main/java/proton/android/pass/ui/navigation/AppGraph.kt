@@ -1746,6 +1746,8 @@ fun NavGraphBuilder.appGraph(
                         )
                     )
                 }
+
+                is ItemDetailNavigation.OpenAttachmentOptions -> TODO()
             }
         }
     )
@@ -1894,6 +1896,8 @@ fun NavGraphBuilder.appGraph(
                     destination = QRViewerNavItem,
                     route = QRViewerNavItem.createNavRoute(itemDetailsNavDestination.rawSVG)
                 )
+
+                is ItemDetailsNavDestination.OpenAttachmentOptions -> TODO()
             }
         }
     )

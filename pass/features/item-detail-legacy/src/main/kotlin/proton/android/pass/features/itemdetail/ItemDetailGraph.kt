@@ -29,6 +29,7 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.features.itemdetail.common.CannotPerformActionDialog
 import proton.android.pass.features.itemdetail.common.CannotPerformActionDialogType
 import proton.android.pass.features.itemdetail.login.passkey.bottomsheet.navigation.passkeyDetailBottomSheetGraph
@@ -97,6 +98,11 @@ sealed interface ItemDetailNavigation {
     @JvmInline
     value class LeaveItemShare(val shareId: ShareId) : ItemDetailNavigation
 
+    data class OpenAttachmentOptions(
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val attachmentId: AttachmentId
+    ) : ItemDetailNavigation
 }
 
 enum class ItemDetailCannotPerformActionType {

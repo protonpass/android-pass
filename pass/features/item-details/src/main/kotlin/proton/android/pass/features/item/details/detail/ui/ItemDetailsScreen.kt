@@ -31,6 +31,7 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.features.item.details.detail.presentation.ItemDetailsEvent
 import proton.android.pass.features.item.details.detail.presentation.ItemDetailsViewModel
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
+import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.OpenAttachmentOptions
 
 @Composable
 fun ItemDetailsScreen(
@@ -129,13 +130,19 @@ fun ItemDetailsScreen(
                 }.also(onNavigated)
 
                 is ItemDetailsUiEvent.OnAttachmentEvent ->
-                    when (uiEvent.attachmentContentEvent) {
+                    when (val event = uiEvent.attachmentContentEvent) {
                         is AttachmentContentEvent.OnAttachmentOpen ->
                             viewModel.onAttachmentOpen(
                                 context = context.toClassHolder(),
-                                attachment = uiEvent.attachmentContentEvent.attachment
+                                attachment = event.attachment
                             )
-                        is AttachmentContentEvent.OnAttachmentOptions,
+                        is AttachmentContentEvent.OnAttachmentOptions -> onNavigated(
+                            OpenAttachmentOptions(
+                                shareId = event.shareId,
+                                itemId = event.itemId,
+                                attachmentId = event.attachmentId
+                            )
+                        )
                         AttachmentContentEvent.OnAddAttachment,
                         AttachmentContentEvent.UpsellAttachments,
                         AttachmentContentEvent.OnDeleteAllAttachments,

@@ -64,7 +64,6 @@ fun AttachmentRow(
     isLoading: Boolean,
     isEnabled: Boolean,
     isError: Boolean,
-    hasOptions: Boolean,
     onOptionsClick: () -> Unit,
     onRetryClick: () -> Unit,
     onAttachmentOpen: () -> Unit
@@ -129,7 +128,7 @@ fun AttachmentRow(
                     .size(24.dp)
             )
 
-            hasOptions && isEnabled -> IconButton(onOptionsClick) {
+            isEnabled -> IconButton(onOptionsClick) {
                 Icon.Default(
                     id = CoreR.drawable.ic_proton_three_dots_vertical,
                     tint = PassTheme.colors.textWeak
@@ -150,7 +149,6 @@ fun AttachmentRowPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) 
                 attachmentType = AttachmentType.RasterImage,
                 size = 1_572_864L,
                 createTime = Instant.fromEpochSeconds(seconds),
-                hasOptions = true,
                 isLoading = false,
                 isEnabled = true,
                 isError = input.second,

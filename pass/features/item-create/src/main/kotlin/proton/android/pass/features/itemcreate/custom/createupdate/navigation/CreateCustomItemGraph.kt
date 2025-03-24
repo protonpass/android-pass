@@ -38,8 +38,8 @@ import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
 import proton.android.pass.features.itemcreate.common.customsection.ExtraSectionNavigation
 import proton.android.pass.features.itemcreate.common.customsection.extraSectionGraph
 import proton.android.pass.features.itemcreate.custom.createupdate.ui.CreateCustomItemScreen
-import proton.android.pass.features.itemcreate.custom.selectwifisecuritytype.navigation.WIFI_SECURITY_TYPE_PARAMETER_KEY
 import proton.android.pass.features.itemcreate.custom.selectwifisecuritytype.navigation.SelectWifiSecurityTypeNavItem
+import proton.android.pass.features.itemcreate.custom.selectwifisecuritytype.navigation.WIFI_SECURITY_TYPE_PARAMETER_KEY
 import proton.android.pass.features.itemcreate.custom.selectwifisecuritytype.ui.SelectWifiSecurityTypeBottomsheet
 import proton.android.pass.features.itemcreate.custom.shared.TemplateType
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameNavigation
@@ -161,6 +161,7 @@ fun NavGraphBuilder.createCustomItemGraph(onNavigate: (BaseCustomItemNavigation)
             }
         }
         createTotpGraph(
+            prefix = CustomFieldPrefix.CreateCustomItem,
             onSuccess = { totp, sectionIndex, index ->
                 val values = buildMap<String, Any> {
                     put(TOTP_NAV_PARAMETER_KEY, totp)

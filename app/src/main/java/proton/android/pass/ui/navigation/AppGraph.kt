@@ -1405,7 +1405,6 @@ fun NavGraphBuilder.appGraph(
             appNavigator.hasDestinationInStack(UpdateCustomItemNavItem) -> UpdateCustomItemNavItem
             else -> null
         }
-        val prefix = CustomFieldPrefix.fromCustomItem(backDestination)
         when (it) {
             BaseCustomItemNavigation.CloseScreen -> appNavigator.navigateBack()
             BaseCustomItemNavigation.DismissBottomsheet -> dismissBottomSheet {}
@@ -1522,16 +1521,22 @@ fun NavGraphBuilder.appGraph(
                 backDestination = HomeNavItem
             )
 
-            is BaseCustomItemNavigation.OpenTOTPScanner -> appNavigator.navigate(
-                destination = CameraTotpNavItem(prefix),
-                route = CameraTotpNavItem(prefix).createNavRoute(it.sectionIndex, it.index.some())
-            )
+            is BaseCustomItemNavigation.OpenTOTPScanner -> {
+                val prefix = CustomFieldPrefix.fromCustomItem(backDestination)
+                appNavigator.navigate(
+                    destination = CameraTotpNavItem(prefix),
+                    route = CameraTotpNavItem(prefix).createNavRoute(it.sectionIndex, it.index.some())
+                )
+            }
 
-            is BaseCustomItemNavigation.OpenImagePicker -> appNavigator.navigate(
-                destination = PhotoPickerTotpNavItem(prefix),
-                route = PhotoPickerTotpNavItem(prefix).createNavRoute(it.sectionIndex, it.index.some()),
-                backDestination = backDestination
-            )
+            is BaseCustomItemNavigation.OpenImagePicker -> {
+                val prefix = CustomFieldPrefix.fromCustomItem(backDestination)
+                appNavigator.navigate(
+                    destination = PhotoPickerTotpNavItem(prefix),
+                    route = PhotoPickerTotpNavItem(prefix).createNavRoute(it.sectionIndex, it.index.some()),
+                    backDestination = backDestination
+                )
+            }
 
             BaseCustomItemNavigation.TotpCancel -> appNavigator.navigateBack()
             is BaseCustomItemNavigation.TotpSuccess ->

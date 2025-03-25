@@ -20,11 +20,15 @@ package proton.android.pass.features.attachments.attachmentoptionsondetail.prese
 
 data class AttachmentOptionsOnDetailState(
     val canDownload: Boolean,
+    val isDownloading: Boolean,
+    val isSharing: Boolean,
     val event: AttachmentOptionsOnDetailEvent
 ) {
     companion object {
         val Initial = AttachmentOptionsOnDetailState(
             canDownload = false,
+            isDownloading = false,
+            isSharing = false,
             event = AttachmentOptionsOnDetailEvent.Idle
         )
     }

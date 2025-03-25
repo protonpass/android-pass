@@ -29,7 +29,7 @@ import javax.inject.Singleton
 
 @Singleton
 class FakeFileHandler @Inject constructor() : FileHandler {
-    override fun shareFile(
+    override suspend fun shareFile(
         contextHolder: ClassHolder<Context>,
         fileTitle: String,
         uri: URI,

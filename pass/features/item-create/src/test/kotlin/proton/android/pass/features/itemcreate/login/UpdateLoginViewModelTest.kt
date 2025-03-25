@@ -28,6 +28,7 @@ import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.common.api.some
+import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
 import proton.android.pass.commonrust.fakes.TestEmailValidator
 import proton.android.pass.commonrust.fakes.passwords.strengths.TestPasswordStrengthCalculator
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
@@ -108,7 +109,7 @@ class UpdateLoginViewModelTest {
             disableTooltip = FakeDisableTooltip(),
             userPreferencesRepository = TestPreferenceRepository(),
             workerLauncher = FakeWorkerLauncher(),
-            attachmentsHandler = proton.android.pass.features.itemcreate.attachments.FakeAttachmentHandler(),
+            attachmentsHandler = FakeAttachmentHandler(),
             linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
             renameAttachments = FakeRenameAttachments(),
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),

@@ -74,7 +74,7 @@ class FileHandlerImpl @Inject constructor(
     ): Uri {
         val context = contextHolder.get().value()
             ?: throw IllegalStateException("Could not get context")
-        val cacheFolder = File(context.cacheDir, CacheDirectories.Temporary.value)
+        val cacheFolder = File(context.cacheDir, CacheDirectories.Share.value)
         if (!cacheFolder.exists()) cacheFolder.mkdirs()
         val fileName = fileTitle.takeIfNotBlank() ?: "share_file"
         val renamedFileName = if (!fileName.hasExtension()) {

@@ -24,5 +24,6 @@ interface DirectoryCleaner {
 
 sealed interface DirectoryType {
     data object CameraTemp : DirectoryType
+    data object ShareTemp : DirectoryType
     data object OrphanedAttachments : DirectoryType
 }

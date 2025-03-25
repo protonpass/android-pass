@@ -18,12 +18,15 @@
 
 package proton.android.pass.features.attachments.attachmentoptionsondetail.ui
 
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -39,13 +42,15 @@ import me.proton.core.presentation.R as CoreR
 fun AttachmentOptionsOnDetailContent(
     modifier: Modifier = Modifier,
     canDownload: Boolean,
+    isDownloading: Boolean,
+    isSharing: Boolean,
     onEvent: (AttachmentOptionsOnDetailUIEvent) -> Unit
 ) {
     val list = buildList {
         if (canDownload) {
-            add(downloadFile { onEvent(AttachmentOptionsOnDetailUIEvent.Download) })
+            add(downloadFile(isDownloading) { onEvent(AttachmentOptionsOnDetailUIEvent.Download) })
         }
-        add(shareFile { onEvent(AttachmentOptionsOnDetailUIEvent.Share) })
+        add(shareFile(isSharing) { onEvent(AttachmentOptionsOnDetailUIEvent.Share) })
     }.withDividers().toPersistentList()
     BottomSheetItemList(
         modifier = modifier,
@@ -53,7 +58,7 @@ fun AttachmentOptionsOnDetailContent(
     )
 }
 
-private fun downloadFile(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+private fun downloadFile(isDownloading: Boolean, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
         get() = {
             BottomSheetItemTitle(
@@ -68,14 +73,15 @@ private fun downloadFile(onClick: () -> Unit): BottomSheetItem = object : Bottom
                 iconId = CoreR.drawable.ic_proton_arrow_down_to_square
             )
         }
-    override val endIcon: (@Composable () -> Unit)?
-        get() = null
+    override val endIcon: (@Composable () -> Unit)? = if (isDownloading) {
+        { CircularProgressIndicator(modifier = Modifier.size(20.dp)) }
+    } else null
     override val onClick: () -> Unit
         get() = onClick
     override val isDivider = false
 }
 
-private fun shareFile(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+private fun shareFile(isSharing: Boolean, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
         get() = {
             BottomSheetItemTitle(
@@ -90,8 +96,9 @@ private fun shareFile(onClick: () -> Unit): BottomSheetItem = object : BottomShe
                 iconId = CoreR.drawable.abc_ic_menu_share_mtrl_alpha
             )
         }
-    override val endIcon: (@Composable () -> Unit)?
-        get() = null
+    override val endIcon: (@Composable () -> Unit)? = if (isSharing) {
+        { CircularProgressIndicator(modifier = Modifier.size(20.dp)) }
+    } else null
     override val onClick: () -> Unit
         get() = onClick
     override val isDivider = false
@@ -104,6 +111,8 @@ fun AttachmentOptionsContentPreview(@PreviewParameter(ThemePreviewProvider::clas
         Surface {
             AttachmentOptionsOnDetailContent(
                 canDownload = true,
+                isDownloading = false,
+                isSharing = false,
                 onEvent = {}
             )
         }

@@ -149,7 +149,7 @@ internal fun HomeEmptyList(
                     text = stringResource(R.string.home_empty_vault_create_custom_item),
                     backgroundColor = PassPalette.SlateGray.copy(alpha = 0.3f),
                     textColor = ProtonTheme.colors.textNorm,
-                    icon = CoreR.drawable.ic_proton_pencil,
+                    icon = CoreR.drawable.ic_proton_wrench,
                     onClick = onCreateCustomItemClick
                 )
             }

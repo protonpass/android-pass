@@ -110,7 +110,7 @@ private fun ItemTypeButton(
             Note -> CoreR.drawable.ic_proton_file_lines
             CreditCard -> CoreR.drawable.ic_proton_credit_card
             Identity -> CoreR.drawable.ic_proton_card_identity
-            Custom -> CoreR.drawable.ic_proton_pencil
+            Custom -> CoreR.drawable.ic_proton_wrench
             LoginMFA -> CoreR.drawable.ic_proton_lock
             SharedWithMe -> CoreR.drawable.ic_proton_user_arrow_left
             SharedByMe -> CoreR.drawable.ic_proton_user_arrow_right

@@ -35,8 +35,8 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.PersistentAttachmentId
 import proton.android.pass.files.api.DirectoryCleaner
 import proton.android.pass.files.api.DirectoryType
+import proton.android.pass.files.api.FilesDirectories.Attachments
 import proton.android.pass.files.impl.CacheDirectories.Camera
-import proton.android.pass.files.impl.FilesDirectories.Attachments
 import proton.android.pass.log.api.PassLogger
 import java.io.File
 import javax.inject.Inject

@@ -120,6 +120,7 @@ import proton.android.pass.data.api.usecases.aliascontact.DeleteAliasContact
 import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContact
 import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
 import proton.android.pass.data.api.usecases.aliascontact.UpdateBlockedAliasContact
+import proton.android.pass.data.api.usecases.attachments.CheckIfAttachmentExistsLocally
 import proton.android.pass.data.api.usecases.attachments.ClearAttachments
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.GetAttachment
@@ -346,6 +347,7 @@ import proton.android.pass.data.impl.usecases.aliascontact.ObserveAliasContactsI
 import proton.android.pass.data.impl.usecases.aliascontact.UpdateBlockedAliasContactImpl
 import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLink
 import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLinkImpl
+import proton.android.pass.data.impl.usecases.attachments.CheckIfAttachmentExistsLocallyImpl
 import proton.android.pass.data.impl.usecases.attachments.ClearAttachmentsImpl
 import proton.android.pass.data.impl.usecases.attachments.DownloadAttachmentImpl
 import proton.android.pass.data.impl.usecases.attachments.GetAttachmentImpl
@@ -1196,4 +1198,8 @@ abstract class DataUseCaseModule {
         impl: ObserveOrganizationSharingPolicyImpl
     ): ObserveOrganizationSharingPolicy
 
+    @[Binds Singleton]
+    abstract fun bindCheckIfAttachmentExistsLocally(
+        impl: CheckIfAttachmentExistsLocallyImpl
+    ): CheckIfAttachmentExistsLocally
 }

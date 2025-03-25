@@ -39,21 +39,18 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import proton.android.pass.biometry.AuthOverrideState
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonui.api.ClassHolder
-import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedState
 import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashState
@@ -74,14 +71,12 @@ import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
-import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.ObserveDetailItemAttachments
 import proton.android.pass.data.api.usecases.capabilities.CanShareShare
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
-import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.features.itemdetail.DetailSnackbarMessages
 import proton.android.pass.features.itemdetail.DetailSnackbarMessages.AliasChangeStatusError
 import proton.android.pass.features.itemdetail.DetailSnackbarMessages.AliasCopiedToClipboard
@@ -91,7 +86,6 @@ import proton.android.pass.features.itemdetail.DetailSnackbarMessages.ItemNotMov
 import proton.android.pass.features.itemdetail.DetailSnackbarMessages.ItemNotRestored
 import proton.android.pass.features.itemdetail.DetailSnackbarMessages.ItemRestored
 import proton.android.pass.features.itemdetail.ItemDelete
-import proton.android.pass.features.itemdetail.R
 import proton.android.pass.features.itemdetail.common.AliasItemFeatures
 import proton.android.pass.features.itemdetail.common.ItemDetailEvent
 import proton.android.pass.features.itemdetail.common.ShareClickAction
@@ -121,10 +115,8 @@ class AliasDetailViewModel @Inject constructor(
     private val pinItem: PinItem,
     private val unpinItem: UnpinItem,
     private val changeAliasStatus: ChangeAliasStatus,
-    private val downloadAttachment: DownloadAttachment,
-    private val fileHandler: FileHandler,
+    private val attachmentsHandler: AttachmentsHandler,
     private val userPreferencesRepository: UserPreferencesRepository,
-    private val authOverrideState: AuthOverrideState,
     observeAliasContacts: ObserveAliasContacts,
     observeItemAttachments: ObserveDetailItemAttachments,
     canPerformPaidAction: CanPerformPaidAction,
@@ -153,8 +145,14 @@ class AliasDetailViewModel @Inject constructor(
         MutableStateFlow(IsPermanentlyDeletedState.NotDeleted)
     private val isRestoredFromTrashState: MutableStateFlow<IsRestoredFromTrashState> =
         MutableStateFlow(IsRestoredFromTrashState.NotRestored)
-    private val loadingAttachmentsState: MutableStateFlow<Set<AttachmentId>> =
-        MutableStateFlow(emptySet())
+    private val actionsFlow: Flow<Triple<IsSentToTrashState, IsPermanentlyDeletedState, IsRestoredFromTrashState>> =
+        combine(
+            isItemSentToTrashState,
+            isPermanentlyDeletedState,
+            isRestoredFromTrashState
+        ) { sent, deleted, restored ->
+            Triple(sent, deleted, restored)
+        }
     private val eventState: MutableStateFlow<ItemDetailEvent> =
         MutableStateFlow(ItemDetailEvent.Unknown)
 
@@ -222,35 +220,27 @@ class AliasDetailViewModel @Inject constructor(
         ::Pair
     )
 
-    private val loadingStates = combine(
-        allLoadingStates,
-        loadingAttachmentsState,
-        ::Pair
-    )
-
     internal val uiState: StateFlow<AliasDetailUiState> = combineN(
         aliasItemDetailsResultFlow,
         aliasDetailsAndContactsFlow,
-        loadingStates,
-        isItemSentToTrashState,
-        isPermanentlyDeletedState,
-        isRestoredFromTrashState,
+        allLoadingStates,
+        actionsFlow,
         shareActionFlow,
         oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult(),
         eventState,
         itemFeaturesFlow,
-        userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementContacts)
+        userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementContacts),
+        attachmentsHandler.attachmentState
     ) { itemLoadingResult,
         (aliasDetailsResult, aliasContactsResult),
-        (allLoadingStates, loadingAttachments),
-        isItemSentToTrash,
-        isPermanentlyDeleted,
-        isRestoredFromTrash,
+        allLoadingStates,
+        (isItemSentToTrash, isPermanentlyDeleted, isRestoredFromTrash),
         shareAction,
         itemActions,
         event,
         itemFeatures,
-        displayContactsBanner ->
+        displayContactsBanner,
+        attachmentState ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
                 if (!isPermanentlyDeleted.value()) {
@@ -288,12 +278,7 @@ class AliasDetailViewModel @Inject constructor(
                     itemActions = actions,
                     event = event,
                     itemFeatures = itemFeatures,
-                    attachmentsState = AttachmentsState(
-                        draftAttachmentsList = emptyList(), // no drafts in detail
-                        attachmentsList = attachments,
-                        loadingAttachments = loadingAttachments,
-                        needsUpgrade = None
-                    ),
+                    attachmentsState = attachmentState.copy(attachmentsList = attachments),
                     hasMoreThanOneVault = details.hasMoreThanOneVault,
                     displayContactsBanner = displayContactsBanner.value
                 )
@@ -428,24 +413,7 @@ class AliasDetailViewModel @Inject constructor(
 
     fun onAttachmentOpen(contextHolder: ClassHolder<Context>, attachment: Attachment) {
         viewModelScope.launch {
-            loadingAttachmentsState.update { it + attachment.id }
-            authOverrideState.setAuthOverride(true)
-            runCatching {
-                val uri = downloadAttachment(attachment)
-                fileHandler.openFile(
-                    contextHolder = contextHolder,
-                    uri = uri,
-                    mimeType = attachment.mimeType,
-                    chooserTitle = contextHolder.get().value()?.getString(R.string.open_with) ?: ""
-                )
-            }.onSuccess {
-                PassLogger.i(TAG, "Attachment opened: ${attachment.id}")
-            }.onFailure {
-                PassLogger.w(TAG, "Could not open attachment: ${attachment.id}")
-                PassLogger.w(TAG, it)
-                snackbarDispatcher(DetailSnackbarMessages.OpenAttachmentsError)
-            }
-            loadingAttachmentsState.update { it - attachment.id }
+            attachmentsHandler.openAttachment(contextHolder, attachment)
         }
     }
 

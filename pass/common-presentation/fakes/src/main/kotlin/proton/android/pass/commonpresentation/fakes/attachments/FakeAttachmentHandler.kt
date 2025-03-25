@@ -68,6 +68,14 @@ class FakeAttachmentHandler : AttachmentsHandler {
         // no-op
     }
 
+    override suspend fun loadAttachment(attachment: Attachment) {
+        // no-op
+    }
+
+    override suspend fun shareAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
+        // no-op
+    }
+
     override suspend fun uploadNewAttachment(fileMetadata: FileMetadata) {
         // no-op
     }

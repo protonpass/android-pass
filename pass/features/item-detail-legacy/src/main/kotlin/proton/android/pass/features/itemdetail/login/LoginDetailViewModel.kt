@@ -39,8 +39,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.network.domain.ApiException
-import proton.android.pass.biometry.AuthOverrideState
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
@@ -53,16 +51,15 @@ import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonrust.api.PasswordScore
 import proton.android.pass.commonrust.api.PasswordScorer
 import proton.android.pass.commonui.api.ClassHolder
-import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
-import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedState
 import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashState
@@ -83,7 +80,6 @@ import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
-import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.ObserveDetailItemAttachments
 import proton.android.pass.data.api.usecases.capabilities.CanShareShare
 import proton.android.pass.data.api.usecases.items.UpdateItemFlag
@@ -97,7 +93,6 @@ import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
-import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.features.itemdetail.DetailSnackbarMessages
 import proton.android.pass.features.itemdetail.DetailSnackbarMessages.FieldCopiedToClipboard
 import proton.android.pass.features.itemdetail.DetailSnackbarMessages.InitError
@@ -117,15 +112,12 @@ import proton.android.pass.features.itemdetail.ItemDetailScopeNavArgId
 import proton.android.pass.features.itemdetail.PassMonitorItemDetailFromMissing2FA
 import proton.android.pass.features.itemdetail.PassMonitorItemDetailFromReusedPassword
 import proton.android.pass.features.itemdetail.PassMonitorItemDetailFromWeakPassword
-import proton.android.pass.features.itemdetail.R
 import proton.android.pass.features.itemdetail.common.ItemDetailEvent
 import proton.android.pass.features.itemdetail.common.LoginItemFeatures
 import proton.android.pass.features.itemdetail.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.notifications.api.SnackbarMessage
-import proton.android.pass.notifications.api.SnackbarType
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.securitycenter.api.passwords.DuplicatedPasswordChecker
@@ -156,9 +148,7 @@ class LoginDetailViewModel @Inject constructor(
     private val pinItem: PinItem,
     private val unpinItem: UnpinItem,
     private val updateItemFlag: UpdateItemFlag,
-    private val downloadAttachment: DownloadAttachment,
-    private val fileHandler: FileHandler,
-    private val authOverrideState: AuthOverrideState,
+    private val attachmentsHandler: AttachmentsHandler,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     observeItemAttachments: ObserveDetailItemAttachments,
     canPerformPaidAction: CanPerformPaidAction,
@@ -214,13 +204,19 @@ class LoginDetailViewModel @Inject constructor(
         MutableStateFlow(IsPermanentlyDeletedState.NotDeleted)
     private val isRestoredFromTrashState: MutableStateFlow<IsRestoredFromTrashState> =
         MutableStateFlow(IsRestoredFromTrashState.NotRestored)
+    private val actionsFlow: Flow<Triple<IsSentToTrashState, IsPermanentlyDeletedState, IsRestoredFromTrashState>> =
+        combine(
+            isItemSentToTrashState,
+            isPermanentlyDeletedState,
+            isRestoredFromTrashState
+        ) { sent, deleted, restored ->
+            Triple(sent, deleted, restored)
+        }
     private val revealedFieldsState: MutableStateFlow<List<DetailFields>> =
         MutableStateFlow(emptyList())
     private val canPerformPaidActionFlow = canPerformPaidAction().asLoadingResult()
     private val customFieldsState: MutableStateFlow<List<CustomFieldUiContent>> =
         MutableStateFlow(emptyList())
-    private val loadingAttachmentsState: MutableStateFlow<Set<AttachmentId>> =
-        MutableStateFlow(emptySet())
     private val eventState: MutableStateFlow<ItemDetailEvent> =
         MutableStateFlow(ItemDetailEvent.Unknown)
 
@@ -418,35 +414,27 @@ class LoginDetailViewModel @Inject constructor(
         val attachments: List<Attachment>
     )
 
-    private val loadingStates = combine(
-        isLoadingState,
-        loadingAttachmentsState,
-        ::Pair
-    )
-
     internal val uiState: StateFlow<LoginDetailUiState> = combineN(
         revealedLoginItemInfoFlow,
         totpUiStateFlow,
-        loadingStates,
-        isItemSentToTrashState,
-        isPermanentlyDeletedState,
-        isRestoredFromTrashState,
+        isLoadingState,
+        actionsFlow,
         canPerformPaidActionFlow,
         customFieldsState,
         oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult(),
         eventState,
-        itemFeaturesFlow
+        itemFeaturesFlow,
+        attachmentsHandler.attachmentState
     ) { itemDetails,
         totpUiState,
-        (isLoading, loadingAttachments),
-        isItemSentToTrash,
-        isPermanentlyDeleted,
-        isRestoredFromTrash,
+        isLoading,
+        (isItemSentToTrash, isPermanentlyDeleted, isRestoredFromTrash),
         canPerformPaidActionResult,
         customFields,
         itemActions,
         event,
-        itemFeatures ->
+        itemFeatures,
+        attachmentState ->
         when (itemDetails) {
             is LoadingResult.Error -> {
                 when {
@@ -495,12 +483,7 @@ class LoginDetailViewModel @Inject constructor(
                     event = event,
                     itemFeatures = itemFeatures,
                     monitorState = details.securityState,
-                    attachmentsState = AttachmentsState(
-                        draftAttachmentsList = emptyList(), // no drafts in detail
-                        attachmentsList = details.attachments,
-                        loadingAttachments = loadingAttachments,
-                        needsUpgrade = None
-                    ),
+                    attachmentsState = attachmentState.copy(attachmentsList = details.attachments),
                     hasMoreThanOneVault = details.hasMoreThanOneVault
                 )
             }
@@ -662,6 +645,7 @@ class LoginDetailViewModel @Inject constructor(
                 val totpCode = observeTotpFromUri(totpUri).firstOrNull()?.code ?: ""
                 totpCode to false
             }
+
             is CustomFieldContent.Date -> throw IllegalStateException("Date field not supported")
         }
 
@@ -900,29 +884,7 @@ class LoginDetailViewModel @Inject constructor(
 
     fun onAttachmentOpen(contextHolder: ClassHolder<Context>, attachment: Attachment) {
         viewModelScope.launch {
-            loadingAttachmentsState.update { it + attachment.id }
-            authOverrideState.setAuthOverride(true)
-            runCatching {
-                val uri = downloadAttachment(attachment)
-                fileHandler.openFile(
-                    contextHolder = contextHolder,
-                    uri = uri,
-                    mimeType = attachment.mimeType,
-                    chooserTitle = contextHolder.get().value()?.getString(R.string.open_with) ?: ""
-                )
-            }.onSuccess {
-                PassLogger.i(TAG, "Attachment opened: ${attachment.id}")
-            }.onFailure {
-                PassLogger.w(TAG, "Could not open attachment: ${attachment.id}")
-                PassLogger.w(TAG, it)
-                val message = if (it is ApiException && !it.message.isNullOrBlank()) {
-                    SnackbarMessage.SimpleMessage(it.message.orEmpty(), SnackbarType.ERROR)
-                } else {
-                    DetailSnackbarMessages.OpenAttachmentsError
-                }
-                snackbarDispatcher(message)
-            }
-            loadingAttachmentsState.update { it - attachment.id }
+            attachmentsHandler.openAttachment(contextHolder, attachment)
         }
     }
 

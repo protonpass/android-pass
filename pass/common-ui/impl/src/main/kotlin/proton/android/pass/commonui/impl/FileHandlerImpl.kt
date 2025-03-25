@@ -23,6 +23,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.FileHandler
@@ -53,7 +54,7 @@ class FileHandlerImpl @Inject constructor(
         mimeType: String,
         chooserTitle: String
     ) {
-        val contentUri = Uri.parse(uri.toString())
+        val contentUri = uri.toString().toUri()
         val intent = Intent(Intent.ACTION_VIEW)
             .setDataAndType(contentUri, mimeType)
         performFileAction(contextHolder, intent, chooserTitle)
@@ -61,12 +62,13 @@ class FileHandlerImpl @Inject constructor(
 
     override fun shareFile(
         contextHolder: ClassHolder<Context>,
-        file: File,
+        uri: URI,
+        mimeType: String,
         chooserTitle: String
     ) {
-        val contentUri = createContentUri(contextHolder, file)
+        val contentUri = uri.toString().toUri()
         val intent = Intent(Intent.ACTION_SEND)
-            .setType("text/plain")
+            .setDataAndType(contentUri, mimeType)
         val bundle = Bundle().apply {
             putParcelable(Intent.EXTRA_STREAM, contentUri)
         }

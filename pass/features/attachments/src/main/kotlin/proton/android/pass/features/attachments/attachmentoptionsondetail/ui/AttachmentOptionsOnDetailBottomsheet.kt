@@ -22,9 +22,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.bottomSheet
+import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.features.attachments.attachmentoptionsondetail.navigation.AttachmentOptionsOnDetailNavigation
 import proton.android.pass.features.attachments.attachmentoptionsondetail.presentation.AttachmentOptionsOnDetailEvent
 import proton.android.pass.features.attachments.attachmentoptionsondetail.presentation.AttachmentOptionsOnDetailViewModel
@@ -45,16 +47,14 @@ fun AttachmentOptionsOnDetailBottomsheet(
         viewmodel.onConsumeEvent(state.event)
     }
 
+    val context = LocalContext.current
     AttachmentOptionsOnDetailContent(
         modifier = modifier.bottomSheet(),
         canDownload = state.canDownload,
         onEvent = {
             when (it) {
-                AttachmentOptionsOnDetailUIEvent.Download ->
-                    viewmodel.download()
-
-                AttachmentOptionsOnDetailUIEvent.Share ->
-                    viewmodel.share()
+                AttachmentOptionsOnDetailUIEvent.Download -> viewmodel.download()
+                AttachmentOptionsOnDetailUIEvent.Share -> viewmodel.share(context.toClassHolder())
             }
         }
     )

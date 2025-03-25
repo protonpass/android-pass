@@ -19,7 +19,6 @@
 package proton.android.pass.commonpresentation.impl.attachments
 
 import android.content.Context
-import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -38,7 +37,10 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonpresentation.impl.R
 import proton.android.pass.commonpresentation.impl.attachments.AttachmentSnackbarMessages.AttachmentSizeExceededError
+import proton.android.pass.commonpresentation.impl.attachments.AttachmentSnackbarMessages.DownloadAttachmentsError
+import proton.android.pass.commonpresentation.impl.attachments.AttachmentSnackbarMessages.DownloadAttachmentsSuccess
 import proton.android.pass.commonpresentation.impl.attachments.AttachmentSnackbarMessages.OpenAttachmentsError
+import proton.android.pass.commonpresentation.impl.attachments.AttachmentSnackbarMessages.ShareAttachmentsError
 import proton.android.pass.commonpresentation.impl.attachments.AttachmentSnackbarMessages.UploadAttachmentsError
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.FileHandler
@@ -62,8 +64,9 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import java.net.URI
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@ViewModelScoped
+@Singleton
 class AttachmentsHandlerImpl @Inject constructor(
     private val draftAttachmentRepository: DraftAttachmentRepository,
     private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
@@ -140,6 +143,42 @@ class AttachmentsHandlerImpl @Inject constructor(
             PassLogger.w(TAG, "Could not open attachment: ${attachment.id}")
             PassLogger.w(TAG, it)
             snackbarDispatcher(OpenAttachmentsError)
+        }
+        loadingAttachments.update { it - attachment.id }
+    }
+
+    override suspend fun loadAttachment(attachment: Attachment) {
+        loadingAttachments.update { it + attachment.id }
+        runCatching {
+            downloadAttachment(attachment)
+        }.onSuccess {
+            PassLogger.i(TAG, "Attachment downloaded: ${attachment.id}")
+            snackbarDispatcher(DownloadAttachmentsSuccess)
+        }.onFailure {
+            PassLogger.w(TAG, "Could not download attachment: ${attachment.id}")
+            PassLogger.w(TAG, it)
+            snackbarDispatcher(DownloadAttachmentsError)
+        }
+        loadingAttachments.update { it - attachment.id }
+    }
+
+    override suspend fun shareAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
+        loadingAttachments.update { it + attachment.id }
+        authOverrideState.setAuthOverride(true)
+        runCatching {
+            val uri = downloadAttachment(attachment)
+            fileHandler.shareFile(
+                contextHolder = contextHolder,
+                uri = uri,
+                mimeType = attachment.mimeType,
+                chooserTitle = contextHolder.get().value()?.getString(R.string.share_with) ?: ""
+            )
+        }.onSuccess {
+            PassLogger.i(TAG, "Attachment shared: ${attachment.id}")
+        }.onFailure {
+            PassLogger.w(TAG, "Could not share attachment: ${attachment.id}")
+            PassLogger.w(TAG, it)
+            snackbarDispatcher(ShareAttachmentsError)
         }
         loadingAttachments.update { it - attachment.id }
     }

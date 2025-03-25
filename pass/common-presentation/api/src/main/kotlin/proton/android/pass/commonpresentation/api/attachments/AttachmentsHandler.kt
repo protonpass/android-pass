@@ -41,6 +41,10 @@ interface AttachmentsHandler {
 
     suspend fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment)
 
+    suspend fun loadAttachment(attachment: Attachment)
+
+    suspend fun shareAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment)
+
     suspend fun uploadNewAttachment(fileMetadata: FileMetadata)
 
     fun onClearAttachments()

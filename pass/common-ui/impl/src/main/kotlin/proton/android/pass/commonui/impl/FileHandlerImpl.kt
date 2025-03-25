@@ -25,6 +25,7 @@ import android.os.Bundle
 import android.webkit.MimeTypeMap
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
+import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.FileHandler
@@ -62,6 +63,7 @@ class FileHandlerImpl @Inject constructor(
 
     private fun createTempFile(
         contextHolder: ClassHolder<Context>,
+        fileTitle: String,
         contentUri: Uri,
         mimeType: String
     ): Uri {
@@ -70,7 +72,9 @@ class FileHandlerImpl @Inject constructor(
         val extension = getExtensionFromMimeType(mimeType)
         val cacheFolder = File(context.cacheDir, CacheDirectories.Temporary.value)
         if (!cacheFolder.exists()) cacheFolder.mkdirs()
-        val renamedFile = File(cacheFolder, "share_file.$extension")
+        val fileName = fileTitle.takeIfNotBlank() ?: "share_file"
+        val renamedFileName = "$fileName.$extension"
+        val renamedFile = File(cacheFolder, renamedFileName)
         context.contentResolver.openInputStream(contentUri)?.use { input ->
             renamedFile.outputStream().use { output ->
                 input.copyTo(output)
@@ -100,6 +104,7 @@ class FileHandlerImpl @Inject constructor(
 
     override fun shareFile(
         contextHolder: ClassHolder<Context>,
+        fileTitle: String,
         uri: URI,
         mimeType: String,
         chooserTitle: String
@@ -108,7 +113,7 @@ class FileHandlerImpl @Inject constructor(
         val shareContentUri = if (contentUri.hasExtension()) {
             contentUri
         } else {
-            createTempFile(contextHolder, contentUri, mimeType)
+            createTempFile(contextHolder, fileTitle, contentUri, mimeType)
         }
         val intent = Intent(Intent.ACTION_SEND)
             .setDataAndType(shareContentUri, mimeType)

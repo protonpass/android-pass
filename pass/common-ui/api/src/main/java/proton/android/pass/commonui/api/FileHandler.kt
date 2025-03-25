@@ -27,6 +27,7 @@ interface FileHandler {
 
     fun shareFile(
         contextHolder: ClassHolder<Context>,
+        fileTitle: String,
         uri: URI,
         mimeType: String,
         chooserTitle: String

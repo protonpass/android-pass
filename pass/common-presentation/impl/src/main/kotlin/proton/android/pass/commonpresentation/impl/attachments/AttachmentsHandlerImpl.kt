@@ -169,6 +169,7 @@ class AttachmentsHandlerImpl @Inject constructor(
             val uri = downloadAttachment(attachment)
             fileHandler.shareFile(
                 contextHolder = contextHolder,
+                fileTitle = attachment.name,
                 uri = uri,
                 mimeType = attachment.mimeType,
                 chooserTitle = contextHolder.get().value()?.getString(R.string.share_with) ?: ""

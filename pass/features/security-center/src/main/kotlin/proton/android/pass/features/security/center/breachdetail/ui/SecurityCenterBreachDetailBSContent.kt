@@ -67,8 +67,7 @@ internal fun SecurityCenterBreachDetailBSContent(
                     ExposedData(exposedDataList = breachEmail.exposedData)
                 }
 
-                breachEmail.copy(passwordLastChars = "12345678")
-                    .passwordLastChars
+                breachEmail.passwordLastChars
                     ?.takeIf { it.isNotBlank() }
                     ?.let { passwordLastChars ->
                         Details(passwordLastChars = passwordLastChars)

@@ -42,6 +42,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -57,7 +58,6 @@ import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
-import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.ItemCreationError
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.ItemLinkAttachmentsError

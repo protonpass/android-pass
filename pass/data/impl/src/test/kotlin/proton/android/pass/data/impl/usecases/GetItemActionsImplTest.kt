@@ -28,6 +28,7 @@ import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestCanShareShare
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveAllShares
+import proton.android.pass.data.fakes.usecases.organizations.FakeObserveOrganizationSharingPolicy
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
@@ -36,6 +37,9 @@ import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.organizations.OrganizationItemShareMode
+import proton.android.pass.domain.organizations.OrganizationSecureLinkMode
+import proton.android.pass.domain.organizations.OrganizationSharingPolicy
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestShare
 
@@ -47,6 +51,7 @@ internal class GetItemActionsImplTest {
     private lateinit var canShareVault: TestCanShareShare
     private lateinit var observeShare: FakeObserveShare
     private lateinit var observeAllShares: TestObserveAllShares
+    private lateinit var observeOrganizationSharingPolicy: FakeObserveOrganizationSharingPolicy
 
     @Before
     fun setup() {
@@ -55,6 +60,7 @@ internal class GetItemActionsImplTest {
         canShareVault = TestCanShareShare()
         observeShare = FakeObserveShare()
         observeAllShares = TestObserveAllShares()
+        observeOrganizationSharingPolicy = FakeObserveOrganizationSharingPolicy()
 
         setDefaultState()
 
@@ -63,7 +69,8 @@ internal class GetItemActionsImplTest {
             observeUserPlan = observeUserPlan,
             canShareShare = canShareVault,
             observeShare = observeShare,
-            observeAllShares = observeAllShares
+            observeAllShares = observeAllShares,
+            observeOrganizationSharingPolicy = observeOrganizationSharingPolicy
         )
     }
 
@@ -333,6 +340,12 @@ internal class GetItemActionsImplTest {
         )
         observeShare.emitValue(vaultShare)
         observeAllShares.sendResult(Result.success(vaultShares))
+
+        val organizationSharingPolicy = OrganizationSharingPolicy(
+            itemShareMode = OrganizationItemShareMode.Enabled,
+            secureLinkMode = OrganizationSecureLinkMode.Enabled
+        )
+        observeOrganizationSharingPolicy.emitValue(organizationSharingPolicy)
     }
 
     private fun setItem(state: ItemState = ItemState.Active) {

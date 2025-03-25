@@ -26,6 +26,7 @@ import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.files.api.FileType
 import proton.android.pass.files.api.FileUriGenerator
+import proton.android.pass.files.api.FilesDirectories
 import java.io.File
 import java.io.IOException
 import java.net.URI

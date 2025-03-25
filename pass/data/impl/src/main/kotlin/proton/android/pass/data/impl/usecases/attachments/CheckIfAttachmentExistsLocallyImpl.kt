@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.files.impl
+package proton.android.pass.data.impl.usecases.attachments
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -25,11 +25,11 @@ import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.data.api.repositories.AttachmentRepository
+import proton.android.pass.data.api.usecases.attachments.CheckIfAttachmentExistsLocally
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
-import proton.android.pass.files.api.CheckIfAttachmentExistsLocally
-import proton.android.pass.files.impl.FilesDirectories.Attachments
+import proton.android.pass.files.api.FilesDirectories
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -53,7 +53,17 @@ class CheckIfAttachmentExistsLocallyImpl @Inject constructor(
         return withContext(appDispatchers.io) {
             File(
                 context.filesDir,
-                "${Attachments.value}/${userId.id}/${shareId.id}/${itemId.id}/${attachment.persistentId.id}"
+                buildString {
+                    append(FilesDirectories.Attachments.value)
+                    append("/")
+                    append(userId.id)
+                    append("/")
+                    append(shareId.id)
+                    append("/")
+                    append(itemId.id)
+                    append("/")
+                    append(attachment.persistentId.id)
+                }
             ).exists()
         }
     }

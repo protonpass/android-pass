@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.files.api
+package proton.android.pass.data.api.usecases.attachments
 
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId

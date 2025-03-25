@@ -22,11 +22,13 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.webkit.MimeTypeMap
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.FileHandler
+import proton.android.pass.files.api.CacheDirectories
 import proton.android.pass.log.api.PassLogger
 import java.io.File
 import java.net.URI
@@ -48,13 +50,49 @@ class FileHandlerImpl @Inject constructor(
         )
     }
 
+    private fun isContentUri(uri: URI?): Boolean = uri?.scheme == "content"
+
+    private fun URI.toContentUri(contextHolder: ClassHolder<Context>): Uri = if (isContentUri(this)) {
+        this.toString().toUri()
+    } else {
+        createContentUri(contextHolder, File(this))
+    }
+
+    private fun Uri.hasExtension(): Boolean = lastPathSegment?.contains(".") == true
+
+    private fun createTempFile(
+        contextHolder: ClassHolder<Context>,
+        contentUri: Uri,
+        mimeType: String
+    ): Uri {
+        val context = contextHolder.get().value()
+            ?: throw IllegalStateException("Could not get context")
+        val extension = getExtensionFromMimeType(mimeType)
+        val cacheFolder = File(context.cacheDir, CacheDirectories.Temporary.value)
+        if (!cacheFolder.exists()) cacheFolder.mkdirs()
+        val renamedFile = File(cacheFolder, "share_file.$extension")
+        context.contentResolver.openInputStream(contentUri)?.use { input ->
+            renamedFile.outputStream().use { output ->
+                input.copyTo(output)
+            }
+        }
+        return FileProvider.getUriForFile(
+            context,
+            "${appConfig.applicationId}.fileprovider",
+            renamedFile
+        )
+    }
+
+    private fun getExtensionFromMimeType(mimeType: String): String =
+        MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType) ?: "bin"
+
     override fun openFile(
         contextHolder: ClassHolder<Context>,
         uri: URI,
         mimeType: String,
         chooserTitle: String
     ) {
-        val contentUri = uri.toString().toUri()
+        val contentUri = uri.toContentUri(contextHolder)
         val intent = Intent(Intent.ACTION_VIEW)
             .setDataAndType(contentUri, mimeType)
         performFileAction(contextHolder, intent, chooserTitle)
@@ -66,11 +104,16 @@ class FileHandlerImpl @Inject constructor(
         mimeType: String,
         chooserTitle: String
     ) {
-        val contentUri = uri.toString().toUri()
+        val contentUri = uri.toContentUri(contextHolder)
+        val shareContentUri = if (contentUri.hasExtension()) {
+            contentUri
+        } else {
+            createTempFile(contextHolder, contentUri, mimeType)
+        }
         val intent = Intent(Intent.ACTION_SEND)
-            .setDataAndType(contentUri, mimeType)
+            .setDataAndType(shareContentUri, mimeType)
         val bundle = Bundle().apply {
-            putParcelable(Intent.EXTRA_STREAM, contentUri)
+            putParcelable(Intent.EXTRA_STREAM, shareContentUri)
         }
         performFileAction(
             contextHolder = contextHolder,
@@ -82,14 +125,15 @@ class FileHandlerImpl @Inject constructor(
 
     override fun shareFileWithEmail(
         contextHolder: ClassHolder<Context>,
-        file: File,
+        uri: URI,
+        mimeType: String,
         chooserTitle: String,
         email: String,
         subject: String
     ) {
-        val contentUri = createContentUri(contextHolder, file)
+        val contentUri = uri.toContentUri(contextHolder)
         val intent = Intent(Intent.ACTION_SEND)
-            .setType("text/plain")
+            .setType(mimeType)
         val bundle = Bundle().apply {
             putStringArray(Intent.EXTRA_EMAIL, arrayOf(email))
             putString(Intent.EXTRA_SUBJECT, subject)

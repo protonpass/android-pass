@@ -21,7 +21,6 @@ package proton.android.pass.commonui.api
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import java.io.File
 import java.net.URI
 
 interface FileHandler {
@@ -33,9 +32,11 @@ interface FileHandler {
         chooserTitle: String
     )
 
+    @Suppress("LongParameterList")
     fun shareFileWithEmail(
         contextHolder: ClassHolder<Context>,
-        file: File,
+        uri: URI,
+        mimeType: String,
         chooserTitle: String,
         email: String,
         subject: String

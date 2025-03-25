@@ -33,10 +33,10 @@ import proton.android.pass.data.api.usecases.CheckIfUserExists
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.PersistentAttachmentId
+import proton.android.pass.files.api.CacheDirectories.Camera
 import proton.android.pass.files.api.DirectoryCleaner
 import proton.android.pass.files.api.DirectoryType
 import proton.android.pass.files.api.FilesDirectories.Attachments
-import proton.android.pass.files.impl.CacheDirectories.Camera
 import proton.android.pass.log.api.PassLogger
 import java.io.File
 import javax.inject.Inject

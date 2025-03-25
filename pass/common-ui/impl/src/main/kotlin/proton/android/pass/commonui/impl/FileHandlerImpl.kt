@@ -25,8 +25,10 @@ import android.os.Bundle
 import android.webkit.MimeTypeMap
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
+import kotlinx.coroutines.withContext
 import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.files.api.CacheDirectories
@@ -38,6 +40,7 @@ import javax.inject.Singleton
 
 @Singleton
 class FileHandlerImpl @Inject constructor(
+    private val appDispatchers: AppDispatchers,
     private val appConfig: AppConfig
 ) : FileHandler {
 
@@ -102,7 +105,7 @@ class FileHandlerImpl @Inject constructor(
         performFileAction(contextHolder, intent, chooserTitle)
     }
 
-    override fun shareFile(
+    override suspend fun shareFile(
         contextHolder: ClassHolder<Context>,
         fileTitle: String,
         uri: URI,
@@ -113,7 +116,9 @@ class FileHandlerImpl @Inject constructor(
         val shareContentUri = if (contentUri.hasExtension()) {
             contentUri
         } else {
-            createTempFile(contextHolder, fileTitle, contentUri, mimeType)
+            withContext(appDispatchers.io) {
+                createTempFile(contextHolder, fileTitle, contentUri, mimeType)
+            }
         }
         val intent = Intent(Intent.ACTION_SEND)
             .setDataAndType(shareContentUri, mimeType)

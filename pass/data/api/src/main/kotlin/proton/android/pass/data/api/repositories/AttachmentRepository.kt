@@ -89,6 +89,5 @@ interface AttachmentRepository {
         attachmentId: AttachmentId
     ): Attachment
 
-    @Suppress("LongParameterList")
     suspend fun downloadAttachment(userId: UserId, attachment: Attachment): URI
 }

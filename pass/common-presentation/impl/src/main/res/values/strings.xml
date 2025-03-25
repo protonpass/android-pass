@@ -18,7 +18,11 @@
 
 <resources>
     <string name="open_attachments_error">Could not open attachment</string>
+    <string name="download_attachments_success">Attachment downloaded</string>
+    <string name="download_attachments_error">Could not download attachment</string>
+    <string name="share_attachments_error">Could not share attachment</string>
     <string name="upload_attachments_error">Could not upload attachment</string>
     <string name="attachment_size_exceeded_error">The selected file exceeds the size limit. Please choose a file smaller than 100MB.</string>
     <string name="open_with">Open with:</string>
+    <string name="share_with">Share with:</string>
 </resources>

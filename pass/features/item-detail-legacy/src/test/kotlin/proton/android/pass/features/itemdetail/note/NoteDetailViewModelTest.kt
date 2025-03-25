@@ -28,11 +28,10 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.biometry.FakeAuthOverrideState
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.common.api.None
+import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
 import proton.android.pass.commonui.api.toUiModel
-import proton.android.pass.commonui.fakes.FakeFileHandler
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
@@ -47,7 +46,6 @@ import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestTrashItems
-import proton.android.pass.data.fakes.usecases.attachments.FakeDownloadAttachment
 import proton.android.pass.data.fakes.usecases.attachments.FakeObserveDetailItemAttachments
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.Flags
@@ -122,9 +120,7 @@ class NoteDetailViewModelTest {
             featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
             observeItemAttachments = FakeObserveDetailItemAttachments(),
             observeShare = observeShare,
-            downloadAttachment = FakeDownloadAttachment(),
-            fileHandler = FakeFileHandler(),
-            authOverrideState = FakeAuthOverrideState()
+            attachmentsHandler = FakeAttachmentHandler()
         )
 
         observeShare.emitValue(TestShare.Vault.create())

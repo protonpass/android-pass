@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.attachments.attachmentoptionsondetail.presentation
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,10 +28,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import proton.android.pass.common.api.FlowUtils.oneShot
+import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.attachments.CheckIfAttachmentExistsLocally
+import proton.android.pass.data.api.usecases.attachments.GetAttachment
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
@@ -39,6 +44,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AttachmentOptionsOnDetailViewModel @Inject constructor(
+    private val getAttachment: GetAttachment,
+    private val attachmentsHandler: AttachmentsHandler,
     checkIfAttachmentExistsLocally: CheckIfAttachmentExistsLocally,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
@@ -75,10 +82,18 @@ class AttachmentOptionsOnDetailViewModel @Inject constructor(
     }
 
     fun download() {
-        eventFlow.update { AttachmentOptionsOnDetailEvent.Close }
+        viewModelScope.launch {
+            val attachment = getAttachment(shareId, itemId, attachmentId)
+            attachmentsHandler.loadAttachment(attachment)
+            eventFlow.update { AttachmentOptionsOnDetailEvent.Close }
+        }
     }
 
-    fun share() {
-        eventFlow.update { AttachmentOptionsOnDetailEvent.Close }
+    fun share(classHolder: ClassHolder<Context>) {
+        viewModelScope.launch {
+            val attachment = getAttachment(shareId, itemId, attachmentId)
+            attachmentsHandler.shareAttachment(classHolder, attachment)
+            eventFlow.update { AttachmentOptionsOnDetailEvent.Close }
+        }
     }
 }

@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonuimodels.api.masks.TextMask
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.security.center.R
 
@@ -47,7 +48,10 @@ internal fun Details(modifier: Modifier = Modifier, passwordLastChars: String) {
             )
 
             Text.Body1Regular(
-                text = passwordLastChars
+                text = TextMask.TextBetweenFirstAndLastChar(
+                    input = passwordLastChars,
+                    replacementLength = 6
+                ).masked
             )
         }
     }

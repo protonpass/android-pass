@@ -835,7 +835,6 @@ fun NavGraphBuilder.appGraph(
                 appNavigator.hasDestinationInStack(EditLoginNavItem) -> EditLoginNavItem
                 else -> null
             }
-            val prefix = CustomFieldPrefix.fromLogin(backDestination)
             when (it) {
                 BaseLoginNavigation.CloseScreen -> appNavigator.navigateBack()
                 BaseLoginNavigation.DismissBottomsheet -> dismissBottomSheet {}
@@ -886,10 +885,13 @@ fun NavGraphBuilder.appGraph(
                     }
                 }
 
-                is BaseLoginNavigation.ScanTotp -> appNavigator.navigate(
-                    destination = CameraTotpNavItem(prefix),
-                    route = CameraTotpNavItem(prefix).createNavRoute(None, it.index)
-                )
+                is BaseLoginNavigation.ScanTotp -> {
+                    val prefix = CustomFieldPrefix.fromLogin(backDestination)
+                    appNavigator.navigate(
+                        destination = CameraTotpNavItem(prefix),
+                        route = CameraTotpNavItem(prefix).createNavRoute(None, it.index)
+                    )
+                }
 
                 BaseLoginNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
 
@@ -917,6 +919,7 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 BaseLoginNavigation.AddCustomField -> {
+                    val prefix = CustomFieldPrefix.fromLogin(backDestination)
                     appNavigator.navigate(
                         destination = AddCustomFieldBottomSheetNavItem(prefix),
                         route = AddCustomFieldBottomSheetNavItem(prefix).buildRoute(sectionIndex = None)
@@ -963,6 +966,7 @@ fun NavGraphBuilder.appGraph(
                 BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {}
 
                 is BaseLoginNavigation.OpenImagePicker -> {
+                    val prefix = CustomFieldPrefix.fromLogin(backDestination)
                     appNavigator.navigate(
                         destination = PhotoPickerTotpNavItem(prefix),
                         route = PhotoPickerTotpNavItem(prefix).createNavRoute(None, it.index),

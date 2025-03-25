@@ -36,6 +36,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.log.api.ShareLogsConstants
 import java.io.FileNotFoundException
 import java.io.IOException
+import java.net.URI
 import javax.inject.Inject
 
 @HiltViewModel
@@ -70,7 +71,8 @@ class LogViewViewModel @Inject constructor(
     fun startShareIntent(contextHolder: ClassHolder<Context>) = viewModelScope.launch {
         fileHandler.shareFileWithEmail(
             contextHolder = contextHolder,
-            file = logFileUri.toFile(),
+            uri = URI(logFileUri.toString()),
+            mimeType = "text/plain",
             chooserTitle = ShareLogsConstants.CHOOSER_TITLE,
             email = ShareLogsConstants.EMAIL,
             subject = ShareLogsConstants.SUBJECT

@@ -123,7 +123,6 @@
     <string name="security_center_report_detail_your_exposed_information">Your exposed information</string>
     <string name="security_center_report_detail_subtitle">Your info was in a data breach and found on __DATE__</string>
     <string name="security_center_report_detail_details">Details</string>
-    <string name="security_center_report_detail_email_address">Email address</string>
     <string name="security_center_report_detail_password">Password</string>
     <string name="security_center_report_detail_recommended_actions">Recommended actions</string>
     <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">The exposed information was leaked from %s. Your Proton Account information remains secure and encrypted.</string>

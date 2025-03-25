@@ -34,6 +34,7 @@ import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.attachments.CheckIfAttachmentExistsLocally
 import proton.android.pass.data.api.usecases.attachments.GetAttachment
 import proton.android.pass.domain.ItemId
@@ -60,15 +61,24 @@ class AttachmentOptionsOnDetailViewModel @Inject constructor(
         .require<String>(CommonOptionalNavArgId.AttachmentId.key)
         .let(::AttachmentId)
 
+    private val isDownloadingFlow =
+        MutableStateFlow<IsLoadingState>(IsLoadingState.NotLoading)
+    private val isSharingFlow =
+        MutableStateFlow<IsLoadingState>(IsLoadingState.NotLoading)
+
     private val eventFlow =
         MutableStateFlow<AttachmentOptionsOnDetailEvent>(AttachmentOptionsOnDetailEvent.Idle)
 
     val state: StateFlow<AttachmentOptionsOnDetailState> = combine(
+        isDownloadingFlow,
+        isSharingFlow,
         eventFlow,
         oneShot { checkIfAttachmentExistsLocally(shareId, itemId, attachmentId) }
-    ) { event, attachmentExists ->
+    ) { isDownloading, isSharing, event, attachmentExists ->
         AttachmentOptionsOnDetailState(
             canDownload = !attachmentExists,
+            isDownloading = isDownloading.value(),
+            isSharing = isSharing.value(),
             event = event
         )
     }.stateIn(
@@ -83,16 +93,20 @@ class AttachmentOptionsOnDetailViewModel @Inject constructor(
 
     fun download() {
         viewModelScope.launch {
+            isDownloadingFlow.update { IsLoadingState.Loading }
             val attachment = getAttachment(shareId, itemId, attachmentId)
             attachmentsHandler.loadAttachment(attachment)
+            isDownloadingFlow.update { IsLoadingState.NotLoading }
             eventFlow.update { AttachmentOptionsOnDetailEvent.Close }
         }
     }
 
     fun share(classHolder: ClassHolder<Context>) {
         viewModelScope.launch {
+            isSharingFlow.update { IsLoadingState.Loading }
             val attachment = getAttachment(shareId, itemId, attachmentId)
             attachmentsHandler.shareAttachment(classHolder, attachment)
+            isSharingFlow.update { IsLoadingState.NotLoading }
             eventFlow.update { AttachmentOptionsOnDetailEvent.Close }
         }
     }

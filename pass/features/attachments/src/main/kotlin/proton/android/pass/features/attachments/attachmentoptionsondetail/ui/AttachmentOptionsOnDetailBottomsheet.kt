@@ -51,6 +51,8 @@ fun AttachmentOptionsOnDetailBottomsheet(
     AttachmentOptionsOnDetailContent(
         modifier = modifier.bottomSheet(),
         canDownload = state.canDownload,
+        isDownloading = state.isDownloading,
+        isSharing = state.isSharing,
         onEvent = {
             when (it) {
                 AttachmentOptionsOnDetailUIEvent.Download -> viewmodel.download()

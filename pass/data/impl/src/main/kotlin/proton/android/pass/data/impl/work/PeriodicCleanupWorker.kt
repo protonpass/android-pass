@@ -48,6 +48,7 @@ class PeriodicCleanupWorker @AssistedInject constructor(
         coroutineScope {
             listOf(
                 async { directoryCleaner.deleteDir(DirectoryType.CameraTemp) },
+                async { directoryCleaner.deleteDir(DirectoryType.ShareTemp) },
                 async { directoryCleaner.deleteDir(DirectoryType.OrphanedAttachments) }
             ).awaitAll()
         }

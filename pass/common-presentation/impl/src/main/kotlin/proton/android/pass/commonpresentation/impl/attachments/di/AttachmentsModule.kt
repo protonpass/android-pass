@@ -21,12 +21,12 @@ package proton.android.pass.commonpresentation.impl.attachments.di
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.components.SingletonComponent
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonpresentation.impl.attachments.AttachmentsHandlerImpl
 
 @Module
-@InstallIn(ViewModelComponent::class)
+@InstallIn(SingletonComponent::class)
 abstract class AttachmentsModule {
 
     @Binds

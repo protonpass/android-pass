@@ -20,7 +20,6 @@ package proton.android.pass.features.item.details.detail.presentation.handlers
 
 import android.content.Context
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -28,22 +27,18 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.update
-import proton.android.pass.biometry.AuthOverrideState
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.FlowUtils.oneShot
-import proton.android.pass.common.api.None
+import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsSource
 import proton.android.pass.commonui.api.ClassHolder
-import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.ItemNotFoundError
-import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.ObserveAllItemRevisionAttachments
 import proton.android.pass.data.api.usecases.attachments.ObserveDetailItemAttachments
 import proton.android.pass.data.api.usecases.shares.ObserveShare
@@ -53,9 +48,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.attachments.Attachment
-import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.items.ItemCategory
-import proton.android.pass.features.item.details.R
 import proton.android.pass.features.item.details.detail.presentation.messages.ItemDetailsSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -67,14 +60,10 @@ class ItemDetailsHandlerImpl @Inject constructor(
     private val observeAllItemRevisionAttachments: ObserveAllItemRevisionAttachments,
     private val observers: Map<ItemCategory, @JvmSuppressWildcards ItemDetailsHandlerObserver<*>>,
     private val clipboardManager: ClipboardManager,
-    private val downloadAttachment: DownloadAttachment,
-    private val fileHandler: FileHandler,
+    private val attachmentsHandler: AttachmentsHandler,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val snackbarDispatcher: SnackbarDispatcher,
-    private val authOverrideState: AuthOverrideState
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ItemDetailsHandler {
-
-    private val loadingAttachmentsState = MutableStateFlow<Set<AttachmentId>>(emptySet())
 
     override fun observeItemDetails(item: Item, source: ItemDetailsSource): Flow<ItemDetailState> = combine(
         oneShot { observeShare(item.shareId).first() },
@@ -93,24 +82,7 @@ class ItemDetailsHandlerImpl @Inject constructor(
         .distinctUntilChanged()
 
     override suspend fun onAttachmentOpen(contextHolder: ClassHolder<Context>, attachment: Attachment) {
-        loadingAttachmentsState.update { it + attachment.id }
-        authOverrideState.setAuthOverride(true)
-        runCatching {
-            val uri = downloadAttachment(attachment)
-            fileHandler.openFile(
-                contextHolder = contextHolder,
-                uri = uri,
-                mimeType = attachment.mimeType,
-                chooserTitle = contextHolder.get().value()?.getString(R.string.open_with) ?: ""
-            )
-        }.onSuccess {
-            PassLogger.i(TAG, "Attachment opened: ${attachment.id}")
-        }.onFailure {
-            PassLogger.w(TAG, "Could not open attachment: ${attachment.id}")
-            PassLogger.w(TAG, it)
-            snackbarDispatcher(ItemDetailsSnackbarMessage.OpenAttachmentsError)
-        }
-        loadingAttachmentsState.update { it - attachment.id }
+        attachmentsHandler.openAttachment(contextHolder, attachment)
     }
 
     override suspend fun onItemDetailsFieldClicked(text: String, plainFieldType: ItemDetailsFieldType.Plain) {
@@ -150,13 +122,8 @@ class ItemDetailsHandlerImpl @Inject constructor(
             }
         }
 
-        return combine(attachmentsFlow, loadingAttachmentsState) { attachments, loadingAttachments ->
-            AttachmentsState(
-                draftAttachmentsList = emptyList(),
-                attachmentsList = attachments,
-                loadingAttachments = loadingAttachments,
-                needsUpgrade = None
-            )
+        return combine(attachmentsFlow, attachmentsHandler.attachmentState) { attachments, attachmentState ->
+            attachmentState.copy(attachmentsList = attachments)
         }
     }
 

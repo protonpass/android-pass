@@ -64,6 +64,8 @@ class FileHandlerImpl @Inject constructor(
 
     private fun Uri.hasExtension(): Boolean = lastPathSegment?.contains(".") == true
 
+    private fun String.hasExtension(): Boolean = contains(".") && substringAfterLast(".").isNotEmpty()
+
     private fun createTempFile(
         contextHolder: ClassHolder<Context>,
         fileTitle: String,
@@ -72,11 +74,15 @@ class FileHandlerImpl @Inject constructor(
     ): Uri {
         val context = contextHolder.get().value()
             ?: throw IllegalStateException("Could not get context")
-        val extension = getExtensionFromMimeType(mimeType)
         val cacheFolder = File(context.cacheDir, CacheDirectories.Temporary.value)
         if (!cacheFolder.exists()) cacheFolder.mkdirs()
         val fileName = fileTitle.takeIfNotBlank() ?: "share_file"
-        val renamedFileName = "$fileName.$extension"
+        val renamedFileName = if (!fileName.hasExtension()) {
+            val extension = getExtensionFromMimeType(mimeType)
+            "$fileName.$extension"
+        } else {
+            fileName
+        }
         val renamedFile = File(cacheFolder, renamedFileName)
         context.contentResolver.openInputStream(contentUri)?.use { input ->
             renamedFile.outputStream().use { output ->

@@ -25,7 +25,7 @@ import java.net.URI
 
 interface FileHandler {
 
-    fun shareFile(
+    suspend fun shareFile(
         contextHolder: ClassHolder<Context>,
         fileTitle: String,
         uri: URI,

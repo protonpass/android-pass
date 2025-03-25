@@ -34,6 +34,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.PersistentAttachmentId
 import proton.android.pass.files.api.CacheDirectories.Camera
+import proton.android.pass.files.api.CacheDirectories.Share
 import proton.android.pass.files.api.DirectoryCleaner
 import proton.android.pass.files.api.DirectoryType
 import proton.android.pass.files.api.FilesDirectories.Attachments
@@ -58,6 +59,12 @@ class DirectoryCleanerImpl @Inject constructor(
                 }.onFailure {
                     PassLogger.w(TAG, "Failed to delete cache directory")
                     PassLogger.w(TAG, it)
+                }
+                DirectoryType.ShareTemp -> runCatching {
+                    val file = File(context.cacheDir, Share.value)
+                    file.deleteRecursively()
+                }.onFailure {
+                    PassLogger.w(TAG, "Failed to delete cache directory")
                 }
 
                 DirectoryType.OrphanedAttachments -> runCatching {

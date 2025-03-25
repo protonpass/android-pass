@@ -43,6 +43,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -73,7 +74,6 @@ import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.ItemUp
 import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.UpdateAppToUpdateItemError
 import proton.android.pass.features.itemcreate.alias.draftrepositories.MailboxDraftRepository
 import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDraftRepository
-import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher

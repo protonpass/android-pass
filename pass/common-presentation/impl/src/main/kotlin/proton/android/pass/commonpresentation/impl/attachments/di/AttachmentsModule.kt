@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,5 +16,19 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.attachments
+package proton.android.pass.commonpresentation.impl.attachments.di
 
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
+import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
+import proton.android.pass.commonpresentation.impl.attachments.AttachmentsHandlerImpl
+
+@Module
+@InstallIn(ViewModelComponent::class)
+abstract class AttachmentsModule {
+
+    @Binds
+    abstract fun bindAttachmentsHandler(impl: AttachmentsHandlerImpl): AttachmentsHandler
+}

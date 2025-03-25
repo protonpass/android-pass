@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.Some
+import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -41,7 +42,6 @@ import proton.android.pass.features.itemcreate.alias.CreateAliasViewModel
 import proton.android.pass.features.itemcreate.alias.IsEditAliasNavArg
 import proton.android.pass.features.itemcreate.alias.draftrepositories.MailboxDraftRepository
 import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDraftRepository
-import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository

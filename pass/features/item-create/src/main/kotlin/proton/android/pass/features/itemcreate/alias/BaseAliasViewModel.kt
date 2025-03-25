@@ -37,6 +37,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
@@ -46,7 +47,6 @@ import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.alias.draftrepositories.MailboxDraftRepository
 import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDraftRepository
-import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner

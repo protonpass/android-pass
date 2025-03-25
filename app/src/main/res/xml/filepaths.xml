@@ -2,6 +2,6 @@
 <paths>
     <cache-path path="logs/" name="logs" />
     <cache-path path="camera/" name="camera" />
-    <cache-path path="temp/" name="temp" />
+    <cache-path path="share/" name="share" />
     <files-path path="attachments/" name="attachments" />
 </paths>

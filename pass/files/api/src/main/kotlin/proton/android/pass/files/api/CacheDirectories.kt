@@ -20,5 +20,5 @@ package proton.android.pass.files.api
 
 enum class CacheDirectories(val value: String) {
     Camera("camera"),
-    Temporary("temp")
+    Share("share")
 }

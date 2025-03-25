@@ -30,10 +30,10 @@ import kotlinx.coroutines.flow.update
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.usecases.attachments.CheckIfAttachmentExistsLocally
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
-import proton.android.pass.files.api.CheckIfAttachmentExistsLocally
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import javax.inject.Inject
 

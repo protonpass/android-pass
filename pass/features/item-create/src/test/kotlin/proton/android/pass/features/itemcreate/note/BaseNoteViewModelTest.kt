@@ -24,8 +24,8 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
-import proton.android.pass.features.itemcreate.attachments.FakeAttachmentHandler
 import proton.android.pass.features.itemcreate.note.BaseNoteUiState.Companion.Initial
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository

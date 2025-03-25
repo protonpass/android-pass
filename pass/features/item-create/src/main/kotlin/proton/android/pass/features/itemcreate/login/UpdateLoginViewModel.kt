@@ -39,6 +39,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
+import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -83,7 +84,6 @@ import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
-import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.AttachmentsInitError
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.InitError
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.ItemLinkAttachmentsError

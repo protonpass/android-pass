@@ -29,6 +29,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.clipboard.fakes.TestClipboardManager
+import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
 import proton.android.pass.commonrust.fakes.TestEmailValidator
 import proton.android.pass.commonrust.fakes.passwords.strengths.TestPasswordStrengthCalculator
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
@@ -61,7 +62,6 @@ import proton.android.pass.features.itemcreate.alias.AliasItemFormState
 import proton.android.pass.features.itemcreate.alias.AliasMailboxUiModel
 import proton.android.pass.features.itemcreate.alias.AliasOptionsUiModel
 import proton.android.pass.features.itemcreate.alias.AliasSuffixUiModel
-import proton.android.pass.features.itemcreate.attachments.FakeAttachmentHandler
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics

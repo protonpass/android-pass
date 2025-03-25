@@ -48,6 +48,7 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toUiModel
@@ -77,7 +78,6 @@ import proton.android.pass.features.itemcreate.alias.draftrepositories.MailboxDr
 import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDraftRepository
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
-import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger

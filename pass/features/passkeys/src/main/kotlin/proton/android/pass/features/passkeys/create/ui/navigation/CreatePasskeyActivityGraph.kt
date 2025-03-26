@@ -168,7 +168,6 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                 appNavigator.hasDestinationInStack(EditLoginNavItem) -> EditLoginNavItem
                 else -> null
             }
-            val prefix = CustomFieldPrefix.fromLogin(backDestination)
             when (it) {
                 BaseLoginNavigation.CloseScreen -> appNavigator.navigateBack()
                 BaseLoginNavigation.DismissBottomsheet -> dismissBottomSheet {}
@@ -206,10 +205,13 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                     }
                 }
 
-                is BaseLoginNavigation.ScanTotp -> appNavigator.navigate(
-                    destination = CameraTotpNavItem(prefix),
-                    route = CameraTotpNavItem(prefix).createNavRoute(None, it.index)
-                )
+                is BaseLoginNavigation.ScanTotp -> {
+                    val prefix = CustomFieldPrefix.fromLogin(backDestination)
+                    appNavigator.navigate(
+                        destination = CameraTotpNavItem(prefix),
+                        route = CameraTotpNavItem(prefix).createNavRoute(None, it.index)
+                    )
+                }
 
                 BaseLoginNavigation.Upgrade -> onNavigate(CreatePasskeyNavigation.Upgrade)
 
@@ -275,11 +277,14 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
 
                 // Updates cannot happen
                 is BaseLoginNavigation.OnUpdateLoginEvent -> {}
-                is BaseLoginNavigation.OpenImagePicker -> appNavigator.navigate(
-                    destination = PhotoPickerTotpNavItem(prefix),
-                    route = PhotoPickerTotpNavItem(prefix).createNavRoute(None, it.index),
-                    backDestination = CreateLoginNavItem
-                )
+                is BaseLoginNavigation.OpenImagePicker -> {
+                    val prefix = CustomFieldPrefix.fromLogin(backDestination)
+                    appNavigator.navigate(
+                        destination = PhotoPickerTotpNavItem(prefix),
+                        route = PhotoPickerTotpNavItem(prefix).createNavRoute(None, it.index),
+                        backDestination = CreateLoginNavItem
+                    )
+                }
 
                 BaseLoginNavigation.TotpCancel -> appNavigator.navigateBack()
                 is BaseLoginNavigation.TotpSuccess ->
@@ -322,7 +327,6 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                 CreateAliasNavigation.CloseBottomsheet -> dismissBottomSheet {}
 
                 is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}
-
 
                 is CreateAliasNavigation.Created -> {
                     throw IllegalStateException("Cannot create alias from CreatePasskey")

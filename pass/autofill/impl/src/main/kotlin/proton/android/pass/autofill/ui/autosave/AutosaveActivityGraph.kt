@@ -94,7 +94,6 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 appNavigator.hasDestinationInStack(EditLoginNavItem) -> EditLoginNavItem
                 else -> null
             }
-            val prefix = CustomFieldPrefix.fromLogin(backDestination)
             when (it) {
                 BaseLoginNavigation.CloseScreen -> appNavigator.navigateBack()
                 BaseLoginNavigation.DismissBottomsheet -> dismissBottomSheet {}
@@ -129,10 +128,13 @@ fun NavGraphBuilder.autosaveActivityGraph(
                     }
                 }
 
-                is BaseLoginNavigation.ScanTotp -> appNavigator.navigate(
-                    destination = CameraTotpNavItem(prefix),
-                    route = CameraTotpNavItem(prefix).createNavRoute(None, it.index)
-                )
+                is BaseLoginNavigation.ScanTotp -> {
+                    val prefix = CustomFieldPrefix.fromLogin(backDestination)
+                    appNavigator.navigate(
+                        destination = CameraTotpNavItem(prefix),
+                        route = CameraTotpNavItem(prefix).createNavRoute(None, it.index)
+                    )
+                }
 
                 BaseLoginNavigation.Upgrade -> onNavigate(AutosaveNavigation.Upgrade)
 
@@ -181,11 +183,14 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 is BaseLoginNavigation.AliasOptions -> {}
                 BaseLoginNavigation.DeleteAlias -> {}
                 is BaseLoginNavigation.EditAlias -> {}
-                is BaseLoginNavigation.OpenImagePicker -> appNavigator.navigate(
-                    destination = PhotoPickerTotpNavItem(prefix),
-                    route = PhotoPickerTotpNavItem(prefix).createNavRoute(None, it.index),
-                    backDestination = CreateLoginNavItem
-                )
+                is BaseLoginNavigation.OpenImagePicker -> {
+                    val prefix = CustomFieldPrefix.fromLogin(backDestination)
+                    appNavigator.navigate(
+                        destination = PhotoPickerTotpNavItem(prefix),
+                        route = PhotoPickerTotpNavItem(prefix).createNavRoute(None, it.index),
+                        backDestination = CreateLoginNavItem
+                    )
+                }
 
                 BaseLoginNavigation.TotpCancel -> appNavigator.navigateBack()
                 is BaseLoginNavigation.TotpSuccess ->

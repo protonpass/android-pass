@@ -43,6 +43,7 @@ import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestObserveItems
+import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
@@ -60,6 +61,7 @@ import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.domain.TestShare
+import proton.android.pass.test.domain.TestUserAccessData
 import proton.android.pass.test.waitUntilExists
 import proton.android.pass.totp.api.TotpManager
 import proton.android.pass.totp.fakes.TestObserveTotpFromUri
@@ -99,6 +101,9 @@ class LoginDetailScreenTest {
 
     @Inject
     lateinit var observeShare: FakeObserveShare
+
+    @Inject
+    lateinit var observeUserAccessData: TestObserveUserAccessData
 
     @Before
     fun setup() {
@@ -317,6 +322,7 @@ class LoginDetailScreenTest {
         observeItemById.emitValue(Result.success(item))
         getItemById.emit(Result.success(item))
         observeShare.emitValue(share)
+        observeUserAccessData.sendValue(TestUserAccessData.random())
 
         return title
     }

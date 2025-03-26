@@ -49,6 +49,7 @@ import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestObserveItems
+import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -61,6 +62,7 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.domain.TestShare
+import proton.android.pass.test.domain.TestUserAccessData
 import proton.android.pass.test.waitUntilExists
 import java.util.Date
 import javax.inject.Inject
@@ -96,6 +98,9 @@ class CreditCardDetailScreenTest {
 
     @Inject
     lateinit var observeShare: FakeObserveShare
+
+    @Inject
+    lateinit var observeUserAccessData: TestObserveUserAccessData
 
     @Before
     fun setup() {
@@ -396,6 +401,7 @@ class CreditCardDetailScreenTest {
         observeItemByIdWithVault.emitValue(Result.success(withVault))
         getItemById.emit(Result.success(item))
         observeShare.emitValue(share)
+        observeUserAccessData.sendValue(TestUserAccessData.random())
         return title
     }
 

@@ -1,0 +1,5 @@
+## 1.30.5 (2025-03-26)
+
+### Fixes :bug:
+
+- Bug fixes and improvements.

@@ -25,6 +25,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.items.ItemCategory
 
 @Stable
@@ -41,16 +42,16 @@ data class ItemUiModel(
     val category: ItemCategory = ItemCategory.Unknown,
     val revision: Long,
     val shareCount: Int,
-    val isOwner: Boolean
+    val shareType: ShareType
 ) {
 
     val key = "${shareId.id}-${id.id}"
 
     val isShared: Boolean = shareCount > 0
 
-    val isSharedByMe: Boolean = isOwner && isShared
+    val isSharedByMe: Boolean = shareType.isVaultShare && isShared
 
-    val isSharedWithMe: Boolean = !isOwner && isShared
+    val isSharedWithMe: Boolean = shareType.isItemShare && isShared
 
     fun isInTrash() = state == ItemState.Trashed.value
 

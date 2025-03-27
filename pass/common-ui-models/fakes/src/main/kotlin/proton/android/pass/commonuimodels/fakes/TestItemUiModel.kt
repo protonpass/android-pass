@@ -25,6 +25,7 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareType
 
 object TestItemUiModel {
 
@@ -39,7 +40,7 @@ object TestItemUiModel {
         isPinned: Boolean = false,
         revision: Long = 0,
         shareCount: Int = 0,
-        isOwner: Boolean = true
+        shareType: ShareType = ShareType.Vault
     ): ItemUiModel = ItemUiModel(
         id = ItemId(id = id),
         userId = UserId("user-id"),
@@ -52,7 +53,7 @@ object TestItemUiModel {
         isPinned = isPinned,
         revision = revision,
         shareCount = shareCount,
-        isOwner = isOwner
+        shareType = shareType
     )
 
 }

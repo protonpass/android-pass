@@ -33,6 +33,7 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.test.TestUtils.randomString
 import java.util.UUID
@@ -68,7 +69,7 @@ object TestItem {
             isPinned = false,
             flags = Flags(0),
             shareCount = 0,
-            isOwner = true
+            shareType = ShareType.Vault
         )
     }
 
@@ -117,7 +118,7 @@ object TestItem {
             isPinned = Random.nextBoolean(),
             flags = Flags(Random.nextInt()),
             shareCount = Random.nextInt(),
-            isOwner = Random.nextBoolean()
+            shareType = ShareType.from(Random.nextInt(1, 2))
         )
     }
 }

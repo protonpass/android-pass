@@ -52,6 +52,7 @@ import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareType
 import proton.android.pass.features.itemdetail.R
 import proton.android.pass.features.itemdetail.login.LoginDetailEvent
 import proton.android.pass.features.itemdetail.login.LoginMonitorState
@@ -218,7 +219,7 @@ internal fun LoginMonitorReusedPassWidgetExpandedPreview(
                         isPinned = false,
                         revision = 1,
                         shareCount = 0,
-                        isOwner = true
+                        shareType = ShareType.Vault
                     )
                 ),
                 canLoadExternalImages = false,

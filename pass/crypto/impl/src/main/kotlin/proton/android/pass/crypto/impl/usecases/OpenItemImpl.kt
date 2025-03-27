@@ -200,7 +200,7 @@ class OpenItemImpl @Inject constructor(
             isPinned = response.isPinned,
             flags = Flags(response.flags),
             shareCount = response.shareCount,
-            isOwner = response.key != null
+            shareType = if (response.key != null) ShareType.Vault else ShareType.Item
         )
     }
 

@@ -20,13 +20,13 @@ package proton.android.pass.notifications.implementation
 
 import android.os.Build
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.notifications.api.SnackbarMessage
 import javax.inject.Inject
@@ -34,32 +34,40 @@ import javax.inject.Singleton
 
 @Singleton
 class SnackbarDispatcherImpl @Inject constructor() : SnackbarDispatcher {
+
     private val mutex = Mutex()
 
-    private val snackbarState = MutableStateFlow<Option<SnackbarMessage>>(None)
+    private val pendingMessages = LinkedHashSet<SnackbarMessage>()
+    private val messageSharedFlow: MutableSharedFlow<Option<SnackbarMessage>> = MutableSharedFlow()
 
-    override val snackbarMessage: Flow<Option<SnackbarMessage>> = snackbarState
+    override val snackbarMessage: Flow<Option<SnackbarMessage>> = messageSharedFlow
 
     override suspend fun invoke(snackbarMessage: SnackbarMessage) {
         if (!shouldDisplay(snackbarMessage)) return
+
         mutex.withLock {
-            snackbarState.update { snackbarMessage.some() }
+            val wasAdded = pendingMessages.add(snackbarMessage)
+            val isFirst = pendingMessages.size == 1
+            if (wasAdded && isFirst) {
+                messageSharedFlow.emit(snackbarMessage.some())
+            }
         }
     }
 
     override suspend fun snackbarMessageDelivered() {
         mutex.withLock {
-            snackbarState.update { None }
+            pendingMessages.firstOrNull()?.let { pendingMessages.remove(it) }
+            messageSharedFlow.emit(pendingMessages.firstOrNull().toOption())
         }
     }
 
     override fun reset() {
-        snackbarState.update { None }
+        pendingMessages.clear()
+        messageSharedFlow.tryEmit(None)
     }
 
     private fun shouldDisplay(snackbarMessage: SnackbarMessage): Boolean {
         if (snackbarMessage !is SnackbarMessage.StructuredMessage) return true
         return !(snackbarMessage.isClipboard && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
     }
-
 }

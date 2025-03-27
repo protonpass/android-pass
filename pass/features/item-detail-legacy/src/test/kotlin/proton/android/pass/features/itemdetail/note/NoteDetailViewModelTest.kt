@@ -54,6 +54,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.ShareType
 import proton.android.pass.features.itemdetail.DetailSnackbarMessages
 import proton.android.pass.features.itemdetail.ItemDelete
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -335,7 +336,7 @@ class NoteDetailViewModelTest {
                 isPinned = false,
                 flags = Flags(0),
                 shareCount = 0,
-                isOwner = true
+                shareType = ShareType.Vault
             )
         }
     }

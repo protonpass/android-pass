@@ -25,6 +25,7 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareType
 
 class NoteRowPreviewProvider : PreviewParameterProvider<NoteRowParameter> {
     override val values: Sequence<NoteRowParameter>
@@ -62,7 +63,7 @@ class NoteRowPreviewProvider : PreviewParameterProvider<NoteRowParameter> {
                 isPinned = false,
                 revision = 1,
                 shareCount = 0,
-                isOwner = true
+                shareType = ShareType.Vault
             ),
             highlight = highlight
         )

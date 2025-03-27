@@ -27,6 +27,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareType
 
 val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
     val itemId = "item_id"
@@ -39,7 +40,7 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
     val isPinned = "is_pinned"
     val revision = "revision"
     val shareCount = "share_count"
-    val isOwner = "is_owner"
+    val shareType = "share_type"
     mapSaver(
         save = {
             it?.let { itemUiModel ->
@@ -54,7 +55,7 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
                     isPinned to itemUiModel.isPinned,
                     revision to itemUiModel.revision,
                     shareCount to itemUiModel.shareCount,
-                    isOwner to itemUiModel.isOwner
+                    shareType to itemUiModel.shareType.value
                 )
             } ?: emptyMap()
         },
@@ -72,7 +73,7 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
                     isPinned = values[isPinned] as Boolean,
                     revision = values[revision] as Long,
                     shareCount = values[shareCount] as Int,
-                    isOwner = values[isOwner] as Boolean
+                    shareType = ShareType.from(values[shareType] as Int)
                 )
             } else {
                 null

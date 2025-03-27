@@ -206,7 +206,7 @@ internal class CreateLoginNavItemViewModelTest {
                             category = ItemCategory.Login,
                             revision = item.revision,
                             shareCount = item.shareCount,
-                            isOwner = item.isOwner
+                            shareType = item.shareType
                         )
                     )
                 )

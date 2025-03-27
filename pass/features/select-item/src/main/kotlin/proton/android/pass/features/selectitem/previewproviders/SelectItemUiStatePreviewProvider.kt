@@ -33,7 +33,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.searchoptions.api.SearchSortingType
+import proton.android.pass.domain.ShareType
 import proton.android.pass.features.selectitem.ui.AccountSwitchUIState
 import proton.android.pass.features.selectitem.ui.AutofillItemClickedEvent
 import proton.android.pass.features.selectitem.ui.PinningUiState
@@ -42,6 +42,7 @@ import proton.android.pass.features.selectitem.ui.SearchUiState
 import proton.android.pass.features.selectitem.ui.SelectItemListItems
 import proton.android.pass.features.selectitem.ui.SelectItemListUiState
 import proton.android.pass.features.selectitem.ui.SelectItemUiState
+import proton.android.pass.searchoptions.api.SearchSortingType
 
 class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiState> {
     override val values: Sequence<SelectItemUiState>
@@ -143,6 +144,6 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
         isPinned = false,
         revision = 1,
         shareCount = 0,
-        isOwner = true
+        shareType = ShareType.Vault
     )
 }

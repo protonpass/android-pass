@@ -40,7 +40,7 @@ fun Item.toUiModel(context: EncryptionContext): ItemUiModel = ItemUiModel(
     category = itemType.category,
     revision = revision,
     shareCount = shareCount,
-    isOwner = isOwner
+    shareType = shareType
 )
 
 fun ItemEncrypted.toUiModel(context: EncryptionContext): ItemUiModel {
@@ -66,7 +66,7 @@ fun ItemEncrypted.toUiModel(context: EncryptionContext): ItemUiModel {
         category = itemType.category,
         revision = revision,
         shareCount = shareCount,
-        isOwner = isOwner
+        shareType = shareType
     )
 }
 

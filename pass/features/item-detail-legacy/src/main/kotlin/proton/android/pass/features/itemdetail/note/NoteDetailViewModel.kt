@@ -232,7 +232,7 @@ class NoteDetailViewModel @Inject constructor(
                 val (details, attachments, share) = itemLoadingResult.data
                 val actions = itemActions.getOrNull() ?: ItemActions.Disabled
 
-                isSharedWithMeItemFlow.update { !details.item.isOwner && details.item.isShared }
+                isSharedWithMeItemFlow.update { details.item.shareType.isItemShare && details.item.isShared }
 
                 NoteDetailUiState.Success(
                     itemUiModel = encryptionContextProvider.withEncryptionContext {

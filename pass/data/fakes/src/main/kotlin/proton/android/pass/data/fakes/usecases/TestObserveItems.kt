@@ -45,6 +45,7 @@ import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.PersonalDetailsContent
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.WorkDetailsContent
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -133,7 +134,7 @@ class TestObserveItems @Inject constructor() : ObserveItems {
                     isPinned = false,
                     flags = Flags(flags),
                     shareCount = 0,
-                    isOwner = true
+                    shareType = ShareType.Vault
                 )
             }
         }

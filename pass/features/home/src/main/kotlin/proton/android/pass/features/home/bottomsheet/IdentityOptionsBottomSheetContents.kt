@@ -51,6 +51,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PersonalDetailsContent
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.WorkDetailsContent
 import proton.android.pass.features.home.R
 
@@ -161,7 +162,7 @@ internal fun IdentityOptionsBSContentsPreview(
                     isPinned = false,
                     revision = 1,
                     shareCount = 0,
-                    isOwner = true
+                    shareType = ShareType.Vault
                 ),
                 action = BottomSheetItemAction.None,
                 isRecentSearch = input.second,

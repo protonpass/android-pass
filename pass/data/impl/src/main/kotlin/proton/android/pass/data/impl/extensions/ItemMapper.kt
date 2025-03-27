@@ -32,6 +32,7 @@ import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.entity.AppName
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.entity.PackageName
@@ -73,7 +74,7 @@ fun ItemEntity.toDomain(context: EncryptionContext): Item {
         isPinned = isPinned,
         flags = Flags(flags),
         shareCount = shareCount,
-        isOwner = encryptedKey != null
+        shareType = if (encryptedKey != null) ShareType.Vault else ShareType.Item
     )
 }
 
@@ -93,5 +94,5 @@ fun ItemEntity.toEncryptedDomain(): ItemEncrypted = ItemEncrypted(
     isPinned = isPinned,
     flags = Flags(flags),
     shareCount = shareCount,
-    isOwner = encryptedKey != null
+    shareType = if (encryptedKey != null) ShareType.Vault else ShareType.Item
 )

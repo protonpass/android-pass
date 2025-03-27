@@ -22,6 +22,11 @@ enum class ShareType(val value: Int) {
     Vault(1),
     Item(2);
 
+    val isVaultShare: Boolean
+        get() = this == Vault
+    val isItemShare: Boolean
+        get() = this == Item
+
     companion object {
 
         val map = entries.associateBy { it.value }

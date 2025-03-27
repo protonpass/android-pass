@@ -30,6 +30,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PersonalDetailsContent
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.WorkDetailsContent
 
 internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
@@ -50,7 +51,7 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
             isPinned = true,
             revision = 1,
             shareCount = 0,
-            isOwner = true
+            shareType = ShareType.Vault
         ),
         ItemUiModel(
             id = ItemId("123"),
@@ -75,7 +76,7 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
             isPinned = true,
             revision = 1,
             shareCount = 0,
-            isOwner = true
+            shareType = ShareType.Vault
         ),
         ItemUiModel(
             id = ItemId("123"),
@@ -93,7 +94,7 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
             isPinned = true,
             revision = 1,
             shareCount = 0,
-            isOwner = true
+            shareType = ShareType.Vault
         ),
         ItemUiModel(
             id = ItemId("123"),
@@ -116,7 +117,7 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
             isPinned = true,
             revision = 1,
             shareCount = 0,
-            isOwner = true
+            shareType = ShareType.Vault
         ),
         ItemUiModel(
             id = ItemId("123"),
@@ -138,7 +139,7 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
             isPinned = true,
             revision = 1,
             shareCount = 0,
-            isOwner = true
+            shareType = ShareType.Vault
         ),
         ItemUiModel(
             id = ItemId("123"),
@@ -157,7 +158,7 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
             isPinned = true,
             revision = 1,
             shareCount = 0,
-            isOwner = true
+            shareType = ShareType.Vault
         )
     )
 }

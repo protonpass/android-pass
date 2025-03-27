@@ -44,6 +44,7 @@ import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareType
 
 private const val PIN_LENGTH = 5
 
@@ -106,7 +107,7 @@ fun PinCarouselPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                         isPinned = true,
                         revision = 1,
                         shareCount = 0,
-                        isOwner = true
+                        shareType = ShareType.Vault
                     ),
                     ItemUiModel(
                         id = ItemId("2"),
@@ -131,7 +132,7 @@ fun PinCarouselPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                         isPinned = true,
                         revision = 1,
                         shareCount = 0,
-                        isOwner = true
+                        shareType = ShareType.Vault
                     )
                 ),
                 canLoadExternalImages = false,

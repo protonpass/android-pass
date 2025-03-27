@@ -179,7 +179,7 @@ class CreateCreditCardViewModelTest {
                             category = ItemCategory.CreditCard,
                             revision = item.revision,
                             shareCount = item.shareCount,
-                            isOwner = item.isOwner
+                            shareType = item.shareType
                         )
                     )
                 )

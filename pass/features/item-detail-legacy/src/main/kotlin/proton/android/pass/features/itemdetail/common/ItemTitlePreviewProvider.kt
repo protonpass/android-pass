@@ -32,6 +32,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.SharePermission
 import proton.android.pass.domain.SharePermissionFlag
 import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.VaultId
 import java.util.Date
 
@@ -158,7 +159,7 @@ data class ItemTitleInput(
         isPinned = false,
         revision = 1,
         shareCount = 0,
-        isOwner = true
+        shareType = ShareType.Vault
     ),
     val share: Share,
     val isPinned: Boolean,

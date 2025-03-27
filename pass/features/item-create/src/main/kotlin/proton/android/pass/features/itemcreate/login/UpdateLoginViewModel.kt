@@ -87,6 +87,7 @@ import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.AttachmentsInitError
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.InitError
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.ItemLinkAttachmentsError
+import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.ItemRenameAttachmentsError
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.ItemUpdateError
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.UpdateAppToUpdateItemError
 import proton.android.pass.log.api.PassLogger
@@ -98,7 +99,6 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
-import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.ItemRenameAttachmentsError as ItemRenameAttachmentsError1
 
 @[HiltViewModel Suppress("LongParameterList")]
 class UpdateLoginViewModel @Inject constructor(
@@ -388,7 +388,7 @@ class UpdateLoginViewModel @Inject constructor(
                 }.onFailure {
                     PassLogger.w(TAG, "Error renaming attachments")
                     PassLogger.w(TAG, it)
-                    snackbarDispatcher(ItemRenameAttachmentsError1)
+                    snackbarDispatcher(ItemRenameAttachmentsError)
                 }
                 runCatching {
                     linkAttachmentsToItem(item.shareId, item.id, item.revision)

@@ -26,6 +26,7 @@ import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareType
 
 internal class LoginRowPreviewProvider : PreviewParameterProvider<LoginRowParameter> {
 
@@ -104,7 +105,7 @@ internal class LoginRowPreviewProvider : PreviewParameterProvider<LoginRowParame
                 isPinned = false,
                 revision = 1,
                 shareCount = 0,
-                isOwner = true
+                shareType = ShareType.Vault
             ),
             highlight = highlight
         )

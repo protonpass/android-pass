@@ -28,6 +28,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PersonalDetailsContent
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.WorkDetailsContent
 
 class IdentityRowPreviewProvider : PreviewParameterProvider<IdentityRowParameter> {
@@ -70,7 +71,7 @@ class IdentityRowPreviewProvider : PreviewParameterProvider<IdentityRowParameter
                 isPinned = false,
                 revision = 1,
                 shareCount = 0,
-                isOwner = true
+                shareType = ShareType.Vault
             ),
             highlight = highlight
         )

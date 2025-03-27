@@ -46,7 +46,7 @@ class RenameAttachmentsImpl @Inject constructor(
         PassLogger.i(TAG, "Renaming ${pendingRenames.size} attachments")
         val userId = accountManager.getPrimaryUserId().firstOrNull()
             ?: throw UserIdNotAvailableError()
-        runConcurrently(
+        val results: List<Result<Unit>> = runConcurrently(
             items = pendingRenames.entries,
             block = { (attachmentId, rename) ->
                 attachmentRepository.updateFileMetadata(
@@ -56,16 +56,13 @@ class RenameAttachmentsImpl @Inject constructor(
                     attachmentId = attachmentId,
                     title = rename
                 )
-            },
-            onSuccess = { _, _ ->
-                PassLogger.i(TAG, "Successfully renamed attachments")
-            },
-            onFailure = { _, error ->
-                PassLogger.w(TAG, "Failed to rename attachments")
-                PassLogger.w(TAG, error)
-                throw error
             }
         )
+        val (_, errors) = results.partition { it.isSuccess }
+        if (errors.isNotEmpty()) {
+            throw errors.firstNotNullOfOrNull { it.exceptionOrNull() }
+                ?: IllegalStateException("An unknown error occurred while renaming attachments")
+        }
     }
 
     companion object {

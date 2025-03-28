@@ -19,6 +19,7 @@
 package proton.android.pass.commonpresentation.impl.attachments
 
 import android.content.Context
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -64,9 +65,8 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import java.net.URI
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
+@ViewModelScoped
 class AttachmentsHandlerImpl @Inject constructor(
     private val draftAttachmentRepository: DraftAttachmentRepository,
     private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,

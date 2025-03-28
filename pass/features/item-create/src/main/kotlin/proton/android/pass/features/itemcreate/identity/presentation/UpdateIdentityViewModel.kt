@@ -139,9 +139,9 @@ class UpdateIdentityViewModel @Inject constructor(
                 item
             }
         }.onSuccess { item ->
+            snackbarDispatcher(ItemUpdated)
             identityActionsProvider.onItemSavedState(item)
             telemetryManager.sendEvent(ItemCreate(EventItemType.Identity))
-            snackbarDispatcher(ItemUpdated)
         }.onFailure {
             PassLogger.w(TAG, "Could not update item")
             PassLogger.w(TAG, it)

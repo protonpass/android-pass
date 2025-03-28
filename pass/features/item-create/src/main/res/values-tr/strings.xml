@@ -205,9 +205,6 @@
   <string name="banner_title_attachments">Ek dosyalar</string>
   <string name="banner_body_attachments">Daha iyi bir düzen için ögelere dosyalar ekleyebilirsiniz</string>
   <string name="open_with">Şununla aç:</string>
-  <string name="open_attachments_error">Ek dosya açılamadı</string>
-  <string name="upload_attachments_error">Ek dosya yüklenemedi</string>
-  <string name="attachment_size_exceeded_error">Seçilmiş dosya boyutu sınırı aşıyor. Lütfen 100MB boyutundan daha küçük bir dosya seçin.</string>
   <string name="banner_advanced_options_title">Biliyor muydunuz?</string>
   <string name="banner_advanced_options_subtitle">Takma adı istediğiniz gibi özelleştirmek için dişli simgesine dokunun.</string>
   <string name="banner_custom_domain_title">Biliyor muydunuz?</string>

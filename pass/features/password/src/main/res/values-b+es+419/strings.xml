@@ -6,7 +6,7 @@
   <string name="password_type">Tipo</string>
   <string name="special_characters">Caracteres especiales (!&amp;*)</string>
   <plurals name="character_count">
-    <item quantity="one">%s caracter</item>
+    <item quantity="one">%s carácter</item>
     <item quantity="other">%s caracteres</item>
   </plurals>
   <plurals name="word_count">

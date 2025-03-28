@@ -235,14 +235,14 @@
   </plurals>
   <plurals name="time_unit_weeks">
     <item quantity="one">%d неделя</item>
-    <item quantity="few">%d недель</item>
-    <item quantity="many">%d недели</item>
+    <item quantity="few">%d недели</item>
+    <item quantity="many">%d недель</item>
     <item quantity="other">%d недели</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d день</item>
     <item quantity="few">%d дня</item>
-    <item quantity="many">%d дня</item>
+    <item quantity="many">%d дней</item>
     <item quantity="other">%d дня</item>
   </plurals>
   <plurals name="time_unit_hours">
@@ -253,14 +253,14 @@
   </plurals>
   <plurals name="time_unit_minutes">
     <item quantity="one">%d минута</item>
-    <item quantity="few">%d мин</item>
+    <item quantity="few">%d минуты</item>
     <item quantity="many">%d мин</item>
-    <item quantity="other">%d мин</item>
+    <item quantity="other">%d минут</item>
   </plurals>
   <plurals name="time_unit_seconds">
     <item quantity="one">%d секунда</item>
-    <item quantity="few">%d секунд</item>
-    <item quantity="many">%d секунды</item>
+    <item quantity="few">%d секунды</item>
+    <item quantity="many">%d секунд</item>
     <item quantity="other">%d секунды</item>
   </plurals>
   <plurals name="aliases_count">
@@ -320,13 +320,13 @@
   <plurals name="shared_items_count">
     <item quantity="one">%d общий элемент</item>
     <item quantity="few">%d общих элемента</item>
-    <item quantity="many">%d общий элементов</item>
-    <item quantity="other">%d общий элементов</item>
+    <item quantity="many">%d общих элементов</item>
+    <item quantity="other">%d общих элементов</item>
   </plurals>
   <plurals name="users_count">
     <item quantity="one">%d пользователь</item>
-    <item quantity="few">%d пользователей</item>
-    <item quantity="many">%d пользователя</item>
+    <item quantity="few">%d пользователя</item>
+    <item quantity="many">%d пользователей</item>
     <item quantity="other">%d пользователя</item>
   </plurals>
   <plurals name="members_count">

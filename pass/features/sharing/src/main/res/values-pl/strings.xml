@@ -25,9 +25,9 @@
   <string name="sharing_can_manage_description">Zarządza dostępem do sejfu.</string>
   <plurals name="sharing_item_count">
     <item quantity="one">%d element</item>
-    <item quantity="few">%d items</item>
-    <item quantity="many">%d items</item>
-    <item quantity="other">%d items</item>
+    <item quantity="few">%d elementy</item>
+    <item quantity="many">%d elementów</item>
+    <item quantity="other">%d elementów</item>
   </plurals>
   <plurals name="sharing_member_count">
     <item quantity="one">%d użytkownik</item>
@@ -39,7 +39,7 @@
   <string name="shared_via_title">Udostępniono przez</string>
   <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Item sharing: %s</string>
   <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Vault sharing: %s</string>
-  <string name="share_with_title">Udostępnij</string>
+  <string name="share_with_title">Udostępnij użytkownikowi</string>
   <string name="share_with_email_hint">Adres e-mail</string>
   <string name="share_with_email_error">Adres e-mail jest nieprawidłowy</string>
   <string name="share_with_email_cannot_invite_outside_org">Nie możesz zapraszać użytkowników spoza swojej organizacji. Skontaktuj się z administratorem, aby uzyskać więcej informacji</string>
@@ -85,9 +85,9 @@
   </plurals>
   <plurals name="share_manage_vault_item_count">
     <item quantity="one">%d element</item>
-    <item quantity="few">%d items</item>
-    <item quantity="many">%d items</item>
-    <item quantity="other">%d items</item>
+    <item quantity="few">%d elementy</item>
+    <item quantity="many">%d elementów</item>
+    <item quantity="other">%d elementów</item>
   </plurals>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Zaproszenie wysłane</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Oczekujące utworzenie konta</string>

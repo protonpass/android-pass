@@ -94,8 +94,8 @@
   <string name="sharing_bottomsheet_transfer_ownership">Siirrä omistajuus</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Et voi siirtää viimeisen omistamasi holvin omistajuutta.</string>
   <string name="sharing_bottomsheet_remove_access">Mitätöi käyttöoikeus</string>
-  <string name="sharing_bottomsheet_item_admin_subtitle">Voi myöntää ja mitätöidä tämän kohteen käyttöoikeuksia.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Voi muokata ja poistaa tämän kohteen.</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Voi myöntää ja mitätöidä kohteen käyttöoikeuksia.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Voi muokata ja poistaa kohteen.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Voi tarkastella tätä kohdetta.</string>
   <string name="sharing_bottomsheet_resend_invite">Lähetä kutsu uudelleen</string>
   <string name="sharing_bottomsheet_cancel_invite">Peru kutsu</string>

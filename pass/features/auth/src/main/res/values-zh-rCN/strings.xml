@@ -20,11 +20,11 @@
   <string name="enter_your_pin_code">输入 PIN 码</string>
   <string name="unlock">解锁</string>
   <plurals name="enter_your_pin_code_error">
-    <item quantity="other">PIN 码无效，剩余 %d 次尝试。</item>
+    <item quantity="other">PIN 码不正确，剩余 %d 次尝试。</item>
   </plurals>
   <string name="auth_unlock_app_title">解锁 Proton Pass</string>
   <string name="auth_unlock_app_subtitle">请输入 %s 的主密码</string>
-  <string name="auth_unlock_app_extra_password_subtitle">输入 %s 的额外密码</string>
+  <string name="auth_unlock_app_extra_password_subtitle">请输入 %s 的额外密码</string>
   <string name="auth_unlock_app_subtitle_account_switch">输入主密码：</string>
   <string name="auth_unlock_app_extra_password_subtitle_account_switch">输入额外密码：</string>
   <string name="auth_master_password_label">主密码</string>

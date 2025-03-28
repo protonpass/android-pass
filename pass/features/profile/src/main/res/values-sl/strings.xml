@@ -62,14 +62,14 @@
   <plurals name="profile_after_minutes">
     <item quantity="one">Po %d minuti</item>
     <item quantity="two">Po %d minutah</item>
-    <item quantity="few">Čez %d minute</item>
-    <item quantity="other">Čez %d minute</item>
+    <item quantity="few">Po %d minutah</item>
+    <item quantity="other">Po %d minutah</item>
   </plurals>
   <plurals name="profile_after_hours">
     <item quantity="one">Po %d uri</item>
     <item quantity="two">Po %d urah</item>
-    <item quantity="few">Čez %d ure</item>
-    <item quantity="other">Čez %d ur</item>
+    <item quantity="few">Po %d urah</item>
+    <item quantity="other">Po %d urah</item>
   </plurals>
   <string name="profile_less_than_a_minute">Manj kot minuto</string>
   <string name="account_switcher_manage_account">Upravljajte račun</string>

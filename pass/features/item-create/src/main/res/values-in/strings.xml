@@ -205,9 +205,6 @@
   <string name="banner_title_attachments">Lampiran</string>
   <string name="banner_body_attachments">Anda dapat melampirkan item ke berkas untuk pengelolaan yang lebih baik</string>
   <string name="open_with">Buka dengan:</string>
-  <string name="open_attachments_error">Gagal membuka lampiran</string>
-  <string name="upload_attachments_error">Gagal mengunggah lampiran</string>
-  <string name="attachment_size_exceeded_error">Berkas yang dipilih melebihi batas ukuran berkas. Silakan pilih berkas yang lebih kecil dari 100 MB.</string>
   <string name="banner_advanced_options_title">Tahukah Anda?</string>
   <string name="banner_advanced_options_subtitle">Ketuk ikon gerigi untuk menyesuaikan alias sesuai keinginan Anda.</string>
   <string name="banner_custom_domain_title">Tahukah Anda?</string>

@@ -23,8 +23,8 @@
   <string name="configure_extra_password_repeat_extra_password">再次输入密码</string>
   <string name="configure_extra_password_description">在登录以及从其他 Proton 应用切换至网页版 Proton Pass 的过程中，系统都会要求您输入该密码。</string>
   <string name="configure_extra_password_warning">警告：如果丢失此密码，您将无法访问Pass账户。</string>
-  <string name="configure_extra_password_mismatch">密码不匹配</string>
-  <string name="extra_password_options_remove">注销</string>
+  <string name="configure_extra_password_mismatch">密码不一致</string>
+  <string name="extra_password_options_remove">移除</string>
   <string name="info_extra_password_title">额外密码</string>
   <string name="info_extra_password_body">使用额外密码保护 Proton Pass。</string>
   <string name="info_extra_password_button">设置额外密码</string>

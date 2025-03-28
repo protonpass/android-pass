@@ -22,6 +22,8 @@
   <string name="add_attachment_choose_a_file">Velg en fil</string>
   <string name="attachment_options_rename">Gi nytt navn</string>
   <string name="attachment_options_delete">Slett</string>
+  <string name="attachment_options_download">Download</string>
+  <string name="attachment_options_share">Share</string>
   <string name="file_picker_open_error">Kunne ikke åpne filvelgeren</string>
   <string name="media_picker_open_error">Kunne ikke åpne medievelgeren</string>
   <string name="camera_open_error">Kunne ikke åpne kameraet</string>

@@ -17,7 +17,7 @@
   <string name="vault_delete_dialog_placeholder">Holvin nimi</string>
   <string name="vault_delete_dialog_cancel_action">Peruuta</string>
   <string name="vault_delete_dialog_delete_action">Poista</string>
-  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">This vault holds %1$s. Deleting it will remove access for all other users.</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Tämä holvi sisältää %1$s. Sen poistaminen estää pääsyn myös muilta käyttäjiltä.</string>
   <string name="vault_leave_dialog_title">Poistu holvista</string>
   <string name="vault_leave_dialog_body">Tämä mitätöi käyttöoikeutesi holviin __VAULT_NAME__ ja sen sisältöön. Haluatko varmasti poistua?</string>
   <string name="vault_leave_dialog_cancel_action">Peruuta</string>

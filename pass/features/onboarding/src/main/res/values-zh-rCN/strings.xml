@@ -6,7 +6,7 @@
   <string name="on_boarding_fingerprint_content">将 Proton Pass 设置为使用指纹解锁，这样只有您才能访问。</string>
   <string name="on_boarding_fingerprint_title">保护您最敏感的数据</string>
   <string name="on_boarding_fingerprint_button">启用指纹锁</string>
-  <string name="on_boarding_last_page_content">不要再分享您的真实电子邮件地址。相反，用电子邮件别名来隐藏它——Proton Pass 独家秘诀。</string>
+  <string name="on_boarding_last_page_content">不要再分享您的真实邮箱地址。相反，用邮箱别名来隐藏它——Proton Pass 独家秘诀。</string>
   <string name="on_boarding_last_page_title">控制收件箱中的内容</string>
   <string name="on_boarding_last_page_button">开始使用 Proton Pass</string>
   <string name="on_boarding_skip">以后再说</string>

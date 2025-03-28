@@ -203,7 +203,7 @@
   <string name="item_details_shared_section_more_info_share_id">Identyfikator sejfu</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
   <string name="item_details_wifi_network_label_password">Hasło</string>
-  <string name="item_details_wifi_network_label_security">Security</string>
+  <string name="item_details_wifi_network_label_security">Bezpieczeństwo</string>
   <string name="item_details_ssh_key_label_public_key">Klucz publiczny</string>
   <string name="item_details_ssh_key_label_private_key">Klucz prywatny</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Wersja aplikacji nie jest obsługiwana. Zaktualizuj aplikację.</string>
@@ -225,7 +225,7 @@
     <item quantity="one">%d rok</item>
     <item quantity="few">%d lata</item>
     <item quantity="many">%d lat</item>
-    <item quantity="other">%d roku</item>
+    <item quantity="other">%d lat</item>
   </plurals>
   <plurals name="time_unit_months">
     <item quantity="one">%d miesiąc</item>
@@ -235,9 +235,9 @@
   </plurals>
   <plurals name="time_unit_weeks">
     <item quantity="one">%d tydzień</item>
-    <item quantity="few">%d tygodni</item>
-    <item quantity="many">%d tygodnie</item>
-    <item quantity="other">%d tygodnie</item>
+    <item quantity="few">%d tygodnie</item>
+    <item quantity="many">%d tygodni</item>
+    <item quantity="other">%d tygodni</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d dzień</item>
@@ -290,8 +290,8 @@
   <string name="simple_login_widget_title">Włącz synchronizację SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
     <item quantity="one">Masz %d alias SimpleLogin, który nie jest widoczny w Proton Pass. Czy chcesz go zaimportować?</item>
-    <item quantity="few">Masz %d aliasów SimpleLogin, które nie są widoczne w Proton Pass. Czy chcesz je zaimportować?</item>
-    <item quantity="many">Masz %d aliasy SimpleLogin, które nie są widoczne w Proton Pass. Czy chcesz je zaimportować?</item>
+    <item quantity="few">Masz %d aliasy SimpleLogin, które nie są widoczne w Proton Pass. Czy chcesz je zaimportować?</item>
+    <item quantity="many">Masz %d aliasów SimpleLogin, które nie są widoczne w Proton Pass. Czy chcesz je zaimportować?</item>
     <item quantity="other">Masz %d aliasów SimpleLogin, które nie są widoczne w Proton Pass. Czy chcesz je zaimportować?</item>
   </plurals>
   <string name="simple_login_widget_action">Synchronizuj aliasy</string>
@@ -331,9 +331,9 @@
   </plurals>
   <plurals name="members_count">
     <item quantity="one">%d członek</item>
-    <item quantity="few">%d użytkowników</item>
-    <item quantity="many">%d użytkowników</item>
-    <item quantity="other">%d użytkowników</item>
+    <item quantity="few">%d członków</item>
+    <item quantity="many">%d członków</item>
+    <item quantity="other">%d członków</item>
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <string name="show_network_qr_code">Show Network QR Code</string>

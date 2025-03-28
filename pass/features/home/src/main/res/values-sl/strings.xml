@@ -141,7 +141,7 @@
   <string name="alert_confirm_restore_all_title">Obnovi vse predmete?</string>
   <string name="alert_confirm_restore_all_message">Ali ste prepričani, da želite obnoviti vse predmete v smetnjaku?</string>
   <plurals name="alert_confirm_restore_items_title">
-    <item quantity="one">Obnovim %d predmet</item>
+    <item quantity="one">Obnovim %d predmet?</item>
     <item quantity="two">Obnovim %d predmeta?</item>
     <item quantity="few">Obnovim %d predmete?</item>
     <item quantity="other">Obnovim %d predmetov?</item>

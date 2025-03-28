@@ -60,6 +60,6 @@
   <string name="alias_contacts_bottomsheet_subtitle">为了保护您的个人邮箱地址不被泄露，您可以创建一个别名联系人，用于隐藏您的真实邮箱地址。</string>
   <string name="alias_contacts_explanation">具体操作如下：</string>
   <string name="alias_contacts_bottomsheet_section_1">输入您要发送电子邮件的地址。</string>
-  <string name="alias_contacts_bottomsheet_section_2">Proton Pass 将生成一个转发地址 ( 也称为反向别名 )。</string>
+  <string name="alias_contacts_bottomsheet_section_2">Proton Pass 将生成一个转发地址（也称为反向别名）。</string>
   <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">向此地址发送邮件，发件人将显示为...</string>
 </resources>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="twenty_vaults">20个保险库</string>
-  <string name="unlimited_email_alias">无限制的电子邮件别名</string>
+  <string name="unlimited_email_alias">不限量的邮箱别名</string>
   <string name="custom_fields">自定义字段</string>
   <string name="restart_to_complete_the_update">重启以完成更新</string>
   <string name="action_restart">重启</string>
-  <string name="shortcut_share_logs_title">共享日志</string>
+  <string name="shortcut_share_logs_title">分享日志</string>
   <string name="no_account_found">未找到帐户</string>
   <string name="no_session_found">未找到会话</string>
   <string name="auth_with_extra_password_failed">使用额外密码验证失败</string>

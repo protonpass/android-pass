@@ -32,8 +32,8 @@
   <string name="security_center_home_row_insecure_passwords_subtitle">更改密码</string>
   <string name="security_center_home_row_reused_passwords_title">重复使用的密码</string>
   <string name="security_center_home_row_reused_passwords_subtitle">生成唯一密码</string>
-  <string name="security_center_home_row_missing_tfa_title">未启用双因素认证</string>
-  <string name="security_center_home_row_missing_tfa_subtitle">设置双因素认证以获得更多安全</string>
+  <string name="security_center_home_row_missing_tfa_title">未启用 2FA</string>
+  <string name="security_center_home_row_missing_tfa_subtitle">设置 2FA 以获得更多安全</string>
   <string name="security_center_home_row_excludes_items_title">从监测中移除</string>
   <string name="security_center_home_row_excludes_items_subtitle">这些项目仍然处于危险中</string>
   <string name="security_center_get_breaches_error">加载泄露信息失败</string>
@@ -55,7 +55,7 @@
   <string name="security_center_reused_pass_top_bar_subtitle">为每个账户生成唯一的密码，以提高安全性。</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">重复使用 %1$d 次</string>
   <!-- Missing 2FA -->
-  <string name="security_center_missing_tfa_top_bar_title">未启用 双因素认证</string>
+  <string name="security_center_missing_tfa_top_bar_title">未启用 2FA</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">为提高安全性，请在以下账户中设置双因素身份验证。</string>
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">不包括的项目</string>
@@ -74,7 +74,7 @@
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">加载自定义电子邮件地址时出错</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">无法获取电子邮件地址</string>
-  <string name="security_center_dark_web_monitor_custom_email_option_remove">注销</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_remove">移除</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">最近一次泄露的时间 %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
     <item quantity="other">在 %s 中发现信息泄露</item>
@@ -82,7 +82,7 @@
   <string name="security_center_dark_web_monitor_found_in_breaches">未检测到数据泄露</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Proton 地址</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email 别名</string>
-  <string name="security_center_dark_web_monitor_proton_addresses_error">检索Proton地址时出错</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">检索 Proton 地址时出错</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">获取 Hide-my-email 别名时出错</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">未监测</string>
   <string name="security_center_dark_web_monitor_see_all">查看全部</string>
@@ -93,9 +93,9 @@
   <!-- Add custom email monitoring -->
   <string name="security_center_custom_email_top_bar_title">自定义电子邮件监测</string>
   <string name="security_center_custom_email_email_address_placeholder">邮箱地址</string>
-  <string name="security_center_custom_email_invalid_address">无效邮件地址</string>
+  <string name="security_center_custom_email_invalid_address">无效邮箱地址</string>
   <string name="security_center_custom_email_continue">继续</string>
-  <string name="security_center_custom_email_already_verified">电子邮件已验证</string>
+  <string name="security_center_custom_email_already_verified">邮箱已验证</string>
   <string name="security_center_custom_email_error_adding">添加电子邮件地址时出错</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_email_title">确认您的邮箱</string>
@@ -121,7 +121,6 @@
   <string name="security_center_report_detail_your_exposed_information">您的泄露信息</string>
   <string name="security_center_report_detail_subtitle">您的信息在一次数据泄露中被发现，并在 __DATE__ 上被发现</string>
   <string name="security_center_report_detail_details">详细信息</string>
-  <string name="security_center_report_detail_email_address">邮箱地址</string>
   <string name="security_center_report_detail_password">密码</string>
   <string name="security_center_report_detail_recommended_actions">建议采取的行动</string>
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">被泄露的信息来自 %s。您的 Proton 账户信息仍然是安全且加密的。</string>

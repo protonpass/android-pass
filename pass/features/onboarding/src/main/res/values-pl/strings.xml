@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="on_boarding_autofill_content">Zezwalaj aplikacji Proton Pass na uzupełnianie danych logowania. Wpisywanie danych lub ich kopiowanie i wklejanie nie jest potrzebne.</string>
-  <string name="on_boarding_autofill_title">Natychmiastowe logowanie się do aplikacji</string>
+  <string name="on_boarding_autofill_title">Błyskawiczne logowanie do aplikacji</string>
   <string name="on_boarding_autofill_button">Autouzupełnianie za pomocą Proton Pass</string>
   <string name="on_boarding_fingerprint_content">Odblokuj aplikację Proton Pass za pomocą odcisku palca.</string>
   <string name="on_boarding_fingerprint_title">Chroń swoje najbardziej poufne dane</string>
@@ -23,7 +23,7 @@
   <string name="onboarding_slide_3_title">Bądź na bieżąco.</string>
   <string name="onboarding_slide_4_title">Bezpieczne udostępnianie.</string>
   <string name="onboarding_slide_1_subtitle">Bezpieczne w jednym miejscu i chronione przez najbardziej zaufaną markę w dziedzinie prywatności.</string>
-  <string name="onboarding_slide_2_subtitle">Używaj aliasów Hide-My-Email przeciwko zagrożeniom phishingowym.</string>
+  <string name="onboarding_slide_2_subtitle">Używaj aliasów hide-my-email przeciwko próbom wyłudzenia informacji.</string>
   <string name="onboarding_slide_3_subtitle">Bezpiecznie i bez wysiłku udostępniaj hasła i poufne informacje.</string>
   <string name="onboarding_slide_4_subtitle">Otrzymuj powiadomienia, gdy Twój adres e-mail zostanie znaleziony w Darknecie.</string>
   <string name="create_an_account_button">Utwórz konto</string>

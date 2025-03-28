@@ -19,7 +19,7 @@
     <item quantity="other">tulosta</item>
   </plurals>
   <string name="item_list_header_identities_type">Identiteetit</string>
-  <string name="item_list_header_custom_type">Custom items</string>
+  <string name="item_list_header_custom_type">Mukautetut kohteet</string>
   <string name="item_list_header_shared_with_me">Jaettu minulle</string>
   <string name="item_list_header_shared_by_me">Minun jakamani</string>
   <!-- Bottomsheets -->
@@ -199,9 +199,9 @@
   <string name="item_details_shared_section_more_info_share_id">Holvin ID</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
   <string name="item_details_wifi_network_label_password">Salasana</string>
-  <string name="item_details_wifi_network_label_security">Security</string>
-  <string name="item_details_ssh_key_label_public_key">Public key</string>
-  <string name="item_details_ssh_key_label_private_key">Private key</string>
+  <string name="item_details_wifi_network_label_security">Suojaus</string>
+  <string name="item_details_ssh_key_label_public_key">Julkinen avain</string>
+  <string name="item_details_ssh_key_label_private_key">Yksityinen avain</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Tätä sovellusversiota ei enää tueta. Päivitä sovelluksesi.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Pääsyavain</string>
@@ -305,6 +305,6 @@
     <item quantity="one">%d jäsen</item>
     <item quantity="other">%d jäsentä</item>
   </plurals>
-  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
-  <string name="show_network_qr_code">Show Network QR Code</string>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">pp kkkk vvvv</string>
+  <string name="show_network_qr_code">Näytä verkon QR-koodi</string>
 </resources>

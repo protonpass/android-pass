@@ -39,7 +39,7 @@
   <string name="login_item_monitor_widget_weak_pass_subtitle">Цей обліковий запис вразливий, відвідайте сервіс та змініть ваш пароль.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d обліковий запис використовує той самий пароль</item>
-    <item quantity="few">%d облікових записів використовують той самий пароль</item>
+    <item quantity="few">%d облікові записи використовують той самий пароль</item>
     <item quantity="many">%d облікових записів використовують той самий пароль</item>
     <item quantity="other">%d облікових записів використовують той самий пароль</item>
   </plurals>
@@ -114,13 +114,13 @@
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s пересилання</item>
     <item quantity="few">%1$s пересилання</item>
-    <item quantity="many">%1$s пересилання</item>
-    <item quantity="other">%1$s пересилання</item>
+    <item quantity="many">%1$s пересилань</item>
+    <item quantity="other">%1$s пересилань</item>
   </plurals>
   <plurals name="alias_replies_count">
     <item quantity="one">%1$s відповідь</item>
     <item quantity="few">%1$s відповіді</item>
-    <item quantity="many">%1$s відповіді</item>
+    <item quantity="many">%1$s відповідей</item>
     <item quantity="other">%1$s відповідей</item>
   </plurals>
   <plurals name="alias_blocks_count">

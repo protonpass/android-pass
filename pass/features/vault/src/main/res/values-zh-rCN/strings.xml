@@ -28,7 +28,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">您已达到可以创建的保险库的限制。升级订阅时创建无限的保险库。</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">要与其他保险库交互，您需要升级您的账户。</string>
   <string name="bottomsheet_upgrade_now">立即升级账户</string>
-  <string name="bottomsheet_edit">更改</string>
+  <string name="bottomsheet_edit">编辑</string>
   <string name="bottomsheet_migrate">将所有项目移至另一个保险库</string>
   <string name="bottomsheet_delete_vault">删除保险库</string>
   <string name="bottomsheet_share_vault">分享</string>

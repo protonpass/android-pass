@@ -22,6 +22,8 @@
   <string name="add_attachment_choose_a_file">Vybrat soubor</string>
   <string name="attachment_options_rename">Přejmenovat</string>
   <string name="attachment_options_delete">Smazat</string>
+  <string name="attachment_options_download">Stáhnout</string>
+  <string name="attachment_options_share">Sdílet</string>
   <string name="file_picker_open_error">Nelze otevřít nástroj pro výběr souborů</string>
   <string name="media_picker_open_error">Nelze otevřít nástroj pro výběr médií</string>
   <string name="camera_open_error">Nelze otevřít fotoaparát</string>

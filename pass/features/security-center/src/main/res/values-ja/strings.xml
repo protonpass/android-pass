@@ -121,7 +121,6 @@
   <string name="security_center_report_detail_your_exposed_information">漏洩した情報</string>
   <string name="security_center_report_detail_subtitle">あなたの情報はデータ侵害に遭い、__DATE__ で発見されました。</string>
   <string name="security_center_report_detail_details">詳細</string>
-  <string name="security_center_report_detail_email_address">メールアドレス</string>
   <string name="security_center_report_detail_password">パスワード</string>
   <string name="security_center_report_detail_recommended_actions">推奨されるアクション</string>
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">危険に晒された情報は%sから漏洩しました。あなたのProtonアカウント情報は安全で暗号化されたままです。</string>

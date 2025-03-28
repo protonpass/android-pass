@@ -18,7 +18,7 @@
     <item quantity="one">rezultat</item>
     <item quantity="two">rezultata</item>
     <item quantity="few">rezultati</item>
-    <item quantity="other">rezultati</item>
+    <item quantity="other">rezultatov</item>
   </plurals>
   <string name="item_list_header_identities_type">Identitete</string>
   <string name="item_list_header_custom_type">Custom items</string>
@@ -98,9 +98,9 @@
   <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
     <item quantity="one">1 predmet</item>
-    <item quantity="two">%d predmeti</item>
-    <item quantity="few">%d predmeta</item>
-    <item quantity="other">%d predmeta</item>
+    <item quantity="two">%d predmeta</item>
+    <item quantity="few">%d predmeti</item>
+    <item quantity="other">%d predmetov</item>
   </plurals>
   <!-- Confirm close dialog -->
   <string name="confirm_close_dialog_title">Zavrzi spremembe?</string>
@@ -223,9 +223,9 @@
   <!-- Time units -->
   <plurals name="time_unit_years">
     <item quantity="one">%d leto</item>
-    <item quantity="two">%d leta</item>
-    <item quantity="few">%d leti</item>
-    <item quantity="other">%d leta</item>
+    <item quantity="two">%d leti</item>
+    <item quantity="few">%d leta</item>
+    <item quantity="other">%d let</item>
   </plurals>
   <plurals name="time_unit_months">
     <item quantity="one">%d mesec</item>
@@ -241,27 +241,27 @@
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d dan</item>
-    <item quantity="two">%d dni</item>
-    <item quantity="few">%d dni</item>
-    <item quantity="other">%d dnevi</item>
+    <item quantity="two">%d dneva</item>
+    <item quantity="few">%d dnevi</item>
+    <item quantity="other">%d dni</item>
   </plurals>
   <plurals name="time_unit_hours">
     <item quantity="one">%d ura</item>
-    <item quantity="two">%d ure</item>
-    <item quantity="few">%d uri</item>
-    <item quantity="other">%d uri</item>
+    <item quantity="two">%d uri</item>
+    <item quantity="few">%d ure</item>
+    <item quantity="other">%d ur</item>
   </plurals>
   <plurals name="time_unit_minutes">
     <item quantity="one">%d minuta</item>
     <item quantity="two">%d minuti</item>
     <item quantity="few">%d minute</item>
-    <item quantity="other">%d minute</item>
+    <item quantity="other">%d minut</item>
   </plurals>
   <plurals name="time_unit_seconds">
     <item quantity="one">%d sekunda</item>
-    <item quantity="two">%d sekunde</item>
-    <item quantity="few">%d sekundi</item>
-    <item quantity="other">%d sekundi</item>
+    <item quantity="two">%d sekundi</item>
+    <item quantity="few">%d sekunde</item>
+    <item quantity="other">%d sekund</item>
   </plurals>
   <plurals name="aliases_count">
     <item quantity="one">%d vzdevek</item>
@@ -325,9 +325,9 @@
   </plurals>
   <plurals name="users_count">
     <item quantity="one">%d uporabnik</item>
-    <item quantity="two">%d uporabnikov</item>
-    <item quantity="few">%d uporabnika</item>
-    <item quantity="other">%d uporabnika</item>
+    <item quantity="two">%d uporabnika</item>
+    <item quantity="few">%d uporabniki</item>
+    <item quantity="other">%d uporabnikov</item>
   </plurals>
   <plurals name="members_count">
     <item quantity="one">%d član</item>

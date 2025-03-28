@@ -205,9 +205,6 @@
   <string name="banner_title_attachments">Pièces jointes</string>
   <string name="banner_body_attachments">Vous pouvez joindre des fichiers aux éléments pour mieux vous organiser.</string>
   <string name="open_with">Ouvrir avec :</string>
-  <string name="open_attachments_error">La pièce jointe n\'a pu être ouverte.</string>
-  <string name="upload_attachments_error">La pièce jointe n\'a pas pu être importée dans le message.</string>
-  <string name="attachment_size_exceeded_error">Le fichier sélectionné dépasse la taille limite. Veuillez choisir un fichier inférieur à 100 Mo.</string>
   <string name="banner_advanced_options_title">Le saviez-vous ?</string>
   <string name="banner_advanced_options_subtitle">Appuyez sur l’icône en forme d\'engrenage pour personnaliser l’alias comme vous le souhaitez.</string>
   <string name="banner_custom_domain_title">Le saviez-vous ?</string>

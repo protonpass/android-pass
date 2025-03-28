@@ -22,6 +22,8 @@
   <string name="add_attachment_choose_a_file">Trieu un fitxer</string>
   <string name="attachment_options_rename">Canvia el nom</string>
   <string name="attachment_options_delete">Elimina</string>
+  <string name="attachment_options_download">Descarrega</string>
+  <string name="attachment_options_share">Comparteix</string>
   <string name="file_picker_open_error">No s\'ha pogut obrir el selector de fitxers.</string>
   <string name="media_picker_open_error">No s\'ha pogut obrir el selector de medià.</string>
   <string name="camera_open_error">No s\'ha pogut obrir la càmera.</string>

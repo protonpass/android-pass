@@ -37,7 +37,7 @@
   <string name="home_snackbar_note_moved_to_trash">Notatka została przeniesiona do Kosza</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Karta płatnicza została przeniesiona do Kosza</string>
   <string name="home_snackbar_identity_moved_to_trash">Tożsamość została przeniesiona do Kosza</string>
-  <string name="home_snackbar_custom_moved_to_trash">Element niestandardowy przeniesiony do kosza</string>
+  <string name="home_snackbar_custom_moved_to_trash">Niestandardowy element został przeniesiony do Kosza</string>
   <string name="home_snackbar_move_to_trash_error">Przenoszenie elementu do Kosza nie powiodło się</string>
   <string name="home_snackbar_items_move_to_trash_success">Elementy zostały przeniesione do Kosza</string>
   <string name="home_snackbar_items_move_to_trash_error">Przenoszenie elementów do Kosza nie powiodło się</string>
@@ -89,9 +89,9 @@
   <string name="vault_drawer_vaults_title">Sejfy</string>
   <plurals name="vault_drawer_vaults_item_count">
     <item quantity="one">%d element</item>
-    <item quantity="few">%d items</item>
-    <item quantity="many">%d items</item>
-    <item quantity="other">%d items</item>
+    <item quantity="few">%d elementy</item>
+    <item quantity="many">%d elementów</item>
+    <item quantity="other">%d elementów</item>
   </plurals>
   <string name="vault_drawer_create_vault">Utwórz sejf</string>
   <string name="vault_drawer_item_trash">Kosz</string>

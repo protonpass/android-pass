@@ -22,6 +22,8 @@
   <string name="add_attachment_choose_a_file">ファイルを選択</string>
   <string name="attachment_options_rename">名前を変更</string>
   <string name="attachment_options_delete">削除</string>
+  <string name="attachment_options_download">Download</string>
+  <string name="attachment_options_share">Share</string>
   <string name="file_picker_open_error">ファイルピッカーを開くことができませんでした</string>
   <string name="media_picker_open_error">メディアピッカーを開くことができませんでした</string>
   <string name="camera_open_error">カメラを開くことができませんでした</string>

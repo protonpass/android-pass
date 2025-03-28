@@ -205,9 +205,6 @@
   <string name="banner_title_attachments">Вкладення</string>
   <string name="banner_body_attachments">Ви можете прикріплювати файли до елементів для кращої організації</string>
   <string name="open_with">Відкрити з:</string>
-  <string name="open_attachments_error">Не вдалося відкрити файл</string>
-  <string name="upload_attachments_error">Не вдалося завантажити файл</string>
-  <string name="attachment_size_exceeded_error">The selected file exceeds the size limit. Please choose a file smaller than 100MB.</string>
   <string name="banner_advanced_options_title">Чи знали ви?</string>
   <string name="banner_advanced_options_subtitle">Торкніться значка шестерні, щоби налаштувати псевдонім так, як вам потрібно.</string>
   <string name="banner_custom_domain_title">Чи знали ви?</string>

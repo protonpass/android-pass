@@ -28,7 +28,7 @@
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
     <item quantity="one">%d ключ безопасности установлен</item>
-    <item quantity="few">%d ключа безопасности установлено</item>
+    <item quantity="few">%d ключа безопасности установлены</item>
     <item quantity="many">%d ключей безопасности установлено</item>
     <item quantity="other">%d ключей безопасности установлено</item>
   </plurals>

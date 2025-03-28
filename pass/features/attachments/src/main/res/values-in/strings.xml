@@ -22,6 +22,8 @@
   <string name="add_attachment_choose_a_file">Pilih berkas</string>
   <string name="attachment_options_rename">Ubah nama</string>
   <string name="attachment_options_delete">Hapus</string>
+  <string name="attachment_options_download">Unduh</string>
+  <string name="attachment_options_share">Bagikan</string>
   <string name="file_picker_open_error">Tidak dapat membuka pemilih berkas</string>
   <string name="media_picker_open_error">Pemilih media tidak dapat dibuka</string>
   <string name="camera_open_error">Kamera tidak dapat dibuka</string>

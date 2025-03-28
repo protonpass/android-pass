@@ -295,7 +295,7 @@ class UpdateAliasViewModel @Inject constructor(
                         content = body
                     )
                 }.onSuccess { item ->
-                    PassLogger.i(TAG, "Alias successfully updated")
+                    snackbarDispatcher(AliasUpdated)
                     if (isFileAttachmentsEnabled()) {
                         runCatching {
                             renameAttachments(item.shareId, item.id)
@@ -326,7 +326,6 @@ class UpdateAliasViewModel @Inject constructor(
                         )
                     }
                     isLoadingState.update { IsLoadingState.NotLoading }
-                    snackbarDispatcher(AliasUpdated)
                     telemetryManager.sendEvent(ItemUpdate(EventItemType.Alias))
                 }.onFailure {
                     PassLogger.w(TAG, "Update alias error")

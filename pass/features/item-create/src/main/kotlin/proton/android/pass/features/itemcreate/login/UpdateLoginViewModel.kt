@@ -87,6 +87,7 @@ import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.AttachmentsInitError
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.InitError
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.ItemLinkAttachmentsError
+import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.ItemRenameAttachmentsError
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.ItemUpdateError
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.UpdateAppToUpdateItemError
 import proton.android.pass.log.api.PassLogger
@@ -98,7 +99,6 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
-import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.ItemRenameAttachmentsError as ItemRenameAttachmentsError1
 
 @[HiltViewModel Suppress("LongParameterList")]
 class UpdateLoginViewModel @Inject constructor(
@@ -382,13 +382,14 @@ class UpdateLoginViewModel @Inject constructor(
                 currentItem
             }
         }.onSuccess { item ->
+            snackbarDispatcher(LoginSnackbarMessages.LoginUpdated)
             if (isFileAttachmentsEnabled()) {
                 runCatching {
                     renameAttachments(item.shareId, item.id)
                 }.onFailure {
                     PassLogger.w(TAG, "Error renaming attachments")
                     PassLogger.w(TAG, it)
-                    snackbarDispatcher(ItemRenameAttachmentsError1)
+                    snackbarDispatcher(ItemRenameAttachmentsError)
                 }
                 runCatching {
                     linkAttachmentsToItem(item.shareId, item.id, item.revision)
@@ -410,7 +411,6 @@ class UpdateLoginViewModel @Inject constructor(
 
             telemetryManager.sendEvent(ItemUpdate(EventItemType.Login))
             send2FAUpdatedTelemetryEvent(currentItem, item)
-            snackbarDispatcher(LoginSnackbarMessages.LoginUpdated)
         }.onFailure {
             val message = if (it is InvalidContentFormatVersionError) {
                 UpdateAppToUpdateItemError

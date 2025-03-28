@@ -176,11 +176,11 @@ class UpdateCustomItemViewModel @Inject constructor(
                     item
                 }
             }.onSuccess { item ->
+                snackbarDispatcher(CustomItemSnackbarMessage.ItemUpdated)
                 linkAttachments(item.shareId, item.id, item.revision)
                 onRenameAttachments(item.shareId, item.id)
                 onItemSavedState(item)
                 telemetryManager.sendEvent(ItemCreate(EventItemType.Custom))
-                snackbarDispatcher(CustomItemSnackbarMessage.ItemUpdated)
             }.onFailure {
                 PassLogger.w(TAG, "Could not update item")
                 PassLogger.w(TAG, it)

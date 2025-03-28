@@ -18,6 +18,9 @@
 
 package proton.android.pass.features.attachments.attachmentoptionsondetail.ui
 
+import android.content.Intent
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -25,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.features.attachments.attachmentoptionsondetail.navigation.AttachmentOptionsOnDetailNavigation
@@ -37,27 +41,46 @@ fun AttachmentOptionsOnDetailBottomsheet(
     viewmodel: AttachmentOptionsOnDetailViewModel = hiltViewModel(),
     onNavigate: (AttachmentOptionsOnDetailNavigation) -> Unit
 ) {
+    val context = LocalContext.current
     val state by viewmodel.state.collectAsStateWithLifecycle()
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val toUri = result.data?.data.toOption()
+        viewmodel.copyFile(context.toClassHolder(), toUri)
+    }
 
     LaunchedEffect(state.event) {
-        when (state.event) {
-            AttachmentOptionsOnDetailEvent.Close -> onNavigate(AttachmentOptionsOnDetailNavigation.CloseBottomsheet)
+        when (val event = state.event) {
+            AttachmentOptionsOnDetailEvent.Close ->
+                onNavigate(AttachmentOptionsOnDetailNavigation.CloseBottomsheet)
+
+            is AttachmentOptionsOnDetailEvent.SaveToLocation ->
+                launcher.launch(createIntent(event.fileName, event.mimeType))
+
             AttachmentOptionsOnDetailEvent.Idle -> {}
         }
         viewmodel.onConsumeEvent(state.event)
     }
 
-    val context = LocalContext.current
     AttachmentOptionsOnDetailContent(
         modifier = modifier.bottomSheet(),
-        canDownload = state.canDownload,
-        isDownloading = state.isDownloading,
+        isDownloading = state.isSavingToLocation,
         isSharing = state.isSharing,
         onEvent = {
             when (it) {
-                AttachmentOptionsOnDetailUIEvent.Download -> viewmodel.download()
+                AttachmentOptionsOnDetailUIEvent.SaveToLocation -> viewmodel.saveToLocation()
                 AttachmentOptionsOnDetailUIEvent.Share -> viewmodel.share(context.toClassHolder())
             }
         }
     )
+}
+
+private fun createIntent(fileTitle: String, mimeType: String): Intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+    addCategory(Intent.CATEGORY_OPENABLE)
+    type = mimeType
+    putExtra(Intent.EXTRA_TITLE, fileTitle)
+    addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
 }

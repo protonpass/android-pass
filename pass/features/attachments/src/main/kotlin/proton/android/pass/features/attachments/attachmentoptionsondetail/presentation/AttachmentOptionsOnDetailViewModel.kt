@@ -19,9 +19,12 @@
 package proton.android.pass.features.attachments.attachmentoptionsondetail.presentation
 
 import android.content.Context
+import android.net.Uri
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -29,25 +32,35 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import proton.android.pass.common.api.FlowUtils.oneShot
+import kotlinx.coroutines.withContext
+import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.usecases.attachments.CheckIfAttachmentExistsLocally
 import proton.android.pass.data.api.usecases.attachments.GetAttachment
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.features.attachments.attachmentoptionsondetail.presentation.AttachmentDetailOptionsSnackbarMessages.AttachmentSavedToLocationError
+import proton.android.pass.features.attachments.attachmentoptionsondetail.presentation.AttachmentDetailOptionsSnackbarMessages.AttachmentSavedToLocationSuccess
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
+import proton.android.pass.notifications.api.SnackbarDispatcher
+import java.io.IOException
+import java.net.URI
 import javax.inject.Inject
 
 @HiltViewModel
 class AttachmentOptionsOnDetailViewModel @Inject constructor(
     private val getAttachment: GetAttachment,
     private val attachmentsHandler: AttachmentsHandler,
-    checkIfAttachmentExistsLocally: CheckIfAttachmentExistsLocally,
+    private val appDispatchers: AppDispatchers,
+    private val snackbarDispatcher: SnackbarDispatcher,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -61,6 +74,7 @@ class AttachmentOptionsOnDetailViewModel @Inject constructor(
         .require<String>(CommonOptionalNavArgId.AttachmentId.key)
         .let(::AttachmentId)
 
+    private val cachedFileUriFlow = MutableStateFlow<Option<URI>>(None)
     private val isDownloadingFlow =
         MutableStateFlow<IsLoadingState>(IsLoadingState.NotLoading)
     private val isSharingFlow =
@@ -72,12 +86,10 @@ class AttachmentOptionsOnDetailViewModel @Inject constructor(
     val state: StateFlow<AttachmentOptionsOnDetailState> = combine(
         isDownloadingFlow,
         isSharingFlow,
-        eventFlow,
-        oneShot { checkIfAttachmentExistsLocally(shareId, itemId, attachmentId) }
-    ) { isDownloading, isSharing, event, attachmentExists ->
+        eventFlow
+    ) { isSavingToLocation, isSharing, event ->
         AttachmentOptionsOnDetailState(
-            canDownload = !attachmentExists,
-            isDownloading = isDownloading.value(),
+            isSavingToLocation = isSavingToLocation.value(),
             isSharing = isSharing.value(),
             event = event
         )
@@ -91,13 +103,23 @@ class AttachmentOptionsOnDetailViewModel @Inject constructor(
         eventFlow.compareAndSet(event, AttachmentOptionsOnDetailEvent.Idle)
     }
 
-    fun download() {
+    fun saveToLocation() {
         viewModelScope.launch {
             isDownloadingFlow.update { IsLoadingState.Loading }
             val attachment = getAttachment(shareId, itemId, attachmentId)
-            attachmentsHandler.loadAttachment(attachment)
-            isDownloadingFlow.update { IsLoadingState.NotLoading }
-            eventFlow.update { AttachmentOptionsOnDetailEvent.Close }
+            val uri = attachmentsHandler.preloadAttachment(attachment)
+            if (uri is Some) {
+                cachedFileUriFlow.update { uri }
+                eventFlow.update {
+                    AttachmentOptionsOnDetailEvent.SaveToLocation(
+                        fileName = attachment.name,
+                        mimeType = attachment.mimeType
+                    )
+                }
+                isDownloadingFlow.update { IsLoadingState.NotLoading }
+            } else {
+                eventFlow.update { AttachmentOptionsOnDetailEvent.Close }
+            }
         }
     }
 
@@ -109,5 +131,42 @@ class AttachmentOptionsOnDetailViewModel @Inject constructor(
             isSharingFlow.update { IsLoadingState.NotLoading }
             eventFlow.update { AttachmentOptionsOnDetailEvent.Close }
         }
+    }
+
+    @Suppress("ThrowsCount")
+    fun copyFile(classHolder: ClassHolder<Context>, toUri: Option<Uri>) {
+        viewModelScope.launch {
+            runCatching {
+                val fromUri = cachedFileUriFlow.value.map { uri -> uri.toString().toUri() }
+                val context = classHolder.get().value()
+                    ?: throw IllegalStateException("Context is not available")
+                if (fromUri is Some && toUri is Some) {
+                    withContext(appDispatchers.io) {
+                        context.contentResolver.openInputStream(fromUri.value)?.use { inputStream ->
+                            context.contentResolver.openOutputStream(toUri.value)
+                                ?.use { outputStream ->
+                                    withContext(NonCancellable) {
+                                        inputStream.copyTo(outputStream)
+                                    }
+                                }
+                                ?: throw IOException("Unable to open output stream for URI: $toUri")
+                        } ?: throw IOException("Unable to open input stream for URI: $fromUri")
+                    }
+                } else {
+                    throw IllegalStateException("Invalid URIs")
+                }
+            }.onFailure {
+                PassLogger.w(TAG, "Failed to copy file")
+                PassLogger.w(TAG, it)
+                snackbarDispatcher(AttachmentSavedToLocationError)
+            }.onSuccess {
+                snackbarDispatcher(AttachmentSavedToLocationSuccess)
+            }
+            eventFlow.update { AttachmentOptionsOnDetailEvent.Close }
+        }
+    }
+
+    companion object {
+        private const val TAG = "AttachmentOptionsOnDetailViewModel"
     }
 }

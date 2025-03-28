@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -18,14 +18,16 @@
 
 package proton.android.pass.features.attachments.attachmentoptionsondetail.presentation
 
-sealed interface AttachmentOptionsOnDetailEvent {
+import androidx.annotation.StringRes
+import proton.android.pass.features.attachments.R
+import proton.android.pass.notifications.api.SnackbarMessage
+import proton.android.pass.notifications.api.SnackbarType
 
-    data object Idle : AttachmentOptionsOnDetailEvent
-
-    data object Close : AttachmentOptionsOnDetailEvent
-
-    data class SaveToLocation(
-        val fileName: String,
-        val mimeType: String
-    ) : AttachmentOptionsOnDetailEvent
+enum class AttachmentDetailOptionsSnackbarMessages(
+    @StringRes override val id: Int,
+    override val type: SnackbarType,
+    override val isClipboard: Boolean = false
+) : SnackbarMessage.StructuredMessage {
+    AttachmentSavedToLocationSuccess(R.string.attachments_saved_to_location_success, SnackbarType.NORM),
+    AttachmentSavedToLocationError(R.string.attachments_saved_to_location_error, SnackbarType.ERROR)
 }

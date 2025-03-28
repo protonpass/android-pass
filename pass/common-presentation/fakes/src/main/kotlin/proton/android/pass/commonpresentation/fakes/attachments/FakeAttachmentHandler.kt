@@ -21,6 +21,8 @@ package proton.android.pass.commonpresentation.fakes.attachments
 import android.content.Context
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
@@ -68,9 +70,7 @@ class FakeAttachmentHandler : AttachmentsHandler {
         // no-op
     }
 
-    override suspend fun loadAttachment(attachment: Attachment) {
-        // no-op
-    }
+    override suspend fun preloadAttachment(attachment: Attachment): Option<URI> = None
 
     override suspend fun shareAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
         // no-op

@@ -41,15 +41,12 @@ import me.proton.core.presentation.R as CoreR
 @Composable
 fun AttachmentOptionsOnDetailContent(
     modifier: Modifier = Modifier,
-    canDownload: Boolean,
     isDownloading: Boolean,
     isSharing: Boolean,
     onEvent: (AttachmentOptionsOnDetailUIEvent) -> Unit
 ) {
     val list = buildList {
-        if (canDownload) {
-            add(downloadFile(isDownloading) { onEvent(AttachmentOptionsOnDetailUIEvent.Download) })
-        }
+        add(downloadFile(isDownloading) { onEvent(AttachmentOptionsOnDetailUIEvent.SaveToLocation) })
         add(shareFile(isSharing) { onEvent(AttachmentOptionsOnDetailUIEvent.Share) })
     }.withDividers().toPersistentList()
     BottomSheetItemList(
@@ -110,7 +107,6 @@ fun AttachmentOptionsContentPreview(@PreviewParameter(ThemePreviewProvider::clas
     PassTheme(isDark = isDark) {
         Surface {
             AttachmentOptionsOnDetailContent(
-                canDownload = true,
                 isDownloading = false,
                 isSharing = false,
                 onEvent = {}

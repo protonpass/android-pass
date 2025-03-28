@@ -35,21 +35,21 @@
   <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">за апошнія 14 дзён.</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
     <item quantity="one">%1$d перасланы</item>
-    <item quantity="few">%1$d пераслана</item>
-    <item quantity="many">%1$d пераслана</item>
-    <item quantity="other">%1$d пераслана</item>
+    <item quantity="few">%1$d перасланыя</item>
+    <item quantity="many">%1$d перасланых</item>
+    <item quantity="other">%1$d перасланых</item>
   </plurals>
   <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
     <item quantity="one">%1$d адпраўлены</item>
-    <item quantity="few">%1$d адпраўлена</item>
-    <item quantity="many">%1$d адпраўлена</item>
-    <item quantity="other">%1$d адпраўлена</item>
+    <item quantity="few">%1$d адпраўленыя</item>
+    <item quantity="many">%1$d адпраўленых</item>
+    <item quantity="other">%1$d адпраўленых</item>
   </plurals>
   <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
     <item quantity="one">%1$d заблакіраваны</item>
-    <item quantity="few">%1$d заблакіравана</item>
-    <item quantity="many">%1$d заблакіравана</item>
-    <item quantity="other">%1$d заблакіравана</item>
+    <item quantity="few">%1$d заблакіраваныя</item>
+    <item quantity="many">%1$d заблакіраваных</item>
+    <item quantity="other">%1$d заблакіраваных</item>
   </plurals>
   <string name="blocked_addresses_subtitle">Заблакіраваныя адрасы</string>
   <string name="forwarding_addresses_subtitle">Адрасы перасылкі</string>

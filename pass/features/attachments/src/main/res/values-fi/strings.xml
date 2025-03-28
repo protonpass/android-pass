@@ -22,6 +22,8 @@
   <string name="add_attachment_choose_a_file">Valitse tiedosto</string>
   <string name="attachment_options_rename">Nimeä uudelleen</string>
   <string name="attachment_options_delete">Poista</string>
+  <string name="attachment_options_download">Download</string>
+  <string name="attachment_options_share">Share</string>
   <string name="file_picker_open_error">Tiedostovalitsinta ei voitu avata</string>
   <string name="media_picker_open_error">Mediavalitsinta ei voitu avata</string>
   <string name="camera_open_error">Kameraa ei voitu avata</string>

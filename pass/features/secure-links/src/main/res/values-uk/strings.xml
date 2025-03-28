@@ -49,9 +49,9 @@
   <string name="secure_links_list_expired_description">Протерміновано</string>
   <plurals name="secure_links_list_viewed_times_description">
     <item quantity="one">%d перегляд</item>
-    <item quantity="few">%d переглядів</item>
-    <item quantity="many">%d перегляди</item>
-    <item quantity="other">%d перегляди</item>
+    <item quantity="few">%d перегляди</item>
+    <item quantity="many">%d переглядів</item>
+    <item quantity="other">%d переглядів</item>
   </plurals>
   <string name="secure_links_list_snackbar_message_links_fetch_error">Виникла помилка при отриманні захищених посилань</string>
   <string name="secure_links_list_header_title_inactive">Неактивні посилання</string>

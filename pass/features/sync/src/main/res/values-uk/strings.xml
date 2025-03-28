@@ -26,7 +26,7 @@
   </plurals>
   <plurals name="sync_finished_item_count">
     <item quantity="one">%d елемент синхронізовано</item>
-    <item quantity="few">%d елементів синхронізовано</item>
+    <item quantity="few">%d елементи синхронізовано</item>
     <item quantity="many">%d елементів синхронізовано</item>
     <item quantity="other">%d елементів синхронізовано</item>
   </plurals>

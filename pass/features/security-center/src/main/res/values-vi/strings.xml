@@ -121,7 +121,6 @@
   <string name="security_center_report_detail_your_exposed_information">Các thông tin đã bị lộ</string>
   <string name="security_center_report_detail_subtitle">Thông tin của bạn được tìm thấy trong một vụ rò rỉ dữ liệu vào __DATE__</string>
   <string name="security_center_report_detail_details">Chi tiết</string>
-  <string name="security_center_report_detail_email_address">Địa chỉ email</string>
   <string name="security_center_report_detail_password">Mật khẩu</string>
   <string name="security_center_report_detail_recommended_actions">Hành động được đề xuất</string>
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">Thông tin bị lộ đã bị rò rỉ từ %s. Thông tin Tài khoản Proton của bạn luôn an toàn</string>

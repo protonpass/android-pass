@@ -22,6 +22,8 @@
   <string name="add_attachment_choose_a_file">ფაილის არჩევა</string>
   <string name="attachment_options_rename">გადარქმევა</string>
   <string name="attachment_options_delete">წაშლა</string>
+  <string name="attachment_options_download">Download</string>
+  <string name="attachment_options_share">Share</string>
   <string name="file_picker_open_error">ვერ გავხსენი ფაილის ამრჩევი</string>
   <string name="media_picker_open_error">ვერ გავხსენი მედიაფაილის ამრჩევი</string>
   <string name="camera_open_error">კამერა ვერ გავხსენი</string>

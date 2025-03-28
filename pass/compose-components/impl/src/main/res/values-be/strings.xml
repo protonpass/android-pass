@@ -97,7 +97,7 @@
   <string name="search_topbar_icon_content_description">Значок пошуку</string>
   <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
-    <item quantity="one">%d элемент</item>
+    <item quantity="one">1 элемент</item>
     <item quantity="few">%d элементы</item>
     <item quantity="many">%d элементаў</item>
     <item quantity="other">%d элементаў</item>
@@ -289,10 +289,10 @@
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Уключыць сінхранізацыю SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="one">Мы выявілі, што ў вас ёсць %d псеўданім, які прысутнічае ў SimpleLogin, але адсутнічае ў Proton Pass. Магчыма, што вы хочаце імпартаваць яго?</item>
-    <item quantity="few">Мы выявілі, што ў вас ёсць %d псеўданімы, якія прысутнічаюць у SimpleLogin, але адсутнічаюць у Proton Pass. Магчыма, што вы хочаце імпартаваць іх?</item>
-    <item quantity="many">Мы выявілі, што ў вас ёсць %d псеўданімаў, якія прысутнічаюць у SimpleLogin, але адсутнічаюць у Proton Pass. Магчыма, што вы хочаце імпартаваць іх?</item>
-    <item quantity="other">Мы выявілі, што ў вас ёсць %d псеўданімаў, якія прысутнічаюць у SimpleLogin, але адсутнічаюць у Proton Pass. Магчыма, што вы хочаце імпартаваць іх?</item>
+    <item quantity="one">Мы выявілі, што ў вас ёсць %d псеўданім, які прысутнічае ў SimpleLogin, але адсутнічае ў Proton Pass. Хочаце імпартаваць яго?</item>
+    <item quantity="few">Мы выявілі, што ў вас ёсць %d псеўданімы, якія прысутнічаюць у SimpleLogin, але адсутнічаюць у Proton Pass. Хочаце імпартаваць іх?</item>
+    <item quantity="many">Мы выявілі, што ў вас ёсць %d псеўданімаў, якія прысутнічаюць у SimpleLogin, але адсутнічаюць у Proton Pass. Хочаце імпартаваць іх?</item>
+    <item quantity="other">Мы выявілі, што ў вас ёсць %d псеўданімаў, якія прысутнічаюць у SimpleLogin, але адсутнічаюць у Proton Pass. Хочаце імпартаваць іх?</item>
   </plurals>
   <string name="simple_login_widget_action">Сінхранізаваць псеўданімы</string>
   <!-- Verification codes -->
@@ -324,8 +324,8 @@
     <item quantity="other">%d абагуленых элементаў</item>
   </plurals>
   <plurals name="users_count">
-    <item quantity="one">%d карыстальніка</item>
-    <item quantity="few">%d карыстальнікаў</item>
+    <item quantity="one">%d карыстальнік</item>
+    <item quantity="few">%d карыстальнікі</item>
     <item quantity="many">%d карыстальнікаў</item>
     <item quantity="other">%d карыстальнікаў</item>
   </plurals>
@@ -336,5 +336,5 @@
     <item quantity="other">%d удзельнікаў</item>
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">дд ММММ гггг</string>
-  <string name="show_network_qr_code">Show Network QR Code</string>
+  <string name="show_network_qr_code">Паказаць QR-код сеткі</string>
 </resources>

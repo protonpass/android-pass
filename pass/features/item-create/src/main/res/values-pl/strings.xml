@@ -57,7 +57,7 @@
   <string name="custom_field_hidden_placeholder">Dodaj ukryty tekst</string>
   <string name="custom_field_hidden_icon_content_description">Ikona ukrytego pola niestandardowego</string>
   <string name="custom_field_text_placeholder">Dodaj tekst</string>
-  <string name="custom_field_date_placeholder">Add date</string>
+  <string name="custom_field_date_placeholder">Dodaj datę</string>
   <string name="custom_field_dialog_title">Nazwa pola niestandardowego</string>
   <string name="custom_field_dialog_body">Wpisz nazwę pola niestandardowego</string>
   <string name="custom_field_dialog_placeholder">Np. identyfikator użytkownika, kod PIN</string>
@@ -205,9 +205,6 @@
   <string name="banner_title_attachments">Załączniki</string>
   <string name="banner_body_attachments">Do elementów możesz dodać pliki</string>
   <string name="open_with">Otwórz za pomocą:</string>
-  <string name="open_attachments_error">Nie można otworzyć załącznika</string>
-  <string name="upload_attachments_error">Nie można przesłać załącznika</string>
-  <string name="attachment_size_exceeded_error">The selected file exceeds the size limit. Please choose a file smaller than 100MB.</string>
   <string name="banner_advanced_options_title">Czy wiesz?</string>
   <string name="banner_advanced_options_subtitle">Tap the gear icon to customize the alias the way you want.</string>
   <string name="banner_custom_domain_title">Czy wiesz?</string>
@@ -226,9 +223,9 @@
   <string name="template_item_server">Serwer</string>
   <string name="template_item_software_license">Licencja oprogramowania</string>
   <string name="template_item_ssh_key">Klucz SSH</string>
-  <string name="template_item_wifi_network">Sieć WiFi</string>
+  <string name="template_item_wifi_network">Sieć Wi-Fi</string>
   <string name="template_item_bank_account">Konto bankowe</string>
-  <string name="template_item_crypto_wallet">Krypto Wallet</string>
+  <string name="template_item_crypto_wallet">Portfel kryptowalut</string>
   <string name="template_item_driver_license">Prawo jazdy</string>
   <string name="template_item_medical_record">Dokumentacja medyczna</string>
   <string name="template_item_membership">Subskrypcja</string>
@@ -292,7 +289,7 @@
   <string name="template_driver_license_field_issuing_state_country">Issuing State/Country</string>
   <string name="template_driver_license_field_expiry_date">Data wygaśnięcia</string>
   <string name="template_driver_license_field_date_of_birth">Data urodzenia</string>
-  <string name="template_driver_license_field_class">Class</string>
+  <string name="template_driver_license_field_class">Klasa</string>
   <string name="template_driver_license_field_note">Notatka</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Nazwa pacjenta</string>
@@ -345,8 +342,8 @@
   <string name="custom_item_link_attachments_error">Failed to link or unlink attachments to the custom item</string>
   <string name="custom_item_rename_attachments_error">Failed to rename custom item attachments</string>
   <string name="create_custom_item_item_creation_error">Could not create custom item</string>
-  <string name="create_custom_item_item_creation_success">Niestandardowy element utworzony</string>
-  <string name="update_custom_item_item_creation_success">Niestandardowy element zaktualizowany</string>
+  <string name="create_custom_item_item_creation_success">Niestandardowy element został utworzony</string>
+  <string name="update_custom_item_item_creation_success">Niestandardowy element został zaktualizowany</string>
   <string name="update_custom_item_item_creation_error">Could not update custom item</string>
   <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <!-- Cannot create items dialog -->

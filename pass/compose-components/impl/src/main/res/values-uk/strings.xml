@@ -17,8 +17,8 @@
   <plurals name="item_list_header_results">
     <item quantity="one">результат</item>
     <item quantity="few">результати</item>
-    <item quantity="many">результати</item>
-    <item quantity="other">результати</item>
+    <item quantity="many">результатів</item>
+    <item quantity="other">результатів</item>
   </plurals>
   <string name="item_list_header_identities_type">Особисті дані</string>
   <string name="item_list_header_custom_type">Власні елементи</string>
@@ -235,9 +235,9 @@
   </plurals>
   <plurals name="time_unit_weeks">
     <item quantity="one">%d тиждень</item>
-    <item quantity="few">%d тижнів</item>
-    <item quantity="many">%d тижні</item>
-    <item quantity="other">%d тижні</item>
+    <item quantity="few">%d тижні</item>
+    <item quantity="many">%d тижнів</item>
+    <item quantity="other">%d тижнів</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d день</item>
@@ -253,15 +253,15 @@
   </plurals>
   <plurals name="time_unit_minutes">
     <item quantity="one">%d хвилина</item>
-    <item quantity="few">%d хвилин</item>
+    <item quantity="few">%d хвилини</item>
     <item quantity="many">%d хвилин</item>
     <item quantity="other">%d хвилин</item>
   </plurals>
   <plurals name="time_unit_seconds">
     <item quantity="one">%d секунда</item>
-    <item quantity="few">%d секунд</item>
-    <item quantity="many">%d секунди</item>
-    <item quantity="other">%d секунди</item>
+    <item quantity="few">%d секунди</item>
+    <item quantity="many">%d секунд</item>
+    <item quantity="other">%d секунд</item>
   </plurals>
   <plurals name="aliases_count">
     <item quantity="one">%d псевдонім</item>
@@ -290,9 +290,9 @@
   <string name="simple_login_widget_title">Увімкнути синхронізацію SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
     <item quantity="one">Ми виявили, що у вас є %d псевдонім, який присутній у SimpleLogin, але відсутній у Proton Pass. Бажаєте імпортувати його?</item>
-    <item quantity="few">Ми виявили, що у вас є %d псевдоніми, які присутні у SimpleLogin, але відсутній у Proton Pass. Бажаєте імпортувати його?</item>
-    <item quantity="many">Ми виявили, що у вас є %d псевдонімів, які присутні у SimpleLogin, але відсутній у Proton Pass. Бажаєте імпортувати його?</item>
-    <item quantity="other">Ми виявили, що у вас є %d псевдонімів, які присутні у SimpleLogin, але відсутній у Proton Pass. Бажаєте імпортувати його?</item>
+    <item quantity="few">Ми виявили, що у вас є %d псевдоніми, які присутні у SimpleLogin, але відсутні у Proton Pass. Бажаєте імпортувати їх?</item>
+    <item quantity="many">Ми виявили, що у вас є %d псевдонімів, які присутні у SimpleLogin, але відсутні у Proton Pass. Бажаєте імпортувати їх?</item>
+    <item quantity="other">Ми виявили, що у вас є %d псевдонімів, які присутні у SimpleLogin, але відсутні у Proton Pass. Бажаєте імпортувати їх?</item>
   </plurals>
   <string name="simple_login_widget_action">Синхронізувати псевдоніми</string>
   <!-- Verification codes -->
@@ -306,9 +306,9 @@
   <!-- Attachments -->
   <plurals name="attachment_file_amount">
     <item quantity="one">%1$s файл</item>
-    <item quantity="few">%1$s файлів</item>
-    <item quantity="many">%1$s файли</item>
-    <item quantity="other">%1$s файли</item>
+    <item quantity="few">%1$s файли</item>
+    <item quantity="many">%1$s файлів</item>
+    <item quantity="other">%1$s файлів</item>
   </plurals>
   <string name="attachment_title">Вкладення</string>
   <string name="attachment_no_files">Вивантажуйте файли зі свого пристрою</string>
@@ -325,15 +325,15 @@
   </plurals>
   <plurals name="users_count">
     <item quantity="one">%d користувач</item>
-    <item quantity="few">%d користувачів</item>
-    <item quantity="many">%d користувачі</item>
+    <item quantity="few">%d користувачі</item>
+    <item quantity="many">%d користувачів</item>
     <item quantity="other">%d користувачів</item>
   </plurals>
   <plurals name="members_count">
     <item quantity="one">%d учасник</item>
     <item quantity="few">%d учасники</item>
-    <item quantity="many">%d учасники</item>
-    <item quantity="other">%d учасники</item>
+    <item quantity="many">%d учасників</item>
+    <item quantity="other">%d учасників</item>
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">дд ММММ рррр</string>
   <string name="show_network_qr_code">Show Network QR Code</string>

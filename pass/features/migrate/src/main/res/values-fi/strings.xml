@@ -22,7 +22,7 @@
   </plurals>
   <string name="migrate_item_shared_warning_message">Tämä kohde on tällä hetkellä jaettuna. Sen siirtäminen toiseen holviin poistaa pääsyn kaikilta muilta käyttäjiltä.</string>
   <plurals name="migrate_items_shared_warning_message">
-    <item quantity="one">%d item is currently shared. Moving it to another vault will remove access for all other users.</item>
-    <item quantity="other">%d items are currently shared. Moving them to another vault will remove access for all other users.</item>
+    <item quantity="one">%d kohde on jaettu. Sen siirto toiseen holviin poistaa käyttöoikeuden muilta käyttäjiltä.</item>
+    <item quantity="other">%d kohdetta on jaettu. Niiden siirto toiseen holviin poistaa käyttöoikeuden muilta käyttäjiltä.</item>
   </plurals>
 </resources>

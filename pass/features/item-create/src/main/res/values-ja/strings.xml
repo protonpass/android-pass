@@ -205,9 +205,6 @@
   <string name="banner_title_attachments">添付ファイル</string>
   <string name="banner_body_attachments">アイテムにファイルを添付して整理できます</string>
   <string name="open_with">開く：</string>
-  <string name="open_attachments_error">添付ファイルを開くことができませんでした</string>
-  <string name="upload_attachments_error">添付ファイルのアップロードに失敗しました</string>
-  <string name="attachment_size_exceeded_error">The selected file exceeds the size limit. Please choose a file smaller than 100MB.</string>
   <string name="banner_advanced_options_title">ご存知ですか？</string>
   <string name="banner_advanced_options_subtitle">歯車アイコンをタップして、エイリアスを好きなようにカスタマイズします。</string>
   <string name="banner_custom_domain_title">ご存知ですか？</string>

@@ -124,7 +124,6 @@
   <string name="security_center_report_detail_your_exposed_information">Vos informations exposées</string>
   <string name="security_center_report_detail_subtitle">Vos informations ont fait l\'objet d\'une fuite de données et ont été trouvées le __DATE__.</string>
   <string name="security_center_report_detail_details">Informations</string>
-  <string name="security_center_report_detail_email_address">Adresse e-mail</string>
   <string name="security_center_report_detail_password">Mot de passe</string>
   <string name="security_center_report_detail_recommended_actions">Actions recommandées</string>
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">Les informations exposées ont été divulguées depuis %s. Les informations de votre compte Proton restent en sécurité et chiffrées.</string>

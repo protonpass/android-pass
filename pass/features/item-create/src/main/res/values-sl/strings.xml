@@ -147,7 +147,7 @@
   <string name="identity_field_reddit_title">Reddit uporabniško ime</string>
   <string name="identity_field_facebook_title">Facebook domača stran</string>
   <string name="identity_field_yahoo_title">Yahoo uporabniško ime</string>
-  <string name="identity_field_instagram_title">Instagram vzdevek</string>
+  <string name="identity_field_instagram_title">Uporabniško ime za Instagram</string>
   <string name="identity_field_personal_website_title">Osebno spletno mesto</string>
   <string name="identity_field_work_phone_number_title">Službena telefonska številka</string>
   <string name="identity_field_work_email_title">Službeni e-poštni naslov</string>
@@ -162,7 +162,7 @@
   <string name="identity_add_field_reddit">Reddit uporabniško ime</string>
   <string name="identity_add_field_facebook">Facebook domača stran</string>
   <string name="identity_add_field_yahoo">Yahoo uporabniško ime</string>
-  <string name="identity_add_field_instagram">Instagram vzdevek</string>
+  <string name="identity_add_field_instagram">Uporabniško ime za Instagram</string>
   <string name="identity_add_field_personal_website">Osebno spletno mesto</string>
   <string name="identity_add_field_work_phone_number">Službena telefonska številka</string>
   <string name="identity_add_field_work_email_address">Službeni e-poštni naslov</string>
@@ -205,9 +205,6 @@
   <string name="banner_title_attachments">Priponke</string>
   <string name="banner_body_attachments">You can attach files to items for a better organization</string>
   <string name="open_with">Odpri z:</string>
-  <string name="open_attachments_error">Could not open attachment</string>
-  <string name="upload_attachments_error">Could not upload attachment</string>
-  <string name="attachment_size_exceeded_error">The selected file exceeds the size limit. Please choose a file smaller than 100MB.</string>
   <string name="banner_advanced_options_title">Did you know?</string>
   <string name="banner_advanced_options_subtitle">Tap the gear icon to customize the alias the way you want.</string>
   <string name="banner_custom_domain_title">Did you know?</string>

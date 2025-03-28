@@ -91,7 +91,7 @@
   <string name="security_center_dark_web_monitor_found_in_breaches">Brak wykrytych wycieków</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Adresy Proton</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Aliasy hide-my-email</string>
-  <string name="security_center_dark_web_monitor_proton_addresses_error">Wystąpił problem podczas pobierania adresów Proton</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Wystąpił błąd podczas pobierania adresów Proton</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Wystąpił problem podczas pobierania aliasów hide-my-email</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Niemonitorowany</string>
   <string name="security_center_dark_web_monitor_see_all">Zobacz wszystko</string>
@@ -130,7 +130,6 @@
   <string name="security_center_report_detail_your_exposed_information">Twoje ujawnione informacje:</string>
   <string name="security_center_report_detail_subtitle">Twoje informacje zostały znalezione w wycieku danych __DATE__</string>
   <string name="security_center_report_detail_details">Szczegóły</string>
-  <string name="security_center_report_detail_email_address">Adres e-mail</string>
   <string name="security_center_report_detail_password">Hasło</string>
   <string name="security_center_report_detail_recommended_actions">Zalecane kroki</string>
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">Twoje informacje zostały ujawnione przez usługę %s. Informacje konta Proton pozostają bezpieczne i zaszyfrowane.</string>

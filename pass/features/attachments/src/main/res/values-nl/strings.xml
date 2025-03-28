@@ -22,6 +22,8 @@
   <string name="add_attachment_choose_a_file">Kies een bestand</string>
   <string name="attachment_options_rename">Hernoem</string>
   <string name="attachment_options_delete">Verwijderen</string>
+  <string name="attachment_options_download">Download</string>
+  <string name="attachment_options_share">Share</string>
   <string name="file_picker_open_error">Kan de bestandskiezer niet openen</string>
   <string name="media_picker_open_error">Kan de mediakiezer niet openen</string>
   <string name="camera_open_error">Camera kan niet worden geopend</string>

@@ -42,8 +42,8 @@
     <item quantity="other">%1$d enviats</item>
   </plurals>
   <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d bloquejat</item>
-    <item quantity="other">%1$d bloquejats</item>
+    <item quantity="one">%1$d blocat</item>
+    <item quantity="other">%1$d blocats</item>
   </plurals>
   <string name="blocked_addresses_subtitle">Adreces bloquejades</string>
   <string name="forwarding_addresses_subtitle">Adreces de reenviament</string>

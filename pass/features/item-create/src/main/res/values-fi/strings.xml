@@ -10,13 +10,13 @@
   <string name="action_credit_card">Maksukortti</string>
   <string name="action_password">Salasana</string>
   <string name="action_identity">Identiteetti</string>
-  <string name="action_custom">Custom item</string>
+  <string name="action_custom">Mukautettu kohde</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Lisää sovelluksen tai sivuston kirjautumistiedot.</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Hanki sähköpostialias, jota voit käyttää uusissa sovelluksissa.</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Säilytä PIN- tai muita koodeja, tai muita muistiinpanoja.</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Säilytä maksutapojesi tiedot turvallisesti.</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Täytä henkilötietosi</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Create items with fully customized fields</string>
+  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Luo kohteita täysin mukautetuilla kentillä</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Luo turvallinen salasana.</string>
   <!-- Create Login -->
   <string name="field_email_title">Sähköpostiosoite</string>
@@ -49,7 +49,7 @@
   <string name="bottomsheet_custom_field_type_text">Teksti</string>
   <string name="bottomsheet_custom_field_type_hidden">Piilotettu</string>
   <string name="bottomsheet_custom_field_type_totp">2FA-salaisuus (TOTP)</string>
-  <string name="bottomsheet_custom_field_type_date">Date</string>
+  <string name="bottomsheet_custom_field_type_date">Päiväys</string>
   <string name="bottomsheet_custom_field_option_edit">Muokkaa nimeä</string>
   <string name="bottomsheet_custom_field_option_remove">Poista kenttä</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Poista mukautettu kenttä</string>
@@ -57,7 +57,7 @@
   <string name="custom_field_hidden_placeholder">Lisää piilotettu teksti</string>
   <string name="custom_field_hidden_icon_content_description">Mukautetun piilotetun kentän kuvake</string>
   <string name="custom_field_text_placeholder">Lisää teksti</string>
-  <string name="custom_field_date_placeholder">Add date</string>
+  <string name="custom_field_date_placeholder">Lisää päiväys</string>
   <string name="custom_field_dialog_title">Mukautetun kentän nimi</string>
   <string name="custom_field_dialog_body">Nimeä mukautettu kenttä</string>
   <string name="custom_field_dialog_placeholder">Esim. käyttäjätunnus, PIN</string>
@@ -205,9 +205,6 @@
   <string name="banner_title_attachments">Liitteet</string>
   <string name="banner_body_attachments">Voit liittää kohteisiin tiedostoja parempaa organisointia varten</string>
   <string name="open_with">Avaa käyttäen:</string>
-  <string name="open_attachments_error">Liitettä ei voitu avata</string>
-  <string name="upload_attachments_error">Liitettä ei voitu lähettää</string>
-  <string name="attachment_size_exceeded_error">The selected file exceeds the size limit. Please choose a file smaller than 100MB.</string>
   <string name="banner_advanced_options_title">Tiesitkö?</string>
   <string name="banner_advanced_options_subtitle">Tap the gear icon to customize the alias the way you want.</string>
   <string name="banner_custom_domain_title">Tiesitkö?</string>
@@ -221,24 +218,24 @@
   <string name="suffix_subtitle_public_domain">Julkinen verkkotunnus</string>
   <string name="suffix_subtitle_private_domain">Sinun verkkotunnuksesi</string>
   <!-- Templates -->
-  <string name="template_item_api_credential">API Credential</string>
-  <string name="template_item_database">Database</string>
+  <string name="template_item_api_credential">API-tunnistetiedot</string>
+  <string name="template_item_database">Tietokanta</string>
   <string name="template_item_server">Palvelin</string>
-  <string name="template_item_software_license">Software License</string>
-  <string name="template_item_ssh_key">SSH Key</string>
-  <string name="template_item_wifi_network">WiFi Network</string>
-  <string name="template_item_bank_account">Bank Account</string>
-  <string name="template_item_crypto_wallet">Crypto Wallet</string>
-  <string name="template_item_driver_license">Driver License</string>
-  <string name="template_item_medical_record">Medical Record</string>
-  <string name="template_item_membership">Membership</string>
+  <string name="template_item_software_license">Ohjelmistolisenssi</string>
+  <string name="template_item_ssh_key">SSH-avain</string>
+  <string name="template_item_wifi_network">Wi-Fi-verkko</string>
+  <string name="template_item_bank_account">Pankkitili</string>
+  <string name="template_item_crypto_wallet">Kryptolompakko</string>
+  <string name="template_item_driver_license">Ajokortti</string>
+  <string name="template_item_medical_record">Terveystiedot</string>
+  <string name="template_item_membership">Jäsenyys</string>
   <string name="template_item_passport">Passi</string>
-  <string name="template_item_reward_program">Reward Program</string>
-  <string name="template_item_social_security_number">Social Security Number</string>
+  <string name="template_item_reward_program">Palkitsemisohjelma</string>
+  <string name="template_item_social_security_number">Henkilötunnus</string>
   <!-- API Credential Fields -->
-  <string name="template_api_credential_field_api_key">API Key</string>
-  <string name="template_api_credential_field_secret">Secret</string>
-  <string name="template_api_credential_field_expiry_date">Expiry Date</string>
+  <string name="template_api_credential_field_api_key">API-avain</string>
+  <string name="template_api_credential_field_secret">Salaisuus</string>
+  <string name="template_api_credential_field_expiry_date">Voimassaolo päättyy</string>
   <string name="template_api_credential_field_permissions">Käyttöoikeudet</string>
   <string name="template_api_credential_field_note">Muistiinpano</string>
   <!-- Database Fields -->
@@ -246,24 +243,24 @@
   <string name="template_database_field_port">Portti</string>
   <string name="template_database_field_username">Käyttäjätunnus</string>
   <string name="template_database_field_password">Salasana</string>
-  <string name="template_database_field_database_type">Database Type</string>
+  <string name="template_database_field_database_type">Tietokannan tyyppi</string>
   <string name="template_database_field_note">Muistiinpano</string>
   <!-- Server Fields -->
   <string name="template_server_field_ip_address">IP-osoite</string>
-  <string name="template_server_field_hostname">Hostname</string>
-  <string name="template_server_field_os">Operating System</string>
+  <string name="template_server_field_hostname">Isäntänimi</string>
+  <string name="template_server_field_os">Käyttöjärjestelmä</string>
   <string name="template_server_field_username">Käyttäjätunnus</string>
   <string name="template_server_field_password">Salasana</string>
   <string name="template_server_field_note">Muistiinpano</string>
   <!-- Software License Fields -->
-  <string name="template_software_license_field_license_key">License Key</string>
+  <string name="template_software_license_field_license_key">Lisenssikoodi</string>
   <string name="template_software_license_field_product">Tuote</string>
-  <string name="template_software_license_field_expiry_date">Expiry Date</string>
+  <string name="template_software_license_field_expiry_date">Voimassaolo päättyy</string>
   <string name="template_software_license_field_owner">Omistaja</string>
   <string name="template_software_license_field_note">Muistiinpano</string>
   <!-- SSH Key Fields -->
-  <string name="template_ssh_key_field_private_key">Private Key</string>
-  <string name="template_ssh_key_field_public_key">Public Key</string>
+  <string name="template_ssh_key_field_private_key">Yksityinen avain</string>
+  <string name="template_ssh_key_field_public_key">Julkinen avain</string>
   <string name="template_ssh_key_field_username">Käyttäjätunnus</string>
   <string name="template_ssh_key_field_host">Isäntä</string>
   <string name="template_ssh_key_field_note">Muistiinpano</string>
@@ -271,86 +268,86 @@
   <string name="template_wifi_network_field_ssid">SSID</string>
   <string name="template_wifi_network_field_note">Muistiinpano</string>
   <!-- Bank Account Fields -->
-  <string name="template_bank_account_field_bank_name">Bank Name</string>
-  <string name="template_bank_account_field_account_number">Account Number</string>
-  <string name="template_bank_account_field_routing_number">Routing Number</string>
+  <string name="template_bank_account_field_bank_name">Pankin nimi</string>
+  <string name="template_bank_account_field_account_number">Tilinumero</string>
+  <string name="template_bank_account_field_routing_number">FW-numero</string>
   <string name="template_bank_account_field_account_type">Tilin tyyppi</string>
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
-  <string name="template_bank_account_field_holder_name">Holder Name</string>
+  <string name="template_bank_account_field_holder_name">Haltijan nimi</string>
   <string name="template_bank_account_field_note">Muistiinpano</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">Lompakon nimi</string>
   <string name="template_crypto_wallet_field_address">Osoite</string>
-  <string name="template_crypto_wallet_field_private_key">Private Key</string>
-  <string name="template_crypto_wallet_field_seed_phrase">Seed Phrase</string>
+  <string name="template_crypto_wallet_field_private_key">Yksityinen avain</string>
+  <string name="template_crypto_wallet_field_seed_phrase">Siemenlause</string>
   <string name="template_crypto_wallet_field_network">Verkko</string>
   <string name="template_crypto_wallet_field_note">Muistiinpano</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">Koko nimi</string>
-  <string name="template_driver_license_field_license_number">License Number</string>
-  <string name="template_driver_license_field_issuing_state_country">Issuing State/Country</string>
-  <string name="template_driver_license_field_expiry_date">Expiry Date</string>
-  <string name="template_driver_license_field_date_of_birth">Date of Birth</string>
-  <string name="template_driver_license_field_class">Class</string>
+  <string name="template_driver_license_field_license_number">Ajokortin numero</string>
+  <string name="template_driver_license_field_issuing_state_country">Myöntänyt osavaltio/maa</string>
+  <string name="template_driver_license_field_expiry_date">Voimassaolo päättyy</string>
+  <string name="template_driver_license_field_date_of_birth">Syntymäpäivä</string>
+  <string name="template_driver_license_field_class">Luokka</string>
   <string name="template_driver_license_field_note">Muistiinpano</string>
   <!-- Medical Record Fields -->
-  <string name="template_medical_record_field_patient_name">Patient Name</string>
-  <string name="template_medical_record_field_record_number">Record Number</string>
-  <string name="template_medical_record_field_medical_conditions">Medical Conditions</string>
-  <string name="template_medical_record_field_medications">Medications</string>
-  <string name="template_medical_record_field_doctor">Doctor</string>
-  <string name="template_medical_record_field_hospital">Hospital</string>
+  <string name="template_medical_record_field_patient_name">Potilaan nimi</string>
+  <string name="template_medical_record_field_record_number">Tietueen numero</string>
+  <string name="template_medical_record_field_medical_conditions">Hoitotarpeet</string>
+  <string name="template_medical_record_field_medications">Lääkkeet</string>
+  <string name="template_medical_record_field_doctor">Lääkäri</string>
+  <string name="template_medical_record_field_hospital">Sairaala</string>
   <string name="template_medical_record_field_note">Muistiinpano</string>
   <!-- Membership Fields -->
-  <string name="template_membership_field_organization_name">Organization Name</string>
-  <string name="template_membership_field_membership_id">Membership ID</string>
-  <string name="template_membership_field_member_name">Member Name</string>
-  <string name="template_membership_field_expiry_date">Expiry Date</string>
-  <string name="template_membership_field_tier_level">Tier/Level</string>
+  <string name="template_membership_field_organization_name">Organisaation nimi</string>
+  <string name="template_membership_field_membership_id">Jäsentunniste</string>
+  <string name="template_membership_field_member_name">Jäsenen nimi</string>
+  <string name="template_membership_field_expiry_date">Voimassaolo päättyy</string>
+  <string name="template_membership_field_tier_level">Taso/versio</string>
   <string name="template_membership_field_note">Muistiinpano</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">Koko nimi</string>
-  <string name="template_passport_field_passport_number">Passport Number</string>
+  <string name="template_passport_field_passport_number">Passin numero</string>
   <string name="template_passport_field_country">Maa</string>
-  <string name="template_passport_field_expiry_date">Expiry Date</string>
-  <string name="template_passport_field_date_of_birth">Date of Birth</string>
-  <string name="template_passport_field_issuing_authority">Issuing Authority</string>
+  <string name="template_passport_field_expiry_date">Voimassaolo päättyy</string>
+  <string name="template_passport_field_date_of_birth">Syntymäpäivä</string>
+  <string name="template_passport_field_issuing_authority">Myöntäjä</string>
   <string name="template_passport_field_note">Muistiinpano</string>
   <!-- Reward Program Fields -->
-  <string name="template_reward_program_field_program_name">Program Name</string>
-  <string name="template_reward_program_field_member_id">Member ID</string>
-  <string name="template_reward_program_field_points_balance">Points Balance</string>
-  <string name="template_reward_program_field_expiry_date">Expiry Date</string>
-  <string name="template_reward_program_field_tier_status">Tier/Status</string>
+  <string name="template_reward_program_field_program_name">Ohjelman nimi</string>
+  <string name="template_reward_program_field_member_id">Jäsentunniste</string>
+  <string name="template_reward_program_field_points_balance">Pistesaldo</string>
+  <string name="template_reward_program_field_expiry_date">Voimassaolo päättyy</string>
+  <string name="template_reward_program_field_tier_status">Tila/versio</string>
   <string name="template_reward_program_field_note">Muistiinpano</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">Koko nimi</string>
-  <string name="template_social_security_number_field_ssn">Social Security Number</string>
-  <string name="template_social_security_number_field_issuing_country">Issuing Country</string>
+  <string name="template_social_security_number_field_ssn">Henkilötunnus</string>
+  <string name="template_social_security_number_field_issuing_country">Myöntänyt maa</string>
   <string name="template_social_security_number_field_note">Muistiinpano</string>
   <string name="template_header_technology">Teknologia</string>
   <string name="template_header_finance">Talous</string>
   <string name="template_header_personal">Talous</string>
-  <string name="button_start_from_scratch">Start from scratch</string>
-  <string name="select_template_title">Custom item</string>
+  <string name="button_start_from_scratch">Aloita alusta</string>
+  <string name="select_template_title">Mukautettu kohde</string>
   <!-- Custom item screen -->
   <string name="add_custom_field_button">Lisää kenttä</string>
   <string name="add_section_button">Lisää osio</string>
-  <string name="add_public_key_placeholder">Add public key</string>
-  <string name="add_private_key_placeholder">Add private key</string>
-  <string name="add_ssid_placeholder">Add SSID</string>
-  <string name="create_custom_item_init_error">Problem retrieving custom item details</string>
-  <string name="update_custom_item_attachments_init_error">Problem retrieving custom item attachments</string>
-  <string name="custom_item_link_attachments_error">Failed to link or unlink attachments to the custom item</string>
-  <string name="custom_item_rename_attachments_error">Failed to rename custom item attachments</string>
-  <string name="create_custom_item_item_creation_error">Could not create custom item</string>
-  <string name="create_custom_item_item_creation_success">Custom item created</string>
-  <string name="update_custom_item_item_creation_success">Custom item updated</string>
-  <string name="update_custom_item_item_creation_error">Could not update custom item</string>
-  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
+  <string name="add_public_key_placeholder">Lisää julkinen avain</string>
+  <string name="add_private_key_placeholder">Lisää yksityinen avain</string>
+  <string name="add_ssid_placeholder">Lisää SSID</string>
+  <string name="create_custom_item_init_error">Ongelma noudettaessa mukautetun kohteen tietoja</string>
+  <string name="update_custom_item_attachments_init_error">Ongelma noudettaessa mukautetun kohteen liitteitä</string>
+  <string name="custom_item_link_attachments_error">Liitteiden liitos tai kytkentä mukautettuun kohteeseen epäonnistui</string>
+  <string name="custom_item_rename_attachments_error">Mukautetun kohteen liitteiden nimeäminen epäonnistui</string>
+  <string name="create_custom_item_item_creation_error">Mukautettua kohdetta ei voitu luoda</string>
+  <string name="create_custom_item_item_creation_success">Mukautettu kohde luotiin</string>
+  <string name="update_custom_item_item_creation_success">Mukautettu kohde päivitettiin</string>
+  <string name="update_custom_item_item_creation_error">Mukautettua kohdetta ei voitu päivittää</string>
+  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">pp kkkk vvvv</string>
   <!-- Cannot create items dialog -->
-  <string name="cannot_create_items_dialog_title">Cannot create items</string>
-  <string name="cannot_create_items_dialog_message">You don\'t have any vaults with editor or admin access. Try creating one in the main app or ask your organization\'s administrator for support.</string>
-  <string name="wifi_security_type_field_label">Security type</string>
+  <string name="cannot_create_items_dialog_title">Kohteita ei voida luoda</string>
+  <string name="cannot_create_items_dialog_message">Sinulla ei ole holveja muokkaus- tai hallintaoikeuksilla. Yritä luoda holvi pääsovellukseen tai ole yhteydessä organisatiosi tukeen.</string>
+  <string name="wifi_security_type_field_label">Suojaustyyppi</string>
 </resources>

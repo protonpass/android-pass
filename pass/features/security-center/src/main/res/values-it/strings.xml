@@ -124,7 +124,6 @@
   <string name="security_center_report_detail_your_exposed_information">Le tue informazioni rese pubbliche</string>
   <string name="security_center_report_detail_subtitle">Le tue informazioni sono finite in una violazione di dati e sono state trovate il __DATE__</string>
   <string name="security_center_report_detail_details">Dettagli</string>
-  <string name="security_center_report_detail_email_address">Indirizzo email</string>
   <string name="security_center_report_detail_password">Password</string>
   <string name="security_center_report_detail_recommended_actions">Azioni consigliate</string>
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">Le informazioni sono state rese pubbliche da %s. Quelle relative al tuo account Proton rimangono sicure e crittografate.</string>

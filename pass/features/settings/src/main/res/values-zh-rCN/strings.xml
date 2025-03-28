@@ -40,7 +40,7 @@
   <string name="clipboard_option_copy_totp_code">复制身份验证码</string>
   <string name="clipboard_option_copy_totp_code_hint">使用自动填充时自动复制验证码。</string>
   <string name="clipboard_option_clear_clipboard_never">从不</string>
-  <string name="clipboard_option_clear_clipboard_after_60_seconds">1分钟后</string>
+  <string name="clipboard_option_clear_clipboard_after_60_seconds">1 分钟后</string>
   <string name="clipboard_option_clear_clipboard_after_180_seconds">3 分钟后</string>
   <string name="settings_use_digital_asset_link_preference_title">启用数字资产链接</string>
   <string name="settings_use_digital_asset_link_preference_subtitle">在 Android 应用程序和网站之间建立网站所有权验证。</string>

@@ -205,9 +205,6 @@
   <string name="banner_title_attachments">Přílohy</string>
   <string name="banner_body_attachments">Pro lepší organizaci můžete k položkám připojit soubory</string>
   <string name="open_with">Otevřít pomocí:</string>
-  <string name="open_attachments_error">Nepodařilo se otevřít přílohu</string>
-  <string name="upload_attachments_error">Nepodařilo se nahrát přílohu</string>
-  <string name="attachment_size_exceeded_error">Vybraný soubor překračuje limit velikosti. Vyberte prosím soubor menší než 100MB.</string>
   <string name="banner_advanced_options_title">Věděli jste?</string>
   <string name="banner_advanced_options_subtitle">Klepněte na ikonu ozubeného kola a přizpůsobte si alias podle svých představ.</string>
   <string name="banner_custom_domain_title">Věděli jste?</string>

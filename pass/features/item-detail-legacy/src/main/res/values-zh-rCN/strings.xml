@@ -7,7 +7,7 @@
   <string name="top_bar_edit_button_text">更改</string>
   <!-- Alias details -->
   <string name="field_alias_title">别名地址</string>
-  <string name="field_alias_disabled_title">别名地址 (禁用)</string>
+  <string name="field_alias_disabled_title">别名地址（禁用）</string>
   <string name="alias_copied_to_clipboard">别名已复制</string>
   <string name="alias_detail_field_mailboxes_title">转发至</string>
   <string name="alias_create_login_from_alias">创建登录</string>
@@ -33,33 +33,33 @@
   <string name="item_monitor_include_message">成功将项目纳入监测</string>
   <string name="item_monitor_include_message_error">将项目纳入监视时出错</string>
   <string name="alias_change_status_error">更改别名状态时出错</string>
-  <string name="login_item_generate_totp_error">生成双因素认证验证码时出错</string>
+  <string name="login_item_generate_totp_error">生成 2FA 验证码时出错</string>
   <string name="login_item_view_alias_button">查看别名</string>
   <string name="login_item_monitor_widget_weak_pass_title">弱密码</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">此帐户易受攻击，请访问服务并更改您的密码。</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="other">%d 其他登录使用相同密码</item>
   </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">设置双因素认证以获得更多安全</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">该服务提供双因素认证。启用它可提高账户安全性。</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">设置 2FA 以获得更多安全</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">该服务提供 2FA。启用它可提高账户安全性。</string>
   <string name="login_item_reused_passwords_subtitle">使用此密码的保险库项目。</string>
   <string name="field_email">邮箱地址</string>
   <string name="field_username">用户名</string>
   <string name="field_username_or_email">用户名或邮箱地址</string>
   <string name="field_password">密码</string>
   <string name="websites_section_title">网站</string>
-  <string name="totp_section_title">双因素认证密钥 (TOTP)</string>
+  <string name="totp_section_title">2FA 令牌 (TOTP)</string>
   <string name="action_reveal_password">显示密码</string>
   <string name="action_conceal_password">隐藏密码</string>
   <string name="action_reveal_number">显示号码</string>
   <string name="action_conceal_number">隐藏号码</string>
   <string name="share_button_content_description">打开共享按钮</string>
   <string name="open_menu_icon_content_description">打开菜单按钮</string>
-  <string name="mfa_limit_reached">已达到双因素认证数量限制</string>
-  <string name="mfa_icon_content_description">双因素认证图标</string>
+  <string name="mfa_limit_reached">已达 2FA 数量上限</string>
+  <string name="mfa_icon_content_description">2FA 图标</string>
   <string name="custom_field_text_icon_description">文本自定义字段</string>
   <string name="custom_field_hidden_icon_description">隐藏自定义字段</string>
-  <string name="custom_field_totp_icon_description">双因素认证自定义字段</string>
+  <string name="custom_field_totp_icon_description">2FA 自定义字段</string>
   <!-- Credit card details -->
   <string name="credit_card_cardholder_field_name">持卡人姓名</string>
   <string name="credit_card_number_field_name">卡号</string>

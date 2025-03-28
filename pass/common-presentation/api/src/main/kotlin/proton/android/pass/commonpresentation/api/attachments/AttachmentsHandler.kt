@@ -20,6 +20,7 @@ package proton.android.pass.commonpresentation.api.attachments
 
 import android.content.Context
 import kotlinx.coroutines.flow.Flow
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.domain.ItemId
@@ -41,7 +42,7 @@ interface AttachmentsHandler {
 
     suspend fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment)
 
-    suspend fun loadAttachment(attachment: Attachment)
+    suspend fun preloadAttachment(attachment: Attachment): Option<URI>
 
     suspend fun shareAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment)
 

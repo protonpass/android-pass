@@ -39,7 +39,6 @@ import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonpresentation.impl.R
 import proton.android.pass.commonpresentation.impl.attachments.AttachmentSnackbarMessages.AttachmentSizeExceededError
 import proton.android.pass.commonpresentation.impl.attachments.AttachmentSnackbarMessages.DownloadAttachmentsError
-import proton.android.pass.commonpresentation.impl.attachments.AttachmentSnackbarMessages.DownloadAttachmentsSuccess
 import proton.android.pass.commonpresentation.impl.attachments.AttachmentSnackbarMessages.OpenAttachmentsError
 import proton.android.pass.commonpresentation.impl.attachments.AttachmentSnackbarMessages.ShareAttachmentsError
 import proton.android.pass.commonpresentation.impl.attachments.AttachmentSnackbarMessages.UploadAttachmentsError
@@ -147,19 +146,20 @@ class AttachmentsHandlerImpl @Inject constructor(
         loadingAttachments.update { it - attachment.id }
     }
 
-    override suspend fun loadAttachment(attachment: Attachment) {
+    override suspend fun preloadAttachment(attachment: Attachment): Option<URI> {
         loadingAttachments.update { it + attachment.id }
-        runCatching {
+        authOverrideState.setAuthOverride(true)
+        val result = runCatching {
             downloadAttachment(attachment)
         }.onSuccess {
             PassLogger.i(TAG, "Attachment downloaded: ${attachment.id}")
-            snackbarDispatcher(DownloadAttachmentsSuccess)
         }.onFailure {
             PassLogger.w(TAG, "Could not download attachment: ${attachment.id}")
             PassLogger.w(TAG, it)
             snackbarDispatcher(DownloadAttachmentsError)
         }
         loadingAttachments.update { it - attachment.id }
+        return result.getOrNull().toOption()
     }
 
     override suspend fun shareAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {

@@ -19,6 +19,6 @@
 package proton.android.pass.features.attachments.attachmentoptionsondetail.ui
 
 sealed interface AttachmentOptionsOnDetailUIEvent {
-    data object Download : AttachmentOptionsOnDetailUIEvent
+    data object SaveToLocation : AttachmentOptionsOnDetailUIEvent
     data object Share : AttachmentOptionsOnDetailUIEvent
 }

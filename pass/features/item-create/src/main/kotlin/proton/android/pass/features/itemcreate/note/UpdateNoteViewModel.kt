@@ -189,6 +189,7 @@ class UpdateNoteViewModel @Inject constructor(
                     initialItem.value
                 }
             }.onSuccess { item ->
+                snackbarDispatcher(NoteUpdated)
                 if (isFileAttachmentsEnabled()) {
                     runCatching {
                         renameAttachments(item.shareId, item.id)
@@ -213,7 +214,6 @@ class UpdateNoteViewModel @Inject constructor(
                         )
                     }
                 }
-                snackbarDispatcher(NoteUpdated)
                 telemetryManager.sendEvent(ItemUpdate(EventItemType.Note))
             }.onFailure {
                 val message = if (it is InvalidContentFormatVersionError) {

@@ -165,6 +165,7 @@ class UpdateCreditCardViewModel @Inject constructor(
                 initialItem
             }
         }.onSuccess { item ->
+            snackbarDispatcher(CreditCardSnackbarMessage.ItemUpdated)
             if (isFileAttachmentsEnabled()) {
                 runCatching {
                     renameAttachments(item.shareId, item.id)
@@ -188,7 +189,6 @@ class UpdateCreditCardViewModel @Inject constructor(
                     item = encryptionContextProvider.withEncryptionContext { item.toUiModel(this) }
                 )
             }
-            snackbarDispatcher(CreditCardSnackbarMessage.ItemUpdated)
             telemetryManager.sendEvent(ItemUpdate(EventItemType.CreditCard))
         }.onFailure {
             PassLogger.w(TAG, "Update credit card error")

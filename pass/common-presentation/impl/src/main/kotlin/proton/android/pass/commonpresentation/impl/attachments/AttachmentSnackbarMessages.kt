@@ -29,7 +29,6 @@ enum class AttachmentSnackbarMessages(
     override val isClipboard: Boolean = false
 ) : SnackbarMessage.StructuredMessage {
     OpenAttachmentsError(R.string.open_attachments_error, SnackbarType.ERROR),
-    DownloadAttachmentsSuccess(R.string.download_attachments_success, SnackbarType.NORM),
     DownloadAttachmentsError(R.string.download_attachments_error, SnackbarType.ERROR),
     ShareAttachmentsError(R.string.share_attachments_error, SnackbarType.ERROR),
     AttachmentSizeExceededError(R.string.attachment_size_exceeded_error, SnackbarType.ERROR),

@@ -22,6 +22,8 @@
   <string name="add_attachment_choose_a_file">Alegeți un fișier</string>
   <string name="attachment_options_rename">Redenumire</string>
   <string name="attachment_options_delete">Ștergere</string>
+  <string name="attachment_options_download">Descărcare</string>
+  <string name="attachment_options_share">Partajare</string>
   <string name="file_picker_open_error">Nu s-a putut deschide selectorul de fișiere.</string>
   <string name="media_picker_open_error">Nu s-a putut deschide selectorul de fișiere.</string>
   <string name="camera_open_error">Nu s-a putut deschide camera.</string>

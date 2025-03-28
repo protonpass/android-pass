@@ -138,7 +138,7 @@
   <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">别名地址</string>
-  <string name="item_details_alias_section_alias_disabled_title">别名地址 ( 已禁用 )</string>
+  <string name="item_details_alias_section_alias_disabled_title">别名地址（已禁用）</string>
   <string name="item_details_alias_section_mailboxes_title">转发至</string>
   <string name="item_details_credit_card_section_cardholder_title">持卡人姓名</string>
   <string name="item_details_credit_card_section_card_number_title">卡号</string>
@@ -148,7 +148,7 @@
   <string name="item_details_login_section_email_title">邮箱地址</string>
   <string name="item_details_login_section_username_title">用户名</string>
   <string name="item_details_login_section_password_title">密码</string>
-  <string name="item_details_login_section_primary_totp_title">双因素认证密钥 (TOTP)</string>
+  <string name="item_details_login_section_primary_totp_title">2FA 令牌 (TOTP)</string>
   <string name="item_details_login_section_websites_title">网站</string>
   <string name="item_details_identity_section_personal_title">个人资料</string>
   <string name="item_details_identity_section_personal_first_name_title">名</string>
@@ -189,7 +189,7 @@
   <string name="item_details_shared_section_note_title">注释</string>
   <string name="item_details_shared_section_item_history_last_autofill_title">最后自动填充</string>
   <string name="item_details_shared_section_item_history_created_title">创建</string>
-  <string name="item_details_shared_section_item_history_modified_times_title">修改 ( %d )</string>
+  <string name="item_details_shared_section_item_history_modified_times_title">修改 (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">查看项目历史</string>
   <string name="item_details_shared_section_more_info_header_title">更多信息</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">更多项目信息图标</string>

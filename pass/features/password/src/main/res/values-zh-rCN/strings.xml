@@ -4,7 +4,7 @@
   <string name="password_copied_to_clipboard">密码已复制</string>
   <string name="bottomsheet_generate_password_title">生成密码</string>
   <string name="password_type">类型</string>
-  <string name="special_characters">特殊字符(!&amp;*)</string>
+  <string name="special_characters">特殊字符 (!&amp;*)</string>
   <plurals name="character_count">
     <item quantity="other">%s 个字符</item>
   </plurals>

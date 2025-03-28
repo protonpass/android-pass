@@ -205,9 +205,6 @@
   <string name="banner_title_attachments">첨부파일</string>
   <string name="banner_body_attachments">더 나은 조직을 위해 항목에 파일 첨부가 가능합니다.</string>
   <string name="open_with">열기:</string>
-  <string name="open_attachments_error">첨부파일을 열 수 없습니다</string>
-  <string name="upload_attachments_error">첨부 파일을 업로드할 수 없습니다</string>
-  <string name="attachment_size_exceeded_error">The selected file exceeds the size limit. Please choose a file smaller than 100MB.</string>
   <string name="banner_advanced_options_title">알고 계셨나요?</string>
   <string name="banner_advanced_options_subtitle">톱니바퀴 아이콘을 눌러 별칭을 원하는 방식으로 사용자 지정하세요.</string>
   <string name="banner_custom_domain_title">알고 계셨나요?</string>

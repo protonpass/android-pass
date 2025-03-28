@@ -25,7 +25,7 @@
   <string name="home_empty_read_only_vault_title">这个保险库是空的</string>
   <string name="home_empty_read_only_vault_subtitle">你不能向只读保险库添加项目。</string>
   <string name="home_empty_vault_create_login">创建登录</string>
-  <string name="home_empty_vault_create_alias">创建一个 Hide-my-email 别名</string>
+  <string name="home_empty_vault_create_alias">创建 Hide-my-email 别名</string>
   <string name="home_empty_vault_create_note">创建笔记</string>
   <string name="home_empty_vault_create_credit_card">创建信用卡</string>
   <string name="home_empty_vault_create_identity">创建身份</string>
@@ -68,9 +68,9 @@
   <string name="bottomsheet_copy_username">复制用户名</string>
   <string name="bottomsheet_copy_email">复制邮箱地址</string>
   <string name="bottomsheet_copy_number">复制号码</string>
-  <string name="bottomsheet_copy_cvv">复制安全代码</string>
+  <string name="bottomsheet_copy_cvv">复制安全码</string>
   <string name="bottomsheet_copy_note">复制笔记</string>
-  <string name="bottomsheet_edit">更改</string>
+  <string name="bottomsheet_edit">编辑</string>
   <string name="bottomsheet_copy_full_name">复制全名</string>
   <!-- Clipboard -->
   <string name="alias_copied_to_clipboard">别名已复制</string>

@@ -124,7 +124,6 @@
   <string name="security_center_report_detail_your_exposed_information">Οι εκτεθειμένες πληροφορίες σας</string>
   <string name="security_center_report_detail_subtitle">Οι πληροφορίες σας ήταν σε παραβίαση δεδομένων και εντοπίστηκαν στις __DATE__</string>
   <string name="security_center_report_detail_details">Λεπτομέρειες</string>
-  <string name="security_center_report_detail_email_address">Διεύθυνση ηλεκτρονικού ταχυδρομείου</string>
   <string name="security_center_report_detail_password">Κωδικός πρόσβασης</string>
   <string name="security_center_report_detail_recommended_actions">Συνιστώμενες ενέργειες</string>
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">Οι εκτεθειμένες πληροφορίες διέρρευσαν από το %s. Οι πληροφορίες του λογαριασμού Proton παραμένουν ασφαλείς και κρυπτογραφημένες.</string>

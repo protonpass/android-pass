@@ -22,6 +22,8 @@
   <string name="add_attachment_choose_a_file">파일 선택</string>
   <string name="attachment_options_rename">이름 변경</string>
   <string name="attachment_options_delete">삭제</string>
+  <string name="attachment_options_download">Download</string>
+  <string name="attachment_options_share">Share</string>
   <string name="file_picker_open_error">파일 선택기를 열 수 없습니다.</string>
   <string name="media_picker_open_error">미디어 선택기 열 수 없음</string>
   <string name="camera_open_error">카메라 열 수 없음</string>

@@ -22,6 +22,8 @@
   <string name="add_attachment_choose_a_file">选择文件</string>
   <string name="attachment_options_rename">重命名</string>
   <string name="attachment_options_delete">刪除</string>
+  <string name="attachment_options_download">下载</string>
+  <string name="attachment_options_share">分享</string>
   <string name="file_picker_open_error">无法打开文件选择器</string>
   <string name="media_picker_open_error">无法打开媒体播放器</string>
   <string name="camera_open_error">无法打开摄像头</string>

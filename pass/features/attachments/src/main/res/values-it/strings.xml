@@ -22,6 +22,8 @@
   <string name="add_attachment_choose_a_file">Scegli un file</string>
   <string name="attachment_options_rename">Rinomina</string>
   <string name="attachment_options_delete">Elimina</string>
+  <string name="attachment_options_download">Scarica</string>
+  <string name="attachment_options_share">Condividi</string>
   <string name="file_picker_open_error">Apertura del selettore file non riuscita</string>
   <string name="media_picker_open_error">Apertura del selettore media non riuscita</string>
   <string name="camera_open_error">Apertura della fotocamera non riuscita</string>

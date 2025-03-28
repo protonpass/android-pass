@@ -205,9 +205,6 @@
   <string name="banner_title_attachments">Далучэнні</string>
   <string name="banner_body_attachments">Вы можаце далучыць файлы да элементаў для лепшай арганізацыі</string>
   <string name="open_with">Адкрыць праз:</string>
-  <string name="open_attachments_error">Немагчыма адкрыць далучэнне</string>
-  <string name="upload_attachments_error">Немагчыма запампаваць далучэнне</string>
-  <string name="attachment_size_exceeded_error">Памер выбранага файла перавысіў абмежаванне. Выберыце файл менш за 100 МБ.</string>
   <string name="banner_advanced_options_title">Ці ведалі вы што?</string>
   <string name="banner_advanced_options_subtitle">Націсніце значок шасцярэнькі, каб наладзіць псеўданім пад свае патрабаванні.</string>
   <string name="banner_custom_domain_title">Ці ведалі вы што?</string>

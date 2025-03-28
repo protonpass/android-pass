@@ -121,7 +121,6 @@
   <string name="security_center_report_detail_your_exposed_information">사용자의 노출된 정보</string>
   <string name="security_center_report_detail_subtitle">사용자의 정보가 데이터 유출되었으며 __DATE__에 발견되었습니다.</string>
   <string name="security_center_report_detail_details">세부 사항</string>
-  <string name="security_center_report_detail_email_address">이메일 주소</string>
   <string name="security_center_report_detail_password">비밀번호</string>
   <string name="security_center_report_detail_recommended_actions">권장하는 조치</string>
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">노출된 정보가 %s(에)서 유출되었습니다. 사용자의 계정 정보는 안전하고 암호화 상태로 유지됩니다.</string>

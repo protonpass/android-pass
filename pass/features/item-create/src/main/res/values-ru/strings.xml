@@ -205,9 +205,6 @@
   <string name="banner_title_attachments">Вложения</string>
   <string name="banner_body_attachments">You can attach files to items for a better organization</string>
   <string name="open_with">Открыть с помощью:</string>
-  <string name="open_attachments_error">Could not open attachment</string>
-  <string name="upload_attachments_error">Could not upload attachment</string>
-  <string name="attachment_size_exceeded_error">The selected file exceeds the size limit. Please choose a file smaller than 100MB.</string>
   <string name="banner_advanced_options_title">Вы знали?</string>
   <string name="banner_advanced_options_subtitle">Нажмите на значок шестеренки, чтобы настроить псевдоним так, как вам нужно.</string>
   <string name="banner_custom_domain_title">Вы знали?</string>

@@ -67,10 +67,10 @@
   <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Pridať novú vlastnú emailovú adresu</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">Pridať</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
-    <item quantity="one">Použitá v %d prihlásení</item>
-    <item quantity="few">Použitá v %d prihláseniach</item>
-    <item quantity="many">Použitá v %d prihláseniach</item>
-    <item quantity="other">Použitá v %d prihláseniach</item>
+    <item quantity="one">Použité v %d prihlásení</item>
+    <item quantity="few">Použité v %d prihláseniach</item>
+    <item quantity="many">Použité v %d prihláseniach</item>
+    <item quantity="other">Použité v %d prihláseniach</item>
   </plurals>
   <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
     <item quantity="one">%d zistený únik</item>
@@ -130,7 +130,6 @@
   <string name="security_center_report_detail_your_exposed_information">Vaše odhalené informácie</string>
   <string name="security_center_report_detail_subtitle">Vaše informácie boli súčasťou úniku údajov a boli nájdené dňa __DATE__</string>
   <string name="security_center_report_detail_details">Podrobnosti</string>
-  <string name="security_center_report_detail_email_address">Emailová adresa</string>
   <string name="security_center_report_detail_password">Heslo</string>
   <string name="security_center_report_detail_recommended_actions">Odporúčané opatrenia</string>
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">Informácie, ktoré boli zverejnené, unikli z %s. Vaše informácie o Proton účte zostávajú zabezpečené a zašifrované.</string>

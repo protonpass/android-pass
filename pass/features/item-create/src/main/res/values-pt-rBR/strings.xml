@@ -205,9 +205,6 @@
   <string name="banner_title_attachments">Anexos</string>
   <string name="banner_body_attachments">Você pode anexar arquivos para itens para melhor organização</string>
   <string name="open_with">Abrir com:</string>
-  <string name="open_attachments_error">Erro ao abrir o anexo</string>
-  <string name="upload_attachments_error">Erro ao anexar o arquivo à mensagem</string>
-  <string name="attachment_size_exceeded_error">O arquivo selecionado excede o limite de tamanho. Escolha um arquivo menor que 100MB.</string>
   <string name="banner_advanced_options_title">Você sabia?</string>
   <string name="banner_advanced_options_subtitle">Toque no ícone da engrenagem para personalizar o alias que deseja.</string>
   <string name="banner_custom_domain_title">Você sabia?</string>

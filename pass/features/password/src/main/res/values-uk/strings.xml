@@ -14,8 +14,8 @@
   <plurals name="word_count">
     <item quantity="one">%s слово</item>
     <item quantity="few">%s слова</item>
-    <item quantity="many">%s слова</item>
-    <item quantity="other">%s слова</item>
+    <item quantity="many">%s слів</item>
+    <item quantity="other">%s слів</item>
   </plurals>
   <string name="word_separator">Розділювач слів</string>
   <string name="bottomsheet_option_capital_letters">Великі літери (А-Я)</string>

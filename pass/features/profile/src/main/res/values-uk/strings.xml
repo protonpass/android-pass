@@ -61,7 +61,7 @@
   </plurals>
   <plurals name="profile_after_minutes">
     <item quantity="one">За %d хвилину</item>
-    <item quantity="few">За %d хвилин</item>
+    <item quantity="few">За %d хвилини</item>
     <item quantity="many">За %d хвилин</item>
     <item quantity="other">За %d хвилин</item>
   </plurals>

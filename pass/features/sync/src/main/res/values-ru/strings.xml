@@ -20,13 +20,13 @@
   <string name="sync_item_empty">Пустое хранилище</string>
   <plurals name="sync_item_count">
     <item quantity="one">Скачан %d элемент</item>
-    <item quantity="few">Скачано %d элемента</item>
-    <item quantity="many">Скачаны %d элементов</item>
+    <item quantity="few">Скачаны %d элемента</item>
+    <item quantity="many">Скачано %d элементов</item>
     <item quantity="other">Скачано %d элемента</item>
   </plurals>
   <plurals name="sync_finished_item_count">
     <item quantity="one">%d элемент синхронизирован</item>
-    <item quantity="few">%d элемента синхронизировано</item>
+    <item quantity="few">%d элемента синхронизированы</item>
     <item quantity="many">%d элементов синхронизировано</item>
     <item quantity="other">%d элементов синхронизировано</item>
   </plurals>

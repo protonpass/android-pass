@@ -26,9 +26,9 @@
   </plurals>
   <plurals name="sync_finished_item_count">
     <item quantity="one">%d элемент сінхранізаваны</item>
-    <item quantity="few">%d элементы сінхранізаваны</item>
-    <item quantity="many">%d элементаў сінхранізаваны</item>
-    <item quantity="other">%d элементаў сінхранізаваны</item>
+    <item quantity="few">%d элементы сінхранізаваныя</item>
+    <item quantity="many">%d элементаў сінхранізаваныя</item>
+    <item quantity="other">%d элементаў сінхранізаваныя</item>
   </plurals>
   <string name="sync_progress_item_count">Спампоўваецца элементаў: %1$d з %2$d</string>
   <string name="sync_dialog_title">Сінхранізацыя элементаў…</string>

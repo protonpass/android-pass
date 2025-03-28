@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2025 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="open_attachments_error">Gagal membuka lampiran</string>
+  <string name="download_attachments_success">Lampiran diunduh</string>
+  <string name="download_attachments_error">Lampiran tidak dapat diunduh</string>
+  <string name="share_attachments_error">Lampiran tidak dapat dibagikan</string>
+  <string name="upload_attachments_error">Gagal mengunggah lampiran</string>
+  <string name="attachment_size_exceeded_error">Berkas yang dipilih melebihi batas ukuran berkas. Silakan pilih berkas yang lebih kecil dari 100 MB.</string>
+  <string name="open_with">Buka dengan:</string>
+  <string name="share_with">Bagikan dengan:</string>
+</resources>

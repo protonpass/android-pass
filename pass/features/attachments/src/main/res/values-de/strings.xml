@@ -22,6 +22,8 @@
   <string name="add_attachment_choose_a_file">Datei wählen</string>
   <string name="attachment_options_rename">Umbenennen</string>
   <string name="attachment_options_delete">Löschen</string>
+  <string name="attachment_options_download">Herunterladen</string>
+  <string name="attachment_options_share">Teilen</string>
   <string name="file_picker_open_error">Der Dateiauswahl-Dialog konnte nicht geöffnet werden.</string>
   <string name="media_picker_open_error">Der Medienauswahl-Dialog konnte nicht geöffnet werden.</string>
   <string name="camera_open_error">Die Kamera konnte nicht geöffnet werden.</string>

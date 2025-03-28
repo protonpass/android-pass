@@ -124,5 +124,5 @@
   <string name="open_with">Avaa käyttäen:</string>
   <string name="open_attachments_error">Liitettä ei voitu avata</string>
   <string name="banner_contacts_title">Tiesitkö?</string>
-  <string name="banner_contacts_subtitle">Every time your alias receives an email from someone, a new contact is automatically created.</string>
+  <string name="banner_contacts_subtitle">Aina kun aliaksesi vastaanottaa viestin uudesta osoitteesta, luodaan automaattisesti yhteystieto.</string>
 </resources>

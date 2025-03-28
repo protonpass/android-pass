@@ -12,7 +12,7 @@
   <string name="action_identity">身份信息</string>
   <string name="action_custom">自定义项</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">添加应用程序或网站的登录详细信息</string>
-  <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">获取在新应用程序上使用的电子邮件别名</string>
+  <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">获取在新应用程序上使用的邮箱别名</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">记下 PIN 码、代码或写张便条</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">安全存储您的付款信息</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">填写您的个人信息</string>
@@ -40,7 +40,7 @@
   <string name="create_login_item_creation_error">无法创建登录</string>
   <string name="create_login_item_update_error">无法更新登录信息</string>
   <string name="create_login_init_error">检索登录信息时遇到问题</string>
-  <string name="create_login_invalid_totp">双重认证信息无效</string>
+  <string name="create_login_invalid_totp">2FA 内容无效</string>
   <string name="update_login_attachments_init_error">检索登录附件时出错</string>
   <string name="login_link_attachments_error">链接或取消链接登录附件失败</string>
   <string name="login_rename_attachments_error">重命名登录附件失败</string>
@@ -48,7 +48,7 @@
   <string name="bottomsheet_modify_alias_title">修改别名</string>
   <string name="bottomsheet_custom_field_type_text">文本</string>
   <string name="bottomsheet_custom_field_type_hidden">隐藏</string>
-  <string name="bottomsheet_custom_field_type_totp">双因素认证密钥（TOTP）</string>
+  <string name="bottomsheet_custom_field_type_totp">2FA 密钥 (TOTP)</string>
   <string name="bottomsheet_custom_field_type_date">日期</string>
   <string name="bottomsheet_custom_field_option_edit">编辑名称</string>
   <string name="bottomsheet_custom_field_option_remove">删除字段</string>
@@ -184,9 +184,9 @@
   <string name="title_create">创建</string>
   <string name="changes_saved">更改已保存</string>
   <!--  TOTP  -->
-  <string name="totp_create_login_field_title">双因素认证密钥 (TOTP)</string>
-  <string name="totp_create_login_field_invalid">无效的双因素认证密钥 ( TOTP )</string>
-  <string name="totp_create_login_field_placeholder">添加双因素认证密钥 ( TOTP )</string>
+  <string name="totp_create_login_field_title">2FA 密钥 (TOTP)</string>
+  <string name="totp_create_login_field_invalid">无效的 2FA 密钥 (TOTP)</string>
+  <string name="totp_create_login_field_placeholder">添加 2FA 密钥 (TOTP)</string>
   <string name="close_scree_icon_content_description">关闭屏幕按钮</string>
   <string name="totp_paste_code_action">粘贴代码</string>
   <string name="totp_scan_code_action">扫描代码</string>
@@ -194,9 +194,9 @@
   <string name="camera_permission_explanation">此功能需要相机权限才能使用.</string>
   <string name="camera_permission_open_settings">打开设置</string>
   <!--  TOTP limit  -->
-  <string name="mfa_limit_reached">已达到双因素认证数量限制</string>
+  <string name="mfa_limit_reached">已达 2FA 数量上限</string>
   <string name="upgrade">升级</string>
-  <string name="mfa_icon_content_description">双因素认证图标</string>
+  <string name="mfa_icon_content_description">2FA 图标</string>
   <string name="create_alias_content_limit_banner">您已达到可以创建的别名的限制。升级订阅时创建无限数量的别名。</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">需要更新应用程序才能编辑此项目</string>
   <string name="remove_passkey_dialog_title">删除此密钥？</string>
@@ -205,9 +205,6 @@
   <string name="banner_title_attachments">附件</string>
   <string name="banner_body_attachments">您可以将文件附加到项目中以便更好地组织</string>
   <string name="open_with">打开方式：</string>
-  <string name="open_attachments_error">无法打开附件</string>
-  <string name="upload_attachments_error">无法上传附件</string>
-  <string name="attachment_size_exceeded_error">您选择的文件超出大小限制，请使用小于100MB的文件。</string>
   <string name="banner_advanced_options_title">你知道吗？</string>
   <string name="banner_advanced_options_subtitle">点击齿轮图标即可按您​​想要的方式自定义别名。</string>
   <string name="banner_custom_domain_title">你知道吗？</string>

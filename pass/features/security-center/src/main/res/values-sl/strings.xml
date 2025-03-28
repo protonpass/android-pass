@@ -84,7 +84,7 @@
   <string name="security_center_dark_web_monitor_latest_breach_on">Zadnja kršitev dne %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
     <item quantity="one">Najdeno v %s kršitvi</item>
-    <item quantity="two">Najdeno v %s kršitvi</item>
+    <item quantity="two">Najdeno v %s kršitvah</item>
     <item quantity="few">Najdeno v %s kršitvah</item>
     <item quantity="other">Najdeno v %s kršitvah</item>
   </plurals>
@@ -130,7 +130,6 @@
   <string name="security_center_report_detail_your_exposed_information">Vaša razkrita informacija</string>
   <string name="security_center_report_detail_subtitle">Vaši podatki so bili v podatkovni kršitvi in najdeni __DATE__</string>
   <string name="security_center_report_detail_details">Podrobnosti</string>
-  <string name="security_center_report_detail_email_address">E-poštni naslov</string>
   <string name="security_center_report_detail_password">Geslo</string>
   <string name="security_center_report_detail_recommended_actions">Priporočena dejanja</string>
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">Razkrite informacije so bile izpostavljene s strani %s. Podatki o vašem računu Proton ostajajo varni in šifrirani.</string>

@@ -78,10 +78,10 @@
   <string name="share_summary_access_level_title">Raven dostopa</string>
   <string name="share_manage_vault_share_with_more_people">Delite z več ljudmi</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
-    <item quantity="one">%d ostane povabilo</item>
-    <item quantity="two">%d ostaneta povabili</item>
-    <item quantity="few">%d ostanejo povabila</item>
-    <item quantity="other">%d ostanejo povabila</item>
+    <item quantity="one">%d ostalo povabilo</item>
+    <item quantity="two">%d ostali povabili</item>
+    <item quantity="few">%d ostala povabila</item>
+    <item quantity="other">%d ostalih povabil</item>
   </plurals>
   <plurals name="share_manage_vault_item_count">
     <item quantity="one">%d predmet</item>

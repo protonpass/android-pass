@@ -130,7 +130,6 @@
   <string name="security_center_report_detail_your_exposed_information">Вашы скампраметаваныя звесткі</string>
   <string name="security_center_report_detail_subtitle">Вашы звесткі былі ва ўцечцы даных і знойдзены __DATE__</string>
   <string name="security_center_report_detail_details">Падрабязнасці</string>
-  <string name="security_center_report_detail_email_address">Адрас электроннай пошты</string>
   <string name="security_center_report_detail_password">Пароль</string>
   <string name="security_center_report_detail_recommended_actions">Рэкамендаваныя дзеянні</string>
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">Адбылася ўцечка скампраметаваных звестак з %s. Гэта не закранула звесткі вашага ўліковага запісу, бо яны зашыфраваны і знаходзяцца ў бяспецы.</string>

@@ -69,9 +69,9 @@
   <string name="item_details_snackbar_message_x_handle_copied">X-tunnus kopioitiin</string>
   <string name="item_details_snackbar_message_yahoo_copied">Yahoo-tunnus kopioitiin</string>
   <string name="item_details_snackbar_message_zip_or_postal_code_copied">Postinumero kopioitiin</string>
-  <string name="item_details_snackbar_message_public_key_copied">Public key copied</string>
-  <string name="item_details_snackbar_message_private_key_copied">Private key copied</string>
-  <string name="item_details_snackbar_message_ssid_copied">SSID copied</string>
+  <string name="item_details_snackbar_message_public_key_copied">Julkinen avain kopioitiin</string>
+  <string name="item_details_snackbar_message_private_key_copied">Yksityinen avain kopioitiin</string>
+  <string name="item_details_snackbar_message_ssid_copied">SSID kopioitiin</string>
   <string name="open_with">Avaa käyttäen:</string>
   <string name="open_attachments_error">Liitettä ei voitu avata</string>
 </resources>

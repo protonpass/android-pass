@@ -205,9 +205,6 @@
   <string name="banner_title_attachments">Anhänge</string>
   <string name="banner_body_attachments">Du kannst Dateien an Einträge anhängen, um sie besser zu organisieren.</string>
   <string name="open_with">Öffnen mit:</string>
-  <string name="open_attachments_error">Der Anhang konnte nicht geöffnet werden</string>
-  <string name="upload_attachments_error">Hochladen des Anhangs der Nachricht fehlgeschlagen</string>
-  <string name="attachment_size_exceeded_error">Die ausgewählte Datei überschreitet die Größenbeschränkung. Bitte eine Datei wählen, die kleiner als 100 MB ist.</string>
   <string name="banner_advanced_options_title">Schon gewusst?</string>
   <string name="banner_advanced_options_subtitle">Tippe auf das Zahnrad-Symbol, um den Alias nach deinen Wünschen zu gestalten.</string>
   <string name="banner_custom_domain_title">Schon gewusst?</string>

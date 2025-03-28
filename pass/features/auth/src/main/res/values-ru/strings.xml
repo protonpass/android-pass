@@ -22,7 +22,7 @@
   <plurals name="enter_your_pin_code_error">
     <item quantity="one">Неправильный PIN-код. Осталась %d попытка.</item>
     <item quantity="few">Неправильный PIN-код. Осталось %d попытки.</item>
-    <item quantity="many">Неправильный PIN-код. Осталось %d попытки.</item>
+    <item quantity="many">Неправильный PIN-код. Осталось %d попыток.</item>
     <item quantity="other">Неправильный PIN-код. Осталось %d попыток.</item>
   </plurals>
   <string name="auth_unlock_app_title">Разблокировать Proton Pass</string>
@@ -45,7 +45,7 @@
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Неправильный пароль. Осталась %d попытка</item>
     <item quantity="few">Неправильный пароль. Осталось %d попытки</item>
-    <item quantity="many">Неправильный пароль. Осталось %d попытки</item>
+    <item quantity="many">Неправильный пароль. Осталось %d попыток</item>
     <item quantity="other">Неправильный пароль. Осталось %d попыток</item>
   </plurals>
   <plurals name="auth_attempts_remaining">

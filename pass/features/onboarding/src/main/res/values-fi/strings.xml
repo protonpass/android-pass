@@ -22,9 +22,9 @@
   <string name="onboarding_slide_2_title">Suojaa postilaatikkosi.</string>
   <string name="onboarding_slide_3_title">Pysy ajan tasalla.</string>
   <string name="onboarding_slide_4_title">Suojattu jakaminen.</string>
-  <string name="onboarding_slide_1_subtitle">Securely in one place and protected by the most trusted name in privacy.</string>
-  <string name="onboarding_slide_2_subtitle">Use Hide-My-Email aliases against phishing threats.</string>
-  <string name="onboarding_slide_3_subtitle">Share passwords and sensitive information securely and effortlessly.</string>
+  <string name="onboarding_slide_1_subtitle">Tallessa yhdessä paikassa, yksityisyyden luotetuimman nimen suojaamana.</string>
+  <string name="onboarding_slide_2_subtitle">Suojaudu tietojenkalastelulta Hide-My-Email-aliaksilla.</string>
+  <string name="onboarding_slide_3_subtitle">Jaa salasanoja ja muita arkaluonteisia tietoja turvallisesti ja vaivattomasti.</string>
   <string name="onboarding_slide_4_subtitle">Saat hälytyksiä, jos sähköpostiosoitteesi löytyy pimeästä verkosta.</string>
   <string name="create_an_account_button">Luo tili</string>
   <string name="sign_in_button">Kirjaudu sisään</string>

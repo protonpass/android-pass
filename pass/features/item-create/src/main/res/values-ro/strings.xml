@@ -205,9 +205,6 @@
   <string name="banner_title_attachments">Atașamente</string>
   <string name="banner_body_attachments">Puteți atașa fișiere la articole pentru o organizare mai bună.</string>
   <string name="open_with">Deschideți cu:</string>
-  <string name="open_attachments_error">Atașamentul nu a putut fi deschis.</string>
-  <string name="upload_attachments_error">Atașamentul nu a putut fi încărcat.</string>
-  <string name="attachment_size_exceeded_error">Fișierul selectat depășește limita de dimensiune. Alegeți un fișier mai mic de 100 MiB.</string>
   <string name="banner_advanced_options_title">Știați că?</string>
   <string name="banner_advanced_options_subtitle">Atingeți pictograma cu roata zimțată pentru vă a personaliza aliasul cum doriți.</string>
   <string name="banner_custom_domain_title">Știați că?</string>

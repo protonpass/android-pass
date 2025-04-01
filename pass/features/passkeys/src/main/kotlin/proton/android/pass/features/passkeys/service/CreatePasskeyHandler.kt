@@ -37,6 +37,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountmanager.domain.getPrimaryAccount
 import proton.android.pass.features.passkeys.create.ui.CreatePasskeyActivity
 import proton.android.pass.features.passkeys.telemetry.CreatePromptDisplay
 import proton.android.pass.log.api.PassLogger
@@ -85,7 +86,7 @@ object CreatePasskeyHandler {
         accountManager: AccountManager,
         telemetryManager: TelemetryManager
     ): BeginCreateCredentialResponse? {
-        val currentUser = accountManager.getPrimaryUserId().first()
+        val currentUser = accountManager.getPrimaryAccount().first()
         if (currentUser == null) {
             PassLogger.d(TAG, "No user found")
             return null
@@ -94,6 +95,7 @@ object CreatePasskeyHandler {
         return when (request) {
             is BeginCreatePublicKeyCredentialRequest -> handleCreatePasskeyQuery(
                 context = context,
+                username = currentUser.username,
                 telemetryManager = telemetryManager
             )
             else -> null
@@ -102,14 +104,13 @@ object CreatePasskeyHandler {
 
     private fun handleCreatePasskeyQuery(
         context: Context,
+        username: String?,
         telemetryManager: TelemetryManager
     ): BeginCreateCredentialResponse {
         val createEntries = listOf(
             CreateEntry(
-                accountName = "createPasskey",
-                pendingIntent = createNewPendingIntent(
-                    context
-                )
+                accountName = username.orEmpty(),
+                pendingIntent = createNewPendingIntent(context)
             )
         )
 

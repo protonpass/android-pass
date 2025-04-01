@@ -78,7 +78,7 @@ internal fun FillResponse.Builder.addSaveInfo(
             SaveInfo.Builder(
                 SaveInfo.SAVE_DATA_TYPE_USERNAME or SaveInfo.SAVE_DATA_TYPE_PASSWORD,
                 ids.toTypedArray()
-            ).setFlags(SaveInfo.FLAG_SAVE_ON_ALL_VIEWS_INVISIBLE)
+            )
         }
 
         is SaveSessionType.Username -> {
@@ -124,7 +124,7 @@ internal fun FillResponse.Builder.addSaveInfo(
             SaveInfo.Builder(
                 saveInfoType,
                 ids.toTypedArray()
-            ).setFlags(SaveInfo.FLAG_SAVE_ON_ALL_VIEWS_INVISIBLE)
+            )
         }
     }
 

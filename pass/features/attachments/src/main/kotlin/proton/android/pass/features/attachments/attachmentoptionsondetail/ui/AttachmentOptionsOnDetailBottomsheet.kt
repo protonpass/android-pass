@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.attachments.attachmentoptionsondetail.ui
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -34,6 +35,7 @@ import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.features.attachments.attachmentoptionsondetail.navigation.AttachmentOptionsOnDetailNavigation
 import proton.android.pass.features.attachments.attachmentoptionsondetail.presentation.AttachmentOptionsOnDetailEvent
 import proton.android.pass.features.attachments.attachmentoptionsondetail.presentation.AttachmentOptionsOnDetailViewModel
+import proton.android.pass.log.api.PassLogger
 
 @Composable
 fun AttachmentOptionsOnDetailBottomsheet(
@@ -55,8 +57,13 @@ fun AttachmentOptionsOnDetailBottomsheet(
             AttachmentOptionsOnDetailEvent.Close ->
                 onNavigate(AttachmentOptionsOnDetailNavigation.CloseBottomsheet)
 
-            is AttachmentOptionsOnDetailEvent.SaveToLocation ->
-                launcher.launch(createIntent(event.fileName, event.mimeType))
+            is AttachmentOptionsOnDetailEvent.SaveToLocation -> {
+                try {
+                    launcher.launch(createIntent(event.fileName))
+                } catch (e: ActivityNotFoundException) {
+                    PassLogger.w(TAG, e)
+                }
+            }
 
             AttachmentOptionsOnDetailEvent.Idle -> {}
         }
@@ -76,9 +83,11 @@ fun AttachmentOptionsOnDetailBottomsheet(
     )
 }
 
-private fun createIntent(fileTitle: String, mimeType: String): Intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+private const val TAG = "AttachmentOptionsOnDetailBottomsheet"
+
+private fun createIntent(fileTitle: String): Intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
     addCategory(Intent.CATEGORY_OPENABLE)
-    type = mimeType
+    type = "*/*"
     putExtra(Intent.EXTRA_TITLE, fileTitle)
     addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
     addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)

@@ -24,8 +24,6 @@ sealed interface AttachmentOptionsOnDetailEvent {
 
     data object Close : AttachmentOptionsOnDetailEvent
 
-    data class SaveToLocation(
-        val fileName: String,
-        val mimeType: String
-    ) : AttachmentOptionsOnDetailEvent
+    @JvmInline
+    value class SaveToLocation(val fileName: String) : AttachmentOptionsOnDetailEvent
 }

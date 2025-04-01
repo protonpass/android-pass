@@ -111,10 +111,7 @@ class AttachmentOptionsOnDetailViewModel @Inject constructor(
             if (uri is Some) {
                 cachedFileUriFlow.update { uri }
                 eventFlow.update {
-                    AttachmentOptionsOnDetailEvent.SaveToLocation(
-                        fileName = attachment.name,
-                        mimeType = attachment.mimeType
-                    )
+                    AttachmentOptionsOnDetailEvent.SaveToLocation(attachment.name)
                 }
                 isDownloadingFlow.update { IsLoadingState.NotLoading }
             } else {

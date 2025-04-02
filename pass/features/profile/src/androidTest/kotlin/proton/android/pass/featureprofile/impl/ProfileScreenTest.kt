@@ -19,6 +19,7 @@
 package proton.android.pass.featureprofile.impl
 
 import android.content.Intent
+import android.content.Intent.ACTION_VIEW
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -27,9 +28,12 @@ import androidx.compose.ui.test.performScrollTo
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasData
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
 import androidx.test.espresso.intent.rule.IntentsRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import org.hamcrest.CoreMatchers.allOf
+import org.hamcrest.CoreMatchers.`is`
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -270,8 +274,17 @@ class ProfileScreenTest {
             onNodeWithText(activity.getString(R.string.profile_option_rating)).performClick()
         }
 
-        intended(hasAction(Intent.ACTION_VIEW))
-        intended(hasData(PASS_STORE))
+        intended(
+            allOf(
+                hasAction(Intent.ACTION_CHOOSER),
+                hasExtra(
+                    `is`(Intent.EXTRA_INTENT), allOf(
+                        hasAction(ACTION_VIEW),
+                        hasData(PASS_STORE)
+                    )
+                )
+            )
+        )
     }
 
 
@@ -291,8 +304,17 @@ class ProfileScreenTest {
             onNodeWithText(activity.getString(R.string.profile_option_import_export)).performClick()
         }
 
-        intended(hasAction(Intent.ACTION_VIEW))
-        intended(hasData(PASS_IMPORT))
+        intended(
+            allOf(
+                hasAction(Intent.ACTION_CHOOSER),
+                hasExtra(
+                    `is`(Intent.EXTRA_INTENT), allOf(
+                        hasAction(ACTION_VIEW),
+                        hasData(PASS_IMPORT)
+                    )
+                )
+            )
+        )
     }
 
     private fun setupPlan(planType: PlanType, isUpgradeAvailable: Boolean) {

@@ -18,24 +18,26 @@
 
 package proton.android.pass.commonui.api
 
-import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
+import androidx.core.net.toUri
 import proton.android.pass.log.api.PassLogger
 
 object BrowserUtils {
     const val TAG = "BrowserUtils"
 
     fun openWebsite(context: Context, website: String) {
-        try {
-            val i = Intent(Intent.ACTION_VIEW).apply {
-                data = Uri.parse(website)
+        runCatching {
+            val intent = Intent(Intent.ACTION_VIEW, website.toUri())
+            if (intent.resolveActivity(context.packageManager) != null) {
+                val chooser = Intent.createChooser(intent, context.getString(R.string.browser_open_with))
+                context.startActivity(chooser)
+            } else {
+                PassLogger.w(TAG, "No application can handle this URL")
             }
-            context.startActivity(i)
-        } catch (e: ActivityNotFoundException) {
-            val message = "Could not find a suitable activity"
-            PassLogger.i(TAG, e, message)
+        }.onFailure {
+            PassLogger.w(TAG, "Could not find a suitable activity")
+            PassLogger.w(TAG, it)
         }
     }
 }

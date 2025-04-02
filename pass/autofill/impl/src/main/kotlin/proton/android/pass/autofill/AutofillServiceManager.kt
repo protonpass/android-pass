@@ -232,10 +232,7 @@ class AutofillServiceManager @Inject constructor(
     }
 
     private fun createUpgradePresentationDataset(autofillData: AutofillData): List<Dataset> {
-        val upgradePendingIntent = PendingIntentUtils.getUpgradePendingIntent(
-            context = context,
-            intentRequestCode = OPEN_PASS_UPGRADE_REQUEST_CODE
-        )
+        val upgradePendingIntent = PendingIntentUtils.getUpgradePendingIntent(context)
         val upgradeRemoteView = RemoteViews(context.packageName, R.layout.autofill_item).apply {
             setTextViewText(
                 R.id.title,
@@ -263,8 +260,7 @@ class AutofillServiceManager @Inject constructor(
     ): List<Dataset> {
         val openAppPendingIntent = PendingIntentUtils.getOpenAppPendingIntent(
             context = context,
-            autofillData = autofillData,
-            intentRequestCode = OPEN_PASS_MENU_REQUEST_CODE
+            autofillData = autofillData
         )
         val openAppRemoteView = RemoteViews(context.packageName, R.layout.autofill_item).apply {
             setTextViewText(R.id.title, context.getText(R.string.autofill_authenticate_prompt))
@@ -309,7 +305,6 @@ class AutofillServiceManager @Inject constructor(
                     context = context,
                     autofillData = autofillData,
                     autofillItem = autofillItem,
-                    intentRequestCode = index,
                     shouldAuthenticate = shouldAuthenticate
                 )
                 val options = DatasetBuilderOptions(
@@ -338,7 +333,6 @@ class AutofillServiceManager @Inject constructor(
             context = context,
             autofillData = autofillData,
             autofillItem = autofillItem,
-            intentRequestCode = index,
             shouldAuthenticate = shouldAuthenticate
         )
         val inlinePresentation = InlinePresentationUtils.create(
@@ -374,8 +368,7 @@ class AutofillServiceManager @Inject constructor(
         )
         val pendingIntent = PendingIntentUtils.getOpenAppPendingIntent(
             context = context,
-            autofillData = autofillData,
-            intentRequestCode = OPEN_PASS_SUGGESTION_REQUEST_CODE
+            autofillData = autofillData
         )
         val builderOptions = DatasetBuilderOptions(
             id = "InlineSuggestion-OpenApp".some(),
@@ -400,10 +393,7 @@ class AutofillServiceManager @Inject constructor(
             pendingIntent = PendingIntentUtils.getLongPressInlinePendingIntent(context),
             icon = getIcon().some()
         )
-        val pendingIntent = PendingIntentUtils.getUpgradePendingIntent(
-            context = context,
-            intentRequestCode = OPEN_PASS_UPGRADE_REQUEST_CODE
-        )
+        val pendingIntent = PendingIntentUtils.getUpgradePendingIntent(context)
         val builderOptions = DatasetBuilderOptions(
             id = "InlineSuggestion-Upgrade".some(),
             inlinePresentation = inlinePresentation.toOption(),
@@ -425,8 +415,7 @@ class AutofillServiceManager @Inject constructor(
         )
         val pendingIntent = PendingIntentUtils.getOpenAppPendingIntent(
             context = context,
-            autofillData = autofillData,
-            intentRequestCode = OPEN_PASS_PINNED_REQUEST_CODE
+            autofillData = autofillData
         )
         val builderOptions = DatasetBuilderOptions(
             id = "InlineSuggestion-PinnedIcon".some(),
@@ -457,12 +446,6 @@ class AutofillServiceManager @Inject constructor(
 
     companion object {
         private const val INLINE_SUGGESTIONS_OFFSET = 2
-        private const val OPEN_PASS_SUGGESTION_REQUEST_CODE = 1000
-        private const val OPEN_PASS_MENU_REQUEST_CODE = 1001
-        private const val OPEN_PASS_PINNED_REQUEST_CODE = 1002
-        private const val OPEN_PASS_UPGRADE_REQUEST_CODE = 1003
-
-        private const val TAG = "AutofillServiceManager"
     }
 }
 

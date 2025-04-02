@@ -37,48 +37,36 @@ object PendingIntentUtils {
             PendingIntent.FLAG_CANCEL_CURRENT
         }
 
-    internal fun getOpenAppPendingIntent(
-        context: Context,
-        autofillData: AutofillData,
-        intentRequestCode: Int
-    ): PendingIntent = PendingIntent.getActivity(
-        context,
-        intentRequestCode,
-        AutofillActivity.newIntent(context, autofillData),
-        autofillPendingIntentFlags
-    )
-
-    internal fun getUpgradePendingIntent(context: Context, intentRequestCode: Int): PendingIntent =
+    internal fun getOpenAppPendingIntent(context: Context, autofillData: AutofillData): PendingIntent =
         PendingIntent.getActivity(
             context,
-            intentRequestCode,
-            AutofillUpgradeActivity.newIntent(context),
+            SuggestionCounter.next(),
+            AutofillActivity.newIntent(context, autofillData),
             autofillPendingIntentFlags
         )
+
+    internal fun getUpgradePendingIntent(context: Context): PendingIntent = PendingIntent.getActivity(
+        context,
+        SuggestionCounter.next(),
+        AutofillUpgradeActivity.newIntent(context),
+        autofillPendingIntentFlags
+    )
 
     internal fun getSuggestionPendingIntent(
         context: Context,
         autofillData: AutofillData,
         autofillItem: AutofillItem,
-        shouldAuthenticate: Boolean,
-        intentRequestCode: Int
+        shouldAuthenticate: Boolean
     ): PendingIntent = PendingIntent.getActivity(
         context,
-        intentRequestCode,
-        getSuggestionPendingIntent(context, autofillData, autofillItem, shouldAuthenticate),
+        SuggestionCounter.next(),
+        if (shouldAuthenticate) {
+            AutofillActivity.newIntent(context, autofillData, autofillItem.some())
+        } else {
+            InlineSuggestionsNoUiActivity.newIntent(context, autofillData, autofillItem)
+        },
         autofillPendingIntentFlags
     )
-
-    private fun getSuggestionPendingIntent(
-        context: Context,
-        autofillData: AutofillData,
-        autofillItem: AutofillItem,
-        shouldAuthenticate: Boolean
-    ) = if (shouldAuthenticate) {
-        AutofillActivity.newIntent(context, autofillData, autofillItem.some())
-    } else {
-        InlineSuggestionsNoUiActivity.newIntent(context, autofillData, autofillItem)
-    }
 
     internal fun getLongPressInlinePendingIntent(context: Context) = PendingIntent.getService(
         context,

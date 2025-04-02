@@ -20,6 +20,23 @@ package proton.android.pass.autofill
 
 import java.util.concurrent.atomic.AtomicInteger
 
+/**
+ * SuggestionCounter is a thread-safe counter used to generate unique integers at runtime.
+ *
+ * This counter is specifically used to assign a unique `requestCode` when creating
+ * a `PendingIntent` within the AutofillService.
+ *
+ * Why is this necessary?
+ * -----------------------
+ * In Android, if you create a `PendingIntent` with the same parameters (including the same `requestCode`),
+ * the system may reuse an existing one instead of generating a new instance. In the context of Autofill,
+ * this can lead to the same `IntentSender` being reused across different suggestions,
+ * which may cause a `SendIntentException` during authentication if the intent is no longer valid.
+ *
+ * To prevent unintended reuse and ensure each `PendingIntent` is unique,
+ * it's important to use a different `requestCode` each time.
+ * This class provides a simple, efficient, and safe way to generate those unique values.
+ */
 object SuggestionCounter {
     private val count = AtomicInteger(0)
 

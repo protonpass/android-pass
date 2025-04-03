@@ -24,12 +24,9 @@ sealed interface ItemFeatures {
 
     val isFileAttachmentsEnabled: Boolean
 
-    val isItemSharingEnabled: Boolean
-
 }
 
 internal data class IdentityItemFeatures(
     override val isHistoryEnabled: Boolean,
-    override val isFileAttachmentsEnabled: Boolean,
-    override val isItemSharingEnabled: Boolean
+    override val isFileAttachmentsEnabled: Boolean
 ) : ItemFeatures

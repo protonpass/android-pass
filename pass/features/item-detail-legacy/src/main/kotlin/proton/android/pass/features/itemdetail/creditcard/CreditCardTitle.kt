@@ -46,8 +46,7 @@ fun CreditCardTitle(
     share: Share,
     onShareClick: () -> Unit,
     isPinned: Boolean,
-    hasMoreThanOneVaultShare: Boolean,
-    isItemSharingEnabled: Boolean
+    hasMoreThanOneVaultShare: Boolean
 ) {
     Row(
         modifier = modifier,
@@ -75,8 +74,7 @@ fun CreditCardTitle(
             VaultNameSubtitle(
                 share = share,
                 onClick = onShareClick,
-                hasMoreThanOneVaultShare = hasMoreThanOneVaultShare,
-                isItemSharingEnabled = isItemSharingEnabled
+                hasMoreThanOneVaultShare = hasMoreThanOneVaultShare
             )
         }
     }
@@ -94,8 +92,7 @@ fun AliasTitlePreview(@PreviewParameter(ThemeItemTitleProvider::class) input: Pa
                 share = params.share,
                 onShareClick = {},
                 isPinned = params.itemUiModel.isPinned,
-                hasMoreThanOneVaultShare = true,
-                isItemSharingEnabled = true
+                hasMoreThanOneVaultShare = true
             )
         }
     }

@@ -47,8 +47,8 @@ import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.HiddenState
-import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.log.api.PassLogger
@@ -110,13 +110,11 @@ class ItemDetailsViewModel @Inject constructor(
 
     private val itemFeaturesFlow: Flow<IdentityItemFeatures> = combine(
         getUserPlan(),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1)
-    ) { userPlan, isFileAttachmentsEnabled, isItemSharingEnabled ->
+        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
+    ) { userPlan, isFileAttachmentsEnabled ->
         IdentityItemFeatures(
             isHistoryEnabled = userPlan.isPaidPlan,
-            isFileAttachmentsEnabled = isFileAttachmentsEnabled,
-            isItemSharingEnabled = isItemSharingEnabled
+            isFileAttachmentsEnabled = isFileAttachmentsEnabled
         )
     }
 

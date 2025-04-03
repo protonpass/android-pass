@@ -49,8 +49,7 @@ fun LoginTitle(
     hasMoreThanOneVaultShare: Boolean,
     canLoadExternalImages: Boolean,
     onShareClick: () -> Unit,
-    isPinned: Boolean,
-    isItemSharingEnabled: Boolean
+    isPinned: Boolean
 ) {
     Row(
         modifier = modifier,
@@ -85,7 +84,6 @@ fun LoginTitle(
             VaultNameSubtitle(
                 share = share,
                 hasMoreThanOneVaultShare = hasMoreThanOneVaultShare,
-                isItemSharingEnabled = isItemSharingEnabled,
                 onClick = onShareClick
             )
         }
@@ -107,8 +105,7 @@ fun LoginTitlePreview(@PreviewParameter(ThemeItemTitleProvider::class) input: Pa
                 canLoadExternalImages = false,
                 onShareClick = {},
                 isPinned = params.itemUiModel.isPinned,
-                hasMoreThanOneVaultShare = true,
-                isItemSharingEnabled = true
+                hasMoreThanOneVaultShare = true
             )
         }
     }

@@ -54,7 +54,6 @@
     <string name="action_conceal_password">Conceal password</string>
     <string name="action_reveal_number">Reveal number</string>
     <string name="action_conceal_number">Conceal number</string>
-    <string name="share_button_content_description">Open share button</string>
     <string name="open_menu_icon_content_description">Open menu button</string>
     <string name="mfa_limit_reached">2FA limit reached</string>
     <string name="mfa_icon_content_description">2FA icon</string>

@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
-import proton.android.pass.preferences.FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.CUSTOM_TYPE_V1
 import proton.android.pass.preferences.FeatureFlag.EXTRA_LOGGING
@@ -46,7 +45,6 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
     override fun <T> get(featureFlag: FeatureFlag): Flow<T> = state.map {
         when (featureFlag) {
             AUTOFILL_DEBUG_MODE -> it.getOrDefault(AUTOFILL_DEBUG_MODE, false) as T
-            ADVANCED_ALIAS_MANAGEMENT_V1 -> it.getOrDefault(ADVANCED_ALIAS_MANAGEMENT_V1, false) as T
             ITEM_SHARING_V1 -> it.getOrDefault(ITEM_SHARING_V1, false) as T
             IN_APP_MESSAGES_V1 -> it.getOrDefault(IN_APP_MESSAGES_V1, false) as T
             EXTRA_LOGGING -> it.getOrDefault(EXTRA_LOGGING, false) as T

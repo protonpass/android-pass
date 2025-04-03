@@ -141,11 +141,9 @@ internal fun ProfileContent(
                         )
                     }
 
-                    if (state.isAdvancedAliasManagementEnabled) {
-                        ProfileAliasesSection(
-                            onclick = { onEvent(ProfileUiEvent.OnAliasesClicked) }
-                        )
-                    }
+                    ProfileAliasesSection(
+                        onclick = { onEvent(ProfileUiEvent.OnAliasesClicked) }
+                    )
 
                     if (state.passkeySupport is ProfilePasskeySupportSection.Show) {
                         PasskeyProfileSection(

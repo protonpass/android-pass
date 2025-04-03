@@ -73,7 +73,6 @@ internal data class ProfileUiState(
     val passkeySupport: ProfilePasskeySupportSection,
     val secureLinksCount: Int,
     val accounts: ImmutableList<AccountListItem>,
-    val isAdvancedAliasManagementEnabled: Boolean,
     val dataStorageState: DataStorageState
 ) {
 
@@ -90,7 +89,6 @@ internal data class ProfileUiState(
             passkeySupport = ProfilePasskeySupportSection.Hide,
             secureLinksCount = 0,
             accounts = persistentListOf(),
-            isAdvancedAliasManagementEnabled = false,
             dataStorageState = DataStorageState.Initial
         )
 

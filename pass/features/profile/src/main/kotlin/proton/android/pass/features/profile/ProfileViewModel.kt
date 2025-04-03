@@ -263,12 +263,11 @@ class ProfileViewModel @Inject constructor(
         upgradeInfoFlow,
         eventFlow,
         passkeySupportFlow,
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1),
         observeSecureLinksCount(),
         dataStorageStateFlow,
         accountsFlow
     ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event,
-        passkey, isAdvancedAliasManagementEnabled, secureLinksCount, dataStorage, accounts ->
+        passkey, secureLinksCount, dataStorage, accounts ->
 
         val (accountType, showUpgradeButton) = processUpgradeInfo(upgradeInfo)
         ProfileUiState(
@@ -282,8 +281,7 @@ class ProfileViewModel @Inject constructor(
             passkeySupport = passkey,
             secureLinksCount = secureLinksCount,
             accounts = accounts,
-            dataStorageState = dataStorage,
-            isAdvancedAliasManagementEnabled = isAdvancedAliasManagementEnabled
+            dataStorageState = dataStorage
         )
     }.stateIn(
         scope = viewModelScope,

@@ -154,6 +154,7 @@ class CreateCreditCardViewModel @Inject constructor(
                     snackbarDispatcher(ItemCreationError)
                 }
                 .onSuccess { item ->
+                    snackbarDispatcher(ItemCreated)
                     runCatching {
                         if (isFileAttachmentsEnabled()) {
                             linkAttachmentsToItem(item.shareId, item.id, item.revision)
@@ -173,7 +174,6 @@ class CreateCreditCardViewModel @Inject constructor(
                         }
                     }
                     telemetryManager.sendEvent(ItemCreate(EventItemType.CreditCard))
-                    snackbarDispatcher(ItemCreated)
                 }
         } else {
             snackbarDispatcher(ItemCreationError)

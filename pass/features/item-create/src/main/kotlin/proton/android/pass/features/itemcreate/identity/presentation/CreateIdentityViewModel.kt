@@ -138,10 +138,10 @@ class CreateIdentityViewModel @Inject constructor(
                 snackbarDispatcher(ItemCreationError)
             }
             .onSuccess { item ->
+                snackbarDispatcher(ItemCreated)
                 inAppReviewTriggerMetrics.incrementItemCreatedCount()
                 identityActionsProvider.onItemSavedState(item)
                 telemetryManager.sendEvent(ItemCreate(EventItemType.Identity))
-                snackbarDispatcher(ItemCreated)
             }
         identityActionsProvider.updateLoadingState(IsLoadingState.NotLoading)
     }

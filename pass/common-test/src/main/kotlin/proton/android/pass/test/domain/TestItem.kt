@@ -67,6 +67,7 @@ object TestItem {
             createTime = now,
             lastAutofillTime = None,
             isPinned = false,
+            pinTime = None,
             flags = Flags(0),
             shareCount = 0,
             shareType = ShareType.Vault
@@ -80,7 +81,8 @@ object TestItem {
         content: ByteArray? = null,
         lastAutofillTime: Long? = null,
         createTime: Long = Clock.System.now().toEpochMilliseconds(),
-        modificationTime: Long = createTime
+        modificationTime: Long = createTime,
+        pinTime: Long? = null
     ): Item {
         val itemTypeParam = itemType ?: ItemType.Login(
             itemEmail = randomString(),
@@ -116,6 +118,7 @@ object TestItem {
             lastAutofillTime = lastAutofillTime?.let { Instant.fromEpochMilliseconds(it) }
                 .toOption(),
             isPinned = Random.nextBoolean(),
+            pinTime = pinTime?.let { Instant.fromEpochMilliseconds(it) }.toOption(),
             flags = Flags(Random.nextInt()),
             shareCount = Random.nextInt(),
             shareType = ShareType.from(Random.nextInt(1, 2))

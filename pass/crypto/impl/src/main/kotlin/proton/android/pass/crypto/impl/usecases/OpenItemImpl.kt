@@ -198,6 +198,7 @@ class OpenItemImpl @Inject constructor(
             modificationTime = Instant.fromEpochSeconds(response.modifyTime),
             lastAutofillTime = response.lastUseTime.toOption().map(Instant::fromEpochSeconds),
             isPinned = response.isPinned,
+            pinTime = response.pinTime.toOption().map(Instant::fromEpochSeconds),
             flags = Flags(response.flags),
             shareCount = response.shareCount,
             shareType = if (response.key != null) ShareType.Vault else ShareType.Item

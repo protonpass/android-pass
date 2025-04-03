@@ -38,6 +38,7 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
     val modificationTime = "modification_time"
     val lastAutofillTime = "last_autofill_time"
     val isPinned = "is_pinned"
+    val pinTime = "pin_time"
     val revision = "revision"
     val shareCount = "share_count"
     val shareType = "share_type"
@@ -53,6 +54,7 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
                     modificationTime to itemUiModel.modificationTime.toString(),
                     lastAutofillTime to itemUiModel.lastAutofillTime?.toString(),
                     isPinned to itemUiModel.isPinned,
+                    pinTime to itemUiModel.pinTime?.toString(),
                     revision to itemUiModel.revision,
                     shareCount to itemUiModel.shareCount,
                     shareType to itemUiModel.shareType.value
@@ -71,6 +73,7 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
                     modificationTime = (values[modificationTime] as String).let { Instant.parse(it) },
                     lastAutofillTime = (values[modificationTime] as? String)?.let { Instant.parse(it) },
                     isPinned = values[isPinned] as Boolean,
+                    pinTime = (values[pinTime] as? String)?.let { Instant.parse(it) },
                     revision = values[revision] as Long,
                     shareCount = values[shareCount] as Int,
                     shareType = ShareType.from(values[shareType] as Int)
@@ -81,4 +84,3 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
         }
     )
 }
-

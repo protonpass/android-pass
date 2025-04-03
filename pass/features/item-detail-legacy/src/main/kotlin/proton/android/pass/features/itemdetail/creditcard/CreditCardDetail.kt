@@ -175,9 +175,6 @@ fun CreditCardDetail(
                         ItemDetailTopBar(
                             isLoading = state.isLoading,
                             actions = state.itemActions,
-                            actionColor = PassTheme.colors.cardInteractionNormMajor1,
-                            iconColor = PassTheme.colors.cardInteractionNormMajor2,
-                            iconBackgroundColor = PassTheme.colors.cardInteractionNormMinor1,
                             itemCategory = state.itemContent.model.category,
                             shareSharedCount = state.shareSharedCount,
                             onUpClick = { onNavigate(ItemDetailNavigation.CloseScreen) },

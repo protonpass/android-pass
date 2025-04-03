@@ -42,7 +42,6 @@ import proton.android.pass.preferences.FeatureFlag.IN_APP_MESSAGES_V1
 import proton.android.pass.preferences.FeatureFlag.ITEM_SHARING_V1
 import proton.android.pass.preferences.FeatureFlag.NEW_LOGIN_FLOW
 import proton.android.pass.preferences.FeatureFlag.SECURE_LINK_NEW_CRYPTO_V1
-import proton.android.pass.preferences.FeatureFlag.SL_ALIASES_SYNC
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -60,11 +59,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { autofillDebugModeEnabled.value }
-
-        SL_ALIASES_SYNC -> getFeatureFlag(
-            key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault
-        ) { simpleLoginAliasesSyncEnabled.value }
 
         ADVANCED_ALIAS_MANAGEMENT_V1 -> getFeatureFlag(
             key = featureFlag.key,
@@ -110,10 +104,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> = when (featureFlag) {
         AUTOFILL_DEBUG_MODE -> setFeatureFlag {
             autofillDebugModeEnabled = boolFlagPrefProto(value)
-        }
-
-        SL_ALIASES_SYNC -> setFeatureFlag {
-            simpleLoginAliasesSyncEnabled = boolFlagPrefProto(value)
         }
 
         ADVANCED_ALIAS_MANAGEMENT_V1 -> setFeatureFlag {
@@ -238,7 +228,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
     private fun getPrefProto(featureFlag: FeatureFlag, preferences: FeatureFlagsPreferences) = with(preferences) {
         when (featureFlag) {
             AUTOFILL_DEBUG_MODE -> autofillDebugModeEnabled
-            SL_ALIASES_SYNC -> simpleLoginAliasesSyncEnabled
             ADVANCED_ALIAS_MANAGEMENT_V1 -> advanceAliasManagementV1Enabled
             ITEM_SHARING_V1 -> itemSharingV1Enabled
             IN_APP_MESSAGES_V1 -> inAppMessagesV1Enabled

@@ -32,7 +32,6 @@ import proton.android.pass.preferences.FeatureFlag.IN_APP_MESSAGES_V1
 import proton.android.pass.preferences.FeatureFlag.ITEM_SHARING_V1
 import proton.android.pass.preferences.FeatureFlag.NEW_LOGIN_FLOW
 import proton.android.pass.preferences.FeatureFlag.SECURE_LINK_NEW_CRYPTO_V1
-import proton.android.pass.preferences.FeatureFlag.SL_ALIASES_SYNC
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -47,7 +46,6 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
     override fun <T> get(featureFlag: FeatureFlag): Flow<T> = state.map {
         when (featureFlag) {
             AUTOFILL_DEBUG_MODE -> it.getOrDefault(AUTOFILL_DEBUG_MODE, false) as T
-            SL_ALIASES_SYNC -> it.getOrDefault(SL_ALIASES_SYNC, false) as T
             ADVANCED_ALIAS_MANAGEMENT_V1 -> it.getOrDefault(ADVANCED_ALIAS_MANAGEMENT_V1, false) as T
             ITEM_SHARING_V1 -> it.getOrDefault(ITEM_SHARING_V1, false) as T
             IN_APP_MESSAGES_V1 -> it.getOrDefault(IN_APP_MESSAGES_V1, false) as T

@@ -87,7 +87,6 @@ internal fun AliasContent(
             onSuffixClick = { onEvent(AliasContentUiEvent.OnSuffixSelect) },
             onMailboxClick = { onEvent(AliasContentUiEvent.OnMailboxSelect) },
             onEvent = onEvent,
-            isAliasManagementEnabled = uiState.isAliasManagementEnabled,
             isFileAttachmentsEnabled = uiState.isFileAttachmentEnabled && canUseAttachments,
             displayAdvancedOptionsBanner = uiState.displayAdvancedOptionsBanner && isCreateMode,
             displayFileAttachmentsOnboarding = uiState.displayFileAttachmentsOnboarding,

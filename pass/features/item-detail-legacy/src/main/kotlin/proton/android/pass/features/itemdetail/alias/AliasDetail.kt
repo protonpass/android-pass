@@ -242,7 +242,6 @@ fun AliasDetail(
                         isLoading = state.isLoadingMailboxes,
                         canViewItemHistory = state.canViewItemHistory,
                         isAliasStateToggling = state.isLoading(LoadingStateKey.AliasStateToggling),
-                        isAliasManagementEnabled = state.itemFeatures.isAliasManagementEnabled,
                         isFileAttachmentsEnabled = state.itemFeatures.isFileAttachmentsEnabled,
                         isItemSharingEnabled = state.itemFeatures.isItemSharingEnabled,
                         displayContactsBanner = state.displayContactsBanner,

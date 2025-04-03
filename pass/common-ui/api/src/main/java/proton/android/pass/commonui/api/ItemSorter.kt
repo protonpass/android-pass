@@ -160,6 +160,10 @@ object ItemSorter {
     fun List<ItemUiModel>.sortSuggestionsByMostRecent(): List<ItemUiModel> =
         sortedByDescending { recentDate(it.modificationTime, it.lastAutofillTime) }
 
+    fun List<ItemUiModel>.sortRecentPinTime(): List<ItemUiModel> = sortedByDescending { itemModel ->
+        itemModel.pinTime ?: recentDate(itemModel.modificationTime, itemModel.lastAutofillTime)
+    }
+
     private fun recentDate(modificationTime: Instant, lastAutofillTime: Instant?): Instant =
         lastAutofillTime?.let { maxOf(it, modificationTime) } ?: modificationTime
 }

@@ -39,6 +39,7 @@ data class ItemUiModel(
     val modificationTime: Instant,
     val lastAutofillTime: Instant?,
     val isPinned: Boolean,
+    val pinTime: Instant?,
     val category: ItemCategory = ItemCategory.Unknown,
     val revision: Long,
     val shareCount: Int,

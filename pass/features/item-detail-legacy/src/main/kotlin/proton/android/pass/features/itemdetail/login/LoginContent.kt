@@ -59,7 +59,6 @@ internal fun LoginContent(
     customFields: ImmutableList<CustomFieldUiContent>,
     canViewItemHistory: Boolean,
     isFileAttachmentsEnabled: Boolean,
-    isItemSharingEnabled: Boolean,
     passkeys: ImmutableList<UIPasskeyContent>,
     monitorState: LoginMonitorState,
     attachmentsState: AttachmentsState,
@@ -90,8 +89,7 @@ internal fun LoginContent(
             canLoadExternalImages = canLoadExternalImages,
             onShareClick = { onEvent(LoginDetailEvent.OnShareClick) },
             isPinned = itemUiModel.isPinned,
-            hasMoreThanOneVaultShare = hasMoreThanOneVaultShare,
-            isItemSharingEnabled = isItemSharingEnabled
+            hasMoreThanOneVaultShare = hasMoreThanOneVaultShare
         )
 
         if (passkeys.isNotEmpty()) {

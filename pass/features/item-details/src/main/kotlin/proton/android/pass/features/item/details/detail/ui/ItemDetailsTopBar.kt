@@ -60,8 +60,7 @@ internal fun ItemDetailsTopBar(
     onOptionsClick: () -> Unit,
     isShareEnabled: Boolean,
     onShareClick: () -> Unit,
-    isLoading: Boolean,
-    isItemSharingEnabled: Boolean
+    isLoading: Boolean
 ) {
     val itemColors = passItemColors(itemCategory = itemCategory)
 
@@ -100,11 +99,8 @@ internal fun ItemDetailsTopBar(
 
                 ItemDetailShareButton(
                     itemCategory = itemCategory,
-                    isItemSharingEnabled = isItemSharingEnabled,
                     shareSharedCount = shareSharedCount,
                     isEnabled = isShareEnabled,
-                    iconBackgroundColor = itemColors.minorPrimary,
-                    iconColor = itemColors.majorSecondary,
                     onShareClick = onShareClick
                 )
 
@@ -166,34 +162,15 @@ private fun ItemDetailShareButton(
     itemCategory: ItemCategory,
     shareSharedCount: Int,
     isEnabled: Boolean,
-    iconBackgroundColor: Color,
-    iconColor: Color,
-    onShareClick: () -> Unit,
-    isItemSharingEnabled: Boolean
+    onShareClick: () -> Unit
 ) {
-    if (isItemSharingEnabled) {
-        if (itemCategory != ItemCategory.Alias) {
-            PassSharingShareIcon(
-                modifier = modifier,
-                itemCategory = itemCategory,
-                shareSharedCount = shareSharedCount,
-                isEnabled = isEnabled,
-                onClick = onShareClick
-            )
-        }
-    } else {
-        CircleIconButton(
+    if (itemCategory != ItemCategory.Alias) {
+        PassSharingShareIcon(
             modifier = modifier,
-            drawableRes = CoreR.drawable.ic_proton_users_plus,
-            size = 40,
-            backgroundColor = iconBackgroundColor,
-            tintColor = iconColor,
-            iconContentDescription = stringResource(
-                id = R.string.item_details_toolbar_content_description_share_button
-            ),
-            enabled = isEnabled,
-            onClick = onShareClick,
-            onDisabledClick = onShareClick
+            itemCategory = itemCategory,
+            shareSharedCount = shareSharedCount,
+            isEnabled = isEnabled,
+            onClick = onShareClick
         )
     }
 }

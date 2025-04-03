@@ -34,7 +34,6 @@ internal sealed interface FilterOptionsState {
     data class Success(
         internal val summary: ItemCountSummary,
         internal val isCustomItemEnabled: Boolean,
-        private val isItemSharingAvailable: Boolean,
         private val searchOptions: SearchOptions
     ) : FilterOptionsState {
 
@@ -48,7 +47,7 @@ internal sealed interface FilterOptionsState {
 
                 VaultSelectionOption.SharedByMe,
                 VaultSelectionOption.SharedWithMe -> false
-            }.and(isItemSharingAvailable)
+            }
 
 
         internal val isSharedByMeFilterAvailable: Boolean = summary.hasSharedByMeItems

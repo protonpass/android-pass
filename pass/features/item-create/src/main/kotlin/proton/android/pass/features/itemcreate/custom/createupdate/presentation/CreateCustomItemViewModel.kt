@@ -229,11 +229,11 @@ class CreateCustomItemViewModel @Inject constructor(
                     snackbarDispatcher(CustomItemSnackbarMessage.ItemCreationError)
                 }
                 .onSuccess { item ->
+                    snackbarDispatcher(CustomItemSnackbarMessage.ItemCreated)
                     linkAttachments(item.shareId, item.id, item.revision)
                     inAppReviewTriggerMetrics.incrementItemCreatedCount()
                     onItemSavedState(item)
                     telemetryManager.sendEvent(ItemCreate(EventItemType.Custom))
-                    snackbarDispatcher(CustomItemSnackbarMessage.ItemCreated)
                 }
             updateLoadingState(IsLoadingState.NotLoading)
         }

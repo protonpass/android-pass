@@ -52,8 +52,6 @@ import proton.android.pass.features.home.onboardingtips.OnBoardingTipPage.Notifi
 import proton.android.pass.features.home.onboardingtips.OnBoardingTipPage.SLSync
 import proton.android.pass.features.home.onboardingtips.OnBoardingTipPage.Trial
 import proton.android.pass.notifications.api.NotificationManager
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.HasDismissedAutofillBanner
 import proton.android.pass.preferences.HasDismissedNotificationBanner
 import proton.android.pass.preferences.HasDismissedSLSyncBanner
@@ -66,7 +64,6 @@ class OnBoardingTipsViewModel @Inject constructor(
     private val autofillManager: AutofillManager,
     private val preferencesRepository: UserPreferencesRepository,
     private val appConfig: AppConfig,
-    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeInvites: ObserveInvites,
     getUserPlan: GetUserPlan,
     notificationManager: NotificationManager,
@@ -116,11 +113,9 @@ class OnBoardingTipsViewModel @Inject constructor(
 
     private val shouldShowSLSyncFlow = combine(
         preferencesRepository.getHasDismissedSLSyncBanner(),
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC),
         simpleLoginSyncStatusResultFlow
-    ) { hasDismissedSLSyncBanner, isSLSyncEnabled, syncStatusResult ->
+    ) { hasDismissedSLSyncBanner, syncStatusResult ->
         when {
-            !isSLSyncEnabled -> false
             hasDismissedSLSyncBanner is HasDismissedSLSyncBanner.Dismissed -> false
             else -> syncStatusResult.getOrNull()?.let { syncStatus ->
                 syncStatus.isPreferenceEnabled && syncStatus.hasPendingAliases && !syncStatus.isSyncEnabled

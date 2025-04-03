@@ -297,6 +297,7 @@ class ItemRepositoryImplTest {
                     lastUseTime = null,
                     revisionTime = 1,
                     isPinned = true,
+                    pinTime = null,
                     flags = 1,
                     shareCount = 0
                 )

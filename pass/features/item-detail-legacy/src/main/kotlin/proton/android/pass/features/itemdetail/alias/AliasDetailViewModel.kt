@@ -195,19 +195,17 @@ class AliasDetailViewModel @Inject constructor(
         .onEach { hasItemBeenFetchedAtLeastOnce = true }
         .asLoadingResult()
 
-    private val itemFeaturesFlow: Flow<AliasItemFeatures> = combineN(
+    private val itemFeaturesFlow: Flow<AliasItemFeatures> = combine(
         getUserPlan().map { it.isPaidPlan },
         featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC),
         userPreferencesRepository.observeAliasTrashDialogStatusPreference().map { it.value },
         featureFlagsRepository.get<Boolean>(FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1),
         featureFlagsRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1)
-    ) { isHistoryEnabled, isFileAttachmentsEnabled, slAliasSyncEnabled, isAliasTrashDialogChecked,
+    ) { isHistoryEnabled, isFileAttachmentsEnabled, isAliasTrashDialogChecked,
         aliasManagementV1, isItemSharingEnabled ->
         AliasItemFeatures(
             isHistoryEnabled = isHistoryEnabled,
             isFileAttachmentsEnabled = isFileAttachmentsEnabled,
-            slAliasSyncEnabled = slAliasSyncEnabled,
             isAliasTrashDialogChecked = isAliasTrashDialogChecked,
             isAliasManagementEnabled = aliasManagementV1,
             isItemSharingEnabled = isItemSharingEnabled

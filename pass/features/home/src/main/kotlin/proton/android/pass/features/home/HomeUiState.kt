@@ -80,7 +80,6 @@ internal data class HomeUiState(
     val navEvent: HomeNavEvent,
     val action: BottomSheetItemAction,
     val isFreePlan: Boolean,
-    val isSLAliasSyncEnabled: Boolean,
     val isItemSharingEnabled: Boolean,
     val isCustomItemEnabled: Boolean,
     val canCreateItems: Boolean,
@@ -123,7 +122,6 @@ internal data class HomeUiState(
     }
 
     internal fun shouldDisplayTrashAliasDialog(itemUiModel: ItemUiModel): Boolean = when {
-        !isSLAliasSyncEnabled -> false
         aliasTrashDialogStatusPreference.value -> false
         else -> (itemUiModel.contents as? ItemContents.Alias)?.isEnabled == true
     }
@@ -138,7 +136,6 @@ internal data class HomeUiState(
             navEvent = HomeNavEvent.Unknown,
             action = BottomSheetItemAction.None,
             isFreePlan = true,
-            isSLAliasSyncEnabled = false,
             isItemSharingEnabled = false,
             isCustomItemEnabled = false,
             canCreateItems = false,

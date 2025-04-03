@@ -103,6 +103,7 @@ class OpenItemImplTest {
             lastUseTime = 1664195804,
             revisionTime = 1664195804,
             isPinned = false,
+            pinTime = 1664195804,
             flags = 0,
             shareCount = 0
         )

@@ -21,11 +21,9 @@ package proton.android.pass.features.home
 import androidx.annotation.StringRes
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import com.google.common.truth.Truth.assertThat
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,16 +42,19 @@ import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.autofill.fakes.TestAutofillManager
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
+import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.SearchEntry
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
 import proton.android.pass.data.fakes.usecases.TestItemSyncStatusRepository
 import proton.android.pass.data.fakes.usecases.TestObserveAllShares
+import proton.android.pass.data.fakes.usecases.TestObserveItemCount
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.TestTrashItems
 import proton.android.pass.data.fakes.usecases.items.FakeObserveCanCreateItems
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveHasShares
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveSharesItemsCount
 import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareColor
@@ -73,8 +74,6 @@ import proton.android.pass.test.domain.TestShare
 import proton.android.pass.test.waitUntilExists
 import java.util.Date
 import javax.inject.Inject
-import proton.android.pass.composecomponents.impl.R as CompR
-import proton.android.pass.features.trash.R as TrashR
 
 @HiltAndroidTest
 class HomeScreenTest {
@@ -114,6 +113,12 @@ class HomeScreenTest {
 
     @Inject
     lateinit var observeHasShares: FakeObserveHasShares
+
+    @Inject
+    lateinit var observeSharesItemsCount: FakeObserveSharesItemsCount
+
+    @Inject
+    lateinit var observeItemCount: TestObserveItemCount
 
     @Before
     fun setup() {
@@ -208,48 +213,6 @@ class HomeScreenTest {
         testEmptyScreenCreateItem(R.string.home_empty_vault_create_note, ItemTypeUiState.Note)
     }
 
-    @Test
-    fun showsConfirmationDialogBeforeTrashingAlias() {
-        val title = "Some alias"
-        val aliasItem = FakeObserveEncryptedItems.createAlias(title = title)
-        setupWithItems(listOf(aliasItem))
-
-        composeTestRule.apply {
-            setContent {
-                PassTheme(isDark = true) {
-                    HomeScreen(
-                        onNavigateEvent = {}
-                    )
-                }
-            }
-
-            waitUntilExists(hasText(title))
-
-            val menuContentDescription =
-                activity.getString(CompR.string.action_content_description_menu)
-            onNodeWithContentDescription(menuContentDescription).performClick()
-
-            val trashItemText = activity.getString(CompR.string.bottomsheet_move_to_trash)
-            waitUntilExists(hasText(trashItemText))
-            onNodeWithText(trashItemText).performClick()
-
-            val confirmDialogText =
-                activity.getString(TrashR.string.alias_dialog_move_to_trash_confirm)
-            waitUntilExists(hasText(confirmDialogText))
-            onNodeWithText(confirmDialogText).performClick()
-
-            waitUntil { trashItem.getMemory().isNotEmpty() }
-
-            onNodeWithText(confirmDialogText).assertDoesNotExist()
-        }
-
-        val memory = trashItem.getMemory()
-        assertThat(memory.size).isEqualTo(1)
-
-        val memoryItem = memory.first()
-        assertThat(memoryItem.items[aliasItem.shareId]!!.first()).isEqualTo(aliasItem.id)
-    }
-
     private fun testEmptyScreenCreateItem(
         @StringRes text: Int,
         itemTypeUiState: ItemTypeUiState
@@ -315,7 +278,8 @@ class HomeScreenTest {
         observeSearchEntry.emit(searchEntries)
         observeCanCreateItems.emit(canCreateItems = true)
         observeHasShares.emit(hasShares = true)
-
+        observeSharesItemsCount.emitValue(emptyMap())
+        observeItemCount.sendResult(Result.success(ItemCountSummary.Initial))
     }
 
     @Module

@@ -81,11 +81,7 @@ import proton.android.pass.commonui.api.ItemSorter.groupAndSortByCreationDesc
 import proton.android.pass.commonui.api.ItemSorter.groupAndSortByMostRecent
 import proton.android.pass.commonui.api.ItemSorter.groupAndSortByTitleAsc
 import proton.android.pass.commonui.api.ItemSorter.groupAndSortByTitleDesc
-import proton.android.pass.commonui.api.ItemSorter.sortByCreationAsc
-import proton.android.pass.commonui.api.ItemSorter.sortByCreationDesc
-import proton.android.pass.commonui.api.ItemSorter.sortByTitleAsc
-import proton.android.pass.commonui.api.ItemSorter.sortByTitleDesc
-import proton.android.pass.commonui.api.ItemSorter.sortMostRecent
+import proton.android.pass.commonui.api.ItemSorter.sortRecentPinTime
 import proton.android.pass.commonui.api.ItemUiFilter.filterByQuery
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -468,7 +464,7 @@ class HomeViewModel @Inject constructor(
                 list.map { it.toUiModel(this@withEncryptionContext) }
             }
         } ?: emptyList()
-        val sortedPinnedItems = pinnedItems.sortItemLists(searchOptions.sortingOption)
+        val sortedPinnedItems = pinnedItems.sortRecentPinTime()
             .toPersistentList()
         val textFilteredPinnedItems = pinnedItems
             .filterByQuery(searchQuery)
@@ -1156,14 +1152,6 @@ class HomeViewModel @Inject constructor(
         items.groupBy({ it.first }, { it.second })
 
     private fun List<ItemUiModel>.toShareIdItemId(): List<Pair<ShareId, ItemId>> = map { it.shareId to it.id }
-
-    private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) = when (sortingOption.searchSortingType) {
-        SearchSortingType.MostRecent -> sortMostRecent()
-        SearchSortingType.TitleAsc -> sortByTitleAsc()
-        SearchSortingType.TitleDesc -> sortByTitleDesc()
-        SearchSortingType.CreationAsc -> sortByCreationAsc()
-        SearchSortingType.CreationDesc -> sortByCreationDesc()
-    }
 
     private fun List<ItemUiModel>.groupedItemLists(sortingOption: SortingOption, instant: Instant) =
         when (sortingOption.searchSortingType) {

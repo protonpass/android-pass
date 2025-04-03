@@ -36,6 +36,7 @@ fun ItemRevisionImpl.toDomain(): ItemRevisionApi = ItemRevisionApi(
     revisionTime = revisionTime,
     itemKey = itemKey,
     isPinned = isPinned,
+    pinTime = pinTime,
     flags = flags,
     shareCount = shareCount
 )
@@ -58,6 +59,7 @@ fun ItemRevisionImpl.toPendingEvent(): PendingEventItemRevision = PendingEventIt
     revisionTime = revisionTime,
     key = itemKey,
     isPinned = isPinned,
+    pinTime = pinTime,
     flags = flags,
     shareCount = shareCount
 )
@@ -76,6 +78,7 @@ fun PendingEventItemRevision.toItemRevision(): ItemRevisionImpl = ItemRevisionIm
     revisionTime = revisionTime,
     itemKey = key,
     isPinned = isPinned,
+    pinTime = pinTime,
     flags = flags,
     shareCount = shareCount
 )

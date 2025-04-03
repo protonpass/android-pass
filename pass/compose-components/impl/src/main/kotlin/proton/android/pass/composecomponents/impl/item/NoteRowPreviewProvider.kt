@@ -61,6 +61,7 @@ class NoteRowPreviewProvider : PreviewParameterProvider<NoteRowParameter> {
                 modificationTime = Clock.System.now(),
                 lastAutofillTime = Clock.System.now(),
                 isPinned = false,
+                pinTime = Clock.System.now(),
                 revision = 1,
                 shareCount = 0,
                 shareType = ShareType.Vault

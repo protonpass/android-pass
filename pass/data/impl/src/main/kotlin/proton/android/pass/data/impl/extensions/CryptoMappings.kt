@@ -66,6 +66,7 @@ fun ItemRevision.toCrypto(): EncryptedItemRevision = EncryptedItemRevision(
     revisionTime = revisionTime,
     key = itemKey,
     isPinned = isPinned,
+    pinTime = pinTime,
     flags = flags,
     shareCount = shareCount
 )

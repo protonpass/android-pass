@@ -141,7 +141,7 @@ internal fun ProfileContent(
                         )
                     }
 
-                    if (state.isSimpleLoginAliasesSyncEnabled || state.isAdvancedAliasManagementEnabled) {
+                    if (state.isAdvancedAliasManagementEnabled) {
                         ProfileAliasesSection(
                             onclick = { onEvent(ProfileUiEvent.OnAliasesClicked) }
                         )

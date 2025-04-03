@@ -62,7 +62,6 @@ internal fun AliasAddressRow(
     alias: String,
     isAliasEnabled: Boolean,
     isAliasCreatedByUser: Boolean,
-    isAliasSyncEnabled: Boolean,
     isAliasStateToggling: Boolean,
     onCopyAlias: (String) -> Unit,
     onCreateLoginFromAlias: (String) -> Unit,
@@ -113,7 +112,7 @@ internal fun AliasAddressRow(
                 )
             }
 
-            if (isAliasSyncEnabled && isAliasCreatedByUser) {
+            if (isAliasCreatedByUser) {
                 if (isAliasStateToggling) {
                     CircularProgressIndicator(
                         modifier = Modifier
@@ -148,7 +147,6 @@ internal fun AliasAddressRowPreview(
             AliasAddressRow(
                 alias = "some@alias.test",
                 isAliasEnabled = isAliasEnabled,
-                isAliasSyncEnabled = true,
                 isAliasCreatedByUser = true,
                 isAliasStateToggling = false,
                 onCopyAlias = {},

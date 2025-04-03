@@ -48,12 +48,6 @@ enum class FeatureFlag(
         key = "PassSecureLinkCryptoChangeV1",
         isEnabledDefault = false
     ),
-    NEW_LOGIN_FLOW(
-        title = "New login flow",
-        description = "Enable new login flow",
-        key = null,
-        isEnabledDefault = false
-    ),
     CUSTOM_TYPE_V1(
         title = "Enable custom types",
         description = "Enable custom types",

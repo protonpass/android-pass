@@ -62,7 +62,6 @@ fun NoteContent(
     isPinned: Boolean,
     canViewItemHistory: Boolean,
     isFileAttachmentsEnabled: Boolean,
-    isItemSharingEnabled: Boolean,
     attachmentsState: AttachmentsState,
     hasMoreThanOneVaultShare: Boolean,
     onShareClick: () -> Unit,
@@ -96,8 +95,7 @@ fun NoteContent(
             VaultNameSubtitle(
                 share = share,
                 onClick = onShareClick,
-                hasMoreThanOneVaultShare = hasMoreThanOneVaultShare,
-                isItemSharingEnabled = isItemSharingEnabled
+                hasMoreThanOneVaultShare = hasMoreThanOneVaultShare
             )
         }
 
@@ -150,7 +148,6 @@ fun NoteContentPreview(@PreviewParameter(ThemeItemTitleProvider::class) input: P
                 onViewItemHistoryClicked = {},
                 canViewItemHistory = params.isHistoryFeatureEnabled,
                 isFileAttachmentsEnabled = false,
-                isItemSharingEnabled = true,
                 attachmentsState = AttachmentsState.Initial,
                 hasMoreThanOneVaultShare = true,
                 onAttachmentEvent = { }

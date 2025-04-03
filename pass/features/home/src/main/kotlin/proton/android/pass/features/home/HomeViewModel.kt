@@ -289,9 +289,8 @@ class HomeViewModel @Inject constructor(
 
     private val shareListWrapperFlow: Flow<ShareListWrapper> = combine(
         searchOptionsFlow,
-        observeAllShares().asLoadingResult(),
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1)
-    ) { searchOptions, sharesResult, isItemSharingEnabled ->
+        observeAllShares().asLoadingResult()
+    ) { searchOptions, sharesResult ->
         val shares: List<Share> = sharesResult.getOrNull().orEmpty()
         val selectedShare: Option<Share> = searchOptions.vaultSelectionOption
             .let { it as? VaultSelectionOption.Vault }
@@ -301,14 +300,6 @@ class HomeViewModel @Inject constructor(
         val isVaultSelected = searchOptions.vaultSelectionOption is VaultSelectionOption.Vault
         if (isVaultSelected) {
             autoSelectAllVaultsIfCannotFindVault(selectedShare, shares, searchOptions.userId)
-        }
-
-        if (!isItemSharingEnabled) {
-            autoSelectVaultIfSingle(
-                shares = shares,
-                vaultSelection = searchOptions.vaultSelectionOption,
-                userId = searchOptions.userId
-            )
         }
 
         ShareListWrapper(
@@ -590,19 +581,12 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(BottomSheetItemAction.None)
 
     data class HomeFeatures(
-        val isItemSharingEnabled: Boolean,
         val isCustomItemEnabled: Boolean
     )
 
-    private val homeFeaturesFlow: Flow<HomeFeatures> = combine(
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1),
+    private val homeFeaturesFlow: Flow<HomeFeatures> =
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1)
-    ) { isItemSharingEnabled, isCustomItemEnabled ->
-        HomeFeatures(
-            isItemSharingEnabled = isItemSharingEnabled,
-            isCustomItemEnabled = isCustomItemEnabled
-        )
-    }
+            .map(::HomeFeatures)
 
     internal val homeUiState: StateFlow<HomeUiState> = combineN(
         homeListUiStateFlow,
@@ -633,7 +617,6 @@ class HomeViewModel @Inject constructor(
             navEvent = navEvent,
             action = bottomSheetItemAction,
             isFreePlan = userPlan.map { plan -> plan.isFreePlan }.getOrNull() ?: true,
-            isItemSharingEnabled = homeFeatures.isItemSharingEnabled,
             isCustomItemEnabled = homeFeatures.isCustomItemEnabled,
             aliasTrashDialogStatusPreference = aliasTrashDialogStatusPreference,
             canCreateItems = canCreateItems,
@@ -730,6 +713,7 @@ class HomeViewModel @Inject constructor(
                             is ItemContents.SSHKey,
                             is ItemContents.WifiNetwork,
                             is ItemContents.Custom -> snackbarDispatcher(CustomMovedToTrash)
+
                             is ItemContents.Unknown -> {}
                         }
                     } else {
@@ -1136,6 +1120,7 @@ class HomeViewModel @Inject constructor(
                 item.contents is ItemContents.Custom ||
                     item.contents is ItemContents.WifiNetwork ||
                     item.contents is ItemContents.SSHKey
+
             SearchFilterType.LoginMFA ->
                 item.contents is ItemContents.Login && (item.contents as ItemContents.Login).hasPrimaryTotp
 
@@ -1206,27 +1191,6 @@ class HomeViewModel @Inject constructor(
                                 vaultSelectionOption = VaultSelectionOption.AllVaults
                             )
                         }
-                    }
-        }
-    }
-
-    private suspend fun autoSelectVaultIfSingle(
-        shares: List<Share>,
-        vaultSelection: VaultSelectionOption,
-        userId: UserId?
-    ) {
-        when {
-            userId == null -> return
-            vaultSelection !is VaultSelectionOption.AllVaults -> return
-            else ->
-                shares
-                    .filterIsInstance<Share.Vault>()
-                    .let { vaultShares ->
-                        if (vaultShares.size != 1) return
-
-                        val vaultSelectionOption =
-                            VaultSelectionOption.Vault(shareId = vaultShares.first().id)
-                        homeSearchOptionsRepository.setVaultSelectionOption(vaultSelectionOption)
                     }
         }
     }

@@ -119,11 +119,8 @@ internal fun HomeContent(
                             stringResource(R.string.search_topbar_placeholder_pinning)
                         } else {
                             when (uiState.homeListUiState.homeVaultSelection) {
-                                VaultSelectionOption.AllVaults -> if (uiState.isItemSharingEnabled) {
+                                VaultSelectionOption.AllVaults ->
                                     stringResource(R.string.search_topbar_placeholder_all_items)
-                                } else {
-                                    stringResource(R.string.search_topbar_placeholder_all_vaults)
-                                }
 
                                 VaultSelectionOption.Trash ->
                                     stringResource(R.string.search_topbar_placeholder_trash)
@@ -152,7 +149,6 @@ internal fun HomeContent(
                                 homeVaultSelection = uiState.homeListUiState.homeVaultSelection,
                                 isSeeAllPinsMode = uiState.pinningUiState.inPinningMode,
                                 isSearchMode = uiState.searchUiState.inSearchMode,
-                                isItemSharingEnabled = uiState.isItemSharingEnabled,
                                 onEvent = onEvent
                             )
                         },
@@ -340,7 +336,6 @@ private fun HomeDrawerIcon(
     homeVaultSelection: VaultSelectionOption,
     isSeeAllPinsMode: Boolean,
     isSearchMode: Boolean,
-    isItemSharingEnabled: Boolean,
     onEvent: (HomeUiEvent) -> Unit
 ) {
     if (!isSeeAllPinsMode && !isSearchMode) {
@@ -350,7 +345,6 @@ private fun HomeDrawerIcon(
                     VaultSelectionOption.AllVaults -> {
                         AllVaultsIcon(
                             modifier = modifier,
-                            isItemSharingEnabled = isItemSharingEnabled,
                             size = 48,
                             onClick = { onEvent(HomeUiEvent.DrawerIconClick) }
                         )

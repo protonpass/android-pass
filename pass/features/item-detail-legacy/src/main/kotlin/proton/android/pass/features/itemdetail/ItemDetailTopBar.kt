@@ -61,7 +61,6 @@ internal fun ItemDetailTopBar(
     actionColor: Color,
     itemCategory: ItemCategory,
     shareSharedCount: Int,
-    isItemSharingEnabled: Boolean,
     onUpClick: () -> Unit,
     onEditClick: () -> Unit,
     onOptionsClick: () -> Unit,
@@ -88,7 +87,6 @@ internal fun ItemDetailTopBar(
                 iconBackgroundColor = iconBackgroundColor,
                 itemCategory = itemCategory,
                 shareSharedCount = shareSharedCount,
-                isItemSharingEnabled = isItemSharingEnabled,
                 onEditClick = onEditClick,
                 onOptionsClick = onOptionsClick,
                 onShareClick = onShareClick
@@ -107,7 +105,6 @@ private fun ItemTopBarActions(
     iconBackgroundColor: Color,
     itemCategory: ItemCategory,
     shareSharedCount: Int,
-    isItemSharingEnabled: Boolean,
     onEditClick: () -> Unit,
     onOptionsClick: () -> Unit,
     onShareClick: () -> Unit
@@ -126,21 +123,12 @@ private fun ItemTopBarActions(
             onEditClick = onEditClick
         )
 
-        if (isItemSharingEnabled) {
-            if (itemCategory != ItemCategory.Alias) {
-                PassSharingShareIcon(
-                    shareSharedCount = shareSharedCount,
-                    itemCategory = itemCategory,
-                    isEnabled = actions.canShare.value,
-                    onClick = onShareClick
-                )
-            }
-        } else {
-            ItemDetailShareButton(
+        if (itemCategory != ItemCategory.Alias) {
+            PassSharingShareIcon(
+                shareSharedCount = shareSharedCount,
+                itemCategory = itemCategory,
                 isEnabled = actions.canShare.value,
-                iconBackgroundColor = iconBackgroundColor,
-                iconColor = iconColor,
-                onShareClick = onShareClick
+                onClick = onShareClick
             )
         }
 
@@ -200,27 +188,6 @@ private fun ItemDetailEditButton(
 }
 
 @Composable
-private fun ItemDetailShareButton(
-    modifier: Modifier = Modifier,
-    isEnabled: Boolean,
-    iconBackgroundColor: Color,
-    iconColor: Color,
-    onShareClick: () -> Unit
-) {
-    CircleIconButton(
-        modifier = modifier,
-        drawableRes = CoreR.drawable.ic_proton_users_plus,
-        size = 40,
-        backgroundColor = iconBackgroundColor,
-        tintColor = iconColor,
-        iconContentDescription = stringResource(id = R.string.share_button_content_description),
-        enabled = isEnabled,
-        onClick = onShareClick,
-        onDisabledClick = onShareClick
-    )
-}
-
-@Composable
 private fun ItemDetailOptionsButton(
     modifier: Modifier = Modifier,
     isVisible: Boolean,
@@ -265,8 +232,7 @@ fun ItemDetailTopBarPreview(
                 onShareClick = {},
                 actions = input.second.actions,
                 itemCategory = ItemCategory.Login,
-                shareSharedCount = 0,
-                isItemSharingEnabled = false
+                shareSharedCount = 0
             )
         }
     }

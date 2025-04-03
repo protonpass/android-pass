@@ -77,14 +77,12 @@ class FilterBottomSheetViewModel @Inject constructor(
 
     internal val stateFlow: StateFlow<FilterOptionsState> = combine(
         summaryAndOptionsFlow,
-        featureFlagsRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1)
-    ) { (summary, options), isCustomItem, isItemSharingAvailable ->
+        featureFlagsRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1)
+    ) { (summary, options), isCustomItem ->
         FilterOptionsState.Success(
             searchOptions = options,
             summary = summary,
-            isCustomItemEnabled = isCustomItem,
-            isItemSharingAvailable = isItemSharingAvailable
+            isCustomItemEnabled = isCustomItem
         )
     }.stateIn(
         scope = viewModelScope,

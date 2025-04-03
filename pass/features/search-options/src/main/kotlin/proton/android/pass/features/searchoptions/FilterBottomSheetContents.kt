@@ -212,8 +212,7 @@ internal fun FilterBottomSheetContentsPreview(
                         trashed = 0,
                         sharedWithMeTrashed = 0
                     ),
-                    isCustomItemEnabled = true,
-                    isItemSharingAvailable = true
+                    isCustomItemEnabled = true
                 ),
                 onSortingTypeSelected = {}
             )

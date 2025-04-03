@@ -18,9 +18,7 @@
 
 package proton.android.pass.features.itemdetail.common
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
@@ -30,25 +28,17 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
-import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toSmallResource
@@ -67,48 +57,20 @@ fun VaultNameSubtitle(
     modifier: Modifier = Modifier,
     share: Share,
     hasMoreThanOneVaultShare: Boolean,
-    isItemSharingEnabled: Boolean,
     onClick: () -> Unit
 ) {
     when (share) {
         is Share.Item -> Unit
 
         is Share.Vault -> {
-            val shouldHandleVaultSharing = remember(isItemSharingEnabled, share.shared) {
-                !isItemSharingEnabled && share.shared
-            }
 
             if (hasMoreThanOneVaultShare) {
-                val vaultText = remember(share.shared, share.memberCount) {
-                    if (shouldHandleVaultSharing) {
-                        buildAnnotatedString {
-                            append(share.name)
-                            append(" ${SpecialCharacters.DOT_SEPARATOR} ")
-                            withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                                append(share.memberCount.toString())
-                            }
-                        }
-                    } else {
-                        AnnotatedString(share.name)
-                    }
-                }
                 Row(
                     modifier = modifier
                         .border(
                             width = 1.dp,
                             color = share.color.toColor(isBackground = true),
                             shape = RoundedCornerShape(24.dp)
-                        )
-                        .applyIf(
-                            condition = shouldHandleVaultSharing,
-                            ifTrue = {
-                                background(
-                                    color = share.color.toColor(isBackground = true),
-                                    shape = RoundedCornerShape(24.dp)
-                                )
-                                    .clip(RoundedCornerShape(24.dp))
-                                    .clickable(onClick = onClick)
-                            }
                         )
                         .padding(horizontal = Spacing.small, vertical = Spacing.extraSmall),
                     verticalAlignment = Alignment.CenterVertically,
@@ -122,7 +84,7 @@ fun VaultNameSubtitle(
                     )
 
                     Text(
-                        text = vaultText,
+                        text = AnnotatedString(share.name),
                         style = PassTheme.typography.body3Norm(),
                         color = share.color.toColor()
                     )
@@ -160,8 +122,7 @@ fun VaultNameSubtitlePreview(@PreviewParameter(ThemedBooleanPreviewProvider::cla
                     canAutofill = true
                 ),
                 onClick = {},
-                hasMoreThanOneVaultShare = true,
-                isItemSharingEnabled = true
+                hasMoreThanOneVaultShare = true
             )
         }
     }

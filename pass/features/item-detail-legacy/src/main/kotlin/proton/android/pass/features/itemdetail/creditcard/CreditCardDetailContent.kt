@@ -45,7 +45,6 @@ internal fun CreditCardDetailContent(
     isPinned: Boolean,
     canViewItemHistory: Boolean,
     isFileAttachmentsEnabled: Boolean,
-    isItemSharingEnabled: Boolean,
     attachmentsState: AttachmentsState,
     hasMoreThanOneVaultShare: Boolean,
     onEvent: (CreditCardDetailEvent) -> Unit
@@ -62,8 +61,7 @@ internal fun CreditCardDetailContent(
             share = share,
             onShareClick = { onEvent(CreditCardDetailEvent.OnShareClick) },
             isPinned = isPinned,
-            hasMoreThanOneVaultShare = hasMoreThanOneVaultShare,
-            isItemSharingEnabled = isItemSharingEnabled
+            hasMoreThanOneVaultShare = hasMoreThanOneVaultShare
         )
 
         MainCreditCardSection(

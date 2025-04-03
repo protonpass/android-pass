@@ -180,13 +180,11 @@ class NoteDetailViewModel @Inject constructor(
 
     private val itemFeaturesFlow: Flow<NoteItemFeatures> = combine(
         getUserPlan(),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1)
-    ) { userPlan, isFileAttachmentsEnabled, isItemSharingEnabled ->
+        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
+    ) { userPlan, isFileAttachmentsEnabled ->
         NoteItemFeatures(
             isHistoryEnabled = userPlan.isPaidPlan,
-            isFileAttachmentsEnabled = isFileAttachmentsEnabled,
-            isItemSharingEnabled = isItemSharingEnabled
+            isFileAttachmentsEnabled = isFileAttachmentsEnabled
         )
     }
 

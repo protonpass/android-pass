@@ -53,7 +53,6 @@ internal fun ItemDetailsContent(
                     ItemDetailsTopBar(
                         isLoading = false,
                         itemCategory = itemDetailState.itemCategory,
-                        isItemSharingEnabled = isItemSharingEnabled,
                         shareSharedCount = shareSharedCount,
                         onUpClick = {
                             ItemDetailsUiEvent.OnNavigateBack

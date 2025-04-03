@@ -47,7 +47,6 @@ internal data class ShareFromItemUiState(
     val event: ShareFromItemNavEvent,
     val canUsePaidFeatures: Boolean,
     private val isNewCryptoEnabled: Boolean,
-    private val isItemSharingAvailable: Boolean,
     private val itemOption: Option<Item>,
     private val shareOption: Option<Share>,
     private val organizationSharingPolicy: OrganizationSharingPolicy
@@ -88,8 +87,6 @@ internal data class ShareFromItemUiState(
         get() {
             if (!isItemSharingAllowedByOrganization) return false
 
-            if (!isItemSharingAvailable) return false
-
             return when (shareOption) {
                 None -> false
                 is Some -> when (val share = shareOption.value) {
@@ -112,7 +109,7 @@ internal data class ShareFromItemUiState(
             }
         }
 
-    internal val canManageAccess: Boolean = isItemSharingAvailable && (isSharedItem || isSharedShare)
+    internal val canManageAccess: Boolean = isSharedItem || isSharedShare
 
     internal companion object {
 
@@ -121,7 +118,6 @@ internal data class ShareFromItemUiState(
             itemId = itemId,
             event = ShareFromItemNavEvent.Unknown,
             canUsePaidFeatures = false,
-            isItemSharingAvailable = false,
             isNewCryptoEnabled = false,
             itemOption = None,
             shareOption = None,

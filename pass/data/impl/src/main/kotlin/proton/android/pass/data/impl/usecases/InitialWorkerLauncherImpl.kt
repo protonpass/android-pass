@@ -39,8 +39,6 @@ import proton.android.pass.data.impl.work.PeriodicIgnoredAssetLinkWorker
 import proton.android.pass.data.impl.work.PeriodicReportWorker
 import proton.android.pass.data.impl.work.UserAccessWorker
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import java.util.concurrent.TimeUnit
@@ -50,7 +48,6 @@ class InitialWorkerLauncherImpl @Inject constructor(
     private val workManager: WorkManager,
     private val eventWorkerManager: EventWorkerManager,
     private val userPreferencesRepository: UserPreferencesRepository,
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val appDispatchers: AppDispatchers
 ) : InitialWorkerLauncher {
 
@@ -89,20 +86,11 @@ class InitialWorkerLauncherImpl @Inject constructor(
         }
     }
 
-    private suspend fun isDALEnabled(): Boolean {
-        val isFeatureFlagEnabled = featureFlagsPreferencesRepository
-            .get<Boolean>(FeatureFlag.DIGITAL_ASSET_LINKS)
-            .firstOrNull()
-            ?: false
-
-        val isUserPreferenceEnabled = userPreferencesRepository
-            .observeUseDigitalAssetLinksPreference()
-            .firstOrNull()
-            ?.value()
-            ?: false
-
-        return isFeatureFlagEnabled && isUserPreferenceEnabled
-    }
+    private suspend fun isDALEnabled(): Boolean = userPreferencesRepository
+        .observeUseDigitalAssetLinksPreference()
+        .firstOrNull()
+        ?.value()
+        ?: false
 
     private fun launchFeature(feature: WorkerFeature) {
         val action = featureLaunchActions[feature]

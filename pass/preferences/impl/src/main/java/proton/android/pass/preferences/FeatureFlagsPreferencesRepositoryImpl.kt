@@ -36,7 +36,6 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.CUSTOM_TYPE_V1
-import proton.android.pass.preferences.FeatureFlag.DIGITAL_ASSET_LINKS
 import proton.android.pass.preferences.FeatureFlag.EXTRA_LOGGING
 import proton.android.pass.preferences.FeatureFlag.FILE_ATTACHMENTS_V1
 import proton.android.pass.preferences.FeatureFlag.IN_APP_MESSAGES_V1
@@ -66,11 +65,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { simpleLoginAliasesSyncEnabled.value }
-
-        DIGITAL_ASSET_LINKS -> getFeatureFlag(
-            key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault
-        ) { digitalAssetLinkEnabled.value }
 
         ADVANCED_ALIAS_MANAGEMENT_V1 -> getFeatureFlag(
             key = featureFlag.key,
@@ -120,10 +114,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         SL_ALIASES_SYNC -> setFeatureFlag {
             simpleLoginAliasesSyncEnabled = boolFlagPrefProto(value)
-        }
-
-        DIGITAL_ASSET_LINKS -> setFeatureFlag {
-            digitalAssetLinkEnabled = boolFlagPrefProto(value)
         }
 
         ADVANCED_ALIAS_MANAGEMENT_V1 -> setFeatureFlag {
@@ -249,7 +239,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
         when (featureFlag) {
             AUTOFILL_DEBUG_MODE -> autofillDebugModeEnabled
             SL_ALIASES_SYNC -> simpleLoginAliasesSyncEnabled
-            DIGITAL_ASSET_LINKS -> digitalAssetLinkEnabled
             ADVANCED_ALIAS_MANAGEMENT_V1 -> advanceAliasManagementV1Enabled
             ITEM_SHARING_V1 -> itemSharingV1Enabled
             IN_APP_MESSAGES_V1 -> inAppMessagesV1Enabled

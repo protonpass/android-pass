@@ -63,7 +63,6 @@ internal fun CreateAliasForm(
     onInvalidAliasError: Boolean,
     isEditAllowed: Boolean,
     isLoading: Boolean,
-    isAliasManagementEnabled: Boolean,
     isAliasCreatedByUser: Boolean,
     showUpgrade: Boolean,
     displayFileAttachmentsOnboarding: Boolean,
@@ -149,36 +148,34 @@ internal fun CreateAliasForm(
             onChange = { onEvent(AliasContentUiEvent.OnNoteChange(it)) }
         )
 
-        if (isAliasManagementEnabled) {
-            aliasItemFormState.slNote?.let { slNote ->
-                SimpleNoteSection(
-                    label = buildString {
-                        append(stringResource(id = CompR.string.field_note_title))
-                        append(" ${SpecialCharacters.DOT_SEPARATOR} ")
-                        append(stringResource(id = CompR.string.simple_login_brand_name))
-                    },
-                    labelIcon = {
-                        Icon(
-                            modifier = Modifier
-                                .clickable { onEvent(AliasContentUiEvent.OnSlNoteInfoClick) }
-                                .size(size = 16.dp),
-                            painter = painterResource(CoreR.drawable.ic_proton_question_circle),
-                            contentDescription = stringResource(id = R.string.sl_note_info_content_description),
-                            tint = PassTheme.colors.textWeak
-                        )
-                    },
-                    value = slNote,
-                    enabled = isEditAllowed,
-                    onChange = { onEvent(AliasContentUiEvent.OnSLNoteChange(it)) }
-                )
-            }
-            if (isCreateMode || isAliasCreatedByUser) {
-                SenderNameSection(
-                    value = aliasItemFormState.senderName.orEmpty(),
-                    enabled = isEditAllowed,
-                    onChange = { onEvent(AliasContentUiEvent.OnSenderNameChange(it)) }
-                )
-            }
+        aliasItemFormState.slNote?.let { slNote ->
+            SimpleNoteSection(
+                label = buildString {
+                    append(stringResource(id = CompR.string.field_note_title))
+                    append(" ${SpecialCharacters.DOT_SEPARATOR} ")
+                    append(stringResource(id = CompR.string.simple_login_brand_name))
+                },
+                labelIcon = {
+                    Icon(
+                        modifier = Modifier
+                            .clickable { onEvent(AliasContentUiEvent.OnSlNoteInfoClick) }
+                            .size(size = 16.dp),
+                        painter = painterResource(CoreR.drawable.ic_proton_question_circle),
+                        contentDescription = stringResource(id = R.string.sl_note_info_content_description),
+                        tint = PassTheme.colors.textWeak
+                    )
+                },
+                value = slNote,
+                enabled = isEditAllowed,
+                onChange = { onEvent(AliasContentUiEvent.OnSLNoteChange(it)) }
+            )
+        }
+        if (isCreateMode || isAliasCreatedByUser) {
+            SenderNameSection(
+                value = aliasItemFormState.senderName.orEmpty(),
+                enabled = isEditAllowed,
+                onChange = { onEvent(AliasContentUiEvent.OnSenderNameChange(it)) }
+            )
         }
 
         if (isFileAttachmentsEnabled) {

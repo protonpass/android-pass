@@ -179,9 +179,6 @@ fun NoteDetail(
                         ItemDetailTopBar(
                             isLoading = state.isLoading,
                             actions = state.itemActions,
-                            actionColor = PassTheme.colors.noteInteractionNormMajor1,
-                            iconColor = PassTheme.colors.noteInteractionNormMajor2,
-                            iconBackgroundColor = PassTheme.colors.noteInteractionNormMinor1,
                             itemCategory = state.itemUiModel.category,
                             shareSharedCount = state.shareSharedCount,
                             onUpClick = { onNavigate(ItemDetailNavigation.CloseScreen) },

@@ -106,6 +106,7 @@ class TestObservePinnedItems @Inject constructor() : ObservePinnedItems {
                     createTime = now,
                     lastAutofillTime = None,
                     isPinned = false,
+                    pinTime = None,
                     flags = Flags(0),
                     shareCount = 0,
                     shareType = ShareType.Vault

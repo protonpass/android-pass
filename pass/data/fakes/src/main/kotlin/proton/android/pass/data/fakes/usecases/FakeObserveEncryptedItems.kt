@@ -128,6 +128,7 @@ class FakeObserveEncryptedItems @Inject constructor() : ObserveEncryptedItems {
                     createTime = now,
                     lastAutofillTime = None,
                     isPinned = false,
+                    pinTime = None,
                     flags = Flags(flags),
                     shareCount = 0,
                     shareType = ShareType.Vault

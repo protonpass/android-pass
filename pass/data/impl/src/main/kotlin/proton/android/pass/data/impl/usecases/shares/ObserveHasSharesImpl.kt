@@ -19,36 +19,20 @@
 package proton.android.pass.data.impl.usecases.shares
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.shares.ObserveHasShares
-import proton.android.pass.domain.ShareType
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 class ObserveHasSharesImpl @Inject constructor(
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val observeCurrentUser: ObserveCurrentUser,
     private val shareRepository: ShareRepository
 ) : ObserveHasShares {
 
-    override fun invoke(): Flow<Boolean> = combine(
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1),
-        observeCurrentUser()
-    ) { isItemSharingEnabled, user ->
-        if (isItemSharingEnabled) {
-            shareRepository.observeAllShares(userId = user.userId)
-        } else {
-            shareRepository.observeSharesByType(
-                userId = user.userId,
-                shareType = ShareType.Vault,
-                isActive = true
-            )
-        }
+    override fun invoke(): Flow<Boolean> = observeCurrentUser().map { user ->
+        shareRepository.observeAllShares(userId = user.userId)
     }.flatMapLatest { sharesFlow ->
         sharesFlow.map { shares -> shares.isNotEmpty() }
     }

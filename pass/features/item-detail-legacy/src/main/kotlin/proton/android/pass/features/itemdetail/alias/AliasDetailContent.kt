@@ -61,7 +61,6 @@ fun AliasDetailContent(
     isLoading: Boolean,
     isAliasStateToggling: Boolean,
     canViewItemHistory: Boolean,
-    isAliasManagementEnabled: Boolean,
     isFileAttachmentsEnabled: Boolean,
     isItemSharingEnabled: Boolean,
     attachmentsState: AttachmentsState,
@@ -111,7 +110,7 @@ fun AliasDetailContent(
             )
         }
 
-        if (isAliasManagementEnabled && slNote.isNotBlank()) {
+        if (slNote.isNotBlank()) {
             NoteSection(
                 title = buildString {
                     append(stringResource(id = R.string.item_details_shared_section_note_title))
@@ -123,25 +122,23 @@ fun AliasDetailContent(
             )
         }
 
-        if (isAliasManagementEnabled) {
-            if (isAliasCreatedByUser) {
-                SenderNameSection(
-                    text = displayName,
-                    isLoading = isLoading
-                )
+        if (isAliasCreatedByUser) {
+            SenderNameSection(
+                text = displayName,
+                isLoading = isLoading
+            )
 
-                ContactsSection(
-                    modifier = Modifier.padding(bottom = Spacing.small),
-                    displayContactsBanner = displayContactsBanner,
-                    counter = contactsCount,
-                    onClick = onContactsClicked,
-                    onDismissContactsBanner = onDismissContactsBanner
-                )
-            }
+            ContactsSection(
+                modifier = Modifier.padding(bottom = Spacing.small),
+                displayContactsBanner = displayContactsBanner,
+                counter = contactsCount,
+                onClick = onContactsClicked,
+                onDismissContactsBanner = onDismissContactsBanner
+            )
+        }
 
-            if (stats is Some) {
-                AliasStats(stats = stats.value)
-            }
+        if (stats is Some) {
+            AliasStats(stats = stats.value)
         }
 
         if (isFileAttachmentsEnabled) {

@@ -73,6 +73,8 @@ data class ItemRevisionApiModel(
     val revisionTime: Long,
     @SerialName("Pinned")
     val isPinned: Boolean,
+    @SerialName("PinTime")
+    val pinTime: Long?,
     @SerialName("Flags")
     val flags: Int,
     @SerialName("ShareCount")

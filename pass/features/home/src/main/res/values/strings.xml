@@ -85,14 +85,12 @@
     <string name="credit_card_cvv_copied_to_clipboard">Security code copied</string>
     <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">Content was too long, partially copied to the clipboard</string>
     <!-- Vault drawer -->
-    <string name="vault_drawer_vaults_title">Vaults</string>
     <plurals name="vault_drawer_vaults_item_count">
         <item quantity="one">%d item</item>
         <item quantity="other">%d items</item>
     </plurals>
     <string name="vault_drawer_create_vault">Create vault</string>
     <string name="vault_drawer_item_trash">Trash</string>
-    <string name="vault_drawer_all_vaults">All vaults</string>
     <!-- Vault management -->
     <string name="vault_delete_dialog_title">Delete vault</string>
     <string name="vault_delete_dialog_cancel_action">Cancel</string>
@@ -101,7 +99,6 @@
     <string name="snackbar_delete_vault_error">Vault not deleted</string>
     <!-- Search top bar -->
     <string name="search_topbar_placeholder_all_items">Search in all items…</string>
-    <string name="search_topbar_placeholder_all_vaults">Search in all vaults…</string>
     <string name="search_topbar_placeholder_vault">Search in %s…</string>
     <string name="search_topbar_placeholder_trash">Search in Trash…</string>
     <string name="search_topbar_placeholder_pinning">Search in Pinned…</string>

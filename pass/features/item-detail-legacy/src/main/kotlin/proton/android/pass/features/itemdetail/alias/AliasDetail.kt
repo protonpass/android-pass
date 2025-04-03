@@ -134,20 +134,16 @@ fun AliasDetail(
                             },
                             onMoveToTrash = {
                                 scope.launch { bottomSheetState.hide() }
-                                if (state.itemFeatures.slAliasSyncEnabled) {
-                                    if (contents.isEnabled && !state.itemFeatures.isAliasTrashDialogChecked) {
-                                        ItemDetailNavigation.OnTrashAlias(
-                                            shareId = state.itemUiModel.shareId,
-                                            itemId = state.itemUiModel.id
-                                        ).also(onNavigate)
-                                    } else {
-                                        viewModel.onMoveToTrash(
-                                            state.itemUiModel.shareId,
-                                            state.itemUiModel.id
-                                        )
-                                    }
+                                if (contents.isEnabled && !state.itemFeatures.isAliasTrashDialogChecked) {
+                                    ItemDetailNavigation.OnTrashAlias(
+                                        shareId = state.itemUiModel.shareId,
+                                        itemId = state.itemUiModel.id
+                                    ).also(onNavigate)
                                 } else {
-                                    shouldShowMoveToTrashItemDialog = true
+                                    viewModel.onMoveToTrash(
+                                        state.itemUiModel.shareId,
+                                        state.itemUiModel.id
+                                    )
                                 }
                             },
                             onPinned = {
@@ -245,7 +241,6 @@ fun AliasDetail(
                         contactsCount = state.contactsCount,
                         isLoading = state.isLoadingMailboxes,
                         canViewItemHistory = state.canViewItemHistory,
-                        isAliasSyncEnabled = state.itemFeatures.slAliasSyncEnabled,
                         isAliasStateToggling = state.isLoading(LoadingStateKey.AliasStateToggling),
                         isAliasManagementEnabled = state.itemFeatures.isAliasManagementEnabled,
                         isFileAttachmentsEnabled = state.itemFeatures.isFileAttachmentsEnabled,

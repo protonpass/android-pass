@@ -30,12 +30,6 @@ enum class FeatureFlag(
         key = null, // Cannot be activated server-side,
         isEnabledDefault = false
     ),
-    SL_ALIASES_SYNC(
-        title = "SL aliases sync",
-        description = "Enable SL aliases sync",
-        key = "PassSimpleLoginAliasesSync",
-        isEnabledDefault = false
-    ),
     ADVANCED_ALIAS_MANAGEMENT_V1(
         title = "Alias management (v1)",
         description = "Enable advanced alias management",

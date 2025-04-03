@@ -388,10 +388,6 @@ fun HomeScreen(
                                         ).also(onNavigateEvent)
                                     }
 
-                                    homeUiState.isSLAliasSyncEnabled -> {
-                                        homeViewModel.sendItemsToTrash(listOf(itemUiModel))
-                                    }
-
                                     else -> {
                                         selectedItem = itemUiModel
                                         shouldShowMoveToTrashAliasDialog = true

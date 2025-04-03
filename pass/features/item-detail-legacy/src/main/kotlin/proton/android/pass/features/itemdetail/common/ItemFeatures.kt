@@ -28,7 +28,6 @@ internal data class AliasItemFeatures(
     override val isHistoryEnabled: Boolean,
     override val isFileAttachmentsEnabled: Boolean,
     override val isItemSharingEnabled: Boolean,
-    internal val slAliasSyncEnabled: Boolean,
     internal val isAliasTrashDialogChecked: Boolean,
     internal val isAliasManagementEnabled: Boolean
 ) : ItemFeatures

@@ -28,8 +28,6 @@ import proton.android.pass.data.api.repositories.InAppMessagesRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableInAppMessages
 import proton.android.pass.domain.inappmessages.InAppMessage
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.minutes
@@ -37,36 +35,27 @@ import kotlin.time.Duration.Companion.minutes
 class ObserveDeliverableInAppMessagesImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
     private val inAppMessagesRepository: InAppMessagesRepository,
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val clock: Clock
 ) : ObserveDeliverableInAppMessages {
 
-    override fun invoke(userId: UserId?): Flow<List<InAppMessage>> =
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.IN_APP_MESSAGES_V1)
-            .flatMapLatest { isFeatureActive ->
-                if (isFeatureActive) {
-                    getUserId(userId).flatMapLatest { resolvedUserId ->
-                        internalSettingsRepository.getLastTimeUserHasSeenIAM(resolvedUserId)
-                            .flatMapLatest { preference ->
-                                val now = clock.now()
-                                val lastSeenTime = preference.value()?.timestamp ?: 0L
-                                val thirtyMinutesAgo = now.minus(30.minutes)
-                                val shouldShowInAppMessage = lastSeenTime < thirtyMinutesAgo.epochSeconds
-                                if (shouldShowInAppMessage) {
-                                    inAppMessagesRepository.observeDeliverableUserMessages(
-                                        userId = resolvedUserId,
-                                        currentTimestamp = now.epochSeconds
-                                    )
-                                } else {
-                                    flowOf(emptyList())
-                                }
-                            }
-                    }
+    override fun invoke(userId: UserId?): Flow<List<InAppMessage>> = getUserId(userId).flatMapLatest { resolvedUserId ->
+        internalSettingsRepository.getLastTimeUserHasSeenIAM(resolvedUserId)
+            .flatMapLatest { preference ->
+                val now = clock.now()
+                val lastSeenTime = preference.value()?.timestamp ?: 0L
+                val thirtyMinutesAgo = now.minus(30.minutes)
+                val shouldShowInAppMessage = lastSeenTime < thirtyMinutesAgo.epochSeconds
+                if (shouldShowInAppMessage) {
+                    inAppMessagesRepository.observeDeliverableUserMessages(
+                        userId = resolvedUserId,
+                        currentTimestamp = now.epochSeconds
+                    )
                 } else {
                     flowOf(emptyList())
                 }
             }
+    }
 
     fun getUserId(userId: UserId?): Flow<UserId> = if (userId != null) {
         flowOf(userId)

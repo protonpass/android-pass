@@ -27,9 +27,7 @@ import org.junit.Before
 import proton.android.pass.data.fakes.repositories.FakeInAppMessagesRepository
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
-import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.LastTimeUserHasSeenIAMPreference
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestInternalSettingsRepository
 import proton.android.pass.test.domain.TestInAppMessage
 import proton.android.pass.test.domain.TestUser
@@ -41,7 +39,6 @@ internal class ObserveDeliverableInAppMessagesImplTest {
     private lateinit var instance: ObserveDeliverableInAppMessagesImpl
     private lateinit var observeCurrentUser: TestObserveCurrentUser
     private lateinit var inAppMessagesRepository: FakeInAppMessagesRepository
-    private lateinit var featureFlagsPreferencesRepository: TestFeatureFlagsPreferenceRepository
     private lateinit var internalSettingsRepository: TestInternalSettingsRepository
     private lateinit var clock: Clock
     private lateinit var userId: UserId
@@ -53,15 +50,11 @@ internal class ObserveDeliverableInAppMessagesImplTest {
             sendUser(TestUser.create())
         }
         inAppMessagesRepository = FakeInAppMessagesRepository()
-        featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository().apply {
-            set(FeatureFlag.IN_APP_MESSAGES_V1, true)
-        }
         internalSettingsRepository = TestInternalSettingsRepository()
         clock = Clock.System
         instance = ObserveDeliverableInAppMessagesImpl(
             observeCurrentUser = observeCurrentUser,
             inAppMessagesRepository = inAppMessagesRepository,
-            featureFlagsPreferencesRepository = featureFlagsPreferencesRepository,
             internalSettingsRepository = internalSettingsRepository,
             clock = clock
         )

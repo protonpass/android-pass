@@ -50,8 +50,6 @@ import proton.android.pass.domain.Plan
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
@@ -66,7 +64,6 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
     private val getUserPlan: GetUserPlan,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val assetLinkRepository: AssetLinkRepository,
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val userPreferencesRepository: UserPreferencesRepository
 ) : GetSuggestedAutofillItems {
 
@@ -161,13 +158,6 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
         }
     }
 
-    private fun isDALEnabledFlow(): Flow<Boolean> = combine(
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.DIGITAL_ASSET_LINKS),
-        userPreferencesRepository.observeUseDigitalAssetLinksPreference().map { it.value() }
-    ) { isFeatureFlagEnabled, isUserPreferenceEnabled ->
-        isFeatureFlagEnabled && isUserPreferenceEnabled
-    }
-
     private fun getSuggestedItemsForAccount(
         userId: UserId,
         itemTypeFilter: ItemTypeFilter,
@@ -182,7 +172,7 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
                     itemState = ItemState.Active
                 ),
                 getUrlFromPackageNameFlow(suggestion),
-                isDALEnabledFlow()
+                userPreferencesRepository.observeUseDigitalAssetLinksPreference().map { it.value() }
             ) { items, digitalAssetLinkSuggestions, isDALEnabled ->
                 val filteredItems = suggestionItemFilter.filter(items, suggestion)
                     .map { item -> ItemData.SuggestedItem(item, suggestion) }

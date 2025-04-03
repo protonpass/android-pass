@@ -36,12 +36,6 @@ enum class FeatureFlag(
         key = "PassSimpleLoginAliasesSync",
         isEnabledDefault = false
     ),
-    DIGITAL_ASSET_LINKS(
-        title = "Digital asset links",
-        description = "Enable Digital asset links",
-        key = "PassDigitalAssetLinks",
-        isEnabledDefault = false
-    ),
     ADVANCED_ALIAS_MANAGEMENT_V1(
         title = "Alias management (v1)",
         description = "Enable advanced alias management",

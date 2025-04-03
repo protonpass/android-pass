@@ -916,7 +916,7 @@ abstract class BaseLoginViewModel(
 
     protected fun updatePrimaryTotpIfNeeded(
         navTotpUri: String?,
-        navTotpIndex: Int?,
+        navTotpIndex: Int,
         currentValue: LoginItemFormState
     ) = navTotpUri
         ?.takeIf { navTotpIndex == -1 }

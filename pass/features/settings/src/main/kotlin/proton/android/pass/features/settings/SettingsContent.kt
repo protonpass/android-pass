@@ -65,7 +65,6 @@ internal fun SettingsContent(
 
             PrivacySection(
                 useFavicons = state.useFavicons.value(),
-                isDigitalAssetLinkEnabled = state.isDigitalAssetLinkEnabled,
                 useDigitalAssetLinks = state.useDigitalAssetLinks.value(),
                 allowScreenshots = state.allowScreenshots.value(),
                 onEvent = onEvent

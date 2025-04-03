@@ -131,13 +131,12 @@ abstract class BaseAliasViewModel(
         isLoadingState,
         eventWrapperState,
         hasUserEditedContentFlow,
-        featureFlagsRepository.get<Boolean>(FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1),
         featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
         userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementOptions),
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
         attachmentsHandler.attachmentState
     ) { aliasItemValidationErrors, isLoading, eventWrapper, hasUserEditedContent,
-        isAliasManagementEnabled, isFileAttachmentEnabled, displayAdvancedOptionsBanner,
+        isFileAttachmentEnabled, displayAdvancedOptionsBanner,
         displayFileAttachmentsOnboarding, attachmentsState ->
         BaseAliasUiState(
             isDraft = isDraft,
@@ -150,7 +149,6 @@ abstract class BaseAliasViewModel(
             hasUserEditedContent = hasUserEditedContent,
             hasReachedAliasLimit = false,
             canUpgrade = false,
-            isAliasManagementEnabled = isAliasManagementEnabled,
             isFileAttachmentEnabled = isFileAttachmentEnabled,
             displayAdvancedOptionsBanner = displayAdvancedOptionsBanner.value,
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),

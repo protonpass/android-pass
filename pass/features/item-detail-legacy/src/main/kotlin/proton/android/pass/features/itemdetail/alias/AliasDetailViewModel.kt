@@ -199,15 +199,13 @@ class AliasDetailViewModel @Inject constructor(
         getUserPlan().map { it.isPaidPlan },
         featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
         userPreferencesRepository.observeAliasTrashDialogStatusPreference().map { it.value },
-        featureFlagsRepository.get<Boolean>(FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1),
         featureFlagsRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1)
     ) { isHistoryEnabled, isFileAttachmentsEnabled, isAliasTrashDialogChecked,
-        aliasManagementV1, isItemSharingEnabled ->
+        isItemSharingEnabled ->
         AliasItemFeatures(
             isHistoryEnabled = isHistoryEnabled,
             isFileAttachmentsEnabled = isFileAttachmentsEnabled,
             isAliasTrashDialogChecked = isAliasTrashDialogChecked,
-            isAliasManagementEnabled = aliasManagementV1,
             isItemSharingEnabled = isItemSharingEnabled
         )
     }

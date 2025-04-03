@@ -47,6 +47,7 @@ import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.buttons.PassSharingShareIcon
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
+import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.domain.items.ItemCategory
 import me.proton.core.presentation.R as CoreR
@@ -56,9 +57,6 @@ internal fun ItemDetailTopBar(
     modifier: Modifier = Modifier,
     isLoading: Boolean,
     actions: ItemActions,
-    iconColor: Color,
-    iconBackgroundColor: Color,
-    actionColor: Color,
     itemCategory: ItemCategory,
     shareSharedCount: Int,
     onUpClick: () -> Unit,
@@ -66,6 +64,7 @@ internal fun ItemDetailTopBar(
     onOptionsClick: () -> Unit,
     onShareClick: () -> Unit
 ) {
+    val passColors = passItemColors(itemCategory)
     ProtonTopAppBar(
         modifier = modifier,
         backgroundColor = PassTheme.colors.itemDetailBackground,
@@ -73,8 +72,8 @@ internal fun ItemDetailTopBar(
         navigationIcon = {
             BackArrowCircleIconButton(
                 modifier = Modifier.padding(Spacing.mediumSmall, Spacing.extraSmall),
-                backgroundColor = iconBackgroundColor,
-                color = iconColor,
+                backgroundColor = passColors.minorPrimary,
+                color = passColors.majorSecondary,
                 onUpClick = onUpClick
             )
         },
@@ -82,9 +81,9 @@ internal fun ItemDetailTopBar(
             ItemTopBarActions(
                 actions = actions,
                 isLoading = isLoading,
-                actionColor = actionColor,
-                iconColor = iconColor,
-                iconBackgroundColor = iconBackgroundColor,
+                actionColor = passColors.majorPrimary,
+                iconColor = passColors.majorSecondary,
+                iconBackgroundColor = passColors.minorPrimary,
                 itemCategory = itemCategory,
                 shareSharedCount = shareSharedCount,
                 onEditClick = onEditClick,
@@ -223,15 +222,12 @@ fun ItemDetailTopBarPreview(
         Surface {
             ItemDetailTopBar(
                 isLoading = input.second.isLoading,
-                actionColor = input.second.color,
-                iconBackgroundColor = input.second.closeBackgroundColor,
-                iconColor = input.second.color,
                 onUpClick = {},
                 onEditClick = {},
                 onOptionsClick = {},
                 onShareClick = {},
                 actions = input.second.actions,
-                itemCategory = ItemCategory.Login,
+                itemCategory = input.second.itemCategory,
                 shareSharedCount = 0
             )
         }

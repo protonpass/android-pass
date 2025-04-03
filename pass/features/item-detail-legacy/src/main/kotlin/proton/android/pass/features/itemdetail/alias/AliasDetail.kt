@@ -206,9 +206,6 @@ fun AliasDetail(
                         ItemDetailTopBar(
                             isLoading = state.isAnyLoading,
                             actions = state.itemActions,
-                            actionColor = PassTheme.colors.aliasInteractionNormMajor1,
-                            iconColor = PassTheme.colors.aliasInteractionNormMajor2,
-                            iconBackgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
                             itemCategory = state.itemUiModel.category,
                             shareSharedCount = state.shareSharedCount,
                             onUpClick = { onNavigate(ItemDetailNavigation.CloseScreen) },

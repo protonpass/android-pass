@@ -18,28 +18,23 @@
 
 package proton.android.pass.features.itemdetail
 
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.capabilities.CanShareShareStatus
+import proton.android.pass.domain.items.ItemCategory
 
 class ItemDetailTopBarPreviewProvider : PreviewParameterProvider<ItemDetailTopBarPreview> {
     override val values: Sequence<ItemDetailTopBarPreview>
         get() = sequence {
             for (isLoading in listOf(true, false)) {
-                for (
-                color in listOf(
-                    PassPalette.Lavender100,
-                    PassPalette.GreenSheen100,
-                    PassPalette.MacaroniAndCheese100
-                )
-                ) {
+                val entries = ItemCategory.entries.filter {
+                    it != ItemCategory.Unknown && it != ItemCategory.Password
+                }
+                for (itemCategory in entries) {
                     yield(
                         ItemDetailTopBarPreview(
                             isLoading = isLoading,
-                            color = color,
-                            closeBackgroundColor = color.copy(alpha = 0.8f),
+                            itemCategory = itemCategory,
                             actions = ItemActions(
                                 canShare = CanShareShareStatus.CanShare(1),
                                 canEdit = ItemActions.CanEditActionState.Enabled,
@@ -56,8 +51,7 @@ class ItemDetailTopBarPreviewProvider : PreviewParameterProvider<ItemDetailTopBa
             yield(
                 ItemDetailTopBarPreview(
                     isLoading = false,
-                    color = PassPalette.Lavender100,
-                    closeBackgroundColor = PassPalette.Lavender100.copy(alpha = 0.8f),
+                    itemCategory = ItemCategory.Login,
                     actions = ItemActions.Disabled
                 )
             )
@@ -66,7 +60,6 @@ class ItemDetailTopBarPreviewProvider : PreviewParameterProvider<ItemDetailTopBa
 
 data class ItemDetailTopBarPreview(
     val isLoading: Boolean,
-    val color: Color,
-    val closeBackgroundColor: Color,
+    val itemCategory: ItemCategory,
     val actions: ItemActions
 )

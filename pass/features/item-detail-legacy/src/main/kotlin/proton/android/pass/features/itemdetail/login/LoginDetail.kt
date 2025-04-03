@@ -223,9 +223,6 @@ fun LoginDetail(
                         ItemDetailTopBar(
                             isLoading = state.isLoading,
                             actions = state.itemActions,
-                            actionColor = PassTheme.colors.loginInteractionNormMajor1,
-                            iconColor = PassTheme.colors.loginInteractionNormMajor2,
-                            iconBackgroundColor = PassTheme.colors.loginInteractionNormMinor1,
                             itemCategory = state.itemUiModel.category,
                             shareSharedCount = state.shareSharedCount,
                             onUpClick = { onNavigate(ItemDetailNavigation.CloseScreen) },

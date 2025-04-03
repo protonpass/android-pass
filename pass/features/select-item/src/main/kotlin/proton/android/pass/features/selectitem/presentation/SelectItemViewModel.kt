@@ -71,11 +71,7 @@ import proton.android.pass.commonui.api.ItemSorter.groupAndSortByCreationDesc
 import proton.android.pass.commonui.api.ItemSorter.groupAndSortByMostRecent
 import proton.android.pass.commonui.api.ItemSorter.groupAndSortByTitleAsc
 import proton.android.pass.commonui.api.ItemSorter.groupAndSortByTitleDesc
-import proton.android.pass.commonui.api.ItemSorter.sortByCreationAsc
-import proton.android.pass.commonui.api.ItemSorter.sortByCreationDesc
-import proton.android.pass.commonui.api.ItemSorter.sortByTitleAsc
-import proton.android.pass.commonui.api.ItemSorter.sortByTitleDesc
-import proton.android.pass.commonui.api.ItemSorter.sortMostRecent
+import proton.android.pass.commonui.api.ItemSorter.sortRecentPinTime
 import proton.android.pass.commonui.api.ItemSorter.sortSuggestionsByMostRecent
 import proton.android.pass.commonui.api.ItemUiFilter.filterByQuery
 import proton.android.pass.commonui.api.toUiModel
@@ -332,7 +328,7 @@ class SelectItemViewModel @Inject constructor(
             }
         } ?: emptyList()
         val unfilteredItems = pinnedItems
-            .sortItemLists(sortingOption)
+            .sortRecentPinTime()
             .toPersistentList()
         val filteredItems = pinnedItems
             .filterByQuery(searchQuery)
@@ -418,8 +414,7 @@ class SelectItemViewModel @Inject constructor(
                     is PlanLimit.Limited -> allShares[user.userId]
                         ?.values
                         ?.filterIsInstance<Share.Vault>()
-                        ?.let { vaultShares -> vaultShares.size > limit.limit }
-                        ?: false
+                        ?.let { vaultShares -> vaultShares.size > limit.limit } == true
                 }
 
                 is PlanType.Paid,
@@ -583,14 +578,6 @@ class SelectItemViewModel @Inject constructor(
 
     fun clearEvent() {
         itemClickedFlow.update { AutofillItemClickedEvent.None }
-    }
-
-    private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) = when (sortingOption.searchSortingType) {
-        SearchSortingType.MostRecent -> sortMostRecent()
-        SearchSortingType.TitleAsc -> sortByTitleAsc()
-        SearchSortingType.TitleDesc -> sortByTitleDesc()
-        SearchSortingType.CreationAsc -> sortByCreationAsc()
-        SearchSortingType.CreationDesc -> sortByCreationDesc()
     }
 
     private fun List<ItemUiModel>.groupedItemLists(sortingOption: SortingOption, instant: Instant) =

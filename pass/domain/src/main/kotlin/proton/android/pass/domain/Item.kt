@@ -54,6 +54,7 @@ data class Item(
     val modificationTime: Instant,
     val lastAutofillTime: Option<Instant>,
     val isPinned: Boolean,
+    val pinTime: Option<Instant>,
     val flags: Flags,
     val shareCount: Int,
     val shareType: ShareType
@@ -85,6 +86,7 @@ data class ItemEncrypted(
     val modificationTime: Instant,
     val lastAutofillTime: Option<Instant>,
     val isPinned: Boolean,
+    val pinTime: Option<Instant>,
     val flags: Flags,
     val shareCount: Int,
     val shareType: ShareType

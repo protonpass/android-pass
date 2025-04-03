@@ -30,12 +30,6 @@ enum class FeatureFlag(
         key = null, // Cannot be activated server-side,
         isEnabledDefault = false
     ),
-    IN_APP_MESSAGES_V1(
-        title = "In App Messages (v1)",
-        description = "Enable in app messages",
-        key = "PassInAppMessagesV1",
-        isEnabledDefault = false
-    ),
     EXTRA_LOGGING(
         title = "Extra logging",
         description = "Enable extra logging",

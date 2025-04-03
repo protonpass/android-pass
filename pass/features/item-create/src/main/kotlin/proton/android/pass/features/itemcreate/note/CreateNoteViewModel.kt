@@ -161,6 +161,7 @@ class CreateNoteViewModel @Inject constructor(
                         snackbarDispatcher(ItemCreationError)
                     }
                     .onSuccess { item ->
+                        snackbarDispatcher(NoteCreated)
                         runCatching {
                             if (isFileAttachmentsEnabled()) {
                                 linkAttachmentsToItem(item.shareId, item.id, item.revision)
@@ -179,7 +180,6 @@ class CreateNoteViewModel @Inject constructor(
                                 )
                             }
                         }
-                        snackbarDispatcher(NoteCreated)
                         telemetryManager.sendEvent(ItemCreate(EventItemType.Note))
                     }
             } else {

@@ -201,17 +201,6 @@ class ProfileViewModel @Inject constructor(
             emit(ProfilePasskeySupportSection.Hide)
         }.distinctUntilChanged()
 
-    private val ffFlow = combine(
-        featureFlagsPreferencesRepository[FeatureFlag.SL_ALIASES_SYNC],
-        featureFlagsPreferencesRepository[FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1],
-        ::FeatureFlags
-    )
-
-    private data class FeatureFlags(
-        val isSimpleLoginAliasesSyncEnabled: Boolean,
-        val isAdvancedAliasManagementEnabled: Boolean
-    )
-
     private val accountItemsFlow = accountManager.getAccounts()
         .flatMapLatest { accounts ->
             combine(
@@ -274,12 +263,12 @@ class ProfileViewModel @Inject constructor(
         upgradeInfoFlow,
         eventFlow,
         passkeySupportFlow,
-        ffFlow,
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1),
         observeSecureLinksCount(),
         dataStorageStateFlow,
         accountsFlow
     ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event,
-        passkey, flags, secureLinksCount, dataStorage, accounts ->
+        passkey, isAdvancedAliasManagementEnabled, secureLinksCount, dataStorage, accounts ->
 
         val (accountType, showUpgradeButton) = processUpgradeInfo(upgradeInfo)
         ProfileUiState(
@@ -294,8 +283,7 @@ class ProfileViewModel @Inject constructor(
             secureLinksCount = secureLinksCount,
             accounts = accounts,
             dataStorageState = dataStorage,
-            isSimpleLoginAliasesSyncEnabled = flags.isSimpleLoginAliasesSyncEnabled,
-            isAdvancedAliasManagementEnabled = flags.isAdvancedAliasManagementEnabled
+            isAdvancedAliasManagementEnabled = isAdvancedAliasManagementEnabled
         )
     }.stateIn(
         scope = viewModelScope,

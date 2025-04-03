@@ -48,7 +48,6 @@ import proton.android.pass.preferences.HasDismissedAutofillBanner
 import proton.android.pass.preferences.HasDismissedNotificationBanner
 import proton.android.pass.preferences.HasDismissedSLSyncBanner
 import proton.android.pass.preferences.HasDismissedTrialBanner
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestPendingInvite
@@ -66,7 +65,6 @@ class OnBoardingTipsViewModelTest {
     private lateinit var observeInvites: TestObserveInvites
     private lateinit var notificationManager: TestNotificationManager
     private lateinit var appConfig: TestAppConfig
-    private lateinit var featureFlagsPreferencesRepository: TestFeatureFlagsPreferenceRepository
     private lateinit var observeSimpleLoginSyncStatus: FakeObserveSimpleLoginSyncStatus
 
     @Before
@@ -77,7 +75,6 @@ class OnBoardingTipsViewModelTest {
         observeInvites = TestObserveInvites()
         notificationManager = TestNotificationManager()
         appConfig = TestAppConfig()
-        featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
         observeSimpleLoginSyncStatus = FakeObserveSimpleLoginSyncStatus()
         viewModel = OnBoardingTipsViewModel(
             autofillManager = autofillManager,
@@ -86,7 +83,6 @@ class OnBoardingTipsViewModelTest {
             getUserPlan = getUserPlan,
             notificationManager = notificationManager,
             appConfig = appConfig,
-            featureFlagsPreferencesRepository = featureFlagsPreferencesRepository,
             observeSimpleLoginSyncStatus = observeSimpleLoginSyncStatus
         )
     }

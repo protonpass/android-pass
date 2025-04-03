@@ -53,7 +53,6 @@ import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.VaultId
 import proton.android.pass.preferences.LastItemAutofillPreference
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestInternalSettingsRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -96,7 +95,6 @@ class GetSuggestedAutofillItemsImplTest {
     private lateinit var observeAutofillShares: FakeObserveAutofillShares
     private lateinit var internalSettingsRepository: TestInternalSettingsRepository
     private lateinit var assetLinkRepository: FakeAssetLinkRepository
-    private lateinit var featureFlagsPreferencesRepository: TestFeatureFlagsPreferenceRepository
     private lateinit var userPreferencesRepository: UserPreferencesRepository
 
     @Before
@@ -108,7 +106,6 @@ class GetSuggestedAutofillItemsImplTest {
         observeAutofillShares = FakeObserveAutofillShares()
         internalSettingsRepository = TestInternalSettingsRepository()
         assetLinkRepository = FakeAssetLinkRepository()
-        featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
         userPreferencesRepository = TestPreferenceRepository()
         getSuggestedAutofillItems = GetSuggestedAutofillItemsImpl(
             accountManager = accountManager,
@@ -119,7 +116,6 @@ class GetSuggestedAutofillItemsImplTest {
             internalSettingsRepository = internalSettingsRepository,
             getUserPlan = getUserPlan,
             assetLinkRepository = assetLinkRepository,
-            featureFlagsPreferencesRepository = featureFlagsPreferencesRepository,
             userPreferencesRepository = userPreferencesRepository
         )
     }

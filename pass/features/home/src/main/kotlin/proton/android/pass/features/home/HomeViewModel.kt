@@ -590,18 +590,15 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(BottomSheetItemAction.None)
 
     data class HomeFeatures(
-        val isSLAliasSyncEnabled: Boolean,
         val isItemSharingEnabled: Boolean,
         val isCustomItemEnabled: Boolean
     )
 
     private val homeFeaturesFlow: Flow<HomeFeatures> = combine(
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC),
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1),
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1)
-    ) { isSLAliasSyncEnabled, isItemSharingEnabled, isCustomItemEnabled ->
+    ) { isItemSharingEnabled, isCustomItemEnabled ->
         HomeFeatures(
-            isSLAliasSyncEnabled = isSLAliasSyncEnabled,
             isItemSharingEnabled = isItemSharingEnabled,
             isCustomItemEnabled = isCustomItemEnabled
         )
@@ -636,7 +633,6 @@ class HomeViewModel @Inject constructor(
             navEvent = navEvent,
             action = bottomSheetItemAction,
             isFreePlan = userPlan.map { plan -> plan.isFreePlan }.getOrNull() ?: true,
-            isSLAliasSyncEnabled = homeFeatures.isSLAliasSyncEnabled,
             isItemSharingEnabled = homeFeatures.isItemSharingEnabled,
             isCustomItemEnabled = homeFeatures.isCustomItemEnabled,
             aliasTrashDialogStatusPreference = aliasTrashDialogStatusPreference,

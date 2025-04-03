@@ -125,6 +125,7 @@ fun AssociateAutofillItemDialogPreview(@PreviewParameter(ThemePreviewProvider::c
                     lastAutofillTime = null,
                     isPinned = false,
                     revision = 1,
+                    pinTime = Clock.System.now(),
                     shareCount = 0,
                     shareType = ShareType.Vault
                 ),

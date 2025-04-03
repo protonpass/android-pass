@@ -1538,6 +1538,7 @@ class ItemRepositoryImpl @Inject constructor(
             encryptedKey = output.itemKey,
             hasTotp = hasTotp,
             isPinned = itemRevision.isPinned,
+            pinTime = itemRevision.pinTime,
             hasPasskeys = output.item.hasPasskeys,
             flags = itemRevision.flags,
             shareCount = itemRevision.shareCount

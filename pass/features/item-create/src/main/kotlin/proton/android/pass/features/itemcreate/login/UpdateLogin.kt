@@ -91,7 +91,7 @@ internal fun UpdateLogin(
 
     LaunchedEffect(navTotpUri) {
         navTotpUri ?: return@LaunchedEffect
-        viewModel.setTotp(navTotpUri, navTotpIndex)
+        viewModel.setTotp(navTotpUri, navTotpIndex ?: -1)
     }
 
     LaunchedEffect(uiState.uiEvent) {

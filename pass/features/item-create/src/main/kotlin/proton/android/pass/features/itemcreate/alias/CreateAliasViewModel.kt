@@ -358,6 +358,7 @@ open class CreateAliasViewModel @Inject constructor(
             }
                 .onFailure { onCreateAliasError(it) }
                 .onSuccess { item ->
+                    snackbarDispatcher(AliasCreated)
                     runCatching {
                         if (isFileAttachmentsEnabled()) {
                             linkAttachmentsToItem(item.shareId, item.id, item.revision)
@@ -375,7 +376,6 @@ open class CreateAliasViewModel @Inject constructor(
                     isItemSavedState.update {
                         ItemSavedState.Success(item.id, itemUiModel)
                     }
-                    snackbarDispatcher(AliasCreated)
                     telemetryManager.sendEvent(ItemCreate(EventItemType.Alias))
                 }
         } else {

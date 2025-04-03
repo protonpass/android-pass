@@ -402,6 +402,7 @@ class CreateLoginViewModel @Inject constructor(
                 PassLogger.w(TAG, it)
             }
             .onSuccess { item ->
+                snackbarDispatcher(LoginCreated)
                 runCatching {
                     if (isFileAttachmentsEnabled()) {
                         linkAttachmentsToItem(item.shareId, item.id, item.revision)
@@ -436,7 +437,6 @@ class CreateLoginViewModel @Inject constructor(
                 telemetryManager.sendEvent(ItemCreate(EventItemType.Login))
                 send2FACreatedTelemetryEvent(item.itemType as ItemType.Login)
                 draftRepository.delete<AliasItemFormState>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
-                snackbarDispatcher(LoginCreated)
             }
     }
 
@@ -458,6 +458,7 @@ class CreateLoginViewModel @Inject constructor(
                 snackbarDispatcher(ItemCreationError)
             }
             .onSuccess { item ->
+                snackbarDispatcher(LoginCreated)
                 runCatching {
                     if (isFileAttachmentsEnabled()) {
                         linkAttachmentsToItem(item.shareId, item.id, item.revision)
@@ -490,7 +491,6 @@ class CreateLoginViewModel @Inject constructor(
                 }
                 telemetryManager.sendEvent(ItemCreate(EventItemType.Login))
                 send2FACreatedTelemetryEvent(item.itemType as ItemType.Login)
-                snackbarDispatcher(LoginCreated)
             }
     }
 

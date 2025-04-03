@@ -30,12 +30,6 @@ enum class FeatureFlag(
         key = null, // Cannot be activated server-side,
         isEnabledDefault = false
     ),
-    ITEM_SHARING_V1(
-        title = "Item sharing (v1)",
-        description = "Enable single item sharing",
-        key = "PassItemSharingV1",
-        isEnabledDefault = false
-    ),
     IN_APP_MESSAGES_V1(
         title = "In App Messages (v1)",
         description = "Enable in app messages",

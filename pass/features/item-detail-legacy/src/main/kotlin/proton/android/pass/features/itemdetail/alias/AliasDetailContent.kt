@@ -62,7 +62,6 @@ fun AliasDetailContent(
     isAliasStateToggling: Boolean,
     canViewItemHistory: Boolean,
     isFileAttachmentsEnabled: Boolean,
-    isItemSharingEnabled: Boolean,
     attachmentsState: AttachmentsState,
     hasMoreThanOneVaultShare: Boolean,
     displayContactsBanner: Boolean,
@@ -87,8 +86,7 @@ fun AliasDetailContent(
             share = share,
             onShareClick = onShareClick,
             isPinned = itemUiModel.isPinned,
-            hasMoreThanOneVaultShare = hasMoreThanOneVaultShare,
-            isItemSharingEnabled = isItemSharingEnabled
+            hasMoreThanOneVaultShare = hasMoreThanOneVaultShare
         )
 
         AliasSection(

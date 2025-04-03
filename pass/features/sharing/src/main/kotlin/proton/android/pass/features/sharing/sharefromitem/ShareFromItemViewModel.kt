@@ -82,14 +82,12 @@ class ShareFromItemViewModel @Inject constructor(
     internal val stateFlow: StateFlow<ShareFromItemUiState> = combineN(
         navEventState,
         canUsePaidFeaturesFlow,
-        featureFlagsRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1),
         oneShot { getItemById(shareId, itemId) },
         observeShare(shareId),
         featureFlagsRepository.get<Boolean>(FeatureFlag.SECURE_LINK_NEW_CRYPTO_V1),
         observeOrganizationSharingPolicy()
     ) { event,
         canUsePaidFeatures,
-        isItemSharingAvailable,
         item,
         share,
         isNewCryptoEnabled,
@@ -99,7 +97,6 @@ class ShareFromItemViewModel @Inject constructor(
             itemId = itemId,
             event = event,
             canUsePaidFeatures = canUsePaidFeatures,
-            isItemSharingAvailable = isItemSharingAvailable,
             isNewCryptoEnabled = isNewCryptoEnabled,
             itemOption = item.some(),
             shareOption = share.some(),

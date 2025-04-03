@@ -211,7 +211,6 @@ fun AliasDetail(
                             iconBackgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
                             itemCategory = state.itemUiModel.category,
                             shareSharedCount = state.shareSharedCount,
-                            isItemSharingEnabled = state.itemFeatures.isItemSharingEnabled,
                             onUpClick = { onNavigate(ItemDetailNavigation.CloseScreen) },
                             onEditClick = {
                                 onEditClick(state.itemActions, onNavigate, state.itemUiModel)
@@ -243,7 +242,6 @@ fun AliasDetail(
                         canViewItemHistory = state.canViewItemHistory,
                         isAliasStateToggling = state.isLoading(LoadingStateKey.AliasStateToggling),
                         isFileAttachmentsEnabled = state.itemFeatures.isFileAttachmentsEnabled,
-                        isItemSharingEnabled = state.itemFeatures.isItemSharingEnabled,
                         displayContactsBanner = state.displayContactsBanner,
                         attachmentsState = state.attachmentsState,
                         hasMoreThanOneVaultShare = state.hasMoreThanOneVault,

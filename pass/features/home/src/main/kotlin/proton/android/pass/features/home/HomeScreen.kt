@@ -91,8 +91,6 @@ import proton.android.pass.features.home.trash.ConfirmDeleteItemsDialog
 import proton.android.pass.features.home.trash.ConfirmRestoreAllDialog
 import proton.android.pass.features.home.trash.ConfirmRestoreItemsDialog
 import proton.android.pass.features.home.trash.ConfirmTrashItemsDialog
-import proton.android.pass.features.home.vault.VaultDrawerContent
-import proton.android.pass.features.home.vault.VaultDrawerViewModel
 import proton.android.pass.features.trash.ConfirmBulkDeleteAliasDialog
 import proton.android.pass.features.trash.ConfirmDeleteDisabledAliasDialog
 import proton.android.pass.features.trash.ConfirmDeleteEnabledAliasDialog
@@ -110,7 +108,6 @@ fun HomeScreen(
     enableBulkActions: Boolean = false,
     homeViewModel: HomeViewModel = hiltViewModel(),
     routerViewModel: RouterViewModel = hiltViewModel(),
-    vaultDrawerViewModel: VaultDrawerViewModel = hiltViewModel(),
     onBoardingTipsViewModel: OnBoardingTipsViewModel = hiltViewModel(),
     homeDrawerViewModel: HomeDrawerViewModel = hiltViewModel()
 ) {
@@ -705,118 +702,75 @@ fun HomeScreen(
             scrimColor = PassTheme.colors.backdrop,
             gesturesEnabled = homeUiState.isDrawerAvailable,
             drawerContent = {
-                if (homeUiState.isItemSharingEnabled) {
-                    val homeDrawerState by homeDrawerViewModel.stateFlow.collectAsStateWithLifecycle()
+                val homeDrawerState by homeDrawerViewModel.stateFlow.collectAsStateWithLifecycle()
+                HomeDrawerContent(
+                    state = homeDrawerState,
+                    onUiEvent = { uiEvent ->
+                        when (uiEvent) {
+                            HomeDrawerUiEvent.OnAllVaultsClick -> {
+                                scope.launch { drawerState.close() }
 
-                    HomeDrawerContent(
-                        state = homeDrawerState,
-                        onUiEvent = { uiEvent ->
-                            when (uiEvent) {
-                                HomeDrawerUiEvent.OnAllVaultsClick -> {
-                                    scope.launch { drawerState.close() }
+                                VaultSelectionOption.AllVaults
+                                    .also(homeDrawerViewModel::setVaultSelection)
+                                    .also(homeViewModel::setVaultSelection)
+                            }
 
-                                    VaultSelectionOption.AllVaults
-                                        .also(homeDrawerViewModel::setVaultSelection)
-                                        .also(homeViewModel::setVaultSelection)
-                                }
+                            is HomeDrawerUiEvent.OnVaultClick -> {
+                                scope.launch { drawerState.close() }
 
-                                is HomeDrawerUiEvent.OnVaultClick -> {
-                                    scope.launch { drawerState.close() }
+                                VaultSelectionOption.Vault(shareId = uiEvent.shareId)
+                                    .also(homeDrawerViewModel::setVaultSelection)
+                                    .also(homeViewModel::setVaultSelection)
+                            }
 
-                                    VaultSelectionOption.Vault(shareId = uiEvent.shareId)
-                                        .also(homeDrawerViewModel::setVaultSelection)
-                                        .also(homeViewModel::setVaultSelection)
-                                }
+                            is HomeDrawerUiEvent.OnShareVaultClick -> {
+                                HomeNavigation.ShareVault(
+                                    shareId = uiEvent.shareId
+                                ).also(onNavigateEvent)
+                            }
 
-                                is HomeDrawerUiEvent.OnShareVaultClick -> {
-                                    HomeNavigation.ShareVault(
-                                        shareId = uiEvent.shareId
-                                    ).also(onNavigateEvent)
-                                }
+                            is HomeDrawerUiEvent.OnManageVaultClick -> {
+                                HomeNavigation.ManageVault(
+                                    shareId = uiEvent.shareId
+                                ).also(onNavigateEvent)
+                            }
 
-                                is HomeDrawerUiEvent.OnManageVaultClick -> {
-                                    HomeNavigation.ManageVault(
-                                        shareId = uiEvent.shareId
-                                    ).also(onNavigateEvent)
-                                }
+                            is HomeDrawerUiEvent.OnVaultOptionsClick -> {
+                                HomeNavigation.VaultOptions(
+                                    shareId = uiEvent.shareId
+                                ).also(onNavigateEvent)
+                            }
 
-                                is HomeDrawerUiEvent.OnVaultOptionsClick -> {
-                                    HomeNavigation.VaultOptions(
-                                        shareId = uiEvent.shareId
-                                    ).also(onNavigateEvent)
-                                }
+                            HomeDrawerUiEvent.OnSharedWithMeClick -> {
+                                scope.launch { drawerState.close() }
 
-                                HomeDrawerUiEvent.OnSharedWithMeClick -> {
-                                    scope.launch { drawerState.close() }
+                                VaultSelectionOption.SharedWithMe
+                                    .also(homeDrawerViewModel::setVaultSelection)
+                                    .also(homeViewModel::setVaultSelection)
+                            }
 
-                                    VaultSelectionOption.SharedWithMe
-                                        .also(homeDrawerViewModel::setVaultSelection)
-                                        .also(homeViewModel::setVaultSelection)
-                                }
+                            HomeDrawerUiEvent.OnSharedByMeClick -> {
+                                scope.launch { drawerState.close() }
 
-                                HomeDrawerUiEvent.OnSharedByMeClick -> {
-                                    scope.launch { drawerState.close() }
+                                VaultSelectionOption.SharedByMe
+                                    .also(homeDrawerViewModel::setVaultSelection)
+                                    .also(homeViewModel::setVaultSelection)
+                            }
 
-                                    VaultSelectionOption.SharedByMe
-                                        .also(homeDrawerViewModel::setVaultSelection)
-                                        .also(homeViewModel::setVaultSelection)
-                                }
+                            HomeDrawerUiEvent.OnTrashClick -> {
+                                scope.launch { drawerState.close() }
 
-                                HomeDrawerUiEvent.OnTrashClick -> {
-                                    scope.launch { drawerState.close() }
+                                VaultSelectionOption.Trash
+                                    .also(homeDrawerViewModel::setVaultSelection)
+                                    .also(homeViewModel::setVaultSelection)
+                            }
 
-                                    VaultSelectionOption.Trash
-                                        .also(homeDrawerViewModel::setVaultSelection)
-                                        .also(homeViewModel::setVaultSelection)
-                                }
-
-                                HomeDrawerUiEvent.OnCreateVaultClick -> {
-                                    onNavigateEvent(HomeNavigation.CreateVault)
-                                }
+                            HomeDrawerUiEvent.OnCreateVaultClick -> {
+                                onNavigateEvent(HomeNavigation.CreateVault)
                             }
                         }
-                    )
-                } else {
-                    val drawerUiState by vaultDrawerViewModel.drawerUiState.collectAsStateWithLifecycle()
-
-                    VaultDrawerContent(
-                        homeVaultSelection = drawerUiState.vaultSelection,
-                        list = drawerUiState.shares,
-                        totalTrashedItems = drawerUiState.totalTrashedItems,
-                        canCreateVault = drawerUiState.canCreateVault,
-                        onAllVaultsClick = remember {
-                            {
-                                scope.launch { drawerState.close() }
-                                vaultDrawerViewModel.setVaultSelection(VaultSelectionOption.AllVaults)
-                                homeViewModel.setVaultSelection(VaultSelectionOption.AllVaults)
-                            }
-                        },
-                        onVaultClick = remember {
-                            {
-                                scope.launch { drawerState.close() }
-                                vaultDrawerViewModel.setVaultSelection(VaultSelectionOption.Vault(it))
-                                homeViewModel.setVaultSelection(VaultSelectionOption.Vault(it))
-                            }
-                        },
-                        onTrashClick = remember {
-                            {
-                                scope.launch { drawerState.close() }
-                                vaultDrawerViewModel.setVaultSelection(VaultSelectionOption.Trash)
-                                homeViewModel.setVaultSelection(VaultSelectionOption.Trash)
-                            }
-                        },
-                        onCreateVaultClick = remember { { onNavigateEvent(HomeNavigation.CreateVault) } },
-                        onVaultOptionsClick = remember {
-                            {
-                                onNavigateEvent(
-                                    HomeNavigation.VaultOptions(
-                                        it.id
-                                    )
-                                )
-                            }
-                        }
-                    )
-                }
+                    }
+                )
             }
         ) {
             HomeContent(

@@ -203,11 +203,11 @@ class UpdateLoginViewModel @Inject constructor(
         initialValue = UpdateLoginUiState.Initial
     )
 
-    internal fun setTotp(navTotpUri: String?, navTotpIndex: Int?) {
+    internal fun setTotp(navTotpUri: String, navTotpIndex: Int) {
         onUserEditedContent()
         val currentState = loginItemFormState
         val primaryTotp = updatePrimaryTotpIfNeeded(navTotpUri, navTotpIndex, currentState)
-        val customFields = updateCustomFieldsIfNeeded(navTotpUri, navTotpIndex ?: -1, currentState)
+        val customFields = updateCustomFieldsIfNeeded(navTotpUri, navTotpIndex, currentState)
         loginItemFormMutableState = currentState.copy(
             primaryTotp = primaryTotp,
             customFields = customFields

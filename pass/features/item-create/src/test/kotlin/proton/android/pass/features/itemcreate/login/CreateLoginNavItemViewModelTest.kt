@@ -203,6 +203,7 @@ internal class CreateLoginNavItemViewModelTest {
                             modificationTime = item.modificationTime,
                             lastAutofillTime = item.lastAutofillTime.value(),
                             isPinned = false,
+                            pinTime = item.pinTime.value(),
                             category = ItemCategory.Login,
                             revision = item.revision,
                             shareCount = item.shareCount,

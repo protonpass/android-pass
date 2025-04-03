@@ -38,6 +38,7 @@ object TestItemUiModel {
         modificationTime: Instant = Clock.System.now(),
         lastAutofillTime: Instant? = null,
         isPinned: Boolean = false,
+        pinTime: Instant? = null,
         revision: Long = 0,
         shareCount: Int = 0,
         shareType: ShareType = ShareType.Vault
@@ -51,6 +52,7 @@ object TestItemUiModel {
         modificationTime = modificationTime,
         lastAutofillTime = lastAutofillTime,
         isPinned = isPinned,
+        pinTime = pinTime,
         revision = revision,
         shareCount = shareCount,
         shareType = shareType

@@ -37,7 +37,6 @@ import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.CUSTOM_TYPE_V1
 import proton.android.pass.preferences.FeatureFlag.EXTRA_LOGGING
 import proton.android.pass.preferences.FeatureFlag.FILE_ATTACHMENTS_V1
-import proton.android.pass.preferences.FeatureFlag.IN_APP_MESSAGES_V1
 import proton.android.pass.preferences.FeatureFlag.NEW_LOGIN_FLOW
 import proton.android.pass.preferences.FeatureFlag.SECURE_LINK_NEW_CRYPTO_V1
 import java.io.IOException
@@ -57,11 +56,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { autofillDebugModeEnabled.value }
-
-        IN_APP_MESSAGES_V1 -> getFeatureFlag(
-            key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault
-        ) { inAppMessagesV1Enabled.value }
 
         EXTRA_LOGGING -> getFeatureFlag(
             key = featureFlag.key,
@@ -96,10 +90,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         EXTRA_LOGGING -> setFeatureFlag {
             extraLoggingEnabled = boolFlagPrefProto(value)
-        }
-
-        IN_APP_MESSAGES_V1 -> setFeatureFlag {
-            inAppMessagesV1Enabled = boolFlagPrefProto(value)
         }
 
         FILE_ATTACHMENTS_V1 -> setFeatureFlag {
@@ -208,7 +198,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
     private fun getPrefProto(featureFlag: FeatureFlag, preferences: FeatureFlagsPreferences) = with(preferences) {
         when (featureFlag) {
             AUTOFILL_DEBUG_MODE -> autofillDebugModeEnabled
-            IN_APP_MESSAGES_V1 -> inAppMessagesV1Enabled
             EXTRA_LOGGING -> extraLoggingEnabled
             FILE_ATTACHMENTS_V1 -> fileAttachmentsV1Enabled
             SECURE_LINK_NEW_CRYPTO_V1 -> secureLinkNewCryptoV1Enabled

@@ -95,7 +95,6 @@ import proton.android.pass.features.trash.ConfirmBulkDeleteAliasDialog
 import proton.android.pass.features.trash.ConfirmDeleteDisabledAliasDialog
 import proton.android.pass.features.trash.ConfirmDeleteEnabledAliasDialog
 import proton.android.pass.features.trash.ConfirmDeleteItemDialog
-import proton.android.pass.features.trash.ConfirmTrashAliasDialog
 import proton.android.pass.features.trash.TrashItemBottomSheetContents
 import proton.android.pass.searchoptions.api.VaultSelectionOption
 
@@ -153,7 +152,6 @@ fun HomeScreen(
     var shouldShowRestoreItemsDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowMoveToTrashItemsDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowDeleteItemsDialog by rememberSaveable { mutableStateOf(false) }
-    var shouldShowMoveToTrashAliasDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowDeleteEnabledAliasDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowDeleteDisabledAliasDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowBulkDeleteAliasDialog by rememberSaveable { mutableStateOf(false) }
@@ -180,7 +178,6 @@ fun HomeScreen(
             shouldShowRestoreItemsDialog = false
             shouldShowMoveToTrashItemsDialog = false
             shouldShowDeleteItemsDialog = false
-            shouldShowMoveToTrashAliasDialog = false
             shouldShowDeleteEnabledAliasDialog = false
             shouldShowDeleteDisabledAliasDialog = false
             shouldShowBulkDeleteAliasDialog = false
@@ -386,8 +383,7 @@ fun HomeScreen(
                                     }
 
                                     else -> {
-                                        selectedItem = itemUiModel
-                                        shouldShowMoveToTrashAliasDialog = true
+                                        homeViewModel.sendItemsToTrash(listOf(itemUiModel))
                                     }
                                 }
                             }
@@ -1014,19 +1010,6 @@ fun HomeScreen(
                     }
                 },
                 onDismiss = { shouldShowDeleteItemDialog = false }
-            )
-
-            ConfirmTrashAliasDialog(
-                show = shouldShowMoveToTrashAliasDialog,
-                onConfirm = {
-                    val item = selectedItem ?: return@ConfirmTrashAliasDialog
-                    homeViewModel.sendItemsToTrash(listOf(item))
-                    selectedItem = null
-                },
-                onDismiss = {
-                    shouldShowMoveToTrashAliasDialog = false
-                    selectedItem = null
-                }
             )
 
             ConfirmRestoreItemsDialog(

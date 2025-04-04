@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.gradlePlugin.compose.compiler)
 }
 
-val appVersionName: String = "1.30.5"
+val appVersionName: String = "1.30.6"
 val appVersionCode: Int = versionCode(appVersionName)
 val archivesBaseName = "AutofillE2EApp-$appVersionName"
 

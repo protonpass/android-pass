@@ -27,7 +27,6 @@ import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.CUSTOM_TYPE_V1
 import proton.android.pass.preferences.FeatureFlag.EXTRA_LOGGING
 import proton.android.pass.preferences.FeatureFlag.FILE_ATTACHMENTS_V1
-import proton.android.pass.preferences.FeatureFlag.SECURE_LINK_NEW_CRYPTO_V1
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -44,7 +43,6 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
             AUTOFILL_DEBUG_MODE -> it.getOrDefault(AUTOFILL_DEBUG_MODE, false) as T
             EXTRA_LOGGING -> it.getOrDefault(EXTRA_LOGGING, false) as T
             FILE_ATTACHMENTS_V1 -> it.getOrDefault(FILE_ATTACHMENTS_V1, false) as T
-            SECURE_LINK_NEW_CRYPTO_V1 -> it.getOrDefault(SECURE_LINK_NEW_CRYPTO_V1, false) as T
             CUSTOM_TYPE_V1 -> it.getOrDefault(CUSTOM_TYPE_V1, false) as T
         }
     }

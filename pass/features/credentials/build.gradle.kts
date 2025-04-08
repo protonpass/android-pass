@@ -4,6 +4,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
     id("org.jetbrains.kotlin.kapt")
+    id("org.jetbrains.kotlin.plugin.serialization")
     alias(libs.plugins.gradlePlugin.compose.compiler)
 }
 
@@ -58,9 +59,10 @@ dependencies {
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
     implementation(libs.core.utilKotlin)
+    implementation(libs.dagger.hilt.android)
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.datetime)
-    implementation(libs.dagger.hilt.android)
+    implementation(libs.kotlinx.serialization.json)
 
     debugImplementation(libs.androidx.compose.uiTooling)
     implementation(libs.androidx.compose.uiToolingPreview)
@@ -70,6 +72,13 @@ dependencies {
 
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
+
+    implementation(projects.pass.biometry.api)
+    implementation(projects.pass.common.api)
+    implementation(projects.pass.data.api)
+    implementation(projects.pass.domain)
+    implementation(projects.pass.log.api)
+    implementation(projects.pass.telemetry.api)
 
     testImplementation(libs.truth)
     testImplementation(libs.kotlinTest)

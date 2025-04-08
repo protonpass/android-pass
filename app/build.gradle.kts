@@ -448,6 +448,7 @@ dependencies {
     implementation(projects.pass.features.account)
     implementation(projects.pass.features.aliasContacts)
     implementation(projects.pass.features.auth)
+    implementation(projects.pass.features.credentials)
     implementation(projects.pass.features.featureFlags)
     implementation(projects.pass.features.home)
     implementation(projects.pass.features.itemCreate)

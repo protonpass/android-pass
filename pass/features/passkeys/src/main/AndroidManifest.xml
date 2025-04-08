@@ -42,17 +42,17 @@
             android:exported="false"
             android:launchMode="singleInstance" />
 
-        <service android:name=".service.PasskeyProviderService"
-            android:enabled="@bool/pass_passkeys_enabled"
-            android:exported="true"
-            android:label="Proton Pass"
-            android:permission="android.permission.BIND_CREDENTIAL_PROVIDER_SERVICE">
-            <intent-filter>
-                <action android:name="android.service.credentials.CredentialProviderService"/>
-            </intent-filter>
-            <meta-data
-                android:name="android.credentials.provider"
-                android:resource="@xml/credentialmanager"/>
-        </service>
+<!--        <service android:name=".service.PasskeyProviderService"-->
+<!--            android:enabled="@bool/pass_passkeys_enabled"-->
+<!--            android:exported="true"-->
+<!--            android:label="Proton Pass"-->
+<!--            android:permission="android.permission.BIND_CREDENTIAL_PROVIDER_SERVICE">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.service.credentials.CredentialProviderService"/>-->
+<!--            </intent-filter>-->
+<!--            <meta-data-->
+<!--                android:name="android.credentials.provider"-->
+<!--                android:resource="@xml/credentialmanager"/>-->
+<!--        </service>-->
     </application>
 </manifest>

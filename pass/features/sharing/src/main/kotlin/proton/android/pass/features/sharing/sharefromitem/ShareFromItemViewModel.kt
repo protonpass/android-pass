@@ -24,12 +24,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.FlowUtils.oneShot
-import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -42,8 +42,6 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -53,7 +51,6 @@ class ShareFromItemViewModel @Inject constructor(
     getUserPlan: GetUserPlan,
     getItemById: GetItemById,
     observeShare: ObserveShare,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     observeOrganizationSharingPolicy: ObserveOrganizationSharingPolicy
 ) : ViewModel() {
 
@@ -79,25 +76,22 @@ class ShareFromItemViewModel @Inject constructor(
             }
         }
 
-    internal val stateFlow: StateFlow<ShareFromItemUiState> = combineN(
+    internal val stateFlow: StateFlow<ShareFromItemUiState> = combine(
         navEventState,
         canUsePaidFeaturesFlow,
         oneShot { getItemById(shareId, itemId) },
         observeShare(shareId),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.SECURE_LINK_NEW_CRYPTO_V1),
         observeOrganizationSharingPolicy()
     ) { event,
         canUsePaidFeatures,
         item,
         share,
-        isNewCryptoEnabled,
         organizationSharingPolicy ->
         ShareFromItemUiState(
             shareId = shareId,
             itemId = itemId,
             event = event,
             canUsePaidFeatures = canUsePaidFeatures,
-            isNewCryptoEnabled = isNewCryptoEnabled,
             itemOption = item.some(),
             shareOption = share.some(),
             organizationSharingPolicy = organizationSharingPolicy

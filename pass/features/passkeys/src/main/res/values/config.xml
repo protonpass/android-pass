@@ -18,7 +18,7 @@
   -->
 
 <resources>
-    <bool name="pass_passkeys_enabled">false</bool>
+    <bool name="pass_passkeys_enabled">true</bool>
 
     <!-- Boolean that determines if we are in light mode, needed for the transparent theme -->
     <bool name="isLightStatusBar">true</bool>

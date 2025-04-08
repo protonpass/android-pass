@@ -37,7 +37,6 @@ import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.CUSTOM_TYPE_V1
 import proton.android.pass.preferences.FeatureFlag.EXTRA_LOGGING
 import proton.android.pass.preferences.FeatureFlag.FILE_ATTACHMENTS_V1
-import proton.android.pass.preferences.FeatureFlag.SECURE_LINK_NEW_CRYPTO_V1
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -66,11 +65,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             defaultValue = featureFlag.isEnabledDefault
         ) { fileAttachmentsV1Enabled.value }
 
-        SECURE_LINK_NEW_CRYPTO_V1 -> getFeatureFlag(
-            key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault
-        ) { secureLinkNewCryptoV1Enabled.value }
-
         CUSTOM_TYPE_V1 -> getFeatureFlag(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
@@ -88,10 +82,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         FILE_ATTACHMENTS_V1 -> setFeatureFlag {
             fileAttachmentsV1Enabled = boolFlagPrefProto(value)
-        }
-
-        SECURE_LINK_NEW_CRYPTO_V1 -> setFeatureFlag {
-            secureLinkNewCryptoV1Enabled = boolFlagPrefProto(value)
         }
 
         CUSTOM_TYPE_V1 -> setFeatureFlag {
@@ -190,7 +180,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             AUTOFILL_DEBUG_MODE -> autofillDebugModeEnabled
             EXTRA_LOGGING -> extraLoggingEnabled
             FILE_ATTACHMENTS_V1 -> fileAttachmentsV1Enabled
-            SECURE_LINK_NEW_CRYPTO_V1 -> secureLinkNewCryptoV1Enabled
             CUSTOM_TYPE_V1 -> customTypeV1Enabled
         }.value
     }

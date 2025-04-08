@@ -24,7 +24,6 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
@@ -36,8 +35,6 @@ import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.data.api.crypto.GetItemKey
-import proton.android.pass.data.api.crypto.GetShareAndItemKey
-import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.securelink.SecureLinkOptions
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.local.LocalShareKeyDataSource
@@ -51,8 +48,6 @@ import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.domain.securelinks.SecureLink
 import proton.android.pass.domain.securelinks.SecureLinkId
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.FeatureFlag.SECURE_LINK_NEW_CRYPTO_V1
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 interface SecureLinkRepository {
@@ -82,28 +77,10 @@ class SecureLinkRepositoryImpl @Inject constructor(
     private val remoteSecureLinkDataSource: RemoteSecureLinkDataSource,
     private val secureLinksLocalDataSource: SecureLinksLocalDataSource,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val shareRepository: ShareRepository,
-    private val getShareAndItemKey: GetShareAndItemKey,
-    private val getItemKey: GetItemKey,
-    private val featureFlagsRepository: FeatureFlagsPreferencesRepository
+    private val getItemKey: GetItemKey
 ) : SecureLinkRepository {
 
     override suspend fun createSecureLink(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId,
-        options: SecureLinkOptions
-    ): SecureLinkId {
-        val isNewCrypto = featureFlagsRepository.get<Boolean>(SECURE_LINK_NEW_CRYPTO_V1).first()
-        return if (isNewCrypto) {
-            newCrypto(shareId = shareId, itemId = itemId, userId = userId, options = options)
-        } else {
-            // To be removed once enough adoption has been reached
-            oldCrypto(shareId = shareId, itemId = itemId, userId = userId, options = options)
-        }
-    }
-
-    private suspend fun newCrypto(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
@@ -157,81 +134,6 @@ class SecureLinkRepositoryImpl @Inject constructor(
 
         val encodedLinkKey =
             Base64.encodeBase64String(linkEncryptionKey.value(), Base64.Mode.UrlSafe)
-        val concatenated = "${response.url}#$encodedLinkKey"
-
-        secureLinksLocalDataSource.create(
-            userId = userId,
-            secureLink = SecureLink(
-                id = SecureLinkId(response.secureLinkId),
-                shareId = shareId,
-                itemId = itemId,
-                expirationInSeconds = response.expirationTime,
-                isActive = true,
-                maxReadCount = options.maxReadCount,
-                readCount = 0,
-                url = concatenated
-            )
-        )
-
-        return SecureLinkId(id = response.secureLinkId)
-    }
-
-    private suspend fun oldCrypto(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId,
-        options: SecureLinkOptions
-    ): SecureLinkId {
-        val item = localItemDataSource.getById(shareId, itemId) ?: throw IllegalStateException(
-            "Item not found [shareId=${shareId.id}] [itemId=${itemId.id}]"
-        )
-
-        val userAddress = shareRepository.getAddressForShareId(userId, shareId)
-
-        val (shareKey, itemKey) = getShareAndItemKey(
-            userAddress = userAddress,
-            shareId = shareId,
-            itemId = itemId
-        )
-
-        val decryptedItemKey = encryptionContextProvider.withEncryptionContext { decrypt(itemKey.key) }
-
-        val linkEncryptionKey = EncryptionKey.generate()
-
-        val encryptedItemKey = encryptionContextProvider.withEncryptionContext(linkEncryptionKey.clone()) {
-            encrypt(decryptedItemKey, EncryptionTag.ItemKey)
-        }
-
-        val encodedEncryptedItemKey = Base64.encodeBase64String(encryptedItemKey.array)
-
-        val shareEncryptionKey = encryptionContextProvider.withEncryptionContext {
-            EncryptionKey(decrypt(shareKey.key))
-        }
-
-        val encryptedLinkKey = encryptionContextProvider.withEncryptionContext(shareEncryptionKey) {
-            encrypt(linkEncryptionKey.value(), EncryptionTag.LinkKey)
-        }
-
-        val encodedEncryptedLinkKey = Base64.encodeBase64String(encryptedLinkKey.array)
-
-        val request = CreateSecureLinkRequest(
-            revision = item.revision,
-            expirationTime = options.expirationSeconds,
-            maxReadCount = options.maxReadCount,
-            encryptedItemKey = encodedEncryptedItemKey,
-            encryptedLinkKey = encodedEncryptedLinkKey,
-            linkKeyShareKeyRotation = shareKey.rotation,
-            linkKeyEncryptedWithItemKey = false
-        )
-
-        val response = remoteSecureLinkDataSource.createSecureLink(
-            userId = userId,
-            shareId = shareId,
-            itemId = itemId,
-            request = request
-        )
-
-        val encodedLinkKey = Base64.encodeBase64String(linkEncryptionKey.value(), Base64.Mode.UrlSafe)
         val concatenated = "${response.url}#$encodedLinkKey"
 
         secureLinksLocalDataSource.create(

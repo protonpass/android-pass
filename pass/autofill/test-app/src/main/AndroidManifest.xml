@@ -48,6 +48,9 @@
             android:name="proton.android.pass.autofill.sample.passkeys.PasskeysActivity"
             android:exported="true" />
         <activity
+            android:name="proton.android.pass.autofill.sample.passwordcredentials.PasswordCredentialsActivity"
+            android:exported="true" />
+        <activity
             android:name="proton.android.pass.autofill.sample.SampleSelectionActivity"
             android:exported="true" >
             <intent-filter>

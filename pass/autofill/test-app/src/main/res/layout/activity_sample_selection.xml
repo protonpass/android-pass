@@ -77,7 +77,14 @@
                 android:id="@+id/passkeysLoginButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:text="Passkeys" />
+
+            <Button
+                android:id="@+id/passwordCredentialsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Password Credentials" />
 
         </LinearLayout>
 

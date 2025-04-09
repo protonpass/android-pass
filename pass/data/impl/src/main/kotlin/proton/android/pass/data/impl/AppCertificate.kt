@@ -35,10 +35,10 @@ object AppCertificate {
         }
 
         val signatures = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-            packageInfo.signingInfo.apkContentsSigners
+            packageInfo.signingInfo?.apkContentsSigners
         } else {
             packageInfo.signatures
-        }
+        }.orEmpty()
 
         signatures.map { signature ->
             val md = MessageDigest.getInstance("SHA-256")

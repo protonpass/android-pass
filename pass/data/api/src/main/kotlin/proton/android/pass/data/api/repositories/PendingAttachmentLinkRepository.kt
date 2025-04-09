@@ -24,18 +24,24 @@ import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.PendingAttachmentId
 
+data class PendingAttachmentLinkData(
+    val linkKey: EncryptionKey,
+    val encryptionVersion: Int,
+    val numChunks: Int
+)
+
 interface PendingAttachmentLinkRepository {
-    fun addToLink(attachmentId: PendingAttachmentId, encryptionKey: EncryptionKey)
+    fun addToLink(attachmentId: PendingAttachmentId, linkData: PendingAttachmentLinkData)
 
     fun addToUnLink(attachmentId: AttachmentId)
 
     fun addAllToUnLink(list: Set<AttachmentId>)
 
-    fun getToLinkKey(attachmentId: PendingAttachmentId): EncryptionKey?
+    fun getToLinkData(attachmentId: PendingAttachmentId): PendingAttachmentLinkData?
 
-    fun getAllToLink(): Map<PendingAttachmentId, EncryptionKey>
+    fun getAllToLink(): Map<PendingAttachmentId, PendingAttachmentLinkData>
 
-    fun observeAllToLink(): StateFlow<Map<PendingAttachmentId, EncryptionKey>>
+    fun observeAllToLink(): StateFlow<Map<PendingAttachmentId, PendingAttachmentLinkData>>
 
     fun getAllToUnLink(): Set<AttachmentId>
 

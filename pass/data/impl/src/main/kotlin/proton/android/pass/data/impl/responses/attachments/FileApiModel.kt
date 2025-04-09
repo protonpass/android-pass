@@ -34,6 +34,8 @@ data class FileApiModel(
     val metadata: EncryptedString,
     @SerialName("FileKey")
     val fileKey: String,
+    @SerialName("EncryptionVersion")
+    val encryptionVersion: Int,
     @SerialName("ItemKeyRotation")
     val itemKeyRotation: String,
     @SerialName("Chunks")

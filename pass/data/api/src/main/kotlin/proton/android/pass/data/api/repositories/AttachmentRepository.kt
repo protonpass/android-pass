@@ -20,7 +20,6 @@ package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
@@ -51,7 +50,7 @@ interface AttachmentRepository {
         shareId: ShareId,
         itemId: ItemId,
         revision: Long,
-        toLink: Map<PendingAttachmentId, EncryptionKey>,
+        toLink: Map<PendingAttachmentId, PendingAttachmentLinkData>,
         toUnlink: Set<AttachmentId>
     )
 

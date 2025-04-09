@@ -26,5 +26,7 @@ data class CreatePendingFileRequest(
     @SerialName("Metadata")
     val metadata: String,
     @SerialName("ChunkCount")
-    val chunkCount: Int
+    val chunkCount: Int,
+    @SerialName("EncryptionVersion")
+    val encryptionVersion: Int
 )

@@ -29,14 +29,45 @@ private const val ITEM_CONTENT_TAG = "itemcontent"
 private const val LINK_KEY_TAG = "linkkey"
 private const val FILE_KEY_TAG = "filekey"
 private const val FILE_CONTENTS_TAG = "filedata"
+private const val FILE_METADATA_TAG = "v2;filemetadata.item.pass.proton"
 
-enum class EncryptionTag(val value: ByteArray) {
-    VaultContent(VAULT_CONTENT_TAG.encodeToByteArray()),
-    ItemKey(ITEM_KEY_TAG.encodeToByteArray()),
-    ItemContent(ITEM_CONTENT_TAG.encodeToByteArray()),
-    LinkKey(LINK_KEY_TAG.encodeToByteArray()),
-    FileKey(FILE_KEY_TAG.encodeToByteArray()),
-    FileData(FILE_CONTENTS_TAG.encodeToByteArray()) // to encrypt metadata and file content
+private fun fileDataV2Tag(chunkIndex: Int, numChunks: Int) =
+    "v2;$chunkIndex;$numChunks;filedata.item.pass.proton".encodeToByteArray()
+
+
+sealed class EncryptionTag(val value: ByteArray, val name: String) {
+    data object VaultContent : EncryptionTag(
+        value = VAULT_CONTENT_TAG.encodeToByteArray(),
+        name = "VaultContent"
+    )
+    data object ItemKey : EncryptionTag(
+        value = ITEM_KEY_TAG.encodeToByteArray(),
+        name = "ItemKey"
+    )
+    data object ItemContent : EncryptionTag(
+        value = ITEM_CONTENT_TAG.encodeToByteArray(),
+        name = "ItemContent"
+    )
+    data object LinkKey : EncryptionTag(
+        value = LINK_KEY_TAG.encodeToByteArray(),
+        name = "LinkKey"
+    )
+    data object FileKey : EncryptionTag(
+        value = FILE_KEY_TAG.encodeToByteArray(),
+        name = "FileKey"
+    )
+    data object FileData : EncryptionTag(
+        value = FILE_CONTENTS_TAG.encodeToByteArray(),
+        name = "FileData"
+    )
+    data object FileMetadata : EncryptionTag(
+        value = FILE_METADATA_TAG.encodeToByteArray(),
+        name = "FileMetadata"
+    )
+    class FileDataV2(chunkIndex: Int, numChunks: Int) : EncryptionTag(
+        value = fileDataV2Tag(chunkIndex = chunkIndex, numChunks = numChunks),
+        name = "FileDataV2"
+    )
 }
 
 interface EncryptionContext {

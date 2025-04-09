@@ -53,6 +53,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.profile.accountswitcher.AccountSwitcherList
 
@@ -99,16 +100,24 @@ internal fun ProfileContent(
                         text = stringResource(R.string.profile_option_account),
                         style = ProtonTheme.typography.defaultSmallWeak
                     )
-                    AccountSwitcherList(
-                        modifier = Modifier.padding(bottom = Spacing.medium),
-                        isExpanded = isExpanded,
-                        accountItemList = state.accounts,
-                        onExpandedChange = { isExpanded = it },
-                        onEvent = {
-                            onEvent(it)
-                            isExpanded = false
-                        }
-                    )
+                    Column(
+                        modifier = Modifier
+                            .padding(Spacing.medium)
+                            .roundedContainerNorm()
+                    ) {
+                        AccountSwitcherList(
+                            isExpanded = isExpanded,
+                            accountItemList = state.accounts,
+                            onExpandedChange = { isExpanded = it },
+                            onEvent = {
+                                onEvent(it)
+                                isExpanded = false
+                            }
+                        )
+                        SignInToAnotherDeviceSection(
+                            onLogOut = { onEvent(AccountSwitchEvent.OnSignOut(it)) }
+                        )
+                    }
                 }
 
                 DataStorage(

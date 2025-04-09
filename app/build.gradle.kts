@@ -393,6 +393,8 @@ dependencies {
     implementation(libs.core.userSettings)
     implementation(libs.core.utilAndroidDagger)
     implementation(libs.core.config.data)
+    implementation(libs.core.biometric)
+    implementation(libs.core.deviceMigration)
     addDevBlackImplementation(
         default = libs.core.config.dagger.staticDefaults,
         devBlack = libs.core.config.dagger.contentProvider

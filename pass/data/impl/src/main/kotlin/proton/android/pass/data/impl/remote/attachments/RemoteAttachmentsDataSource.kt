@@ -35,7 +35,8 @@ interface RemoteAttachmentsDataSource {
     suspend fun createPendingFile(
         userId: UserId,
         metadata: EncryptedString,
-        chunkCount: Int
+        chunkCount: Int,
+        encryptionVersion: Int
     ): String
 
     suspend fun updatePendingFile(

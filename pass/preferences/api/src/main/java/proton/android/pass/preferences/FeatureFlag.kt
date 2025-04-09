@@ -47,5 +47,11 @@ enum class FeatureFlag(
         description = "Enable custom types",
         key = "PassCustomTypeV1",
         isEnabledDefault = false
+    ),
+    FILE_ATTACHMENT_ENCRYPTION_V2(
+        title = "File Attachment Encryption V2",
+        description = "Enable File Attachment Encryption V2",
+        key = "PassFileAttachmentEncryptionV2",
+        isEnabledDefault = false
     )
 }

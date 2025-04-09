@@ -47,11 +47,16 @@ import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.crypto.GetItemKey
 import proton.android.pass.data.api.errors.FileSizeExceededError
 import proton.android.pass.data.api.repositories.AttachmentRepository
+import proton.android.pass.data.api.repositories.PendingAttachmentLinkData
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
-import proton.android.pass.data.impl.crypto.ReencryptAttachment
-import proton.android.pass.data.impl.crypto.ReencryptedKey
-import proton.android.pass.data.impl.crypto.ReencryptedMetadata
+import proton.android.pass.data.impl.crypto.attachment.AttachmentToReencrypt
+import proton.android.pass.data.impl.crypto.attachment.DecryptFileAttachmentChunk
+import proton.android.pass.data.impl.crypto.attachment.EncryptFileAttachmentChunk
+import proton.android.pass.data.impl.crypto.attachment.EncryptFileAttachmentMetadata
+import proton.android.pass.data.impl.crypto.attachment.ReencryptAttachment
+import proton.android.pass.data.impl.crypto.attachment.ReencryptedKey
+import proton.android.pass.data.impl.crypto.attachment.ReencryptedMetadata
 import proton.android.pass.data.impl.db.entities.attachments.AttachmentEntity
 import proton.android.pass.data.impl.db.entities.attachments.AttachmentWithChunks
 import proton.android.pass.data.impl.db.entities.attachments.ChunkEntity
@@ -91,7 +96,10 @@ class AttachmentRepositoryImpl @Inject constructor(
     private val fileUriGenerator: FileUriGenerator,
     private val reencryptAttachment: ReencryptAttachment,
     private val userAccessDataRepository: UserAccessDataRepository,
-    private val getItemKey: GetItemKey
+    private val getItemKey: GetItemKey,
+    private val encryptFileAttachmentMetadata: EncryptFileAttachmentMetadata,
+    private val encryptFileAttachmentChunk: EncryptFileAttachmentChunk,
+    private val decryptFileAttachmentChunk: DecryptFileAttachmentChunk
 ) : AttachmentRepository {
 
     override suspend fun createPendingAttachment(userId: UserId, metadata: FileMetadata): PendingAttachmentId {
@@ -104,17 +112,22 @@ class AttachmentRepositoryImpl @Inject constructor(
             this.name = metadata.name
             this.mimeType = metadata.mimeType
         }
-
-        val fileKey = EncryptionKey.generate()
-        val encryptedMetadata =
-            encryptionContextProvider.withEncryptionContextSuspendable(fileKey.clone()) {
-                encrypt(fileMetadata.toByteArray(), EncryptionTag.FileData)
-            }
-        val encodedMetadata = Base64.encodeBase64String(encryptedMetadata.array)
+        val encryptedMetadata = encryptFileAttachmentMetadata.encrypt(fileMetadata)
         val chunks = ceil(metadata.size.toDouble() / CHUNK_SIZE).toInt()
-        val id = remote.createPendingFile(userId, encodedMetadata, chunks)
-            .let(::PendingAttachmentId)
-        pendingAttachmentLinkRepository.addToLink(id, fileKey)
+        val id = remote.createPendingFile(
+            userId = userId,
+            metadata = encryptedMetadata.encryptedMetadata,
+            chunkCount = chunks,
+            encryptionVersion = encryptedMetadata.encryptionVersion
+        ).let(::PendingAttachmentId)
+        pendingAttachmentLinkRepository.addToLink(
+            id,
+            PendingAttachmentLinkData(
+                linkKey = encryptedMetadata.fileKey,
+                encryptionVersion = encryptedMetadata.encryptionVersion,
+                numChunks = chunks
+            )
+        )
         return id
     }
 
@@ -123,21 +136,21 @@ class AttachmentRepositoryImpl @Inject constructor(
         attachmentId: PendingAttachmentId,
         metadata: FileMetadata
     ) {
-        val fileMetadata = fileMetadata {
-            this.name = metadata.name
-            this.mimeType = metadata.mimeType
-        }
-        val fileKey: EncryptionKey = pendingAttachmentLinkRepository.getToLinkKey(attachmentId)
-            ?: throw IllegalStateException("No encryption key found for attachment")
-        val encryptedMetadata =
-            encryptionContextProvider.withEncryptionContextSuspendable(fileKey.clone()) {
-                encrypt(fileMetadata.toByteArray(), EncryptionTag.FileData)
-            }
-        val encodedMetadata = Base64.encodeBase64String(encryptedMetadata.array)
+        val linkData = pendingAttachmentLinkRepository.getToLinkData(attachmentId)
+            ?: throw IllegalStateException("No PendingAttachmentLinkData found for attachment $attachmentId")
+
+        val encryptedMetadata = encryptFileAttachmentMetadata.update(
+            fileKey = linkData.linkKey,
+            metadata = fileMetadata {
+                this.name = metadata.name
+                this.mimeType = metadata.mimeType
+            },
+            encryptionVersion = linkData.encryptionVersion
+        )
         remote.updatePendingFile(
             userId = userId,
             pendingAttachmentId = attachmentId,
-            metadata = encodedMetadata
+            metadata = encryptedMetadata.encryptedMetadata
         )
     }
 
@@ -147,12 +160,12 @@ class AttachmentRepositoryImpl @Inject constructor(
         pendingAttachmentId: PendingAttachmentId,
         uri: URI
     ) {
-        val fileKey: EncryptionKey =
-            pendingAttachmentLinkRepository.getToLinkKey(pendingAttachmentId)
-                ?: throw IllegalStateException("No encryption key found for attachment $pendingAttachmentId")
+        val linkData = pendingAttachmentLinkRepository.getToLinkData(pendingAttachmentId)
+            ?: throw IllegalStateException("No PendingAttachmentLinkData found for attachment $pendingAttachmentId")
+
         val contentUri: Uri = uri.toString().toUri()
         withContext(appDispatchers.io) {
-            encryptionContextProvider.withEncryptionContextSuspendable(fileKey) {
+            encryptionContextProvider.withEncryptionContextSuspendable(linkData.linkKey) {
                 context.contentResolver.openInputStream(contentUri)?.use { inputStream ->
                     val buffer = ByteArray(CHUNK_SIZE)
                     var chunkIndex = 0
@@ -164,15 +177,18 @@ class AttachmentRepositoryImpl @Inject constructor(
 
                         PassLogger.d(
                             TAG,
-                            "Uploading chunk $chunkIndex for attachment $pendingAttachmentId"
+                            "Uploading chunk $chunkIndex / $${linkData.numChunks} for attachment $pendingAttachmentId"
                         )
                         remote.uploadPendingFile(
                             userId = userId,
                             pendingAttachmentId = pendingAttachmentId,
                             chunkIndex = chunkIndex,
-                            encryptedByteArray = encrypt(
-                                buffer.copyOf(bytesRead),
-                                EncryptionTag.FileData
+                            encryptedByteArray = encryptFileAttachmentChunk(
+                                encryptionContext = this@withEncryptionContextSuspendable,
+                                chunkIndex = chunkIndex,
+                                numChunks = linkData.numChunks,
+                                chunk = buffer.copyOf(bytesRead),
+                                encryptionVersion = linkData.encryptionVersion
                             )
                         )
                         chunkIndex++
@@ -187,7 +203,7 @@ class AttachmentRepositoryImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId,
         revision: Long,
-        toLink: Map<PendingAttachmentId, EncryptionKey>,
+        toLink: Map<PendingAttachmentId, PendingAttachmentLinkData>,
         toUnlink: Set<AttachmentId>
     ) {
         val encryptedItemKey = getItemKey(userId, shareId, itemId)
@@ -195,8 +211,8 @@ class AttachmentRepositoryImpl @Inject constructor(
             EncryptionKey(decrypt(encryptedItemKey.key))
         }
         val toLinkEncrypted = encryptionContextProvider.withEncryptionContextSuspendable(itemKey) {
-            toLink.mapValues { (_, fileKey) ->
-                val encryptedKey = encrypt(fileKey.value(), EncryptionTag.FileKey)
+            toLink.mapValues { (_, linkData) ->
+                val encryptedKey = encrypt(linkData.linkKey.value(), EncryptionTag.FileKey)
                 Base64.encodeBase64String(encryptedKey.array)
             }
         }
@@ -239,10 +255,12 @@ class AttachmentRepositoryImpl @Inject constructor(
                 }
             val metadata = FileV1.FileMetadata.parseFrom(decryptedMetadata)
             val updatedMetadata = metadata.toBuilder().setName(title).build()
-            val encryptedMetadata = encryptionContextProvider.withEncryptionContextSuspendable(
-                EncryptionKey(decryptedFileKey)
-            ) { encrypt(updatedMetadata.toByteArray(), EncryptionTag.FileData) }
-            val encodedMetadata = Base64.encodeBase64String(encryptedMetadata.array)
+            val encryptedMetadata = encryptFileAttachmentMetadata.update(
+                fileKey = EncryptionKey(decryptedFileKey),
+                metadata = updatedMetadata,
+                encryptionVersion = attachment.encryptionVersion
+            )
+            val encodedMetadata = encryptedMetadata.encryptedMetadata
 
             remote.updateFileMetadata(
                 userId = userId,
@@ -255,8 +273,13 @@ class AttachmentRepositoryImpl @Inject constructor(
 
             val (reencryptedMetadatas, reencryptedKeys) = reencryptAttachment(
                 encryptedItemKey = encryptedItemKey.key,
-                encryptedMetadatas = listOf(encodedMetadata),
-                encryptedKeys = listOf(attachment.key)
+                attachments = listOf(
+                    AttachmentToReencrypt(
+                        encryptedMetadata = encodedMetadata,
+                        encryptedKey = attachment.key,
+                        encryptionVersion = attachment.encryptionVersion
+                    )
+                )
             )
             val entity = attachment.copy(
                 reencryptedKey = reencryptedKeys.first().value,
@@ -441,10 +464,17 @@ class AttachmentRepositoryImpl @Inject constructor(
     ) {
         val encryptedItemKey = getItemKey(userId, shareId, itemId)
 
+        val attachmentsToReencrypt = fileDetails.map { fileDetail ->
+            AttachmentToReencrypt(
+                encryptedMetadata = fileDetail.metadata,
+                encryptedKey = fileDetail.fileKey,
+                encryptionVersion = fileDetail.encryptionVersion
+
+            )
+        }
         val (reencryptedMetadatas, reencryptedKeys) = reencryptAttachment(
-            encryptedItemKey.key,
-            fileDetails.map(FileApiModel::metadata),
-            fileDetails.map(FileApiModel::fileKey)
+            encryptedItemKey = encryptedItemKey.key,
+            attachments = attachmentsToReencrypt
         )
         val attachmentsWithChunks = fileDetails
             .zip(reencryptedMetadatas)
@@ -507,10 +537,15 @@ class AttachmentRepositoryImpl @Inject constructor(
                                     attachmentId = attachment.id,
                                     chunkId = chunk.id
                                 )
-                                decrypt(encryptedChunk, EncryptionTag.FileData).inputStream()
-                                    .use { decryptedStream ->
-                                        decryptedStream.copyTo(outputStream)
-                                    }
+                                decryptFileAttachmentChunk(
+                                    encryptionContext = this@withEncryptionContextSuspendable,
+                                    chunk = encryptedChunk,
+                                    chunkIndex = chunk.index,
+                                    numChunks = attachment.chunks.size,
+                                    encryptionVersion = attachment.encryptionVersion
+                                ).inputStream().use { decryptedStream ->
+                                    decryptedStream.copyTo(outputStream)
+                                }
                             }
                         }
                     }
@@ -556,7 +591,8 @@ fun FileApiModel.toEntity(
     revisionAdded = this.revisionAdded,
     revisionRemoved = this.revisionRemoved,
     reencryptedKey = reencryptedKey,
-    reencryptedMetadata = reencryptedMetadata
+    reencryptedMetadata = reencryptedMetadata,
+    encryptionVersion = this.encryptionVersion
 )
 
 fun ChunkApiModel.toChunkEntity(
@@ -596,7 +632,8 @@ fun AttachmentEntity.toDomain(
         reencryptedKey = this.reencryptedKey,
         revisionAdded = this.revisionAdded,
         revisionRemoved = this.revisionRemoved,
-        chunks = chunks
+        chunks = chunks,
+        encryptionVersion = this.encryptionVersion
     )
 }
 

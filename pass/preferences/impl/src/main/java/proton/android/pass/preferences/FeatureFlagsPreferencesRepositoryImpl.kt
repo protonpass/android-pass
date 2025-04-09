@@ -37,6 +37,7 @@ import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.CUSTOM_TYPE_V1
 import proton.android.pass.preferences.FeatureFlag.EXTRA_LOGGING
 import proton.android.pass.preferences.FeatureFlag.FILE_ATTACHMENTS_V1
+import proton.android.pass.preferences.FeatureFlag.FILE_ATTACHMENT_ENCRYPTION_V2
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -69,6 +70,11 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { customTypeV1Enabled.value }
+
+        FILE_ATTACHMENT_ENCRYPTION_V2 -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault
+        ) { fileAttachmentEncryptionV2Enabled.value }
     }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> = when (featureFlag) {
@@ -86,6 +92,10 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         CUSTOM_TYPE_V1 -> setFeatureFlag {
             customTypeV1Enabled = boolFlagPrefProto(value)
+        }
+
+        FILE_ATTACHMENT_ENCRYPTION_V2 -> setFeatureFlag {
+            fileAttachmentEncryptionV2Enabled = boolFlagPrefProto(value)
         }
     }
 
@@ -181,6 +191,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             EXTRA_LOGGING -> extraLoggingEnabled
             FILE_ATTACHMENTS_V1 -> fileAttachmentsV1Enabled
             CUSTOM_TYPE_V1 -> customTypeV1Enabled
+            FILE_ATTACHMENT_ENCRYPTION_V2 -> fileAttachmentEncryptionV2Enabled
         }.value
     }
 }

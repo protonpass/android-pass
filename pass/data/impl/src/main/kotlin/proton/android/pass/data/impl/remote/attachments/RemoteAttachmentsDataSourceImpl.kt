@@ -49,9 +49,18 @@ class RemoteAttachmentsDataSourceImpl @Inject constructor(
     override suspend fun createPendingFile(
         userId: UserId,
         metadata: EncryptedString,
-        chunkCount: Int
+        chunkCount: Int,
+        encryptionVersion: Int
     ): String = api.get<PasswordManagerApi>(userId)
-        .invoke { createPendingFile(CreatePendingFileRequest(metadata, chunkCount)) }
+        .invoke {
+            createPendingFile(
+                CreatePendingFileRequest(
+                    metadata = metadata,
+                    chunkCount = chunkCount,
+                    encryptionVersion = encryptionVersion
+                )
+            )
+        }
         .valueOrThrow
         .file
         .fileID

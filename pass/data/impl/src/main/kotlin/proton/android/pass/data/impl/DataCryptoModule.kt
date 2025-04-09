@@ -34,14 +34,20 @@ import proton.android.pass.data.impl.crypto.GetItemKeyImpl
 import proton.android.pass.data.impl.crypto.GetShareAndItemKeyImpl
 import proton.android.pass.data.impl.crypto.NewUserInviteSignatureManager
 import proton.android.pass.data.impl.crypto.NewUserInviteSignatureManagerImpl
-import proton.android.pass.data.impl.crypto.ReencryptAttachment
-import proton.android.pass.data.impl.crypto.ReencryptAttachmentImpl
 import proton.android.pass.data.impl.crypto.ReencryptInviteContents
 import proton.android.pass.data.impl.crypto.ReencryptInviteContentsImpl
 import proton.android.pass.data.impl.crypto.ReencryptShareContents
 import proton.android.pass.data.impl.crypto.ReencryptShareContentsImpl
 import proton.android.pass.data.impl.crypto.ReencryptShareKey
 import proton.android.pass.data.impl.crypto.ReencryptShareKeyImpl
+import proton.android.pass.data.impl.crypto.attachment.DecryptFileAttachmentChunk
+import proton.android.pass.data.impl.crypto.attachment.DecryptFileAttachmentChunkImpl
+import proton.android.pass.data.impl.crypto.attachment.EncryptFileAttachmentChunk
+import proton.android.pass.data.impl.crypto.attachment.EncryptFileAttachmentChunkImpl
+import proton.android.pass.data.impl.crypto.attachment.EncryptFileAttachmentMetadata
+import proton.android.pass.data.impl.crypto.attachment.EncryptFileAttachmentMetadataImpl
+import proton.android.pass.data.impl.crypto.attachment.ReencryptAttachment
+import proton.android.pass.data.impl.crypto.attachment.ReencryptAttachmentImpl
 import javax.inject.Singleton
 
 @Module
@@ -79,5 +85,17 @@ abstract class DataCryptoModule {
 
     @[Binds Singleton]
     abstract fun bindReencryptAttachment(impl: ReencryptAttachmentImpl): ReencryptAttachment
+
+    @[Binds Singleton]
+    abstract fun bindDecryptFileAttachmentChunk(impl: DecryptFileAttachmentChunkImpl): DecryptFileAttachmentChunk
+
+    @[Binds Singleton]
+    abstract fun bindEncryptFileAttachmentChunk(impl: EncryptFileAttachmentChunkImpl): EncryptFileAttachmentChunk
+
+    @[Binds Singleton]
+    abstract fun bindEncryptFileAttachmentMetadata(
+        impl: EncryptFileAttachmentMetadataImpl
+    ): EncryptFileAttachmentMetadata
+
 
 }

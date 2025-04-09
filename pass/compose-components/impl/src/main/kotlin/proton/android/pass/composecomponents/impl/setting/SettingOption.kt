@@ -51,7 +51,8 @@ fun SettingOption(
     label: String? = null,
     isLoading: Boolean = false,
     isLink: Boolean = false,
-    onClick: (() -> Unit)? = null
+    onClick: (() -> Unit)? = null,
+    leadingIcon: @Composable (() -> Unit)? = null
 ) {
     Row(
         modifier = modifier
@@ -65,6 +66,9 @@ fun SettingOption(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
+        if (leadingIcon != null) {
+            leadingIcon()
+        }
         Column(Modifier.weight(1f)) {
             label?.let {
                 Text(

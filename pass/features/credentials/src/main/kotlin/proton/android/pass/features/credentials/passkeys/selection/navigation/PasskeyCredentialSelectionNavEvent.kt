@@ -16,9 +16,20 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.credentials.shared.passkeys.domain
+package proton.android.pass.features.credentials.passkeys.selection.navigation
 
-internal enum class PasskeyRequestType {
-    SelectPasskey,
-    UsePasskey
+import me.proton.core.domain.entity.UserId
+
+internal sealed interface PasskeyCredentialSelectionNavEvent {
+
+    data object Cancel : PasskeyCredentialSelectionNavEvent
+
+    @JvmInline
+    value class ForceSignOut(val userId: UserId) : PasskeyCredentialSelectionNavEvent
+
+    @JvmInline
+    value class SendResponse(val response: String) : PasskeyCredentialSelectionNavEvent
+
+    data object Upgrade : PasskeyCredentialSelectionNavEvent
+
 }

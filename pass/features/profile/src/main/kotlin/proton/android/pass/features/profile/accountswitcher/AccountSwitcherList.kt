@@ -21,7 +21,6 @@ package proton.android.pass.features.profile.accountswitcher
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.Surface
@@ -43,9 +42,7 @@ import kotlinx.collections.immutable.toPersistentList
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.features.profile.AccountSwitchEvent
 import proton.android.pass.features.profile.PlanInfo
 
@@ -62,8 +59,6 @@ fun AccountSwitcherList(
 
     Column(
         modifier = modifier
-            .padding(horizontal = Spacing.medium)
-            .roundedContainerNorm()
     ) {
         if (primary.isNotEmpty()) {
             AccountSwitcherRow(

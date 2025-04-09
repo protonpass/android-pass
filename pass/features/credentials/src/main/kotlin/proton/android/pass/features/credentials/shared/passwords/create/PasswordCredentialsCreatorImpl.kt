@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.first
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
 import proton.android.pass.features.credentials.passkeys.ui.CreatePasskeyActivity
-import proton.android.pass.features.credentials.shared.passwords.events.PasswordCredentialsEvent
+import proton.android.pass.features.credentials.shared.passwords.events.PasswordCredentialsTelemetryEvent
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
@@ -45,7 +45,7 @@ internal class PasswordCredentialsCreatorImpl @Inject constructor(
         }
         ?.let(::listOf)
         ?.also {
-            telemetryManager.sendEvent(PasswordCredentialsEvent.CreatePromptDisplay)
+            telemetryManager.sendEvent(PasswordCredentialsTelemetryEvent.CreatePromptDisplay)
         }
         ?: emptyList()
 

@@ -27,21 +27,19 @@ import androidx.credentials.provider.BeginGetPublicKeyCredentialOption
 import androidx.credentials.provider.PublicKeyCredentialEntry
 import kotlinx.coroutines.flow.first
 import kotlinx.serialization.json.Json
-import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeysForDomain
 import proton.android.pass.data.api.usecases.passkeys.PasskeyItem
 import proton.android.pass.features.credentials.R
-import proton.android.pass.features.credentials.passkeys.selection.presentation.PasskeyCredentialSelectionActivity
+import proton.android.pass.features.credentials.passkeys.selection.ui.PasskeyCredentialSelectionActivity
 import proton.android.pass.features.credentials.shared.passkeys.domain.PasskeyCredential
-import proton.android.pass.features.credentials.shared.passkeys.events.PasskeyCredentialsEvent
+import proton.android.pass.features.credentials.shared.passkeys.events.PasskeyCredentialsTelemetryEvent
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 internal class PasskeyCredentialsSearcherImpl @Inject constructor(
-    private val accountManager: AccountManager,
     private val getPasskeysForDomain: GetPasskeysForDomain,
     private val needsBiometricAuth: NeedsBiometricAuth,
     private val telemetryManager: TelemetryManager
@@ -65,12 +63,6 @@ internal class PasskeyCredentialsSearcherImpl @Inject constructor(
         context: Context,
         option: BeginGetPublicKeyCredentialOption
     ): Pair<List<PublicKeyCredentialEntry>, Action>? {
-        if (accountManager.getPrimaryUserId().first() == null) {
-            PassLogger.d(TAG, "No user was found")
-
-            return null
-        }
-
         val passkeyCredential = createPasskeyCredential(option) ?: return null
 
         val passkeyCredentialEntries = createPasskeyCredentialEntries(
@@ -87,7 +79,7 @@ internal class PasskeyCredentialsSearcherImpl @Inject constructor(
         )
 
         return Pair(passkeyCredentialEntries, passkeyCredentialAction)
-            .also { telemetryManager.sendEvent(PasskeyCredentialsEvent.DisplaySuggestions) }
+            .also { telemetryManager.sendEvent(PasskeyCredentialsTelemetryEvent.DisplaySuggestions) }
     }
 
     private fun createPasskeyCredential(option: BeginGetPublicKeyCredentialOption): PasskeyCredential? = runCatching {

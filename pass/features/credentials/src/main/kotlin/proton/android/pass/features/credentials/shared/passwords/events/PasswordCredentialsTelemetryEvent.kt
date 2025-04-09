@@ -20,18 +20,18 @@ package proton.android.pass.features.credentials.shared.passwords.events
 
 import proton.android.pass.telemetry.api.TelemetryEvent
 
-internal sealed class PasswordCredentialsEvent(
+internal sealed class PasswordCredentialsTelemetryEvent(
     eventName: String
 ) : TelemetryEvent.DeferredTelemetryEvent(eventName) {
 
-    data object CreatePromptDisplay : PasswordCredentialsEvent("password.create_prompt_display")
+    data object CreatePromptDisplay : PasswordCredentialsTelemetryEvent("password.create_prompt_display")
 
-    data object CreateDone : PasswordCredentialsEvent("password.create_done")
+    data object CreateDone : PasswordCredentialsTelemetryEvent("password.create_done")
 
-    data object DisplaySuggestions : PasswordCredentialsEvent("password.display_suggestions")
+    data object DisplaySuggestions : PasswordCredentialsTelemetryEvent("password.display_suggestions")
 
-    data object DisplayAllPasskeys : PasswordCredentialsEvent("password.display_all_passkeys")
+    data object DisplayAllPasskeys : PasswordCredentialsTelemetryEvent("password.display_all_passkeys")
 
-    data object AuthDone : PasswordCredentialsEvent("password.auth_done")
+    data object AuthDone : PasswordCredentialsTelemetryEvent("password.auth_done")
 
 }

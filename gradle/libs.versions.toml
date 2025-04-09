@@ -1,6 +1,6 @@
 [versions]
 minSdk = "27" # Minimum SDK for AutofillService
-compileSdk = "34"
+compileSdk = "35"
 targetSdk = "34"
 # Accompanist
 accompanist = "0.34.0"
@@ -42,7 +42,7 @@ coil = "2.2.2"
 # Compose marker
 compose-stable-marker = "1.0.5"
 # Core
-core = "30.4.3"
+core = "32.0.1"
 # Dagger
 dagger = "2.49"
 # Google
@@ -61,7 +61,7 @@ gradlePlugin-ksp = "2.0.21-1.0.27"
 gradlePlugin-protobuf = "0.9.3"
 gradlePlugin-proton-detekt = "1.3.0"
 gradlePlugin-proton-config = "1.3.1"
-gradlePlugin-sentry = "3.5.0"
+gradlePlugin-sentry = "4.14.1"
 gradlePlugin-test-logger = "3.2.0"
 # Jacoco
 jacoco = "0.8.8"
@@ -204,6 +204,7 @@ core-auth-test = { module = "me.proton.core:auth-test", version.ref = "core" }
 core-authFidoDagger = { module = "me.proton.core:auth-fido-dagger", version.ref = "core" }
 core-authFidoDomain = { module = "me.proton.core:auth-fido-domain", version.ref = "core" }
 core-authFidoPlay = { module = "me.proton.core:auth-fido-play", version.ref = "core" }
+core-biometric = { module = "me.proton.core:biometric", version.ref = "core" }
 core-challenge = { module = "me.proton.core:challenge", version.ref = "core" }
 core-country = { module = "me.proton.core:country", version.ref = "core" }
 core-crypto = { module = "me.proton.core:crypto", version.ref = "core" }
@@ -212,6 +213,8 @@ core-cryptoCommon = { module = "me.proton.core:crypto-common", version.ref = "co
 core-cryptoValidator = { module = "me.proton.core:crypto-validator", version.ref = "core" }
 core-data = { module = "me.proton.core:data", version.ref = "core" }
 core-dataRoom = { module = "me.proton.core:data-room", version.ref = "core" }
+core-deviceMigration = { module = "me.proton.core:device-migration", version.ref = "core" }
+core-deviceMigrationPresentation = { module = "me.proton.core:device-migration-presentation", version.ref = "core" }
 core-domain = { module = "me.proton.core:domain", version.ref = "core" }
 core-eventManager = { module = "me.proton.core:event-manager", version.ref = "core" }
 core-featureFlag = { module = "me.proton.core:feature-flag", version.ref = "core" }

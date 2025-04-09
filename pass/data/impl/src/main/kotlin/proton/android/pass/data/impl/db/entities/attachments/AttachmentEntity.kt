@@ -86,7 +86,9 @@ data class AttachmentEntity(
     @ColumnInfo(name = Columns.REENCRYPTED_KEY)
     val reencryptedKey: EncryptedByteArray,
     @ColumnInfo(name = Columns.REENCRYPTED_METADATA)
-    val reencryptedMetadata: EncryptedByteArray
+    val reencryptedMetadata: EncryptedByteArray,
+    @ColumnInfo(name = Columns.ENCRYPTION_VERSION, defaultValue = "1")
+    val encryptionVersion: Int
 ) {
     object Columns {
         const val ID = "id"
@@ -104,6 +106,7 @@ data class AttachmentEntity(
         const val REVISION_REMOVED = "revision_removed"
         const val REENCRYPTED_KEY = "reencrypted_key"
         const val REENCRYPTED_METADATA = "reencrypted_metadata"
+        const val ENCRYPTION_VERSION = "encryptionVersion"
     }
 
     companion object {

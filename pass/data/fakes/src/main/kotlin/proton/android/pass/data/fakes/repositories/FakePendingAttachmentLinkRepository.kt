@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
-import proton.android.pass.crypto.api.EncryptionKey
+import proton.android.pass.data.api.repositories.PendingAttachmentLinkData
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.PendingAttachmentId
@@ -30,11 +30,11 @@ import javax.inject.Inject
 
 class FakePendingAttachmentLinkRepository @Inject constructor() : PendingAttachmentLinkRepository {
 
-    private val toLinkMap = mutableMapOf<PendingAttachmentId, EncryptionKey>()
+    private val toLinkMap = mutableMapOf<PendingAttachmentId, PendingAttachmentLinkData>()
     private val toUnlinkSet = mutableSetOf<AttachmentId>()
 
-    override fun addToLink(attachmentId: PendingAttachmentId, encryptionKey: EncryptionKey) {
-        toLinkMap[attachmentId] = encryptionKey
+    override fun addToLink(attachmentId: PendingAttachmentId, linkData: PendingAttachmentLinkData) {
+        toLinkMap[attachmentId] = linkData
     }
 
     override fun addToUnLink(attachmentId: AttachmentId) {
@@ -45,11 +45,11 @@ class FakePendingAttachmentLinkRepository @Inject constructor() : PendingAttachm
         toUnlinkSet.addAll(list)
     }
 
-    override fun getToLinkKey(attachmentId: PendingAttachmentId): EncryptionKey? = toLinkMap[attachmentId]
+    override fun getToLinkData(attachmentId: PendingAttachmentId): PendingAttachmentLinkData? = toLinkMap[attachmentId]
 
-    override fun getAllToLink(): Map<PendingAttachmentId, EncryptionKey> = toLinkMap.toMap()
+    override fun getAllToLink(): Map<PendingAttachmentId, PendingAttachmentLinkData> = toLinkMap.toMap()
 
-    override fun observeAllToLink(): StateFlow<Map<PendingAttachmentId, EncryptionKey>> =
+    override fun observeAllToLink(): StateFlow<Map<PendingAttachmentId, PendingAttachmentLinkData>> =
         MutableStateFlow(toLinkMap.toMap())
 
     override fun getAllToUnLink(): Set<AttachmentId> = toUnlinkSet.toSet()

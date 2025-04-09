@@ -21,7 +21,7 @@ package proton.android.pass.data.impl.repositories
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
-import proton.android.pass.crypto.api.EncryptionKey
+import proton.android.pass.data.api.repositories.PendingAttachmentLinkData
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.PendingAttachmentId
@@ -32,13 +32,13 @@ import javax.inject.Singleton
 @Singleton
 class PendingAttachmentLinkRepositoryImpl @Inject constructor() : PendingAttachmentLinkRepository {
 
-    private val toLink = MutableStateFlow<Map<PendingAttachmentId, EncryptionKey>>(emptyMap())
+    private val toLink = MutableStateFlow<Map<PendingAttachmentId, PendingAttachmentLinkData>>(emptyMap())
     private val toUnlink = MutableStateFlow<Set<AttachmentId>>(emptySet())
 
-    override fun addToLink(attachmentId: PendingAttachmentId, encryptionKey: EncryptionKey) {
+    override fun addToLink(attachmentId: PendingAttachmentId, linkData: PendingAttachmentLinkData) {
         toLink.update { currentMap ->
             ConcurrentHashMap(currentMap).apply {
-                this[attachmentId] = encryptionKey
+                this[attachmentId] = linkData
             }.toMap()
         }
     }
@@ -59,11 +59,18 @@ class PendingAttachmentLinkRepositoryImpl @Inject constructor() : PendingAttachm
         }
     }
 
-    override fun getToLinkKey(attachmentId: PendingAttachmentId): EncryptionKey? = toLink.value[attachmentId]?.clone()
+    override fun getToLinkData(attachmentId: PendingAttachmentId): PendingAttachmentLinkData? =
+        toLink.value[attachmentId]?.let { data ->
+            PendingAttachmentLinkData(
+                linkKey = data.linkKey.clone(),
+                encryptionVersion = data.encryptionVersion,
+                numChunks = data.numChunks
+            )
+        }
 
-    override fun getAllToLink(): Map<PendingAttachmentId, EncryptionKey> = toLink.value
+    override fun getAllToLink(): Map<PendingAttachmentId, PendingAttachmentLinkData> = toLink.value
 
-    override fun observeAllToLink(): StateFlow<Map<PendingAttachmentId, EncryptionKey>> = toLink
+    override fun observeAllToLink(): StateFlow<Map<PendingAttachmentId, PendingAttachmentLinkData>> = toLink
 
     override fun getAllToUnLink(): Set<AttachmentId> = toUnlink.value
 

@@ -121,7 +121,8 @@ class AttachmentSectionPreviewProvider :
         revisionRemoved = null,
         mimeType = "",
         reencryptedKey = EncryptedByteArray(byteArrayOf()),
-        chunks = listOf()
+        chunks = listOf(),
+        encryptionVersion = 1
     )
 
     private fun createSuccessDraftAttachment(

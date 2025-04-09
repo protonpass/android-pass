@@ -63,7 +63,8 @@ data class Attachment(
     val revisionAdded: Int,
     val revisionRemoved: Int?,
     val reencryptedKey: EncryptedByteArray,
-    val chunks: List<Chunk>
+    val chunks: List<Chunk>,
+    val encryptionVersion: Int
 ) {
     fun existsForRevision(revision: Long): Boolean =
         revision >= revisionAdded && (revisionRemoved == null || revision < revisionRemoved)

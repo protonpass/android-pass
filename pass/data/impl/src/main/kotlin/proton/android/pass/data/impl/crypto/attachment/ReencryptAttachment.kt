@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.crypto
+package proton.android.pass.data.impl.crypto.attachment
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -32,11 +32,16 @@ value class ReencryptedMetadata(val value: EncryptedByteArray)
 @JvmInline
 value class ReencryptedKey(val value: EncryptedByteArray)
 
+data class AttachmentToReencrypt(
+    val encryptedMetadata: EncryptedString,
+    val encryptedKey: EncryptedString,
+    val encryptionVersion: Int
+)
+
 interface ReencryptAttachment {
     suspend operator fun invoke(
         encryptedItemKey: EncryptedByteArray,
-        encryptedMetadatas: List<EncryptedString>,
-        encryptedKeys: List<EncryptedString>
+        attachments: List<AttachmentToReencrypt>
     ): Pair<List<ReencryptedMetadata>, List<ReencryptedKey>>
 }
 
@@ -46,27 +51,36 @@ class ReencryptAttachmentImpl @Inject constructor(
 
     override suspend fun invoke(
         encryptedItemKey: EncryptedByteArray,
-        encryptedMetadatas: List<EncryptedString>,
-        encryptedKeys: List<EncryptedString>
+        attachments: List<AttachmentToReencrypt>
     ): Pair<List<ReencryptedMetadata>, List<ReencryptedKey>> {
         val itemKey = encryptionContextProvider.withEncryptionContextSuspendable {
             EncryptionKey(decrypt(encryptedItemKey))
         }
         val decryptedKeys = encryptionContextProvider.withEncryptionContextSuspendable(itemKey) {
-            encryptedKeys.map { key ->
+            attachments.map { attachment ->
                 val decrypted = decrypt(
-                    EncryptedByteArray(Base64.decodeBase64(key)),
+                    EncryptedByteArray(Base64.decodeBase64(attachment.encryptedKey)),
                     EncryptionTag.FileKey
                 )
                 EncryptionKey(decrypted)
             }
         }
-        val decryptedMetadata = decryptedKeys.zip(encryptedMetadatas).map { (key, metadata) ->
+
+        val decryptedMetadata = decryptedKeys.zip(attachments).map { (key, attachment) ->
             encryptionContextProvider.withEncryptionContextSuspendable(key.clone()) {
-                decrypt(
-                    content = EncryptedByteArray(Base64.decodeBase64(metadata)),
-                    tag = EncryptionTag.FileData
-                )
+                val content = EncryptedByteArray(Base64.decodeBase64(attachment.encryptedMetadata))
+                val encryptionVersion = attachment.encryptionVersion
+                when (encryptionVersion) {
+                    1 -> decrypt(
+                        content = content,
+                        tag = EncryptionTag.FileData
+                    )
+                    2 -> decrypt(
+                        content = content,
+                        tag = EncryptionTag.FileMetadata
+                    )
+                    else -> throw IllegalStateException("Unknown encryptionVersion $encryptionVersion")
+                }
             }
         }
         return encryptionContextProvider.withEncryptionContextSuspendable {

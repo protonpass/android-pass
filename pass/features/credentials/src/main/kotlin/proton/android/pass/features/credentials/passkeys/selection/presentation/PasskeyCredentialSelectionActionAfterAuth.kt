@@ -16,9 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.credentials.shared.passkeys.domain
+package proton.android.pass.features.credentials.passkeys.selection.presentation
 
-internal enum class PasskeyRequestType {
-    SelectPasskey,
-    UsePasskey
+import androidx.compose.runtime.Immutable
+
+@Immutable
+internal enum class PasskeyCredentialSelectionActionAfterAuth {
+    EmitEvent,
+    SelectItem
 }

@@ -18,7 +18,7 @@
 
 package proton.android.pass.features.credentials.shared.passkeys.domain
 
-enum class PasskeyRequestType {
+internal enum class PasskeyRequestType {
     SelectPasskey,
     UsePasskey
 }

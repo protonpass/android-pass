@@ -58,9 +58,7 @@ internal class PasskeyCredentialSelectionActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val request = getPasskeySelectionRequest()
-        println("JIBIRI: request -> $request")
-        viewModel.onUpdateRequest(request)
+        viewModel.onUpdateRequest(getPasskeySelectionRequest())
 
         lifecycleScope.launch {
             viewModel.stateFlow.collectLatest { state ->

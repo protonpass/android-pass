@@ -32,6 +32,7 @@ import proton.android.pass.data.api.usecases.passkeys.GetPasskeysForDomain
 import proton.android.pass.data.api.usecases.passkeys.PasskeyItem
 import proton.android.pass.features.credentials.R
 import proton.android.pass.features.credentials.passkeys.selection.ui.PasskeyCredentialSelectionActivity
+import proton.android.pass.features.credentials.passkeys.usage.ui.PasskeyCredentialUsageActivity
 import proton.android.pass.features.credentials.shared.passkeys.domain.PasskeyCredential
 import proton.android.pass.features.credentials.shared.passkeys.events.PasskeyCredentialsTelemetryEvent
 import proton.android.pass.log.api.PassLogger
@@ -106,10 +107,10 @@ internal class PasskeyCredentialsSearcherImpl @Inject constructor(
             beginGetPublicKeyCredentialOption = option,
             pendingIntent = createPasskeyPendingIntent(
                 context = context,
-                passkeyItem = passkeyItem,
-                isBiometricAuthRequired = isBiometricAuthRequired,
                 credential = credential,
-                option = option
+                option = option,
+                passkeyItem = passkeyItem,
+                isBiometricAuthRequired = isBiometricAuthRequired
             )
         )
             .setDisplayName(passkeyItem.itemTitle)
@@ -119,20 +120,21 @@ internal class PasskeyCredentialsSearcherImpl @Inject constructor(
 
     private fun createPasskeyPendingIntent(
         context: Context,
-        passkeyItem: PasskeyItem,
-        isBiometricAuthRequired: Boolean,
         credential: PasskeyCredential,
-        option: BeginGetPublicKeyCredentialOption
+        option: BeginGetPublicKeyCredentialOption,
+        passkeyItem: PasskeyItem,
+        isBiometricAuthRequired: Boolean
     ) = if (isBiometricAuthRequired) {
         PasskeyCredentialSelectionActivity.createPasskeyCredentialIntent(
             context = context,
             passkeyItem = passkeyItem
         )
     } else {
-        PasskeyCredentialSelectionActivity.createPasskeyCredentialIntent(
+        PasskeyCredentialUsageActivity.createPasskeyCredentialIntent(
             context = context,
             origin = credential.domain,
-            option = option
+            option = option,
+            passkeyItem = passkeyItem
         )
     }.let { intent ->
         PendingIntent.getActivity(

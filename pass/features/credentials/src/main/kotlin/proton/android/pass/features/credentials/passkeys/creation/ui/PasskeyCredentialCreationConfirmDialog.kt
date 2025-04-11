@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.passkeys.create.ui.confirm
+package proton.android.pass.features.credentials.passkeys.creation.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,24 +24,23 @@ import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmWithLoadingDialog
 import proton.android.pass.composecomponents.impl.text.Text
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.features.passkeys.R
+import proton.android.pass.features.credentials.R
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
-fun ConfirmItemDialog(
+internal fun PasskeyCredentialCreationConfirmDialog(
     modifier: Modifier = Modifier,
-    item: ItemUiModel,
-    isLoading: IsLoadingState,
+    isLoading: Boolean,
+    itemUiModel: ItemUiModel,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit
 ) {
     ConfirmWithLoadingDialog(
         modifier = modifier,
         show = true,
-        isLoading = isLoading.value(),
+        isLoading = isLoading,
         isConfirmActionDestructive = false,
-        title = stringResource(R.string.passkey_confirm_item_title),
+        title = stringResource(R.string.passkey_credential_creation_confirmation_dialog_title),
         confirmText = stringResource(CompR.string.bottomsheet_confirm_button),
         cancelText = stringResource(CompR.string.bottomsheet_cancel_button),
         onDismiss = onDismiss,
@@ -50,8 +49,8 @@ fun ConfirmItemDialog(
         content = {
             Text.Body1Regular(
                 text = stringResource(
-                    id = R.string.passkey_confirm_item_body,
-                    item.contents.title
+                    id = R.string.passkey_credential_creation_confirmation_dialog_message,
+                    itemUiModel.contents.title
                 )
             )
         }

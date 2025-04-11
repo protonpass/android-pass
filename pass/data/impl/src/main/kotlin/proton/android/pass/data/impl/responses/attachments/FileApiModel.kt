@@ -35,7 +35,7 @@ data class FileApiModel(
     @SerialName("FileKey")
     val fileKey: String,
     @SerialName("EncryptionVersion")
-    val encryptionVersion: Int,
+    val encryptionVersion: Int?,
     @SerialName("ItemKeyRotation")
     val itemKeyRotation: String,
     @SerialName("Chunks")

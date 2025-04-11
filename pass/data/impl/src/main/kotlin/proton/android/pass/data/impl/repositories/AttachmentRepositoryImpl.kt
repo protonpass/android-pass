@@ -468,7 +468,7 @@ class AttachmentRepositoryImpl @Inject constructor(
             AttachmentToReencrypt(
                 encryptedMetadata = fileDetail.metadata,
                 encryptedKey = fileDetail.fileKey,
-                encryptionVersion = fileDetail.encryptionVersion
+                encryptionVersion = fileDetail.encryptionVersion ?: DEFAULT_ENCRYPTION_VERSION
 
             )
         }
@@ -592,7 +592,7 @@ fun FileApiModel.toEntity(
     revisionRemoved = this.revisionRemoved,
     reencryptedKey = reencryptedKey,
     reencryptedMetadata = reencryptedMetadata,
-    encryptionVersion = this.encryptionVersion
+    encryptionVersion = this.encryptionVersion ?: DEFAULT_ENCRYPTION_VERSION
 )
 
 fun ChunkApiModel.toChunkEntity(
@@ -642,3 +642,5 @@ fun ChunkEntity.toDomain(): Chunk = Chunk(
     size = this.size,
     index = this.index
 )
+
+private const val DEFAULT_ENCRYPTION_VERSION = 1

@@ -48,11 +48,11 @@ internal class PasskeyCredentialUsageViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager
 ) : ViewModel() {
 
-    private val requestFlow = MutableStateFlow<Option<PasskeyCredentialUsageRequest?>>(
+    private val requestOptionFlow = MutableStateFlow<Option<PasskeyCredentialUsageRequest>>(
         value = None
     )
 
-    internal val stateFlow: StateFlow<PasskeyCredentialUsageState> = requestFlow.mapLatest { requestOption ->
+    internal val stateFlow: StateFlow<PasskeyCredentialUsageState> = requestOptionFlow.mapLatest { requestOption ->
         val request = requestOption.value() ?: return@mapLatest PasskeyCredentialUsageState.NotReady
 
         val response = resolveChallenge(request).getOrElse { error ->
@@ -91,7 +91,7 @@ internal class PasskeyCredentialUsageViewModel @Inject constructor(
     }
 
     internal fun onUpdateRequest(newRequest: PasskeyCredentialUsageRequest?) {
-        requestFlow.update { newRequest.toOption() }
+        requestOptionFlow.update { newRequest.toOption() }
     }
 
     internal fun onStop() {

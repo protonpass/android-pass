@@ -25,7 +25,7 @@ import androidx.credentials.provider.CreateEntry
 import kotlinx.coroutines.flow.first
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
-import proton.android.pass.features.credentials.passkeys.ui.CreatePasskeyActivity
+import proton.android.pass.features.credentials.passkeys.creation.ui.PasskeyCredentialCreationActivity
 import proton.android.pass.features.credentials.shared.passwords.events.PasswordCredentialsTelemetryEvent
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
@@ -51,7 +51,7 @@ internal class PasswordCredentialsCreatorImpl @Inject constructor(
 
 
     private fun createPendingIntent(context: Context): PendingIntent =
-        Intent(context, CreatePasskeyActivity::class.java)
+        Intent(context, PasskeyCredentialCreationActivity::class.java)
             .apply { setPackage(context.packageName) }
             .let { intent ->
                 PendingIntent.getActivity(

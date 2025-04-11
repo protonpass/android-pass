@@ -41,7 +41,7 @@ import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.toOption
+import proton.android.pass.common.api.some
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
@@ -60,7 +60,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class PasskeyCredentialSelectionViewModel @Inject constructor(
-    preferenceRepository: UserPreferencesRepository,
+    userPreferenceRepository: UserPreferencesRepository,
     needsBiometricAuth: NeedsBiometricAuth,
     private val accountOrchestrators: AccountOrchestrators,
     private val accountManager: AccountManager,
@@ -71,9 +71,9 @@ internal class PasskeyCredentialSelectionViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager
 ) : ViewModel() {
 
-    private val closeScreenFlow = MutableStateFlow<Boolean>(false)
+    private val closeScreenFlow = MutableStateFlow<Boolean>(value = false)
 
-    private val requestFlow = MutableStateFlow<Option<PasskeyCredentialSelectionRequest?>>(
+    private val requestOptionFlow = MutableStateFlow<Option<PasskeyCredentialSelectionRequest?>>(
         value = None
     )
 
@@ -81,29 +81,34 @@ internal class PasskeyCredentialSelectionViewModel @Inject constructor(
         value = PasskeyCredentialSelectionStateEvent.Idle
     )
 
-    private val themePreferenceFlow: Flow<ThemePreference> = preferenceRepository
+    private val themePreferenceFlow: Flow<ThemePreference> = userPreferenceRepository
         .getThemePreference()
         .distinctUntilChanged()
 
     internal val stateFlow: StateFlow<PasskeyCredentialSelectionState> = combine(
-        requestFlow,
         closeScreenFlow,
+        requestOptionFlow,
         themePreferenceFlow,
         needsBiometricAuth(),
         eventFlow
-    ) { request, shouldCloseScreen, themePreference, isBiometricAuthRequired, event ->
-        when (request) {
+    ) { shouldCloseScreen, requestOption, themePreference, isBiometricAuthRequired, event ->
+        if (shouldCloseScreen) {
+            return@combine PasskeyCredentialSelectionState.Close
+        }
+
+        when (requestOption) {
             None -> PasskeyCredentialSelectionState.NotReady
-            is Some -> when {
-                shouldCloseScreen -> PasskeyCredentialSelectionState.Close
-                request.value == null -> PasskeyCredentialSelectionState.Close
-                else -> PasskeyCredentialSelectionState.Ready(
-                    themePreference = themePreference,
-                    isBiometricAuthRequired = isBiometricAuthRequired,
-                    request = request.value!!,
-                    event = event
-                )
-            }
+            is Some ->
+                requestOption.value
+                    ?.let { request ->
+                        PasskeyCredentialSelectionState.Ready(
+                            themePreference = themePreference,
+                            isBiometricAuthRequired = isBiometricAuthRequired,
+                            request = request,
+                            event = event
+                        )
+                    }
+                    ?: PasskeyCredentialSelectionState.Close
         }
     }.stateIn(
         scope = viewModelScope,
@@ -116,7 +121,7 @@ internal class PasskeyCredentialSelectionViewModel @Inject constructor(
     }
 
     internal fun onUpdateRequest(newRequest: PasskeyCredentialSelectionRequest?) {
-        requestFlow.update { newRequest.toOption() }
+        requestOptionFlow.update { newRequest.some() }
     }
 
     internal fun onUpgrade() {

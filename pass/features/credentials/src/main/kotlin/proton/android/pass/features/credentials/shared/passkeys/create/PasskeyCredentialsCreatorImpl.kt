@@ -20,38 +20,42 @@ package proton.android.pass.features.credentials.shared.passkeys.create
 
 import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.credentials.provider.BeginCreatePublicKeyCredentialRequest
 import androidx.credentials.provider.CreateEntry
 import kotlinx.coroutines.flow.first
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
-import proton.android.pass.features.credentials.passkeys.ui.CreatePasskeyActivity
+import proton.android.pass.features.credentials.passkeys.creation.ui.PasskeyCredentialCreationActivity
 import proton.android.pass.features.credentials.shared.passkeys.events.PasskeyCredentialsTelemetryEvent
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 internal class PasskeyCredentialsCreatorImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val telemetryManager: TelemetryManager
 ) : PasskeyCredentialsCreator {
 
-    override suspend fun create(context: Context): List<CreateEntry> = accountManager.getPrimaryAccount()
-        .first()
-        ?.let { account ->
-            CreateEntry(
-                accountName = account.username.orEmpty(),
-                pendingIntent = createPendingIntent(context)
-            )
-        }
-        ?.let(::listOf)
-        ?.also {
-            telemetryManager.sendEvent(PasskeyCredentialsTelemetryEvent.CreatePromptDisplay)
-        }
-        ?: emptyList()
+    override suspend fun create(context: Context, request: BeginCreatePublicKeyCredentialRequest): List<CreateEntry> =
+        accountManager.getPrimaryAccount()
+            .first()
+            ?.let { account ->
+                CreateEntry(
+                    accountName = account.username.orEmpty(),
+                    pendingIntent = createPendingIntent(context, request)
+                )
+            }
+            ?.let(::listOf)
+            ?.also {
+                telemetryManager.sendEvent(PasskeyCredentialsTelemetryEvent.CreatePromptDisplay)
+            }
+            ?: emptyList()
 
 
-    private fun createPendingIntent(context: Context): PendingIntent =
-        Intent(context, CreatePasskeyActivity::class.java)
+    private fun createPendingIntent(context: Context, request: BeginCreatePublicKeyCredentialRequest): PendingIntent =
+        PasskeyCredentialCreationActivity.createPasskeyCredentialIntent(context, request)
             .apply { setPackage(context.packageName) }
             .let { intent ->
                 PendingIntent.getActivity(

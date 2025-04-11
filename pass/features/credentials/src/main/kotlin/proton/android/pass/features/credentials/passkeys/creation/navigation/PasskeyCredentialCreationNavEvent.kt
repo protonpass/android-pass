@@ -16,14 +16,20 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.credentials.shared.passkeys.create
+package proton.android.pass.features.credentials.passkeys.creation.navigation
 
-import android.content.Context
-import androidx.credentials.provider.BeginCreatePublicKeyCredentialRequest
-import androidx.credentials.provider.CreateEntry
+import me.proton.core.domain.entity.UserId
 
-internal interface PasskeyCredentialsCreator {
+internal sealed interface PasskeyCredentialCreationNavEvent {
 
-    suspend fun create(context: Context, request: BeginCreatePublicKeyCredentialRequest): List<CreateEntry>
+    data object Cancel : PasskeyCredentialCreationNavEvent
+
+    @JvmInline
+    value class ForceSignOut(internal val userId: UserId) : PasskeyCredentialCreationNavEvent
+
+    @JvmInline
+    value class SendResponse(internal val response: String) : PasskeyCredentialCreationNavEvent
+
+    data object Upgrade : PasskeyCredentialCreationNavEvent
 
 }

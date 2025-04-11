@@ -29,7 +29,9 @@ import androidx.credentials.PublicKeyCredential
 import androidx.credentials.provider.BeginGetPublicKeyCredentialOption
 import androidx.credentials.provider.PendingIntentHandler
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -53,15 +55,17 @@ internal class PasskeyCredentialUsageActivity : FragmentActivity() {
         viewModel.onUpdateRequest(getPasskeyUsageRequest())
 
         lifecycleScope.launch {
-            viewModel.stateFlow.collectLatest { state ->
-                when (state) {
-                    PasskeyCredentialUsageState.NotReady -> Unit
-                    PasskeyCredentialUsageState.Cancel -> {
-                        onCancelAuthRequest()
-                    }
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.stateFlow.collectLatest { state ->
+                    when (state) {
+                        PasskeyCredentialUsageState.NotReady -> Unit
+                        PasskeyCredentialUsageState.Cancel -> {
+                            onCancelAuthRequest()
+                        }
 
-                    is PasskeyCredentialUsageState.Ready -> {
-                        onProceedAuthRequest(authResponseJson = state.authResponseJson)
+                        is PasskeyCredentialUsageState.Ready -> {
+                            onProceedAuthRequest(authResponseJson = state.authResponseJson)
+                        }
                     }
                 }
             }

@@ -91,10 +91,14 @@ dependencies {
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.telemetry.api)
 
+    implementation(projects.pass.features.accountSelector)
     implementation(projects.pass.features.auth)
+    implementation(projects.pass.features.itemCreate)
     implementation(projects.pass.features.passkeys)
+    implementation(projects.pass.features.password)
     implementation(projects.pass.features.searchOptions)
     implementation(projects.pass.features.selectItem)
+    implementation(projects.pass.features.vault)
 
     testImplementation(libs.truth)
     testImplementation(libs.kotlinTest)

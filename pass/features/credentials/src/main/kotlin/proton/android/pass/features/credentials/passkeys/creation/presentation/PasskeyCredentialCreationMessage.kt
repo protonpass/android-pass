@@ -16,14 +16,22 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.credentials.shared.passkeys.create
+package proton.android.pass.features.credentials.passkeys.creation.presentation
 
-import android.content.Context
-import androidx.credentials.provider.BeginCreatePublicKeyCredentialRequest
-import androidx.credentials.provider.CreateEntry
+import androidx.annotation.StringRes
+import proton.android.pass.features.credentials.R
+import proton.android.pass.notifications.api.SnackbarMessage
+import proton.android.pass.notifications.api.SnackbarType
 
-internal interface PasskeyCredentialsCreator {
+internal enum class PasskeyCredentialCreationMessage(
+    @StringRes override val id: Int,
+    override val type: SnackbarType,
+    override val isClipboard: Boolean = false
+) : SnackbarMessage.StructuredMessage {
 
-    suspend fun create(context: Context, request: BeginCreatePublicKeyCredentialRequest): List<CreateEntry>
+    PasskeyGenerationError(
+        id = R.string.passkey_credential_creation_snackbar_passkey_generation_error,
+        type = SnackbarType.ERROR
+    )
 
 }

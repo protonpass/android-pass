@@ -16,20 +16,33 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.credentials.passkeys.ui
+package proton.android.pass.features.credentials.passwords.creation.ui
 
 import android.os.Build
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
 import dagger.hilt.android.AndroidEntryPoint
+import proton.android.pass.features.credentials.passwords.creation.presentation.PasswordCredentialCreationViewModel
 
-@AndroidEntryPoint
-@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
-internal class CreatePasskeyActivity : FragmentActivity() {
+@[AndroidEntryPoint RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)]
+internal class PasswordCredentialCreationActivity : FragmentActivity() {
+
+    private val viewModel: PasswordCredentialCreationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+//        val request = getPasswordCredentialCreationRequest()
+//        println("JIBIRI: Create password credential request: $request")
+//        viewModel.onUpdateRequest(request)
+
+        viewModel.onRegister(this)
+
+
     }
+
+//    private fun getPasswordCredentialCreationRequest(): PasswordCredentialCreationRequest? = null
 
 }

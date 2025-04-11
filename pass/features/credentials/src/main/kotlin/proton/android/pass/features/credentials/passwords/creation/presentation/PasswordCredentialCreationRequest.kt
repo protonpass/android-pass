@@ -16,14 +16,8 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.credentials.shared.passkeys.create
+package proton.android.pass.features.credentials.passwords.creation.presentation
 
-import android.content.Context
-import androidx.credentials.provider.BeginCreatePublicKeyCredentialRequest
-import androidx.credentials.provider.CreateEntry
-
-internal interface PasskeyCredentialsCreator {
-
-    suspend fun create(context: Context, request: BeginCreatePublicKeyCredentialRequest): List<CreateEntry>
-
-}
+internal data class PasswordCredentialCreationRequest(
+    val foo: String
+)

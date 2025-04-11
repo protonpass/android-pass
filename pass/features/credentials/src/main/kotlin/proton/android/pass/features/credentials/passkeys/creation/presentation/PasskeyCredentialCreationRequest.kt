@@ -16,14 +16,22 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.credentials.shared.passkeys.create
+package proton.android.pass.features.credentials.passkeys.creation.presentation
 
-import android.content.Context
-import androidx.credentials.provider.BeginCreatePublicKeyCredentialRequest
-import androidx.credentials.provider.CreateEntry
+import proton.android.pass.data.api.url.UrlSanitizer
+import proton.android.pass.passkeys.api.CreatePasskeyRequestData
 
-internal interface PasskeyCredentialsCreator {
+internal data class PasskeyCredentialCreationRequest(
+    private val data: CreatePasskeyRequestData,
+    internal val requestJson: String
+) {
 
-    suspend fun create(context: Context, request: BeginCreatePublicKeyCredentialRequest): List<CreateEntry>
+    internal val requestOrigin: String = data.rpId.orEmpty()
+
+    internal val rpName: String = data.rpName
+
+    internal val username: String = data.userName
+
+    internal val domain: String = UrlSanitizer.getDomain(requestOrigin).getOrElse { "" }
 
 }

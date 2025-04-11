@@ -43,7 +43,6 @@ import proton.android.pass.features.credentials.passkeys.creation.navigation.Pas
 import proton.android.pass.features.credentials.passkeys.creation.presentation.PasskeyCredentialCreationEvent
 import proton.android.pass.features.credentials.passkeys.creation.presentation.PasskeyCredentialCreationState
 import proton.android.pass.features.credentials.passkeys.creation.presentation.PasskeyCredentialCreationStateEvent
-import proton.android.pass.features.passkeys.create.ui.confirm.ConfirmItemDialog
 
 @Composable
 internal fun PasskeyCredentialCreationScreen(
@@ -105,9 +104,9 @@ internal fun PasskeyCredentialCreationScreen(
         )
 
         askForConfirmationEvent?.let { event ->
-            ConfirmItemDialog(
-                item = event.itemUiModel,
-                isLoading = event.isLoadingState,
+            PasskeyCredentialCreationConfirmDialog(
+                isLoading = event.isLoading,
+                itemUiModel = event.itemUiModel,
                 onConfirm = {
                     PasskeyCredentialCreationEvent.OnItemSelectionConfirmed(
                         itemUiModel = event.itemUiModel

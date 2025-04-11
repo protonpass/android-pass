@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmWithLoadingDialog
+import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.features.passkeys.R
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -41,14 +42,18 @@ fun ConfirmItemDialog(
         isLoading = isLoading.value(),
         isConfirmActionDestructive = false,
         title = stringResource(R.string.passkey_confirm_item_title),
-        message = stringResource(
-            id = R.string.passkey_confirm_item_body,
-            item.contents.title
-        ),
         confirmText = stringResource(CompR.string.bottomsheet_confirm_button),
         cancelText = stringResource(CompR.string.bottomsheet_cancel_button),
         onDismiss = onDismiss,
         onConfirm = onConfirm,
-        onCancel = onDismiss
+        onCancel = onDismiss,
+        content = {
+            Text.Body1Regular(
+                text = stringResource(
+                    id = R.string.passkey_confirm_item_body,
+                    item.contents.title
+                )
+            )
+        }
     )
 }

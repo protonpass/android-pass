@@ -27,8 +27,15 @@ internal sealed interface PasskeyCredentialCreationStateEvent {
 
     data class OnAskForConfirmation(
         internal val itemUiModel: ItemUiModel,
-        internal val isLoadingState: IsLoadingState
-    ) : PasskeyCredentialCreationStateEvent
+        private val isLoadingState: IsLoadingState
+    ) : PasskeyCredentialCreationStateEvent {
+
+        internal val isLoading: Boolean = when (isLoadingState) {
+            IsLoadingState.Loading -> true
+            IsLoadingState.NotLoading -> false
+        }
+
+    }
 
     @JvmInline
     value class OnSendResponse(internal val response: String) : PasskeyCredentialCreationStateEvent

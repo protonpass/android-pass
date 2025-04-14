@@ -206,8 +206,8 @@ private fun createIdentity(onClick: () -> Unit) = createItem(
 
 @Composable
 private fun createCustom(onClick: () -> Unit) = createItem(
-    title = { BottomSheetItemTitle(text = stringResource(id = R.string.action_custom)) },
-    subtitleResId = R.string.item_type_custom_description,
+    title = { BottomSheetItemTitle(text = stringResource(id = R.string.action_more)) },
+    subtitleResId = R.string.item_type_more_description,
     leftIcon = { CustomItemIcon() },
     onClick = onClick
 )

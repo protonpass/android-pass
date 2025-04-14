@@ -34,6 +34,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.container.BoxedIcon
+import me.proton.core.presentation.R
 
 private const val ALPHA = 0.3f
 
@@ -62,7 +63,7 @@ fun CustomItemIcon(
     ) {
         Icon(
             modifier = Modifier.padding(Spacing.extraSmall),
-            painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_wrench),
+            painter = painterResource(R.drawable.ic_proton_pen_sparks),
             contentDescription = null,
             tint = foregroundColor
         )
@@ -71,7 +72,7 @@ fun CustomItemIcon(
 
 @Preview
 @Composable
-fun CustomIconPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
+internal fun CustomIconPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     PassTheme(isDark = input.first) {
         Surface {
             CustomItemIcon(

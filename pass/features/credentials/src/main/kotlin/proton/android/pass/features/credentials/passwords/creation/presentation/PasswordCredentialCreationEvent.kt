@@ -16,13 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.credentials.shared.passkeys.create
+package proton.android.pass.features.credentials.passwords.creation.presentation
 
-import android.content.Context
-import androidx.credentials.provider.CreateEntry
+import proton.android.pass.commonuimodels.api.ItemUiModel
 
-internal interface PasskeyCredentialsCreator {
+internal sealed interface PasswordCredentialCreationEvent {
 
-    suspend fun create(context: Context): List<CreateEntry>
+    @JvmInline
+    value class OnEventConsumed(
+        internal val event: PasswordCredentialCreationStateEvent
+    ) : PasswordCredentialCreationEvent
+
+    @JvmInline
+    value class OnItemSelected(internal val itemUiModel: ItemUiModel) : PasswordCredentialCreationEvent
+
+    @JvmInline
+    value class OnItemSelectionConfirmed(
+        internal val itemUiModel: ItemUiModel
+    ) : PasswordCredentialCreationEvent
 
 }

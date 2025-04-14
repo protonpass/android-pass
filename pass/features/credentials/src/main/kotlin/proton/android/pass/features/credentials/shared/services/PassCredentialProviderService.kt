@@ -92,7 +92,7 @@ class PassCredentialProviderService : CredentialProviderService() {
                 }
 
                 is BeginCreatePublicKeyCredentialRequest -> {
-                    passkeyCredentialsCreator.create(applicationContext, request)
+                    passkeyCredentialsCreator.create(applicationContext)
                 }
 
                 else -> {

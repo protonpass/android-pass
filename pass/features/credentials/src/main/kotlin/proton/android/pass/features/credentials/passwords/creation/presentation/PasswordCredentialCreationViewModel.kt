@@ -24,8 +24,12 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountState
@@ -37,6 +41,7 @@ import proton.android.pass.account.api.Orchestrator
 import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.features.credentials.R
 import proton.android.pass.features.credentials.shared.passwords.events.PasswordCredentialsTelemetryEvent
@@ -60,7 +65,7 @@ internal class PasswordCredentialCreationViewModel @Inject constructor(
 
     private val closeScreenFlow = MutableStateFlow<Boolean>(value = false)
 
-    private val requestFlow = MutableStateFlow<Option<PasswordCredentialCreationRequest?>>(
+    private val requestOptionFlow = MutableStateFlow<Option<PasswordCredentialCreationRequest?>>(
         value = None
     )
 
@@ -68,12 +73,51 @@ internal class PasswordCredentialCreationViewModel @Inject constructor(
         .getThemePreference()
         .distinctUntilChanged()
 
+    private val eventFlow = MutableStateFlow<PasswordCredentialCreationStateEvent>(
+        value = PasswordCredentialCreationStateEvent.Idle
+    )
+
+    internal val stateFlow: StateFlow<PasswordCredentialCreationState> = combine(
+        closeScreenFlow,
+        requestOptionFlow,
+        themePreferenceFlow,
+        needsBiometricAuth(),
+        eventFlow
+    ) { shouldCloseScreen, requestOption, themePreference, isBiometricAuthRequired, event ->
+        if (shouldCloseScreen) {
+            return@combine PasswordCredentialCreationState.Close
+        }
+
+        when (requestOption) {
+            None -> PasswordCredentialCreationState.NotReady
+            is Some ->
+                requestOption.value
+                    ?.let { request ->
+                        PasswordCredentialCreationState.Ready(
+                            request = request,
+                            themePreference = themePreference,
+                            isBiometricAuthRequired = isBiometricAuthRequired,
+                            event = event
+                        )
+                    }
+                    ?: PasswordCredentialCreationState.Close
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = PasswordCredentialCreationState.NotReady
+    )
+
+    internal fun onConsumeEvent(event: PasswordCredentialCreationStateEvent) {
+        eventFlow.compareAndSet(event, PasswordCredentialCreationStateEvent.Idle)
+    }
+
     internal fun onRegister(context: ComponentActivity) {
         accountOrchestrators.register(context, listOf(Orchestrator.PlansOrchestrator))
     }
 
     internal fun onUpdateRequest(newRequest: PasswordCredentialCreationRequest?) {
-        requestFlow.update { newRequest.toOption() }
+        requestOptionFlow.update { newRequest.toOption() }
     }
 
     internal fun onResponseSent() {
@@ -109,6 +153,5 @@ internal class PasswordCredentialCreationViewModel @Inject constructor(
         private const val TAG = "PasswordCredentialCreationViewModel"
 
     }
-
 
 }

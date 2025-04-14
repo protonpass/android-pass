@@ -18,7 +18,6 @@
 
 package proton.android.pass.features.credentials.passkeys.creation.ui
 
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -26,8 +25,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.credentials.CreatePublicKeyCredentialRequest
 import androidx.credentials.CreatePublicKeyCredentialResponse
-import androidx.credentials.provider.BeginCreatePublicKeyCredentialRequest
 import androidx.credentials.provider.PendingIntentHandler
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
@@ -59,9 +58,7 @@ internal class PasskeyCredentialCreationActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val request = getPasskeyCredentialCreationRequest()
-        println("JIBIRI: Create passkey credential request: $request")
-        viewModel.onUpdateRequest(request)
+        viewModel.onUpdateRequest(getPasskeyCredentialCreationRequest())
 
         viewModel.onRegister(this)
 
@@ -131,28 +128,29 @@ internal class PasskeyCredentialCreationActivity : FragmentActivity() {
         }
     }
 
-    private fun getPasskeyCredentialCreationRequest(): PasskeyCredentialCreationRequest? {
-        val requestJson = intent.getStringExtra(EXTRAS_REQUEST_JSON) ?: run {
-            PassLogger.w(TAG, "Passkey creation request does not contain requestJson")
-            return null
-        }
+    private fun getPasskeyCredentialCreationRequest(): PasskeyCredentialCreationRequest? =
+        PendingIntentHandler.retrieveProviderCreateCredentialRequest(intent)
+            ?.let { providerCreateCredentialRequest ->
+                providerCreateCredentialRequest.callingRequest as? CreatePublicKeyCredentialRequest
+            }
+            ?.requestJson
+            ?.let { requestJson ->
+                runCatching { parseCreatePasskeyRequest(request = requestJson) }
+                    .fold(
+                        onSuccess = { createPasskeyRequestData ->
+                            PasskeyCredentialCreationRequest(
+                                data = createPasskeyRequestData,
+                                requestJson = requestJson
+                            )
+                        },
+                        onFailure = { error ->
+                            PassLogger.w(TAG, "Error parsing Passkey credential creation request")
+                            PassLogger.w(TAG, error)
 
-        return runCatching { parseCreatePasskeyRequest(request = requestJson) }
-            .fold(
-                onSuccess = { createPasskeyRequestData ->
-                    PasskeyCredentialCreationRequest(
-                        data = createPasskeyRequestData,
-                        requestJson = requestJson
+                            null
+                        }
                     )
-                },
-                onFailure = { error ->
-                    PassLogger.w(TAG, "Error parsing Passkey credential creation request")
-                    PassLogger.w(TAG, error)
-
-                    null
-                }
-            )
-    }
+            }
 
     private fun onCancelCreationRequest() {
         setResult(RESULT_CANCELED)
@@ -183,19 +181,6 @@ internal class PasskeyCredentialCreationActivity : FragmentActivity() {
 
         private const val TAG = "PasskeyCredentialCreationActivity"
 
-        private const val EXTRAS_REQUEST_JSON = "REQUEST_JSON"
-
-        internal fun createPasskeyCredentialIntent(
-            context: Context,
-            request: BeginCreatePublicKeyCredentialRequest
-        ): Intent = Intent(
-            context,
-            PasskeyCredentialCreationActivity::class.java
-        ).apply {
-            setPackage(context.packageName)
-
-            putExtra(EXTRAS_REQUEST_JSON, request.requestJson)
-        }
     }
 
 }

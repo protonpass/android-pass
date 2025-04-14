@@ -18,12 +18,30 @@
 
 package proton.android.pass.features.credentials.passwords.creation.ui
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.credentials.CreatePasswordRequest
+import androidx.credentials.CreatePasswordResponse
+import androidx.credentials.provider.PendingIntentHandler
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.composecomponents.impl.theme.SystemUIDisposableEffect
+import proton.android.pass.composecomponents.impl.theme.isDark
+import proton.android.pass.features.credentials.passwords.creation.navigation.PasswordCredentialCreationNavEvent
+import proton.android.pass.features.credentials.passwords.creation.presentation.PasswordCredentialCreationEvent
+import proton.android.pass.features.credentials.passwords.creation.presentation.PasswordCredentialCreationRequest
+import proton.android.pass.features.credentials.passwords.creation.presentation.PasswordCredentialCreationState
 import proton.android.pass.features.credentials.passwords.creation.presentation.PasswordCredentialCreationViewModel
 
 @[AndroidEntryPoint RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)]
@@ -34,15 +52,115 @@ internal class PasswordCredentialCreationActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        val request = getPasswordCredentialCreationRequest()
-//        println("JIBIRI: Create password credential request: $request")
-//        viewModel.onUpdateRequest(request)
+        viewModel.onUpdateRequest(getPasswordCredentialCreationRequest())
 
         viewModel.onRegister(this)
 
-
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.stateFlow.collectLatest { state ->
+                    when (state) {
+                        PasswordCredentialCreationState.NotReady -> Unit
+                        PasswordCredentialCreationState.Close -> onCancelCreationRequest()
+                        is PasswordCredentialCreationState.Ready -> setContent(state)
+                    }
+                }
+            }
+        }
     }
 
-//    private fun getPasswordCredentialCreationRequest(): PasswordCredentialCreationRequest? = null
+    private fun setContent(state: PasswordCredentialCreationState.Ready) {
+        enableEdgeToEdge()
+
+        setContent {
+            val isDark = isDark(state.themePreference)
+
+            SystemUIDisposableEffect(isDark)
+
+            PassTheme(isDark = isDark) {
+                PasswordCredentialCreationScreen(
+                    state = state,
+                    onNavigate = { destination ->
+                        when (destination) {
+                            PasswordCredentialCreationNavEvent.Cancel -> {
+                                onCancelCreationRequest()
+                            }
+
+                            is PasswordCredentialCreationNavEvent.ForceSignOut -> {
+                                viewModel.onSignOut(userId = destination.userId)
+                            }
+
+                            PasswordCredentialCreationNavEvent.SendResponse -> {
+                                onProceedCreationRequest()
+                            }
+
+                            PasswordCredentialCreationNavEvent.Upgrade -> {
+                                viewModel.onUpgrade()
+                            }
+                        }
+                    },
+                    onEvent = { event ->
+                        when (event) {
+                            is PasswordCredentialCreationEvent.OnEventConsumed -> {
+                                viewModel.onConsumeEvent(event = event.event)
+                            }
+
+                            is PasswordCredentialCreationEvent.OnItemSelected -> {
+                                println("JIBIRI: OnItemSelected")
+                            }
+
+                            is PasswordCredentialCreationEvent.OnItemSelectionConfirmed -> {
+                                println("JIBIRI: OnItemSelectionConfirmed")
+                            }
+                        }
+                    }
+                )
+            }
+        }
+    }
+
+    private fun getPasswordCredentialCreationRequest(): PasswordCredentialCreationRequest? =
+        PendingIntentHandler.retrieveProviderCreateCredentialRequest(intent)
+            ?.let { providerCreateCredentialRequest ->
+                providerCreateCredentialRequest.callingRequest as? CreatePasswordRequest
+            }
+            ?.let { createPasswordRequest ->
+                PasswordCredentialCreationRequest(
+                    id = createPasswordRequest.id,
+                    password = createPasswordRequest.password,
+                    domain = createPasswordRequest.origin.orEmpty()
+                )
+            }
+
+    private fun onCancelCreationRequest() {
+        setResult(RESULT_CANCELED)
+
+        finish()
+    }
+
+    private fun onProceedCreationRequest() {
+        CreatePasswordResponse()
+            .also {
+                viewModel.onResponseSent()
+            }
+            .also { createPasswordResponse ->
+                val responseIntent = Intent()
+
+                PendingIntentHandler.setCreateCredentialResponse(
+                    intent = responseIntent,
+                    response = createPasswordResponse
+                )
+
+                setResult(RESULT_OK, responseIntent)
+
+                finish()
+            }
+    }
+
+    private companion object {
+
+        private const val TAG = "PasswordCredentialCreationActivity"
+
+    }
 
 }

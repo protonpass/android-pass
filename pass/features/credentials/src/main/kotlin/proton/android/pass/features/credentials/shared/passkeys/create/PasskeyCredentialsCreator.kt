@@ -19,11 +19,10 @@
 package proton.android.pass.features.credentials.shared.passkeys.create
 
 import android.content.Context
-import androidx.credentials.provider.BeginCreatePublicKeyCredentialRequest
 import androidx.credentials.provider.CreateEntry
 
 internal interface PasskeyCredentialsCreator {
 
-    suspend fun create(context: Context, request: BeginCreatePublicKeyCredentialRequest): List<CreateEntry>
+    suspend fun create(context: Context): List<CreateEntry>
 
 }

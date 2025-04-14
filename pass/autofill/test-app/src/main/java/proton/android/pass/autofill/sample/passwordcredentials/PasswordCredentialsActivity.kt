@@ -62,7 +62,7 @@ internal class PasswordCredentialsActivity : AppCompatActivity() {
                 Log.w(TAG, "Error creating password credential")
                 Log.w(TAG, error)
             }.onSuccess { createCredentialResponse ->
-                Log.i(TAG, "Credential created: $createCredentialResponse")
+                Log.i(TAG, "Password credential created: $createCredentialResponse")
             }
         }
     }

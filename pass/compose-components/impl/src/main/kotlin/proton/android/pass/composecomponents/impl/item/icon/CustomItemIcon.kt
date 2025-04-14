@@ -63,7 +63,7 @@ fun CustomItemIcon(
     ) {
         Icon(
             modifier = Modifier.padding(Spacing.extraSmall),
-            painter = painterResource(R.drawable.ic_proton_pen_sparks),
+            painter = painterResource(R.drawable.ic_proton_wrench),
             contentDescription = null,
             tint = foregroundColor
         )

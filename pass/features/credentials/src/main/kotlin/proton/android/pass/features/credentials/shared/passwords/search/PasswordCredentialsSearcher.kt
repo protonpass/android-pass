@@ -25,6 +25,10 @@ import androidx.credentials.provider.PasswordCredentialEntry
 
 internal interface PasswordCredentialsSearcher {
 
-    suspend fun search(context: Context, option: BeginGetPasswordOption): Pair<List<PasswordCredentialEntry>, Action>?
+    suspend fun search(
+        context: Context,
+        packageName: String?,
+        option: BeginGetPasswordOption
+    ): Pair<List<PasswordCredentialEntry>, Action>?
 
 }

@@ -122,14 +122,15 @@ internal class PasswordCredentialCreationActivity : FragmentActivity() {
     private fun getPasswordCredentialCreationRequest(): PasswordCredentialCreationRequest? =
         PendingIntentHandler.retrieveProviderCreateCredentialRequest(intent)
             ?.let { providerCreateCredentialRequest ->
-                providerCreateCredentialRequest.callingRequest as? CreatePasswordRequest
-            }
-            ?.let { createPasswordRequest ->
-                PasswordCredentialCreationRequest(
-                    id = createPasswordRequest.id,
-                    password = createPasswordRequest.password,
-                    domain = createPasswordRequest.origin.orEmpty()
-                )
+                (providerCreateCredentialRequest.callingRequest as? CreatePasswordRequest)
+                    ?.let { createPasswordRequest ->
+                        PasswordCredentialCreationRequest(
+                            id = createPasswordRequest.id,
+                            password = createPasswordRequest.password,
+                            domain = createPasswordRequest.origin.orEmpty(),
+                            packageName = providerCreateCredentialRequest.callingAppInfo.packageName
+                        )
+                    }
             }
 
     private fun onCancelCreationRequest() {

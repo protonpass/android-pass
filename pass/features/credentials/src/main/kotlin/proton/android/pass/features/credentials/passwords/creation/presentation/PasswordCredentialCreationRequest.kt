@@ -21,5 +21,6 @@ package proton.android.pass.features.credentials.passwords.creation.presentation
 internal data class PasswordCredentialCreationRequest(
     internal val id: String,
     internal val password: String,
-    internal val domain: String
+    internal val domain: String,
+    internal val packageName: String
 )

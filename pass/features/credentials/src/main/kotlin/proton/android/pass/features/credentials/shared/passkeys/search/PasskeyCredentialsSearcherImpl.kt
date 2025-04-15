@@ -141,7 +141,7 @@ internal class PasskeyCredentialsSearcherImpl @Inject constructor(
             context,
             requestCode,
             intent,
-            PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            PENDING_INTENT_FLAGS
         )
     }
 
@@ -159,7 +159,7 @@ internal class PasskeyCredentialsSearcherImpl @Inject constructor(
                 context,
                 requestCode,
                 intent,
-                PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+                PENDING_INTENT_FLAGS
             )
         }
         .let { pendingIntent ->
@@ -177,6 +177,8 @@ internal class PasskeyCredentialsSearcherImpl @Inject constructor(
         private const val REQUEST_CODE_RANGE_START = 1
 
         private const val REQUEST_CODE_RANGE_END = 9999
+
+        private const val PENDING_INTENT_FLAGS = PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
 
     }
 

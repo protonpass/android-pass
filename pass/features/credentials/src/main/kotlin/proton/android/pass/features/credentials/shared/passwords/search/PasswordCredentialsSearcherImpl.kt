@@ -18,17 +18,144 @@
 
 package proton.android.pass.features.credentials.shared.passwords.search
 
+import android.app.PendingIntent
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.credentials.provider.Action
 import androidx.credentials.provider.BeginGetPasswordOption
 import androidx.credentials.provider.PasswordCredentialEntry
+import kotlinx.coroutines.flow.first
+import proton.android.pass.biometry.NeedsBiometricAuth
+import proton.android.pass.data.api.usecases.credentials.passwords.GetPasswordCredentialItems
+import proton.android.pass.domain.credentials.PasswordCredentialItem
+import proton.android.pass.features.credentials.R
+import proton.android.pass.features.credentials.passwords.usage.ui.PasswordCredentialUsageActivity
+import proton.android.pass.features.credentials.shared.passwords.events.PasswordCredentialsTelemetryEvent
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
-internal class PasswordCredentialsSearcherImpl @Inject constructor() : PasswordCredentialsSearcher {
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+internal class PasswordCredentialsSearcherImpl @Inject constructor(
+    private val getPasswordCredentialItems: GetPasswordCredentialItems,
+    private val needsBiometricAuth: NeedsBiometricAuth,
+    private val telemetryManager: TelemetryManager
+) : PasswordCredentialsSearcher {
+
+    private val requestCodes = mutableSetOf<Int>()
+
+    private val requestCode: Int
+        get() {
+            var newRequestCode: Int
+            do {
+                newRequestCode = (REQUEST_CODE_RANGE_START..REQUEST_CODE_RANGE_END).random()
+            } while (newRequestCode in requestCodes)
+            requestCodes.add(newRequestCode)
+            return newRequestCode
+        }
 
     override suspend fun search(
         context: Context,
+        packageName: String?,
         option: BeginGetPasswordOption
-    ): Pair<List<PasswordCredentialEntry>, Action>? = null
+    ): Pair<List<PasswordCredentialEntry>, Action>? {
+        val passwordCredentialEntries = createPasswordCredentialEntries(
+            context = context,
+            packageName = packageName,
+            option = option,
+            isBiometricAuthRequired = needsBiometricAuth().first()
+        )
+
+        val passwordCredentialAction = createPasswordCredentialAction(
+            context = context,
+            passwordCredentialItem = PasswordCredentialItem(
+                username = "Temp Username",
+                displayName = "Temp Display Name",
+                encryptedPassword = "Temp Encrypted Password"
+            )
+        )
+
+        return Pair(passwordCredentialEntries, passwordCredentialAction)
+            .also { telemetryManager.sendEvent(PasswordCredentialsTelemetryEvent.DisplaySuggestions) }
+    }
+
+    private suspend fun createPasswordCredentialEntries(
+        context: Context,
+        packageName: String?,
+        option: BeginGetPasswordOption,
+        isBiometricAuthRequired: Boolean
+    ) = getPasswordCredentialItems(packageName.orEmpty())
+        .map { passwordCredentialItem ->
+            PasswordCredentialEntry.Builder(
+                context = context,
+                username = passwordCredentialItem.username,
+                beginGetPasswordOption = option,
+                pendingIntent = createPasswordCredentialPendingIntent(
+                    context = context,
+                    passwordCredentialItem = passwordCredentialItem,
+                    isBiometricAuthRequired = isBiometricAuthRequired
+                )
+            )
+                .setDisplayName(passwordCredentialItem.displayName)
+                .setAutoSelectAllowed(false)
+                .build()
+        }
+
+    private fun createPasswordCredentialPendingIntent(
+        context: Context,
+        passwordCredentialItem: PasswordCredentialItem,
+        isBiometricAuthRequired: Boolean
+    ) = if (isBiometricAuthRequired) {
+        PasswordCredentialUsageActivity.createPasswordCredentialIntent(
+            context = context,
+            passwordCredentialItem = passwordCredentialItem
+        )
+    } else {
+        PasswordCredentialUsageActivity.createPasswordCredentialIntent(
+            context = context,
+            passwordCredentialItem = passwordCredentialItem
+        )
+    }.let { intent ->
+        PendingIntent.getActivity(
+            context,
+            requestCode,
+            intent,
+            PENDING_INTENT_FLAGS
+        )
+    }
+
+    private fun createPasswordCredentialAction(context: Context, passwordCredentialItem: PasswordCredentialItem) =
+        PasswordCredentialUsageActivity.createPasswordCredentialIntent(
+            context = context,
+            passwordCredentialItem = passwordCredentialItem
+        )
+            .let { intent ->
+                PendingIntent.getActivity(
+                    context,
+                    requestCode,
+                    intent,
+                    PENDING_INTENT_FLAGS
+                )
+            }
+            .let { pendingIntent ->
+                Action(
+                    title = context.getString(R.string.password_credential_selection_action_title),
+                    subtitle = context.getString(R.string.password_credential_selection_action_subtitle),
+                    pendingIntent = pendingIntent
+                )
+            }
+
+
+    private companion object {
+
+        private const val TAG = "PassPasskeyCredentialsSearcherImpl"
+
+        private const val REQUEST_CODE_RANGE_START = 1
+
+        private const val REQUEST_CODE_RANGE_END = 9999
+
+        private const val PENDING_INTENT_FLAGS = PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+
+    }
 
 }

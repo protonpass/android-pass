@@ -16,11 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.credentials.passwords.creation.presentation
+package proton.android.pass.domain.credentials
 
-internal data class PasswordCredentialCreationRequest(
-    internal val id: String,
-    internal val password: String,
-    internal val domain: String,
-    internal val packageName: String
+import me.proton.core.crypto.common.keystore.EncryptedString
+
+data class PasswordCredentialItem(
+    val displayName: String,
+    val username: String,
+    val encryptedPassword: EncryptedString
 )

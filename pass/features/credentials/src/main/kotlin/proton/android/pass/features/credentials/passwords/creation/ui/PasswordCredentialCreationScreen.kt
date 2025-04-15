@@ -88,5 +88,4 @@ internal fun PasswordCredentialCreationScreen(
             onEvent = onEvent
         )
     }
-
 }

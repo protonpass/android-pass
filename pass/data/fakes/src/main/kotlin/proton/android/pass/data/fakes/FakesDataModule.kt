@@ -151,6 +151,7 @@ import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareShare
+import proton.android.pass.data.api.usecases.credentials.passwords.GetPasswordCredentialItems
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
@@ -362,6 +363,7 @@ import proton.android.pass.data.fakes.usecases.breach.FakeUpdateGlobalAliasAddre
 import proton.android.pass.data.fakes.usecases.breach.FakeUpdateGlobalProtonAddressesMonitorState
 import proton.android.pass.data.fakes.usecases.breach.FakeUpdateProtonAddressMonitorState
 import proton.android.pass.data.fakes.usecases.breach.FakeVerifyBreachCustomEmail
+import proton.android.pass.data.fakes.usecases.credentials.passwords.FakeGetPasswordCredentialItems
 import proton.android.pass.data.fakes.usecases.invites.FakeInviteToItem
 import proton.android.pass.data.fakes.usecases.invites.FakeObserveInvite
 import proton.android.pass.data.fakes.usecases.items.FakeGetItemCategory
@@ -1054,5 +1056,8 @@ abstract class FakesDataModule {
     abstract fun bindObserveOrganizationSharingPolicy(
         impl: FakeObserveOrganizationSharingPolicy
     ): ObserveOrganizationSharingPolicy
+
+    @Binds
+    abstract fun bindGetPasswordCredentialItems(impl: FakeGetPasswordCredentialItems): GetPasswordCredentialItems
 
 }

@@ -16,11 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.credentials.passwords.creation.presentation
+package proton.android.pass.data.api.usecases.credentials.passwords
 
-internal data class PasswordCredentialCreationRequest(
-    internal val id: String,
-    internal val password: String,
-    internal val domain: String,
-    internal val packageName: String
-)
+import proton.android.pass.domain.credentials.PasswordCredentialItem
+
+interface GetPasswordCredentialItems {
+
+    suspend operator fun invoke(packageName: String): List<PasswordCredentialItem>
+
+}

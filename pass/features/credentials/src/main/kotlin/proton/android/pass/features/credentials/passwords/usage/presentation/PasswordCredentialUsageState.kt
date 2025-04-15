@@ -16,11 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.credentials.passwords.creation.presentation
+package proton.android.pass.features.credentials.passwords.usage.presentation
 
-internal data class PasswordCredentialCreationRequest(
-    internal val id: String,
-    internal val password: String,
-    internal val domain: String,
-    internal val packageName: String
-)
+import androidx.compose.runtime.Immutable
+
+@Immutable
+internal sealed interface PasswordCredentialUsageState {
+
+    @Immutable
+    data object Cancel : PasswordCredentialUsageState
+
+    @Immutable
+    data object NotReady : PasswordCredentialUsageState
+
+    @Immutable
+    data class Ready(
+        internal val id: String,
+        internal val password: String
+    ) : PasswordCredentialUsageState
+
+}

@@ -133,6 +133,7 @@ class ItemDetailsHandlerImpl @Inject constructor(
         ItemDetailsFieldType.Hidden.Password -> ItemDetailsSnackbarMessage.PasswordCopied
         ItemDetailsFieldType.Hidden.Pin -> ItemDetailsSnackbarMessage.PinCopied
         ItemDetailsFieldType.Hidden.PrivateKey -> ItemDetailsSnackbarMessage.PrivateKeyCopied
+        ItemDetailsFieldType.Hidden.SocialSecurityNumber -> ItemDetailsSnackbarMessage.SocialSecurityNumberCopied
         ItemDetailsFieldType.Plain.Alias -> ItemDetailsSnackbarMessage.AliasCopied
         ItemDetailsFieldType.Plain.BirthDate -> ItemDetailsSnackbarMessage.BirthDateCopied
         ItemDetailsFieldType.Plain.CardNumber -> ItemDetailsSnackbarMessage.CardNumberCopied
@@ -157,7 +158,6 @@ class ItemDetailsHandlerImpl @Inject constructor(
         ItemDetailsFieldType.Plain.PassportNumber -> ItemDetailsSnackbarMessage.PassportNumberCopied
         ItemDetailsFieldType.Plain.PhoneNumber -> ItemDetailsSnackbarMessage.PhoneNumberCopied
         ItemDetailsFieldType.Plain.Reddit -> ItemDetailsSnackbarMessage.RedditCopied
-        ItemDetailsFieldType.Plain.SocialSecurityNumber -> ItemDetailsSnackbarMessage.SocialSecurityNumberCopied
         ItemDetailsFieldType.Plain.StateOrProvince -> ItemDetailsSnackbarMessage.StateOrProvinceCopied
         ItemDetailsFieldType.Plain.StreetAddress -> ItemDetailsSnackbarMessage.StreetAddressCopied
         ItemDetailsFieldType.Plain.TotpCode -> ItemDetailsSnackbarMessage.TotpCodeCopied

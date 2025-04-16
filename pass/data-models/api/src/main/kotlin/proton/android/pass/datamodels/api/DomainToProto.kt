@@ -174,7 +174,9 @@ fun ItemContents.serializeToProto(
                         addressDetailsContent.customFields.mapToExtraFields(encryptionContext)
                     )
                     // Contact details
-                    .setSocialSecurityNumber(contactDetailsContent.socialSecurityNumber)
+                    .setSocialSecurityNumber(
+                        encryptionContext.decrypt(contactDetailsContent.socialSecurityNumber.encrypted)
+                    )
                     .setPassportNumber(contactDetailsContent.passportNumber)
                     .setLicenseNumber(contactDetailsContent.licenseNumber)
                     .setWebsite(contactDetailsContent.website)

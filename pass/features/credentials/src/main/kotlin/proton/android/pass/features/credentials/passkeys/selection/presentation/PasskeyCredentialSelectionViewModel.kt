@@ -206,9 +206,9 @@ internal class PasskeyCredentialSelectionViewModel @Inject constructor(
         }.onSuccess { response ->
             PassLogger.i(TAG, "Successfully authenticated with passkey")
             eventFlow.update { PasskeyCredentialSelectionStateEvent.SendResponse(response.response) }
-        }.onFailure {
+        }.onFailure { error ->
             PassLogger.w(TAG, "Error authenticating with passkey")
-            PassLogger.w(TAG, it)
+            PassLogger.w(TAG, error)
             eventFlow.update { PasskeyCredentialSelectionStateEvent.Cancel }
         }
     }

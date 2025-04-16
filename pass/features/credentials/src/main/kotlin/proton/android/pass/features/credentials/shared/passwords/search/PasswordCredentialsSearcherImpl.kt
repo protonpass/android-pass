@@ -30,6 +30,7 @@ import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.data.api.usecases.credentials.passwords.GetPasswordCredentialItems
 import proton.android.pass.domain.credentials.PasswordCredentialItem
 import proton.android.pass.features.credentials.R
+import proton.android.pass.features.credentials.passwords.selection.ui.PasswordCredentialSelectionActivity
 import proton.android.pass.features.credentials.passwords.usage.ui.PasswordCredentialUsageActivity
 import proton.android.pass.features.credentials.shared.passwords.events.PasswordCredentialsTelemetryEvent
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -106,7 +107,7 @@ internal class PasswordCredentialsSearcherImpl @Inject constructor(
         passwordCredentialItem: PasswordCredentialItem,
         isBiometricAuthRequired: Boolean
     ) = if (isBiometricAuthRequired) {
-        PasswordCredentialUsageActivity.createPasswordCredentialIntent(
+        PasswordCredentialSelectionActivity.createPasswordCredentialIntent(
             context = context,
             passwordCredentialItem = passwordCredentialItem
         )
@@ -125,7 +126,7 @@ internal class PasswordCredentialsSearcherImpl @Inject constructor(
     }
 
     private fun createPasswordCredentialAction(context: Context, passwordCredentialItem: PasswordCredentialItem) =
-        PasswordCredentialUsageActivity.createPasswordCredentialIntent(
+        PasswordCredentialSelectionActivity.createPasswordCredentialIntent(
             context = context,
             passwordCredentialItem = passwordCredentialItem
         )

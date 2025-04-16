@@ -41,6 +41,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.customfields.AddCustomFieldButton
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEntry
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent
@@ -91,7 +92,19 @@ internal fun ContactDetails(
             SocialSecurityNumberInput(
                 value = uiContactDetails.socialSecurityNumber,
                 enabled = enabled,
-                onChange = { onEvent(OnFieldChange(FieldChange.SocialSecurityNumber(it))) }
+                onChange = { newSocialSecurityNumber ->
+                    OnFieldChange(
+                        value = FieldChange.SocialSecurityNumber(
+                            value = newSocialSecurityNumber
+                        )
+                    ).also(onEvent)
+                },
+                onFocusChange = { isFocused ->
+                    IdentityContentEvent.OnSocialSecurityNumberFieldFocusChanged(
+                        isFocused = isFocused,
+                        socialSecurityNumberHiddenState = uiContactDetails.socialSecurityNumber
+                    ).also(onEvent)
+                }
             )
             PassDivider()
             PassportNumberInput(
@@ -194,9 +207,23 @@ internal fun ContactDetails(
                     onEvent(OnFieldChange(fieldChange))
                 },
                 onFocusChange = { idx, isFocused ->
-                    onEvent(IdentityContentEvent.OnCustomFieldFocused(idx, isFocused, ContactCustomField))
+                    onEvent(
+                        IdentityContentEvent.OnCustomFieldFocused(
+                            idx,
+                            isFocused,
+                            ContactCustomField
+                        )
+                    )
                 },
-                onOptionsClick = { onEvent(OnCustomFieldOptions(index, value.label, ContactCustomField)) }
+                onOptionsClick = {
+                    onEvent(
+                        OnCustomFieldOptions(
+                            index,
+                            value.label,
+                            ContactCustomField
+                        )
+                    )
+                }
             )
             RequestFocusLaunchedEffect(
                 focusRequester = focusRequester,
@@ -220,7 +247,20 @@ fun ContactDetailsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark:
     PassTheme(isDark = isDark) {
         Surface {
             ContactDetails(
-                uiContactDetails = UIContactDetails.EMPTY,
+                uiContactDetails = UIContactDetails(
+                    socialSecurityNumber = UIHiddenState.Empty(""),
+                    passportNumber = "",
+                    licenseNumber = "",
+                    website = "",
+                    xHandle = "",
+                    secondPhoneNumber = "",
+                    linkedin = "",
+                    reddit = "",
+                    facebook = "",
+                    yahoo = "",
+                    instagram = "",
+                    customFields = emptyList()
+                ),
                 enabled = true,
                 extraFields = persistentSetOf(),
                 focusedField = None,

@@ -70,8 +70,6 @@ sealed interface ItemDetailsFieldType {
 
         data object Reddit : Plain
 
-        data object SocialSecurityNumber : Plain
-
         data object StateOrProvince : Plain
 
         data object StreetAddress : Plain
@@ -105,6 +103,8 @@ sealed interface ItemDetailsFieldType {
         data object Pin : Hidden
 
         data object PrivateKey : Hidden
+
+        data object SocialSecurityNumber : Hidden
 
     }
 

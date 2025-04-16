@@ -21,6 +21,7 @@ package proton.android.pass.features.itemcreate.identity.presentation
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
+import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.domain.AddressDetailsContent
 import proton.android.pass.domain.ContactDetailsContent
 import proton.android.pass.domain.ExtraSectionContent
@@ -29,6 +30,8 @@ import proton.android.pass.domain.PersonalDetailsContent
 import proton.android.pass.domain.WorkDetailsContent
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIExtraSection
+import proton.android.pass.features.itemcreate.common.UIHiddenState
+import proton.android.pass.features.itemcreate.common.UIHiddenState.Companion.from
 
 @Parcelize
 @Immutable
@@ -82,7 +85,7 @@ data class IdentityItemFormState(
             customFields = uiAddressDetails.customFields.map(UICustomFieldContent::toCustomFieldContent)
         ),
         contactDetailsContent = ContactDetailsContent(
-            socialSecurityNumber = uiContactDetails.socialSecurityNumber,
+            socialSecurityNumber = uiContactDetails.socialSecurityNumber.toHiddenState(),
             passportNumber = uiContactDetails.passportNumber,
             licenseNumber = uiContactDetails.licenseNumber,
             website = uiContactDetails.website,
@@ -113,8 +116,10 @@ data class IdentityItemFormState(
 
     fun containsContactDetails(): Boolean {
         if (uiContactDetails.customFields.isNotEmpty()) return true
+
+        if (uiContactDetails.socialSecurityNumber !is UIHiddenState.Empty) return true
+
         val list = listOf(
-            uiContactDetails.socialSecurityNumber,
             uiContactDetails.passportNumber,
             uiContactDetails.licenseNumber,
             uiContactDetails.website,
@@ -142,14 +147,16 @@ data class IdentityItemFormState(
     }
 
     companion object {
-        val EMPTY = IdentityItemFormState(
+
+        fun default(encryptionContext: EncryptionContext): IdentityItemFormState = IdentityItemFormState(
             title = "",
             uiPersonalDetails = UIPersonalDetails.EMPTY,
             uiAddressDetails = UIAddressDetails.EMPTY,
-            uiContactDetails = UIContactDetails.EMPTY,
+            uiContactDetails = UIContactDetails.default(encryptionContext),
             uiWorkDetails = UIWorkDetails.EMPTY,
             uiExtraSections = emptyList()
         )
+
     }
 }
 
@@ -240,7 +247,7 @@ data class UIAddressDetails(
 @Parcelize
 @Immutable
 data class UIContactDetails(
-    val socialSecurityNumber: String,
+    val socialSecurityNumber: UIHiddenState,
     val passportNumber: String,
     val licenseNumber: String,
     val website: String,
@@ -253,8 +260,9 @@ data class UIContactDetails(
     val instagram: String,
     val customFields: List<UICustomFieldContent>
 ) : Parcelable {
+
     constructor(contactDetailsContent: ContactDetailsContent) : this(
-        socialSecurityNumber = contactDetailsContent.socialSecurityNumber,
+        socialSecurityNumber = from(contactDetailsContent.socialSecurityNumber),
         passportNumber = contactDetailsContent.passportNumber,
         licenseNumber = contactDetailsContent.licenseNumber,
         website = contactDetailsContent.website,
@@ -269,8 +277,9 @@ data class UIContactDetails(
     )
 
     companion object {
-        val EMPTY = UIContactDetails(
-            socialSecurityNumber = "",
+
+        fun default(encryptionContext: EncryptionContext): UIContactDetails = UIContactDetails(
+            socialSecurityNumber = UIHiddenState.Empty(encryptionContext.encrypt("")),
             passportNumber = "",
             licenseNumber = "",
             website = "",
@@ -283,6 +292,7 @@ data class UIContactDetails(
             instagram = "",
             customFields = emptyList()
         )
+
     }
 
 }

@@ -19,3 +19,4 @@
 package proton.android.pass.features.itemcreate.login
 
 const val PASSWORD_CONCEALED_LENGTH = 8
+const val SSN_CONCEALED_LENGTH = 9

@@ -213,7 +213,6 @@ private fun getHighlightedFields(
         annotatedFields.addAll(
             highlightFields(
                 listOf(
-                    contactDetailsContent.socialSecurityNumber,
                     contactDetailsContent.passportNumber,
                     contactDetailsContent.licenseNumber,
                     contactDetailsContent.website,

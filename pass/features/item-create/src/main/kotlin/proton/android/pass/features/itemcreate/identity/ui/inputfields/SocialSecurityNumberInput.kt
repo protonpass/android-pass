@@ -19,9 +19,14 @@
 package proton.android.pass.features.itemcreate.identity.ui.inputfields
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.Spacing
@@ -30,14 +35,25 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.features.itemcreate.R
+import proton.android.pass.features.itemcreate.common.UIHiddenState
+import proton.android.pass.features.itemcreate.login.SSN_CONCEALED_LENGTH
 
 @Composable
 internal fun SocialSecurityNumberInput(
     modifier: Modifier = Modifier,
-    value: String,
+    value: UIHiddenState,
     enabled: Boolean,
-    onChange: (String) -> Unit
+    onChange: (String) -> Unit,
+    onFocusChange: (Boolean) -> Unit
 ) {
+    val (text, visualTransformation) = remember(key1 = value) {
+        when (value) {
+            is UIHiddenState.Concealed -> "x".repeat(SSN_CONCEALED_LENGTH) to PasswordVisualTransformation()
+            is UIHiddenState.Revealed -> value.clearText to VisualTransformation.None
+            is UIHiddenState.Empty -> "" to VisualTransformation.None
+        }
+    }
+
     ProtonTextField(
         modifier = modifier.padding(
             start = Spacing.medium,
@@ -45,27 +61,31 @@ internal fun SocialSecurityNumberInput(
             end = Spacing.small,
             bottom = Spacing.medium
         ),
-        value = value,
+        value = text,
         onChange = onChange,
         moveToNextOnEnter = true,
         textStyle = ProtonTheme.typography.defaultNorm(enabled),
+        visualTransformation = visualTransformation,
+        keyboardOptions = KeyboardOptions(
+            autoCorrectEnabled = false,
+            keyboardType = KeyboardType.Text
+        ),
         editable = enabled,
         label = {
             ProtonTextFieldLabel(
-                text =
-                stringResource(id = R.string.identity_field_social_security_number_title)
+                text = stringResource(id = R.string.identity_field_social_security_number_title)
             )
         },
         placeholder = {
             ProtonTextFieldPlaceHolder(
-                text =
-                stringResource(id = R.string.identity_field_social_security_number_hint)
+                text = stringResource(id = R.string.identity_field_social_security_number_hint)
             )
         },
         trailingIcon = {
-            if (value.isNotEmpty()) {
+            if (text.isNotEmpty()) {
                 SmallCrossIconButton(enabled = true) { onChange("") }
             }
-        }
+        },
+        onFocusChange = onFocusChange
     )
 }

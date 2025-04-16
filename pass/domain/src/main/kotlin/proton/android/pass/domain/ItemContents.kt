@@ -425,7 +425,7 @@ data class AddressDetailsContent(
 
 @Serializable
 data class ContactDetailsContent(
-    val socialSecurityNumber: String,
+    val socialSecurityNumber: HiddenState,
     val passportNumber: String,
     val licenseNumber: String,
     val website: String,
@@ -438,7 +438,14 @@ data class ContactDetailsContent(
     val instagram: String,
     val customFields: List<CustomFieldContent>
 ) {
-    val hasSocialSecurityNumber: Boolean by lazy { socialSecurityNumber.isNotBlank() }
+    val hasSocialSecurityNumber: Boolean by lazy {
+        when (socialSecurityNumber) {
+            is HiddenState.Empty -> false
+
+            is HiddenState.Concealed,
+            is HiddenState.Revealed -> true
+        }
+    }
 
     val hasPassportNumber: Boolean by lazy { passportNumber.isNotBlank() }
 
@@ -481,7 +488,7 @@ data class ContactDetailsContent(
 
     companion object {
         val EMPTY = ContactDetailsContent(
-            socialSecurityNumber = "",
+            socialSecurityNumber = HiddenState.Empty(""),
             passportNumber = "",
             licenseNumber = "",
             website = "",

@@ -64,14 +64,18 @@ interface IdentityFormActions {
         focused: Boolean,
         customExtraField: CustomExtraField
     )
+
     fun openDraftAttachment(
         contextHolder: ClassHolder<Context>,
         uri: URI,
         mimetype: String
     )
+
     suspend fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment)
     suspend fun retryUploadDraftAttachment(metadata: FileMetadata)
     suspend fun dismissFileAttachmentsOnboardingBanner()
+
+    fun onSocialSecurityNumberFieldFocusChange(isFocused: Boolean)
 }
 
 interface IdentityActionsProvider : IdentityFormActions {

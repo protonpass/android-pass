@@ -156,7 +156,7 @@ private fun AddressDetails.toContent(decrypt: (String) -> String) = AddressDetai
 )
 
 private fun ContactDetails.toContent(decrypt: (String) -> String) = ContactDetailsContent(
-    socialSecurityNumber = socialSecurityNumber,
+    socialSecurityNumber = concealedOrEmpty(socialSecurityNumber, decrypt),
     passportNumber = passportNumber,
     licenseNumber = licenseNumber,
     website = website,

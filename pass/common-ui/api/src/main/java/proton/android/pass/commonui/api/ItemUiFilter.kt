@@ -80,7 +80,6 @@ object ItemUiFilter {
             addressDetails.countryOrRegion,
             addressDetails.floor,
             addressDetails.county,
-            contactDetails.socialSecurityNumber,
             contactDetails.passportNumber,
             contactDetails.licenseNumber,
             contactDetails.website,

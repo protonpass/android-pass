@@ -26,6 +26,7 @@ import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
+import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailsHiddenFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.addItemDetailsFieldRow
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.addCustomFieldRows
@@ -33,6 +34,8 @@ import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ContactDetailsContent
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemSection
+
+private const val HIDDEN_SSN_TEXT_LENGTH = 9
 
 @Composable
 internal fun PassIdentityItemDetailsContactSection(
@@ -45,14 +48,32 @@ internal fun PassIdentityItemDetailsContactSection(
     val rows = mutableListOf<@Composable () -> Unit>()
 
     if (hasSocialSecurityNumber) {
-        rows.addItemDetailsFieldRow(
-            titleResId = R.string.item_details_identity_section_contact_social_security_number_title,
-            section = socialSecurityNumber,
-            field = ItemDetailsFieldType.Plain.SocialSecurityNumber,
-            itemColors = itemColors,
-            itemDiffType = itemDiffs.socialSecurityNumber,
-            onEvent = onEvent
-        )
+        rows.add {
+            PassItemDetailsHiddenFieldRow(
+                title = stringResource(
+                    id = R.string.item_details_identity_section_contact_social_security_number_title
+                ),
+                hiddenState = socialSecurityNumber,
+                hiddenTextLength = HIDDEN_SSN_TEXT_LENGTH,
+                itemColors = itemColors,
+                itemDiffType = itemDiffs.socialSecurityNumber,
+                icon = null,
+                onClick = {
+                    PassItemDetailsUiEvent.OnHiddenFieldClick(
+                        state = socialSecurityNumber,
+                        field = ItemDetailsFieldType.Hidden.SocialSecurityNumber
+                    ).also(onEvent)
+                },
+                onToggle = { isVisible ->
+                    PassItemDetailsUiEvent.OnHiddenFieldToggle(
+                        isVisible = isVisible,
+                        hiddenState = socialSecurityNumber,
+                        fieldType = ItemDetailsFieldType.Hidden.SocialSecurityNumber,
+                        fieldSection = ItemSection.Identity.SocialSecurityNumber
+                    ).also(onEvent)
+                }
+            )
+        }
     }
 
     if (hasPassportNumber) {

@@ -101,7 +101,7 @@ data class AddressDetails(
 
 @Serializable
 data class ContactDetails(
-    val socialSecurityNumber: String,
+    val socialSecurityNumber: EncryptedString,
     val passportNumber: String,
     val licenseNumber: String,
     val website: String,

@@ -95,7 +95,7 @@ private fun createIdentityItemType(parsed: ItemV1.Item, context: EncryptionConte
             }
         ),
         contactDetails = ContactDetails(
-            socialSecurityNumber = content.socialSecurityNumber,
+            socialSecurityNumber = context.encrypt(content.socialSecurityNumber),
             passportNumber = content.passportNumber,
             licenseNumber = content.licenseNumber,
             website = content.website,

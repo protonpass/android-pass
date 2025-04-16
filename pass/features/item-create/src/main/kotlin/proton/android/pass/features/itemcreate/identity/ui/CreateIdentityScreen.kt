@@ -199,6 +199,10 @@ fun CreateIdentityScreen(
 
                     IdentityContentEvent.DismissAttachmentBanner ->
                         viewModel.dismissFileAttachmentsOnboarding()
+
+                    is IdentityContentEvent.OnSocialSecurityNumberFieldFocusChanged -> {
+                        viewModel.onSocialSecurityNumberFieldFocusChange(it.isFocused)
+                    }
                 }
             }
         )

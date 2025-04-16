@@ -104,7 +104,13 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
                     val shouldBeRevealed = revealedHiddenFields[ItemSection.Identity.Contact]
                         ?.any { it is ItemDetailsFieldType.Hidden.CustomField && it.index == fieldIndex } == true
                     updateHiddenState(field, shouldBeRevealed, encryptionContextProvider)
-                }
+                },
+                socialSecurityNumber = updateHiddenStateValue(
+                    hiddenState = itemContents.contactDetailsContent.socialSecurityNumber,
+                    shouldBeRevealed = revealedHiddenFields[ItemSection.Identity.SocialSecurityNumber]
+                        ?.any { it is ItemDetailsFieldType.Hidden.SocialSecurityNumber } == true,
+                    encryptionContextProvider = encryptionContextProvider
+                )
             ),
             addressDetailsContent = itemContents.addressDetailsContent.copy(
                 customFields = itemContents.addressDetailsContent.customFields.mapIndexed { fieldIndex, field ->
@@ -198,8 +204,9 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
                 otherItemFieldValue = otherItemContents.addressDetailsContent.county
             ),
             socialSecurityNumber = calculateItemDiffType(
-                baseItemFieldValue = baseItemContents.contactDetailsContent.socialSecurityNumber,
-                otherItemFieldValue = otherItemContents.contactDetailsContent.socialSecurityNumber
+                encryptionContext = this@withEncryptionContext,
+                baseItemFieldHiddenState = baseItemContents.contactDetailsContent.socialSecurityNumber,
+                otherItemFieldHiddenState = otherItemContents.contactDetailsContent.socialSecurityNumber
             ),
             passportNumber = calculateItemDiffType(
                 baseItemFieldValue = baseItemContents.contactDetailsContent.passportNumber,

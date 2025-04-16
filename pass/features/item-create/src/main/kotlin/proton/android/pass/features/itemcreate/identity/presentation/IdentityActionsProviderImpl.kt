@@ -47,6 +47,7 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.repositories.DRAFT_IDENTITY_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
@@ -123,7 +124,11 @@ class IdentityActionsProviderImpl @Inject constructor(
 
     @OptIn(SavedStateHandleSaveableApi::class)
     private var identityItemFormMutableState: IdentityItemFormState by savedStateHandleProvider.get()
-        .saveable { mutableStateOf(IdentityItemFormState.EMPTY) }
+        .saveable {
+            encryptionContextProvider.withEncryptionContext {
+                mutableStateOf(IdentityItemFormState.default(this@withEncryptionContext))
+            }
+        }
     private val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
     private val hasUserEditedContentState: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -232,11 +237,26 @@ class IdentityActionsProviderImpl @Inject constructor(
                 )
             )
 
-            is FieldChange.SocialSecurityNumber -> identityItemFormMutableState.copy(
-                uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(
-                    socialSecurityNumber = field.value
-                )
-            )
+            is FieldChange.SocialSecurityNumber -> encryptionContextProvider.withEncryptionContext {
+                field.value
+                    .let { socialSecurityNumber ->
+                        if (socialSecurityNumber.isBlank()) {
+                            UIHiddenState.Empty(encrypt(socialSecurityNumber))
+                        } else {
+                            UIHiddenState.Revealed(
+                                encrypt(socialSecurityNumber),
+                                socialSecurityNumber
+                            )
+                        }
+                    }
+                    .let { socialSecurityNumberUiHiddenState ->
+                        identityItemFormMutableState.copy(
+                            uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(
+                                socialSecurityNumber = socialSecurityNumberUiHiddenState
+                            )
+                        )
+                    }
+            }
 
             is FieldChange.StateOrProvince -> identityItemFormMutableState.copy(
                 uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(
@@ -941,8 +961,9 @@ class IdentityActionsProviderImpl @Inject constructor(
         }.launchIn(coroutineScope)
     }
 
-    suspend fun isFileAttachmentsEnabled(): Boolean =
-        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1).firstOrNull() ?: false
+    suspend fun isFileAttachmentsEnabled(): Boolean = featureFlagsRepository.get<Boolean>(
+        featureFlag = FeatureFlag.FILE_ATTACHMENTS_V1
+    ).firstOrNull() == true
 
     override suspend fun retryUploadDraftAttachment(metadata: FileMetadata) {
         isLoadingState.update { IsLoadingState.Loading }
@@ -956,7 +977,44 @@ class IdentityActionsProviderImpl @Inject constructor(
         )
     }
 
-    companion object {
-        private const val TAG = "IdentityActionsProviderImpl"
+    override fun onSocialSecurityNumberFieldFocusChange(isFocused: Boolean) {
+        val socialSecurityNumber =
+            identityItemFormMutableState.uiContactDetails.socialSecurityNumber
+
+        identityItemFormMutableState = encryptionContextProvider.withEncryptionContext {
+            decrypt(socialSecurityNumber.encrypted.toEncryptedByteArray())
+                .let { decryptedSocialSecurityNumberByteArray ->
+                    when {
+                        decryptedSocialSecurityNumberByteArray.isEmpty() -> {
+                            UIHiddenState.Empty(encrypted = socialSecurityNumber.encrypted)
+                        }
+
+                        isFocused -> {
+                            UIHiddenState.Revealed(
+                                encrypted = socialSecurityNumber.encrypted,
+                                clearText = decryptedSocialSecurityNumberByteArray.decodeToString()
+                            )
+                        }
+
+                        else -> {
+                            UIHiddenState.Concealed(encrypted = socialSecurityNumber.encrypted)
+                        }
+                    }
+                }
+                .let { newSocialSecurityNumber ->
+                    identityItemFormMutableState.copy(
+                        uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(
+                            socialSecurityNumber = newSocialSecurityNumber
+                        )
+                    )
+                }
+        }
     }
+
+    private companion object {
+
+        private const val TAG = "IdentityActionsProviderImpl"
+
+    }
+
 }

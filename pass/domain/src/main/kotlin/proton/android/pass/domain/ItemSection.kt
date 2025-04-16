@@ -33,6 +33,8 @@ sealed interface ItemSection {
 
         data object Personal : Identity
 
+        data object SocialSecurityNumber : Identity
+
         data object Work : Identity
     }
 

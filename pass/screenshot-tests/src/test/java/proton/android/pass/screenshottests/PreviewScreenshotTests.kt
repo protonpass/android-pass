@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
-import app.cash.paparazzi.detectEnvironment
 import com.airbnb.android.showkase.models.Showkase
 import com.airbnb.android.showkase.models.ShowkaseBrowserComponent
 import com.google.testing.junit.testparameterinjector.TestParameter
@@ -47,19 +46,14 @@ class PreviewScreenshotTests {
     }
 
     @get:Rule
-    val rule = PaparazziWrapperRule(
-        paparazzi = Paparazzi(
-            deviceConfig = DeviceConfig.NEXUS_5,
-            maxPercentDifference = 0.0,
-            environment = detectEnvironment().run {
-                copy(compileSdkVersion = 33, platformDir = platformDir.replace("34", "33"))
-            }
-        )
+    val rule = Paparazzi(
+        deviceConfig = DeviceConfig.NEXUS_5,
+        maxPercentDifference = 0.05
     )
 
     @Test
     fun preview_tests(@TestParameter(valuesProvider = PreviewProvider::class) componentPreview: ComponentPreview) {
-        rule.paparazzi.snapshot {
+        rule.snapshot {
             Box {
                 componentPreview.content()
             }

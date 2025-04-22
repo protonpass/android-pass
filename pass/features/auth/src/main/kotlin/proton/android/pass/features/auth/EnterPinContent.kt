@@ -52,7 +52,7 @@ import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 @Composable
-fun EnterPinContent(
+internal fun EnterPinContent(
     modifier: Modifier = Modifier,
     state: EnterPinUiState,
     onPinChanged: (String) -> Unit,
@@ -61,9 +61,12 @@ fun EnterPinContent(
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
-            .padding(32.dp),
+            .padding(all = Spacing.large),
         horizontalAlignment = CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(32.dp, CenterVertically)
+        verticalArrangement = Arrangement.spacedBy(
+            space = Spacing.large,
+            alignment = CenterVertically
+        )
     ) {
         Icon(
             modifier = Modifier
@@ -73,25 +76,26 @@ fun EnterPinContent(
             contentDescription = null,
             tint = Color.Unspecified
         )
+
         Text(
             text = stringResource(R.string.enter_your_pin_code),
             style = ProtonTheme.typography.headlineNorm
         )
+
         PinInput(
             state = state,
             onPinChanged = onPinChanged,
             onPinSubmit = onPinSubmit
         )
+
         val pinError = (state as? EnterPinUiState.Data)?.pinError?.value()
         if (pinError is PinError.PinIncorrect) {
             Text(
-                text = (pinError as? PinError.PinIncorrect)?.let {
-                    pluralStringResource(
-                        id = R.plurals.enter_your_pin_code_error,
-                        count = it.remainingAttempts,
-                        it.remainingAttempts
-                    )
-                } ?: "",
+                text = pluralStringResource(
+                    id = R.plurals.enter_your_pin_code_error,
+                    count = pinError.remainingAttempts,
+                    pinError.remainingAttempts
+                ),
                 style = ProtonTheme.typography.defaultSmallNorm,
                 color = PassTheme.colors.signalDanger
             )
@@ -125,7 +129,7 @@ fun EnterPinContent(
 
 @Preview
 @Composable
-fun EnterPinContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun EnterPinContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             EnterPinContent(

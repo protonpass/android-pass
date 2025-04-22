@@ -21,7 +21,6 @@ package proton.android.pass.autofill
 import android.app.assist.AssistStructure.WindowNode
 import android.content.Context
 import android.os.Build
-import android.os.Bundle
 import android.os.CancellationSignal
 import android.service.autofill.Dataset
 import android.service.autofill.FillCallback
@@ -177,10 +176,9 @@ object AutoFillHandler {
         datasetList.forEach { responseBuilder.addDataset(it) }
 
         responseBuilder.addSaveInfo(
+            request = request,
             cluster = assistInfo.cluster,
-            currentClientState = request.clientState ?: Bundle(),
-            packageName = packageName,
-            autofillSessionId = request.id
+            packageName = packageName
         )
 
         return if (!currentCoroutineContext().isActive) {
@@ -248,7 +246,7 @@ object AutoFillHandler {
                 val maxSuggestion = it.maxSuggestionCount
                 val specCount = it.inlinePresentationSpecs.count()
                 maxSuggestion > 0 && specCount > 0
-            } ?: false
+            } == true
         } else {
             false
         }

@@ -45,7 +45,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.form.ProtonSelectableTextField
 
 @Composable
-fun PinInput(
+internal fun PinInput(
     modifier: Modifier = Modifier,
     state: EnterPinUiState,
     onPinChanged: (String) -> Unit,

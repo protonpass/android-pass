@@ -20,8 +20,10 @@ package proton.android.pass.autofill.extensions
 
 import android.os.Build
 import android.os.Bundle
+import android.service.autofill.FillRequest
 import android.service.autofill.FillResponse
 import android.service.autofill.SaveInfo
+import proton.android.pass.autofill.RequestFlags
 import proton.android.pass.autofill.entities.AssistField
 import proton.android.pass.autofill.entities.asAndroid
 import proton.android.pass.autofill.extensions.MultiStepUtils.addPasswordToState
@@ -58,11 +60,13 @@ sealed interface SaveSessionType {
 }
 
 internal fun FillResponse.Builder.addSaveInfo(
-    autofillSessionId: Int,
+    request: FillRequest,
     cluster: NodeCluster,
-    currentClientState: Bundle,
     packageName: PackageName
 ) {
+    val currentClientState = request.clientState ?: Bundle()
+    val autofillSessionId = request.id
+
     val saveSessionType = getSaveSessionType(cluster, currentClientState, packageName)
     val saveInfo = when (saveSessionType) {
         SaveSessionType.NotAutoSaveable -> return
@@ -78,7 +82,7 @@ internal fun FillResponse.Builder.addSaveInfo(
             SaveInfo.Builder(
                 SaveInfo.SAVE_DATA_TYPE_USERNAME or SaveInfo.SAVE_DATA_TYPE_PASSWORD,
                 ids.toTypedArray()
-            )
+            ).applyFlags(request.flags)
         }
 
         is SaveSessionType.Username -> {
@@ -124,7 +128,7 @@ internal fun FillResponse.Builder.addSaveInfo(
             SaveInfo.Builder(
                 saveInfoType,
                 ids.toTypedArray()
-            )
+            ).applyFlags(request.flags)
         }
     }
 
@@ -179,5 +183,13 @@ private fun getSaveSessionType(
         }
 
         is NodeCluster.Identity -> SaveSessionType.NotAutoSaveable
+    }
+}
+
+private fun SaveInfo.Builder.applyFlags(flags: Int): SaveInfo.Builder = apply {
+    // From official docs we should set FLAG_SAVE_ON_ALL_VIEWS_INVISIBLE if save was triggered in compatibility mode.
+    // https://developer.android.com/reference/android/service/autofill/AutofillService#CompatibilityMode
+    if (RequestFlags.FLAG_COMPATIBILITY_MODE_REQUEST in RequestFlags.fromValue(flags)) {
+        setFlags(SaveInfo.FLAG_SAVE_ON_ALL_VIEWS_INVISIBLE)
     }
 }

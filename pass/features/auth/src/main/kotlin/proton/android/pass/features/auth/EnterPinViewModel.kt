@@ -89,63 +89,70 @@ class EnterPinViewModel @Inject constructor(
         initialValue = NotInitialised
     )
 
-    fun onPinChanged(value: String) {
+    internal fun onPinChanged(value: String) {
         val sanitisedValue = value.replace(CommonRegex.NON_DIGIT_REGEX, "").take(MAX_PIN_LENGTH)
         pinErrorState.update { None }
         pinState.update { sanitisedValue }
     }
 
-    fun onPinSubmit() = viewModelScope.launch {
-        val pin = pinState.value
-        if (pin.isEmpty()) {
+    internal fun onPinSubmit() {
+        if (pinState.value.isEmpty()) {
             pinErrorState.update { PinError.PinEmpty.some() }
-            return@launch
+            return
         }
 
-        runCatching {
-            val isMatch = checkPin(pinState.value.encodeToByteArray())
-            if (isMatch) {
-                storeAuthSuccessful(UnlockMethod.PinOrBiometrics)
-                eventState.update { EnterPinEvent.Success(origin) }
-            } else {
-                isLoading.update { IsLoadingState.Loading }
-                delay(WRONG_PIN_DELAY_SECONDS)
-                isLoading.update { IsLoadingState.NotLoading }
-                val attemptsCount = internalSettingsRepository.getPinAttemptsCount().first() + 1
-                internalSettingsRepository.setPinAttemptsCount(attemptsCount)
-                val remainingAttempts = MAX_PIN_ATTEMPTS - attemptsCount
-                if (remainingAttempts <= 0) {
-                    PassLogger.w(TAG, "Too many wrong attempts, logging user out")
-                    val userId = accountManager.getPrimaryUserId().firstOrNull()
-                        ?: throw UserIdNotAvailableError()
-                    when (origin) {
-                        AuthOrigin.CONFIGURE_PIN_OR_BIOMETRY -> {
-                            snackbarDispatcher(PinTooManyAttemptsError)
-                            delay(1.seconds)
-                            eventState.update { EnterPinEvent.ForceSignOutAllUsers }
-                        }
-                        AuthOrigin.AUTO_LOCK,
-                        AuthOrigin.EXTRA_PASSWORD_CONFIGURE,
-                        AuthOrigin.EXTRA_PASSWORD_LOGIN,
-                        AuthOrigin.EXTRA_PASSWORD_REMOVE -> {
-                            snackbarDispatcher(PinTooManyAttemptsDismissError)
-                            eventState.update { EnterPinEvent.ForcePassword(userId) }
-                        }
-                    }
+        viewModelScope.launch {
+            runCatching {
+                val isMatch = checkPin(pinState.value.encodeToByteArray())
+                if (isMatch) {
+                    storeAuthSuccessful(UnlockMethod.PinOrBiometrics)
+                    eventState.update { EnterPinEvent.Success(origin) }
+                    pinState.update { "" }
                 } else {
-                    pinErrorState.update { PinError.PinIncorrect(remainingAttempts).some() }
+                    isLoading.update { IsLoadingState.Loading }
+                    delay(WRONG_PIN_DELAY_SECONDS)
+                    isLoading.update { IsLoadingState.NotLoading }
+                    val attemptsCount = internalSettingsRepository.getPinAttemptsCount().first() + 1
+                    internalSettingsRepository.setPinAttemptsCount(attemptsCount)
+                    val remainingAttempts = MAX_PIN_ATTEMPTS - attemptsCount
+                    if (remainingAttempts <= 0) {
+                        PassLogger.w(TAG, "Too many wrong attempts, logging user out")
+                        val userId = accountManager.getPrimaryUserId().firstOrNull()
+                            ?: throw UserIdNotAvailableError()
+                        when (origin) {
+                            AuthOrigin.CONFIGURE_PIN_OR_BIOMETRY -> {
+                                snackbarDispatcher(PinTooManyAttemptsError)
+                                delay(1.seconds)
+                                eventState.update { EnterPinEvent.ForceSignOutAllUsers }
+                            }
+
+                            AuthOrigin.AUTO_LOCK,
+                            AuthOrigin.EXTRA_PASSWORD_CONFIGURE,
+                            AuthOrigin.EXTRA_PASSWORD_LOGIN,
+                            AuthOrigin.EXTRA_PASSWORD_REMOVE -> {
+                                snackbarDispatcher(PinTooManyAttemptsDismissError)
+                                eventState.update { EnterPinEvent.ForcePassword(userId) }
+                            }
+                        }
+                    } else {
+                        pinState.update { "" }
+                        pinErrorState.update { PinError.PinIncorrect(remainingAttempts).some() }
+                    }
                 }
-            }
-        }.onFailure { PassLogger.d(TAG, it, "Failed to check pin") }
+            }.onFailure { PassLogger.d(TAG, it, "Failed to check pin") }
+        }
     }
 
-    companion object {
+    private companion object {
+
         private val WRONG_PIN_DELAY_SECONDS = 2.seconds
+
         private const val TAG = "EnterPinViewModel"
+
     }
 }
 
-sealed interface EnterPinEvent {
+internal sealed interface EnterPinEvent {
 
     data object ForceSignOutAllUsers : EnterPinEvent
 

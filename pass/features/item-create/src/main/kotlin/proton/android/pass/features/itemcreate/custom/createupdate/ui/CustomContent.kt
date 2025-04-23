@@ -30,7 +30,7 @@ import proton.android.pass.features.itemcreate.custom.createupdate.presentation.
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun CustomContent(
+internal fun CustomContent(
     modifier: Modifier = Modifier,
     itemFormState: ItemFormState,
     topBarActionName: String,

@@ -47,6 +47,7 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.domain.CustomFieldType
@@ -76,7 +77,9 @@ import proton.android.pass.totp.api.TotpManager
 import java.net.URI
 
 sealed interface BaseItemFormIntent
+
 sealed interface BaseCustomItemCommonIntent : BaseItemFormIntent {
+
     @JvmInline
     value class OnTitleChanged(val value: String) : BaseCustomItemCommonIntent
 
@@ -158,7 +161,7 @@ abstract class BaseCustomItemViewModel(
     }
 
     @OptIn(SavedStateHandleSaveableApi::class)
-    var itemFormState: ItemFormState by savedStateHandleProvider.get()
+    internal var itemFormState: ItemFormState by savedStateHandleProvider.get()
         .saveable { mutableStateOf(ItemFormState.EMPTY) }
         protected set
 
@@ -578,20 +581,27 @@ abstract class BaseCustomItemViewModel(
         return fields.toMutableList().apply { set(index, updatedField) }
     }
 
-    private fun toggleHiddenState(field: UIHiddenState, isFocused: Boolean): UIHiddenState = if (isFocused) {
-        if (field !is UIHiddenState.Empty) {
-            UIHiddenState.Revealed(
-                encrypted = field.encrypted,
-                clearText = encryptionContextProvider.withEncryptionContext {
-                    decrypt(field.encrypted)
+    private fun toggleHiddenState(hiddenState: UIHiddenState, isFocused: Boolean): UIHiddenState =
+        encryptionContextProvider.withEncryptionContext {
+            decrypt(hiddenState.encrypted.toEncryptedByteArray()).let { decryptedByteArray ->
+                when {
+                    decryptedByteArray.isEmpty() -> {
+                        UIHiddenState.Empty(encrypted = hiddenState.encrypted)
+                    }
+
+                    isFocused -> {
+                        UIHiddenState.Revealed(
+                            encrypted = hiddenState.encrypted,
+                            clearText = decryptedByteArray.decodeToString()
+                        )
+                    }
+
+                    else -> {
+                        UIHiddenState.Concealed(encrypted = hiddenState.encrypted)
+                    }
                 }
-            )
-        } else {
-            field
+            }
         }
-    } else {
-        UIHiddenState.Concealed(field.encrypted)
-    }
 
     private fun createHiddenState(value: String): UIHiddenState = encryptionContextProvider.withEncryptionContext {
         when {

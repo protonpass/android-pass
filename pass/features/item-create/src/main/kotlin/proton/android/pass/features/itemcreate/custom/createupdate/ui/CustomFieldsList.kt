@@ -43,7 +43,7 @@ import proton.android.pass.features.itemcreate.custom.createupdate.presentation.
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemValidationErrors
 
 @Suppress("LongParameterList", "LongMethod")
-fun LazyListScope.customFieldsList(
+internal fun LazyListScope.customFieldsList(
     customFields: List<UICustomFieldContent>,
     enabled: Boolean,
     errors: PersistentSet<ItemValidationErrors>,

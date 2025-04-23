@@ -305,7 +305,7 @@
     <string name="template_ssh_key_field_note">Note</string>
 
     <!-- WiFi Network Fields -->
-    <string name="template_wifi_network_field_ssid">SSID</string>
+    <string name="template_wifi_network_field_name">Name (SSID)</string>
     <string name="template_wifi_network_field_note">Note</string>
 
     <!-- Bank Account Fields -->

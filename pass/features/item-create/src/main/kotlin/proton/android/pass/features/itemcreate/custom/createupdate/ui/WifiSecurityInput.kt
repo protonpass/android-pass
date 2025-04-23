@@ -45,7 +45,7 @@ import proton.android.pass.features.itemcreate.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun WifiSecurityInput(
+internal fun WifiSecurityInput(
     modifier: Modifier = Modifier,
     wifiSecurityType: WifiSecurityType,
     isEditAllowed: Boolean,
@@ -54,24 +54,33 @@ fun WifiSecurityInput(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clickable(enabled = isEditAllowed, onClick = { onClick(wifiSecurityType) })
-            .padding(vertical = Spacing.medium, horizontal = Spacing.mediumSmall),
+            .clickable(
+                enabled = isEditAllowed,
+                onClick = { onClick(wifiSecurityType) }
+            )
+            .padding(
+                vertical = Spacing.medium,
+                horizontal = Spacing.mediumSmall
+            ),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
+        horizontalArrangement = Arrangement.spacedBy(space = Spacing.mediumSmall)
     ) {
         Icon.Default(
-            id = CoreR.drawable.ic_proton_key,
+            id = CoreR.drawable.ic_proton_lock,
             tint = ProtonTheme.colors.iconWeak
         )
+
         Column(
             modifier = Modifier.weight(1f)
         ) {
             ProtonTextFieldLabel(text = stringResource(R.string.wifi_security_type_field_label))
+
             Text.Body1Regular(
                 text = getWifiSecurityTypeText(wifiSecurityType),
                 color = ProtonTheme.colors.textNorm
             )
         }
+
         if (isEditAllowed) {
             ChevronDownIcon()
         }
@@ -80,7 +89,7 @@ fun WifiSecurityInput(
 
 @Preview
 @Composable
-fun WifiSecurityInputPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun WifiSecurityInputPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             WifiSecurityInput(
@@ -91,4 +100,3 @@ fun WifiSecurityInputPreview(@PreviewParameter(ThemePreviewProvider::class) isDa
         }
     }
 }
-

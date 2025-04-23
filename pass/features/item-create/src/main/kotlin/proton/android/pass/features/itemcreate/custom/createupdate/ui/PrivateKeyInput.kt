@@ -41,7 +41,7 @@ import proton.android.pass.features.itemcreate.login.PASSWORD_CONCEALED_LENGTH
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun PrivateKeyInput(
+internal fun PrivateKeyInput(
     modifier: Modifier = Modifier,
     content: UIHiddenState,
     isEditAllowed: Boolean,
@@ -86,7 +86,7 @@ fun PrivateKeyInput(
                 }
             },
             visualTransformation = visualTransformation,
-            onFocusChange = { onFocusChange(it) }
+            onFocusChange = onFocusChange
         )
     }
 }

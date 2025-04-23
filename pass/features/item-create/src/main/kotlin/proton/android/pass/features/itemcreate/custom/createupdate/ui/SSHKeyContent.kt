@@ -26,7 +26,7 @@ import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemStaticFields
 
 @Composable
-fun SSHKeyContent(
+internal fun SSHKeyContent(
     modifier: Modifier = Modifier,
     itemStaticFields: ItemStaticFields.SSHKey,
     isEditAllowed: Boolean,
@@ -40,7 +40,9 @@ fun SSHKeyContent(
                 onEvent(ItemContentEvent.OnFieldValueChange(FieldChange.PublicKey, it))
             }
         )
+
         PassDivider()
+
         PrivateKeyInput(
             content = itemStaticFields.privateKey,
             isEditAllowed = isEditAllowed,

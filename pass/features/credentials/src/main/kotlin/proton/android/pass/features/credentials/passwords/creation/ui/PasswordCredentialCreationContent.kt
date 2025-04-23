@@ -36,9 +36,8 @@ import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomShe
 import proton.android.pass.features.auth.AUTH_GRAPH
 import proton.android.pass.features.credentials.passkeys.creation.navigation.passwordCredentialCreationNavGraph
 import proton.android.pass.features.credentials.passwords.creation.navigation.PasswordCredentialCreationNavEvent
-import proton.android.pass.features.credentials.passwords.creation.presentation.PasswordCredentialCreationEvent
 import proton.android.pass.features.credentials.passwords.creation.presentation.PasswordCredentialCreationState
-import proton.android.pass.features.selectitem.navigation.SelectItem
+import proton.android.pass.features.itemcreate.login.CREATE_LOGIN_GRAPH
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 
@@ -46,8 +45,7 @@ import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 internal fun PasswordCredentialCreationContent(
     modifier: Modifier = Modifier,
     state: PasswordCredentialCreationState.Ready,
-    onNavigate: (PasswordCredentialCreationNavEvent) -> Unit,
-    onEvent: (PasswordCredentialCreationEvent) -> Unit
+    onNavigate: (PasswordCredentialCreationNavEvent) -> Unit
 ) = with(state) {
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -59,7 +57,7 @@ internal fun PasswordCredentialCreationContent(
     )
 
     val startDestination = remember(key1 = isBiometricAuthRequired) {
-        if (isBiometricAuthRequired) AUTH_GRAPH else SelectItem.route
+        if (isBiometricAuthRequired) AUTH_GRAPH else CREATE_LOGIN_GRAPH
     }
 
     val bottomSheetJob: MutableState<Job?> = remember { mutableStateOf(null) }
@@ -75,9 +73,7 @@ internal fun PasswordCredentialCreationContent(
             passwordCredentialCreationNavGraph(
                 appNavigator = appNavigator,
                 initialCreateLoginUiState = initialCreateLoginUiState,
-                selectItemState = selectItemState,
                 onNavigate = onNavigate,
-                onEvent = onEvent,
                 dismissBottomSheet = { block ->
                     onBottomSheetDismissed(
                         coroutineScope = coroutineScope,

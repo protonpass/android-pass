@@ -84,8 +84,7 @@ internal fun PasswordCredentialCreationScreen(
         PasswordCredentialCreationContent(
             modifier = Modifier.padding(paddingValues = innerPaddingValues),
             state = state,
-            onNavigate = onNavigate,
-            onEvent = onEvent
+            onNavigate = onNavigate
         )
     }
 }

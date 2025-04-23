@@ -22,8 +22,8 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.R
-import proton.android.pass.features.itemcreate.custom.shared.TemplateType.entries
 import me.proton.core.presentation.compose.R as CoreR
+import proton.android.pass.composecomponents.impl.R as CompR
 
 data class Field(@StringRes val nameResId: Int, val type: CustomFieldType)
 
@@ -103,7 +103,7 @@ enum class TemplateType(
         id = 6,
         category = Category.TECHNOLOGY,
         titleResId = R.string.template_item_wifi_network,
-        iconResId = CoreR.drawable.ic_proton_shield_2_bolt,
+        iconResId = CompR.drawable.ic_wifi,
         fields = listOf(
             Field(R.string.template_wifi_network_field_note, CustomFieldType.Text)
         )

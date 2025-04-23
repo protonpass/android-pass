@@ -48,7 +48,7 @@ import me.proton.core.presentation.R as CoreR
 private const val HIDDEN_PRIVATE_KEY_TEXT_LENGTH = 12
 
 @Composable
-fun PassSSHKeyMainSection(
+internal fun PassSSHKeyMainSection(
     modifier: Modifier = Modifier,
     contents: ItemContents.SSHKey,
     itemColors: PassItemColors,
@@ -71,13 +71,14 @@ fun PassSSHKeyMainSection(
                 )
             }
         )
+
         PassDivider()
+
         PassItemDetailsHiddenFieldRow(
             icon = CoreR.drawable.ic_proton_key,
             title = stringResource(R.string.item_details_ssh_key_label_private_key),
             hiddenState = contents.privateKey,
             hiddenTextLength = HIDDEN_PRIVATE_KEY_TEXT_LENGTH,
-            needsRevealedColors = true,
             itemColors = itemColors,
             itemDiffType = itemDiffs.privateKey,
             hiddenTextStyle = ProtonTheme.typography.defaultNorm
@@ -106,7 +107,7 @@ fun PassSSHKeyMainSection(
 
 @Preview
 @Composable
-fun PassSSHKeyMainSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun PassSSHKeyMainSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             PassSSHKeyMainSection(

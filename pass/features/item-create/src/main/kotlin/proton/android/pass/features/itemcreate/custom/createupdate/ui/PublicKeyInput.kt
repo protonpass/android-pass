@@ -35,7 +35,7 @@ import proton.android.pass.features.itemcreate.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun PublicKeyInput(
+internal fun PublicKeyInput(
     modifier: Modifier = Modifier,
     text: String,
     isEditAllowed: Boolean,
@@ -50,7 +50,7 @@ fun PublicKeyInput(
         ),
         value = text,
         editable = isEditAllowed,
-        errorMessage = "",
+        singleLine = false,
         onChange = onChange,
         onFocusChange = {},
         textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed),

@@ -35,7 +35,7 @@ import proton.android.pass.features.itemcreate.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun SSIDInput(
+internal fun SSIDInput(
     modifier: Modifier = Modifier,
     text: String,
     isEditAllowed: Boolean,
@@ -67,7 +67,7 @@ fun SSIDInput(
         },
         label = {
             ProtonTextFieldLabel(
-                text = stringResource(R.string.template_wifi_network_field_ssid)
+                text = stringResource(R.string.template_wifi_network_field_name)
             )
         },
         placeholder = {

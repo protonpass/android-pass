@@ -28,7 +28,7 @@ import proton.android.pass.features.itemcreate.common.PasswordInput
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemStaticFields
 
 @Composable
-fun WifiNetworkContent(
+internal fun WifiNetworkContent(
     modifier: Modifier = Modifier,
     itemStaticFields: ItemStaticFields.WifiNetwork,
     isEditAllowed: Boolean,

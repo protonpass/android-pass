@@ -24,11 +24,17 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.WifiSecurityType
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.FieldIdentifier
 
-enum class FieldChange {
-    Title, SSID, Password, WifiSecurityType, PrivateKey, PublicKey
+internal enum class FieldChange {
+    Password,
+    PrivateKey,
+    PublicKey,
+    SSID,
+    Title,
+    WifiSecurityType
 }
 
-sealed interface ItemContentEvent {
+internal sealed interface ItemContentEvent {
+
     data object Up : ItemContentEvent
 
     @JvmInline

@@ -21,9 +21,7 @@ package proton.android.pass.features.credentials.passwords.creation.presentation
 import androidx.compose.runtime.Immutable
 import me.proton.core.util.kotlin.takeIfNotEmpty
 import proton.android.pass.commonuimodels.api.PackageInfoUi
-import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.features.itemcreate.login.InitialCreateLoginUiState
-import proton.android.pass.features.selectitem.navigation.SelectItemState
 import proton.android.pass.preferences.ThemePreference
 
 @Immutable
@@ -52,11 +50,6 @@ internal sealed interface PasswordCredentialCreationState {
                 packageName = request.packageName,
                 appName = ""
             )
-        )
-
-        internal val selectItemState: SelectItemState = SelectItemState.Passkey.Register(
-            title = request.domain,
-            suggestion = Suggestion.Url(request.domain)
         )
 
     }

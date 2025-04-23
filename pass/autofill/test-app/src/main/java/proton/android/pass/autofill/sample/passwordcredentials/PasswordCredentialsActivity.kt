@@ -43,24 +43,29 @@ internal class PasswordCredentialsActivity : AppCompatActivity() {
         val binding = ActivityPasswordCredentialsBinding.inflate(layoutInflater)
 
         binding.registerButton.setOnClickListener {
-            val email = binding.loginEditText.text.toString()
-            val password = binding.passwordEditText.text.toString()
-            createPasswordCredential(email, password)
+            updateStatusMessage(binding, "")
+
+            createPasswordCredential(
+                email = binding.loginEditText.text.toString(),
+                password = binding.passwordEditText.text.toString(),
+                onFailure = { failureMessage ->
+                    updateStatusMessage(binding, failureMessage, Color.RED)
+                },
+                onSuccess = { successMessage ->
+                    updateStatusMessage(binding, successMessage, Color.GREEN)
+                }
+            )
         }
 
         binding.authenticateButton.setOnClickListener {
+            updateStatusMessage(binding, "")
+
             getPasswordCredential(
                 onFailure = { failureMessage ->
-                    binding.statusTextView.apply {
-                        text = failureMessage
-                        setTextColor(Color.RED)
-                    }
+                    updateStatusMessage(binding, failureMessage, Color.RED)
                 },
                 onSuccess = { successMessage ->
-                    binding.statusTextView.apply {
-                        text = successMessage
-                        setTextColor(Color.GREEN)
-                    }
+                    updateStatusMessage(binding, successMessage, Color.GREEN)
                 }
             )
         }
@@ -68,7 +73,23 @@ internal class PasswordCredentialsActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    private fun createPasswordCredential(email: String, password: String) {
+    private fun updateStatusMessage(
+        binding: ActivityPasswordCredentialsBinding,
+        message: String,
+        color: Int? = null
+    ) {
+        binding.statusTextView.apply {
+            text = message
+            color?.let(::setTextColor)
+        }
+    }
+
+    private fun createPasswordCredential(
+        email: String,
+        password: String,
+        onFailure: (String) -> Unit,
+        onSuccess: (String) -> Unit
+    ) {
         lifecycleScope.launch {
             runCatching {
                 credentialManager.createCredential(
@@ -84,8 +105,21 @@ internal class PasswordCredentialsActivity : AppCompatActivity() {
             }.onFailure { error ->
                 Log.w(TAG, "Error creating password credential")
                 Log.w(TAG, error)
+
+                buildString {
+                    append("CREATION FAILED")
+                    append("\n\n")
+                    append("Error creating password credential: ${error.message}")
+                }.also(onFailure)
+
             }.onSuccess { createCredentialResponse ->
                 Log.i(TAG, "Password credential created: $createCredentialResponse")
+
+                buildString {
+                    append("CREATION SUCCESSFUL")
+                    append("\n\n")
+                    append("Password credential created type: ${createCredentialResponse.type}")
+                }.also(onSuccess)
             }
         }
     }

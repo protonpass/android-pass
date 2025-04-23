@@ -42,7 +42,9 @@ internal fun WifiNetworkContent(
                 onEvent(ItemContentEvent.OnFieldValueChange(FieldChange.SSID, it))
             }
         )
+
         PassDivider()
+
         PasswordInput(
             value = itemStaticFields.password,
             passwordStrength = PasswordStrength.None,
@@ -54,7 +56,9 @@ internal fun WifiNetworkContent(
                 onEvent(ItemContentEvent.OnFieldFocusChange(FieldChange.Password, it))
             }
         )
+
         PassDivider()
+
         WifiSecurityInput(
             wifiSecurityType = itemStaticFields.wifiSecurityType,
             isEditAllowed = isEditAllowed,

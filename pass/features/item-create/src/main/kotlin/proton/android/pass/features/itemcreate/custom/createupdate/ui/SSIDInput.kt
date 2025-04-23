@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
-import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
@@ -32,7 +31,7 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolde
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.features.itemcreate.R
-import me.proton.core.presentation.R as CoreR
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun SSIDInput(
@@ -56,8 +55,8 @@ internal fun SSIDInput(
         textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed),
         leadingIcon = {
             Icon.Default(
-                id = CoreR.drawable.ic_proton_text_align_left,
-                tint = PassTheme.colors.textWeak
+                id = CompR.drawable.ic_wifi,
+                tint = ProtonTheme.colors.iconWeak,
             )
         },
         trailingIcon = if (text.isNotEmpty()) {

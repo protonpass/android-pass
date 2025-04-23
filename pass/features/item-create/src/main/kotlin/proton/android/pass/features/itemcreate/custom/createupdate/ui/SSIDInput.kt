@@ -56,7 +56,7 @@ internal fun SSIDInput(
         leadingIcon = {
             Icon.Default(
                 id = CompR.drawable.ic_wifi,
-                tint = ProtonTheme.colors.iconWeak,
+                tint = ProtonTheme.colors.iconWeak
             )
         },
         trailingIcon = if (text.isNotEmpty()) {

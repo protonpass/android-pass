@@ -25,8 +25,11 @@ private fun HiddenState.compareDecrypted(other: HiddenState, decrypt: (Encrypted
     return decryptedThis.compareTo(decryptedOther)
 }
 
-private fun CustomFieldContent.compareDecrypted(b: CustomFieldContent, decrypt: (EncryptedString) -> String): Int =
-    when {
+private fun CustomFieldContent.compareDecrypted(b: CustomFieldContent, decrypt: (EncryptedString) -> String): Int {
+    val labelsComparison = this.label.compareTo(b.label)
+    if (labelsComparison != 0) return labelsComparison
+
+    return when {
         this is CustomFieldContent.Text && b is CustomFieldContent.Text ->
             this.value.compareTo(b.value)
 
@@ -38,6 +41,7 @@ private fun CustomFieldContent.compareDecrypted(b: CustomFieldContent, decrypt: 
 
         else -> this::class.simpleName!!.compareTo(b::class.simpleName!!)
     }
+}
 
 private fun List<CustomFieldContent>.compareDecrypted(
     other: List<CustomFieldContent>,

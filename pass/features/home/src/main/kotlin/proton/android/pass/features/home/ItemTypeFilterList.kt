@@ -59,7 +59,7 @@ import proton.android.pass.searchoptions.api.SearchFilterType.SharedWithMe
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun ItemTypeFilterList(
+internal fun ItemTypeFilterList(
     modifier: Modifier = Modifier,
     selected: SearchFilterType,
     itemTypeCount: ItemTypeCount,
@@ -92,6 +92,12 @@ fun ItemTypeFilterList(
             onItemTypeClick
         )
 
+        ItemTypeButton(
+            Custom,
+            selected == Custom,
+            itemTypeCount.customCount,
+            onItemTypeClick
+        )
     }
 }
 
@@ -182,7 +188,8 @@ internal fun ItemTypeFilterListPreview(@PreviewParameter(ThemePreviewProvider::c
                     aliasCount = 4,
                     noteCount = 1,
                     creditCardCount = 3,
-                    identityCount = 2
+                    identityCount = 2,
+                    customCount = 1
                 ),
                 onItemTypeClick = {}
             )

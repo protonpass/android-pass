@@ -31,14 +31,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.Spacing
@@ -72,16 +76,34 @@ internal fun ItemForm(
     val isGroupCollapsed = rememberSaveable(saver = isCollapsedSaver<Int>()) {
         mutableStateListOf()
     }
+
     val isCurrentStickyVisible = remember(itemSharedProperties.focusedField) {
         itemSharedProperties.focusedField.value()?.type == CustomFieldType.Totp
     }
+
+    val shouldShowAttachmentBanner = remember(
+        key1 = itemSharedProperties.showFileAttachments,
+        key2 = itemSharedProperties.showFileAttachmentsBanner
+    ) { itemSharedProperties.showFileAttachments && itemSharedProperties.showFileAttachmentsBanner }
+
+    val scope = rememberCoroutineScope()
+
+    val lazyListState = rememberLazyListState()
+
+    LaunchedEffect(key1 = shouldShowAttachmentBanner) {
+        if (shouldShowAttachmentBanner && lazyListState.firstVisibleItemIndex > 0) {
+            scope.launch {
+                lazyListState.animateScrollToItem(0)
+            }
+        }
+    }
+
     Box(modifier.fillMaxSize()) {
-        LazyColumn {
+        LazyColumn(state = lazyListState) {
             item {
                 AnimatedVisibility(
                     modifier = Modifier.fillMaxWidth(),
-                    visible = itemSharedProperties.showFileAttachments &&
-                        itemSharedProperties.showFileAttachmentsBanner
+                    visible = shouldShowAttachmentBanner
                 ) {
                     AttachmentBanner(
                         modifier = Modifier

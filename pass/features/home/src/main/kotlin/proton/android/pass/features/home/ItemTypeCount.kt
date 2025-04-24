@@ -18,21 +18,32 @@
 
 package proton.android.pass.features.home
 
-data class ItemTypeCount(
-    val loginCount: Int,
-    val aliasCount: Int,
-    val noteCount: Int,
-    val creditCardCount: Int,
-    val identityCount: Int
+internal data class ItemTypeCount(
+    internal val loginCount: Int,
+    internal val aliasCount: Int,
+    internal val noteCount: Int,
+    internal val creditCardCount: Int,
+    internal val identityCount: Int,
+    internal val customCount: Int
 ) {
-    val totalCount: Int = loginCount + aliasCount + noteCount + creditCardCount + identityCount
-    companion object {
-        val Initial = ItemTypeCount(
+
+    internal val totalCount: Int = loginCount
+        .plus(aliasCount)
+        .plus(noteCount)
+        .plus(creditCardCount)
+        .plus(identityCount)
+        .plus(customCount)
+
+    internal companion object {
+
+        internal val Initial = ItemTypeCount(
             loginCount = 0,
             aliasCount = 0,
             noteCount = 0,
             creditCardCount = 0,
-            identityCount = 0
+            identityCount = 0,
+            customCount = 0
         )
+
     }
 }

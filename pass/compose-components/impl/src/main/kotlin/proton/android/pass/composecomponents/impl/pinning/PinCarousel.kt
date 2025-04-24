@@ -30,12 +30,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.R
@@ -60,11 +60,12 @@ fun PinCarousel(
         LazyRow(
             modifier = modifier,
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(Spacing.small)
         ) {
             item {
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(Spacing.small))
             }
+
             items(items = list.take(PIN_LENGTH), key = { it.key }) { item ->
                 PinItem(
                     item = item,
@@ -72,6 +73,7 @@ fun PinCarousel(
                     onItemClick = onItemClick
                 )
             }
+
             if (list.size > PIN_LENGTH) {
                 item {
                     TransparentTextButton(
@@ -81,13 +83,17 @@ fun PinCarousel(
                     )
                 }
             }
+
+            item {
+                Spacer(modifier = Modifier.width(Spacing.small))
+            }
         }
     }
 }
 
 @Preview
 @Composable
-fun PinCarouselPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun PinCarouselPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             PinCarousel(

@@ -284,7 +284,7 @@ internal data class SearchUiState(
             isProcessingSearch = IsProcessingSearchState.NotLoading,
             inSearchMode = false,
             isInSuggestionsMode = false,
-            itemTypeCount = ItemTypeCount(0, 0, 0, 0, 0)
+            itemTypeCount = ItemTypeCount.Initial
         )
 
     }
@@ -305,7 +305,7 @@ internal data class PinningUiState(
             inPinningMode = false,
             filteredItems = persistentListOf(),
             unFilteredItems = persistentListOf(),
-            itemTypeCount = ItemTypeCount(0, 0, 0, 0, 0)
+            itemTypeCount = ItemTypeCount.Initial
         )
 
     }

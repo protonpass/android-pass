@@ -222,8 +222,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             val isExtraLoggingEnabled =
                 featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.EXTRA_LOGGING)
-                    .firstOrNull()
-                    ?: false
+                    .firstOrNull() == true
             if (isExtraLoggingEnabled) {
                 accountManager.getPrimaryAccount()
                     .distinctUntilChanged()
@@ -239,7 +238,7 @@ class HomeViewModel @Inject constructor(
                     }
                     .map { (account, data): Pair<Account?, Pair<Long?, Long>> ->
                         val (previous, current) = data
-                        val isAccountReady = account?.isReady() ?: false
+                        val isAccountReady = account?.isReady() == true
                         val itemsDisappeared =
                             previous != null && previous > ITEM_DELETED_THRESHOLD && current == 0L
                         if (isAccountReady && itemsDisappeared) {
@@ -481,7 +480,16 @@ class HomeViewModel @Inject constructor(
                 aliasCount = textFilteredPinnedItems.count { it.contents is ItemContents.Alias },
                 noteCount = textFilteredPinnedItems.count { it.contents is ItemContents.Note },
                 creditCardCount = textFilteredPinnedItems.count { it.contents is ItemContents.CreditCard },
-                identityCount = textFilteredPinnedItems.count { it.contents is ItemContents.Identity }
+                identityCount = textFilteredPinnedItems.count { it.contents is ItemContents.Identity },
+                customCount = textFilteredPinnedItems.count { itemUiModel ->
+                    when (itemUiModel.contents) {
+                        is ItemContents.Custom,
+                        is ItemContents.SSHKey,
+                        is ItemContents.WifiNetwork -> true
+
+                        else -> false
+                    }
+                }
             )
         )
     }
@@ -503,7 +511,16 @@ class HomeViewModel @Inject constructor(
                         aliasCount = list.count { it.contents is ItemContents.Alias },
                         noteCount = list.count { it.contents is ItemContents.Note },
                         creditCardCount = list.count { it.contents is ItemContents.CreditCard },
-                        identityCount = list.count { it.contents is ItemContents.Identity }
+                        identityCount = list.count { it.contents is ItemContents.Identity },
+                        customCount = list.count { itemUiModel ->
+                            when (itemUiModel.contents) {
+                                is ItemContents.Custom,
+                                is ItemContents.SSHKey,
+                                is ItemContents.WifiNetwork -> true
+
+                                else -> false
+                            }
+                        }
                     )
                 }
             }
@@ -569,7 +586,7 @@ class HomeViewModel @Inject constructor(
             selectionState = selection.toState(
                 isTrash = searchOptions.vaultSelectionOption == VaultSelectionOption.Trash
             ),
-            showNeedsUpdate = appNeedsUpdate.getOrNull() ?: false
+            showNeedsUpdate = appNeedsUpdate.getOrNull() == true
         )
     }
 
@@ -612,7 +629,7 @@ class HomeViewModel @Inject constructor(
             accountType = AccountType.fromPlan(userPlan),
             navEvent = navEvent,
             action = bottomSheetItemAction,
-            isFreePlan = userPlan.map { plan -> plan.isFreePlan }.getOrNull() ?: true,
+            isFreePlan = userPlan.map { plan -> plan.isFreePlan }.getOrNull() != false,
             isCustomItemEnabled = homeFeatures.isCustomItemEnabled,
             aliasTrashDialogStatusPreference = aliasTrashDialogStatusPreference,
             canCreateItems = canCreateItems,

@@ -37,7 +37,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
 import me.proton.core.compose.theme.overlineNorm
@@ -69,7 +68,7 @@ internal fun ItemTypeFilterList(
         modifier = modifier.horizontalScroll(rememberScrollState()),
         horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
     ) {
-        Spacer(modifier = Modifier.width(12.dp))
+        Spacer(modifier = Modifier.width(width = Spacing.mediumSmall))
         ItemTypeButton(
             All,
             selected == All,
@@ -98,6 +97,8 @@ internal fun ItemTypeFilterList(
             itemTypeCount.customCount,
             onItemTypeClick
         )
+
+        Spacer(modifier = Modifier.width(width = Spacing.mediumSmall))
     }
 }
 

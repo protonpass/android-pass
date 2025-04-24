@@ -131,7 +131,7 @@ private fun ItemTypeButton(
             Note -> R.string.item_type_filter_note
             CreditCard -> R.string.item_type_filter_credit_card
             Identity -> R.string.item_type_filter_identity
-            Custom -> R.string.item_type_filter_custom
+            Custom -> R.string.item_type_filter_custom_item
             LoginMFA -> R.string.item_type_filter_login_totp
             SharedWithMe -> R.string.item_type_filter_items_shared_with_me
             SharedByMe -> R.string.item_type_filter_items_shared_by_me

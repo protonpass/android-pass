@@ -70,7 +70,7 @@ internal fun SSIDInput(
             )
         },
         placeholder = {
-            ProtonTextFieldPlaceHolder(text = stringResource(R.string.add_ssid_placeholder))
+            ProtonTextFieldPlaceHolder(text = stringResource(R.string.add_ssid_name_placeholder))
         }
     )
 }

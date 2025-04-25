@@ -45,7 +45,7 @@ fun DialogCancelConfirmSection(
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
     color: Color = PassTheme.colors.interactionNormMajor1,
-    disabledColor: Color = color
+    disabledColor: Color = color.copy(alpha = 0.3f)
 ) {
     val confirmColor = remember(confirmEnabled) {
         if (confirmEnabled) color else disabledColor
@@ -81,7 +81,7 @@ private fun DialogCancelConfirmTextButton(
         enabled = isEnabled,
         onClick = onClick
     ) {
-        Text.Body2Regular(
+        Text.Body1Regular(
             text = text,
             color = textColor,
             maxLines = 1,

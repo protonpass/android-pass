@@ -20,6 +20,7 @@ package proton.android.pass.features.itemcreate.common.customfields
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
@@ -31,10 +32,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
@@ -55,12 +57,24 @@ internal fun TextCustomFieldEntry(
     canEdit: Boolean,
     onChange: (String) -> Unit,
     onFocusChange: (Int, Boolean) -> Unit,
-    onOptionsClick: () -> Unit
+    onOptionsClick: () -> Unit,
+    showLeadingIcon: Boolean
 ) {
     ProtonTextField(
         modifier = modifier
             .roundedContainerNorm()
-            .padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
+            .padding(
+                start = Spacing.none,
+                top = Spacing.medium,
+                end = Spacing.extraSmall,
+                bottom = Spacing.medium
+            ),
+        textFieldModifier = Modifier
+            .fillMaxWidth()
+            .applyIf(
+                condition = !showLeadingIcon,
+                ifTrue = { padding(start = Spacing.medium) }
+            ),
         textStyle = ProtonTheme.typography.defaultNorm(canEdit),
         label = { ProtonTextFieldLabel(text = content.label) },
         placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(R.string.custom_field_text_placeholder)) },
@@ -69,15 +83,22 @@ internal fun TextCustomFieldEntry(
         onChange = onChange,
         singleLine = false,
         moveToNextOnEnter = true,
-        leadingIcon = {
-            Icon(
-                painter = painterResource(CoreR.drawable.ic_proton_text_align_left),
-                contentDescription = null,
-                tint = PassTheme.colors.textWeak
-            )
+        leadingIcon = if (showLeadingIcon) {
+            {
+                Icon(
+                    painter = painterResource(CoreR.drawable.ic_proton_text_align_left),
+                    contentDescription = null,
+                    tint = PassTheme.colors.textWeak
+                )
+            }
+        } else {
+            null
         },
         trailingIcon = {
-            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            Row(
+                modifier = Modifier.padding(end = Spacing.small),
+                horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
+            ) {
                 if (content.value.isNotEmpty()) {
                     SmallCrossIconButton { onChange("") }
                 }
@@ -94,15 +115,18 @@ internal fun TextCustomFieldEntry(
 internal fun TextCustomFieldEntryPreview(
     @PreviewParameter(ThemeCustomFieldPreviewProvider::class) input: Pair<Boolean, CustomFieldInput>
 ) {
-    PassTheme(isDark = input.first) {
+    val (isDark, customFieldInput) = input
+
+    PassTheme(isDark = isDark) {
         Surface {
             TextCustomFieldEntry(
                 content = UICustomFieldContent.Text(label = "label", value = input.second.text),
-                canEdit = input.second.enabled,
+                canEdit = customFieldInput.enabled,
                 index = 0,
                 onChange = {},
                 onFocusChange = { _, _ -> },
-                onOptionsClick = {}
+                onOptionsClick = {},
+                showLeadingIcon = customFieldInput.showLeadingIcon
             )
         }
     }

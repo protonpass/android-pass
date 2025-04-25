@@ -33,7 +33,8 @@ internal fun CustomFieldEntry(
     onClick: () -> Unit = {},
     onValueChange: (String) -> Unit,
     onFocusChange: (Int, Boolean) -> Unit,
-    onOptionsClick: () -> Unit
+    onOptionsClick: () -> Unit,
+    showLeadingIcon: Boolean = true
 ) {
     when (entry) {
         is UICustomFieldContent.Text -> TextCustomFieldEntry(
@@ -43,8 +44,10 @@ internal fun CustomFieldEntry(
             canEdit = canEdit,
             onChange = onValueChange,
             onFocusChange = onFocusChange,
-            onOptionsClick = onOptionsClick
+            onOptionsClick = onOptionsClick,
+            showLeadingIcon = showLeadingIcon
         )
+
         is UICustomFieldContent.Hidden -> HiddenCustomFieldEntry(
             modifier = modifier,
             content = entry,
@@ -52,8 +55,10 @@ internal fun CustomFieldEntry(
             canEdit = canEdit,
             onChange = onValueChange,
             onFocusChange = onFocusChange,
-            onOptionsClick = onOptionsClick
+            onOptionsClick = onOptionsClick,
+            showLeadingIcon = showLeadingIcon
         )
+
         is UICustomFieldContent.Totp -> TotpCustomFieldEntry(
             modifier = modifier,
             content = entry,
@@ -63,8 +68,10 @@ internal fun CustomFieldEntry(
             canEdit = canEdit,
             onChange = onValueChange,
             onFocusChange = onFocusChange,
-            onOptionsClick = onOptionsClick
+            onOptionsClick = onOptionsClick,
+            showLeadingIcon = showLeadingIcon
         )
+
         is UICustomFieldContent.Date -> DateCustomFieldEntry(
             modifier = modifier,
             content = entry,
@@ -72,7 +79,8 @@ internal fun CustomFieldEntry(
             isLoading = canEdit,
             onClick = onClick,
             onFocusChange = onFocusChange,
-            onOptionsClick = onOptionsClick
+            onOptionsClick = onOptionsClick,
+            showLeadingIcon = showLeadingIcon
         )
     }
 }

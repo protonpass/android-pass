@@ -29,14 +29,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.container.BoxedIcon
 import me.proton.core.presentation.R
-
-private const val ALPHA = 0.3f
+import proton.android.pass.commonui.api.PassPalette
 
 @Composable
 fun CustomItemIcon(
@@ -45,9 +43,9 @@ fun CustomItemIcon(
     size: Int = 40,
     shape: Shape = PassTheme.shapes.squircleMediumShape,
     backgroundColor: Color = if (enabled) {
-        PassPalette.SlateGray.copy(alpha = ALPHA)
+        PassPalette.SlateGray
     } else {
-        PassPalette.MistGray.copy(alpha = ALPHA)
+        PassPalette.MistGray
     },
     foregroundColor: Color = if (enabled) {
         ProtonTheme.colors.textNorm

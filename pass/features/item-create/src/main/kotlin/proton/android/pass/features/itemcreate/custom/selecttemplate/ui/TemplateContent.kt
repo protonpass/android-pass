@@ -70,7 +70,7 @@ internal fun TemplateContent(modifier: Modifier = Modifier, onEvent: (TemplateEv
                         TemplateType.Category.FINANCE -> R.string.template_header_finance
                         TemplateType.Category.PERSONAL -> R.string.template_header_title_personal
                     }
-                    
+
                     stickyHeader {
                         Text.Body2Weak(
                             text = stringResource(header),

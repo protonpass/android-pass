@@ -20,6 +20,9 @@ package proton.android.pass.features.itemcreate.common.customfields
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import proton.android.pass.composecomponents.impl.utils.PassItemColors
+import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 
 @Composable
@@ -34,7 +37,8 @@ internal fun CustomFieldEntry(
     onValueChange: (String) -> Unit,
     onFocusChange: (Int, Boolean) -> Unit,
     onOptionsClick: () -> Unit,
-    showLeadingIcon: Boolean = true
+    showLeadingIcon: Boolean = true,
+    passItemColors: PassItemColors = passItemColors(itemCategory = ItemCategory.Unknown)
 ) {
     when (entry) {
         is UICustomFieldContent.Text -> TextCustomFieldEntry(
@@ -45,7 +49,8 @@ internal fun CustomFieldEntry(
             onChange = onValueChange,
             onFocusChange = onFocusChange,
             onOptionsClick = onOptionsClick,
-            showLeadingIcon = showLeadingIcon
+            showLeadingIcon = showLeadingIcon,
+            passItemColors = passItemColors
         )
 
         is UICustomFieldContent.Hidden -> HiddenCustomFieldEntry(
@@ -56,7 +61,8 @@ internal fun CustomFieldEntry(
             onChange = onValueChange,
             onFocusChange = onFocusChange,
             onOptionsClick = onOptionsClick,
-            showLeadingIcon = showLeadingIcon
+            showLeadingIcon = showLeadingIcon,
+            passItemColors = passItemColors
         )
 
         is UICustomFieldContent.Totp -> TotpCustomFieldEntry(
@@ -69,7 +75,8 @@ internal fun CustomFieldEntry(
             onChange = onValueChange,
             onFocusChange = onFocusChange,
             onOptionsClick = onOptionsClick,
-            showLeadingIcon = showLeadingIcon
+            showLeadingIcon = showLeadingIcon,
+            passItemColors = passItemColors
         )
 
         is UICustomFieldContent.Date -> DateCustomFieldEntry(
@@ -80,7 +87,8 @@ internal fun CustomFieldEntry(
             onClick = onClick,
             onFocusChange = onFocusChange,
             onOptionsClick = onOptionsClick,
-            showLeadingIcon = showLeadingIcon
+            showLeadingIcon = showLeadingIcon,
+            passItemColors = passItemColors
         )
     }
 }

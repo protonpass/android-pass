@@ -71,6 +71,7 @@ internal fun LazyListScope.customFieldsList(
                     .padding(vertical = Spacing.extraSmall)
                     .padding(horizontal = Spacing.medium)
                     .focusRequester(focusRequester),
+                passItemColors = passItemColors(ItemCategory.Custom),
                 entry = entry,
                 canEdit = enabled,
                 showLeadingIcon = false,

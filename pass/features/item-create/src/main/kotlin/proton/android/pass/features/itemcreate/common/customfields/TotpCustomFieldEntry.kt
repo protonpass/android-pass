@@ -20,6 +20,7 @@ package proton.android.pass.features.itemcreate.common.customfields
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
@@ -34,6 +35,8 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
@@ -46,6 +49,7 @@ import proton.android.pass.features.itemcreate.login.LoginItemValidationErrors
 import proton.android.pass.features.itemcreate.login.customfields.CustomFieldOptionsButton
 import proton.android.pass.features.itemcreate.login.customfields.ThemeTotpCustomFieldInput
 import proton.android.pass.features.itemcreate.login.customfields.TotpCustomFieldInput
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun TotpCustomFieldEntry(
@@ -57,7 +61,8 @@ internal fun TotpCustomFieldEntry(
     onChange: (String) -> Unit,
     onFocusChange: (Int, Boolean) -> Unit,
     onOptionsClick: () -> Unit,
-    index: Int
+    index: Int,
+    showLeadingIcon: Boolean
 ) {
     val value = when (val state = content.value) {
         is UIHiddenState.Concealed -> ""
@@ -68,7 +73,23 @@ internal fun TotpCustomFieldEntry(
     ProtonTextField(
         modifier = modifier
             .roundedContainerNorm()
-            .padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
+            .padding(
+                start = Spacing.none,
+                top = Spacing.medium,
+                end = Spacing.extraSmall,
+                bottom = Spacing.medium
+            ),
+        textFieldModifier = Modifier
+            .fillMaxWidth()
+            .applyIf(
+                condition = !showLeadingIcon,
+                ifTrue = { padding(start = Spacing.medium) }
+            ),
+        errorMessageModifier = Modifier.applyIf(
+            condition = showLeadingIcon,
+            ifTrue = { padding(start = 48.dp) },
+            ifFalse = { padding(start = Spacing.medium) }
+        ),
         value = value,
         onChange = onChange,
         editable = canEdit,
@@ -82,19 +103,26 @@ internal fun TotpCustomFieldEntry(
         placeholder = {
             ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.totp_create_login_field_placeholder))
         },
-        leadingIcon = {
-            Icon(
-                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_lock),
-                contentDescription = stringResource(R.string.mfa_icon_content_description),
-                tint = if (isError) {
-                    PassTheme.colors.signalDanger
-                } else {
-                    ProtonTheme.colors.iconWeak
-                }
-            )
+        leadingIcon = if (showLeadingIcon) {
+            {
+                Icon(
+                    painter = painterResource(CoreR.drawable.ic_proton_lock),
+                    contentDescription = stringResource(R.string.mfa_icon_content_description),
+                    tint = if (isError) {
+                        PassTheme.colors.signalDanger
+                    } else {
+                        ProtonTheme.colors.iconWeak
+                    }
+                )
+            }
+        } else {
+            null
         },
         trailingIcon = {
-            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            Row(
+                modifier = Modifier.padding(end = Spacing.small),
+                horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
+            ) {
                 if (value.isNotEmpty()) {
                     SmallCrossIconButton { onChange("") }
                 }
@@ -109,16 +137,18 @@ internal fun TotpCustomFieldEntry(
 internal fun TotpCustomFieldEntryPreview(
     @PreviewParameter(ThemeTotpCustomFieldInput::class) input: Pair<Boolean, TotpCustomFieldInput>
 ) {
-    PassTheme(isDark = input.first) {
+    val (isDark, customFieldInput) = input
+
+    PassTheme(isDark = isDark) {
         Surface {
             TotpCustomFieldEntry(
                 content = UICustomFieldContent.Totp(
                     label = "label",
-                    value = UIHiddenState.Revealed("", input.second.text),
+                    value = UIHiddenState.Revealed("", customFieldInput.text),
                     id = "id"
                 ),
-                isError = input.second.error != null,
-                errorMessage = when (input.second.error) {
+                isError = customFieldInput.error != null,
+                errorMessage = when (customFieldInput.error) {
                     is LoginItemValidationErrors.CustomFieldValidationError.EmptyField ->
                         stringResource(R.string.field_cannot_be_empty)
 
@@ -127,11 +157,12 @@ internal fun TotpCustomFieldEntryPreview(
 
                     null -> ""
                 },
-                canEdit = input.second.isEnabled,
+                canEdit = customFieldInput.isEnabled,
                 index = 0,
                 onChange = {},
                 onFocusChange = { _, _ -> },
-                onOptionsClick = {}
+                onOptionsClick = {},
+                showLeadingIcon = customFieldInput.showLeadingIcon
             )
         }
     }

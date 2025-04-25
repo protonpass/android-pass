@@ -22,8 +22,8 @@
   <string name="add_attachment_choose_a_file">Valitse tiedosto</string>
   <string name="attachment_options_rename">Nimeä uudelleen</string>
   <string name="attachment_options_delete">Poista</string>
-  <string name="attachment_options_download">Download</string>
-  <string name="attachment_options_share">Share</string>
+  <string name="attachment_options_download">Lataa</string>
+  <string name="attachment_options_share">Jaa</string>
   <string name="file_picker_open_error">Tiedostovalitsinta ei voitu avata</string>
   <string name="media_picker_open_error">Mediavalitsinta ei voitu avata</string>
   <string name="camera_open_error">Kameraa ei voitu avata</string>
@@ -37,4 +37,6 @@
   <string name="storage_full_body">Päivitä lisätäksesi tallennuskapasiteettiasi.</string>
   <string name="storage_full_upgrade">Päivitä</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s/%2$s</string>
+  <string name="attachments_saved_to_location_success">Liite tallennettiin sijaintiin</string>
+  <string name="attachments_saved_to_location_error">Liitteitä ei voitu tallentaa sijaintiin</string>
 </resources>

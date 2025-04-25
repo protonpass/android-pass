@@ -37,4 +37,6 @@
   <string name="storage_full_body">Uppgradera för att öka din lagringskapacitet.</string>
   <string name="storage_full_upgrade">Uppgradera</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s av %2$s</string>
+  <string name="attachments_saved_to_location_success">Bilaga sparad till plats</string>
+  <string name="attachments_saved_to_location_error">Kunde inte spara bilaga till plats</string>
 </resources>

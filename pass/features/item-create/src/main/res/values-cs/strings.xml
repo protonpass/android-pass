@@ -10,13 +10,13 @@
   <string name="action_credit_card">Platební karta</string>
   <string name="action_password">Heslo</string>
   <string name="action_identity">Identita</string>
-  <string name="action_custom">Vlastní položka</string>
+  <string name="action_more">Další</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Přidání přihlašovacích údajů k aplikaci nebo webové stránce</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Získání aliasu e-mailu pro použití v nových aplikacích</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Zaznamenejte si pro sebe PIN, kód nebo poznámku</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Bezpečné ukládání vašich platebních údajů</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Vyplňte své osobní údaje</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Vytváření položek s plně přizpůsobenými poli</string>
+  <string name="item_type_more_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Ukládejte Wi-Fi, hesla, SSH, nebo vlastní položky</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Vygenerovat bezpečné heslo</string>
   <!-- Create Login -->
   <string name="field_email_title">E-mailová adresa</string>
@@ -265,7 +265,7 @@
   <string name="template_ssh_key_field_host">Hostitel</string>
   <string name="template_ssh_key_field_note">Poznámka</string>
   <!-- WiFi Network Fields -->
-  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_name">Název (SSID)</string>
   <string name="template_wifi_network_field_note">Poznámka</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Název banky</string>

@@ -54,7 +54,6 @@
   <string name="action_conceal_password">Απόκρυψη κωδικού πρόσβασης</string>
   <string name="action_reveal_number">Αποκάλυψη αριθμού</string>
   <string name="action_conceal_number">Απόκρυψή αριθμού</string>
-  <string name="share_button_content_description">Άνοιγμα κουμπιού κοινής χρήσης</string>
   <string name="open_menu_icon_content_description">Άνοιγμα κουμπιού μενού</string>
   <string name="mfa_limit_reached">Επιτεύχθηκε το όριο 2FA</string>
   <string name="mfa_icon_content_description">Εικονίδιο 2FA</string>

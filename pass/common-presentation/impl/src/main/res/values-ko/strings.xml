@@ -18,11 +18,10 @@
   -->
 <resources>
   <string name="open_attachments_error">첨부파일을 열 수 없습니다</string>
-  <string name="download_attachments_success">Attachment downloaded</string>
-  <string name="download_attachments_error">Could not download attachment</string>
-  <string name="share_attachments_error">Could not share attachment</string>
+  <string name="download_attachments_error">첨부 파일 다운로드 실패</string>
+  <string name="share_attachments_error">첨부 파일 공유 실패</string>
   <string name="upload_attachments_error">첨부 파일을 업로드할 수 없습니다</string>
-  <string name="attachment_size_exceeded_error">The selected file exceeds the size limit. Please choose a file smaller than 100MB.</string>
+  <string name="attachment_size_exceeded_error">선택된 파일이 크기 제한을 초과합니다. 100 Mb 이하의 파일을 선택하세요.</string>
   <string name="open_with">열기:</string>
-  <string name="share_with">Share with:</string>
+  <string name="share_with">공유 대상:</string>
 </resources>

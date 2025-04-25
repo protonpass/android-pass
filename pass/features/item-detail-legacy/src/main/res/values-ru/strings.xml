@@ -56,7 +56,6 @@
   <string name="action_conceal_password">Скрыть пароль</string>
   <string name="action_reveal_number">Показать номер</string>
   <string name="action_conceal_number">Скрыть номер</string>
-  <string name="share_button_content_description">Открыть кнопку \"поделиться\"</string>
   <string name="open_menu_icon_content_description">Кнопка чтобы открыть меню</string>
   <string name="mfa_limit_reached">Достигнут предел двухфакторных идентификаций</string>
   <string name="mfa_icon_content_description">2FA icon</string>

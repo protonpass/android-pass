@@ -37,4 +37,6 @@
   <string name="storage_full_body">Passez à un abonnement supérieur pour augmenter votre espace de stockage.</string>
   <string name="storage_full_upgrade">Améliorer votre abonnement</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s sur %2$s</string>
+  <string name="attachments_saved_to_location_success">Pièce jointe enregistrée à l\'emplacement</string>
+  <string name="attachments_saved_to_location_error">L\'enregistrement de la pièce jointe à l\'emplacement n\'a pas abouti.</string>
 </resources>

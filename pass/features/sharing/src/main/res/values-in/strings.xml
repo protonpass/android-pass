@@ -121,7 +121,7 @@
   <string name="share_with_recents_title">Terkini</string>
   <string name="share_with_remove_email_content_description">Hapus email</string>
   <string name="share_with_user_shared_title">Dengan pengguna Proton Pass lainnya</string>
-  <string name="share_with_user_shared_description">Berguna unutk pembagian yang bersifat permanen.</string>
+  <string name="share_with_user_shared_description">Untuk pembagian yang bersifat permanen.</string>
   <string name="share_with_manage_shared_item_title">Kelola akses</string>
   <string name="share_with_manage_shared_item_description">Lihat ikhtisar anggota dan perizinan.</string>
   <string name="share_with_secure_link_shared_title">Via tautan aman</string>

@@ -27,7 +27,7 @@
     <item quantity="other">%d 项</item>
   </plurals>
   <plurals name="sharing_member_count">
-    <item quantity="other">%d 个成员</item>
+    <item quantity="other">%d 位成员</item>
   </plurals>
   <string name="sharing_member_count_header">成员</string>
   <string name="shared_via_title">共享方式</string>

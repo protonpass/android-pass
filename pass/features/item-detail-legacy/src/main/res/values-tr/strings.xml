@@ -54,7 +54,6 @@
   <string name="action_conceal_password">Parolayı gizle</string>
   <string name="action_reveal_number">Numarayı göster</string>
   <string name="action_conceal_number">Numarayı gizle</string>
-  <string name="share_button_content_description">Paylaşmayı açma düğmesi</string>
   <string name="open_menu_icon_content_description">Menüyü açma düğmesi</string>
   <string name="mfa_limit_reached">İki adımlı doğrulama sınırına ulaşıldı</string>
   <string name="mfa_icon_content_description">İki adımlı doğrulama simgesi</string>

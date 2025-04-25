@@ -37,4 +37,6 @@
   <string name="storage_full_body">Покращте, щоби збільшити обсяг сховища.</string>
   <string name="storage_full_upgrade">Покращити</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s зі %2$s</string>
+  <string name="attachments_saved_to_location_success">Attachment saved to location</string>
+  <string name="attachments_saved_to_location_error">Could not save attachment to location</string>
 </resources>

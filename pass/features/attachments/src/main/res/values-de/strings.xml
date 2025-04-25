@@ -37,4 +37,6 @@
   <string name="storage_full_body">Upgrade, um deine Speicherkapazität zu erhöhen.</string>
   <string name="storage_full_upgrade">Upgraden</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s von %2$s</string>
+  <string name="attachments_saved_to_location_success">Anhang gespeichert</string>
+  <string name="attachments_saved_to_location_error">Anhang konnte nicht gespeichert werden</string>
 </resources>

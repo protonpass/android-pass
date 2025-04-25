@@ -10,13 +10,13 @@
   <string name="action_credit_card">Cartão de crédito</string>
   <string name="action_password">Senha</string>
   <string name="action_identity">Identidade</string>
-  <string name="action_custom">Item personalizado</string>
+  <string name="action_more">Mais</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Adicione detalhes de início de sessão para um aplicativo ou site</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Obtenha um alias de e-mail para usar em novos aplicativos</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Anote um PIN, código ou nota para si próprio</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Armazene de forma segura suas informações de pagamento</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Preencha seus dados pessoais</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Crie itens com campos totalmente personalizados</string>
+  <string name="item_type_more_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Salve Wi-Fi, passaporte, SSH ou personalizado</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Gerar uma senha segura</string>
   <!-- Create Login -->
   <string name="field_email_title">Endereço de e-mail</string>
@@ -265,7 +265,7 @@
   <string name="template_ssh_key_field_host">Servidor</string>
   <string name="template_ssh_key_field_note">Nota</string>
   <!-- WiFi Network Fields -->
-  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_name">Nome (SSID)</string>
   <string name="template_wifi_network_field_note">Nota</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Nome do banco</string>

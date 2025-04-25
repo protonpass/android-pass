@@ -18,11 +18,10 @@
   -->
 <resources>
   <string name="open_attachments_error">Немагчыма адкрыць далучэнне</string>
-  <string name="download_attachments_success">Attachment downloaded</string>
-  <string name="download_attachments_error">Could not download attachment</string>
-  <string name="share_attachments_error">Could not share attachment</string>
+  <string name="download_attachments_error">Немагчыма спампаваць далучэнне</string>
+  <string name="share_attachments_error">Немагчыма абагуліць далучэнне</string>
   <string name="upload_attachments_error">Немагчыма запампаваць далучэнне</string>
   <string name="attachment_size_exceeded_error">Памер выбранага файла перавысіў абмежаванне. Выберыце файл менш за 100 МБ.</string>
   <string name="open_with">Адкрыць праз:</string>
-  <string name="share_with">Share with:</string>
+  <string name="share_with">Абагуліць з:</string>
 </resources>

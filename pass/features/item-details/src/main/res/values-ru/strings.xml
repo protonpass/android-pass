@@ -18,7 +18,6 @@
   -->
 <resources>
   <string name="item_details_toolbar_content_description_menu_button">Кнопка для отображения параметров меню</string>
-  <string name="item_details_toolbar_content_description_share_button">Кнопка для совместного использования элемента</string>
   <!-- Item details forbidden actions -->
   <string name="item_details_forbidden_actions_edit_title">Невозможно отредактировать</string>
   <string name="item_details_forbidden_actions_edit_permission">Вы не можете редактировать этот элемент, потому что у вас для этого недостаточно прав.</string>

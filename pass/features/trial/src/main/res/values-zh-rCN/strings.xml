@@ -9,5 +9,5 @@
   <plurals name="trial_days_left">
     <item quantity="other">剩下的%d天尝试优质功能</item>
   </plurals>
-  <string name="trial_learn_more">了解更多</string>
+  <string name="trial_learn_more">了解详情</string>
 </resources>

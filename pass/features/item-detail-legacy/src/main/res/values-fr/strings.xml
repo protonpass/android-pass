@@ -54,7 +54,6 @@
   <string name="action_conceal_password">Masquer le mot de passe</string>
   <string name="action_reveal_number">Afficher le numéro</string>
   <string name="action_conceal_number">Masquer le numéro</string>
-  <string name="share_button_content_description">Ouvrir le bouton de partage</string>
   <string name="open_menu_icon_content_description">Bouton d\'ouverture du menu</string>
   <string name="mfa_limit_reached">La limite de l\'A2F est atteinte.</string>
   <string name="mfa_icon_content_description">Icône A2F</string>

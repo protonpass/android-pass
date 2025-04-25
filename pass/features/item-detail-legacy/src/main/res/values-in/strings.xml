@@ -53,7 +53,6 @@
   <string name="action_conceal_password">Sembunyikan kata sandi</string>
   <string name="action_reveal_number">Perlihatkan angka</string>
   <string name="action_conceal_number">Sembunyikan angka</string>
-  <string name="share_button_content_description">Buka tombol berbagi</string>
   <string name="open_menu_icon_content_description">Buka tombol menu</string>
   <string name="mfa_limit_reached">Batas 2FA tercapai</string>
   <string name="mfa_icon_content_description">Ikon 2FA</string>

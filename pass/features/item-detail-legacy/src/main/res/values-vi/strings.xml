@@ -53,7 +53,6 @@
   <string name="action_conceal_password">Che mật khẩu</string>
   <string name="action_reveal_number">Hiện số thẻ</string>
   <string name="action_conceal_number">Che số thẻ</string>
-  <string name="share_button_content_description">Mở nút chia sẻ</string>
   <string name="open_menu_icon_content_description">Nút mở menu</string>
   <string name="mfa_limit_reached">Đã dạt giới hạn 2FA</string>
   <string name="mfa_icon_content_description">biểu tượng 2FA</string>

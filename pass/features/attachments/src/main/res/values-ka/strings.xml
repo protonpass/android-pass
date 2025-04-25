@@ -37,4 +37,6 @@
   <string name="storage_full_body">ასწიეთ ტარიფი მეტი საცავის მისაღებად.</string>
   <string name="storage_full_upgrade">გაუმჯობესება</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s %2$s-დან</string>
+  <string name="attachments_saved_to_location_success">Attachment saved to location</string>
+  <string name="attachments_saved_to_location_error">Could not save attachment to location</string>
 </resources>

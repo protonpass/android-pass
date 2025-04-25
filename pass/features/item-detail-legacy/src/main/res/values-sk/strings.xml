@@ -56,7 +56,6 @@
   <string name="action_conceal_password">Skryť heslo</string>
   <string name="action_reveal_number">Odkryť číslo</string>
   <string name="action_conceal_number">Skryť číslo</string>
-  <string name="share_button_content_description">Otvoriť tlačidlo zdieľania</string>
   <string name="open_menu_icon_content_description">Tlačidlo otvorenia ponuky</string>
   <string name="mfa_limit_reached">2FA limit dosiahnutý</string>
   <string name="mfa_icon_content_description">Ikona 2FA</string>

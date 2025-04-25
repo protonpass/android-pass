@@ -18,11 +18,10 @@
   -->
 <resources>
   <string name="open_attachments_error">Kunne ikke åbne vedhæftning</string>
-  <string name="download_attachments_success">Attachment downloaded</string>
-  <string name="download_attachments_error">Could not download attachment</string>
-  <string name="share_attachments_error">Could not share attachment</string>
+  <string name="download_attachments_error">Kunne ikke downloade vedhæftning</string>
+  <string name="share_attachments_error">Kunne ikke dele vedhæftning</string>
   <string name="upload_attachments_error">Kunne ikke uploade vedhæftning</string>
-  <string name="attachment_size_exceeded_error">The selected file exceeds the size limit. Please choose a file smaller than 100MB.</string>
+  <string name="attachment_size_exceeded_error">Den valgte fil overskrider størrelsesbegrænsningen. Vælg en fil, der er mindre end 100 MB.</string>
   <string name="open_with">Åbn med:</string>
-  <string name="share_with">Share with:</string>
+  <string name="share_with">Del med:</string>
 </resources>

@@ -37,4 +37,6 @@
   <string name="storage_full_body">Улучшите тариф, чтобы увеличить объем хранилища.</string>
   <string name="storage_full_upgrade">Повысить</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s из %2$s</string>
+  <string name="attachments_saved_to_location_success">Attachment saved to location</string>
+  <string name="attachments_saved_to_location_error">Could not save attachment to location</string>
 </resources>

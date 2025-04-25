@@ -27,9 +27,9 @@
   <string name="account_settings_list_item_security_keys_hint_not_set">Nie ustawiono</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
-    <item quantity="one">Ustawiono %d klucz bezpieczeństwa</item>
-    <item quantity="few">Ustawiono %d klucze bezpieczeństwa</item>
-    <item quantity="many">Ustawiono %d kluczy bezpieczeństwa</item>
-    <item quantity="other">Ustawiono %d kluczy bezpieczeństwa</item>
+    <item quantity="one">%d klucz bezpieczeństwa</item>
+    <item quantity="few">%d klucze bezpieczeństwa</item>
+    <item quantity="many">%d kluczy bezpieczeństwa</item>
+    <item quantity="other">%d kluczy bezpieczeństwa</item>
   </plurals>
 </resources>

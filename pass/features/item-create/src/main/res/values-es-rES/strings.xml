@@ -10,13 +10,13 @@
   <string name="action_credit_card">Tarjeta de crédito</string>
   <string name="action_password">Contraseña</string>
   <string name="action_identity">Identidad</string>
-  <string name="action_custom">Elemento personalizado</string>
+  <string name="action_more">Más</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Añadir detalles de inicio de sesión para una aplicación o sitio web</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Obtener un alias de correo electrónico para utilizarlo en nuevas aplicaciones</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Anota un PIN, un código o una nota para ti mismo</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Almacena de forma segura tu información de pago.</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Rellena tus datos personales.</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Crea elementos con campos completamente personalizados</string>
+  <string name="item_type_more_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Guarda los datos de WiFi, contraseña, SSH o personalízalo</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Genera una contraseña segura</string>
   <!-- Create Login -->
   <string name="field_email_title">Dirección de correo electrónico</string>
@@ -265,7 +265,7 @@
   <string name="template_ssh_key_field_host">Servidor</string>
   <string name="template_ssh_key_field_note">Nota</string>
   <!-- WiFi Network Fields -->
-  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_name">Nombre (SSID)</string>
   <string name="template_wifi_network_field_note">Nota</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Nombre del banco</string>

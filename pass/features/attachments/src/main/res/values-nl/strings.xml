@@ -22,8 +22,8 @@
   <string name="add_attachment_choose_a_file">Kies een bestand</string>
   <string name="attachment_options_rename">Hernoem</string>
   <string name="attachment_options_delete">Verwijderen</string>
-  <string name="attachment_options_download">Download</string>
-  <string name="attachment_options_share">Share</string>
+  <string name="attachment_options_download">Downloaden</string>
+  <string name="attachment_options_share">Delen</string>
   <string name="file_picker_open_error">Kan de bestandskiezer niet openen</string>
   <string name="media_picker_open_error">Kan de mediakiezer niet openen</string>
   <string name="camera_open_error">Camera kan niet worden geopend</string>
@@ -37,4 +37,6 @@
   <string name="storage_full_body">Upgrade om uw opslagcapaciteit te vergroten.</string>
   <string name="storage_full_upgrade">Upgraden</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s van %2$s</string>
+  <string name="attachments_saved_to_location_success">Bijlage opgeslagen op locatie</string>
+  <string name="attachments_saved_to_location_error">Kon bijlage niet opslaan op locatie</string>
 </resources>

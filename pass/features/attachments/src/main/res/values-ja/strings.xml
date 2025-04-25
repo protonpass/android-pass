@@ -22,8 +22,8 @@
   <string name="add_attachment_choose_a_file">ファイルを選択</string>
   <string name="attachment_options_rename">名前を変更</string>
   <string name="attachment_options_delete">削除</string>
-  <string name="attachment_options_download">Download</string>
-  <string name="attachment_options_share">Share</string>
+  <string name="attachment_options_download">ダウンロード</string>
+  <string name="attachment_options_share">共有</string>
   <string name="file_picker_open_error">ファイルピッカーを開くことができませんでした</string>
   <string name="media_picker_open_error">メディアピッカーを開くことができませんでした</string>
   <string name="camera_open_error">カメラを開くことができませんでした</string>
@@ -37,4 +37,6 @@
   <string name="storage_full_body">アップグレードすると、ストレージ容量が増えます。</string>
   <string name="storage_full_upgrade">アップグレード</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%2$s の中の%1$s</string>
+  <string name="attachments_saved_to_location_success">添付ファイルを場所に保存しました</string>
+  <string name="attachments_saved_to_location_error">場所に添付ファイルを保存できませんでした</string>
 </resources>

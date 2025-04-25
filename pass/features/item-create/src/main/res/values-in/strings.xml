@@ -10,13 +10,13 @@
   <string name="action_credit_card">Kartu kredit</string>
   <string name="action_password">Kata sandi</string>
   <string name="action_identity">Identitas</string>
-  <string name="action_custom">Item khusus</string>
+  <string name="action_more">Lainnya</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Tambahkan rincian entri masuk untuk aplikasi atau situs tertentu</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Dapatkan alias email untuk digunakan pada berbagai aplikasi baru</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Tulis PIN, kode, atau catatan untuk diri Anda sendiri</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Simpan informasi pembayaran Anda dengan aman</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Isi data pribadi Anda</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Buat item dengan kolom yang dapat disesuaikan sepenuhnya</string>
+  <string name="item_type_more_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Simpan WiFi, paspor, SSH, atau item khusus lainnya</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Hasilkan kata sandi yang aman</string>
   <!-- Create Login -->
   <string name="field_email_title">Alamat email</string>
@@ -199,7 +199,7 @@
   <string name="mfa_icon_content_description">Ikon 2FA</string>
   <string name="create_alias_content_limit_banner">Anda telah mencapai batas jumlah alias yang dapat Anda buat. Dapatkan kemampuan untuk membuat alias tanpa batasan jumlah dengan meningkatkan paket langganan Anda.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Aplikasi perlu diperbarui untuk menyunting item ini</string>
-  <string name="remove_passkey_dialog_title">Hapus kunci sandi ini?</string>
+  <string name="remove_passkey_dialog_title">Hapus passkey ini?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Anda akan menghapus passkey situs \'%2$s\' milik pengguna \'%1$s\'. Apakah Anda yakin?</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Lampiran</string>
@@ -265,7 +265,7 @@
   <string name="template_ssh_key_field_host">Host</string>
   <string name="template_ssh_key_field_note">Catatan</string>
   <!-- WiFi Network Fields -->
-  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_name">Name (SSID)</string>
   <string name="template_wifi_network_field_note">Catatan</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Nama Bank</string>

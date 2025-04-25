@@ -55,7 +55,6 @@
   <string name="action_conceal_password">Ascundere parolă</string>
   <string name="action_reveal_number">Afișare număr</string>
   <string name="action_conceal_number">Ascundere număr</string>
-  <string name="share_button_content_description">Deschidere buton partajare.</string>
   <string name="open_menu_icon_content_description">Buton meniu deschidere</string>
   <string name="mfa_limit_reached">Limită A2F atinsă.</string>
   <string name="mfa_icon_content_description">Pictogramă A2F</string>

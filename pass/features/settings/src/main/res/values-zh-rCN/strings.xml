@@ -19,7 +19,7 @@
   <string name="settings_option_view_logs">查看日志</string>
   <string name="settings_option_force_sync">强制同步</string>
   <string name="settings_about_section_title">关于</string>
-  <string name="settings_option_privacy_policy">隐私协议</string>
+  <string name="settings_option_privacy_policy">隐私政策</string>
   <string name="settings_option_terms_of_service">服务条款</string>
   <string name="settings_privacy_section_title">隐私</string>
   <string name="settings_use_favicons_preference_title">使用网页图标</string>

@@ -18,7 +18,6 @@
   -->
 <resources>
   <string name="item_details_toolbar_content_description_menu_button">Pulsante per la visualizzazione delle opzioni di menu</string>
-  <string name="item_details_toolbar_content_description_share_button">Pulsante per la condivisione di un elemento</string>
   <!-- Item details forbidden actions -->
   <string name="item_details_forbidden_actions_edit_title">Impossibile modificare</string>
   <string name="item_details_forbidden_actions_edit_permission">Non disponi delle autorizzazioni necessarie per modificare questo elemento.</string>

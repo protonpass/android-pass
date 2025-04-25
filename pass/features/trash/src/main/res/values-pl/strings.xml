@@ -3,9 +3,9 @@
   <string name="bottomsheet_delete_permanently">Usuń trwale</string>
   <string name="alert_confirm_delete_item_dialog_title">Usunąć trwale?</string>
   <string name="alert_confirm_delete_item_dialog_message">Ta akcja jest nieodwracalna.</string>
-  <string name="alert_confirm_delete_item_dialog_shared_warning_message">This item is currently shared. Deleting it to will remove access for all other users.</string>
-  <string name="alias_dialog_move_to_trash_title">Przenieść do Kosza?</string>
-  <string name="alias_dialog_move_to_trash_content">Jeśli przeniesiesz alias do Kosza, przekierowanie wiadomości zostanie zatrzymane.</string>
+  <string name="alert_confirm_delete_item_dialog_shared_warning_message">Element jest udostępniony. Usunięcie go spowoduje zatrzymanie udostępniania.</string>
+  <string name="alias_dialog_move_to_trash_title">Przenieść do kosza?</string>
+  <string name="alias_dialog_move_to_trash_content">Jeśli przeniesiesz alias do kosza, przekierowanie wiadomości zostanie zatrzymane.</string>
   <string name="alias_dialog_move_to_trash_confirm">Potwierdź</string>
   <string name="delete_alias_confirm">Usuń go. Nigdy nie będę go potrzebować</string>
   <string name="delete_alias_title">Usuń %s</string>

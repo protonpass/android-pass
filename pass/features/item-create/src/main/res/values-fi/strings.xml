@@ -10,13 +10,13 @@
   <string name="action_credit_card">Maksukortti</string>
   <string name="action_password">Salasana</string>
   <string name="action_identity">Identiteetti</string>
-  <string name="action_custom">Mukautettu kohde</string>
+  <string name="action_more">More</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Lisää sovelluksen tai sivuston kirjautumistiedot.</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Hanki sähköpostialias, jota voit käyttää uusissa sovelluksissa.</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Säilytä PIN- tai muita koodeja, tai muita muistiinpanoja.</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Säilytä maksutapojesi tiedot turvallisesti.</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Täytä henkilötietosi</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Luo kohteita täysin mukautetuilla kentillä</string>
+  <string name="item_type_more_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Save WiFi, passport, SSH, or go custom</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Luo turvallinen salasana.</string>
   <!-- Create Login -->
   <string name="field_email_title">Sähköpostiosoite</string>
@@ -265,7 +265,7 @@
   <string name="template_ssh_key_field_host">Isäntä</string>
   <string name="template_ssh_key_field_note">Muistiinpano</string>
   <!-- WiFi Network Fields -->
-  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_name">Name (SSID)</string>
   <string name="template_wifi_network_field_note">Muistiinpano</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Pankin nimi</string>

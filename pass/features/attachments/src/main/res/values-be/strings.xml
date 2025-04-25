@@ -22,8 +22,8 @@
   <string name="add_attachment_choose_a_file">Выберыце файл</string>
   <string name="attachment_options_rename">Перайменаваць</string>
   <string name="attachment_options_delete">Выдаліць</string>
-  <string name="attachment_options_download">Download</string>
-  <string name="attachment_options_share">Share</string>
+  <string name="attachment_options_download">Спампаваць</string>
+  <string name="attachment_options_share">Абагуліць</string>
   <string name="file_picker_open_error">Немагчыма адкрыць сродак выбару файлаў</string>
   <string name="media_picker_open_error">Немагчыма адкрыць сродак выбару медыя</string>
   <string name="camera_open_error">Немагчыма адрыць камеру</string>
@@ -37,4 +37,6 @@
   <string name="storage_full_body">Палепшыць, каб павялічыць ёмістасць вашага сховішча.</string>
   <string name="storage_full_upgrade">Палепшыць</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s з %2$s</string>
+  <string name="attachments_saved_to_location_success">Далучэнне захавана ў размяшчэнні</string>
+  <string name="attachments_saved_to_location_error">Немагчыма захаваць далучэнне ў размяшчэнні</string>
 </resources>

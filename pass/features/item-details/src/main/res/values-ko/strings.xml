@@ -18,7 +18,6 @@
   -->
 <resources>
   <string name="item_details_toolbar_content_description_menu_button">메뉴 옵션을 표시하는 버튼</string>
-  <string name="item_details_toolbar_content_description_share_button">항목 공유를 위한 버튼</string>
   <!-- Item details forbidden actions -->
   <string name="item_details_forbidden_actions_edit_title">편집 불가</string>
   <string name="item_details_forbidden_actions_edit_permission">편집할 권한이 없어 이 항목 수정이 불가합니다.</string>

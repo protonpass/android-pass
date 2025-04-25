@@ -18,7 +18,6 @@
   -->
 <resources>
   <string name="item_details_toolbar_content_description_menu_button">Buton pentru afișarea meniului de opțiuni</string>
-  <string name="item_details_toolbar_content_description_share_button">Buton pentru partajarea unui articol</string>
   <!-- Item details forbidden actions -->
   <string name="item_details_forbidden_actions_edit_title">Nu se poate edita</string>
   <string name="item_details_forbidden_actions_edit_permission">Nu puteți edita acest articol deoarece nu aveți suficiente permisiuni pentru a face acest lucru.</string>

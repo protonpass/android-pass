@@ -54,7 +54,6 @@
   <string name="action_conceal_password">Ocultar contraseña</string>
   <string name="action_reveal_number">Mostrar el número</string>
   <string name="action_conceal_number">Ocultar el número</string>
-  <string name="share_button_content_description">Abrir el botón para compartir</string>
   <string name="open_menu_icon_content_description">Botón de abrir menú</string>
   <string name="mfa_limit_reached">Límite de 2FA alcanzado</string>
   <string name="mfa_icon_content_description">Ícono de 2FA</string>

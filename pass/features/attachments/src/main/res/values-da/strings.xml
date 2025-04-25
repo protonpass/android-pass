@@ -23,7 +23,7 @@
   <string name="attachment_options_rename">Omdøb</string>
   <string name="attachment_options_delete">Slet</string>
   <string name="attachment_options_download">Download</string>
-  <string name="attachment_options_share">Share</string>
+  <string name="attachment_options_share">Del</string>
   <string name="file_picker_open_error">Kunne ikke åbne filvælgeren</string>
   <string name="media_picker_open_error">Kunne ikke åbne medievælger</string>
   <string name="camera_open_error">Kunne ikke åbne kamera</string>
@@ -37,4 +37,6 @@
   <string name="storage_full_body">Opgrader for at øge din lagerkapacitet.</string>
   <string name="storage_full_upgrade">Opgradér</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s af %2$s</string>
+  <string name="attachments_saved_to_location_success">Vedhæftning gemt på placering</string>
+  <string name="attachments_saved_to_location_error">Kunne ikke gemme vedhæftning på placering</string>
 </resources>

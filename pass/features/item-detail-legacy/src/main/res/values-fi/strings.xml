@@ -54,7 +54,6 @@
   <string name="action_conceal_password">Piilota salasana</string>
   <string name="action_reveal_number">Näytä numero</string>
   <string name="action_conceal_number">Piilota numero</string>
-  <string name="share_button_content_description">Avaa jakaminen -painike</string>
   <string name="open_menu_icon_content_description">Avaa valikko -painike</string>
   <string name="mfa_limit_reached">Kaksivaiheisen tunnistautumisen rajoitus on saavutettu</string>
   <string name="mfa_icon_content_description">Kasivaiheisen tunnistautumisen kuvake</string>

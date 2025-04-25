@@ -53,7 +53,6 @@
   <string name="action_conceal_password">隱蔽密碼</string>
   <string name="action_reveal_number">顯示號碼</string>
   <string name="action_conceal_number">隱蔽號碼</string>
-  <string name="share_button_content_description">開啟共享按鈕</string>
   <string name="open_menu_icon_content_description">開啟清單</string>
   <string name="mfa_limit_reached">雙重驗證已達上限</string>
   <string name="mfa_icon_content_description">雙重驗證圖像</string>

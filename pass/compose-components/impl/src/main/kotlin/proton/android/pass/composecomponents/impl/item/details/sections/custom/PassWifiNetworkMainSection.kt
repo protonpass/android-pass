@@ -60,6 +60,7 @@ import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.WifiSecurityType
 import proton.android.pass.domain.items.ItemCategory
 import me.proton.core.presentation.R as CoreR
+import proton.android.pass.composecomponents.impl.R as CompR
 
 private const val HIDDEN_PRIVATE_KEY_TEXT_LENGTH = 12
 
@@ -74,8 +75,8 @@ fun PassWifiNetworkMainSection(
 ) {
     RoundedCornersColumn(modifier = modifier) {
         PassItemDetailFieldRow(
-            icon = CoreR.drawable.ic_proton_text_align_left,
-            title = stringResource(R.string.item_details_wifi_network_label_ssid),
+            icon = CompR.drawable.ic_wifi,
+            title = stringResource(R.string.item_details_wifi_network_label_ssid_name),
             subtitle = contents.ssid,
             itemColors = itemColors,
             itemDiffType = itemDiffs.ssid,
@@ -88,7 +89,9 @@ fun PassWifiNetworkMainSection(
                 )
             }
         )
+
         PassDivider()
+
         PassItemDetailsHiddenFieldRow(
             icon = CoreR.drawable.ic_proton_key,
             title = stringResource(R.string.item_details_wifi_network_label_password),
@@ -118,16 +121,20 @@ fun PassWifiNetworkMainSection(
                 )
             }
         )
+
         PassDivider()
+
         PassItemDetailFieldRow(
-            icon = CoreR.drawable.ic_proton_key,
+            icon = CoreR.drawable.ic_proton_lock,
             title = stringResource(R.string.item_details_wifi_network_label_security),
             subtitle = getWifiSecurityTypeText(contents.wifiSecurityType),
             itemColors = itemColors,
             itemDiffType = itemDiffs.wifiSecurity
         )
+
         if (svgQR is Some) {
             PassDivider()
+
             Row(
                 modifier = modifier
                     .fillMaxWidth()
@@ -142,6 +149,7 @@ fun PassWifiNetworkMainSection(
                     id = R.drawable.ic_qr_code,
                     tint = itemColors.norm
                 )
+
                 Text.Body1Regular(
                     text = stringResource(R.string.show_network_qr_code),
                     color = itemColors.majorSecondary
@@ -153,7 +161,7 @@ fun PassWifiNetworkMainSection(
 
 @Preview
 @Composable
-fun PassWifiNetworkMainSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun PassWifiNetworkMainSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             PassWifiNetworkMainSection(

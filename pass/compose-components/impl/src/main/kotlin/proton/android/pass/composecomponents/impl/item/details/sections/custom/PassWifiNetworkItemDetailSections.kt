@@ -73,6 +73,7 @@ internal fun PassWifiNetworkItemDetailSections(
             itemDiffs = itemDiffs,
             onEvent = onEvent
         )
+
         if (contents.customFieldList.isNotEmpty()) {
             PassItemDetailCustomFieldsSection(
                 customFields = contents.customFieldList.toPersistentList(),

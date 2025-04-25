@@ -22,6 +22,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 fun ConfirmCloseDialog(
@@ -30,15 +32,21 @@ fun ConfirmCloseDialog(
     onCancel: () -> Unit,
     onConfirm: () -> Unit
 ) {
-    if (!show) return
-
-    ConfirmDialog(
+    ConfirmWithLoadingDialog(
         modifier = modifier,
-        title = stringResource(R.string.confirm_close_dialog_title),
-        message = stringResource(R.string.confirm_close_dialog_message),
-        confirmText = stringResource(R.string.confirm_close_dialog_close_button),
-        state = true,
+        show = show,
+        isLoading = false,
+        isConfirmActionDestructive = false,
+        title = stringResource(id = R.string.confirm_close_dialog_title),
+        confirmText = stringResource(id = R.string.confirm_close_dialog_close_button),
+        cancelText = stringResource(id = CompR.string.action_cancel),
         onDismiss = onCancel,
-        onConfirm = { onConfirm() }
+        onConfirm = onConfirm,
+        onCancel = onCancel,
+        content = {
+            Text.Body1Regular(
+                text = stringResource(id = R.string.confirm_close_dialog_message)
+            )
+        }
     )
 }

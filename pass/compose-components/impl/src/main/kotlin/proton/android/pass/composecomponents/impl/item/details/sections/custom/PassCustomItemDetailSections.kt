@@ -61,7 +61,7 @@ internal fun PassCustomItemDetailSections(
     attachmentsState: AttachmentsState,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
-    return Column(
+    Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {

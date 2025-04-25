@@ -38,6 +38,7 @@ import proton.android.pass.image.api.ClearIconCache
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.notifications.api.ToastManager
+import proton.android.pass.preferences.DisplayFileAttachmentsBanner
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryBannerPreference
@@ -67,77 +68,89 @@ class InternalDrawerViewModel @Inject constructor(
     private val toastManager: ToastManager
 ) : ViewModel() {
 
-    internal fun clearPreferences() = viewModelScope.launch {
-        preferenceRepository.clearPreferences()
-            .flatMap { internalSettingsRepository.clearSettings() }
-            .flatMap { runCatching { tooltipPreferencesRepository.clear() } }
-            .onSuccess {
-                snackbarDispatcher(PreferencesCleared)
+    internal fun clearPreferences() {
+        viewModelScope.launch {
+            preferenceRepository.clearPreferences()
+                .flatMap { internalSettingsRepository.clearSettings() }
+                .flatMap { runCatching { tooltipPreferencesRepository.clear() } }
+                .onSuccess {
+                    snackbarDispatcher(PreferencesCleared)
+                }
+                .onFailure {
+                    PassLogger.e(TAG, it, "Error clearing preferences")
+                    snackbarDispatcher(PreferencesClearError)
+                }
+        }
+    }
+
+    internal fun clearIconCache() {
+        viewModelScope.launch {
+            clearCache()
+        }
+    }
+
+    internal fun runSecurityChecks() {
+        viewModelScope.launch {
+            observeSecurityAnalysis().collect { analysis ->
+                PassLogger.i(TAG, "-----")
+                PassLogger.i(TAG, "Security analysis: Breached Data: ${analysis.breachedData}")
+                PassLogger.i(
+                    TAG,
+                    "Security analysis: Insecure Passwords: ${analysis.insecurePasswords}"
+                )
+                PassLogger.i(TAG, "Security analysis: Missing 2FA: ${analysis.missing2fa}")
+                PassLogger.i(TAG, "Security analysis: Reused passwords: ${analysis.reusedPasswords}")
+                PassLogger.i(TAG, "-----")
             }
-            .onFailure {
-                PassLogger.e(TAG, it, "Error clearing preferences")
-                snackbarDispatcher(PreferencesClearError)
+        }
+    }
+
+    internal fun setAccessKey() {
+        viewModelScope.launch {
+            val encrypted = encryptionContextProvider.withEncryptionContext { encrypt("MyPassword") }
+            runCatching {
+                setupExtraPassword(encrypted)
+            }.onSuccess {
+                PassLogger.i(TAG, "Access key set successfully")
+            }.onFailure {
+                PassLogger.w(TAG, "Error setting access key")
+                PassLogger.w(TAG, it)
             }
-    }
-
-    fun clearIconCache() = viewModelScope.launch {
-        clearCache()
-    }
-
-    fun runSecurityChecks() = viewModelScope.launch {
-        observeSecurityAnalysis().collect { analysis ->
-            PassLogger.i(TAG, "-----")
-            PassLogger.i(TAG, "Security analysis: Breached Data: ${analysis.breachedData}")
-            PassLogger.i(
-                TAG,
-                "Security analysis: Insecure Passwords: ${analysis.insecurePasswords}"
-            )
-            PassLogger.i(TAG, "Security analysis: Missing 2FA: ${analysis.missing2fa}")
-            PassLogger.i(TAG, "Security analysis: Reused passwords: ${analysis.reusedPasswords}")
-            PassLogger.i(TAG, "-----")
         }
     }
 
-    fun setAccessKey() = viewModelScope.launch {
-        val encrypted = encryptionContextProvider.withEncryptionContext { encrypt("MyPassword") }
-        runCatching {
-            setupExtraPassword(encrypted)
-        }.onSuccess {
-            PassLogger.i(TAG, "Access key set successfully")
-        }.onFailure {
-            PassLogger.w(TAG, "Error setting access key")
-            PassLogger.w(TAG, it)
+    internal fun performSrp() {
+        viewModelScope.launch {
+            val encrypted = encryptionContextProvider.withEncryptionContext { encrypt("MyPassword") }
+            val userId = accountManager.getPrimaryUserId().firstOrNull() ?: run {
+                PassLogger.w(TAG, "No primary user id")
+                return@launch
+            }
+            runCatching {
+                authWithExtraPassword(userId, encrypted)
+            }.onSuccess {
+                PassLogger.i(TAG, "SRP performed successfully. Result: $it")
+            }.onFailure {
+                PassLogger.w(TAG, "Error performing SRP key")
+                PassLogger.w(TAG, it)
+            }
         }
     }
 
-    fun performSrp() = viewModelScope.launch {
-        val encrypted = encryptionContextProvider.withEncryptionContext { encrypt("MyPassword") }
-        val userId = accountManager.getPrimaryUserId().firstOrNull() ?: run {
-            PassLogger.w(TAG, "No primary user id")
-            return@launch
-        }
-        runCatching {
-            authWithExtraPassword(userId, encrypted)
-        }.onSuccess {
-            PassLogger.i(TAG, "SRP performed successfully. Result: $it")
-        }.onFailure {
-            PassLogger.w(TAG, "Error performing SRP key")
-            PassLogger.w(TAG, it)
+    internal fun removeAccessKey() {
+        viewModelScope.launch {
+            runCatching {
+                removeExtraPassword.invoke()
+            }.onSuccess {
+                PassLogger.i(TAG, "Access key removed successfully")
+            }.onFailure {
+                PassLogger.w(TAG, "Error removing access key")
+                PassLogger.w(TAG, it)
+            }
         }
     }
 
-    fun removeAccessKey() = viewModelScope.launch {
-        runCatching {
-            removeExtraPassword.invoke()
-        }.onSuccess {
-            PassLogger.i(TAG, "Access key removed successfully")
-        }.onFailure {
-            PassLogger.w(TAG, "Error removing access key")
-            PassLogger.w(TAG, it)
-        }
-    }
-
-    fun clearAttachments() {
+    internal fun clearAttachments() {
         viewModelScope.launch {
             withContext(appDispatchers.io) {
                 val file = File(context.filesDir, FilesDirectories.Attachments.value)
@@ -155,18 +168,23 @@ class InternalDrawerViewModel @Inject constructor(
         }
     }
 
-    fun displayAllFeatureDiscoveryBanners() {
-        viewModelScope.launch {
-            FeatureDiscoveryFeature.entries.forEach { feature ->
-                preferenceRepository.setDisplayFeatureDiscoverBanner(
-                    feature = feature,
-                    preference = FeatureDiscoveryBannerPreference.Display
-                )
-            }
+    internal fun displayAllFeatureDiscoveryBanners() {
+        FeatureDiscoveryFeature.entries.forEach { feature ->
+            preferenceRepository.setDisplayFeatureDiscoverBanner(
+                feature = feature,
+                preference = FeatureDiscoveryBannerPreference.Display
+            )
         }
+
+        preferenceRepository.setDisplayFileAttachmentsOnboarding(
+            value = DisplayFileAttachmentsBanner.Display
+        )
     }
 
-    companion object {
+    private companion object {
+
         private const val TAG = "InternalDrawerViewModel"
+
     }
+
 }

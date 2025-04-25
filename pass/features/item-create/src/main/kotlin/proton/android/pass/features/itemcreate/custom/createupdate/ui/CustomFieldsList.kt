@@ -73,6 +73,7 @@ internal fun LazyListScope.customFieldsList(
                     .focusRequester(focusRequester),
                 entry = entry,
                 canEdit = enabled,
+                showLeadingIcon = false,
                 isError = errors.contains(ItemValidationErrors.EmptyTotp(sectionIndex, index)) ||
                     errors.contains(ItemValidationErrors.InvalidTotp(sectionIndex, index)),
                 errorMessage = when {

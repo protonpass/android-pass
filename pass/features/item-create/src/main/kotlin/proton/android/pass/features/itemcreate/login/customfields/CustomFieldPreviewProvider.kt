@@ -30,7 +30,15 @@ internal class CustomFieldPreviewProvider : PreviewParameterProvider<CustomField
     override val values: Sequence<CustomFieldInput> = sequence {
         for (text in listOf("", "value")) {
             for (enabled in listOf(true, false)) {
-                yield(CustomFieldInput(text, enabled))
+                for (showLeadingIcon in listOf(true, false)) {
+                    CustomFieldInput(
+                        text = text,
+                        enabled = enabled,
+                        showLeadingIcon = showLeadingIcon
+                    ).also { customFieldInput ->
+                        yield(customFieldInput)
+                    }
+                }
             }
         }
     }
@@ -38,5 +46,6 @@ internal class CustomFieldPreviewProvider : PreviewParameterProvider<CustomField
 
 internal data class CustomFieldInput(
     val text: String,
-    val enabled: Boolean
+    val enabled: Boolean,
+    val showLeadingIcon: Boolean
 )

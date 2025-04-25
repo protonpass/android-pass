@@ -23,10 +23,8 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -79,7 +77,12 @@ fun ProtonTextField(
     verticalArrangement: Arrangement.Vertical = Arrangement.Center,
     onChange: (String) -> Unit,
     onFocusChange: ((Boolean) -> Unit)? = null,
-    onDoneClick: (() -> Unit)? = null
+    onDoneClick: (() -> Unit)? = null,
+    errorMessageModifier: Modifier = if (leadingIcon == null) {
+        Modifier
+    } else {
+        Modifier.padding(start = 50.dp)
+    }
 ) {
     val maxLines = if (singleLine) {
         1
@@ -155,26 +158,22 @@ fun ProtonTextField(
             visible = isError && errorMessage.isNotBlank(),
             label = "ProtonTextField-errorMessage"
         ) {
-            Row {
-                if (leadingIcon != null) {
-                    Spacer(modifier = Modifier.width(50.dp))
-                }
-                Text(
-                    text = errorMessage,
-                    style = ProtonTheme.typography.captionNorm,
-                    color = PassTheme.colors.signalDanger
-                )
-            }
+            Text(
+                modifier = errorMessageModifier,
+                text = errorMessage,
+                style = ProtonTheme.typography.captionNorm,
+                color = PassTheme.colors.signalDanger
+            )
         }
     }
 }
 
-class ThemeAndProtonTextFieldProvider :
+internal class ThemeAndProtonTextFieldProvider :
     ThemePairPreviewProvider<ProtonTextFieldPreviewData>(ProtonTextFieldPreviewProvider())
 
 @Preview
 @Composable
-fun ProtonTextFieldPreview(
+internal fun ProtonTextFieldPreview(
     @PreviewParameter(ThemeAndProtonTextFieldProvider::class)
     input: Pair<Boolean, ProtonTextFieldPreviewData>
 ) {

@@ -21,6 +21,7 @@ package proton.android.pass.features.itemcreate.common.customfields
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
@@ -32,10 +33,11 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
@@ -58,7 +60,8 @@ internal fun HiddenCustomFieldEntry(
     onChange: (String) -> Unit,
     onFocusChange: (Int, Boolean) -> Unit,
     onOptionsClick: () -> Unit,
-    index: Int
+    index: Int,
+    showLeadingIcon: Boolean
 ) {
     val (text, visualTransformation) = when (val value = content.value) {
         is UIHiddenState.Concealed -> "x".repeat(PASSWORD_CONCEALED_LENGTH) to PasswordVisualTransformation()
@@ -68,7 +71,18 @@ internal fun HiddenCustomFieldEntry(
 
     Box(modifier = modifier.roundedContainerNorm()) {
         ProtonTextField(
-            modifier = Modifier.padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
+            modifier = Modifier.padding(
+                start = Spacing.none,
+                top = Spacing.medium,
+                end = Spacing.extraSmall,
+                bottom = Spacing.medium
+            ),
+            textFieldModifier = Modifier
+                .fillMaxWidth()
+                .applyIf(
+                    condition = !showLeadingIcon,
+                    ifTrue = { padding(start = Spacing.medium) }
+                ),
             value = text,
             editable = canEdit,
             moveToNextOnEnter = true,
@@ -79,15 +93,22 @@ internal fun HiddenCustomFieldEntry(
             placeholder = {
                 ProtonTextFieldPlaceHolder(text = stringResource(R.string.custom_field_hidden_placeholder))
             },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(CoreR.drawable.ic_proton_eye_slash),
-                    contentDescription = stringResource(R.string.custom_field_hidden_icon_content_description),
-                    tint = ProtonTheme.colors.iconWeak
-                )
+            leadingIcon = if (showLeadingIcon) {
+                {
+                    Icon(
+                        painter = painterResource(CoreR.drawable.ic_proton_eye_slash),
+                        contentDescription = stringResource(R.string.custom_field_hidden_icon_content_description),
+                        tint = ProtonTheme.colors.iconWeak
+                    )
+                }
+            } else {
+                null
             },
             trailingIcon = {
-                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                Row(
+                    modifier = Modifier.padding(end = Spacing.small),
+                    horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
+                ) {
                     if (text.isNotEmpty()) {
                         SmallCrossIconButton { onChange("") }
                     }
@@ -105,18 +126,21 @@ internal fun HiddenCustomFieldEntry(
 internal fun HiddenCustomFieldEntryPreview(
     @PreviewParameter(ThemeCustomFieldPreviewProvider::class) input: Pair<Boolean, CustomFieldInput>
 ) {
-    PassTheme(isDark = input.first) {
+    val (isDark, customFieldInput) = input
+
+    PassTheme(isDark = isDark) {
         Surface {
             HiddenCustomFieldEntry(
                 content = UICustomFieldContent.Hidden(
                     label = "label",
                     value = UIHiddenState.Revealed("", input.second.text)
                 ),
-                canEdit = input.second.enabled,
+                canEdit = customFieldInput.enabled,
                 onChange = {},
                 onFocusChange = { _, _ -> },
                 onOptionsClick = {},
-                index = 0
+                index = 0,
+                showLeadingIcon = customFieldInput.showLeadingIcon
             )
         }
     }

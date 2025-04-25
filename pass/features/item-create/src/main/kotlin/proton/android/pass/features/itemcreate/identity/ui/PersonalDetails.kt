@@ -159,6 +159,7 @@ internal fun PersonalDetails(
             val focusRequester = remember { FocusRequester() }
             CustomFieldEntry(
                 modifier = Modifier.focusRequester(focusRequester),
+                passItemColors = passItemColors(ItemCategory.Identity),
                 entry = value,
                 canEdit = enabled,
                 isError = false,

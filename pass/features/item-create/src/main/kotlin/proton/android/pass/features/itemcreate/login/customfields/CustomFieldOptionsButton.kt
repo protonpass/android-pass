@@ -22,6 +22,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,26 +34,35 @@ import proton.android.pass.features.itemcreate.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun CustomFieldOptionsButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun CustomFieldOptionsButton(
+    modifier: Modifier = Modifier,
+    backgroundColor: Color,
+    tint: Color,
+    onClick: () -> Unit
+) {
     CircleIconButton(
         modifier = modifier,
-        backgroundColor = PassTheme.colors.loginInteractionNormMinor1,
+        backgroundColor = backgroundColor,
         onClick = onClick
     ) {
         Icon(
             painter = painterResource(CoreR.drawable.ic_proton_three_dots_vertical),
             contentDescription = stringResource(R.string.custom_field_options_content_description),
-            tint = PassTheme.colors.loginInteractionNormMajor2
+            tint = tint
         )
     }
 }
 
 @Preview
 @Composable
-fun CustomFieldOptionsButtonPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun CustomFieldOptionsButtonPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            CustomFieldOptionsButton(onClick = {})
+            CustomFieldOptionsButton(
+                backgroundColor = PassTheme.colors.loginInteractionNormMinor1,
+                tint = PassTheme.colors.loginInteractionNormMajor2,
+                onClick = {}
+            )
         }
     }
 }

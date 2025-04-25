@@ -42,6 +42,9 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.icon.Icon
+import proton.android.pass.composecomponents.impl.utils.PassItemColors
+import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.login.customfields.CustomFieldOptionsButton
@@ -56,7 +59,8 @@ internal fun DateCustomFieldEntry(
     onClick: () -> Unit,
     onFocusChange: (Int, Boolean) -> Unit,
     onOptionsClick: () -> Unit,
-    showLeadingIcon: Boolean
+    showLeadingIcon: Boolean,
+    passItemColors: PassItemColors
 ) {
     val pattern = stringResource(R.string.custom_field_date_pattern)
     val date = remember(pattern, content.value) {
@@ -101,7 +105,11 @@ internal fun DateCustomFieldEntry(
                 modifier = Modifier.padding(end = Spacing.small),
                 horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
             ) {
-                CustomFieldOptionsButton(onClick = onOptionsClick)
+                CustomFieldOptionsButton(
+                    backgroundColor = passItemColors.minorPrimary,
+                    tint = passItemColors.majorSecondary,
+                    onClick = onOptionsClick
+                )
             }
         },
         onFocusChange = { onFocusChange(index, it) }
@@ -122,7 +130,8 @@ internal fun DateCustomFieldEntryPreview(
                 onClick = {},
                 onFocusChange = { _, _ -> },
                 onOptionsClick = {},
-                showLeadingIcon = input.second
+                showLeadingIcon = input.second,
+                passItemColors = passItemColors(ItemCategory.Unknown)
             )
         }
     }

@@ -53,7 +53,6 @@
   <string name="action_conceal_password">비밀번호 숨기기</string>
   <string name="action_reveal_number">번호 표시하기</string>
   <string name="action_conceal_number">번호 숨기기</string>
-  <string name="share_button_content_description">공유 버튼 열기</string>
   <string name="open_menu_icon_content_description">매뉴 버튼 열기</string>
   <string name="mfa_limit_reached">2단계 인증 제한 도달</string>
   <string name="mfa_icon_content_description">2단계 인증 아이콘</string>

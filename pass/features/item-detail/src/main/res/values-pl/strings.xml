@@ -22,7 +22,7 @@
   <string name="website_copied_to_clipboard">Strona internetowa została skopiowana</string>
   <string name="totp_copied_to_clipboard">Kod TOTP został skopiowany</string>
   <string name="field_copied_to_clipboard">Pole zostało skopiowane</string>
-  <string name="move_item_to_trash_message">Element został przeniesiony do Kosza</string>
+  <string name="move_item_to_trash_message">Element został przeniesiony do kosza</string>
   <string name="error_move_item_to_trash_message">Wystąpił błąd podczas usuwania elementu</string>
   <string name="item_permanently_deleted_message">Element został trwale usunięty</string>
   <string name="item_permanently_deleted_message_error">Wystąpił błąd podczas usuwania elementu</string>
@@ -73,7 +73,7 @@
   <string name="credit_card_number_copied_to_clipboard">Numer karty został skopiowany do schowka</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Kod zabezpieczający został skopiowany do schowka</string>
   <!-- Bottomsheet -->
-  <string name="move_to_trash_item_detail_bottom_sheet">Przenieś do Kosza</string>
+  <string name="move_to_trash_item_detail_bottom_sheet">Przenieś do kosza</string>
   <string name="migrate_item_detail_bottom_sheet">Przenieś do innego sejfu</string>
   <!-- More info -->
   <string name="date_today">Dzisiaj %s</string>
@@ -93,11 +93,11 @@
   <string name="item_detail_cannot_perform_action_edit_title">Nie można edytować</string>
   <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Nie możesz edytować elementu, ponieważ nie masz wystarczających uprawnień.</string>
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Możesz edytować tylko najstarsze sejfy. Ulepsz do płatnego planu, aby edytować ten element.</string>
-  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Nie można edytować elementu znajdującego się w Koszu. Przenieś element z Kosza, aby go edytować.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Nie można edytować elementu znajdującego się w koszu. Przenieś element z kosza, aby go edytować.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nie można udostępnić</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nie masz wystarczających uprawnień do udostępnienia sejfu.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Osiągnięto maksymalną liczbę udostępnionych sejfów. Ulepsz plan, aby udostępnić więcej sejfów.</string>
-  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Nie można udostępniać elementu znajdującego się w Koszu. Przenieś element z Kosza, aby go udostępnić.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Nie można udostępniać elementu znajdującego się w koszu. Przenieś element z kosza, aby go udostępnić.</string>
   <string name="password_score_vulnerable">Bardzo słabe</string>
   <string name="password_score_weak">Słabe</string>
   <string name="password_score_strong">Silne</string>
@@ -112,23 +112,23 @@
   <string name="field_detail_display_name_title">Nazwa wyświetlana</string>
   <string name="display_name_section_description">Nazwa wyświetlana podczas wysyłania wiadomości z tego aliasu.</string>
   <plurals name="alias_forwards_count">
-    <item quantity="one">Przekierowano %1$s</item>
-    <item quantity="few">Przekierowano %1$s</item>
-    <item quantity="many">Przekierowano %1$s</item>
-    <item quantity="other">Przekierowano %1$s</item>
+    <item quantity="one">%1$s przekierowana</item>
+    <item quantity="few">%1$s przekierowane</item>
+    <item quantity="many">%1$s przekierowanych</item>
+    <item quantity="other">%1$s przekierowanych</item>
   </plurals>
   <plurals name="alias_replies_count">
-    <item quantity="one">%1$s odpowiedź</item>
-    <item quantity="few">%1$s odpowiedzi</item>
-    <item quantity="many">%1$s odpowiedzi</item>
-    <item quantity="other">%1$s odpowiedzi</item>
+    <item quantity="one">%1$s wysłana</item>
+    <item quantity="few">%1$s wysłane</item>
+    <item quantity="many">%1$s wysłanych</item>
+    <item quantity="other">%1$s wysłanych</item>
   </plurals>
   <plurals name="alias_blocks_count">
-    <item quantity="one">Zablokowano %1$s</item>
-    <item quantity="few">Zablokowano %1$s</item>
-    <item quantity="many">Zablokowano %1$s</item>
-    <item quantity="other">Zablokowano %1$s</item>
+    <item quantity="one">%1$s zablokowana</item>
+    <item quantity="few">%1$s zablokowane</item>
+    <item quantity="many">%1$s zablokowanych</item>
+    <item quantity="other">%1$s zablokowanych</item>
   </plurals>
-  <string name="open_with">Otwórz za pomocą:</string>
+  <string name="open_with">Otwórz w:</string>
   <string name="open_attachments_error">Nie można otworzyć załącznika</string>
 </resources>

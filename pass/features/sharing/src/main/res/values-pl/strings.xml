@@ -22,7 +22,7 @@
   <string name="sharing_can_manage">Administrator</string>
   <string name="sharing_can_view_description">Widzi elementy w sejfie.</string>
   <string name="sharing_can_edit_description">Może edytować i eksportować elementy w sejfie.</string>
-  <string name="sharing_can_manage_description">Zarządza dostępem do sejfu.</string>
+  <string name="sharing_can_manage_description">Może zarządzać dostępem do sejfu.</string>
   <plurals name="sharing_item_count">
     <item quantity="one">%d element</item>
     <item quantity="few">%d elementy</item>
@@ -37,8 +37,8 @@
   </plurals>
   <string name="sharing_member_count_header">Użytkownicy</string>
   <string name="shared_via_title">Udostępniono przez</string>
-  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Item sharing: %s</string>
-  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Vault sharing: %s</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Udostępnianie elementu: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Udostępnianie sejfu: %s</string>
   <string name="share_with_title">Udostępnij użytkownikowi</string>
   <string name="share_with_email_hint">Adres e-mail</string>
   <string name="share_with_email_error">Adres e-mail jest nieprawidłowy</string>
@@ -60,8 +60,8 @@
   <string name="sharing_snackbar_invite_reject_error">Wystąpił błąd podczas odrzucania zaproszenia</string>
   <string name="sharing_snackbar_invite_sent_success">Zaproszenie zostało wysłane</string>
   <string name="sharing_snackbar_invite_sent_error">Nie można wysłać zaproszenia</string>
-  <string name="sharing_snackbar_invite_new_users_error">Cannot send invites to new users</string>
-  <string name="sharing_snackbar_invite_free_user_error">Item invites are only allowed to be sent to paid users</string>
+  <string name="sharing_snackbar_invite_new_users_error">Nie można wysyłać zaproszeń do nowych użytkowników</string>
+  <string name="sharing_snackbar_invite_free_user_error">Zaproszenia do elementów mogą być wysyłane tylko do płatnych użytkowników</string>
   <string name="sharing_snackbar_invite_user_already_invited_error">Adres został już zaproszony</string>
   <string name="sharing_snackbar_get_vault_members_error">Nie można pobrać użytkowników sejfu</string>
   <string name="sharing_snackbar_change_permission_success">Uprawnienia zostały zmienione</string>
@@ -102,8 +102,8 @@
   <string name="sharing_bottomsheet_transfer_ownership">Zmień właściciela</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Nie możesz zmienić właściciela swojego jedynego sejfu.</string>
   <string name="sharing_bottomsheet_remove_access">Unieważnij dostęp</string>
-  <string name="sharing_bottomsheet_item_admin_subtitle">Zarządza dostępem do elementu.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Może zarządzać dostępem do elementu.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Może edytować i usuwać element.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Odczyt elementu.</string>
   <string name="sharing_bottomsheet_resend_invite">Wyślij ponownie zaproszenie</string>
   <string name="sharing_bottomsheet_cancel_invite">Anuluj zaproszenie</string>

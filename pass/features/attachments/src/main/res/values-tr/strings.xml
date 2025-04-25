@@ -37,4 +37,6 @@
   <string name="storage_full_body">Depolama alanınızı artırmak için tarifenizi yükseltin.</string>
   <string name="storage_full_upgrade">Yükselt</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s / %2$s</string>
+  <string name="attachments_saved_to_location_success">Ek dosya konuma kaydedildi</string>
+  <string name="attachments_saved_to_location_error">Ek dosya konuma kaydedilemedi</string>
 </resources>

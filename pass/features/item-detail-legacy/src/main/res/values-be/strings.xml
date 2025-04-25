@@ -56,7 +56,6 @@
   <string name="action_conceal_password">Схаваць пароль</string>
   <string name="action_reveal_number">Паказаць нумар</string>
   <string name="action_conceal_number">Схаваць нумар</string>
-  <string name="share_button_content_description">Адкрыць кнопку абагулення</string>
   <string name="open_menu_icon_content_description">Кнопка адкрыцця меню</string>
   <string name="mfa_limit_reached">Дасягнута абмежаванне 2ФА</string>
   <string name="mfa_icon_content_description">Значок 2ФА</string>

@@ -27,7 +27,7 @@
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Potwierdź</string>
   <string name="bottomsheet_cancel_button">Anuluj</string>
-  <string name="bottomsheet_move_to_trash">Przenieś do Kosza</string>
+  <string name="bottomsheet_move_to_trash">Przenieś do kosza</string>
   <string name="bottomsheet_pin_item">Przypnij</string>
   <string name="bottomsheet_unpin_item">Odepnij</string>
   <string name="bottomsheet_view_item_history">Pokaż historię</string>
@@ -280,10 +280,10 @@
   <string name="snack_bar_message_item_pinned_error">Wystąpił błąd podczas przypinania elementu</string>
   <string name="snack_bar_message_item_unpinned_success">Element został odpięty</string>
   <string name="snack_bar_message_item_unpinned_error">Wystąpił błąd podczas odpinania elementu</string>
-  <string name="snack_bar_message_item_trashed_success">Element został przeniesiony do Kosza</string>
-  <string name="snack_bar_message_item_trashed_error">Wystąpił błąd podczas przenoszenia elementu do Kosza</string>
+  <string name="snack_bar_message_item_trashed_success">Element został przeniesiony do kosza</string>
+  <string name="snack_bar_message_item_trashed_error">Wystąpił błąd podczas przenoszenia elementu do kosza</string>
   <string name="snack_bar_message_item_restore_success">Element został przywrócony</string>
-  <string name="snack_bar_message_item_restore_error">Wystąpił błąd podczas przywracania elementu z Kosza</string>
+  <string name="snack_bar_message_item_restore_error">Wystąpił błąd podczas przywracania elementu z kosza</string>
   <string name="snack_bar_message_item_delete_success">Element został usunięty</string>
   <string name="snack_bar_message_item_delete_error">Wystąpił błąd podczas usuwania elementu</string>
   <!-- Simple Login -->
@@ -297,7 +297,7 @@
   <string name="simple_login_widget_action">Synchronizuj aliasy</string>
   <!-- Verification codes -->
   <string name="verification_code_not_received">Nie otrzymano kodu?</string>
-  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Sprawdź folder Spam w poszukiwaniu wiadomości \"%s\"</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Sprawdź folder spam w poszukiwaniu wiadomości \"%s\"</string>
   <string name="verification_code_suggestion_subject_new_email_address">Potwierdź adres e-mail Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Potwierdź skrzynkę pocztową</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Jeśli nie możesz znaleźć wiadomości, %s.</string>
@@ -318,10 +318,10 @@
   <string name="options_menu_content_description">Opcje menu</string>
   <!-- Items -->
   <plurals name="shared_items_count">
-    <item quantity="one">%d shared item</item>
-    <item quantity="few">%d shared items</item>
-    <item quantity="many">%d shared items</item>
-    <item quantity="other">%d shared items</item>
+    <item quantity="one">%d udostępniony element</item>
+    <item quantity="few">%d udostępnione elementy</item>
+    <item quantity="many">%d udostępnionych elementów</item>
+    <item quantity="other">%d udostępnionych elementów</item>
   </plurals>
   <plurals name="users_count">
     <item quantity="one">%d użytkownika</item>
@@ -336,5 +336,5 @@
     <item quantity="other">%d członków</item>
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
-  <string name="show_network_qr_code">Show Network QR Code</string>
+  <string name="show_network_qr_code">Pokaż kod QR sieci</string>
 </resources>

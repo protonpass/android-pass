@@ -10,13 +10,13 @@
   <string name="action_credit_card">Karta płatnicza</string>
   <string name="action_password">Hasło</string>
   <string name="action_identity">Tożsamość</string>
-  <string name="action_custom">Niestandardowy element</string>
+  <string name="action_more">Więcej</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Dodaj dane logowania do aplikacji i stron</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Uzyskaj alias do użycia w nowych aplikacjach</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Zapisz kod PIN lub notatkę</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Bezpieczne przechowywanie informacji o płatnościach</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Uzupełnij dane osobowe</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Create items with fully customized fields</string>
+  <string name="item_type_more_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Zapisz sieć Wi-Fi, paszport, klucz SSH lub coś innego</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Generuj bezpieczne hasło</string>
   <!-- Create Login -->
   <string name="field_email_title">Adres e-mail</string>
@@ -49,7 +49,7 @@
   <string name="bottomsheet_custom_field_type_text">Tekst</string>
   <string name="bottomsheet_custom_field_type_hidden">Ukryty tekst</string>
   <string name="bottomsheet_custom_field_type_totp">Sekret TOTP</string>
-  <string name="bottomsheet_custom_field_type_date">Date</string>
+  <string name="bottomsheet_custom_field_type_date">Data</string>
   <string name="bottomsheet_custom_field_option_edit">Edytuj nazwę</string>
   <string name="bottomsheet_custom_field_option_remove">Usuń pole</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Usuń pole niestandardowe</string>
@@ -204,14 +204,14 @@
   <!-- Attachments -->
   <string name="banner_title_attachments">Załączniki</string>
   <string name="banner_body_attachments">Do elementów możesz dodać pliki</string>
-  <string name="open_with">Otwórz za pomocą:</string>
+  <string name="open_with">Otwórz w:</string>
   <string name="banner_advanced_options_title">Czy wiesz?</string>
-  <string name="banner_advanced_options_subtitle">Tap the gear icon to customize the alias the way you want.</string>
+  <string name="banner_advanced_options_subtitle">Kliknij ikonę koła zębatego, aby dostosować alias do swoich potrzeb.</string>
   <string name="banner_custom_domain_title">Czy wiesz?</string>
-  <string name="banner_custom_domain_subtitle">By adding your domain, you can create aliases like hi@my-domain.com.</string>
+  <string name="banner_custom_domain_subtitle">Po dodaniu domeny możesz utworzyć aliasy, takie jak hej@moja-domena.pl.</string>
   <string name="banner_custom_domain_button">Dodaj domenę</string>
   <string name="banner_mailbox_title">Czy wiesz?</string>
-  <string name="banner_mailbox_subtitle">Share aliases with others by adding their inbox as an additional mailbox.</string>
+  <string name="banner_mailbox_subtitle">Udostępniaj aliasy innym użytkownikom, dodając ich adres jako dodatkową skrzynkę pocztową.</string>
   <string name="banner_mailbox_button">Dodaj skrzynkę pocztową</string>
   <!-- Suffix -->
   <string name="suffix_subtitle_premium_domain">Domena premium</string>
@@ -228,7 +228,7 @@
   <string name="template_item_crypto_wallet">Portfel kryptowalut</string>
   <string name="template_item_driver_license">Prawo jazdy</string>
   <string name="template_item_medical_record">Dokumentacja medyczna</string>
-  <string name="template_item_membership">Subskrypcja</string>
+  <string name="template_item_membership">Członkostwo</string>
   <string name="template_item_passport">Paszport</string>
   <string name="template_item_reward_program">Program lojalnościowy</string>
   <string name="template_item_social_security_number">Numer ubezpieczenia społecznego</string>
@@ -265,37 +265,37 @@
   <string name="template_ssh_key_field_host">Host</string>
   <string name="template_ssh_key_field_note">Notatka</string>
   <!-- WiFi Network Fields -->
-  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_name">Nazwa (SSID)</string>
   <string name="template_wifi_network_field_note">Notatka</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Nazwa banku</string>
   <string name="template_bank_account_field_account_number">Numer konta</string>
-  <string name="template_bank_account_field_routing_number">Routing Number</string>
+  <string name="template_bank_account_field_routing_number">Numer rozliczeniowy</string>
   <string name="template_bank_account_field_account_type">Typ konta</string>
   <string name="template_bank_account_field_iban">Numer IBAN</string>
-  <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
-  <string name="template_bank_account_field_holder_name">Holder Name</string>
+  <string name="template_bank_account_field_swift_bic">SWIFT / BIC</string>
+  <string name="template_bank_account_field_holder_name">Nazwa właściciela</string>
   <string name="template_bank_account_field_note">Notatka</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">Nazwa portfela</string>
   <string name="template_crypto_wallet_field_address">Adres</string>
   <string name="template_crypto_wallet_field_private_key">Klucz prywatny</string>
-  <string name="template_crypto_wallet_field_seed_phrase">Seed Phrase</string>
+  <string name="template_crypto_wallet_field_seed_phrase">Fraza seed</string>
   <string name="template_crypto_wallet_field_network">Sieć</string>
   <string name="template_crypto_wallet_field_note">Notatka</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">Imię i nazwisko</string>
-  <string name="template_driver_license_field_license_number">License Number</string>
-  <string name="template_driver_license_field_issuing_state_country">Issuing State/Country</string>
+  <string name="template_driver_license_field_license_number">Numer prawa jazdy</string>
+  <string name="template_driver_license_field_issuing_state_country">Kraj / stan wydający</string>
   <string name="template_driver_license_field_expiry_date">Data wygaśnięcia</string>
   <string name="template_driver_license_field_date_of_birth">Data urodzenia</string>
   <string name="template_driver_license_field_class">Klasa</string>
   <string name="template_driver_license_field_note">Notatka</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Nazwa pacjenta</string>
-  <string name="template_medical_record_field_record_number">Record Number</string>
-  <string name="template_medical_record_field_medical_conditions">Medical Conditions</string>
-  <string name="template_medical_record_field_medications">Medykamenty</string>
+  <string name="template_medical_record_field_record_number">Numer rekordu</string>
+  <string name="template_medical_record_field_medical_conditions">Stan zdrowia</string>
+  <string name="template_medical_record_field_medications">Leki</string>
   <string name="template_medical_record_field_doctor">Lekarz</string>
   <string name="template_medical_record_field_hospital">Szpital</string>
   <string name="template_medical_record_field_note">Notatka</string>
@@ -304,7 +304,7 @@
   <string name="template_membership_field_membership_id">Identyfikator członkostwa</string>
   <string name="template_membership_field_member_name">Nazwa członka</string>
   <string name="template_membership_field_expiry_date">Data wygaśnięcia</string>
-  <string name="template_membership_field_tier_level">Tier/Level</string>
+  <string name="template_membership_field_tier_level">Poziom</string>
   <string name="template_membership_field_note">Notatka</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">Imię i nazwisko</string>
@@ -316,15 +316,15 @@
   <string name="template_passport_field_note">Notatka</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Nazwa programu</string>
-  <string name="template_reward_program_field_member_id">Member ID</string>
+  <string name="template_reward_program_field_member_id">Identyfikator członka</string>
   <string name="template_reward_program_field_points_balance">Saldo punktów</string>
   <string name="template_reward_program_field_expiry_date">Data wygaśnięcia</string>
-  <string name="template_reward_program_field_tier_status">Tier/Status</string>
+  <string name="template_reward_program_field_tier_status">Poziom / status</string>
   <string name="template_reward_program_field_note">Notatka</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">Imię i nazwisko</string>
-  <string name="template_social_security_number_field_ssn">Numer PESEL</string>
-  <string name="template_social_security_number_field_issuing_country">Issuing Country</string>
+  <string name="template_social_security_number_field_ssn">Numer ubezpieczenia społecznego</string>
+  <string name="template_social_security_number_field_issuing_country">Kraj wydający</string>
   <string name="template_social_security_number_field_note">Notatka</string>
   <string name="template_header_technology">Technologia</string>
   <string name="template_header_finance">Finanse</string>
@@ -337,17 +337,17 @@
   <string name="add_public_key_placeholder">Dodaj klucz publiczny</string>
   <string name="add_private_key_placeholder">Dodaj klucz prywatny</string>
   <string name="add_ssid_placeholder">Dodaj SSID</string>
-  <string name="create_custom_item_init_error">Problem retrieving custom item details</string>
-  <string name="update_custom_item_attachments_init_error">Problem retrieving custom item attachments</string>
-  <string name="custom_item_link_attachments_error">Failed to link or unlink attachments to the custom item</string>
-  <string name="custom_item_rename_attachments_error">Failed to rename custom item attachments</string>
-  <string name="create_custom_item_item_creation_error">Could not create custom item</string>
+  <string name="create_custom_item_init_error">Wystąpił problem podczas pobierania szczegółów niestandardowego elementu</string>
+  <string name="update_custom_item_attachments_init_error">Wystąpił problem podczas pobierania załączników niestandardowego elementu</string>
+  <string name="custom_item_link_attachments_error">Nie można połączyć lub odłączyć załączników z niestandardowym elementem</string>
+  <string name="custom_item_rename_attachments_error">Nie udało się zmienić nazwy załączników niestandardowego elementu</string>
+  <string name="create_custom_item_item_creation_error">Nie można utworzyć niestandardowego elementu</string>
   <string name="create_custom_item_item_creation_success">Niestandardowy element został utworzony</string>
   <string name="update_custom_item_item_creation_success">Niestandardowy element został zaktualizowany</string>
-  <string name="update_custom_item_item_creation_error">Could not update custom item</string>
+  <string name="update_custom_item_item_creation_error">Nie można zaktualizować niestandardowego elementu</string>
   <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Nie można utworzyć elementów</string>
-  <string name="cannot_create_items_dialog_message">You don\'t have any vaults with editor or admin access. Try creating one in the main app or ask your organization\'s administrator for support.</string>
-  <string name="wifi_security_type_field_label">Security type</string>
+  <string name="cannot_create_items_dialog_message">Nie masz żadnych sejfów z dostępem edytora lub administratora. Spróbuj utworzyć sejf w głównej aplikacji lub poproś administratora organizacji o wsparcie.</string>
+  <string name="wifi_security_type_field_label">Typ zabezpieczenia</string>
 </resources>

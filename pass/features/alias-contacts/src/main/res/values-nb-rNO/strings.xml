@@ -35,7 +35,7 @@
   <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">i løpet av de siste 14 dagene.</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
     <item quantity="one">%1$d videresendt</item>
-    <item quantity="other">%1$d videresendt</item>
+    <item quantity="other">%1$d videresendte</item>
   </plurals>
   <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
     <item quantity="one">%1$d sendt</item>

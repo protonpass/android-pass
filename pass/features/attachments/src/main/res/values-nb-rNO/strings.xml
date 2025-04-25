@@ -22,8 +22,8 @@
   <string name="add_attachment_choose_a_file">Velg en fil</string>
   <string name="attachment_options_rename">Gi nytt navn</string>
   <string name="attachment_options_delete">Slett</string>
-  <string name="attachment_options_download">Download</string>
-  <string name="attachment_options_share">Share</string>
+  <string name="attachment_options_download">Last ned</string>
+  <string name="attachment_options_share">Del</string>
   <string name="file_picker_open_error">Kunne ikke åpne filvelgeren</string>
   <string name="media_picker_open_error">Kunne ikke åpne medievelgeren</string>
   <string name="camera_open_error">Kunne ikke åpne kameraet</string>
@@ -37,4 +37,6 @@
   <string name="storage_full_body">Oppgrader for å øke lagringskapasiteten.</string>
   <string name="storage_full_upgrade">Oppgrader</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s av %2$s</string>
+  <string name="attachments_saved_to_location_success">Vedlegg lagret på plasseringen</string>
+  <string name="attachments_saved_to_location_error">Kunne ikke lagre vedlegg på plasseringen</string>
 </resources>

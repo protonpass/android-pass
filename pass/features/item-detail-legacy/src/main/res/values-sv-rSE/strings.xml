@@ -54,7 +54,6 @@
   <string name="action_conceal_password">Dölj lösenord</string>
   <string name="action_reveal_number">Avslöja nummer</string>
   <string name="action_conceal_number">Dölj nummer</string>
-  <string name="share_button_content_description">Öppna delningsknapp</string>
   <string name="open_menu_icon_content_description">Knapp för “Öppna meny“</string>
   <string name="mfa_limit_reached">2FA-gränsen uppnådd</string>
   <string name="mfa_icon_content_description">2FA-ikon</string>

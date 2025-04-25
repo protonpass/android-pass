@@ -37,4 +37,6 @@
   <string name="storage_full_body">升级以增加存储容量。</string>
   <string name="storage_full_upgrade">升级</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">已使用 %1$s ，共 %2$s</string>
+  <string name="attachments_saved_to_location_success">附件已保存到指定位置</string>
+  <string name="attachments_saved_to_location_error">无法将附件保存到指定位置</string>
 </resources>

@@ -10,13 +10,13 @@
   <string name="action_credit_card">Kredittkort</string>
   <string name="action_password">Passord</string>
   <string name="action_identity">Identitet</string>
-  <string name="action_custom">Tilpasset element</string>
+  <string name="action_more">Mer</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Legg til påloggingsinformasjon for en app eller nettsted.</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Få et e-postalias som du kan bruke i nye apper.</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Skrible ned en PIN-kode, kode eller notat til deg selv.</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Lagre betalingsinformasjonen din på en sikker måte.</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Fyll ut personopplysningene dine</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Opprett elementer med fullstendig tilpassede felt</string>
+  <string name="item_type_more_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Lagre WiFi, pass, SSH eller gå for tilpasset</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Generer et sikkert passord</string>
   <!-- Create Login -->
   <string name="field_email_title">E-postadresse</string>
@@ -49,7 +49,7 @@
   <string name="bottomsheet_custom_field_type_text">Tekst</string>
   <string name="bottomsheet_custom_field_type_hidden">Skjult</string>
   <string name="bottomsheet_custom_field_type_totp">2FA-hemmelig nøkkel (TOTP)</string>
-  <string name="bottomsheet_custom_field_type_date">Date</string>
+  <string name="bottomsheet_custom_field_type_date">Dato</string>
   <string name="bottomsheet_custom_field_option_edit">Rediger navn</string>
   <string name="bottomsheet_custom_field_option_remove">Fjern felt</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Fjern tilpasset felt</string>
@@ -57,7 +57,7 @@
   <string name="custom_field_hidden_placeholder">Legg til skjult tekst</string>
   <string name="custom_field_hidden_icon_content_description">Ikon for skjult tilpasset felt</string>
   <string name="custom_field_text_placeholder">Legg til tekst</string>
-  <string name="custom_field_date_placeholder">Add date</string>
+  <string name="custom_field_date_placeholder">Legg til dato</string>
   <string name="custom_field_dialog_title">Navn på tilpasset felt</string>
   <string name="custom_field_dialog_body">Gi det tilpassede feltet et navn</string>
   <string name="custom_field_dialog_placeholder">F.eks., Bruker-ID, PIN</string>
@@ -265,7 +265,7 @@
   <string name="template_ssh_key_field_host">Vert</string>
   <string name="template_ssh_key_field_note">Notat</string>
   <!-- WiFi Network Fields -->
-  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_name">Navn (SSID)</string>
   <string name="template_wifi_network_field_note">Notat</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Banknavn</string>
@@ -349,5 +349,5 @@
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Kan ikke opprette elementer</string>
   <string name="cannot_create_items_dialog_message">Du har ingen hvelv med redigerings- eller administratortilgang. Prøv å opprette en i hovedappen, eller be organisasjonens administrator om støtte.</string>
-  <string name="wifi_security_type_field_label">Security type</string>
+  <string name="wifi_security_type_field_label">Sikkerhetstype</string>
 </resources>

@@ -83,13 +83,11 @@
   <string name="credit_card_cvv_copied_to_clipboard">보안 코드를 복사했습니다.</string>
   <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">연락처가 너무 길어 클립보드에 부분적으로 복사되었습니다.</string>
   <!-- Vault drawer -->
-  <string name="vault_drawer_vaults_title">금고</string>
   <plurals name="vault_drawer_vaults_item_count">
     <item quantity="other">%d개 항목</item>
   </plurals>
   <string name="vault_drawer_create_vault">금고 생성</string>
   <string name="vault_drawer_item_trash">휴지통</string>
-  <string name="vault_drawer_all_vaults">전체 금고</string>
   <!-- Vault management -->
   <string name="vault_delete_dialog_title">금고 삭제</string>
   <string name="vault_delete_dialog_cancel_action">취소</string>
@@ -98,7 +96,6 @@
   <string name="snackbar_delete_vault_error">금고가 지워지지 않았습니다</string>
   <!-- Search top bar -->
   <string name="search_topbar_placeholder_all_items">전체 금고 내에서 검색...</string>
-  <string name="search_topbar_placeholder_all_vaults">모든 금고를 검색...</string>
   <string name="search_topbar_placeholder_vault">%s에서 검색…</string>
   <string name="search_topbar_placeholder_trash">휴지통 검색...</string>
   <string name="search_topbar_placeholder_pinning">고정 내에서 검색…</string>
@@ -111,7 +108,7 @@
   <string name="item_type_filter_note">메모</string>
   <string name="item_type_filter_credit_card">카드</string>
   <string name="item_type_filter_identity">신원</string>
-  <string name="item_type_filter_custom">사용지 지정 항목</string>
+  <string name="item_type_filter_custom_item">Custom</string>
   <string name="item_type_filter_login_totp">TOTP로 진행한 로그인</string>
   <string name="item_type_filter_items_shared_with_me">나와 공유됨</string>
   <string name="item_type_filter_items_shared_by_me">내가 공유함</string>

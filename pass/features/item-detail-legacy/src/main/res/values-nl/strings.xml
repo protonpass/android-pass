@@ -54,7 +54,6 @@
   <string name="action_conceal_password">Wachtwoord verbergen</string>
   <string name="action_reveal_number">Nummer weergeven</string>
   <string name="action_conceal_number">Nummer verbergen</string>
-  <string name="share_button_content_description">Deelknop openen</string>
   <string name="open_menu_icon_content_description">Menuknop openen</string>
   <string name="mfa_limit_reached">2FA-limiet bereikt</string>
   <string name="mfa_icon_content_description">2FA-pictogram</string>

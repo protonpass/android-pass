@@ -18,21 +18,20 @@
   -->
 <resources>
   <string name="item_details_toolbar_content_description_menu_button">Przycisk opcji menu</string>
-  <string name="item_details_toolbar_content_description_share_button">Przycisk udostępniania elementu</string>
   <!-- Item details forbidden actions -->
   <string name="item_details_forbidden_actions_edit_title">Nie można edytować</string>
   <string name="item_details_forbidden_actions_edit_permission">Nie możesz edytować elementu, ponieważ nie masz wystarczających uprawnień.</string>
-  <string name="item_details_forbidden_actions_edit_trash">Nie można edytować elementu znajdującego się w Koszu. Przenieś element z Kosza, aby go edytować.</string>
+  <string name="item_details_forbidden_actions_edit_trash">Nie można edytować elementu znajdującego się w koszu. Przenieś element z kosza, aby go edytować.</string>
   <string name="item_details_forbidden_actions_edit_upgrade">Możesz edytować tylko najstarsze sejfy. Ulepsz do płatnego planu, aby edytować ten element.</string>
   <string name="item_details_forbidden_actions_share_title">Nie można udostępnić</string>
   <string name="item_details_forbidden_actions_share_limit">Osiągnięto maksymalną liczbę udostępnionych sejfów. Ulepsz plan, aby udostępnić więcej sejfów.</string>
   <string name="item_details_forbidden_actions_sharing_permission">Nie masz wystarczających uprawnień, aby wykonać tę akcję.</string>
-  <string name="item_details_forbidden_actions_share_trash">Nie można udostępniać elementu znajdującego się w Koszu. Przenieś element z Kosza, aby go edytować.</string>
+  <string name="item_details_forbidden_actions_share_trash">Nie można udostępniać elementu znajdującego się w koszu. Przenieś element z kosza, aby go edytować.</string>
   <!-- Item details leave item -->
   <string name="item_details_leave_dialog_title">Opuścić element?</string>
-  <string name="item_details_leave_dialog_message">You will lose access to this item and its details. Do you want to continue?</string>
-  <string name="item_details_leave_item_message_error">There was an error leaving the item</string>
-  <string name="item_details_leave_item_message_success">Item successfully left</string>
+  <string name="item_details_leave_dialog_message">Stracisz dostęp do elementu i jego szczegółów. Czy chcesz kontynuować?</string>
+  <string name="item_details_leave_item_message_error">Wystąpił błąd podczas opuszczania elementu</string>
+  <string name="item_details_leave_item_message_success">Opuszczono element</string>
   <string name="item_details_snackbar_message_alias_copied">Alias został skopiowany</string>
   <string name="item_details_snackbar_message_birthdate_copied">Urodziny zostały skopiowane</string>
   <string name="item_details_snackbar_message_card_number_copied">Numer karty został skopiowany</string>
@@ -69,9 +68,9 @@
   <string name="item_details_snackbar_message_x_handle_copied">Profil X został skopiowany</string>
   <string name="item_details_snackbar_message_yahoo_copied">Profil Yahoo został skopiowany</string>
   <string name="item_details_snackbar_message_zip_or_postal_code_copied">Kod pocztowy został skopiowany</string>
-  <string name="item_details_snackbar_message_public_key_copied">Public key copied</string>
-  <string name="item_details_snackbar_message_private_key_copied">Private key copied</string>
-  <string name="item_details_snackbar_message_ssid_copied">SSID copied</string>
-  <string name="open_with">Otwórz za pomocą:</string>
+  <string name="item_details_snackbar_message_public_key_copied">Klucz publiczny został skopiowany</string>
+  <string name="item_details_snackbar_message_private_key_copied">Klucz prywatny został skopiowany</string>
+  <string name="item_details_snackbar_message_ssid_copied">SSID został skopiowany</string>
+  <string name="open_with">Otwórz w:</string>
   <string name="open_attachments_error">Nie można otworzyć załącznika</string>
 </resources>

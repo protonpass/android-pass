@@ -16,7 +16,7 @@
   <string name="note_detail_copy_note_to_clipboard">复制笔记</string>
   <string name="note_copied_to_clipboard">笔记已复制到剪贴板</string>
   <!-- Login details -->
-  <string name="email_copied_to_clipboard">电子邮件地址已复制</string>
+  <string name="email_copied_to_clipboard">邮箱地址已复制</string>
   <string name="username_copied_to_clipboard">用户名已复制</string>
   <string name="password_copied_to_clipboard">密码已复制</string>
   <string name="website_copied_to_clipboard">网址已复制</string>
@@ -53,7 +53,6 @@
   <string name="action_conceal_password">隐藏密码</string>
   <string name="action_reveal_number">显示号码</string>
   <string name="action_conceal_number">隐藏号码</string>
-  <string name="share_button_content_description">打开共享按钮</string>
   <string name="open_menu_icon_content_description">打开菜单按钮</string>
   <string name="mfa_limit_reached">已达 2FA 数量上限</string>
   <string name="mfa_icon_content_description">2FA 图标</string>

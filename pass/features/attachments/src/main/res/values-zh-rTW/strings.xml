@@ -37,4 +37,6 @@
   <string name="storage_full_body">Upgrade to increase your storage capacity.</string>
   <string name="storage_full_upgrade">升級</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%2$s 中的 %1$s</string>
+  <string name="attachments_saved_to_location_success">Attachment saved to location</string>
+  <string name="attachments_saved_to_location_error">Could not save attachment to location</string>
 </resources>

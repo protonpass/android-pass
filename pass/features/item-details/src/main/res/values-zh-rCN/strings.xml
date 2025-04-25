@@ -18,7 +18,6 @@
   -->
 <resources>
   <string name="item_details_toolbar_content_description_menu_button">显示菜单选项</string>
-  <string name="item_details_toolbar_content_description_share_button">共享项目</string>
   <!-- Item details forbidden actions -->
   <string name="item_details_forbidden_actions_edit_title">无法编辑</string>
   <string name="item_details_forbidden_actions_edit_permission">您不能编辑此项目，因为您没有足够的权限。</string>
@@ -58,7 +57,7 @@
   <string name="item_details_snackbar_message_passport_number_copied">护照号码已复制</string>
   <string name="item_details_snackbar_message_password_copied">密码已复制</string>
   <string name="item_details_snackbar_message_phone_number_copied">电话号码已复制</string>
-  <string name="item_details_snackbar_message_pin_copied">PIN 码已复制</string>
+  <string name="item_details_snackbar_message_pin_copied">已复制 PIN 码</string>
   <string name="item_details_snackbar_message_reddit_copied">Reddit 已复制</string>
   <string name="item_details_snackbar_message_social_security_number_copied">社会安全代码已复制</string>
   <string name="item_details_snackbar_message_state_or_province_copied">州或省已复制</string>

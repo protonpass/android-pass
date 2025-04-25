@@ -22,8 +22,8 @@
   <string name="add_attachment_choose_a_file">파일 선택</string>
   <string name="attachment_options_rename">이름 변경</string>
   <string name="attachment_options_delete">삭제</string>
-  <string name="attachment_options_download">Download</string>
-  <string name="attachment_options_share">Share</string>
+  <string name="attachment_options_download">다운로드</string>
+  <string name="attachment_options_share">공유</string>
   <string name="file_picker_open_error">파일 선택기를 열 수 없습니다.</string>
   <string name="media_picker_open_error">미디어 선택기 열 수 없음</string>
   <string name="camera_open_error">카메라 열 수 없음</string>
@@ -37,4 +37,6 @@
   <string name="storage_full_body">저장 공간을 늘리려면 업그레이드 하세요.</string>
   <string name="storage_full_upgrade">업그레이드</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%2$s 중 %1$s</string>
+  <string name="attachments_saved_to_location_success">Attachment saved to location</string>
+  <string name="attachments_saved_to_location_error">Could not save attachment to location</string>
 </resources>

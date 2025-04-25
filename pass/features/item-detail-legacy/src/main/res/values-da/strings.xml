@@ -54,7 +54,6 @@
   <string name="action_conceal_password">Skjul adgangskode</string>
   <string name="action_reveal_number">Vis nummer</string>
   <string name="action_conceal_number">Skjul nummer</string>
-  <string name="share_button_content_description">Åbn delingsknap</string>
   <string name="open_menu_icon_content_description">Knap til at åbne menu</string>
   <string name="mfa_limit_reached">2FA-grænse nået</string>
   <string name="mfa_icon_content_description">2FA-ikon</string>

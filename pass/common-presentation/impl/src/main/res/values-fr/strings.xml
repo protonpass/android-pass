@@ -18,7 +18,6 @@
   -->
 <resources>
   <string name="open_attachments_error">La pièce jointe n\'a pu être ouverte.</string>
-  <string name="download_attachments_success">La pièce jointe a été téléchargée.</string>
   <string name="download_attachments_error">Le téléchargement de la pièce jointe n\'a pas abouti.</string>
   <string name="share_attachments_error">Le partage de la pièce jointe n\'a pas abouti.</string>
   <string name="upload_attachments_error">La pièce jointe n\'a pas pu être importée dans le message.</string>

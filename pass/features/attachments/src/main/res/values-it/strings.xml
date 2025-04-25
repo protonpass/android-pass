@@ -37,4 +37,6 @@
   <string name="storage_full_body">Esegui l\'upgrade per aumentare la tua capacità di archiviazione.</string>
   <string name="storage_full_upgrade">Effettua l\'upgrade</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s di %2$s</string>
+  <string name="attachments_saved_to_location_success">Allegato salvato nella posizione</string>
+  <string name="attachments_saved_to_location_error">Non è stato possibile salvare l\'allegato nella posizione</string>
 </resources>

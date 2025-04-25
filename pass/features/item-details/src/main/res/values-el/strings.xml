@@ -18,7 +18,6 @@
   -->
 <resources>
   <string name="item_details_toolbar_content_description_menu_button">Κουμπί για την εμφάνιση επιλογών μενού</string>
-  <string name="item_details_toolbar_content_description_share_button">Κουμπί για κοινή χρήση στοιχείου</string>
   <!-- Item details forbidden actions -->
   <string name="item_details_forbidden_actions_edit_title">Δεν είναι δυνατή η επεξεργασία</string>
   <string name="item_details_forbidden_actions_edit_permission">Δεν μπορείτε να επεξεργαστείτε αυτό το στοιχείο, επειδή δεν έχετε αρκετά δικαιώματα.</string>

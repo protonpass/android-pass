@@ -21,8 +21,8 @@
   <string name="bottomsheet_copy_password">Kopiuj hasło</string>
   <string name="bottomsheet_copy_username">Kopiuj nazwę użytkownika</string>
   <string name="bottomsheet_no_actions">Brak dostępnych akcji</string>
-  <string name="snackbar_item_move_to_trash_success">Element został przeniesiony do Kosza</string>
-  <string name="snackbar_item_move_to_trash_error">Nie można przenieść do Kosza</string>
+  <string name="snackbar_item_move_to_trash_success">Element został przeniesiony do kosza</string>
+  <string name="snackbar_item_move_to_trash_error">Nie można przenieść do kosza</string>
   <string name="snackbar_item_copy_email_success">Adres został skopiowany do schowka</string>
   <string name="snackbar_item_copy_username_success">Nazwa użytkownika została skopiowana do schowka</string>
   <string name="snackbar_item_copy_password_success">Hasło zostało skopiowane do schowka</string>

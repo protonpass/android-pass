@@ -56,7 +56,6 @@
   <string name="action_conceal_password">Приховати пароль</string>
   <string name="action_reveal_number">Показати номер</string>
   <string name="action_conceal_number">Сховати номер</string>
-  <string name="share_button_content_description">Відкрити кнопку «Поділитися»</string>
   <string name="open_menu_icon_content_description">Кнопка відкриття меню</string>
   <string name="mfa_limit_reached">Досягнуто обмеження 2FA</string>
   <string name="mfa_icon_content_description">Піктограма 2FA</string>

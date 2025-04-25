@@ -10,13 +10,13 @@
   <string name="action_credit_card">Πιστωτική κάρτα</string>
   <string name="action_password">Κωδικός</string>
   <string name="action_identity">Ταυτότητα</string>
-  <string name="action_custom">Προσαρμοσμένο στοιχείο</string>
+  <string name="action_more">Περισσότερα</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Προσθήκη στοιχείων σύνδεσης για μια εφαρμογή ή έναν ιστότοπο</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Αποκτήστε ένα ψευδώνυμο ηλεκτρονικού ταχυδρομείου για χρήση σε νέες εφαρμογές</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Σημειώστε ένα PIN, έναν κωδικό ή μια σημείωση στον εαυτό σας</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Αποθηκεύστε με ασφάλεια τα στοιχεία πληρωμής σας</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Συμπληρώστε τα προσωπικά σας στοιχεία</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Δημιουργία στοιχείων με πλήρως προσαρμοσμένα πεδία</string>
+  <string name="item_type_more_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Αποθηκεύστε WiFi, διαβατήριο, SSH ή προσαρμοσμένες πληροφορίες</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Δημιουργήσετε έναν ασφαλή κωδικό πρόσβασης</string>
   <!-- Create Login -->
   <string name="field_email_title">Διεύθυνση ηλεκτρονικού ταχυδρομείου</string>
@@ -265,7 +265,7 @@
   <string name="template_ssh_key_field_host">Διακομιστής</string>
   <string name="template_ssh_key_field_note">Σημείωση</string>
   <!-- WiFi Network Fields -->
-  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_name">Όνομα (SSID)</string>
   <string name="template_wifi_network_field_note">Σημείωση</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Όνομα Τράπεζας</string>

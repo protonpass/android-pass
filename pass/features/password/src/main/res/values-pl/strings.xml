@@ -13,8 +13,8 @@
   </plurals>
   <plurals name="word_count">
     <item quantity="one">%s słowo</item>
-    <item quantity="few">%s słów</item>
-    <item quantity="many">%s słowa</item>
+    <item quantity="few">%s słowa</item>
+    <item quantity="many">%s słów</item>
     <item quantity="other">%s słowa</item>
   </plurals>
   <string name="word_separator">Separator słów</string>
@@ -27,7 +27,7 @@
   <string name="bottomsheet_option_word_separator_commas">Przecinki ( , )</string>
   <string name="bottomsheet_option_word_separator_underscores">Podkreślenia ( _ )</string>
   <string name="bottomsheet_option_word_separator_numbers">Cyfry</string>
-  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Cyfry i symbole</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Cyfry i znaki specjalne</string>
   <string name="regenerate_password_icon_content_description">Przycisk wygenerowania hasła ponownie</string>
   <string name="password_mode_memorable">Hasło wyrazowe</string>
   <string name="password_mode_random">Hasło losowe</string>

@@ -37,4 +37,6 @@
   <string name="storage_full_body">Tingkatkan untuk menambah kapasitas penyimpanan Anda.</string>
   <string name="storage_full_upgrade">Tingkatkan</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s dari %2$s</string>
+  <string name="attachments_saved_to_location_success">Lampiran disimpan ke lokasi</string>
+  <string name="attachments_saved_to_location_error">Lampiran tidak dapat disimpan ke lokasi</string>
 </resources>

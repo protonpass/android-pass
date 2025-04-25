@@ -37,4 +37,6 @@
   <string name="storage_full_body">Mejora para aumentar el almacenamiento.</string>
   <string name="storage_full_upgrade">Cambiar de plan</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s de %2$s</string>
+  <string name="attachments_saved_to_location_success">Archivo adjunto guardado en la ubicación</string>
+  <string name="attachments_saved_to_location_error">No se pudo guardar el archivo adjunto en la ubicación</string>
 </resources>

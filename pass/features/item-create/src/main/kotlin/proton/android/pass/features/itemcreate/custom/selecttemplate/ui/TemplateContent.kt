@@ -42,7 +42,7 @@ import proton.android.pass.features.itemcreate.custom.shared.TemplateType
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TemplateContent(modifier: Modifier = Modifier, onEvent: (TemplateEvent) -> Unit) {
+internal fun TemplateContent(modifier: Modifier = Modifier, onEvent: (TemplateEvent) -> Unit) {
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -68,8 +68,9 @@ fun TemplateContent(modifier: Modifier = Modifier, onEvent: (TemplateEvent) -> U
                     val header = when (category) {
                         TemplateType.Category.TECHNOLOGY -> R.string.template_header_technology
                         TemplateType.Category.FINANCE -> R.string.template_header_finance
-                        TemplateType.Category.PERSONAL -> R.string.template_header_personal
+                        TemplateType.Category.PERSONAL -> R.string.template_header_title_personal
                     }
+                    
                     stickyHeader {
                         Text.Body2Weak(
                             text = stringResource(header),
@@ -94,7 +95,7 @@ fun TemplateContent(modifier: Modifier = Modifier, onEvent: (TemplateEvent) -> U
 
 @Preview
 @Composable
-fun TemplateContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun TemplateContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             TemplateContent(

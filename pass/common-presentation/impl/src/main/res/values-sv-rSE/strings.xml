@@ -18,9 +18,8 @@
   -->
 <resources>
   <string name="open_attachments_error">Kunde inte öppna bilaga</string>
-  <string name="download_attachments_success">Bilaga nedladdad</string>
   <string name="download_attachments_error">Kunde inte ladda ner bilaga</string>
-  <string name="share_attachments_error">Kunde inte dela bifogad fil</string>
+  <string name="share_attachments_error">Kunde inte dela bilaga</string>
   <string name="upload_attachments_error">Kunde inte ladda upp bilaga</string>
   <string name="attachment_size_exceeded_error">Den valda filen överskrider storleksgränsen. Välj en fil som är mindre än 100 Mb.</string>
   <string name="open_with">Öppna med:</string>

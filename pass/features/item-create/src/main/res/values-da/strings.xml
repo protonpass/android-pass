@@ -10,13 +10,13 @@
   <string name="action_credit_card">Betalingskort</string>
   <string name="action_password">Adgangskode</string>
   <string name="action_identity">Identitet</string>
-  <string name="action_custom">Brugerdefineret element</string>
+  <string name="action_more">Mere</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Tilføj loginoplysninger for en app eller et websted</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Få et e-mail-alias til brug i nye apps</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Notér en pinkode, kode eller bemærkning til dig selv</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Opbevar dine betalingsoplysninger sikkert</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Udfyld dine personlige data</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Opret elementer med brugerdefinerede felter</string>
+  <string name="item_type_more_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Gem WiFi, pas, SSH eller noget brugerdefineret</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Generér en sikker adgangskode</string>
   <!-- Create Login -->
   <string name="field_email_title">E-mailadresse</string>
@@ -49,7 +49,7 @@
   <string name="bottomsheet_custom_field_type_text">Tekst</string>
   <string name="bottomsheet_custom_field_type_hidden">Skjult</string>
   <string name="bottomsheet_custom_field_type_totp">2FA hemmelig nøgle (TOTP)</string>
-  <string name="bottomsheet_custom_field_type_date">Date</string>
+  <string name="bottomsheet_custom_field_type_date">Dato</string>
   <string name="bottomsheet_custom_field_option_edit">Redigér navn</string>
   <string name="bottomsheet_custom_field_option_remove">Fjern felt</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Fjern brugerdefineret felt</string>
@@ -57,7 +57,7 @@
   <string name="custom_field_hidden_placeholder">Tilføj skjult tekst</string>
   <string name="custom_field_hidden_icon_content_description">Ikon for skjult brugerdefineret felt</string>
   <string name="custom_field_text_placeholder">Tilføj tekst</string>
-  <string name="custom_field_date_placeholder">Add date</string>
+  <string name="custom_field_date_placeholder">Tilføj dato</string>
   <string name="custom_field_dialog_title">Navn på brugerdefineret felt</string>
   <string name="custom_field_dialog_body">Giv dit brugerdefinerede felt et navn</string>
   <string name="custom_field_dialog_placeholder">F.eks. bruger-ID, pinkode</string>
@@ -265,7 +265,7 @@
   <string name="template_ssh_key_field_host">Vært</string>
   <string name="template_ssh_key_field_note">Note</string>
   <!-- WiFi Network Fields -->
-  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_name">Name (SSID)</string>
   <string name="template_wifi_network_field_note">Note</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Banknavn</string>
@@ -280,7 +280,7 @@
   <string name="template_crypto_wallet_field_wallet_name">Wallet-navn</string>
   <string name="template_crypto_wallet_field_address">Adresse</string>
   <string name="template_crypto_wallet_field_private_key">Privat nøgle</string>
-  <string name="template_crypto_wallet_field_seed_phrase">Seed Phrase</string>
+  <string name="template_crypto_wallet_field_seed_phrase">Seed-sætning</string>
   <string name="template_crypto_wallet_field_network">Netværk</string>
   <string name="template_crypto_wallet_field_note">Note</string>
   <!-- Driver License Fields -->
@@ -293,7 +293,7 @@
   <string name="template_driver_license_field_note">Note</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Patientnavn</string>
-  <string name="template_medical_record_field_record_number">Record Number</string>
+  <string name="template_medical_record_field_record_number">Journalnummer</string>
   <string name="template_medical_record_field_medical_conditions">Medicinske forhold</string>
   <string name="template_medical_record_field_medications">Medicin</string>
   <string name="template_medical_record_field_doctor">Praktiserende læge</string>
@@ -316,8 +316,8 @@
   <string name="template_passport_field_note">Note</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Programnavn</string>
-  <string name="template_reward_program_field_member_id">Member ID</string>
-  <string name="template_reward_program_field_points_balance">Points Balance</string>
+  <string name="template_reward_program_field_member_id">Medlems-ID</string>
+  <string name="template_reward_program_field_points_balance">Pointsaldo</string>
   <string name="template_reward_program_field_expiry_date">Udløbsdato</string>
   <string name="template_reward_program_field_tier_status">Tier/Status</string>
   <string name="template_reward_program_field_note">Note</string>
@@ -349,5 +349,5 @@
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Kan ikke oprette elementer</string>
   <string name="cannot_create_items_dialog_message">Du har ikke nogen bokse med redaktør- eller administratoradgang. Prøv at oprette en i hovedappen, eller spørg din organisations administrator om hjælp.</string>
-  <string name="wifi_security_type_field_label">Security type</string>
+  <string name="wifi_security_type_field_label">Sikkerhedstype</string>
 </resources>

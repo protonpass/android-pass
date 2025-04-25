@@ -37,4 +37,6 @@
   <string name="storage_full_body">Treceți la alt tip de plan pentru a vă mări capacitatea de stocare.</string>
   <string name="storage_full_upgrade">Modificare</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s din %2$s</string>
+  <string name="attachments_saved_to_location_success">Atașamentul a fost salvat.</string>
+  <string name="attachments_saved_to_location_error">Atașamentul nu s-a putut salva.</string>
 </resources>

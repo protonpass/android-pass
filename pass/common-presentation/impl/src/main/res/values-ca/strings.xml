@@ -18,7 +18,6 @@
   -->
 <resources>
   <string name="open_attachments_error">No s\'ha pogut obrir el adjunt.</string>
-  <string name="download_attachments_success">S\'ha descarregat l\'adjunt.</string>
   <string name="download_attachments_error">No s\'ha pogut descarregar l\'adjunt.</string>
   <string name="share_attachments_error">No s\'ha pogut compartir l\'adjunt.</string>
   <string name="upload_attachments_error">No s\'ha pogut carregar l\'adjunt.</string>

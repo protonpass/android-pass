@@ -10,13 +10,13 @@
   <string name="action_credit_card">Targeta de crèdit</string>
   <string name="action_password">Contrasenya</string>
   <string name="action_identity">Identitat</string>
-  <string name="action_custom">Element personalitzat</string>
+  <string name="action_more">Més</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Afegeix els detalls d\'inici de sessió per a una aplicació o lloc web</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Obteniu un àlies de correu electrònic per utilitzar en aplicacions noves</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Apunteu-vos un PIN, un codi o una nota</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Emmagatzemeu de forma segura la informació de pagament</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Empleneu les vostres dades personals</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Creeu elements amb camps totalment personalitzats</string>
+  <string name="item_type_more_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Deseu el wifi, passaport, SSH o personalitzeu-ho</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Genera una contrasenya segura</string>
   <!-- Create Login -->
   <string name="field_email_title">Adreça de correu electrònic</string>
@@ -265,7 +265,7 @@
   <string name="template_ssh_key_field_host">Amfitrió</string>
   <string name="template_ssh_key_field_note">Nota</string>
   <!-- WiFi Network Fields -->
-  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_name">Nom (SSID)</string>
   <string name="template_wifi_network_field_note">Nota</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Nom del banc</string>

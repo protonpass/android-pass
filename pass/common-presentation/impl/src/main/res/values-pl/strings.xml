@@ -18,11 +18,10 @@
   -->
 <resources>
   <string name="open_attachments_error">Nie można otworzyć załącznika</string>
-  <string name="download_attachments_success">Attachment downloaded</string>
-  <string name="download_attachments_error">Could not download attachment</string>
-  <string name="share_attachments_error">Could not share attachment</string>
+  <string name="download_attachments_error">Nie można pobrać załącznika</string>
+  <string name="share_attachments_error">Nie można udostępnić załącznika</string>
   <string name="upload_attachments_error">Nie można przesłać załącznika</string>
-  <string name="attachment_size_exceeded_error">The selected file exceeds the size limit. Please choose a file smaller than 100MB.</string>
-  <string name="open_with">Otwórz za pomocą:</string>
-  <string name="share_with">Share with:</string>
+  <string name="attachment_size_exceeded_error">Przekroczono maksymalny rozmiar pliku. Wybierz plik mniejszy niż 100 MB.</string>
+  <string name="open_with">Otwórz w:</string>
+  <string name="share_with">Udostępnij użytkownikowi:</string>
 </resources>

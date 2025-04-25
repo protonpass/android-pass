@@ -17,13 +17,13 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="item_options_alias_trash_dialog_title">Przenieś do Kosza</string>
-  <string name="item_options_alias_trash_dialog_message">Aliasy w Koszu będą nadal przekierowywać wiadomości. Wyłącz alias, jeśli chcesz zatrzymać otrzymywanie wiadomości na ten adres.</string>
+  <string name="item_options_alias_trash_dialog_title">Przenieś do kosza</string>
+  <string name="item_options_alias_trash_dialog_message">Aliasy w koszu będą nadal przekierowywać wiadomości. Wyłącz alias, jeśli chcesz zatrzymać otrzymywanie wiadomości na ten adres.</string>
   <string name="item_options_alias_trash_dialog_checkbox_text">Nie pokazuj ponownie</string>
   <string name="item_options_alias_trash_dialog_button_text_disable">Wyłącz</string>
-  <string name="item_options_alias_trash_dialog_button_text_trash">Przenieś do Kosza</string>
+  <string name="item_options_alias_trash_dialog_button_text_trash">Przenieś do kosza</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">Wystąpił błąd podczas wyłączania aliasu</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">Alias został wyłączony</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">Wystąpił błąd podczas przenoszenia aliasu do Kosza</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">Alias został przeniesiony do Kosza</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">Wystąpił błąd podczas przenoszenia aliasu do kosza</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">Alias został przeniesiony do kosza</string>
 </resources>

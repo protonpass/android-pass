@@ -37,4 +37,6 @@
   <string name="storage_full_body">Αναβαθμίστε για να αυξήσετε τον αποθηκευτικό σας χώρο.</string>
   <string name="storage_full_upgrade">Αναβάθμιση</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s από %2$s</string>
+  <string name="attachments_saved_to_location_success">Το συνημμένο αποθηκεύτηκε στην τοποθεσία</string>
+  <string name="attachments_saved_to_location_error">Δεν ήταν δυνατή η αποθήκευση συνημμένου στην τοποθεσία</string>
 </resources>

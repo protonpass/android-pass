@@ -53,7 +53,6 @@
   <string name="action_conceal_password">パスワードを隠す</string>
   <string name="action_reveal_number">数を表示</string>
   <string name="action_conceal_number">数を隠す</string>
-  <string name="share_button_content_description">共有ボタンを開く</string>
   <string name="open_menu_icon_content_description">メニューを開くボタン</string>
   <string name="mfa_limit_reached">2要素認証 制限に達しました</string>
   <string name="mfa_icon_content_description">2要素認証アイコン</string>

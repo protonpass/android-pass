@@ -198,7 +198,7 @@
     <string name="item_details_shared_section_more_info_item_id">Item ID</string>
     <string name="item_details_shared_section_more_info_share_id">Vault ID</string>
 
-    <string name="item_details_wifi_network_label_ssid">SSID</string>
+    <string name="item_details_wifi_network_label_ssid_name">Name (SSID)</string>
     <string name="item_details_wifi_network_label_password">Password</string>
     <string name="item_details_wifi_network_label_security">Security</string>
     <string name="item_details_ssh_key_label_public_key">Public key</string>

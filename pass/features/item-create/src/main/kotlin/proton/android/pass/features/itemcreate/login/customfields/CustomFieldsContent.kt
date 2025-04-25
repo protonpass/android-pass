@@ -27,9 +27,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.R
@@ -56,7 +56,7 @@ internal fun CustomFieldsContent(
 
     Column(
         modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
     ) {
         customFields.forEachIndexed { idx, field: UICustomFieldContent ->
             val entryModifier = if (focusedField?.index == idx) {
@@ -89,6 +89,7 @@ internal fun CustomFieldsContent(
 
             CustomFieldEntry(
                 modifier = entryModifier,
+                passItemColors = passItemColors(ItemCategory.Login),
                 entry = field,
                 isError = isError,
                 errorMessage = errorMessage,

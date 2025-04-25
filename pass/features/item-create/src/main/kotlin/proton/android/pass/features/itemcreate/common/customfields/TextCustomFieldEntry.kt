@@ -42,6 +42,9 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
+import proton.android.pass.composecomponents.impl.utils.PassItemColors
+import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.login.customfields.CustomFieldInput
@@ -58,7 +61,8 @@ internal fun TextCustomFieldEntry(
     onChange: (String) -> Unit,
     onFocusChange: (Int, Boolean) -> Unit,
     onOptionsClick: () -> Unit,
-    showLeadingIcon: Boolean
+    showLeadingIcon: Boolean,
+    passItemColors: PassItemColors
 ) {
     ProtonTextField(
         modifier = modifier
@@ -102,7 +106,12 @@ internal fun TextCustomFieldEntry(
                 if (content.value.isNotEmpty()) {
                     SmallCrossIconButton { onChange("") }
                 }
-                CustomFieldOptionsButton(onClick = onOptionsClick)
+
+                CustomFieldOptionsButton(
+                    backgroundColor = passItemColors.minorPrimary,
+                    tint = passItemColors.majorSecondary,
+                    onClick = onOptionsClick
+                )
             }
         },
         keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
@@ -126,7 +135,8 @@ internal fun TextCustomFieldEntryPreview(
                 onChange = {},
                 onFocusChange = { _, _ -> },
                 onOptionsClick = {},
-                showLeadingIcon = customFieldInput.showLeadingIcon
+                showLeadingIcon = customFieldInput.showLeadingIcon,
+                passItemColors = passItemColors(ItemCategory.Unknown)
             )
         }
     }

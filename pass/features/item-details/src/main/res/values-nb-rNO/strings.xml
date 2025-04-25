@@ -18,7 +18,6 @@
   -->
 <resources>
   <string name="item_details_toolbar_content_description_menu_button">Knapp for visning av menyalternativer</string>
-  <string name="item_details_toolbar_content_description_share_button">Knapp for å dele et element</string>
   <!-- Item details forbidden actions -->
   <string name="item_details_forbidden_actions_edit_title">Kan ikke redigere</string>
   <string name="item_details_forbidden_actions_edit_permission">Du kan ikke redigere dette elementet fordi du ikke har nok tillatelser til å gjøre det.</string>

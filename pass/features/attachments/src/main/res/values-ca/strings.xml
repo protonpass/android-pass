@@ -37,4 +37,6 @@
   <string name="storage_full_body">Actualitzeu per augmentar l\'emmagatzematge.</string>
   <string name="storage_full_upgrade">Millora</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s de %2$s</string>
+  <string name="attachments_saved_to_location_success">S\'ha desat el fitxer adjunt a la ubicació.</string>
+  <string name="attachments_saved_to_location_error">No s\'ha pogut desar el fitxer adjunt a la ubicació.</string>
 </resources>

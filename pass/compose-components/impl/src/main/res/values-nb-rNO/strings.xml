@@ -199,7 +199,7 @@
   <string name="item_details_shared_section_more_info_share_id">Hvelv-ID</string>
   <string name="item_details_wifi_network_label_ssid">SSID</string>
   <string name="item_details_wifi_network_label_password">Passord</string>
-  <string name="item_details_wifi_network_label_security">Security</string>
+  <string name="item_details_wifi_network_label_security">Sikkerhet</string>
   <string name="item_details_ssh_key_label_public_key">Offentlig nøkkel</string>
   <string name="item_details_ssh_key_label_private_key">Privat nøkkel</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Appversjonen støttes ikke lenger, oppdater appen din.</string>
@@ -306,5 +306,5 @@
     <item quantity="other">%d medlemmer</item>
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
-  <string name="show_network_qr_code">Show Network QR Code</string>
+  <string name="show_network_qr_code">Vis QR-kode for nettverk</string>
 </resources>

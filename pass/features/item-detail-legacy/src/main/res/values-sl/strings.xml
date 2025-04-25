@@ -56,7 +56,6 @@
   <string name="action_conceal_password">Skrij geslo</string>
   <string name="action_reveal_number">Pokaži številko</string>
   <string name="action_conceal_number">Skrij številko</string>
-  <string name="share_button_content_description">Odpri gumb za skupno rabo</string>
   <string name="open_menu_icon_content_description">Gumb za odpiranje menija</string>
   <string name="mfa_limit_reached">Dosežena je omejitev za 2FA</string>
   <string name="mfa_icon_content_description">Ikona 2FA</string>

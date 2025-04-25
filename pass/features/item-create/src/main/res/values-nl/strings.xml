@@ -10,13 +10,13 @@
   <string name="action_credit_card">Kredietkaart</string>
   <string name="action_password">Wachtwoord</string>
   <string name="action_identity">Identiteit</string>
-  <string name="action_custom">Aangepast item</string>
+  <string name="action_more">Meer</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Voeg inloggegevens voor een app of site toe</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Ontvang een e-mailalias voor gebruik in nieuwe apps</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Noteer een pincode, code of notitie voor uzelf</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Bewaar veilig uw betalingsgegevens</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Vul uw persoonlijke gegevens in</string>
-  <string name="item_type_custom_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Creëer items met volledig aanpasbare velden</string>
+  <string name="item_type_more_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Wifi, paspoort, SSH opslaan of aangepast instellen</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Genereer een veilig wachtwoord</string>
   <!-- Create Login -->
   <string name="field_email_title">E-mailadres</string>
@@ -265,7 +265,7 @@
   <string name="template_ssh_key_field_host">Host</string>
   <string name="template_ssh_key_field_note">Notitie</string>
   <!-- WiFi Network Fields -->
-  <string name="template_wifi_network_field_ssid">SSID</string>
+  <string name="template_wifi_network_field_name">Naam (SSID)</string>
   <string name="template_wifi_network_field_note">Notitie</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Naam bank</string>

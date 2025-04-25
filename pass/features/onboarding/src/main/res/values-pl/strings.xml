@@ -24,8 +24,8 @@
   <string name="onboarding_slide_4_title">Bezpieczne udostępnianie.</string>
   <string name="onboarding_slide_1_subtitle">Bezpieczne w jednym miejscu i chronione przez najbardziej zaufaną markę w dziedzinie prywatności.</string>
   <string name="onboarding_slide_2_subtitle">Używaj aliasów hide-my-email przeciwko próbom wyłudzenia informacji.</string>
-  <string name="onboarding_slide_3_subtitle">Bezpiecznie i bez wysiłku udostępniaj hasła i poufne informacje.</string>
-  <string name="onboarding_slide_4_subtitle">Otrzymuj powiadomienia, gdy Twój adres e-mail zostanie znaleziony w Darknecie.</string>
+  <string name="onboarding_slide_3_subtitle">Udostępniaj hasła i poufne informacje w bezpieczny i łatwy sposób.</string>
+  <string name="onboarding_slide_4_subtitle">Otrzymaj powiadomienie, gdy Twój adres e-mail zostanie znaleziony w sieci dark web.</string>
   <string name="create_an_account_button">Utwórz konto</string>
   <string name="sign_in_button">Zaloguj się</string>
 </resources>

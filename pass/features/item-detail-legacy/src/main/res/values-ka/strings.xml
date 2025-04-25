@@ -54,7 +54,6 @@
   <string name="action_conceal_password">პაროლის დამალვა</string>
   <string name="action_reveal_number">ნომრის ჩვენება</string>
   <string name="action_conceal_number">ნომრის დამალვა</string>
-  <string name="share_button_content_description">გაზიარების ღილაკის გახსნა</string>
   <string name="open_menu_icon_content_description">მენიუს გახსნის ღილაკი</string>
   <string name="mfa_limit_reached">მიღწეულია 2FA-ის ლიმიტი</string>
   <string name="mfa_icon_content_description">2FA-ის ხატულა</string>

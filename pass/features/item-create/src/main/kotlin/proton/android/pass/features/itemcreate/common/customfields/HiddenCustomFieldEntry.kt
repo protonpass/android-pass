@@ -43,6 +43,9 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
+import proton.android.pass.composecomponents.impl.utils.PassItemColors
+import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
@@ -61,7 +64,8 @@ internal fun HiddenCustomFieldEntry(
     onFocusChange: (Int, Boolean) -> Unit,
     onOptionsClick: () -> Unit,
     index: Int,
-    showLeadingIcon: Boolean
+    showLeadingIcon: Boolean,
+    passItemColors: PassItemColors
 ) {
     val (text, visualTransformation) = when (val value = content.value) {
         is UIHiddenState.Concealed -> "x".repeat(PASSWORD_CONCEALED_LENGTH) to PasswordVisualTransformation()
@@ -112,7 +116,12 @@ internal fun HiddenCustomFieldEntry(
                     if (text.isNotEmpty()) {
                         SmallCrossIconButton { onChange("") }
                     }
-                    CustomFieldOptionsButton(onClick = onOptionsClick)
+
+                    CustomFieldOptionsButton(
+                        backgroundColor = passItemColors.minorPrimary,
+                        tint = passItemColors.majorSecondary,
+                        onClick = onOptionsClick
+                    )
                 }
             },
             visualTransformation = visualTransformation,
@@ -140,7 +149,8 @@ internal fun HiddenCustomFieldEntryPreview(
                 onFocusChange = { _, _ -> },
                 onOptionsClick = {},
                 index = 0,
-                showLeadingIcon = customFieldInput.showLeadingIcon
+                showLeadingIcon = customFieldInput.showLeadingIcon,
+                passItemColors = passItemColors(ItemCategory.Unknown)
             )
         }
     }

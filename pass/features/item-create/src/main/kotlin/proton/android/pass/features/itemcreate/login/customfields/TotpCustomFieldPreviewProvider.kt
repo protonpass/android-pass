@@ -29,23 +29,27 @@ internal class TotpCustomFieldPreviewProvider : PreviewParameterProvider<TotpCus
 
     override val values: Sequence<TotpCustomFieldInput> = sequence {
         for (text in listOf("", "mytotp")) {
-            for (isEnabled in listOf(true, false)) {
-                yield(TotpCustomFieldInput(text, isEnabled, null))
+            for (showLeadingIcon in listOf(true, false)) {
+                for (isEnabled in listOf(true, false)) {
+                    yield(TotpCustomFieldInput(text, isEnabled, null, showLeadingIcon))
+                }
+                yield(
+                    TotpCustomFieldInput(
+                        text,
+                        false,
+                        LoginItemValidationErrors.CustomFieldValidationError.EmptyField(1),
+                        showLeadingIcon
+                    )
+                )
+                yield(
+                    TotpCustomFieldInput(
+                        text,
+                        false,
+                        LoginItemValidationErrors.CustomFieldValidationError.InvalidTotp(1),
+                        showLeadingIcon
+                    )
+                )
             }
-            yield(
-                TotpCustomFieldInput(
-                    text,
-                    false,
-                    LoginItemValidationErrors.CustomFieldValidationError.EmptyField(1)
-                )
-            )
-            yield(
-                TotpCustomFieldInput(
-                    text,
-                    false,
-                    LoginItemValidationErrors.CustomFieldValidationError.InvalidTotp(1)
-                )
-            )
         }
     }
 }
@@ -53,5 +57,6 @@ internal class TotpCustomFieldPreviewProvider : PreviewParameterProvider<TotpCus
 internal data class TotpCustomFieldInput(
     val text: String,
     val isEnabled: Boolean,
-    val error: LoginItemValidationErrors.CustomFieldValidationError?
+    val error: LoginItemValidationErrors.CustomFieldValidationError?,
+    val showLeadingIcon: Boolean = true
 )

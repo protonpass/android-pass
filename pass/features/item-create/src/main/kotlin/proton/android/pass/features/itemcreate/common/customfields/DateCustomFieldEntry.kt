@@ -21,6 +21,7 @@ package proton.android.pass.features.itemcreate.common.customfields
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -35,6 +36,7 @@ import proton.android.pass.commonui.api.DateFormatUtils
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
@@ -53,7 +55,8 @@ internal fun DateCustomFieldEntry(
     isLoading: Boolean,
     onClick: () -> Unit,
     onFocusChange: (Int, Boolean) -> Unit,
-    onOptionsClick: () -> Unit
+    onOptionsClick: () -> Unit,
+    showLeadingIcon: Boolean
 ) {
     val pattern = stringResource(R.string.custom_field_date_pattern)
     val date = remember(pattern, content.value) {
@@ -69,6 +72,12 @@ internal fun DateCustomFieldEntry(
                 end = Spacing.extraSmall,
                 bottom = Spacing.medium
             ),
+        textFieldModifier = Modifier
+            .fillMaxWidth()
+            .applyIf(
+                condition = !showLeadingIcon,
+                ifTrue = { padding(start = Spacing.medium) }
+            ),
         textStyle = ProtonTheme.typography.defaultNorm(isLoading),
         label = { ProtonTextFieldLabel(text = content.label) },
         placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(R.string.custom_field_date_placeholder)) },
@@ -77,11 +86,21 @@ internal fun DateCustomFieldEntry(
         onChange = {},
         singleLine = true,
         moveToNextOnEnter = true,
-        leadingIcon = {
-            Icon.Default(CoreR.drawable.ic_proton_calendar_today, tint = PassTheme.colors.textWeak)
+        leadingIcon = if (showLeadingIcon) {
+            {
+                Icon.Default(
+                    id = CoreR.drawable.ic_proton_calendar_today,
+                    tint = PassTheme.colors.textWeak
+                )
+            }
+        } else {
+            null
         },
         trailingIcon = {
-            Row(horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)) {
+            Row(
+                modifier = Modifier.padding(end = Spacing.small),
+                horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
+            ) {
                 CustomFieldOptionsButton(onClick = onOptionsClick)
             }
         },
@@ -102,7 +121,8 @@ internal fun DateCustomFieldEntryPreview(
                 index = 0,
                 onClick = {},
                 onFocusChange = { _, _ -> },
-                onOptionsClick = {}
+                onOptionsClick = {},
+                showLeadingIcon = input.second
             )
         }
     }

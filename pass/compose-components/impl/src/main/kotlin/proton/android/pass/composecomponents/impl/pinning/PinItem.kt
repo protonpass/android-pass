@@ -66,7 +66,7 @@ fun PinItem(
         is ItemContents.Identity -> PassTheme.colors.interactionNormMinor1
         is ItemContents.WifiNetwork,
         is ItemContents.SSHKey,
-        is ItemContents.Custom -> PassTheme.colors.loginInteractionNormMinor1
+        is ItemContents.Custom -> PassTheme.colors.interactionNormMinor1
         is ItemContents.Unknown -> Color.Transparent
     }
     Row(
@@ -113,17 +113,17 @@ fun PinItem(
             is ItemContents.Identity -> IdentityIcon(
                 modifier = Modifier.size(ICON_SIZE.dp),
                 shape = PassTheme.shapes.squircleSmallShape,
-                backgroundColor = PassTheme.colors.cardInteractionNormMinor2
+                backgroundColor = PassTheme.colors.interactionNormMinor2
             )
             is ItemContents.WifiNetwork,
             is ItemContents.SSHKey,
             is ItemContents.Custom -> CustomItemIcon(
                 modifier = Modifier.size(ICON_SIZE.dp),
                 shape = PassTheme.shapes.squircleSmallShape,
-                backgroundColor = PassTheme.colors.cardInteractionNormMinor2
+                backgroundColor = PassTheme.colors.interactionNormMinor2
             )
 
-            is ItemContents.Unknown -> {}
+            is ItemContents.Unknown -> Unit
         }
         Text(
             text = item.contents.title.ellipsize(TEXT_MAX_LENGTH_BEFORE_ELLIPSE),

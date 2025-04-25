@@ -147,7 +147,7 @@ internal fun HomeEmptyList(
                 HomeEmptyButton(
                     modifier = Modifier.fillMaxWidth(),
                     text = stringResource(R.string.home_empty_vault_create_custom_item),
-                    backgroundColor = PassPalette.SlateGray.copy(alpha = 0.3f),
+                    backgroundColor = PassPalette.SlateGray,
                     textColor = ProtonTheme.colors.textNorm,
                     icon = CoreR.drawable.ic_proton_wrench,
                     onClick = onCreateCustomItemClick

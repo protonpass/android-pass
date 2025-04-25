@@ -56,7 +56,7 @@ fun TemplateItem(
     ) {
         val (bgColor, fgColor) = when (item.category) {
             TemplateType.Category.TECHNOLOGY ->
-                PassTheme.colors.interactionNormMinor2 to PassTheme.colors.interactionNormMajor2
+                PassTheme.colors.inputBackgroundStrong to PassTheme.colors.interactionNormMajor2
 
             TemplateType.Category.FINANCE ->
                 PassTheme.colors.noteInteractionNormMinor2 to PassTheme.colors.noteInteractionNormMajor2
@@ -79,7 +79,7 @@ fun TemplateItem(
 
 @Preview
 @Composable
-fun TemplateItemPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun TemplateItemPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             TemplateItem(

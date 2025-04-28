@@ -34,7 +34,8 @@ internal sealed interface PasswordCredentialSelectionState {
     data class Ready(
         internal val themePreference: ThemePreference,
         internal val isBiometricAuthRequired: Boolean,
-        internal val request: PasswordCredentialSelectionRequest
+        internal val request: PasswordCredentialSelectionRequest,
+        internal val event: PasswordCredentialSelectionStateEvent
     ) : PasswordCredentialSelectionState {
 
         internal val actionAfterAuth: PasswordCredentialSelectionActionAfterAuth = when (request) {

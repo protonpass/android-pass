@@ -28,4 +28,9 @@ internal sealed interface PasswordCredentialSelectionEvent {
 
     data object OnSelectScreenShown : PasswordCredentialSelectionEvent
 
+    @JvmInline
+    value class OnEventConsumed(
+        internal val event: PasswordCredentialSelectionStateEvent
+    ) : PasswordCredentialSelectionEvent
+
 }

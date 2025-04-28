@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,6 +39,7 @@ import proton.android.pass.features.credentials.passwords.selection.navigation.P
 import proton.android.pass.features.credentials.passwords.selection.navigation.passwordCredentialSelectionNavGraph
 import proton.android.pass.features.credentials.passwords.selection.presentation.PasswordCredentialSelectionEvent
 import proton.android.pass.features.credentials.passwords.selection.presentation.PasswordCredentialSelectionState
+import proton.android.pass.features.credentials.passwords.selection.presentation.PasswordCredentialSelectionStateEvent
 import proton.android.pass.features.selectitem.navigation.SelectItem
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
@@ -65,6 +67,24 @@ internal fun PasswordCredentialSelectionContent(
     val bottomSheetJob: MutableState<Job?> = remember { mutableStateOf(null) }
 
     val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(key1 = state.event) {
+        when (val event = state.event) {
+            PasswordCredentialSelectionStateEvent.Idle -> Unit
+            PasswordCredentialSelectionStateEvent.Cancel -> {
+                onNavigate(PasswordCredentialSelectionNavEvent.Cancel)
+            }
+
+            is PasswordCredentialSelectionStateEvent.SendCredentialResponse -> {
+                PasswordCredentialSelectionNavEvent.SendResponse(
+                    id = event.id,
+                    password = event.password
+                ).also(onNavigate)
+            }
+        }
+
+        onEvent(PasswordCredentialSelectionEvent.OnEventConsumed(event))
+    }
 
     PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {
         NavHost(

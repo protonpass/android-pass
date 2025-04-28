@@ -67,14 +67,7 @@ internal class PasswordCredentialsSearcherImpl @Inject constructor(
             isBiometricAuthRequired = needsBiometricAuth().first()
         )
 
-        val passwordCredentialAction = createPasswordCredentialAction(
-            context = context,
-            passwordCredentialItem = PasswordCredentialItem(
-                username = "Temp Username",
-                displayName = "Temp Display Name",
-                encryptedPassword = "Temp Encrypted Password"
-            )
-        )
+        val passwordCredentialAction = createPasswordCredentialAction(context = context)
 
         return Pair(passwordCredentialEntries, passwordCredentialAction)
             .also { telemetryManager.sendEvent(PasswordCredentialsTelemetryEvent.DisplaySuggestions) }
@@ -125,11 +118,8 @@ internal class PasswordCredentialsSearcherImpl @Inject constructor(
         )
     }
 
-    private fun createPasswordCredentialAction(context: Context, passwordCredentialItem: PasswordCredentialItem) =
-        PasswordCredentialSelectionActivity.createPasswordCredentialIntent(
-            context = context,
-            passwordCredentialItem = passwordCredentialItem
-        )
+    private fun createPasswordCredentialAction(context: Context) =
+        PasswordCredentialSelectionActivity.createPasswordCredentialIntent(context = context)
             .let { intent ->
                 PendingIntent.getActivity(
                     context,
@@ -148,8 +138,6 @@ internal class PasswordCredentialsSearcherImpl @Inject constructor(
 
 
     private companion object {
-
-        private const val TAG = "PassPasskeyCredentialsSearcherImpl"
 
         private const val REQUEST_CODE_RANGE_START = 1
 

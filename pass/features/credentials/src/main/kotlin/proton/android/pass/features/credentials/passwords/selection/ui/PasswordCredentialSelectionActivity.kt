@@ -92,6 +92,13 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
                                 viewModel.onSignOut(userId = destination.userId)
                             }
 
+                            is PasswordCredentialSelectionNavEvent.SendResponse -> {
+                                onProceedSelectionRequest(
+                                    id = destination.id,
+                                    password = destination.password
+                                )
+                            }
+
                             PasswordCredentialSelectionNavEvent.Upgrade -> {
                                 viewModel.onUpgrade()
                             }
@@ -100,15 +107,19 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
                     onEvent = { event ->
                         when (event) {
                             PasswordCredentialSelectionEvent.OnAuthPerformed -> {
-                                println("JIBIRI: OnAuthPerformed")
+                                viewModel.onAuthPerformed(request = state.request)
                             }
 
                             is PasswordCredentialSelectionEvent.OnItemSelected -> {
-                                println("JIBIRI: OnItemSelected")
+                                viewModel.onItemSelected(itemUiModel = event.itemUiModel)
                             }
 
                             PasswordCredentialSelectionEvent.OnSelectScreenShown -> {
                                 viewModel.onScreenShown()
+                            }
+
+                            is PasswordCredentialSelectionEvent.OnEventConsumed -> {
+                                viewModel.onEventConsumed(event = event.event)
                             }
                         }
                     }
@@ -121,7 +132,7 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
         ?.let { extrasBundle ->
             when (extrasBundle.getString(EXTRAS_REQUEST_TYPE_KEY)) {
                 PasswordRequestType.SelectPassword.name -> {
-                    createPasswordSelectRequest(extrasBundle)
+                    PasswordCredentialSelectionRequest.Select
                 }
 
                 PasswordRequestType.UsePassword.name -> {
@@ -135,11 +146,23 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
             }
         }
 
-    private fun createPasswordSelectRequest(extrasBundle: Bundle): PasswordCredentialSelectionRequest? =
-        PasswordCredentialSelectionRequest.Select()
 
-    private fun createPasswordUseRequest(extrasBundle: Bundle): PasswordCredentialSelectionRequest? =
-        PasswordCredentialSelectionRequest.Use()
+    private fun createPasswordUseRequest(extrasBundle: Bundle): PasswordCredentialSelectionRequest? {
+        val username = extrasBundle.getString(EXTRAS_REQUEST_USERNAME) ?: run {
+            PassLogger.w(TAG, "Password selection request does not contain username")
+            return null
+        }
+
+        val encryptedPassword = extrasBundle.getString(EXTRAS_REQUEST_ENCRYPTED_PASSWORD) ?: run {
+            PassLogger.w(TAG, "Password selection request does not contain username")
+            return null
+        }
+
+        return PasswordCredentialSelectionRequest.Use(
+            username = username,
+            encryptedPassword = encryptedPassword
+        )
+    }
 
     private fun onCancelSelectionRequest() {
         setResult(RESULT_CANCELED)
@@ -169,6 +192,8 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
 
         private const val TAG = "PasswordCredentialSelectionActivity"
 
+        private const val EXTRAS_REQUEST_USERNAME = "REQUEST_USERNAME"
+        private const val EXTRAS_REQUEST_ENCRYPTED_PASSWORD = "REQUEST_ENCRYPTED_PASSWORD"
         private const val EXTRAS_REQUEST_TYPE_KEY = "REQUEST_TYPE"
 
         internal fun createPasswordCredentialIntent(
@@ -180,6 +205,8 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
         ).apply {
             setPackage(context.packageName)
 
+            putExtra(EXTRAS_REQUEST_USERNAME, passwordCredentialItem.username)
+            putExtra(EXTRAS_REQUEST_ENCRYPTED_PASSWORD, passwordCredentialItem.encryptedPassword)
             putExtra(EXTRAS_REQUEST_TYPE_KEY, PasswordRequestType.UsePassword.name)
         }
 

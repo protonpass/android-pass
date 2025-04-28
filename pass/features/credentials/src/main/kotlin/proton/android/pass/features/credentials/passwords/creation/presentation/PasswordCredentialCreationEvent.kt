@@ -18,21 +18,11 @@
 
 package proton.android.pass.features.credentials.passwords.creation.presentation
 
-import proton.android.pass.commonuimodels.api.ItemUiModel
-
 internal sealed interface PasswordCredentialCreationEvent {
 
     @JvmInline
     value class OnEventConsumed(
         internal val event: PasswordCredentialCreationStateEvent
-    ) : PasswordCredentialCreationEvent
-
-    @JvmInline
-    value class OnItemSelected(internal val itemUiModel: ItemUiModel) : PasswordCredentialCreationEvent
-
-    @JvmInline
-    value class OnItemSelectionConfirmed(
-        internal val itemUiModel: ItemUiModel
     ) : PasswordCredentialCreationEvent
 
 }

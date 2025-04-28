@@ -16,22 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.credentials.passwords.selection.navigation
+package proton.android.pass.features.credentials.passwords.selection.presentation
 
-import me.proton.core.domain.entity.UserId
+import androidx.compose.runtime.Immutable
 
-internal sealed interface PasswordCredentialSelectionNavEvent {
+@Immutable
+internal sealed interface PasswordCredentialSelectionStateEvent {
 
-    data object Cancel : PasswordCredentialSelectionNavEvent
+    @Immutable
+    data object Idle : PasswordCredentialSelectionStateEvent
 
-    @JvmInline
-    value class ForceSignOut(internal val userId: UserId) : PasswordCredentialSelectionNavEvent
+    @Immutable
+    data object Cancel : PasswordCredentialSelectionStateEvent
 
-    data object Upgrade : PasswordCredentialSelectionNavEvent
-
-    data class SendResponse(
+    @Immutable
+    data class SendCredentialResponse(
         internal val id: String,
         internal val password: String
-    ) : PasswordCredentialSelectionNavEvent
+    ) : PasswordCredentialSelectionStateEvent
 
 }

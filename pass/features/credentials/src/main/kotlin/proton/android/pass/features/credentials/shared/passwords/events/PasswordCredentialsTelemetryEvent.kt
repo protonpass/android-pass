@@ -30,7 +30,7 @@ internal sealed class PasswordCredentialsTelemetryEvent(
 
     data object DisplaySuggestions : PasswordCredentialsTelemetryEvent("password.display_suggestions")
 
-    data object DisplayAllPasskeys : PasswordCredentialsTelemetryEvent("password.display_all_passkeys")
+    data object DisplayAllPasswords : PasswordCredentialsTelemetryEvent("password.display_all_passwords")
 
     data object AuthDone : PasswordCredentialsTelemetryEvent("password.auth_done")
 

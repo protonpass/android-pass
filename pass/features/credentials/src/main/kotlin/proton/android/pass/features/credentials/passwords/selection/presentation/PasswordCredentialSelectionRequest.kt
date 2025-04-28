@@ -18,14 +18,15 @@
 
 package proton.android.pass.features.credentials.passwords.selection.presentation
 
+import me.proton.core.crypto.common.keystore.EncryptedString
+
 internal sealed interface PasswordCredentialSelectionRequest {
 
-    data class Select(
-        internal val foo: String = "Select"
-    ) : PasswordCredentialSelectionRequest
+    data object Select : PasswordCredentialSelectionRequest
 
     data class Use(
-        internal val foo: String = "Use"
+        internal val username: String,
+        internal val encryptedPassword: EncryptedString
     ) : PasswordCredentialSelectionRequest
 
 }

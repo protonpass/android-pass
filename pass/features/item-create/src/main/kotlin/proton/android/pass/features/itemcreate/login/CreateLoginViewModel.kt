@@ -252,8 +252,6 @@ class CreateLoginViewModel @Inject constructor(
             currentValue.packageInfoSet
         }
 
-        println("JIBIRI: packageInfoSet: $packageInfoSet")
-
         val password = initialContents.password
             ?.let { password ->
                 encryptionContextProvider.withEncryptionContext {

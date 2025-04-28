@@ -104,14 +104,6 @@ internal class PasswordCredentialCreationActivity : FragmentActivity() {
                             is PasswordCredentialCreationEvent.OnEventConsumed -> {
                                 viewModel.onConsumeEvent(event = event.event)
                             }
-
-                            is PasswordCredentialCreationEvent.OnItemSelected -> {
-                                println("JIBIRI: OnItemSelected")
-                            }
-
-                            is PasswordCredentialCreationEvent.OnItemSelectionConfirmed -> {
-                                println("JIBIRI: OnItemSelectionConfirmed")
-                            }
                         }
                     }
                 )
@@ -156,12 +148,6 @@ internal class PasswordCredentialCreationActivity : FragmentActivity() {
 
                 finish()
             }
-    }
-
-    private companion object {
-
-        private const val TAG = "PasswordCredentialCreationActivity"
-
     }
 
 }

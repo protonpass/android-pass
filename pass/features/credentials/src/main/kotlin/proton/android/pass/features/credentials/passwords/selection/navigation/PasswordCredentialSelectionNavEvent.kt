@@ -25,8 +25,13 @@ internal sealed interface PasswordCredentialSelectionNavEvent {
     data object Cancel : PasswordCredentialSelectionNavEvent
 
     @JvmInline
-    value class ForceSignOut(val userId: UserId) : PasswordCredentialSelectionNavEvent
+    value class ForceSignOut(internal val userId: UserId) : PasswordCredentialSelectionNavEvent
 
     data object Upgrade : PasswordCredentialSelectionNavEvent
+
+    data class SendResponse(
+        internal val id: String,
+        internal val password: String
+    ) : PasswordCredentialSelectionNavEvent
 
 }

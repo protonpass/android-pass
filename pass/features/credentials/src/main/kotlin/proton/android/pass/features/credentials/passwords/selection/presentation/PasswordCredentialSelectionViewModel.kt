@@ -34,6 +34,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
+import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.account.api.AccountOrchestrators
 import proton.android.pass.account.api.Orchestrator
@@ -42,8 +43,12 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
+import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.domain.ItemContents
 import proton.android.pass.features.credentials.R
 import proton.android.pass.features.credentials.shared.passwords.events.PasswordCredentialsTelemetryEvent
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.ThemePreference
@@ -57,6 +62,7 @@ internal class PasswordCredentialSelectionViewModel @Inject constructor(
     needsBiometricAuth: NeedsBiometricAuth,
     private val accountOrchestrators: AccountOrchestrators,
     private val accountManager: AccountManager,
+    private val encryptionContextProvider: EncryptionContextProvider,
     private val toastManager: ToastManager,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val telemetryManager: TelemetryManager
@@ -72,12 +78,17 @@ internal class PasswordCredentialSelectionViewModel @Inject constructor(
         .getThemePreference()
         .distinctUntilChanged()
 
+    private val eventFlow = MutableStateFlow<PasswordCredentialSelectionStateEvent>(
+        value = PasswordCredentialSelectionStateEvent.Idle
+    )
+
     internal val stateFlow: StateFlow<PasswordCredentialSelectionState> = combine(
         closeScreenFlow,
         requestOptionFlow,
         themePreferenceFlow,
-        needsBiometricAuth()
-    ) { shouldCloseScreen, requestOption, themePreference, isBiometricAuthRequired ->
+        needsBiometricAuth(),
+        eventFlow
+    ) { shouldCloseScreen, requestOption, themePreference, isBiometricAuthRequired, event ->
         if (shouldCloseScreen) {
             return@combine PasswordCredentialSelectionState.Close
         }
@@ -90,7 +101,8 @@ internal class PasswordCredentialSelectionViewModel @Inject constructor(
                         PasswordCredentialSelectionState.Ready(
                             themePreference = themePreference,
                             isBiometricAuthRequired = isBiometricAuthRequired,
-                            request = request
+                            request = request,
+                            event = event
                         )
                     }
                     ?: PasswordCredentialSelectionState.Close
@@ -106,7 +118,46 @@ internal class PasswordCredentialSelectionViewModel @Inject constructor(
     }
 
     internal fun onScreenShown() {
-        telemetryManager.sendEvent(PasswordCredentialsTelemetryEvent.DisplayAllPasskeys)
+        telemetryManager.sendEvent(PasswordCredentialsTelemetryEvent.DisplayAllPasswords)
+    }
+
+    internal fun onEventConsumed(event: PasswordCredentialSelectionStateEvent) {
+        eventFlow.compareAndSet(event, PasswordCredentialSelectionStateEvent.Idle)
+    }
+
+    internal fun onAuthPerformed(request: PasswordCredentialSelectionRequest) {
+        if (request !is PasswordCredentialSelectionRequest.Use) return
+
+        onPasswordCredentialSelected(
+            id = request.username,
+            encryptedPassword = request.encryptedPassword
+        )
+    }
+
+    internal fun onItemSelected(itemUiModel: ItemUiModel) {
+        val loginItemContents = itemUiModel.contents as? ItemContents.Login ?: run {
+            PassLogger.w(TAG, "Received ItemContents are not ItemContents.Login")
+            eventFlow.update { PasswordCredentialSelectionStateEvent.Cancel }
+            return
+        }
+
+        onPasswordCredentialSelected(
+            id = loginItemContents.displayValue,
+            encryptedPassword = loginItemContents.password.encrypted
+        )
+    }
+
+    private fun onPasswordCredentialSelected(id: String, encryptedPassword: EncryptedString) {
+        encryptionContextProvider.withEncryptionContext {
+            decrypt(encryptedPassword)
+        }.also { password ->
+            eventFlow.update {
+                PasswordCredentialSelectionStateEvent.SendCredentialResponse(
+                    id = id,
+                    password = password
+                )
+            }
+        }
     }
 
     internal fun onUpgrade() {

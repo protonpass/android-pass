@@ -210,7 +210,6 @@ abstract class BaseCustomItemViewModel(
     }
 
     protected fun onReceiveWifiSecurityType(type: WifiSecurityType) {
-        onUserEditedContent()
         onWifiSecurityTypeChange(type.id)
     }
 
@@ -650,24 +649,32 @@ abstract class BaseCustomItemViewModel(
     }
 
     private fun onSSIDChange(value: String) {
+        onUserEditedContent()
+
         val updatedStaticFields = (itemFormState.itemStaticFields as ItemStaticFields.WifiNetwork)
             .copy(ssid = value)
         itemFormState = itemFormState.copy(itemStaticFields = updatedStaticFields)
     }
 
     private fun onWifiSecurityTypeChange(value: Int) {
+        onUserEditedContent()
+
         val updatedStaticFields = (itemFormState.itemStaticFields as ItemStaticFields.WifiNetwork)
             .copy(wifiSecurityType = WifiSecurityType.fromId(value))
         itemFormState = itemFormState.copy(itemStaticFields = updatedStaticFields)
     }
 
     private fun onPublicKeyChange(value: String) {
+        onUserEditedContent()
+
         val updatedStaticFields = (itemFormState.itemStaticFields as ItemStaticFields.SSHKey)
             .copy(publicKey = value)
         itemFormState = itemFormState.copy(itemStaticFields = updatedStaticFields)
     }
 
     private fun onPrivateKeyChange(value: String) {
+        onUserEditedContent()
+
         val privateKey = encryptionContextProvider.withEncryptionContext {
             if (value.isBlank()) {
                 UIHiddenState.Empty(encrypt(""))
@@ -684,6 +691,8 @@ abstract class BaseCustomItemViewModel(
     }
 
     private fun onPasswordChange(value: String) {
+        onUserEditedContent()
+
         val password = encryptionContextProvider.withEncryptionContext {
             if (value.isBlank()) {
                 UIHiddenState.Empty(encrypt(""))

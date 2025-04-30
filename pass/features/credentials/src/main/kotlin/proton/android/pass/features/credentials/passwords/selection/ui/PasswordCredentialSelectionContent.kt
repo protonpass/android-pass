@@ -95,6 +95,7 @@ internal fun PasswordCredentialSelectionContent(
             passwordCredentialSelectionNavGraph(
                 appNavigator = appNavigator,
                 actionAfterAuth = actionAfterAuth,
+                selectItemState = selectItemState,
                 onNavigate = onNavigate,
                 onEvent = onEvent,
                 dismissBottomSheet = { block ->

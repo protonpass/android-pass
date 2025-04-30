@@ -16,23 +16,19 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases.credentials.passwords
+package proton.android.pass.autofill.api.suggestions
 
 import proton.android.pass.data.api.usecases.Suggestion
-import proton.android.pass.data.api.usecases.credentials.passwords.GetPasswordCredentialItems
-import proton.android.pass.domain.credentials.PasswordCredentialItem
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class FakeGetPasswordCredentialItems @Inject constructor() : GetPasswordCredentialItems {
+sealed interface SuggestionSource {
 
-    private var passwordCredentialItems: List<PasswordCredentialItem> = emptyList()
+    data class WithPackageName(val packageName: String) : SuggestionSource
 
-    fun setPasswordCredentialItems(passwordCredentialItems: List<PasswordCredentialItem>) {
-        this.passwordCredentialItems = passwordCredentialItems
+    data class WithUrl(val url: String) : SuggestionSource
+
+    fun toSuggestion(): Suggestion = when (this) {
+        is WithPackageName -> Suggestion.PackageName(packageName)
+        is WithUrl -> Suggestion.Url(url)
     }
-
-    override suspend fun invoke(suggestion: Suggestion): List<PasswordCredentialItem> = passwordCredentialItems
 
 }

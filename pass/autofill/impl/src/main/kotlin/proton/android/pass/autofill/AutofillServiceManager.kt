@@ -32,8 +32,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
+import proton.android.pass.autofill.api.suggestions.PackageNameUrlSuggestionAdapter
 import proton.android.pass.autofill.entities.AutofillData
-import proton.android.pass.autofill.extensions.PackageNameUrlSuggestionAdapter
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.autofill.service.R
@@ -56,7 +56,8 @@ class AutofillServiceManager @Inject constructor(
     private val getSuggestedAutofillItems: GetSuggestedAutofillItems,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val needsBiometricAuth: NeedsBiometricAuth,
-    @AppIcon private val appIcon: Int
+    @AppIcon private val appIcon: Int,
+    private val packageNameUrlSuggestionAdapter: PackageNameUrlSuggestionAdapter
 ) {
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -192,7 +193,7 @@ class AutofillServiceManager @Inject constructor(
         suggestionType: SuggestionType,
         autofillData: AutofillData
     ): SuggestedItemsResult {
-        val suggestionSource = PackageNameUrlSuggestionAdapter.adapt(
+        val suggestionSource = packageNameUrlSuggestionAdapter.adapt(
             packageName = autofillData.packageInfo.packageName,
             url = autofillData.assistInfo.url.value().orEmpty()
         )

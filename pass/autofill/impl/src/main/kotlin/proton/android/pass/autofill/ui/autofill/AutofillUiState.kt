@@ -18,12 +18,15 @@
 
 package proton.android.pass.autofill.ui.autofill
 
+import androidx.compose.runtime.Immutable
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.common.api.Option
 
-sealed interface AutofillUiState {
+@Immutable
+internal sealed interface AutofillUiState {
 
+    @Immutable
     data class StartAutofillUiState(
         val autofillAppState: AutofillAppState,
         val themePreference: Int,
@@ -32,7 +35,13 @@ sealed interface AutofillUiState {
         val selectedAutofillItem: Option<AutofillItem>
     ) : AutofillUiState
 
+    @Immutable
     data object UninitialisedAutofillUiState : AutofillUiState
+
+    @Immutable
     data object NotValidAutofillUiState : AutofillUiState
+
+    @Immutable
     data object CloseScreen : AutofillUiState
+
 }

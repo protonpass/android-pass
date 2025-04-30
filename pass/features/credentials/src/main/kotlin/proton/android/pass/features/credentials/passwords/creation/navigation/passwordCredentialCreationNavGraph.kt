@@ -16,14 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.credentials.passkeys.creation.navigation
+package proton.android.pass.features.credentials.passwords.creation.navigation
 
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.None
 import proton.android.pass.features.auth.AuthNavigation
 import proton.android.pass.features.auth.EnterPin
 import proton.android.pass.features.auth.authGraph
-import proton.android.pass.features.credentials.passwords.creation.navigation.PasswordCredentialCreationNavEvent
 import proton.android.pass.features.itemcreate.alias.CreateAliasBottomSheet
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.AddCustomFieldBottomSheetNavItem
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldOptionsBottomSheetNavItem

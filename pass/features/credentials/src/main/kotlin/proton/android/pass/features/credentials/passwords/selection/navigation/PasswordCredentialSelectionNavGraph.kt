@@ -22,7 +22,6 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsBottomSheetNavItem
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsNavDestination
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.itemOptionsNavGraph
-import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.features.auth.AuthNavigation
 import proton.android.pass.features.auth.EnterPin
 import proton.android.pass.features.auth.authGraph
@@ -42,6 +41,7 @@ import proton.android.pass.navigation.api.AppNavigator
 internal fun NavGraphBuilder.passwordCredentialSelectionNavGraph(
     appNavigator: AppNavigator,
     actionAfterAuth: PasswordCredentialSelectionActionAfterAuth,
+    selectItemState: SelectItemState,
     onNavigate: (PasswordCredentialSelectionNavEvent) -> Unit,
     onEvent: (PasswordCredentialSelectionEvent) -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit
@@ -124,11 +124,7 @@ internal fun NavGraphBuilder.passwordCredentialSelectionNavGraph(
     )
 
     selectItemGraph(
-        state = SelectItemState.Autofill.Login(
-            title = "Select Password Credential",
-            suggestion = Suggestion.PackageName("")
-
-        ),
+        state = selectItemState,
         onScreenShown = {
             onEvent(PasswordCredentialSelectionEvent.OnSelectScreenShown)
         },

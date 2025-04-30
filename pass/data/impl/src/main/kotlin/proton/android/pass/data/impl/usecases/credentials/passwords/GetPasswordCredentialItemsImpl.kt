@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.api.usecases.credentials.passwords.GetPasswordCredentialItems
 import proton.android.pass.data.api.usecases.shares.ObserveAutofillShares
 import proton.android.pass.domain.ItemContents
@@ -39,7 +40,7 @@ class GetPasswordCredentialItemsImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : GetPasswordCredentialItems {
 
-    override suspend fun invoke(packageName: String): List<PasswordCredentialItem> = observeAutofillShares()
+    override suspend fun invoke(suggestion: Suggestion): List<PasswordCredentialItem> = observeAutofillShares()
         .flatMapLatest { autofillShares ->
             observeItems(
                 selection = ShareSelection.Shares(autofillShares.map(Share::id)),
@@ -56,8 +57,17 @@ class GetPasswordCredentialItemsImpl @Inject constructor(
             }
         }
         .filter { loginItemContents ->
-            loginItemContents.packageInfoSet.any { packageInfo ->
-                packageInfo.packageName.value == packageName
+            when (suggestion) {
+                is Suggestion.PackageName -> {
+                    loginItemContents.packageInfoSet.any { packageInfo ->
+                        packageInfo.packageName.value == suggestion.value
+                    }
+                }
+                is Suggestion.Url -> {
+                    loginItemContents.urls.any { url ->
+                        url == suggestion.value
+                    }
+                }
             }
         }
         .map { loginItemContents ->

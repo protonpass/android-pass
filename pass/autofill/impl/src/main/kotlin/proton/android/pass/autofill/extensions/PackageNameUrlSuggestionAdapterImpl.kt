@@ -18,22 +18,16 @@
 
 package proton.android.pass.autofill.extensions
 
-import proton.android.pass.data.api.usecases.Suggestion
+import proton.android.pass.autofill.api.suggestions.PackageNameUrlSuggestionAdapter
+import proton.android.pass.autofill.api.suggestions.SuggestionSource
 import proton.android.pass.domain.entity.PackageName
+import javax.inject.Inject
+import javax.inject.Singleton
 
-sealed interface SuggestionSource {
-    data class WithPackageName(val packageName: String) : SuggestionSource
-    data class WithUrl(val url: String) : SuggestionSource
+@Singleton
+class PackageNameUrlSuggestionAdapterImpl @Inject constructor() : PackageNameUrlSuggestionAdapter {
 
-    fun toSuggestion(): Suggestion = when (this) {
-        is WithPackageName -> Suggestion.PackageName(packageName)
-        is WithUrl -> Suggestion.Url(url)
-    }
-}
-
-object PackageNameUrlSuggestionAdapter {
-
-    fun adapt(packageName: PackageName, url: String): SuggestionSource {
+    override fun adapt(packageName: PackageName, url: String): SuggestionSource {
         val autofillDataPackageName = packageName
             .takeIf { !it.isBrowser() }
             ?.value
@@ -52,4 +46,5 @@ object PackageNameUrlSuggestionAdapter {
             else -> throw IllegalStateException("Unexpected state")
         }
     }
+
 }

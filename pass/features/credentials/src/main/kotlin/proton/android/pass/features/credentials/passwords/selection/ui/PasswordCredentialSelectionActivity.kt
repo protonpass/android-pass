@@ -36,10 +36,13 @@ import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import proton.android.pass.autofill.api.suggestions.PackageNameUrlSuggestionAdapter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.theme.SystemUIDisposableEffect
 import proton.android.pass.composecomponents.impl.theme.isDark
+import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.domain.credentials.PasswordCredentialItem
+import proton.android.pass.domain.entity.PackageName
 import proton.android.pass.features.credentials.passwords.selection.navigation.PasswordCredentialSelectionNavEvent
 import proton.android.pass.features.credentials.passwords.selection.presentation.PasswordCredentialSelectionEvent
 import proton.android.pass.features.credentials.passwords.selection.presentation.PasswordCredentialSelectionRequest
@@ -47,9 +50,13 @@ import proton.android.pass.features.credentials.passwords.selection.presentation
 import proton.android.pass.features.credentials.passwords.selection.presentation.PasswordCredentialSelectionViewModel
 import proton.android.pass.features.credentials.shared.passwords.domain.PasswordRequestType
 import proton.android.pass.log.api.PassLogger
+import javax.inject.Inject
 
 @[AndroidEntryPoint RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)]
 internal class PasswordCredentialSelectionActivity : FragmentActivity() {
+
+    @Inject
+    internal lateinit var packageNameUrlSuggestionAdapter: PackageNameUrlSuggestionAdapter
 
     private val viewModel: PasswordCredentialSelectionViewModel by viewModels()
 
@@ -132,7 +139,7 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
         ?.let { extrasBundle ->
             when (extrasBundle.getString(EXTRAS_REQUEST_TYPE_KEY)) {
                 PasswordRequestType.SelectPassword.name -> {
-                    PasswordCredentialSelectionRequest.Select
+                    createPasswordSelectRequest(extrasBundle)
                 }
 
                 PasswordRequestType.UsePassword.name -> {
@@ -146,6 +153,14 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
             }
         }
 
+    private fun createPasswordSelectRequest(extrasBundle: Bundle): PasswordCredentialSelectionRequest? {
+        return packageNameUrlSuggestionAdapter.adapt(
+            packageName = PackageName(extrasBundle.getString(EXTRAS_REQUEST_PACKAGE_NAME).orEmpty()),
+            url = extrasBundle.getString(EXTRAS_REQUEST_URL).orEmpty()
+        )
+            .toSuggestion()
+            .let(PasswordCredentialSelectionRequest::Select)
+    }
 
     private fun createPasswordUseRequest(extrasBundle: Bundle): PasswordCredentialSelectionRequest? {
         val username = extrasBundle.getString(EXTRAS_REQUEST_USERNAME) ?: run {
@@ -158,9 +173,15 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
             return null
         }
 
+        val suggestion = packageNameUrlSuggestionAdapter.adapt(
+            packageName = PackageName(extrasBundle.getString(EXTRAS_REQUEST_PACKAGE_NAME).orEmpty()),
+            url = extrasBundle.getString(EXTRAS_REQUEST_URL).orEmpty()
+        ).toSuggestion()
+
         return PasswordCredentialSelectionRequest.Use(
             username = username,
-            encryptedPassword = encryptedPassword
+            encryptedPassword = encryptedPassword,
+            suggestion = suggestion
         )
     }
 
@@ -194,11 +215,14 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
 
         private const val EXTRAS_REQUEST_USERNAME = "REQUEST_USERNAME"
         private const val EXTRAS_REQUEST_ENCRYPTED_PASSWORD = "REQUEST_ENCRYPTED_PASSWORD"
+        private const val EXTRAS_REQUEST_URL = "REQUEST_ENCRYPTED_URL"
+        private const val EXTRAS_REQUEST_PACKAGE_NAME = "REQUEST_PACKAGE_NAME"
         private const val EXTRAS_REQUEST_TYPE_KEY = "REQUEST_TYPE"
 
         internal fun createPasswordCredentialIntent(
             context: Context,
-            passwordCredentialItem: PasswordCredentialItem
+            passwordCredentialItem: PasswordCredentialItem,
+            suggestion: Suggestion
         ): Intent = Intent(
             context,
             PasswordCredentialSelectionActivity::class.java
@@ -207,15 +231,19 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
 
             putExtra(EXTRAS_REQUEST_USERNAME, passwordCredentialItem.username)
             putExtra(EXTRAS_REQUEST_ENCRYPTED_PASSWORD, passwordCredentialItem.encryptedPassword)
+            putExtra(EXTRAS_REQUEST_URL, (suggestion as? Suggestion.Url)?.value)
+            putExtra(EXTRAS_REQUEST_PACKAGE_NAME, (suggestion as? Suggestion.PackageName)?.value)
             putExtra(EXTRAS_REQUEST_TYPE_KEY, PasswordRequestType.UsePassword.name)
         }
 
-        internal fun createPasswordCredentialIntent(context: Context): Intent = Intent(
+        internal fun createPasswordCredentialIntent(context: Context, suggestion: Suggestion): Intent = Intent(
             context,
             PasswordCredentialSelectionActivity::class.java
         ).apply {
             setPackage(context.packageName)
 
+            putExtra(EXTRAS_REQUEST_URL, (suggestion as? Suggestion.Url)?.value)
+            putExtra(EXTRAS_REQUEST_PACKAGE_NAME, (suggestion as? Suggestion.PackageName)?.value)
             putExtra(EXTRAS_REQUEST_TYPE_KEY, PasswordRequestType.SelectPassword.name)
         }
 

@@ -16,21 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.credentials.passwords.selection.presentation
+package proton.android.pass.autofill.api.suggestions
 
-import me.proton.core.crypto.common.keystore.EncryptedString
-import proton.android.pass.data.api.usecases.Suggestion
+import proton.android.pass.domain.entity.PackageName
 
-internal sealed interface PasswordCredentialSelectionRequest {
+interface PackageNameUrlSuggestionAdapter {
 
-    val suggestion: Suggestion
-
-    data class Select(override val suggestion: Suggestion) : PasswordCredentialSelectionRequest
-
-    data class Use(
-        override val suggestion: Suggestion,
-        internal val username: String,
-        internal val encryptedPassword: EncryptedString
-    ) : PasswordCredentialSelectionRequest
+    fun adapt(packageName: PackageName, url: String): SuggestionSource
 
 }

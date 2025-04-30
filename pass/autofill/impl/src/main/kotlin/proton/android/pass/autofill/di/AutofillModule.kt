@@ -16,21 +16,22 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.credentials.passwords.selection.presentation
+package proton.android.pass.autofill.di
 
-import me.proton.core.crypto.common.keystore.EncryptedString
-import proton.android.pass.data.api.usecases.Suggestion
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import proton.android.pass.autofill.api.suggestions.PackageNameUrlSuggestionAdapter
+import proton.android.pass.autofill.extensions.PackageNameUrlSuggestionAdapterImpl
+import javax.inject.Singleton
 
-internal sealed interface PasswordCredentialSelectionRequest {
+@[Module InstallIn(SingletonComponent::class)]
+internal abstract class AutofillModule {
 
-    val suggestion: Suggestion
-
-    data class Select(override val suggestion: Suggestion) : PasswordCredentialSelectionRequest
-
-    data class Use(
-        override val suggestion: Suggestion,
-        internal val username: String,
-        internal val encryptedPassword: EncryptedString
-    ) : PasswordCredentialSelectionRequest
+    @[Binds Singleton]
+    internal abstract fun bindPackageNameUrlSuggestionAdapter(
+        impl: PackageNameUrlSuggestionAdapterImpl
+    ): PackageNameUrlSuggestionAdapter
 
 }

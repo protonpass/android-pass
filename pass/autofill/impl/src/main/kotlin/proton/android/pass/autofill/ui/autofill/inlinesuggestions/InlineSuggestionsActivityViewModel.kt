@@ -34,6 +34,7 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.autofill.AutofillDone
 import proton.android.pass.autofill.AutofillTriggerSource
 import proton.android.pass.autofill.MFAAutofillCopied
+import proton.android.pass.autofill.api.suggestions.PackageNameUrlSuggestionAdapter
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
@@ -71,6 +72,7 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
     private val updateAutofillItem: UpdateAutofillItem,
     private val telemetryManager: TelemetryManager,
     private val internalSettingsRepository: InternalSettingsRepository,
+    private val packageNameUrlSuggestionAdapter: PackageNameUrlSuggestionAdapter,
     preferenceRepository: UserPreferencesRepository,
     inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     clock: Clock,
@@ -81,7 +83,11 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
         savedStateHandle.require(AutofillIntentExtras.ARG_EXTRAS_BUNDLE)
     )
 
-    private val appState = AutofillAppState(extras.first)
+    private val appState = AutofillAppState(
+        autofillData = extras.first,
+        packageNameUrlSuggestionAdapter = packageNameUrlSuggestionAdapter
+    )
+
     private val selectedAutofillItem: Option<AutofillItem> = extras.second
 
     init {

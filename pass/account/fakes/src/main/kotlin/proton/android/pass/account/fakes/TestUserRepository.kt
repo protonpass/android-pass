@@ -32,9 +32,10 @@ import me.proton.core.user.domain.entity.Domain
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserRepository
+import javax.inject.Inject
 
 @Suppress("TooManyFunctions")
-class TestUserRepository : UserRepository {
+class TestUserRepository @Inject constructor() : UserRepository {
     override fun addOnPassphraseChangedListener(listener: PassphraseRepository.OnPassphraseChangedListener) {
         throw IllegalStateException("Not implemented")
     }

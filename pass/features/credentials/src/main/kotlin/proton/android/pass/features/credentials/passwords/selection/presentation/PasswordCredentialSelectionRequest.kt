@@ -23,11 +23,17 @@ import proton.android.pass.data.api.usecases.Suggestion
 
 internal sealed interface PasswordCredentialSelectionRequest {
 
+    val title: String
+
     val suggestion: Suggestion
 
-    data class Select(override val suggestion: Suggestion) : PasswordCredentialSelectionRequest
+    data class Select(
+        override val title: String,
+        override val suggestion: Suggestion
+    ) : PasswordCredentialSelectionRequest
 
     data class Use(
+        override val title: String,
         override val suggestion: Suggestion,
         internal val username: String,
         internal val encryptedPassword: EncryptedString

@@ -48,6 +48,7 @@ import proton.android.pass.composecomponents.impl.form.ProtonSelectableTextField
 internal fun PinInput(
     modifier: Modifier = Modifier,
     state: EnterPinUiState,
+    pin: String,
     onPinChanged: (String) -> Unit,
     onPinSubmit: () -> Unit
 ) {
@@ -65,7 +66,7 @@ internal fun PinInput(
                 borderColor = PassTheme.colors.inputBorderNorm
             )
             .padding(Spacing.medium),
-        text = data?.pin.orEmpty(),
+        text = pin,
         onTextChanged = onPinChanged,
         isEnabled = data?.isLoadingState?.value() != true,
         textStyle = PassTheme.typography.heroNorm().copy(textAlign = TextAlign.Center),

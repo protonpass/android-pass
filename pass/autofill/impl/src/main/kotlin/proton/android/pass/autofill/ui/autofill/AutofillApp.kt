@@ -37,7 +37,7 @@ import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarH
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
 
 @Composable
-fun AutofillApp(
+internal fun AutofillApp(
     modifier: Modifier = Modifier,
     autofillUiState: AutofillUiState.StartAutofillUiState,
     onNavigate: (AutofillNavigation) -> Unit,

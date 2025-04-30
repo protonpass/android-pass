@@ -107,13 +107,13 @@ class AutofillAppViewModel @Inject constructor(
     private val _eventFlow: MutableStateFlow<AutofillAppEvent> =
         MutableStateFlow(AutofillAppEvent.Unknown)
 
-    val state: StateFlow<AutofillAppEvent> = _eventFlow
+    internal val stateFlow: StateFlow<AutofillAppEvent> = _eventFlow
 
-    fun setHadSelectedAutofillItem(value: Boolean) {
+    internal fun setHadSelectedAutofillItem(value: Boolean) {
         hadSelectedAutofillItem = value.some()
     }
 
-    fun onSelectItemScreenShown(state: AutofillAppState) {
+    internal fun onSelectItemScreenShown(state: AutofillAppState) {
         val event = with(state.autofillData) {
             AutofillDisplayed(
                 source = AutofillTriggerSource.App,
@@ -124,67 +124,75 @@ class AutofillAppViewModel @Inject constructor(
         telemetryManager.sendEvent(event)
     }
 
-    fun onItemSelected(
+    internal fun onItemSelected(
         state: AutofillAppState,
         autofillItem: AutofillItem,
         isSuggestion: Boolean
-    ) = viewModelScope.launch {
-        val item = runCatching { getItemById(autofillItem.shareId(), autofillItem.itemId()) }
-            .getOrNull()
-            ?: run {
-                PassLogger.d(TAG, "Could not get item isSuggestion = $isSuggestion")
-                return@launch
-            }
-        val itemUiModel = encryptionContextProvider.withEncryptionContext {
-            item.toUiModel(this@withEncryptionContext)
-        }
-
-
-        when {
-            state.autofillData.isDangerousAutofill -> _eventFlow.update {
-                AutofillAppEvent.ShowWarningDialog(itemUiModel)
-            }
-
-            !isSuggestion && shouldAskForAssociation(itemUiModel.contents, state) -> {
-                _eventFlow.update {
-                    AutofillAppEvent.ShowAssociateDialog(itemUiModel)
+    ) {
+        viewModelScope.launch {
+            val item = runCatching { getItemById(autofillItem.shareId(), autofillItem.itemId()) }
+                .getOrNull()
+                ?: run {
+                    PassLogger.d(TAG, "Could not get item isSuggestion = $isSuggestion")
+                    return@launch
                 }
+            val itemUiModel = encryptionContextProvider.withEncryptionContext {
+                item.toUiModel(this@withEncryptionContext)
             }
 
-            else -> sendMappings(
-                item = autofillItem,
-                state = state,
-                associate = autofillItem.shouldAssociate()
-            )
+            when {
+                state.autofillData.isDangerousAutofill -> _eventFlow.update {
+                    AutofillAppEvent.ShowWarningDialog(itemUiModel)
+                }
+
+                !isSuggestion && shouldAskForAssociation(itemUiModel.contents, state) -> {
+                    _eventFlow.update {
+                        AutofillAppEvent.ShowAssociateDialog(itemUiModel)
+                    }
+                }
+
+                else -> sendMappings(
+                    item = autofillItem,
+                    state = state,
+                    associate = autofillItem.shouldAssociate()
+                )
+            }
         }
     }
 
-    fun onAssociationResult(
+    internal fun onAssociationResult(
         state: AutofillAppState,
         item: ItemUiModel,
         associate: Boolean
-    ) = viewModelScope.launch { sendMappings(item.toAutoFillItem(), state, associate) }
-
-    fun onWarningConfirmed(state: AutofillAppState, item: ItemUiModel) = viewModelScope.launch {
-        if (shouldAskForAssociation(state = state, item = item.contents)) {
-            _eventFlow.update { AutofillAppEvent.ShowAssociateDialog(item) }
-        } else {
-            sendMappings(item.toAutoFillItem(), state, false)
+    ) {
+        viewModelScope.launch {
+            sendMappings(item.toAutoFillItem(), state, associate)
         }
     }
 
-    fun onAssociationCancelled(isInlineSuggestionSession: Boolean) = viewModelScope.launch {
-        if (isInlineSuggestionSession) {
-            _eventFlow.update { AutofillAppEvent.Cancel }
+    internal fun onWarningConfirmed(state: AutofillAppState, item: ItemUiModel) {
+        viewModelScope.launch {
+            if (shouldAskForAssociation(state = state, item = item.contents)) {
+                _eventFlow.update { AutofillAppEvent.ShowAssociateDialog(item) }
+            } else {
+                sendMappings(item.toAutoFillItem(), state, false)
+            }
         }
     }
 
-    fun clearEvent() {
+    internal fun onAssociationCancelled(isInlineSuggestionSession: Boolean) {
+        viewModelScope.launch {
+            if (isInlineSuggestionSession) {
+                _eventFlow.update { AutofillAppEvent.Cancel }
+            }
+        }
+    }
+
+    internal fun clearEvent() {
         _eventFlow.update { AutofillAppEvent.Unknown }
     }
 
     private fun getMappings(autofillItem: AutofillItem, autofillAppState: AutofillAppState): AutofillMappings {
-
         if (autofillItem is AutofillItem.Login) {
             handleTotpUri(autofillItem.totp)
         }
@@ -199,7 +207,7 @@ class AutofillAppViewModel @Inject constructor(
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    suspend fun sendMappings(
+    internal suspend fun sendMappings(
         item: AutofillItem,
         state: AutofillAppState,
         associate: Boolean
@@ -274,7 +282,7 @@ class AutofillAppViewModel @Inject constructor(
         }
     }
 
-    companion object {
+    private companion object {
         private const val TAG = "AutofillAppViewModel"
 
         private fun shouldAskForAssociation(item: ItemContents, state: AutofillAppState): Boolean = when (item) {

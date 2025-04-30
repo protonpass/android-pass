@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.fakes.usecases.credentials.passwords
 
+import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.api.usecases.credentials.passwords.GetPasswordCredentialItems
 import proton.android.pass.domain.credentials.PasswordCredentialItem
 import javax.inject.Inject
@@ -32,6 +33,6 @@ class FakeGetPasswordCredentialItems @Inject constructor() : GetPasswordCredenti
         this.passwordCredentialItems = passwordCredentialItems
     }
 
-    override suspend fun invoke(packageName: String): List<PasswordCredentialItem> = passwordCredentialItems
+    override suspend fun invoke(suggestion: Suggestion): List<PasswordCredentialItem> = passwordCredentialItems
 
 }

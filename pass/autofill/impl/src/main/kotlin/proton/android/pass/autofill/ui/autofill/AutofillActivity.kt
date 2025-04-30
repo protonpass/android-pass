@@ -67,7 +67,7 @@ class AutofillActivity : FragmentActivity() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collectLatest(::onStateReceived)
+                viewModel.stateFlow.collectLatest(::onStateReceived)
             }
         }
     }

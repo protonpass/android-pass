@@ -18,8 +18,11 @@
 
 package proton.android.pass.features.auth
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
+import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -74,11 +77,16 @@ class EnterPinViewModel @Inject constructor(
     private val pinErrorState: MutableStateFlow<Option<PinError>> = MutableStateFlow(None)
     private val eventState: MutableStateFlow<EnterPinEvent> =
         MutableStateFlow(EnterPinEvent.Unknown)
-    private val pinState: MutableStateFlow<String> = MutableStateFlow("")
+
+    @OptIn(SavedStateHandleSaveableApi::class)
+    private var pinMutableState: String by savedStateHandleProvider.get()
+        .saveable { mutableStateOf("") }
+
+    internal val pinState: String
+        get() = pinMutableState
 
     internal val state: StateFlow<EnterPinUiState> = combine(
         eventState,
-        pinState,
         pinErrorState,
         isLoading,
         accountManager.getPrimaryUserId().filterNotNull(),
@@ -92,22 +100,22 @@ class EnterPinViewModel @Inject constructor(
     internal fun onPinChanged(value: String) {
         val sanitisedValue = value.replace(CommonRegex.NON_DIGIT_REGEX, "").take(MAX_PIN_LENGTH)
         pinErrorState.update { None }
-        pinState.update { sanitisedValue }
+        pinMutableState = sanitisedValue
     }
 
     internal fun onPinSubmit() {
-        if (pinState.value.isEmpty()) {
+        if (pinState.isEmpty()) {
             pinErrorState.update { PinError.PinEmpty.some() }
             return
         }
 
         viewModelScope.launch {
             runCatching {
-                val isMatch = checkPin(pinState.value.encodeToByteArray())
+                val isMatch = checkPin(pinState.encodeToByteArray())
                 if (isMatch) {
                     storeAuthSuccessful(UnlockMethod.PinOrBiometrics)
                     eventState.update { EnterPinEvent.Success(origin) }
-                    pinState.update { "" }
+                    pinMutableState = ""
                 } else {
                     isLoading.update { IsLoadingState.Loading }
                     delay(WRONG_PIN_DELAY_SECONDS)
@@ -135,7 +143,7 @@ class EnterPinViewModel @Inject constructor(
                             }
                         }
                     } else {
-                        pinState.update { "" }
+                        pinMutableState = ""
                         pinErrorState.update { PinError.PinIncorrect(remainingAttempts).some() }
                     }
                 }

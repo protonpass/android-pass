@@ -24,11 +24,15 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.credentials.provider.Action
 import androidx.credentials.provider.BeginGetPasswordOption
+import androidx.credentials.provider.CallingAppInfo
 import androidx.credentials.provider.PasswordCredentialEntry
 import kotlinx.coroutines.flow.first
+import proton.android.pass.autofill.api.suggestions.PackageNameUrlSuggestionAdapter
 import proton.android.pass.biometry.NeedsBiometricAuth
+import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.api.usecases.credentials.passwords.GetPasswordCredentialItems
 import proton.android.pass.domain.credentials.PasswordCredentialItem
+import proton.android.pass.domain.entity.PackageName
 import proton.android.pass.features.credentials.R
 import proton.android.pass.features.credentials.passwords.selection.ui.PasswordCredentialSelectionActivity
 import proton.android.pass.features.credentials.passwords.usage.ui.PasswordCredentialUsageActivity
@@ -38,6 +42,7 @@ import javax.inject.Inject
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 internal class PasswordCredentialsSearcherImpl @Inject constructor(
+    private val packageNameUrlSuggestionAdapter: PackageNameUrlSuggestionAdapter,
     private val getPasswordCredentialItems: GetPasswordCredentialItems,
     private val needsBiometricAuth: NeedsBiometricAuth,
     private val telemetryManager: TelemetryManager
@@ -57,17 +62,25 @@ internal class PasswordCredentialsSearcherImpl @Inject constructor(
 
     override suspend fun search(
         context: Context,
-        packageName: String?,
+        callingAppInfo: CallingAppInfo?,
         option: BeginGetPasswordOption
     ): Pair<List<PasswordCredentialEntry>, Action>? {
+        val suggestion = packageNameUrlSuggestionAdapter.adapt(
+            packageName = PackageName(callingAppInfo?.packageName.orEmpty()),
+            url = callingAppInfo?.origin.orEmpty()
+        ).toSuggestion()
+
         val passwordCredentialEntries = createPasswordCredentialEntries(
             context = context,
-            packageName = packageName,
             option = option,
-            isBiometricAuthRequired = needsBiometricAuth().first()
+            isBiometricAuthRequired = needsBiometricAuth().first(),
+            suggestion = suggestion
         )
 
-        val passwordCredentialAction = createPasswordCredentialAction(context = context)
+        val passwordCredentialAction = createPasswordCredentialAction(
+            context = context,
+            suggestion = suggestion
+        )
 
         return Pair(passwordCredentialEntries, passwordCredentialAction)
             .also { telemetryManager.sendEvent(PasswordCredentialsTelemetryEvent.DisplaySuggestions) }
@@ -75,34 +88,36 @@ internal class PasswordCredentialsSearcherImpl @Inject constructor(
 
     private suspend fun createPasswordCredentialEntries(
         context: Context,
-        packageName: String?,
+        suggestion: Suggestion,
         option: BeginGetPasswordOption,
         isBiometricAuthRequired: Boolean
-    ) = getPasswordCredentialItems(packageName.orEmpty())
-        .map { passwordCredentialItem ->
-            PasswordCredentialEntry.Builder(
+    ) = getPasswordCredentialItems(suggestion).map { passwordCredentialItem ->
+        PasswordCredentialEntry.Builder(
+            context = context,
+            username = passwordCredentialItem.username,
+            beginGetPasswordOption = option,
+            pendingIntent = createPasswordCredentialPendingIntent(
+                isBiometricAuthRequired = isBiometricAuthRequired,
                 context = context,
-                username = passwordCredentialItem.username,
-                beginGetPasswordOption = option,
-                pendingIntent = createPasswordCredentialPendingIntent(
-                    context = context,
-                    passwordCredentialItem = passwordCredentialItem,
-                    isBiometricAuthRequired = isBiometricAuthRequired
-                )
+                passwordCredentialItem = passwordCredentialItem,
+                suggestion = suggestion
             )
-                .setDisplayName(passwordCredentialItem.displayName)
-                .setAutoSelectAllowed(false)
-                .build()
-        }
+        )
+            .setDisplayName(passwordCredentialItem.displayName)
+            .setAutoSelectAllowed(false)
+            .build()
+    }
 
     private fun createPasswordCredentialPendingIntent(
+        isBiometricAuthRequired: Boolean,
         context: Context,
         passwordCredentialItem: PasswordCredentialItem,
-        isBiometricAuthRequired: Boolean
+        suggestion: Suggestion
     ) = if (isBiometricAuthRequired) {
         PasswordCredentialSelectionActivity.createPasswordCredentialIntent(
             context = context,
-            passwordCredentialItem = passwordCredentialItem
+            passwordCredentialItem = passwordCredentialItem,
+            suggestion = suggestion
         )
     } else {
         PasswordCredentialUsageActivity.createPasswordCredentialIntent(
@@ -118,8 +133,11 @@ internal class PasswordCredentialsSearcherImpl @Inject constructor(
         )
     }
 
-    private fun createPasswordCredentialAction(context: Context) =
-        PasswordCredentialSelectionActivity.createPasswordCredentialIntent(context = context)
+    private fun createPasswordCredentialAction(context: Context, suggestion: Suggestion) =
+        PasswordCredentialSelectionActivity.createPasswordCredentialIntent(
+            context = context,
+            suggestion = suggestion
+        )
             .let { intent ->
                 PendingIntent.getActivity(
                     context,
@@ -135,7 +153,6 @@ internal class PasswordCredentialsSearcherImpl @Inject constructor(
                     pendingIntent = pendingIntent
                 )
             }
-
 
     private companion object {
 

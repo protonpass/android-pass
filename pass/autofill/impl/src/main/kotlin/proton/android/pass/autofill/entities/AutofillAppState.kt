@@ -19,7 +19,7 @@
 package proton.android.pass.autofill.entities
 
 import androidx.compose.runtime.Immutable
-import proton.android.pass.autofill.extensions.PackageNameUrlSuggestionAdapter
+import proton.android.pass.autofill.api.suggestions.PackageNameUrlSuggestionAdapter
 import proton.android.pass.autofill.extensions.isBrowser
 import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.common.api.None
@@ -35,10 +35,35 @@ import java.net.URI
 private const val TAG = "AutofillAppState"
 
 @Immutable
-data class AutofillAppState(
-    val autofillData: AutofillData
+internal data class AutofillAppState(
+    internal val autofillData: AutofillData,
+    private val packageNameUrlSuggestionAdapter: PackageNameUrlSuggestionAdapter
 ) {
-    fun updateAutofillFields(): Pair<Option<PackageInfo>, Option<String>> {
+    private val suggestionsTitle: String by lazy {
+        when (autofillData.assistInfo.url) {
+            None -> {
+                autofillData.packageInfo.appName.value
+            }
+
+            is Some -> {
+                UrlSanitizer.sanitize(autofillData.assistInfo.url.value).fold(
+                    onSuccess = { url ->
+                        runCatching { URI(url).host }.getOrDefault("")
+                    },
+                    onFailure = { error ->
+                        PassLogger.i(
+                            tag = TAG,
+                            e = error,
+                            message = "Error sanitizing URL [url=${autofillData.assistInfo.url.value}]"
+                        )
+                        ""
+                    }
+                )
+            }
+        }
+    }
+
+    internal fun updateAutofillFields(): Pair<Option<PackageInfo>, Option<String>> {
         val packageInfo = autofillData.packageInfo
         val optionUrl = autofillData.assistInfo.url
 
@@ -54,47 +79,33 @@ data class AutofillAppState(
         // It's not a browser and we have a url, then the URL takes precedence
         return None to optionUrl
     }
-}
 
-fun AutofillAppState.isValid(): Boolean = autofillData.assistInfo.cluster != NodeCluster.Empty
+    internal fun isValid(): Boolean = autofillData.assistInfo.cluster != NodeCluster.Empty
 
-fun AutofillAppState.toSelectItemState(): SelectItemState.Autofill {
-    val suggestionsTitle = getSuggestionsTitle()
+    internal fun toSelectItemState(): SelectItemState.Autofill {
+        return when (autofillData.assistInfo.cluster) {
+            is NodeCluster.CreditCard -> {
+                SelectItemState.Autofill.CreditCard(title = suggestionsTitle)
+            }
 
-    return when (autofillData.assistInfo.cluster) {
-        is NodeCluster.CreditCard -> SelectItemState.Autofill.CreditCard(title = suggestionsTitle)
+            is NodeCluster.Login,
+            is NodeCluster.SignUp -> {
+                SelectItemState.Autofill.Login(
+                    title = suggestionsTitle,
+                    suggestion = packageNameUrlSuggestionAdapter.adapt(
+                        packageName = autofillData.packageInfo.packageName,
+                        url = autofillData.assistInfo.url.value().orEmpty()
+                    ).toSuggestion()
+                )
+            }
 
-        is NodeCluster.Login,
-        is NodeCluster.SignUp -> {
-            val suggestionSource = PackageNameUrlSuggestionAdapter.adapt(
-                packageName = autofillData.packageInfo.packageName,
-                url = autofillData.assistInfo.url.value().orEmpty()
-            )
-            SelectItemState.Autofill.Login(
-                title = suggestionsTitle,
-                suggestion = suggestionSource.toSuggestion()
-            )
+            is NodeCluster.Identity -> {
+                SelectItemState.Autofill.Identity(title = suggestionsTitle)
+            }
+
+            NodeCluster.Empty -> {
+                throw IllegalStateException("Empty cluster type")
+            }
         }
-        is NodeCluster.Identity -> SelectItemState.Autofill.Identity(title = suggestionsTitle)
-        NodeCluster.Empty -> throw IllegalStateException("Empty cluster type")
     }
 }
-
-private fun AutofillAppState.getSuggestionsTitle(): String = if (autofillData.assistInfo.url is Some) {
-    getSuggestionsTitleForDomain(autofillData.assistInfo.url.value)
-} else {
-    autofillData.packageInfo.appName.value
-}
-
-private fun getSuggestionsTitleForDomain(domain: String): String = UrlSanitizer.sanitize(domain).fold(
-    onSuccess = {
-        runCatching {
-            val parsed = URI(it)
-            parsed.host
-        }.getOrDefault("")
-    },
-    onFailure = {
-        PassLogger.i(TAG, it, "Error sanitizing URL [url=$domain]")
-        ""
-    }
-)

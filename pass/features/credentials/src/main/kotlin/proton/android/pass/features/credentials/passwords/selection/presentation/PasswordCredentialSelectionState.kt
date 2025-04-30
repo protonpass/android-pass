@@ -19,6 +19,7 @@
 package proton.android.pass.features.credentials.passwords.selection.presentation
 
 import androidx.compose.runtime.Immutable
+import proton.android.pass.features.selectitem.navigation.SelectItemState
 import proton.android.pass.preferences.ThemePreference
 
 @Immutable
@@ -47,6 +48,11 @@ internal sealed interface PasswordCredentialSelectionState {
                 PasswordCredentialSelectionActionAfterAuth.ProceedWithRequest
             }
         }
+
+        internal val selectItemState = SelectItemState.Password.Select(
+            title = request.suggestion.value,
+            suggestion = request.suggestion
+        )
 
     }
 

@@ -132,7 +132,7 @@ class PassCredentialProviderService : CredentialProviderService() {
                     is BeginGetPasswordOption -> {
                         passwordCredentialsSearcher.search(
                             context = applicationContext,
-                            packageName = request.callingAppInfo?.packageName,
+                            callingAppInfo = request.callingAppInfo,
                             option = option
                         )
                     }

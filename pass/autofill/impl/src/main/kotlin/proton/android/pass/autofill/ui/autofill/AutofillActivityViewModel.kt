@@ -39,9 +39,9 @@ import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.account.api.AccountOrchestrators
 import proton.android.pass.account.api.Orchestrator
+import proton.android.pass.autofill.api.suggestions.PackageNameUrlSuggestionAdapter
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
-import proton.android.pass.autofill.entities.isValid
 import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_EXTRAS_BUNDLE
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.NotValidAutofillUiState
@@ -63,6 +63,7 @@ class AutofillActivityViewModel @Inject constructor(
     private val toastManager: ToastManager,
     private val savedStateHandle: SavedStateHandle,
     private val internalSettingsRepository: InternalSettingsRepository,
+    private val packageNameUrlSuggestionAdapter: PackageNameUrlSuggestionAdapter,
     userPreferencesRepository: UserPreferencesRepository,
     needsBiometricAuth: NeedsBiometricAuth
 ) : ViewModel() {
@@ -79,7 +80,7 @@ class AutofillActivityViewModel @Inject constructor(
         .getThemePreference()
         .distinctUntilChanged()
 
-    val state: StateFlow<AutofillUiState> = combine(
+    internal val stateFlow: StateFlow<AutofillUiState> = combine(
         themePreferenceState,
         needsBiometricAuth(),
         copyTotpToClipboardPreferenceState,
@@ -104,24 +105,28 @@ class AutofillActivityViewModel @Inject constructor(
             initialValue = UninitialisedAutofillUiState
         )
 
-    fun register(context: ComponentActivity) {
+    internal fun register(context: ComponentActivity) {
         accountOrchestrators.register(context, listOf(Orchestrator.PlansOrchestrator))
     }
 
-    fun upgrade() = viewModelScope.launch {
-        accountOrchestrators.start(Orchestrator.PlansOrchestrator)
+    internal fun upgrade() {
+        viewModelScope.launch {
+            accountOrchestrators.start(Orchestrator.PlansOrchestrator)
+        }
     }
 
-    fun signOut(userId: UserId) = viewModelScope.launch {
-        val accounts = accountManager.getAccounts(AccountState.Ready).firstOrNull() ?: emptyList()
-        val hasAccountsLeft = accounts.filterNot { it.userId == userId }.isNotEmpty()
-        internalSettingsRepository.setMasterPasswordAttemptsCount(userId, 0)
+    internal fun signOut(userId: UserId) {
+        viewModelScope.launch {
+            val accounts = accountManager.getAccounts(AccountState.Ready).firstOrNull().orEmpty()
+            val hasAccountsLeft = accounts.filterNot { it.userId == userId }.isNotEmpty()
+            internalSettingsRepository.setMasterPasswordAttemptsCount(userId, 0)
 
-        accountManager.disableAccount(userId)
-        toastManager.showToast(R.string.autofill_user_logged_out)
+            accountManager.disableAccount(userId)
+            toastManager.showToast(R.string.autofill_user_logged_out)
 
-        if (hasAccountsLeft.not()) {
-            closeScreenFlow.update { true }
+            if (hasAccountsLeft.not()) {
+                closeScreenFlow.update { true }
+            }
         }
     }
 
@@ -130,18 +135,17 @@ class AutofillActivityViewModel @Inject constructor(
             bundle = savedStateHandle.require(ARG_EXTRAS_BUNDLE)
         )
         return AppState(
-            appState = AutofillAppState(extras.first),
+            appState = AutofillAppState(
+                autofillData = extras.first,
+                packageNameUrlSuggestionAdapter = packageNameUrlSuggestionAdapter
+            ),
             selectedAutofillItem = extras.second
         )
     }
 
-
-    data class AppState(
+    internal data class AppState(
         val appState: AutofillAppState,
         val selectedAutofillItem: Option<AutofillItem>
     )
 
-    companion object {
-        private const val TAG = "AutofillActivityViewModel"
-    }
 }

@@ -21,13 +21,14 @@ package proton.android.pass.features.credentials.shared.passwords.search
 import android.content.Context
 import androidx.credentials.provider.Action
 import androidx.credentials.provider.BeginGetPasswordOption
+import androidx.credentials.provider.CallingAppInfo
 import androidx.credentials.provider.PasswordCredentialEntry
 
 internal interface PasswordCredentialsSearcher {
 
     suspend fun search(
         context: Context,
-        packageName: String?,
+        callingAppInfo: CallingAppInfo?,
         option: BeginGetPasswordOption
     ): Pair<List<PasswordCredentialEntry>, Action>?
 

@@ -214,6 +214,7 @@ core-cryptoValidator = { module = "me.proton.core:crypto-validator", version.ref
 core-data = { module = "me.proton.core:data", version.ref = "core" }
 core-dataRoom = { module = "me.proton.core:data-room", version.ref = "core" }
 core-deviceMigration = { module = "me.proton.core:device-migration", version.ref = "core" }
+core-deviceMigrationDomain = { module = "me.proton.core:device-migration-domain", version.ref = "core" }
 core-deviceMigrationPresentation = { module = "me.proton.core:device-migration-presentation", version.ref = "core" }
 core-domain = { module = "me.proton.core:domain", version.ref = "core" }
 core-eventManager = { module = "me.proton.core:event-manager", version.ref = "core" }

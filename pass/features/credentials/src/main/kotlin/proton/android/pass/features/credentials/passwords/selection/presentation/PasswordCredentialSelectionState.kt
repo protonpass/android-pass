@@ -50,7 +50,7 @@ internal sealed interface PasswordCredentialSelectionState {
         }
 
         internal val selectItemState = SelectItemState.Password.Select(
-            title = request.suggestion.value,
+            title = request.title,
             suggestion = request.suggestion
         )
 

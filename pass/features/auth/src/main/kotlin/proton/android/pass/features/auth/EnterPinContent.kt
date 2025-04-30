@@ -55,6 +55,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 internal fun EnterPinContent(
     modifier: Modifier = Modifier,
     state: EnterPinUiState,
+    pin: String,
     onPinChanged: (String) -> Unit,
     onPinSubmit: () -> Unit
 ) {
@@ -84,6 +85,7 @@ internal fun EnterPinContent(
 
         PinInput(
             state = state,
+            pin = pin,
             onPinChanged = onPinChanged,
             onPinSubmit = onPinSubmit
         )
@@ -134,6 +136,7 @@ internal fun EnterPinContentPreview(@PreviewParameter(ThemePreviewProvider::clas
         Surface {
             EnterPinContent(
                 state = EnterPinUiState.NotInitialised,
+                pin = "",
                 onPinChanged = {},
                 onPinSubmit = {}
             )

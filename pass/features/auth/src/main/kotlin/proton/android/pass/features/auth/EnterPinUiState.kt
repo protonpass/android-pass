@@ -32,7 +32,6 @@ internal sealed interface EnterPinUiState {
     @Stable
     data class Data(
         val event: EnterPinEvent,
-        val pin: String,
         val pinError: Option<PinError>,
         val isLoadingState: IsLoadingState,
         val userId: UserId

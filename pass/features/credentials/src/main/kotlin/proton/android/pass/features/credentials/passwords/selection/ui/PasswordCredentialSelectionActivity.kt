@@ -37,6 +37,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import proton.android.pass.autofill.api.suggestions.PackageNameUrlSuggestionAdapter
+import proton.android.pass.commonui.api.AndroidUtils
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.theme.SystemUIDisposableEffect
 import proton.android.pass.composecomponents.impl.theme.isDark
@@ -154,12 +155,13 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
         }
 
     private fun createPasswordSelectRequest(extrasBundle: Bundle): PasswordCredentialSelectionRequest? {
-        return packageNameUrlSuggestionAdapter.adapt(
-            packageName = PackageName(extrasBundle.getString(EXTRAS_REQUEST_PACKAGE_NAME).orEmpty()),
-            url = extrasBundle.getString(EXTRAS_REQUEST_URL).orEmpty()
+        val suggestion = getSuggestionFromExtras(extrasBundle)
+        val title = getTitleFromSuggestion(suggestion)
+
+        return PasswordCredentialSelectionRequest.Select(
+            title = title,
+            suggestion = suggestion
         )
-            .toSuggestion()
-            .let(PasswordCredentialSelectionRequest::Select)
     }
 
     private fun createPasswordUseRequest(extrasBundle: Bundle): PasswordCredentialSelectionRequest? {
@@ -173,16 +175,30 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
             return null
         }
 
-        val suggestion = packageNameUrlSuggestionAdapter.adapt(
-            packageName = PackageName(extrasBundle.getString(EXTRAS_REQUEST_PACKAGE_NAME).orEmpty()),
-            url = extrasBundle.getString(EXTRAS_REQUEST_URL).orEmpty()
-        ).toSuggestion()
+        val suggestion = getSuggestionFromExtras(extrasBundle)
+
+        val title = getTitleFromSuggestion(suggestion)
 
         return PasswordCredentialSelectionRequest.Use(
             username = username,
             encryptedPassword = encryptedPassword,
-            suggestion = suggestion
+            suggestion = suggestion,
+            title = title
         )
+    }
+
+    private fun getSuggestionFromExtras(extrasBundle: Bundle): Suggestion {
+        return packageNameUrlSuggestionAdapter.adapt(
+            packageName = PackageName(extrasBundle.getString(EXTRAS_REQUEST_PACKAGE_NAME).orEmpty()),
+            url = extrasBundle.getString(EXTRAS_REQUEST_URL).orEmpty()
+        ).toSuggestion()
+    }
+
+    private fun getTitleFromSuggestion(suggestion: Suggestion): String = when (suggestion) {
+        is Suggestion.Url -> suggestion.value
+        is Suggestion.PackageName -> AndroidUtils.getApplicationName(this, suggestion.value)
+            .value()
+            ?: suggestion.value
     }
 
     private fun onCancelSelectionRequest() {

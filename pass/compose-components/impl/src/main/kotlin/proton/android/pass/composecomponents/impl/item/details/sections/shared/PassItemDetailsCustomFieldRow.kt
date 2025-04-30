@@ -18,7 +18,6 @@
 
 package proton.android.pass.composecomponents.impl.item.details.sections.shared
 
-import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -43,7 +42,6 @@ import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.Totp
-import me.proton.core.presentation.R as CoreR
 
 private const val HIDDEN_CUSTOM_FIELD_TEXT_LENGTH = 12
 
@@ -56,8 +54,7 @@ internal fun PassItemDetailsCustomFieldRow(
     customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, Totp>,
     itemColors: PassItemColors,
     itemDiffType: ItemDiffType,
-    onEvent: (PassItemDetailsUiEvent) -> Unit,
-    @DrawableRes iconResId: Int? = null
+    onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     when (customFieldContent) {
         is CustomFieldContent.Hidden -> PassItemDetailsHiddenFieldRow(
@@ -90,7 +87,7 @@ internal fun PassItemDetailsCustomFieldRow(
 
         is CustomFieldContent.Text -> PassItemDetailFieldRow(
             modifier = modifier,
-            icon = iconResId,
+            icon = null,
             title = customFieldContent.label,
             subtitle = customFieldContent.value,
             itemColors = itemColors,
@@ -111,7 +108,7 @@ internal fun PassItemDetailsCustomFieldRow(
                 .toOption()
             customFieldTotps[sectionIndex to customFieldIndex]?.let { customFieldTotp ->
                 PassItemDetailMaskedFieldRow(
-                    icon = CoreR.drawable.ic_proton_lock,
+                    icon = null,
                     title = customFieldContent.label,
                     maskedSubtitle = TextMask.TotpCode(customFieldTotp.code),
                     itemColors = itemColors,
@@ -141,7 +138,7 @@ internal fun PassItemDetailsCustomFieldRow(
             }
             PassItemDetailFieldRow(
                 modifier = modifier,
-                icon = CoreR.drawable.ic_proton_calendar_today,
+                icon = null,
                 title = customFieldContent.label,
                 subtitle = date,
                 itemColors = itemColors,

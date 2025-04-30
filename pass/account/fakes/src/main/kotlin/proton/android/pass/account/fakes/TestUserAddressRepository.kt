@@ -25,8 +25,9 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.repository.UserAddressRepository
+import javax.inject.Inject
 
-class TestUserAddressRepository : UserAddressRepository {
+class TestUserAddressRepository @Inject constructor() : UserAddressRepository {
 
     private var address: UserAddress? = null
     private var addresses: List<UserAddress> = emptyList()

@@ -51,14 +51,14 @@ fun EnterPinBottomsheet(
             is EnterPinEvent.ForceSignOutAllUsers -> onNavigate(EnterPinNavigation.ForceSignOutAllUsers)
             is EnterPinEvent.ForcePassword -> onNavigate(EnterPinNavigation.CloseBottomsheet)
             is EnterPinEvent.Success -> onNavigate(EnterPinNavigation.Success(event.origin))
-            EnterPinEvent.Unknown -> {
-            }
+            EnterPinEvent.Unknown -> Unit
         }
     }
 
     EnterPinContent(
         modifier = modifier,
         state = state,
+        pin = viewModel.pinState,
         onPinChanged = viewModel::onPinChanged,
         onPinSubmit = {
             keyboardController?.hide()

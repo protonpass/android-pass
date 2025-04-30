@@ -33,6 +33,7 @@ dependencies {
 
     implementation(libs.core.cryptoCommon)
     implementation(libs.core.accountManager.domain)
+    implementation(libs.core.deviceMigrationDomain)
     implementation(libs.core.payment.domain)
     implementation(libs.core.authFidoDomain)
     implementation(libs.core.userSettings.domain)

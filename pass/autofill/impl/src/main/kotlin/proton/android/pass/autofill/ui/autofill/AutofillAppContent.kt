@@ -57,7 +57,7 @@ import proton.android.pass.navigation.api.rememberBottomSheetNavigator
     ExperimentalMaterialNavigationApi::class
 )
 @Composable
-fun AutofillAppContent(
+internal fun AutofillAppContent(
     modifier: Modifier = Modifier,
     autofillAppState: AutofillAppState,
     selectedAutofillItem: AutofillItem?,
@@ -72,7 +72,7 @@ fun AutofillAppContent(
     var showAssociateDialog: ItemUiModel? by remember { mutableStateOf(null) }
     var showWarningDialog: ItemUiModel? by remember { mutableStateOf(null) }
 
-    val event by viewModel.state.collectAsStateWithLifecycle()
+    val event by viewModel.stateFlow.collectAsStateWithLifecycle()
     LaunchedEffect(event) {
         when (val e = event) {
             AutofillAppEvent.Cancel -> {

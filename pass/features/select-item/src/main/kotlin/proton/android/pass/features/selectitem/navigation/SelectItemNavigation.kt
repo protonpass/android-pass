@@ -76,6 +76,20 @@ sealed class SelectItemState(
             val title: String
         ) : Passkey(title, showPinnedItems = false, showCreateButton = false)
     }
+
+    sealed class Password(title: String) : SelectItemState(
+        suggestionsTitle = title,
+        itemTypeFilter = ItemTypeFilter.Logins,
+        showPinnedItems = false,
+        showCreateButton = false
+    ) {
+
+        data class Select(
+            internal val title: String,
+            internal val suggestion: Suggestion
+        ) : Password(title)
+
+    }
 }
 
 fun NavGraphBuilder.selectItemGraph(
@@ -103,7 +117,9 @@ sealed interface SelectItemNavigation {
     @JvmInline
     value class SuggestionSelected(val item: ItemUiModel) : SelectItemNavigation
     data object SortingBottomsheet : SelectItemNavigation
-    data class ItemOptions(val userId: UserId, val shareId: ShareId, val itemId: ItemId) : SelectItemNavigation
+    data class ItemOptions(val userId: UserId, val shareId: ShareId, val itemId: ItemId) :
+        SelectItemNavigation
+
     data object Cancel : SelectItemNavigation
     data object Upgrade : SelectItemNavigation
 }

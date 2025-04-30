@@ -18,10 +18,11 @@
 
 package proton.android.pass.data.api.usecases.credentials.passwords
 
+import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.domain.credentials.PasswordCredentialItem
 
 interface GetPasswordCredentialItems {
 
-    suspend operator fun invoke(packageName: String): List<PasswordCredentialItem>
+    suspend operator fun invoke(suggestion: Suggestion): List<PasswordCredentialItem>
 
 }

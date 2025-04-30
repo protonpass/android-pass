@@ -46,7 +46,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import me.proton.core.account.domain.entity.AccountState
@@ -218,8 +217,8 @@ class SelectItemViewModel @Inject constructor(
                     .filter { (userId, _) ->
                         if (state.itemTypeFilter == ItemTypeFilter.CreditCards) {
                             usersAndPlans.keys.find { it.userId == userId }?.let { user ->
-                                usersAndPlans[user]?.let(Plan::hasPlanWithAccess) ?: false
-                            } ?: false
+                                usersAndPlans[user]?.let(Plan::hasPlanWithAccess) == true
+                            } == true
                         } else {
                             true
                         }
@@ -471,8 +470,8 @@ class SelectItemViewModel @Inject constructor(
             }
         }
 
-        val canUpgrade = upgradeInfo.getOrNull()?.isUpgradeAvailable ?: false
-        val showCreateButton = selectItemState.map { it.showCreateButton }.value() ?: false
+        val canUpgrade = upgradeInfo.getOrNull()?.isUpgradeAvailable == true
+        val showCreateButton = selectItemState.map { it.showCreateButton }.value() == true
 
         SelectItemListUiState(
             isLoading = isLoading,
@@ -592,6 +591,7 @@ class SelectItemViewModel @Inject constructor(
     private fun getSuggestionsForState(state: SelectItemState) = when (state) {
         is SelectItemState.Autofill -> getSuggestionsForAutofill(state)
         is SelectItemState.Passkey -> getSuggestionsForPasskey(state)
+        is SelectItemState.Password -> getSuggestionsForPassword(state)
     }
 
     private fun getSuggestionsForAutofill(state: SelectItemState.Autofill) = when (state) {
@@ -630,7 +630,20 @@ class SelectItemViewModel @Inject constructor(
         is SelectItemState.Passkey.Select -> flowOf(LoadingResult.Success(emptyList()))
     }
 
-    fun onAccountSwitch(userId: Option<UserId>) = viewModelScope.launch {
+    private fun getSuggestionsForPassword(state: SelectItemState.Password) = when (state) {
+        is SelectItemState.Password.Select -> selectedAccountFlow.flatMapLatest { userId ->
+            getSuggestedAutofillItems(
+                itemTypeFilter = ItemTypeFilter.Logins,
+                suggestion = state.suggestion,
+                userId = userId
+            )
+        }
+            .filterIsInstance<SuggestedAutofillItemsResult.Items>()
+            .map { list -> list.suggestedItems }
+            .asResultWithoutLoading()
+    }
+
+    internal fun onAccountSwitch(userId: Option<UserId>) {
         selectedAccountFlow.update { userId }
     }
 
@@ -641,8 +654,12 @@ class SelectItemViewModel @Inject constructor(
             true
         }
 
-    companion object {
+    private companion object {
+
         private const val DEBOUNCE_TIMEOUT = 300L
+
         private const val TAG = "SelectItemViewModel"
+
     }
+
 }

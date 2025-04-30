@@ -33,7 +33,7 @@ import proton.android.pass.domain.ItemDiffType
 @Composable
 internal fun PassItemDetailMaskedFieldRow(
     modifier: Modifier = Modifier,
-    @DrawableRes icon: Int,
+    @DrawableRes icon: Int?,
     title: String,
     maskedSubtitle: TextMask,
     itemColors: PassItemColors,

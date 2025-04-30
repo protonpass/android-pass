@@ -46,7 +46,6 @@ import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.Totp
-import me.proton.core.presentation.R as CoreR
 
 private const val HIDDEN_CUSTOM_FIELD_TEXT_LENGTH = 12
 
@@ -67,7 +66,7 @@ internal fun PassItemDetailCustomFieldsSection(
             RoundedCornersColumn {
                 when (customFieldContent) {
                     is CustomFieldContent.Text -> PassItemDetailFieldRow(
-                        icon = CoreR.drawable.ic_proton_text_align_left,
+                        icon = null,
                         title = customFieldContent.label,
                         subtitle = customFieldContent.value,
                         itemColors = itemColors,
@@ -83,7 +82,7 @@ internal fun PassItemDetailCustomFieldsSection(
                     )
 
                     is CustomFieldContent.Hidden -> PassItemDetailsHiddenFieldRow(
-                        icon = CoreR.drawable.ic_proton_eye_slash,
+                        icon = null,
                         title = customFieldContent.label,
                         hiddenState = customFieldContent.value,
                         hiddenTextLength = HIDDEN_CUSTOM_FIELD_TEXT_LENGTH,
@@ -113,7 +112,7 @@ internal fun PassItemDetailCustomFieldsSection(
                     is CustomFieldContent.Totp -> {
                         customFieldTotps[None to index]?.let { customFieldTotp ->
                             PassItemDetailMaskedFieldRow(
-                                icon = CoreR.drawable.ic_proton_lock,
+                                icon = null,
                                 title = customFieldContent.label,
                                 maskedSubtitle = TextMask.TotpCode(customFieldTotp.code),
                                 itemColors = itemColors,
@@ -143,7 +142,7 @@ internal fun PassItemDetailCustomFieldsSection(
                         }
                         PassItemDetailFieldRow(
                             modifier = modifier,
-                            icon = CoreR.drawable.ic_proton_calendar_today,
+                            icon = null,
                             title = customFieldContent.label,
                             subtitle = date,
                             itemColors = itemColors,

@@ -265,7 +265,7 @@
   <string name="template_ssh_key_field_host">Вузел</string>
   <string name="template_ssh_key_field_note">Нататка</string>
   <!-- WiFi Network Fields -->
-  <string name="template_wifi_network_field_name">Name (SSID)</string>
+  <string name="template_wifi_network_field_name">Назва (SSID)</string>
   <string name="template_wifi_network_field_note">Нататка</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Назва банка</string>
@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">Нататка</string>
   <string name="template_header_technology">Тэхналогіі</string>
   <string name="template_header_finance">Фінансы</string>
-  <string name="template_header_personal">Фінансы</string>
+  <string name="template_header_title_personal">Асабісты</string>
   <string name="button_start_from_scratch">Пачаць з нуля</string>
   <string name="select_template_title">Карыстальніцкі элемент</string>
   <!-- Custom item screen -->
@@ -336,7 +336,7 @@
   <string name="add_section_button">Дадаць раздзел</string>
   <string name="add_public_key_placeholder">Дадаць публічны ключ</string>
   <string name="add_private_key_placeholder">Дадаць прыватны ключ</string>
-  <string name="add_ssid_placeholder">Дадаць SSID</string>
+  <string name="add_ssid_name_placeholder">Дадаць назву (SSID)</string>
   <string name="create_custom_item_init_error">Праблема пры атрыманні падрабязнасцяў карыстальніцкага элемента</string>
   <string name="update_custom_item_attachments_init_error">Праблема пры атрыманні далучэнняў карыстальніцкага элемента</string>
   <string name="custom_item_link_attachments_error">Не ўдалося звязаць або адвязаць далучэнні ў карыстальніцкім элеменце</string>

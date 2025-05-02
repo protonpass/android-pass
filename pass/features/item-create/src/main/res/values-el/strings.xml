@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">Σημείωση</string>
   <string name="template_header_technology">Τεχνολογία</string>
   <string name="template_header_finance">Οικονομικά</string>
-  <string name="template_header_personal">Οικονομικά</string>
+  <string name="template_header_title_personal">Προσωπικό</string>
   <string name="button_start_from_scratch">Ξεκινήστε από την αρχή</string>
   <string name="select_template_title">Προσαρμοσμένο στοιχείο</string>
   <!-- Custom item screen -->
@@ -336,7 +336,7 @@
   <string name="add_section_button">Προσθήκη ενότητας</string>
   <string name="add_public_key_placeholder">Προσθήκη δημόσιου κλειδιού</string>
   <string name="add_private_key_placeholder">Προσθήκη ιδιωτικού κλειδιού</string>
-  <string name="add_ssid_placeholder">Προσθήκη SSID</string>
+  <string name="add_ssid_name_placeholder">Προσθήκη ονόματος (SSID)</string>
   <string name="create_custom_item_init_error">Πρόβλημα ανάκτησης λεπτομερειών προσαρμοσμένου στοιχείου</string>
   <string name="update_custom_item_attachments_init_error">Πρόβλημα ανάκτησης συνημμένων προσαρμοσμένου στοιχείου</string>
   <string name="custom_item_link_attachments_error">Αποτυχία σύνδεσης ή αποσύνδεσης συνημμένων στο προσαρμοσμένο στοιχείο</string>

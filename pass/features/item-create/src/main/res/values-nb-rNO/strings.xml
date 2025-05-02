@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">Notat</string>
   <string name="template_header_technology">Teknologi</string>
   <string name="template_header_finance">Finans</string>
-  <string name="template_header_personal">Finans</string>
+  <string name="template_header_title_personal">Personlig</string>
   <string name="button_start_from_scratch">Start fra begynnelsen</string>
   <string name="select_template_title">Tilpasset element</string>
   <!-- Custom item screen -->
@@ -336,7 +336,7 @@
   <string name="add_section_button">Legg til seksjon</string>
   <string name="add_public_key_placeholder">Legg til offentlig nøkkel</string>
   <string name="add_private_key_placeholder">Legg til privat nøkkel</string>
-  <string name="add_ssid_placeholder">Legg til SSID</string>
+  <string name="add_ssid_name_placeholder">Legg til navn (SSID)</string>
   <string name="create_custom_item_init_error">Problem med å hente tilpassede elementdetaljer</string>
   <string name="update_custom_item_attachments_init_error">Problem med å hente tilpassede elementvedlegg</string>
   <string name="custom_item_link_attachments_error">Kunne ikke koble til eller fra vedlegg for det tilpassede elementet</string>

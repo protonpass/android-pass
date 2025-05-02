@@ -265,7 +265,7 @@
   <string name="template_ssh_key_field_host">Hôte</string>
   <string name="template_ssh_key_field_note">Note</string>
   <!-- WiFi Network Fields -->
-  <string name="template_wifi_network_field_name">Name (SSID)</string>
+  <string name="template_wifi_network_field_name">Nom (SSID)</string>
   <string name="template_wifi_network_field_note">Note</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Nom de la banque</string>
@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">Note</string>
   <string name="template_header_technology">Technologie</string>
   <string name="template_header_finance">Finance</string>
-  <string name="template_header_personal">Finance</string>
+  <string name="template_header_title_personal">Personnel</string>
   <string name="button_start_from_scratch">Démarrer sans données existantes</string>
   <string name="select_template_title">Élément personnalisé</string>
   <!-- Custom item screen -->
@@ -336,7 +336,7 @@
   <string name="add_section_button">Ajouter une section</string>
   <string name="add_public_key_placeholder">Ajouter une clé publique</string>
   <string name="add_private_key_placeholder">Ajouter une clé privée</string>
-  <string name="add_ssid_placeholder">Ajouter un SSID</string>
+  <string name="add_ssid_name_placeholder">Ajouter un nom (SSID)</string>
   <string name="create_custom_item_init_error">Un problème est survenu lors de la récupération des informations de l\'élément personnalisé.</string>
   <string name="update_custom_item_attachments_init_error">Un problème est survenu lors de la récupération des pièces jointes de l\'élément personnalisé.</string>
   <string name="custom_item_link_attachments_error">Les pièces jointes de l\'élément personnalisé n\'ont pu être liées ou déliées.</string>

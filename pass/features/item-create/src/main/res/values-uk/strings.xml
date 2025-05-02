@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">Нотатка</string>
   <string name="template_header_technology">Технології</string>
   <string name="template_header_finance">Фінанси</string>
-  <string name="template_header_personal">Фінанси</string>
+  <string name="template_header_title_personal">Personal</string>
   <string name="button_start_from_scratch">Почати з нуля</string>
   <string name="select_template_title">Власний елемент</string>
   <!-- Custom item screen -->
@@ -336,7 +336,7 @@
   <string name="add_section_button">Додати розділ</string>
   <string name="add_public_key_placeholder">Додати відкритий ключ</string>
   <string name="add_private_key_placeholder">Додати приватний ключ</string>
-  <string name="add_ssid_placeholder">Додати SSID</string>
+  <string name="add_ssid_name_placeholder">Add name (SSID)</string>
   <string name="create_custom_item_init_error">Проблема з отриманням деталей власного елемента</string>
   <string name="update_custom_item_attachments_init_error">Проблема з отриманням вкладення власного елемента</string>
   <string name="custom_item_link_attachments_error">Не вдалося прив\'язати або відв\'язати вкладення власного елемента</string>

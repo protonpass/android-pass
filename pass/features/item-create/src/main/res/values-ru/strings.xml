@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">Заметка</string>
   <string name="template_header_technology">Технологии</string>
   <string name="template_header_finance">Финансы</string>
-  <string name="template_header_personal">Финансы</string>
+  <string name="template_header_title_personal">Personal</string>
   <string name="button_start_from_scratch">Начать заново</string>
   <string name="select_template_title">Пользовательский элемент</string>
   <!-- Custom item screen -->
@@ -336,7 +336,7 @@
   <string name="add_section_button">Добавить раздел</string>
   <string name="add_public_key_placeholder">Add public key</string>
   <string name="add_private_key_placeholder">Add private key</string>
-  <string name="add_ssid_placeholder">Add SSID</string>
+  <string name="add_ssid_name_placeholder">Add name (SSID)</string>
   <string name="create_custom_item_init_error">Ошибка при получении информации о пользовательском элементе</string>
   <string name="update_custom_item_attachments_init_error">Проблема при получении вложений пользовательского элемента</string>
   <string name="custom_item_link_attachments_error">Не удалось связать или отвязать вложения от пользовательского элемента</string>

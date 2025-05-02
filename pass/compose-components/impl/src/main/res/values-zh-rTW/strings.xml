@@ -195,7 +195,7 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
   <string name="item_details_shared_section_more_info_item_id">項目 ID</string>
   <string name="item_details_shared_section_more_info_share_id">保管庫 ID</string>
-  <string name="item_details_wifi_network_label_ssid">SSID</string>
+  <string name="item_details_wifi_network_label_ssid_name">Name (SSID)</string>
   <string name="item_details_wifi_network_label_password">密碼</string>
   <string name="item_details_wifi_network_label_security">Security</string>
   <string name="item_details_ssh_key_label_public_key">Public key</string>

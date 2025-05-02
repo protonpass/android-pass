@@ -265,7 +265,7 @@
   <string name="template_ssh_key_field_host">Vært</string>
   <string name="template_ssh_key_field_note">Note</string>
   <!-- WiFi Network Fields -->
-  <string name="template_wifi_network_field_name">Name (SSID)</string>
+  <string name="template_wifi_network_field_name">Navn (SSID)</string>
   <string name="template_wifi_network_field_note">Note</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Banknavn</string>
@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">Note</string>
   <string name="template_header_technology">Teknologi</string>
   <string name="template_header_finance">Finans</string>
-  <string name="template_header_personal">Finans</string>
+  <string name="template_header_title_personal">Personlig</string>
   <string name="button_start_from_scratch">Start fra bunden</string>
   <string name="select_template_title">Brugerdefineret element</string>
   <!-- Custom item screen -->
@@ -336,7 +336,7 @@
   <string name="add_section_button">Tilføj sektion</string>
   <string name="add_public_key_placeholder">Tilføj offentlig nøgle</string>
   <string name="add_private_key_placeholder">Tilføj privat nøgle</string>
-  <string name="add_ssid_placeholder">Tilføj SSID</string>
+  <string name="add_ssid_name_placeholder">Add name (SSID)</string>
   <string name="create_custom_item_init_error">Problem med at hente brugerdefinerede elementdetaljer</string>
   <string name="update_custom_item_attachments_init_error">Problem med at hente vedhæftninger for brugerdefinerede element</string>
   <string name="custom_item_link_attachments_error">Kunne ikke linke eller fjerne link til vedhæftede filer for brugerdefineret element</string>

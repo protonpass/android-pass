@@ -265,7 +265,7 @@
   <string name="template_ssh_key_field_host">主机</string>
   <string name="template_ssh_key_field_note">备注</string>
   <!-- WiFi Network Fields -->
-  <string name="template_wifi_network_field_name">Name (SSID)</string>
+  <string name="template_wifi_network_field_name">名称 (SSID)</string>
   <string name="template_wifi_network_field_note">备注</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">银行名称</string>
@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">备注</string>
   <string name="template_header_technology">技术</string>
   <string name="template_header_finance">金融</string>
-  <string name="template_header_personal">金融</string>
+  <string name="template_header_title_personal">私人</string>
   <string name="button_start_from_scratch">从零开始</string>
   <string name="select_template_title">自定义项目</string>
   <!-- Custom item screen -->
@@ -336,7 +336,7 @@
   <string name="add_section_button">添加分组</string>
   <string name="add_public_key_placeholder">添加公钥</string>
   <string name="add_private_key_placeholder">添加私钥</string>
-  <string name="add_ssid_placeholder">添加 SSID</string>
+  <string name="add_ssid_name_placeholder">添加名称 (SSID)</string>
   <string name="create_custom_item_init_error">检索自定义项目详细信息时出现问题</string>
   <string name="update_custom_item_attachments_init_error">检索自定义项目附件的问题</string>
   <string name="custom_item_link_attachments_error">无法将附件链接或取消链接到自定义项目</string>

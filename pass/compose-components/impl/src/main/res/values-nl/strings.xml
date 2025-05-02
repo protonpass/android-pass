@@ -197,7 +197,7 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Meer item informatie icoon</string>
   <string name="item_details_shared_section_more_info_item_id">Item-ID</string>
   <string name="item_details_shared_section_more_info_share_id">Kluis-ID</string>
-  <string name="item_details_wifi_network_label_ssid">SSID</string>
+  <string name="item_details_wifi_network_label_ssid_name">Naam (SSID)</string>
   <string name="item_details_wifi_network_label_password">Wachtwoord</string>
   <string name="item_details_wifi_network_label_security">Beveiliging</string>
   <string name="item_details_ssh_key_label_public_key">Publieke sleutel</string>

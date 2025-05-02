@@ -10,7 +10,7 @@
   <string name="action_credit_card">Plačilna kartica</string>
   <string name="action_password">Geslo</string>
   <string name="action_identity">Identiteta</string>
-  <string name="action_more">More</string>
+  <string name="action_more">Več</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Dodajte podatke za prijavo v aplikacijo ali spletno mesto</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Pridobite e-poštni vzdevek za uporabo v novih aplikacijah</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Zapišite si PIN, kodo ali opombo</string>
@@ -49,7 +49,7 @@
   <string name="bottomsheet_custom_field_type_text">Besedilo</string>
   <string name="bottomsheet_custom_field_type_hidden">Skrito</string>
   <string name="bottomsheet_custom_field_type_totp">Skrivni ključ 2FA (TOTP)</string>
-  <string name="bottomsheet_custom_field_type_date">Date</string>
+  <string name="bottomsheet_custom_field_type_date">Datum</string>
   <string name="bottomsheet_custom_field_option_edit">Uredi ime</string>
   <string name="bottomsheet_custom_field_option_remove">Odstrani polje</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Odstrani polje po meri</string>
@@ -57,7 +57,7 @@
   <string name="custom_field_hidden_placeholder">Dodajte skrito besedilo</string>
   <string name="custom_field_hidden_icon_content_description">Skrita ikona za polje po meri</string>
   <string name="custom_field_text_placeholder">Dodaj besedilo</string>
-  <string name="custom_field_date_placeholder">Add date</string>
+  <string name="custom_field_date_placeholder">Dodaj datum</string>
   <string name="custom_field_dialog_title">Ime polja po meri</string>
   <string name="custom_field_dialog_body">Poimenujte svoje polje po meri</string>
   <string name="custom_field_dialog_placeholder">Npr., uporabnikov ID, PIN</string>
@@ -212,114 +212,114 @@
   <string name="banner_custom_domain_button">Dodaj domeno</string>
   <string name="banner_mailbox_title">Did you know?</string>
   <string name="banner_mailbox_subtitle">Share aliases with others by adding their inbox as an additional mailbox.</string>
-  <string name="banner_mailbox_button">Add mailbox</string>
+  <string name="banner_mailbox_button">Dodaj poštni predal</string>
   <!-- Suffix -->
-  <string name="suffix_subtitle_premium_domain">Premium domain</string>
+  <string name="suffix_subtitle_premium_domain">Premium domena</string>
   <string name="suffix_subtitle_public_domain">Public domain</string>
-  <string name="suffix_subtitle_private_domain">Your domain</string>
+  <string name="suffix_subtitle_private_domain">Vaša domena</string>
   <!-- Templates -->
   <string name="template_item_api_credential">API Credential</string>
-  <string name="template_item_database">Database</string>
+  <string name="template_item_database">Zbirka podatkov</string>
   <string name="template_item_server">Strežnik</string>
   <string name="template_item_software_license">Software License</string>
-  <string name="template_item_ssh_key">SSH Key</string>
+  <string name="template_item_ssh_key">Ključ SSH</string>
   <string name="template_item_wifi_network">WiFi Network</string>
   <string name="template_item_bank_account">Bank Account</string>
   <string name="template_item_crypto_wallet">Crypto Wallet</string>
-  <string name="template_item_driver_license">Driver License</string>
-  <string name="template_item_medical_record">Medical Record</string>
+  <string name="template_item_driver_license">Vozniško dovoljenje</string>
+  <string name="template_item_medical_record">Zdravstveni karton</string>
   <string name="template_item_membership">Membership</string>
   <string name="template_item_passport">Potni list</string>
-  <string name="template_item_reward_program">Reward Program</string>
+  <string name="template_item_reward_program">Program nagrajevanja</string>
   <string name="template_item_social_security_number">Social Security Number</string>
   <!-- API Credential Fields -->
-  <string name="template_api_credential_field_api_key">API Key</string>
-  <string name="template_api_credential_field_secret">Secret</string>
-  <string name="template_api_credential_field_expiry_date">Expiry Date</string>
+  <string name="template_api_credential_field_api_key">Ključ API</string>
+  <string name="template_api_credential_field_secret">Skrivnost</string>
+  <string name="template_api_credential_field_expiry_date">Datum veljavnosti</string>
   <string name="template_api_credential_field_permissions">Dovoljenja</string>
   <string name="template_api_credential_field_note">Opomba</string>
   <!-- Database Fields -->
-  <string name="template_database_field_host">Host</string>
+  <string name="template_database_field_host">Gostitelj</string>
   <string name="template_database_field_port">Vrata</string>
   <string name="template_database_field_username">Uporabniško ime</string>
   <string name="template_database_field_password">Geslo</string>
-  <string name="template_database_field_database_type">Database Type</string>
+  <string name="template_database_field_database_type">Vrsta zbirke podatkov</string>
   <string name="template_database_field_note">Opomba</string>
   <!-- Server Fields -->
   <string name="template_server_field_ip_address">IP naslov</string>
-  <string name="template_server_field_hostname">Hostname</string>
+  <string name="template_server_field_hostname">Ime gostitelja</string>
   <string name="template_server_field_os">Operating System</string>
   <string name="template_server_field_username">Uporabniško ime</string>
   <string name="template_server_field_password">Geslo</string>
   <string name="template_server_field_note">Opomba</string>
   <!-- Software License Fields -->
-  <string name="template_software_license_field_license_key">License Key</string>
+  <string name="template_software_license_field_license_key">Licenčni ključ</string>
   <string name="template_software_license_field_product">Izdelek</string>
-  <string name="template_software_license_field_expiry_date">Expiry Date</string>
+  <string name="template_software_license_field_expiry_date">Datum veljavnosti</string>
   <string name="template_software_license_field_owner">Lastnik</string>
   <string name="template_software_license_field_note">Opomba</string>
   <!-- SSH Key Fields -->
-  <string name="template_ssh_key_field_private_key">Private Key</string>
+  <string name="template_ssh_key_field_private_key">Zasebni ključ</string>
   <string name="template_ssh_key_field_public_key">Public Key</string>
   <string name="template_ssh_key_field_username">Uporabniško ime</string>
-  <string name="template_ssh_key_field_host">Host</string>
+  <string name="template_ssh_key_field_host">Gostitelj</string>
   <string name="template_ssh_key_field_note">Opomba</string>
   <!-- WiFi Network Fields -->
-  <string name="template_wifi_network_field_name">Name (SSID)</string>
+  <string name="template_wifi_network_field_name">Ime (SSID)</string>
   <string name="template_wifi_network_field_note">Opomba</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Bank Name</string>
-  <string name="template_bank_account_field_account_number">Account Number</string>
+  <string name="template_bank_account_field_account_number">Številka računa</string>
   <string name="template_bank_account_field_routing_number">Routing Number</string>
   <string name="template_bank_account_field_account_type">Vrsta računa</string>
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
-  <string name="template_bank_account_field_holder_name">Holder Name</string>
+  <string name="template_bank_account_field_holder_name">Ime imetnika</string>
   <string name="template_bank_account_field_note">Opomba</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">Ime denarnice</string>
   <string name="template_crypto_wallet_field_address">Naslov</string>
-  <string name="template_crypto_wallet_field_private_key">Private Key</string>
-  <string name="template_crypto_wallet_field_seed_phrase">Seed Phrase</string>
+  <string name="template_crypto_wallet_field_private_key">Zasebni ključ</string>
+  <string name="template_crypto_wallet_field_seed_phrase">Začetna fraza</string>
   <string name="template_crypto_wallet_field_network">Omrežje</string>
   <string name="template_crypto_wallet_field_note">Opomba</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">Polno ime</string>
   <string name="template_driver_license_field_license_number">License Number</string>
   <string name="template_driver_license_field_issuing_state_country">Issuing State/Country</string>
-  <string name="template_driver_license_field_expiry_date">Expiry Date</string>
-  <string name="template_driver_license_field_date_of_birth">Date of Birth</string>
-  <string name="template_driver_license_field_class">Class</string>
+  <string name="template_driver_license_field_expiry_date">Datum veljavnosti</string>
+  <string name="template_driver_license_field_date_of_birth">Datum rojstva</string>
+  <string name="template_driver_license_field_class">Razred</string>
   <string name="template_driver_license_field_note">Opomba</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Patient Name</string>
-  <string name="template_medical_record_field_record_number">Record Number</string>
+  <string name="template_medical_record_field_record_number">Številka zapisa</string>
   <string name="template_medical_record_field_medical_conditions">Medical Conditions</string>
-  <string name="template_medical_record_field_medications">Medications</string>
-  <string name="template_medical_record_field_doctor">Doctor</string>
-  <string name="template_medical_record_field_hospital">Hospital</string>
+  <string name="template_medical_record_field_medications">Zdravila</string>
+  <string name="template_medical_record_field_doctor">Zdravnik</string>
+  <string name="template_medical_record_field_hospital">Bolnišnica</string>
   <string name="template_medical_record_field_note">Opomba</string>
   <!-- Membership Fields -->
   <string name="template_membership_field_organization_name">Organization Name</string>
-  <string name="template_membership_field_membership_id">Membership ID</string>
-  <string name="template_membership_field_member_name">Member Name</string>
-  <string name="template_membership_field_expiry_date">Expiry Date</string>
+  <string name="template_membership_field_membership_id">ID članstva</string>
+  <string name="template_membership_field_member_name">Ime člana</string>
+  <string name="template_membership_field_expiry_date">Datum veljavnosti</string>
   <string name="template_membership_field_tier_level">Tier/Level</string>
   <string name="template_membership_field_note">Opomba</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">Polno ime</string>
   <string name="template_passport_field_passport_number">Passport Number</string>
   <string name="template_passport_field_country">Država</string>
-  <string name="template_passport_field_expiry_date">Expiry Date</string>
-  <string name="template_passport_field_date_of_birth">Date of Birth</string>
+  <string name="template_passport_field_expiry_date">Datum veljavnosti</string>
+  <string name="template_passport_field_date_of_birth">Datum rojstva</string>
   <string name="template_passport_field_issuing_authority">Issuing Authority</string>
   <string name="template_passport_field_note">Opomba</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Program Name</string>
   <string name="template_reward_program_field_member_id">Member ID</string>
   <string name="template_reward_program_field_points_balance">Points Balance</string>
-  <string name="template_reward_program_field_expiry_date">Expiry Date</string>
-  <string name="template_reward_program_field_tier_status">Tier/Status</string>
+  <string name="template_reward_program_field_expiry_date">Datum veljavnosti</string>
+  <string name="template_reward_program_field_tier_status">Nivo/stanje</string>
   <string name="template_reward_program_field_note">Opomba</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">Polno ime</string>
@@ -328,15 +328,15 @@
   <string name="template_social_security_number_field_note">Opomba</string>
   <string name="template_header_technology">Tehnologija</string>
   <string name="template_header_finance">Finance</string>
-  <string name="template_header_personal">Finance</string>
+  <string name="template_header_title_personal">Personal</string>
   <string name="button_start_from_scratch">Start from scratch</string>
-  <string name="select_template_title">Custom item</string>
+  <string name="select_template_title">Predmet po meri</string>
   <!-- Custom item screen -->
   <string name="add_custom_field_button">Dodaj polje</string>
   <string name="add_section_button">Dodaj razdelek</string>
   <string name="add_public_key_placeholder">Add public key</string>
   <string name="add_private_key_placeholder">Add private key</string>
-  <string name="add_ssid_placeholder">Add SSID</string>
+  <string name="add_ssid_name_placeholder">Add name (SSID)</string>
   <string name="create_custom_item_init_error">Problem retrieving custom item details</string>
   <string name="update_custom_item_attachments_init_error">Problem retrieving custom item attachments</string>
   <string name="custom_item_link_attachments_error">Failed to link or unlink attachments to the custom item</string>
@@ -349,5 +349,5 @@
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Cannot create items</string>
   <string name="cannot_create_items_dialog_message">You don\'t have any vaults with editor or admin access. Try creating one in the main app or ask your organization\'s administrator for support.</string>
-  <string name="wifi_security_type_field_label">Security type</string>
+  <string name="wifi_security_type_field_label">Vrsta varnosti</string>
 </resources>

@@ -29,7 +29,7 @@
   <string name="contact_us_button">Stopite v stik z nami</string>
   <string name="hint_tips_screen">Ni delovalo?</string>
   <string name="report_reason_autofill">Samodejno izpolnjevanje</string>
-  <string name="report_reason_sharing">Sharing</string>
+  <string name="report_reason_sharing">Deli</string>
   <string name="report_reason_sync">Sinhronizacija</string>
   <string name="report_reason_passkeys">Identifikacijski ključi</string>
   <string name="report_reason_other">Ostalo</string>

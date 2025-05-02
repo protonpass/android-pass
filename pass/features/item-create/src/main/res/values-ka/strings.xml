@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">შენიშვნა</string>
   <string name="template_header_technology">ტექნოლოგია</string>
   <string name="template_header_finance">ფინანსები</string>
-  <string name="template_header_personal">ფინანსები</string>
+  <string name="template_header_title_personal">Personal</string>
   <string name="button_start_from_scratch">ნულიდან დაწყება</string>
   <string name="select_template_title">მომხმარებლის ელემენტი</string>
   <!-- Custom item screen -->
@@ -336,7 +336,7 @@
   <string name="add_section_button">სექციის დამატება</string>
   <string name="add_public_key_placeholder">საჯარო გასაღების დამატება</string>
   <string name="add_private_key_placeholder">პირადი გასაღების დამატება</string>
-  <string name="add_ssid_placeholder">SSID-ის დამატება</string>
+  <string name="add_ssid_name_placeholder">Add name (SSID)</string>
   <string name="create_custom_item_init_error">შეცდომა მორგებული ელემენტის დეტალების მიღებისას</string>
   <string name="update_custom_item_attachments_init_error">შეცდომა მორგებული ელემენტზე მიმაგრებული ფაილების მიღებისას</string>
   <string name="custom_item_link_attachments_error">მორგებული ელემენტისთვის ფაილის მიმაგრების ან მოხსნის მცდელობა ჩავარდა</string>

@@ -199,7 +199,7 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Pictogramă detalii articol</string>
   <string name="item_details_shared_section_more_info_item_id">ID articol</string>
   <string name="item_details_shared_section_more_info_share_id">ID seif</string>
-  <string name="item_details_wifi_network_label_ssid">SSID</string>
+  <string name="item_details_wifi_network_label_ssid_name">Nume (SSID)</string>
   <string name="item_details_wifi_network_label_password">Parola</string>
   <string name="item_details_wifi_network_label_security">Securitate</string>
   <string name="item_details_ssh_key_label_public_key">Cheia publică</string>

@@ -265,7 +265,7 @@
   <string name="template_ssh_key_field_host">Sunucu</string>
   <string name="template_ssh_key_field_note">Not</string>
   <!-- WiFi Network Fields -->
-  <string name="template_wifi_network_field_name">Name (SSID)</string>
+  <string name="template_wifi_network_field_name">Ad (SSID)</string>
   <string name="template_wifi_network_field_note">Not</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Banka adı</string>
@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">Not</string>
   <string name="template_header_technology">Teknoloji</string>
   <string name="template_header_finance">Finans</string>
-  <string name="template_header_personal">Finans</string>
+  <string name="template_header_title_personal">Kişisel</string>
   <string name="button_start_from_scratch">Sıfırdan başla</string>
   <string name="select_template_title">Özel öge</string>
   <!-- Custom item screen -->
@@ -336,7 +336,7 @@
   <string name="add_section_button">Bölüm ekle</string>
   <string name="add_public_key_placeholder">Herkese açık anahtar ekle</string>
   <string name="add_private_key_placeholder">Kişisel anahtar ekle</string>
-  <string name="add_ssid_placeholder">SSID ekle</string>
+  <string name="add_ssid_name_placeholder">Ad ekle (SSID)</string>
   <string name="create_custom_item_init_error">Özel öge ayrıntıları alınırken sorun çıktı</string>
   <string name="update_custom_item_attachments_init_error">Özel ögenin ek dosyaları alınırken sorun çıktı</string>
   <string name="custom_item_link_attachments_error">Özel ögeye ek dosyaların bağlantısı eklenemedi ya da kaldırılamadı</string>

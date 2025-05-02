@@ -37,10 +37,10 @@
   <string name="simple_login_sync_enable_snackbar_error">There was an error enabling SimpleLogin aliases sync</string>
   <string name="simple_login_sync_enable_snackbar_success">SimpleLogin aliases sync successfully enabled</string>
   <!-- Mailbox create screen -->
-  <string name="simple_login_sync_mailbox_create_title">Add mailbox</string>
+  <string name="simple_login_sync_mailbox_create_title">Dodaj poštni predal</string>
   <string name="simple_login_sync_mailbox_create_message_error">There was an error adding the mailbox</string>
   <!-- Mailbox change screen -->
-  <string name="simple_login_sync_mailbox_change_title">Change mailbox</string>
+  <string name="simple_login_sync_mailbox_change_title">Spremeni poštni predal</string>
   <string name="simple_login_sync_mailbox_change_message_error">There was an error changing the mailbox</string>
   <string name="simple_login_sync_mailbox_change_email_already_in_use_message_error">Email already in use</string>
   <!-- Mailbox verify screen -->
@@ -54,23 +54,23 @@
   <string name="simple_login_sync_mailbox_verify_message_resend_code_error">There was an error sending verification code</string>
   <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Verification code successfully sent</string>
   <!-- Mailbox delete screen -->
-  <string name="simple_login_sync_mailbox_delete_title">Delete mailbox</string>
+  <string name="simple_login_sync_mailbox_delete_title">Izbriši poštni predal</string>
   <string name="simple_login_sync_mailbox_delete_subtitle">All aliases using the mailbox %s will be also deleted. To keep receiving emails transfer these aliases to a different mailbox:</string>
   <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Transfer aliases</string>
   <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">To mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete">Delete mailbox</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete">Izbriši poštni predal</string>
   <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Transfer and delete mailbox</string>
   <string name="simple_login_sync_mailbox_delete_message_delete_error">There was an error deleting mailbox</string>
   <string name="simple_login_sync_mailbox_delete_message_delete_success">Mailbox successfully deleted</string>
   <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Transfer aliases to</string>
   <string name="simple_login_sync_mailbox_delete_warning">Please note that once deleted, aliases can\'t be restored</string>
   <!-- Domain select screen -->
-  <string name="simple_login_sync_domain_select_title">Default domain</string>
+  <string name="simple_login_sync_domain_select_title">Privzeta domena</string>
   <string name="simple_login_sync_domain_select_title_none">brez</string>
   <string name="simple_login_sync_domain_select_description_none">No domain</string>
-  <string name="simple_login_sync_domain_select_description_custom">Your domain</string>
+  <string name="simple_login_sync_domain_select_description_custom">Vaša domena</string>
   <string name="simple_login_sync_domain_select_description_free">Public domain</string>
-  <string name="simple_login_sync_domain_select_description_premium">Premium domain</string>
+  <string name="simple_login_sync_domain_select_description_premium">Premium domena</string>
   <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">There was an error fetching SL alias domains</string>
   <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">There was an error updating SL alias domain</string>
   <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SL alias domain successfully updated</string>
@@ -78,7 +78,7 @@
   <string name="simple_login_sync_mailbox_options_snackbar_options_error">Cannot display mailbox options</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_error">There was an error updating default mailbox</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_success">Default mailbox successfully updated</string>
-  <string name="simple_login_sync_mailbox_change_email_option">Change mailbox</string>
+  <string name="simple_login_sync_mailbox_change_email_option">Spremeni poštni predal</string>
   <string name="simple_login_sync_mailbox_cancel_change_email_option">Cancel mailbox change</string>
   <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">There was an error cancelling mailbox email change</string>
   <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">Cancelled mailbox email change</string>

@@ -195,7 +195,7 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">더 많은 항목 정보 아이콘</string>
   <string name="item_details_shared_section_more_info_item_id">항목 ID</string>
   <string name="item_details_shared_section_more_info_share_id">금고 ID</string>
-  <string name="item_details_wifi_network_label_ssid">SSID</string>
+  <string name="item_details_wifi_network_label_ssid_name">Name (SSID)</string>
   <string name="item_details_wifi_network_label_password">비밀번호</string>
   <string name="item_details_wifi_network_label_security">보안</string>
   <string name="item_details_ssh_key_label_public_key">공개 키</string>

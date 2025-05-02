@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">Poznámka</string>
   <string name="template_header_technology">Technologie</string>
   <string name="template_header_finance">Finance</string>
-  <string name="template_header_personal">Finance</string>
+  <string name="template_header_title_personal">Osobní</string>
   <string name="button_start_from_scratch">Začít od nuly</string>
   <string name="select_template_title">Vlastní položka</string>
   <!-- Custom item screen -->
@@ -336,7 +336,7 @@
   <string name="add_section_button">Přidat sekci</string>
   <string name="add_public_key_placeholder">Přidat veřejný klíč</string>
   <string name="add_private_key_placeholder">Přidat soukromý klíč</string>
-  <string name="add_ssid_placeholder">Přidat SSID</string>
+  <string name="add_ssid_name_placeholder">Přidat název (SSID)</string>
   <string name="create_custom_item_init_error">Problém s načtením detailů vlastní položky</string>
   <string name="update_custom_item_attachments_init_error">Problém s načtením příloh vlastní položky</string>
   <string name="custom_item_link_attachments_error">Připojení nebo odpojení příloh k vlastní položce selhalo</string>

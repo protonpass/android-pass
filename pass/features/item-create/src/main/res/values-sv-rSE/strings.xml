@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">Anteckning</string>
   <string name="template_header_technology">Teknologi</string>
   <string name="template_header_finance">Finans</string>
-  <string name="template_header_personal">Ekonomi</string>
+  <string name="template_header_title_personal">Personal</string>
   <string name="button_start_from_scratch">Börja från början</string>
   <string name="select_template_title">Anpassat objekt</string>
   <!-- Custom item screen -->
@@ -336,7 +336,7 @@
   <string name="add_section_button">Lägg till sektion</string>
   <string name="add_public_key_placeholder">Lägg till offentlig nyckel</string>
   <string name="add_private_key_placeholder">Lägg till privat nyckel</string>
-  <string name="add_ssid_placeholder">Lägg till SSID</string>
+  <string name="add_ssid_name_placeholder">Lägg till namn (SSID)</string>
   <string name="create_custom_item_init_error">Problem att hämta anpassade objektdetaljer</string>
   <string name="update_custom_item_attachments_init_error">Problem att hämta anpassade objektbilagor</string>
   <string name="custom_item_link_attachments_error">Failed to link or unlink attachments to the custom item</string>

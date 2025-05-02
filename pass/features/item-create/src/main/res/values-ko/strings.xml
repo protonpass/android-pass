@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">메모</string>
   <string name="template_header_technology">기술</string>
   <string name="template_header_finance">금융</string>
-  <string name="template_header_personal">금융</string>
+  <string name="template_header_title_personal">Personal</string>
   <string name="button_start_from_scratch">처음부터 시작하기</string>
   <string name="select_template_title">사용지 지정 항목</string>
   <!-- Custom item screen -->
@@ -336,7 +336,7 @@
   <string name="add_section_button">섹션 추가</string>
   <string name="add_public_key_placeholder">공개 키 추가</string>
   <string name="add_private_key_placeholder">개인 키 추가</string>
-  <string name="add_ssid_placeholder">SSID 추가</string>
+  <string name="add_ssid_name_placeholder">Add name (SSID)</string>
   <string name="create_custom_item_init_error">커스텀 항목 상세 사항을 검색하는데 문제가 발생했습니다</string>
   <string name="update_custom_item_attachments_init_error">커스텀 항목 첨부 파일을 검색하는데 문제가 발생했습니다</string>
   <string name="custom_item_link_attachments_error">첨부 파일을 커스텀 항목에 연결하거나 연결 해제하지 못했습니다.</string>

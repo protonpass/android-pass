@@ -265,7 +265,7 @@
   <string name="template_ssh_key_field_host">Host</string>
   <string name="template_ssh_key_field_note">Catatan</string>
   <!-- WiFi Network Fields -->
-  <string name="template_wifi_network_field_name">Name (SSID)</string>
+  <string name="template_wifi_network_field_name">Nama (SSID)</string>
   <string name="template_wifi_network_field_note">Catatan</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Nama Bank</string>
@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">Catatan</string>
   <string name="template_header_technology">Teknologi</string>
   <string name="template_header_finance">Keuangan</string>
-  <string name="template_header_personal">Keuangan</string>
+  <string name="template_header_title_personal">Personal</string>
   <string name="button_start_from_scratch">Mulai dari awal</string>
   <string name="select_template_title">Item khusus</string>
   <!-- Custom item screen -->
@@ -336,7 +336,7 @@
   <string name="add_section_button">Tambahkan bagian</string>
   <string name="add_public_key_placeholder">Tambah kunci publik</string>
   <string name="add_private_key_placeholder">Tambah kunci privat</string>
-  <string name="add_ssid_placeholder">Tambah SSID</string>
+  <string name="add_ssid_name_placeholder">Add name (SSID)</string>
   <string name="create_custom_item_init_error">Terdapat masalah mendapatkan detail item khusus</string>
   <string name="update_custom_item_attachments_init_error">Terdapat masalah mendapatkan lampiran item khusus</string>
   <string name="custom_item_link_attachments_error">Gagal menautkan atau menghapus tautan lampiran ke item khusus</string>

@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">Nota</string>
   <string name="template_header_technology">Tecnologia</string>
   <string name="template_header_finance">Finances</string>
-  <string name="template_header_personal">Finances</string>
+  <string name="template_header_title_personal">Personal</string>
   <string name="button_start_from_scratch">Comença des de zero</string>
   <string name="select_template_title">Element personalitzat</string>
   <!-- Custom item screen -->
@@ -336,7 +336,7 @@
   <string name="add_section_button">Afegeix una secció</string>
   <string name="add_public_key_placeholder">Afegeix una clau pública</string>
   <string name="add_private_key_placeholder">Afegeix una clau privada</string>
-  <string name="add_ssid_placeholder">Afegeix SSID</string>
+  <string name="add_ssid_name_placeholder">Afegeix un nom (SSID)</string>
   <string name="create_custom_item_init_error">Hi ha hagut un problema recuperant els detalls de l\'element personalitzat</string>
   <string name="update_custom_item_attachments_init_error">Hi ha hagut un problema recuperant els elements personalitzats adjunts</string>
   <string name="custom_item_link_attachments_error">Ha fallat en vincular o desvincular els elements personalitzats adjunts</string>

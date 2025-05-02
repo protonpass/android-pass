@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">Notitie</string>
   <string name="template_header_technology">Technologie</string>
   <string name="template_header_finance">Financieel</string>
-  <string name="template_header_personal">Financieel</string>
+  <string name="template_header_title_personal">Persoonlijk</string>
   <string name="button_start_from_scratch">Begin vanaf nul</string>
   <string name="select_template_title">Aangepast item</string>
   <!-- Custom item screen -->
@@ -336,7 +336,7 @@
   <string name="add_section_button">Sectie toevoegen</string>
   <string name="add_public_key_placeholder">Voeg publieke sleutel toe</string>
   <string name="add_private_key_placeholder">Voeg privé-sleutel toe</string>
-  <string name="add_ssid_placeholder">Voeg SSID toe</string>
+  <string name="add_ssid_name_placeholder">Naam toevoegen (SSID)</string>
   <string name="create_custom_item_init_error">Probleem bij het opvragen details van aangepast item</string>
   <string name="update_custom_item_attachments_init_error">Probleem bij het opvragen bijlagen van aangepast item</string>
   <string name="custom_item_link_attachments_error">Fout bij het koppelen of ontkoppelen van de bijlagen met het aangepast item</string>

@@ -17,7 +17,7 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="sync_item_empty">Empty vault</string>
+  <string name="sync_item_empty">Prazen trezor</string>
   <plurals name="sync_item_count">
     <item quantity="one">Downloaded %d item</item>
     <item quantity="two">Downloaded %d items</item>

@@ -195,7 +195,7 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">更多项目信息图标</string>
   <string name="item_details_shared_section_more_info_item_id">项目 ID</string>
   <string name="item_details_shared_section_more_info_share_id">保险库 ID</string>
-  <string name="item_details_wifi_network_label_ssid">SSID</string>
+  <string name="item_details_wifi_network_label_ssid_name">名称 (SSID)</string>
   <string name="item_details_wifi_network_label_password">密码</string>
   <string name="item_details_wifi_network_label_security">安全性</string>
   <string name="item_details_ssh_key_label_public_key">公钥</string>

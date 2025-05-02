@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">備注</string>
   <string name="template_header_technology">技術</string>
   <string name="template_header_finance">金融</string>
-  <string name="template_header_personal">金融</string>
+  <string name="template_header_title_personal">Personal</string>
   <string name="button_start_from_scratch">Start from scratch</string>
   <string name="select_template_title">Custom item</string>
   <!-- Custom item screen -->
@@ -336,7 +336,7 @@
   <string name="add_section_button">Add section</string>
   <string name="add_public_key_placeholder">Add public key</string>
   <string name="add_private_key_placeholder">Add private key</string>
-  <string name="add_ssid_placeholder">Add SSID</string>
+  <string name="add_ssid_name_placeholder">Add name (SSID)</string>
   <string name="create_custom_item_init_error">Problem retrieving custom item details</string>
   <string name="update_custom_item_attachments_init_error">Problem retrieving custom item attachments</string>
   <string name="custom_item_link_attachments_error">Failed to link or unlink attachments to the custom item</string>

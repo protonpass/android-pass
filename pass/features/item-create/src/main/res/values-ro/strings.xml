@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">Notiță</string>
   <string name="template_header_technology">Tehnologie</string>
   <string name="template_header_finance">Finanțe</string>
-  <string name="template_header_personal">Finanțe</string>
+  <string name="template_header_title_personal">Personal</string>
   <string name="button_start_from_scratch">De la început</string>
   <string name="select_template_title">Articol personal</string>
   <!-- Custom item screen -->
@@ -336,7 +336,7 @@
   <string name="add_section_button">Adăugare secțiune</string>
   <string name="add_public_key_placeholder">Adăugare cheie publică</string>
   <string name="add_private_key_placeholder">Adăugare cheie privată</string>
-  <string name="add_ssid_placeholder">Adăugare SSID</string>
+  <string name="add_ssid_name_placeholder">Adăugare nume (SSID)</string>
   <string name="create_custom_item_init_error">Problemă preluare detalii articol personalizat.</string>
   <string name="update_custom_item_attachments_init_error">Problemă preluare atașamente articol personalizat.</string>
   <string name="custom_item_link_attachments_error">Legarea sau dezlegarea atașamentelor la articolul personalizat a eșuat.</string>

@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">Notatka</string>
   <string name="template_header_technology">Technologia</string>
   <string name="template_header_finance">Finanse</string>
-  <string name="template_header_personal">Finanse</string>
+  <string name="template_header_title_personal">Osobiste</string>
   <string name="button_start_from_scratch">Rozpocznij od początku</string>
   <string name="select_template_title">Niestandardowy element</string>
   <!-- Custom item screen -->
@@ -336,7 +336,7 @@
   <string name="add_section_button">Dodaj sekcję</string>
   <string name="add_public_key_placeholder">Dodaj klucz publiczny</string>
   <string name="add_private_key_placeholder">Dodaj klucz prywatny</string>
-  <string name="add_ssid_placeholder">Dodaj SSID</string>
+  <string name="add_ssid_name_placeholder">Dodaj nazwę (SSID)</string>
   <string name="create_custom_item_init_error">Wystąpił problem podczas pobierania szczegółów niestandardowego elementu</string>
   <string name="update_custom_item_attachments_init_error">Wystąpił problem podczas pobierania załączników niestandardowego elementu</string>
   <string name="custom_item_link_attachments_error">Nie można połączyć lub odłączyć załączników z niestandardowym elementem</string>

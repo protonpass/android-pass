@@ -265,7 +265,7 @@
   <string name="template_ssh_key_field_host">Hostiteľ</string>
   <string name="template_ssh_key_field_note">Poznámka</string>
   <!-- WiFi Network Fields -->
-  <string name="template_wifi_network_field_name">Name (SSID)</string>
+  <string name="template_wifi_network_field_name">Názov (SSID)</string>
   <string name="template_wifi_network_field_note">Poznámka</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Názov banky</string>
@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">Poznámka</string>
   <string name="template_header_technology">Technológia</string>
   <string name="template_header_finance">Financie</string>
-  <string name="template_header_personal">Financie</string>
+  <string name="template_header_title_personal">Osobné</string>
   <string name="button_start_from_scratch">Začať úplne od začiatku</string>
   <string name="select_template_title">Vlastná položka</string>
   <!-- Custom item screen -->
@@ -336,7 +336,7 @@
   <string name="add_section_button">Pridať sekciu</string>
   <string name="add_public_key_placeholder">Pridať verejný kľúč</string>
   <string name="add_private_key_placeholder">Pridať súkromný kľúč</string>
-  <string name="add_ssid_placeholder">Pridať SSID</string>
+  <string name="add_ssid_name_placeholder">Pridať názov (SSID)</string>
   <string name="create_custom_item_init_error">Problém s načítaním podrobností vlastnej položky</string>
   <string name="update_custom_item_attachments_init_error">Problém s načítaním príloh vlastnej položky</string>
   <string name="custom_item_link_attachments_error">Nepodarilo sa prepojiť alebo zrušiť prepojenie príloh s vlastnou položkou</string>

@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">Nota</string>
   <string name="template_header_technology">Tecnologia</string>
   <string name="template_header_finance">Finanças</string>
-  <string name="template_header_personal">Finanças</string>
+  <string name="template_header_title_personal">Pessoal</string>
   <string name="button_start_from_scratch">Começar do zero</string>
   <string name="select_template_title">Item personalizado</string>
   <!-- Custom item screen -->
@@ -336,7 +336,7 @@
   <string name="add_section_button">Adicionar seção</string>
   <string name="add_public_key_placeholder">Adicionar chave pública</string>
   <string name="add_private_key_placeholder">Adicionar chave privada</string>
-  <string name="add_ssid_placeholder">Adicionar SSID</string>
+  <string name="add_ssid_name_placeholder">Adicionar nome (SSID)</string>
   <string name="create_custom_item_init_error">Problema ao recuperar detalhes do item personalizado</string>
   <string name="update_custom_item_attachments_init_error">Problema ao recuperar anexos de itens personalizados</string>
   <string name="custom_item_link_attachments_error">Falha ao vincular ou desvincular anexos do item personalizado</string>

@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">Notiz</string>
   <string name="template_header_technology">Technologie</string>
   <string name="template_header_finance">Finanzen</string>
-  <string name="template_header_personal">Finanzen</string>
+  <string name="template_header_title_personal">Privat</string>
   <string name="button_start_from_scratch">Ganz von vorne anfangen</string>
   <string name="select_template_title">Benutzerdefinierter Eintrag</string>
   <!-- Custom item screen -->
@@ -336,7 +336,7 @@
   <string name="add_section_button">Abschnitt hinzufügen</string>
   <string name="add_public_key_placeholder">Öffentlicher Schlüssel hinzufügen</string>
   <string name="add_private_key_placeholder">Privater Schlüssel hinzufügen</string>
-  <string name="add_ssid_placeholder">SSID hinzufügen</string>
+  <string name="add_ssid_name_placeholder">Name hinzufügen (SSID)</string>
   <string name="create_custom_item_init_error">Problem beim Abrufen benutzerdefinierter Eintragdetails</string>
   <string name="update_custom_item_attachments_init_error">Problem beim Abrufen benutzerdefinierter Eintrag-Anhänge</string>
   <string name="custom_item_link_attachments_error">Verknüpfung oder Aufhebung der Verknüpfung von Anhängen mit dem benutzerdefinierten Eintrag fehlgeschlagen.</string>

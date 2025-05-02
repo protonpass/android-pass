@@ -265,7 +265,7 @@
   <string name="template_ssh_key_field_host">ホスト</string>
   <string name="template_ssh_key_field_note">メモ</string>
   <!-- WiFi Network Fields -->
-  <string name="template_wifi_network_field_name">Name (SSID)</string>
+  <string name="template_wifi_network_field_name">名前（SSID）</string>
   <string name="template_wifi_network_field_note">メモ</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">銀行名</string>
@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">メモ</string>
   <string name="template_header_technology">テクノロジー</string>
   <string name="template_header_finance">ファイナンス</string>
-  <string name="template_header_personal">ファイナンス</string>
+  <string name="template_header_title_personal">個人</string>
   <string name="button_start_from_scratch">ゼロから始める</string>
   <string name="select_template_title">カスタムアイテム</string>
   <!-- Custom item screen -->
@@ -336,7 +336,7 @@
   <string name="add_section_button">セクションを追加</string>
   <string name="add_public_key_placeholder">公開鍵を追加</string>
   <string name="add_private_key_placeholder">秘密鍵を追加</string>
-  <string name="add_ssid_placeholder">SSIDを追加</string>
+  <string name="add_ssid_name_placeholder">名前を追加（SSID）</string>
   <string name="create_custom_item_init_error">カスタムアイテムの詳細を取得中に問題が発生しました</string>
   <string name="update_custom_item_attachments_init_error">カスタムアイテムの添付ファイルの取得中に問題が発生しました</string>
   <string name="custom_item_link_attachments_error">カスタムアイテムへの添付ファイルのリンクまたは解除に失敗しました</string>

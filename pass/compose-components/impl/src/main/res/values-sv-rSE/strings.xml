@@ -197,7 +197,7 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Ikon för mer objektinformation</string>
   <string name="item_details_shared_section_more_info_item_id">Objekt-ID</string>
   <string name="item_details_shared_section_more_info_share_id">Valv-ID</string>
-  <string name="item_details_wifi_network_label_ssid">SSID</string>
+  <string name="item_details_wifi_network_label_ssid_name">Namn (SSID)</string>
   <string name="item_details_wifi_network_label_password">Lösenord</string>
   <string name="item_details_wifi_network_label_security">Säkerhet</string>
   <string name="item_details_ssh_key_label_public_key">Offentlig nyckel</string>

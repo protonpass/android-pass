@@ -62,7 +62,8 @@ internal fun ItemTypeFilterList(
     modifier: Modifier = Modifier,
     selected: SearchFilterType,
     itemTypeCount: ItemTypeCount,
-    onItemTypeClick: (SearchFilterType) -> Unit
+    onItemTypeClick: (SearchFilterType) -> Unit,
+    isCustomItemEnabled: Boolean
 ) {
     Row(
         modifier = modifier.horizontalScroll(rememberScrollState()),
@@ -91,12 +92,14 @@ internal fun ItemTypeFilterList(
             onItemTypeClick
         )
 
-        ItemTypeButton(
-            Custom,
-            selected == Custom,
-            itemTypeCount.customCount,
-            onItemTypeClick
-        )
+        if (isCustomItemEnabled) {
+            ItemTypeButton(
+                Custom,
+                selected == Custom,
+                itemTypeCount.customCount,
+                onItemTypeClick
+            )
+        }
 
         Spacer(modifier = Modifier.width(width = Spacing.mediumSmall))
     }
@@ -192,7 +195,8 @@ internal fun ItemTypeFilterListPreview(@PreviewParameter(ThemePreviewProvider::c
                     identityCount = 2,
                     customCount = 1
                 ),
-                onItemTypeClick = {}
+                onItemTypeClick = {},
+                isCustomItemEnabled = true
             )
         }
     }

@@ -211,7 +211,8 @@ internal fun HomeContent(
                 ItemTypeFilterList(
                     selected = uiState.homeListUiState.searchFilterType,
                     itemTypeCount = itemTypeCount,
-                    onItemTypeClick = { onEvent(HomeUiEvent.ItemTypeSelected(it)) }
+                    onItemTypeClick = { onEvent(HomeUiEvent.ItemTypeSelected(it)) },
+                    isCustomItemEnabled = uiState.isCustomItemEnabled
                 )
             }
 

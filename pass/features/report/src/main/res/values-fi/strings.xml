@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="description_field_label">Mikä on ongelmana?</string>
-  <string name="description_field_hint">Kuvaile ongelma mahdollisimman yksityiskohtaisesti. Jos tapahtui virhe, kerro meille mitä siinä luki.</string>
+  <string name="description_field_hint">Kuvaile ongelma mahdollisimman yksityiskohtaisesti. Jos näet virheilmoituksen, kerro mitä siinä luki.</string>
   <string name="email_field_label">Sähköpostiosoite</string>
   <string name="email_field_hint">sähköpostiosoite</string>
   <string name="attach_image_button">Liitä kuva</string>
@@ -37,18 +37,18 @@
   <string name="tips_subtitle">Nämä vinkit voivat auttaa ratkaisemaan ongelman nopeammin.</string>
   <string name="autofill_tip_restart">Kokeile poistaa automaattitäytön palvelu käytöstä ja ottaa se käyttöön uudelleen.</string>
   <string name="autofill_tip_browser">Kokeile toista selainta.</string>
-  <string name="sharing_tip_vault_sharing_guide">Onko sinulla ongelmia holvin jakamisen kanssa? Tutustu oppaaseemme.</string>
-  <string name="sharing_tip_secure_links_guide">Onko sinulla ongelmia suojattujen linkkien kanssa? Tutustu oppaaseemme.</string>
-  <string name="sync_tip_force_refresh">Onko näyttösi tyhjä? Yritä pakottaa synkronointi.</string>
+  <string name="sharing_tip_vault_sharing_guide">Kohtaatko ongelmia holvien jakamisessa? Tutustu oppaaseemme.</string>
+  <string name="sharing_tip_secure_links_guide">Kohtaatko ongelmia suojatuissa linkeissä? Tutustu oppaaseemme.</string>
+  <string name="sync_tip_force_refresh">Onko näyttösi tyhjä? Kokeile auttaako pakotettu synkronointi.</string>
   <string name="send_logs_label">Lähetä lokit</string>
-  <string name="report_sending_success">Raportti lähetettiin</string>
+  <string name="report_sending_success">Raportti lähetettiin.</string>
   <string name="report_sending_error">Raporttia ei voitu lähettää.</string>
-  <string name="tips_passkey_check_guide">Jos sinulla on ongelmia, tutustu oppaaseemme.</string>
-  <string name="tips_passkey_android_not_supported">Android-versiosi on liian vanha. Yritä päivittää laitteesi.</string>
-  <string name="tips_passkeys_credential_manager_not_supported">Laitteen valmistaja ei tarjoa kirjautumistietohallintaa.</string>
-  <string name="tips_passkey_supported">Tuki pääsyavaimille</string>
-  <string name="tips_passkey_not_supported">Ei tukea pääsyavaimille</string>
-  <string name="report_steps" comment="Indicator showing report progress">Vaihe %1$d / %2$d</string>
+  <string name="tips_passkey_check_guide">Jos kohtaat ongelmia, tutustu oppaaseemme.</string>
+  <string name="tips_passkey_android_not_supported">Android-versiosi on liian vanha. Pyri päivittämään laitteesi.</string>
+  <string name="tips_passkeys_credential_manager_not_supported">Laitevalmistaja ei tarjoa tunnistetietohallintaa.</string>
+  <string name="tips_passkey_supported">Pääsyavaimia tuetaan</string>
+  <string name="tips_passkey_not_supported">Pääsyavaimia ei tueta</string>
+  <string name="report_steps" comment="Indicator showing report progress">Vaihe %1$d/%2$d</string>
   <string name="description_cannot_be_blank">Kuvaus ei voi olla tyhjä</string>
   <string name="description_is_too_short">Kuvaus on liian lyhyt</string>
   <string name="description_is_too_long">Kuvaus on liian pitkä</string>

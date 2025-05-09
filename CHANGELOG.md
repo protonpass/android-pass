@@ -6,6 +6,19 @@
 
 ### Other
 
+## 1.31.3 (2025-05-09)
+
+### Fixes :bug:
+
+- PIN code input improvements.
+- Autofill improvements.
+
+### Other
+
+- Make Identity SSN field hidden.
+- UI tweaks.
+- Updated translations.
+
 ## 1.31.2 (2025-04-11)
 
 ### Fixes :bug:

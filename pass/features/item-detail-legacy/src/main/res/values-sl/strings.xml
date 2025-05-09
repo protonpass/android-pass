@@ -94,7 +94,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Dovoljeno vam je samo urejanje predmetov v vaših najstarejših trezorjih. Če želite urediti ta predmet, nadgradite svoj trenutni paket.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Tega predmeta ne morete urejati, ker je v smetnjaku. Pred urejanjem ga premaknite iz smetnjaka.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Ni mogoče deliti</string>
-  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">You don\'t have enough permissions to perform this action.</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">Nimate dovolj dovoljenj za izvedbo tega dejanja.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Dosegli ste omejitev skupne rabe trezorja. Če želite deliti več trezorjev, nadgradite svoj trenutni paket.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Tega predmeta ne morete urejati, ker je v smetnjaku. Pred urejanjem ga premaknite iz smetnjaka.</string>
   <string name="password_score_vulnerable">Ranljivo</string>
@@ -107,7 +107,7 @@
   <string name="passkey_detail_bottomsheet_created">Ustvarjeno</string>
   <string name="activity_in_last_two_weeks">Activity in the last 14 days</string>
   <string name="contacts">Stiki</string>
-  <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
+  <string name="contacts_section_description">Če želite skriti svoj osebni e-poštni naslov, lahko ustvarite kontakt z vzdevkom, ki prikrije vaš naslov.</string>
   <string name="field_detail_display_name_title">Prikazno ime</string>
   <string name="display_name_section_description">The display name when sending an email from this alias.</string>
   <plurals name="alias_forwards_count">
@@ -117,7 +117,7 @@
     <item quantity="other">%1$s forwards</item>
   </plurals>
   <plurals name="alias_replies_count">
-    <item quantity="one">%1$s reply</item>
+    <item quantity="one">%1$s odgovor</item>
     <item quantity="two">%1$s replies</item>
     <item quantity="few">%1$s replies</item>
     <item quantity="other">%1$s replies</item>

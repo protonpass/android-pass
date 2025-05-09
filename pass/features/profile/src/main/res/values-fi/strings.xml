@@ -72,13 +72,13 @@
   <string name="account_switcher_switch_to">Vaihda tiliin</string>
   <string name="account_switcher_add_account">Lisää tili</string>
   <string name="account_switcher_remove">Poista</string>
-  <string name="filtered_by_logins">Suodatettu kirjautumistietojen mukaan. Roskakorissa olevia kohteita ei näytetä</string>
-  <string name="filtered_by_logins_with_mfa">Suodatettu TOTP-kirjautumistietojen mukaan. Roskakorissa olevia kohteita ei näytetä</string>
-  <string name="filtered_by_aliases">Suodatettu aliasten mukaan. Roskakorissa olevia kohteita ei näytetä</string>
-  <string name="filtered_by_notes">Suodatettu muistiinpanojen mukaan. Roskakorissa olevia kohteita ei näytetä</string>
-  <string name="filtered_by_credit_cards">Suodatettu maksukorttien mukaan. Roskakorissa olevia kohteita ei näytetä</string>
-  <string name="filtered_by_identities">Suodatettu identiteettien mukaan. Roskakorissa olevia kohteita ei näytetä</string>
-  <string name="filtered_by_custom_items">Suodatetaan mukautetut kohteet. Roskakorin kohteita ei näytetä.</string>
+  <string name="filtered_by_logins">Kirjautumistiedot näytetään. Roskakorissa olevia kohteita ei näytetä.</string>
+  <string name="filtered_by_logins_with_mfa">TOTP:n sisältävät kirjautumistiedot näytetään. Roskakorissa olevia kohteita ei näytetä.</string>
+  <string name="filtered_by_aliases">Aliakset näytetään. Roskakorissa olevia kohteita ei näytetä.</string>
+  <string name="filtered_by_notes">Muistiinpanot näytetään. Roskakorissa olevia kohteita ei näytetä.</string>
+  <string name="filtered_by_credit_cards">Maksukortit näytetään. Roskakorissa olevia kohteita ei näytetä.</string>
+  <string name="filtered_by_identities">Identiteetit näytetään. Roskakorissa olevia kohteita ei näytetä.</string>
+  <string name="filtered_by_custom_items">Mukautetut kohteet näytetään. Poistettuja kohteita ei näytetä.</string>
   <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Sinun on vaihdettava tiliin %1$s hallitaksesi sitä</string>
   <string name="account_switch_confirmation_title">Hallitse tiliä</string>
   <string name="account_switch_confirmation_confirm">Vaihda ja hallitse</string>

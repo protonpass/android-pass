@@ -5,7 +5,7 @@
   <string name="home_empty_vault_subtitle">Začnite tako, da ustvarite svoj prvi predmet.</string>
   <string name="home_empty_vault_login_title">No logins found</string>
   <string name="home_empty_vault_login_subtitle">Get started by creating your first login item.</string>
-  <string name="home_empty_vault_aliases_title">No aliases found</string>
+  <string name="home_empty_vault_aliases_title">Ni najdenih vzdevkov</string>
   <string name="home_empty_vault_aliases_subtitle">Get started by creating your first alias item.</string>
   <string name="home_empty_vault_notes_title">No notes found</string>
   <string name="home_empty_vault_notes_subtitle">Get started by creating your first note item.</string>
@@ -49,7 +49,7 @@
   <string name="home_trial_banner_title">Naše darilo dobrodošlice za vas</string>
   <string name="home_trial_banner_text">7 dni, da brezplačno preizkusite premijske funkcije. Samo v prvem tednu Proton Pass.</string>
   <string name="home_trial_banner_settings">Izvedi več ›</string>
-  <string name="home_drawer_all_items">All items</string>
+  <string name="home_drawer_all_items">Vsi predmeti</string>
   <string name="sl_sync_banner_title">Sync your aliases from SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">You have %d alias that is present in SimpleLogin but missing in Proton Pass. Would you like to sync it?</item>
@@ -65,7 +65,7 @@
   <string name="home_invite_banner_title">Trezor v skupni rabi z vami</string>
   <string name="home_invite_banner_subtitle">Vabljeni ste v skupni trezor. Poglejte podrobnosti.</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
-  <string name="home_item_invite_banner_subtitle">Tap for details.</string>
+  <string name="home_item_invite_banner_subtitle">Dotaknite se za podrobnosti.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopiraj geslo</string>
   <string name="bottomsheet_copy_username">Kopiraj uporabniško ime</string>
@@ -198,6 +198,6 @@
   <string name="home_snackbar_items_alias_disabled_error">Error disabling aliases</string>
   <string name="bulk_action_unpin">Odpni</string>
   <string name="bulk_action_pin">Pripni</string>
-  <string name="bulk_action_enable_alias">Enable alias</string>
+  <string name="bulk_action_enable_alias">Omogoči vzdevek</string>
   <string name="bulk_action_disable_alias">Onemogoči vzdevek</string>
 </resources>

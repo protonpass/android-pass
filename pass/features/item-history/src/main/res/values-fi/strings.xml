@@ -28,10 +28,10 @@
   <string name="item_history_timeline_node_leaf_title">Luotu</string>
   <string name="item_history_timeline_node_root_title">Nykyinen versio</string>
   <string name="item_history_timeline_snackbar_message_error">Virhe noudattessa kohteen versioita</string>
-  <string name="reset_history_bottomsheet_option">Nollaa historia</string>
-  <string name="reset_history_dialog_title">Nollataanko tämän kohteen historia?</string>
-  <string name="reset_history_dialog_body">Historian nollaus poistaa kaikki aiemmat versiot pysyvästi, eikä sitä voi perua.</string>
-  <string name="reset_history_action">Nollaa</string>
-  <string name="reset_history_dialog_snackbar_message_error">Virhe nollauksessa</string>
-  <string name="reset_history_dialog_snackbar_message_success">Kohdehistoria nollattiin</string>
+  <string name="reset_history_bottomsheet_option">Tyhjennä historia</string>
+  <string name="reset_history_dialog_title">Tyhjennetäänkö kohteen historia?</string>
+  <string name="reset_history_dialog_body">Historian tyhjennys poistaa kaikki aiemmat versiot pysyvästi, eikä sen peruminen ole mahdollista.</string>
+  <string name="reset_history_action">Tyhjennä</string>
+  <string name="reset_history_dialog_snackbar_message_error">Virhe tyhjennettäessä</string>
+  <string name="reset_history_dialog_snackbar_message_success">Kohteen historia tyhjennettiin</string>
 </resources>

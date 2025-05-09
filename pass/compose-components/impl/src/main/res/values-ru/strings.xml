@@ -201,11 +201,11 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Значок дополнительной информации об элементе</string>
   <string name="item_details_shared_section_more_info_item_id">ID элемента</string>
   <string name="item_details_shared_section_more_info_share_id">ID хранилища</string>
-  <string name="item_details_wifi_network_label_ssid_name">Name (SSID)</string>
+  <string name="item_details_wifi_network_label_ssid_name">Имя (SSID)</string>
   <string name="item_details_wifi_network_label_password">Пароль</string>
-  <string name="item_details_wifi_network_label_security">Security</string>
-  <string name="item_details_ssh_key_label_public_key">Public key</string>
-  <string name="item_details_ssh_key_label_private_key">Private key</string>
+  <string name="item_details_wifi_network_label_security">Безопасность</string>
+  <string name="item_details_ssh_key_label_public_key">Открытый ключ</string>
+  <string name="item_details_ssh_key_label_private_key">Закрытый ключ</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Версия приложения больше не поддерживается, пожалуйста, обновите приложение.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Ключ доступа</string>
@@ -297,9 +297,9 @@
   <string name="simple_login_widget_action">Синхронизировать псевдонимы</string>
   <!-- Verification codes -->
   <string name="verification_code_not_received">Не получили код?</string>
-  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Please check in your Spam for an email called “%s“</string>
-  <string name="verification_code_suggestion_subject_new_email_address">Please confirm your email address for Proton Pass</string>
-  <string name="verification_code_suggestion_subject_new_mailbox">Please confirm your mailbox</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Пожалуйста, проверьте папку Спам на наличие электронного письма под названием “%s“</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Подтвердите свой адрес электронной почты для Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Подтвердите свой почтовый ящик</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Если вы не можете найти такое письмо, вы можете %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">запросить новый код</string>
   <string name="field_display_name_title">Отображаемое имя</string>
@@ -315,7 +315,7 @@
   <string name="attachment_add_file">Вложить файл</string>
   <string name="attachment_row_upload_failed">Загрузка не удалась</string>
   <string name="attachment_row_retry">Повторить</string>
-  <string name="options_menu_content_description">Options menu</string>
+  <string name="options_menu_content_description">Меню параметров</string>
   <!-- Items -->
   <plurals name="shared_items_count">
     <item quantity="one">%d общий элемент</item>
@@ -336,5 +336,5 @@
     <item quantity="other">%d участников</item>
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
-  <string name="show_network_qr_code">Show Network QR Code</string>
+  <string name="show_network_qr_code">Показать QR-код сети</string>
 </resources>

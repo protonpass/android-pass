@@ -30,11 +30,11 @@
   <string name="camera_permission_explanation">Ominaisuus tarvitsee kameran käyttöoikeuden.</string>
   <string name="camera_permission_open_settings">Avaa asetukset</string>
   <string name="delete_all_attachments_title">Poistetaanko kaikki liitteet?</string>
-  <string name="delete_all_attachments_subtitle">Tätä toimintoa ei voi kumota</string>
+  <string name="delete_all_attachments_subtitle">Toimintoa ei ole mahdollista kumota</string>
   <string name="delete_all_attachments_confirm">Poista kaikki</string>
   <string name="rename_attachment_dialog_title">Nimeä tiedosto uudelleen</string>
   <string name="storage_full_title">Tallennustilasi on lähes täynnä.</string>
-  <string name="storage_full_body">Päivitä lisätäksesi tallennuskapasiteettiasi.</string>
+  <string name="storage_full_body">Hanki lisää tilaa päivittämällä tilauksesi.</string>
   <string name="storage_full_upgrade">Päivitä</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s/%2$s</string>
   <string name="attachments_saved_to_location_success">Liite tallennettiin sijaintiin</string>

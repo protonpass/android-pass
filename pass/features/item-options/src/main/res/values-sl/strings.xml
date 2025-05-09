@@ -23,7 +23,7 @@
   <string name="item_options_alias_trash_dialog_button_text_disable">Disable instead</string>
   <string name="item_options_alias_trash_dialog_button_text_trash">Premakni v smeti</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">There was an error disabling the alias</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">Alias disabled</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">Vzdevek onemogočen</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">There was an error moving the alias to trash</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">Vzdevek premaknjen v smetnjak</string>
 </resources>

@@ -9,5 +9,5 @@
   <string name="no_account_found">Не найдено ни одного аккаунта</string>
   <string name="no_session_found">Не найдено ни одного сеанса</string>
   <string name="auth_with_extra_password_failed">Не удалось выполнить аутентификацию с дополнительным паролем</string>
-  <string name="auth_only_1_proton_account_failed">Only 1 free Proton account is allowed.</string>
+  <string name="auth_only_1_proton_account_failed">Разрешен только 1 бесплатный аккаунт Proton.</string>
 </resources>

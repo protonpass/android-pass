@@ -27,14 +27,14 @@
   </plurals>
   <string name="auth_unlock_app_title">Odkleni Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Vnesite glavno geslo za %s</string>
-  <string name="auth_unlock_app_extra_password_subtitle">Enter the extra password for %s</string>
+  <string name="auth_unlock_app_extra_password_subtitle">Vnesite dodatno geslo za %s</string>
   <string name="auth_unlock_app_subtitle_account_switch">Vnesite glavno geslo za:</string>
-  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Enter the extra password for:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Vnesite dodatno geslo za:</string>
   <string name="auth_master_password_label">Glavno geslo</string>
   <string name="auth_action_reveal_password">Razkrij glavno geslo</string>
   <string name="auth_action_conceal_password">Skrij glavno geslo</string>
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Namesto tega vnesite PIN</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Use fingerprint instead</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Uporabite raje prstni odtis</string>
   <string name="auth_unlock_button">Odkleni</string>
   <string name="auth_error_empty_password">Geslo ne more biti prazno.</string>
   <string name="auth_error_pin_cannot_be_empty">PIN vnos ne sme biti prazen.</string>

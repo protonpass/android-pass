@@ -1,0 +1,10 @@
+### Fixes :bug:
+
+- PIN code input improvements.
+- Autofill improvements.
+
+### Other
+
+- Make Identity SSN field hidden.
+- UI tweaks.
+- Updated translations.

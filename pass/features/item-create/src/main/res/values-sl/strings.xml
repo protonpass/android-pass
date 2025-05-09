@@ -96,7 +96,7 @@
   <string name="sl_note_info_title">What is a SimpleLogin note?</string>
   <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">In Pass, an item note is encrypted with the item encryption key and only users who have access to the item can view the note.</string>
   <string name="sl_note_info_message_part2">Not even Proton or SimpleLogin can see it.</string>
-  <string name="sl_note_info_message_part3">SimpleLogin note is stored together in the same location with alias address and while it is protected by encryption at rest, it isn\'t E2E encrypted meaning anyone who has access to SimpleLogin database can read it.</string>
+  <string name="sl_note_info_message_part3">Opomba SimpleLogin je shranjena skupaj na isti lokaciji kot naslov vzdevka, in čeprav je zaščitena s šifriranjem v mirovanju, ni šifrirana E2E, kar pomeni, da jo lahko prebere vsak, ki ima dostop do baze podatkov SimpleLogin.</string>
   <string name="sl_note_info_content_description">Show SL note information dialog</string>
   <!-- Create note -->
   <string name="note_hint">Opomba</string>
@@ -206,9 +206,9 @@
   <string name="banner_body_attachments">You can attach files to items for a better organization</string>
   <string name="open_with">Odpri z:</string>
   <string name="banner_advanced_options_title">Did you know?</string>
-  <string name="banner_advanced_options_subtitle">Tap the gear icon to customize the alias the way you want.</string>
+  <string name="banner_advanced_options_subtitle">Dotaknite se ikone zobnika, da prilagodite vzdevek, kot želite.</string>
   <string name="banner_custom_domain_title">Did you know?</string>
-  <string name="banner_custom_domain_subtitle">By adding your domain, you can create aliases like hi@my-domain.com.</string>
+  <string name="banner_custom_domain_subtitle">Če dodate svojo domeno, lahko ustvarite vzdevke, kot je npr. zdravo@moja-domena.com.</string>
   <string name="banner_custom_domain_button">Dodaj domeno</string>
   <string name="banner_mailbox_title">Did you know?</string>
   <string name="banner_mailbox_subtitle">Share aliases with others by adding their inbox as an additional mailbox.</string>
@@ -218,7 +218,7 @@
   <string name="suffix_subtitle_public_domain">Public domain</string>
   <string name="suffix_subtitle_private_domain">Vaša domena</string>
   <!-- Templates -->
-  <string name="template_item_api_credential">API Credential</string>
+  <string name="template_item_api_credential">Poverilnica API</string>
   <string name="template_item_database">Zbirka podatkov</string>
   <string name="template_item_server">Strežnik</string>
   <string name="template_item_software_license">Software License</string>
@@ -228,10 +228,10 @@
   <string name="template_item_crypto_wallet">Crypto Wallet</string>
   <string name="template_item_driver_license">Vozniško dovoljenje</string>
   <string name="template_item_medical_record">Zdravstveni karton</string>
-  <string name="template_item_membership">Membership</string>
+  <string name="template_item_membership">Članstvo</string>
   <string name="template_item_passport">Potni list</string>
   <string name="template_item_reward_program">Program nagrajevanja</string>
-  <string name="template_item_social_security_number">Social Security Number</string>
+  <string name="template_item_social_security_number">Številka socialnega zavarovanja</string>
   <!-- API Credential Fields -->
   <string name="template_api_credential_field_api_key">Ključ API</string>
   <string name="template_api_credential_field_secret">Skrivnost</string>
@@ -260,7 +260,7 @@
   <string name="template_software_license_field_note">Opomba</string>
   <!-- SSH Key Fields -->
   <string name="template_ssh_key_field_private_key">Zasebni ključ</string>
-  <string name="template_ssh_key_field_public_key">Public Key</string>
+  <string name="template_ssh_key_field_public_key">Javni ključ</string>
   <string name="template_ssh_key_field_username">Uporabniško ime</string>
   <string name="template_ssh_key_field_host">Gostitelj</string>
   <string name="template_ssh_key_field_note">Opomba</string>
@@ -268,7 +268,7 @@
   <string name="template_wifi_network_field_name">Ime (SSID)</string>
   <string name="template_wifi_network_field_note">Opomba</string>
   <!-- Bank Account Fields -->
-  <string name="template_bank_account_field_bank_name">Bank Name</string>
+  <string name="template_bank_account_field_bank_name">Ime banke</string>
   <string name="template_bank_account_field_account_number">Številka računa</string>
   <string name="template_bank_account_field_routing_number">Routing Number</string>
   <string name="template_bank_account_field_account_type">Vrsta računa</string>
@@ -294,7 +294,7 @@
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Patient Name</string>
   <string name="template_medical_record_field_record_number">Številka zapisa</string>
-  <string name="template_medical_record_field_medical_conditions">Medical Conditions</string>
+  <string name="template_medical_record_field_medical_conditions">Zdravstvena stanja</string>
   <string name="template_medical_record_field_medications">Zdravila</string>
   <string name="template_medical_record_field_doctor">Zdravnik</string>
   <string name="template_medical_record_field_hospital">Bolnišnica</string>
@@ -308,7 +308,7 @@
   <string name="template_membership_field_note">Opomba</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">Polno ime</string>
-  <string name="template_passport_field_passport_number">Passport Number</string>
+  <string name="template_passport_field_passport_number">Številka potnega lista</string>
   <string name="template_passport_field_country">Država</string>
   <string name="template_passport_field_expiry_date">Datum veljavnosti</string>
   <string name="template_passport_field_date_of_birth">Datum rojstva</string>
@@ -316,27 +316,27 @@
   <string name="template_passport_field_note">Opomba</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Program Name</string>
-  <string name="template_reward_program_field_member_id">Member ID</string>
-  <string name="template_reward_program_field_points_balance">Points Balance</string>
+  <string name="template_reward_program_field_member_id">ID člana</string>
+  <string name="template_reward_program_field_points_balance">Stanje točk</string>
   <string name="template_reward_program_field_expiry_date">Datum veljavnosti</string>
   <string name="template_reward_program_field_tier_status">Nivo/stanje</string>
   <string name="template_reward_program_field_note">Opomba</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">Polno ime</string>
-  <string name="template_social_security_number_field_ssn">Social Security Number</string>
-  <string name="template_social_security_number_field_issuing_country">Issuing Country</string>
+  <string name="template_social_security_number_field_ssn">Številka socialnega zavarovanja</string>
+  <string name="template_social_security_number_field_issuing_country">Država izdajateljica</string>
   <string name="template_social_security_number_field_note">Opomba</string>
   <string name="template_header_technology">Tehnologija</string>
   <string name="template_header_finance">Finance</string>
-  <string name="template_header_title_personal">Personal</string>
+  <string name="template_header_title_personal">Osebno</string>
   <string name="button_start_from_scratch">Start from scratch</string>
   <string name="select_template_title">Predmet po meri</string>
   <!-- Custom item screen -->
   <string name="add_custom_field_button">Dodaj polje</string>
   <string name="add_section_button">Dodaj razdelek</string>
-  <string name="add_public_key_placeholder">Add public key</string>
-  <string name="add_private_key_placeholder">Add private key</string>
-  <string name="add_ssid_name_placeholder">Add name (SSID)</string>
+  <string name="add_public_key_placeholder">Dodaj javni ključ</string>
+  <string name="add_private_key_placeholder">Dodaj zasebni ključ</string>
+  <string name="add_ssid_name_placeholder">Dodaj ime (SSID)</string>
   <string name="create_custom_item_init_error">Problem retrieving custom item details</string>
   <string name="update_custom_item_attachments_init_error">Problem retrieving custom item attachments</string>
   <string name="custom_item_link_attachments_error">Failed to link or unlink attachments to the custom item</string>
@@ -348,6 +348,6 @@
   <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Cannot create items</string>
-  <string name="cannot_create_items_dialog_message">You don\'t have any vaults with editor or admin access. Try creating one in the main app or ask your organization\'s administrator for support.</string>
+  <string name="cannot_create_items_dialog_message">Nimate nobenih trezorjev z dostopom urejevalnika ali skrbnika. Poskusite ustvariti trezor v glavni aplikaciji ali prosite skrbnika vaše organizacije za pomoč.</string>
   <string name="wifi_security_type_field_label">Vrsta varnosti</string>
 </resources>

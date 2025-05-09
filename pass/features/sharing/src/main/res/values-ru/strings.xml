@@ -25,9 +25,9 @@
   <string name="sharing_can_manage_description">Может представлять и отзывать доступ к этому хранилищу.</string>
   <plurals name="sharing_item_count">
     <item quantity="one">%d элемент</item>
-    <item quantity="few">%d items</item>
-    <item quantity="many">%d items</item>
-    <item quantity="other">%d items</item>
+    <item quantity="few">%d элемента</item>
+    <item quantity="many">%d элементов</item>
+    <item quantity="other">%d элементов</item>
   </plurals>
   <plurals name="sharing_member_count">
     <item quantity="one">%d участник</item>
@@ -68,8 +68,8 @@
   <string name="sharing_snackbar_change_permission_error">Не могу изменить разрешения</string>
   <string name="sharing_snackbar_remove_member_success">Участник удалён из хранилища</string>
   <string name="sharing_snackbar_remove_member_error">Не могу удалить из хранилища</string>
-  <string name="sharing_snackbar_fetch_member_error">There was an error fetching members</string>
-  <string name="sharing_snackbar_fetch_pending_invites_error">There was an error fetching pending invites</string>
+  <string name="sharing_snackbar_fetch_member_error">Произошла ошибка при загрузке участников</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">Произошла ошибка при загрузке ожидающих приглашений</string>
   <string name="share_summary_title">Проверить и поделиться</string>
   <string name="share_summary_share_vault">Поделиться хранилищем</string>
   <string name="share_summary_share_item">Поделиться элементом</string>
@@ -85,9 +85,9 @@
   </plurals>
   <plurals name="share_manage_vault_item_count">
     <item quantity="one">%d элемент</item>
-    <item quantity="few">%d items</item>
-    <item quantity="many">%d items</item>
-    <item quantity="other">%d items</item>
+    <item quantity="few">%d элемента</item>
+    <item quantity="many">%d элементов</item>
+    <item quantity="other">%d элементов</item>
   </plurals>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Приглашение отправлено</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Ожидание создания аккаунта</string>
@@ -135,12 +135,12 @@
   <string name="share_with_suggestions_title">Рекомендации</string>
   <string name="share_with_recents_title">Недавние</string>
   <string name="share_with_remove_email_content_description">Удалить адрес эл. почты</string>
-  <string name="share_with_user_shared_title">With other Proton Pass users</string>
+  <string name="share_with_user_shared_title">С другими пользователями Proton Pass</string>
   <string name="share_with_user_shared_description">Полезно для постоянного обмена.</string>
   <string name="share_with_manage_shared_item_title">Управлять доступом</string>
   <string name="share_with_manage_shared_item_description">Просмотреть обзор участника и прав доступа.</string>
-  <string name="share_with_secure_link_shared_title">Via a secure link</string>
-  <string name="share_with_secure_link_shared_description">For one-off sharing.</string>
+  <string name="share_with_secure_link_shared_title">Через защищенную ссылку</string>
+  <string name="share_with_secure_link_shared_description">Для одноразового использования.</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Установить уровень доступа для всех участников</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Установить уровень доступа для %s</string>
   <string name="sharing_edit_permissions_remove_user">Удалить пользователя</string>

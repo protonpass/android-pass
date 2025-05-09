@@ -25,10 +25,10 @@
   <string name="item_details_forbidden_actions_edit_upgrade">Dovoljeno vam je samo urejanje predmetov v vaših najstarejših trezorjih. Če želite urediti ta predmet, nadgradite svoj trenutni paket.</string>
   <string name="item_details_forbidden_actions_share_title">Ni mogoče deliti</string>
   <string name="item_details_forbidden_actions_share_limit">Dosegli ste omejitev skupne rabe trezorja. Če želite deliti več trezorjev, nadgradite svoj trenutni paket.</string>
-  <string name="item_details_forbidden_actions_sharing_permission">You don\'t have enough permissions to perform this action.</string>
+  <string name="item_details_forbidden_actions_sharing_permission">Nimate dovolj dovoljenj za izvedbo tega dejanja.</string>
   <string name="item_details_forbidden_actions_share_trash">Tega predmeta ne morete dati v skupno rabo, ker je v smetnjaku. Pred urejanjem ga premaknite iz smetnjaka.</string>
   <!-- Item details leave item -->
-  <string name="item_details_leave_dialog_title">Leave this Item?</string>
+  <string name="item_details_leave_dialog_title">Zapustim ta predmet?</string>
   <string name="item_details_leave_dialog_message">You will lose access to this item and its details. Do you want to continue?</string>
   <string name="item_details_leave_item_message_error">There was an error leaving the item</string>
   <string name="item_details_leave_item_message_success">Item successfully left</string>
@@ -70,7 +70,7 @@
   <string name="item_details_snackbar_message_zip_or_postal_code_copied">Poštna številka je kopirana</string>
   <string name="item_details_snackbar_message_public_key_copied">Public key copied</string>
   <string name="item_details_snackbar_message_private_key_copied">Private key copied</string>
-  <string name="item_details_snackbar_message_ssid_copied">SSID copied</string>
+  <string name="item_details_snackbar_message_ssid_copied">SSID kopiran</string>
   <string name="open_with">Odpri z:</string>
   <string name="open_attachments_error">Could not open attachment</string>
 </resources>

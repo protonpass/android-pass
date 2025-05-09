@@ -32,7 +32,7 @@
   <string name="item_monitor_exclude_message_error">Произошла ошибка при исключении элемента из мониторинга</string>
   <string name="item_monitor_include_message">Элемент успешно включен в мониторинг</string>
   <string name="item_monitor_include_message_error">Произошла ошибка при включении элемента в мониторинг</string>
-  <string name="alias_change_status_error">There was an error changing the alias status</string>
+  <string name="alias_change_status_error">Произошла ошибка при изменении состояния псевдонима</string>
   <string name="login_item_generate_totp_error">Ошибка при генерации кода 2FA</string>
   <string name="login_item_view_alias_button">Посмотреть псевдоним</string>
   <string name="login_item_monitor_widget_weak_pass_title">Ненадежный пароль</string>
@@ -130,5 +130,5 @@
     <item quantity="other">%1$s блокировок</item>
   </plurals>
   <string name="open_with">Открыть с помощью:</string>
-  <string name="open_attachments_error">Could not open attachment</string>
+  <string name="open_attachments_error">Не удалось открыть вложение</string>
 </resources>

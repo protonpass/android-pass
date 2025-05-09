@@ -26,12 +26,12 @@
   <string name="configure_extra_password_mismatch">Gesli se ne ujemata</string>
   <string name="extra_password_options_remove">Odstrani</string>
   <string name="info_extra_password_title">Dodatno geslo</string>
-  <string name="info_extra_password_body">Protect Proton Pass with an extra password.</string>
+  <string name="info_extra_password_body">Zaščitite Proton Pass z dodatnim geslom.</string>
   <string name="info_extra_password_button">Nastavite dodatno geslo</string>
-  <string name="configure_extra_password_cannot_be_blank">Password cannot be blank</string>
-  <string name="configure_extra_password_password_too_short">Extra password must have at least 8 characters</string>
+  <string name="configure_extra_password_cannot_be_blank">Geslo ne more biti prazno</string>
+  <string name="configure_extra_password_password_too_short">Dodatno geslo mora vsebovati vsaj 8 znakov</string>
   <string name="confirm_extra_password_title">Nastavite dodatno geslo</string>
-  <string name="confirm_extra_password_body">You will be logged out and will have to log in again on all of your other devices.</string>
-  <string name="confirm_extra_password_error">Could not set extra password</string>
-  <string name="confirm_extra_password_success">Extra password set</string>
+  <string name="confirm_extra_password_body">Odjavljeni boste in se boste morali znova prijaviti v vse svoje druge naprave.</string>
+  <string name="confirm_extra_password_error">Dodatnega gesla ni bilo mogoče nastaviti</string>
+  <string name="confirm_extra_password_success">Dodatno geslo nastavljeno</string>
 </resources>

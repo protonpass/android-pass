@@ -24,26 +24,26 @@
   <string name="create_contact_title">Luo yhteystieto</string>
   <string name="detail_contact_title">Yhteystiedot</string>
   <string name="email_input_error">Virheellinen sähköpostiosoite</string>
-  <string name="detail_contact_display_name" comment="sender email address">Yhteystieto luodaan jokaiselle sähköpostiosoitteelle, joka lähettää tai vastaanottaa sähköposteja osoitteelta %1$s</string>
+  <string name="detail_contact_display_name" comment="sender email address">Yhteystieto luodaan jokaiselle sähköpostiosoitteelle, joka lähettää tai vastaanottaa viestejä osoitteella %1$s</string>
   <string name="empty_alias_contacts_title">Aliasyhteystiedot</string>
   <string name="empty_alias_contacts_body">Pitääksesi henkilökohtaisen sähköpostiosoitteesi piilossa voit luoda aliasyhteystiedon, joka naamioi osoitteesi.</string>
   <string name="empty_alias_contacts_learn_more">Lue lisää</string>
-  <string name="unblock_button">Estä yhteystieto</string>
-  <string name="block_button">Salli yhteystieto</string>
+  <string name="unblock_button">Salli yhteystieto</string>
+  <string name="block_button">Estä yhteystieto</string>
   <string name="contact_created_date" comment="date of creation">Luotiin %1$s sitten</string>
-  <string name="no_activity_contact">Ei toimintaa viimeisten 14 päivän aikana.</string>
-  <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">viimeisen 14 päivän aikana.</string>
+  <string name="no_activity_contact">Ei tapahtumia viimeisten kahden viikon aikana.</string>
+  <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">viimeisten kahden viikon aikana.</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d välitetty</item>
-    <item quantity="other">%1$d välitetty</item>
+    <item quantity="one">%1$d ohjaus</item>
+    <item quantity="other">%1$d ohjausta</item>
   </plurals>
   <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d lähetetty</item>
-    <item quantity="other">%1$d lähetetty</item>
+    <item quantity="one">%1$d lähetys</item>
+    <item quantity="other">%1$d lähetystä</item>
   </plurals>
   <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d estetty</item>
-    <item quantity="other">%1$d estetty</item>
+    <item quantity="one">%1$d esto</item>
+    <item quantity="other">%1$d estoa</item>
   </plurals>
   <string name="blocked_addresses_subtitle">Estetyt osoitteet</string>
   <string name="forwarding_addresses_subtitle">Välitysosoitteet</string>
@@ -62,7 +62,7 @@
   <string name="alias_contacts_bottomsheet_title">Aliasyhteystiedot</string>
   <string name="alias_contacts_bottomsheet_subtitle">Pitääksesi henkilökohtaisen sähköpostiosoitteesi piilossa voit luoda aliasyhteystiedon, joka naamioi osoitteesi.</string>
   <string name="alias_contacts_explanation">Näin se toimii:</string>
-  <string name="alias_contacts_bottomsheet_section_1">Syötä osoite, johon haluat välittää viestit.</string>
+  <string name="alias_contacts_bottomsheet_section_1">Syötä osoite, johon haluat ohjata viestit.</string>
   <string name="alias_contacts_bottomsheet_section_2">Proton Pass luo välitysosoitteen (jota kutsutaan myös käänteisaliakseksi).</string>
   <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">Lähetä viesti tähän osoitteeseen, niin se näyttää saapuneen osoitteesta</string>
 </resources>

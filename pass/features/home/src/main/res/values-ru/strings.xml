@@ -17,9 +17,9 @@
   <string name="home_empty_vault_custom_item_subtitle">Начните с создания первого пользовательского элемента.</string>
   <string name="home_empty_vault_cc_title">Кредитная карта не найдена</string>
   <string name="home_empty_vault_cc_subtitle">Начните с создания своего первого элемента кредитной карты.</string>
-  <string name="home_empty_shared_items_title">No shared items found</string>
-  <string name="home_empty_shared_items_with_me_subtitle">No items have been shared with you.</string>
-  <string name="home_empty_shared_items_by_me_subtitle">No items have been shared by you.</string>
+  <string name="home_empty_shared_items_title">Общие элементы не найдены</string>
+  <string name="home_empty_shared_items_with_me_subtitle">Никто не предоставлял вам общий доступ к элементам.</string>
+  <string name="home_empty_shared_items_by_me_subtitle">Вы никому не предоставляли общий доступ к элементам</string>
   <string name="home_empty_no_vaults_title">У вас нет хранилища</string>
   <string name="home_empty_no_vaults_subtitle">Пожалуйста, свяжитесь со службой поддержки вашей организации.</string>
   <string name="home_empty_read_only_vault_title">Это хранилище пусто</string>
@@ -88,9 +88,9 @@
   <!-- Vault drawer -->
   <plurals name="vault_drawer_vaults_item_count">
     <item quantity="one">%d элемент</item>
-    <item quantity="few">%d items</item>
-    <item quantity="many">%d items</item>
-    <item quantity="other">%d items</item>
+    <item quantity="few">%d элемента</item>
+    <item quantity="many">%d элементов</item>
+    <item quantity="other">%d элементов</item>
   </plurals>
   <string name="vault_drawer_create_vault">Создать хранилище</string>
   <string name="vault_drawer_item_trash">Корзина</string>
@@ -105,8 +105,8 @@
   <string name="search_topbar_placeholder_vault">Поиск в %s…</string>
   <string name="search_topbar_placeholder_trash">Поиск в Корзине…</string>
   <string name="search_topbar_placeholder_pinning">Поиск в закрепленных…</string>
-  <string name="search_topbar_placeholder_shared_by_me">Search in Shared by me…</string>
-  <string name="search_topbar_placeholder_shared_with_me">Search in Shared with me…</string>
+  <string name="search_topbar_placeholder_shared_by_me">Искать в Я поделился</string>
+  <string name="search_topbar_placeholder_shared_with_me">Искать в Поделились со мной</string>
   <string name="item_type_filter_list_icon_content_description">Значок типа элемента</string>
   <string name="item_type_filter_all">Все</string>
   <string name="item_type_filter_login">Войти</string>
@@ -114,7 +114,7 @@
   <string name="item_type_filter_note">Заметка</string>
   <string name="item_type_filter_credit_card">Карта</string>
   <string name="item_type_filter_identity">Личные данные</string>
-  <string name="item_type_filter_custom_item">Custom</string>
+  <string name="item_type_filter_custom_item">Пользовательский</string>
   <string name="item_type_filter_login_totp">Имя пользователей с TOTP</string>
   <string name="item_type_filter_items_shared_with_me">В общем доступе со мной</string>
   <string name="item_type_filter_items_shared_by_me">Я поделился</string>
@@ -190,12 +190,12 @@
   <string name="home_snackbar_items_unpinned_success">Элементы откреплены</string>
   <string name="home_snackbar_items_unpinned_partial_success">Ошибка при откреплении некоторых элементов</string>
   <string name="home_snackbar_items_unpinned_error">Ошибка при откреплении элементов</string>
-  <string name="home_snackbar_items_alias_enabled_success">Alias enabled successfully</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
-  <string name="home_snackbar_items_alias_enabled_error">Error enabling aliases</string>
-  <string name="home_snackbar_items_alias_disabled_success">Alias disabled successfully</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
-  <string name="home_snackbar_items_alias_disabled_error">Error disabling aliases</string>
+  <string name="home_snackbar_items_alias_enabled_success">Псевдоним успешно включен</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Ошибка при включении некоторых псевдонимов</string>
+  <string name="home_snackbar_items_alias_enabled_error">Ошибка при включении псевдонимов</string>
+  <string name="home_snackbar_items_alias_disabled_success">Псевдоним успешно отключен</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Ошибка при отключении некоторых псевдонимов</string>
+  <string name="home_snackbar_items_alias_disabled_error">Ошибка при отключении псевдонимов</string>
   <string name="bulk_action_unpin">Открепить</string>
   <string name="bulk_action_pin">Закрепить</string>
   <string name="bulk_action_enable_alias">Включить псевдоним</string>

@@ -43,7 +43,7 @@
   <string name="secure_links_overview_button_view_all_links">View all your secure links</string>
   <!--List screen-->
   <string name="secure_links_list_title">Varne povezave</string>
-  <string name="secure_links_list_empty_title">No secure links</string>
+  <string name="secure_links_list_empty_title">Ni varnih povezav</string>
   <string name="secure_links_list_empty_subtitle">You can start creating secure links from an item details sharing options</string>
   <string name="secure_links_list_expiration_description">Poteče čez %s</string>
   <string name="secure_links_list_expired_description">Poteklo</string>
@@ -60,10 +60,10 @@
   <string name="secure_links_shared_action_share_link">Deli povezavo</string>
   <string name="secure_links_shared_action_delete_link">Odstrani povezavo</string>
   <string name="secure_links_shared_action_delete_link_inactive">Remove inactive link</string>
-  <string name="secure_links_shared_action_delete_links_inactive">Remove all inactive links</string>
+  <string name="secure_links_shared_action_delete_links_inactive">Odstrani vse nedejavne povezave</string>
   <string name="secure_links_shared_snackbar_message_link_copied">Varna povezava je bila kopirana</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Secure link deletion was canceled</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_error">There was an error deleting secure link</string>
   <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Inactive secure links deletion was canceled</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">There was an error deleting inactive secure links</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">Pri brisanju neaktivnih varnih povezav je prišlo do napake</string>
 </resources>

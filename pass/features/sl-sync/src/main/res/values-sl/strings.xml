@@ -18,10 +18,10 @@
   -->
 <resources>
   <!-- Management screen -->
-  <string name="simple_login_sync_management_title">Alias management</string>
+  <string name="simple_login_sync_management_title">Upravljanje vzdevkov</string>
   <string name="simple_login_sync_management_domain_label">Domena</string>
   <string name="simple_login_sync_management_domain_title">Privzeta domena za vzdevke</string>
-  <string name="simple_login_sync_management_domain_option_blank">Not selected</string>
+  <string name="simple_login_sync_management_domain_option_blank">Ni izbrano</string>
   <string name="simple_login_sync_management_mailboxes_label">Poštni predali</string>
   <string name="simple_login_sync_management_mailboxes_description">Mailbox is where emails sent to an alias are forwarded to. It\'s your usual mailbox, e.g. Gmail, Outlook, Proton Mail, etc.</string>
   <string name="simple_login_sync_management_mailbox_default">Privzeto</string>
@@ -55,8 +55,8 @@
   <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Verification code successfully sent</string>
   <!-- Mailbox delete screen -->
   <string name="simple_login_sync_mailbox_delete_title">Izbriši poštni predal</string>
-  <string name="simple_login_sync_mailbox_delete_subtitle">All aliases using the mailbox %s will be also deleted. To keep receiving emails transfer these aliases to a different mailbox:</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Transfer aliases</string>
+  <string name="simple_login_sync_mailbox_delete_subtitle">Vsi vzdevki, ki uporabljajo poštni predal %s, bodo prav tako izbrisani. Če želite še naprej prejemati e-pošto, prenesite te vzdevke v drug poštni predal:</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Prenesi vzdevke</string>
   <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">To mailbox</string>
   <string name="simple_login_sync_mailbox_delete_action_delete">Izbriši poštni predal</string>
   <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Transfer and delete mailbox</string>
@@ -67,7 +67,7 @@
   <!-- Domain select screen -->
   <string name="simple_login_sync_domain_select_title">Privzeta domena</string>
   <string name="simple_login_sync_domain_select_title_none">brez</string>
-  <string name="simple_login_sync_domain_select_description_none">No domain</string>
+  <string name="simple_login_sync_domain_select_description_none">Brez domene</string>
   <string name="simple_login_sync_domain_select_description_custom">Vaša domena</string>
   <string name="simple_login_sync_domain_select_description_free">Public domain</string>
   <string name="simple_login_sync_domain_select_description_premium">Premium domena</string>

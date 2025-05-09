@@ -32,9 +32,9 @@
   <string name="upsell_paid_feature_authenticator_essential">Требуется двухфакторная идентификация для организации</string>
   <string name="upsell_paid_feature_sso_essential">Интеграция с SSO (скоро появится)</string>
   <string name="upsell_paid_feature_advance_alias_management_title">Управляйте псевдонимами</string>
-  <string name="upsell_paid_feature_advance_alias_management_subtitle">Advanced alias management is available with a paid plan. Upgrade for immediate access.</string>
-  <string name="upsell_paid_feature_item_sharing_title">Quickly share an item</string>
-  <string name="upsell_paid_feature_item_sharing_subtitle">Upgrade today so you can share an item with any Pass user. And enjoy other premium features:</string>
+  <string name="upsell_paid_feature_advance_alias_management_subtitle">Расширенное управление псевдонимами доступно с платным тарифом. Чтобы получить немедленный доступ, улучшите тариф.</string>
+  <string name="upsell_paid_feature_item_sharing_title">Быстро поделиться элементом</string>
+  <string name="upsell_paid_feature_item_sharing_subtitle">Улучшите тариф сегодня, чтобы поделиться элементом с любым пользователем Pass. А также получите другие платные функции:</string>
   <string name="upsell_paid_feature_file_attachments_title">Вложенные файлы</string>
   <string name="upsell_button_upgrade">Получить Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Получить Pass Business</string>

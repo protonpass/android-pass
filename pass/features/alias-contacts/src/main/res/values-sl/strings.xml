@@ -25,8 +25,8 @@
   <string name="detail_contact_title">Stiki</string>
   <string name="email_input_error">Neveljaven e-poštni naslov</string>
   <string name="detail_contact_display_name" comment="sender email address">A contact is created for every email address that sends emails to or receives emails from %1$s</string>
-  <string name="empty_alias_contacts_title">Alias contacts</string>
-  <string name="empty_alias_contacts_body">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
+  <string name="empty_alias_contacts_title">Stiki z vzdevkom</string>
+  <string name="empty_alias_contacts_body">Če želite skriti svoj osebni e-poštni naslov, lahko ustvarite kontakt z vzdevkom, ki prikrije vaš naslov.</string>
   <string name="empty_alias_contacts_learn_more">Izvedi več</string>
   <string name="unblock_button">Unblock contact</string>
   <string name="block_button">Blokiraj stik</string>
@@ -53,7 +53,7 @@
   </plurals>
   <string name="blocked_addresses_subtitle">Blocked addresses</string>
   <string name="forwarding_addresses_subtitle">Forwarding addresses</string>
-  <string name="snackbar_contact_block_success">Contact blocked</string>
+  <string name="snackbar_contact_block_success">Stik blokiran</string>
   <string name="snackbar_contact_block_error">Could not block contact</string>
   <string name="snackbar_contact_unblock_success">Contact unblocked</string>
   <string name="snackbar_contact_unblock_error">Could not unblock contact</string>
@@ -66,7 +66,7 @@
   <string name="contact_option_unblock_contact">Unblock contact</string>
   <string name="contact_option_delete">Izbriši</string>
   <string name="alias_contacts_bottomsheet_title">Alias Contacts</string>
-  <string name="alias_contacts_bottomsheet_subtitle">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
+  <string name="alias_contacts_bottomsheet_subtitle">Če želite skriti svoj osebni e-poštni naslov, lahko ustvarite kontakt z vzdevkom, ki prikrije vaš naslov.</string>
   <string name="alias_contacts_explanation">Here’s how it works:</string>
   <string name="alias_contacts_bottomsheet_section_1">Enter the address you want to email.</string>
   <string name="alias_contacts_bottomsheet_section_2">Proton Pass will generate a forwarding address (also referred to as reverse alias).</string>

@@ -7,7 +7,7 @@
   <string name="settings_authentication_section_title">Tunnistautuminen</string>
   <string name="settings_authentication_preference_title">Sormenjälkilukitus</string>
   <string name="settings_authentication_preference_description_enabled">Avaa sovellus nopeasti ja turvallisesti sormenjäljellä.</string>
-  <string name="settings_authentication_preference_description_no_fingerprint">Et voi avata sovellusta sormenjäljellä, koska laitteelle ei ole tallennettu sormenjälkiä.</string>
+  <string name="settings_authentication_preference_description_no_fingerprint">Et voi vaatia sormenjälkeäsi sovelluksen avaamiseksi, sillä laitteelle ei ole tallennettu sormenjälkiä.</string>
   <string name="settings_appearance_preference_title">Teema</string>
   <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">Seuraa järjestelmää</string>
   <string name="settings_appearance_preference_subtitle_light">Vaalea tila</string>
@@ -25,7 +25,7 @@
   <string name="settings_use_favicons_preference_title">Käytä sivustokuvakkeita</string>
   <string name="settings_use_favicons_preference_subtitle">Valitse näytetäänkö kohteille verkkosivustojen kuvakkeet.</string>
   <string name="settings_allow_screenshots_preference_title">Salli kuvakaappaukset</string>
-  <string name="settings_allow_screenshots_preference_subtitle">Mahdollistaa kuvankaappauksen sovelluksesta.</string>
+  <string name="settings_allow_screenshots_preference_subtitle">Mahdollistaa kuvakaappauksen sovelluksesta.</string>
   <string name="settings_clear_icon_cache_success">Kuvakevälimuisti tyhjennettiin</string>
   <string name="settings_clear_icon_cache_error">Kuvakevälimuistia ei voitu tyhjentää</string>
   <string name="settings_share_telemetry">Jaa anonyymejä käyttötietoja</string>
@@ -43,5 +43,5 @@
   <string name="clipboard_option_clear_clipboard_after_60_seconds">Minuutin kuluttua</string>
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Kolmen minuutin kuluttua</string>
   <string name="settings_use_digital_asset_link_preference_title">Ota Digital Asset Links käyttöön</string>
-  <string name="settings_use_digital_asset_link_preference_subtitle">Establishes website ownership verification between an Android app and a website.</string>
+  <string name="settings_use_digital_asset_link_preference_subtitle">Luo verkkosivuston omistajuuden varmennuksen Android-sovelluksen ja verkkosivuston välille.</string>
 </resources>

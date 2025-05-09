@@ -10,7 +10,7 @@
   <string name="delete_alias_confirm">Poista se, en koskaan tarvitse sitä</string>
   <string name="delete_alias_title">Poista %s</string>
   <string name="delete_alias_enabled_subtitle">"Huomaa, että poistettua aliasta ei voi palauttaa. Haluatko sen sijaan poistaa aliaksen käytöstä? "</string>
-  <string name="delete_alias_disabled_subtitle">Huomaa, että poistettuja aliaksia ei voi palauttaa. Alias on jo poistettu käytöstä, eikä se välitä sähköposteja postilaatikkoosi.</string>
+  <string name="delete_alias_disabled_subtitle">Huomioi, että poistettuja aliaksia ei ole mahdollista palauttaa. Alias on jo poistettu käytöstä, eikä se ohjaa viestejä postilaatikkoosi.</string>
   <plurals name="bulk_delete_alias_title">
     <item quantity="one">Olet poistamassa %d aliaksen pysyvästi</item>
     <item quantity="other">Olet poistamassa %d aliasta pysyvästi</item>

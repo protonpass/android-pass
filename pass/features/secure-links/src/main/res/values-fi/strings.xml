@@ -46,8 +46,8 @@
   <string name="secure_links_list_expiration_description">Erääntymiseen: %s</string>
   <string name="secure_links_list_expired_description">Erääntyneet</string>
   <plurals name="secure_links_list_viewed_times_description">
-    <item quantity="one">%d näyttö</item>
-    <item quantity="other">%d näyttöä</item>
+    <item quantity="one">%d avaus</item>
+    <item quantity="other">%d avausta</item>
   </plurals>
   <string name="secure_links_list_snackbar_message_links_fetch_error">Virhe noudettaessa suojattuja linkkejä</string>
   <string name="secure_links_list_header_title_inactive">Käytöstä poistuneet linkit</string>

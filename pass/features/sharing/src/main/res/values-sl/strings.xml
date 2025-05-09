@@ -52,7 +52,7 @@
   <string name="sharing_item_invitation_title">Shared item invitation</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
   <string name="sharing_item_invitation_accept">Accept and view the item</string>
-  <string name="sharing_invite_more">Invite more…</string>
+  <string name="sharing_invite_more">Povabite več …</string>
   <string name="sharing_snackbar_invite_accepted">Povabilo sprejeto</string>
   <string name="sharing_snackbar_invite_accept_error">Napaka pri sprejemanju povabila</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Povabila ni bilo mogoče sprejeti, ker ste dosegli omejitev trezorja</string>
@@ -62,7 +62,7 @@
   <string name="sharing_snackbar_invite_sent_error">Povabila ni bilo mogoče poslati</string>
   <string name="sharing_snackbar_invite_new_users_error">Cannot send invites to new users</string>
   <string name="sharing_snackbar_invite_free_user_error">Item invites are only allowed to be sent to paid users</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">Address has already been invited</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">Naslov je že bil povabljen</string>
   <string name="sharing_snackbar_get_vault_members_error">Ni bilo mogoče pridobiti članov trezorja</string>
   <string name="sharing_snackbar_change_permission_success">Spremenjena dovoljenja</string>
   <string name="sharing_snackbar_change_permission_error">Dovoljenj ni bilo mogoče spremeniti</string>

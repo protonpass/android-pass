@@ -304,7 +304,7 @@
   <string name="template_membership_field_membership_id">Medlem-ID</string>
   <string name="template_membership_field_member_name">Medlemsnavn</string>
   <string name="template_membership_field_expiry_date">Udløbsdato</string>
-  <string name="template_membership_field_tier_level">Tier/Level</string>
+  <string name="template_membership_field_tier_level">Niveau/Lag</string>
   <string name="template_membership_field_note">Note</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">Fulde navn</string>
@@ -319,7 +319,7 @@
   <string name="template_reward_program_field_member_id">Medlems-ID</string>
   <string name="template_reward_program_field_points_balance">Pointsaldo</string>
   <string name="template_reward_program_field_expiry_date">Udløbsdato</string>
-  <string name="template_reward_program_field_tier_status">Tier/Status</string>
+  <string name="template_reward_program_field_tier_status">Niveau/Status</string>
   <string name="template_reward_program_field_note">Note</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">Fulde navn</string>
@@ -336,7 +336,7 @@
   <string name="add_section_button">Tilføj sektion</string>
   <string name="add_public_key_placeholder">Tilføj offentlig nøgle</string>
   <string name="add_private_key_placeholder">Tilføj privat nøgle</string>
-  <string name="add_ssid_name_placeholder">Add name (SSID)</string>
+  <string name="add_ssid_name_placeholder">Tilføj navn (SSID)</string>
   <string name="create_custom_item_init_error">Problem med at hente brugerdefinerede elementdetaljer</string>
   <string name="update_custom_item_attachments_init_error">Problem med at hente vedhæftninger for brugerdefinerede element</string>
   <string name="custom_item_link_attachments_error">Kunne ikke linke eller fjerne link til vedhæftede filer for brugerdefineret element</string>

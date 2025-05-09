@@ -22,7 +22,7 @@
   <string name="add_attachment_choose_a_file">Izberite datoteko</string>
   <string name="attachment_options_rename">Preimenuj</string>
   <string name="attachment_options_delete">Izbriši</string>
-  <string name="attachment_options_download">Download</string>
+  <string name="attachment_options_download">Naloži</string>
   <string name="attachment_options_share">Deli</string>
   <string name="file_picker_open_error">Could not open file picker</string>
   <string name="media_picker_open_error">Could not open media picker</string>

@@ -95,7 +95,7 @@
   <string name="search_topbar_icon_content_description">Hakukuvake</string>
   <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
-    <item quantity="one">Yksi kohde</item>
+    <item quantity="one">1 kohde</item>
     <item quantity="other">%d kohdetta</item>
   </plurals>
   <!-- Confirm close dialog -->
@@ -289,7 +289,7 @@
   <string name="attachment_title">Liitteet</string>
   <string name="attachment_no_files">Tallenna tiedostoja laitteeltasi</string>
   <string name="attachment_add_file">Liitä tiedosto</string>
-  <string name="attachment_row_upload_failed">Lähetys epäonnistui</string>
+  <string name="attachment_row_upload_failed">Tallennus epäonnistui</string>
   <string name="attachment_row_retry">Yritä uudelleen</string>
   <string name="options_menu_content_description">Asetusvalikko</string>
   <!-- Items -->

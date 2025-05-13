@@ -92,6 +92,14 @@ internal fun FilterBottomSheetContents(
             onClick = { onSortingTypeSelected(SearchFilterType.CreditCard) }
         ).also(::add)
 
+        filterRow(
+            titleResId = R.string.item_type_filter_identity,
+            startIconResId = CoreR.drawable.ic_proton_card_identity,
+            itemCount = summary.identities,
+            isSelected = filterType == SearchFilterType.Identity,
+            onClick = { onSortingTypeSelected(SearchFilterType.Identity) }
+        ).also(::add)
+
         if (isCustomItemEnabled) {
             filterRow(
                 titleResId = R.string.item_type_filter_custom_item,

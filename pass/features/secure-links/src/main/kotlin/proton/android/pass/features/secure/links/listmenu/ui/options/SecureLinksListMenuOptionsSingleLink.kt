@@ -59,8 +59,8 @@ internal fun SecureLinksListMenuOptionsSingleLink(
     }
 }
 
-@[Preview Composable Suppress("FunctionMaxLength")]
-internal fun SecureLinksListMenuOptionsSingleLinkPreview(
+@[Preview Composable]
+internal fun SecureLinksOptionsSingleLinkPreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
     val (isDark, isLinkActive) = input

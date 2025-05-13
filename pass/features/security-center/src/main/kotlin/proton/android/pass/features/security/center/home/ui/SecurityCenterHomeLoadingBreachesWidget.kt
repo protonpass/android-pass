@@ -54,8 +54,8 @@ internal fun SecurityCenterHomeLoadingBreachesWidget(modifier: Modifier = Modifi
     }
 }
 
-@[Preview Composable Suppress("FunctionMaxLength")]
-fun SecurityCenterHomeLoadingBreachesWidgetPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+@[Preview Composable]
+internal fun SecCenHomeLoadBreachesWidgetPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             SecurityCenterHomeLoadingBreachesWidget()

@@ -201,7 +201,7 @@ private fun PassItemDetailsMoreInfoText(
 }
 
 @[Preview Composable]
-internal fun PassItemDetailsMoreInfoSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun PassItemDetailsMoreInfoPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             PassItemDetailsMoreInfoSection(

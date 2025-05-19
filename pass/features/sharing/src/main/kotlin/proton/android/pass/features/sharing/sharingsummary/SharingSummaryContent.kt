@@ -157,7 +157,8 @@ internal fun SharingSummaryContent(
             items(items = state.addresses, key = { it.address }) { address ->
                 AddressRowSection(
                     modifier = Modifier.padding(vertical = Spacing.small),
-                    address = address
+                    address = address,
+                    isRenameAdminToManagerEnabled = state.isRenameAdminToManagerEnabled
                 )
             }
 

@@ -67,6 +67,8 @@ internal sealed class SharingSummaryState {
 
     protected abstract val isLoadingState: IsLoadingState
 
+    internal abstract val isRenameAdminToManagerEnabled: Boolean
+
     internal val addresses: ImmutableList<AddressPermissionUiState>
         get() = addressPermissions
             .map(AddressPermission::toUiState)
@@ -85,12 +87,14 @@ internal sealed class SharingSummaryState {
 
         override val shareType: ShareType = ShareType.Vault
 
+        override val isRenameAdminToManagerEnabled: Boolean = false
     }
 
     data class ShareItem(
         override val event: SharingSummaryEvent,
         override val addressPermissions: List<AddressPermission>,
         override val isLoadingState: IsLoadingState,
+        override val isRenameAdminToManagerEnabled: Boolean,
         private val itemUiModel: ItemUiModel,
         private val useFaviconsPreference: UseFaviconsPreference
     ) : SharingSummaryState() {
@@ -126,6 +130,7 @@ internal sealed class SharingSummaryState {
         override val event: SharingSummaryEvent,
         override val addressPermissions: List<AddressPermission>,
         override val isLoadingState: IsLoadingState,
+        override val isRenameAdminToManagerEnabled: Boolean,
         private val vaultWithItemCount: VaultWithItemCount
     ) : SharingSummaryState() {
 

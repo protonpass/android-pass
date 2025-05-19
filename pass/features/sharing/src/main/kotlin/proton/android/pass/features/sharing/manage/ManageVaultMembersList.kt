@@ -34,8 +34,8 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.data.api.usecases.VaultMember
-import proton.android.pass.features.sharing.R
 import proton.android.pass.domain.VaultWithItemCount
+import proton.android.pass.features.sharing.R
 
 @Composable
 fun ManageVaultMembersList(
@@ -57,6 +57,7 @@ fun ManageVaultMembersList(
                     repeat(2) {
                         ManageVaultMemberRow(
                             member = VaultMemberContent.Loading,
+                            isRenameAdminToManagerEnabled = false,
                             canShowActions = false
                         )
                         PassDivider()
@@ -102,9 +103,13 @@ private fun ManageVaultMembersList(
                     }
 
                     ManageVaultMemberRow(
-                        member = VaultMemberContent.Member(member = invite, isLoading = isLoading),
+                        member = VaultMemberContent.Member(
+                            member = invite,
+                            isLoading = isLoading
+                        ),
                         canShowActions = content.canEdit,
                         onOptionsClick = { onMemberOptionsClick(invite) },
+                        isRenameAdminToManagerEnabled = content.isRenameAdminToManagerEnabled,
                         onConfirmInviteClick = onConfirmInviteClick
                     )
                     PassDivider()
@@ -121,8 +126,11 @@ private fun ManageVaultMembersList(
         Column(modifier = Modifier.roundedContainerNorm()) {
             content.vaultMembers.forEach { member ->
                 ManageVaultMemberRow(
-                    member = VaultMemberContent.Member(member),
+                    member = VaultMemberContent.Member(
+                        member = member
+                    ),
                     canShowActions = content.canEdit,
+                    isRenameAdminToManagerEnabled = content.isRenameAdminToManagerEnabled,
                     onOptionsClick = { onMemberOptionsClick(member) }
                 )
                 PassDivider()

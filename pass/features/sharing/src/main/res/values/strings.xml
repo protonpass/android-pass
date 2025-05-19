@@ -117,6 +117,7 @@
     <string name="share_role_viewer">Viewer</string>
     <string name="share_role_editor">Editor</string>
     <string name="share_role_admin">Admin</string>
+    <string name="share_role_manager">Manager</string>
     <string name="share_role_owner">Owner</string>
 
     <string name="sharing_bottomsheet_transfer_ownership">Transfer ownership</string>

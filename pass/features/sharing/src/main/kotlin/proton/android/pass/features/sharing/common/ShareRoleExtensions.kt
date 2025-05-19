@@ -24,8 +24,12 @@ import proton.android.pass.domain.ShareRole
 import proton.android.pass.features.sharing.R
 
 @Composable
-fun ShareRole.toShortSummary(): String = when (this) {
-    ShareRole.Admin -> stringResource(R.string.share_role_admin)
+fun ShareRole.toShortSummary(isRenameActive: Boolean): String = when (this) {
+    ShareRole.Admin -> if (isRenameActive) {
+        stringResource(R.string.share_role_manager)
+    } else {
+        stringResource(R.string.share_role_admin)
+    }
     is ShareRole.Custom -> ""
     ShareRole.Read -> stringResource(R.string.share_role_viewer)
     ShareRole.Write -> stringResource(R.string.share_role_editor)

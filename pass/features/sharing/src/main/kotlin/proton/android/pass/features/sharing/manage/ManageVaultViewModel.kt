@@ -61,6 +61,8 @@ import proton.android.pass.features.sharing.SharingSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -69,6 +71,7 @@ class ManageVaultViewModel @Inject constructor(
     observeVaultById: ObserveVaultWithItemCountById,
     getUserPlan: GetUserPlan,
     savedStateHandleProvider: SavedStateHandleProvider,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val canShareShare: CanShareShare,
     private val confirmNewUserInvite: ConfirmNewUserInvite
@@ -119,14 +122,16 @@ class ManageVaultViewModel @Inject constructor(
         canEditFlow,
         eventFlow,
         invitesBeingConfirmedFlow.distinctUntilChanged(),
-        getUserPlan()
+        getUserPlan(),
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.RENAME_ADMIN_TO_MANAGER)
     ) { vaultMembers,
         vault,
         showShareButton,
         canEdit,
         event,
         invitesBeingConfirmed,
-        userPlan ->
+        userPlan,
+        isRenameAdminToManagerEnabled ->
         val content = when (vaultMembers) {
             is LoadingResult.Error -> ManageVaultUiContent.Loading
             LoadingResult.Loading -> ManageVaultUiContent.Loading
@@ -137,7 +142,8 @@ class ManageVaultViewModel @Inject constructor(
                     vaultMembers = partitioned.members,
                     invites = partitioned.invites,
                     loadingInvites = invitesBeingConfirmed.toImmutableSet(),
-                    canEdit = canEdit
+                    canEdit = canEdit,
+                    isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled
                 )
             }
         }

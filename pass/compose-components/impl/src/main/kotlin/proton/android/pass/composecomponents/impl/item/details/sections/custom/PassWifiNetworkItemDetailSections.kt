@@ -41,12 +41,14 @@ import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Totp
+import proton.android.pass.domain.VaultId
 
 @Composable
 internal fun PassWifiNetworkItemDetailSections(
     modifier: Modifier = Modifier,
     itemId: ItemId,
     shareId: ShareId,
+    vaultId: VaultId,
     contents: ItemContents.WifiNetwork,
     customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, Totp>,
     svgQR: Option<String>,
@@ -118,7 +120,8 @@ internal fun PassWifiNetworkItemDetailSections(
 
         PassItemDetailsMoreInfoSection(
             itemId = itemId,
-            shareId = shareId
+            shareId = shareId,
+            vaultId = vaultId
         )
     }
 }

@@ -160,7 +160,8 @@ fun AliasDetailContent(
 
         PassItemDetailsMoreInfoSection(
             itemId = itemUiModel.id,
-            shareId = itemUiModel.shareId
+            shareId = itemUiModel.shareId,
+            vaultId = share.vaultId
         )
     }
 }

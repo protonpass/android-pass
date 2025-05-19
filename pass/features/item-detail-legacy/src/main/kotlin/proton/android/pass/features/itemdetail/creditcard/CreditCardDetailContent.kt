@@ -102,7 +102,8 @@ internal fun CreditCardDetailContent(
 
         PassItemDetailsMoreInfoSection(
             itemId = contents.model.id,
-            shareId = contents.model.shareId
+            shareId = contents.model.shareId,
+            vaultId = share.vaultId
         )
     }
 }

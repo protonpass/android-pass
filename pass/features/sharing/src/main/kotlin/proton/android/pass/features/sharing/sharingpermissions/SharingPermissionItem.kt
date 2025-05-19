@@ -44,6 +44,7 @@ import proton.android.pass.features.sharing.extensions.toStringResource
 internal fun SharingPermissionItem(
     modifier: Modifier = Modifier,
     address: AddressPermissionUiState,
+    isRenameAdminToManagerEnabled: Boolean,
     onPermissionChangeClick: () -> Unit
 ) {
     Row(
@@ -67,7 +68,7 @@ internal fun SharingPermissionItem(
             )
 
             Text.Body2Regular(
-                text = stringResource(address.permission.toStringResource()),
+                text = stringResource(address.permission.toStringResource(isRenameAdminToManagerEnabled)),
                 color = PassTheme.colors.textWeak
             )
         }

@@ -54,6 +54,8 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -61,6 +63,7 @@ class MemberOptionsViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val removeShareMember: RemoveShareMember,
     private val updateShareMemberRole: UpdateShareMemberRole,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     savedState: SavedStateHandleProvider,
     observeVaults: ObserveVaults
 ) : ViewModel() {
@@ -95,8 +98,9 @@ class MemberOptionsViewModel @Inject constructor(
         getVaultFlow,
         eventFlow,
         isLoadingFlow,
-        loadingOptionFlow
-    ) { vaultInfo, event, isLoading, loadingOption ->
+        loadingOptionFlow,
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.RENAME_ADMIN_TO_MANAGER)
+    ) { vaultInfo, event, isLoading, loadingOption, isRenameAdminToManagerEnabled ->
         val memberPermissions = shareRole.toPermissions()
 
         when (vaultInfo) {
@@ -106,7 +110,8 @@ class MemberOptionsViewModel @Inject constructor(
                 transferOwnership = TransferOwnershipState.Hide,
                 event = event,
                 isLoading = isLoading,
-                loadingOption = loadingOption
+                loadingOption = loadingOption,
+                isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled
             )
 
             is LoadingResult.Success -> {
@@ -120,7 +125,8 @@ class MemberOptionsViewModel @Inject constructor(
                     transferOwnership = showTransferOwnership,
                     event = event,
                     isLoading = isLoading,
-                    loadingOption = loadingOption
+                    loadingOption = loadingOption,
+                    isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled
                 )
             }
         }

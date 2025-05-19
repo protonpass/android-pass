@@ -54,7 +54,8 @@ fun MemberOptionsContent(
         setAdminPermission(
             enabled = enabled,
             loading = state.loadingOption == LoadingOption.Admin,
-            checked = state.memberRole == ShareRole.Admin
+            checked = state.memberRole == ShareRole.Admin,
+            isRenameAdminToManagerEnabled = state.isRenameAdminToManagerEnabled
         ) {
             onEvent(MemberOptionsUiEvent.SetPermission(MemberPermissionLevel.Admin))
         },
@@ -107,12 +108,17 @@ fun MemberOptionsContent(
 
 @Composable
 private fun setAdminPermission(
+    isRenameAdminToManagerEnabled: Boolean,
     enabled: Boolean,
     checked: Boolean,
     loading: Boolean,
     onClick: () -> Unit
 ): BottomSheetItem = permissionRow(
-    title = R.string.sharing_can_manage,
+    title = if (isRenameAdminToManagerEnabled) {
+        R.string.sharing_can_manage_V2
+    } else {
+        R.string.sharing_can_manage
+    },
     subtitle = R.string.sharing_can_manage_description,
     icon = CoreR.drawable.ic_proton_key,
     enabled = enabled,
@@ -306,7 +312,8 @@ fun MemberOptionsContentPreview(
                     loadingOption = input.second.loadingOption,
                     transferOwnership = input.second.showTransferOwnership,
                     isLoading = input.second.isLoading,
-                    event = MemberOptionsEvent.Unknown
+                    event = MemberOptionsEvent.Unknown,
+                    isRenameAdminToManagerEnabled = true
                 ),
                 onEvent = {}
             )

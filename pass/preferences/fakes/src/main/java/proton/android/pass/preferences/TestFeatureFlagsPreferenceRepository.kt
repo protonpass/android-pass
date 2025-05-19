@@ -28,6 +28,7 @@ import proton.android.pass.preferences.FeatureFlag.CUSTOM_TYPE_V1
 import proton.android.pass.preferences.FeatureFlag.EXTRA_LOGGING
 import proton.android.pass.preferences.FeatureFlag.FILE_ATTACHMENTS_V1
 import proton.android.pass.preferences.FeatureFlag.FILE_ATTACHMENT_ENCRYPTION_V2
+import proton.android.pass.preferences.FeatureFlag.RENAME_ADMIN_TO_MANAGER
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -45,7 +46,8 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
             EXTRA_LOGGING -> it.getOrDefault(EXTRA_LOGGING, false) as T
             FILE_ATTACHMENTS_V1 -> it.getOrDefault(FILE_ATTACHMENTS_V1, false) as T
             CUSTOM_TYPE_V1 -> it.getOrDefault(CUSTOM_TYPE_V1, false) as T
-            FILE_ATTACHMENT_ENCRYPTION_V2 -> it.getOrDefault(CUSTOM_TYPE_V1, false) as T
+            FILE_ATTACHMENT_ENCRYPTION_V2 -> it.getOrDefault(FILE_ATTACHMENT_ENCRYPTION_V2, false) as T
+            RENAME_ADMIN_TO_MANAGER -> it.getOrDefault(RENAME_ADMIN_TO_MANAGER, false) as T
         }
     }
 

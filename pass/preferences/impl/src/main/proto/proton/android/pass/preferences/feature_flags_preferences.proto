@@ -32,4 +32,5 @@ message FeatureFlagsPreferences {
   BoolFlagPrefProto new_login_flow_enabled = 24;
   BoolFlagPrefProto custom_type_v1_enabled = 25;
   BoolFlagPrefProto file_attachment_encryption_v2_enabled = 26;
+  BoolFlagPrefProto rename_admin_to_manager_enabled = 27;
 }

@@ -32,12 +32,12 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.repositories.AddressPermission
 import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
-import proton.android.pass.data.fakes.usecases.invites.FakeInviteToItem
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
 import proton.android.pass.data.fakes.usecases.TestInviteToVault
 import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveItems
+import proton.android.pass.data.fakes.usecases.invites.FakeInviteToItem
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -49,6 +49,7 @@ import proton.android.pass.features.sharing.SharingSnackbarMessage.InviteSentSuc
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.test.MainDispatcherRule
@@ -112,7 +113,8 @@ internal class SharingSummaryViewModelTest {
                 )
             ),
             isLoadingState = IsLoadingState.NotLoading,
-            vaultWithItemCount = vaultData
+            vaultWithItemCount = vaultData,
+            isRenameAdminToManagerEnabled = false
         )
 
         getVaultWithItemCountById.emitValue(vaultData)
@@ -235,7 +237,8 @@ internal class SharingSummaryViewModelTest {
             itemUiModel = encryptionContextProvider.withEncryptionContext {
                 item.toUiModel(this@withEncryptionContext)
             },
-            useFaviconsPreference = useFaviconsPreference
+            useFaviconsPreference = useFaviconsPreference,
+            isRenameAdminToManagerEnabled = false
         )
         userPreferencesRepository.setUseFaviconsPreference(useFaviconsPreference)
         observeItemById.emitValue(Result.success(item))
@@ -273,7 +276,8 @@ internal class SharingSummaryViewModelTest {
             observeItemById = observeItemById,
             inviteToItem = inviteToItem,
             encryptionContextProvider = encryptionContextProvider,
-            userPreferencesRepository = userPreferencesRepository
+            userPreferencesRepository = userPreferencesRepository,
+            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
         )
     }
 

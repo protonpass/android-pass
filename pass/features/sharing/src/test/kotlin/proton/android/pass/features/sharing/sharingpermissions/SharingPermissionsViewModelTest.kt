@@ -31,6 +31,7 @@ import proton.android.pass.data.fakes.usecases.TestGetVaultByShareId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.sharing.common.AddressPermissionUiState
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 
 class SharingPermissionsViewModelTest {
@@ -55,7 +56,8 @@ class SharingPermissionsViewModelTest {
         viewModel = SharingPermissionsViewModel(
             getVaultByShareId = getVaultById,
             savedStateHandleProvider = savedStateHandleProvider,
-            bulkInviteRepository = bulkInviteRepository
+            bulkInviteRepository = bulkInviteRepository,
+            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
         )
     }
 

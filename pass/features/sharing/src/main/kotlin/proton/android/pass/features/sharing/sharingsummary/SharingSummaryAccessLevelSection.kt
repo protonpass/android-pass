@@ -39,19 +39,28 @@ import proton.android.pass.domain.ShareType
 import proton.android.pass.features.sharing.R
 
 @Composable
-internal fun SharingSummaryAccessLevelSection(modifier: Modifier = Modifier, shareType: ShareType) {
+internal fun SharingSummaryAccessLevelSection(
+    modifier: Modifier = Modifier,
+    shareType: ShareType,
+    isRenameAdminToManagerEnabled: Boolean
+) {
     val rowsResIds = remember(shareType) {
+        val managerTitle = if (isRenameAdminToManagerEnabled) {
+            R.string.sharing_can_manage_V2
+        } else {
+            R.string.sharing_can_manage
+        }
         when (shareType) {
             ShareType.Vault -> listOf(
                 R.string.sharing_can_view to R.string.sharing_can_view_description,
                 R.string.sharing_can_edit to R.string.sharing_can_edit_description,
-                R.string.sharing_can_manage to R.string.sharing_can_manage_description
+                managerTitle to R.string.sharing_can_manage_description
             )
 
             ShareType.Item -> listOf(
                 R.string.sharing_can_view to R.string.sharing_bottomsheet_item_viewer_subtitle,
                 R.string.sharing_can_edit to R.string.sharing_bottomsheet_item_editor_subtitle,
-                R.string.sharing_can_manage to R.string.sharing_bottomsheet_item_admin_subtitle
+                managerTitle to R.string.sharing_bottomsheet_item_admin_subtitle
             )
         }
     }
@@ -111,7 +120,8 @@ internal fun SharingSummaryAccessLevelSectionPreview(
     PassTheme(isDark = isDark) {
         Surface {
             SharingSummaryAccessLevelSection(
-                shareType = if (isItemShare) ShareType.Item else ShareType.Vault
+                shareType = if (isItemShare) ShareType.Item else ShareType.Vault,
+                isRenameAdminToManagerEnabled = true
             )
         }
     }

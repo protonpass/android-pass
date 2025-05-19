@@ -38,7 +38,11 @@ internal fun ManageItemMemberOptionsContent(
 ) = with(state) {
     buildList {
         manageItemMemberOptionRow(
-            titleRes = R.string.sharing_can_manage,
+            titleRes = if (state.isRenameAdminToManagerEnabled) {
+                R.string.sharing_can_manage_V2
+            } else {
+                R.string.sharing_can_manage
+            },
             subtitleRes = R.string.sharing_bottomsheet_item_admin_subtitle,
             iconRes = CoreR.drawable.ic_proton_key,
             isSelected = memberShareRole is ShareRole.Admin,

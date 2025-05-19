@@ -166,7 +166,8 @@ internal fun SharingSummaryContent(
                 item {
                     SharingSummaryAccessLevelSection(
                         modifier = Modifier.padding(top = Spacing.medium),
-                        shareType = state.shareType
+                        shareType = state.shareType,
+                        isRenameAdminToManagerEnabled = state.isRenameAdminToManagerEnabled
                     )
                 }
             }

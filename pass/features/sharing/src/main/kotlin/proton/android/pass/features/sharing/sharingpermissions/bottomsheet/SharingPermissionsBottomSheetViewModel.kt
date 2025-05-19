@@ -37,12 +37,15 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.features.sharing.extensions.toShareRole
 import proton.android.pass.features.sharing.sharingpermissions.SharingType
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class SharingPermissionsBottomSheetViewModel @Inject constructor(
     private val bulkInviteRepository: BulkInviteRepository,
-    private val savedStateHandleProvider: SavedStateHandleProvider
+    private val savedStateHandleProvider: SavedStateHandleProvider,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
     private val itemIdOption: Option<ItemId> = savedStateHandleProvider.get()
@@ -57,8 +60,9 @@ class SharingPermissionsBottomSheetViewModel @Inject constructor(
 
     internal val state: StateFlow<SharingPermissionsBottomSheetUiState> = combine(
         eventFlow,
-        bulkInviteRepository.observeAddresses()
-    ) { event, addresses ->
+        bulkInviteRepository.observeAddresses(),
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.RENAME_ADMIN_TO_MANAGER)
+    ) { event, addresses, isRenameAdminToManagerEnabled ->
         SharingPermissionsBottomSheetUiState(
             event = event,
             mode = mode.toUi(),
@@ -68,7 +72,8 @@ class SharingPermissionsBottomSheetViewModel @Inject constructor(
                     addresses.size > 1
                 }
             },
-            itemIdOption = itemIdOption
+            itemIdOption = itemIdOption,
+            isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled
         )
     }.stateIn(
         scope = viewModelScope,

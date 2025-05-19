@@ -41,11 +41,14 @@ import proton.android.pass.features.sharing.manage.bottomsheet.ShareRoleArg
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class ManageItemMemberOptionsViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val updateShareMemberRole: UpdateShareMemberRole,
     private val removeShareMember: RemoveShareMember,
     private val snackbarDispatcher: SnackbarDispatcher
@@ -75,6 +78,7 @@ class ManageItemMemberOptionsViewModel @Inject constructor(
         flowOf(memberShareRole),
         actionFlow,
         eventFlow,
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.RENAME_ADMIN_TO_MANAGER),
         ::ManageItemMemberOptionsState
     ).stateIn(
         scope = viewModelScope,

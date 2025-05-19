@@ -25,7 +25,8 @@ import proton.android.pass.domain.ShareRole
 internal data class ManageItemMemberOptionsState(
     internal val memberShareRole: ShareRole,
     internal val action: ManageItemMemberOptionsAction,
-    internal val event: ManageItemMemberOptionsEvent
+    internal val event: ManageItemMemberOptionsEvent,
+    internal val isRenameAdminToManagerEnabled: Boolean
 ) {
 
     internal companion object {
@@ -33,7 +34,8 @@ internal data class ManageItemMemberOptionsState(
         internal fun initial(memberShareRole: ShareRole) = ManageItemMemberOptionsState(
             memberShareRole = memberShareRole,
             action = ManageItemMemberOptionsAction.None,
-            event = ManageItemMemberOptionsEvent.Idle
+            event = ManageItemMemberOptionsEvent.Idle,
+            isRenameAdminToManagerEnabled = false
         )
 
     }

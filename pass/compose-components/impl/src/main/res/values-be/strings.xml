@@ -200,7 +200,7 @@
   <string name="item_details_shared_section_more_info_header_title">Падрабязней</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">Больш звестак аб значку элемента</string>
   <string name="item_details_shared_section_more_info_item_id">Ідэнтыфікатар элемента</string>
-  <string name="item_details_shared_section_more_info_share_id">Ідэнтыфікатар сховішча</string>
+  <string name="item_details_shared_section_more_info_vault_id">Ідэнтыфікатар сховішча</string>
   <string name="item_details_wifi_network_label_ssid_name">Назва (SSID)</string>
   <string name="item_details_wifi_network_label_password">Пароль</string>
   <string name="item_details_wifi_network_label_security">Бяспека</string>

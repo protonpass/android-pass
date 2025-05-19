@@ -196,7 +196,7 @@
   <string name="item_details_shared_section_more_info_header_title">Altre informazioni</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">Altre informazioni sull\'elemento</string>
   <string name="item_details_shared_section_more_info_item_id">ID elemento</string>
-  <string name="item_details_shared_section_more_info_share_id">ID cassaforte</string>
+  <string name="item_details_shared_section_more_info_vault_id">ID cassaforte</string>
   <string name="item_details_wifi_network_label_ssid_name">Nome (SSID)</string>
   <string name="item_details_wifi_network_label_password">Password</string>
   <string name="item_details_wifi_network_label_security">Sicurezza</string>

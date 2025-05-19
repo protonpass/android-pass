@@ -200,7 +200,7 @@
   <string name="item_details_shared_section_more_info_header_title">Viac informácií</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">Ikona pre viac informácií o položke</string>
   <string name="item_details_shared_section_more_info_item_id">ID položky</string>
-  <string name="item_details_shared_section_more_info_share_id">ID trezoru</string>
+  <string name="item_details_shared_section_more_info_vault_id">ID trezoru</string>
   <string name="item_details_wifi_network_label_ssid_name">Názov (SSID)</string>
   <string name="item_details_wifi_network_label_password">Heslo</string>
   <string name="item_details_wifi_network_label_security">Zabezpečenie</string>

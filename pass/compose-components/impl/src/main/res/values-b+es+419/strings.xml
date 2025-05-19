@@ -196,7 +196,7 @@
   <string name="item_details_shared_section_more_info_header_title">Más información</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">Ícono del elemento de más información</string>
   <string name="item_details_shared_section_more_info_item_id">ID del elemento</string>
-  <string name="item_details_shared_section_more_info_share_id">ID de la bóveda</string>
+  <string name="item_details_shared_section_more_info_vault_id">ID de la bóveda</string>
   <string name="item_details_wifi_network_label_ssid_name">Nombre (SSID)</string>
   <string name="item_details_wifi_network_label_password">Contraseña</string>
   <string name="item_details_wifi_network_label_security">Seguridad</string>

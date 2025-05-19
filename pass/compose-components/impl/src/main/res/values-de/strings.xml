@@ -196,7 +196,7 @@
   <string name="item_details_shared_section_more_info_header_title">Weitere Informationen</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">Symbol für weitere Informationen</string>
   <string name="item_details_shared_section_more_info_item_id">Eintrag-ID</string>
-  <string name="item_details_shared_section_more_info_share_id">Tresor-ID</string>
+  <string name="item_details_shared_section_more_info_vault_id">Tresor-ID</string>
   <string name="item_details_wifi_network_label_ssid_name">Name (SSID)</string>
   <string name="item_details_wifi_network_label_password">Passwort</string>
   <string name="item_details_wifi_network_label_security">Sicherheit</string>

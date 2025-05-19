@@ -194,7 +194,7 @@
   <string name="item_details_shared_section_more_info_header_title">詳細はこちら</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">アイテム情報アイコン</string>
   <string name="item_details_shared_section_more_info_item_id">アイテム ID</string>
-  <string name="item_details_shared_section_more_info_share_id">保管庫 ID</string>
+  <string name="item_details_shared_section_more_info_vault_id">保管庫 ID</string>
   <string name="item_details_wifi_network_label_ssid_name">名前（SSID）</string>
   <string name="item_details_wifi_network_label_password">パスワード</string>
   <string name="item_details_wifi_network_label_security">セキュリティ</string>

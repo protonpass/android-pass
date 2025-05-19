@@ -196,8 +196,8 @@
     <string name="item_details_shared_section_more_info_header_title">More info</string>
     <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
     <string name="item_details_shared_section_more_info_item_id">Item ID</string>
-    <string name="item_details_shared_section_more_info_share_id">Vault ID</string>
-    <string name="item_details_shared_section_more_info_real_share_id">Share ID</string>
+    <string name="item_details_shared_section_more_info_vault_id">Vault ID</string>
+    <string name="item_details_shared_section_more_info_share_id">Share ID</string>
 
     <string name="item_details_wifi_network_label_ssid_name">Name (SSID)</string>
     <string name="item_details_wifi_network_label_password">Password</string>

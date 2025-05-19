@@ -200,7 +200,7 @@
   <string name="item_details_shared_section_more_info_header_title">Więcej informacji</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">Ikona informacji o elemencie</string>
   <string name="item_details_shared_section_more_info_item_id">Identyfikator elementu</string>
-  <string name="item_details_shared_section_more_info_share_id">Identyfikator sejfu</string>
+  <string name="item_details_shared_section_more_info_vault_id">Identyfikator sejfu</string>
   <string name="item_details_wifi_network_label_ssid_name">Nazwa (SSID)</string>
   <string name="item_details_wifi_network_label_password">Hasło</string>
   <string name="item_details_wifi_network_label_security">Bezpieczeństwo</string>

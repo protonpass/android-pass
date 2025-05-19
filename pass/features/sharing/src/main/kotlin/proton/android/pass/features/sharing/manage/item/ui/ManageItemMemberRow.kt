@@ -47,6 +47,7 @@ internal fun ManageItemMemberRow(
     member: ShareMember,
     canAdmin: Boolean,
     hasVaultAccess: Boolean,
+    isRenameAdminToManagerEnabled: Boolean,
     onMenuOptionsClick: (ShareMember) -> Unit
 ) {
     val showMemberShareRole = remember(member.isItemMember, hasVaultAccess) {
@@ -104,7 +105,7 @@ internal fun ManageItemMemberRow(
                         text = if (member.isOwner) {
                             stringResource(id = R.string.share_role_owner)
                         } else {
-                            member.role.toShortSummary()
+                            member.role.toShortSummary(isRenameAdminToManagerEnabled)
                         },
                         color = PassTheme.colors.textWeak
                     )

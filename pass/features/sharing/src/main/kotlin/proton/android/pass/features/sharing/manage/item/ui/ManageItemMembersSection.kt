@@ -45,6 +45,7 @@ internal fun ManageItemMembersSection(
     shareItemsCount: Int,
     pendingInvites: List<SharePendingInvite>,
     members: List<ShareMember>,
+    isRenameAdminToManagerEnabled: Boolean,
     onPendingInviteMenuOptionsClick: (SharePendingInvite) -> Unit,
     onMemberMenuOptionsClick: (ShareMember) -> Unit,
     onInviteMoreClick: () -> Unit
@@ -90,6 +91,7 @@ internal fun ManageItemMembersSection(
             pendingInvites.forEach { pendingInvite ->
                 ManageItemPendingInviteRow(
                     pendingInvite = pendingInvite,
+                    isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled,
                     onMenuOptionsClick = onPendingInviteMenuOptionsClick
                 )
 
@@ -101,6 +103,7 @@ internal fun ManageItemMembersSection(
                     member = member,
                     canAdmin = isShareAdmin,
                     hasVaultAccess = vaultOption is Some,
+                    isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled,
                     onMenuOptionsClick = onMemberMenuOptionsClick
                 )
 

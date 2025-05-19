@@ -72,6 +72,7 @@ fun ManageVaultMemberRow(
     modifier: Modifier = Modifier,
     member: VaultMemberContent,
     canShowActions: Boolean,
+    isRenameAdminToManagerEnabled: Boolean,
     onOptionsClick: (() -> Unit)? = null,
     onConfirmInviteClick: ((VaultMember.NewUserInvitePending) -> Unit)? = null
 ) {
@@ -113,7 +114,8 @@ fun ManageVaultMemberRow(
 
             UserInfo(
                 modifier = Modifier.weight(1f),
-                member = member
+                member = member,
+                isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled
             )
 
             if (showActions) {
@@ -138,7 +140,11 @@ fun ManageVaultMemberRow(
 }
 
 @Composable
-private fun UserInfo(modifier: Modifier = Modifier, member: VaultMemberContent) {
+private fun UserInfo(
+    modifier: Modifier = Modifier,
+    member: VaultMemberContent,
+    isRenameAdminToManagerEnabled: Boolean
+) {
     val (titleTextModifier, titleText) = when (member) {
         VaultMemberContent.Loading ->
             Modifier
@@ -158,12 +164,16 @@ private fun UserInfo(modifier: Modifier = Modifier, member: VaultMemberContent) 
             style = PassTheme.typography.body3Norm()
         )
 
-        UserInfoSubtitle(member = member)
+        UserInfoSubtitle(member = member, isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled)
     }
 }
 
 @Composable
-private fun UserInfoSubtitle(modifier: Modifier = Modifier, member: VaultMemberContent) {
+private fun UserInfoSubtitle(
+    modifier: Modifier = Modifier,
+    member: VaultMemberContent,
+    isRenameAdminToManagerEnabled: Boolean
+) {
     when (member) {
         VaultMemberContent.Loading -> {
             Text(
@@ -200,7 +210,7 @@ private fun UserInfoSubtitle(modifier: Modifier = Modifier, member: VaultMemberC
                         val subtitle = if (memberContent.isOwner) {
                             stringResource(R.string.share_role_owner)
                         } else {
-                            role.toShortSummary()
+                            role.toShortSummary(isRenameAdminToManagerEnabled)
                         }
                         Text(
                             text = subtitle,
@@ -225,7 +235,7 @@ private fun UserInfoSubtitle(modifier: Modifier = Modifier, member: VaultMemberC
                     }
 
                     VaultMember.NewUserInvitePending.InviteState.PendingAcceptance -> {
-                        memberContent.role.toShortSummary()
+                        memberContent.role.toShortSummary(isRenameAdminToManagerEnabled)
                     }
                 }
                 Text(
@@ -277,6 +287,7 @@ fun ManageVaultMemberRowPreview(
             ManageVaultMemberRow(
                 member = input.second.member,
                 canShowActions = true,
+                isRenameAdminToManagerEnabled = true,
                 onOptionsClick = {}
             )
         }

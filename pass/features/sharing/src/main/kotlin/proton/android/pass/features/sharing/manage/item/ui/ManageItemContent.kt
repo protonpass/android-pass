@@ -88,6 +88,7 @@ internal fun ManageItemContent(
                             shareItemsCount = state.itemsCount,
                             pendingInvites = state.itemPendingInvites,
                             members = state.itemMembers,
+                            isRenameAdminToManagerEnabled = state.isRenameAdminToManagerEnabled,
                             onPendingInviteMenuOptionsClick = { pendingInvite ->
                                 ManageItemUiEvent.OnPendingInviteOptionsClick(
                                     shareId = state.share.id,
@@ -126,6 +127,7 @@ internal fun ManageItemContent(
                             shareItemsCount = state.itemsCount,
                             pendingInvites = state.vaultPendingInvites,
                             members = state.vaultMembers,
+                            isRenameAdminToManagerEnabled = state.isRenameAdminToManagerEnabled,
                             onPendingInviteMenuOptionsClick = { pendingInvite ->
                                 ManageItemUiEvent.OnPendingInviteOptionsClick(
                                     shareId = state.share.id,

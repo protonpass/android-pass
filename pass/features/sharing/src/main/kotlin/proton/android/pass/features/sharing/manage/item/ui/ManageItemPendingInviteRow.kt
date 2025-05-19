@@ -40,6 +40,7 @@ import proton.android.pass.features.sharing.common.toShortSummary
 internal fun ManageItemPendingInviteRow(
     modifier: Modifier = Modifier,
     pendingInvite: SharePendingInvite,
+    isRenameAdminToManagerEnabled: Boolean,
     onMenuOptionsClick: (SharePendingInvite) -> Unit
 ) {
     val subtitleText = when (pendingInvite) {
@@ -54,7 +55,7 @@ internal fun ManageItemPendingInviteRow(
                 }
 
                 SharePendingInvite.NewUser.InviteState.PendingAcceptance -> {
-                    pendingInvite.role.toShortSummary()
+                    pendingInvite.role.toShortSummary(isRenameAdminToManagerEnabled)
                 }
             }
         }

@@ -36,6 +36,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -60,6 +61,8 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
@@ -74,6 +77,7 @@ class SharingSummaryViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     observeItemById: ObserveItemById,
     encryptionContextProvider: EncryptionContextProvider,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
@@ -109,6 +113,7 @@ class SharingSummaryViewModel @Inject constructor(
                 eventFlow,
                 addressesFlow,
                 isLoadingStateFlow,
+                featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.RENAME_ADMIN_TO_MANAGER),
                 getVaultWithItemCountById(shareId = shareId),
                 SharingSummaryState::ShareVault
             )
@@ -122,10 +127,11 @@ class SharingSummaryViewModel @Inject constructor(
                     }
                 }
                 .let { itemUiModelFlow ->
-                    combine(
+                    combineN(
                         eventFlow,
                         addressesFlow,
                         isLoadingStateFlow,
+                        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.RENAME_ADMIN_TO_MANAGER),
                         itemUiModelFlow,
                         userPreferencesRepository.getUseFaviconsPreference(),
                         SharingSummaryState::ShareItem

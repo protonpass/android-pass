@@ -85,7 +85,8 @@ data class MemberOptionsUiState(
     val transferOwnership: TransferOwnershipState,
     val event: MemberOptionsEvent,
     val loadingOption: LoadingOption?,
-    val isLoading: IsLoadingState
+    val isLoading: IsLoadingState,
+    val isRenameAdminToManagerEnabled: Boolean
 ) {
     companion object {
         val Initial = MemberOptionsUiState(
@@ -93,7 +94,8 @@ data class MemberOptionsUiState(
             transferOwnership = TransferOwnershipState.Hide,
             event = MemberOptionsEvent.Unknown,
             loadingOption = null,
-            isLoading = IsLoadingState.NotLoading
+            isLoading = IsLoadingState.NotLoading,
+            isRenameAdminToManagerEnabled = false
         )
     }
 }

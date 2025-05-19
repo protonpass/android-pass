@@ -52,7 +52,8 @@ internal data class SharingPermissionsBottomSheetUiState(
     val event: SharingPermissionsBottomSheetEvent,
     val displayRemove: Boolean,
     val mode: SharingPermissionsEditMode,
-    private val itemIdOption: Option<ItemId>
+    private val itemIdOption: Option<ItemId>,
+    val isRenameAdminToManagerEnabled: Boolean
 ) {
 
     internal val isSharingAnItem: Boolean = when (itemIdOption) {
@@ -67,7 +68,8 @@ internal data class SharingPermissionsBottomSheetUiState(
                 event = SharingPermissionsBottomSheetEvent.Unknown,
                 mode = mode,
                 displayRemove = false,
-                itemIdOption = itemIdOption
+                itemIdOption = itemIdOption,
+                isRenameAdminToManagerEnabled = false
             )
 
     }

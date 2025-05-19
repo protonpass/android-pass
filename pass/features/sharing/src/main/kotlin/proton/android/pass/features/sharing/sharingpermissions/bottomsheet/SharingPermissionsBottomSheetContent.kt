@@ -63,6 +63,7 @@ internal fun SharingPermissionsBottomSheetContent(
         setAdminPermission(
             isSharingAnItem = isSharingAnItem,
             sharingType = selectedSharingType,
+            isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled,
             onClick = onPermissionClick
         ).also(::add)
 
@@ -115,6 +116,7 @@ private fun titleText(text: String): BottomSheetItem = object : BottomSheetItem 
 @Composable
 private fun setAdminPermission(
     isSharingAnItem: Boolean,
+    isRenameAdminToManagerEnabled: Boolean,
     sharingType: SharingType?,
     onClick: (SharingType) -> Unit
 ): BottomSheetItem = remember(isSharingAnItem) {
@@ -125,7 +127,11 @@ private fun setAdminPermission(
     }
 }.let { subtitleResId ->
     permissionRow(
-        title = R.string.sharing_can_manage,
+        title = if (isRenameAdminToManagerEnabled) {
+            R.string.sharing_can_manage_V2
+        } else {
+            R.string.sharing_can_manage
+        },
         subtitle = subtitleResId,
         icon = CoreR.drawable.ic_proton_key,
         checked = sharingType == SharingType.Admin,

@@ -20,6 +20,7 @@
     <string name="sharing_can_view">Viewer</string>
     <string name="sharing_can_edit">Editor</string>
     <string name="sharing_can_manage">Admin</string>
+    <string name="sharing_can_manage_V2">Manager</string>
     <string name="sharing_can_view_description">Can view items in this vault.</string>
     <string name="sharing_can_edit_description">Can create, edit, delete, and export items in this vault.</string>
     <string name="sharing_can_manage_description">Can grant and revoke access to this vault.</string>

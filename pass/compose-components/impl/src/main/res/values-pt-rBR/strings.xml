@@ -196,7 +196,7 @@
   <string name="item_details_shared_section_more_info_header_title">Mais informações</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">Ícone de item de mais formações</string>
   <string name="item_details_shared_section_more_info_item_id">ID do item</string>
-  <string name="item_details_shared_section_more_info_share_id">ID do cofre</string>
+  <string name="item_details_shared_section_more_info_vault_id">ID do cofre</string>
   <string name="item_details_wifi_network_label_ssid_name">Nome (SSID)</string>
   <string name="item_details_wifi_network_label_password">Senha</string>
   <string name="item_details_wifi_network_label_security">Segurança</string>

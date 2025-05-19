@@ -164,12 +164,12 @@ private fun PassItemDetailsMoreInfoContent(
         )
 
         PassItemDetailsMoreInfoRow(
-            titleResId = R.string.item_details_shared_section_more_info_real_share_id,
+            titleResId = R.string.item_details_shared_section_more_info_share_id,
             value = shareId.id
         )
 
         PassItemDetailsMoreInfoRow(
-            titleResId = R.string.item_details_shared_section_more_info_share_id,
+            titleResId = R.string.item_details_shared_section_more_info_vault_id,
             value = vaultId.id
         )
     }

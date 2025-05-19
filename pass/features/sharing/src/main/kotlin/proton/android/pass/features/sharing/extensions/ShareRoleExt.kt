@@ -44,8 +44,12 @@ internal fun SharingType.toShareRole(): ShareRole = when (this) {
     SharingType.Admin -> ShareRole.Admin
 }
 
-internal fun SharingType.toStringResource() = when (this) {
+internal fun SharingType.toStringResource(isRenameActive: Boolean) = when (this) {
     SharingType.Read -> R.string.sharing_can_view
     SharingType.Write -> R.string.sharing_can_edit
-    SharingType.Admin -> R.string.sharing_can_manage
+    SharingType.Admin -> if (isRenameActive) {
+        R.string.sharing_can_manage_V2
+    } else {
+        R.string.sharing_can_manage
+    }
 }

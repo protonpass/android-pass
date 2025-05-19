@@ -37,7 +37,8 @@ internal data class SharingPermissionsUIState(
     internal val itemIdOption: Option<ItemId> = None,
     internal val addresses: ImmutableList<AddressPermissionUiState> = persistentListOf(),
     internal val vaultName: String? = null,
-    internal val event: SharingPermissionsEvents = SharingPermissionsEvents.Idle
+    internal val event: SharingPermissionsEvents = SharingPermissionsEvents.Idle,
+    internal val isRenameAdminToManagerEnabled: Boolean = false
 ) {
 
     internal val memberCount: Int = addresses.size

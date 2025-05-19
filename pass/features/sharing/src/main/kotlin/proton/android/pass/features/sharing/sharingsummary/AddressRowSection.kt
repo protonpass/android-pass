@@ -41,7 +41,11 @@ import proton.android.pass.features.sharing.extensions.toStringResource
 import proton.android.pass.features.sharing.sharingpermissions.SharingType
 
 @Composable
-internal fun AddressRowSection(modifier: Modifier = Modifier, address: AddressPermissionUiState) {
+internal fun AddressRowSection(
+    modifier: Modifier = Modifier,
+    address: AddressPermissionUiState,
+    isRenameAdminToManagerEnabled: Boolean
+) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
@@ -68,7 +72,7 @@ internal fun AddressRowSection(modifier: Modifier = Modifier, address: AddressPe
             )
 
             Text.Body2Regular(
-                text = stringResource(address.permission.toStringResource()),
+                text = stringResource(address.permission.toStringResource(isRenameAdminToManagerEnabled)),
                 color = PassTheme.colors.textWeak
             )
         }
@@ -80,7 +84,8 @@ internal fun AddressRowSectionPreview(@PreviewParameter(ThemePreviewProvider::cl
     PassTheme(isDark = isDark) {
         Surface {
             AddressRowSection(
-                address = AddressPermissionUiState("my@test.email", SharingType.Write)
+                address = AddressPermissionUiState("my@test.email", SharingType.Write),
+                isRenameAdminToManagerEnabled = true
             )
         }
     }

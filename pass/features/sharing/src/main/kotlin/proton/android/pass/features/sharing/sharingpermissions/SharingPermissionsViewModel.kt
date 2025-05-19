@@ -41,12 +41,15 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.features.sharing.common.toUiState
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class SharingPermissionsViewModel @Inject constructor(
     bulkInviteRepository: BulkInviteRepository,
     getVaultByShareId: GetVaultByShareId,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -65,8 +68,9 @@ class SharingPermissionsViewModel @Inject constructor(
     internal val stateFlow: StateFlow<SharingPermissionsUIState> = combine(
         bulkInviteRepository.observeAddresses(),
         getVaultByShareId(shareId = shareId).asLoadingResult(),
-        eventState
-    ) { addresses, vault, event ->
+        eventState,
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.RENAME_ADMIN_TO_MANAGER)
+    ) { addresses, vault, event, isRenameAdminToManagerEnabled ->
         val uiEvent = if (event == SharingPermissionsEvents.Idle && addresses.isEmpty()) {
             SharingPermissionsEvents.BackToHome
         } else {
@@ -76,6 +80,7 @@ class SharingPermissionsViewModel @Inject constructor(
             itemIdOption = itemIdOption,
             addresses = addresses.map { it.toUiState() }.toImmutableList(),
             vaultName = vault.getOrNull()?.name,
+            isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled,
             event = uiEvent
         )
     }.stateIn(

@@ -84,6 +84,7 @@ internal fun SharingPermissionsContent(
                     SharingPermissionItem(
                         modifier = Modifier.padding(vertical = Spacing.small),
                         address = addressPermission,
+                        isRenameAdminToManagerEnabled = state.isRenameAdminToManagerEnabled,
                         onPermissionChangeClick = {
                             onEvent(
                                 SharingPermissionsUiEvent.OnPermissionChangeClick(addressPermission)

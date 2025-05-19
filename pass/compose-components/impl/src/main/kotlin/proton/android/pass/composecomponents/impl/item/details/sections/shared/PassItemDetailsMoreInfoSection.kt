@@ -29,6 +29,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -58,6 +59,7 @@ import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.form.ChevronDownIcon
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.VaultId
 import me.proton.core.presentation.R as CoreR
 
 private const val CHEVRON_ROTATION_DEGREES_COLLAPSED = 0f
@@ -70,7 +72,8 @@ private const val IS_MORE_INFO_EXPANDED_DEFAULT = false
 fun PassItemDetailsMoreInfoSection(
     modifier: Modifier = Modifier,
     itemId: ItemId,
-    shareId: ShareId
+    shareId: ShareId,
+    vaultId: VaultId
 ) {
     var chevronRotationDegrees by remember { mutableFloatStateOf(CHEVRON_ROTATION_DEGREES_COLLAPSED) }
     var isMoreInfoExpanded by remember { mutableStateOf(IS_MORE_INFO_EXPANDED_DEFAULT) }
@@ -94,7 +97,8 @@ fun PassItemDetailsMoreInfoSection(
         AnimatedVisibility(visible = isMoreInfoExpanded) {
             PassItemDetailsMoreInfoContent(
                 itemId = itemId,
-                shareId = shareId
+                shareId = shareId,
+                vaultId = vaultId
             )
         }
     }
@@ -145,7 +149,8 @@ private fun PassItemDetailsMoreInfoHeader(
 private fun PassItemDetailsMoreInfoContent(
     modifier: Modifier = Modifier,
     itemId: ItemId,
-    shareId: ShareId
+    shareId: ShareId,
+    vaultId: VaultId
 ) {
     Column(
         modifier = modifier
@@ -159,8 +164,13 @@ private fun PassItemDetailsMoreInfoContent(
         )
 
         PassItemDetailsMoreInfoRow(
-            titleResId = R.string.item_details_shared_section_more_info_share_id,
+            titleResId = R.string.item_details_shared_section_more_info_real_share_id,
             value = shareId.id
+        )
+
+        PassItemDetailsMoreInfoRow(
+            titleResId = R.string.item_details_shared_section_more_info_share_id,
+            value = vaultId.id
         )
     }
 }
@@ -192,12 +202,14 @@ private fun PassItemDetailsMoreInfoText(
     text: String,
     style: TextStyle = ProtonTheme.typography.overlineStrongNorm
 ) {
-    Text(
-        modifier = modifier,
-        text = text,
-        style = style,
-        color = ProtonTheme.colors.textWeak
-    )
+    SelectionContainer {
+        Text(
+            modifier = modifier,
+            text = text,
+            style = style,
+            color = ProtonTheme.colors.textWeak
+        )
+    }
 }
 
 @[Preview Composable]
@@ -206,7 +218,8 @@ internal fun PassItemDetailsMoreInfoPreview(@PreviewParameter(ThemePreviewProvid
         Surface {
             PassItemDetailsMoreInfoSection(
                 itemId = ItemId(id = "UD09090ikodfjd0ulhj267sjk3lsdfjkls345djsdfdsf=="),
-                shareId = ShareId(id = "OPPOSDkljksd__kjksdfjkj23r4343434Ju343434ookj==")
+                shareId = ShareId(id = "OPPOSDkljksd__kjksdfjkj23r4343434Ju343434ookj=="),
+                vaultId = VaultId(id = "dsdsd090iksdsds7sjk3lsdfjkls345djsdfdsf")
             )
         }
     }

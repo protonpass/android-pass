@@ -41,12 +41,14 @@ import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Totp
+import proton.android.pass.domain.VaultId
 
 @Composable
 internal fun PassCustomItemDetailSections(
     modifier: Modifier = Modifier,
     itemId: ItemId,
     shareId: ShareId,
+    vaultId: VaultId,
     contents: ItemContents.Custom,
     customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, Totp>,
     itemColors: PassItemColors,
@@ -109,7 +111,8 @@ internal fun PassCustomItemDetailSections(
 
         PassItemDetailsMoreInfoSection(
             itemId = itemId,
-            shareId = shareId
+            shareId = shareId,
+            vaultId = vaultId
         )
     }
 }

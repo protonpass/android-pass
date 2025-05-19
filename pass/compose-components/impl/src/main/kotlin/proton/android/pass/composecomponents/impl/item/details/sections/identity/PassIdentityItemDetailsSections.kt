@@ -40,12 +40,14 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.VaultId
 
 @Composable
 internal fun PassIdentityItemDetailsSections(
     modifier: Modifier = Modifier,
     itemId: ItemId,
     shareId: ShareId,
+    vaultId: VaultId,
     contents: ItemContents.Identity,
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs.Identity,
@@ -134,7 +136,8 @@ internal fun PassIdentityItemDetailsSections(
 
         PassItemDetailsMoreInfoSection(
             itemId = itemId,
-            shareId = shareId
+            shareId = shareId,
+            vaultId = vaultId
         )
     }
 }

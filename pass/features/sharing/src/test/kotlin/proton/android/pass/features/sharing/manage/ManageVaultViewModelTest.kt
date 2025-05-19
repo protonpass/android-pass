@@ -35,6 +35,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 
 internal class ManageVaultViewModelTest {
 
@@ -54,7 +55,8 @@ internal class ManageVaultViewModelTest {
             },
             snackbarDispatcher = TestSnackbarDispatcher(),
             confirmNewUserInvite = confirmNewUserInvite,
-            getUserPlan = TestGetUserPlan()
+            getUserPlan = TestGetUserPlan(),
+            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
         )
     }
 

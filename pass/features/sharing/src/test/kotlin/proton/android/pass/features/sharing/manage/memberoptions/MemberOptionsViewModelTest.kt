@@ -43,6 +43,7 @@ import proton.android.pass.features.sharing.manage.bottomsheet.memberoptions.Tra
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestVault
 
@@ -257,7 +258,8 @@ class MemberOptionsViewModelTest {
             removeShareMember = removeMemberFromVault,
             updateShareMemberRole = setVaultMemberPermission,
             savedState = savedStateHandle,
-            observeVaults = observeVaults
+            observeVaults = observeVaults,
+            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
         )
     }
 

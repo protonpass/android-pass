@@ -49,6 +49,7 @@ import proton.android.pass.data.api.errors.FileSizeExceededError
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
 import proton.android.pass.data.api.usecases.attachments.ClearAttachments
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
@@ -77,7 +78,8 @@ class AttachmentsHandlerImpl @Inject constructor(
     private val fileHandler: FileHandler,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val authOverrideState: AuthOverrideState,
-    observeUserAccessData: ObserveUserAccessData
+    observeUserAccessData: ObserveUserAccessData,
+    getUserPlan: GetUserPlan
 ) : AttachmentsHandler {
 
     private val shareIdState = MutableStateFlow<Option<ShareId>>(None)
@@ -101,13 +103,15 @@ class AttachmentsHandlerImpl @Inject constructor(
         draftAttachmentRepository.observeAll(),
         attachments,
         loadingAttachments,
-        observeUserAccessData()
-    ) { draftAttachments, attachments, loadingAttachments, userAccessData ->
+        observeUserAccessData(),
+        getUserPlan()
+    ) { draftAttachments, attachments, loadingAttachments, userAccessData, plan ->
         AttachmentsState(
             draftAttachmentsList = draftAttachments,
             attachmentsList = attachments,
             loadingAttachments = loadingAttachments,
-            needsUpgrade = userAccessData?.storageAllowed?.let { !it }.toOption()
+            needsUpgrade = userAccessData?.storageAllowed?.let { !it }.toOption(),
+            canUpgrade = !plan.hideUpgrade
         )
     }.distinctUntilChanged()
 

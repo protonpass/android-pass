@@ -128,7 +128,7 @@ private fun setAdminPermission(
 }.let { subtitleResId ->
     permissionRow(
         title = if (isRenameAdminToManagerEnabled) {
-            R.string.sharing_can_manage_V2
+            R.string.sharing_can_manage_v2
         } else {
             R.string.sharing_can_manage
         },

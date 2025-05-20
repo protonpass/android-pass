@@ -69,7 +69,7 @@ internal sealed interface ManageItemState {
 
         internal val canInviteMoreToVault = true
 
-        internal val isRenameAdminToManagerEnabled = true
+        internal val isRenameAdminToManagerEnabled = false
 
     }
 

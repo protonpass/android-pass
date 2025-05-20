@@ -61,7 +61,7 @@ fun AttachmentSection(
     itemDiffs: Map<AttachmentId, ItemDiffType> = emptyMap(),
     onEvent: (AttachmentContentEvent) -> Unit
 ) {
-    if (!attachmentsState.hasAnyAttachment && isDetail) return
+    if (!attachmentsState.canShowAttachmentSection(isDetail)) return
     Column(
         modifier = modifier
             .applyIf(

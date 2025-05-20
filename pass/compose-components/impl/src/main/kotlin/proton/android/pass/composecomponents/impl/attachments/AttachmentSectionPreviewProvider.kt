@@ -172,6 +172,7 @@ class AttachmentSectionPreviewProvider :
         draftAttachmentsList = draftAttachments,
         attachmentsList = attachments,
         loadingAttachments = loadingAttachments,
-        needsUpgrade = None
+        needsUpgrade = None,
+        canUpgrade = false
     )
 }

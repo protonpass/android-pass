@@ -45,6 +45,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -76,14 +77,17 @@ import me.proton.core.plan.presentation.onUpgradeResult
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
 import proton.android.pass.biometry.ResetAuthPreferences
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.InitialWorkerLauncher
 import proton.android.pass.data.api.usecases.RefreshPlan
+import proton.android.pass.domain.Plan
 import proton.android.pass.inappupdates.api.InAppUpdatesManager
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 
 @HiltViewModel
 @Suppress("LongParameterList")
@@ -93,6 +97,7 @@ class LauncherViewModel @Inject constructor(
     private val plansOrchestrator: PlansOrchestrator,
     private val userSettingsOrchestrator: UserSettingsOrchestrator,
     private val initialWorkerLauncher: InitialWorkerLauncher,
+    private val getUserPlan: GetUserPlan,
     private val refreshPlan: RefreshPlan,
     private val inAppUpdatesManager: InAppUpdatesManager,
     private val resetUserPreferences: ResetAuthPreferences,
@@ -232,11 +237,26 @@ class LauncherViewModel @Inject constructor(
                 .onUpgradeResult { result ->
                     if (result != null) {
                         viewModelScope.launch {
-                            runCatching { refreshPlan(userId) }
-                                .onFailure { e ->
-                                    PassLogger.w(TAG, "Failed refreshing plan for $userId")
-                                    PassLogger.w(TAG, e)
+                            runCatching {
+                                /*
+                                 We need to add a delay to refresh the plan since the BE
+                                 doesn't have the updated plan yet.
+                                 */
+                                val maxAttempts = 3
+                                val baseDelay = 2.seconds
+                                val previousPlan: Plan? = getUserPlan(userId).firstOrNull()
+                                repeat(maxAttempts) { attempt ->
+                                    delay(baseDelay * (attempt + 1))
+                                    refreshPlan(userId)
+                                    val currentPlan: Plan? = getUserPlan(userId).firstOrNull()
+                                    if (previousPlan?.internalName != currentPlan?.internalName) {
+                                        return@launch
+                                    }
                                 }
+                            }.onFailure { e ->
+                                PassLogger.w(TAG, "Failed refreshing plan for $userId")
+                                PassLogger.w(TAG, e)
+                            }
                         }
                     }
                 }

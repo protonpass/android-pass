@@ -21,6 +21,7 @@ package proton.android.pass.commonuimodels.api.attachments
 import androidx.compose.runtime.Immutable
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.getOrElse
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.DraftAttachment
@@ -31,7 +32,8 @@ data class AttachmentsState(
     val draftAttachmentsList: List<DraftAttachment>,
     val attachmentsList: List<Attachment>,
     val loadingAttachments: Set<AttachmentId>,
-    val needsUpgrade: Option<Boolean>
+    val needsUpgrade: Option<Boolean>,
+    val canUpgrade: Boolean
 ) {
 
     val hasAnyAttachment: Boolean
@@ -56,6 +58,16 @@ data class AttachmentsState(
     val allToUnlink: Set<AttachmentId>
         get() = attachmentsList.map { it.id }.toSet()
 
+    fun canShowAttachmentSection(isDetail: Boolean): Boolean = if (isDetail) {
+        hasAnyAttachment
+    } else when {
+        canUpgrade && needsUpgrade.getOrElse { false } || // Free account
+            !canUpgrade && !needsUpgrade.getOrElse { false } // Unlimited account
+        -> true
+
+        else -> false // Pass essentials account
+    }
+
     fun shouldDisplayDivider(index: Int): Boolean =
         index < attachmentsList.lastIndex || draftAttachmentsList.isNotEmpty()
 
@@ -64,7 +76,8 @@ data class AttachmentsState(
             draftAttachmentsList = emptyList(),
             attachmentsList = emptyList(),
             loadingAttachments = emptySet(),
-            needsUpgrade = None
+            needsUpgrade = None,
+            canUpgrade = false
         )
     }
 }

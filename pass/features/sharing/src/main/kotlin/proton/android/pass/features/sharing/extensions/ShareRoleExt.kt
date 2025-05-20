@@ -48,7 +48,7 @@ internal fun SharingType.toStringResource(isRenameActive: Boolean) = when (this)
     SharingType.Read -> R.string.sharing_can_view
     SharingType.Write -> R.string.sharing_can_edit
     SharingType.Admin -> if (isRenameActive) {
-        R.string.sharing_can_manage_V2
+        R.string.sharing_can_manage_v2
     } else {
         R.string.sharing_can_manage
     }

@@ -25,7 +25,7 @@ import proton.android.pass.autofill.entities.AssistInfo
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.entities.FieldType
-import proton.android.pass.autofill.entities.isValid
+import proton.android.pass.autofill.extensions.PackageNameUrlSuggestionAdapterImpl
 import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.common.api.None
 import proton.android.pass.domain.entity.AppName
@@ -44,7 +44,8 @@ class AutofillAppStateTest {
                 ),
                 packageInfo = PackageInfo(PackageName("some.example"), AppName("Some example")),
                 isDangerousAutofill = false
-            )
+            ),
+            packageNameUrlSuggestionAdapter = PackageNameUrlSuggestionAdapterImpl()
         )
         assertThat(state.isValid()).isFalse()
     }
@@ -70,7 +71,8 @@ class AutofillAppStateTest {
                 ),
                 packageInfo = PackageInfo(PackageName("some.example"), AppName("Some example")),
                 isDangerousAutofill = false
-            )
+            ),
+            packageNameUrlSuggestionAdapter = PackageNameUrlSuggestionAdapterImpl()
         )
         assertThat(state.isValid()).isTrue()
     }

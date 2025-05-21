@@ -282,7 +282,7 @@ class AutofillAppViewModel @Inject constructor(
         }
     }
 
-    private companion object {
+    internal companion object {
         private const val TAG = "AutofillAppViewModel"
 
         private fun shouldAskForAssociation(item: ItemContents, state: AutofillAppState): Boolean = when (item) {

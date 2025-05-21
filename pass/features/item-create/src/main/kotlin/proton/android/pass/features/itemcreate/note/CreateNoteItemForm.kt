@@ -66,6 +66,10 @@ internal fun CreateNoteItemForm(
             }
         }
 
+        val shouldApplyNoteWeight = remember(isFileAttachmentsEnabled, attachmentsState) {
+            !isFileAttachmentsEnabled || !attachmentsState.hasAnyAttachment
+        }
+
         if (isCustomItemEnabled) {
             TitleSection(
                 modifier = Modifier
@@ -84,6 +88,11 @@ internal fun CreateNoteItemForm(
                 onChange = { onEvent(NoteContentUiEvent.OnTitleChange(it)) }
             )
             RoundedNoteSection(
+                modifier = Modifier
+                    .applyIf(shouldApplyNoteWeight, ifTrue = { weight(1f) }),
+                textFieldModifier = Modifier
+                    .applyIf(shouldApplyNoteWeight, ifTrue = { weight(1f) })
+                    .fillMaxWidth(),
                 enabled = enabled,
                 value = noteItemFormState.note,
                 onChange = { onEvent(NoteContentUiEvent.OnNoteChange(it)) }
@@ -104,14 +113,11 @@ internal fun CreateNoteItemForm(
                 enabled = enabled,
                 onValueChanged = { onEvent(NoteContentUiEvent.OnTitleChange(it)) }
             )
-            val shouldApplyWeight = remember(isFileAttachmentsEnabled, attachmentsState) {
-                !isFileAttachmentsEnabled || !attachmentsState.hasAnyAttachment
-            }
             FullNoteSection(
                 modifier = Modifier
-                    .applyIf(shouldApplyWeight, ifTrue = { weight(1f) }),
+                    .applyIf(shouldApplyNoteWeight, ifTrue = { weight(1f) }),
                 textFieldModifier = Modifier
-                    .applyIf(shouldApplyWeight, ifTrue = { weight(1f) })
+                    .applyIf(shouldApplyNoteWeight, ifTrue = { weight(1f) })
                     .fillMaxWidth(),
                 enabled = enabled,
                 value = noteItemFormState.note,

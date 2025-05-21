@@ -19,7 +19,6 @@
 package proton.android.pass.features.credentials.passwords.creation.presentation
 
 import androidx.compose.runtime.Immutable
-import me.proton.core.util.kotlin.takeIfNotEmpty
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.features.itemcreate.login.InitialCreateLoginUiState
 import proton.android.pass.preferences.ThemePreference
@@ -42,13 +41,13 @@ internal sealed interface PasswordCredentialCreationState {
     ) : PasswordCredentialCreationState {
 
         internal val initialCreateLoginUiState: InitialCreateLoginUiState = InitialCreateLoginUiState(
-            title = request.domain.takeIfNotEmpty() ?: request.packageName,
+            title = request.title,
             username = request.id,
             password = request.password,
             url = request.domain,
             packageInfoUi = PackageInfoUi(
                 packageName = request.packageName,
-                appName = ""
+                appName = request.appName
             )
         )
 

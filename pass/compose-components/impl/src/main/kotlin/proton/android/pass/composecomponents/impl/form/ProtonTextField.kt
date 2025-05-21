@@ -68,6 +68,7 @@ fun ProtonTextField(
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
     singleLine: Boolean = true,
+    minLines: Int = 1,
     moveToNextOnEnter: Boolean = false,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     editable: Boolean = true,
@@ -122,6 +123,7 @@ fun ProtonTextField(
             interactionSource = interactionSource,
             visualTransformation = visualTransformation,
             singleLine = singleLine,
+            minLines = minLines,
             maxLines = maxLines,
             keyboardActions = KeyboardActions(
                 onNext = { goToNextField() },

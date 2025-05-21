@@ -96,9 +96,10 @@ abstract class BaseNoteViewModel(
         hasUserEditedContentFlow,
         attachmentsHandler.attachmentState,
         featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
+        featureFlagsRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1),
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding()
     ) { noteItemValidationErrors, isLoading, isItemSaved, hasUserEditedContent, attachmentsState,
-        isFileAttachmentsEnabled, displayFileAttachmentsOnboarding ->
+        isFileAttachmentsEnabled, isCustomItemEnabled, displayFileAttachmentsOnboarding ->
         BaseNoteUiState(
             errorList = noteItemValidationErrors,
             isLoadingState = isLoading,
@@ -106,7 +107,8 @@ abstract class BaseNoteViewModel(
             hasUserEditedContent = hasUserEditedContent,
             attachmentsState = attachmentsState,
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
-            isFileAttachmentsEnabled = isFileAttachmentsEnabled
+            isFileAttachmentsEnabled = isFileAttachmentsEnabled,
+            isCustomItemEnabled = isCustomItemEnabled
         )
     }
         .stateIn(

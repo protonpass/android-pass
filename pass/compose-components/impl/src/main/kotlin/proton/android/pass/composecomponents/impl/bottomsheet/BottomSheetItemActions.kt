@@ -309,3 +309,15 @@ fun leave(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val isDivider = false
 
 }
+
+fun noOptions(): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = {
+            BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_no_actions))
+        }
+    override val subtitle: (@Composable () -> Unit)? = null
+    override val leftIcon: (@Composable () -> Unit)? = null
+    override val endIcon: (@Composable () -> Unit)? = null
+    override val onClick: (() -> Unit)? = null
+    override val isDivider = false
+}

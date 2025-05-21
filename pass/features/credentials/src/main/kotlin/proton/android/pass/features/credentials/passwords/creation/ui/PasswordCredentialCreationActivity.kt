@@ -120,7 +120,8 @@ internal class PasswordCredentialCreationActivity : FragmentActivity() {
                             id = createPasswordRequest.id,
                             password = createPasswordRequest.password,
                             domain = createPasswordRequest.origin.orEmpty(),
-                            packageName = providerCreateCredentialRequest.callingAppInfo.packageName
+                            packageName = providerCreateCredentialRequest.callingAppInfo.packageName,
+                            context = this
                         )
                     }
             }

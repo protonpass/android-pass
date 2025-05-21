@@ -18,9 +18,24 @@
 
 package proton.android.pass.features.credentials.passwords.creation.presentation
 
+import android.content.Context
+import me.proton.core.util.kotlin.takeIfNotEmpty
+import proton.android.pass.commonui.api.AndroidUtils
+
 internal data class PasswordCredentialCreationRequest(
     internal val id: String,
     internal val password: String,
     internal val domain: String,
-    internal val packageName: String
-)
+    internal val packageName: String,
+    private val context: Context
+) {
+
+    internal val appName: String = AndroidUtils.getApplicationName(context, packageName)
+        .value()
+        .orEmpty()
+
+    internal val title: String = appName.takeIfNotEmpty()
+        ?: domain.takeIfNotEmpty()
+        ?: packageName
+
+}

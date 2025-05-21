@@ -32,13 +32,20 @@ import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.composecomponents.impl.form.TitleSection
+import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
+import proton.android.pass.features.itemcreate.note.NoteContentUiEvent.OnAttachmentEvent
 
 @Composable
 internal fun CreateNoteItemForm(
     modifier: Modifier = Modifier,
     noteItemFormState: NoteItemFormState,
     isFileAttachmentsEnabled: Boolean,
+    isCustomItemEnabled: Boolean,
     displayFileAttachmentsOnboarding: Boolean,
     attachmentsState: AttachmentsState,
     enabled: Boolean,
@@ -59,31 +66,63 @@ internal fun CreateNoteItemForm(
             }
         }
 
-        NoteTitle(
-            value = noteItemFormState.title,
-            requestFocus = true,
-            onTitleRequiredError = onTitleRequiredError,
-            enabled = enabled,
-            onValueChanged = { onEvent(NoteContentUiEvent.OnTitleChange(it)) }
-        )
-        val shouldApplyWeight = remember(isFileAttachmentsEnabled, attachmentsState) {
-            !isFileAttachmentsEnabled || !attachmentsState.hasAnyAttachment
-        }
-        FullNoteSection(
-            modifier = Modifier
-                .applyIf(shouldApplyWeight, ifTrue = { weight(1f) }),
-            textFieldModifier = Modifier
-                .applyIf(shouldApplyWeight, ifTrue = { weight(1f) })
-                .fillMaxWidth(),
-            enabled = enabled,
-            value = noteItemFormState.note,
-            onChange = { onEvent(NoteContentUiEvent.OnNoteChange(it)) }
-        )
-        if (isFileAttachmentsEnabled) {
-            AttachmentList(
-                attachmentsState = attachmentsState,
-                onEvent = onEvent
+        if (isCustomItemEnabled) {
+            TitleSection(
+                modifier = Modifier
+                    .roundedContainerNorm()
+                    .padding(
+                        start = Spacing.medium,
+                        top = Spacing.medium,
+                        end = Spacing.extraSmall,
+                        bottom = Spacing.medium
+                    ),
+                value = noteItemFormState.title,
+                requestFocus = true,
+                onTitleRequiredError = onTitleRequiredError,
+                enabled = enabled,
+                isRounded = true,
+                onChange = { onEvent(NoteContentUiEvent.OnTitleChange(it)) }
             )
+            RoundedNoteSection(
+                enabled = enabled,
+                value = noteItemFormState.note,
+                onChange = { onEvent(NoteContentUiEvent.OnNoteChange(it)) }
+            )
+            if (isFileAttachmentsEnabled) {
+                AttachmentSection(
+                    attachmentsState = attachmentsState,
+                    isDetail = false,
+                    itemColors = passItemColors(ItemCategory.Note),
+                    onEvent = { onEvent(OnAttachmentEvent(it)) }
+                )
+            }
+        } else {
+            NoteTitle(
+                value = noteItemFormState.title,
+                requestFocus = true,
+                onTitleRequiredError = onTitleRequiredError,
+                enabled = enabled,
+                onValueChanged = { onEvent(NoteContentUiEvent.OnTitleChange(it)) }
+            )
+            val shouldApplyWeight = remember(isFileAttachmentsEnabled, attachmentsState) {
+                !isFileAttachmentsEnabled || !attachmentsState.hasAnyAttachment
+            }
+            FullNoteSection(
+                modifier = Modifier
+                    .applyIf(shouldApplyWeight, ifTrue = { weight(1f) }),
+                textFieldModifier = Modifier
+                    .applyIf(shouldApplyWeight, ifTrue = { weight(1f) })
+                    .fillMaxWidth(),
+                enabled = enabled,
+                value = noteItemFormState.note,
+                onChange = { onEvent(NoteContentUiEvent.OnNoteChange(it)) }
+            )
+            if (isFileAttachmentsEnabled) {
+                AttachmentList(
+                    attachmentsState = attachmentsState,
+                    onEvent = onEvent
+                )
+            }
         }
     }
 }

@@ -35,7 +35,6 @@ import proton.android.pass.composecomponents.impl.form.NoteInputPreviewParameter
 import proton.android.pass.composecomponents.impl.form.NoteInputPreviewProvider
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
-import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.features.itemcreate.R
 
 @Composable
@@ -71,7 +70,7 @@ fun FullNoteSectionPreview(
 ) {
     PassTheme(isDark = input.first) {
         Surface {
-            SimpleNoteSection(
+            FullNoteSection(
                 value = input.second.value,
                 enabled = input.second.enabled,
                 onChange = {}

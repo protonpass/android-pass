@@ -32,6 +32,7 @@ data class BaseNoteUiState(
     val itemSavedState: ItemSavedState,
     val hasUserEditedContent: Boolean,
     val isFileAttachmentsEnabled: Boolean,
+    val isCustomItemEnabled: Boolean,
     val displayFileAttachmentsOnboarding: Boolean,
     val attachmentsState: AttachmentsState
 ) {
@@ -42,6 +43,7 @@ data class BaseNoteUiState(
             itemSavedState = ItemSavedState.Unknown,
             hasUserEditedContent = false,
             isFileAttachmentsEnabled = false,
+            isCustomItemEnabled = false,
             displayFileAttachmentsOnboarding = false,
             attachmentsState = AttachmentsState.Initial
         )

@@ -40,6 +40,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSub
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.delete
 import proton.android.pass.composecomponents.impl.bottomsheet.leave
+import proton.android.pass.composecomponents.impl.bottomsheet.noOptions
 import proton.android.pass.composecomponents.impl.bottomsheet.restore
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
@@ -93,6 +94,10 @@ fun TrashItemBottomSheetContents(
                 delete(
                     onClick = { onDeleteItem(itemUiModel) }
                 ).also(::add)
+            }
+
+            if (isEmpty()) {
+                add(noOptions())
             }
         }.let { items ->
             BottomSheetItemList(

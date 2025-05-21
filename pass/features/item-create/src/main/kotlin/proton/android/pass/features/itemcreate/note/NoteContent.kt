@@ -71,7 +71,9 @@ internal fun NoteContent(
                     onEvent(NoteContentUiEvent.OnVaultSelect(selectedShareId))
                 },
                 extraActions = {
-                    if (uiState.isFileAttachmentsEnabled) {
+                    val shouldDisplayAttachmentButton =
+                        uiState.isFileAttachmentsEnabled && !uiState.isCustomItemEnabled
+                    if (shouldDisplayAttachmentButton) {
                         Button.CircleIcon(
                             size = PassTheme.dimens.topBarButtonHeight,
                             backgroundColor = PassTheme.colors.noteInteractionNormMinor1,
@@ -98,6 +100,7 @@ internal fun NoteContent(
             noteItemFormState = noteItemFormState,
             attachmentsState = uiState.attachmentsState,
             isFileAttachmentsEnabled = uiState.isFileAttachmentsEnabled,
+            isCustomItemEnabled = uiState.isCustomItemEnabled,
             displayFileAttachmentsOnboarding = uiState.displayFileAttachmentsOnboarding,
             onTitleRequiredError = uiState.errorList.contains(BlankTitle),
             enabled = uiState.isLoadingState != IsLoadingState.Loading,

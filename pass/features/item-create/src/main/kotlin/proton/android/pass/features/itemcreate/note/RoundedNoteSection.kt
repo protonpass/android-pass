@@ -19,6 +19,8 @@
 package proton.android.pass.features.itemcreate.note
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -30,15 +32,15 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.NoteInputPreviewParameter
-import proton.android.pass.composecomponents.impl.form.NoteInputPreviewProvider
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.features.itemcreate.R
 
 @Composable
-fun FullNoteSection(
+fun RoundedNoteSection(
     modifier: Modifier = Modifier,
     textFieldModifier: Modifier = Modifier,
     value: String,
@@ -46,7 +48,10 @@ fun FullNoteSection(
     onChange: (String) -> Unit
 ) {
     ProtonTextField(
-        modifier = modifier,
+        modifier = modifier
+            .fillMaxWidth()
+            .roundedContainerNorm()
+            .padding(Spacing.medium),
         textFieldModifier = textFieldModifier,
         textStyle = ProtonTheme.typography.defaultNorm(enabled),
         placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.note_hint)) },
@@ -54,23 +59,21 @@ fun FullNoteSection(
         value = value,
         onChange = onChange,
         singleLine = false,
+        minLines = 5,
         moveToNextOnEnter = false,
         verticalArrangement = Arrangement.Top,
         keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences)
     )
 }
 
-class ThemedFullNoteInputPreviewProvider :
-    ThemePairPreviewProvider<NoteInputPreviewParameter>(NoteInputPreviewProvider())
-
 @Preview
 @Composable
-fun FullNoteSectionPreview(
+fun RoundedNoteSectionPreview(
     @PreviewParameter(ThemedFullNoteInputPreviewProvider::class) input: Pair<Boolean, NoteInputPreviewParameter>
 ) {
     PassTheme(isDark = input.first) {
         Surface {
-            FullNoteSection(
+            RoundedNoteSection(
                 value = input.second.value,
                 enabled = input.second.enabled,
                 onChange = {}

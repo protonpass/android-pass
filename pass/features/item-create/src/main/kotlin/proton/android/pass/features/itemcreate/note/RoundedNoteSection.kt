@@ -19,7 +19,6 @@
 package proton.android.pass.features.itemcreate.note
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Surface
@@ -49,7 +48,6 @@ fun RoundedNoteSection(
 ) {
     ProtonTextField(
         modifier = modifier
-            .fillMaxWidth()
             .roundedContainerNorm()
             .padding(Spacing.medium),
         textFieldModifier = textFieldModifier,

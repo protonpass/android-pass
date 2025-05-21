@@ -21,6 +21,7 @@ package proton.android.pass.autofill.extensions
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import proton.android.pass.autofill.BROWSERS
+import proton.android.pass.autofill.api.suggestions.SuggestionSource
 import proton.android.pass.domain.entity.PackageName
 
 class PackageNameUrlSuggestionAdapterTest {
@@ -30,7 +31,7 @@ class PackageNameUrlSuggestionAdapterTest {
         val packageName = PackageName("com.example.app")
         val url = "https://example.com"
 
-        val result = PackageNameUrlSuggestionAdapter.adapt(packageName, url)
+        val result = PackageNameUrlSuggestionAdapterImpl().adapt(packageName, url)
 
         assertThat(result).isInstanceOf(SuggestionSource.WithUrl::class.java)
         assertThat((result as SuggestionSource.WithUrl).url).isEqualTo(url)
@@ -41,7 +42,7 @@ class PackageNameUrlSuggestionAdapterTest {
         val packageName = PackageName("com.example.app")
         val url = ""
 
-        val result = PackageNameUrlSuggestionAdapter.adapt(packageName, url)
+        val result = PackageNameUrlSuggestionAdapterImpl().adapt(packageName, url)
 
         assertThat(result).isInstanceOf(SuggestionSource.WithPackageName::class.java)
         assertThat((result as SuggestionSource.WithPackageName).packageName).isEqualTo(packageName.value)
@@ -52,7 +53,7 @@ class PackageNameUrlSuggestionAdapterTest {
         val packageName = PackageName(BROWSERS.first())
         val url = "https://example.com"
 
-        val result = PackageNameUrlSuggestionAdapter.adapt(packageName, url)
+        val result = PackageNameUrlSuggestionAdapterImpl().adapt(packageName, url)
 
         assertThat(result).isInstanceOf(SuggestionSource.WithUrl::class.java)
         assertThat((result as SuggestionSource.WithUrl).url).isEqualTo(url)
@@ -63,7 +64,7 @@ class PackageNameUrlSuggestionAdapterTest {
         val packageName = PackageName(BROWSERS.first())
         val url = ""
 
-        val result = PackageNameUrlSuggestionAdapter.adapt(packageName, url)
+        val result = PackageNameUrlSuggestionAdapterImpl().adapt(packageName, url)
 
         assertThat(result).isInstanceOf(SuggestionSource.WithUrl::class.java)
         assertThat((result as SuggestionSource.WithUrl).url).isEqualTo(url)

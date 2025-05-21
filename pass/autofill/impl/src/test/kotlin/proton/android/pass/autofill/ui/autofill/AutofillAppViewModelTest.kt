@@ -27,6 +27,7 @@ import proton.android.pass.autofill.entities.AssistInfo
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.entities.AutofillItem
+import proton.android.pass.autofill.extensions.PackageNameUrlSuggestionAdapterImpl
 import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.common.api.None
@@ -110,7 +111,8 @@ class AutofillAppViewModelTest {
                 appName = AppName("Test app name")
             ),
             isDangerousAutofill = false
-        )
+        ),
+        packageNameUrlSuggestionAdapter = PackageNameUrlSuggestionAdapterImpl()
     )
 
 }

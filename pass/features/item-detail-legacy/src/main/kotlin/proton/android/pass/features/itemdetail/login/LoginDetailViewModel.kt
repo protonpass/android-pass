@@ -251,11 +251,13 @@ class LoginDetailViewModel @Inject constructor(
 
     private val itemFeaturesFlow: Flow<LoginItemFeatures> = combine(
         getUserPlan(),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
-    ) { userPlan, isFileAttachmentsEnabled ->
+        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
+        featureFlagsRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1)
+    ) { userPlan, isFileAttachmentsEnabled, isCustomItemEnabled ->
         LoginItemFeatures(
             isHistoryEnabled = userPlan.isPaidPlan,
-            isFileAttachmentsEnabled = isFileAttachmentsEnabled
+            isFileAttachmentsEnabled = isFileAttachmentsEnabled,
+            isCustomItemEnabled = isCustomItemEnabled
         )
     }
 

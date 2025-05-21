@@ -40,6 +40,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemLis
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemRow
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import proton.android.pass.composecomponents.impl.bottomsheet.noOptions
 import proton.android.pass.composecomponents.impl.bottomsheet.pin
 import proton.android.pass.composecomponents.impl.bottomsheet.trash
 import proton.android.pass.composecomponents.impl.bottomsheet.unpin
@@ -107,6 +108,10 @@ internal fun AliasOptionsBottomSheetContents(
 
             if (isRecentSearch) {
                 add(removeFromRecentSearch(itemUiModel, onRemoveFromRecentSearch))
+            }
+
+            if (isEmpty()) {
+                add(noOptions())
             }
         }.also { bottomSheetItems ->
             BottomSheetItemList(

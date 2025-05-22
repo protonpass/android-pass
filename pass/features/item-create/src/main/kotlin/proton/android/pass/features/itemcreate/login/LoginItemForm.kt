@@ -215,7 +215,7 @@ internal fun LoginItemForm(
                 enabled = isEditAllowed,
                 errors = customFieldValidationErrors.toPersistentSet(),
                 isVisible = true,
-                // canUseCustomFields
+                canCreateCustomFields = canUseCustomFields,
                 sectionIndex = None,
                 focusedField = (focusedField as? LoginField.CustomField)?.field.toOption(),
                 itemCategory = ItemCategory.Login,

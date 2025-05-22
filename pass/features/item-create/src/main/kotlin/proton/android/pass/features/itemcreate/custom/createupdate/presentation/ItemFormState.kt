@@ -31,9 +31,13 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.domain.ExtraSectionContent
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.WifiSecurityType
+import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
+import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.common.UIHiddenState
+import proton.android.pass.features.itemcreate.common.ValidationError
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
 import proton.android.pass.totp.api.TotpManager
 
 @Parcelize
@@ -99,9 +103,9 @@ data class ItemFormState(
         originalSections: List<UIExtraSection>,
         totpManager: TotpManager,
         encryptionContextProvider: EncryptionContextProvider
-    ): Set<ItemValidationErrors> {
-        val errors = mutableSetOf<ItemValidationErrors>()
-        if (title.isBlank()) errors.add(ItemValidationErrors.BlankTitle)
+    ): Set<ValidationError> {
+        val errors = mutableSetOf<ValidationError>()
+        if (title.isBlank()) errors.add(CommonFieldValidationError.BlankTitle)
 
         encryptionContextProvider.withEncryptionContextSuspendable {
             errors += validateTotpFields(
@@ -138,13 +142,13 @@ data class ItemFormState(
         sectionIndex: Option<Int>,
         totpManager: TotpManager,
         encryptionContext: EncryptionContext
-    ): Set<ItemValidationErrors> {
-        val errors = mutableSetOf<ItemValidationErrors>()
+    ): Set<ValidationError> {
+        val errors = mutableSetOf<ValidationError>()
         entries.forEachIndexed { index, entry ->
             if (entry !is UICustomFieldContent.Totp) return@forEachIndexed
             val decrypted = encryptionContext.decrypt(entry.value.encrypted)
             if (decrypted.isBlank()) {
-                errors.add(ItemValidationErrors.EmptyTotp(sectionIndex, index))
+                errors.add(CustomFieldValidationError.EmptyTotp(sectionIndex, index))
                 return@forEachIndexed
             }
             val original = originalEntriesById[entry.id]
@@ -155,17 +159,17 @@ data class ItemFormState(
             result.fold(
                 onSuccess = { sanitisedUri ->
                     totpManager.parse(sanitisedUri).getOrElse {
-                        errors.add(ItemValidationErrors.InvalidTotp(sectionIndex, index))
+                        errors.add(CustomFieldValidationError.InvalidTotp(sectionIndex, index))
                     }
 
                     val totpCodeResult =
                         runCatching { totpManager.observeCode(sanitisedUri).firstOrNull() }
                     if (totpCodeResult.isFailure) {
-                        errors.add(ItemValidationErrors.InvalidTotp(sectionIndex, index))
+                        errors.add(CustomFieldValidationError.InvalidTotp(sectionIndex, index))
                     }
                 },
                 onFailure = {
-                    errors.add(ItemValidationErrors.InvalidTotp(sectionIndex, index))
+                    errors.add(CustomFieldValidationError.InvalidTotp(sectionIndex, index))
                 }
             )
         }
@@ -216,7 +220,7 @@ data class ItemFormState(
         )
     }
 
-    fun findCustomField(field: FieldIdentifier): UICustomFieldContent = if (field.sectionIndex is Some) {
+    fun findCustomField(field: CustomFieldIdentifier): UICustomFieldContent = if (field.sectionIndex is Some) {
         sectionList[field.sectionIndex.value].customFields[field.index]
     } else {
         customFieldList[field.index]
@@ -232,15 +236,3 @@ data class ItemFormState(
     }
 }
 
-sealed interface ItemValidationErrors {
-    data object BlankTitle : ItemValidationErrors
-    data class EmptyTotp(
-        val sectionIndex: Option<Int>,
-        val index: Int
-    ) : ItemValidationErrors
-
-    data class InvalidTotp(
-        val sectionIndex: Option<Int>,
-        val index: Int
-    ) : ItemValidationErrors
-}

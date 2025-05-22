@@ -46,6 +46,8 @@ import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.BaseCustomItemNavigation
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.BaseCustomItemNavigation.OpenWifiSecurityTypeSelector
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.CreateCustomItemNavigation
@@ -65,7 +67,6 @@ import proton.android.pass.features.itemcreate.custom.createupdate.presentation.
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateCustomItemViewModel
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateSpecificIntent
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateSpecificIntent.OnVaultSelected
-import proton.android.pass.features.itemcreate.custom.createupdate.presentation.FieldIdentifier
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
 
@@ -105,7 +106,7 @@ fun CreateCustomItemScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
-    var showDatePickerForField: Option<FieldIdentifier> by remember { mutableStateOf(None) }
+    var showDatePickerForField: Option<CustomFieldIdentifier> by remember { mutableStateOf(None) }
 
     val onExit = {
         if (state.hasUserEdited) {
@@ -156,43 +157,51 @@ fun CreateCustomItemScreen(
                         else -> throw IllegalStateException("Ignore focus change for ${it.field}")
                     }
 
-                    is ItemContentEvent.OnAddCustomField ->
-                        actionAfterKeyboardHide = {
-                            onNavigate(BaseCustomItemNavigation.AddCustomField(it.sectionIndex))
-                        }
-
-                    is ItemContentEvent.OnCustomFieldChange -> viewModel.processIntent(
-                        OnCustomFieldChanged(
-                            field = it.field,
-                            value = it.value
-                        )
-                    )
-
-                    is ItemContentEvent.OnCustomFieldOptions ->
-                        actionAfterKeyboardHide = {
-                            onNavigate(
-                                BaseCustomItemNavigation.CustomFieldOptions(
-                                    title = it.label,
-                                    index = it.field.index,
-                                    sectionIndex = it.field.sectionIndex
+                    is ItemContentEvent.OnCustomFieldEvent -> {
+                        when (val cevent = it.event) {
+                            is CustomFieldEvent.FocusRequested -> {
+                                viewModel.processIntent(
+                                    BaseCustomItemCommonIntent.OnCustomFieldFocusedChanged(
+                                        field = cevent.field,
+                                        isFocused = cevent.isFocused
+                                    )
                                 )
-                            )
-                        }
-
-                    is ItemContentEvent.OnCustomFieldClick -> {
-                        when (it.field.type) {
-                            CustomFieldType.Date -> {
-                                showDatePickerForField = Some(it.field)
                             }
-                            else -> throw IllegalStateException("Unhandled action")
+                            is CustomFieldEvent.OnAddField -> {
+                                actionAfterKeyboardHide = {
+                                    onNavigate(BaseCustomItemNavigation.AddCustomField(cevent.sectionIndex))
+                                }
+                            }
+                            is CustomFieldEvent.OnFieldClick -> {
+                                when (cevent.field.type) {
+                                    CustomFieldType.Date -> {
+                                        showDatePickerForField = Some(cevent.field)
+                                    }
+                                    else -> throw IllegalStateException("Unhandled action")
+                                }
+                            }
+                            is CustomFieldEvent.OnFieldOptions -> {
+                                actionAfterKeyboardHide = {
+                                    onNavigate(
+                                        BaseCustomItemNavigation.CustomFieldOptions(
+                                            title = cevent.label,
+                                            index = cevent.field.index,
+                                            sectionIndex = cevent.field.sectionIndex
+                                        )
+                                    )
+                                }
+                            }
+                            is CustomFieldEvent.OnValueChange -> {
+                                viewModel.processIntent(
+                                    OnCustomFieldChanged(
+                                        field = cevent.field,
+                                        value = cevent.value
+                                    )
+                                )
+                            }
+                            CustomFieldEvent.Upgrade -> onNavigate(BaseCustomItemNavigation.Upgrade)
                         }
                     }
-                    is ItemContentEvent.OnCustomFieldFocused -> viewModel.processIntent(
-                        BaseCustomItemCommonIntent.OnCustomFieldFocusedChanged(
-                            field = it.field,
-                            isFocused = it.isFocused
-                        )
-                    )
 
                     ItemContentEvent.OnAddSection ->
                         actionAfterKeyboardHide =

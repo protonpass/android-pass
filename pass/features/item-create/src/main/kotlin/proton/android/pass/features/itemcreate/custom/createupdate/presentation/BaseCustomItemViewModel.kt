@@ -64,6 +64,8 @@ import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent.Companion.createCustomField
 import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.common.UIHiddenState
+import proton.android.pass.features.itemcreate.common.ValidationError
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnCustomFieldChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnTitleChanged
 import proton.android.pass.log.api.PassLogger
@@ -105,12 +107,12 @@ sealed interface BaseCustomItemCommonIntent : BaseItemFormIntent {
     value class OnPrivateKeyFocusedChanged(val isFocused: Boolean) : BaseCustomItemCommonIntent
 
     data class OnCustomFieldChanged(
-        val field: FieldIdentifier,
+        val field: CustomFieldIdentifier,
         val value: String
     ) : BaseCustomItemCommonIntent
 
     data class OnCustomFieldFocusedChanged(
-        val field: FieldIdentifier,
+        val field: CustomFieldIdentifier,
         val isFocused: Boolean
     ) : BaseCustomItemCommonIntent
 
@@ -167,9 +169,9 @@ abstract class BaseCustomItemViewModel(
 
     private val isLoadingState = MutableStateFlow<IsLoadingState>(IsLoadingState.NotLoading)
     private val hasUserEditedContentState = MutableStateFlow(false)
-    private val validationErrorsState = MutableStateFlow(emptySet<ItemValidationErrors>())
+    private val validationErrorsState = MutableStateFlow(emptySet<ValidationError>())
     private val isItemSavedState = MutableStateFlow<ItemSavedState>(ItemSavedState.Unknown)
-    private val focusedFieldState = MutableStateFlow<Option<FieldIdentifier>>(None)
+    private val focusedFieldState = MutableStateFlow<Option<CustomFieldIdentifier>>(None)
 
     protected fun processCommonIntent(intent: BaseCustomItemCommonIntent) {
         when (intent) {
@@ -369,7 +371,7 @@ abstract class BaseCustomItemViewModel(
                     }
                 )
                 focusedFieldState.update {
-                    FieldIdentifier(
+                    CustomFieldIdentifier(
                         sectionIndex = sectionIndex,
                         index = updatedSection.customFields.lastIndex,
                         type = type
@@ -382,7 +384,7 @@ abstract class BaseCustomItemViewModel(
                     customFieldList = itemFormState.customFieldList + field
                 )
                 focusedFieldState.update {
-                    FieldIdentifier(
+                    CustomFieldIdentifier(
                         sectionIndex = sectionIndex,
                         index = itemFormState.customFieldList.lastIndex,
                         type = type
@@ -392,30 +394,30 @@ abstract class BaseCustomItemViewModel(
         }
     }
 
-    private fun onCustomFieldFocusedChanged(fieldIdentifier: FieldIdentifier, isFocused: Boolean) {
-        if (fieldIdentifier.type == CustomFieldType.Totp) return
-        when (fieldIdentifier.sectionIndex) {
+    private fun onCustomFieldFocusedChanged(customFieldIdentifier: CustomFieldIdentifier, isFocused: Boolean) {
+        if (customFieldIdentifier.type == CustomFieldType.Totp) return
+        when (customFieldIdentifier.sectionIndex) {
             None -> {
                 itemFormState = itemFormState.copy(
                     customFieldList = itemFormState.customFieldList.mapIndexed fields@{ customFieldIndex, field ->
-                        updateFocus(customFieldIndex, fieldIdentifier.index, field, isFocused)
+                        updateFocus(customFieldIndex, customFieldIdentifier.index, field, isFocused)
                     }
                 )
             }
 
             is Some -> {
-                val sectionPos = fieldIdentifier.sectionIndex.value() ?: 0
+                val sectionPos = customFieldIdentifier.sectionIndex.value() ?: 0
                 if (sectionPos >= itemFormState.sectionList.size) return
 
                 itemFormState = itemFormState.copy(
                     sectionList = itemFormState.sectionList.mapIndexed sections@{ index, section ->
-                        if (index != fieldIdentifier.index) return@sections section
+                        if (index != customFieldIdentifier.index) return@sections section
 
                         val updatedFields =
                             section.customFields.mapIndexed fields@{ customFieldIndex, field ->
                                 updateFocus(
                                     customFieldIndex,
-                                    fieldIdentifier.index,
+                                    customFieldIdentifier.index,
                                     field,
                                     isFocused
                                 )
@@ -428,10 +430,10 @@ abstract class BaseCustomItemViewModel(
         }
 
         focusedFieldState.update {
-            FieldIdentifier(
-                fieldIdentifier.sectionIndex,
-                fieldIdentifier.index,
-                fieldIdentifier.type
+            CustomFieldIdentifier(
+                customFieldIdentifier.sectionIndex,
+                customFieldIdentifier.index,
+                customFieldIdentifier.type
             )
                 .takeIf { isFocused }
                 .toOption()
@@ -503,7 +505,7 @@ abstract class BaseCustomItemViewModel(
         isItemSavedState.update { itemSavedState }
     }
 
-    private fun onCustomFieldChange(field: FieldIdentifier, value: String) {
+    private fun onCustomFieldChange(field: CustomFieldIdentifier, value: String) {
         onUserEditedContent()
         updateContent(field.sectionIndex, field.index, value)
     }

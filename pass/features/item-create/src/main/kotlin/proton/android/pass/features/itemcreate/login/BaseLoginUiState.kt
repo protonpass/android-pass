@@ -31,11 +31,12 @@ import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.OpenScanState
 import proton.android.pass.features.itemcreate.alias.AliasItemFormState
 import proton.android.pass.features.itemcreate.common.ShareUiState
+import proton.android.pass.features.itemcreate.common.ValidationError
 
 @Immutable
 internal data class BaseLoginUiState(
     val aliasItemFormState: AliasItemFormState?,
-    val validationErrors: PersistentSet<LoginItemValidationErrors>,
+    val validationErrors: PersistentSet<ValidationError>,
     val isLoadingState: IsLoadingState,
     val isItemSaved: ItemSavedState,
     val openScanState: OpenScanState,

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.custom.createupdate.ui
+package proton.android.pass.features.itemcreate.common.customfields
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,28 +36,25 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.R
+import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
-import proton.android.pass.features.itemcreate.common.customfields.AddCustomFieldButton
-import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEntry
-import proton.android.pass.features.itemcreate.custom.createupdate.presentation.FieldIdentifier
-import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemValidationErrors
 
 @Suppress("LongParameterList", "LongMethod")
 internal fun LazyListScope.customFieldsList(
     customFields: List<UICustomFieldContent>,
     enabled: Boolean,
-    errors: PersistentSet<ItemValidationErrors>,
+    errors: PersistentSet<CustomFieldValidationError>,
     isVisible: Boolean,
     sectionIndex: Option<Int>,
-    focusedField: Option<FieldIdentifier>,
-    onEvent: (ItemContentEvent) -> Unit
+    focusedField: Option<CustomFieldIdentifier>,
+    onEvent: (CustomFieldEvent) -> Unit
 ) {
     itemsIndexed(
         items = customFields,
         key = { index, _ -> "${sectionIndex.getOrElse { -1 }}/$index" }
     ) { index, entry ->
         val focusRequester = remember { FocusRequester() }
-        val field = FieldIdentifier(
+        val field = CustomFieldIdentifier(
             sectionIndex = sectionIndex,
             index = index,
             type = entry.toCustomFieldType()
@@ -75,27 +72,27 @@ internal fun LazyListScope.customFieldsList(
                 entry = entry,
                 canEdit = enabled,
                 showLeadingIcon = false,
-                isError = errors.contains(ItemValidationErrors.EmptyTotp(sectionIndex, index)) ||
-                    errors.contains(ItemValidationErrors.InvalidTotp(sectionIndex, index)),
+                isError = errors.contains(CustomFieldValidationError.EmptyTotp(sectionIndex, index)) ||
+                    errors.contains(CustomFieldValidationError.InvalidTotp(sectionIndex, index)),
                 errorMessage = when {
-                    errors.contains(ItemValidationErrors.EmptyTotp(sectionIndex, index)) ->
+                    errors.contains(CustomFieldValidationError.EmptyTotp(sectionIndex, index)) ->
                         stringResource(R.string.field_cannot_be_empty)
-                    errors.contains(ItemValidationErrors.InvalidTotp(sectionIndex, index)) ->
+                    errors.contains(CustomFieldValidationError.InvalidTotp(sectionIndex, index)) ->
                         stringResource(R.string.create_login_invalid_totp)
                     else -> ""
                 },
                 index = index,
                 onValueChange = { newValue ->
-                    onEvent(ItemContentEvent.OnCustomFieldChange(field, newValue))
+                    onEvent(CustomFieldEvent.OnValueChange(field, newValue))
                 },
                 onClick = {
-                    onEvent(ItemContentEvent.OnCustomFieldClick(field))
+                    onEvent(CustomFieldEvent.OnFieldClick(field))
                 },
                 onFocusChange = { _, isFocused ->
-                    onEvent(ItemContentEvent.OnCustomFieldFocused(field, isFocused))
+                    onEvent(CustomFieldEvent.FocusRequested(field, isFocused))
                 },
                 onOptionsClick = {
-                    onEvent(ItemContentEvent.OnCustomFieldOptions(field, entry.label))
+                    onEvent(CustomFieldEvent.OnFieldOptions(field, entry.label))
                 }
             )
         }
@@ -115,7 +112,7 @@ internal fun LazyListScope.customFieldsList(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
                 isEnabled = enabled,
                 passItemColors = passItemColors(ItemCategory.Custom),
-                onClick = { onEvent(ItemContentEvent.OnAddCustomField(sectionIndex)) }
+                onClick = { onEvent(CustomFieldEvent.OnAddField(sectionIndex)) }
             )
         }
     }

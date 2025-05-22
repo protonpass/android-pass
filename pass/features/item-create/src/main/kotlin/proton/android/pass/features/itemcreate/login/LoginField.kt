@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.itemcreate.login
 
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
 
 internal sealed interface LoginField {
 
@@ -31,19 +32,6 @@ internal sealed interface LoginField {
 
     data object PrimaryTotp : LoginField
 
-}
-
-internal sealed interface LoginCustomField : LoginField {
-
-    val index: Int
-
     @JvmInline
-    value class CustomFieldText(override val index: Int) : LoginCustomField
-
-    @JvmInline
-    value class CustomFieldHidden(override val index: Int) : LoginCustomField
-
-    @JvmInline
-    value class CustomFieldTOTP(override val index: Int) : LoginCustomField
-
+    value class CustomField(val field: CustomFieldIdentifier) : LoginField
 }

@@ -30,8 +30,10 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.CreateUpdateTopBar
-import proton.android.pass.features.itemcreate.login.LoginItemValidationErrors.InvalidUrl
+import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
+import proton.android.pass.features.itemcreate.common.LoginItemValidationError
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -82,7 +84,7 @@ internal fun LoginContent(
             canUseCustomFields = uiState.canUseCustomFields,
             totpUiState = uiState.totpUiState,
             customFieldValidationErrors = uiState.validationErrors
-                .filterIsInstance<LoginItemValidationErrors.CustomFieldValidationError>()
+                .filterIsInstance<CustomFieldValidationError>()
                 .toPersistentList(),
             focusedField = uiState.focusedField,
             showCreateAliasButton = showCreateAliasButton,
@@ -90,12 +92,12 @@ internal fun LoginContent(
             primaryEmail = uiState.primaryEmail,
             isUpdate = isUpdate,
             isEditAllowed = uiState.isLoadingState == IsLoadingState.NotLoading,
-            isTotpError = uiState.validationErrors.contains(LoginItemValidationErrors.InvalidTotp),
-            isTitleError = uiState.validationErrors.contains(LoginItemValidationErrors.BlankTitle),
+            isTotpError = uiState.validationErrors.contains(LoginItemValidationError.InvalidTotp),
+            isTitleError = uiState.validationErrors.contains(CommonFieldValidationError.BlankTitle),
             focusLastWebsite = uiState.focusLastWebsite,
             websitesWithErrors = uiState.validationErrors
-                .filterIsInstance<InvalidUrl>()
-                .map { it.index }
+                .filterIsInstance<LoginItemValidationError.InvalidUrl>()
+                .map(LoginItemValidationError.InvalidUrl::index)
                 .toPersistentList(),
             selectedShareId = selectedShareId,
             hasReachedAliasLimit = uiState.hasReachedAliasLimit,

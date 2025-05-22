@@ -40,6 +40,7 @@ fun AttachmentList(
     attachmentsState: AttachmentsState,
     onEvent: (NoteContentUiEvent) -> Unit
 ) {
+    if (!attachmentsState.canShowAttachmentSection(false)) return
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(Spacing.small)

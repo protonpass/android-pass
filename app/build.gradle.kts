@@ -395,6 +395,7 @@ dependencies {
     implementation(libs.core.config.data)
     implementation(libs.core.biometric)
     implementation(libs.core.deviceMigration)
+    implementation(libs.core.passValidator)
     addDevBlackImplementation(
         default = libs.core.config.dagger.staticDefaults,
         devBlack = libs.core.config.dagger.contentProvider

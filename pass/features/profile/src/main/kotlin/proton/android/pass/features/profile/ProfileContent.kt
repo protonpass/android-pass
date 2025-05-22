@@ -114,9 +114,7 @@ internal fun ProfileContent(
                                 isExpanded = false
                             }
                         )
-                        SignInToAnotherDeviceSection(
-                            onLogOut = { onEvent(AccountSwitchEvent.OnSignOut(it)) }
-                        )
+                        SignInToAnotherDeviceSection()
                     }
                 }
 

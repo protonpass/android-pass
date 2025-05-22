@@ -177,6 +177,7 @@ internal fun ItemForm(
                     .filterIsInstance<CustomFieldValidationError>()
                     .toPersistentSet(),
                 isVisible = true,
+                canCreateCustomFields = true,
                 sectionIndex = None,
                 focusedField = itemSharedProperties.focusedField,
                 itemCategory = ItemCategory.Custom,
@@ -209,6 +210,7 @@ internal fun ItemForm(
                         .filterIsInstance<CustomFieldValidationError>()
                         .toPersistentSet(),
                     isVisible = !isGroupCollapsed.contains(sectionIndex),
+                    canCreateCustomFields = true,
                     sectionIndex = sectionIndex.some(),
                     focusedField = itemSharedProperties.focusedField,
                     itemCategory = ItemCategory.Custom,

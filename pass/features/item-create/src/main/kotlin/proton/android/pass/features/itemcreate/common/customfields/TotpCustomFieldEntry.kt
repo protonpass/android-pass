@@ -161,8 +161,6 @@ internal fun TotpCustomFieldEntryPreview(
                     is CustomFieldValidationError.InvalidTotp ->
                         stringResource(R.string.totp_create_login_field_invalid)
 
-                    is CustomFieldValidationError.EmptyTotp -> TODO()
-
                     null -> ""
                 },
                 canEdit = customFieldInput.isEnabled,

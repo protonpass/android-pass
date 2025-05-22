@@ -25,7 +25,6 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performTextReplacement
-import androidx.test.espresso.Espresso
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -233,15 +232,10 @@ class CreateLoginScreenTest {
             onNode(hasText("https://")).performTextReplacement(website2)
             waitUntilExists(hasText(website2))
 
-            Espresso.closeSoftKeyboard()
-
-
             // Note
             val noteText = activity.getString(CompR.string.field_note_title)
-            onNode(hasText(noteText)).performScrollTo()
+            onNode(hasText(noteText)).performScrollTo().performClick()
             writeTextAndWait(hasText(noteText), note)
-
-            Espresso.closeSoftKeyboard()
 
             onNode(hasText(buttonText)).performClick()
 

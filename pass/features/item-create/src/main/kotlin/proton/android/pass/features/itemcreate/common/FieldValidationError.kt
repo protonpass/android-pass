@@ -31,9 +31,6 @@ sealed interface CustomFieldValidationError : ValidationError {
     data class EmptyField(val sectionIndex: Option<Int> = None, val index: Int) :
         CustomFieldValidationError
 
-    data class EmptyTotp(val sectionIndex: Option<Int> = None, val index: Int) :
-        CustomFieldValidationError
-
     data class InvalidTotp(val sectionIndex: Option<Int> = None, val index: Int) :
         CustomFieldValidationError
 }
@@ -43,5 +40,3 @@ sealed interface LoginItemValidationError : ValidationError {
     value class InvalidUrl(val index: Int) : LoginItemValidationError
     data object InvalidTotp : LoginItemValidationError
 }
-
-sealed interface CustomItemValidationError : CustomFieldValidationError, CommonFieldValidationError

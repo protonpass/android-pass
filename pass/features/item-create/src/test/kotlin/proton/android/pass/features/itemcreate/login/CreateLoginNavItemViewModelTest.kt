@@ -62,7 +62,9 @@ import proton.android.pass.features.itemcreate.alias.AliasItemFormState
 import proton.android.pass.features.itemcreate.alias.AliasMailboxUiModel
 import proton.android.pass.features.itemcreate.alias.AliasOptionsUiModel
 import proton.android.pass.features.itemcreate.alias.AliasSuffixUiModel
+import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
+import proton.android.pass.features.itemcreate.common.LoginItemValidationError
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
@@ -151,7 +153,7 @@ internal class CreateLoginNavItemViewModelTest {
                             currentVault = vaultWithItemCount
                         ),
                         BaseLoginUiState.Initial.copy(
-                            validationErrors = persistentSetOf(LoginItemValidationErrors.BlankTitle),
+                            validationErrors = persistentSetOf(CommonFieldValidationError.BlankTitle),
                             totpUiState = TotpUiState.Success
                         )
                     )
@@ -303,7 +305,7 @@ internal class CreateLoginNavItemViewModelTest {
 
             assertThat(item.baseLoginUiState.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
             assertThat(item.baseLoginUiState.validationErrors).isEqualTo(
-                setOf(LoginItemValidationErrors.InvalidTotp)
+                setOf(LoginItemValidationError.InvalidTotp)
             )
 
             val message = snackbarDispatcher.snackbarMessage.first().value()!!

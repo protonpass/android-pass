@@ -70,6 +70,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.attachments.Attachment
@@ -79,12 +80,16 @@ import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.OpenScanState
 import proton.android.pass.features.itemcreate.alias.AliasItemFormState
 import proton.android.pass.features.itemcreate.alias.CreateAliasViewModel
+import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
 import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
+import proton.android.pass.features.itemcreate.common.LoginItemValidationError
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent.Companion.createCustomField
 import proton.android.pass.features.itemcreate.common.UIHiddenState
-import proton.android.pass.features.itemcreate.login.LoginItemValidationErrors.CustomFieldValidationError
+import proton.android.pass.features.itemcreate.common.ValidationError
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
@@ -188,7 +193,7 @@ abstract class BaseLoginViewModel(
         val openScanState: OpenScanState
     )
 
-    private val loginItemValidationErrorsState: MutableStateFlow<Set<LoginItemValidationErrors>> =
+    private val loginItemValidationErrorsState: MutableStateFlow<Set<ValidationError>> =
         MutableStateFlow(emptySet())
     private val focusLastWebsiteState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     protected val canUpdateUsernameState: MutableStateFlow<Boolean> = MutableStateFlow(true)
@@ -274,7 +279,7 @@ abstract class BaseLoginViewModel(
     internal fun onTitleChange(value: String) {
         onUserEditedContent()
         loginItemFormMutableState = loginItemFormMutableState.copy(title = value)
-        removeValidationErrors(LoginItemValidationErrors.BlankTitle)
+        removeValidationErrors(CommonFieldValidationError.BlankTitle)
 
         val aliasItem = aliasLocalItemState.value
         if (aliasItem is Some) {
@@ -335,7 +340,7 @@ abstract class BaseLoginViewModel(
                 primaryTotp = UIHiddenState.Revealed(encrypt(newValue), newValue)
             )
         }
-        removeValidationErrors(LoginItemValidationErrors.InvalidTotp)
+        removeValidationErrors(LoginItemValidationError.InvalidTotp)
     }
 
     internal fun onWebsiteChange(value: String, index: Int) {
@@ -349,7 +354,7 @@ abstract class BaseLoginViewModel(
                     }
                 }
         )
-        removeValidationErrors(LoginItemValidationErrors.InvalidUrl(index))
+        removeValidationErrors(LoginItemValidationError.InvalidUrl(index))
         focusLastWebsiteState.update { false }
     }
 
@@ -368,7 +373,7 @@ abstract class BaseLoginViewModel(
                 urls = loginItemFormState.urls.toMutableList()
                     .apply { removeAt(index) }
             )
-            removeValidationErrors(LoginItemValidationErrors.InvalidUrl(index))
+            removeValidationErrors(LoginItemValidationError.InvalidUrl(index))
         }
 
         focusLastWebsiteState.update { false }
@@ -448,7 +453,7 @@ abstract class BaseLoginViewModel(
         return true
     }
 
-    private fun removeValidationErrors(vararg errors: LoginItemValidationErrors) {
+    private fun removeValidationErrors(vararg errors: ValidationError) {
         loginItemValidationErrorsState.update { currentLoginValidationErrors ->
             currentLoginValidationErrors.toMutableSet().apply {
                 errors.forEach { error -> remove(error) }
@@ -457,7 +462,7 @@ abstract class BaseLoginViewModel(
     }
 
     private suspend fun showInvalidTOTP(): Boolean {
-        addValidationError(LoginItemValidationErrors.InvalidTotp)
+        addValidationError(LoginItemValidationError.InvalidTotp)
         snackbarDispatcher(LoginSnackbarMessages.InvalidTotpError)
         return false
     }
@@ -509,7 +514,7 @@ abstract class BaseLoginViewModel(
         }
 
         if (content.isBlank()) {
-            addValidationError(CustomFieldValidationError.EmptyField(index))
+            addValidationError(CustomFieldValidationError.EmptyField(None, index))
             return field to true
         }
 
@@ -523,18 +528,18 @@ abstract class BaseLoginViewModel(
         }
         val sanitisedUri = totpManager.sanitiseToSave(originalUri, content)
             .getOrElse { _ ->
-                addValidationError(CustomFieldValidationError.InvalidTotp(index))
+                addValidationError(CustomFieldValidationError.InvalidTotp(None, index))
                 return field to true
             }
         if (sanitisedUri.isNotBlank()) {
             totpManager.parse(sanitisedUri).getOrElse {
-                addValidationError(CustomFieldValidationError.InvalidTotp(index))
+                addValidationError(CustomFieldValidationError.InvalidTotp(None, index))
                 return field to true
             }
 
             val totpCodeResult = runCatching { totpManager.observeCode(sanitisedUri).firstOrNull() }
             if (totpCodeResult.isFailure) {
-                addValidationError(CustomFieldValidationError.InvalidTotp(index))
+                addValidationError(CustomFieldValidationError.InvalidTotp(None, index))
                 return field to true
             }
         }
@@ -591,10 +596,9 @@ abstract class BaseLoginViewModel(
                     encrypt(sanitisedContent)
                 }
                 withContext(Dispatchers.Main) {
-                    when (focusedFieldFlow.value.value()) {
-                        is LoginCustomField.CustomFieldTOTP -> {
-                            val customFieldTOTP =
-                                focusedFieldFlow.value.value() as? LoginCustomField.CustomFieldTOTP
+                    when (val field = focusedFieldFlow.value.value()) {
+                        is LoginField.CustomField -> {
+                            val customFieldTOTP = field.field.takeIf { it.type == CustomFieldType.Totp }
                             val customFields = loginItemFormState.customFields
                             if (customFieldTOTP != null && customFields.size - 1 >= customFieldTOTP.index) {
                                 val updatedCustomFields = customFields.toMutableList()
@@ -646,8 +650,8 @@ abstract class BaseLoginViewModel(
         if (index >= loginItemFormState.customFields.size) return@launch
 
         removeValidationErrors(
-            CustomFieldValidationError.EmptyField(index),
-            CustomFieldValidationError.InvalidTotp(index)
+            CustomFieldValidationError.EmptyField(None, index),
+            CustomFieldValidationError.InvalidTotp(None, index)
         )
 
         val customFields = loginItemFormState.customFields.toMutableList()
@@ -770,15 +774,30 @@ abstract class BaseLoginViewModel(
 
         when (loginItemFormState.customFields.getOrNull(index)) {
             is UICustomFieldContent.Hidden -> focusedFieldFlow.update {
-                LoginCustomField.CustomFieldHidden(index).some()
+                LoginField.CustomField(
+                    field = CustomFieldIdentifier(
+                        index = index,
+                        type = CustomFieldType.Hidden
+                    )
+                ).some()
             }
 
             is UICustomFieldContent.Text -> focusedFieldFlow.update {
-                LoginCustomField.CustomFieldText(index).some()
+                LoginField.CustomField(
+                    field = CustomFieldIdentifier(
+                        index = index,
+                        type = CustomFieldType.Text
+                    )
+                ).some()
             }
 
             is UICustomFieldContent.Totp -> focusedFieldFlow.update {
-                LoginCustomField.CustomFieldTOTP(index).some()
+                LoginField.CustomField(
+                    field = CustomFieldIdentifier(
+                        index = index,
+                        type = CustomFieldType.Totp
+                    )
+                ).some()
             }
 
             is UICustomFieldContent.Date -> throw IllegalStateException("Date field not supported")
@@ -800,15 +819,30 @@ abstract class BaseLoginViewModel(
         val index = loginItemFormState.customFields.size - 1
         when (field) {
             is UICustomFieldContent.Hidden -> focusedFieldFlow.update {
-                LoginCustomField.CustomFieldHidden(index).some()
+                LoginField.CustomField(
+                    field = CustomFieldIdentifier(
+                        index = index,
+                        type = CustomFieldType.Hidden
+                    )
+                ).some()
             }
 
             is UICustomFieldContent.Text -> focusedFieldFlow.update {
-                LoginCustomField.CustomFieldText(index).some()
+                LoginField.CustomField(
+                    field = CustomFieldIdentifier(
+                        index = index,
+                        type = CustomFieldType.Text
+                    )
+                ).some()
             }
 
             is UICustomFieldContent.Totp -> focusedFieldFlow.update {
-                LoginCustomField.CustomFieldTOTP(index).some()
+                LoginField.CustomField(
+                    field = CustomFieldIdentifier(
+                        index = index,
+                        type = CustomFieldType.Totp
+                    )
+                ).some()
             }
 
             is UICustomFieldContent.Date ->
@@ -820,15 +854,15 @@ abstract class BaseLoginViewModel(
         when (field) {
             LoginField.Password -> updatePasswordOnFocusChange(isFocused)
             LoginField.PrimaryTotp -> updatePrimaryTotpOnFocusChange()
-            is LoginCustomField.CustomFieldHidden ->
-                updateCustomFieldHiddenOnFocusChange(field, isFocused)
-
+            is LoginField.CustomField -> when (field.field.type) {
+                CustomFieldType.Hidden -> updateCustomFieldHiddenOnFocusChange(field.field, isFocused)
+                else -> {}
+            }
             LoginField.Email,
             LoginField.Username,
-            is LoginCustomField.CustomFieldTOTP,
-            is LoginCustomField.CustomFieldText,
             LoginField.Title -> {
             }
+
         }
         if (isFocused) {
             focusedFieldFlow.update { field.some() }
@@ -849,7 +883,7 @@ abstract class BaseLoginViewModel(
         loginItemFormMutableState = loginItemFormState.copy(isExpandedByUser = true)
     }
 
-    private fun updateCustomFieldHiddenOnFocusChange(field: LoginCustomField.CustomFieldHidden, isFocused: Boolean) {
+    private fun updateCustomFieldHiddenOnFocusChange(field: CustomFieldIdentifier, isFocused: Boolean) {
         val customFields = loginItemFormState.customFields.toMutableList()
         val customFieldContent: UICustomFieldContent.Hidden? = customFields.getOrNull(field.index)
             as? UICustomFieldContent.Hidden
@@ -908,7 +942,7 @@ abstract class BaseLoginViewModel(
             }
     }
 
-    private fun addValidationError(error: LoginItemValidationErrors) {
+    private fun addValidationError(error: ValidationError) {
         loginItemValidationErrorsState.update { errors ->
             errors.toMutableSet().apply { add(error) }
         }

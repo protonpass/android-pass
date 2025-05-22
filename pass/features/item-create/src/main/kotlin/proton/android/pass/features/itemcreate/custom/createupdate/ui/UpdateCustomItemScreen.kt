@@ -44,6 +44,8 @@ import proton.android.pass.domain.WifiSecurityType
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.BaseCustomItemNavigation
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.BaseCustomItemNavigation.OpenWifiSecurityTypeSelector
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.CreateCustomItemNavigation
@@ -60,7 +62,6 @@ import proton.android.pass.features.itemcreate.custom.createupdate.presentation.
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnSSIDChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnTitleChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnWifiSecurityTypeChanged
-import proton.android.pass.features.itemcreate.custom.createupdate.presentation.FieldIdentifier
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.UpdateCustomItemViewModel
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.UpdateSpecificIntent
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
@@ -82,7 +83,7 @@ fun UpdateCustomItemScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
-    var showDatePickerForField: Option<FieldIdentifier> by remember { mutableStateOf(None) }
+    var showDatePickerForField: Option<CustomFieldIdentifier> by remember { mutableStateOf(None) }
 
     val onExit = {
         if (state.hasUserEdited) {
@@ -145,39 +146,36 @@ fun UpdateCustomItemScreen(
 
                         else -> throw IllegalStateException("Ignore focus change for ${it.field}")
                     }
-
-                    is ItemContentEvent.OnAddCustomField ->
-                        actionAfterKeyboardHide = {
-                            onNavigate(BaseCustomItemNavigation.AddCustomField(it.sectionIndex))
+                    is ItemContentEvent.OnCustomFieldEvent -> when (val cevent = it.event) {
+                        is CustomFieldEvent.FocusRequested -> viewModel.processIntent(
+                            BaseCustomItemCommonIntent.OnCustomFieldFocusedChanged(
+                                field = cevent.field,
+                                isFocused = cevent.isFocused
+                            )
+                        )
+                        is CustomFieldEvent.OnAddField -> actionAfterKeyboardHide = {
+                            onNavigate(BaseCustomItemNavigation.AddCustomField(cevent.sectionIndex))
                         }
-
-                    is ItemContentEvent.OnCustomFieldChange ->
-                        viewModel.processIntent(OnCustomFieldChanged(it.field, it.value))
-
-                    is ItemContentEvent.OnCustomFieldOptions ->
-                        actionAfterKeyboardHide = {
+                        is CustomFieldEvent.OnFieldClick -> when (cevent.field.type) {
+                            CustomFieldType.Date -> {
+                                showDatePickerForField = Some(cevent.field)
+                            }
+                            else -> throw IllegalStateException("Unhandled action")
+                        }
+                        is CustomFieldEvent.OnFieldOptions -> actionAfterKeyboardHide = {
                             onNavigate(
                                 BaseCustomItemNavigation.CustomFieldOptions(
-                                    title = it.label,
-                                    index = it.field.index,
-                                    sectionIndex = it.field.sectionIndex
+                                    title = cevent.label,
+                                    index = cevent.field.index,
+                                    sectionIndex = cevent.field.sectionIndex
                                 )
                             )
                         }
-
-                    is ItemContentEvent.OnCustomFieldClick -> when (it.field.type) {
-                        CustomFieldType.Date -> {
-                            showDatePickerForField = Some(it.field)
-                        }
-                        else -> throw IllegalStateException("Unhandled action")
-                    }
-
-                    is ItemContentEvent.OnCustomFieldFocused -> viewModel.processIntent(
-                        BaseCustomItemCommonIntent.OnCustomFieldFocusedChanged(
-                            field = it.field,
-                            isFocused = it.isFocused
+                        is CustomFieldEvent.OnValueChange -> viewModel.processIntent(
+                            OnCustomFieldChanged(cevent.field, cevent.value)
                         )
-                    )
+                        CustomFieldEvent.Upgrade -> onNavigate(BaseCustomItemNavigation.Upgrade)
+                    }
 
                     ItemContentEvent.OnAddSection ->
                         actionAfterKeyboardHide =

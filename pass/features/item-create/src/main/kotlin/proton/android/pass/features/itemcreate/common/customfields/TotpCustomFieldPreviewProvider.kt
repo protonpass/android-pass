@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,11 +16,11 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.login.customfields
+package proton.android.pass.features.itemcreate.common.customfields
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
-import proton.android.pass.features.itemcreate.login.LoginItemValidationErrors
+import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
 
 internal class ThemeTotpCustomFieldInput :
     ThemePairPreviewProvider<TotpCustomFieldInput>(TotpCustomFieldPreviewProvider())
@@ -37,7 +37,7 @@ internal class TotpCustomFieldPreviewProvider : PreviewParameterProvider<TotpCus
                     TotpCustomFieldInput(
                         text,
                         false,
-                        LoginItemValidationErrors.CustomFieldValidationError.EmptyField(1),
+                        CustomFieldValidationError.EmptyField(index = 1),
                         showLeadingIcon
                     )
                 )
@@ -45,7 +45,7 @@ internal class TotpCustomFieldPreviewProvider : PreviewParameterProvider<TotpCus
                     TotpCustomFieldInput(
                         text,
                         false,
-                        LoginItemValidationErrors.CustomFieldValidationError.InvalidTotp(1),
+                        CustomFieldValidationError.InvalidTotp(index = 1),
                         showLeadingIcon
                     )
                 )
@@ -57,6 +57,6 @@ internal class TotpCustomFieldPreviewProvider : PreviewParameterProvider<TotpCus
 internal data class TotpCustomFieldInput(
     val text: String,
     val isEnabled: Boolean,
-    val error: LoginItemValidationErrors.CustomFieldValidationError?,
+    val error: CustomFieldValidationError?,
     val showLeadingIcon: Boolean = true
 )

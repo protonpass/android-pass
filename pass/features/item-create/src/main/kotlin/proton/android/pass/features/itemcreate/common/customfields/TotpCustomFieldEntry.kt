@@ -46,12 +46,9 @@ import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.R
+import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
-import proton.android.pass.features.itemcreate.login.LoginItemValidationErrors
-import proton.android.pass.features.itemcreate.login.customfields.CustomFieldOptionsButton
-import proton.android.pass.features.itemcreate.login.customfields.ThemeTotpCustomFieldInput
-import proton.android.pass.features.itemcreate.login.customfields.TotpCustomFieldInput
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -158,11 +155,13 @@ internal fun TotpCustomFieldEntryPreview(
                 ),
                 isError = customFieldInput.error != null,
                 errorMessage = when (customFieldInput.error) {
-                    is LoginItemValidationErrors.CustomFieldValidationError.EmptyField ->
+                    is CustomFieldValidationError.EmptyField ->
                         stringResource(R.string.field_cannot_be_empty)
 
-                    is LoginItemValidationErrors.CustomFieldValidationError.InvalidTotp ->
+                    is CustomFieldValidationError.InvalidTotp ->
                         stringResource(R.string.totp_create_login_field_invalid)
+
+                    is CustomFieldValidationError.EmptyTotp -> TODO()
 
                     null -> ""
                 },

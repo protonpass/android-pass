@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,23 +16,33 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.login.customfields
+package proton.android.pass.features.itemcreate.common.customfields
 
-import proton.android.pass.features.itemcreate.login.LoginCustomField
+import proton.android.pass.common.api.Option
 
 internal sealed interface CustomFieldEvent {
 
-    data object AddCustomField : CustomFieldEvent
+    @JvmInline
+    value class OnAddField(val sectionIndex: Option<Int>) : CustomFieldEvent
 
     data object Upgrade : CustomFieldEvent
 
-    data class OnValueChange(val value: String, val index: Int) : CustomFieldEvent
+    data class OnValueChange(
+        val field: CustomFieldIdentifier,
+        val value: String
+    ) : CustomFieldEvent
 
-    data class OnCustomFieldOptions(val currentLabel: String, val index: Int) : CustomFieldEvent
+    data class OnFieldOptions(
+        val field: CustomFieldIdentifier,
+        val label: String
+    ) : CustomFieldEvent
 
     data class FocusRequested(
-        val loginCustomField: LoginCustomField,
+        val field: CustomFieldIdentifier,
         val isFocused: Boolean
     ) : CustomFieldEvent
+
+    @JvmInline
+    value class OnFieldClick(val field: CustomFieldIdentifier) : CustomFieldEvent
 
 }

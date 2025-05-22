@@ -18,29 +18,7 @@
 
 package proton.android.pass.features.itemcreate.login.customfields
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.res.stringResource
-import kotlinx.collections.immutable.ImmutableList
-import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
-import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.utils.passItemColors
-import proton.android.pass.domain.items.ItemCategory
-import proton.android.pass.features.itemcreate.R
-import proton.android.pass.features.itemcreate.common.UICustomFieldContent
-import proton.android.pass.features.itemcreate.common.customfields.AddCustomFieldButton
-import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEntry
-import proton.android.pass.features.itemcreate.login.LoginCustomField
-import proton.android.pass.features.itemcreate.login.LoginCustomField.CustomFieldHidden
-import proton.android.pass.features.itemcreate.login.LoginCustomField.CustomFieldTOTP
-import proton.android.pass.features.itemcreate.login.LoginCustomField.CustomFieldText
-import proton.android.pass.features.itemcreate.login.LoginItemValidationErrors
+/*
 
 @Composable
 internal fun CustomFieldsContent(
@@ -66,7 +44,7 @@ internal fun CustomFieldsContent(
             }
             val validationError = validationErrors.firstOrNull {
                 when (it) {
-                    is LoginItemValidationErrors.CustomFieldValidationError.EmptyField -> {
+                    is CustomFieldValidationError.EmptyField -> {
                         it.index == idx
                     }
 
@@ -132,3 +110,4 @@ internal fun CustomFieldsContent(
         requestFocus = focusedField != null
     )
 }
+*/

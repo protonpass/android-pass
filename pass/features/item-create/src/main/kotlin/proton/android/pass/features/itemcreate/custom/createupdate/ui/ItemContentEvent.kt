@@ -22,7 +22,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.WifiSecurityType
-import proton.android.pass.features.itemcreate.custom.createupdate.presentation.FieldIdentifier
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
 
 internal enum class FieldChange {
     Password,
@@ -44,29 +44,8 @@ internal sealed interface ItemContentEvent {
 
     data class OnFieldFocusChange(val field: FieldChange, val isFocused: Boolean) : ItemContentEvent
 
-    data class OnCustomFieldChange(
-        val field: FieldIdentifier,
-        val value: String
-    ) : ItemContentEvent
-
     @JvmInline
     value class OnVaultSelect(val shareId: ShareId) : ItemContentEvent
-
-    data class OnCustomFieldOptions(
-        val field: FieldIdentifier,
-        val label: String
-    ) : ItemContentEvent
-
-    @JvmInline
-    value class OnCustomFieldClick(val field: FieldIdentifier) : ItemContentEvent
-
-    data class OnCustomFieldFocused(
-        val field: FieldIdentifier,
-        val isFocused: Boolean
-    ) : ItemContentEvent
-
-    @JvmInline
-    value class OnAddCustomField(val sectionIndex: Option<Int>) : ItemContentEvent
 
     data object OnAddSection : ItemContentEvent
 
@@ -86,4 +65,6 @@ internal sealed interface ItemContentEvent {
 
     data object OnUpgrade : ItemContentEvent
 
+    @JvmInline
+    value class OnCustomFieldEvent(val event: CustomFieldEvent) : ItemContentEvent
 }

@@ -30,8 +30,11 @@ import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
+import proton.android.pass.features.itemcreate.common.LoginItemValidationError
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
+import proton.android.pass.features.itemcreate.common.ValidationError
 
 @Parcelize
 @Immutable
@@ -60,16 +63,16 @@ data class LoginItemFormState(
     internal val isExpanded: Boolean =
         isExpandedByContent || isExpandedByUser || isExpandedByPreference
 
-    internal fun validate(): Set<LoginItemValidationErrors> = mutableSetOf<LoginItemValidationErrors>().apply {
+    internal fun validate(): Set<ValidationError> = mutableSetOf<ValidationError>().apply {
         if (title.isBlank()) {
-            add(LoginItemValidationErrors.BlankTitle)
+            add(CommonFieldValidationError.BlankTitle)
         }
 
         urls.forEachIndexed { idx, url ->
             if (url.isNotBlank()) {
                 val validation = UrlSanitizer.sanitize(url)
                 if (validation.isFailure) {
-                    add(LoginItemValidationErrors.InvalidUrl(idx))
+                    add(LoginItemValidationError.InvalidUrl(idx))
                 }
             }
         }
@@ -140,27 +143,6 @@ data class LoginItemFormState(
             isExpandedByUser = false,
             isExpandedByPreference = false
         )
-
-    }
-
-}
-
-internal sealed interface LoginItemValidationErrors {
-
-    data object BlankTitle : LoginItemValidationErrors
-
-    @JvmInline
-    value class InvalidUrl(val index: Int) : LoginItemValidationErrors
-
-    data object InvalidTotp : LoginItemValidationErrors
-
-    sealed interface CustomFieldValidationError : LoginItemValidationErrors {
-
-        @JvmInline
-        value class EmptyField(val index: Int) : CustomFieldValidationError
-
-        @JvmInline
-        value class InvalidTotp(val index: Int) : CustomFieldValidationError
 
     }
 

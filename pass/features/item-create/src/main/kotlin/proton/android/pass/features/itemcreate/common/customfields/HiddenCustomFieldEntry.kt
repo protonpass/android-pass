@@ -50,9 +50,6 @@ import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.login.PASSWORD_CONCEALED_LENGTH
-import proton.android.pass.features.itemcreate.login.customfields.CustomFieldInput
-import proton.android.pass.features.itemcreate.login.customfields.CustomFieldOptionsButton
-import proton.android.pass.features.itemcreate.login.customfields.ThemeCustomFieldPreviewProvider
 import me.proton.core.presentation.R as CoreR
 
 @Composable

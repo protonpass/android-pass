@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,13 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.login.customfields
+package proton.android.pass.features.itemcreate.common.customfields
 
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.domain.CustomFieldType
 
-@Composable
-fun LimitedCustomFieldsContent(modifier: Modifier = Modifier) {
-    Text(modifier = modifier, text = "TBD")
-}
+data class CustomFieldIdentifier(
+    val sectionIndex: Option<Int> = None,
+    val index: Int,
+    val type: CustomFieldType
+)

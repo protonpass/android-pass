@@ -158,6 +158,7 @@ fun ExpandableText(
     text: String,
     minimizedMaxLines: Int = 10
 ) {
+    if (text.isBlank()) return
     var isExpanded by remember { mutableStateOf(false) }
     var isTextOverflowing by remember { mutableStateOf(false) }
     var textLayoutResult by remember { mutableStateOf<TextLayoutResult?>(null) }

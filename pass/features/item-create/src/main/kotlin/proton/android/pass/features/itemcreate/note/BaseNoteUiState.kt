@@ -36,6 +36,11 @@ data class BaseNoteUiState(
     val displayFileAttachmentsOnboarding: Boolean,
     val attachmentsState: AttachmentsState
 ) {
+
+    val canShowAttachments: Boolean = isFileAttachmentsEnabled &&
+        !isCustomItemEnabled &&
+        attachmentsState.canShowAttachmentSection(isDetail = false)
+
     companion object {
         val Initial = BaseNoteUiState(
             errorList = emptySet(),

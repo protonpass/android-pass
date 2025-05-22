@@ -148,7 +148,7 @@ data class ItemFormState(
             if (entry !is UICustomFieldContent.Totp) return@forEachIndexed
             val decrypted = encryptionContext.decrypt(entry.value.encrypted)
             if (decrypted.isBlank()) {
-                errors.add(CustomFieldValidationError.EmptyTotp(sectionIndex, index))
+                errors.add(CustomFieldValidationError.EmptyField(sectionIndex, index))
                 return@forEachIndexed
             }
             val original = originalEntriesById[entry.id]

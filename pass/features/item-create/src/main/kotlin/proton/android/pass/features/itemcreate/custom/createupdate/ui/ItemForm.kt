@@ -170,6 +170,7 @@ internal fun ItemForm(
             }
 
             customFieldsList(
+                modifier = Modifier.padding(horizontal = Spacing.medium),
                 customFields = itemFormState.customFieldList,
                 enabled = itemSharedProperties.isFormEnabled,
                 errors = itemSharedProperties.validationErrors
@@ -178,6 +179,7 @@ internal fun ItemForm(
                 isVisible = true,
                 sectionIndex = None,
                 focusedField = itemSharedProperties.focusedField,
+                itemCategory = ItemCategory.Custom,
                 onEvent = { onEvent(ItemContentEvent.OnCustomFieldEvent(it)) }
             )
 
@@ -200,6 +202,7 @@ internal fun ItemForm(
                 }
 
                 customFieldsList(
+                    modifier = Modifier.padding(horizontal = Spacing.medium),
                     customFields = section.customFields,
                     enabled = itemSharedProperties.isFormEnabled,
                     errors = itemSharedProperties.validationErrors
@@ -208,6 +211,7 @@ internal fun ItemForm(
                     isVisible = !isGroupCollapsed.contains(sectionIndex),
                     sectionIndex = sectionIndex.some(),
                     focusedField = itemSharedProperties.focusedField,
+                    itemCategory = ItemCategory.Custom,
                     onEvent = { onEvent(ItemContentEvent.OnCustomFieldEvent(it)) }
                 )
             }

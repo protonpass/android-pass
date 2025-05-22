@@ -42,6 +42,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
@@ -56,12 +57,14 @@ import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
+import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
+import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
 import proton.android.pass.features.itemcreate.common.StickyTotpOptions
 import proton.android.pass.features.itemcreate.common.customfields.AddSectionButton
+import proton.android.pass.features.itemcreate.common.customfields.customFieldsList
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemFormState
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemSharedProperties
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemStaticFields
-import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemValidationErrors
 import proton.android.pass.features.itemcreate.custom.createupdate.ui.ItemContentEvent.OnOpenTOTPScanner
 import proton.android.pass.features.itemcreate.custom.createupdate.ui.ItemContentEvent.OnPasteTOTPSecret
 
@@ -129,7 +132,7 @@ internal fun ItemForm(
                     value = itemFormState.title,
                     requestFocus = true,
                     onTitleRequiredError = itemSharedProperties.validationErrors.contains(
-                        ItemValidationErrors.BlankTitle
+                        CommonFieldValidationError.BlankTitle
                     ),
                     enabled = itemSharedProperties.isFormEnabled,
                     isRounded = true,
@@ -169,11 +172,13 @@ internal fun ItemForm(
             customFieldsList(
                 customFields = itemFormState.customFieldList,
                 enabled = itemSharedProperties.isFormEnabled,
-                errors = itemSharedProperties.validationErrors,
+                errors = itemSharedProperties.validationErrors
+                    .filterIsInstance<CustomFieldValidationError>()
+                    .toPersistentSet(),
                 isVisible = true,
                 sectionIndex = None,
                 focusedField = itemSharedProperties.focusedField,
-                onEvent = onEvent
+                onEvent = { onEvent(ItemContentEvent.OnCustomFieldEvent(it)) }
             )
 
             itemFormState.sectionList.forEachIndexed { sectionIndex, section ->
@@ -197,11 +202,13 @@ internal fun ItemForm(
                 customFieldsList(
                     customFields = section.customFields,
                     enabled = itemSharedProperties.isFormEnabled,
-                    errors = itemSharedProperties.validationErrors,
+                    errors = itemSharedProperties.validationErrors
+                        .filterIsInstance<CustomFieldValidationError>()
+                        .toPersistentSet(),
                     isVisible = !isGroupCollapsed.contains(sectionIndex),
                     sectionIndex = sectionIndex.some(),
                     focusedField = itemSharedProperties.focusedField,
-                    onEvent = onEvent
+                    onEvent = { onEvent(ItemContentEvent.OnCustomFieldEvent(it)) }
                 )
             }
             item {

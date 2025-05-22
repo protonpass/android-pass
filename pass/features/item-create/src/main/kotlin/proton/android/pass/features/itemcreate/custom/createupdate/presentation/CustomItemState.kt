@@ -30,6 +30,8 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.ShareUiState
+import proton.android.pass.features.itemcreate.common.ValidationError
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
 
 sealed interface CustomItemState : ItemSharedProperties {
     @Immutable
@@ -98,10 +100,10 @@ interface ItemSharedProperties {
     val isLoading: Boolean
         get() = sharedState.isLoadingState.value()
 
-    val validationErrors: PersistentSet<ItemValidationErrors>
+    val validationErrors: PersistentSet<ValidationError>
         get() = sharedState.validationErrors
 
-    val focusedField: Option<FieldIdentifier>
+    val focusedField: Option<CustomFieldIdentifier>
         get() = sharedState.focusedField
 
     val canCreateItem: Boolean

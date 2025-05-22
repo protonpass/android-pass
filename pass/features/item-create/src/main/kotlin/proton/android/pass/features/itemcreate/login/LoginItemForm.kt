@@ -22,15 +22,12 @@ import android.content.pm.PackageManager
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -40,6 +37,8 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableSet
+import kotlinx.collections.immutable.toPersistentSet
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
@@ -52,10 +51,13 @@ import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
+import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
 import proton.android.pass.features.itemcreate.common.StickyTotpOptions
+import proton.android.pass.features.itemcreate.common.customfields.customFieldsList
 import proton.android.pass.features.itemcreate.login.LoginContentEvent.OnAttachmentEvent
 import proton.android.pass.features.itemcreate.login.LoginContentEvent.OnCreateAlias
 import proton.android.pass.features.itemcreate.login.LoginContentEvent.OnCreatePassword
@@ -72,7 +74,6 @@ import proton.android.pass.features.itemcreate.login.LoginStickyFormOptionsConte
 import proton.android.pass.features.itemcreate.login.LoginStickyFormOptionsContentType.AliasOptions
 import proton.android.pass.features.itemcreate.login.LoginStickyFormOptionsContentType.GeneratePassword
 import proton.android.pass.features.itemcreate.login.LoginStickyFormOptionsContentType.NoOption
-import proton.android.pass.features.itemcreate.login.customfields.CustomFieldsContent
 import proton.android.pass.features.itemcreate.login.passkey.PasskeyEditRow
 import proton.android.pass.features.itemcreate.login.passkey.PasskeysSection
 
@@ -85,7 +86,7 @@ internal fun LoginItemForm(
     isEditAllowed: Boolean,
     totpUiState: TotpUiState,
     focusedField: LoginField?,
-    customFieldValidationErrors: ImmutableList<LoginItemValidationErrors.CustomFieldValidationError>,
+    customFieldValidationErrors: ImmutableList<CustomFieldValidationError>,
     showCreateAliasButton: Boolean,
     primaryEmail: String?,
     isUpdate: Boolean,
@@ -107,121 +108,144 @@ internal fun LoginItemForm(
             LoginField.Email -> AliasOptions
             LoginField.Username -> NoOption
             LoginField.Password -> GeneratePassword
-            LoginField.PrimaryTotp,
-            is LoginCustomField.CustomFieldTOTP -> AddTotp
-
-            is LoginCustomField.CustomFieldHidden,
-            is LoginCustomField.CustomFieldText,
+            LoginField.PrimaryTotp -> AddTotp
+            is LoginField.CustomField -> when (focusedField.field.type) {
+                CustomFieldType.Totp -> AddTotp
+                else -> NoOption
+            }
             LoginField.Title,
             null -> NoOption
         }
 
         val isCurrentStickyVisible = currentStickyFormOption != NoOption
 
-        Column(
+        LazyColumn(
             modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+                .fillMaxWidth()
                 .padding(all = Spacing.medium),
             verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
         ) {
-            AnimatedVisibility(isFileAttachmentsEnabled && displayFileAttachmentsOnboarding) {
-                AttachmentBanner(Modifier.padding(bottom = Spacing.mediumSmall)) {
-                    onEvent(LoginContentEvent.DismissAttachmentBanner)
+            item {
+                AnimatedVisibility(isFileAttachmentsEnabled && displayFileAttachmentsOnboarding) {
+                    AttachmentBanner(Modifier.padding(bottom = Spacing.mediumSmall)) {
+                        onEvent(LoginContentEvent.DismissAttachmentBanner)
+                    }
                 }
             }
-            TitleSection(
-                modifier = Modifier
-                    .roundedContainerNorm()
-                    .padding(
-                        start = Spacing.medium,
-                        top = Spacing.medium,
-                        end = Spacing.extraSmall,
-                        bottom = Spacing.medium
-                    ),
-                value = loginItemFormState.title,
-                requestFocus = true,
-                onTitleRequiredError = isTitleError,
-                enabled = isEditAllowed,
-                isRounded = true,
-                onChange = { onEvent(OnTitleChange(it)) }
-            )
+            item {
+                TitleSection(
+                    modifier = Modifier
+                        .roundedContainerNorm()
+                        .padding(
+                            start = Spacing.medium,
+                            top = Spacing.medium,
+                            end = Spacing.extraSmall,
+                            bottom = Spacing.medium
+                        ),
+                    value = loginItemFormState.title,
+                    requestFocus = true,
+                    onTitleRequiredError = isTitleError,
+                    enabled = isEditAllowed,
+                    isRounded = true,
+                    onChange = { onEvent(OnTitleChange(it)) }
+                )
+            }
 
-            Spacer(modifier = Modifier.height(height = Spacing.extraSmall))
+            item {
+                Spacer(modifier = Modifier.height(height = Spacing.extraSmall))
+            }
 
             if (passkeyState is Some) {
-                PasskeyEditRow(
-                    domain = passkeyState.value.domain,
-                    username = passkeyState.value.username,
-                    canDelete = false,
-                    onDeleteClick = {}
-                )
+                item {
+                    PasskeyEditRow(
+                        domain = passkeyState.value.domain,
+                        username = passkeyState.value.username,
+                        canDelete = false,
+                        onDeleteClick = {}
+                    )
+                }
             }
 
             if (loginItemFormState.hasPasskeys) {
-                PasskeysSection(
-                    passkeys = loginItemFormState.passkeys.toImmutableList(),
-                    onEvent = onEvent
+                item {
+                    PasskeysSection(
+                        passkeys = loginItemFormState.passkeys.toImmutableList(),
+                        onEvent = onEvent
+                    )
+                }
+            }
+
+            item {
+                MainLoginSection(
+                    loginItemFormState = loginItemFormState,
+                    canUpdateUsername = canUpdateUsername,
+                    selectedShareId = selectedShareId,
+                    totpUiState = totpUiState,
+                    isEditAllowed = isEditAllowed,
+                    isTotpError = isTotpError,
+                    hasReachedAliasLimit = hasReachedAliasLimit,
+                    onEvent = onEvent,
+                    onFocusChange = { field, isFocused ->
+                        onEvent(OnFocusChange(field, isFocused))
+                    },
+                    isUsernameSplitTooltipEnabled = isUsernameSplitTooltipEnabled
                 )
             }
 
-            MainLoginSection(
-                loginItemFormState = loginItemFormState,
-                canUpdateUsername = canUpdateUsername,
-                selectedShareId = selectedShareId,
-                totpUiState = totpUiState,
-                isEditAllowed = isEditAllowed,
-                isTotpError = isTotpError,
-                hasReachedAliasLimit = hasReachedAliasLimit,
-                onEvent = onEvent,
-                onFocusChange = { field, isFocused ->
-                    onEvent(OnFocusChange(field, isFocused))
-                },
-                isUsernameSplitTooltipEnabled = isUsernameSplitTooltipEnabled
-            )
+            item {
+                WebsitesSection(
+                    websites = loginItemFormState.urls.toImmutableList(),
+                    isEditAllowed = isEditAllowed,
+                    websitesWithErrors = websitesWithErrors,
+                    focusLastWebsite = focusLastWebsite,
+                    onWebsiteSectionEvent = { onEvent(OnWebsiteEvent(it)) }
+                )
+            }
 
-            WebsitesSection(
-                websites = loginItemFormState.urls.toImmutableList(),
-                isEditAllowed = isEditAllowed,
-                websitesWithErrors = websitesWithErrors,
-                focusLastWebsite = focusLastWebsite,
-                onWebsiteSectionEvent = { onEvent(OnWebsiteEvent(it)) }
-            )
+            item {
+                SimpleNoteSection(
+                    value = loginItemFormState.note,
+                    enabled = isEditAllowed,
+                    onChange = { onEvent(OnNoteChange(it)) }
+                )
+            }
 
-            SimpleNoteSection(
-                value = loginItemFormState.note,
+            customFieldsList(
+                customFields = loginItemFormState.customFields,
                 enabled = isEditAllowed,
-                onChange = { onEvent(OnNoteChange(it)) }
-            )
-
-            CustomFieldsContent(
-                customFields = loginItemFormState.customFields.toImmutableList(),
-                focusedField = focusedField as? LoginCustomField,
-                canEdit = isEditAllowed,
-                canUseCustomFields = canUseCustomFields,
-                validationErrors = customFieldValidationErrors,
+                errors = customFieldValidationErrors.toPersistentSet(),
+                isVisible = true,
+                // canUseCustomFields
+                sectionIndex = None,
+                focusedField = (focusedField as? LoginField.CustomField)?.field.toOption(),
                 onEvent = { onEvent(OnCustomFieldEvent(it)) }
             )
 
             if (isUpdate) {
-                LinkedAppsListSection(
-                    packageInfoUiSet = loginItemFormState.packageInfoSet.toImmutableSet(),
-                    isEditable = true,
-                    onLinkedAppDelete = { onEvent(OnLinkedAppDelete(it)) }
-                )
+                item {
+                    LinkedAppsListSection(
+                        packageInfoUiSet = loginItemFormState.packageInfoSet.toImmutableSet(),
+                        isEditable = true,
+                        onLinkedAppDelete = { onEvent(OnLinkedAppDelete(it)) }
+                    )
+                }
             }
 
             if (isFileAttachmentsEnabled) {
-                AttachmentSection(
-                    attachmentsState = attachmentsState,
-                    isDetail = false,
-                    itemColors = passItemColors(ItemCategory.Login),
-                    onEvent = { onEvent(OnAttachmentEvent(it)) }
-                )
+                item {
+                    AttachmentSection(
+                        attachmentsState = attachmentsState,
+                        isDetail = false,
+                        itemColors = passItemColors(ItemCategory.Login),
+                        onEvent = { onEvent(OnAttachmentEvent(it)) }
+                    )
+                }
             }
 
             if (isCurrentStickyVisible) {
-                Spacer(modifier = Modifier.height(48.dp))
+                item {
+                    Spacer(modifier = Modifier.height(48.dp))
+                }
             }
         }
 
@@ -269,7 +293,7 @@ internal fun LoginItemForm(
                             onEvent(PasteTotp)
                         },
                         onScanCode = {
-                            val index = (focusedField as? LoginCustomField)?.index
+                            val index = (focusedField as? LoginField.CustomField)?.field?.index
                             onEvent(OnScanTotp(index.toOption()))
                         }
                     )

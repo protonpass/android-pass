@@ -44,13 +44,15 @@ import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.common.ShareError.EmptyShareList
 import proton.android.pass.features.itemcreate.common.ShareError.SharesNotAvailable
 import proton.android.pass.features.itemcreate.common.ShareUiState
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.AddAttachment
+import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.CustomFieldOptions
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.DeleteAllAttachments
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.OnCreateLoginEvent
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.OpenAttachmentOptions
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.OpenDraftAttachmentOptions
-import proton.android.pass.features.itemcreate.login.customfields.CustomFieldEvent
+import proton.android.pass.features.itemcreate.login.LoginField.CustomField
 
 @Suppress("ComplexMethod")
 @Composable
@@ -152,24 +154,24 @@ fun CreateLoginScreen(
 
                     is LoginContentEvent.OnCustomFieldEvent -> {
                         when (val event = it.event) {
-                            CustomFieldEvent.AddCustomField -> {
+                            is CustomFieldEvent.OnAddField -> {
                                 actionAfterKeyboardHide =
                                     { onNavigate(BaseLoginNavigation.AddCustomField) }
                             }
 
-                            is CustomFieldEvent.OnCustomFieldOptions -> {
+                            is CustomFieldEvent.OnFieldOptions -> {
                                 actionAfterKeyboardHide = {
                                     onNavigate(
-                                        BaseLoginNavigation.CustomFieldOptions(
-                                            currentValue = event.currentLabel,
-                                            index = event.index
+                                        CustomFieldOptions(
+                                            currentValue = event.label,
+                                            index = event.field.index
                                         )
                                     )
                                 }
                             }
 
                             is CustomFieldEvent.OnValueChange -> {
-                                viewModel.onCustomFieldChange(event.index, event.value)
+                                viewModel.onCustomFieldChange(event.field.index, event.value)
                             }
 
                             CustomFieldEvent.Upgrade -> {
@@ -178,7 +180,14 @@ fun CreateLoginScreen(
                             }
 
                             is CustomFieldEvent.FocusRequested ->
-                                viewModel.onFocusChange(event.loginCustomField, event.isFocused)
+                                viewModel.onFocusChange(
+                                    field = CustomField(event.field),
+                                    isFocused = event.isFocused
+                                )
+
+                            is CustomFieldEvent.OnFieldClick -> {
+                                // Currently only supported by date field
+                            }
                         }
                     }
 

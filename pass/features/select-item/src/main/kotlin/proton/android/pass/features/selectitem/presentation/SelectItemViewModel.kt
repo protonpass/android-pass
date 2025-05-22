@@ -92,6 +92,7 @@ import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.data.api.usecases.shares.ObserveAutofillShares
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
@@ -242,6 +243,32 @@ class SelectItemViewModel @Inject constructor(
                     )
                 }
                 combine(flows) { it.toList().flatten().map(ItemData::DefaultItem) }
+            }
+
+            is SelectItemState.Password -> {
+                val flows = usersAutofillShares
+                    .filter { it.matchesSelectedAccount(selectedAccount) }
+                    .map { (userId, autofillShares) ->
+                        observeItems(
+                            userId = userId,
+                            filter = state.itemTypeFilter,
+                            selection = ShareSelection.Shares(autofillShares.map(Share::id)),
+                            itemState = ItemState.Active
+                        )
+                            .map { items ->
+                                encryptionContextProvider.withEncryptionContext {
+                                    items.filter { item ->
+                                        (item.itemType as? ItemType.Login)
+                                            ?.password
+                                            ?.let { encryptedPassword ->
+                                                decrypt(encryptedPassword).isNotEmpty()
+                                            } == true
+                                    }
+                                }
+                            }
+                            .map { autofillShares to it.map(ItemData::DefaultItem) }
+                    }
+                combine(flows, ItemFilterProcessor::removeDuplicates)
             }
 
             else -> flowOf(emptyList())

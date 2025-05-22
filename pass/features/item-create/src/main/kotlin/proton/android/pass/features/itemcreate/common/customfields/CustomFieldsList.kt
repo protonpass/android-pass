@@ -46,6 +46,7 @@ internal fun LazyListScope.customFieldsList(
     enabled: Boolean,
     errors: PersistentSet<CustomFieldValidationError>,
     isVisible: Boolean,
+    canCreateCustomFields: Boolean,
     sectionIndex: Option<Int>,
     focusedField: Option<CustomFieldIdentifier>,
     itemCategory: ItemCategory,
@@ -78,8 +79,10 @@ internal fun LazyListScope.customFieldsList(
                 errorMessage = when {
                     errors.contains(CustomFieldValidationError.EmptyField(sectionIndex, index)) ->
                         stringResource(R.string.field_cannot_be_empty)
+
                     errors.contains(CustomFieldValidationError.InvalidTotp(sectionIndex, index)) ->
                         stringResource(R.string.create_login_invalid_totp)
+
                     else -> ""
                 },
                 index = index,
@@ -102,18 +105,20 @@ internal fun LazyListScope.customFieldsList(
             requestFocus = field == focusedField.value()
         )
     }
-    item {
-        AnimatedVisibility(
-            modifier = modifier
-                .padding(vertical = Spacing.small)
-                .fillMaxWidth(),
-            visible = isVisible
-        ) {
-            AddCustomFieldButton(
-                isEnabled = enabled,
-                passItemColors = passItemColors(itemCategory),
-                onClick = { onEvent(CustomFieldEvent.OnAddField(sectionIndex)) }
-            )
+    if (canCreateCustomFields) {
+        item {
+            AnimatedVisibility(
+                modifier = modifier
+                    .padding(vertical = Spacing.small)
+                    .fillMaxWidth(),
+                visible = isVisible
+            ) {
+                AddCustomFieldButton(
+                    isEnabled = enabled,
+                    passItemColors = passItemColors(itemCategory),
+                    onClick = { onEvent(CustomFieldEvent.OnAddField(sectionIndex)) }
+                )
+            }
         }
     }
 }

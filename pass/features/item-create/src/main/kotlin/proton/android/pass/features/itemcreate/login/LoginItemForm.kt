@@ -218,6 +218,7 @@ internal fun LoginItemForm(
                 // canUseCustomFields
                 sectionIndex = None,
                 focusedField = (focusedField as? LoginField.CustomField)?.field.toOption(),
+                itemCategory = ItemCategory.Login,
                 onEvent = { onEvent(OnCustomFieldEvent(it)) }
             )
 

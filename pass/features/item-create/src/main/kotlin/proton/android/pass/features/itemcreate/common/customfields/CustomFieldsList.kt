@@ -41,12 +41,14 @@ import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 
 @Suppress("LongParameterList", "LongMethod")
 internal fun LazyListScope.customFieldsList(
+    modifier: Modifier = Modifier,
     customFields: List<UICustomFieldContent>,
     enabled: Boolean,
     errors: PersistentSet<CustomFieldValidationError>,
     isVisible: Boolean,
     sectionIndex: Option<Int>,
     focusedField: Option<CustomFieldIdentifier>,
+    itemCategory: ItemCategory,
     onEvent: (CustomFieldEvent) -> Unit
 ) {
     itemsIndexed(
@@ -60,15 +62,14 @@ internal fun LazyListScope.customFieldsList(
             type = entry.toCustomFieldType()
         )
         AnimatedVisibility(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = modifier.fillMaxWidth(),
             visible = isVisible
         ) {
             CustomFieldEntry(
                 modifier = Modifier
                     .padding(vertical = Spacing.extraSmall)
-                    .padding(horizontal = Spacing.medium)
                     .focusRequester(focusRequester),
-                passItemColors = passItemColors(ItemCategory.Custom),
+                passItemColors = passItemColors(itemCategory),
                 entry = entry,
                 canEdit = enabled,
                 showLeadingIcon = false,
@@ -103,15 +104,14 @@ internal fun LazyListScope.customFieldsList(
     }
     item {
         AnimatedVisibility(
-            modifier = Modifier
+            modifier = modifier
                 .padding(vertical = Spacing.small)
                 .fillMaxWidth(),
             visible = isVisible
         ) {
             AddCustomFieldButton(
-                modifier = Modifier.padding(horizontal = Spacing.medium),
                 isEnabled = enabled,
-                passItemColors = passItemColors(ItemCategory.Custom),
+                passItemColors = passItemColors(itemCategory),
                 onClick = { onEvent(CustomFieldEvent.OnAddField(sectionIndex)) }
             )
         }

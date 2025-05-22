@@ -24,7 +24,7 @@ import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.tooltips.Tooltip
-import proton.android.pass.features.itemcreate.login.customfields.CustomFieldEvent
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
 
 internal sealed interface LoginContentEvent {
 

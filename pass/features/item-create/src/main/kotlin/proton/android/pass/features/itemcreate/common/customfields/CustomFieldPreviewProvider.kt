@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.login.customfields
+package proton.android.pass.features.itemcreate.common.customfields
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import proton.android.pass.commonui.api.ThemePairPreviewProvider

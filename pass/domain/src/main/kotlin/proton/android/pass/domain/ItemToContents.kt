@@ -27,7 +27,7 @@ fun toItemContents(
 ): ItemContents = when (itemType) {
     is ItemType.Alias -> createAlias(decrypt, title, note, itemType, flags.isAliasDisabled())
     is ItemType.Login -> createLogin(decrypt, title, note, itemType)
-    is ItemType.Note -> createNote(decrypt, title, note)
+    is ItemType.Note -> createNote(decrypt, title, note, itemType)
     is ItemType.CreditCard -> createCreditCard(decrypt, title, note, itemType)
     is ItemType.Identity -> createIdentity(decrypt, title, note, itemType)
     is ItemType.Custom -> createCustom(decrypt, title, note, itemType)
@@ -35,7 +35,8 @@ fun toItemContents(
     is ItemType.SSHKey -> createSSHKey(decrypt, title, note, itemType)
     ItemType.Password, ItemType.Unknown -> ItemContents.Unknown(
         title = decrypt(title),
-        note = decrypt(note)
+        note = decrypt(note),
+        customFields = emptyList()
     )
 }
 
@@ -43,7 +44,7 @@ fun toItemContents(
 fun <T : ItemContents> Item.toItemContents(decrypt: (String) -> String): T = when (val type = this.itemType) {
     is ItemType.Alias -> createAlias(decrypt, title, note, type, flags.isAliasDisabled())
     is ItemType.Login -> createLogin(decrypt, title, note, type)
-    is ItemType.Note -> createNote(decrypt, title, note)
+    is ItemType.Note -> createNote(decrypt, title, note, type)
     is ItemType.CreditCard -> createCreditCard(decrypt, title, note, type)
     is ItemType.Identity -> createIdentity(decrypt, title, note, type)
     is ItemType.Custom -> createCustom(decrypt, title, note, type)
@@ -51,7 +52,8 @@ fun <T : ItemContents> Item.toItemContents(decrypt: (String) -> String): T = whe
     is ItemType.SSHKey -> createSSHKey(decrypt, title, note, type)
     ItemType.Password, ItemType.Unknown -> ItemContents.Unknown(
         title = decrypt(title),
-        note = decrypt(note)
+        note = decrypt(note),
+        customFields = emptyList()
     )
 } as T
 
@@ -65,7 +67,8 @@ private fun createAlias(
     title = decrypt(title),
     note = decrypt(note),
     aliasEmail = type.aliasEmail,
-    isDisabled = isAliasDisabled
+    isDisabled = isAliasDisabled,
+    customFields = type.customFields.mapNotNull { it.toContent(decrypt, true) }
 )
 
 private fun createLogin(
@@ -89,10 +92,12 @@ private fun createLogin(
 private fun createNote(
     decrypt: (String) -> String,
     title: String,
-    note: String
+    note: String,
+    type: ItemType.Note
 ) = ItemContents.Note(
     title = decrypt(title),
-    note = decrypt(note)
+    note = decrypt(note),
+    customFields = type.customFields.mapNotNull { it.toContent(decrypt, true) }
 )
 
 private fun createCreditCard(
@@ -103,6 +108,7 @@ private fun createCreditCard(
 ) = ItemContents.CreditCard(
     title = decrypt(title),
     note = decrypt(note),
+    customFields = type.customFields.mapNotNull { it.toContent(decrypt, true) },
     type = type.creditCardType,
     cardHolder = type.cardHolder,
     number = decrypt(type.number),
@@ -119,6 +125,7 @@ private fun createIdentity(
 ) = ItemContents.Identity(
     title = decrypt(title),
     note = decrypt(note),
+    customFields = emptyList(),
     personalDetailsContent = type.personalDetails.toContent(decrypt),
     addressDetailsContent = type.addressDetails.toContent(decrypt),
     contactDetailsContent = type.contactDetails.toContent(decrypt),
@@ -187,7 +194,7 @@ private fun createCustom(
 ) = ItemContents.Custom(
     title = decrypt(title),
     note = decrypt(note),
-    customFieldList = type.customFields.mapNotNull { it.toContent(decrypt, true) },
+    customFields = type.customFields.mapNotNull { it.toContent(decrypt, true) },
     sectionContentList = type.extraSections.map { it.toContent(decrypt) }
 )
 
@@ -202,7 +209,7 @@ private fun createWifiNetWork(
     ssid = type.ssid,
     password = concealedOrEmpty(type.password, decrypt),
     wifiSecurityType = type.wifiSecurityType,
-    customFieldList = type.customFields.mapNotNull { it.toContent(decrypt, true) },
+    customFields = type.customFields.mapNotNull { it.toContent(decrypt, true) },
     sectionContentList = type.extraSections.map { it.toContent(decrypt) }
 )
 
@@ -216,7 +223,7 @@ private fun createSSHKey(
     note = decrypt(note),
     publicKey = type.publicKey,
     privateKey = concealedOrEmpty(type.privateKey, decrypt),
-    customFieldList = type.customFields.mapNotNull { it.toContent(decrypt, true) },
+    customFields = type.customFields.mapNotNull { it.toContent(decrypt, true) },
     sectionContentList = type.extraSections.map { it.toContent(decrypt) }
 )
 

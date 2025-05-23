@@ -119,7 +119,7 @@ internal fun CustomItemOptionsContentsPreview(
                     contents = ItemContents.Custom(
                         title = "My custom item",
                         note = "Note content",
-                        customFieldList = emptyList(),
+                        customFields = emptyList(),
                         sectionContentList = emptyList()
                     ),
                     state = 0,

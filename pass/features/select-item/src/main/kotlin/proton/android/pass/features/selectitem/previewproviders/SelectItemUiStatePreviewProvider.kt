@@ -135,7 +135,8 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
         shareId = ShareId("345"),
         contents = ItemContents.Note(
             name,
-            "Some very very long test that should be ellipsized as we type"
+            "Some very very long test that should be ellipsized as we type",
+            customFields = emptyList()
         ),
         state = 0,
         createTime = Clock.System.now(),

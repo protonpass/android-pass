@@ -153,6 +153,7 @@ internal fun AliasOptionsBottomSheetContentsPreview(
                     contents = ItemContents.Alias(
                         "My Alias",
                         "Note content",
+                        customFields = emptyList(),
                         "alias.email@proton.me",
                         false
                     ),

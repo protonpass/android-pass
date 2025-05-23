@@ -94,7 +94,7 @@ class SSHKeyDetailsHandlerObserverImpl @Inject constructor(
                         )
                     }.toMap()
 
-                val customFields = contents.customFieldList.mapToDecryptedTotp(
+                val customFields = contents.customFields.mapToDecryptedTotp(
                     sectionIndex = None,
                     decrypt = ::decrypt
                 ).toMap()
@@ -120,7 +120,7 @@ class SSHKeyDetailsHandlerObserverImpl @Inject constructor(
     ): ItemContents {
         val revealedFields = revealedHiddenFields[ItemSection.SSHKey] ?: emptyList()
         val mutableSections = itemContents.sectionContentList.toMutableList()
-        val mutableCustomFields = itemContents.customFieldList.toMutableList()
+        val mutableCustomFields = itemContents.customFields.toMutableList()
 
         mutableSections.forEachIndexed { sectionIndex, sectionContent ->
             val updatedCustomFields = sectionContent.customFieldList.mapIndexed { fieldIndex, field ->
@@ -144,7 +144,7 @@ class SSHKeyDetailsHandlerObserverImpl @Inject constructor(
                 encryptionContextProvider = encryptionContextProvider
             ),
             sectionContentList = mutableSections,
-            customFieldList = mutableCustomFields
+            customFields = mutableCustomFields
         )
     }
 
@@ -175,8 +175,8 @@ class SSHKeyDetailsHandlerObserverImpl @Inject constructor(
             ),
             customFields = calculateItemDiffTypes(
                 encryptionContext = this@withEncryptionContext,
-                baseItemCustomFieldsContent = baseItemContents.customFieldList,
-                otherItemCustomFieldsContent = otherItemContents.customFieldList
+                baseItemCustomFieldsContent = baseItemContents.customFields,
+                otherItemCustomFieldsContent = otherItemContents.customFields
             ),
             extraCustomFields = baseItemContents.sectionContentList.mapIndexed { index, extraSectionContent ->
                 calculateItemDiffTypes(

@@ -163,6 +163,7 @@ class ItemRepositoryImpl @Inject constructor(
         val itemContents = ItemContents.Alias(
             title = newAlias.title,
             note = newAlias.note,
+            customFields = emptyList(),
             aliasEmail = "" // Not used when creating the payload,
         )
         val body = createItem.create(shareKey, itemContents)
@@ -202,6 +203,7 @@ class ItemRepositoryImpl @Inject constructor(
             val aliasContents = ItemContents.Alias(
                 title = newAlias.title,
                 note = newAlias.note,
+                customFields = emptyList(),
                 aliasEmail = "" // Not used when creating the payload
             )
             val aliasBody = createItem.create(shareKey, aliasContents)

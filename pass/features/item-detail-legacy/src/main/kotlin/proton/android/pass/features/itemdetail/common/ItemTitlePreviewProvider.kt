@@ -150,7 +150,8 @@ data class ItemTitleInput(
         shareId = ShareId("123"),
         contents = ItemContents.Note(
             title = "A really long title to check if the element is multiline",
-            note = "Note body"
+            note = "Note body",
+            customFields = emptyList()
         ),
         state = 0,
         createTime = Instant.fromEpochMilliseconds(1_697_213_366_026),

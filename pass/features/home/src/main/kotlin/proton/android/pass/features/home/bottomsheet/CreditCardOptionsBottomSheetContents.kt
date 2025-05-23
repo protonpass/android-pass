@@ -158,8 +158,8 @@ internal fun CreditCardOptionsBottomSheetContentsPreview(
                         number = "1234123412341234",
                         cvv = HiddenState.Concealed("123"),
                         pin = HiddenState.Concealed(""),
-                        expirationDate = "2030-01"
-
+                        expirationDate = "2030-01",
+                        customFields = emptyList()
                     ),
                     state = 0,
                     createTime = Clock.System.now(),

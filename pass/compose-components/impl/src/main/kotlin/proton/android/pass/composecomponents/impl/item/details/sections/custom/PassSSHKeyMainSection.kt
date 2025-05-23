@@ -40,8 +40,8 @@ import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.items.ItemCategory
 import me.proton.core.presentation.R as CoreR
 
@@ -116,7 +116,7 @@ internal fun PassSSHKeyMainSectionPreview(@PreviewParameter(ThemePreviewProvider
                     privateKey = HiddenState.Empty(""),
                     note = "",
                     title = "",
-                    customFieldList = emptyList(),
+                    customFields = emptyList(),
                     sectionContentList = emptyList()
                 ),
                 itemColors = passItemColors(ItemCategory.SSHKey),

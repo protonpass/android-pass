@@ -104,7 +104,7 @@ class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
                         )
                     }.toMap()
 
-                val customFields = contents.customFieldList.mapToDecryptedTotp(
+                val customFields = contents.customFields.mapToDecryptedTotp(
                     sectionIndex = None,
                     decrypt = ::decrypt
                 ).toMap()
@@ -130,7 +130,7 @@ class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
     ): ItemContents {
         val revealedFields = revealedHiddenFields[ItemSection.WifiNetwork] ?: emptyList()
         val mutableSections = itemContents.sectionContentList.toMutableList()
-        val mutableCustomFields = itemContents.customFieldList.toMutableList()
+        val mutableCustomFields = itemContents.customFields.toMutableList()
 
         mutableSections.forEachIndexed { sectionIndex, sectionContent ->
             val updatedCustomFields = sectionContent.customFieldList.mapIndexed { fieldIndex, field ->
@@ -154,7 +154,7 @@ class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
                 encryptionContextProvider = encryptionContextProvider
             ),
             sectionContentList = mutableSections,
-            customFieldList = mutableCustomFields
+            customFields = mutableCustomFields
         )
     }
 
@@ -185,8 +185,8 @@ class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
             ),
             customFields = calculateItemDiffTypes(
                 encryptionContext = this@withEncryptionContext,
-                baseItemCustomFieldsContent = baseItemContents.customFieldList,
-                otherItemCustomFieldsContent = otherItemContents.customFieldList
+                baseItemCustomFieldsContent = baseItemContents.customFields,
+                otherItemCustomFieldsContent = otherItemContents.customFields
             ),
             extraCustomFields = baseItemContents.sectionContentList.mapIndexed { index, extraSectionContent ->
                 calculateItemDiffTypes(

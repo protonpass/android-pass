@@ -106,7 +106,7 @@ private fun areSSHKeyItemEqual(
     a.note == b.note &&
     a.publicKey == b.publicKey &&
     a.privateKey.compareDecrypted(b.privateKey, decrypt) == 0 &&
-    a.customFieldList.compareDecrypted(b.customFieldList, decrypt) == 0 &&
+    a.customFields.compareDecrypted(b.customFields, decrypt) == 0 &&
     a.sectionContentList.compareSections(b.sectionContentList, decrypt) == 0
 
 private fun areWifiNetworkItemEqual(
@@ -118,7 +118,7 @@ private fun areWifiNetworkItemEqual(
     a.ssid == b.ssid &&
     a.wifiSecurityType == b.wifiSecurityType &&
     a.password.compareDecrypted(b.password, decrypt) == 0 &&
-    a.customFieldList.compareDecrypted(b.customFieldList, decrypt) == 0 &&
+    a.customFields.compareDecrypted(b.customFields, decrypt) == 0 &&
     a.sectionContentList.compareSections(b.sectionContentList, decrypt) == 0
 
 private fun areCustomItemEqual(
@@ -127,7 +127,7 @@ private fun areCustomItemEqual(
     decrypt: (EncryptedString) -> String
 ) = a.title == b.title &&
     a.note == b.note &&
-    a.customFieldList.compareDecrypted(b.customFieldList, decrypt) == 0 &&
+    a.customFields.compareDecrypted(b.customFields, decrypt) == 0 &&
     a.sectionContentList.compareSections(b.sectionContentList, decrypt) == 0
 
 private fun areIdentityItemsEqual(

@@ -118,18 +118,20 @@ sealed class ItemContents {
 
     abstract val displayValue: String
 
+    abstract val customFields: List<CustomFieldContent>
+
     @Stable
     @Serializable
     data class Login(
         override val title: String,
         override val note: String,
+        override val customFields: List<CustomFieldContent>,
         val itemEmail: String,
         val itemUsername: String,
         val password: HiddenState,
         val urls: List<String>,
         val packageInfoSet: Set<PackageInfo>,
         val primaryTotp: HiddenState,
-        val customFields: List<CustomFieldContent>,
         val passkeys: List<Passkey>
     ) : ItemContents() {
 
@@ -166,7 +168,8 @@ sealed class ItemContents {
     @Serializable
     data class Note(
         override val title: String,
-        override val note: String
+        override val note: String,
+        override val customFields: List<CustomFieldContent>
     ) : ItemContents() {
 
         override val displayValue: String = note
@@ -178,6 +181,7 @@ sealed class ItemContents {
     data class Alias(
         override val title: String,
         override val note: String,
+        override val customFields: List<CustomFieldContent>,
         val aliasEmail: String,
         private val isDisabled: Boolean? = null
     ) : ItemContents() {
@@ -193,6 +197,7 @@ sealed class ItemContents {
     data class CreditCard(
         override val title: String,
         override val note: String,
+        override val customFields: List<CustomFieldContent>,
         val cardHolder: String,
         @SerialName("CreditCardType")
         val type: CreditCardType,
@@ -214,7 +219,8 @@ sealed class ItemContents {
                 cvv = cvv,
                 pin = pin,
                 expirationDate = "",
-                note = ""
+                note = "",
+                customFields = emptyList()
             )
 
         }
@@ -225,6 +231,7 @@ sealed class ItemContents {
     data class Identity(
         override val title: String,
         override val note: String,
+        override val customFields: List<CustomFieldContent>,
         val personalDetailsContent: PersonalDetailsContent,
         val addressDetailsContent: AddressDetailsContent,
         val contactDetailsContent: ContactDetailsContent,
@@ -246,7 +253,7 @@ sealed class ItemContents {
     data class Custom(
         override val title: String,
         override val note: String,
-        val customFieldList: List<CustomFieldContent>,
+        override val customFields: List<CustomFieldContent>,
         val sectionContentList: List<ExtraSectionContent>
     ) : ItemContents() {
 
@@ -259,10 +266,10 @@ sealed class ItemContents {
     data class WifiNetwork(
         override val title: String,
         override val note: String,
+        override val customFields: List<CustomFieldContent>,
         val ssid: String,
         val password: HiddenState,
         val wifiSecurityType: WifiSecurityType,
-        val customFieldList: List<CustomFieldContent>,
         val sectionContentList: List<ExtraSectionContent>
     ) : ItemContents() {
 
@@ -275,9 +282,9 @@ sealed class ItemContents {
     data class SSHKey(
         override val title: String,
         override val note: String,
+        override val customFields: List<CustomFieldContent>,
         val publicKey: String,
         val privateKey: HiddenState,
-        val customFieldList: List<CustomFieldContent>,
         val sectionContentList: List<ExtraSectionContent>
     ) : ItemContents() {
 
@@ -288,7 +295,8 @@ sealed class ItemContents {
     @Serializable
     data class Unknown(
         override val title: String,
-        override val note: String
+        override val note: String,
+        override val customFields: List<CustomFieldContent>
     ) : ItemContents() {
 
         override val displayValue: String = ""

@@ -66,7 +66,7 @@ class AliasRowPreviewProvider : PreviewParameterProvider<AliasRowParameter> {
                 id = ItemId("123"),
                 userId = UserId("user-id"),
                 shareId = ShareId("456"),
-                contents = ItemContents.Alias(title, note, alias, disabled),
+                contents = ItemContents.Alias(title, note, emptyList(), alias, disabled),
                 state = 0,
                 createTime = Clock.System.now(),
                 modificationTime = Clock.System.now(),

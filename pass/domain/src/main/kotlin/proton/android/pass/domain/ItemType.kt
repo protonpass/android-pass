@@ -187,10 +187,16 @@ sealed interface ItemType {
     ) : ItemType
 
     @Serializable
-    data class Note(val text: String) : ItemType
+    data class Note(
+        val text: String,
+        val customFields: List<CustomField>
+    ) : ItemType
 
     @Serializable
-    data class Alias(val aliasEmail: String) : ItemType
+    data class Alias(
+        val aliasEmail: String,
+        val customFields: List<CustomField>
+    ) : ItemType
 
     @Serializable
     data class CreditCard(
@@ -199,7 +205,8 @@ sealed interface ItemType {
         val cvv: EncryptedString,
         val pin: EncryptedString,
         val creditCardType: CreditCardType,
-        val expirationDate: String
+        val expirationDate: String,
+        val customFields: List<CustomField>
     ) : ItemType
 
     @Serializable

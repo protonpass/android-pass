@@ -111,7 +111,8 @@ data class IdentityItemFormState(
                 title = it.title,
                 customFieldList = it.customFields.map(UICustomFieldContent::toCustomFieldContent)
             )
-        }
+        },
+        customFields = emptyList()
     )
 
     fun containsContactDetails(): Boolean {

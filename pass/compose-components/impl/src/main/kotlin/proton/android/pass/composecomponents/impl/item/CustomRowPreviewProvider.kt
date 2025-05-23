@@ -42,7 +42,7 @@ class CustomRowPreviewProvider : PreviewParameterProvider<CustomRowParameter> {
                 contents = ItemContents.Custom(
                     title = title,
                     note = "",
-                    customFieldList = emptyList(),
+                    customFields = emptyList(),
                     sectionContentList = emptyList()
                 ),
                 state = 0,

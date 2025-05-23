@@ -58,19 +58,19 @@ fun CustomRow(
         when (val contents = item.contents) {
             is ItemContents.Custom -> Triple(
                 contents.title,
-                contents.customFieldList,
+                contents.customFields,
                 contents.sectionContentList
             )
 
             is ItemContents.SSHKey -> Triple(
                 contents.title,
-                contents.customFieldList,
+                contents.customFields,
                 contents.sectionContentList
             )
 
             is ItemContents.WifiNetwork -> Triple(
                 contents.title,
-                contents.customFieldList,
+                contents.customFields,
                 contents.sectionContentList
             )
 

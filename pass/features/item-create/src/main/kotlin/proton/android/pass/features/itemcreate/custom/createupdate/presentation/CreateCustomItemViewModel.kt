@@ -60,6 +60,7 @@ import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.TemplateTypeNavArgId
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateSpecificIntent.OnVaultSelected
@@ -89,6 +90,7 @@ class CreateCustomItemViewModel @Inject constructor(
     canPerformPaidAction: CanPerformPaidAction,
     linkAttachmentsToItem: LinkAttachmentsToItem,
     attachmentsHandler: AttachmentsHandler,
+    customFieldHandler: CustomFieldHandler,
     userPreferencesRepository: UserPreferencesRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     observeVaults: ObserveVaultsWithItemCount,
@@ -103,6 +105,7 @@ class CreateCustomItemViewModel @Inject constructor(
     linkAttachmentsToItem = linkAttachmentsToItem,
     snackbarDispatcher = snackbarDispatcher,
     attachmentsHandler = attachmentsHandler,
+    customFieldHandler = customFieldHandler,
     userPreferencesRepository = userPreferencesRepository,
     featureFlagsRepository = featureFlagsRepository,
     encryptionContextProvider = encryptionContextProvider,

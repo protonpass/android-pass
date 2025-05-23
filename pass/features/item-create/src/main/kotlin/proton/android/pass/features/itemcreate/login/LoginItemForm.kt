@@ -33,6 +33,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -121,6 +122,7 @@ internal fun LoginItemForm(
 
         LazyColumn(
             modifier = Modifier
+                .testTag(LoginFormTag.LAZY_COLUMN)
                 .fillMaxWidth()
                 .padding(all = Spacing.medium),
             verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
@@ -304,4 +306,8 @@ internal fun LoginItemForm(
             }
         }
     }
+}
+
+object LoginFormTag {
+    const val LAZY_COLUMN = "login_form_lazy_column"
 }

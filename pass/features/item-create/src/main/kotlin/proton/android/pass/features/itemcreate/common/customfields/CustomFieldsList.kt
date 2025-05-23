@@ -106,7 +106,7 @@ internal fun LazyListScope.customFieldsList(
         )
     }
     if (canCreateCustomFields) {
-        item {
+        item(key = "${sectionIndex.getOrElse { -1 }}/add_custom_field") {
             AnimatedVisibility(
                 modifier = modifier
                     .padding(vertical = Spacing.small)
@@ -122,4 +122,3 @@ internal fun LazyListScope.customFieldsList(
         }
     }
 }
-

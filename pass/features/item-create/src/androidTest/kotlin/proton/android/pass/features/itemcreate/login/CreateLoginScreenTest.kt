@@ -21,9 +21,12 @@ package proton.android.pass.features.itemcreate.login
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performScrollToIndex
+import androidx.compose.ui.test.performScrollToKey
 import androidx.compose.ui.test.performTextReplacement
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -233,10 +236,12 @@ class CreateLoginScreenTest {
             waitUntilExists(hasText(website2))
 
             // Note
+            onNodeWithTag(LoginFormTag.LAZY_COLUMN).performScrollToIndex(5)
             val noteText = activity.getString(CompR.string.field_note_title)
             onNode(hasText(noteText)).performScrollTo().performClick()
             writeTextAndWait(hasText(noteText), note)
 
+            onNodeWithTag(LoginFormTag.LAZY_COLUMN).performScrollToIndex(0)
             onNode(hasText(buttonText)).performClick()
 
             waitUntil { checker.isCalled }
@@ -337,7 +342,8 @@ class CreateLoginScreenTest {
                     )
                 )
             }
-            waitUntilExists(hasText(textCustomField.label))
+
+            onNodeWithTag(LoginFormTag.LAZY_COLUMN).performScrollToKey("-1/0")
             onNodeWithText(textCustomField.label).performScrollTo().performClick()
             val textPlaceholder =
                 activity.getString(R.string.custom_field_text_placeholder)
@@ -351,6 +357,7 @@ class CreateLoginScreenTest {
                     )
                 )
             }
+            onNodeWithTag(LoginFormTag.LAZY_COLUMN).performScrollToKey("-1/1")
             waitUntilExists(hasText(hiddenCustomField.label))
             onNodeWithText(hiddenCustomField.label).performScrollTo().performClick()
             val hiddenTextPlaceholder =
@@ -365,15 +372,13 @@ class CreateLoginScreenTest {
                     )
                 )
             }
-            val addCustomFieldText =
-                activity.getString(R.string.add_custom_field_button)
-            onNodeWithText(addCustomFieldText).performScrollTo()
+            onNodeWithTag(LoginFormTag.LAZY_COLUMN).performScrollToKey("-1/2")
             waitUntilExists(hasText(totpCustomField.label))
             onNodeWithText(totpCustomField.label).performScrollTo().performClick()
             val totpPlaceholder =
                 activity.getString(R.string.totp_create_login_field_placeholder)
             onNodeWithText(totpPlaceholder).performTextReplacement(totpCustomFieldValue)
-
+            onNodeWithTag(LoginFormTag.LAZY_COLUMN).performScrollToIndex(0)
             onNode(hasText(titleText)).performClick().performScrollTo()
             // Submit
             onNode(hasText(buttonText)).performClick()
@@ -584,11 +589,11 @@ class CreateLoginScreenTest {
 
             val buttonText = activity.getString(R.string.title_create)
             waitUntilExists(hasText(buttonText))
-
+            onNodeWithTag(LoginFormTag.LAZY_COLUMN)
+                .performScrollToKey("-1/add_custom_field")
             val addCustomFieldText =
                 activity.getString(R.string.add_custom_field_button)
             onNodeWithText(addCustomFieldText).performScrollTo().performClick()
-
             waitUntil { checker.isCalled }
         }
     }

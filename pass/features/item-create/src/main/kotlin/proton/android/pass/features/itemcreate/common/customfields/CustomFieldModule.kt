@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -18,14 +18,15 @@
 
 package proton.android.pass.features.itemcreate.common.customfields
 
-import proton.android.pass.domain.CustomFieldType
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
 
-sealed interface CustomFieldNavigation {
-    data object AddCustomField : CustomFieldNavigation
+@Module
+@InstallIn(ViewModelComponent::class)
+abstract class CustomFieldModule {
 
-    @JvmInline
-    value class CustomFieldTypeSelected(val type: CustomFieldType) : CustomFieldNavigation
-    data class CustomFieldOptions(val currentValue: String, val index: Int) : CustomFieldNavigation
-    data class EditCustomField(val currentValue: String, val index: Int) : CustomFieldNavigation
-    data object RemovedCustomField : CustomFieldNavigation
+    @Binds
+    abstract fun bindCustomFieldHandler(impl: CustomFieldHandlerImpl): CustomFieldHandler
 }

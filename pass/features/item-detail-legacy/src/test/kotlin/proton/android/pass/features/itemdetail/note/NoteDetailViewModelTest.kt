@@ -324,7 +324,7 @@ class NoteDetailViewModelTest {
                 itemUuid = "uuid",
                 revision = 0,
                 shareId = ShareId(SHARE_ID),
-                itemType = ItemType.Note(note),
+                itemType = ItemType.Note(note, emptyList()),
                 title = encrypt(title),
                 note = encrypt(note),
                 content = EncryptedByteArray(byteArrayOf()),

@@ -36,7 +36,8 @@ class CreateItemImplTest {
     fun testCanCreateItem() {
         val contents = ItemContents.Note(
             title = proton.android.pass.test.TestUtils.randomString(),
-            note = proton.android.pass.test.TestUtils.randomString()
+            note = proton.android.pass.test.TestUtils.randomString(),
+            customFields = emptyList()
         )
         val (shareKey, decryptedShareKey) = TestUtils.createShareKey()
 

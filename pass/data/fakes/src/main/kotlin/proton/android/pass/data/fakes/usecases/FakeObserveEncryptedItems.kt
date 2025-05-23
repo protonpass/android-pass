@@ -180,7 +180,8 @@ class FakeObserveEncryptedItems @Inject constructor() : ObserveEncryptedItems {
             itemContents = ItemContents.Alias(
                 title = title,
                 note = note,
-                aliasEmail = alias
+                aliasEmail = alias,
+                customFields = emptyList()
             )
         )
 
@@ -194,7 +195,8 @@ class FakeObserveEncryptedItems @Inject constructor() : ObserveEncryptedItems {
             itemId = itemId,
             itemContents = ItemContents.Note(
                 title = title,
-                note = note
+                note = note,
+                customFields = emptyList()
             )
         )
 
@@ -227,7 +229,8 @@ class FakeObserveEncryptedItems @Inject constructor() : ObserveEncryptedItems {
                 } else {
                     HiddenState.Concealed(TestEncryptionContext.encrypt(pin))
                 },
-                expirationDate = expirationDate
+                expirationDate = expirationDate,
+                customFields = emptyList()
             )
         )
 
@@ -257,7 +260,8 @@ class FakeObserveEncryptedItems @Inject constructor() : ObserveEncryptedItems {
                 ),
                 contactDetailsContent = ContactDetailsContent.EMPTY,
                 workDetailsContent = WorkDetailsContent.EMPTY,
-                extraSectionContentList = emptyList()
+                extraSectionContentList = emptyList(),
+                customFields = emptyList()
             )
         )
     }

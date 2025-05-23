@@ -74,7 +74,7 @@ internal class ItemDetailViewModelTest {
     @Test
     fun `sends the right item data`() = runTest {
         val note = "some text"
-        val item = TestItem.create(itemType = ItemType.Note(note))
+        val item = TestItem.create(itemType = ItemType.Note(note, emptyList()))
         getItemById.emit(Result.success(item))
 
         instance.uiState.test {

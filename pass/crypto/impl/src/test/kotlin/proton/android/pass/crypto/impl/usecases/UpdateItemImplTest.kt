@@ -43,7 +43,8 @@ class UpdateItemImplTest {
         val (itemKey, decryptedItemKey) = TestUtils.createItemKey()
         val contents = ItemContents.Note(
             title = proton.android.pass.test.TestUtils.randomString(),
-            note = proton.android.pass.test.TestUtils.randomString()
+            note = proton.android.pass.test.TestUtils.randomString(),
+            customFields = emptyList()
         )
         val body = instance.createRequest(
             itemKey,

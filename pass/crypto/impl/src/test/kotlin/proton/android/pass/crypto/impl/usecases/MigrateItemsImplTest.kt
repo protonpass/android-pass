@@ -49,7 +49,8 @@ internal class MigrateItemsImplTest {
         val sourceShareKey = TestUtils.createShareKey().first
         val itemContents = ItemContents.Note(
             title = proton.android.pass.test.TestUtils.randomString(),
-            note = proton.android.pass.test.TestUtils.randomString()
+            note = proton.android.pass.test.TestUtils.randomString(),
+            customFields = emptyList()
         )
         val item: CreateItemPayload = createItem.create(sourceShareKey, itemContents)
         val (destinationShareKey, decryptedDestinationShareKey) = TestUtils.createShareKey()

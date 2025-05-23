@@ -58,6 +58,7 @@ object TestItemType {
         cvv = cvv,
         pin = pin,
         creditCardType = CreditCardType.MasterCard,
-        expirationDate = expirationDate
+        expirationDate = expirationDate,
+        customFields = emptyList()
     )
 }

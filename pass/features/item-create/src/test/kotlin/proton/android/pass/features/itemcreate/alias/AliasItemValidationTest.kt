@@ -75,7 +75,8 @@ class AliasItemValidationTest {
                     1,
                     "email"
                 )
-            )
+            ),
+            customFields = emptyList()
         )
 
     companion object {

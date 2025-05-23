@@ -20,9 +20,12 @@ package proton.android.pass.features.itemcreate.note
 
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.ShareId
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
 
-sealed interface NoteContentUiEvent {
+internal sealed interface NoteContentUiEvent {
     data object Back : NoteContentUiEvent
+
+    data object Upgrade : NoteContentUiEvent
 
     @JvmInline
     value class Submit(val shareId: ShareId) : NoteContentUiEvent
@@ -40,4 +43,7 @@ sealed interface NoteContentUiEvent {
     value class OnAttachmentEvent(val event: AttachmentContentEvent) : NoteContentUiEvent
 
     data object DismissAttachmentBanner : NoteContentUiEvent
+
+    @JvmInline
+    value class OnCustomFieldEvent(val event: CustomFieldEvent) : NoteContentUiEvent
 }

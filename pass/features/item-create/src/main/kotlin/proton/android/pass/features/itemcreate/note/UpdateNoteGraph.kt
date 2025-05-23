@@ -22,6 +22,7 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldNavigation
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
@@ -45,6 +46,7 @@ sealed interface UpdateNoteNavigation {
     data object CloseScreen : UpdateNoteNavigation
     data object AddAttachment : UpdateNoteNavigation
     data object UpsellAttachments : UpdateNoteNavigation
+    data object Upgrade : UpdateNoteNavigation
 
     @JvmInline
     value class DeleteAllAttachments(val attachmentIds: Set<AttachmentId>) : UpdateNoteNavigation
@@ -57,4 +59,7 @@ sealed interface UpdateNoteNavigation {
 
     @JvmInline
     value class OpenDraftAttachmentOptions(val uri: URI) : UpdateNoteNavigation
+
+    @JvmInline
+    value class NoteCustomFieldNavigation(val event: CustomFieldNavigation) : UpdateNoteNavigation
 }

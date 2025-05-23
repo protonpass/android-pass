@@ -332,7 +332,8 @@ internal class CreateLoginNavItemViewModelTest {
             ),
             selectedSuffix = suffix,
             selectedMailboxes = setOf(mailbox),
-            aliasToBeCreated = TestUtils.randomString()
+            aliasToBeCreated = TestUtils.randomString(),
+            customFields = emptyList()
         )
         instance.onAliasCreated(aliasItemFormState)
         return aliasItemFormState

@@ -33,7 +33,7 @@ object TestItemUiModel {
         id: String = "item-id",
         title: String = "item-title",
         note: String = "item-note",
-        itemContents: ItemContents = ItemContents.Note(title, note),
+        itemContents: ItemContents = ItemContents.Note(title, note, emptyList()),
         createTime: Instant = Clock.System.now(),
         modificationTime: Instant = Clock.System.now(),
         lastAutofillTime: Instant? = null,

@@ -41,6 +41,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
+import proton.android.pass.features.itemcreate.login.LoginField
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
 import proton.android.pass.preferences.FeatureFlag
@@ -164,6 +165,14 @@ abstract class BaseNoteViewModel(
                 attachment = attachment
             )
         }
+    }
+
+    internal fun onCustomFieldChange(index: Int, value: String) {
+        // share code with handler
+    }
+
+    internal fun onFocusChange(field: LoginField.CustomField, isFocused: Boolean) {
+        // share code with handler
     }
 
     suspend fun isFileAttachmentsEnabled() = featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)

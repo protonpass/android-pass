@@ -67,9 +67,9 @@ internal fun PassCustomItemDetailSections(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
-        if (contents.customFieldList.isNotEmpty()) {
+        if (contents.customFields.isNotEmpty()) {
             PassItemDetailCustomFieldsSection(
-                customFields = contents.customFieldList.toPersistentList(),
+                customFields = contents.customFields.toPersistentList(),
                 customFieldTotps = customFieldTotps,
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,

@@ -61,7 +61,8 @@ class CreditCardRowPreviewProvider : PreviewParameterProvider<CreditCardRowParam
                     expirationDate = "2030-01",
                     pin = HiddenState.Concealed(""),
                     cvv = HiddenState.Concealed(""),
-                    type = CreditCardType.Visa
+                    type = CreditCardType.Visa,
+                    customFields = emptyList()
                 ),
                 state = 0,
                 createTime = Clock.System.now(),

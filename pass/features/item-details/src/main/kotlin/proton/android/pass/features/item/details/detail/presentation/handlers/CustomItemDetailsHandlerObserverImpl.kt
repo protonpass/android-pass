@@ -29,7 +29,6 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
-import proton.android.pass.domain.toItemContents
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -41,6 +40,7 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.Totp
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
@@ -86,7 +86,7 @@ class CustomItemDetailsHandlerObserverImpl @Inject constructor(
                         )
                     }.toMap()
 
-                val customFields = contents.customFieldList.mapToDecryptedTotp(
+                val customFields = contents.customFields.mapToDecryptedTotp(
                     sectionIndex = None,
                     decrypt = ::decrypt
                 ).toMap()
@@ -120,7 +120,7 @@ class CustomItemDetailsHandlerObserverImpl @Inject constructor(
         revealedHiddenFields: Map<ItemSection, Set<ItemDetailsFieldType.Hidden>>
     ): ItemContents {
         val mutableSections = itemContents.sectionContentList.toMutableList()
-        val mutableCustomFields = itemContents.customFieldList.toMutableList()
+        val mutableCustomFields = itemContents.customFields.toMutableList()
 
         mutableSections.forEachIndexed { sectionIndex, sectionContent ->
             val updatedCustomFields = sectionContent.customFieldList.mapIndexed { fieldIndex, field ->
@@ -139,7 +139,7 @@ class CustomItemDetailsHandlerObserverImpl @Inject constructor(
 
         return itemContents.copy(
             sectionContentList = mutableSections,
-            customFieldList = mutableCustomFields
+            customFields = mutableCustomFields
         )
     }
 
@@ -161,8 +161,8 @@ class CustomItemDetailsHandlerObserverImpl @Inject constructor(
             ),
             customFields = calculateItemDiffTypes(
                 encryptionContext = this@withEncryptionContext,
-                baseItemCustomFieldsContent = baseItemContents.customFieldList,
-                otherItemCustomFieldsContent = otherItemContents.customFieldList
+                baseItemCustomFieldsContent = baseItemContents.customFields,
+                otherItemCustomFieldsContent = otherItemContents.customFields
             ),
             extraCustomFields = baseItemContents.sectionContentList.mapIndexed { index, extraSectionContent ->
                 calculateItemDiffTypes(

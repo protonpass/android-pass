@@ -42,7 +42,8 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
             shareId = ShareId("345"),
             contents = ItemContents.Note(
                 "Item with long text and a maximum",
-                ""
+                "",
+                customFields = emptyList()
             ),
             state = 0,
             createTime = Clock.System.now(),
@@ -87,7 +88,8 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
             contents = ItemContents.Alias(
                 title = "Alias title",
                 note = "",
-                aliasEmail = ""
+                aliasEmail = "",
+                customFields = emptyList()
             ),
             state = 0,
             createTime = Clock.System.now(),
@@ -111,7 +113,8 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
                 number = "",
                 cvv = HiddenState.Empty(""),
                 pin = HiddenState.Empty(""),
-                expirationDate = ""
+                expirationDate = "",
+                customFields = emptyList()
             ),
             state = 0,
             createTime = Clock.System.now(),
@@ -134,7 +137,8 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
                 addressDetailsContent = AddressDetailsContent.EMPTY,
                 contactDetailsContent = ContactDetailsContent.EMPTY,
                 workDetailsContent = WorkDetailsContent.EMPTY,
-                extraSectionContentList = emptyList()
+                extraSectionContentList = emptyList(),
+                customFields = emptyList()
             ),
             state = 0,
             createTime = Clock.System.now(),
@@ -153,7 +157,7 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
             contents = ItemContents.Custom(
                 title = "Custom title",
                 note = "",
-                customFieldList = emptyList(),
+                customFields = emptyList(),
                 sectionContentList = emptyList()
             ),
             state = 0,

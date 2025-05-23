@@ -22,13 +22,22 @@ import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 
 @Parcelize
 @Immutable
 data class NoteItemFormState(
     val title: String,
-    val note: String
+    val note: String,
+    val customFields: List<UICustomFieldContent>
 ) : Parcelable {
+
+    constructor(itemContents: ItemContents.Note) : this(
+        title = itemContents.title,
+        note = itemContents.note,
+        customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
+    )
+
     fun validate(): Set<NoteItemValidationErrors> {
         val mutableSet = mutableSetOf<NoteItemValidationErrors>()
         if (title.isBlank()) mutableSet.add(NoteItemValidationErrors.BlankTitle)
@@ -37,13 +46,15 @@ data class NoteItemFormState(
 
     fun toItemContents(): ItemContents = ItemContents.Note(
         title = title,
-        note = note
+        note = note,
+        customFields = customFields.map(UICustomFieldContent::toCustomFieldContent)
     )
 
     companion object {
         val Empty = NoteItemFormState(
             title = "",
-            note = ""
+            note = "",
+            customFields = emptyList()
         )
     }
 }

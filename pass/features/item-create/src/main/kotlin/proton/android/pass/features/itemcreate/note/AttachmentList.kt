@@ -35,7 +35,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.features.itemcreate.note.NoteContentUiEvent.OnAttachmentEvent
 
 @Composable
-fun AttachmentList(
+internal fun AttachmentList(
     modifier: Modifier = Modifier,
     attachmentsState: AttachmentsState,
     onEvent: (NoteContentUiEvent) -> Unit

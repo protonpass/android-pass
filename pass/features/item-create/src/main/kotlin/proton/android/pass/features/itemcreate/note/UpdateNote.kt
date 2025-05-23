@@ -39,10 +39,15 @@ import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldNavigation.AddCustomField
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldNavigation.CustomFieldOptions
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
+import proton.android.pass.features.itemcreate.login.LoginField.CustomField
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
 import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.AddAttachment
 import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.DeleteAllAttachments
+import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.NoteCustomFieldNavigation
 import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.OpenAttachmentOptions
 import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.OpenDraftAttachmentOptions
 
@@ -86,6 +91,9 @@ fun UpdateNote(
             onEvent = {
                 when (it) {
                     NoteContentUiEvent.Back -> onExit()
+                    NoteContentUiEvent.Upgrade ->
+                        actionAfterKeyboardHide =
+                            { onNavigate(UpdateNoteNavigation.Upgrade) }
                     is NoteContentUiEvent.OnNoteChange -> viewModel.onNoteChange(it.note)
                     is NoteContentUiEvent.OnTitleChange -> viewModel.onTitleChange(it.title)
                     is NoteContentUiEvent.OnVaultSelect -> {}
@@ -136,6 +144,46 @@ fun UpdateNote(
                                         onNavigate(UpdateNoteNavigation.UpsellAttachments)
                                 }
                             }
+                    is NoteContentUiEvent.OnCustomFieldEvent -> {
+                        when (val cevent = it.event) {
+                            is CustomFieldEvent.OnAddField -> {
+                                actionAfterKeyboardHide = {
+                                    onNavigate(NoteCustomFieldNavigation(AddCustomField))
+                                }
+                            }
+
+                            is CustomFieldEvent.OnFieldOptions -> {
+                                actionAfterKeyboardHide = {
+                                    onNavigate(
+                                        NoteCustomFieldNavigation(
+                                            CustomFieldOptions(
+                                                currentValue = cevent.label,
+                                                index = cevent.field.index
+                                            )
+                                        )
+                                    )
+                                }
+                            }
+
+                            is CustomFieldEvent.OnValueChange -> {
+                                viewModel.onCustomFieldChange(cevent.field.index, cevent.value)
+                            }
+
+                            CustomFieldEvent.Upgrade ->
+                                actionAfterKeyboardHide =
+                                    { onNavigate(UpdateNoteNavigation.Upgrade) }
+
+                            is CustomFieldEvent.FocusRequested ->
+                                viewModel.onFocusChange(
+                                    field = CustomField(cevent.field),
+                                    isFocused = cevent.isFocused
+                                )
+
+                            is CustomFieldEvent.OnFieldClick -> {
+                                // Currently only supported by date field
+                            }
+                        }
+                    }
 
                     NoteContentUiEvent.DismissAttachmentBanner ->
                         viewModel.dismissFileAttachmentsOnboardingBanner()

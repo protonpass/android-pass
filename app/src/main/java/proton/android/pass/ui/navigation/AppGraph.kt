@@ -105,6 +105,7 @@ import proton.android.pass.features.itemcreate.bottomsheets.customfield.AddCusto
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldOptionsBottomSheetNavItem
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
 import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldNavigation
 import proton.android.pass.features.itemcreate.common.customsection.CustomSectionNameDialogNavItem
 import proton.android.pass.features.itemcreate.common.customsection.CustomSectionOptionsBottomSheetNavItem
 import proton.android.pass.features.itemcreate.common.customsection.EditCustomSectionNameDialogNavItem
@@ -1040,6 +1041,9 @@ fun NavGraphBuilder.appGraph(
                         destination = UpsellNavItem,
                         route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
                     )
+
+                is CreateNoteNavigation.NoteCustomFieldNavigation -> TODO()
+                CreateNoteNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
             }
         }
     )
@@ -1081,6 +1085,16 @@ fun NavGraphBuilder.appGraph(
                         destination = UpsellNavItem,
                         route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
                     )
+
+                is UpdateNoteNavigation.NoteCustomFieldNavigation ->
+                    when(it.event) {
+                        CustomFieldNavigation.AddCustomField -> TODO()
+                        is CustomFieldNavigation.CustomFieldOptions -> TODO()
+                        is CustomFieldNavigation.CustomFieldTypeSelected -> TODO()
+                        is CustomFieldNavigation.EditCustomField -> TODO()
+                        CustomFieldNavigation.RemovedCustomField -> TODO()
+                    }
+                UpdateNoteNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
             }
         }
     )

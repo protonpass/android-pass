@@ -44,7 +44,10 @@ import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.common.ShareError.EmptyShareList
 import proton.android.pass.features.itemcreate.common.ShareError.SharesNotAvailable
 import proton.android.pass.features.itemcreate.common.ShareUiState
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldNavigation
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
+import proton.android.pass.features.itemcreate.login.LoginField.CustomField
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
 import proton.android.pass.features.itemcreate.note.CreateNoteNavigation.DeleteAllAttachments
 import proton.android.pass.features.itemcreate.note.CreateNoteNavigation.OpenDraftAttachmentOptions
@@ -115,6 +118,8 @@ fun CreateNoteScreen(
             onEvent = { event ->
                 when (event) {
                     NoteContentUiEvent.Back -> onExit()
+                    NoteContentUiEvent.Upgrade ->
+                        actionAfterKeyboardHide = { onNavigate(CreateNoteNavigation.Upgrade) }
                     is NoteContentUiEvent.Submit -> viewModel.createNote(event.shareId)
                     is NoteContentUiEvent.OnVaultSelect ->
                         actionAfterKeyboardHide =
@@ -161,6 +166,50 @@ fun CreateNoteScreen(
 
                     NoteContentUiEvent.DismissAttachmentBanner ->
                         viewModel.dismissFileAttachmentsOnboardingBanner()
+
+                    is NoteContentUiEvent.OnCustomFieldEvent ->
+                        when (val cevent = event.event) {
+                            is CustomFieldEvent.OnAddField -> {
+                                actionAfterKeyboardHide = {
+                                    onNavigate(
+                                        CreateNoteNavigation.NoteCustomFieldNavigation(
+                                            CustomFieldNavigation.AddCustomField
+                                        )
+                                    )
+                                }
+                            }
+
+                            is CustomFieldEvent.OnFieldOptions -> {
+                                actionAfterKeyboardHide = {
+                                    onNavigate(
+                                        CreateNoteNavigation.NoteCustomFieldNavigation(
+                                            CustomFieldNavigation.CustomFieldOptions(
+                                                currentValue = cevent.label,
+                                                index = cevent.field.index
+                                            )
+                                        )
+                                    )
+                                }
+                            }
+
+                            is CustomFieldEvent.OnValueChange -> {
+                                viewModel.onCustomFieldChange(cevent.field.index, cevent.value)
+                            }
+
+                            CustomFieldEvent.Upgrade ->
+                                actionAfterKeyboardHide =
+                                    { onNavigate(CreateNoteNavigation.Upgrade) }
+
+                            is CustomFieldEvent.FocusRequested ->
+                                viewModel.onFocusChange(
+                                    field = CustomField(cevent.field),
+                                    isFocused = cevent.isFocused
+                                )
+
+                            is CustomFieldEvent.OnFieldClick -> {
+                                // Currently only supported by date field
+                            }
+                        }
                 }
             }
         )

@@ -20,6 +20,7 @@
   <string name="sharing_can_view">Visualizador</string>
   <string name="sharing_can_edit">Editor</string>
   <string name="sharing_can_manage">Administrador</string>
+  <string name="sharing_can_manage_v2">Gerenciador</string>
   <string name="sharing_can_view_description">Pode visualizar itens neste cofre.</string>
   <string name="sharing_can_edit_description">Pode criar, editar, excluir, e exportar itens para esse cofre.</string>
   <string name="sharing_can_manage_description">Pode conceder ou revogar acesso para esse cofre.</string>
@@ -90,6 +91,7 @@
   <string name="share_role_viewer">Visualizador</string>
   <string name="share_role_editor">Editor</string>
   <string name="share_role_admin">Administrador</string>
+  <string name="share_role_manager">Gerenciador</string>
   <string name="share_role_owner">Proprietário</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transferir a propriedade</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Você não pode transferir o seu último cofre possuído.</string>

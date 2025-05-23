@@ -20,7 +20,7 @@
   <string name="bottomsheet_copy_email">Kopiraj e-pošto</string>
   <string name="bottomsheet_copy_password">Kopiraj geslo</string>
   <string name="bottomsheet_copy_username">Kopiraj uporabniško ime</string>
-  <string name="bottomsheet_no_actions">No actions available</string>
+  <string name="bottomsheet_no_actions">Na voljo ni nobenih dejanj</string>
   <string name="snackbar_item_move_to_trash_success">Predmet je premaknjen v smetnjak</string>
   <string name="snackbar_item_move_to_trash_error">Ni bilo mogoče premakniti v smetnjak</string>
   <string name="snackbar_item_copy_email_success">E-poštni naslov kopiran v odložišče</string>

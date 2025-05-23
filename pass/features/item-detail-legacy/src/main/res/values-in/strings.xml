@@ -120,4 +120,6 @@
   <string name="open_attachments_error">Gagal membuka lampiran</string>
   <string name="banner_contacts_title">Tahukah Anda?</string>
   <string name="banner_contacts_subtitle">Setiap kali alias Anda menerima email dari orang lain, kontak baru akan dibuat secara otomatis.</string>
+  <string name="expand_note_more">lainnya</string>
+  <string name="collapse_note_less">lebih sedikit</string>
 </resources>

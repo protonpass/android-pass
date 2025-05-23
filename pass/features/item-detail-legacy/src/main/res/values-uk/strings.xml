@@ -132,4 +132,6 @@
   <string name="open_attachments_error">Не вдалося відкрити файл</string>
   <string name="banner_contacts_title">Чи знали ви?</string>
   <string name="banner_contacts_subtitle">Щоразу, коли ваш псевдонім отримує лист від когось, автоматично створюється новий контакт.</string>
+  <string name="expand_note_more">more</string>
+  <string name="collapse_note_less">less</string>
 </resources>

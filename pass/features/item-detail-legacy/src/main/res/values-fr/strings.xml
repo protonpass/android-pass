@@ -124,4 +124,6 @@
   <string name="open_attachments_error">La pièce jointe n\'a pu être ouverte.</string>
   <string name="banner_contacts_title">Le saviez-vous ?</string>
   <string name="banner_contacts_subtitle">Chaque fois que votre alias reçoit un e-mail, un contact est automatiquement créé.</string>
+  <string name="expand_note_more">plus</string>
+  <string name="collapse_note_less">moins</string>
 </resources>

@@ -36,6 +36,7 @@
   <string name="bottomsheet_delete_permanently">Elimina definitivamente</string>
   <string name="bottomsheet_restore">Ripristina</string>
   <string name="bottomsheet_leave">Abbandona</string>
+  <string name="bottomsheet_no_actions">Nessuna azione disponibile</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Apri menu azioni elemento</string>
   <string name="action_upgrade_now">Effettua l\'upgrade</string>
@@ -196,7 +197,8 @@
   <string name="item_details_shared_section_more_info_header_title">Altre informazioni</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">Altre informazioni sull\'elemento</string>
   <string name="item_details_shared_section_more_info_item_id">ID elemento</string>
-  <string name="item_details_shared_section_more_info_vault_id">ID cassaforte</string>
+  <string name="item_details_shared_section_more_info_vault_id">ID della cassaforte</string>
+  <string name="item_details_shared_section_more_info_share_id">ID di condivisione</string>
   <string name="item_details_wifi_network_label_ssid_name">Nome (SSID)</string>
   <string name="item_details_wifi_network_label_password">Password</string>
   <string name="item_details_wifi_network_label_security">Sicurezza</string>

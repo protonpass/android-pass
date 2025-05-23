@@ -84,6 +84,7 @@ import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.AttachmentsInitError
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.InitError
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.ItemLinkAttachmentsError
@@ -124,6 +125,7 @@ class UpdateLoginViewModel @Inject constructor(
     observeTooltipEnabled: ObserveTooltipEnabled,
     disableTooltip: DisableTooltip,
     attachmentsHandler: AttachmentsHandler,
+    customFieldHandler: CustomFieldHandler,
     userPreferencesRepository: UserPreferencesRepository,
     customFieldDraftRepository: CustomFieldDraftRepository,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -141,6 +143,7 @@ class UpdateLoginViewModel @Inject constructor(
     observeTooltipEnabled = observeTooltipEnabled,
     disableTooltip = disableTooltip,
     attachmentsHandler = attachmentsHandler,
+    customFieldHandler = customFieldHandler,
     userPreferencesRepository = userPreferencesRepository,
     featureFlagsRepository = featureFlagsRepository,
     customFieldDraftRepository = customFieldDraftRepository,

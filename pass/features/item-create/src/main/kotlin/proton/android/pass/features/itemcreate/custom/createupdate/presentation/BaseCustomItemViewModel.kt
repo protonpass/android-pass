@@ -65,6 +65,7 @@ import proton.android.pass.features.itemcreate.common.UICustomFieldContent.Compa
 import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.ValidationError
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnCustomFieldChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnTitleChanged
@@ -148,6 +149,7 @@ abstract class BaseCustomItemViewModel(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val customFieldDraftRepository: CustomFieldDraftRepository,
     private val attachmentsHandler: AttachmentsHandler,
+    private val customFieldHandler: CustomFieldHandler,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
@@ -398,11 +400,12 @@ abstract class BaseCustomItemViewModel(
         if (customFieldIdentifier.type == CustomFieldType.Totp) return
         when (customFieldIdentifier.sectionIndex) {
             None -> {
-                itemFormState = itemFormState.copy(
-                    customFieldList = itemFormState.customFieldList.mapIndexed fields@{ customFieldIndex, field ->
-                        updateFocus(customFieldIndex, customFieldIdentifier.index, field, isFocused)
-                    }
+                val customFields = customFieldHandler.onCustomFieldFocusedChanged(
+                    customFieldIdentifier = customFieldIdentifier,
+                    customFieldList = itemFormState.customFieldList,
+                    isFocused = isFocused
                 )
+                itemFormState = itemFormState.copy(customFieldList = customFields)
             }
 
             is Some -> {
@@ -412,54 +415,22 @@ abstract class BaseCustomItemViewModel(
                 itemFormState = itemFormState.copy(
                     sectionList = itemFormState.sectionList.mapIndexed sections@{ index, section ->
                         if (index != customFieldIdentifier.index) return@sections section
-
-                        val updatedFields =
-                            section.customFields.mapIndexed fields@{ customFieldIndex, field ->
-                                updateFocus(
-                                    customFieldIndex,
-                                    customFieldIdentifier.index,
-                                    field,
-                                    isFocused
-                                )
-                            }
-
-                        section.copy(customFields = updatedFields)
+                        val customFields = customFieldHandler.onCustomFieldFocusedChanged(
+                            customFieldIdentifier = customFieldIdentifier,
+                            customFieldList = section.customFields,
+                            isFocused = isFocused
+                        )
+                        section.copy(customFields = customFields)
                     }
                 )
             }
         }
 
         focusedFieldState.update {
-            CustomFieldIdentifier(
-                customFieldIdentifier.sectionIndex,
-                customFieldIdentifier.index,
-                customFieldIdentifier.type
-            )
+            customFieldIdentifier
                 .takeIf { isFocused }
                 .toOption()
         }
-    }
-
-    private fun updateFocus(
-        customFieldIndex: Int,
-        focusedFieldIndex: Int,
-        field: UICustomFieldContent,
-        isFocused: Boolean
-    ) = when {
-        customFieldIndex != focusedFieldIndex || field !is UICustomFieldContent.Hidden -> field
-        field.value is UIHiddenState.Empty -> field
-        isFocused -> encryptionContextProvider.withEncryptionContext {
-            field.copy(
-                value = UIHiddenState.Revealed(
-                    encrypted = field.value.encrypted,
-                    clearText = decrypt(field.value.encrypted)
-                )
-            )
-        }
-
-        else -> field.copy(
-            value = UIHiddenState.Concealed(encrypted = field.value.encrypted)
-        )
     }
 
     private fun onClearDraft() {

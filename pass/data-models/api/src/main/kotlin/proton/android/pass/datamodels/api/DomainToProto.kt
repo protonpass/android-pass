@@ -49,6 +49,9 @@ fun ItemContents.serializeToProto(
             .build()
     )
 
+    builder.clearExtraFields()
+        .addAllExtraFields(customFields.mapToExtraFields(encryptionContext))
+
     val content = when (this) {
         is ItemContents.Login -> {
             val packageNameList = packageInfoSet.map {
@@ -65,9 +68,6 @@ fun ItemContents.serializeToProto(
                         .build()
                 )
                 .build()
-
-            builder.clearExtraFields()
-                .addAllExtraFields(customFields.mapToExtraFields(encryptionContext))
 
             builder.content.toBuilder().setLogin(
                 builder.content.login.toBuilder()
@@ -124,162 +124,142 @@ fun ItemContents.serializeToProto(
             ItemV1.ItemAlias.newBuilder().build()
         )
 
-        is ItemContents.CreditCard -> {
-            builder.content.toBuilder().setCreditCard(
-                builder.content.creditCard.toBuilder()
-                    .setCardholderName(cardHolder)
-                    .setNumber(number)
-                    .setCardType(
-                        when (type) {
-                            CreditCardType.Other -> ItemV1.CardType.Other
-                            CreditCardType.Visa -> ItemV1.CardType.Visa
-                            CreditCardType.MasterCard -> ItemV1.CardType.Mastercard
-                            CreditCardType.AmericanExpress -> ItemV1.CardType.AmericanExpress
-                        }
-                    )
-                    .setVerificationNumber(encryptionContext.decrypt(cvv.encrypted))
-                    .setPin(encryptionContext.decrypt(pin.encrypted))
-                    .setExpirationDate(expirationDate)
-                    .build()
-            )
-        }
+        is ItemContents.CreditCard -> builder.content.toBuilder().setCreditCard(
+            builder.content.creditCard.toBuilder()
+                .setCardholderName(cardHolder)
+                .setNumber(number)
+                .setCardType(
+                    when (type) {
+                        CreditCardType.Other -> ItemV1.CardType.Other
+                        CreditCardType.Visa -> ItemV1.CardType.Visa
+                        CreditCardType.MasterCard -> ItemV1.CardType.Mastercard
+                        CreditCardType.AmericanExpress -> ItemV1.CardType.AmericanExpress
+                    }
+                )
+                .setVerificationNumber(encryptionContext.decrypt(cvv.encrypted))
+                .setPin(encryptionContext.decrypt(pin.encrypted))
+                .setExpirationDate(expirationDate)
+                .build()
+        )
 
-        is ItemContents.Identity -> {
-            builder.content.toBuilder().setIdentity(
-                builder.content.identity.toBuilder()
-                    // Personal Details
-                    .setFullName(personalDetailsContent.fullName)
-                    .setEmail(personalDetailsContent.email)
-                    .setPhoneNumber(personalDetailsContent.phoneNumber)
-                    .setFirstName(personalDetailsContent.firstName)
-                    .setMiddleName(personalDetailsContent.middleName)
-                    .setLastName(personalDetailsContent.lastName)
-                    .setBirthdate(personalDetailsContent.birthdate)
-                    .setGender(personalDetailsContent.gender)
-                    .clearExtraPersonalDetails()
-                    .addAllExtraPersonalDetails(
-                        personalDetailsContent.customFields.mapToExtraFields(encryptionContext)
-                    )
-                    // Address details
-                    .setOrganization(addressDetailsContent.organization)
-                    .setStreetAddress(addressDetailsContent.streetAddress)
-                    .setZipOrPostalCode(addressDetailsContent.zipOrPostalCode)
-                    .setCity(addressDetailsContent.city)
-                    .setStateOrProvince(addressDetailsContent.stateOrProvince)
-                    .setCountryOrRegion(addressDetailsContent.countryOrRegion)
-                    .setFloor(addressDetailsContent.floor)
-                    .setCounty(addressDetailsContent.county)
-                    .clearExtraAddressDetails()
-                    .addAllExtraAddressDetails(
-                        addressDetailsContent.customFields.mapToExtraFields(encryptionContext)
-                    )
-                    // Contact details
-                    .setSocialSecurityNumber(
-                        encryptionContext.decrypt(contactDetailsContent.socialSecurityNumber.encrypted)
-                    )
-                    .setPassportNumber(contactDetailsContent.passportNumber)
-                    .setLicenseNumber(contactDetailsContent.licenseNumber)
-                    .setWebsite(contactDetailsContent.website)
-                    .setXHandle(contactDetailsContent.xHandle)
-                    .setSecondPhoneNumber(contactDetailsContent.secondPhoneNumber)
-                    .setLinkedin(contactDetailsContent.linkedin)
-                    .setReddit(contactDetailsContent.reddit)
-                    .setFacebook(contactDetailsContent.facebook)
-                    .setYahoo(contactDetailsContent.yahoo)
-                    .setInstagram(contactDetailsContent.instagram)
-                    .clearExtraContactDetails()
-                    .addAllExtraContactDetails(
-                        contactDetailsContent.customFields.mapToExtraFields(encryptionContext)
-                    )
-                    // Work details
-                    .setJobTitle(workDetailsContent.jobTitle)
-                    .setCompany(workDetailsContent.company)
-                    .setPersonalWebsite(workDetailsContent.personalWebsite)
-                    .setWorkPhoneNumber(workDetailsContent.workPhoneNumber)
-                    .setWorkEmail(workDetailsContent.workEmail)
-                    .clearExtraWorkDetails()
-                    .addAllExtraWorkDetails(
-                        workDetailsContent.customFields.mapToExtraFields(encryptionContext)
-                    )
-                    .clearExtraSections()
-                    .addAllExtraSections(
-                        extraSectionContentList.map {
-                            ItemV1.CustomSection.newBuilder()
-                                .setSectionName(it.title)
-                                .clearSectionFields()
-                                .addAllSectionFields(it.customFieldList.mapToExtraFields(encryptionContext))
-                                .build()
-                        }
-                    )
-                    .build()
-            )
+        is ItemContents.Identity -> builder.content.toBuilder().setIdentity(
+            builder.content.identity.toBuilder()
+                // Personal Details
+                .setFullName(personalDetailsContent.fullName)
+                .setEmail(personalDetailsContent.email)
+                .setPhoneNumber(personalDetailsContent.phoneNumber)
+                .setFirstName(personalDetailsContent.firstName)
+                .setMiddleName(personalDetailsContent.middleName)
+                .setLastName(personalDetailsContent.lastName)
+                .setBirthdate(personalDetailsContent.birthdate)
+                .setGender(personalDetailsContent.gender)
+                .clearExtraPersonalDetails()
+                .addAllExtraPersonalDetails(
+                    personalDetailsContent.customFields.mapToExtraFields(encryptionContext)
+                )
+                // Address details
+                .setOrganization(addressDetailsContent.organization)
+                .setStreetAddress(addressDetailsContent.streetAddress)
+                .setZipOrPostalCode(addressDetailsContent.zipOrPostalCode)
+                .setCity(addressDetailsContent.city)
+                .setStateOrProvince(addressDetailsContent.stateOrProvince)
+                .setCountryOrRegion(addressDetailsContent.countryOrRegion)
+                .setFloor(addressDetailsContent.floor)
+                .setCounty(addressDetailsContent.county)
+                .clearExtraAddressDetails()
+                .addAllExtraAddressDetails(
+                    addressDetailsContent.customFields.mapToExtraFields(encryptionContext)
+                )
+                // Contact details
+                .setSocialSecurityNumber(
+                    encryptionContext.decrypt(contactDetailsContent.socialSecurityNumber.encrypted)
+                )
+                .setPassportNumber(contactDetailsContent.passportNumber)
+                .setLicenseNumber(contactDetailsContent.licenseNumber)
+                .setWebsite(contactDetailsContent.website)
+                .setXHandle(contactDetailsContent.xHandle)
+                .setSecondPhoneNumber(contactDetailsContent.secondPhoneNumber)
+                .setLinkedin(contactDetailsContent.linkedin)
+                .setReddit(contactDetailsContent.reddit)
+                .setFacebook(contactDetailsContent.facebook)
+                .setYahoo(contactDetailsContent.yahoo)
+                .setInstagram(contactDetailsContent.instagram)
+                .clearExtraContactDetails()
+                .addAllExtraContactDetails(
+                    contactDetailsContent.customFields.mapToExtraFields(encryptionContext)
+                )
+                // Work details
+                .setJobTitle(workDetailsContent.jobTitle)
+                .setCompany(workDetailsContent.company)
+                .setPersonalWebsite(workDetailsContent.personalWebsite)
+                .setWorkPhoneNumber(workDetailsContent.workPhoneNumber)
+                .setWorkEmail(workDetailsContent.workEmail)
+                .clearExtraWorkDetails()
+                .addAllExtraWorkDetails(
+                    workDetailsContent.customFields.mapToExtraFields(encryptionContext)
+                )
+                .clearExtraSections()
+                .addAllExtraSections(
+                    extraSectionContentList.map {
+                        ItemV1.CustomSection.newBuilder()
+                            .setSectionName(it.title)
+                            .clearSectionFields()
+                            .addAllSectionFields(it.customFieldList.mapToExtraFields(encryptionContext))
+                            .build()
+                    }
+                )
+                .build()
+        )
 
-        }
+        is ItemContents.Custom -> builder.content.toBuilder().setCustom(
+            builder.content.custom.toBuilder()
+                .clearSections()
+                .addAllSections(
+                    sectionContentList.map {
+                        ItemV1.CustomSection.newBuilder()
+                            .setSectionName(it.title)
+                            .clearSectionFields()
+                            .addAllSectionFields(it.customFieldList.mapToExtraFields(encryptionContext))
+                            .build()
+                    }
+                )
+                .build()
+        )
 
-        is ItemContents.Custom ->
-            builder.content.toBuilder().setCustom(
-                builder.clearExtraFields()
-                    .addAllExtraFields(customFields.mapToExtraFields(encryptionContext))
-                    .content
-                    .custom
-                    .toBuilder()
-                    .clearSections()
-                    .addAllSections(
-                        sectionContentList.map {
-                            ItemV1.CustomSection.newBuilder()
-                                .setSectionName(it.title)
-                                .clearSectionFields()
-                                .addAllSectionFields(it.customFieldList.mapToExtraFields(encryptionContext))
-                                .build()
-                        }
-                    )
-                    .build()
-            )
+        is ItemContents.WifiNetwork -> builder.content.toBuilder().setWifi(
+            builder.content.wifi.toBuilder()
+                .setSsid(ssid)
+                .setPassword(encryptionContext.decrypt(password.encrypted))
+                .setSecurityValue(wifiSecurityType.id)
+                .clearSections()
+                .addAllSections(
+                    sectionContentList.map {
+                        ItemV1.CustomSection.newBuilder()
+                            .setSectionName(it.title)
+                            .clearSectionFields()
+                            .addAllSectionFields(it.customFieldList.mapToExtraFields(encryptionContext))
+                            .build()
+                    }
+                )
+                .build()
+        )
 
-        is ItemContents.WifiNetwork ->
-            builder.content.toBuilder().setWifi(
-                builder.clearExtraFields()
-                    .addAllExtraFields(customFields.mapToExtraFields(encryptionContext))
-                    .content
-                    .wifi
-                    .toBuilder()
-                    .setSsid(ssid)
-                    .setPassword(encryptionContext.decrypt(password.encrypted))
-                    .setSecurityValue(wifiSecurityType.id)
-                    .clearSections()
-                    .addAllSections(
-                        sectionContentList.map {
-                            ItemV1.CustomSection.newBuilder()
-                                .setSectionName(it.title)
-                                .clearSectionFields()
-                                .addAllSectionFields(it.customFieldList.mapToExtraFields(encryptionContext))
-                                .build()
-                        }
-                    )
-                    .build()
-            )
-
-        is ItemContents.SSHKey ->
-            builder.content.toBuilder().setSshKey(
-                builder.clearExtraFields()
-                    .addAllExtraFields(customFields.mapToExtraFields(encryptionContext))
-                    .content
-                    .sshKey
-                    .toBuilder()
-                    .setPublicKey(publicKey)
-                    .setPrivateKey(encryptionContext.decrypt(privateKey.encrypted))
-                    .clearSections()
-                    .addAllSections(
-                        sectionContentList.map {
-                            ItemV1.CustomSection.newBuilder()
-                                .setSectionName(it.title)
-                                .clearSectionFields()
-                                .addAllSectionFields(it.customFieldList.mapToExtraFields(encryptionContext))
-                                .build()
-                        }
-                    )
-                    .build()
-            )
+        is ItemContents.SSHKey -> builder.content.toBuilder().setSshKey(
+            builder.content.sshKey.toBuilder()
+                .setPublicKey(publicKey)
+                .setPrivateKey(encryptionContext.decrypt(privateKey.encrypted))
+                .clearSections()
+                .addAllSections(
+                    sectionContentList.map {
+                        ItemV1.CustomSection.newBuilder()
+                            .setSectionName(it.title)
+                            .clearSectionFields()
+                            .addAllSectionFields(it.customFieldList.mapToExtraFields(encryptionContext))
+                            .build()
+                    }
+                )
+                .build()
+        )
 
         is ItemContents.Unknown -> throw IllegalStateException("Cannot be unknown")
     }.build()

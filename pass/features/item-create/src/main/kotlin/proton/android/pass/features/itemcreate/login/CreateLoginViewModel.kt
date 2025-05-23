@@ -85,6 +85,7 @@ import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.UIHiddenState
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.AliasRateLimited
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.CannotCreateMoreAliases
@@ -130,6 +131,7 @@ class CreateLoginViewModel @Inject constructor(
     observeTooltipEnabled: ObserveTooltipEnabled,
     disableTooltip: DisableTooltip,
     attachmentsHandler: AttachmentsHandler,
+    customFieldHandler: CustomFieldHandler,
     userPreferencesRepository: UserPreferencesRepository,
     customFieldDraftRepository: CustomFieldDraftRepository,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -148,6 +150,7 @@ class CreateLoginViewModel @Inject constructor(
     disableTooltip = disableTooltip,
     userPreferencesRepository = userPreferencesRepository,
     attachmentsHandler = attachmentsHandler,
+    customFieldHandler = customFieldHandler,
     featureFlagsRepository = featureFlagsRepository,
     customFieldDraftRepository = customFieldDraftRepository,
     savedStateHandleProvider = savedStateHandleProvider

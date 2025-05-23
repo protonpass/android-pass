@@ -1087,7 +1087,7 @@ fun NavGraphBuilder.appGraph(
                     )
 
                 is UpdateNoteNavigation.NoteCustomFieldNavigation ->
-                    when(it.event) {
+                    when (it.event) {
                         CustomFieldNavigation.AddCustomField -> TODO()
                         is CustomFieldNavigation.CustomFieldOptions -> TODO()
                         is CustomFieldNavigation.CustomFieldTypeSelected -> TODO()

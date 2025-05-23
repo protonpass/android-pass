@@ -183,7 +183,8 @@ internal class SharingSummaryViewModelTest {
         val item = TestObserveItems.createItem(
             itemContents = ItemContents.Note(
                 title = "item",
-                note = "note"
+                note = "note",
+                customFields = emptyList()
             )
         )
         val expectedEvent = SharingSummaryEvent.OnGoHome
@@ -220,7 +221,8 @@ internal class SharingSummaryViewModelTest {
         val item = TestObserveItems.createItem(
             itemContents = ItemContents.Note(
                 title = "item",
-                note = "note"
+                note = "note",
+                customFields = emptyList()
             )
         )
         val useFaviconsPreference = UseFaviconsPreference.Enabled

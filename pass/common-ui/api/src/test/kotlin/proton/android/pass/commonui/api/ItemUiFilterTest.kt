@@ -254,14 +254,16 @@ internal class ItemUiFilterTest {
             itemContents = ItemContents.Alias(
                 title = "Title",
                 note = "Note",
-                aliasEmail = "alias@example.com"
+                aliasEmail = "alias@example.com",
+                customFields = emptyList()
             )
         ),
         TestItemUiModel.create(
             itemContents = ItemContents.Alias(
                 title = "Another Title",
                 note = "Another Note",
-                aliasEmail = "test@example.com"
+                aliasEmail = "test@example.com",
+                customFields = emptyList()
             )
         )
     )
@@ -276,7 +278,8 @@ internal class ItemUiFilterTest {
                 number = "ancillae",
                 cvv = HiddenState.Empty(""),
                 pin = HiddenState.Empty(""),
-                expirationDate = "pro"
+                expirationDate = "pro",
+                customFields = emptyList()
             )
         ),
         TestItemUiModel.create(
@@ -288,7 +291,8 @@ internal class ItemUiFilterTest {
                 number = "viris",
                 cvv = HiddenState.Empty(""),
                 pin = HiddenState.Empty(""),
-                expirationDate = "pertinacia"
+                expirationDate = "pertinacia",
+                customFields = emptyList()
             )
         )
     )

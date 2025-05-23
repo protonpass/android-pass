@@ -150,7 +150,7 @@ internal class AcceptInviteViewModelTest {
         val item = TestItem.create(
             shareId = acceptInviteStatus.shareId,
             itemId = acceptInviteStatus.itemId,
-            itemType = ItemType.Note(text = "Test note")
+            itemType = ItemType.Note(text = "Test note", customFields = emptyList())
         )
         val acceptationResult: Result<AcceptInviteStatus> = Result.success(acceptInviteStatus)
         val expectedMessage = SharingSnackbarMessage.InviteAccepted
@@ -224,7 +224,7 @@ internal class AcceptInviteViewModelTest {
         val item = TestItem.create(
             shareId = acceptInviteStatus.shareId,
             itemId = acceptInviteStatus.itemId,
-            itemType = ItemType.Note(text = "Test note")
+            itemType = ItemType.Note(text = "Test note", emptyList())
         )
         val acceptationResult: Result<AcceptInviteStatus> = Result.success(acceptInviteStatus)
         val expectedState = AcceptInviteStateMother.Item.create(

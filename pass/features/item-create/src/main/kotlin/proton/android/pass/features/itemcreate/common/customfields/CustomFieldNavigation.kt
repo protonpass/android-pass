@@ -22,6 +22,7 @@ import proton.android.pass.domain.CustomFieldType
 
 sealed interface CustomFieldNavigation {
     data object AddCustomField : CustomFieldNavigation
+
     @JvmInline
     value class CustomFieldTypeSelected(val type: CustomFieldType) : CustomFieldNavigation
     data class CustomFieldOptions(val currentValue: String, val index: Int) : CustomFieldNavigation

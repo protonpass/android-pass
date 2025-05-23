@@ -89,6 +89,7 @@ import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent.Companion.createCustomField
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.ValidationError
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -113,6 +114,7 @@ abstract class BaseLoginViewModel(
     private val disableTooltip: DisableTooltip,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val attachmentsHandler: AttachmentsHandler,
+    private val customFieldHandler: CustomFieldHandler,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val customFieldDraftRepository: CustomFieldDraftRepository,
     observeCurrentUser: ObserveCurrentUser,
@@ -855,7 +857,7 @@ abstract class BaseLoginViewModel(
             LoginField.Password -> updatePasswordOnFocusChange(isFocused)
             LoginField.PrimaryTotp -> updatePrimaryTotpOnFocusChange()
             is LoginField.CustomField -> when (field.field.type) {
-                CustomFieldType.Hidden -> updateCustomFieldHiddenOnFocusChange(field.field, isFocused)
+                CustomFieldType.Hidden -> updateCustomFieldOnFocusChange(field.field, isFocused)
                 else -> {}
             }
             LoginField.Email,
@@ -883,28 +885,13 @@ abstract class BaseLoginViewModel(
         loginItemFormMutableState = loginItemFormState.copy(isExpandedByUser = true)
     }
 
-    private fun updateCustomFieldHiddenOnFocusChange(field: CustomFieldIdentifier, isFocused: Boolean) {
-        val customFields = loginItemFormState.customFields.toMutableList()
-        val customFieldContent: UICustomFieldContent.Hidden? = customFields.getOrNull(field.index)
-            as? UICustomFieldContent.Hidden
-        customFieldContent ?: return
-        val hiddenValueByteArray = encryptionContextProvider.withEncryptionContext {
-            decrypt(customFieldContent.value.encrypted.toEncryptedByteArray())
-        }
-        val hiddenFieldHiddenState = when {
-            isFocused -> UIHiddenState.Revealed(
-                encrypted = customFieldContent.value.encrypted,
-                clearText = hiddenValueByteArray.decodeToString()
-            )
-
-            hiddenValueByteArray.isEmpty() -> UIHiddenState.Empty(customFieldContent.value.encrypted)
-            else -> UIHiddenState.Concealed(customFieldContent.value.encrypted)
-        }
-        customFields[field.index] = customFieldContent.copy(
-            value = hiddenFieldHiddenState
+    private fun updateCustomFieldOnFocusChange(field: CustomFieldIdentifier, isFocused: Boolean) {
+        val customFields = customFieldHandler.onCustomFieldFocusedChanged(
+            customFieldIdentifier = field,
+            customFieldList = loginItemFormState.customFields,
+            isFocused = isFocused
         )
-        loginItemFormMutableState =
-            loginItemFormState.copy(customFields = customFields.toPersistentList())
+        loginItemFormMutableState = loginItemFormState.copy(customFields = customFields)
     }
 
     private fun updatePrimaryTotpOnFocusChange() {

@@ -213,7 +213,8 @@ class CreateCreditCardScreenTest {
                 pin = HiddenState.Concealed(encrypted= TestEncryptionContext.encrypt(pin)),
                 note = note,
                 expirationDate = expirationDateToBeSaved,
-                type = CreditCardType.Other
+                type = CreditCardType.Other,
+                customFields = emptyList()
             )
         )
         assertEquals(listOf(expected), memory)

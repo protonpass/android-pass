@@ -20,6 +20,7 @@
   <string name="sharing_can_view">Lecteur</string>
   <string name="sharing_can_edit">Éditeur</string>
   <string name="sharing_can_manage">Administrateur</string>
+  <string name="sharing_can_manage_v2">Gestionnaire</string>
   <string name="sharing_can_view_description">Permet de consulter les éléments de ce coffre-fort.</string>
   <string name="sharing_can_edit_description">Permet de créer, de modifier, de supprimer et d\'exporter des éléments dans ce coffre-fort.</string>
   <string name="sharing_can_manage_description">Permet d\'accorder et de révoquer l\'accès à ce coffre-fort.</string>
@@ -90,6 +91,7 @@
   <string name="share_role_viewer">Lecteur</string>
   <string name="share_role_editor">Éditeur</string>
   <string name="share_role_admin">Administrateur</string>
+  <string name="share_role_manager">Gestionnaire</string>
   <string name="share_role_owner">Propriétaire</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transférer la propriété</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Vous ne pouvez pas transférer le dernier coffre-fort dont vous disposez.</string>

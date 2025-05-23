@@ -20,6 +20,7 @@
   <string name="sharing_can_view">Tarkastelu</string>
   <string name="sharing_can_edit">Muokkaus</string>
   <string name="sharing_can_manage">Ylläpito</string>
+  <string name="sharing_can_manage_v2">Manager</string>
   <string name="sharing_can_view_description">Voi tarkastella holvin kohteita.</string>
   <string name="sharing_can_edit_description">Voi luoda, muokata, poistaa ja viedä holvin kohteita.</string>
   <string name="sharing_can_manage_description">Voi myöntää ja mitätöidä holvin käyttöoikeuksia.</string>
@@ -90,6 +91,7 @@
   <string name="share_role_viewer">Tarkastelu</string>
   <string name="share_role_editor">Muokkaus</string>
   <string name="share_role_admin">Ylläpito</string>
+  <string name="share_role_manager">Manager</string>
   <string name="share_role_owner">Omistaja</string>
   <string name="sharing_bottomsheet_transfer_ownership">Siirrä omistajuus</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Et voi siirtää viimeisen omistamasi holvin omistajuutta.</string>

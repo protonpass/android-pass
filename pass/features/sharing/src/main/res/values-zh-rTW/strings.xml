@@ -20,6 +20,7 @@
   <string name="sharing_can_view">檢視者</string>
   <string name="sharing_can_edit">編輯器</string>
   <string name="sharing_can_manage">管理員</string>
+  <string name="sharing_can_manage_v2">Manager</string>
   <string name="sharing_can_view_description">可查看保管庫的項目。</string>
   <string name="sharing_can_edit_description">可於此保管庫新增、編輯、刪除與匯出項目。</string>
   <string name="sharing_can_manage_description">可取得及撤銷此保管庫的權限。</string>
@@ -86,6 +87,7 @@
   <string name="share_role_viewer">檢視者</string>
   <string name="share_role_editor">編輯者</string>
   <string name="share_role_admin">管理員</string>
+  <string name="share_role_manager">Manager</string>
   <string name="share_role_owner">擁有者</string>
   <string name="sharing_bottomsheet_transfer_ownership">轉移所有權</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">您無法移轉最後擁有的保管庫。</string>

@@ -37,6 +37,6 @@
   <string name="storage_full_body">저장 공간을 늘리려면 업그레이드 하세요.</string>
   <string name="storage_full_upgrade">업그레이드</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%2$s 중 %1$s</string>
-  <string name="attachments_saved_to_location_success">Attachment saved to location</string>
-  <string name="attachments_saved_to_location_error">Could not save attachment to location</string>
+  <string name="attachments_saved_to_location_success">첨부 파일이 위치에 저장되었습니다</string>
+  <string name="attachments_saved_to_location_error">첨부 파일을 위치에 저장하지 못했습니다</string>
 </resources>

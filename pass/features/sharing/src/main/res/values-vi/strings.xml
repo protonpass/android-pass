@@ -20,6 +20,7 @@
   <string name="sharing_can_view">Người xem</string>
   <string name="sharing_can_edit">Chỉnh sửa</string>
   <string name="sharing_can_manage">Quản trị viên</string>
+  <string name="sharing_can_manage_v2">Manager</string>
   <string name="sharing_can_view_description">Cho phép xem nội dung trong kho lưu trữ này.</string>
   <string name="sharing_can_edit_description">Cho phép tạo, chỉnh sửa, xóa và xuất nội dung trong kho lưu trữ này.</string>
   <string name="sharing_can_manage_description">Cho phép cấp và thu hồi quyền truy cập vào kho lưu trữ này.</string>
@@ -86,6 +87,7 @@
   <string name="share_role_viewer">Người xem</string>
   <string name="share_role_editor">Trình chỉnh sửa</string>
   <string name="share_role_admin">Quản trị viên</string>
+  <string name="share_role_manager">Manager</string>
   <string name="share_role_owner">Chủ sở hữu</string>
   <string name="sharing_bottomsheet_transfer_ownership">Chuyển quyền sở hữu</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Bạn không thể chuyển quyền sở hữu kho lưu trữ cuối cùng của mình.</string>

@@ -35,6 +35,7 @@
   <string name="bottomsheet_delete_permanently">完全に削除する</string>
   <string name="bottomsheet_restore">復元</string>
   <string name="bottomsheet_leave">退出</string>
+  <string name="bottomsheet_no_actions">操作は利用できません</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">アイテム操作メニューを開く</string>
   <string name="action_upgrade_now">今すぐアップグレード</string>
@@ -194,7 +195,8 @@
   <string name="item_details_shared_section_more_info_header_title">詳細はこちら</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">アイテム情報アイコン</string>
   <string name="item_details_shared_section_more_info_item_id">アイテム ID</string>
-  <string name="item_details_shared_section_more_info_vault_id">保管庫 ID</string>
+  <string name="item_details_shared_section_more_info_vault_id">Vault ID</string>
+  <string name="item_details_shared_section_more_info_share_id">Share ID</string>
   <string name="item_details_wifi_network_label_ssid_name">名前（SSID）</string>
   <string name="item_details_wifi_network_label_password">パスワード</string>
   <string name="item_details_wifi_network_label_security">セキュリティ</string>

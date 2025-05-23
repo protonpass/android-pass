@@ -132,4 +132,6 @@
   <string name="open_attachments_error">Немагчыма адкрыць далучэнне</string>
   <string name="banner_contacts_title">Ці ведалі вы што?</string>
   <string name="banner_contacts_subtitle">Новы кантакт ствараецца аўтаматычна. Гэта адбываецца кожны раз, калі ваш псеўданім атрымлівае ліст ад каго-небудзь.</string>
+  <string name="expand_note_more">больш</string>
+  <string name="collapse_note_less">менш</string>
 </resources>

@@ -37,6 +37,7 @@
   <string name="bottomsheet_delete_permanently">Ștergere permanentă</string>
   <string name="bottomsheet_restore">Restaurare</string>
   <string name="bottomsheet_leave">Părăsire</string>
+  <string name="bottomsheet_no_actions">Nu există acțiuni disponibile</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Meniu acțiune deschidere articol</string>
   <string name="action_upgrade_now">Modificare</string>
@@ -199,6 +200,7 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Pictogramă detalii articol</string>
   <string name="item_details_shared_section_more_info_item_id">ID articol</string>
   <string name="item_details_shared_section_more_info_vault_id">ID seif</string>
+  <string name="item_details_shared_section_more_info_share_id">ID partajare</string>
   <string name="item_details_wifi_network_label_ssid_name">Nume (SSID)</string>
   <string name="item_details_wifi_network_label_password">Parola</string>
   <string name="item_details_wifi_network_label_security">Securitate</string>

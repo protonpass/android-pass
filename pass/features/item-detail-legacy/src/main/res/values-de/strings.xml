@@ -124,4 +124,6 @@
   <string name="open_attachments_error">Der Anhang konnte nicht geöffnet werden</string>
   <string name="banner_contacts_title">Schon gewusst?</string>
   <string name="banner_contacts_subtitle">Jedes Mal, wenn dein Alias eine E-Mail von einer Person erhält, wird automatisch ein neuer Kontakt erstellt.</string>
+  <string name="expand_note_more">mehr</string>
+  <string name="collapse_note_less">weniger</string>
 </resources>

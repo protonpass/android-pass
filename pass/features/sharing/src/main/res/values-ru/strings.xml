@@ -20,6 +20,7 @@
   <string name="sharing_can_view">Читатель</string>
   <string name="sharing_can_edit">Редактор</string>
   <string name="sharing_can_manage">Администратор</string>
+  <string name="sharing_can_manage_v2">Менеджер</string>
   <string name="sharing_can_view_description">Может просматривать элементы в этом хранилище.</string>
   <string name="sharing_can_edit_description">Может создавать, редактировать, удалять и экспортировать элементы этого хранилища.</string>
   <string name="sharing_can_manage_description">Может представлять и отзывать доступ к этому хранилищу.</string>
@@ -98,6 +99,7 @@
   <string name="share_role_viewer">Только просмотр</string>
   <string name="share_role_editor">Редактор</string>
   <string name="share_role_admin">Администратор</string>
+  <string name="share_role_manager">Менеджер</string>
   <string name="share_role_owner">Владелец</string>
   <string name="sharing_bottomsheet_transfer_ownership">Передать права владельца</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Вы не можете передать последнее принадлежащее вам хранилище.</string>

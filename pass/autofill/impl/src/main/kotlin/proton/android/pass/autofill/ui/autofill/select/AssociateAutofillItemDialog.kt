@@ -117,7 +117,8 @@ fun AssociateAutofillItemDialogPreview(@PreviewParameter(ThemePreviewProvider::c
                     shareId = ShareId(id = "rutrum"),
                     contents = ItemContents.Note(
                         title = "Willie Lowe",
-                        note = "repudiandae"
+                        note = "repudiandae",
+                        customFields = emptyList()
                     ),
                     state = 6128,
                     createTime = Clock.System.now(),

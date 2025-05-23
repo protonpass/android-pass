@@ -25,6 +25,7 @@ import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.UIHiddenState.Companion.from
 
@@ -38,7 +39,8 @@ data class CreditCardItemFormState(
     val number: String,
     val cvv: UIHiddenState,
     val pin: UIHiddenState,
-    val expirationDate: String
+    val expirationDate: String,
+    val customFields: List<UICustomFieldContent>
 ) : Parcelable {
 
     constructor(itemContents: ItemContents.CreditCard) : this(
@@ -49,7 +51,8 @@ data class CreditCardItemFormState(
         number = itemContents.number,
         cvv = from(itemContents.cvv),
         pin = from(itemContents.pin),
-        expirationDate = itemContents.expirationDate
+        expirationDate = itemContents.expirationDate,
+        customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
     )
 
     fun validate(): Set<CreditCardValidationErrors> {
@@ -68,7 +71,8 @@ data class CreditCardItemFormState(
         cvv = cvv.toHiddenState(),
         expirationDate = expirationDate,
         pin = pin.toHiddenState(),
-        type = type
+        type = type,
+        customFields = customFields.map(UICustomFieldContent::toCustomFieldContent)
     )
 
     fun compare(other: CreditCardItemFormState, encryptionContext: EncryptionContext): Boolean = title == other.title &&
@@ -95,7 +99,8 @@ data class CreditCardItemFormState(
             cvv = UIHiddenState.Empty(encryptionContext.encrypt("")),
             expirationDate = "",
             pin = UIHiddenState.Empty(encryptionContext.encrypt("")),
-            type = CreditCardType.Other
+            type = CreditCardType.Other,
+            customFields = emptyList()
         )
     }
 }

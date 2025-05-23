@@ -73,7 +73,7 @@ data class ItemFormState(
     constructor(itemContents: ItemContents.Custom) : this(
         title = itemContents.title,
         itemStaticFields = ItemStaticFields.Custom,
-        customFieldList = itemContents.customFieldList.map(UICustomFieldContent.Companion::from),
+        customFieldList = itemContents.customFields.map(UICustomFieldContent.Companion::from),
         sectionList = itemContents.sectionContentList.map(::UIExtraSection)
     )
 
@@ -84,7 +84,7 @@ data class ItemFormState(
             password = UIHiddenState.from(itemContents.password),
             wifiSecurityType = itemContents.wifiSecurityType
         ),
-        customFieldList = itemContents.customFieldList.map(UICustomFieldContent.Companion::from),
+        customFieldList = itemContents.customFields.map(UICustomFieldContent.Companion::from),
         sectionList = itemContents.sectionContentList.map(::UIExtraSection)
     )
 
@@ -94,7 +94,7 @@ data class ItemFormState(
             publicKey = itemContents.publicKey,
             privateKey = UIHiddenState.from(itemContents.privateKey)
         ),
-        customFieldList = itemContents.customFieldList.map(UICustomFieldContent.Companion::from),
+        customFieldList = itemContents.customFields.map(UICustomFieldContent.Companion::from),
         sectionList = itemContents.sectionContentList.map(::UIExtraSection)
     )
 
@@ -181,7 +181,7 @@ data class ItemFormState(
         ItemStaticFields.Custom -> ItemContents.Custom(
             title = title,
             note = "",
-            customFieldList = customFieldList.map(UICustomFieldContent::toCustomFieldContent),
+            customFields = customFieldList.map(UICustomFieldContent::toCustomFieldContent),
             sectionContentList = sectionList.map {
                 ExtraSectionContent(
                     title = it.title,
@@ -195,7 +195,7 @@ data class ItemFormState(
             note = "",
             publicKey = itemStaticFields.publicKey,
             privateKey = itemStaticFields.privateKey.toHiddenState(),
-            customFieldList = customFieldList.map(UICustomFieldContent::toCustomFieldContent),
+            customFields = customFieldList.map(UICustomFieldContent::toCustomFieldContent),
             sectionContentList = sectionList.map {
                 ExtraSectionContent(
                     title = it.title,
@@ -210,7 +210,7 @@ data class ItemFormState(
             ssid = itemStaticFields.ssid,
             password = itemStaticFields.password.toHiddenState(),
             wifiSecurityType = itemStaticFields.wifiSecurityType,
-            customFieldList = customFieldList.map(UICustomFieldContent::toCustomFieldContent),
+            customFields = customFieldList.map(UICustomFieldContent::toCustomFieldContent),
             sectionContentList = sectionList.map {
                 ExtraSectionContent(
                     title = it.title,

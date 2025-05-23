@@ -153,7 +153,8 @@ internal fun NoteOptionsBottomSheetContentsPreview(
                     shareId = ShareId(id = ""),
                     contents = ItemContents.Note(
                         "My Note",
-                        "My note text"
+                        "My note text",
+                        customFields = emptyList()
                     ),
                     state = 0,
                     createTime = Clock.System.now(),

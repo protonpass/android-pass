@@ -62,7 +62,8 @@ class IdentityRowPreviewProvider : PreviewParameterProvider<IdentityRowParameter
                     addressDetailsContent = AddressDetailsContent.EMPTY,
                     contactDetailsContent = ContactDetailsContent.EMPTY,
                     workDetailsContent = WorkDetailsContent.EMPTY,
-                    extraSectionContentList = emptyList()
+                    extraSectionContentList = emptyList(),
+                    customFields = emptyList()
                 ),
                 state = 0,
                 createTime = Clock.System.now(),

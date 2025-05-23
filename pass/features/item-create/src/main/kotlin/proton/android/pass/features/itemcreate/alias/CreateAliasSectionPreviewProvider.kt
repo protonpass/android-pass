@@ -72,7 +72,8 @@ class CreateAliasSectionPreviewProvider :
             isPremium = false,
             domain = "random.suffix"
         ),
-        aliasToBeCreated = "$alias@random.suffix"
+        aliasToBeCreated = "$alias@random.suffix",
+        customFields = emptyList()
     )
 }
 

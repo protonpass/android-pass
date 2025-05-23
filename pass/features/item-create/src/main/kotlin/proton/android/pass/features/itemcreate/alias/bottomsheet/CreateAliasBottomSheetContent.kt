@@ -180,6 +180,7 @@ fun CreateAliasBottomSheetContentPreview(@PreviewParameter(ThemePreviewProvider:
                     title = "some title",
                     prefix = "some alias",
                     note = "",
+                    customFields = emptyList(),
                     aliasOptions = AliasOptionsUiModel(
                         suffixes = listOf(
                             AliasSuffixUiModel(

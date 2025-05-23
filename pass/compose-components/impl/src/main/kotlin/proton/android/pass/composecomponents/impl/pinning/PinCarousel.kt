@@ -104,7 +104,8 @@ internal fun PinCarouselPreview(@PreviewParameter(ThemePreviewProvider::class) i
                         shareId = ShareId("345"),
                         contents = ItemContents.Note(
                             "Item with long text and a maximum",
-                            ""
+                            "",
+                            customFields = emptyList()
                         ),
                         state = 0,
                         createTime = Clock.System.now(),

@@ -117,7 +117,7 @@ object ItemUiFilter {
     }
 
     private fun isCustomMatch(content: ItemContents.Custom, query: String): Boolean = when {
-        hasMatchingCustomField(content.customFieldList, query) -> true
+        hasMatchingCustomField(content.customFields, query) -> true
         else -> {
             content.sectionContentList.forEach {
                 if (hasMatchingCustomField(it.customFieldList, query)) return true
@@ -129,7 +129,7 @@ object ItemUiFilter {
 
     private fun isWifiNetworkMatch(content: ItemContents.WifiNetwork, query: String): Boolean = when {
         content.ssid.preprocess().contains(query) -> true
-        hasMatchingCustomField(content.customFieldList, query) -> true
+        hasMatchingCustomField(content.customFields, query) -> true
         else -> {
             content.sectionContentList.forEach {
                 if (hasMatchingCustomField(it.customFieldList, query)) return true
@@ -139,7 +139,7 @@ object ItemUiFilter {
         }
     }
     private fun isSSHKeyMatch(content: ItemContents.SSHKey, query: String): Boolean = when {
-        hasMatchingCustomField(content.customFieldList, query) -> true
+        hasMatchingCustomField(content.customFields, query) -> true
         else -> {
             content.sectionContentList.forEach {
                 if (hasMatchingCustomField(it.customFieldList, query)) return true

@@ -48,8 +48,8 @@ fun ItemType.Companion.fromParsed(
     aliasEmail: String? = null
 ): ItemType = when (parsed.content.contentCase) {
     ItemV1.Content.ContentCase.LOGIN -> createLoginItemType(parsed, context)
-    ItemV1.Content.ContentCase.NOTE -> ItemType.Note(parsed.metadata.note)
-    ItemV1.Content.ContentCase.ALIAS -> createAliasItemType(aliasEmail)
+    ItemV1.Content.ContentCase.NOTE -> createNoteItemType(parsed, context)
+    ItemV1.Content.ContentCase.ALIAS -> createAliasItemType(parsed, aliasEmail, context)
     ItemV1.Content.ContentCase.CREDIT_CARD -> createCreditCardItemType(parsed, context)
     ItemV1.Content.ContentCase.IDENTITY -> createIdentityItemType(parsed, context)
     ItemV1.Content.ContentCase.CUSTOM -> createCustomItemType(parsed, context)
@@ -59,9 +59,21 @@ fun ItemType.Companion.fromParsed(
     null -> ItemType.Unknown
 }
 
-private fun createAliasItemType(aliasEmail: String?): ItemType.Alias {
+private fun createNoteItemType(parsed: ItemV1.Item, context: EncryptionContext): ItemType.Note = ItemType.Note(
+    text = parsed.metadata.note,
+    customFields = parsed.extraFieldsList.map { field -> field.toDomain(context) }
+)
+
+private fun createAliasItemType(
+    parsed: ItemV1.Item,
+    aliasEmail: String?,
+    context: EncryptionContext
+): ItemType.Alias {
     requireNotNull(aliasEmail)
-    return ItemType.Alias(aliasEmail = aliasEmail)
+    return ItemType.Alias(
+        aliasEmail = aliasEmail,
+        customFields = parsed.extraFieldsList.map { field -> field.toDomain(context) }
+    )
 }
 
 @Suppress("LongMethod")
@@ -134,7 +146,8 @@ private fun createCreditCardItemType(parsed: ItemV1.Item, context: EncryptionCon
         cvv = context.encrypt(content.verificationNumber),
         pin = context.encrypt(content.pin),
         creditCardType = content.cardType.toDomain(),
-        expirationDate = content.expirationDate
+        expirationDate = content.expirationDate,
+        customFields = parsed.extraFieldsList.map { field -> field.toDomain(context) }
     )
 }
 

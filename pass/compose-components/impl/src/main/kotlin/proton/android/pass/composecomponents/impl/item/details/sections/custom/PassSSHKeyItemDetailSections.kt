@@ -73,9 +73,9 @@ internal fun PassSSHKeyItemDetailSections(
             itemDiffs = itemDiffs,
             onEvent = onEvent
         )
-        if (contents.customFieldList.isNotEmpty()) {
+        if (contents.customFields.isNotEmpty()) {
             PassItemDetailCustomFieldsSection(
-                customFields = contents.customFieldList.toPersistentList(),
+                customFields = contents.customFields.toPersistentList(),
                 customFieldTotps = customFieldTotps,
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,

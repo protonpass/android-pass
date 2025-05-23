@@ -33,7 +33,7 @@ class AliasItemPreviewProvider : PreviewParameterProvider<AliasItemParameter> {
 
     companion object {
         private fun with(alias: String) = AliasItemParameter(
-            item = AliasItemFormState(aliasToBeCreated = alias)
+            item = AliasItemFormState(aliasToBeCreated = alias, customFields = emptyList())
         )
     }
 }

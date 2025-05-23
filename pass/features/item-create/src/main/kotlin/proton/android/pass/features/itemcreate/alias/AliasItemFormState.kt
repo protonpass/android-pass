@@ -27,6 +27,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.commonrust.api.AliasPrefixError
 import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.log.api.PassLogger
 
 @Parcelize
@@ -41,7 +42,8 @@ data class AliasItemFormState(
     val selectedMailboxes: Set<AliasMailboxUiModel> = emptySet(),
     val aliasToBeCreated: String? = null,
     val slNote: String? = null,
-    val senderName: String? = null
+    val senderName: String? = null,
+    val customFields: List<UICustomFieldContent>
 ) : Parcelable {
 
     fun validate(allowEmptyTitle: Boolean, aliasPrefixValidator: AliasPrefixValidator): Set<AliasItemValidationErrors> {
@@ -68,7 +70,8 @@ data class AliasItemFormState(
     internal fun toItemContents(): ItemContents.Alias = ItemContents.Alias(
         title = title,
         note = note,
-        aliasEmail = aliasToBeCreated.orEmpty()
+        aliasEmail = aliasToBeCreated.orEmpty(),
+        customFields = customFields.map(UICustomFieldContent::toCustomFieldContent)
     )
 
     companion object {
@@ -76,10 +79,11 @@ data class AliasItemFormState(
         const val MAX_PREFIX_LENGTH: Int = 40
 
         fun default(title: Option<String>): AliasItemFormState = when (title) {
-            None -> AliasItemFormState()
+            None -> AliasItemFormState(customFields = emptyList())
             is Some -> AliasItemFormState(
                 title = title.value,
-                prefix = AliasUtils.formatAlias(title.value)
+                prefix = AliasUtils.formatAlias(title.value),
+                customFields = emptyList()
             )
         }
     }

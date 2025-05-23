@@ -171,7 +171,7 @@ internal fun PassWifiNetworkMainSectionPreview(@PreviewParameter(ThemePreviewPro
                     wifiSecurityType = WifiSecurityType.WPA,
                     note = "",
                     title = "",
-                    customFieldList = emptyList(),
+                    customFields = emptyList(),
                     sectionContentList = emptyList()
                 ),
                 svgQR = Some(""),

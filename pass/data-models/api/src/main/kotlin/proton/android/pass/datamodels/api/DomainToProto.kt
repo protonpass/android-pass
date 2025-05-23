@@ -219,7 +219,7 @@ fun ItemContents.serializeToProto(
         is ItemContents.Custom ->
             builder.content.toBuilder().setCustom(
                 builder.clearExtraFields()
-                    .addAllExtraFields(customFieldList.mapToExtraFields(encryptionContext))
+                    .addAllExtraFields(customFields.mapToExtraFields(encryptionContext))
                     .content
                     .custom
                     .toBuilder()
@@ -239,7 +239,7 @@ fun ItemContents.serializeToProto(
         is ItemContents.WifiNetwork ->
             builder.content.toBuilder().setWifi(
                 builder.clearExtraFields()
-                    .addAllExtraFields(customFieldList.mapToExtraFields(encryptionContext))
+                    .addAllExtraFields(customFields.mapToExtraFields(encryptionContext))
                     .content
                     .wifi
                     .toBuilder()
@@ -262,7 +262,7 @@ fun ItemContents.serializeToProto(
         is ItemContents.SSHKey ->
             builder.content.toBuilder().setSshKey(
                 builder.clearExtraFields()
-                    .addAllExtraFields(customFieldList.mapToExtraFields(encryptionContext))
+                    .addAllExtraFields(customFields.mapToExtraFields(encryptionContext))
                     .content
                     .sshKey
                     .toBuilder()

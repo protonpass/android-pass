@@ -36,7 +36,8 @@ class ItemUiModelPreviewProvider : PreviewParameterProvider<ItemUiModel> {
                 shareId = ShareId("345"),
                 contents = ItemContents.Note(
                     "Item with long text",
-                    "Some very very long test that should be ellipsized as we type"
+                    "Some very very long test that should be ellipsized as we type",
+                    customFields = emptyList()
                 ),
                 state = 0,
                 createTime = Clock.System.now(),
@@ -58,7 +59,8 @@ class ItemUiModelPreviewProvider : PreviewParameterProvider<ItemUiModel> {
                         A line
                         Another line
                         At some point this gets ellipsized
-                    """.trimIndent()
+                    """.trimIndent(),
+                    customFields = emptyList()
                 ),
                 state = 0,
                 createTime = Clock.System.now(),

@@ -55,7 +55,7 @@ class NoteRowPreviewProvider : PreviewParameterProvider<NoteRowParameter> {
                 id = ItemId("123"),
                 userId = UserId("user-id"),
                 shareId = ShareId("345"),
-                contents = ItemContents.Note(title = title, note = text),
+                contents = ItemContents.Note(title = title, note = text, customFields = emptyList()),
                 state = 0,
                 createTime = Clock.System.now(),
                 modificationTime = Clock.System.now(),

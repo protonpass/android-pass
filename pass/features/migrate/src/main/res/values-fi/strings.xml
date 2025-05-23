@@ -20,7 +20,7 @@
     <item quantity="one">Siirretäänkö kohde toiseen holviin?</item>
     <item quantity="other">Siirretäänkö %d kohdetta toiseen holviin?</item>
   </plurals>
-  <string name="migrate_item_shared_warning_message">Tämä kohde on tällä hetkellä jaettuna. Sen siirtäminen toiseen holviin poistaa pääsyn kaikilta muilta käyttäjiltä.</string>
+  <string name="migrate_item_shared_warning_message">Kohde on jaettu. Sen siirtäminen toiseen holviin poistaa käyttöoikeuden muilta käyttäjiltä.</string>
   <plurals name="migrate_items_shared_warning_message">
     <item quantity="one">%d kohde on jaettu. Sen siirto toiseen holviin poistaa käyttöoikeuden muilta käyttäjiltä.</item>
     <item quantity="other">%d kohdetta on jaettu. Niiden siirto toiseen holviin poistaa käyttöoikeuden muilta käyttäjiltä.</item>

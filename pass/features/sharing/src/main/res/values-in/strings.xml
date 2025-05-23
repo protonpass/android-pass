@@ -20,6 +20,7 @@
   <string name="sharing_can_view">Pengamat</string>
   <string name="sharing_can_edit">Penyunting</string>
   <string name="sharing_can_manage">Admin</string>
+  <string name="sharing_can_manage_v2">Pengelola</string>
   <string name="sharing_can_view_description">Dapat melihat item dalam brankas ini.</string>
   <string name="sharing_can_edit_description">Dapat membuat, menyunting, menghapus, dan mengekspor item dalam brankas ini.</string>
   <string name="sharing_can_manage_description">Dapat memberikan dan menghilangkan akses ke brankas ini.</string>
@@ -86,6 +87,7 @@
   <string name="share_role_viewer">Pengamat</string>
   <string name="share_role_editor">Penyunting</string>
   <string name="share_role_admin">Admin</string>
+  <string name="share_role_manager">Pengelola</string>
   <string name="share_role_owner">Pemilik</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transfer kepemilikan</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Anda tidak dapat mentransfer brankas terakhir yang Anda miliki.</string>

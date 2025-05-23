@@ -124,4 +124,6 @@
   <string name="open_attachments_error">Kon bijlage niet openen</string>
   <string name="banner_contacts_title">Wist u dat?</string>
   <string name="banner_contacts_subtitle">Elke keer dat uw alias een e-mail van iemand ontvangt, wordt een nieuwe contactpersoon automatisch aangemaakt.</string>
+  <string name="expand_note_more">meer</string>
+  <string name="collapse_note_less">minder</string>
 </resources>

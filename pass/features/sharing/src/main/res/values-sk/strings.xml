@@ -20,6 +20,7 @@
   <string name="sharing_can_view">Čitateľ</string>
   <string name="sharing_can_edit">Editor</string>
   <string name="sharing_can_manage">Správca</string>
+  <string name="sharing_can_manage_v2">Správca</string>
   <string name="sharing_can_view_description">Môže zobraziť položky v tomto trezore.</string>
   <string name="sharing_can_edit_description">Môže vytvárať, upravovať, mazať a exportovať položky v tomto trezore.</string>
   <string name="sharing_can_manage_description">Môže udeliť alebo zrušiť prístup k tomuto trezoru.</string>
@@ -98,6 +99,7 @@
   <string name="share_role_viewer">Čitateľ</string>
   <string name="share_role_editor">Redaktor</string>
   <string name="share_role_admin">Admin</string>
+  <string name="share_role_manager">Správca</string>
   <string name="share_role_owner">Vlastník</string>
   <string name="sharing_bottomsheet_transfer_ownership">Previesť vlastníctvo</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Nemôžete preniesť svoj naposledy vlastnený trezor.</string>

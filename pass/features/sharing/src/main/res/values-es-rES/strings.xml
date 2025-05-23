@@ -20,6 +20,7 @@
   <string name="sharing_can_view">Lector</string>
   <string name="sharing_can_edit">Editor</string>
   <string name="sharing_can_manage">Administrador</string>
+  <string name="sharing_can_manage_v2">Gestor</string>
   <string name="sharing_can_view_description">Permite ver los elementos en esta caja fuerte.</string>
   <string name="sharing_can_edit_description">Permite crear, editar, eliminar y exportar los elementos en esta caja fuerte.</string>
   <string name="sharing_can_manage_description">Permite conceder y revocar acceso a esta caja fuerte.</string>
@@ -90,6 +91,7 @@
   <string name="share_role_viewer">Lector</string>
   <string name="share_role_editor">Editor</string>
   <string name="share_role_admin">Administrador</string>
+  <string name="share_role_manager">Gestor</string>
   <string name="share_role_owner">Propietario</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transferir la propiedad</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">No puedes transferir tu última caja fuerte propia.</string>

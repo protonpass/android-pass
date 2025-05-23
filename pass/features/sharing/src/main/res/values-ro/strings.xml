@@ -20,6 +20,7 @@
   <string name="sharing_can_view">Utilizator</string>
   <string name="sharing_can_edit">Editor</string>
   <string name="sharing_can_manage">Administrator</string>
+  <string name="sharing_can_manage_v2">Manager</string>
   <string name="sharing_can_view_description">Poate vizualiza articolele din acest seif.</string>
   <string name="sharing_can_edit_description">Poate crea, edita, șterge și exporta articole din acest seif.</string>
   <string name="sharing_can_manage_description">Poate acorda și anul accesul la acest seif.</string>
@@ -94,6 +95,7 @@
   <string name="share_role_viewer">Citire</string>
   <string name="share_role_editor">Editor</string>
   <string name="share_role_admin">Administrator</string>
+  <string name="share_role_manager">Manager</string>
   <string name="share_role_owner">Proprietar</string>
   <string name="sharing_bottomsheet_transfer_ownership">Schimbare proprietar</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Nu puteți transfera ultimul seif deținut.</string>

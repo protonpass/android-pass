@@ -612,7 +612,8 @@ class CreateLoginScreenTest {
                     isPremium = false,
                     domain = "test.random"
                 )
-            )
+            ),
+            customFields = emptyList()
         )
 
         draftRepository.save(CreateAliasViewModel.KEY_DRAFT_ALIAS, aliasItemFormState)

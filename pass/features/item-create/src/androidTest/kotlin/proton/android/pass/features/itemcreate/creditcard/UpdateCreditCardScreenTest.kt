@@ -233,7 +233,8 @@ class UpdateCreditCardScreenTest {
                 pin = HiddenState.Concealed(TestEncryptionContext.encrypt(newPin)),
                 cvv = HiddenState.Concealed(TestEncryptionContext.encrypt(newCvv)),
                 expirationDate = newItemExpirationDate,
-                type = CreditCardType.Other
+                type = CreditCardType.Other,
+                customFields = emptyList()
             )
         )
 

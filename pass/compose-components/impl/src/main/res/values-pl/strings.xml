@@ -38,6 +38,7 @@
   <string name="bottomsheet_delete_permanently">Usuń trwale</string>
   <string name="bottomsheet_restore">Przywróć</string>
   <string name="bottomsheet_leave">Opuść</string>
+  <string name="bottomsheet_no_actions">Brak dostępnych akcji</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Otwórz menu akcji elementu</string>
   <string name="action_upgrade_now">Ulepsz teraz</string>
@@ -201,6 +202,7 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Ikona informacji o elemencie</string>
   <string name="item_details_shared_section_more_info_item_id">Identyfikator elementu</string>
   <string name="item_details_shared_section_more_info_vault_id">Identyfikator sejfu</string>
+  <string name="item_details_shared_section_more_info_share_id">Identyfikator udostępnionego obiektu</string>
   <string name="item_details_wifi_network_label_ssid_name">Nazwa (SSID)</string>
   <string name="item_details_wifi_network_label_password">Hasło</string>
   <string name="item_details_wifi_network_label_security">Bezpieczeństwo</string>

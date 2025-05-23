@@ -36,6 +36,7 @@
   <string name="bottomsheet_delete_permanently">სამუდამოდ წაშლა</string>
   <string name="bottomsheet_restore">აღდგენა</string>
   <string name="bottomsheet_leave">გასვლა</string>
+  <string name="bottomsheet_no_actions">ქმედებები ხელმისაწვდომი არაა</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">ელემენტის ქმედების მენიუს გახსნა</string>
   <string name="action_upgrade_now">ტარიფის განახლება</string>
@@ -196,7 +197,8 @@
   <string name="item_details_shared_section_more_info_header_title">მეტი ინფორმაცია</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">ელემენტის დამატებითი ინფორმაციის ხატულა</string>
   <string name="item_details_shared_section_more_info_item_id">ელემენტის ID</string>
-  <string name="item_details_shared_section_more_info_vault_id">საცავის ID</string>
+  <string name="item_details_shared_section_more_info_vault_id">Vault ID</string>
+  <string name="item_details_shared_section_more_info_share_id">Share ID</string>
   <string name="item_details_wifi_network_label_ssid_name">Name (SSID)</string>
   <string name="item_details_wifi_network_label_password">პაროლი</string>
   <string name="item_details_wifi_network_label_security">Security</string>

@@ -124,4 +124,6 @@
   <string name="open_attachments_error">Ek dosya açılamadı</string>
   <string name="banner_contacts_title">Biliyor muydunuz?</string>
   <string name="banner_contacts_subtitle">Takma adınız birinden bir e-posta aldığında otomatik olarak yeni bir kişi oluşturulur.</string>
+  <string name="expand_note_more">daha fazla</string>
+  <string name="collapse_note_less">daha az</string>
 </resources>

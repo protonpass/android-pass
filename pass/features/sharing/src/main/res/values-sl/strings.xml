@@ -20,6 +20,7 @@
   <string name="sharing_can_view">Preglednik</string>
   <string name="sharing_can_edit">Urejevalnik</string>
   <string name="sharing_can_manage">Administrator</string>
+  <string name="sharing_can_manage_v2">Manager</string>
   <string name="sharing_can_view_description">Lahko si ogleda predmete v tem trezorju.</string>
   <string name="sharing_can_edit_description">Lahko ustvarja, ureja, briše in izvaža predmete v tem trezorju.</string>
   <string name="sharing_can_manage_description">Lahko odobri in prekliče dostop do tega trezorja.</string>
@@ -98,6 +99,7 @@
   <string name="share_role_viewer">Preglednik</string>
   <string name="share_role_editor">Urejevalnik</string>
   <string name="share_role_admin">Administrator</string>
+  <string name="share_role_manager">Manager</string>
   <string name="share_role_owner">Lastnik</string>
   <string name="sharing_bottomsheet_transfer_ownership">Prenos lastništva</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Svojega zadnjega trezorja ne morete prenesti.</string>

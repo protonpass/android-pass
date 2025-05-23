@@ -36,6 +36,7 @@
   <string name="bottomsheet_delete_permanently">Excluir permanentemente</string>
   <string name="bottomsheet_restore">Restaurar</string>
   <string name="bottomsheet_leave">Deixar</string>
+  <string name="bottomsheet_no_actions">Nenhuma ação disponível</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Abrir menu de ação do item</string>
   <string name="action_upgrade_now">Fazer upgrade agora</string>
@@ -197,6 +198,7 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Ícone de item de mais formações</string>
   <string name="item_details_shared_section_more_info_item_id">ID do item</string>
   <string name="item_details_shared_section_more_info_vault_id">ID do cofre</string>
+  <string name="item_details_shared_section_more_info_share_id">ID de compartilhamento</string>
   <string name="item_details_wifi_network_label_ssid_name">Nome (SSID)</string>
   <string name="item_details_wifi_network_label_password">Senha</string>
   <string name="item_details_wifi_network_label_security">Segurança</string>

@@ -20,6 +20,7 @@
   <string name="sharing_can_view">Leser</string>
   <string name="sharing_can_edit">Redaktør</string>
   <string name="sharing_can_manage">Administrator</string>
+  <string name="sharing_can_manage_v2">Administrator</string>
   <string name="sharing_can_view_description">Kan se elementer i dette hvelvet.</string>
   <string name="sharing_can_edit_description">Kan opprette, redigere, slette og eksportere elementer i dette hvelvet.</string>
   <string name="sharing_can_manage_description">Kan innvilge og oppheve tilgang til dette hvelvet.</string>
@@ -90,6 +91,7 @@
   <string name="share_role_viewer">Leser</string>
   <string name="share_role_editor">Redaktør</string>
   <string name="share_role_admin">Administrator</string>
+  <string name="share_role_manager">Administrator</string>
   <string name="share_role_owner">Eier</string>
   <string name="sharing_bottomsheet_transfer_ownership">Overfør eierskap</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Du kan ikke overføre ditt sist eide hvelv.</string>

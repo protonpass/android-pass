@@ -20,6 +20,7 @@
   <string name="sharing_can_view">Праглядальнік</string>
   <string name="sharing_can_edit">Рэдактар​​</string>
   <string name="sharing_can_manage">Адміністратар</string>
+  <string name="sharing_can_manage_v2">Кіраўнік</string>
   <string name="sharing_can_view_description">Можа праглядаць элементы ў гэтым сховішчы.</string>
   <string name="sharing_can_edit_description">Можа ствараць, рэдагаваць, выдаляць і экспартаваць элементы ў гэтым сховішчы.</string>
   <string name="sharing_can_manage_description">Можа даваць і адклікаць дазвол на доступ да гэтага сховішча.</string>
@@ -98,6 +99,7 @@
   <string name="share_role_viewer">Праглядальнік</string>
   <string name="share_role_editor">Рэдактар​​</string>
   <string name="share_role_admin">Адміністратар</string>
+  <string name="share_role_manager">Кіраўнік</string>
   <string name="share_role_owner">Уладальнік</string>
   <string name="sharing_bottomsheet_transfer_ownership">Перадаць права ўласнасці</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Вы не можаце перанесці апошняе сховішча, якое належала вам.</string>

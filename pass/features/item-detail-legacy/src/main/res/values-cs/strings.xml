@@ -132,4 +132,6 @@
   <string name="open_attachments_error">Nepodařilo se otevřít přílohu</string>
   <string name="banner_contacts_title">Věděli jste?</string>
   <string name="banner_contacts_subtitle">Pokaždé, když váš alias od někoho obdrží e-mail, automaticky se vytvoří nový kontakt.</string>
+  <string name="expand_note_more">více</string>
+  <string name="collapse_note_less">méně</string>
 </resources>

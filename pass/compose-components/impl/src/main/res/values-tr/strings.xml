@@ -36,6 +36,7 @@
   <string name="bottomsheet_delete_permanently">Kalıcı olarak sil</string>
   <string name="bottomsheet_restore">Geri yükle</string>
   <string name="bottomsheet_leave">Bırak</string>
+  <string name="bottomsheet_no_actions">Kullanılabilecek bir işlem yok</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Öge işlem menüsünü aç</string>
   <string name="action_upgrade_now">Şimdi yükselt</string>
@@ -196,7 +197,8 @@
   <string name="item_details_shared_section_more_info_header_title">Diğer bilgiler</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">Diğer öge bilgileri simgesi</string>
   <string name="item_details_shared_section_more_info_item_id">Öge kimliği</string>
-  <string name="item_details_shared_section_more_info_vault_id">Kasa kimliği</string>
+  <string name="item_details_shared_section_more_info_vault_id">Kasa Kimliği</string>
+  <string name="item_details_shared_section_more_info_share_id">Paylaşım Kimliği</string>
   <string name="item_details_wifi_network_label_ssid_name">Ad (SSID)</string>
   <string name="item_details_wifi_network_label_password">Parola</string>
   <string name="item_details_wifi_network_label_security">Güvenlik</string>

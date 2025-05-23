@@ -124,4 +124,6 @@
   <string name="open_attachments_error">მიმაგრებული ფაილის გახსნა შეუძლებელია</string>
   <string name="banner_contacts_title">იცოდით?</string>
   <string name="banner_contacts_subtitle">ყოველთვის, როცა თქვენი ფსევდონიმი ელფოსტის მიიღებს, ახალი კონტაქტი ავტომატურად იქნება.</string>
+  <string name="expand_note_more">more</string>
+  <string name="collapse_note_less">less</string>
 </resources>

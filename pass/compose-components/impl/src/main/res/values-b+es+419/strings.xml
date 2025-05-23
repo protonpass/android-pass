@@ -36,6 +36,7 @@
   <string name="bottomsheet_delete_permanently">Eliminar permanentemente</string>
   <string name="bottomsheet_restore">Restaurar</string>
   <string name="bottomsheet_leave">Abandonar</string>
+  <string name="bottomsheet_no_actions">No hay acciones disponibles</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Abrir menú de acciones del elemento</string>
   <string name="action_upgrade_now">Mejorar ahora</string>
@@ -197,6 +198,7 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Ícono del elemento de más información</string>
   <string name="item_details_shared_section_more_info_item_id">ID del elemento</string>
   <string name="item_details_shared_section_more_info_vault_id">ID de la bóveda</string>
+  <string name="item_details_shared_section_more_info_share_id">Compartir ID</string>
   <string name="item_details_wifi_network_label_ssid_name">Nombre (SSID)</string>
   <string name="item_details_wifi_network_label_password">Contraseña</string>
   <string name="item_details_wifi_network_label_security">Seguridad</string>

@@ -20,6 +20,7 @@
   <string name="sharing_can_view">Kijker</string>
   <string name="sharing_can_edit">Bewerker</string>
   <string name="sharing_can_manage">Beheerder</string>
+  <string name="sharing_can_manage_v2">Beheer</string>
   <string name="sharing_can_view_description">Kan items bekijken in deze kluis.</string>
   <string name="sharing_can_edit_description">Kan items aanmaken, bewerken, verwijderen en exporteren in deze kluis.</string>
   <string name="sharing_can_manage_description">Kan toegang tot deze kluis verlenen en intrekken.</string>
@@ -90,6 +91,7 @@
   <string name="share_role_viewer">Lezer</string>
   <string name="share_role_editor">Bewerker</string>
   <string name="share_role_admin">Beheerder</string>
+  <string name="share_role_manager">Beheerder</string>
   <string name="share_role_owner">Eigenaar</string>
   <string name="sharing_bottomsheet_transfer_ownership">Eigendom overdragen</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">U mag uw laatste eigen kluis niet overdragen.</string>

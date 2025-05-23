@@ -36,6 +36,7 @@
   <string name="bottomsheet_delete_permanently">Elimina de manera permanent</string>
   <string name="bottomsheet_restore">Restaura</string>
   <string name="bottomsheet_leave">Surt</string>
+  <string name="bottomsheet_no_actions">No hi ha cap acció disponible.</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Obre el menú d\'acció de l\'element</string>
   <string name="action_upgrade_now">Millora ara</string>
@@ -197,6 +198,7 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Icona Més informació sobre l\'element</string>
   <string name="item_details_shared_section_more_info_item_id">ID de l\'element</string>
   <string name="item_details_shared_section_more_info_vault_id">ID de la caixa forta</string>
+  <string name="item_details_shared_section_more_info_share_id">ID de compartició</string>
   <string name="item_details_wifi_network_label_ssid_name">Nom (SSID)</string>
   <string name="item_details_wifi_network_label_password">Contrasenya</string>
   <string name="item_details_wifi_network_label_security">Seguretat</string>
@@ -269,7 +271,7 @@
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Activa la sincronització amb SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="one">Hem detectat que teniu %d àlies en SimpleLogin que no apareix en Proton Pass. Voleu importar-lo?</item>
+    <item quantity="one">Hem detectat que teniu %d àlies a SimpleLogin que no apareix en Proton Pass. Voleu importar-lo?</item>
     <item quantity="other">Hem detectat que teniu %d àlies en SimpleLogin que no apareixen en Proton Pass. Voleu importar-los?</item>
   </plurals>
   <string name="simple_login_widget_action">Sincronitza els àlies</string>

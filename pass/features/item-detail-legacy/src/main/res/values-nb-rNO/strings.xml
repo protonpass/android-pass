@@ -124,4 +124,6 @@
   <string name="open_attachments_error">Kunne ikke åpne vedlegg</string>
   <string name="banner_contacts_title">Visste du at?</string>
   <string name="banner_contacts_subtitle">Hver gang aliaset ditt mottar en e-post fra noen, opprettes det automatisk en ny kontakt.</string>
+  <string name="expand_note_more">mer</string>
+  <string name="collapse_note_less">mindre</string>
 </resources>

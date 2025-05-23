@@ -20,6 +20,7 @@
   <string name="sharing_can_view">მთვალიერებელი</string>
   <string name="sharing_can_edit">რედაქტორი</string>
   <string name="sharing_can_manage">ადმინისტრატორი</string>
+  <string name="sharing_can_manage_v2">Manager</string>
   <string name="sharing_can_view_description">შეუძლია ამ საცავის ელემენტების დათვალიერება.</string>
   <string name="sharing_can_edit_description">შეუძლია ამ საცავის ელემენტების ჩასწორება, წაშლა და გატანა.</string>
   <string name="sharing_can_manage_description">შეუძლია ამ საცავზე წვდომების მინიჭება და ჩამორთმევა.</string>
@@ -90,6 +91,7 @@
   <string name="share_role_viewer">მთვალიერებელი</string>
   <string name="share_role_editor">რედაქტორი</string>
   <string name="share_role_admin">ადმინისტრატორი</string>
+  <string name="share_role_manager">Manager</string>
   <string name="share_role_owner">მფლობელი</string>
   <string name="sharing_bottomsheet_transfer_ownership">მფლობელობის გადაცემა</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">თქვენი უკანასკნელი საკუთარი საცავის გადატანა შეუძლებელია.</string>

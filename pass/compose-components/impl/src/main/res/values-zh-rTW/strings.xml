@@ -35,6 +35,7 @@
   <string name="bottomsheet_delete_permanently">永久刪除</string>
   <string name="bottomsheet_restore">還原</string>
   <string name="bottomsheet_leave">退出</string>
+  <string name="bottomsheet_no_actions">沒有可用的操作</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">開啟項目行為清單</string>
   <string name="action_upgrade_now">立即升級</string>
@@ -194,7 +195,8 @@
   <string name="item_details_shared_section_more_info_header_title">更多資訊</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
   <string name="item_details_shared_section_more_info_item_id">項目 ID</string>
-  <string name="item_details_shared_section_more_info_vault_id">保管庫 ID</string>
+  <string name="item_details_shared_section_more_info_vault_id">Vault ID</string>
+  <string name="item_details_shared_section_more_info_share_id">Share ID</string>
   <string name="item_details_wifi_network_label_ssid_name">Name (SSID)</string>
   <string name="item_details_wifi_network_label_password">密碼</string>
   <string name="item_details_wifi_network_label_security">Security</string>

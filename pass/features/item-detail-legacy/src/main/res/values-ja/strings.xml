@@ -120,4 +120,6 @@
   <string name="open_attachments_error">添付ファイルを開くことができませんでした</string>
   <string name="banner_contacts_title">ご存知ですか？</string>
   <string name="banner_contacts_subtitle">エイリアスが誰かからメールを受け取るたびに、新しい連絡先が自動的に作成されます。</string>
+  <string name="expand_note_more">more</string>
+  <string name="collapse_note_less">less</string>
 </resources>

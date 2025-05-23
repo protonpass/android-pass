@@ -38,6 +38,7 @@
   <string name="bottomsheet_delete_permanently">Trajno izbriši</string>
   <string name="bottomsheet_restore">Obnovi</string>
   <string name="bottomsheet_leave">Zapusti</string>
+  <string name="bottomsheet_no_actions">Na voljo ni nobenih dejanj</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Odpri meni z dejanji predmeta</string>
   <string name="action_upgrade_now">Nadgradi zdaj</string>
@@ -200,7 +201,8 @@
   <string name="item_details_shared_section_more_info_header_title">Več informacij</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">Ikona za informacije o predmetu</string>
   <string name="item_details_shared_section_more_info_item_id">ID predmeta</string>
-  <string name="item_details_shared_section_more_info_vault_id">ID trezorja</string>
+  <string name="item_details_shared_section_more_info_vault_id">Vault ID</string>
+  <string name="item_details_shared_section_more_info_share_id">Share ID</string>
   <string name="item_details_wifi_network_label_ssid_name">Ime (SSID)</string>
   <string name="item_details_wifi_network_label_password">Geslo</string>
   <string name="item_details_wifi_network_label_security">Varnost</string>

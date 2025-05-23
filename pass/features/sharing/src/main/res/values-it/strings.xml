@@ -20,6 +20,7 @@
   <string name="sharing_can_view">Visualizzatore</string>
   <string name="sharing_can_edit">Editor</string>
   <string name="sharing_can_manage">Amministratore</string>
+  <string name="sharing_can_manage_v2">Gestore</string>
   <string name="sharing_can_view_description">Può visualizzare gli elementi in questa cassaforte.</string>
   <string name="sharing_can_edit_description">Può creare, modificare, eliminare ed esportare gli elementi in questa cassaforte.</string>
   <string name="sharing_can_manage_description">Può concedere e revocare l\'accesso a questa cassaforte.</string>
@@ -90,6 +91,7 @@
   <string name="share_role_viewer">Sola lettura</string>
   <string name="share_role_editor">Editore</string>
   <string name="share_role_admin">Amministratore</string>
+  <string name="share_role_manager">Gestore</string>
   <string name="share_role_owner">Proprietario</string>
   <string name="sharing_bottomsheet_transfer_ownership">Trasferisci la proprietà</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Non puoi trasferire la tua unica cassaforte.</string>

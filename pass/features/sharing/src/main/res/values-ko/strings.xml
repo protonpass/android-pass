@@ -20,6 +20,7 @@
   <string name="sharing_can_view">보기</string>
   <string name="sharing_can_edit">편집자</string>
   <string name="sharing_can_manage">관리자</string>
+  <string name="sharing_can_manage_v2">Manager</string>
   <string name="sharing_can_view_description">이 금고에서 항목을 확인 가능합니다.</string>
   <string name="sharing_can_edit_description">이 금고에서 항목을 생성, 편집, 삭제 및 불러올 수 있습니다.</string>
   <string name="sharing_can_manage_description">이 금고의 접근을 허용 및 취소할 수 있습니다.</string>
@@ -86,6 +87,7 @@
   <string name="share_role_viewer">뷰어</string>
   <string name="share_role_editor">편집자</string>
   <string name="share_role_admin">관리자</string>
+  <string name="share_role_manager">Manager</string>
   <string name="share_role_owner">소유자</string>
   <string name="sharing_bottomsheet_transfer_ownership">소유권 이전</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">마지막에 소유했던 금고를 이전할 수 없습니다.</string>

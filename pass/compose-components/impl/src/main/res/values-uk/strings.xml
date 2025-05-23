@@ -38,6 +38,7 @@
   <string name="bottomsheet_delete_permanently">Видалити остаточно</string>
   <string name="bottomsheet_restore">Відновити</string>
   <string name="bottomsheet_leave">Покинути</string>
+  <string name="bottomsheet_no_actions">Немає доступних дій</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Відкрити меню дій елемента</string>
   <string name="action_upgrade_now">Покращити</string>
@@ -200,7 +201,8 @@
   <string name="item_details_shared_section_more_info_header_title">Докладніше</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">Додаткові значки інформації про елемент</string>
   <string name="item_details_shared_section_more_info_item_id">ID елемента</string>
-  <string name="item_details_shared_section_more_info_vault_id">ID сховища</string>
+  <string name="item_details_shared_section_more_info_vault_id">Vault ID</string>
+  <string name="item_details_shared_section_more_info_share_id">Share ID</string>
   <string name="item_details_wifi_network_label_ssid_name">Name (SSID)</string>
   <string name="item_details_wifi_network_label_password">Пароль</string>
   <string name="item_details_wifi_network_label_security">Безпека</string>

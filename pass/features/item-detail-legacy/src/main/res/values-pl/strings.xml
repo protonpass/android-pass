@@ -132,4 +132,6 @@
   <string name="open_attachments_error">Nie można otworzyć załącznika</string>
   <string name="banner_contacts_title">Czy wiesz?</string>
   <string name="banner_contacts_subtitle">Za każdym razem, gdy Twój alias otrzyma wiadomość, zostanie automatycznie utworzony nowy kontakt.</string>
+  <string name="expand_note_more">więcej</string>
+  <string name="collapse_note_less">mniej</string>
 </resources>

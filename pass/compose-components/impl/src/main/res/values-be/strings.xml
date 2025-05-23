@@ -38,6 +38,7 @@
   <string name="bottomsheet_delete_permanently">Выдаліць незваротна</string>
   <string name="bottomsheet_restore">Аднавіць</string>
   <string name="bottomsheet_leave">Выйсці</string>
+  <string name="bottomsheet_no_actions">Няма даступных дзеянняў</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Адкрыць меню дзеянняў элемента</string>
   <string name="action_upgrade_now">Палепшыць</string>
@@ -103,9 +104,9 @@
     <item quantity="other">%d элементаў</item>
   </plurals>
   <!-- Confirm close dialog -->
-  <string name="confirm_close_dialog_title">Адхіліць змены?</string>
-  <string name="confirm_close_dialog_message">У вас ёсць незахаваныя змены. Вы сапраўды хочаце адхіліць іх?</string>
-  <string name="confirm_close_dialog_close_button">Адхіліць</string>
+  <string name="confirm_close_dialog_title">Скасаваць змены?</string>
+  <string name="confirm_close_dialog_message">У вас ёсць незахаваныя змены. Вы сапраўды хочаце скасаваць іх?</string>
+  <string name="confirm_close_dialog_close_button">Скасаваць</string>
   <!-- Upgrade -->
   <string name="upgrade">Палепшыць</string>
   <!-- Advanced options -->
@@ -201,6 +202,7 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Больш звестак аб значку элемента</string>
   <string name="item_details_shared_section_more_info_item_id">Ідэнтыфікатар элемента</string>
   <string name="item_details_shared_section_more_info_vault_id">Ідэнтыфікатар сховішча</string>
+  <string name="item_details_shared_section_more_info_share_id">Абагуліць ідэнтыфікатар</string>
   <string name="item_details_wifi_network_label_ssid_name">Назва (SSID)</string>
   <string name="item_details_wifi_network_label_password">Пароль</string>
   <string name="item_details_wifi_network_label_security">Бяспека</string>

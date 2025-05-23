@@ -124,4 +124,6 @@
   <string name="open_attachments_error">No s\'ha pogut obrir el adjunt.</string>
   <string name="banner_contacts_title">Ho sabíeu?</string>
   <string name="banner_contacts_subtitle">Cada vegada que el vostre àlies rep un correu electrònic, es crea automàticament un contacte de qui ho ha enviat.</string>
+  <string name="expand_note_more">més</string>
+  <string name="collapse_note_less">menys</string>
 </resources>

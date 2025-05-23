@@ -36,6 +36,7 @@
   <string name="bottomsheet_delete_permanently">Permanent verwijderen</string>
   <string name="bottomsheet_restore">Herstel</string>
   <string name="bottomsheet_leave">Afsluiten</string>
+  <string name="bottomsheet_no_actions">Geen acties beschikbaar</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Actiemenu item openen</string>
   <string name="action_upgrade_now">Nu upgraden</string>
@@ -197,6 +198,7 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Meer item informatie icoon</string>
   <string name="item_details_shared_section_more_info_item_id">Item-ID</string>
   <string name="item_details_shared_section_more_info_vault_id">Kluis-ID</string>
+  <string name="item_details_shared_section_more_info_share_id">Deel-ID</string>
   <string name="item_details_wifi_network_label_ssid_name">Naam (SSID)</string>
   <string name="item_details_wifi_network_label_password">Wachtwoord</string>
   <string name="item_details_wifi_network_label_security">Beveiliging</string>

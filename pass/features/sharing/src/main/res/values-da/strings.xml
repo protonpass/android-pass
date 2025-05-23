@@ -20,6 +20,7 @@
   <string name="sharing_can_view">Seer</string>
   <string name="sharing_can_edit">Redaktør</string>
   <string name="sharing_can_manage">Admin</string>
+  <string name="sharing_can_manage_v2">Manager</string>
   <string name="sharing_can_view_description">Kan se elementer i denne boks.</string>
   <string name="sharing_can_edit_description">Kan oprette, redigere, slette og eksportere elementer i denne boks.</string>
   <string name="sharing_can_manage_description">Kan give og tilbagekalde adgang til denne boks.</string>
@@ -90,6 +91,7 @@
   <string name="share_role_viewer">Seer</string>
   <string name="share_role_editor">Redaktør</string>
   <string name="share_role_admin">Admin</string>
+  <string name="share_role_manager">Manager</string>
   <string name="share_role_owner">Ejer</string>
   <string name="sharing_bottomsheet_transfer_ownership">Overfør ejerskab</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Du kan ikke overføre den sidste boks, du ejer.</string>

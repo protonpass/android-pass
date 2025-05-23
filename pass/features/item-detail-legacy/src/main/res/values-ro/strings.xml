@@ -128,4 +128,6 @@
   <string name="open_attachments_error">Atașamentul nu a putut fi deschis.</string>
   <string name="banner_contacts_title">Știați că?</string>
   <string name="banner_contacts_subtitle">De fiecare dată când aliasul primește un mesaj de la cineva, este creat automat un contact.</string>
+  <string name="expand_note_more">mai mult</string>
+  <string name="collapse_note_less">mai puțin</string>
 </resources>

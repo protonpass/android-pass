@@ -19,7 +19,7 @@
   <string name="email_copied_to_clipboard">Адрес электронной почты скопирован</string>
   <string name="username_copied_to_clipboard">Имя пользователя скопировано</string>
   <string name="password_copied_to_clipboard">Пароль скопирован</string>
-  <string name="website_copied_to_clipboard">Веб-адрес скопирован</string>
+  <string name="website_copied_to_clipboard">Ссылка скопирована</string>
   <string name="totp_copied_to_clipboard">TOTP скопирован</string>
   <string name="field_copied_to_clipboard">Поле скопировано</string>
   <string name="move_item_to_trash_message">Элемент перемещён в Корзину</string>
@@ -132,4 +132,6 @@
   <string name="open_attachments_error">Не удалось открыть вложение</string>
   <string name="banner_contacts_title">Вы знали?</string>
   <string name="banner_contacts_subtitle">Каждый раз, когда ваш псевдоним получает письмо от кого-то, новый контакт создается автоматически.</string>
+  <string name="expand_note_more">больше</string>
+  <string name="collapse_note_less">меньше</string>
 </resources>

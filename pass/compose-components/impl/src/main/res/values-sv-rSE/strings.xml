@@ -36,6 +36,7 @@
   <string name="bottomsheet_delete_permanently">Ta bort permanent</string>
   <string name="bottomsheet_restore">Återställ</string>
   <string name="bottomsheet_leave">Lämna</string>
+  <string name="bottomsheet_no_actions">Inga åtgärder tillgängliga</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Öppna åtgärdsmeny för objekt</string>
   <string name="action_upgrade_now">Uppgradera nu</string>
@@ -197,6 +198,7 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Ikon för mer objektinformation</string>
   <string name="item_details_shared_section_more_info_item_id">Objekt-ID</string>
   <string name="item_details_shared_section_more_info_vault_id">Valv-ID</string>
+  <string name="item_details_shared_section_more_info_share_id">Delnings-ID</string>
   <string name="item_details_wifi_network_label_ssid_name">Namn (SSID)</string>
   <string name="item_details_wifi_network_label_password">Lösenord</string>
   <string name="item_details_wifi_network_label_security">Säkerhet</string>

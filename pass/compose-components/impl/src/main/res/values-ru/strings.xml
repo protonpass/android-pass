@@ -38,6 +38,7 @@
   <string name="bottomsheet_delete_permanently">Удалить безвозвратно</string>
   <string name="bottomsheet_restore">Восстановить</string>
   <string name="bottomsheet_leave">Выйти</string>
+  <string name="bottomsheet_no_actions">Нет доступных действий</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Открыть меню действий с элементом</string>
   <string name="action_upgrade_now">Улучшить сейчас</string>
@@ -201,6 +202,7 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Значок дополнительной информации об элементе</string>
   <string name="item_details_shared_section_more_info_item_id">ID элемента</string>
   <string name="item_details_shared_section_more_info_vault_id">ID хранилища</string>
+  <string name="item_details_shared_section_more_info_share_id">Поделиться ID</string>
   <string name="item_details_wifi_network_label_ssid_name">Имя (SSID)</string>
   <string name="item_details_wifi_network_label_password">Пароль</string>
   <string name="item_details_wifi_network_label_security">Безопасность</string>

@@ -38,6 +38,7 @@
   <string name="bottomsheet_delete_permanently">Trvale smazat</string>
   <string name="bottomsheet_restore">Obnovit</string>
   <string name="bottomsheet_leave">Opustit</string>
+  <string name="bottomsheet_no_actions">Nejsou dostupné žádné akce</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Otevřít nabídku akcí položky</string>
   <string name="action_upgrade_now">Navýšit nyní</string>
@@ -201,6 +202,7 @@
   <string name="item_details_shared_section_more_info_header_icon_content_description">Ikona více informací o položce</string>
   <string name="item_details_shared_section_more_info_item_id">ID položky</string>
   <string name="item_details_shared_section_more_info_vault_id">ID trezoru</string>
+  <string name="item_details_shared_section_more_info_share_id">ID sdílení</string>
   <string name="item_details_wifi_network_label_ssid_name">Název (SSID)</string>
   <string name="item_details_wifi_network_label_password">Heslo</string>
   <string name="item_details_wifi_network_label_security">Zabezpečení</string>

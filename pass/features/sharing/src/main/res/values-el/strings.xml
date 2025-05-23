@@ -20,6 +20,7 @@
   <string name="sharing_can_view">Θεατής</string>
   <string name="sharing_can_edit">Επεξεργαστής</string>
   <string name="sharing_can_manage">Διαχειριστής</string>
+  <string name="sharing_can_manage_v2">Διαχειριστής</string>
   <string name="sharing_can_view_description">Μπορεί να προβάλει στοιχεία σε αυτή την κρύπτη.</string>
   <string name="sharing_can_edit_description">Μπορεί να δημιουργήσει, επεξεργαστεί, διαγράψει και εξάγει στοιχεία σε αυτήν την κρύπτη.</string>
   <string name="sharing_can_manage_description">Μπορεί να παραχωρήσει και να ανακαλέσει την πρόσβαση σε αυτή την κρύπτη.</string>
@@ -90,6 +91,7 @@
   <string name="share_role_viewer">Πρόγραμμα προβολής</string>
   <string name="share_role_editor">Επεξεργαστής</string>
   <string name="share_role_admin">Διαχειριστής</string>
+  <string name="share_role_manager">Διαχειριστής</string>
   <string name="share_role_owner">Ιδιοκτήτης</string>
   <string name="sharing_bottomsheet_transfer_ownership">Μεταβίβαση κυριότητας</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Δεν μπορείτε να μεταφέρετε την τελευταία κρύπτη που κατέχετε.</string>

@@ -153,10 +153,6 @@ internal fun LoginItemForm(
                 )
             }
 
-            item {
-                Spacer(modifier = Modifier.height(height = Spacing.extraSmall))
-            }
-
             if (passkeyState is Some) {
                 item {
                     PasskeyEditRow(

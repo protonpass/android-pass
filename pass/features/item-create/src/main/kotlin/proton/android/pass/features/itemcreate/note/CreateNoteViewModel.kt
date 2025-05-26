@@ -49,6 +49,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.GetShareById
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
@@ -85,6 +86,7 @@ class CreateNoteViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
+    getUserPlan: GetUserPlan,
     userPreferencesRepository: UserPreferencesRepository,
     observeVaults: ObserveVaultsWithItemCount,
     observeDefaultVault: ObserveDefaultVault,
@@ -94,6 +96,7 @@ class CreateNoteViewModel @Inject constructor(
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseNoteViewModel(
+    getUserPlan = getUserPlan,
     userPreferencesRepository = userPreferencesRepository,
     snackbarDispatcher = snackbarDispatcher,
     attachmentsHandler = attachmentsHandler,
@@ -136,7 +139,7 @@ class CreateNoteViewModel @Inject constructor(
         tag = TAG
     )
 
-    val createNoteUiState: StateFlow<CreateNoteUiState> = combine(
+    internal val createNoteUiState: StateFlow<CreateNoteUiState> = combine(
         shareUiState,
         baseNoteUiState,
         ::CreateNoteUiState

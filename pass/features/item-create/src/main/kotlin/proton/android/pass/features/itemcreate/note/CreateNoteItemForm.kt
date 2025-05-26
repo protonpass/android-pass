@@ -20,16 +20,19 @@ package proton.android.pass.features.itemcreate.note
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.toPersistentSet
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
@@ -56,94 +59,103 @@ internal fun CreateNoteItemForm(
     customFieldValidationErrors: List<CustomFieldValidationError>,
     onEvent: (NoteContentUiEvent) -> Unit
 ) {
-    LazyColumn(
+    Column(
         modifier = modifier
             .fillMaxSize()
             .padding(Spacing.medium),
-        verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+        verticalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
 
-        item {
-            AnimatedVisibility(isFileAttachmentsEnabled && displayFileAttachmentsOnboarding) {
-                AttachmentBanner(Modifier.padding(bottom = Spacing.mediumSmall)) {
-                    onEvent(NoteContentUiEvent.DismissAttachmentBanner)
-                }
+        AnimatedVisibility(isFileAttachmentsEnabled && displayFileAttachmentsOnboarding) {
+            AttachmentBanner(Modifier.padding(bottom = Spacing.mediumSmall)) {
+                onEvent(NoteContentUiEvent.DismissAttachmentBanner)
             }
         }
 
-
         if (isCustomItemEnabled) {
-            item {
-                TitleSection(
-                    modifier = Modifier
-                        .roundedContainerNorm()
-                        .padding(
-                            start = Spacing.medium,
-                            top = Spacing.medium,
-                            end = Spacing.extraSmall,
-                            bottom = Spacing.medium
-                        ),
-                    value = noteItemFormState.title,
-                    requestFocus = true,
-                    onTitleRequiredError = onTitleRequiredError,
-                    enabled = enabled,
-                    isRounded = true,
-                    onChange = { onEvent(NoteContentUiEvent.OnTitleChange(it)) }
-                )
-            }
-            item {
-                RoundedNoteSection(
-                    modifier = Modifier,
-                    textFieldModifier = Modifier.fillMaxWidth(),
-                    enabled = enabled,
-                    value = noteItemFormState.note,
-                    onChange = { onEvent(NoteContentUiEvent.OnNoteChange(it)) }
-                )
-            }
-
-            if (isFileAttachmentsEnabled) {
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(Spacing.small)
+            ) {
                 item {
-                    AttachmentSection(
-                        attachmentsState = attachmentsState,
-                        isDetail = false,
-                        itemColors = passItemColors(ItemCategory.Note),
-                        onEvent = { onEvent(OnAttachmentEvent(it)) }
+                    TitleSection(
+                        modifier = Modifier
+                            .roundedContainerNorm()
+                            .padding(
+                                start = Spacing.medium,
+                                top = Spacing.medium,
+                                end = Spacing.extraSmall,
+                                bottom = Spacing.medium
+                            ),
+                        value = noteItemFormState.title,
+                        requestFocus = true,
+                        onTitleRequiredError = onTitleRequiredError,
+                        enabled = enabled,
+                        isRounded = true,
+                        onChange = { onEvent(NoteContentUiEvent.OnTitleChange(it)) }
                     )
                 }
+
+                item {
+                    RoundedNoteSection(
+                        modifier = Modifier,
+                        textFieldModifier = Modifier.fillMaxWidth(),
+                        enabled = enabled,
+                        value = noteItemFormState.note,
+                        onChange = { onEvent(NoteContentUiEvent.OnNoteChange(it)) }
+                    )
+                }
+
+                customFieldsList(
+                    customFields = noteItemFormState.customFields,
+                    enabled = enabled,
+                    errors = customFieldValidationErrors.toPersistentSet(),
+                    isVisible = true,
+                    canCreateCustomFields = canUseCustomFields,
+                    sectionIndex = None,
+                    focusedField = (focusedField as? NoteField.CustomField)?.field.toOption(),
+                    itemCategory = ItemCategory.Note,
+                    onEvent = { onEvent(NoteContentUiEvent.OnCustomFieldEvent(it)) }
+                )
+
+                if (isFileAttachmentsEnabled) {
+                    item {
+                        AttachmentSection(
+                            attachmentsState = attachmentsState,
+                            isDetail = false,
+                            itemColors = passItemColors(ItemCategory.Note),
+                            onEvent = { onEvent(OnAttachmentEvent(it)) }
+                        )
+                    }
+                }
             }
-            customFieldsList(
-                customFields = noteItemFormState.customFields,
-                enabled = enabled,
-                errors = customFieldValidationErrors.toPersistentSet(),
-                isVisible = true,
-                canCreateCustomFields = canUseCustomFields,
-                sectionIndex = None,
-                focusedField = (focusedField as? NoteField.CustomField)?.field.toOption(),
-                itemCategory = ItemCategory.Note,
-                onEvent = { onEvent(NoteContentUiEvent.OnCustomFieldEvent(it)) }
-            )
         } else {
-            item {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(Spacing.small)
+            ) {
                 NoteTitle(
+                    modifier = Modifier.padding(bottom = Spacing.small),
                     value = noteItemFormState.title,
                     requestFocus = true,
                     onTitleRequiredError = onTitleRequiredError,
                     enabled = enabled,
                     onValueChanged = { onEvent(NoteContentUiEvent.OnTitleChange(it)) }
                 )
-            }
-            item {
+                val shouldApplyNoteWeight = remember(isFileAttachmentsEnabled, attachmentsState) {
+                    !isFileAttachmentsEnabled || !attachmentsState.hasAnyAttachment
+                }
                 FullNoteSection(
-                    modifier = Modifier,
-                    textFieldModifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .applyIf(shouldApplyNoteWeight, ifTrue = { Modifier.weight(1f) }),
+                    textFieldModifier = Modifier
+                        .applyIf(shouldApplyNoteWeight, ifTrue = { Modifier.weight(1f) })
+                        .fillMaxWidth(),
                     enabled = enabled,
                     value = noteItemFormState.note,
                     onChange = { onEvent(NoteContentUiEvent.OnNoteChange(it)) }
                 )
-            }
 
-            if (isFileAttachmentsEnabled) {
-                item {
+                if (isFileAttachmentsEnabled) {
                     AttachmentList(
                         attachmentsState = attachmentsState,
                         onEvent = onEvent

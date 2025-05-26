@@ -22,7 +22,9 @@ import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
+import proton.android.pass.features.itemcreate.common.ValidationError
 
 @Parcelize
 @Immutable
@@ -38,9 +40,9 @@ data class NoteItemFormState(
         customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
     )
 
-    fun validate(): Set<NoteItemValidationErrors> {
-        val mutableSet = mutableSetOf<NoteItemValidationErrors>()
-        if (title.isBlank()) mutableSet.add(NoteItemValidationErrors.BlankTitle)
+    fun validate(): Set<ValidationError> {
+        val mutableSet = mutableSetOf<ValidationError>()
+        if (title.isBlank()) mutableSet.add(CommonFieldValidationError.BlankTitle)
         return mutableSet.toSet()
     }
 
@@ -57,8 +59,4 @@ data class NoteItemFormState(
             customFields = emptyList()
         )
     }
-}
-
-sealed interface NoteItemValidationErrors {
-    data object BlankTitle : NoteItemValidationErrors
 }

@@ -25,15 +25,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.combineN
+import proton.android.pass.common.api.some
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -41,6 +46,13 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
+import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
+import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
+import proton.android.pass.features.itemcreate.common.ValidationError
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
 import proton.android.pass.features.itemcreate.login.LoginField
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
@@ -55,6 +67,8 @@ abstract class BaseNoteViewModel(
     private val attachmentsHandler: AttachmentsHandler,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
+    private val customFieldHandler: CustomFieldHandler,
+    customFieldDraftRepository: CustomFieldDraftRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -63,6 +77,16 @@ abstract class BaseNoteViewModel(
         MutableStateFlow(IsLoadingState.NotLoading)
 
     init {
+        customFieldDraftRepository.observeCustomFieldEvents()
+            .onEach {
+                onUserEditedContent()
+                when (it) {
+                    is DraftFormFieldEvent.FieldAdded -> onFieldAdded(it)
+                    is DraftFormFieldEvent.FieldRemoved -> onFieldRemoved(it)
+                    is DraftFormFieldEvent.FieldRenamed -> onFieldRenamed(it)
+                }
+            }
+            .launchIn(viewModelScope)
         attachmentsHandler.observeNewAttachments {
             onUserEditedContent()
             viewModelScope.launch {
@@ -86,8 +110,10 @@ abstract class BaseNoteViewModel(
 
     protected val isItemSavedState: MutableStateFlow<ItemSavedState> =
         MutableStateFlow(ItemSavedState.Unknown)
-    protected val noteItemValidationErrorsState: MutableStateFlow<Set<NoteItemValidationErrors>> =
+    protected val noteItemValidationErrorsState: MutableStateFlow<Set<ValidationError>> =
         MutableStateFlow(emptySet())
+    private val focusedFieldState: MutableStateFlow<Option<CustomFieldIdentifier>> =
+        MutableStateFlow<Option<CustomFieldIdentifier>>(None)
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     val baseNoteUiState: StateFlow<BaseNoteUiState> = combineN(
@@ -122,7 +148,7 @@ abstract class BaseNoteViewModel(
         onUserEditedContent()
         noteItemFormMutableState = noteItemFormMutableState.copy(title = value)
         noteItemValidationErrorsState.update {
-            it.toMutableSet().apply { remove(NoteItemValidationErrors.BlankTitle) }
+            it.toMutableSet().apply { remove(CommonFieldValidationError.BlankTitle) }
         }
     }
 
@@ -167,12 +193,61 @@ abstract class BaseNoteViewModel(
         }
     }
 
-    internal fun onCustomFieldChange(index: Int, value: String) {
-        // share code with handler
+    private fun onFieldRemoved(event: DraftFormFieldEvent.FieldRemoved) {
+        val (_, index) = event
+        noteItemFormMutableState = noteItemFormState.copy(
+            customFields = noteItemFormState.customFields
+                .toMutableList()
+                .apply { removeAt(index) }
+                .toPersistentList()
+        )
+    }
+
+    private fun onFieldRenamed(event: DraftFormFieldEvent.FieldRenamed) {
+        val (_, index, newLabel) = event
+        val updated = customFieldHandler.onCustomFieldRenamed(
+            customFieldList = noteItemFormState.customFields,
+            index = index,
+            newLabel = newLabel
+        )
+        noteItemFormMutableState = noteItemFormState.copy(customFields = updated)
+    }
+
+    private fun onFieldAdded(event: DraftFormFieldEvent.FieldAdded) {
+        val (_, label, type) = event
+        val added = customFieldHandler.onCustomFieldAdded(label, type)
+        noteItemFormMutableState = noteItemFormState.copy(
+            customFields = noteItemFormState.customFields + added
+        )
+        val identifier = CustomFieldIdentifier(
+            index = noteItemFormState.customFields.lastIndex,
+            type = type
+        )
+        focusedFieldState.update { identifier.some() }
+    }
+
+    internal fun onCustomFieldChange(id: CustomFieldIdentifier, value: String) {
+        removeValidationErrors(
+            CustomFieldValidationError.EmptyField(index = id.index),
+            CustomFieldValidationError.InvalidTotp(index = id.index)
+        )
+        val updated = customFieldHandler.onCustomFieldValueChanged(
+            customFieldIdentifier = id,
+            customFieldList = noteItemFormState.customFields,
+            value = value
+        )
+        noteItemFormMutableState = noteItemFormState.copy(
+            customFields = updated.toPersistentList()
+        )
     }
 
     internal fun onFocusChange(field: LoginField.CustomField, isFocused: Boolean) {
-        // share code with handler
+        val customFields = customFieldHandler.onCustomFieldFocusedChanged(
+            customFieldIdentifier = field.field,
+            customFieldList = noteItemFormState.customFields,
+            isFocused = isFocused
+        )
+        noteItemFormMutableState = noteItemFormState.copy(customFields = customFields)
     }
 
     suspend fun isFileAttachmentsEnabled() = featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
@@ -190,6 +265,14 @@ abstract class BaseNoteViewModel(
     fun dismissFileAttachmentsOnboardingBanner() {
         viewModelScope.launch {
             userPreferencesRepository.setDisplayFileAttachmentsOnboarding(NotDisplay)
+        }
+    }
+
+    private fun removeValidationErrors(vararg errors: ValidationError) {
+        noteItemValidationErrorsState.update { currentValidationErrors ->
+            currentValidationErrors.toMutableSet().apply {
+                errors.forEach { error -> remove(error) }
+            }
         }
     }
 }

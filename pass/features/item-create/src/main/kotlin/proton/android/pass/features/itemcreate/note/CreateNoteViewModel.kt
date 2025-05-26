@@ -56,8 +56,10 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.ItemSavedState
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.ItemCreationError
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.ItemLinkAttachmentsError
@@ -72,6 +74,7 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
+@Suppress("LongParameterList")
 @HiltViewModel
 class CreateNoteViewModel @Inject constructor(
     private val accountManager: AccountManager,
@@ -86,12 +89,16 @@ class CreateNoteViewModel @Inject constructor(
     observeVaults: ObserveVaultsWithItemCount,
     observeDefaultVault: ObserveDefaultVault,
     attachmentsHandler: AttachmentsHandler,
+    customFieldHandler: CustomFieldHandler,
+    customFieldDraftRepository: CustomFieldDraftRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseNoteViewModel(
     userPreferencesRepository = userPreferencesRepository,
     snackbarDispatcher = snackbarDispatcher,
     attachmentsHandler = attachmentsHandler,
+    customFieldHandler = customFieldHandler,
+    customFieldDraftRepository = customFieldDraftRepository,
     featureFlagsRepository = featureFlagsRepository,
     savedStateHandleProvider = savedStateHandleProvider
 ) {

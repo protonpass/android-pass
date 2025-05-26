@@ -43,6 +43,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.RenameAttachments
@@ -71,6 +72,7 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
+@Suppress("LongParameterList")
 @HiltViewModel
 class UpdateNoteViewModel @Inject constructor(
     private val accountManager: AccountManager,
@@ -83,12 +85,14 @@ class UpdateNoteViewModel @Inject constructor(
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
     private val renameAttachments: RenameAttachments,
     private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
+    getUserPlan: GetUserPlan,
     customFieldHandler: CustomFieldHandler,
     customFieldDraftRepository: CustomFieldDraftRepository,
     userPreferencesRepository: UserPreferencesRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseNoteViewModel(
+    getUserPlan = getUserPlan,
     userPreferencesRepository = userPreferencesRepository,
     snackbarDispatcher = snackbarDispatcher,
     attachmentsHandler = attachmentsHandler,
@@ -115,7 +119,7 @@ class UpdateNoteViewModel @Inject constructor(
         }
     }
 
-    val updateNoteUiState: StateFlow<UpdateNoteUiState> = combine(
+    internal val updateNoteUiState: StateFlow<UpdateNoteUiState> = combine(
         flowOf(navShareId),
         baseNoteUiState,
         ::UpdateNoteUiState

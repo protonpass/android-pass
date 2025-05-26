@@ -27,7 +27,7 @@ import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.ValidationError
 
 @Immutable
-data class BaseNoteUiState(
+internal data class BaseNoteUiState(
     val errorList: Set<ValidationError>,
     val isLoadingState: IsLoadingState,
     val itemSavedState: ItemSavedState,
@@ -35,6 +35,8 @@ data class BaseNoteUiState(
     val isFileAttachmentsEnabled: Boolean,
     val isCustomItemEnabled: Boolean,
     val displayFileAttachmentsOnboarding: Boolean,
+    val canUseCustomFields: Boolean,
+    val focusedField: NoteField?,
     val attachmentsState: AttachmentsState
 ) {
 
@@ -50,6 +52,8 @@ data class BaseNoteUiState(
             hasUserEditedContent = false,
             isFileAttachmentsEnabled = false,
             isCustomItemEnabled = false,
+            canUseCustomFields = false,
+            focusedField = null,
             displayFileAttachmentsOnboarding = false,
             attachmentsState = AttachmentsState.Initial
         )
@@ -57,7 +61,7 @@ data class BaseNoteUiState(
 }
 
 @Immutable
-data class CreateNoteUiState(
+internal data class CreateNoteUiState(
     val shareUiState: ShareUiState,
     val baseNoteUiState: BaseNoteUiState
 ) {
@@ -70,7 +74,7 @@ data class CreateNoteUiState(
 }
 
 @Immutable
-data class UpdateNoteUiState(
+internal data class UpdateNoteUiState(
     val selectedShareId: ShareId?,
     val baseNoteUiState: BaseNoteUiState
 ) {

@@ -648,50 +648,20 @@ abstract class BaseLoginViewModel(
         canUpdateUsernameState.update { true }
     }
 
-    fun onCustomFieldChange(index: Int, value: String) = viewModelScope.launch {
-        if (index >= loginItemFormState.customFields.size) return@launch
-
+    fun onCustomFieldChange(id: CustomFieldIdentifier, value: String) {
         removeValidationErrors(
-            CustomFieldValidationError.EmptyField(None, index),
-            CustomFieldValidationError.InvalidTotp(None, index)
+            CustomFieldValidationError.EmptyField(index = id.index),
+            CustomFieldValidationError.InvalidTotp(index = id.index)
         )
 
-        val customFields = loginItemFormState.customFields.toMutableList()
+        val updated = customFieldHandler.onCustomFieldValueChanged(
+            customFieldIdentifier = id,
+            customFieldList = loginItemFormState.customFields,
+            value = value
+        )
 
-        val updated = encryptionContextProvider.withEncryptionContext {
-            when (val field = customFields[index]) {
-                is UICustomFieldContent.Hidden -> {
-                    UICustomFieldContent.Hidden(
-                        label = field.label,
-                        value = UIHiddenState.Revealed(
-                            encrypted = encrypt(value),
-                            clearText = value
-                        )
-                    )
-                }
-
-                is UICustomFieldContent.Text -> UICustomFieldContent.Text(
-                    label = field.label,
-                    value = value
-                )
-
-                is UICustomFieldContent.Totp -> UICustomFieldContent.Totp(
-                    label = field.label,
-                    value = UIHiddenState.Revealed(
-                        encrypted = encrypt(value),
-                        clearText = value
-                    ),
-                    id = field.id
-                )
-
-                is UICustomFieldContent.Date ->
-                    throw IllegalStateException("Date field not supported")
-            }
-        }
-
-        customFields[index] = updated
         loginItemFormMutableState = loginItemFormState.copy(
-            customFields = customFields.toPersistentList()
+            customFields = updated.toPersistentList()
         )
     }
 

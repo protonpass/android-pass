@@ -22,10 +22,13 @@ import dagger.hilt.android.scopes.ViewModelScoped
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
+import proton.android.pass.features.itemcreate.common.UICustomFieldContent.Companion.createCustomField
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import javax.inject.Inject
 
 interface CustomFieldHandler {
+    fun onCustomFieldAdded(label: String, customFieldType: CustomFieldType): UICustomFieldContent
+
     fun onCustomFieldValueChanged(
         customFieldIdentifier: CustomFieldIdentifier,
         customFieldList: List<UICustomFieldContent>,
@@ -43,6 +46,11 @@ interface CustomFieldHandler {
 class CustomFieldHandlerImpl @Inject constructor(
     val encryptionContextProvider: EncryptionContextProvider
 ) : CustomFieldHandler {
+
+    override fun onCustomFieldAdded(label: String, customFieldType: CustomFieldType): UICustomFieldContent =
+        encryptionContextProvider.withEncryptionContext {
+            createCustomField(customFieldType, label, this)
+        }
 
     override fun onCustomFieldValueChanged(
         customFieldIdentifier: CustomFieldIdentifier,

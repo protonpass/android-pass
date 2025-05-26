@@ -61,7 +61,6 @@ import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
 import proton.android.pass.features.itemcreate.common.DraftFormSectionEvent
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
-import proton.android.pass.features.itemcreate.common.UICustomFieldContent.Companion.createCustomField
 import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.ValidationError
@@ -361,38 +360,32 @@ abstract class BaseCustomItemViewModel(
 
     private fun onFieldAdded(event: DraftFormFieldEvent.FieldAdded) {
         val (sectionIndex, label, type) = event
-        val field = encryptionContextProvider.withEncryptionContext {
-            createCustomField(type, label, this)
-        }
+        val added = customFieldHandler.onCustomFieldAdded(label, type)
         when (sectionIndex) {
             is Some -> {
                 val section = itemFormState.sectionList[sectionIndex.value]
-                val updatedSection = section.copy(customFields = section.customFields + field)
+                val updatedSection = section.copy(customFields = section.customFields + added)
                 itemFormState = itemFormState.copy(
                     sectionList = itemFormState.sectionList.toMutableList().apply {
                         set(sectionIndex.value, updatedSection)
                     }
                 )
-                focusedFieldState.update {
-                    CustomFieldIdentifier(
-                        sectionIndex = sectionIndex,
-                        index = updatedSection.customFields.lastIndex,
-                        type = type
-                    ).some()
-                }
+                val identifier = CustomFieldIdentifier(
+                    index = updatedSection.customFields.lastIndex,
+                    type = type
+                )
+                focusedFieldState.update { identifier.some() }
             }
 
             is None -> {
                 itemFormState = itemFormState.copy(
-                    customFieldList = itemFormState.customFieldList + field
+                    customFieldList = itemFormState.customFieldList + added
                 )
-                focusedFieldState.update {
-                    CustomFieldIdentifier(
-                        sectionIndex = sectionIndex,
-                        index = itemFormState.customFieldList.lastIndex,
-                        type = type
-                    ).some()
-                }
+                val identifier = CustomFieldIdentifier(
+                    index = itemFormState.customFieldList.lastIndex,
+                    type = type
+                )
+                focusedFieldState.update { identifier.some() }
             }
         }
     }

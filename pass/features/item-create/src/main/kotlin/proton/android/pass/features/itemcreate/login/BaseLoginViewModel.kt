@@ -86,7 +86,6 @@ import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
 import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
 import proton.android.pass.features.itemcreate.common.LoginItemValidationError
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
-import proton.android.pass.features.itemcreate.common.UICustomFieldContent.Companion.createCustomField
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.ValidationError
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
@@ -780,46 +779,15 @@ abstract class BaseLoginViewModel(
 
     private fun onFieldAdded(event: DraftFormFieldEvent.FieldAdded) {
         val (_, label, type) = event
-        val field = encryptionContextProvider.withEncryptionContext {
-            createCustomField(type, label, this)
-        }
+        val added = customFieldHandler.onCustomFieldAdded(label, type)
         loginItemFormMutableState = loginItemFormState.copy(
-            customFields = loginItemFormState.customFields.toMutableList()
-                .apply { add(field) }
-                .toPersistentList()
+            customFields = loginItemFormState.customFields + added
         )
-        val index = loginItemFormState.customFields.size - 1
-        when (field) {
-            is UICustomFieldContent.Hidden -> focusedFieldFlow.update {
-                LoginField.CustomField(
-                    field = CustomFieldIdentifier(
-                        index = index,
-                        type = CustomFieldType.Hidden
-                    )
-                ).some()
-            }
-
-            is UICustomFieldContent.Text -> focusedFieldFlow.update {
-                LoginField.CustomField(
-                    field = CustomFieldIdentifier(
-                        index = index,
-                        type = CustomFieldType.Text
-                    )
-                ).some()
-            }
-
-            is UICustomFieldContent.Totp -> focusedFieldFlow.update {
-                LoginField.CustomField(
-                    field = CustomFieldIdentifier(
-                        index = index,
-                        type = CustomFieldType.Totp
-                    )
-                ).some()
-            }
-
-            is UICustomFieldContent.Date ->
-                throw IllegalStateException("Date field not supported in login")
-        }
+        val identifier = CustomFieldIdentifier(
+            index = loginItemFormState.customFields.lastIndex,
+            type = type
+        )
+        focusedFieldFlow.update { LoginField.CustomField(identifier).some() }
     }
 
     internal fun onFocusChange(field: LoginField, isFocused: Boolean) {

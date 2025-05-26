@@ -43,7 +43,6 @@ import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEv
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldNavigation.AddCustomField
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldNavigation.CustomFieldOptions
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
-import proton.android.pass.features.itemcreate.login.LoginField.CustomField
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
 import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.AddAttachment
 import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.DeleteAllAttachments
@@ -175,7 +174,7 @@ fun UpdateNote(
 
                             is CustomFieldEvent.FocusRequested ->
                                 viewModel.onFocusChange(
-                                    field = CustomField(cevent.field),
+                                    field = NoteField.CustomField(cevent.field),
                                     isFocused = cevent.isFocused
                                 )
 

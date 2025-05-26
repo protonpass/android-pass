@@ -47,7 +47,6 @@ import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldNavigation
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
-import proton.android.pass.features.itemcreate.login.LoginField.CustomField
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
 import proton.android.pass.features.itemcreate.note.CreateNoteNavigation.DeleteAllAttachments
 import proton.android.pass.features.itemcreate.note.CreateNoteNavigation.OpenDraftAttachmentOptions
@@ -202,7 +201,7 @@ fun CreateNoteScreen(
 
                             is CustomFieldEvent.FocusRequested ->
                                 viewModel.onFocusChange(
-                                    field = CustomField(cevent.field),
+                                    field = NoteField.CustomField(cevent.field),
                                     isFocused = cevent.isFocused
                                 )
 

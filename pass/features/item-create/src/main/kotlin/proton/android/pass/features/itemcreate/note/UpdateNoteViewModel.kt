@@ -53,6 +53,8 @@ import proton.android.pass.domain.areItemContentsEqual
 import proton.android.pass.domain.toItemContents
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.ItemUpdate
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.AttachmentsInitError
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.InitError
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.ItemLinkAttachmentsError
@@ -81,6 +83,8 @@ class UpdateNoteViewModel @Inject constructor(
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
     private val renameAttachments: RenameAttachments,
     private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
+    customFieldHandler: CustomFieldHandler,
+    customFieldDraftRepository: CustomFieldDraftRepository,
     userPreferencesRepository: UserPreferencesRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -88,6 +92,8 @@ class UpdateNoteViewModel @Inject constructor(
     userPreferencesRepository = userPreferencesRepository,
     snackbarDispatcher = snackbarDispatcher,
     attachmentsHandler = attachmentsHandler,
+    customFieldHandler = customFieldHandler,
+    customFieldDraftRepository = customFieldDraftRepository,
     featureFlagsRepository = featureFlagsRepository,
     savedStateHandleProvider = savedStateHandleProvider
 ) {

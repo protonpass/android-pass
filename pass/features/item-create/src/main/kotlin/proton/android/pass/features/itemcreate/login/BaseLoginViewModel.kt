@@ -742,10 +742,7 @@ abstract class BaseLoginViewModel(
         when (field) {
             LoginField.Password -> updatePasswordOnFocusChange(isFocused)
             LoginField.PrimaryTotp -> updatePrimaryTotpOnFocusChange()
-            is LoginField.CustomField -> when (field.field.type) {
-                CustomFieldType.Hidden -> updateCustomFieldOnFocusChange(field.field, isFocused)
-                else -> {}
-            }
+            is LoginField.CustomField -> updateCustomFieldOnFocusChange(field.field, isFocused)
             LoginField.Email,
             LoginField.Username,
             LoginField.Title -> {

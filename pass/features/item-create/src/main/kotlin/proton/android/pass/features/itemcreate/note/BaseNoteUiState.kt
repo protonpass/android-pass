@@ -24,10 +24,11 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.ShareUiState
+import proton.android.pass.features.itemcreate.common.ValidationError
 
 @Immutable
 data class BaseNoteUiState(
-    val errorList: Set<NoteItemValidationErrors>,
+    val errorList: Set<ValidationError>,
     val isLoadingState: IsLoadingState,
     val itemSavedState: ItemSavedState,
     val hasUserEditedContent: Boolean,

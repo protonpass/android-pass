@@ -193,7 +193,7 @@ fun CreateNoteScreen(
                             }
 
                             is CustomFieldEvent.OnValueChange -> {
-                                viewModel.onCustomFieldChange(cevent.field.index, cevent.value)
+                                viewModel.onCustomFieldChange(cevent.field, cevent.value)
                             }
 
                             CustomFieldEvent.Upgrade ->

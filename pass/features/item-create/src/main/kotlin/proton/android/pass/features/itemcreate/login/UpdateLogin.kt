@@ -165,7 +165,7 @@ internal fun UpdateLogin(
                             }
 
                             is CustomFieldEvent.OnValueChange -> {
-                                viewModel.onCustomFieldChange(event.field.index, event.value)
+                                viewModel.onCustomFieldChange(event.field, event.value)
                             }
 
                             CustomFieldEvent.Upgrade -> {

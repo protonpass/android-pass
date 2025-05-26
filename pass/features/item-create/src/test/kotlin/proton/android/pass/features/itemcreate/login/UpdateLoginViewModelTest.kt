@@ -32,6 +32,7 @@ import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHa
 import proton.android.pass.commonrust.fakes.TestEmailValidator
 import proton.android.pass.commonrust.fakes.passwords.strengths.TestPasswordStrengthCalculator
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
@@ -53,6 +54,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.common.UIHiddenState
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
@@ -75,6 +77,7 @@ class UpdateLoginViewModelTest {
     private lateinit var totpManager: TestTotpManager
     private lateinit var updateItem: TestUpdateItem
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
+    private lateinit var encryptionContextProvider: EncryptionContextProvider
 
     @Before
     fun setup() {
@@ -82,6 +85,7 @@ class UpdateLoginViewModelTest {
         totpManager = TestTotpManager()
         updateItem = TestUpdateItem()
         snackbarDispatcher = TestSnackbarDispatcher()
+        encryptionContextProvider = TestEncryptionContextProvider()
 
         instance = UpdateLoginViewModel(
             getItemById = getItemById,
@@ -95,7 +99,7 @@ class UpdateLoginViewModelTest {
                 get()[CommonOptionalNavArgId.ShareId.key] = SHARE_ID
                 get()[CommonNavArgId.ItemId.key] = ITEM_ID
             },
-            encryptionContextProvider = TestEncryptionContextProvider(),
+            encryptionContextProvider = encryptionContextProvider,
             passwordStrengthCalculator = TestPasswordStrengthCalculator(),
             observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) },
             telemetryManager = TestTelemetryManager(),
@@ -113,7 +117,8 @@ class UpdateLoginViewModelTest {
             linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
             renameAttachments = FakeRenameAttachments(),
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
-            pendingAttachmentLinkRepository = FakePendingAttachmentLinkRepository()
+            pendingAttachmentLinkRepository = FakePendingAttachmentLinkRepository(),
+            customFieldHandler = CustomFieldHandlerImpl(encryptionContextProvider)
         )
     }
 

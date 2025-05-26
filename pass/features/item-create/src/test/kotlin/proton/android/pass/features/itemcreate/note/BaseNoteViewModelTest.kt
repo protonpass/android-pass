@@ -26,6 +26,9 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
 import proton.android.pass.features.itemcreate.note.BaseNoteUiState.Companion.Initial
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
@@ -52,7 +55,9 @@ internal class BaseNoteViewModelTest {
             featureFlagsRepository = featureFlagsPreferenceRepository,
             attachmentsHandler = FakeAttachmentHandler(),
             userPreferencesRepository = TestPreferenceRepository(),
-            savedStateHandleProvider = savedStateHandleProvider
+            savedStateHandleProvider = savedStateHandleProvider,
+            customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
+            customFieldHandler = CustomFieldHandlerImpl(TestEncryptionContextProvider())
         ) {}
     }
 

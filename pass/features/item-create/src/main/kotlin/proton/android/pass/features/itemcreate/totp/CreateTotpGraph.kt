@@ -20,6 +20,7 @@ package proton.android.pass.features.itemcreate.totp
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
 import proton.android.pass.features.itemcreate.totp.camera.CameraPreviewTotp
@@ -57,7 +58,7 @@ data class PhotoPickerTotpNavItem(val prefix: CustomFieldPrefix) : NavItem(
         TotpOptionalNavArgId.TotpIndexField
     )
 ) {
-    fun createNavRoute(sectionIndex: Option<Int>, index: Option<Int>) = buildString {
+    fun createNavRoute(sectionIndex: Option<Int> = None, index: Option<Int>) = buildString {
         append(baseRoute)
         val path = mapOf(
             TotpOptionalNavArgId.TotpSectionIndexField.key to (sectionIndex.value() ?: -1),

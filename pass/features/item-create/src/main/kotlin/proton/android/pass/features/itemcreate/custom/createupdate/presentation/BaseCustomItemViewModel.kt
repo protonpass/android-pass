@@ -312,11 +312,12 @@ abstract class BaseCustomItemViewModel(
         when (sectionIndex) {
             is Some -> {
                 val section = itemFormState.sectionList[sectionIndex.value]
-                val updatedSection = section.copy(
-                    customFields = section.customFields.toMutableList().apply {
-                        set(index, section.customFields[index].updateLabel(newLabel))
-                    }
+                val updatedCustomFields = customFieldHandler.onCustomFieldRenamed(
+                    customFieldList = section.customFields,
+                    index = index,
+                    newLabel = newLabel
                 )
+                val updatedSection = section.copy(customFields = updatedCustomFields)
                 itemFormState = itemFormState.copy(
                     sectionList = itemFormState.sectionList.toMutableList().apply {
                         set(sectionIndex.value, updatedSection)
@@ -325,11 +326,12 @@ abstract class BaseCustomItemViewModel(
             }
 
             is None -> {
-                itemFormState = itemFormState.copy(
-                    customFieldList = itemFormState.customFieldList.toMutableList().apply {
-                        set(index, itemFormState.customFieldList[index].updateLabel(newLabel))
-                    }
+                val updated = customFieldHandler.onCustomFieldRenamed(
+                    customFieldList = itemFormState.customFieldList,
+                    index = index,
+                    newLabel = newLabel
                 )
+                itemFormState = itemFormState.copy(customFieldList = updated)
             }
         }
     }

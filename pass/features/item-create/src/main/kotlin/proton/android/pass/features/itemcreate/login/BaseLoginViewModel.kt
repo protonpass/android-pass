@@ -717,64 +717,12 @@ abstract class BaseLoginViewModel(
 
     private fun onFieldRenamed(event: DraftFormFieldEvent.FieldRenamed) {
         val (_, index, newLabel) = event
-        val customFields = loginItemFormState.customFields.toMutableList()
-        val updated = when (val field = customFields[index]) {
-            is UICustomFieldContent.Hidden -> {
-                UICustomFieldContent.Hidden(
-                    label = newLabel,
-                    value = field.value
-                )
-            }
-
-            is UICustomFieldContent.Text -> UICustomFieldContent.Text(
-                label = newLabel,
-                value = field.value
-            )
-
-            is UICustomFieldContent.Totp -> UICustomFieldContent.Totp(
-                label = newLabel,
-                value = field.value,
-                id = field.id
-            )
-
-            is UICustomFieldContent.Date -> throw IllegalStateException("Date field not supported")
-        }
-        customFields[index] = updated
-        loginItemFormMutableState =
-            loginItemFormState.copy(customFields = customFields.toPersistentList())
-
-        when (loginItemFormState.customFields.getOrNull(index)) {
-            is UICustomFieldContent.Hidden -> focusedFieldFlow.update {
-                LoginField.CustomField(
-                    field = CustomFieldIdentifier(
-                        index = index,
-                        type = CustomFieldType.Hidden
-                    )
-                ).some()
-            }
-
-            is UICustomFieldContent.Text -> focusedFieldFlow.update {
-                LoginField.CustomField(
-                    field = CustomFieldIdentifier(
-                        index = index,
-                        type = CustomFieldType.Text
-                    )
-                ).some()
-            }
-
-            is UICustomFieldContent.Totp -> focusedFieldFlow.update {
-                LoginField.CustomField(
-                    field = CustomFieldIdentifier(
-                        index = index,
-                        type = CustomFieldType.Totp
-                    )
-                ).some()
-            }
-
-            is UICustomFieldContent.Date -> throw IllegalStateException("Date field not supported")
-
-            null -> {}
-        }
+        val updated = customFieldHandler.onCustomFieldRenamed(
+            customFieldList = loginItemFormState.customFields,
+            index = index,
+            newLabel = newLabel
+        )
+        loginItemFormMutableState = loginItemFormState.copy(customFields = updated)
     }
 
     private fun onFieldAdded(event: DraftFormFieldEvent.FieldAdded) {

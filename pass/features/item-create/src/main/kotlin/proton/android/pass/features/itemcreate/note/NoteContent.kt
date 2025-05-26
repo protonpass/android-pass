@@ -32,9 +32,9 @@ import proton.android.pass.composecomponents.impl.buttons.Button
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.CreateUpdateTopBar
 import proton.android.pass.features.itemcreate.note.NoteContentUiEvent.OnAttachmentEvent
-import proton.android.pass.features.itemcreate.note.NoteItemValidationErrors.BlankTitle
 
 @ExperimentalComposeUiApi
 @Composable
@@ -100,7 +100,7 @@ internal fun NoteContent(
             isFileAttachmentsEnabled = uiState.isFileAttachmentsEnabled,
             isCustomItemEnabled = uiState.isCustomItemEnabled,
             displayFileAttachmentsOnboarding = uiState.displayFileAttachmentsOnboarding,
-            onTitleRequiredError = uiState.errorList.contains(BlankTitle),
+            onTitleRequiredError = uiState.errorList.contains(CommonFieldValidationError.BlankTitle),
             enabled = uiState.isLoadingState != IsLoadingState.Loading,
             onEvent = onEvent
         )

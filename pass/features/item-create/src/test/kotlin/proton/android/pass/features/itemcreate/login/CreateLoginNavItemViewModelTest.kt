@@ -35,6 +35,7 @@ import proton.android.pass.commonrust.fakes.passwords.strengths.TestPasswordStre
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.errors.EmailNotValidatedError
@@ -66,6 +67,7 @@ import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.common.LoginItemValidationError
 import proton.android.pass.features.itemcreate.common.ShareUiState
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.passkeys.fakes.TestGeneratePasskey
@@ -94,6 +96,7 @@ internal class CreateLoginNavItemViewModelTest {
     private lateinit var telemetryManager: TestTelemetryManager
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
+    private lateinit var encryptionContextProvider: EncryptionContextProvider
 
     @Before
     fun setUp() {
@@ -106,6 +109,7 @@ internal class CreateLoginNavItemViewModelTest {
         telemetryManager = TestTelemetryManager()
         snackbarDispatcher = TestSnackbarDispatcher()
         observeUpgradeInfo = TestObserveUpgradeInfo()
+        encryptionContextProvider = TestEncryptionContextProvider()
         instance = CreateLoginViewModel(
             accountManager = accountManager,
             createItem = createItem,
@@ -113,7 +117,7 @@ internal class CreateLoginNavItemViewModelTest {
             totpManager = totpManager,
             snackbarDispatcher = snackbarDispatcher,
             savedStateHandleProvider = TestSavedStateHandleProvider(),
-            encryptionContextProvider = TestEncryptionContextProvider(),
+            encryptionContextProvider = encryptionContextProvider,
             passwordStrengthCalculator = TestPasswordStrengthCalculator(),
             createItemAndAlias = createItemAndAlias,
             observeVaults = observeVaults,
@@ -132,7 +136,8 @@ internal class CreateLoginNavItemViewModelTest {
             userPreferencesRepository = TestPreferenceRepository(),
             linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
             attachmentsHandler = FakeAttachmentHandler(),
-            customFieldDraftRepository = CustomFieldDraftRepositoryImpl()
+            customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
+            customFieldHandler = CustomFieldHandlerImpl(encryptionContextProvider)
         )
     }
 

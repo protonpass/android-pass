@@ -26,6 +26,12 @@ import proton.android.pass.features.itemcreate.common.UIHiddenState
 import javax.inject.Inject
 
 interface CustomFieldHandler {
+    fun onCustomFieldValueChanged(
+        customFieldIdentifier: CustomFieldIdentifier,
+        customFieldList: List<UICustomFieldContent>,
+        value: String
+    ): List<UICustomFieldContent>
+
     fun onCustomFieldFocusedChanged(
         customFieldIdentifier: CustomFieldIdentifier,
         customFieldList: List<UICustomFieldContent>,
@@ -37,6 +43,42 @@ interface CustomFieldHandler {
 class CustomFieldHandlerImpl @Inject constructor(
     val encryptionContextProvider: EncryptionContextProvider
 ) : CustomFieldHandler {
+
+    override fun onCustomFieldValueChanged(
+        customFieldIdentifier: CustomFieldIdentifier,
+        customFieldList: List<UICustomFieldContent>,
+        value: String
+    ): List<UICustomFieldContent> {
+        if (customFieldIdentifier.index !in customFieldList.indices) return customFieldList
+        val updated = when (val field = customFieldList[customFieldIdentifier.index]) {
+            is UICustomFieldContent.Hidden -> {
+                UICustomFieldContent.Hidden(
+                    label = field.label,
+                    value = createHiddenState(value)
+                )
+            }
+
+            is UICustomFieldContent.Text -> UICustomFieldContent.Text(
+                label = field.label,
+                value = value
+            )
+
+            is UICustomFieldContent.Totp -> UICustomFieldContent.Totp(
+                label = field.label,
+                value = createHiddenState(value),
+                id = field.id
+            )
+
+
+            is UICustomFieldContent.Date -> UICustomFieldContent.Date(
+                label = field.label,
+                value = value.toLong()
+            )
+        }
+        return customFieldList.toMutableList().apply {
+            this[customFieldIdentifier.index] = updated
+        }
+    }
 
     override fun onCustomFieldFocusedChanged(
         customFieldIdentifier: CustomFieldIdentifier,
@@ -61,6 +103,16 @@ class CustomFieldHandlerImpl @Inject constructor(
                     value = UIHiddenState.Concealed(encrypted = field.value.encrypted)
                 )
             }
+        }
+    }
+
+    private fun createHiddenState(value: String): UIHiddenState = encryptionContextProvider.withEncryptionContext {
+        when {
+            value.isBlank() -> UIHiddenState.Empty(encrypt(""))
+            else -> UIHiddenState.Revealed(
+                encrypted = encrypt(value),
+                clearText = value
+            )
         }
     }
 }

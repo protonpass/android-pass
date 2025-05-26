@@ -223,7 +223,12 @@ abstract class BaseCustomItemViewModel(
         index: Int
     ) {
         onUserEditedContent()
-        updateContent(sectionIndex, index, secret)
+        val field = CustomFieldIdentifier(
+            sectionIndex = sectionIndex,
+            index = index,
+            type = CustomFieldType.Totp
+        )
+        updateContent(field, secret)
     }
 
     private fun onPasteTOTPSecret() {
@@ -238,11 +243,7 @@ abstract class BaseCustomItemViewModel(
                     withContext(appDispatchers.main) {
                         val focusedField = focusedFieldState.value.value() ?: return@withContext
                         if (focusedField.type == CustomFieldType.Totp) {
-                            updateContent(
-                                sectionIndex = focusedField.sectionIndex,
-                                index = focusedField.index,
-                                newValue = sanitisedContent
-                            )
+                            updateContent(focusedField, sanitisedContent)
                         }
                     }
                 }
@@ -478,79 +479,43 @@ abstract class BaseCustomItemViewModel(
 
     private fun onCustomFieldChange(field: CustomFieldIdentifier, value: String) {
         onUserEditedContent()
-        updateContent(field.sectionIndex, field.index, value)
+        updateContent(field, value)
     }
 
-    private fun updateContent(
-        sectionIndex: Option<Int>,
-        index: Int,
-        newValue: String
-    ) {
-        when (sectionIndex) {
+    private fun updateContent(field: CustomFieldIdentifier, newValue: String) {
+        when (field.sectionIndex) {
             None -> {
+                val updated = customFieldHandler.onCustomFieldValueChanged(
+                    customFieldIdentifier = field,
+                    customFieldList = itemFormState.customFieldList,
+                    value = newValue
+                )
                 itemFormState = itemFormState.copy(
-                    customFieldList = updateCustomField(
-                        fields = itemFormState.customFieldList,
-                        index = index,
-                        newValue = newValue
-                    )
+                    customFieldList = updated
                 )
             }
 
             is Some<Int> -> {
                 val section =
-                    itemFormState.sectionList[sectionIndex.value]
-                val updatedSection = section.copy(
-                    customFields = updateCustomField(
-                        fields = section.customFields,
-                        index = index,
-                        newValue = newValue
-                    )
+                    itemFormState.sectionList[field.sectionIndex.value]
+                val updated = customFieldHandler.onCustomFieldValueChanged(
+                    customFieldIdentifier = field,
+                    customFieldList = section.customFields,
+                    value = newValue
                 )
+                val updatedSection = section.copy(customFields = updated)
                 itemFormState = itemFormState.copy(
                     sectionList = itemFormState.sectionList
                         .toMutableList()
                         .apply {
                             set(
-                                index = sectionIndex.value,
+                                index = field.sectionIndex.value,
                                 element = updatedSection
                             )
                         }
                 )
             }
         }
-    }
-
-    private fun updateCustomField(
-        fields: List<UICustomFieldContent>,
-        index: Int,
-        newValue: String
-    ): List<UICustomFieldContent> {
-        if (index !in fields.indices) return fields
-        val updatedField = when (val currentField = fields[index]) {
-            is UICustomFieldContent.Hidden -> UICustomFieldContent.Hidden(
-                label = currentField.label,
-                value = createHiddenState(newValue)
-            )
-
-            is UICustomFieldContent.Text -> UICustomFieldContent.Text(
-                label = currentField.label,
-                value = newValue
-            )
-
-            is UICustomFieldContent.Totp -> UICustomFieldContent.Totp(
-                label = currentField.label,
-                value = createHiddenState(newValue),
-                id = currentField.id
-            )
-
-            is UICustomFieldContent.Date -> UICustomFieldContent.Date(
-                label = currentField.label,
-                value = newValue.toLong()
-            )
-        }
-
-        return fields.toMutableList().apply { set(index, updatedField) }
     }
 
     private fun toggleHiddenState(hiddenState: UIHiddenState, isFocused: Boolean): UIHiddenState =
@@ -574,16 +539,6 @@ abstract class BaseCustomItemViewModel(
                 }
             }
         }
-
-    private fun createHiddenState(value: String): UIHiddenState = encryptionContextProvider.withEncryptionContext {
-        when {
-            value.isBlank() -> UIHiddenState.Empty(encrypt(""))
-            else -> UIHiddenState.Revealed(
-                encrypted = encrypt(value),
-                clearText = value
-            )
-        }
-    }
 
     private fun openDraftAttachment(
         contextHolder: ClassHolder<Context>,

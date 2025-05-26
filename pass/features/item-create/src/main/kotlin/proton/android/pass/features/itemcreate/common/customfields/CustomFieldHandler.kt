@@ -27,7 +27,14 @@ import proton.android.pass.features.itemcreate.common.UIHiddenState
 import javax.inject.Inject
 
 interface CustomFieldHandler {
+
     fun onCustomFieldAdded(label: String, customFieldType: CustomFieldType): UICustomFieldContent
+
+    fun onCustomFieldRenamed(
+        customFieldList: List<UICustomFieldContent>,
+        index: Int,
+        newLabel: String
+    ): List<UICustomFieldContent>
 
     fun onCustomFieldValueChanged(
         customFieldIdentifier: CustomFieldIdentifier,
@@ -51,6 +58,14 @@ class CustomFieldHandlerImpl @Inject constructor(
         encryptionContextProvider.withEncryptionContext {
             createCustomField(customFieldType, label, this)
         }
+
+    override fun onCustomFieldRenamed(
+        customFieldList: List<UICustomFieldContent>,
+        index: Int,
+        newLabel: String
+    ): List<UICustomFieldContent> = customFieldList.toMutableList().apply {
+        set(index, this[index].updateLabel(newLabel))
+    }
 
     override fun onCustomFieldValueChanged(
         customFieldIdentifier: CustomFieldIdentifier,

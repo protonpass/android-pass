@@ -26,8 +26,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import kotlinx.collections.immutable.persistentSetOf
+import kotlinx.collections.immutable.toPersistentSet
 import proton.android.pass.common.api.None
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
@@ -37,7 +38,6 @@ import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
 import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
-import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.customfields.customFieldsList
 import proton.android.pass.features.itemcreate.note.NoteContentUiEvent.OnAttachmentEvent
 
@@ -45,12 +45,15 @@ import proton.android.pass.features.itemcreate.note.NoteContentUiEvent.OnAttachm
 internal fun CreateNoteItemForm(
     modifier: Modifier = Modifier,
     noteItemFormState: NoteItemFormState,
+    canUseCustomFields: Boolean,
+    focusedField: NoteField?,
     isFileAttachmentsEnabled: Boolean,
     isCustomItemEnabled: Boolean,
     displayFileAttachmentsOnboarding: Boolean,
     attachmentsState: AttachmentsState,
     enabled: Boolean,
     onTitleRequiredError: Boolean,
+    customFieldValidationErrors: List<CustomFieldValidationError>,
     onEvent: (NoteContentUiEvent) -> Unit
 ) {
     LazyColumn(
@@ -109,13 +112,13 @@ internal fun CreateNoteItemForm(
                 }
             }
             customFieldsList(
-                customFields = emptyList<UICustomFieldContent>(),
-                enabled = true,
-                errors = persistentSetOf<CustomFieldValidationError>(),
+                customFields = noteItemFormState.customFields,
+                enabled = enabled,
+                errors = customFieldValidationErrors.toPersistentSet(),
                 isVisible = true,
-                canCreateCustomFields = true,
+                canCreateCustomFields = canUseCustomFields,
                 sectionIndex = None,
-                focusedField = None,
+                focusedField = (focusedField as? NoteField.CustomField)?.field.toOption(),
                 itemCategory = ItemCategory.Note,
                 onEvent = { onEvent(NoteContentUiEvent.OnCustomFieldEvent(it)) }
             )

@@ -43,6 +43,7 @@ import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
@@ -53,7 +54,6 @@ import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
 import proton.android.pass.features.itemcreate.common.ValidationError
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
-import proton.android.pass.features.itemcreate.login.LoginField
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
 import proton.android.pass.preferences.FeatureFlag
@@ -68,6 +68,7 @@ abstract class BaseNoteViewModel(
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val customFieldHandler: CustomFieldHandler,
+    getUserPlan: GetUserPlan,
     customFieldDraftRepository: CustomFieldDraftRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
@@ -112,11 +113,11 @@ abstract class BaseNoteViewModel(
         MutableStateFlow(ItemSavedState.Unknown)
     protected val noteItemValidationErrorsState: MutableStateFlow<Set<ValidationError>> =
         MutableStateFlow(emptySet())
-    private val focusedFieldState: MutableStateFlow<Option<CustomFieldIdentifier>> =
-        MutableStateFlow<Option<CustomFieldIdentifier>>(None)
+    private val focusedFieldState: MutableStateFlow<Option<NoteField>> =
+        MutableStateFlow<Option<NoteField>>(None)
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    val baseNoteUiState: StateFlow<BaseNoteUiState> = combineN(
+    internal val baseNoteUiState: StateFlow<BaseNoteUiState> = combineN(
         noteItemValidationErrorsState,
         isLoadingState,
         isItemSavedState,
@@ -124,9 +125,12 @@ abstract class BaseNoteViewModel(
         attachmentsHandler.attachmentState,
         featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
         featureFlagsRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1),
-        userPreferencesRepository.observeDisplayFileAttachmentsOnboarding()
+        userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
+        getUserPlan(),
+        focusedFieldState
     ) { noteItemValidationErrors, isLoading, isItemSaved, hasUserEditedContent, attachmentsState,
-        isFileAttachmentsEnabled, isCustomItemEnabled, displayFileAttachmentsOnboarding ->
+        isFileAttachmentsEnabled, isCustomItemEnabled, displayFileAttachmentsOnboarding,
+        userPlan, focusedField ->
         BaseNoteUiState(
             errorList = noteItemValidationErrors,
             isLoadingState = isLoading,
@@ -135,7 +139,9 @@ abstract class BaseNoteViewModel(
             attachmentsState = attachmentsState,
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
             isFileAttachmentsEnabled = isFileAttachmentsEnabled,
-            isCustomItemEnabled = isCustomItemEnabled
+            isCustomItemEnabled = isCustomItemEnabled,
+            canUseCustomFields = userPlan.hasPlanWithAccess,
+            focusedField = focusedField.value()
         )
     }
         .stateIn(
@@ -223,7 +229,7 @@ abstract class BaseNoteViewModel(
             index = noteItemFormState.customFields.lastIndex,
             type = type
         )
-        focusedFieldState.update { identifier.some() }
+        focusedFieldState.update { NoteField.CustomField(identifier).some() }
     }
 
     internal fun onCustomFieldChange(id: CustomFieldIdentifier, value: String) {
@@ -241,7 +247,7 @@ abstract class BaseNoteViewModel(
         )
     }
 
-    internal fun onFocusChange(field: LoginField.CustomField, isFocused: Boolean) {
+    internal fun onFocusChange(field: NoteField.CustomField, isFocused: Boolean) {
         val customFields = customFieldHandler.onCustomFieldFocusedChanged(
             customFieldIdentifier = field.field,
             customFieldList = noteItemFormState.customFields,

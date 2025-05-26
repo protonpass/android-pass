@@ -34,6 +34,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.CreateUpdateTopBar
+import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
 import proton.android.pass.features.itemcreate.note.NoteContentUiEvent.OnAttachmentEvent
 
 @ExperimentalComposeUiApi
@@ -96,10 +97,13 @@ internal fun NoteContent(
         CreateNoteItemForm(
             modifier = Modifier.padding(padding),
             noteItemFormState = noteItemFormState,
+            focusedField = uiState.focusedField,
+            canUseCustomFields = uiState.canUseCustomFields,
             attachmentsState = uiState.attachmentsState,
             isFileAttachmentsEnabled = uiState.isFileAttachmentsEnabled,
             isCustomItemEnabled = uiState.isCustomItemEnabled,
             displayFileAttachmentsOnboarding = uiState.displayFileAttachmentsOnboarding,
+            customFieldValidationErrors = uiState.errorList.filterIsInstance<CustomFieldValidationError>(),
             onTitleRequiredError = uiState.errorList.contains(CommonFieldValidationError.BlankTitle),
             enabled = uiState.isLoadingState != IsLoadingState.Loading,
             onEvent = onEvent

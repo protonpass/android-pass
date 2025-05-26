@@ -26,15 +26,23 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.features.itemcreate.bottomsheets.customfield.customFieldBottomSheetGraph
+import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
 import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldNavigation
+import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameNavigation
+import proton.android.pass.features.itemcreate.dialogs.customfield.customFieldNameDialogGraph
+import proton.android.pass.features.itemcreate.note.CreateNoteNavigation.NoteCustomFieldNavigation
+import proton.android.pass.features.itemcreate.totp.INDEX_NAV_PARAMETER_KEY
+import proton.android.pass.features.itemcreate.totp.TOTP_NAV_PARAMETER_KEY
+import proton.android.pass.features.itemcreate.totp.createTotpGraph
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.toPath
 import java.net.URI
 
-object CreateNote : NavItem(
+object CreateNoteNavItem : NavItem(
     baseRoute = "note/create",
     optionalArgIds = listOf(CommonOptionalNavArgId.ShareId)
 ) {
@@ -50,7 +58,7 @@ object CreateNote : NavItem(
 }
 
 fun NavGraphBuilder.createNoteGraph(onNavigate: (CreateNoteNavigation) -> Unit) {
-    composable(CreateNote) { navBackStack ->
+    composable(CreateNoteNavItem) { navBackStack ->
         val selectVault by navBackStack.savedStateHandle
             .getStateFlow<String?>(KEY_VAULT_SELECTED, null)
             .collectAsStateWithLifecycle()
@@ -60,6 +68,45 @@ fun NavGraphBuilder.createNoteGraph(onNavigate: (CreateNoteNavigation) -> Unit) 
             onNavigate = onNavigate
         )
     }
+    customFieldBottomSheetGraph(
+        prefix = CustomFieldPrefix.CreateNote,
+        onAddCustomFieldNavigate = { type, _ ->
+            val event =
+                NoteCustomFieldNavigation(CustomFieldNavigation.CustomFieldTypeSelected(type))
+            onNavigate(event)
+        },
+        onEditCustomFieldNavigate = { title: String, index: Int, _: Option<Int> ->
+            val event =
+                NoteCustomFieldNavigation(CustomFieldNavigation.EditCustomField(title, index))
+            onNavigate(event)
+        },
+        onRemoveCustomFieldNavigate = {
+            val event = NoteCustomFieldNavigation(CustomFieldNavigation.RemovedCustomField)
+            onNavigate(event)
+        },
+        onDismissBottomsheet = { onNavigate(CreateNoteNavigation.DismissBottomsheet) }
+    )
+    customFieldNameDialogGraph(CustomFieldPrefix.CreateNote) {
+        when (it) {
+            is CustomFieldNameNavigation.CloseScreen -> {
+                onNavigate(CreateNoteNavigation.CloseScreen)
+            }
+        }
+    }
+    createTotpGraph(
+        prefix = CustomFieldPrefix.CreateNote,
+        onSuccess = { totp, _, index ->
+            val values = buildMap<String, Any> {
+                put(TOTP_NAV_PARAMETER_KEY, totp)
+                index?.let { put(INDEX_NAV_PARAMETER_KEY, it) }
+            }
+            onNavigate(CreateNoteNavigation.TotpSuccess(values))
+        },
+        onCloseTotp = { onNavigate(CreateNoteNavigation.TotpCancel) },
+        onOpenImagePicker = { _, index ->
+            onNavigate(CreateNoteNavigation.OpenImagePicker(index.toOption()))
+        }
+    )
 }
 
 sealed interface CreateNoteNavigation {
@@ -67,6 +114,7 @@ sealed interface CreateNoteNavigation {
     data object NoteCreated : CreateNoteNavigation
     data object AddAttachment : CreateNoteNavigation
     data object Upgrade : CreateNoteNavigation
+    data object DismissBottomsheet : CreateNoteNavigation
 
     @JvmInline
     value class DeleteAllAttachments(val attachmentIds: Set<AttachmentId>) : CreateNoteNavigation
@@ -79,4 +127,11 @@ sealed interface CreateNoteNavigation {
 
     @JvmInline
     value class NoteCustomFieldNavigation(val event: CustomFieldNavigation) : CreateNoteNavigation
+
+    @JvmInline
+    value class TotpSuccess(val results: Map<String, Any>) : CreateNoteNavigation
+    data object TotpCancel : CreateNoteNavigation
+
+    @JvmInline
+    value class OpenImagePicker(val index: Option<Int>) : CreateNoteNavigation
 }

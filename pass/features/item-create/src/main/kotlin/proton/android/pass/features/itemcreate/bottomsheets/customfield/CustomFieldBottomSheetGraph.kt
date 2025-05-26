@@ -21,6 +21,7 @@ package proton.android.pass.features.itemcreate.bottomsheets.customfield
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import me.proton.core.util.kotlin.takeIfNotBlank
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.common.api.getOrElse
@@ -48,7 +49,7 @@ class AddCustomFieldBottomSheetNavItem(val prefix: CustomFieldPrefix) : NavItem(
     navArgIds = listOf(CustomSectionIndexNavArgId),
     navItemType = NavItemType.Bottomsheet
 ) {
-    fun buildRoute(sectionIndex: Option<Int>) = buildString {
+    fun buildRoute(sectionIndex: Option<Int> = None) = buildString {
         append(baseRoute)
         append(SpecialCharacters.SLASH)
         append(sectionIndex.getOrElse { -1 })
@@ -71,7 +72,7 @@ class CustomFieldOptionsBottomSheetNavItem(val prefix: CustomFieldPrefix) : NavI
 ) {
     fun buildRoute(
         index: Int,
-        sectionIndex: Option<Int>,
+        sectionIndex: Option<Int> = None,
         currentTitle: String
     ) = buildString {
         append(baseRoute)

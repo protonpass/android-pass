@@ -19,16 +19,26 @@
 package proton.android.pass.features.itemcreate.note
 
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.features.itemcreate.bottomsheets.customfield.customFieldBottomSheetGraph
+import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldNavigation
+import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameNavigation
+import proton.android.pass.features.itemcreate.dialogs.customfield.customFieldNameDialogGraph
+import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.NoteCustomFieldNavigation
+import proton.android.pass.features.itemcreate.totp.INDEX_NAV_PARAMETER_KEY
+import proton.android.pass.features.itemcreate.totp.TOTP_NAV_PARAMETER_KEY
+import proton.android.pass.features.itemcreate.totp.createTotpGraph
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 import java.net.URI
 
-object EditNote : NavItem(
+object UpdateNoteNavItem : NavItem(
     baseRoute = "note/edit",
     navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)
 ) {
@@ -36,9 +46,48 @@ object EditNote : NavItem(
 }
 
 fun NavGraphBuilder.updateNoteGraph(onNavigate: (UpdateNoteNavigation) -> Unit) {
-    composable(EditNote) {
+    composable(UpdateNoteNavItem) {
         UpdateNote(onNavigate = onNavigate)
     }
+    customFieldBottomSheetGraph(
+        prefix = CustomFieldPrefix.UpdateNote,
+        onAddCustomFieldNavigate = { type, _ ->
+            val event =
+                NoteCustomFieldNavigation(CustomFieldNavigation.CustomFieldTypeSelected(type))
+            onNavigate(event)
+        },
+        onEditCustomFieldNavigate = { title: String, index: Int, _: Option<Int> ->
+            val event =
+                NoteCustomFieldNavigation(CustomFieldNavigation.EditCustomField(title, index))
+            onNavigate(event)
+        },
+        onRemoveCustomFieldNavigate = {
+            val event = NoteCustomFieldNavigation(CustomFieldNavigation.RemovedCustomField)
+            onNavigate(event)
+        },
+        onDismissBottomsheet = { onNavigate(UpdateNoteNavigation.DismissBottomsheet) }
+    )
+    customFieldNameDialogGraph(CustomFieldPrefix.UpdateNote) {
+        when (it) {
+            is CustomFieldNameNavigation.CloseScreen -> {
+                onNavigate(UpdateNoteNavigation.CloseScreen)
+            }
+        }
+    }
+    createTotpGraph(
+        prefix = CustomFieldPrefix.UpdateNote,
+        onSuccess = { totp, _, index ->
+            val values = buildMap<String, Any> {
+                put(TOTP_NAV_PARAMETER_KEY, totp)
+                index?.let { put(INDEX_NAV_PARAMETER_KEY, it) }
+            }
+            onNavigate(UpdateNoteNavigation.TotpSuccess(values))
+        },
+        onCloseTotp = { onNavigate(UpdateNoteNavigation.TotpCancel) },
+        onOpenImagePicker = { _, index ->
+            onNavigate(UpdateNoteNavigation.OpenImagePicker(index.toOption()))
+        }
+    )
 }
 
 sealed interface UpdateNoteNavigation {
@@ -47,6 +96,7 @@ sealed interface UpdateNoteNavigation {
     data object AddAttachment : UpdateNoteNavigation
     data object UpsellAttachments : UpdateNoteNavigation
     data object Upgrade : UpdateNoteNavigation
+    data object DismissBottomsheet : UpdateNoteNavigation
 
     @JvmInline
     value class DeleteAllAttachments(val attachmentIds: Set<AttachmentId>) : UpdateNoteNavigation
@@ -62,4 +112,11 @@ sealed interface UpdateNoteNavigation {
 
     @JvmInline
     value class NoteCustomFieldNavigation(val event: CustomFieldNavigation) : UpdateNoteNavigation
+
+    @JvmInline
+    value class TotpSuccess(val results: Map<String, Any>) : UpdateNoteNavigation
+    data object TotpCancel : UpdateNoteNavigation
+
+    @JvmInline
+    value class OpenImagePicker(val index: Option<Int>) : UpdateNoteNavigation
 }

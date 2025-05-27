@@ -20,11 +20,13 @@ package proton.android.pass.features.itemcreate.bottomsheets.customfield
 
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -47,11 +49,13 @@ fun AddCustomFieldBottomSheet(
     viewModel: AddCustomFieldViewModel = hiltViewModel(),
     onNavigate: (AddCustomFieldNavigation, sectionIndex: Option<Int>) -> Unit
 ) {
+    val isCustomItemEnabled by viewModel.isCustomItemEnabled.collectAsStateWithLifecycle()
     AddCustomFieldBottomContent(
         modifier = modifier,
         onNavigate = onNavigate,
         sectionIndex = viewModel.sectionIndex,
-        prefix = prefix
+        prefix = prefix,
+        isCustomItemEnabled = isCustomItemEnabled
     )
 }
 
@@ -60,15 +64,18 @@ fun AddCustomFieldBottomContent(
     modifier: Modifier = Modifier,
     onNavigate: (AddCustomFieldNavigation, sectionIndex: Option<Int>) -> Unit,
     sectionIndex: Option<Int>,
-    prefix: CustomFieldPrefix
+    prefix: CustomFieldPrefix,
+    isCustomItemEnabled: Boolean
 ) {
     val list = mutableListOf<BottomSheetItem>()
     list.add(textField { onNavigate(AddCustomFieldNavigation.AddText, sectionIndex) })
-    if (prefix != CustomFieldPrefix.CreateIdentity && prefix != CustomFieldPrefix.UpdateIdentity) {
+
+    val isNotIdentity = prefix != CustomFieldPrefix.CreateIdentity && prefix != CustomFieldPrefix.UpdateIdentity
+    if (isNotIdentity || isCustomItemEnabled) {
         list.add(totpField { onNavigate(AddCustomFieldNavigation.AddTotp, sectionIndex) })
     }
     list.add(hiddenField { onNavigate(AddCustomFieldNavigation.AddHidden, sectionIndex) })
-    if (prefix == CustomFieldPrefix.CreateCustomItem || prefix == CustomFieldPrefix.UpdateCustomItem) {
+    if (isCustomItemEnabled) {
         list.add(dateField { onNavigate(AddCustomFieldNavigation.AddDate, sectionIndex) })
     }
     BottomSheetItemList(
@@ -135,9 +142,10 @@ fun AddCustomFieldBottomContentPreview(@PreviewParameter(ThemePreviewProvider::c
     PassTheme(isDark = isDark) {
         Surface {
             AddCustomFieldBottomContent(
-                prefix = CustomFieldPrefix.CreateLogin,
+                onNavigate = { _, _ -> },
                 sectionIndex = None,
-                onNavigate = { _, _ -> }
+                prefix = CustomFieldPrefix.CreateLogin,
+                isCustomItemEnabled = true
             )
         }
     }

@@ -1089,6 +1089,11 @@ fun NavGraphBuilder.appGraph(
                 CreateNoteNavigation.TotpCancel -> appNavigator.navigateBack()
                 is CreateNoteNavigation.TotpSuccess ->
                     appNavigator.navigateBackWithResult(it.results)
+
+                is CreateNoteNavigation.ScanTotp -> appNavigator.navigate(
+                    destination = CameraTotpNavItem(prefix),
+                    route = CameraTotpNavItem(prefix).createNavRoute(None, it.index)
+                )
             }
         }
     )
@@ -1178,6 +1183,11 @@ fun NavGraphBuilder.appGraph(
                 UpdateNoteNavigation.TotpCancel -> appNavigator.navigateBack()
                 is UpdateNoteNavigation.TotpSuccess ->
                     appNavigator.navigateBackWithResult(it.results)
+
+                is UpdateNoteNavigation.ScanTotp -> appNavigator.navigate(
+                    destination = CameraTotpNavItem(prefix),
+                    route = CameraTotpNavItem(prefix).createNavRoute(None, it.index)
+                )
             }
         }
     )

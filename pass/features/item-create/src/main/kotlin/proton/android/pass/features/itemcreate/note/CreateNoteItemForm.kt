@@ -18,16 +18,24 @@
 
 package proton.android.pass.features.itemcreate.note
 
+import android.content.pm.PackageManager
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toPersistentSet
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.toOption
@@ -38,9 +46,12 @@ import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
 import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
+import proton.android.pass.features.itemcreate.common.StickyTotpOptions
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldStickyFormOptionsContentType
 import proton.android.pass.features.itemcreate.common.customfields.customFieldsList
 import proton.android.pass.features.itemcreate.note.NoteContentUiEvent.OnAttachmentEvent
 
@@ -59,108 +70,158 @@ internal fun CreateNoteItemForm(
     customFieldValidationErrors: List<CustomFieldValidationError>,
     onEvent: (NoteContentUiEvent) -> Unit
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(Spacing.medium),
-        verticalArrangement = Arrangement.spacedBy(Spacing.small)
-    ) {
-
-        AnimatedVisibility(isFileAttachmentsEnabled && displayFileAttachmentsOnboarding) {
-            AttachmentBanner(Modifier.padding(bottom = Spacing.mediumSmall)) {
-                onEvent(NoteContentUiEvent.DismissAttachmentBanner)
+    Box(modifier = modifier) {
+        val currentStickyFormOption = remember(focusedField) {
+            when (focusedField) {
+                is NoteField.CustomField -> when (focusedField.field.type) {
+                    CustomFieldType.Totp -> CustomFieldStickyFormOptionsContentType.AddTotp
+                    else -> CustomFieldStickyFormOptionsContentType.NoOption
+                }
+                else -> CustomFieldStickyFormOptionsContentType.NoOption
             }
         }
 
-        if (isCustomItemEnabled) {
-            LazyColumn(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(Spacing.small)
-            ) {
-                item {
-                    TitleSection(
-                        modifier = Modifier
-                            .roundedContainerNorm()
-                            .padding(
-                                start = Spacing.medium,
-                                top = Spacing.medium,
-                                end = Spacing.extraSmall,
-                                bottom = Spacing.medium
-                            ),
+        val isCurrentStickyVisible = currentStickyFormOption != CustomFieldStickyFormOptionsContentType.NoOption
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = Spacing.medium)
+                .padding(horizontal = Spacing.medium),
+            verticalArrangement = Arrangement.spacedBy(Spacing.small)
+        ) {
+
+            AnimatedVisibility(isFileAttachmentsEnabled && displayFileAttachmentsOnboarding) {
+                AttachmentBanner(Modifier.padding(bottom = Spacing.mediumSmall)) {
+                    onEvent(NoteContentUiEvent.DismissAttachmentBanner)
+                }
+            }
+
+            if (isCustomItemEnabled) {
+                LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                    item {
+                        TitleSection(
+                            modifier = Modifier
+                                .padding(bottom = Spacing.small)
+                                .roundedContainerNorm()
+                                .padding(
+                                    start = Spacing.medium,
+                                    top = Spacing.medium,
+                                    end = Spacing.extraSmall,
+                                    bottom = Spacing.medium
+                                ),
+                            value = noteItemFormState.title,
+                            requestFocus = true,
+                            onTitleRequiredError = onTitleRequiredError,
+                            enabled = enabled,
+                            isRounded = true,
+                            onChange = { onEvent(NoteContentUiEvent.OnTitleChange(it)) }
+                        )
+                    }
+
+                    item {
+                        RoundedNoteSection(
+                            modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                            textFieldModifier = Modifier.fillMaxWidth(),
+                            enabled = enabled,
+                            value = noteItemFormState.note,
+                            onChange = { onEvent(NoteContentUiEvent.OnNoteChange(it)) }
+                        )
+                    }
+
+                    customFieldsList(
+                        modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                        customFields = noteItemFormState.customFields,
+                        enabled = enabled,
+                        errors = customFieldValidationErrors.toPersistentSet(),
+                        isVisible = true,
+                        canCreateCustomFields = canUseCustomFields,
+                        sectionIndex = None,
+                        focusedField = (focusedField as? NoteField.CustomField)?.field.toOption(),
+                        itemCategory = ItemCategory.Note,
+                        onEvent = { onEvent(NoteContentUiEvent.OnCustomFieldEvent(it)) }
+                    )
+
+                    if (isFileAttachmentsEnabled) {
+                        item {
+                            AttachmentSection(
+                                modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                                attachmentsState = attachmentsState,
+                                isDetail = false,
+                                itemColors = passItemColors(ItemCategory.Note),
+                                onEvent = { onEvent(OnAttachmentEvent(it)) }
+                            )
+                        }
+                    }
+                    if (isCurrentStickyVisible) {
+                        item { Spacer(modifier = Modifier.height(48.dp)) }
+                    }
+                }
+            } else {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(Spacing.small)
+                ) {
+                    NoteTitle(
+                        modifier = Modifier.padding(bottom = Spacing.small),
                         value = noteItemFormState.title,
                         requestFocus = true,
                         onTitleRequiredError = onTitleRequiredError,
                         enabled = enabled,
-                        isRounded = true,
-                        onChange = { onEvent(NoteContentUiEvent.OnTitleChange(it)) }
+                        onValueChanged = { onEvent(NoteContentUiEvent.OnTitleChange(it)) }
                     )
-                }
-
-                item {
-                    RoundedNoteSection(
-                        modifier = Modifier,
-                        textFieldModifier = Modifier.fillMaxWidth(),
+                    val shouldApplyNoteWeight =
+                        remember(isFileAttachmentsEnabled, attachmentsState) {
+                            !isFileAttachmentsEnabled || !attachmentsState.hasAnyAttachment
+                        }
+                    FullNoteSection(
+                        modifier = Modifier
+                            .applyIf(shouldApplyNoteWeight, ifTrue = { Modifier.weight(1f) }),
+                        textFieldModifier = Modifier
+                            .applyIf(shouldApplyNoteWeight, ifTrue = { Modifier.weight(1f) })
+                            .fillMaxWidth(),
                         enabled = enabled,
                         value = noteItemFormState.note,
                         onChange = { onEvent(NoteContentUiEvent.OnNoteChange(it)) }
                     )
-                }
 
-                customFieldsList(
-                    customFields = noteItemFormState.customFields,
-                    enabled = enabled,
-                    errors = customFieldValidationErrors.toPersistentSet(),
-                    isVisible = true,
-                    canCreateCustomFields = canUseCustomFields,
-                    sectionIndex = None,
-                    focusedField = (focusedField as? NoteField.CustomField)?.field.toOption(),
-                    itemCategory = ItemCategory.Note,
-                    onEvent = { onEvent(NoteContentUiEvent.OnCustomFieldEvent(it)) }
-                )
-
-                if (isFileAttachmentsEnabled) {
-                    item {
-                        AttachmentSection(
+                    if (isFileAttachmentsEnabled) {
+                        AttachmentList(
                             attachmentsState = attachmentsState,
-                            isDetail = false,
-                            itemColors = passItemColors(ItemCategory.Note),
-                            onEvent = { onEvent(OnAttachmentEvent(it)) }
+                            onEvent = onEvent
                         )
                     }
                 }
             }
-        } else {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(Spacing.small)
-            ) {
-                NoteTitle(
-                    modifier = Modifier.padding(bottom = Spacing.small),
-                    value = noteItemFormState.title,
-                    requestFocus = true,
-                    onTitleRequiredError = onTitleRequiredError,
-                    enabled = enabled,
-                    onValueChanged = { onEvent(NoteContentUiEvent.OnTitleChange(it)) }
-                )
-                val shouldApplyNoteWeight = remember(isFileAttachmentsEnabled, attachmentsState) {
-                    !isFileAttachmentsEnabled || !attachmentsState.hasAnyAttachment
-                }
-                FullNoteSection(
-                    modifier = Modifier
-                        .applyIf(shouldApplyNoteWeight, ifTrue = { Modifier.weight(1f) }),
-                    textFieldModifier = Modifier
-                        .applyIf(shouldApplyNoteWeight, ifTrue = { Modifier.weight(1f) })
-                        .fillMaxWidth(),
-                    enabled = enabled,
-                    value = noteItemFormState.note,
-                    onChange = { onEvent(NoteContentUiEvent.OnNoteChange(it)) }
-                )
+        }
 
-                if (isFileAttachmentsEnabled) {
-                    AttachmentList(
-                        attachmentsState = attachmentsState,
-                        onEvent = onEvent
+        AnimatedVisibility(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .imePadding(),
+            visible = isCurrentStickyVisible
+        ) {
+            when (currentStickyFormOption) {
+                CustomFieldStickyFormOptionsContentType.AddTotp -> {
+                    val context = LocalContext.current
+                    val hasCamera = remember(LocalContext.current) {
+                        context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)
+                    }
+
+                    StickyTotpOptions(
+                        hasCamera = hasCamera,
+                        passItemColors = passItemColors(ItemCategory.Note),
+                        onPasteCode = {
+                            onEvent(NoteContentUiEvent.PasteTotp)
+                        },
+                        onScanCode = {
+                            val focusedField = focusedField as? NoteField.CustomField
+                            onEvent(NoteContentUiEvent.OnScanTotp(focusedField?.field?.index.toOption()))
+                        }
                     )
                 }
+
+                CustomFieldStickyFormOptionsContentType.NoOption -> {}
             }
         }
     }

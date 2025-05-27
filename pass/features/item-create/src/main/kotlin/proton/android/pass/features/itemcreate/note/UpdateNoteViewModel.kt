@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -85,6 +86,7 @@ class UpdateNoteViewModel @Inject constructor(
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
     private val renameAttachments: RenameAttachments,
     private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
+    clipboardManager: ClipboardManager,
     getUserPlan: GetUserPlan,
     customFieldHandler: CustomFieldHandler,
     customFieldDraftRepository: CustomFieldDraftRepository,
@@ -92,6 +94,7 @@ class UpdateNoteViewModel @Inject constructor(
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseNoteViewModel(
+    clipboardManager = clipboardManager,
     getUserPlan = getUserPlan,
     userPreferencesRepository = userPreferencesRepository,
     snackbarDispatcher = snackbarDispatcher,

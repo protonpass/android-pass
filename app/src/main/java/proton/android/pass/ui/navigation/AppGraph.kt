@@ -90,13 +90,13 @@ import proton.android.pass.features.item.trash.trashdelete.navigation.ItemTrashD
 import proton.android.pass.features.item.trash.trashmenu.navigation.ItemTrashMenuNavItem
 import proton.android.pass.features.itemcreate.alias.AliasSelectMailboxBottomSheetNavItem
 import proton.android.pass.features.itemcreate.alias.AliasSelectSuffixBottomSheetNavItem
+import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation
 import proton.android.pass.features.itemcreate.alias.CreateAlias
 import proton.android.pass.features.itemcreate.alias.CreateAliasBottomSheet
 import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation
 import proton.android.pass.features.itemcreate.alias.EditAlias
 import proton.android.pass.features.itemcreate.alias.UpdateAliasNavigation
-import proton.android.pass.features.itemcreate.alias.createAliasGraph
-import proton.android.pass.features.itemcreate.alias.updateAliasGraph
+import proton.android.pass.features.itemcreate.alias.createUpdateCreditCardGraph
 import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomSheetMode
 import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomsheetNavItem
 import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomsheetNavigation
@@ -114,7 +114,7 @@ import proton.android.pass.features.itemcreate.creditcard.CreateCreditCard
 import proton.android.pass.features.itemcreate.creditcard.CreateCreditCardNavigation
 import proton.android.pass.features.itemcreate.creditcard.EditCreditCard
 import proton.android.pass.features.itemcreate.creditcard.UpdateCreditCardNavigation
-import proton.android.pass.features.itemcreate.creditcard.createUpdateCreditCardGraph
+import proton.android.pass.features.itemcreate.creditcard.createUpdateAliasGraph
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.BaseCustomItemNavigation
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.CreateCustomItemNavItem
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.CreateCustomItemNavigation
@@ -1182,99 +1182,69 @@ fun NavGraphBuilder.appGraph(
             }
         }
     )
-    createAliasGraph(
+    createUpdateAliasGraph(
         canUseAttachments = true,
         canAddMailbox = true,
         onNavigate = {
             when (it) {
-                CreateAliasNavigation.CloseScreen -> appNavigator.navigateBack()
-                CreateAliasNavigation.CloseBottomsheet -> dismissBottomSheet {}
-                is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}
-                is CreateAliasNavigation.Created -> appNavigator.navigateBack()
-                CreateAliasNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
-
-                is CreateAliasNavigation.SelectVault -> {
-                    appNavigator.navigate(
+                is BaseAliasNavigation.OnCreateAliasEvent -> when (val cevent = it.event) {
+                    is CreateAliasNavigation.Created -> appNavigator.navigateBack()
+                    is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}
+                    is CreateAliasNavigation.SelectVault -> appNavigator.navigate(
                         destination = SelectVaultBottomsheet,
-                        route = SelectVaultBottomsheet.createNavRoute(it.shareId)
+                        route = SelectVaultBottomsheet.createNavRoute(cevent.shareId)
                     )
                 }
-
-                CreateAliasNavigation.AddAttachment ->
-                    appNavigator.navigate(AddAttachmentNavItem)
-
-                is CreateAliasNavigation.OpenDraftAttachmentOptions ->
-                    appNavigator.navigate(
-                        destination = AttachmentOptionsOnEditNavItem,
-                        route = AttachmentOptionsOnEditNavItem.createNavRoute(it.uri)
-                    )
-
-                is CreateAliasNavigation.DeleteAllAttachments ->
-                    appNavigator.navigate(
-                        destination = DeleteAllAttachmentsDialogNavItem,
-                        route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
-                    )
-
-                CreateAliasNavigation.UpsellAttachments ->
-                    appNavigator.navigate(
-                        destination = UpsellNavItem,
-                        route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
-                    )
-
-                CreateAliasNavigation.SelectMailbox ->
-                    appNavigator.navigate(AliasSelectMailboxBottomSheetNavItem)
-
-                CreateAliasNavigation.SelectSuffix ->
-                    appNavigator.navigate(AliasSelectSuffixBottomSheetNavItem)
-
-                CreateAliasNavigation.AddMailbox -> dismissBottomSheet {
-                    appNavigator.navigate(SimpleLoginSyncMailboxCreateNavItem)
-                }
-            }
-        }
-    )
-    updateAliasGraph(
-        onNavigate = {
-            when (it) {
-                UpdateAliasNavigation.CloseScreen -> appNavigator.navigateBack()
-                is UpdateAliasNavigation.Updated -> appNavigator.navigate(
-                    destination = ViewItem,
-                    route = ViewItem.createNavRoute(it.shareId, it.itemId),
-                    backDestination = HomeNavItem
-                )
-
-                UpdateAliasNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
-                UpdateAliasNavigation.SelectMailbox ->
-                    appNavigator.navigate(AliasSelectMailboxBottomSheetNavItem)
-
-                UpdateAliasNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
-                is UpdateAliasNavigation.OpenAttachmentOptions ->
-                    appNavigator.navigate(
+                is BaseAliasNavigation.OnUpdateAliasEvent -> when (val cevent = it.event) {
+                    is UpdateAliasNavigation.OpenAttachmentOptions -> appNavigator.navigate(
                         destination = AttachmentOptionsOnEditNavItem,
                         route = AttachmentOptionsOnEditNavItem.createNavRoute(
-                            shareId = it.shareId,
-                            itemId = it.itemId,
-                            attachmentId = it.attachmentId
+                            shareId = cevent.shareId,
+                            itemId = cevent.itemId,
+                            attachmentId = cevent.attachmentId
                         )
                     )
+                    is UpdateAliasNavigation.Updated -> appNavigator.navigate(
+                        destination = ViewItem,
+                        route = ViewItem.createNavRoute(cevent.shareId, cevent.itemId),
+                        backDestination = HomeNavItem
+                    )
+                }
+                BaseAliasNavigation.CloseScreen -> appNavigator.navigateBack()
+                BaseAliasNavigation.CloseBottomsheet -> dismissBottomSheet {}
+                BaseAliasNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
 
-                is UpdateAliasNavigation.OpenDraftAttachmentOptions ->
+
+                BaseAliasNavigation.AddAttachment ->
+                    appNavigator.navigate(AddAttachmentNavItem)
+
+                is BaseAliasNavigation.OpenDraftAttachmentOptions ->
                     appNavigator.navigate(
                         destination = AttachmentOptionsOnEditNavItem,
                         route = AttachmentOptionsOnEditNavItem.createNavRoute(it.uri)
                     )
 
-                is UpdateAliasNavigation.DeleteAllAttachments ->
+                is BaseAliasNavigation.DeleteAllAttachments ->
                     appNavigator.navigate(
                         destination = DeleteAllAttachmentsDialogNavItem,
                         route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
                     )
 
-                UpdateAliasNavigation.UpsellAttachments ->
+                BaseAliasNavigation.UpsellAttachments ->
                     appNavigator.navigate(
                         destination = UpsellNavItem,
                         route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
                     )
+
+                BaseAliasNavigation.SelectMailbox ->
+                    appNavigator.navigate(AliasSelectMailboxBottomSheetNavItem)
+
+                BaseAliasNavigation.SelectSuffix ->
+                    appNavigator.navigate(AliasSelectSuffixBottomSheetNavItem)
+
+                BaseAliasNavigation.AddMailbox -> dismissBottomSheet {
+                    appNavigator.navigate(SimpleLoginSyncMailboxCreateNavItem)
+                }
             }
         }
     )

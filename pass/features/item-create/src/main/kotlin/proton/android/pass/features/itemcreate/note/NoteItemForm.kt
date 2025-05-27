@@ -56,7 +56,7 @@ import proton.android.pass.features.itemcreate.common.customfields.customFieldsL
 import proton.android.pass.features.itemcreate.note.NoteContentUiEvent.OnAttachmentEvent
 
 @Composable
-internal fun CreateNoteItemForm(
+internal fun NoteItemForm(
     modifier: Modifier = Modifier,
     noteItemFormState: NoteItemFormState,
     canUseCustomFields: Boolean,

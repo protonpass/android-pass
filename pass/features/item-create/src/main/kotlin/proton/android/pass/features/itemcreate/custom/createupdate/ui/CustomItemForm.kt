@@ -68,7 +68,7 @@ import proton.android.pass.features.itemcreate.custom.createupdate.ui.ItemConten
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-internal fun ItemForm(
+internal fun CustomItemForm(
     modifier: Modifier,
     itemFormState: ItemFormState,
     itemSharedProperties: ItemSharedProperties,

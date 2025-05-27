@@ -62,9 +62,9 @@ import proton.android.pass.features.itemcreate.alias.AliasMailboxUiModel
 import proton.android.pass.features.itemcreate.alias.AliasOptionsUiModel
 import proton.android.pass.features.itemcreate.alias.AliasPrefixSuffixText
 import proton.android.pass.features.itemcreate.alias.AliasSuffixUiModel
+import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation
 import proton.android.pass.features.itemcreate.alias.BaseAliasUiState
 import proton.android.pass.features.itemcreate.alias.CloseScreenEvent
-import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation
 import proton.android.pass.features.itemcreate.alias.MailboxSection
 
 @Composable
@@ -75,7 +75,7 @@ fun CreateAliasBottomSheetContent(
     onCancel: () -> Unit,
     onConfirm: () -> Unit,
     onPrefixChanged: (String) -> Unit,
-    onNavigate: (CreateAliasNavigation) -> Unit,
+    onNavigate: (BaseAliasNavigation) -> Unit,
     showAdvancedOptionsInitially: Boolean = false
 ) {
     val isBlankAliasError = state.errorList.contains(AliasItemValidationErrors.BlankPrefix)
@@ -111,7 +111,7 @@ fun CreateAliasBottomSheetContent(
                 isError = isBlankAliasError || isInvalidAliasError,
                 canSelectSuffix = aliasItemFormState.aliasOptions.suffixes.size > 1,
                 onPrefixChanged = onPrefixChanged,
-                onSuffixClicked = { onNavigate(CreateAliasNavigation.SelectSuffix) }
+                onSuffixClicked = { onNavigate(BaseAliasNavigation.SelectSuffix) }
             )
         }
         AnimatedVisibilityWithOnComplete(
@@ -134,7 +134,7 @@ fun CreateAliasBottomSheetContent(
             isCreateMode = false,
             isEditAllowed = aliasItemFormState.aliasOptions.mailboxes.size > 1,
             isLoading = state.isLoadingState.value(),
-            onMailboxClick = { onNavigate(CreateAliasNavigation.SelectMailbox) }
+            onMailboxClick = { onNavigate(BaseAliasNavigation.SelectMailbox) }
         )
         AnimatedVisibility(visible = state.hasReachedAliasLimit) {
             InfoBanner(
@@ -149,7 +149,7 @@ fun CreateAliasBottomSheetContent(
             showUpgrade = state.hasReachedAliasLimit,
             onCancel = onCancel,
             onConfirm = onConfirm,
-            onUpgradeClick = { onNavigate(CreateAliasNavigation.Upgrade) }
+            onUpgradeClick = { onNavigate(BaseAliasNavigation.Upgrade) }
         )
     }
 }

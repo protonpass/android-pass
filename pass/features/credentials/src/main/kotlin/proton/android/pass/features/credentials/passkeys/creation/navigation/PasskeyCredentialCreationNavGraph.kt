@@ -29,6 +29,7 @@ import proton.android.pass.features.auth.authGraph
 import proton.android.pass.features.credentials.passkeys.creation.presentation.PasskeyCredentialCreationEvent
 import proton.android.pass.features.itemcreate.alias.AliasSelectMailboxBottomSheetNavItem
 import proton.android.pass.features.itemcreate.alias.AliasSelectSuffixBottomSheetNavItem
+import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation
 import proton.android.pass.features.itemcreate.alias.CreateAliasBottomSheet
 import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation
 import proton.android.pass.features.itemcreate.alias.createAliasGraph
@@ -143,43 +144,33 @@ internal fun NavGraphBuilder.passkeyCredentialCreationNavGraph(
         canAddMailbox = false,
         onNavigate = { destination ->
             when (destination) {
-                CreateAliasNavigation.CloseScreen -> appNavigator.navigateBack()
-                CreateAliasNavigation.CloseBottomsheet -> dismissBottomSheet {}
-
-                is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}
-
-                is CreateAliasNavigation.Created -> {
-                    throw IllegalStateException("Cannot create alias from PasskeyCredentialCreation")
-                }
-
-                CreateAliasNavigation.Upgrade -> onNavigate(PasskeyCredentialCreationNavEvent.Upgrade)
-                is CreateAliasNavigation.SelectVault -> {
-                    appNavigator.navigate(
+                is BaseAliasNavigation.OnCreateAliasEvent -> when (val cevent = destination.event) {
+                    is CreateAliasNavigation.Created ->
+                        throw IllegalStateException("Cannot create alias from PasskeyCredentialCreation")
+                    is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}
+                    is CreateAliasNavigation.SelectVault -> appNavigator.navigate(
                         destination = SelectVaultBottomsheet,
-                        route = SelectVaultBottomsheet.createNavRoute(
-                            selectedVault = destination.shareId
-                        )
+                        route = SelectVaultBottomsheet.createNavRoute(cevent.shareId)
                     )
                 }
-
-                CreateAliasNavigation.SelectMailbox -> appNavigator.navigate(
+                is BaseAliasNavigation.OnUpdateAliasEvent ->
+                    throw IllegalStateException("Cannot update alias from PasskeyCredentialCreation")
+                BaseAliasNavigation.CloseScreen -> appNavigator.navigateBack()
+                BaseAliasNavigation.CloseBottomsheet -> dismissBottomSheet {}
+                BaseAliasNavigation.Upgrade -> onNavigate(PasskeyCredentialCreationNavEvent.Upgrade)
+                BaseAliasNavigation.SelectMailbox -> appNavigator.navigate(
                     destination = AliasSelectMailboxBottomSheetNavItem
                 )
-
-                CreateAliasNavigation.SelectSuffix -> appNavigator.navigate(
+                BaseAliasNavigation.SelectSuffix -> appNavigator.navigate(
                     destination = AliasSelectSuffixBottomSheetNavItem
                 )
-
-                CreateAliasNavigation.AddAttachment,
-                CreateAliasNavigation.UpsellAttachments,
-                is CreateAliasNavigation.OpenDraftAttachmentOptions,
-                is CreateAliasNavigation.DeleteAllAttachments -> {
+                BaseAliasNavigation.AddAttachment,
+                BaseAliasNavigation.UpsellAttachments,
+                is BaseAliasNavigation.OpenDraftAttachmentOptions,
+                is BaseAliasNavigation.DeleteAllAttachments ->
                     throw IllegalStateException("Cannot use attachments from PasskeyCredentialCreation")
-                }
-
-                CreateAliasNavigation.AddMailbox -> {
+                BaseAliasNavigation.AddMailbox ->
                     throw IllegalStateException("Cannot add mailbox from PasskeyCredentialCreation")
-                }
             }
         }
     )

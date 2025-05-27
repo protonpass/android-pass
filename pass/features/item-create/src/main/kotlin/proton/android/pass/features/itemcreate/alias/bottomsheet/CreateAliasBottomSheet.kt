@@ -25,15 +25,16 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.itemcreate.alias.AliasDraftSavedState
+import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation
 import proton.android.pass.features.itemcreate.alias.CloseScreenEvent
-import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation
+import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation.CreatedFromBottomsheet
 import proton.android.pass.features.itemcreate.common.ShareUiState
 
 @Composable
 fun CreateAliasBottomSheet(
     modifier: Modifier = Modifier,
     itemTitle: String,
-    onNavigate: (CreateAliasNavigation) -> Unit,
+    onNavigate: (BaseAliasNavigation) -> Unit,
     viewModel: CreateAliasBottomSheetViewModel = hiltViewModel()
 ) {
     LaunchedEffect(itemTitle) {
@@ -44,7 +45,7 @@ fun CreateAliasBottomSheet(
 
     LaunchedEffect(state.baseAliasUiState.closeScreenEvent) {
         if (state.baseAliasUiState.closeScreenEvent is CloseScreenEvent.Close) {
-            onNavigate(CreateAliasNavigation.CloseBottomsheet)
+            onNavigate(BaseAliasNavigation.CloseBottomsheet)
         }
     }
 
@@ -52,8 +53,10 @@ fun CreateAliasBottomSheet(
     if (isAliasDraftSaved is AliasDraftSavedState.Success) {
         LaunchedEffect(state.shareUiState) {
             if (state.shareUiState is ShareUiState.Success) {
-                val event = CreateAliasNavigation.CreatedFromBottomsheet(
-                    alias = isAliasDraftSaved.aliasItemFormState.aliasToBeCreated ?: ""
+                val event = BaseAliasNavigation.OnCreateAliasEvent(
+                    CreatedFromBottomsheet(
+                        alias = isAliasDraftSaved.aliasItemFormState.aliasToBeCreated ?: ""
+                    )
                 )
                 onNavigate(event)
                 viewModel.resetAliasDraftSavedState()
@@ -65,7 +68,7 @@ fun CreateAliasBottomSheet(
         modifier = modifier,
         state = state.baseAliasUiState,
         aliasItemFormState = viewModel.aliasItemFormState,
-        onCancel = { onNavigate(CreateAliasNavigation.CloseScreen) },
+        onCancel = { onNavigate(BaseAliasNavigation.CloseScreen) },
         onConfirm = {
             val shareUiState = state.shareUiState
             if (shareUiState is ShareUiState.Success) {

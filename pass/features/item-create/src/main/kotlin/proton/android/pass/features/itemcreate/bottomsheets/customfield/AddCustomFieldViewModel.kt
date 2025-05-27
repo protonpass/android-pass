@@ -19,18 +19,29 @@
 package proton.android.pass.features.itemcreate.bottomsheets.customfield
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.features.itemcreate.common.customsection.CustomSectionIndexNavArgId
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class AddCustomFieldViewModel @Inject constructor(
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     savedStateHandle: SavedStateHandleProvider
 ) : ViewModel() {
+
+    val isCustomItemEnabled: StateFlow<Boolean> =
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1)
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     val sectionIndex: Option<Int> = savedStateHandle
         .get()

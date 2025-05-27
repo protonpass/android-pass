@@ -324,13 +324,13 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
         canAddMailbox = false,
         onNavigate = {
             when (it) {
-                is BaseAliasNavigation.OnCreateAliasEvent -> when (val cevent = it.event) {
+                is BaseAliasNavigation.OnCreateAliasEvent -> when (val event = it.event) {
                     is CreateAliasNavigation.Created ->
                         throw IllegalStateException("Cannot create alias from CreatePasskey")
                     is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}
                     is CreateAliasNavigation.SelectVault -> appNavigator.navigate(
                         destination = SelectVaultBottomsheet,
-                        route = SelectVaultBottomsheet.createNavRoute(cevent.shareId)
+                        route = SelectVaultBottomsheet.createNavRoute(event.shareId)
                     )
                 }
                 is BaseAliasNavigation.OnUpdateAliasEvent ->

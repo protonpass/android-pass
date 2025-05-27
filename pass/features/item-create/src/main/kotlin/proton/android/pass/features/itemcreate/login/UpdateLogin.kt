@@ -34,15 +34,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.alias.AliasItemFormState
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
+import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
+import proton.android.pass.features.itemcreate.custom.createupdate.ui.DatePickerModal
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.AddAttachment
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.AddCustomField
@@ -66,8 +72,8 @@ internal fun UpdateLogin(
     viewModel: UpdateLoginViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
+    var showDatePickerForField: Option<CustomFieldIdentifier> by remember { mutableStateOf(None) }
     var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
-
     PerformActionAfterKeyboardHide(
         action = actionAfterKeyboardHide,
         clearAction = { actionAfterKeyboardHide = null }
@@ -178,8 +184,11 @@ internal fun UpdateLogin(
                                     isFocused = event.isFocused
                                 )
 
-                            is CustomFieldEvent.OnFieldClick -> {
-                                // Currently only supported by date field
+                            is CustomFieldEvent.OnFieldClick -> when (event.field.type) {
+                                CustomFieldType.Date -> {
+                                    showDatePickerForField = Some(event.field)
+                                }
+                                else -> throw IllegalStateException("Unhandled action")
                             }
                         }
                     }
@@ -297,7 +306,17 @@ internal fun UpdateLogin(
                 actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.CloseScreen) }
             }
         )
-
+        showDatePickerForField.value()?.let { fieldIdentifier ->
+            val selectedDate = viewModel.loginItemFormState
+                .customFields[fieldIdentifier.index] as UICustomFieldContent.Date
+            DatePickerModal(
+                selectedDate = selectedDate.value,
+                onDateSelected = {
+                    viewModel.onCustomFieldChange(fieldIdentifier, it.toString())
+                },
+                onDismiss = { showDatePickerForField = None }
+            )
+        }
         confirmDeletePasskey?.let { event ->
             ConfirmDeletePasskeyDialog(
                 passkey = event.passkey,

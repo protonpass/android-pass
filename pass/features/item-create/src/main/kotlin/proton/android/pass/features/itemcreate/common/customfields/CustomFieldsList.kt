@@ -20,7 +20,6 @@ package proton.android.pass.features.itemcreate.common.customfields
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.remember
@@ -32,7 +31,6 @@ import kotlinx.collections.immutable.PersistentSet
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.getOrElse
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
-import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.R
@@ -67,9 +65,7 @@ internal fun LazyListScope.customFieldsList(
             visible = isVisible
         ) {
             CustomFieldEntry(
-                modifier = Modifier
-                    .padding(vertical = Spacing.extraSmall)
-                    .focusRequester(focusRequester),
+                modifier = Modifier.focusRequester(focusRequester),
                 passItemColors = passItemColors(itemCategory),
                 entry = entry,
                 canEdit = enabled,

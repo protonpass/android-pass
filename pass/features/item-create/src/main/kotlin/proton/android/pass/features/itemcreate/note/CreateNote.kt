@@ -46,10 +46,14 @@ import proton.android.pass.features.itemcreate.common.ShareError.SharesNotAvaila
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldNavigation
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldNavigation.CustomFieldOptions
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
 import proton.android.pass.features.itemcreate.note.CreateNoteNavigation.DeleteAllAttachments
+import proton.android.pass.features.itemcreate.note.CreateNoteNavigation.NoteCustomFieldNavigation
 import proton.android.pass.features.itemcreate.note.CreateNoteNavigation.OpenDraftAttachmentOptions
+import proton.android.pass.features.itemcreate.note.CreateNoteNavigation.SelectVault
+import proton.android.pass.features.itemcreate.note.NoteField.CustomField
 
 @Suppress("ComplexMethod")
 @OptIn(ExperimentalComposeUiApi::class)
@@ -57,6 +61,8 @@ import proton.android.pass.features.itemcreate.note.CreateNoteNavigation.OpenDra
 fun CreateNoteScreen(
     modifier: Modifier = Modifier,
     selectVault: ShareId?,
+    navTotpUri: String? = null,
+    navTotpIndex: Int? = null,
     onNavigate: (CreateNoteNavigation) -> Unit,
     viewModel: CreateNoteViewModel = hiltViewModel()
 ) {
@@ -65,6 +71,10 @@ fun CreateNoteScreen(
         if (selectVault != null) {
             viewModel.changeVault(selectVault)
         }
+    }
+    LaunchedEffect(navTotpUri) {
+        navTotpUri ?: return@LaunchedEffect
+        viewModel.setTotp(navTotpUri, navTotpIndex ?: -1)
     }
     var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
 
@@ -122,7 +132,7 @@ fun CreateNoteScreen(
                     is NoteContentUiEvent.Submit -> viewModel.createNote(event.shareId)
                     is NoteContentUiEvent.OnVaultSelect ->
                         actionAfterKeyboardHide =
-                            { onNavigate(CreateNoteNavigation.SelectVault(event.shareId)) }
+                            { onNavigate(SelectVault(event.shareId)) }
 
                     is NoteContentUiEvent.OnNoteChange -> viewModel.onNoteChange(event.note)
                     is NoteContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
@@ -171,7 +181,7 @@ fun CreateNoteScreen(
                             is CustomFieldEvent.OnAddField -> {
                                 actionAfterKeyboardHide = {
                                     onNavigate(
-                                        CreateNoteNavigation.NoteCustomFieldNavigation(
+                                        NoteCustomFieldNavigation(
                                             CustomFieldNavigation.AddCustomField
                                         )
                                     )
@@ -181,8 +191,8 @@ fun CreateNoteScreen(
                             is CustomFieldEvent.OnFieldOptions -> {
                                 actionAfterKeyboardHide = {
                                     onNavigate(
-                                        CreateNoteNavigation.NoteCustomFieldNavigation(
-                                            CustomFieldNavigation.CustomFieldOptions(
+                                        NoteCustomFieldNavigation(
+                                            CustomFieldOptions(
                                                 currentValue = cevent.label,
                                                 index = cevent.field.index
                                             )
@@ -201,7 +211,7 @@ fun CreateNoteScreen(
 
                             is CustomFieldEvent.FocusRequested ->
                                 viewModel.onFocusChange(
-                                    field = NoteField.CustomField(cevent.field),
+                                    field = CustomField(cevent.field),
                                     isFocused = cevent.isFocused
                                 )
 
@@ -209,6 +219,11 @@ fun CreateNoteScreen(
                                 // Currently only supported by date field
                             }
                         }
+
+                    is NoteContentUiEvent.OnScanTotp ->
+                        actionAfterKeyboardHide =
+                            { onNavigate(CreateNoteNavigation.ScanTotp(event.index)) }
+                    NoteContentUiEvent.PasteTotp -> viewModel.onPasteTotp()
                 }
             }
         )

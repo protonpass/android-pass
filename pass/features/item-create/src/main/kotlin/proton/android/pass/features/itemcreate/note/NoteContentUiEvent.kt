@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.itemcreate.note
 
+import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
@@ -46,4 +47,9 @@ internal sealed interface NoteContentUiEvent {
 
     @JvmInline
     value class OnCustomFieldEvent(val event: CustomFieldEvent) : NoteContentUiEvent
+
+    data object PasteTotp : NoteContentUiEvent
+
+    @JvmInline
+    value class OnScanTotp(val index: Option<Int>) : NoteContentUiEvent
 }

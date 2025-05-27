@@ -114,8 +114,7 @@ import proton.android.pass.features.itemcreate.creditcard.CreateCreditCard
 import proton.android.pass.features.itemcreate.creditcard.CreateCreditCardNavigation
 import proton.android.pass.features.itemcreate.creditcard.EditCreditCard
 import proton.android.pass.features.itemcreate.creditcard.UpdateCreditCardNavigation
-import proton.android.pass.features.itemcreate.creditcard.createCreditCardGraph
-import proton.android.pass.features.itemcreate.creditcard.updateCreditCardGraph
+import proton.android.pass.features.itemcreate.creditcard.createUpdateCreditCardGraph
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.BaseCustomItemNavigation
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.CreateCustomItemNavItem
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.CreateCustomItemNavigation
@@ -1132,7 +1131,7 @@ fun NavGraphBuilder.appGraph(
             }
         }
     )
-    createCreditCardGraph(
+    createUpdateCreditCardGraph(
         canUseAttachments = true,
         onNavigate = {
             when (it) {
@@ -1144,9 +1143,14 @@ fun NavGraphBuilder.appGraph(
                         route = SelectVaultBottomsheet.createNavRoute(it.shareId)
                     )
                 }
-
+                is UpdateCreditCardNavigation -> when (it) {
+                    is UpdateCreditCardNavigation.ItemUpdated -> appNavigator.navigate(
+                        destination = ViewItem,
+                        route = ViewItem.createNavRoute(it.shareId, it.itemId),
+                        backDestination = HomeNavItem
+                    )
+                }
                 BaseCreditCardNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
-                is UpdateCreditCardNavigation -> {}
                 BaseCreditCardNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
                 is BaseCreditCardNavigation.OpenAttachmentOptions ->
                     appNavigator.navigate(
@@ -1178,51 +1182,6 @@ fun NavGraphBuilder.appGraph(
             }
         }
     )
-    updateCreditCardGraph {
-        when (it) {
-            BaseCreditCardNavigation.CloseScreen -> appNavigator.navigateBack()
-            is CreateCreditCardNavigation -> {}
-            is UpdateCreditCardNavigation -> {
-                when (it) {
-                    is UpdateCreditCardNavigation.ItemUpdated -> appNavigator.navigate(
-                        destination = ViewItem,
-                        route = ViewItem.createNavRoute(it.shareId, it.itemId),
-                        backDestination = HomeNavItem
-                    )
-                }
-            }
-
-            BaseCreditCardNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
-            BaseCreditCardNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
-            is BaseCreditCardNavigation.OpenAttachmentOptions ->
-                appNavigator.navigate(
-                    destination = AttachmentOptionsOnEditNavItem,
-                    route = AttachmentOptionsOnEditNavItem.createNavRoute(
-                        shareId = it.shareId,
-                        itemId = it.itemId,
-                        attachmentId = it.attachmentId
-                    )
-                )
-
-            is BaseCreditCardNavigation.OpenDraftAttachmentOptions ->
-                appNavigator.navigate(
-                    destination = AttachmentOptionsOnEditNavItem,
-                    route = AttachmentOptionsOnEditNavItem.createNavRoute(it.uri)
-                )
-
-            is BaseCreditCardNavigation.DeleteAllAttachments ->
-                appNavigator.navigate(
-                    destination = DeleteAllAttachmentsDialogNavItem,
-                    route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
-                )
-
-            BaseCreditCardNavigation.UpsellAttachments ->
-                appNavigator.navigate(
-                    destination = UpsellNavItem,
-                    route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
-                )
-        }
-    }
     createAliasGraph(
         canUseAttachments = true,
         canAddMailbox = true,

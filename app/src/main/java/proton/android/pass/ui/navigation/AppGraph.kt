@@ -1187,26 +1187,26 @@ fun NavGraphBuilder.appGraph(
         canAddMailbox = true,
         onNavigate = {
             when (it) {
-                is BaseAliasNavigation.OnCreateAliasEvent -> when (val cevent = it.event) {
+                is BaseAliasNavigation.OnCreateAliasEvent -> when (val event = it.event) {
                     is CreateAliasNavigation.Created -> appNavigator.navigateBack()
                     is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}
                     is CreateAliasNavigation.SelectVault -> appNavigator.navigate(
                         destination = SelectVaultBottomsheet,
-                        route = SelectVaultBottomsheet.createNavRoute(cevent.shareId)
+                        route = SelectVaultBottomsheet.createNavRoute(event.shareId)
                     )
                 }
-                is BaseAliasNavigation.OnUpdateAliasEvent -> when (val cevent = it.event) {
+                is BaseAliasNavigation.OnUpdateAliasEvent -> when (val event = it.event) {
                     is UpdateAliasNavigation.OpenAttachmentOptions -> appNavigator.navigate(
                         destination = AttachmentOptionsOnEditNavItem,
                         route = AttachmentOptionsOnEditNavItem.createNavRoute(
-                            shareId = cevent.shareId,
-                            itemId = cevent.itemId,
-                            attachmentId = cevent.attachmentId
+                            shareId = event.shareId,
+                            itemId = event.itemId,
+                            attachmentId = event.attachmentId
                         )
                     )
                     is UpdateAliasNavigation.Updated -> appNavigator.navigate(
                         destination = ViewItem,
-                        route = ViewItem.createNavRoute(cevent.shareId, cevent.itemId),
+                        route = ViewItem.createNavRoute(event.shareId, event.itemId),
                         backDestination = HomeNavItem
                     )
                 }

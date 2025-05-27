@@ -49,9 +49,9 @@ import proton.android.pass.features.itemcreate.common.customfields.CustomFieldNa
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldNavigation.CustomFieldOptions
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
-import proton.android.pass.features.itemcreate.note.CreateNoteNavigation.DeleteAllAttachments
-import proton.android.pass.features.itemcreate.note.CreateNoteNavigation.NoteCustomFieldNavigation
-import proton.android.pass.features.itemcreate.note.CreateNoteNavigation.OpenDraftAttachmentOptions
+import proton.android.pass.features.itemcreate.note.BaseNoteNavigation.DeleteAllAttachments
+import proton.android.pass.features.itemcreate.note.BaseNoteNavigation.NoteCustomFieldNavigation
+import proton.android.pass.features.itemcreate.note.BaseNoteNavigation.OpenDraftAttachmentOptions
 import proton.android.pass.features.itemcreate.note.CreateNoteNavigation.SelectVault
 import proton.android.pass.features.itemcreate.note.NoteField.CustomField
 
@@ -63,7 +63,7 @@ fun CreateNoteScreen(
     selectVault: ShareId?,
     navTotpUri: String? = null,
     navTotpIndex: Int? = null,
-    onNavigate: (CreateNoteNavigation) -> Unit,
+    onNavigate: (BaseNoteNavigation) -> Unit,
     viewModel: CreateNoteViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -91,7 +91,7 @@ fun CreateNoteScreen(
             showConfirmDialog = !showConfirmDialog
         } else {
             viewModel.clearDraftData()
-            actionAfterKeyboardHide = { onNavigate(CreateNoteNavigation.CloseScreen) }
+            actionAfterKeyboardHide = { onNavigate(BaseNoteNavigation.CloseScreen) }
         }
     }
     BackHandler {
@@ -106,7 +106,7 @@ fun CreateNoteScreen(
             if (shares.shareError == EmptyShareList || shares.shareError == SharesNotAvailable) {
                 viewModel.onEmitSnackbarMessage(NoteSnackbarMessage.InitError)
                 LaunchedEffect(Unit) {
-                    onNavigate(CreateNoteNavigation.CloseScreen)
+                    onNavigate(BaseNoteNavigation.CloseScreen)
                 }
             }
             false to null
@@ -128,11 +128,14 @@ fun CreateNoteScreen(
                 when (event) {
                     NoteContentUiEvent.Back -> onExit()
                     NoteContentUiEvent.Upgrade ->
-                        actionAfterKeyboardHide = { onNavigate(CreateNoteNavigation.Upgrade) }
+                        actionAfterKeyboardHide = { onNavigate(BaseNoteNavigation.Upgrade) }
                     is NoteContentUiEvent.Submit -> viewModel.createNote(event.shareId)
                     is NoteContentUiEvent.OnVaultSelect ->
-                        actionAfterKeyboardHide =
-                            { onNavigate(SelectVault(event.shareId)) }
+                        actionAfterKeyboardHide = {
+                            onNavigate(
+                                BaseNoteNavigation.OnCreateNoteEvent(SelectVault(event.shareId))
+                            )
+                        }
 
                     is NoteContentUiEvent.OnNoteChange -> viewModel.onNoteChange(event.note)
                     is NoteContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
@@ -141,7 +144,7 @@ fun CreateNoteScreen(
                             {
                                 when (event.event) {
                                     AttachmentContentEvent.OnAddAttachment ->
-                                        onNavigate(CreateNoteNavigation.AddAttachment)
+                                        onNavigate(BaseNoteNavigation.AddAttachment)
 
                                     is AttachmentContentEvent.OnAttachmentOpen,
                                     is AttachmentContentEvent.OnAttachmentOptions -> {
@@ -169,7 +172,7 @@ fun CreateNoteScreen(
                                         viewModel.retryUploadDraftAttachment(event.event.metadata)
 
                                     AttachmentContentEvent.UpsellAttachments ->
-                                        onNavigate(CreateNoteNavigation.UpsellAttachments)
+                                        onNavigate(BaseNoteNavigation.UpsellAttachments)
                                 }
                             }
 
@@ -207,7 +210,7 @@ fun CreateNoteScreen(
 
                             CustomFieldEvent.Upgrade ->
                                 actionAfterKeyboardHide =
-                                    { onNavigate(CreateNoteNavigation.Upgrade) }
+                                    { onNavigate(BaseNoteNavigation.Upgrade) }
 
                             is CustomFieldEvent.FocusRequested ->
                                 viewModel.onFocusChange(
@@ -222,7 +225,7 @@ fun CreateNoteScreen(
 
                     is NoteContentUiEvent.OnScanTotp ->
                         actionAfterKeyboardHide =
-                            { onNavigate(CreateNoteNavigation.ScanTotp(event.index)) }
+                            { onNavigate(BaseNoteNavigation.ScanTotp(event.index)) }
                     NoteContentUiEvent.PasteTotp -> viewModel.onPasteTotp()
                 }
             }
@@ -236,7 +239,7 @@ fun CreateNoteScreen(
             onConfirm = {
                 showConfirmDialog = false
                 viewModel.clearDraftData()
-                actionAfterKeyboardHide = { onNavigate(CreateNoteNavigation.CloseScreen) }
+                actionAfterKeyboardHide = { onNavigate(BaseNoteNavigation.CloseScreen) }
             }
         )
     }
@@ -245,7 +248,9 @@ fun CreateNoteScreen(
         selectedShareId = selectedVault?.vault?.shareId,
         onSuccess = { _, _, _ ->
             viewModel.clearDraftData()
-            actionAfterKeyboardHide = { onNavigate(CreateNoteNavigation.NoteCreated) }
+            actionAfterKeyboardHide = {
+                onNavigate(BaseNoteNavigation.OnCreateNoteEvent(CreateNoteNavigation.NoteCreated))
+            }
         }
     )
     InAppReviewTriggerLaunchedEffect(

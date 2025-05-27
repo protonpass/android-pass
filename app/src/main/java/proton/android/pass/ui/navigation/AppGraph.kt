@@ -144,12 +144,12 @@ import proton.android.pass.features.itemcreate.login.UpdateLoginNavigation
 import proton.android.pass.features.itemcreate.login.bottomsheet.aliasoptions.AliasOptionsBottomSheet
 import proton.android.pass.features.itemcreate.login.bottomsheet.aliasoptions.CLEAR_ALIAS_NAV_PARAMETER_KEY
 import proton.android.pass.features.itemcreate.login.createUpdateLoginGraph
+import proton.android.pass.features.itemcreate.note.BaseNoteNavigation
 import proton.android.pass.features.itemcreate.note.CreateNoteNavItem
 import proton.android.pass.features.itemcreate.note.CreateNoteNavigation
 import proton.android.pass.features.itemcreate.note.UpdateNoteNavItem
 import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation
-import proton.android.pass.features.itemcreate.note.createNoteGraph
-import proton.android.pass.features.itemcreate.note.updateNoteGraph
+import proton.android.pass.features.itemcreate.note.createUpdateNoteGraph
 import proton.android.pass.features.itemcreate.totp.CameraTotpNavItem
 import proton.android.pass.features.itemcreate.totp.PhotoPickerTotpNavItem
 import proton.android.pass.features.itemdetail.ItemDetailCannotPerformAction
@@ -1011,63 +1011,69 @@ fun NavGraphBuilder.appGraph(
             }
         }
     )
-    createNoteGraph(
+    createUpdateNoteGraph(
         onNavigate = {
-            val prefix = CustomFieldPrefix.CreateNote
+            val backDestination = when {
+                appNavigator.hasDestinationInStack(CreateNoteNavItem) -> CreateNoteNavItem
+                appNavigator.hasDestinationInStack(UpdateNoteNavItem) -> UpdateNoteNavItem
+                else -> null
+            }
             when (it) {
-                CreateNoteNavigation.CloseScreen -> appNavigator.navigateBack()
-                CreateNoteNavigation.DismissBottomsheet -> dismissBottomSheet {}
-                is CreateNoteNavigation.SelectVault -> appNavigator.navigate(
-                    destination = SelectVaultBottomsheet,
-                    route = SelectVaultBottomsheet.createNavRoute(it.shareId)
-                )
-
-                CreateNoteNavigation.NoteCreated -> appNavigator.navigateBack()
-                CreateNoteNavigation.AddAttachment ->
+                BaseNoteNavigation.CloseScreen -> appNavigator.navigateBack()
+                BaseNoteNavigation.DismissBottomsheet -> dismissBottomSheet {}
+                BaseNoteNavigation.AddAttachment ->
                     appNavigator.navigate(AddAttachmentNavItem)
 
-                is CreateNoteNavigation.OpenDraftAttachmentOptions ->
+                is BaseNoteNavigation.OpenDraftAttachmentOptions ->
                     appNavigator.navigate(
                         destination = AttachmentOptionsOnEditNavItem,
                         route = AttachmentOptionsOnEditNavItem.createNavRoute(it.uri)
                     )
 
-                is CreateNoteNavigation.DeleteAllAttachments ->
+                is BaseNoteNavigation.DeleteAllAttachments ->
                     appNavigator.navigate(
                         destination = DeleteAllAttachmentsDialogNavItem,
                         route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
                     )
 
-                CreateNoteNavigation.UpsellAttachments ->
+                BaseNoteNavigation.UpsellAttachments ->
                     appNavigator.navigate(
                         destination = UpsellNavItem,
                         route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
                     )
 
-                is CreateNoteNavigation.NoteCustomFieldNavigation ->
+                is BaseNoteNavigation.NoteCustomFieldNavigation ->
                     when (val cevent = it.event) {
-                        CustomFieldNavigation.AddCustomField -> appNavigator.navigate(
-                            destination = AddCustomFieldBottomSheetNavItem(prefix),
-                            route = AddCustomFieldBottomSheetNavItem(prefix).buildRoute()
-                        )
-                        is CustomFieldNavigation.CustomFieldOptions -> appNavigator.navigate(
-                            destination = CustomFieldOptionsBottomSheetNavItem(prefix),
-                            route = CustomFieldOptionsBottomSheetNavItem(prefix).buildRoute(
-                                index = cevent.index,
-                                currentTitle = cevent.currentValue
+                        CustomFieldNavigation.AddCustomField -> {
+                            val prefix = CustomFieldPrefix.fromNote(backDestination)
+                            appNavigator.navigate(
+                                destination = AddCustomFieldBottomSheetNavItem(prefix),
+                                route = AddCustomFieldBottomSheetNavItem(prefix).buildRoute()
                             )
-                        )
+                        }
+                        is CustomFieldNavigation.CustomFieldOptions -> {
+                            val prefix = CustomFieldPrefix.fromNote(backDestination)
+                            appNavigator.navigate(
+                                destination = CustomFieldOptionsBottomSheetNavItem(prefix),
+                                route = CustomFieldOptionsBottomSheetNavItem(prefix).buildRoute(
+                                    index = cevent.index,
+                                    currentTitle = cevent.currentValue
+                                )
+                            )
+                        }
                         is CustomFieldNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
+                            val prefix = CustomFieldPrefix.fromNote(backDestination)
                             appNavigator.navigate(
                                 destination = CustomFieldNameDialogNavItem(prefix),
                                 route = CustomFieldNameDialogNavItem(prefix).buildRoute(
                                     type = cevent.type,
                                     sectionIndex = None
                                 ),
-                                backDestination = CreateNoteNavItem
+                                backDestination = backDestination
                             )
                         }
                         is CustomFieldNavigation.EditCustomField -> dismissBottomSheet {
+                            val prefix = CustomFieldPrefix.fromNote(backDestination)
                             appNavigator.navigate(
                                 destination = EditCustomFieldNameDialogNavItem(prefix),
                                 route = EditCustomFieldNameDialogNavItem(prefix).buildRoute(
@@ -1075,119 +1081,54 @@ fun NavGraphBuilder.appGraph(
                                     sectionIndex = None,
                                     currentValue = cevent.currentValue
                                 ),
-                                backDestination = CreateNoteNavItem
+                                backDestination = backDestination
                             )
                         }
                         CustomFieldNavigation.RemovedCustomField -> dismissBottomSheet {}
                     }
-                CreateNoteNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
-                is CreateNoteNavigation.OpenImagePicker -> appNavigator.navigate(
-                    destination = PhotoPickerTotpNavItem(prefix),
-                    route = PhotoPickerTotpNavItem(prefix).createNavRoute(index = it.index),
-                    backDestination = CreateNoteNavItem
-                )
-                CreateNoteNavigation.TotpCancel -> appNavigator.navigateBack()
-                is CreateNoteNavigation.TotpSuccess ->
+                BaseNoteNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+                is BaseNoteNavigation.OpenImagePicker -> {
+                    val prefix = CustomFieldPrefix.fromNote(backDestination)
+                    appNavigator.navigate(
+                        destination = PhotoPickerTotpNavItem(prefix),
+                        route = PhotoPickerTotpNavItem(prefix).createNavRoute(index = it.index),
+                        backDestination = backDestination
+                    )
+                }
+                BaseNoteNavigation.TotpCancel -> appNavigator.navigateBack()
+                is BaseNoteNavigation.TotpSuccess ->
                     appNavigator.navigateBackWithResult(it.results)
 
-                is CreateNoteNavigation.ScanTotp -> appNavigator.navigate(
-                    destination = CameraTotpNavItem(prefix),
-                    route = CameraTotpNavItem(prefix).createNavRoute(None, it.index)
-                )
-            }
-        }
-    )
-    updateNoteGraph(
-        onNavigate = {
-            val prefix = CustomFieldPrefix.UpdateNote
-            when (it) {
-                UpdateNoteNavigation.CloseScreen -> appNavigator.navigateBack()
-                UpdateNoteNavigation.DismissBottomsheet -> dismissBottomSheet {}
-                is UpdateNoteNavigation.NoteUpdated -> appNavigator.navigate(
-                    destination = ViewItem,
-                    route = ViewItem.createNavRoute(it.shareId, it.itemId),
-                    backDestination = HomeNavItem
-                )
-
-                UpdateNoteNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
-                is UpdateNoteNavigation.OpenAttachmentOptions ->
+                is BaseNoteNavigation.ScanTotp -> {
+                    val prefix = CustomFieldPrefix.fromNote(backDestination)
                     appNavigator.navigate(
+                        destination = CameraTotpNavItem(prefix),
+                        route = CameraTotpNavItem(prefix).createNavRoute(None, it.index)
+                    )
+                }
+
+                is BaseNoteNavigation.OnCreateNoteEvent -> when (val cevent = it.event) {
+                    CreateNoteNavigation.NoteCreated -> appNavigator.navigateBack()
+                    is CreateNoteNavigation.SelectVault -> appNavigator.navigate(
+                        destination = SelectVaultBottomsheet,
+                        route = SelectVaultBottomsheet.createNavRoute(cevent.shareId)
+                    )
+                }
+                is BaseNoteNavigation.OnUpdateNoteEvent -> when (val cevent = it.event) {
+                    is UpdateNoteNavigation.NoteUpdated -> appNavigator.navigate(
+                        destination = ViewItem,
+                        route = ViewItem.createNavRoute(cevent.shareId, cevent.itemId),
+                        backDestination = HomeNavItem
+                    )
+                    is UpdateNoteNavigation.OpenAttachmentOptions -> appNavigator.navigate(
                         destination = AttachmentOptionsOnEditNavItem,
                         route = AttachmentOptionsOnEditNavItem.createNavRoute(
-                            shareId = it.shareId,
-                            itemId = it.itemId,
-                            attachmentId = it.attachmentId
+                            shareId = cevent.shareId,
+                            itemId = cevent.itemId,
+                            attachmentId = cevent.attachmentId
                         )
                     )
-
-                is UpdateNoteNavigation.OpenDraftAttachmentOptions ->
-                    appNavigator.navigate(
-                        destination = AttachmentOptionsOnEditNavItem,
-                        route = AttachmentOptionsOnEditNavItem.createNavRoute(it.uri)
-                    )
-
-                is UpdateNoteNavigation.DeleteAllAttachments ->
-                    appNavigator.navigate(
-                        destination = DeleteAllAttachmentsDialogNavItem,
-                        route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
-                    )
-
-                UpdateNoteNavigation.UpsellAttachments ->
-                    appNavigator.navigate(
-                        destination = UpsellNavItem,
-                        route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
-                    )
-
-                is UpdateNoteNavigation.NoteCustomFieldNavigation ->
-                    when (val cevent = it.event) {
-                        CustomFieldNavigation.AddCustomField -> {
-                            appNavigator.navigate(
-                                destination = AddCustomFieldBottomSheetNavItem(prefix),
-                                route = AddCustomFieldBottomSheetNavItem(prefix).buildRoute()
-                            )
-                        }
-                        is CustomFieldNavigation.CustomFieldOptions -> appNavigator.navigate(
-                            destination = CustomFieldOptionsBottomSheetNavItem(prefix),
-                            route = CustomFieldOptionsBottomSheetNavItem(prefix).buildRoute(
-                                index = cevent.index,
-                                currentTitle = cevent.currentValue
-                            )
-                        )
-                        is CustomFieldNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
-                            appNavigator.navigate(
-                                destination = CustomFieldNameDialogNavItem(prefix),
-                                route = CustomFieldNameDialogNavItem(prefix).buildRoute(
-                                    type = cevent.type,
-                                    sectionIndex = None
-                                ),
-                                backDestination = UpdateNoteNavItem
-                            )
-                        }
-                        is CustomFieldNavigation.EditCustomField -> appNavigator.navigate(
-                            destination = EditCustomFieldNameDialogNavItem(prefix),
-                            route = EditCustomFieldNameDialogNavItem(prefix).buildRoute(
-                                index = cevent.index,
-                                sectionIndex = None,
-                                currentValue = cevent.currentValue
-                            ),
-                            backDestination = UpdateNoteNavItem
-                        )
-                        CustomFieldNavigation.RemovedCustomField -> dismissBottomSheet {}
-                    }
-                UpdateNoteNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
-                is UpdateNoteNavigation.OpenImagePicker -> appNavigator.navigate(
-                    destination = PhotoPickerTotpNavItem(prefix),
-                    route = PhotoPickerTotpNavItem(prefix).createNavRoute(index = it.index),
-                    backDestination = UpdateNoteNavItem
-                )
-                UpdateNoteNavigation.TotpCancel -> appNavigator.navigateBack()
-                is UpdateNoteNavigation.TotpSuccess ->
-                    appNavigator.navigateBackWithResult(it.results)
-
-                is UpdateNoteNavigation.ScanTotp -> appNavigator.navigate(
-                    destination = CameraTotpNavItem(prefix),
-                    route = CameraTotpNavItem(prefix).createNavRoute(None, it.index)
-                )
+                }
             }
         }
     )

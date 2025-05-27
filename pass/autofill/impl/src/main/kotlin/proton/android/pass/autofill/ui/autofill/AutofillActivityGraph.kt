@@ -384,15 +384,15 @@ internal fun NavGraphBuilder.autofillActivityGraph(
         canAddMailbox = false,
         onNavigate = {
             when (it) {
-                is BaseAliasNavigation.OnCreateAliasEvent -> when (val cevent = it.event) {
+                is BaseAliasNavigation.OnCreateAliasEvent -> when (val event = it.event) {
                     is CreateAliasNavigation.Created -> {
-                        val created = CreatedAlias(cevent.shareId, cevent.itemId, cevent.alias)
+                        val created = CreatedAlias(event.shareId, event.itemId, event.alias)
                         onEvent(AutofillItemSelected(created.toAutofillItem()))
                     }
                     is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}
                     is CreateAliasNavigation.SelectVault -> appNavigator.navigate(
                         destination = SelectVaultBottomsheet,
-                        route = SelectVaultBottomsheet.createNavRoute(cevent.shareId)
+                        route = SelectVaultBottomsheet.createNavRoute(event.shareId)
                     )
                 }
                 is BaseAliasNavigation.OnUpdateAliasEvent ->

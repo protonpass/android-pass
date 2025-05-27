@@ -144,13 +144,13 @@ internal fun NavGraphBuilder.passkeyCredentialCreationNavGraph(
         canAddMailbox = false,
         onNavigate = { destination ->
             when (destination) {
-                is BaseAliasNavigation.OnCreateAliasEvent -> when (val cevent = destination.event) {
+                is BaseAliasNavigation.OnCreateAliasEvent -> when (val event = destination.event) {
                     is CreateAliasNavigation.Created ->
                         throw IllegalStateException("Cannot create alias from PasskeyCredentialCreation")
                     is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}
                     is CreateAliasNavigation.SelectVault -> appNavigator.navigate(
                         destination = SelectVaultBottomsheet,
-                        route = SelectVaultBottomsheet.createNavRoute(cevent.shareId)
+                        route = SelectVaultBottomsheet.createNavRoute(event.shareId)
                     )
                 }
                 is BaseAliasNavigation.OnUpdateAliasEvent ->

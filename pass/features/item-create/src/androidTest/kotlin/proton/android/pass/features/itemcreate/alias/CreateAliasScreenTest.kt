@@ -231,7 +231,7 @@ class CreateAliasScreenTest {
                     CreateAliasScreen(
                         selectVault = null,
                         onNavigate = {
-                            if (it == CreateAliasNavigation.CloseScreen) {
+                            if (it == BaseAliasNavigation.CloseScreen) {
                                 checker.call()
                             }
                         },

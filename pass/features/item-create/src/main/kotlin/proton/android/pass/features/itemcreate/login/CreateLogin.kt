@@ -33,10 +33,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.OneTimeLaunchedEffect
 import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
@@ -44,7 +48,10 @@ import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.common.ShareError.EmptyShareList
 import proton.android.pass.features.itemcreate.common.ShareError.SharesNotAvailable
 import proton.android.pass.features.itemcreate.common.ShareUiState
+import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
+import proton.android.pass.features.itemcreate.custom.createupdate.ui.DatePickerModal
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.AddAttachment
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.CustomFieldOptions
@@ -73,6 +80,7 @@ fun CreateLoginScreen(
     }
     val uiState by viewModel.createLoginUiState.collectAsStateWithLifecycle()
 
+    var showDatePickerForField: Option<CustomFieldIdentifier> by remember { mutableStateOf(None) }
     var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
     PerformActionAfterKeyboardHide(
         action = actionAfterKeyboardHide,
@@ -185,8 +193,11 @@ fun CreateLoginScreen(
                                     isFocused = event.isFocused
                                 )
 
-                            is CustomFieldEvent.OnFieldClick -> {
-                                // Currently only supported by date field
+                            is CustomFieldEvent.OnFieldClick -> when (event.field.type) {
+                                CustomFieldType.Date -> {
+                                    showDatePickerForField = Some(event.field)
+                                }
+                                else -> throw IllegalStateException("Unhandled action")
                             }
                         }
                     }
@@ -301,6 +312,17 @@ fun CreateLoginScreen(
                 actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.CloseScreen) }
             }
         )
+        showDatePickerForField.value()?.let { fieldIdentifier ->
+            val selectedDate = viewModel.loginItemFormState
+                .customFields[fieldIdentifier.index] as UICustomFieldContent.Date
+            DatePickerModal(
+                selectedDate = selectedDate.value,
+                onDateSelected = {
+                    viewModel.onCustomFieldChange(fieldIdentifier, it.toString())
+                },
+                onDismiss = { showDatePickerForField = None }
+            )
+        }
     }
 
     ItemSavedLaunchedEffect(

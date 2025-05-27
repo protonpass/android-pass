@@ -41,9 +41,8 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
-import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation.AddAttachment
-import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation.DeleteAllAttachments
-import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation.OpenDraftAttachmentOptions
+import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation.Created
+import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation.SelectVault
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.common.ShareError.EmptyShareList
 import proton.android.pass.features.itemcreate.common.ShareError.SharesNotAvailable
@@ -56,7 +55,7 @@ fun CreateAliasScreen(
     modifier: Modifier = Modifier,
     selectVault: ShareId?,
     canUseAttachments: Boolean,
-    onNavigate: (CreateAliasNavigation) -> Unit,
+    onNavigate: (BaseAliasNavigation) -> Unit,
     viewModel: CreateAliasViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -80,7 +79,7 @@ fun CreateAliasScreen(
             showConfirmDialog = !showConfirmDialog
         } else {
             viewModel.clearDraftData()
-            actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.CloseScreen) }
+            actionAfterKeyboardHide = { onNavigate(BaseAliasNavigation.CloseScreen) }
         }
     }
     BackHandler {
@@ -89,7 +88,7 @@ fun CreateAliasScreen(
 
     LaunchedEffect(uiState.baseAliasUiState.closeScreenEvent) {
         if (uiState.baseAliasUiState.closeScreenEvent is CloseScreenEvent.Close) {
-            actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.CloseScreen) }
+            actionAfterKeyboardHide = { onNavigate(BaseAliasNavigation.CloseScreen) }
         }
     }
     val (showVaultSelector, selectedVault) = when (val shares = uiState.shareUiState) {
@@ -100,7 +99,7 @@ fun CreateAliasScreen(
             if (shares.shareError == EmptyShareList || shares.shareError == SharesNotAvailable) {
                 viewModel.onEmitSnackbarMessage(AliasSnackbarMessage.InitError)
                 LaunchedEffect(Unit) {
-                    actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.CloseScreen) }
+                    actionAfterKeyboardHide = { onNavigate(BaseAliasNavigation.CloseScreen) }
                 }
             }
             false to null
@@ -130,19 +129,20 @@ fun CreateAliasScreen(
                     is AliasContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
                     is AliasContentUiEvent.OnVaultSelect ->
                         actionAfterKeyboardHide =
-                            { onNavigate(CreateAliasNavigation.SelectVault(event.shareId)) }
+                            { onNavigate(BaseAliasNavigation.OnCreateAliasEvent(SelectVault(event.shareId))) }
 
                     is AliasContentUiEvent.OnPrefixChange -> viewModel.onPrefixChange(event.prefix)
                     is AliasContentUiEvent.OnUpgrade ->
-                        actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.Upgrade) }
+                        actionAfterKeyboardHide = { onNavigate(BaseAliasNavigation.Upgrade) }
                     is AliasContentUiEvent.OnSLNoteChange -> viewModel.onSLNoteChange(event.newSLNote)
                     is AliasContentUiEvent.OnSenderNameChange -> viewModel.onSenderNameChange(event.value)
                     AliasContentUiEvent.OnSlNoteInfoClick -> Unit
                     is AliasContentUiEvent.OnAttachmentEvent -> {
                         when (event.event) {
-                            AttachmentContentEvent.OnAddAttachment -> onNavigate(AddAttachment)
+                            AttachmentContentEvent.OnAddAttachment ->
+                                onNavigate(BaseAliasNavigation.AddAttachment)
                             AttachmentContentEvent.OnDeleteAllAttachments -> onNavigate(
-                                DeleteAllAttachments(
+                                BaseAliasNavigation.DeleteAllAttachments(
                                     uiState.baseAliasUiState.attachmentsState.allToUnlink
                                 )
                             )
@@ -152,8 +152,9 @@ fun CreateAliasScreen(
                                     uri = event.event.uri,
                                     mimetype = event.event.mimetype
                                 )
-                            is AttachmentContentEvent.OnDraftAttachmentOptions ->
-                                onNavigate(OpenDraftAttachmentOptions(event.event.uri))
+                            is AttachmentContentEvent.OnDraftAttachmentOptions -> onNavigate(
+                                BaseAliasNavigation.OpenDraftAttachmentOptions(event.event.uri)
+                            )
                             is AttachmentContentEvent.OnAttachmentOpen,
                             is AttachmentContentEvent.OnAttachmentOptions ->
                                 throw IllegalStateException("Action not allowed: $event")
@@ -162,7 +163,7 @@ fun CreateAliasScreen(
                                 viewModel.retryUploadDraftAttachment(event.event.metadata)
 
                             AttachmentContentEvent.UpsellAttachments ->
-                                onNavigate(CreateAliasNavigation.UpsellAttachments)
+                                onNavigate(BaseAliasNavigation.UpsellAttachments)
                         }
                     }
 
@@ -173,9 +174,9 @@ fun CreateAliasScreen(
                         viewModel.dismissAdvancedOptionsBanner()
 
                     AliasContentUiEvent.OnMailboxSelect ->
-                        onNavigate(CreateAliasNavigation.SelectMailbox)
+                        onNavigate(BaseAliasNavigation.SelectMailbox)
                     AliasContentUiEvent.OnSuffixSelect ->
-                        onNavigate(CreateAliasNavigation.SelectSuffix)
+                        onNavigate(BaseAliasNavigation.SelectSuffix)
                 }
             }
         )
@@ -188,7 +189,7 @@ fun CreateAliasScreen(
             onConfirm = {
                 showConfirmDialog = false
                 viewModel.clearDraftData()
-                actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.CloseScreen) }
+                actionAfterKeyboardHide = { onNavigate(BaseAliasNavigation.CloseScreen) }
             }
         )
     }
@@ -199,7 +200,7 @@ fun CreateAliasScreen(
         onSuccess = { shareId, itemId, model ->
             viewModel.clearDraftData()
             val aliasEmail = (model.contents as ItemContents.Alias).aliasEmail
-            val event = CreateAliasNavigation.Created(shareId, itemId, aliasEmail)
+            val event = BaseAliasNavigation.OnCreateAliasEvent(Created(shareId, itemId, aliasEmail))
             actionAfterKeyboardHide = { onNavigate(event) }
         }
     )

@@ -24,7 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation
+import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation
 import proton.android.pass.features.itemcreate.alias.mailboxes.presentation.SelectMailboxesEvent
 import proton.android.pass.features.itemcreate.alias.mailboxes.presentation.SelectMailboxesViewModel
 
@@ -33,14 +33,14 @@ internal fun SelectMailboxesBottomsheet(
     modifier: Modifier = Modifier,
     viewModel: SelectMailboxesViewModel = hiltViewModel(),
     canAddMailbox: Boolean,
-    onNavigate: (CreateAliasNavigation) -> Unit
+    onNavigate: (BaseAliasNavigation) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(uiState.event) {
         when (uiState.event) {
             SelectMailboxesEvent.AddMailbox ->
-                onNavigate(CreateAliasNavigation.AddMailbox)
+                onNavigate(BaseAliasNavigation.AddMailbox)
 
             SelectMailboxesEvent.Idle -> {}
         }

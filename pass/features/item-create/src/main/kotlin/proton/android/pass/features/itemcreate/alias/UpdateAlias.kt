@@ -43,10 +43,8 @@ import proton.android.pass.composecomponents.impl.dialogs.PassInfoDialog
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
-import proton.android.pass.features.itemcreate.alias.UpdateAliasNavigation.AddAttachment
-import proton.android.pass.features.itemcreate.alias.UpdateAliasNavigation.DeleteAllAttachments
 import proton.android.pass.features.itemcreate.alias.UpdateAliasNavigation.OpenAttachmentOptions
-import proton.android.pass.features.itemcreate.alias.UpdateAliasNavigation.OpenDraftAttachmentOptions
+import proton.android.pass.features.itemcreate.alias.UpdateAliasNavigation.Updated
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
@@ -56,7 +54,7 @@ import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardH
 @Composable
 fun UpdateAlias(
     modifier: Modifier = Modifier,
-    onNavigate: (UpdateAliasNavigation) -> Unit,
+    onNavigate: (BaseAliasNavigation) -> Unit,
     viewModel: UpdateAliasViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -74,7 +72,7 @@ fun UpdateAlias(
             showConfirmDialog = !showConfirmDialog
         } else {
             viewModel.clearDraftData()
-            actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.CloseScreen) }
+            actionAfterKeyboardHide = { onNavigate(BaseAliasNavigation.CloseScreen) }
         }
     }
     BackHandler {
@@ -83,7 +81,7 @@ fun UpdateAlias(
 
     LaunchedEffect(uiState.baseAliasUiState.closeScreenEvent) {
         if (uiState.baseAliasUiState.closeScreenEvent is CloseScreenEvent.Close) {
-            actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.CloseScreen) }
+            actionAfterKeyboardHide = { onNavigate(BaseAliasNavigation.CloseScreen) }
         }
     }
 
@@ -111,7 +109,7 @@ fun UpdateAlias(
 
                     is AliasContentUiEvent.OnTitleChange -> viewModel.onTitleChange(it.title)
                     AliasContentUiEvent.OnUpgrade ->
-                        actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.Upgrade) }
+                        actionAfterKeyboardHide = { onNavigate(BaseAliasNavigation.Upgrade) }
 
                     is AliasContentUiEvent.Submit -> viewModel.updateAlias()
                     is AliasContentUiEvent.OnPrefixChange,
@@ -127,7 +125,7 @@ fun UpdateAlias(
                     is AliasContentUiEvent.OnAttachmentEvent ->
                         when (val event = it.event) {
                             AttachmentContentEvent.OnAddAttachment ->
-                                onNavigate(AddAttachment)
+                                onNavigate(BaseAliasNavigation.AddAttachment)
 
                             is AttachmentContentEvent.OnAttachmentOpen ->
                                 viewModel.openAttachment(
@@ -137,16 +135,18 @@ fun UpdateAlias(
 
                             is AttachmentContentEvent.OnAttachmentOptions ->
                                 onNavigate(
-                                    OpenAttachmentOptions(
-                                        shareId = event.shareId,
-                                        itemId = event.itemId,
-                                        attachmentId = event.attachmentId
+                                    BaseAliasNavigation.OnUpdateAliasEvent(
+                                        OpenAttachmentOptions(
+                                            shareId = event.shareId,
+                                            itemId = event.itemId,
+                                            attachmentId = event.attachmentId
+                                        )
                                     )
                                 )
 
                             AttachmentContentEvent.OnDeleteAllAttachments ->
                                 onNavigate(
-                                    DeleteAllAttachments(
+                                    BaseAliasNavigation.DeleteAllAttachments(
                                         uiState.baseAliasUiState.attachmentsState.allToUnlink
                                     )
                                 )
@@ -159,13 +159,13 @@ fun UpdateAlias(
                                 )
 
                             is AttachmentContentEvent.OnDraftAttachmentOptions ->
-                                onNavigate(OpenDraftAttachmentOptions(event.uri))
+                                onNavigate(BaseAliasNavigation.OpenDraftAttachmentOptions(event.uri))
 
                             is AttachmentContentEvent.OnDraftAttachmentRetry ->
                                 viewModel.retryUploadDraftAttachment(event.metadata)
 
                             AttachmentContentEvent.UpsellAttachments ->
-                                onNavigate(UpdateAliasNavigation.UpsellAttachments)
+                                onNavigate(BaseAliasNavigation.UpsellAttachments)
                         }
 
                     AliasContentUiEvent.DismissAttachmentBanner ->
@@ -175,7 +175,7 @@ fun UpdateAlias(
                         viewModel.dismissAdvancedOptionsBanner()
 
                     AliasContentUiEvent.OnMailboxSelect ->
-                        onNavigate(UpdateAliasNavigation.SelectMailbox)
+                        onNavigate(BaseAliasNavigation.SelectMailbox)
                 }
             }
         )
@@ -188,7 +188,7 @@ fun UpdateAlias(
             onConfirm = {
                 showConfirmDialog = false
                 viewModel.clearDraftData()
-                actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.CloseScreen) }
+                actionAfterKeyboardHide = { onNavigate(BaseAliasNavigation.CloseScreen) }
             }
         )
     }
@@ -197,7 +197,11 @@ fun UpdateAlias(
         selectedShareId = uiState.selectedShareId,
         onSuccess = { shareId, itemId, _ ->
             viewModel.clearDraftData()
-            actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.Updated(shareId, itemId)) }
+            actionAfterKeyboardHide = {
+                onNavigate(
+                    BaseAliasNavigation.OnUpdateAliasEvent(Updated(shareId, itemId))
+                )
+            }
         }
     )
     InAppReviewTriggerLaunchedEffect(

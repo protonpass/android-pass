@@ -26,9 +26,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
-import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.features.itemcreate.alias.bottomsheet.CreateAliasBottomSheet
 import proton.android.pass.features.itemcreate.alias.mailboxes.ui.SelectMailboxesBottomsheet
 import proton.android.pass.features.itemcreate.alias.suffixes.ui.SelectSuffixBottomsheet
@@ -42,7 +40,6 @@ import proton.android.pass.navigation.api.ShowUpgradeNavArgId
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.toPath
-import java.net.URI
 
 object IsEditAliasNavArg : OptionalNavArgId {
     override val key = "isEdit"
@@ -103,36 +100,10 @@ data object AliasSelectMailboxBottomSheetNavItem : NavItem(
     navItemType = NavItemType.Bottomsheet
 )
 
-sealed interface CreateAliasNavigation {
-    data class CreatedFromBottomsheet(val alias: String) : CreateAliasNavigation
-    data class Created(
-        val shareId: ShareId,
-        val itemId: ItemId,
-        val alias: String
-    ) : CreateAliasNavigation
-
-    data object Upgrade : CreateAliasNavigation
-    data object CloseScreen : CreateAliasNavigation
-    data object CloseBottomsheet : CreateAliasNavigation
-    data object AddAttachment : CreateAliasNavigation
-    data object UpsellAttachments : CreateAliasNavigation
-    data object SelectSuffix : CreateAliasNavigation
-    data object SelectMailbox : CreateAliasNavigation
-    data object AddMailbox : CreateAliasNavigation
-
-    @JvmInline
-    value class DeleteAllAttachments(val attachmentIds: Set<AttachmentId>) : CreateAliasNavigation
-
-    @JvmInline
-    value class OpenDraftAttachmentOptions(val uri: URI) : CreateAliasNavigation
-
-    data class SelectVault(val shareId: ShareId) : CreateAliasNavigation
-}
-
 fun NavGraphBuilder.createAliasGraph(
     canUseAttachments: Boolean,
     canAddMailbox: Boolean,
-    onNavigate: (CreateAliasNavigation) -> Unit
+    onNavigate: (BaseAliasNavigation) -> Unit
 ) {
     composable(CreateAlias) { navBackStack ->
         val selectVault by navBackStack.savedStateHandle

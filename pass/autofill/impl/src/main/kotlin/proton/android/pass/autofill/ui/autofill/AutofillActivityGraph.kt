@@ -29,6 +29,7 @@ import proton.android.pass.autofill.extensions.isBrowser
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.extensions.toAutofillItem
 import proton.android.pass.autofill.heuristics.NodeCluster
+import proton.android.pass.autofill.ui.autofill.AutofillEvent.AutofillItemSelected
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsBottomSheetNavItem
@@ -40,6 +41,7 @@ import proton.android.pass.features.auth.EnterPin
 import proton.android.pass.features.auth.authGraph
 import proton.android.pass.features.itemcreate.alias.AliasSelectMailboxBottomSheetNavItem
 import proton.android.pass.features.itemcreate.alias.AliasSelectSuffixBottomSheetNavItem
+import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation
 import proton.android.pass.features.itemcreate.alias.CreateAlias
 import proton.android.pass.features.itemcreate.alias.CreateAliasBottomSheet
 import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation
@@ -382,36 +384,33 @@ internal fun NavGraphBuilder.autofillActivityGraph(
         canAddMailbox = false,
         onNavigate = {
             when (it) {
-                CreateAliasNavigation.CloseScreen -> appNavigator.navigateBack()
-                CreateAliasNavigation.CloseBottomsheet -> dismissBottomSheet {}
-                is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}
-
-                is CreateAliasNavigation.Created -> {
-                    val created = CreatedAlias(it.shareId, it.itemId, it.alias)
-                    onEvent(AutofillEvent.AutofillItemSelected(created.toAutofillItem()))
-                }
-
-                CreateAliasNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
-                is CreateAliasNavigation.SelectVault -> {
-                    appNavigator.navigate(
+                is BaseAliasNavigation.OnCreateAliasEvent -> when (val cevent = it.event) {
+                    is CreateAliasNavigation.Created -> {
+                        val created = CreatedAlias(cevent.shareId, cevent.itemId, cevent.alias)
+                        onEvent(AutofillItemSelected(created.toAutofillItem()))
+                    }
+                    is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}
+                    is CreateAliasNavigation.SelectVault -> appNavigator.navigate(
                         destination = SelectVaultBottomsheet,
-                        route = SelectVaultBottomsheet.createNavRoute(it.shareId)
+                        route = SelectVaultBottomsheet.createNavRoute(cevent.shareId)
                     )
                 }
-
-                CreateAliasNavigation.SelectMailbox ->
+                is BaseAliasNavigation.OnUpdateAliasEvent ->
+                    throw IllegalStateException("Cannot update alias from autofill")
+                BaseAliasNavigation.CloseScreen -> appNavigator.navigateBack()
+                BaseAliasNavigation.CloseBottomsheet -> dismissBottomSheet {}
+                BaseAliasNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
+                BaseAliasNavigation.SelectMailbox ->
                     appNavigator.navigate(AliasSelectMailboxBottomSheetNavItem)
-
-                CreateAliasNavigation.SelectSuffix ->
+                BaseAliasNavigation.SelectSuffix ->
                     appNavigator.navigate(AliasSelectSuffixBottomSheetNavItem)
-
-                CreateAliasNavigation.AddAttachment,
-                CreateAliasNavigation.UpsellAttachments,
-                is CreateAliasNavigation.DeleteAllAttachments,
-                is CreateAliasNavigation.OpenDraftAttachmentOptions ->
+                BaseAliasNavigation.AddAttachment,
+                BaseAliasNavigation.UpsellAttachments,
+                is BaseAliasNavigation.DeleteAllAttachments,
+                is BaseAliasNavigation.OpenDraftAttachmentOptions ->
                     throw IllegalStateException("Cannot use attachments from autofill")
 
-                CreateAliasNavigation.AddMailbox ->
+                BaseAliasNavigation.AddMailbox ->
                     throw IllegalStateException("Cannot add mailbox from autofill")
             }
         }
@@ -423,7 +422,7 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                 BaseCreditCardNavigation.CloseScreen -> appNavigator.navigateBack()
                 is CreateCreditCardNavigation -> when (it) {
                     is CreateCreditCardNavigation.ItemCreated ->
-                        onEvent(AutofillEvent.AutofillItemSelected(it.itemUiModel.toAutoFillItem()))
+                        onEvent(AutofillItemSelected(it.itemUiModel.toAutoFillItem()))
 
                     is CreateCreditCardNavigation.SelectVault -> appNavigator.navigate(
                         destination = SelectVaultBottomsheet,
@@ -459,7 +458,7 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                     )
 
                 is CreateIdentityNavigation.ItemCreated ->
-                    onEvent(AutofillEvent.AutofillItemSelected(it.itemUiModel.toAutoFillItem()))
+                    onEvent(AutofillItemSelected(it.itemUiModel.toAutoFillItem()))
 
                 is CreateIdentityNavigation.SelectVault -> appNavigator.navigate(
                     destination = SelectVaultBottomsheet,

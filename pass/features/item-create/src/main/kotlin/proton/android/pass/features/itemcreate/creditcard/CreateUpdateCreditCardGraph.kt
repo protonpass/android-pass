@@ -19,16 +19,21 @@
 package proton.android.pass.features.itemcreate.creditcard
 
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation
+import proton.android.pass.features.itemcreate.alias.createAliasGraph
+import proton.android.pass.features.itemcreate.alias.updateAliasGraph
 
-fun NavGraphBuilder.createUpdateCreditCardGraph(
+fun NavGraphBuilder.createUpdateAliasGraph(
     canUseAttachments: Boolean,
-    onNavigate: (BaseCreditCardNavigation) -> Unit
+    canAddMailbox: Boolean,
+    onNavigate: (BaseAliasNavigation) -> Unit
 ) {
-    createCreditCardGraph(
+    createAliasGraph(
         canUseAttachments = canUseAttachments,
+        canAddMailbox = canAddMailbox,
         onNavigate = onNavigate
     )
-    updateCreditCardGraph(
+    updateAliasGraph(
         onNavigate = onNavigate
     )
 }

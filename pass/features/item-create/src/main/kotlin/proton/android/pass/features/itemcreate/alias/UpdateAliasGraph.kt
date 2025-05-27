@@ -23,11 +23,9 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
-import java.net.URI
 
 object EditAlias : NavItem(
     baseRoute = "alias/edit",
@@ -43,31 +41,10 @@ object EditAlias : NavItem(
     ExperimentalMaterialApi::class,
     ExperimentalComposeUiApi::class
 )
-fun NavGraphBuilder.updateAliasGraph(onNavigate: (UpdateAliasNavigation) -> Unit) {
+fun NavGraphBuilder.updateAliasGraph(onNavigate: (BaseAliasNavigation) -> Unit) {
     composable(EditAlias) {
         UpdateAlias(
             onNavigate = onNavigate
         )
     }
-}
-
-sealed interface UpdateAliasNavigation {
-    data class Updated(val shareId: ShareId, val itemId: ItemId) : UpdateAliasNavigation
-    data object Upgrade : UpdateAliasNavigation
-    data object CloseScreen : UpdateAliasNavigation
-    data object AddAttachment : UpdateAliasNavigation
-    data object UpsellAttachments : UpdateAliasNavigation
-    data object SelectMailbox : UpdateAliasNavigation
-
-    data class OpenAttachmentOptions(
-        val shareId: ShareId,
-        val itemId: ItemId,
-        val attachmentId: AttachmentId
-    ) : UpdateAliasNavigation
-
-    @JvmInline
-    value class DeleteAllAttachments(val attachmentIds: Set<AttachmentId>) : UpdateAliasNavigation
-
-    @JvmInline
-    value class OpenDraftAttachmentOptions(val uri: URI) : UpdateAliasNavigation
 }

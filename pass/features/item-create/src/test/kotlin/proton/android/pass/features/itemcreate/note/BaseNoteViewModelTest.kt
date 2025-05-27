@@ -24,6 +24,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
@@ -59,7 +60,8 @@ internal class BaseNoteViewModelTest {
             savedStateHandleProvider = savedStateHandleProvider,
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
             customFieldHandler = CustomFieldHandlerImpl(TestEncryptionContextProvider()),
-            getUserPlan = TestGetUserPlan()
+            getUserPlan = TestGetUserPlan(),
+            clipboardManager = TestClipboardManager()
         ) {}
     }
 

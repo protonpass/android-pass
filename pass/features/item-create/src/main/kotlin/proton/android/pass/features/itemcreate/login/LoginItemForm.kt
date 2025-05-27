@@ -20,7 +20,6 @@ package proton.android.pass.features.itemcreate.login
 
 import android.content.pm.PackageManager
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -114,6 +113,7 @@ internal fun LoginItemForm(
                 CustomFieldType.Totp -> AddTotp
                 else -> NoOption
             }
+
             LoginField.Title,
             null -> NoOption
         }
@@ -124,8 +124,7 @@ internal fun LoginItemForm(
             modifier = Modifier
                 .testTag(LoginFormTag.LAZY_COLUMN)
                 .fillMaxWidth()
-                .padding(all = Spacing.medium),
-            verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
+                .padding(horizontal = Spacing.medium)
         ) {
             item {
                 AnimatedVisibility(isFileAttachmentsEnabled && displayFileAttachmentsOnboarding) {
@@ -137,6 +136,7 @@ internal fun LoginItemForm(
             item {
                 TitleSection(
                     modifier = Modifier
+                        .padding(bottom = Spacing.small)
                         .roundedContainerNorm()
                         .padding(
                             start = Spacing.medium,
@@ -156,6 +156,7 @@ internal fun LoginItemForm(
             if (passkeyState is Some) {
                 item {
                     PasskeyEditRow(
+                        modifier = Modifier.padding(vertical = Spacing.extraSmall),
                         domain = passkeyState.value.domain,
                         username = passkeyState.value.username,
                         canDelete = false,
@@ -167,6 +168,7 @@ internal fun LoginItemForm(
             if (loginItemFormState.hasPasskeys) {
                 item {
                     PasskeysSection(
+                        modifier = Modifier.padding(vertical = Spacing.extraSmall),
                         passkeys = loginItemFormState.passkeys.toImmutableList(),
                         onEvent = onEvent
                     )
@@ -175,6 +177,7 @@ internal fun LoginItemForm(
 
             item {
                 MainLoginSection(
+                    modifier = Modifier.padding(vertical = Spacing.extraSmall),
                     loginItemFormState = loginItemFormState,
                     canUpdateUsername = canUpdateUsername,
                     selectedShareId = selectedShareId,
@@ -192,6 +195,7 @@ internal fun LoginItemForm(
 
             item {
                 WebsitesSection(
+                    modifier = Modifier.padding(vertical = Spacing.extraSmall),
                     websites = loginItemFormState.urls.toImmutableList(),
                     isEditAllowed = isEditAllowed,
                     websitesWithErrors = websitesWithErrors,
@@ -202,6 +206,7 @@ internal fun LoginItemForm(
 
             item {
                 SimpleNoteSection(
+                    modifier = Modifier.padding(vertical = Spacing.extraSmall),
                     value = loginItemFormState.note,
                     enabled = isEditAllowed,
                     onChange = { onEvent(OnNoteChange(it)) }
@@ -209,6 +214,7 @@ internal fun LoginItemForm(
             }
 
             customFieldsList(
+                modifier = Modifier.padding(vertical = Spacing.extraSmall),
                 customFields = loginItemFormState.customFields,
                 enabled = isEditAllowed,
                 errors = customFieldValidationErrors.toPersistentSet(),
@@ -223,6 +229,7 @@ internal fun LoginItemForm(
             if (isUpdate) {
                 item {
                     LinkedAppsListSection(
+                        modifier = Modifier.padding(vertical = Spacing.extraSmall),
                         packageInfoUiSet = loginItemFormState.packageInfoSet.toImmutableSet(),
                         isEditable = true,
                         onLinkedAppDelete = { onEvent(OnLinkedAppDelete(it)) }
@@ -233,6 +240,7 @@ internal fun LoginItemForm(
             if (isFileAttachmentsEnabled) {
                 item {
                     AttachmentSection(
+                        modifier = Modifier.padding(vertical = Spacing.extraSmall),
                         attachmentsState = attachmentsState,
                         isDetail = false,
                         itemColors = passItemColors(ItemCategory.Login),

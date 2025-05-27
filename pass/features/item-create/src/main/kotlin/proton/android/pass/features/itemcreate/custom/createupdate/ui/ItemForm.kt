@@ -21,9 +21,7 @@ package proton.android.pass.features.itemcreate.custom.createupdate.ui
 import android.content.pm.PackageManager
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -105,14 +103,10 @@ internal fun ItemForm(
         LazyColumn(state = lazyListState) {
             item {
                 AnimatedVisibility(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = Spacing.medium),
                     visible = shouldShowAttachmentBanner
                 ) {
-                    AttachmentBanner(
-                        modifier = Modifier
-                            .padding(horizontal = Spacing.medium)
-                            .padding(bottom = Spacing.mediumSmall)
-                    ) {
+                    AttachmentBanner(Modifier.padding(bottom = Spacing.mediumSmall)) {
                         onEvent(ItemContentEvent.DismissAttachmentBanner)
                     }
                 }
@@ -120,8 +114,8 @@ internal fun ItemForm(
             item {
                 TitleSection(
                     modifier = Modifier
-                        .padding(vertical = Spacing.small)
                         .padding(horizontal = Spacing.medium)
+                        .padding(bottom = Spacing.extraSmall)
                         .roundedContainerNorm()
                         .padding(
                             start = Spacing.medium,
@@ -146,10 +140,7 @@ internal fun ItemForm(
                 ItemStaticFields.Custom -> {}
                 is ItemStaticFields.SSHKey -> item {
                     SSHKeyContent(
-                        modifier = Modifier.padding(
-                            vertical = Spacing.small,
-                            horizontal = Spacing.medium
-                        ),
+                        modifier = Modifier.padding(horizontal = Spacing.medium).padding(vertical = Spacing.extraSmall),
                         itemStaticFields = itemFormState.itemStaticFields,
                         isEditAllowed = itemSharedProperties.isFormEnabled,
                         onEvent = onEvent
@@ -158,10 +149,7 @@ internal fun ItemForm(
 
                 is ItemStaticFields.WifiNetwork -> item {
                     WifiNetworkContent(
-                        modifier = Modifier.padding(
-                            vertical = Spacing.small,
-                            horizontal = Spacing.medium
-                        ),
+                        modifier = Modifier.padding(horizontal = Spacing.medium).padding(vertical = Spacing.extraSmall),
                         itemStaticFields = itemFormState.itemStaticFields,
                         isEditAllowed = itemSharedProperties.isFormEnabled,
                         onEvent = onEvent
@@ -170,7 +158,7 @@ internal fun ItemForm(
             }
 
             customFieldsList(
-                modifier = Modifier.padding(horizontal = Spacing.medium),
+                modifier = Modifier.padding(horizontal = Spacing.medium).padding(vertical = Spacing.extraSmall),
                 customFields = itemFormState.customFieldList,
                 enabled = itemSharedProperties.isFormEnabled,
                 errors = itemSharedProperties.validationErrors
@@ -203,7 +191,7 @@ internal fun ItemForm(
                 }
 
                 customFieldsList(
-                    modifier = Modifier.padding(horizontal = Spacing.medium),
+                    modifier = Modifier.padding(horizontal = Spacing.medium).padding(vertical = Spacing.extraSmall),
                     customFields = section.customFields,
                     enabled = itemSharedProperties.isFormEnabled,
                     errors = itemSharedProperties.validationErrors
@@ -218,27 +206,20 @@ internal fun ItemForm(
                 )
             }
             item {
-                Column(
-                    modifier = Modifier.padding(
-                        vertical = Spacing.small,
-                        horizontal = Spacing.medium
-                    ),
-                    verticalArrangement = Arrangement.spacedBy(Spacing.medium)
-                ) {
-                    PassDivider()
-                    AddSectionButton(
-                        isEnabled = itemSharedProperties.isFormEnabled,
-                        passItemColors = passItemColors(ItemCategory.Custom),
-                        onClick = { onEvent(ItemContentEvent.OnAddSection) }
-                    )
-                }
+                PassDivider(
+                    modifier = Modifier.padding(horizontal = Spacing.medium).padding(vertical = Spacing.extraSmall)
+                )
+                AddSectionButton(
+                    modifier = Modifier.padding(horizontal = Spacing.medium).padding(vertical = Spacing.extraSmall),
+                    isEnabled = itemSharedProperties.isFormEnabled,
+                    passItemColors = passItemColors(ItemCategory.Custom),
+                    onClick = { onEvent(ItemContentEvent.OnAddSection) }
+                )
             }
             if (itemSharedProperties.showFileAttachments) {
                 item {
                     AttachmentSection(
-                        modifier = Modifier
-                            .padding(vertical = Spacing.small)
-                            .padding(horizontal = Spacing.medium),
+                        modifier = Modifier.padding(horizontal = Spacing.medium).padding(vertical = Spacing.extraSmall),
                         attachmentsState = itemSharedProperties.attachmentsState,
                         isDetail = false,
                         itemColors = passItemColors(ItemCategory.Custom),

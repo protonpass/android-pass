@@ -26,6 +26,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -35,6 +36,8 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.combineN
@@ -44,6 +47,7 @@ import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.GetUserPlan
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
@@ -54,6 +58,7 @@ import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
 import proton.android.pass.features.itemcreate.common.ValidationError
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
 import proton.android.pass.preferences.FeatureFlag
@@ -63,6 +68,7 @@ import proton.android.pass.preferences.value
 import java.net.URI
 
 abstract class BaseNoteViewModel(
+    private val clipboardManager: ClipboardManager,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val attachmentsHandler: AttachmentsHandler,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
@@ -199,6 +205,22 @@ abstract class BaseNoteViewModel(
         }
     }
 
+    fun setTotp(navTotpUri: String, navTotpIndex: Int) {
+        onUserEditedContent()
+        val identifier = CustomFieldIdentifier(
+            index = navTotpIndex,
+            type = CustomFieldType.Totp
+        )
+        val updated = customFieldHandler.onCustomFieldValueChanged(
+            customFieldIdentifier = identifier,
+            customFieldList = noteItemFormState.customFields,
+            value = navTotpUri
+        )
+        noteItemFormMutableState = noteItemFormState.copy(
+            customFields = updated
+        )
+    }
+
     private fun onFieldRemoved(event: DraftFormFieldEvent.FieldRemoved) {
         val (_, index) = event
         noteItemFormMutableState = noteItemFormState.copy(
@@ -254,6 +276,11 @@ abstract class BaseNoteViewModel(
             isFocused = isFocused
         )
         noteItemFormMutableState = noteItemFormState.copy(customFields = customFields)
+        if (isFocused) {
+            focusedFieldState.update { field.some() }
+        } else {
+            focusedFieldState.update { None }
+        }
     }
 
     suspend fun isFileAttachmentsEnabled() = featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
@@ -280,5 +307,38 @@ abstract class BaseNoteViewModel(
                 errors.forEach { error -> remove(error) }
             }
         }
+    }
+
+    fun onPasteTotp() {
+        viewModelScope.launch(Dispatchers.IO) {
+            onUserEditedContent()
+            clipboardManager.getClipboardContent()
+                .onSuccess { clipboardContent ->
+                    withContext(Dispatchers.Main) {
+                        when (val field = focusedFieldState.value.value()) {
+                            is NoteField.CustomField -> {
+                                val sanitisedContent = clipboardContent
+                                    .replace(" ", "")
+                                    .replace("\n", "")
+                                val updated = customFieldHandler.onCustomFieldValueChanged(
+                                    customFieldIdentifier = field.field,
+                                    customFieldList = noteItemFormState.customFields,
+                                    value = sanitisedContent
+                                )
+                                noteItemFormMutableState = noteItemFormState.copy(
+                                    customFields = updated
+                                )
+                            }
+
+                            else -> {}
+                        }
+                    }
+                }
+                .onFailure { PassLogger.d(TAG, it, "Failed on getting clipboard content") }
+        }
+    }
+
+    companion object {
+        private const val TAG = "BaseNoteViewModel"
     }
 }

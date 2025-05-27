@@ -22,6 +22,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,6 +45,7 @@ import proton.android.pass.features.itemcreate.common.customfields.CustomFieldNa
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldNavigation.CustomFieldOptions
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
+import proton.android.pass.features.itemcreate.note.NoteField.CustomField
 import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.AddAttachment
 import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.DeleteAllAttachments
 import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.NoteCustomFieldNavigation
@@ -54,6 +56,8 @@ import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.OpenDra
 @Composable
 fun UpdateNote(
     modifier: Modifier = Modifier,
+    navTotpUri: String? = null,
+    navTotpIndex: Int? = null,
     onNavigate: (UpdateNoteNavigation) -> Unit,
     viewModel: UpdateNoteViewModel = hiltViewModel()
 ) {
@@ -63,7 +67,10 @@ fun UpdateNote(
         action = actionAfterKeyboardHide,
         clearAction = { actionAfterKeyboardHide = null }
     )
-
+    LaunchedEffect(navTotpUri) {
+        navTotpUri ?: return@LaunchedEffect
+        viewModel.setTotp(navTotpUri, navTotpIndex ?: -1)
+    }
     val noteUiState by viewModel.updateNoteUiState.collectAsStateWithLifecycle()
 
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
@@ -174,7 +181,7 @@ fun UpdateNote(
 
                             is CustomFieldEvent.FocusRequested ->
                                 viewModel.onFocusChange(
-                                    field = NoteField.CustomField(cevent.field),
+                                    field = CustomField(cevent.field),
                                     isFocused = cevent.isFocused
                                 )
 
@@ -186,6 +193,11 @@ fun UpdateNote(
 
                     NoteContentUiEvent.DismissAttachmentBanner ->
                         viewModel.dismissFileAttachmentsOnboardingBanner()
+
+                    is NoteContentUiEvent.OnScanTotp ->
+                        actionAfterKeyboardHide =
+                            { onNavigate(UpdateNoteNavigation.ScanTotp(it.index)) }
+                    NoteContentUiEvent.PasteTotp -> viewModel.onPasteTotp()
                 }
             }
         )

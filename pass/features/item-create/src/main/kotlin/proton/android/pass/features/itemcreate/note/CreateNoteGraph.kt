@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.itemcreate.note
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
@@ -57,14 +58,32 @@ object CreateNoteNavItem : NavItem(
     }
 }
 
+@Suppress("LongMethod")
 fun NavGraphBuilder.createNoteGraph(onNavigate: (CreateNoteNavigation) -> Unit) {
     composable(CreateNoteNavItem) { navBackStack ->
         val selectVault by navBackStack.savedStateHandle
             .getStateFlow<String?>(KEY_VAULT_SELECTED, null)
             .collectAsStateWithLifecycle()
 
+        val navTotpUri by navBackStack.savedStateHandle
+            .getStateFlow<String?>(TOTP_NAV_PARAMETER_KEY, null)
+            .collectAsStateWithLifecycle()
+
+        LaunchedEffect(navTotpUri) {
+            navBackStack.savedStateHandle.remove<String?>(TOTP_NAV_PARAMETER_KEY)
+        }
+
+        val navTotpIndex by navBackStack.savedStateHandle
+            .getStateFlow<Int?>(INDEX_NAV_PARAMETER_KEY, null)
+            .collectAsStateWithLifecycle()
+
+        LaunchedEffect(navTotpIndex) {
+            navBackStack.savedStateHandle.remove<Int?>(INDEX_NAV_PARAMETER_KEY)
+        }
         CreateNoteScreen(
             selectVault = selectVault.toOption().map { ShareId(it) }.value(),
+            navTotpUri = navTotpUri,
+            navTotpIndex = navTotpIndex,
             onNavigate = onNavigate
         )
     }
@@ -134,4 +153,7 @@ sealed interface CreateNoteNavigation {
 
     @JvmInline
     value class OpenImagePicker(val index: Option<Int>) : CreateNoteNavigation
+
+    @JvmInline
+    value class ScanTotp(val index: Option<Int>) : CreateNoteNavigation
 }

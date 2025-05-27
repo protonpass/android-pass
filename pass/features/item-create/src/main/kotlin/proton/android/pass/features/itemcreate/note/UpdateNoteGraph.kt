@@ -18,6 +18,9 @@
 
 package proton.android.pass.features.itemcreate.note
 
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
@@ -45,9 +48,29 @@ object UpdateNoteNavItem : NavItem(
     fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
 }
 
+@Suppress("LongMethod")
 fun NavGraphBuilder.updateNoteGraph(onNavigate: (UpdateNoteNavigation) -> Unit) {
-    composable(UpdateNoteNavItem) {
-        UpdateNote(onNavigate = onNavigate)
+    composable(UpdateNoteNavItem) { navBackStack ->
+        val navTotpUri by navBackStack.savedStateHandle
+            .getStateFlow<String?>(TOTP_NAV_PARAMETER_KEY, null)
+            .collectAsStateWithLifecycle()
+
+        LaunchedEffect(navTotpUri) {
+            navBackStack.savedStateHandle.remove<String?>(TOTP_NAV_PARAMETER_KEY)
+        }
+
+        val navTotpIndex by navBackStack.savedStateHandle
+            .getStateFlow<Int?>(INDEX_NAV_PARAMETER_KEY, null)
+            .collectAsStateWithLifecycle()
+
+        LaunchedEffect(navTotpIndex) {
+            navBackStack.savedStateHandle.remove<Int?>(INDEX_NAV_PARAMETER_KEY)
+        }
+        UpdateNote(
+            navTotpUri = navTotpUri,
+            navTotpIndex = navTotpIndex,
+            onNavigate = onNavigate
+        )
     }
     customFieldBottomSheetGraph(
         prefix = CustomFieldPrefix.UpdateNote,
@@ -119,4 +142,7 @@ sealed interface UpdateNoteNavigation {
 
     @JvmInline
     value class OpenImagePicker(val index: Option<Int>) : UpdateNoteNavigation
+
+    @JvmInline
+    value class ScanTotp(val index: Option<Int>) : UpdateNoteNavigation
 }

@@ -65,7 +65,7 @@ internal fun CustomContent(
             )
         }
     ) { padding ->
-        ItemForm(
+        CustomItemForm(
             modifier = Modifier.padding(padding),
             itemFormState = itemFormState,
             itemSharedProperties = itemSharedProperties,

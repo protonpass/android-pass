@@ -94,7 +94,7 @@ internal fun NoteContent(
             )
         }
     ) { padding ->
-        CreateNoteItemForm(
+        NoteItemForm(
             modifier = Modifier.padding(padding),
             noteItemFormState = noteItemFormState,
             focusedField = uiState.focusedField,

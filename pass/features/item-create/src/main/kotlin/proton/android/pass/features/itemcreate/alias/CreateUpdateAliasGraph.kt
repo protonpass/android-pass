@@ -16,24 +16,22 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.creditcard
+package proton.android.pass.features.itemcreate.alias
 
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation
-import proton.android.pass.features.itemcreate.alias.createAliasGraph
-import proton.android.pass.features.itemcreate.alias.updateAliasGraph
+import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation
+import proton.android.pass.features.itemcreate.creditcard.createCreditCardGraph
+import proton.android.pass.features.itemcreate.creditcard.updateCreditCardGraph
 
-fun NavGraphBuilder.createUpdateAliasGraph(
+fun NavGraphBuilder.createUpdateCreditCardGraph(
     canUseAttachments: Boolean,
-    canAddMailbox: Boolean,
-    onNavigate: (BaseAliasNavigation) -> Unit
+    onNavigate: (BaseCreditCardNavigation) -> Unit
 ) {
-    createAliasGraph(
+    createCreditCardGraph(
         canUseAttachments = canUseAttachments,
-        canAddMailbox = canAddMailbox,
         onNavigate = onNavigate
     )
-    updateAliasGraph(
+    updateCreditCardGraph(
         onNavigate = onNavigate
     )
 }

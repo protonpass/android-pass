@@ -26,7 +26,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
-import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation
+import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation
 import proton.android.pass.features.itemcreate.alias.suffixes.presentation.SelectSuffixEvent
 import proton.android.pass.features.itemcreate.alias.suffixes.presentation.SelectSuffixViewModel
 
@@ -34,7 +34,7 @@ import proton.android.pass.features.itemcreate.alias.suffixes.presentation.Selec
 fun SelectSuffixBottomsheet(
     modifier: Modifier = Modifier,
     viewModel: SelectSuffixViewModel = hiltViewModel(),
-    onNavigate: (CreateAliasNavigation) -> Unit
+    onNavigate: (BaseAliasNavigation) -> Unit
 ) {
     val context = LocalContext.current
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -42,7 +42,7 @@ fun SelectSuffixBottomsheet(
     LaunchedEffect(state.event) {
         when (state.event) {
             SelectSuffixEvent.DismissBottomsheet ->
-                onNavigate(CreateAliasNavigation.CloseBottomsheet)
+                onNavigate(BaseAliasNavigation.CloseBottomsheet)
 
             SelectSuffixEvent.Idle -> {}
         }
@@ -65,7 +65,7 @@ fun SelectSuffixBottomsheet(
                     viewModel.selectSuffix(it.suffix)
 
                 SelectSuffixUiEvent.Upgrade ->
-                    onNavigate(CreateAliasNavigation.Upgrade)
+                    onNavigate(BaseAliasNavigation.Upgrade)
             }
         }
     )

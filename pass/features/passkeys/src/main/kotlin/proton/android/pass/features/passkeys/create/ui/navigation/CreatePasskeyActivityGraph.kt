@@ -28,6 +28,7 @@ import proton.android.pass.features.auth.EnterPin
 import proton.android.pass.features.auth.authGraph
 import proton.android.pass.features.itemcreate.alias.AliasSelectMailboxBottomSheetNavItem
 import proton.android.pass.features.itemcreate.alias.AliasSelectSuffixBottomSheetNavItem
+import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation
 import proton.android.pass.features.itemcreate.alias.CreateAliasBottomSheet
 import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation
 import proton.android.pass.features.itemcreate.alias.createAliasGraph
@@ -323,37 +324,30 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
         canAddMailbox = false,
         onNavigate = {
             when (it) {
-                CreateAliasNavigation.CloseScreen -> appNavigator.navigateBack()
-                CreateAliasNavigation.CloseBottomsheet -> dismissBottomSheet {}
-
-                is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}
-
-                is CreateAliasNavigation.Created -> {
-                    throw IllegalStateException("Cannot create alias from CreatePasskey")
-                }
-
-                CreateAliasNavigation.Upgrade -> onNavigate(CreatePasskeyNavigation.Upgrade)
-                is CreateAliasNavigation.SelectVault -> {
-                    appNavigator.navigate(
+                is BaseAliasNavigation.OnCreateAliasEvent -> when (val cevent = it.event) {
+                    is CreateAliasNavigation.Created ->
+                        throw IllegalStateException("Cannot create alias from CreatePasskey")
+                    is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}
+                    is CreateAliasNavigation.SelectVault -> appNavigator.navigate(
                         destination = SelectVaultBottomsheet,
-                        route = SelectVaultBottomsheet.createNavRoute(it.shareId)
+                        route = SelectVaultBottomsheet.createNavRoute(cevent.shareId)
                     )
                 }
-
-                CreateAliasNavigation.SelectMailbox ->
+                is BaseAliasNavigation.OnUpdateAliasEvent ->
+                    throw IllegalStateException("Cannot update alias from CreatePasskey")
+                BaseAliasNavigation.CloseScreen -> appNavigator.navigateBack()
+                BaseAliasNavigation.CloseBottomsheet -> dismissBottomSheet {}
+                BaseAliasNavigation.Upgrade -> onNavigate(CreatePasskeyNavigation.Upgrade)
+                BaseAliasNavigation.SelectMailbox ->
                     appNavigator.navigate(AliasSelectMailboxBottomSheetNavItem)
-
-                CreateAliasNavigation.SelectSuffix ->
+                BaseAliasNavigation.SelectSuffix ->
                     appNavigator.navigate(AliasSelectSuffixBottomSheetNavItem)
-
-                CreateAliasNavigation.AddAttachment,
-                CreateAliasNavigation.UpsellAttachments,
-                is CreateAliasNavigation.OpenDraftAttachmentOptions,
-                is CreateAliasNavigation.DeleteAllAttachments -> {
+                BaseAliasNavigation.AddAttachment,
+                BaseAliasNavigation.UpsellAttachments,
+                is BaseAliasNavigation.OpenDraftAttachmentOptions,
+                is BaseAliasNavigation.DeleteAllAttachments ->
                     throw IllegalStateException("Cannot use attachments from CreatePasskey")
-                }
-
-                CreateAliasNavigation.AddMailbox ->
+                BaseAliasNavigation.AddMailbox ->
                     throw IllegalStateException("Cannot add mailbox from CreatePasskey")
             }
         }

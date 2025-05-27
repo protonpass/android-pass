@@ -46,11 +46,8 @@ import proton.android.pass.features.itemcreate.common.customfields.CustomFieldNa
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
 import proton.android.pass.features.itemcreate.note.NoteField.CustomField
-import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.AddAttachment
-import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.DeleteAllAttachments
-import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.NoteCustomFieldNavigation
+import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.NoteUpdated
 import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.OpenAttachmentOptions
-import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.OpenDraftAttachmentOptions
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -58,7 +55,7 @@ fun UpdateNote(
     modifier: Modifier = Modifier,
     navTotpUri: String? = null,
     navTotpIndex: Int? = null,
-    onNavigate: (UpdateNoteNavigation) -> Unit,
+    onNavigate: (BaseNoteNavigation) -> Unit,
     viewModel: UpdateNoteViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -79,7 +76,7 @@ fun UpdateNote(
             showConfirmDialog = !showConfirmDialog
         } else {
             viewModel.clearDraftData()
-            actionAfterKeyboardHide = { onNavigate(UpdateNoteNavigation.CloseScreen) }
+            actionAfterKeyboardHide = { onNavigate(BaseNoteNavigation.CloseScreen) }
         }
     }
     BackHandler {
@@ -99,7 +96,7 @@ fun UpdateNote(
                     NoteContentUiEvent.Back -> onExit()
                     NoteContentUiEvent.Upgrade ->
                         actionAfterKeyboardHide =
-                            { onNavigate(UpdateNoteNavigation.Upgrade) }
+                            { onNavigate(BaseNoteNavigation.Upgrade) }
                     is NoteContentUiEvent.OnNoteChange -> viewModel.onNoteChange(it.note)
                     is NoteContentUiEvent.OnTitleChange -> viewModel.onTitleChange(it.title)
                     is NoteContentUiEvent.OnVaultSelect -> {}
@@ -109,7 +106,7 @@ fun UpdateNote(
                             {
                                 when (val event = it.event) {
                                     AttachmentContentEvent.OnAddAttachment ->
-                                        onNavigate(AddAttachment)
+                                        onNavigate(BaseNoteNavigation.AddAttachment)
 
                                     is AttachmentContentEvent.OnAttachmentOpen ->
                                         viewModel.onAttachmentOpen(
@@ -119,16 +116,18 @@ fun UpdateNote(
 
                                     is AttachmentContentEvent.OnAttachmentOptions ->
                                         onNavigate(
-                                            OpenAttachmentOptions(
-                                                shareId = event.shareId,
-                                                itemId = event.itemId,
-                                                attachmentId = event.attachmentId
+                                            BaseNoteNavigation.OnUpdateNoteEvent(
+                                                OpenAttachmentOptions(
+                                                    shareId = event.shareId,
+                                                    itemId = event.itemId,
+                                                    attachmentId = event.attachmentId
+                                                )
                                             )
                                         )
 
                                     AttachmentContentEvent.OnDeleteAllAttachments ->
                                         onNavigate(
-                                            DeleteAllAttachments(
+                                            BaseNoteNavigation.DeleteAllAttachments(
                                                 noteUiState.baseNoteUiState.attachmentsState.allToUnlink
                                             )
                                         )
@@ -141,27 +140,31 @@ fun UpdateNote(
                                         )
 
                                     is AttachmentContentEvent.OnDraftAttachmentOptions ->
-                                        onNavigate(OpenDraftAttachmentOptions(event.uri))
+                                        onNavigate(
+                                            BaseNoteNavigation.OpenDraftAttachmentOptions(event.uri)
+                                        )
 
                                     is AttachmentContentEvent.OnDraftAttachmentRetry ->
                                         viewModel.retryUploadDraftAttachment(event.metadata)
 
                                     AttachmentContentEvent.UpsellAttachments ->
-                                        onNavigate(UpdateNoteNavigation.UpsellAttachments)
+                                        onNavigate(BaseNoteNavigation.UpsellAttachments)
                                 }
                             }
                     is NoteContentUiEvent.OnCustomFieldEvent -> {
                         when (val cevent = it.event) {
                             is CustomFieldEvent.OnAddField -> {
                                 actionAfterKeyboardHide = {
-                                    onNavigate(NoteCustomFieldNavigation(AddCustomField))
+                                    onNavigate(
+                                        BaseNoteNavigation.NoteCustomFieldNavigation(AddCustomField)
+                                    )
                                 }
                             }
 
                             is CustomFieldEvent.OnFieldOptions -> {
                                 actionAfterKeyboardHide = {
                                     onNavigate(
-                                        NoteCustomFieldNavigation(
+                                        BaseNoteNavigation.NoteCustomFieldNavigation(
                                             CustomFieldOptions(
                                                 currentValue = cevent.label,
                                                 index = cevent.field.index
@@ -177,7 +180,7 @@ fun UpdateNote(
 
                             CustomFieldEvent.Upgrade ->
                                 actionAfterKeyboardHide =
-                                    { onNavigate(UpdateNoteNavigation.Upgrade) }
+                                    { onNavigate(BaseNoteNavigation.Upgrade) }
 
                             is CustomFieldEvent.FocusRequested ->
                                 viewModel.onFocusChange(
@@ -196,7 +199,7 @@ fun UpdateNote(
 
                     is NoteContentUiEvent.OnScanTotp ->
                         actionAfterKeyboardHide =
-                            { onNavigate(UpdateNoteNavigation.ScanTotp(it.index)) }
+                            { onNavigate(BaseNoteNavigation.ScanTotp(it.index)) }
                     NoteContentUiEvent.PasteTotp -> viewModel.onPasteTotp()
                 }
             }
@@ -210,7 +213,7 @@ fun UpdateNote(
             onConfirm = {
                 showConfirmDialog = false
                 viewModel.clearDraftData()
-                actionAfterKeyboardHide = { onNavigate(UpdateNoteNavigation.CloseScreen) }
+                actionAfterKeyboardHide = { onNavigate(BaseNoteNavigation.CloseScreen) }
             }
         )
     }
@@ -220,7 +223,7 @@ fun UpdateNote(
         onSuccess = { shareId, itemId, _ ->
             viewModel.clearDraftData()
             actionAfterKeyboardHide =
-                { onNavigate(UpdateNoteNavigation.NoteUpdated(shareId, itemId)) }
+                { onNavigate(BaseNoteNavigation.OnUpdateNoteEvent(NoteUpdated(shareId, itemId))) }
         }
     )
     InAppReviewTriggerLaunchedEffect(

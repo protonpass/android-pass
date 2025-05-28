@@ -49,6 +49,7 @@ internal fun ItemDetailsContent(
                 shouldDisplayItemHistorySection = true,
                 shouldDisplayItemHistoryButton = canViewItemHistory,
                 shouldDisplayFileAttachments = isFileAttachmentsEnabled,
+                shouldDisplayCustomItems = isCustomItemEnabled,
                 topBar = {
                     ItemDetailsTopBar(
                         isLoading = false,

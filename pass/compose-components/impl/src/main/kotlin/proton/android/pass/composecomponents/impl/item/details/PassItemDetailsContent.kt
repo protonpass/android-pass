@@ -49,6 +49,7 @@ fun PassItemDetailsContent(
     shouldDisplayItemHistorySection: Boolean,
     shouldDisplayItemHistoryButton: Boolean,
     shouldDisplayFileAttachments: Boolean,
+    shouldDisplayCustomItems: Boolean,
     extraBottomSpacing: Dp = Spacing.none
 ) {
     Scaffold(
@@ -84,7 +85,8 @@ fun PassItemDetailsContent(
                 onEvent = onEvent,
                 shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
                 shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
-                shouldDisplayFileAttachments = shouldDisplayFileAttachments
+                shouldDisplayFileAttachments = shouldDisplayFileAttachments,
+                shouldDisplayCustomItems = shouldDisplayCustomItems
             )
 
             Spacer(

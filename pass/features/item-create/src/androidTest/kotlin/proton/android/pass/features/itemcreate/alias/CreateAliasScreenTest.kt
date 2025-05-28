@@ -146,7 +146,10 @@ class CreateAliasScreenTest {
                     CreateAliasScreen(
                         selectVault = null,
                         onNavigate = {
-                            if (it is CreateAliasNavigation.Created) {
+                            if (
+                                it is BaseAliasNavigation.OnCreateAliasEvent &&
+                                it.event is CreateAliasNavigation.Created
+                                ) {
                                 checker.call()
                             }
                         },

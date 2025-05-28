@@ -98,11 +98,6 @@
     <string name="password_score_vulnerable">Vulnerable</string>
     <string name="password_score_weak">Weak</string>
     <string name="password_score_strong">Strong</string>
-    <string name="passkey_detail_bottomsheet_title">Passkey</string>
-    <string name="passkey_detail_bottomsheet_username">Username</string>
-    <string name="passkey_detail_bottomsheet_domain">Domain</string>
-    <string name="passkey_detail_bottomsheet_key">Key</string>
-    <string name="passkey_detail_bottomsheet_created">Created</string>
     <string name="activity_in_last_two_weeks">Activity in the last 14 days</string>
 
     <string name="contacts">Contacts</string>

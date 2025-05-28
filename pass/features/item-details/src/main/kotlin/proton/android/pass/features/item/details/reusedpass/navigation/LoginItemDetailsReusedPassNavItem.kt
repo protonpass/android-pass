@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemdetail.login.reusedpass.navigation
+package proton.android.pass.features.item.details.reusedpass.navigation
 
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId

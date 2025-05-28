@@ -18,7 +18,6 @@
 
 package proton.android.pass.features.itemdetail
 
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ItemId
@@ -26,10 +25,7 @@ import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.features.itemdetail.common.CannotPerformActionDialogType
-import proton.android.pass.features.itemdetail.login.reusedpass.navigation.LoginItemDetailsReusedPassNavItem
-import proton.android.pass.features.itemdetail.login.reusedpass.ui.LoginItemDetailReusedPassScreen
 import proton.android.pass.navigation.api.OptionalNavArgId
-import proton.android.pass.navigation.api.composable
 
 sealed interface ItemDetailNavigation {
 
@@ -117,12 +113,4 @@ object ItemDetailScopeNavArgId : OptionalNavArgId {
     override val key: String = "itemDetailNavScope"
     override val navType: NavType<*> = NavType.EnumType(ItemDetailNavScope::class.java)
     override val default: Any = ItemDetailNavScope.Default
-}
-
-fun NavGraphBuilder.itemDetailGraph(onNavigate: (ItemDetailNavigation) -> Unit) {
-
-    composable(navItem = LoginItemDetailsReusedPassNavItem) {
-        LoginItemDetailReusedPassScreen(onNavigated = onNavigate)
-    }
-
 }

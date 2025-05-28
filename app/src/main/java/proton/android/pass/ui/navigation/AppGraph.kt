@@ -70,6 +70,7 @@ import proton.android.pass.features.item.details.detail.navigation.ItemDetailsNa
 import proton.android.pass.features.item.details.detailforbidden.navigation.ItemDetailsForbiddenNavItem
 import proton.android.pass.features.item.details.detailleave.navigation.ItemDetailsLeaveNavItem
 import proton.android.pass.features.item.details.detailmenu.navigation.ItemDetailsMenuNavItem
+import proton.android.pass.features.item.details.passkey.bottomsheet.navigation.ViewPasskeyDetailsBottomSheet
 import proton.android.pass.features.item.details.qrviewer.navigation.QRViewerNavItem
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
 import proton.android.pass.features.item.details.shared.navigation.itemDetailsNavGraph
@@ -151,8 +152,7 @@ import proton.android.pass.features.itemcreate.totp.CameraTotpNavItem
 import proton.android.pass.features.itemcreate.totp.PhotoPickerTotpNavItem
 import proton.android.pass.features.itemdetail.ItemDetailNavigation
 import proton.android.pass.features.itemdetail.itemDetailGraph
-import proton.android.pass.features.item.details.passkey.bottomsheet.navigation.ViewPasskeyDetailsBottomSheet
-import proton.android.pass.features.itemdetail.login.reusedpass.navigation.LoginItemDetailsReusedPassNavItem
+import proton.android.pass.features.item.details.reusedpass.navigation.LoginItemDetailsReusedPassNavItem
 import proton.android.pass.features.migrate.MigrateConfirmVault
 import proton.android.pass.features.migrate.MigrateModeValue
 import proton.android.pass.features.migrate.MigrateNavigation

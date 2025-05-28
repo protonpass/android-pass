@@ -58,6 +58,7 @@ internal fun PassNoteItemDetailSections(
     shouldDisplayItemHistorySection: Boolean,
     shouldDisplayItemHistoryButton: Boolean,
     shouldDisplayFileAttachments: Boolean,
+    shouldDisplayCustomItems: Boolean,
     attachmentsState: AttachmentsState,
     customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, Totp>,
     onEvent: (PassItemDetailsUiEvent) -> Unit
@@ -68,6 +69,7 @@ internal fun PassNoteItemDetailSections(
     ) {
         PassNoteItemDetailMainSection(
             note = note,
+            shouldDisplayCustomItems = shouldDisplayCustomItems,
             itemDiffs = itemDiffs
         )
 

@@ -26,14 +26,18 @@ import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.items.ItemCategory
 
 interface ItemDetailsHandler {
 
-    fun observeItemDetails(item: Item, source: ItemDetailsSource): Flow<ItemDetailState>
+    fun observeItemDetails(
+        item: Item,
+        source: ItemDetailsSource,
+        savedStateEntries: Map<String, Any?>
+    ): Flow<ItemDetailState>
 
     suspend fun onAttachmentOpen(contextHolder: ClassHolder<Context>, attachment: Attachment)
 

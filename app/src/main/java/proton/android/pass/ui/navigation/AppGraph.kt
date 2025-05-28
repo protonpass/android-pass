@@ -22,6 +22,7 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
+import proton.android.pass.commonuimodels.api.items.ItemDetailNavScope
 import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.account.Account
@@ -212,6 +213,7 @@ import proton.android.pass.features.security.center.report.navigation.SecurityCe
 import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassNavItem
 import proton.android.pass.features.security.center.sentinel.navigation.SecurityCenterSentinelNavItem
 import proton.android.pass.features.security.center.shared.navigation.SecurityCenterNavDestination
+import proton.android.pass.features.security.center.shared.navigation.SecurityCenterNavDestination.ItemDetails.Origin
 import proton.android.pass.features.security.center.shared.navigation.securityCenterNavGraph
 import proton.android.pass.features.security.center.verifyemail.navigation.SecurityCenterVerifyEmailNavItem
 import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassNavItem
@@ -1924,7 +1926,14 @@ fun NavGraphBuilder.appGraph(
                     destination = ItemDetailsNavItem,
                     route = ItemDetailsNavItem.createNavRoute(
                         shareId = destination.shareId,
-                        itemId = destination.itemId
+                        itemId = destination.itemId,
+                        scope = when (destination.origin) {
+                            Origin.Excluded -> ItemDetailNavScope.MonitorExcluded
+                            Origin.Missing2fa -> ItemDetailNavScope.MonitorMissing2fa
+                            Origin.Report -> ItemDetailNavScope.MonitorReport
+                            Origin.ReusedPassword -> ItemDetailNavScope.MonitorReusedPassword
+                            Origin.WeakPasswords -> ItemDetailNavScope.MonitorWeakPassword
+                        }
                     )
                 )
 

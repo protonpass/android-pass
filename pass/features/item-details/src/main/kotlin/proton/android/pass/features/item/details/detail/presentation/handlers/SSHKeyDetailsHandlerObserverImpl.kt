@@ -50,7 +50,8 @@ class SSHKeyDetailsHandlerObserverImpl @Inject constructor(
     override fun observe(
         share: Share,
         item: Item,
-        attachmentsState: AttachmentsState
+        attachmentsState: AttachmentsState,
+        savedStateEntries: Map<String, Any?>
     ): Flow<ItemDetailState> = combine(
         observeItemContents(item),
         observeTotps(item)

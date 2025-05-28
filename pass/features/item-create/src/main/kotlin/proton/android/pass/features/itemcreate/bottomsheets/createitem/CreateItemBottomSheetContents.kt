@@ -77,12 +77,18 @@ internal fun CreateItemBottomSheetContents(
                     onClick = { onNavigate(CreateAlias(shareId.toOption())) }
                 ).also(::add)
 
-                createCreditCard(
-                    onClick = { onNavigate(CreateCreditCard(shareId.toOption())) }
-                ).also(::add)
-
                 createNote(
                     onClick = { onNavigate(CreateNote(shareId.toOption())) }
+                ).also(::add)
+            }
+
+            createPassword(
+                onClick = { onNavigate(CreatePassword) }
+            ).also(::add)
+
+            if (canCreateItems) {
+                createCreditCard(
+                    onClick = { onNavigate(CreateCreditCard(shareId.toOption())) }
                 ).also(::add)
 
                 createIdentity(
@@ -95,10 +101,6 @@ internal fun CreateItemBottomSheetContents(
                     ).also(::add)
                 }
             }
-
-            createPassword(
-                onClick = { onNavigate(CreatePassword) }
-            ).also(::add)
         }
 
         CreateItemBottomSheetMode.AutofillLogin -> buildList {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemdetail.login.reusedpass.ui
+package proton.android.pass.features.item.details.reusedpass.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -37,20 +37,20 @@ import proton.android.pass.composecomponents.impl.item.LoginRow
 import proton.android.pass.composecomponents.impl.loading.Loading
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.features.itemdetail.ItemDetailNavigation
-import proton.android.pass.features.itemdetail.login.reusedpass.presentation.LoginItemDetailReusedPassState
+import proton.android.pass.features.item.details.reusedpass.presentation.LoginItemDetailReusedPassState
+import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
 
 @Composable
 internal fun LoginItemDetailReusedPassContent(
     modifier: Modifier = Modifier,
-    onNavigated: (ItemDetailNavigation) -> Unit,
+    onNavigated: (ItemDetailsNavDestination) -> Unit,
     state: LoginItemDetailReusedPassState
 ) = with(state) {
     Scaffold(
         modifier = modifier,
         topBar = {
             BackArrowTopAppBar(
-                onUpClick = { onNavigated(ItemDetailNavigation.CloseScreen) }
+                onUpClick = { onNavigated(ItemDetailsNavDestination.CloseScreen) }
             )
         }
     ) { innerPaddingValues ->

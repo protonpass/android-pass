@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.item.details.passkey.bottomsheet.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
@@ -32,18 +33,20 @@ import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.features.item.details.passkey.bottomsheet.presentation.PasskeyDetailBottomSheetContent
 import proton.android.pass.features.item.details.passkey.bottomsheet.presentation.PasskeyDetailBottomSheetEvent
 import proton.android.pass.features.item.details.passkey.bottomsheet.presentation.PasskeyDetailBottomSheetViewModel
+import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
 
 @Composable
 fun PasskeyDetailBottomSheet(
     modifier: Modifier = Modifier,
-    onDismiss: () -> Unit,
+    onNavigated: (ItemDetailsNavDestination) -> Unit,
     viewModel: PasskeyDetailBottomSheetViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    BackHandler(onBack = { onNavigated(ItemDetailsNavDestination.DismissBottomSheet) })
 
     LaunchedEffect(state.event) {
         when (state.event) {
-            PasskeyDetailBottomSheetEvent.Close -> onDismiss()
+            PasskeyDetailBottomSheetEvent.Close -> onNavigated(ItemDetailsNavDestination.DismissBottomSheet)
             PasskeyDetailBottomSheetEvent.Idle -> {}
         }
 

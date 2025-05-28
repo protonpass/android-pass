@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemdetail.login.passkey.bottomsheet.presentation
+package proton.android.pass.features.item.details.passkey.bottomsheet.presentation
 
 import androidx.compose.runtime.Stable
 import androidx.lifecycle.ViewModel
@@ -48,10 +48,10 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.features.itemdetail.login.passkey.bottomsheet.navigation.DirectPasskeyNavArgId
-import proton.android.pass.features.itemdetail.login.passkey.bottomsheet.navigation.PasskeyIdNavArgId
-import proton.android.pass.features.itemdetail.login.passkey.bottomsheet.navigation.ViewPasskeyDetailsMode
-import proton.android.pass.features.itemdetail.login.passkey.bottomsheet.navigation.ViewPasskeyDetailsModeNavArgId
+import proton.android.pass.features.item.details.passkey.bottomsheet.navigation.DirectPasskeyNavArgId
+import proton.android.pass.features.item.details.passkey.bottomsheet.navigation.PasskeyIdNavArgId
+import proton.android.pass.features.item.details.passkey.bottomsheet.navigation.ViewPasskeyDetailsMode
+import proton.android.pass.features.item.details.passkey.bottomsheet.navigation.ViewPasskeyDetailsModeNavArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder

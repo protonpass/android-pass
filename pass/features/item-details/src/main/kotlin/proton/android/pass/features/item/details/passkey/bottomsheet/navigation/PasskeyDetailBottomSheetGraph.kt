@@ -18,8 +18,6 @@
 
 package proton.android.pass.features.item.details.passkey.bottomsheet.navigation
 
-import androidx.activity.compose.BackHandler
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -27,13 +25,11 @@ import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.features.item.details.passkey.bottomsheet.ui.PasskeyDetailBottomSheet
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.navigation.api.OptionalNavArgId
-import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.toPath
 
 object PasskeyIdNavArgId : OptionalNavArgId {
@@ -99,12 +95,5 @@ object ViewPasskeyDetailsBottomSheet : NavItem(
         )
 
         append(params.toPath())
-    }
-}
-
-fun NavGraphBuilder.passkeyDetailBottomSheetGraph(onDismiss: () -> Unit) {
-    bottomSheet(ViewPasskeyDetailsBottomSheet) {
-        BackHandler(onBack = onDismiss)
-        PasskeyDetailBottomSheet(onDismiss = onDismiss)
     }
 }

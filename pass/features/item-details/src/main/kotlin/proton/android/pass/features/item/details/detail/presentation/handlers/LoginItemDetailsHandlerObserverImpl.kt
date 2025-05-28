@@ -31,6 +31,7 @@ import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCa
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.commonuimodels.api.items.ItemDetailNavScope
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.commonuimodels.api.items.LoginMonitorState
 import proton.android.pass.commonuimodels.api.items.LoginMonitorState.ReusedPasswordDisplayMode
@@ -47,11 +48,16 @@ import proton.android.pass.domain.Share
 import proton.android.pass.domain.Totp
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.entity.PackageInfo
+import proton.android.pass.features.item.details.detail.navigation.ItemDetailScopeNavArgId
+import proton.android.pass.features.item.details.detail.presentation.PassMonitorItemDetailFromMissing2FA
+import proton.android.pass.features.item.details.detail.presentation.PassMonitorItemDetailFromReusedPassword
+import proton.android.pass.features.item.details.detail.presentation.PassMonitorItemDetailFromWeakPassword
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.securitycenter.api.passwords.DuplicatedPasswordChecker
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
 import proton.android.pass.securitycenter.api.passwords.MissingTfaChecker
+import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
@@ -64,18 +70,25 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     private val passwordStrengthCalculator: PasswordStrengthCalculator,
     private val insecurePasswordChecker: InsecurePasswordChecker,
     private val duplicatedPasswordChecker: DuplicatedPasswordChecker,
-    private val missingTfaChecker: MissingTfaChecker
+    private val missingTfaChecker: MissingTfaChecker,
+    private val telemetryManager: TelemetryManager
 ) : ItemDetailsHandlerObserver<ItemContents.Login>(encryptionContextProvider, totpManager) {
 
     override fun observe(
         share: Share,
         item: Item,
-        attachmentsState: AttachmentsState
+        attachmentsState: AttachmentsState,
+        savedStateEntries: Map<String, Any?>
     ): Flow<ItemDetailState> = combine(
         observeItemContents(item),
         observePrimaryTotp(item),
         observeCustomFieldTotps(item),
-        observeLoginMonitorState(item),
+        observeLoginMonitorState(
+            item = item,
+            scope = savedStateEntries[ItemDetailScopeNavArgId.key]
+                ?.let { it as? ItemDetailNavScope }
+                ?: ItemDetailNavScope.Default
+        ),
         userPreferencesRepository.getUseFaviconsPreference()
     ) { loginItemContents, primaryTotp, customFieldTotps, loginMonitorState,
         useFaviconsPreference ->
@@ -105,7 +118,8 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         )
     }
 
-    private fun observeLoginMonitorState(item: Item) = flow {
+    private fun observeLoginMonitorState(item: Item, scope: ItemDetailNavScope) = flow {
+        sendTelemetry(scope)
         val insecurePasswordsReport = insecurePasswordChecker(listOf(item))
         val duplicatedPasswordsReport = duplicatedPasswordChecker(item)
         val missing2faReport = missingTfaChecker(listOf(item))
@@ -113,7 +127,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             duplicatedPasswordsReport.duplicationCount > REUSED_PASSWORD_DISPLAY_MODE_THRESHOLD
         val state = LoginMonitorState(
             isExcludedFromMonitor = item.hasSkippedHealthCheck,
-            navigationScope = TODO(),
+            navigationScope = scope,
             isPasswordInsecure = insecurePasswordsReport.hasInsecurePasswords,
             isPasswordReused = duplicatedPasswordsReport.hasDuplications,
             isMissingTwoFa = missing2faReport.isMissingTwoFa,
@@ -132,6 +146,24 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                 .toPersistentList()
         )
         emit(state)
+    }
+
+    private fun sendTelemetry(scope: ItemDetailNavScope) {
+        when (scope) {
+            ItemDetailNavScope.MonitorWeakPassword ->
+                telemetryManager.sendEvent(PassMonitorItemDetailFromWeakPassword)
+
+            ItemDetailNavScope.MonitorReusedPassword ->
+                telemetryManager.sendEvent(PassMonitorItemDetailFromReusedPassword)
+
+            ItemDetailNavScope.MonitorMissing2fa ->
+                telemetryManager.sendEvent(PassMonitorItemDetailFromMissing2FA)
+
+            ItemDetailNavScope.Default,
+            ItemDetailNavScope.MonitorExcluded,
+            ItemDetailNavScope.MonitorReport -> {
+            }
+        }
     }
 
     private fun observePrimaryTotp(item: Item): Flow<Totp?> = observeItemContents(item)
@@ -169,7 +201,8 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         mutableCustomFields.forEachIndexed { index, field ->
             val shouldBeRevealed = revealedHiddenFields[ItemSection.CustomField]
                 ?.any { it is ItemDetailsFieldType.Hidden.CustomField && it.index == index } == true
-            mutableCustomFields[index] = updateHiddenState(field, shouldBeRevealed, encryptionContextProvider)
+            mutableCustomFields[index] =
+                updateHiddenState(field, shouldBeRevealed, encryptionContextProvider)
         }
 
         return itemContents.copy(

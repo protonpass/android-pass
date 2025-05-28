@@ -153,7 +153,8 @@ class ItemHistoryRestoreViewModel @Inject constructor(
             revealedHiddenFieldsFlow = revealedRevisionHiddenFieldsFlow,
             itemDetailStateFlow = itemDetailsHandler.observeItemDetails(
                 item = item,
-                source = ItemDetailsSource.REVISION
+                source = ItemDetailsSource.REVISION,
+                savedStateEntries = emptyMap()
             ),
             itemDiffsFlow = revisionItemDiffsFlow
         )
@@ -184,7 +185,8 @@ class ItemHistoryRestoreViewModel @Inject constructor(
             revealedHiddenFieldsFlow = revealedCurrentHiddenFieldsFlow,
             itemDetailStateFlow = itemDetailsHandler.observeItemDetails(
                 item = item,
-                source = ItemDetailsSource.REVISION
+                source = ItemDetailsSource.REVISION,
+                savedStateEntries = emptyMap()
             ),
             itemDiffsFlow = currentItemDiffsFlow
         )

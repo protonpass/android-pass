@@ -53,7 +53,8 @@ abstract class ItemDetailsHandlerObserver<ITEM_CONTENTS : ItemContents>(
     abstract fun observe(
         share: Share,
         item: Item,
-        attachmentsState: AttachmentsState
+        attachmentsState: AttachmentsState,
+        savedStateEntries: Map<String, Any?>
     ): Flow<ItemDetailState>
 
     abstract fun updateHiddenFieldsContents(

@@ -76,6 +76,10 @@ class ItemDetailsViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
 
+    private val savedStateEntries: Map<String, Any?> = savedStateHandleProvider.get().let {
+        it.keys().associateWith { key -> it.get<Any?>(key) }
+    }
+
     private val itemFlow = observeItemById(shareId, itemId)
         .catch { error ->
             if (error is ItemNotFoundError) {
@@ -94,7 +98,7 @@ class ItemDetailsViewModel @Inject constructor(
     private val itemDetailsStateFlow = itemFlow.flatMapLatest { item ->
         combine(
             revealedHiddenFieldsFlow,
-            itemDetailsHandler.observeItemDetails(item, ItemDetailsSource.DETAIL)
+            itemDetailsHandler.observeItemDetails(item, ItemDetailsSource.DETAIL, savedStateEntries)
         ) { revealedHiddenFields, itemDetailState: ItemDetailState ->
             itemDetailState.update(
                 itemContents = itemDetailsHandler.updateItemDetailsContent(

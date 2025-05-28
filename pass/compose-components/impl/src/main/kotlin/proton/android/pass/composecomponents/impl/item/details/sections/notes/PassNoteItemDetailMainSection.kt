@@ -38,25 +38,42 @@ import proton.android.pass.domain.ItemDiffs
 internal fun PassNoteItemDetailMainSection(
     modifier: Modifier = Modifier,
     note: String,
+    shouldDisplayCustomItems: Boolean,
     itemDiffs: ItemDiffs.Note
 ) {
     if (note.isNotBlank()) {
-        SelectionContainer(modifier = modifier.contentDiff(itemDiffs.note)) {
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .applyIf(
-                        condition = itemDiffs.note == ItemDiffType.Field,
-                        ifTrue = { padding(all = Spacing.medium) }
-                    ),
+        if (shouldDisplayCustomItems) {
+            ExpandableText(
+                modifier = modifier.contentDiff(itemDiffs.note),
                 text = note,
-                style = ProtonTheme.typography.defaultNorm,
-                color = if (itemDiffs.note == ItemDiffType.Content) {
+                textModifier = Modifier.applyIf(
+                    condition = itemDiffs.note == ItemDiffType.Field,
+                    ifTrue = { padding(all = Spacing.medium) }
+                ),
+                textColor = if (itemDiffs.note == ItemDiffType.Content) {
                     PassTheme.colors.signalWarning
                 } else {
                     Color.Unspecified
                 }
             )
+        } else {
+            SelectionContainer(modifier = modifier.contentDiff(itemDiffs.note)) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .applyIf(
+                            condition = itemDiffs.note == ItemDiffType.Field,
+                            ifTrue = { padding(all = Spacing.medium) }
+                        ),
+                    text = note,
+                    style = ProtonTheme.typography.defaultNorm,
+                    color = if (itemDiffs.note == ItemDiffType.Content) {
+                        PassTheme.colors.signalWarning
+                    } else {
+                        Color.Unspecified
+                    }
+                )
+            }
         }
     }
 }

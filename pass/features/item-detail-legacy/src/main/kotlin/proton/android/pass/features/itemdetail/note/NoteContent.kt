@@ -19,10 +19,8 @@
 package proton.android.pass.features.itemdetail.note
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.expandHorizontally
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,16 +29,8 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextLayoutResult
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
@@ -53,15 +43,13 @@ import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.badge.CircledBadge
-import proton.android.pass.composecomponents.impl.buttons.TransparentTextButton
-import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.composecomponents.impl.item.details.sections.notes.ExpandableText
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.items.ItemCategory
-import proton.android.pass.features.itemdetail.R
 import proton.android.pass.features.itemdetail.common.ItemTitleInput
 import proton.android.pass.features.itemdetail.common.ItemTitleText
 import proton.android.pass.features.itemdetail.common.ThemeItemTitleProvider
@@ -149,56 +137,6 @@ fun NoteContent(
             shareId = itemUiModel.shareId,
             vaultId = share.vaultId
         )
-    }
-}
-
-@Composable
-fun ExpandableText(
-    modifier: Modifier = Modifier,
-    text: String,
-    minimizedMaxLines: Int = 10
-) {
-    if (text.isBlank()) return
-    var isExpanded by remember { mutableStateOf(false) }
-    var isTextOverflowing by remember { mutableStateOf(false) }
-    var textLayoutResult by remember { mutableStateOf<TextLayoutResult?>(null) }
-
-    Box(
-        modifier = modifier
-            .animateContentSize()
-            .roundedContainer(
-                backgroundColor = Color.Transparent,
-                borderColor = ProtonTheme.colors.separatorNorm
-            )
-    ) {
-        SelectionContainer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(Spacing.medium)
-        ) {
-            Text(
-                text = text,
-                maxLines = if (isExpanded) Int.MAX_VALUE else minimizedMaxLines,
-                overflow = TextOverflow.Ellipsis,
-                onTextLayout = { layoutResult ->
-                    textLayoutResult = layoutResult
-                    isTextOverflowing = layoutResult.hasVisualOverflow
-                },
-                style = ProtonTheme.typography.defaultNorm
-            )
-        }
-        if (isTextOverflowing || isExpanded) {
-            TransparentTextButton(
-                modifier = Modifier.align(Alignment.BottomEnd),
-                text = if (isExpanded) {
-                    stringResource(R.string.collapse_note_less)
-                } else {
-                    stringResource(R.string.expand_note_more)
-                },
-                color = PassTheme.colors.noteInteractionNormMajor2,
-                onClick = { isExpanded = !isExpanded }
-            )
-        }
     }
 }
 

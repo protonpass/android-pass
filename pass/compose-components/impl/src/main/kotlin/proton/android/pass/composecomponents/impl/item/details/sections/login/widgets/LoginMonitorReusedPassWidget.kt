@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemdetail.login.widgets
+package proton.android.pass.composecomponents.impl.item.details.sections.login.widgets
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -46,18 +46,16 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.commonuimodels.api.items.LoginMonitorState
+import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
-import proton.android.pass.features.itemdetail.R
-import proton.android.pass.features.itemdetail.login.LoginDetailEvent
-import proton.android.pass.features.itemdetail.login.LoginMonitorState
-import proton.android.pass.features.itemdetail.login.LoginMonitorWidget
-import proton.android.pass.composecomponents.impl.R as CompR
 
 private const val REUSED_LOGIN_ITEM_ICON_SIZE = 24
 private const val REUSED_LOGIN_ITEM_TITLE_MAX_LENGTH = 20
@@ -69,7 +67,7 @@ internal fun LoginMonitorReusedPassWidget(
     reusedPasswordCount: Int,
     reusedPasswordItems: ImmutableList<ItemUiModel>,
     canLoadExternalImages: Boolean,
-    onEvent: (LoginDetailEvent) -> Unit
+    onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     LoginMonitorWidget(
         modifier = modifier,
@@ -87,12 +85,12 @@ internal fun LoginMonitorReusedPassWidget(
                                 backgroundColor = PassTheme.colors.noteInteractionNormMinor1,
                                 borderColor = PassTheme.colors.noteInteractionNormMinor1
                             )
-                            .clickable { onEvent(LoginDetailEvent.OnShowReusedPasswords) }
+                            .clickable { onEvent(PassItemDetailsUiEvent.OnShowReusedPasswords) }
                             .padding(
                                 vertical = Spacing.small,
                                 horizontal = Spacing.medium
                             ),
-                        text = stringResource(id = CompR.string.action_see_all),
+                        text = stringResource(id = R.string.action_see_all),
                         color = PassTheme.colors.noteInteractionNormMajor2,
                         style = ProtonTheme.typography.captionMedium
                     )

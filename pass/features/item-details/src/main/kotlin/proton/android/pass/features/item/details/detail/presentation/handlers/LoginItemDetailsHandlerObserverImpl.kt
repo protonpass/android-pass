@@ -18,17 +18,22 @@
 
 package proton.android.pass.features.item.details.detail.presentation.handlers
 
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
+import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
+import proton.android.pass.commonuimodels.api.items.LoginMonitorState
+import proton.android.pass.commonuimodels.api.items.LoginMonitorState.ReusedPasswordDisplayMode
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
@@ -44,14 +49,22 @@ import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
+import proton.android.pass.securitycenter.api.passwords.DuplicatedPasswordChecker
+import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
+import proton.android.pass.securitycenter.api.passwords.MissingTfaChecker
 import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
+
+private const val REUSED_PASSWORD_DISPLAY_MODE_THRESHOLD = 5
 
 class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     override val encryptionContextProvider: EncryptionContextProvider,
     override val totpManager: TotpManager,
     private val userPreferencesRepository: UserPreferencesRepository,
-    private val passwordStrengthCalculator: PasswordStrengthCalculator
+    private val passwordStrengthCalculator: PasswordStrengthCalculator,
+    private val insecurePasswordChecker: InsecurePasswordChecker,
+    private val duplicatedPasswordChecker: DuplicatedPasswordChecker,
+    private val missingTfaChecker: MissingTfaChecker
 ) : ItemDetailsHandlerObserver<ItemContents.Login>(encryptionContextProvider, totpManager) {
 
     override fun observe(
@@ -62,8 +75,10 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         observeItemContents(item),
         observePrimaryTotp(item),
         observeCustomFieldTotps(item),
+        observeLoginMonitorState(item),
         userPreferencesRepository.getUseFaviconsPreference()
-    ) { loginItemContents, primaryTotp, customFieldTotps, useFaviconsPreference ->
+    ) { loginItemContents, primaryTotp, customFieldTotps, loginMonitorState,
+        useFaviconsPreference ->
         ItemDetailState.Login(
             itemContents = loginItemContents,
             itemId = item.id,
@@ -85,8 +100,38 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             primaryTotp = primaryTotp,
             customFieldTotps = customFieldTotps,
             passkeys = loginItemContents.passkeys.map { passkey -> UIPasskeyContent.from(passkey) },
-            attachmentsState = attachmentsState
+            attachmentsState = attachmentsState,
+            loginMonitorState = loginMonitorState
         )
+    }
+
+    private fun observeLoginMonitorState(item: Item) = flow {
+        val insecurePasswordsReport = insecurePasswordChecker(listOf(item))
+        val duplicatedPasswordsReport = duplicatedPasswordChecker(item)
+        val missing2faReport = missingTfaChecker(listOf(item))
+        val hasExceededDuplicationThreshold =
+            duplicatedPasswordsReport.duplicationCount > REUSED_PASSWORD_DISPLAY_MODE_THRESHOLD
+        val state = LoginMonitorState(
+            isExcludedFromMonitor = item.hasSkippedHealthCheck,
+            navigationScope = TODO(),
+            isPasswordInsecure = insecurePasswordsReport.hasInsecurePasswords,
+            isPasswordReused = duplicatedPasswordsReport.hasDuplications,
+            isMissingTwoFa = missing2faReport.isMissingTwoFa,
+            reusedPasswordDisplayMode = if (hasExceededDuplicationThreshold) {
+                ReusedPasswordDisplayMode.Compact
+            } else {
+                ReusedPasswordDisplayMode.Expanded
+            },
+            reusedPasswordCount = duplicatedPasswordsReport.duplicationCount,
+            reusedPasswordItems = duplicatedPasswordsReport.duplications
+                .map { item ->
+                    encryptionContextProvider.withEncryptionContext {
+                        item.toUiModel(this@withEncryptionContext)
+                    }
+                }
+                .toPersistentList()
+        )
+        emit(state)
     }
 
     private fun observePrimaryTotp(item: Item): Flow<Totp?> = observeItemContents(item)

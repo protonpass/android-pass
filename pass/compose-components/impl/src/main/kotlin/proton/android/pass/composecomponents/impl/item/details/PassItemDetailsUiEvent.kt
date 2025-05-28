@@ -61,4 +61,5 @@ sealed interface PassItemDetailsUiEvent {
     @JvmInline
     value class OnWifiNetworkQRClick(val rawSvg: String) : PassItemDetailsUiEvent
 
+    data object OnShowReusedPasswords : PassItemDetailsUiEvent
 }

@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemdetail.login
+package proton.android.pass.composecomponents.impl.item.details.sections.login.widgets
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background

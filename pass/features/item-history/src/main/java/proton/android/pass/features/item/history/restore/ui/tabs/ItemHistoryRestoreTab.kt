@@ -27,6 +27,12 @@ import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsCo
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent
+import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent.OnHiddenFieldClick
+import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent.OnHiddenFieldToggle
+import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent.OnLinkClick
+import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent.OnPasskeyClick
+import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent.OnSectionClick
+import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent.OnWifiNetworkQRClick
 import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreSelection
 import proton.android.pass.features.item.history.restore.ui.ItemHistoryRestoreTopBar
 
@@ -53,17 +59,17 @@ internal fun ItemHistoryRestoreTab(
         itemColors = itemColors,
         onEvent = { uiEvent ->
             when (uiEvent) {
-                is PassItemDetailsUiEvent.OnSectionClick -> ItemHistoryRestoreUiEvent.OnSectionClick(
+                is PassItemDetailsUiEvent.OnSectionClick -> OnSectionClick(
                     section = uiEvent.section,
                     field = uiEvent.field
                 ).also(onEvent)
 
-                is PassItemDetailsUiEvent.OnHiddenFieldClick -> ItemHistoryRestoreUiEvent.OnHiddenFieldClick(
+                is PassItemDetailsUiEvent.OnHiddenFieldClick -> OnHiddenFieldClick(
                     state = uiEvent.state,
                     field = uiEvent.field
                 ).also(onEvent)
 
-                is PassItemDetailsUiEvent.OnHiddenFieldToggle -> ItemHistoryRestoreUiEvent.OnHiddenFieldToggle(
+                is PassItemDetailsUiEvent.OnHiddenFieldToggle -> OnHiddenFieldToggle(
                     selection = selection,
                     isVisible = uiEvent.isVisible,
                     hiddenState = uiEvent.hiddenState,
@@ -71,11 +77,11 @@ internal fun ItemHistoryRestoreTab(
                     fieldSection = uiEvent.fieldSection
                 ).also(onEvent)
 
-                is PassItemDetailsUiEvent.OnLinkClick -> ItemHistoryRestoreUiEvent.OnLinkClick(
+                is PassItemDetailsUiEvent.OnLinkClick -> OnLinkClick(
                     linkUrl = uiEvent.link
                 ).also(onEvent)
 
-                is PassItemDetailsUiEvent.OnPasskeyClick -> ItemHistoryRestoreUiEvent.OnPasskeyClick(
+                is PassItemDetailsUiEvent.OnPasskeyClick -> OnPasskeyClick(
                     passkey = uiEvent.passkey
                 ).also(onEvent)
 
@@ -100,8 +106,12 @@ internal fun ItemHistoryRestoreTab(
                     }
                 }
                 is PassItemDetailsUiEvent.OnWifiNetworkQRClick ->
-                    ItemHistoryRestoreUiEvent.OnWifiNetworkQRClick(rawSvg = uiEvent.rawSvg)
+                    OnWifiNetworkQRClick(rawSvg = uiEvent.rawSvg)
                         .also(onEvent)
+
+                PassItemDetailsUiEvent.OnShowReusedPasswords -> {
+                    // We do nothing since the widget should not show from restore screen
+                }
             }
         },
         shouldDisplayItemHistorySection = false,

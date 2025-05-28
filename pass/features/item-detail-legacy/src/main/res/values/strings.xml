@@ -35,15 +35,6 @@
     <string name="alias_change_status_error">There was an error changing the alias status</string>
     <string name="login_item_generate_totp_error">Error generating 2FA code</string>
     <string name="login_item_view_alias_button">View alias</string>
-    <string name="login_item_monitor_widget_weak_pass_title">Weak Password</string>
-    <string name="login_item_monitor_widget_weak_pass_subtitle">This account is vulnerable, visit the service and change your password.</string>
-    <plurals name="login_item_monitor_widget_reused_pass_title">
-        <item quantity="one">%d other login uses the same password</item>
-        <item quantity="other">%d other logins use the same password</item>
-    </plurals>
-    <string name="login_item_monitor_widget_missing_two_fa_title">Set up 2FA for more security</string>
-    <string name="login_item_monitor_widget_missing_two_fa_subtitle">This service offers 2FA. Enable it for added account security.</string>
-    <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
     <string name="field_email">Email address</string>
     <string name="field_username">Username</string>
     <string name="field_username_or_email">Username or email address</string>

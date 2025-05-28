@@ -60,6 +60,7 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
+import proton.android.pass.commonuimodels.api.items.ItemDetailNavScope
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedState
 import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashState
@@ -107,7 +108,6 @@ import proton.android.pass.features.itemdetail.DetailSnackbarMessages.TotpCopied
 import proton.android.pass.features.itemdetail.DetailSnackbarMessages.UsernameCopiedToClipboard
 import proton.android.pass.features.itemdetail.DetailSnackbarMessages.WebsiteCopiedToClipboard
 import proton.android.pass.features.itemdetail.ItemDelete
-import proton.android.pass.features.itemdetail.ItemDetailNavScope
 import proton.android.pass.features.itemdetail.ItemDetailScopeNavArgId
 import proton.android.pass.features.itemdetail.PassMonitorItemDetailFromMissing2FA
 import proton.android.pass.features.itemdetail.PassMonitorItemDetailFromReusedPassword
@@ -331,15 +331,7 @@ class LoginDetailViewModel @Inject constructor(
                     linkedAlias = alias,
                     shareClickAction = shareClickAction,
                     passwordScore = passwordScore,
-                    attachments = attachments,
-                    securityState = LoginMonitorState(
-                        isExcludedFromMonitor = details.item.hasSkippedHealthCheck,
-                        navigationScope = navigationScope,
-                        insecurePasswordsReport = insecurePasswordChecker(listOf(details.item)),
-                        duplicatedPasswordsReport = duplicatedPasswordChecker(details.item),
-                        missing2faReport = missingTfaChecker(listOf(details.item)),
-                        encryptionContextProvider = encryptionContextProvider
-                    )
+                    attachments = attachments
                 )
             }
         }
@@ -410,7 +402,6 @@ class LoginDetailViewModel @Inject constructor(
         val linkedAlias: Option<LinkedAliasItem>,
         val shareClickAction: ShareClickAction,
         val passwordScore: PasswordScore?,
-        val securityState: LoginMonitorState,
         val attachments: List<Attachment>
     )
 
@@ -482,7 +473,6 @@ class LoginDetailViewModel @Inject constructor(
                     itemActions = actions,
                     event = event,
                     itemFeatures = itemFeatures,
-                    monitorState = details.securityState,
                     attachmentsState = attachmentState.copy(attachmentsList = details.attachments),
                     hasMoreThanOneVault = details.hasMoreThanOneVault
                 )

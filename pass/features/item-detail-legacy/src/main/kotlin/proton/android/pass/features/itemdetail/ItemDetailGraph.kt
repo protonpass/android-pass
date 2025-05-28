@@ -20,6 +20,7 @@ package proton.android.pass.features.itemdetail
 
 import androidx.navigation.NavType
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.commonuimodels.api.items.ItemDetailNavScope
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.ShareId
@@ -98,15 +99,6 @@ enum class ItemDetailCannotPerformActionType {
         CannotShareBecauseNoPermissions -> CannotPerformActionDialogType.CannotShareBecauseNoPermissions
         CannotShareBecauseItemInTrash -> CannotPerformActionDialogType.CannotShareBecauseItemInTrash
     }
-}
-
-enum class ItemDetailNavScope {
-    Default,
-    MonitorExcluded,
-    MonitorReport,
-    MonitorWeakPassword,
-    MonitorReusedPassword,
-    MonitorMissing2fa
 }
 
 object ItemDetailScopeNavArgId : OptionalNavArgId {

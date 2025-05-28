@@ -84,5 +84,4 @@
     <string name="passkey_detail_bottomsheet_created">Created</string>
 
     <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
-
 </resources>

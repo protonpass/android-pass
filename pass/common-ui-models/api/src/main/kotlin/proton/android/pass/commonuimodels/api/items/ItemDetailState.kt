@@ -202,11 +202,12 @@ sealed interface ItemDetailState {
         override val itemDiffs: ItemDiffs.Login,
         override val itemShareCount: Int,
         override val customFieldTotps: Map<Pair<Option<Int>, Int>, Totp>,
+        override val attachmentsState: AttachmentsState,
         val canLoadExternalImages: Boolean,
         val passwordStrength: PasswordStrength,
         val primaryTotp: Totp?,
         val passkeys: List<UIPasskeyContent>,
-        override val attachmentsState: AttachmentsState
+        val loginMonitorState: LoginMonitorState
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Login

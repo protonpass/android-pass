@@ -134,7 +134,7 @@ fun LoginDetail(
                                 canMoveToTrash = state.canMoveToTrash,
                                 canLeave = state.canLeaveItem,
                                 isPinned = state.itemUiModel.isPinned,
-                                isExcludedFromMonitor = state.monitorState.isExcludedFromMonitor,
+                                isExcludedFromMonitor = false,
                                 onMigrate = {
                                     scope.launch {
                                         bottomSheetState.hide()
@@ -253,7 +253,6 @@ fun LoginDetail(
                         canLoadExternalImages = canLoadExternalImages,
                         customFields = state.customFields,
                         passkeys = state.passkeys,
-                        monitorState = state.monitorState,
                         attachmentsState = state.attachmentsState,
                         onEvent = {
                             when (it) {

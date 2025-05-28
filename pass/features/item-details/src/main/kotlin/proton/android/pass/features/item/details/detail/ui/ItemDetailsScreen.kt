@@ -31,7 +31,17 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.features.item.details.detail.presentation.ItemDetailsEvent
 import proton.android.pass.features.item.details.detail.presentation.ItemDetailsViewModel
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
+import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.EditItem
+import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.ItemActionForbidden
+import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.ItemHistory
+import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.ItemOptionsMenu
+import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.ItemSharing
+import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.ItemTrashMenu
+import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.ManageSharedVault
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.OpenAttachmentOptions
+import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.PasskeyDetails
+import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.ViewReusedPasswords
+import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.WifiNetworkQRClick
 
 @Composable
 fun ItemDetailsScreen(
@@ -61,18 +71,18 @@ fun ItemDetailsScreen(
                     ItemDetailsNavDestination.CloseScreen
                         .also(onNavigated)
 
-                is ItemDetailsUiEvent.OnEditClicked -> ItemDetailsNavDestination.EditItem(
+                is ItemDetailsUiEvent.OnEditClicked -> EditItem(
                     shareId = uiEvent.shareId,
                     itemId = uiEvent.itemId,
                     itemCategory = uiEvent.itemCategory
                 ).also(onNavigated)
 
                 is ItemDetailsUiEvent.OnDisabledEditClicked -> uiEvent.reason?.let { reason ->
-                    ItemDetailsNavDestination.ItemActionForbidden(reason = reason)
+                    ItemActionForbidden(reason = reason)
                         .also(onNavigated)
                 }
 
-                is ItemDetailsUiEvent.OnPasskeyClicked -> ItemDetailsNavDestination.PasskeyDetails(
+                is ItemDetailsUiEvent.OnPasskeyClicked -> PasskeyDetails(
                     passkeyContent = uiEvent.passkeyContent
                 ).also(onNavigated)
 
@@ -97,33 +107,33 @@ fun ItemDetailsScreen(
                     website = uiEvent.link
                 )
 
-                is ItemDetailsUiEvent.OnViewItemHistoryClicked -> ItemDetailsNavDestination.ItemHistory(
+                is ItemDetailsUiEvent.OnViewItemHistoryClicked -> ItemHistory(
                     shareId = uiEvent.shareId,
                     itemId = uiEvent.itemId
                 ).also(onNavigated)
 
-                is ItemDetailsUiEvent.OnShareItemClicked -> ItemDetailsNavDestination.ItemSharing(
+                is ItemDetailsUiEvent.OnShareItemClicked -> ItemSharing(
                     shareId = uiEvent.shareId,
                     itemId = uiEvent.itemId
                 ).also(onNavigated)
 
                 is ItemDetailsUiEvent.OnDisabledShareItemClicked -> uiEvent.reason?.let { reason ->
-                    ItemDetailsNavDestination.ItemActionForbidden(reason = reason)
+                    ItemActionForbidden(reason = reason)
                         .also(onNavigated)
                 }
 
-                is ItemDetailsUiEvent.OnSharedVaultClicked -> ItemDetailsNavDestination.ManageSharedVault(
+                is ItemDetailsUiEvent.OnSharedVaultClicked -> ManageSharedVault(
                     sharedVaultId = uiEvent.sharedVaultId,
                     itemCategory = uiEvent.itemCategory
                 ).also(onNavigated)
 
                 is ItemDetailsUiEvent.OnMenuClicked -> when (uiEvent.itemState) {
-                    ItemState.Active -> ItemDetailsNavDestination.ItemOptionsMenu(
+                    ItemState.Active -> ItemOptionsMenu(
                         shareId = uiEvent.shareId,
                         itemId = uiEvent.itemId
                     )
 
-                    ItemState.Trashed -> ItemDetailsNavDestination.ItemTrashMenu(
+                    ItemState.Trashed -> ItemTrashMenu(
                         shareId = uiEvent.shareId,
                         itemId = uiEvent.itemId
                     )
@@ -153,7 +163,11 @@ fun ItemDetailsScreen(
                     }
 
                 is ItemDetailsUiEvent.OnWifiNetworkQRClick ->
-                    ItemDetailsNavDestination.WifiNetworkQRClick(uiEvent.rawSvg)
+                    WifiNetworkQRClick(uiEvent.rawSvg)
+                        .also(onNavigated)
+
+                is ItemDetailsUiEvent.ViewReusedPasswords ->
+                    ViewReusedPasswords(uiEvent.shareId, uiEvent.itemId)
                         .also(onNavigated)
             }
         }

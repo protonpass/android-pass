@@ -101,4 +101,6 @@ internal sealed interface ItemDetailsUiEvent {
     @JvmInline
     value class OnWifiNetworkQRClick(val rawSvg: String) : ItemDetailsUiEvent
 
+    data class ViewReusedPasswords(val shareId: ShareId, val itemId: ItemId) : ItemDetailsUiEvent
+
 }

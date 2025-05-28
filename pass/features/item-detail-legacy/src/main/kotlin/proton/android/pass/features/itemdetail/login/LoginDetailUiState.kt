@@ -65,7 +65,6 @@ internal sealed interface LoginDetailUiState {
         val event: ItemDetailEvent,
         val itemFeatures: LoginItemFeatures,
         val attachmentsState: AttachmentsState,
-        val monitorState: LoginMonitorState,
         val hasMoreThanOneVault: Boolean
     ) : LoginDetailUiState {
 

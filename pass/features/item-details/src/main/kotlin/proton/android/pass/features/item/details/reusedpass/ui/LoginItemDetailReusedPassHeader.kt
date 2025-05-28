@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemdetail.login.reusedpass.ui
+package proton.android.pass.features.item.details.reusedpass.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,7 +28,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.heroNorm
-import proton.android.pass.features.itemdetail.R
+import proton.android.pass.features.item.details.R
 
 @Composable
 internal fun LoginItemDetailReusedPassHeader(modifier: Modifier = Modifier, password: String) {

@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemdetail.login.passkey.bottomsheet.ui
+package proton.android.pass.features.item.details.passkey.bottomsheet.ui
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
@@ -49,7 +49,7 @@ import proton.android.pass.domain.ByteArrayWrapper
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.PasskeyCreationData
 import proton.android.pass.domain.PasskeyId
-import proton.android.pass.features.itemdetail.R
+import proton.android.pass.features.item.details.R
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 

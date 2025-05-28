@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemdetail.login.passkey.bottomsheet.navigation
+package proton.android.pass.features.item.details.passkey.bottomsheet.navigation
 
 import androidx.activity.compose.BackHandler
 import androidx.navigation.NavGraphBuilder
@@ -27,7 +27,7 @@ import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.features.itemdetail.login.passkey.bottomsheet.ui.PasskeyDetailBottomSheet
+import proton.android.pass.features.item.details.passkey.bottomsheet.ui.PasskeyDetailBottomSheet
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem

@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.item.details.shared.navigation
 
+import androidx.activity.compose.BackHandler
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.features.item.details.detail.navigation.ItemDetailsNavItem
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsScreen
@@ -27,6 +28,8 @@ import proton.android.pass.features.item.details.detailleave.navigation.ItemDeta
 import proton.android.pass.features.item.details.detailleave.ui.ItemDetailsLeaveDialog
 import proton.android.pass.features.item.details.detailmenu.navigation.ItemDetailsMenuNavItem
 import proton.android.pass.features.item.details.detailmenu.ui.ItemDetailsMenuBottomSheet
+import proton.android.pass.features.item.details.passkey.bottomsheet.navigation.ViewPasskeyDetailsBottomSheet
+import proton.android.pass.features.item.details.passkey.bottomsheet.ui.PasskeyDetailBottomSheet
 import proton.android.pass.features.item.details.qrviewer.navigation.QRViewerNavItem
 import proton.android.pass.features.item.details.qrviewer.ui.QRViewerDialog
 import proton.android.pass.navigation.api.bottomSheet
@@ -55,4 +58,10 @@ fun NavGraphBuilder.itemDetailsNavGraph(onNavigated: (ItemDetailsNavDestination)
         QRViewerDialog(onNavigated = onNavigated)
     }
 
+    bottomSheet(ViewPasskeyDetailsBottomSheet) {
+        BackHandler(onBack = { onNavigated(ItemDetailsNavDestination.DismissBottomSheet) })
+        PasskeyDetailBottomSheet(
+            onDismiss = { onNavigated(ItemDetailsNavDestination.DismissBottomSheet) }
+        )
+    }
 }

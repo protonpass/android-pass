@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemdetail.login.passkey.bottomsheet.ui
+package proton.android.pass.features.item.details.passkey.bottomsheet.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
@@ -29,9 +29,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.bottomSheet
-import proton.android.pass.features.itemdetail.login.passkey.bottomsheet.presentation.PasskeyDetailBottomSheetContent
-import proton.android.pass.features.itemdetail.login.passkey.bottomsheet.presentation.PasskeyDetailBottomSheetEvent
-import proton.android.pass.features.itemdetail.login.passkey.bottomsheet.presentation.PasskeyDetailBottomSheetViewModel
+import proton.android.pass.features.item.details.passkey.bottomsheet.presentation.PasskeyDetailBottomSheetContent
+import proton.android.pass.features.item.details.passkey.bottomsheet.presentation.PasskeyDetailBottomSheetEvent
+import proton.android.pass.features.item.details.passkey.bottomsheet.presentation.PasskeyDetailBottomSheetViewModel
 
 @Composable
 fun PasskeyDetailBottomSheet(

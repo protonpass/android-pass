@@ -151,7 +151,7 @@ import proton.android.pass.features.itemcreate.totp.CameraTotpNavItem
 import proton.android.pass.features.itemcreate.totp.PhotoPickerTotpNavItem
 import proton.android.pass.features.itemdetail.ItemDetailNavigation
 import proton.android.pass.features.itemdetail.itemDetailGraph
-import proton.android.pass.features.itemdetail.login.passkey.bottomsheet.navigation.ViewPasskeyDetailsBottomSheet
+import proton.android.pass.features.item.details.passkey.bottomsheet.navigation.ViewPasskeyDetailsBottomSheet
 import proton.android.pass.features.itemdetail.login.reusedpass.navigation.LoginItemDetailsReusedPassNavItem
 import proton.android.pass.features.migrate.MigrateConfirmVault
 import proton.android.pass.features.migrate.MigrateModeValue

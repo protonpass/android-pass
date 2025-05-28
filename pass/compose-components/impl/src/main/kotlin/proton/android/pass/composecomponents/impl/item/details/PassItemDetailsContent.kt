@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.Dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
+import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailBannerRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailTitleRow
 import proton.android.pass.composecomponents.impl.item.details.sections.PassItemDetailSections
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
@@ -64,6 +65,13 @@ fun PassItemDetailsContent(
                 .verticalScroll(state = rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
         ) {
+            PassItemDetailBannerRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = Spacing.medium),
+                itemDetailState = itemDetailState,
+                onEvent = onEvent
+            )
             PassItemDetailTitleRow(
                 modifier = Modifier
                     .fillMaxWidth()

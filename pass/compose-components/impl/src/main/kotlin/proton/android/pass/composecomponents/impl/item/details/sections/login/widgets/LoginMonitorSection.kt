@@ -16,23 +16,22 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemdetail.login
+package proton.android.pass.composecomponents.impl.item.details.sections.login.widgets
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.features.itemdetail.login.widgets.LoginMonitorInsecurePassWidget
-import proton.android.pass.features.itemdetail.login.widgets.LoginMonitorMissingTwoFaWidget
-import proton.android.pass.features.itemdetail.login.widgets.LoginMonitorReusedPassWidget
+import proton.android.pass.commonuimodels.api.items.LoginMonitorState
+import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 
 @Composable
 internal fun LoginMonitorSection(
     modifier: Modifier = Modifier,
     monitorState: LoginMonitorState,
     canLoadExternalImages: Boolean,
-    onEvent: (LoginDetailEvent) -> Unit
+    onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(monitorState) {
     Column(
         modifier = modifier,

@@ -18,10 +18,7 @@
 
 package proton.android.pass.features.itemdetail
 
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import me.proton.core.compose.navigation.requireArguments
@@ -35,15 +32,12 @@ import proton.android.pass.features.itemdetail.common.CannotPerformActionDialogT
 import proton.android.pass.features.itemdetail.login.passkey.bottomsheet.navigation.passkeyDetailBottomSheetGraph
 import proton.android.pass.features.itemdetail.login.reusedpass.navigation.LoginItemDetailsReusedPassNavItem
 import proton.android.pass.features.itemdetail.login.reusedpass.ui.LoginItemDetailReusedPassScreen
-import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.navigation.api.CommonNavArgKey
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.OptionalNavArgId
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.dialog
-import proton.android.pass.navigation.api.toPath
 
 sealed interface ItemDetailNavigation {
 
@@ -151,40 +145,8 @@ object ItemDetailScopeNavArgId : OptionalNavArgId {
     override val default: Any = ItemDetailNavScope.Default
 }
 
-object ViewItem : NavItem(
-    baseRoute = "item/detail/view",
-    navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId),
-    optionalArgIds = listOf(ItemDetailScopeNavArgId),
-    baseDeepLinkRoute = listOf("view_item")
-) {
-    fun createNavRoute(
-        shareId: ShareId,
-        itemId: ItemId,
-        scope: ItemDetailNavScope = ItemDetailNavScope.Default
-    ) = buildString {
-        append("$baseRoute/${shareId.id}/${itemId.id}")
-        val optionalPath = mapOf(ItemDetailScopeNavArgId.key to scope).toPath()
-        append(optionalPath)
-    }
-}
 
 fun NavGraphBuilder.itemDetailGraph(onNavigate: (ItemDetailNavigation) -> Unit) {
-    composable(
-        navItem = ViewItem
-    ) { navBackStack ->
-        val isItemMovedToTrash by navBackStack.savedStateHandle
-            .getStateFlow(CommonNavArgKey.ITEM_MOVED_TO_TRASH, false)
-            .collectAsStateWithLifecycle()
-
-        LaunchedEffect(isItemMovedToTrash) {
-            navBackStack.savedStateHandle.remove<Boolean?>(CommonNavArgKey.ITEM_MOVED_TO_TRASH)
-        }
-
-        ItemDetailScreen(
-            isItemMovedToTrash = isItemMovedToTrash,
-            onNavigate = onNavigate
-        )
-    }
 
     dialog(ItemDetailCannotPerformAction) { backStackEntry ->
         val type = remember {

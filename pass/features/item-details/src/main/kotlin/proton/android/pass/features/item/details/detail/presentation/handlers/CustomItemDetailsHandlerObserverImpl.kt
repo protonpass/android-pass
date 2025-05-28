@@ -21,7 +21,6 @@ package proton.android.pass.features.item.details.detail.presentation.handlers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import proton.android.pass.common.api.None
@@ -29,6 +28,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
+import proton.android.pass.commonpresentation.api.items.details.handlers.mapToDecryptedTotp
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -40,21 +40,20 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.Totp
 import proton.android.pass.domain.attachments.Attachment
-import proton.android.pass.domain.toItemContents
 import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
 class CustomItemDetailsHandlerObserverImpl @Inject constructor(
-    private val encryptionContextProvider: EncryptionContextProvider,
-    private val totpManager: TotpManager
-) : ItemDetailsHandlerObserver<ItemContents.Custom>() {
+    override val encryptionContextProvider: EncryptionContextProvider,
+    override val totpManager: TotpManager
+) : ItemDetailsHandlerObserver<ItemContents.Custom>(encryptionContextProvider, totpManager) {
 
     override fun observe(
         share: Share,
         item: Item,
         attachmentsState: AttachmentsState
     ): Flow<ItemDetailState> = combine(
-        observeCustomItemContents(item),
+        observeItemContents(item),
         observeTotps(item)
     ) { itemContents, totps ->
         ItemDetailState.Custom(
@@ -76,7 +75,7 @@ class CustomItemDetailsHandlerObserverImpl @Inject constructor(
     }
 
     private fun observeTotps(item: Item): Flow<Map<Pair<Option<Int>, Int>, Totp>> =
-        observeCustomItemContents(item).flatMapLatest { contents ->
+        observeItemContents(item).flatMapLatest { contents ->
             val decrypted = encryptionContextProvider.withEncryptionContextSuspendable {
                 val sectionCustomFields =
                     contents.sectionContentList.flatMapIndexed { sectionIndex, sectionContent ->
@@ -105,14 +104,6 @@ class CustomItemDetailsHandlerObserverImpl @Inject constructor(
             }
             combine(flows) { it.toMap() }
         }.onStart { emit(emptyMap()) }
-
-    private fun observeCustomItemContents(item: Item): Flow<ItemContents.Custom> = flow {
-        encryptionContextProvider.withEncryptionContext {
-            item.toItemContents<ItemContents.Custom> { decrypt(it) }
-        }.let { identityItemContents ->
-            emit(identityItemContents)
-        }
-    }
 
     @Suppress("LongMethod")
     override fun updateHiddenFieldsContents(

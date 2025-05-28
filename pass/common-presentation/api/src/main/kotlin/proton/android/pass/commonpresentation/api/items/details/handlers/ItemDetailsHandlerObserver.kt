@@ -19,6 +19,13 @@
 package proton.android.pass.commonpresentation.api.items.details.handlers
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
@@ -32,10 +39,16 @@ import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.Totp
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.domain.toItemContents
+import proton.android.pass.totp.api.TotpManager
 
-abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
+abstract class ItemDetailsHandlerObserver<ITEM_CONTENTS : ItemContents>(
+    open val encryptionContextProvider: EncryptionContextProvider,
+    open val totpManager: TotpManager
+) {
 
     abstract fun observe(
         share: Share,
@@ -54,6 +67,14 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
         baseAttachments: List<Attachment>,
         otherAttachments: List<Attachment>
     ): ItemDiffs
+
+    protected fun observeItemContents(item: Item): Flow<ITEM_CONTENTS> = flow {
+        encryptionContextProvider.withEncryptionContext {
+            item.toItemContents<ITEM_CONTENTS> { decrypt(it) }
+        }.let { loginItemContents ->
+            emit(loginItemContents)
+        }
+    }
 
     protected fun calculateItemDiffTypes(
         encryptionContext: EncryptionContext,
@@ -206,4 +227,25 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
     } else {
         customField
     }
+
+    protected fun observeCustomFieldTotps(item: Item): Flow<Map<Pair<Option<Int>, Int>, Totp>> =
+        observeItemContents(item).flatMapLatest { contents ->
+            val decrypted = encryptionContextProvider.withEncryptionContextSuspendable {
+                contents.customFields.mapToDecryptedTotp(
+                    sectionIndex = None,
+                    decrypt = ::decrypt
+                ).toMap()
+            }
+            val flows = decrypted.map { uri ->
+                totpManager.observeCode(uri.value)
+                    .map {
+                        uri.key to Totp(
+                            code = it.code,
+                            remainingSeconds = it.remainingSeconds,
+                            totalSeconds = it.totalSeconds
+                        )
+                    }
+            }
+            combine(flows) { it.toMap() }
+        }.onStart { emit(emptyMap()) }
 }

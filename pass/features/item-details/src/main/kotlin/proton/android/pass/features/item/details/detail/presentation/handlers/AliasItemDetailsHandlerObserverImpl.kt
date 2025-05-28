@@ -20,11 +20,9 @@ package proton.android.pass.features.item.details.detail.presentation.handlers
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
-import proton.android.pass.domain.toItemContents
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -32,26 +30,29 @@ import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
 class AliasItemDetailsHandlerObserverImpl @Inject constructor(
-    private val observeAliasDetails: ObserveAliasDetails,
-    private val encryptionContextProvider: EncryptionContextProvider
-) : ItemDetailsHandlerObserver<ItemContents.Alias>() {
+    override val encryptionContextProvider: EncryptionContextProvider,
+    override val totpManager: TotpManager,
+    private val observeAliasDetails: ObserveAliasDetails
+) : ItemDetailsHandlerObserver<ItemContents.Alias>(encryptionContextProvider, totpManager) {
 
     override fun observe(
         share: Share,
         item: Item,
         attachmentsState: AttachmentsState
     ): Flow<ItemDetailState> = combine(
-        observeAliasItemContents(item),
-        observeAliasDetails(item.shareId, item.id).onStart { emit(AliasDetails.EMPTY) }
-    ) { aliasItemContents, aliasDetails ->
+        observeItemContents(item),
+        observeAliasDetails(item.shareId, item.id).onStart { emit(AliasDetails.EMPTY) },
+        observeCustomFieldTotps(item)
+    ) { aliasItemContents, aliasDetails, customFieldTotps ->
         ItemDetailState.Alias(
             itemContents = aliasItemContents,
             itemId = item.id,
@@ -66,16 +67,9 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
             itemDiffs = ItemDiffs.Alias(),
             itemShareCount = item.shareCount,
             mailboxes = aliasDetails.mailboxes,
-            attachmentsState = attachmentsState
+            attachmentsState = attachmentsState,
+            customFieldTotps = customFieldTotps
         )
-    }
-
-    private fun observeAliasItemContents(item: Item): Flow<ItemContents.Alias> = flow {
-        encryptionContextProvider.withEncryptionContext {
-            item.toItemContents<ItemContents.Alias> { decrypt(it) }
-        }.also { aliasItemContents ->
-            emit(aliasItemContents)
-        }
     }
 
     override fun updateHiddenFieldsContents(

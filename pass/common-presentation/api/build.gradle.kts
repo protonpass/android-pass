@@ -40,4 +40,5 @@ dependencies {
     implementation(projects.pass.domain)
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
+    implementation(projects.pass.totp.api)
 }

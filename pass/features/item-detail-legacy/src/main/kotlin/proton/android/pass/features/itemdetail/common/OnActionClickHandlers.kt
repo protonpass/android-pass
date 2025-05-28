@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -21,7 +21,6 @@ package proton.android.pass.features.itemdetail.common
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.capabilities.CanShareShareStatus
-import proton.android.pass.features.itemdetail.ItemDetailCannotPerformActionType
 import proton.android.pass.features.itemdetail.ItemDetailNavigation
 
 fun onEditClick(
@@ -29,23 +28,8 @@ fun onEditClick(
     onNavigate: (ItemDetailNavigation) -> Unit,
     itemUiModel: ItemUiModel
 ) {
-    when (val canEdit = itemActions.canEdit) {
-        is ItemActions.CanEditActionState.Disabled -> {
-            val type = when (canEdit.reason) {
-                ItemActions.CanEditActionState.CanEditDisabledReason.Downgraded -> {
-                    ItemDetailCannotPerformActionType.CannotEditBecauseNeedsUpgrade
-                }
-
-                ItemActions.CanEditActionState.CanEditDisabledReason.ItemInTrash -> {
-                    ItemDetailCannotPerformActionType.CannotEditBecauseItemInTrash
-                }
-
-                ItemActions.CanEditActionState.CanEditDisabledReason.NotEnoughPermission -> {
-                    ItemDetailCannotPerformActionType.CannotEditBecauseNoPermissions
-                }
-            }
-            onNavigate(ItemDetailNavigation.CannotPerformAction(type))
-        }
+    when (itemActions.canEdit) {
+        is ItemActions.CanEditActionState.Disabled -> {}
 
         ItemActions.CanEditActionState.Enabled -> {
             onNavigate(ItemDetailNavigation.OnEdit(itemUiModel))
@@ -69,29 +53,11 @@ fun onShareClick(
         }
 
         is CanShareShareStatus.CannotShare -> when (canShare.reason) {
-            CanShareShareStatus.CannotShareReason.NotEnoughInvites -> {
-                onNavigate(
-                    ItemDetailNavigation.CannotPerformAction(
-                        type = ItemDetailCannotPerformActionType.CannotShareBecauseLimitReached
-                    )
-                )
-            }
+            CanShareShareStatus.CannotShareReason.NotEnoughInvites -> {}
 
-            CanShareShareStatus.CannotShareReason.NotEnoughPermissions -> {
-                onNavigate(
-                    ItemDetailNavigation.CannotPerformAction(
-                        ItemDetailCannotPerformActionType.CannotShareBecauseNoPermissions
-                    )
-                )
-            }
+            CanShareShareStatus.CannotShareReason.NotEnoughPermissions -> {}
 
-            CanShareShareStatus.CannotShareReason.ItemInTrash -> {
-                onNavigate(
-                    ItemDetailNavigation.CannotPerformAction(
-                        ItemDetailCannotPerformActionType.CannotShareBecauseItemInTrash
-                    )
-                )
-            }
+            CanShareShareStatus.CannotShareReason.ItemInTrash -> {}
 
             CanShareShareStatus.CannotShareReason.Unknown -> {}
         }

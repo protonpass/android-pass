@@ -149,7 +149,6 @@ import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation
 import proton.android.pass.features.itemcreate.note.createUpdateNoteGraph
 import proton.android.pass.features.itemcreate.totp.CameraTotpNavItem
 import proton.android.pass.features.itemcreate.totp.PhotoPickerTotpNavItem
-import proton.android.pass.features.itemdetail.ItemDetailCannotPerformAction
 import proton.android.pass.features.itemdetail.ItemDetailNavigation
 import proton.android.pass.features.itemdetail.itemDetailGraph
 import proton.android.pass.features.itemdetail.login.passkey.bottomsheet.navigation.ViewPasskeyDetailsBottomSheet
@@ -1657,13 +1656,6 @@ fun NavGraphBuilder.appGraph(
                             shareId = it.shareId,
                             itemId = it.itemId
                         )
-                    )
-                }
-
-                is ItemDetailNavigation.CannotPerformAction -> {
-                    appNavigator.navigate(
-                        destination = ItemDetailCannotPerformAction,
-                        route = ItemDetailCannotPerformAction.buildRoute(it.type)
                     )
                 }
 

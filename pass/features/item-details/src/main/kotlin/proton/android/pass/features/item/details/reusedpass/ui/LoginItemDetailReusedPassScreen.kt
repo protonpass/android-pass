@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,18 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemdetail.login.reusedpass.ui
+package proton.android.pass.features.item.details.reusedpass.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.features.itemdetail.ItemDetailNavigation
-import proton.android.pass.features.itemdetail.login.reusedpass.presentation.LoginItemDetailReusedPassViewModel
+import proton.android.pass.features.item.details.reusedpass.presentation.LoginItemDetailReusedPassViewModel
+import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
 
 @Composable
 fun LoginItemDetailReusedPassScreen(
-    onNavigated: (ItemDetailNavigation) -> Unit,
+    onNavigated: (ItemDetailsNavDestination) -> Unit,
     viewModel: LoginItemDetailReusedPassViewModel = hiltViewModel()
 ) = with(viewModel) {
     val state by state.collectAsStateWithLifecycle()

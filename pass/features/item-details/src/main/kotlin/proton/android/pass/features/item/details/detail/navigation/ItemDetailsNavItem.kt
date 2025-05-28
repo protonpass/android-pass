@@ -18,19 +18,38 @@
 
 package proton.android.pass.features.item.details.detail.navigation
 
+import androidx.navigation.NavType
+import proton.android.pass.commonuimodels.api.items.ItemDetailNavScope
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.OptionalNavArgId
+import proton.android.pass.navigation.api.toPath
+
+object ItemDetailScopeNavArgId : OptionalNavArgId {
+    override val key: String = "itemDetailNavScope"
+    override val navType: NavType<*> = NavType.EnumType(ItemDetailNavScope::class.java)
+    override val default: Any = ItemDetailNavScope.Default
+}
 
 object ItemDetailsNavItem : NavItem(
     baseRoute = "item/details",
     navArgIds = listOf(
         CommonNavArgId.ShareId,
         CommonNavArgId.ItemId
-    )
+    ),
+    optionalArgIds = listOf(ItemDetailScopeNavArgId)
 ) {
 
-    fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
+    fun createNavRoute(
+        shareId: ShareId,
+        itemId: ItemId,
+        scope: ItemDetailNavScope = ItemDetailNavScope.Default
+    ) = buildString {
+        append("$baseRoute/${shareId.id}/${itemId.id}")
+        val optionalPath = mapOf(ItemDetailScopeNavArgId.key to scope).toPath()
+        append(optionalPath)
+    }
 
 }

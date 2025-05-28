@@ -60,7 +60,6 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
-import proton.android.pass.commonuimodels.api.items.ItemDetailNavScope
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedState
 import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashState
@@ -108,10 +107,6 @@ import proton.android.pass.features.itemdetail.DetailSnackbarMessages.TotpCopied
 import proton.android.pass.features.itemdetail.DetailSnackbarMessages.UsernameCopiedToClipboard
 import proton.android.pass.features.itemdetail.DetailSnackbarMessages.WebsiteCopiedToClipboard
 import proton.android.pass.features.itemdetail.ItemDelete
-import proton.android.pass.features.itemdetail.ItemDetailScopeNavArgId
-import proton.android.pass.features.itemdetail.PassMonitorItemDetailFromMissing2FA
-import proton.android.pass.features.itemdetail.PassMonitorItemDetailFromReusedPassword
-import proton.android.pass.features.itemdetail.PassMonitorItemDetailFromWeakPassword
 import proton.android.pass.features.itemdetail.common.ItemDetailEvent
 import proton.android.pass.features.itemdetail.common.LoginItemFeatures
 import proton.android.pass.features.itemdetail.common.ShareClickAction
@@ -169,28 +164,6 @@ class LoginDetailViewModel @Inject constructor(
     private val itemId: ItemId = savedStateHandle.get()
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
-
-    private val navigationScope: ItemDetailNavScope =
-        savedStateHandle.get()[ItemDetailScopeNavArgId.key]
-            ?: ItemDetailNavScope.Default
-
-    init {
-        when (navigationScope) {
-            ItemDetailNavScope.MonitorWeakPassword ->
-                telemetryManager.sendEvent(PassMonitorItemDetailFromWeakPassword)
-
-            ItemDetailNavScope.MonitorReusedPassword ->
-                telemetryManager.sendEvent(PassMonitorItemDetailFromReusedPassword)
-
-            ItemDetailNavScope.MonitorMissing2fa ->
-                telemetryManager.sendEvent(PassMonitorItemDetailFromMissing2FA)
-
-            ItemDetailNavScope.Default,
-            ItemDetailNavScope.MonitorExcluded,
-            ItemDetailNavScope.MonitorReport -> {
-            }
-        }
-    }
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.w(TAG, throwable)

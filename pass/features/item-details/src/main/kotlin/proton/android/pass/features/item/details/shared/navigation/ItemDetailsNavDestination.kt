@@ -89,4 +89,6 @@ sealed interface ItemDetailsNavDestination {
         val itemId: ItemId,
         val attachmentId: AttachmentId
     ) : ItemDetailsNavDestination
+
+    data class ViewReusedPasswords(val shareId: ShareId, val itemId: ItemId) : ItemDetailsNavDestination
 }

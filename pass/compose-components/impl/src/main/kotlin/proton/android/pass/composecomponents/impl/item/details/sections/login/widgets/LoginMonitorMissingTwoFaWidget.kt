@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemdetail.login.widgets
+package proton.android.pass.composecomponents.impl.item.details.sections.login.widgets
 
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -26,23 +26,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.features.itemdetail.R
-import proton.android.pass.features.itemdetail.login.LoginMonitorWidget
+import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.items.ItemCategory
 
 @Composable
-internal fun LoginMonitorInsecurePassWidget(modifier: Modifier = Modifier) {
+internal fun LoginMonitorMissingTwoFaWidget(modifier: Modifier = Modifier) {
     LoginMonitorWidget(
         modifier = modifier,
-        title = stringResource(id = R.string.login_item_monitor_widget_weak_pass_title),
-        subtitleResId = R.string.login_item_monitor_widget_weak_pass_subtitle
+        title = stringResource(id = R.string.login_item_monitor_widget_missing_two_fa_title),
+        subtitleResId = R.string.login_item_monitor_widget_missing_two_fa_subtitle,
+        itemColors = passItemColors(itemCategory = ItemCategory.Login)
     )
 }
 
 @[Preview Composable]
-internal fun LoginMonitorInsecurePassWidgetPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun LoginMonitorMissingTwoFaWidgetPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            LoginMonitorInsecurePassWidget()
+            LoginMonitorMissingTwoFaWidget()
         }
     }
 }

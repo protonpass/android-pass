@@ -18,7 +18,6 @@
 
 package proton.android.pass.features.itemdetail.login
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -60,7 +59,6 @@ internal fun LoginContent(
     canViewItemHistory: Boolean,
     isFileAttachmentsEnabled: Boolean,
     passkeys: ImmutableList<UIPasskeyContent>,
-    monitorState: LoginMonitorState,
     attachmentsState: AttachmentsState,
     hasMoreThanOneVaultShare: Boolean,
     onEvent: (LoginDetailEvent) -> Unit
@@ -71,14 +69,6 @@ internal fun LoginContent(
         modifier = modifier.padding(horizontal = Spacing.medium),
         verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
-        AnimatedVisibility(visible = monitorState.shouldDisplayMonitoring) {
-            LoginMonitorSection(
-                modifier = Modifier.padding(top = Spacing.small),
-                monitorState = monitorState,
-                canLoadExternalImages = canLoadExternalImages,
-                onEvent = onEvent
-            )
-        }
 
         LoginTitle(
             modifier = Modifier.padding(Spacing.none, Spacing.mediumSmall),

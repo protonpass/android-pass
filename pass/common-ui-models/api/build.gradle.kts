@@ -31,6 +31,7 @@ dependencies {
     implementation(projects.pass.domain)
     implementation(projects.pass.protos)
 
+    implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
     compileOnly(libs.compose.stable.marker)

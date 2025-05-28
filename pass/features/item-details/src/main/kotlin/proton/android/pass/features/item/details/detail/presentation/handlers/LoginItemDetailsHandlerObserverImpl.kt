@@ -21,16 +21,11 @@ package proton.android.pass.features.item.details.detail.presentation.handlers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
-import proton.android.pass.domain.toItemContents
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
@@ -53,22 +48,22 @@ import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
 class LoginItemDetailsHandlerObserverImpl @Inject constructor(
+    override val encryptionContextProvider: EncryptionContextProvider,
+    override val totpManager: TotpManager,
     private val userPreferencesRepository: UserPreferencesRepository,
-    private val encryptionContextProvider: EncryptionContextProvider,
-    private val passwordStrengthCalculator: PasswordStrengthCalculator,
-    private val totpManager: TotpManager
-) : ItemDetailsHandlerObserver<ItemContents.Login>() {
+    private val passwordStrengthCalculator: PasswordStrengthCalculator
+) : ItemDetailsHandlerObserver<ItemContents.Login>(encryptionContextProvider, totpManager) {
 
     override fun observe(
         share: Share,
         item: Item,
         attachmentsState: AttachmentsState
     ): Flow<ItemDetailState> = combine(
-        observeLoginItemContents(item),
+        observeItemContents(item),
         observePrimaryTotp(item),
         observeCustomFieldTotps(item),
         userPreferencesRepository.getUseFaviconsPreference()
-    ) { loginItemContents, primaryTotp, customFieldsTotps, useFaviconsPreference ->
+    ) { loginItemContents, primaryTotp, customFieldTotps, useFaviconsPreference ->
         ItemDetailState.Login(
             itemContents = loginItemContents,
             itemId = item.id,
@@ -88,45 +83,16 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                     .let(passwordStrengthCalculator::calculateStrength)
             },
             primaryTotp = primaryTotp,
-            customFieldTotps = customFieldsTotps,
+            customFieldTotps = customFieldTotps,
             passkeys = loginItemContents.passkeys.map { passkey -> UIPasskeyContent.from(passkey) },
             attachmentsState = attachmentsState
         )
     }
 
-    private fun observeLoginItemContents(item: Item): Flow<ItemContents.Login> = flow {
-        encryptionContextProvider.withEncryptionContext {
-            item.toItemContents<ItemContents.Login> { decrypt(it) }
-        }.let { loginItemContents ->
-            emit(loginItemContents)
-        }
-    }
-
-    private fun observePrimaryTotp(item: Item): Flow<Totp?> = observeLoginItemContents(item)
+    private fun observePrimaryTotp(item: Item): Flow<Totp?> = observeItemContents(item)
         .flatMapLatest { loginItemContents ->
             observeTotp(loginItemContents.primaryTotp)
         }
-
-    private fun observeCustomFieldTotps(item: Item): Flow<Map<Pair<Option<Int>, Int>, Totp>> =
-        observeLoginItemContents(item).flatMapLatest { contents ->
-            val decrypted = encryptionContextProvider.withEncryptionContextSuspendable {
-                contents.customFields.mapToDecryptedTotp(
-                    sectionIndex = None,
-                    decrypt = ::decrypt
-                ).toMap()
-            }
-            val flows = decrypted.map { uri ->
-                totpManager.observeCode(uri.value)
-                    .map {
-                        uri.key to Totp(
-                            code = it.code,
-                            remainingSeconds = it.remainingSeconds,
-                            totalSeconds = it.totalSeconds
-                        )
-                    }
-            }
-            combine(flows) { it.toMap() }
-        }.onStart { emit(emptyMap()) }
 
     private fun observeTotp(hiddenTotpState: HiddenState): Flow<Totp?> = when (hiddenTotpState) {
         is HiddenState.Empty -> ""

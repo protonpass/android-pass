@@ -16,12 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.details.detail.presentation.handlers
+package proton.android.pass.commonpresentation.api.items.details.handlers
 
 import proton.android.pass.common.api.Option
 import proton.android.pass.domain.CustomFieldContent
 
-internal fun <T> Iterable<T>.mapToDecryptedTotp(
+fun <T> Iterable<T>.mapToDecryptedTotp(
     sectionIndex: Option<Int>,
     decrypt: (String) -> String
 ): List<Pair<Pair<Option<Int>, Int>, String>> = mapIndexedNotNull { index, customFieldContent ->

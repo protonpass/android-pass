@@ -18,26 +18,19 @@
 
 package proton.android.pass.features.itemdetail
 
-import androidx.compose.runtime.remember
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
-import me.proton.core.compose.navigation.requireArguments
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
-import proton.android.pass.features.itemdetail.common.CannotPerformActionDialog
 import proton.android.pass.features.itemdetail.common.CannotPerformActionDialogType
 import proton.android.pass.features.itemdetail.login.passkey.bottomsheet.navigation.passkeyDetailBottomSheetGraph
 import proton.android.pass.features.itemdetail.login.reusedpass.navigation.LoginItemDetailsReusedPassNavItem
 import proton.android.pass.features.itemdetail.login.reusedpass.ui.LoginItemDetailReusedPassScreen
-import proton.android.pass.navigation.api.NavArgId
-import proton.android.pass.navigation.api.NavItem
-import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.OptionalNavArgId
 import proton.android.pass.navigation.api.composable
-import proton.android.pass.navigation.api.dialog
 
 sealed interface ItemDetailNavigation {
 
@@ -66,11 +59,6 @@ sealed interface ItemDetailNavigation {
     value class ManageVault(val shareId: ShareId) : ItemDetailNavigation
 
     data class OnShareVault(val shareId: ShareId, val itemId: ItemId) : ItemDetailNavigation
-
-    @JvmInline
-    value class CannotPerformAction(
-        val type: ItemDetailCannotPerformActionType
-    ) : ItemDetailNavigation
 
     data class OnViewItemHistory(
         val shareId: ShareId,
@@ -126,45 +114,13 @@ enum class ItemDetailNavScope {
     MonitorMissing2fa
 }
 
-object ItemDetailCannotPerformActionTypeNavArgId : NavArgId {
-    override val key = "cannotPerformActionType"
-    override val navType = NavType.StringType
-}
-
-object ItemDetailCannotPerformAction : NavItem(
-    baseRoute = "item/detail/cannotperformaction/dialog",
-    navArgIds = listOf(ItemDetailCannotPerformActionTypeNavArgId),
-    navItemType = NavItemType.Dialog
-) {
-    fun buildRoute(type: ItemDetailCannotPerformActionType) = "$baseRoute/${type.name}"
-}
-
 object ItemDetailScopeNavArgId : OptionalNavArgId {
     override val key: String = "itemDetailNavScope"
     override val navType: NavType<*> = NavType.EnumType(ItemDetailNavScope::class.java)
     override val default: Any = ItemDetailNavScope.Default
 }
 
-
 fun NavGraphBuilder.itemDetailGraph(onNavigate: (ItemDetailNavigation) -> Unit) {
-
-    dialog(ItemDetailCannotPerformAction) { backStackEntry ->
-        val type = remember {
-            val typeArg: String = requireNotNull(
-                backStackEntry
-                    .requireArguments()
-                    .getString(ItemDetailCannotPerformActionTypeNavArgId.key)
-            )
-            val asType = ItemDetailCannotPerformActionType.entries.find { it.name == typeArg }
-                ?: throw IllegalStateException("Cannot find type $typeArg")
-            asType.toType()
-        }
-        CannotPerformActionDialog(
-            type = type,
-            onClose = { onNavigate(ItemDetailNavigation.CloseScreen) },
-            onUpgrade = { onNavigate(ItemDetailNavigation.Upgrade(true)) }
-        )
-    }
 
     passkeyDetailBottomSheetGraph(
         onDismiss = { onNavigate(ItemDetailNavigation.DismissBottomSheet) }

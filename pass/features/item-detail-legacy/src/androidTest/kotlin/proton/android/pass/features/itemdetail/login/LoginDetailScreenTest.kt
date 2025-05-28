@@ -51,7 +51,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultId
-import proton.android.pass.features.itemdetail.ItemDetailNavScope
+import proton.android.pass.commonuimodels.api.items.ItemDetailNavScope
 import proton.android.pass.features.itemdetail.ItemDetailNavigation
 import proton.android.pass.features.itemdetail.ItemDetailScopeNavArgId
 import proton.android.pass.features.itemdetail.ItemDetailScreen

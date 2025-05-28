@@ -21,9 +21,7 @@ package proton.android.pass.ui.navigation
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
-import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
-import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.account.Account
@@ -32,7 +30,6 @@ import proton.android.pass.features.account.accountGraph
 import proton.android.pass.features.alias.contacts.AliasContactsNavigation
 import proton.android.pass.features.alias.contacts.aliasContactGraph
 import proton.android.pass.features.alias.contacts.create.navigation.CreateAliasContactNavItem
-import proton.android.pass.features.alias.contacts.detail.navigation.DetailAliasContactNavItem
 import proton.android.pass.features.alias.contacts.onboarding.navigation.OnBoardingAliasContactNavItem
 import proton.android.pass.features.alias.contacts.options.navigation.OptionsAliasContactNavItem
 import proton.android.pass.features.attachments.AttachmentsNavigation
@@ -72,6 +69,7 @@ import proton.android.pass.features.item.details.detailleave.navigation.ItemDeta
 import proton.android.pass.features.item.details.detailmenu.navigation.ItemDetailsMenuNavItem
 import proton.android.pass.features.item.details.passkey.bottomsheet.navigation.ViewPasskeyDetailsBottomSheet
 import proton.android.pass.features.item.details.qrviewer.navigation.QRViewerNavItem
+import proton.android.pass.features.item.details.reusedpass.navigation.LoginItemDetailsReusedPassNavItem
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
 import proton.android.pass.features.item.details.shared.navigation.itemDetailsNavGraph
 import proton.android.pass.features.item.history.confirmreset.navigation.ConfirmResetHistoryDialogNavItem
@@ -150,9 +148,6 @@ import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation
 import proton.android.pass.features.itemcreate.note.createUpdateNoteGraph
 import proton.android.pass.features.itemcreate.totp.CameraTotpNavItem
 import proton.android.pass.features.itemcreate.totp.PhotoPickerTotpNavItem
-import proton.android.pass.features.itemdetail.ItemDetailNavigation
-import proton.android.pass.features.itemdetail.itemDetailGraph
-import proton.android.pass.features.item.details.reusedpass.navigation.LoginItemDetailsReusedPassNavItem
 import proton.android.pass.features.migrate.MigrateConfirmVault
 import proton.android.pass.features.migrate.MigrateModeValue
 import proton.android.pass.features.migrate.MigrateNavigation
@@ -1528,198 +1523,6 @@ fun NavGraphBuilder.appGraph(
             }
         }
     }
-    itemDetailGraph(
-        onNavigate = {
-            when (it) {
-                ItemDetailNavigation.CloseScreen -> appNavigator.navigateBack()
-                ItemDetailNavigation.DismissBottomSheet -> dismissBottomSheet {}
-
-                is ItemDetailNavigation.OnCreateLoginFromAlias -> {
-                    appNavigator.navigate(
-                        destination = CreateLoginNavItem,
-                        route = CreateLoginNavItem.createNavRoute(
-                            emailOption = it.alias.some(),
-                            shareId = it.shareId.toOption()
-                        ),
-                        backDestination = HomeNavItem
-                    )
-                }
-
-                is ItemDetailNavigation.OnEdit -> {
-                    val destination = when (it.itemUiModel.contents) {
-                        is ItemContents.Login -> EditLoginNavItem
-                        is ItemContents.Note -> UpdateNoteNavItem
-                        is ItemContents.Alias -> EditAlias
-                        is ItemContents.CreditCard -> EditCreditCard
-                        is ItemContents.Unknown -> null
-                        is ItemContents.WifiNetwork,
-                        is ItemContents.SSHKey,
-                        is ItemContents.Custom,
-                        is ItemContents.Identity -> {
-                            // Not required as already migrated to new item-details feature
-                            throw IllegalStateException("Should navigate from new graph")
-                        }
-                    }
-                    val route = when (it.itemUiModel.contents) {
-                        is ItemContents.Login -> EditLoginNavItem.createNavRoute(
-                            it.itemUiModel.shareId,
-                            it.itemUiModel.id
-                        )
-
-                        is ItemContents.Note -> UpdateNoteNavItem.createNavRoute(
-                            it.itemUiModel.shareId,
-                            it.itemUiModel.id
-                        )
-
-                        is ItemContents.Alias -> EditAlias.createNavRoute(
-                            it.itemUiModel.shareId,
-                            it.itemUiModel.id
-                        )
-
-                        is ItemContents.CreditCard -> EditCreditCard.createNavRoute(
-                            it.itemUiModel.shareId,
-                            it.itemUiModel.id
-                        )
-
-                        is ItemContents.WifiNetwork,
-                        is ItemContents.SSHKey,
-                        is ItemContents.Custom,
-                        is ItemContents.Identity -> {
-                            // Not required as already migrated to new item-details feature
-                            throw IllegalStateException("Should navigate from new graph")
-                        }
-
-                        is ItemContents.Unknown -> null
-                    }
-
-                    if (destination != null && route != null) {
-                        appNavigator.navigate(destination, route)
-                    }
-                }
-
-                is ItemDetailNavigation.OnMigrate -> {
-                    appNavigator.navigate(
-                        destination = MigrateSelectVault,
-                        route = MigrateSelectVault.createNavRouteForMigrateSelectedItems(
-                            filter = MigrateVaultFilter.All
-                        )
-                    )
-                }
-
-                is ItemDetailNavigation.OnMigrateSharedWarning -> {
-                    appNavigator.navigate(
-                        destination = MigrateSharedWarningNavItem,
-                        route = MigrateSharedWarningNavItem.createNavRoute(
-                            migrateMode = MigrateModeValue.SelectedItems,
-                            filter = MigrateVaultFilter.All
-                        )
-                    )
-                }
-
-                is ItemDetailNavigation.OnViewItem -> {
-                    appNavigator.navigate(
-                        destination = ItemDetailsNavItem,
-                        route = ItemDetailsNavItem.createNavRoute(it.shareId, it.itemId)
-                    )
-                }
-
-                is ItemDetailNavigation.Upgrade -> {
-                    if (it.popBefore) {
-                        appNavigator.navigateBack()
-                    }
-                    onNavigate(AppNavigation.Upgrade)
-                }
-
-                is ItemDetailNavigation.ManageItem -> {
-                    appNavigator.navigate(
-                        destination = ManageItemNavItem,
-                        route = ManageItemNavItem.createNavRoute(
-                            shareId = it.shareId,
-                            itemId = it.itemId
-                        ),
-                        backDestination = ItemDetailsNavItem
-                    )
-                }
-
-                is ItemDetailNavigation.ManageVault -> {
-                    appNavigator.navigate(
-                        destination = ManageVault,
-                        route = ManageVault.createRoute(it.shareId),
-                        backDestination = ItemDetailsNavItem
-                    )
-                }
-
-                is ItemDetailNavigation.OnShareVault -> {
-                    appNavigator.navigate(
-                        destination = ShareFromItem,
-                        route = ShareFromItem.buildRoute(
-                            shareId = it.shareId,
-                            itemId = it.itemId
-                        )
-                    )
-                }
-
-                is ItemDetailNavigation.ViewPasskeyDetails -> {
-                    appNavigator.navigate(
-                        destination = ViewPasskeyDetailsBottomSheet,
-                        route = ViewPasskeyDetailsBottomSheet.buildRoute(
-                            shareId = it.shareId,
-                            itemId = it.itemId,
-                            passkeyId = it.passkeyId
-                        )
-                    )
-                }
-
-                is ItemDetailNavigation.OnViewItemHistory -> appNavigator.navigate(
-                    destination = ItemHistoryTimelineNavItem,
-                    route = ItemHistoryTimelineNavItem.createNavRoute(
-                        shareId = it.shareId,
-                        itemId = it.itemId
-                    )
-                )
-
-                is ItemDetailNavigation.ViewReusedPasswords -> appNavigator.navigate(
-                    destination = LoginItemDetailsReusedPassNavItem,
-                    route = LoginItemDetailsReusedPassNavItem.createNavRoute(
-                        shareId = it.shareId,
-                        itemId = it.itemId
-                    )
-                )
-
-                is ItemDetailNavigation.OnTrashAlias -> appNavigator.navigate(
-                    destination = ItemOptionsAliasTrashDialogNavItem,
-                    route = ItemOptionsAliasTrashDialogNavItem.createNavRoute(
-                        shareId = it.shareId,
-                        itemId = it.itemId
-                    )
-                )
-
-                is ItemDetailNavigation.OnContactsClicked -> appNavigator.navigate(
-                    destination = DetailAliasContactNavItem,
-                    route = DetailAliasContactNavItem.createNavRoute(it.shareId, it.itemId)
-                )
-
-                is ItemDetailNavigation.LeaveItemShare -> dismissBottomSheet {
-                    appNavigator.navigate(
-                        destination = ItemDetailsLeaveNavItem,
-                        route = ItemDetailsLeaveNavItem.createNavRoute(
-                            shareId = it.shareId
-                        )
-                    )
-                }
-
-                is ItemDetailNavigation.OpenAttachmentOptions -> appNavigator.navigate(
-                    destination = AttachmentOptionsOnDetailNavItem,
-                    route = AttachmentOptionsOnDetailNavItem.createNavRoute(
-                        shareId = it.shareId,
-                        itemId = it.itemId,
-                        attachmentId = it.attachmentId
-                    )
-                )
-            }
-        }
-    )
-
     itemDetailsNavGraph(
         onNavigated = { itemDetailsNavDestination ->
             when (itemDetailsNavDestination) {
@@ -1871,6 +1674,14 @@ fun NavGraphBuilder.appGraph(
                         shareId = itemDetailsNavDestination.shareId,
                         itemId = itemDetailsNavDestination.itemId,
                         attachmentId = itemDetailsNavDestination.attachmentId
+                    )
+                )
+
+                is ItemDetailsNavDestination.ViewReusedPasswords -> appNavigator.navigate(
+                    destination = LoginItemDetailsReusedPassNavItem,
+                    route = LoginItemDetailsReusedPassNavItem.createNavRoute(
+                        shareId = itemDetailsNavDestination.shareId,
+                        itemId = itemDetailsNavDestination.itemId
                     )
                 )
             }

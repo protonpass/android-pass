@@ -75,10 +75,10 @@ fun areItemContentsEqual(
         areLoginItemsEqual(a, b, decrypt)
 
     a is ItemContents.Note && b is ItemContents.Note ->
-        areNoteItemsEqual(a, b)
+        areNoteItemsEqual(a, b, decrypt)
 
     a is ItemContents.Alias && b is ItemContents.Alias ->
-        areAliasItemsEqual(a, b)
+        areAliasItemsEqual(a, b, decrypt)
 
     a is ItemContents.CreditCard && b is ItemContents.CreditCard ->
         areCreditCardItemsEqual(a, b, decrypt)
@@ -166,15 +166,26 @@ private fun areCreditCardItemsEqual(
     a.number == b.number &&
     a.cvv.compareDecrypted(b.cvv, decrypt) == 0 &&
     a.pin.compareDecrypted(b.pin, decrypt) == 0 &&
-    a.expirationDate == b.expirationDate
+    a.expirationDate == b.expirationDate &&
+    a.customFields.compareDecrypted(b.customFields, decrypt) == 0
 
-private fun areAliasItemsEqual(a: ItemContents.Alias, b: ItemContents.Alias) = a.title == b.title &&
+private fun areAliasItemsEqual(
+    a: ItemContents.Alias,
+    b: ItemContents.Alias,
+    decrypt: (EncryptedString) -> String
+) = a.title == b.title &&
     a.note == b.note &&
     a.aliasEmail == b.aliasEmail &&
-    a.isEnabled == b.isEnabled
+    a.isEnabled == b.isEnabled &&
+    a.customFields.compareDecrypted(b.customFields, decrypt) == 0
 
-private fun areNoteItemsEqual(a: ItemContents.Note, b: ItemContents.Note) = a.title == b.title &&
-    a.note == b.note
+private fun areNoteItemsEqual(
+    a: ItemContents.Note,
+    b: ItemContents.Note,
+    decrypt: (EncryptedString) -> String
+) = a.title == b.title &&
+    a.note == b.note &&
+    a.customFields.compareDecrypted(b.customFields, decrypt) == 0
 
 private fun areLoginItemsEqual(
     a: ItemContents.Login,

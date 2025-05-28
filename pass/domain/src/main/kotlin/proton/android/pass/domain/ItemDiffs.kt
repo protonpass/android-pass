@@ -134,7 +134,7 @@ sealed interface ItemDiffs {
         val urls: Pair<ItemDiffType, List<ItemDiffType>> = Pair(ItemDiffType.None, listOf(ItemDiffType.None)),
         val linkedApps: Pair<ItemDiffType, List<ItemDiffType>> = Pair(
             ItemDiffType.None,
-            emptyList()
+            listOf(ItemDiffType.None)
         ),
         private val passkeys: Map<String, ItemDiffType> = emptyMap()
     ) : ItemDiffs {

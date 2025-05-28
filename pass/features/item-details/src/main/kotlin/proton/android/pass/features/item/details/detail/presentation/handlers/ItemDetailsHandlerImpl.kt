@@ -65,13 +65,22 @@ class ItemDetailsHandlerImpl @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ItemDetailsHandler {
 
-    override fun observeItemDetails(item: Item, source: ItemDetailsSource): Flow<ItemDetailState> = combine(
+    override fun observeItemDetails(
+        item: Item,
+        source: ItemDetailsSource,
+        savedStateEntries: Map<String, Any?>
+    ): Flow<ItemDetailState> = combine(
         oneShot { observeShare(item.shareId).first() },
         attachmentsFlow(item, source),
         ::Pair
     )
         .flatMapLatest { (share, attachments) ->
-            getItemDetailsObserver(item.itemType.category).observe(share, item, attachments)
+            getItemDetailsObserver(item.itemType.category).observe(
+                share = share,
+                item = item,
+                attachmentsState = attachments,
+                savedStateEntries = savedStateEntries
+            )
         }
         .catch { error ->
             if (error !is ItemNotFoundError) {

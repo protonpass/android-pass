@@ -22,6 +22,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.datetime.Instant
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.Spacing
@@ -29,6 +31,7 @@ import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent.OnAttachmentEvent
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailCustomFieldsSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
@@ -36,6 +39,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Totp
 import proton.android.pass.domain.VaultId
 
 @Composable
@@ -55,6 +59,7 @@ internal fun PassNoteItemDetailSections(
     shouldDisplayItemHistoryButton: Boolean,
     shouldDisplayFileAttachments: Boolean,
     attachmentsState: AttachmentsState,
+    customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, Totp>,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(contents) {
     Column(
@@ -65,6 +70,16 @@ internal fun PassNoteItemDetailSections(
             note = note,
             itemDiffs = itemDiffs
         )
+
+        if (contents.customFields.isNotEmpty()) {
+            PassItemDetailCustomFieldsSection(
+                customFields = contents.customFields.toPersistentList(),
+                customFieldTotps = customFieldTotps,
+                itemColors = itemColors,
+                itemDiffs = itemDiffs,
+                onEvent = onEvent
+            )
+        }
 
         if (shouldDisplayFileAttachments) {
             AttachmentSection(

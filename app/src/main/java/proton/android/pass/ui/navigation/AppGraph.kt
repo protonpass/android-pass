@@ -24,8 +24,6 @@ import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.account.Account
@@ -152,9 +150,7 @@ import proton.android.pass.features.itemcreate.note.createUpdateNoteGraph
 import proton.android.pass.features.itemcreate.totp.CameraTotpNavItem
 import proton.android.pass.features.itemcreate.totp.PhotoPickerTotpNavItem
 import proton.android.pass.features.itemdetail.ItemDetailCannotPerformAction
-import proton.android.pass.features.itemdetail.ItemDetailNavScope
 import proton.android.pass.features.itemdetail.ItemDetailNavigation
-import proton.android.pass.features.itemdetail.ViewItem
 import proton.android.pass.features.itemdetail.itemDetailGraph
 import proton.android.pass.features.itemdetail.login.passkey.bottomsheet.navigation.ViewPasskeyDetailsBottomSheet
 import proton.android.pass.features.itemdetail.login.reusedpass.navigation.LoginItemDetailsReusedPassNavItem
@@ -222,7 +218,6 @@ import proton.android.pass.features.security.center.report.navigation.SecurityCe
 import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassNavItem
 import proton.android.pass.features.security.center.sentinel.navigation.SecurityCenterSentinelNavItem
 import proton.android.pass.features.security.center.shared.navigation.SecurityCenterNavDestination
-import proton.android.pass.features.security.center.shared.navigation.SecurityCenterNavDestination.ItemDetails.Origin
 import proton.android.pass.features.security.center.shared.navigation.securityCenterNavGraph
 import proton.android.pass.features.security.center.verifyemail.navigation.SecurityCenterVerifyEmailNavItem
 import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassNavItem
@@ -375,12 +370,8 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 is HomeNavigation.ItemDetail -> appNavigator.navigate(
-                    destination = getItemDetailsDestination(it.itemCategory),
-                    route = getItemDetailsRoute(
-                        itemCategory = it.itemCategory,
-                        shareId = it.shareId,
-                        itemId = it.itemId
-                    )
+                    destination = ItemDetailsNavItem,
+                    route = ItemDetailsNavItem.createNavRoute(it.shareId, it.itemId)
                 )
 
                 HomeNavigation.Profile -> {
@@ -876,8 +867,8 @@ fun NavGraphBuilder.appGraph(
                     is UpdateLoginNavigation.LoginUpdated -> {
                         if (!appNavigator.hasDestinationInStack(SecurityCenterHomeNavItem)) {
                             appNavigator.navigate(
-                                destination = ViewItem,
-                                route = ViewItem.createNavRoute(event.shareId, event.itemId),
+                                destination = ItemDetailsNavItem,
+                                route = ItemDetailsNavItem.createNavRoute(event.shareId, event.itemId),
                                 backDestination = HomeNavItem
                             )
                         } else {
@@ -1115,8 +1106,8 @@ fun NavGraphBuilder.appGraph(
                 }
                 is BaseNoteNavigation.OnUpdateNoteEvent -> when (val cevent = it.event) {
                     is UpdateNoteNavigation.NoteUpdated -> appNavigator.navigate(
-                        destination = ViewItem,
-                        route = ViewItem.createNavRoute(cevent.shareId, cevent.itemId),
+                        destination = ItemDetailsNavItem,
+                        route = ItemDetailsNavItem.createNavRoute(cevent.shareId, cevent.itemId),
                         backDestination = HomeNavItem
                     )
                     is UpdateNoteNavigation.OpenAttachmentOptions -> appNavigator.navigate(
@@ -1145,8 +1136,8 @@ fun NavGraphBuilder.appGraph(
                 }
                 is UpdateCreditCardNavigation -> when (it) {
                     is UpdateCreditCardNavigation.ItemUpdated -> appNavigator.navigate(
-                        destination = ViewItem,
-                        route = ViewItem.createNavRoute(it.shareId, it.itemId),
+                        destination = ItemDetailsNavItem,
+                        route = ItemDetailsNavItem.createNavRoute(it.shareId, it.itemId),
                         backDestination = HomeNavItem
                     )
                 }
@@ -1205,8 +1196,8 @@ fun NavGraphBuilder.appGraph(
                         )
                     )
                     is UpdateAliasNavigation.Updated -> appNavigator.navigate(
-                        destination = ViewItem,
-                        route = ViewItem.createNavRoute(event.shareId, event.itemId),
+                        destination = ItemDetailsNavItem,
+                        route = ItemDetailsNavItem.createNavRoute(event.shareId, event.itemId),
                         backDestination = HomeNavItem
                     )
                 }
@@ -1628,8 +1619,8 @@ fun NavGraphBuilder.appGraph(
 
                 is ItemDetailNavigation.OnViewItem -> {
                     appNavigator.navigate(
-                        destination = ViewItem,
-                        route = ViewItem.createNavRoute(it.shareId, it.itemId)
+                        destination = ItemDetailsNavItem,
+                        route = ItemDetailsNavItem.createNavRoute(it.shareId, it.itemId)
                     )
                 }
 
@@ -1647,7 +1638,7 @@ fun NavGraphBuilder.appGraph(
                             shareId = it.shareId,
                             itemId = it.itemId
                         ),
-                        backDestination = ViewItem
+                        backDestination = ItemDetailsNavItem
                     )
                 }
 
@@ -1655,7 +1646,7 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(
                         destination = ManageVault,
                         route = ManageVault.createRoute(it.shareId),
-                        backDestination = ViewItem
+                        backDestination = ItemDetailsNavItem
                     )
                 }
 
@@ -1819,7 +1810,7 @@ fun NavGraphBuilder.appGraph(
                     route = ManageVault.createRoute(
                         shareId = itemDetailsNavDestination.sharedVaultId
                     ),
-                    backDestination = getItemDetailsDestination(itemDetailsNavDestination.itemCategory)
+                    backDestination = ItemDetailsNavItem
                 )
 
                 is ItemDetailsNavDestination.ItemOptionsMenu -> appNavigator.navigate(
@@ -1899,9 +1890,7 @@ fun NavGraphBuilder.appGraph(
             when (itemHistoryNavDestination) {
                 ItemHistoryNavDestination.CloseScreen -> appNavigator.navigateBack()
 
-                is ItemHistoryNavDestination.Detail -> appNavigator.popUpTo(
-                    destination = getItemDetailsDestination(itemHistoryNavDestination.itemCategory)
-                )
+                is ItemHistoryNavDestination.Detail -> appNavigator.popUpTo(ItemDetailsNavItem)
 
                 is ItemHistoryNavDestination.Restore -> appNavigator.navigate(
                     destination = ItemHistoryRestoreNavItem,
@@ -1996,16 +1985,16 @@ fun NavGraphBuilder.appGraph(
                         route = MigrateConfirmVault.createNavRouteForMigrateSelectedItems(
                             destShareId = it.destShareId
                         ),
-                        backDestination = ViewItem
+                        backDestination = ItemDetailsNavItem
                     )
                 }
 
                 is MigrateNavigation.ItemMigrated -> dismissBottomSheet {
                     // Only navigate to detail if we already were in a detail screen
-                    if (appNavigator.hasDestinationInStack(ViewItem)) {
+                    if (appNavigator.hasDestinationInStack(ItemDetailsNavItem)) {
                         appNavigator.navigate(
-                            destination = ViewItem,
-                            route = ViewItem.createNavRoute(it.shareId, it.itemId),
+                            destination = ItemDetailsNavItem,
+                            route = ItemDetailsNavItem.createNavRoute(it.shareId, it.itemId),
                             backDestination = HomeNavItem
                         )
                     } else if (appNavigator.hasDestinationInStack(HomeNavItem)) {
@@ -2129,17 +2118,10 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 is SecurityCenterNavDestination.ItemDetails -> appNavigator.navigate(
-                    destination = ViewItem,
-                    route = ViewItem.createNavRoute(
+                    destination = ItemDetailsNavItem,
+                    route = ItemDetailsNavItem.createNavRoute(
                         shareId = destination.shareId,
-                        itemId = destination.itemId,
-                        scope = when (destination.origin) {
-                            Origin.Excluded -> ItemDetailNavScope.MonitorExcluded
-                            Origin.Missing2fa -> ItemDetailNavScope.MonitorMissing2fa
-                            Origin.Report -> ItemDetailNavScope.MonitorReport
-                            Origin.ReusedPassword -> ItemDetailNavScope.MonitorReusedPassword
-                            Origin.WeakPasswords -> ItemDetailNavScope.MonitorWeakPassword
-                        }
+                        itemId = destination.itemId
                     )
                 )
 
@@ -2541,18 +2523,11 @@ fun NavGraphBuilder.appGraph(
                 )
             }
 
-            is SharingNavigation.ItemDetails -> appNavigator.popUpTo(
-                destination = getItemDetailsDestination(it.itemCategory)
-            )
-
+            is SharingNavigation.ItemDetails -> appNavigator.popUpTo(ItemDetailsNavItem)
             is SharingNavigation.SharedItemDetails -> dismissBottomSheet {
                 appNavigator.navigate(
-                    destination = getItemDetailsDestination(it.itemCategory),
-                    route = getItemDetailsRoute(
-                        itemCategory = it.itemCategory,
-                        shareId = it.shareId,
-                        itemId = it.itemId
-                    ),
+                    destination = ItemDetailsNavItem,
+                    route = ItemDetailsNavItem.createNavRoute(it.shareId, it.itemId),
                     backDestination = HomeNavItem
                 )
             }
@@ -2584,9 +2559,8 @@ fun NavGraphBuilder.appGraph(
             when (destination) {
                 SecureLinksNavDestination.CloseScreen -> appNavigator.navigateBack()
 
-                is SecureLinksNavDestination.CloseScreenWithCategory -> appNavigator.popUpTo(
-                    destination = getItemDetailsDestination(destination.itemCategory)
-                )
+                is SecureLinksNavDestination.CloseScreenWithCategory ->
+                    appNavigator.popUpTo(ItemDetailsNavItem)
 
                 SecureLinksNavDestination.DismissBottomSheet -> dismissBottomSheet {}
 
@@ -2601,7 +2575,7 @@ fun NavGraphBuilder.appGraph(
                     SecureLinksOverviewNavScope.SecureLinksGeneration -> appNavigator.navigate(
                         destination = SecureLinksOverviewScreenNavItem,
                         route = SecureLinksOverviewScreenNavItem.createNavRoute(destination.secureLinkId),
-                        backDestination = ViewItem
+                        backDestination = ItemDetailsNavItem
                     )
 
                     SecureLinksOverviewNavScope.SecureLinksList -> appNavigator.navigate(
@@ -2823,44 +2797,4 @@ fun NavGraphBuilder.appGraph(
             }
         }
     }
-}
-
-// This fun should be removed once all categories are migrated to new item-details feature
-// ItemDetailsNavItem should be keep as new destination
-private fun getItemDetailsDestination(itemCategory: ItemCategory) = when (itemCategory) {
-    ItemCategory.Login,
-    ItemCategory.Alias,
-    ItemCategory.Note,
-    ItemCategory.CreditCard -> ViewItem
-
-    // Identity is the first item category migrated
-    ItemCategory.SSHKey,
-    ItemCategory.WifiNetwork,
-    ItemCategory.Custom,
-    ItemCategory.Identity -> ItemDetailsNavItem
-
-    ItemCategory.Unknown,
-    ItemCategory.Password -> throw IllegalArgumentException("Cannot view items with category: $itemCategory")
-}
-
-// This fun should be removed once all categories are migrated to new item-details feature
-// ItemDetailsNavItem route should be keep as new destination route
-private fun getItemDetailsRoute(
-    itemCategory: ItemCategory,
-    shareId: ShareId,
-    itemId: ItemId
-) = when (itemCategory) {
-    ItemCategory.Login,
-    ItemCategory.Alias,
-    ItemCategory.Note,
-    ItemCategory.CreditCard -> ViewItem.createNavRoute(shareId, itemId)
-
-    // Identity is the first item category migrated
-    ItemCategory.Identity,
-    ItemCategory.SSHKey,
-    ItemCategory.WifiNetwork,
-    ItemCategory.Custom -> ItemDetailsNavItem.createNavRoute(shareId, itemId)
-
-    ItemCategory.Unknown,
-    ItemCategory.Password -> throw IllegalArgumentException("Cannot view items with category: $itemCategory")
 }

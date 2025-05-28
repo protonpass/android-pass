@@ -19,56 +19,51 @@
 package proton.android.pass.features.item.details.detail.presentation.handlers
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.combine
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
-import proton.android.pass.domain.toItemContents
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
 class NoteItemDetailsHandlerObserverImpl @Inject constructor(
-    private val encryptionContextProvider: EncryptionContextProvider
-) : ItemDetailsHandlerObserver<ItemContents.Note>() {
+    override val encryptionContextProvider: EncryptionContextProvider,
+    override val totpManager: TotpManager
+) : ItemDetailsHandlerObserver<ItemContents.Note>(encryptionContextProvider, totpManager) {
 
     override fun observe(
         share: Share,
         item: Item,
         attachmentsState: AttachmentsState
-    ): Flow<ItemDetailState> = observeNoteItemContents(item)
-        .mapLatest { noteItemContents ->
-            ItemDetailState.Note(
-                itemContents = noteItemContents,
-                itemId = item.id,
-                shareId = item.shareId,
-                isItemPinned = item.isPinned,
-                itemShare = share,
-                itemCreatedAt = item.createTime,
-                itemModifiedAt = item.modificationTime,
-                itemLastAutofillAtOption = item.lastAutofillTime,
-                itemRevision = item.revision,
-                itemState = ItemState.from(item.state),
-                itemDiffs = ItemDiffs.Note(),
-                itemShareCount = item.shareCount,
-                attachmentsState = attachmentsState
-            )
-        }
-
-    private fun observeNoteItemContents(item: Item): Flow<ItemContents.Note> = flow {
-        encryptionContextProvider.withEncryptionContext {
-            item.toItemContents<ItemContents.Note> { decrypt(it) }
-        }.let { noteItemContents ->
-            emit(noteItemContents)
-        }
+    ): Flow<ItemDetailState> = combine(
+        observeItemContents(item),
+        observeCustomFieldTotps(item)
+    ) { noteItemContents, customFieldTotps ->
+        ItemDetailState.Note(
+            itemContents = noteItemContents,
+            itemId = item.id,
+            shareId = item.shareId,
+            isItemPinned = item.isPinned,
+            itemShare = share,
+            itemCreatedAt = item.createTime,
+            itemModifiedAt = item.modificationTime,
+            itemLastAutofillAtOption = item.lastAutofillTime,
+            itemRevision = item.revision,
+            itemState = ItemState.from(item.state),
+            itemDiffs = ItemDiffs.Note(),
+            itemShareCount = item.shareCount,
+            attachmentsState = attachmentsState,
+            customFieldTotps = customFieldTotps
+        )
     }
 
     override fun updateHiddenFieldsContents(

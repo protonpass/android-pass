@@ -19,11 +19,9 @@
 package proton.android.pass.features.item.details.detail.presentation.handlers
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.combine
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
-import proton.android.pass.domain.toItemContents
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -34,41 +32,38 @@ import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
 class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
-    private val encryptionContextProvider: EncryptionContextProvider
-) : ItemDetailsHandlerObserver<ItemContents.CreditCard>() {
+    override val encryptionContextProvider: EncryptionContextProvider,
+    override val totpManager: TotpManager
+) : ItemDetailsHandlerObserver<ItemContents.CreditCard>(encryptionContextProvider, totpManager) {
 
     override fun observe(
         share: Share,
         item: Item,
         attachmentsState: AttachmentsState
-    ): Flow<ItemDetailState> = observeCreditCardItemContents(item)
-        .mapLatest { creditCardItemContents ->
-            ItemDetailState.CreditCard(
-                itemContents = creditCardItemContents,
-                itemId = item.id,
-                shareId = item.shareId,
-                isItemPinned = item.isPinned,
-                itemShare = share,
-                itemCreatedAt = item.createTime,
-                itemModifiedAt = item.modificationTime,
-                itemLastAutofillAtOption = item.lastAutofillTime,
-                itemRevision = item.revision,
-                itemState = ItemState.from(item.state),
-                itemDiffs = ItemDiffs.CreditCard(),
-                itemShareCount = item.shareCount,
-                attachmentsState = attachmentsState
-            )
-        }
-
-    private fun observeCreditCardItemContents(item: Item): Flow<ItemContents.CreditCard> = flow {
-        encryptionContextProvider.withEncryptionContext {
-            item.toItemContents<ItemContents.CreditCard> { decrypt(it) }
-        }.let { creditCardItemContents ->
-            emit(creditCardItemContents)
-        }
+    ): Flow<ItemDetailState> = combine(
+        observeItemContents(item),
+        observeCustomFieldTotps(item)
+    ) { creditCardItemContents, customFieldTotps ->
+        ItemDetailState.CreditCard(
+            itemContents = creditCardItemContents,
+            itemId = item.id,
+            shareId = item.shareId,
+            isItemPinned = item.isPinned,
+            itemShare = share,
+            itemCreatedAt = item.createTime,
+            itemModifiedAt = item.modificationTime,
+            itemLastAutofillAtOption = item.lastAutofillTime,
+            itemRevision = item.revision,
+            itemState = ItemState.from(item.state),
+            itemDiffs = ItemDiffs.CreditCard(),
+            itemShareCount = item.shareCount,
+            attachmentsState = attachmentsState,
+            customFieldTotps = customFieldTotps
+        )
     }
 
     override fun updateHiddenFieldsContents(

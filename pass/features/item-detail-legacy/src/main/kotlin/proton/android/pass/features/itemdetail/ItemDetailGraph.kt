@@ -18,15 +18,11 @@
 
 package proton.android.pass.features.itemdetail
 
-import androidx.navigation.NavType
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.commonuimodels.api.items.ItemDetailNavScope
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
-import proton.android.pass.features.itemdetail.common.CannotPerformActionDialogType
-import proton.android.pass.navigation.api.OptionalNavArgId
 
 sealed interface ItemDetailNavigation {
 
@@ -81,28 +77,4 @@ sealed interface ItemDetailNavigation {
         val itemId: ItemId,
         val attachmentId: AttachmentId
     ) : ItemDetailNavigation
-}
-
-enum class ItemDetailCannotPerformActionType {
-    CannotEditBecauseNoPermissions,
-    CannotEditBecauseNeedsUpgrade,
-    CannotEditBecauseItemInTrash,
-    CannotShareBecauseLimitReached,
-    CannotShareBecauseNoPermissions,
-    CannotShareBecauseItemInTrash;
-
-    fun toType(): CannotPerformActionDialogType = when (this) {
-        CannotEditBecauseNoPermissions -> CannotPerformActionDialogType.CannotEditBecauseNoPermissions
-        CannotEditBecauseNeedsUpgrade -> CannotPerformActionDialogType.CannotEditBecauseNeedsUpgrade
-        CannotEditBecauseItemInTrash -> CannotPerformActionDialogType.CannotEditBecauseItemInTrash
-        CannotShareBecauseLimitReached -> CannotPerformActionDialogType.CannotShareBecauseLimitReached
-        CannotShareBecauseNoPermissions -> CannotPerformActionDialogType.CannotShareBecauseNoPermissions
-        CannotShareBecauseItemInTrash -> CannotPerformActionDialogType.CannotShareBecauseItemInTrash
-    }
-}
-
-object ItemDetailScopeNavArgId : OptionalNavArgId {
-    override val key: String = "itemDetailNavScope"
-    override val navType: NavType<*> = NavType.EnumType(ItemDetailNavScope::class.java)
-    override val default: Any = ItemDetailNavScope.Default
 }

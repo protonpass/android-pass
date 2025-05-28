@@ -79,6 +79,7 @@ dependencies {
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.securityCenter.api)
     implementation(projects.pass.totp.api)
+    implementation(projects.pass.telemetry.api)
 
     implementation(libs.androidsvg)
     implementation(libs.androidx.compose.material)

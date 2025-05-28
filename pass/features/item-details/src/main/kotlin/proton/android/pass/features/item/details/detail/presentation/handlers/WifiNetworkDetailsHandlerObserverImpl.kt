@@ -21,7 +21,6 @@ package proton.android.pass.features.item.details.detail.presentation.handlers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import proton.android.pass.common.api.None
@@ -30,6 +29,7 @@ import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
+import proton.android.pass.commonpresentation.api.items.details.handlers.mapToDecryptedTotp
 import proton.android.pass.commonrust.api.WifiNetworkQRGenerator
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
@@ -42,22 +42,21 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.Totp
 import proton.android.pass.domain.attachments.Attachment
-import proton.android.pass.domain.toItemContents
 import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
 class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
-    private val wifiNetworkQRGenerator: WifiNetworkQRGenerator,
-    private val encryptionContextProvider: EncryptionContextProvider,
-    private val totpManager: TotpManager
-) : ItemDetailsHandlerObserver<ItemContents.WifiNetwork>() {
+    override val encryptionContextProvider: EncryptionContextProvider,
+    override val totpManager: TotpManager,
+    private val wifiNetworkQRGenerator: WifiNetworkQRGenerator
+) : ItemDetailsHandlerObserver<ItemContents.WifiNetwork>(encryptionContextProvider, totpManager) {
 
     override fun observe(
         share: Share,
         item: Item,
         attachmentsState: AttachmentsState
     ): Flow<ItemDetailState> = combine(
-        observeWifiNetworkItemContents(item),
+        observeItemContents(item),
         observeTotps(item)
     ) { itemContents, customFieldsTotps ->
         ItemDetailState.WifiNetwork(
@@ -85,16 +84,8 @@ class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
         )
     }
 
-    private fun observeWifiNetworkItemContents(item: Item): Flow<ItemContents.WifiNetwork> = flow {
-        encryptionContextProvider.withEncryptionContext {
-            item.toItemContents<ItemContents.WifiNetwork> { decrypt(it) }
-        }.let { identityItemContents ->
-            emit(identityItemContents)
-        }
-    }
-
     private fun observeTotps(item: Item): Flow<Map<Pair<Option<Int>, Int>, Totp>> =
-        observeWifiNetworkItemContents(item).flatMapLatest { contents ->
+        observeItemContents(item).flatMapLatest { contents ->
             val decrypted = encryptionContextProvider.withEncryptionContextSuspendable {
                 val sectionCustomFields =
                     contents.sectionContentList.flatMapIndexed { sectionIndex, sectionContent ->

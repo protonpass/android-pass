@@ -43,6 +43,7 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.usecases.GetItemActions
+import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.shares.ObserveShare
@@ -55,6 +56,9 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.TelemetryManager
+import proton.android.pass.telemetry.api.events.ItemViewed
 import javax.inject.Inject
 
 @HiltViewModel
@@ -63,8 +67,10 @@ class ItemDetailsViewModel @Inject constructor(
     getItemActions: GetItemActions,
     getUserPlan: GetUserPlan,
     observeItemById: ObserveItemById,
+    getItemById: GetItemById,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     observeShare: ObserveShare,
+    telemetryManager: TelemetryManager,
     private val itemDetailsHandler: ItemDetailsHandler
 ) : ViewModel() {
 
@@ -75,6 +81,17 @@ class ItemDetailsViewModel @Inject constructor(
     private val itemId: ItemId = savedStateHandleProvider.get()
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
+
+    init {
+        viewModelScope.launch {
+            runCatching {
+                val itemType = getItemById(shareId, itemId).itemType
+                val eventItemType: EventItemType = EventItemType.from(itemType)
+                telemetryManager.sendEvent(ItemRead(eventItemType))
+                telemetryManager.sendEvent(ItemViewed(shareId, itemId))
+            }
+        }
+    }
 
     private val savedStateEntries: Map<String, Any?> = savedStateHandleProvider.get().let {
         it.keys().associateWith { key -> it.get<Any?>(key) }

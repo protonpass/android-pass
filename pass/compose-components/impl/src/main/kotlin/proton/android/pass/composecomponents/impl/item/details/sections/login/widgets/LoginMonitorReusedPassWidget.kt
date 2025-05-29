@@ -168,7 +168,7 @@ private fun ReusedPasswordCarouselItem(
 }
 
 @[Preview Composable Suppress("FunctionMaxLength")]
-internal fun LoginMonitorReusedPassWidgetCompactPreview(
+internal fun LoginMonitorReusedPassWCPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
     PassTheme(isDark = isDark) {
@@ -185,7 +185,7 @@ internal fun LoginMonitorReusedPassWidgetCompactPreview(
 }
 
 @[Preview Composable Suppress("FunctionMaxLength")]
-internal fun LoginMonitorReusedPassWidgetExpandedPreview(
+internal fun LoginMonitorReusedPassWEPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
     PassTheme(isDark = isDark) {

@@ -130,7 +130,7 @@ fun PassItemDetailsHistorySection(
 
 
 @[Preview Composable Suppress("MagicNumber")]
-internal fun PassItemDetailsHistorySectionPreview(
+internal fun PassItemDetailsHistorySPreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
     val (isDark, shouldDisplayItemHistoryButton) = input

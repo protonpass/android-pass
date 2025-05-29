@@ -51,9 +51,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultId
-import proton.android.pass.commonuimodels.api.items.ItemDetailNavScope
 import proton.android.pass.features.itemdetail.ItemDetailNavigation
-import proton.android.pass.features.itemdetail.ItemDetailScopeNavArgId
 import proton.android.pass.features.itemdetail.ItemDetailScreen
 import proton.android.pass.features.itemdetail.R
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -111,7 +109,6 @@ class LoginDetailScreenTest {
         savedStateHandle.get().apply {
             set(CommonNavArgId.ShareId.key, SHARE_ID)
             set(CommonNavArgId.ItemId.key, ITEM_ID)
-            set(ItemDetailScopeNavArgId.key, ItemDetailNavScope.Default)
         }
     }
 

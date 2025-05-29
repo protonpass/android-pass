@@ -16,17 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonpresentation.api.items.details.handlers
+package proton.android.pass.features.itemdetail.login
 
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.domain.CustomFieldContent
+import androidx.compose.runtime.Stable
 
-fun <T> Iterable<T>.mapToDecryptedTotp(
-    sectionIndex: Option<Int> = None,
-    decrypt: (String) -> String
-): List<Pair<Pair<Option<Int>, Int>, String>> = mapIndexedNotNull { index, customFieldContent ->
-    (customFieldContent as? CustomFieldContent.Totp)?.let {
-        Pair(sectionIndex, index) to decrypt(it.value.encrypted)
-    }
+sealed interface TotpUiState {
+    data object Hidden : TotpUiState
+    data object Limited : TotpUiState
+
+    @Stable
+    data class Visible(
+        val code: String,
+        val remainingSeconds: Int,
+        val totalSeconds: Int
+    ) : TotpUiState
 }

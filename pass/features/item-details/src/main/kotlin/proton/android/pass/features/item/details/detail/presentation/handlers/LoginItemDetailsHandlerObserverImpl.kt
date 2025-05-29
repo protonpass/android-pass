@@ -36,6 +36,7 @@ import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.commonuimodels.api.items.LoginMonitorState
 import proton.android.pass.commonuimodels.api.items.LoginMonitorState.ReusedPasswordDisplayMode
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -45,7 +46,7 @@ import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.Share
-import proton.android.pass.domain.Totp
+import proton.android.pass.domain.TotpState
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.features.item.details.detail.navigation.ItemDetailScopeNavArgId
@@ -66,13 +67,18 @@ private const val REUSED_PASSWORD_DISPLAY_MODE_THRESHOLD = 5
 class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     override val encryptionContextProvider: EncryptionContextProvider,
     override val totpManager: TotpManager,
+    override val canDisplayTotp: CanDisplayTotp,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val passwordStrengthCalculator: PasswordStrengthCalculator,
     private val insecurePasswordChecker: InsecurePasswordChecker,
     private val duplicatedPasswordChecker: DuplicatedPasswordChecker,
     private val missingTfaChecker: MissingTfaChecker,
     private val telemetryManager: TelemetryManager
-) : ItemDetailsHandlerObserver<ItemContents.Login>(encryptionContextProvider, totpManager) {
+) : ItemDetailsHandlerObserver<ItemContents.Login>(
+    encryptionContextProvider,
+    totpManager,
+    canDisplayTotp
+) {
 
     override fun observe(
         share: Share,
@@ -166,30 +172,30 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         }
     }
 
-    private fun observePrimaryTotp(item: Item): Flow<Totp?> = observeItemContents(item)
-        .flatMapLatest { loginItemContents ->
-            observeTotp(loginItemContents.primaryTotp)
-        }
-
-    private fun observeTotp(hiddenTotpState: HiddenState): Flow<Totp?> = when (hiddenTotpState) {
-        is HiddenState.Empty -> ""
-        is HiddenState.Revealed -> hiddenTotpState.clearText
-        is HiddenState.Concealed -> encryptionContextProvider.withEncryptionContext {
-            decrypt(hiddenTotpState.encrypted)
-        }
-    }.let { totpUri ->
-        if (totpUri.isEmpty()) {
-            flowOf(null)
-        } else {
-            totpManager.observeCode(totpUri).map { totpWrapper ->
-                Totp(
-                    code = totpWrapper.code,
-                    remainingSeconds = totpWrapper.remainingSeconds,
-                    totalSeconds = totpWrapper.totalSeconds
-                )
+    private fun observePrimaryTotp(item: Item): Flow<TotpState> = combine(
+        observeItemContents(item),
+        canDisplayTotp(shareId = item.shareId, itemId = item.id)
+    ) { contents, canDisplayTotp -> Pair(contents, canDisplayTotp) }
+        .flatMapLatest { (contents, canDisplayTotp) ->
+            val totpUri = when (val hiddenField = contents.primaryTotp) {
+                is HiddenState.Empty -> ""
+                is HiddenState.Revealed -> hiddenField.clearText
+                is HiddenState.Concealed -> encryptionContextProvider.withEncryptionContext {
+                    decrypt(hiddenField.encrypted)
+                }
+            }
+            when {
+                totpUri.isBlank() -> flowOf(TotpState.Hidden)
+                canDisplayTotp -> totpManager.observeCode(totpUri).map { totpWrapper ->
+                    TotpState.Visible(
+                        code = totpWrapper.code,
+                        remainingSeconds = totpWrapper.remainingSeconds,
+                        totalSeconds = totpWrapper.totalSeconds
+                    )
+                }
+                else -> flowOf(TotpState.Limited)
             }
         }
-    }
 
     override fun updateHiddenFieldsContents(
         itemContents: ItemContents.Login,

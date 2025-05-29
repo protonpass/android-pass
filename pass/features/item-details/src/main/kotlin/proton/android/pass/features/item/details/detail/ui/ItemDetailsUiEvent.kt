@@ -103,4 +103,5 @@ internal sealed interface ItemDetailsUiEvent {
 
     data class ViewReusedPasswords(val shareId: ShareId, val itemId: ItemId) : ItemDetailsUiEvent
 
+    data object OnUpgrade : ItemDetailsUiEvent
 }

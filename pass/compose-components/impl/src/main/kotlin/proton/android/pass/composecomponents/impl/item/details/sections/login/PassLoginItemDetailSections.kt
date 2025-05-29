@@ -46,7 +46,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Totp
+import proton.android.pass.domain.TotpState
 import proton.android.pass.domain.VaultId
 
 @Composable
@@ -57,8 +57,8 @@ internal fun PassLoginItemDetailSections(
     vaultId: VaultId,
     contents: ItemContents.Login,
     passwordStrength: PasswordStrength,
-    primaryTotp: Totp?,
-    customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, Totp>,
+    primaryTotp: TotpState?,
+    customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, TotpState>,
     passkeys: ImmutableList<UIPasskeyContent>,
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs.Login,

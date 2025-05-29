@@ -70,4 +70,6 @@ internal sealed interface ItemHistoryRestoreUiEvent {
 
     @JvmInline
     value class OnWifiNetworkQRClick(val rawSvg: String) : ItemHistoryRestoreUiEvent
+
+    data object OnUpgrade : ItemHistoryRestoreUiEvent
 }

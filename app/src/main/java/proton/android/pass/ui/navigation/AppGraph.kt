@@ -1693,6 +1693,7 @@ fun NavGraphBuilder.appGraph(
     itemHistoryNavGraph(
         onNavigated = { itemHistoryNavDestination ->
             when (itemHistoryNavDestination) {
+                ItemHistoryNavDestination.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 ItemHistoryNavDestination.CloseScreen -> appNavigator.navigateBack()
 
                 is ItemHistoryNavDestination.Detail -> appNavigator.popUpTo(ItemDetailsNavItem)

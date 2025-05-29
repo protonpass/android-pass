@@ -20,9 +20,14 @@ package proton.android.pass.domain
 
 import androidx.compose.runtime.Stable
 
-@Stable
-data class Totp(
-    val code: String,
-    val remainingSeconds: Int,
-    val totalSeconds: Int
-)
+sealed interface TotpState {
+    data object Hidden : TotpState
+    data object Limited : TotpState
+
+    @Stable
+    data class Visible(
+        val code: String,
+        val remainingSeconds: Int,
+        val totalSeconds: Int
+    ) : TotpState
+}

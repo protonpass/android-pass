@@ -70,26 +70,37 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
     override fun updateHiddenFieldsContents(
         itemContents: ItemContents.Note,
         revealedHiddenFields: Map<ItemSection, Set<ItemDetailsFieldType.Hidden>>
-    ): ItemContents = itemContents
+    ): ItemContents = itemContents.copy(
+        customFields = updateHiddenCustomFieldContents(
+            customFields = itemContents.customFields,
+            revealedHiddenFields = revealedHiddenFields[ItemSection.CustomField].orEmpty()
+        )
+    )
 
     override fun calculateItemDiffs(
         baseItemContents: ItemContents.Note,
         otherItemContents: ItemContents.Note,
         baseAttachments: List<Attachment>,
         otherAttachments: List<Attachment>
-    ): ItemDiffs = ItemDiffs.Note(
-        title = calculateItemDiffType(
-            baseItemFieldValue = baseItemContents.title,
-            otherItemFieldValue = otherItemContents.title
-        ),
-        note = calculateItemDiffType(
-            baseItemFieldValue = baseItemContents.note,
-            otherItemFieldValue = otherItemContents.note
-        ),
-        attachments = calculateItemDiffType(
-            baseItemAttachments = baseAttachments,
-            otherItemAttachments = otherAttachments
+    ): ItemDiffs = encryptionContextProvider.withEncryptionContext {
+        ItemDiffs.Note(
+            title = calculateItemDiffType(
+                baseItemFieldValue = baseItemContents.title,
+                otherItemFieldValue = otherItemContents.title
+            ),
+            note = calculateItemDiffType(
+                baseItemFieldValue = baseItemContents.note,
+                otherItemFieldValue = otherItemContents.note
+            ),
+            attachments = calculateItemDiffType(
+                baseItemAttachments = baseAttachments,
+                otherItemAttachments = otherAttachments
+            ),
+            customFields = calculateItemDiffTypes(
+                encryptionContext = this@withEncryptionContext,
+                baseItemCustomFieldsContent = baseItemContents.customFields,
+                otherItemCustomFieldsContent = otherItemContents.customFields
+            )
         )
-    )
-
+    }
 }

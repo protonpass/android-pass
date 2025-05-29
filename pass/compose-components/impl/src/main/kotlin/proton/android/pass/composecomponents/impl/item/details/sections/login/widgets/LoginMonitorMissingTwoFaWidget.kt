@@ -41,7 +41,7 @@ internal fun LoginMonitorMissingTwoFaWidget(modifier: Modifier = Modifier) {
 }
 
 @[Preview Composable]
-internal fun LoginMonitorMissingTwoFaWidgetPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun LoginMonitorMissingTwoFaWPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             LoginMonitorMissingTwoFaWidget()

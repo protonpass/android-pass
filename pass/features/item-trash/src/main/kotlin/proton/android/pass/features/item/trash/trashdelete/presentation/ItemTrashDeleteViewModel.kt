@@ -32,17 +32,22 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.DeleteItems
+import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 @HiltViewModel
 class ItemTrashDeleteViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     private val deleteItem: DeleteItems,
+    private val getItemById: GetItemById,
+    private val telemetryManager: TelemetryManager,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
@@ -75,7 +80,11 @@ class ItemTrashDeleteViewModel @Inject constructor(
     internal fun onDeleteItem() {
         viewModelScope.launch {
             isLoadingStateFlow.update { IsLoadingState.Loading }
-
+            val itemType = runCatching {
+                getItemById(shareId, itemId).itemType
+            }.onFailure {
+                PassLogger.w(TAG, "Failed to load item before delete for telemetry")
+            }.getOrNull()
             runCatching { deleteItem(items = mapOf(shareId to listOf(itemId))) }
                 .onFailure { error ->
                     PassLogger.w(TAG, "There was an error deleting trashed item")
@@ -84,6 +93,9 @@ class ItemTrashDeleteViewModel @Inject constructor(
                     snackbarDispatcher(ItemTrashDeleteSnackBarMessage.ItemDeleteError)
                 }
                 .onSuccess {
+                    itemType?.let {
+                        telemetryManager.sendEvent(ItemDelete(EventItemType.from(it)))
+                    }
                     eventFlow.update { ItemTrashDeleteEvent.OnItemDeleted }
                     snackbarDispatcher(ItemTrashDeleteSnackBarMessage.ItemDeleted)
                 }

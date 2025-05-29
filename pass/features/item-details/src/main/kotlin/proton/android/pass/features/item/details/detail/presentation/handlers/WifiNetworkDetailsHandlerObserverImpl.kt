@@ -153,7 +153,7 @@ class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
         return itemContents.copy(
             password = updateHiddenStateValue(
                 hiddenState = itemContents.password,
-                shouldBeRevealed = revealedFields.contains(ItemDetailsFieldType.Hidden.Password),
+                shouldBeRevealed = revealedFields.contains(ItemDetailsFieldType.Hidden.Password(itemContents.password)),
                 encryptionContextProvider = encryptionContextProvider
             ),
             sectionContentList = mutableSections,

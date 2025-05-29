@@ -27,7 +27,6 @@ import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.features.item.details.detail.presentation.ItemDetailsState
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnAttachmentEvent
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnFieldClicked
-import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnHiddenFieldClicked
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnHiddenFieldToggled
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnLinkClicked
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnPasskeyClicked
@@ -106,11 +105,6 @@ internal fun ItemDetailsContent(
                 onEvent = { uiEvent ->
                     when (uiEvent) {
                         is PassItemDetailsUiEvent.OnUpgrade -> OnUpgrade
-                        is PassItemDetailsUiEvent.OnHiddenFieldClick -> OnHiddenFieldClicked(
-                            state = uiEvent.state,
-                            field = uiEvent.field
-                        )
-
                         is PassItemDetailsUiEvent.OnHiddenFieldToggle -> OnHiddenFieldToggled(
                             isVisible = uiEvent.isVisible,
                             state = uiEvent.hiddenState,
@@ -126,8 +120,7 @@ internal fun ItemDetailsContent(
                             passkeyContent = uiEvent.passkey
                         )
 
-                        is PassItemDetailsUiEvent.OnSectionClick -> OnFieldClicked(
-                            text = uiEvent.section,
+                        is PassItemDetailsUiEvent.OnFieldClick -> OnFieldClicked(
                             field = uiEvent.field
                         )
 

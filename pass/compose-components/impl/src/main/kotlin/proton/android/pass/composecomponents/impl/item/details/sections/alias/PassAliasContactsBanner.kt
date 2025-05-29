@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemdetail.alias.banner
+package proton.android.pass.composecomponents.impl.item.details.sections.alias
 
 
 import androidx.compose.foundation.layout.Box
@@ -32,11 +32,11 @@ import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.banner.FeatureDiscoveryBanner
 import proton.android.pass.composecomponents.impl.banner.FeatureDiscoveryText
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.image.Image
-import proton.android.pass.features.itemdetail.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable

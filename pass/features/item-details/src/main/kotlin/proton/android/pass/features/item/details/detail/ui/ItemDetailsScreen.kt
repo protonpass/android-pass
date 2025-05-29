@@ -91,13 +91,7 @@ fun ItemDetailsScreen(
                 ).also(onNavigated)
 
                 is ItemDetailsUiEvent.OnFieldClicked -> onItemFieldClicked(
-                    text = uiEvent.text,
-                    plainFieldType = uiEvent.field
-                )
-
-                is ItemDetailsUiEvent.OnHiddenFieldClicked -> onItemHiddenFieldClicked(
-                    hiddenState = uiEvent.state,
-                    hiddenFieldType = uiEvent.field
+                    fieldType = uiEvent.field
                 )
 
                 is ItemDetailsUiEvent.OnHiddenFieldToggled -> onToggleItemHiddenField(

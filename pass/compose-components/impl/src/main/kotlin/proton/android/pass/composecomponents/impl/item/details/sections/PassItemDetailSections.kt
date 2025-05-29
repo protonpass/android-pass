@@ -22,6 +22,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableMap
+import kotlinx.collections.immutable.toPersistentList
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.sections.alias.PassAliasItemDetailSections
@@ -54,9 +56,15 @@ internal fun PassItemDetailSections(
             vaultId = itemShare.vaultId,
             contents = itemContents,
             customFieldTotps = customFieldTotps.toImmutableMap(),
+            mailboxes = aliasDetails.mailboxes.toPersistentList(),
+            isAliasCreatedByUser = aliasDetails.canModify,
+            slNote = aliasDetails.slNote,
+            displayName = aliasDetails.name.orEmpty(),
+            stats = aliasDetails.stats.toOption(),
+            contactsCount = aliasContacts.total,
+            displayContactsBanner = displayContactsBanner,
             itemColors = itemColors,
             itemDiffs = itemDiffs,
-            mailboxes = mailboxes.toImmutableList(),
             onEvent = onEvent,
             lastAutofillOption = itemLastAutofillAtOption,
             revision = itemRevision,

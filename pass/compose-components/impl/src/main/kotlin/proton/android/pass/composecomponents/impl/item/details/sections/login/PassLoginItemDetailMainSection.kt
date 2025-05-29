@@ -76,9 +76,8 @@ internal fun PassLoginItemDetailMainSection(
                 itemDiffType = itemDiffs.email,
                 onClick = {
                     onEvent(
-                        PassItemDetailsUiEvent.OnSectionClick(
-                            section = email,
-                            field = ItemDetailsFieldType.Plain.Email
+                        PassItemDetailsUiEvent.OnFieldClick(
+                            field = ItemDetailsFieldType.Copyable.Email(email)
                         )
                     )
                 }
@@ -96,9 +95,8 @@ internal fun PassLoginItemDetailMainSection(
                 itemDiffType = itemDiffs.username,
                 onClick = {
                     onEvent(
-                        PassItemDetailsUiEvent.OnSectionClick(
-                            section = username,
-                            field = ItemDetailsFieldType.Plain.Username
+                        PassItemDetailsUiEvent.OnFieldClick(
+                            field = ItemDetailsFieldType.Copyable.Username(username)
                         )
                     )
                 }
@@ -120,9 +118,8 @@ internal fun PassLoginItemDetailMainSection(
                     .copy(fontFamily = FontFamily.Monospace),
                 onClick = {
                     onEvent(
-                        PassItemDetailsUiEvent.OnHiddenFieldClick(
-                            state = password,
-                            field = ItemDetailsFieldType.Hidden.Password
+                        PassItemDetailsUiEvent.OnFieldClick(
+                            field = ItemDetailsFieldType.Hidden.Password(password)
                         )
                     )
                 },
@@ -131,7 +128,7 @@ internal fun PassLoginItemDetailMainSection(
                         PassItemDetailsUiEvent.OnHiddenFieldToggle(
                             isVisible = isVisible,
                             hiddenState = password,
-                            fieldType = ItemDetailsFieldType.Hidden.Password,
+                            fieldType = ItemDetailsFieldType.Hidden.Password(password),
                             fieldSection = ItemSection.Login
                         )
                     )

@@ -47,7 +47,6 @@ import proton.android.pass.data.api.usecases.attachments.RestoreAttachments
 import proton.android.pass.data.api.usecases.attachments.SetAttachmentToBeUnlinked
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.api.usecases.items.RestoreItemRevision
-import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
@@ -239,15 +238,9 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         eventFlow.compareAndSet(event, ItemHistoryRestoreEvent.Idle)
     }
 
-    internal fun onItemFieldClicked(text: String, plainFieldType: ItemDetailsFieldType.Plain) {
+    internal fun onItemFieldClicked(copyableFieldType: ItemDetailsFieldType) {
         viewModelScope.launch {
-            itemDetailsHandler.onItemDetailsFieldClicked(text, plainFieldType)
-        }
-    }
-
-    internal fun onItemHiddenFieldClicked(hiddenState: HiddenState, hiddenFieldType: ItemDetailsFieldType.Hidden) {
-        viewModelScope.launch {
-            itemDetailsHandler.onItemDetailsHiddenFieldClicked(hiddenState, hiddenFieldType)
+            itemDetailsHandler.onItemDetailsFieldClicked(copyableFieldType)
         }
     }
 

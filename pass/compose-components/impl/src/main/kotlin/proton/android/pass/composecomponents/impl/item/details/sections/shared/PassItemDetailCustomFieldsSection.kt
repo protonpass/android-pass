@@ -71,9 +71,10 @@ internal fun PassItemDetailCustomFieldsSection(
                         itemDiffType = itemDiffs.customField(index),
                         onClick = {
                             onEvent(
-                                PassItemDetailsUiEvent.OnSectionClick(
-                                    section = customFieldContent.value,
-                                    field = ItemDetailsFieldType.Plain.CustomField
+                                PassItemDetailsUiEvent.OnFieldClick(
+                                    field = ItemDetailsFieldType.Copyable.CustomField(
+                                        text = customFieldContent.value
+                                    )
                                 )
                             )
                         }
@@ -89,9 +90,11 @@ internal fun PassItemDetailCustomFieldsSection(
                         hiddenTextStyle = ProtonTheme.typography.defaultNorm,
                         onClick = {
                             onEvent(
-                                PassItemDetailsUiEvent.OnHiddenFieldClick(
-                                    state = customFieldContent.value,
-                                    field = ItemDetailsFieldType.Hidden.CustomField(index)
+                                PassItemDetailsUiEvent.OnFieldClick(
+                                    field = ItemDetailsFieldType.Hidden.CustomField(
+                                        hiddenState = customFieldContent.value,
+                                        index = index
+                                    )
                                 )
                             )
                         },
@@ -100,7 +103,10 @@ internal fun PassItemDetailCustomFieldsSection(
                                 PassItemDetailsUiEvent.OnHiddenFieldToggle(
                                     isVisible = isVisible,
                                     hiddenState = customFieldContent.value,
-                                    fieldType = ItemDetailsFieldType.Hidden.CustomField(index),
+                                    fieldType = ItemDetailsFieldType.Hidden.CustomField(
+                                        hiddenState = customFieldContent.value,
+                                        index = index
+                                    ),
                                     fieldSection = ItemSection.CustomField
                                 )
                             )

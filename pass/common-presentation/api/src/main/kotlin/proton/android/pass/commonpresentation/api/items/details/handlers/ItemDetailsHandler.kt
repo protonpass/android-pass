@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.Flow
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
-import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
@@ -41,9 +40,7 @@ interface ItemDetailsHandler {
 
     suspend fun onAttachmentOpen(contextHolder: ClassHolder<Context>, attachment: Attachment)
 
-    suspend fun onItemDetailsFieldClicked(text: String, plainFieldType: ItemDetailsFieldType.Plain)
-
-    suspend fun onItemDetailsHiddenFieldClicked(hiddenState: HiddenState, hiddenFieldType: ItemDetailsFieldType.Hidden)
+    suspend fun onItemDetailsFieldClicked(fieldType: ItemDetailsFieldType)
 
     @Suppress("LongParameterList")
     fun updateItemDetailsContent(

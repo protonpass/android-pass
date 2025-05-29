@@ -94,26 +94,28 @@ class ItemDetailsHandlerImpl @Inject constructor(
         attachmentsHandler.openAttachment(contextHolder, attachment)
     }
 
-    override suspend fun onItemDetailsFieldClicked(text: String, plainFieldType: ItemDetailsFieldType.Plain) {
-        clipboardManager.copyToClipboard(text = text, isSecure = false)
-        displayFieldCopiedSnackbarMessage(plainFieldType)
-    }
+    override suspend fun onItemDetailsFieldClicked(fieldType: ItemDetailsFieldType) {
+        when (fieldType) {
+            is ItemDetailsFieldType.Copyable -> {
+                clipboardManager.copyToClipboard(text = fieldType.text, isSecure = false)
+                displayFieldCopiedSnackbarMessage(fieldType)
+            }
+            is ItemDetailsFieldType.Hidden -> {
+                val text = when (val value = fieldType.hiddenState) {
+                    is HiddenState.Empty -> ""
+                    is HiddenState.Revealed -> value.clearText
+                    is HiddenState.Concealed -> encryptionContextProvider.withEncryptionContext {
+                        decrypt(value.encrypted)
+                    }
+                }
 
-    override suspend fun onItemDetailsHiddenFieldClicked(
-        hiddenState: HiddenState,
-        hiddenFieldType: ItemDetailsFieldType.Hidden
-    ) {
-        val text = when (hiddenState) {
-            is HiddenState.Empty -> ""
-            is HiddenState.Revealed -> hiddenState.clearText
-            is HiddenState.Concealed -> encryptionContextProvider.withEncryptionContext {
-                decrypt(hiddenState.encrypted)
+                clipboardManager.copyToClipboard(text = text, isSecure = true)
+                displayFieldCopiedSnackbarMessage(fieldType)
             }
         }
 
-        clipboardManager.copyToClipboard(text = text, isSecure = true)
-        displayFieldCopiedSnackbarMessage(hiddenFieldType)
     }
+
 
     private fun attachmentsFlow(item: Item, source: ItemDetailsSource): Flow<AttachmentsState> {
         val attachmentsFlow = when (source) {
@@ -138,45 +140,45 @@ class ItemDetailsHandlerImpl @Inject constructor(
 
     private suspend fun displayFieldCopiedSnackbarMessage(fieldType: ItemDetailsFieldType) = when (fieldType) {
         is ItemDetailsFieldType.Hidden.CustomField -> ItemDetailsSnackbarMessage.CustomFieldCopied
-        ItemDetailsFieldType.Hidden.Cvv -> ItemDetailsSnackbarMessage.CvvCopied
-        ItemDetailsFieldType.Hidden.Password -> ItemDetailsSnackbarMessage.PasswordCopied
-        ItemDetailsFieldType.Hidden.Pin -> ItemDetailsSnackbarMessage.PinCopied
-        ItemDetailsFieldType.Hidden.PrivateKey -> ItemDetailsSnackbarMessage.PrivateKeyCopied
-        ItemDetailsFieldType.Hidden.SocialSecurityNumber -> ItemDetailsSnackbarMessage.SocialSecurityNumberCopied
-        ItemDetailsFieldType.Plain.Alias -> ItemDetailsSnackbarMessage.AliasCopied
-        ItemDetailsFieldType.Plain.BirthDate -> ItemDetailsSnackbarMessage.BirthDateCopied
-        ItemDetailsFieldType.Plain.CardNumber -> ItemDetailsSnackbarMessage.CardNumberCopied
-        ItemDetailsFieldType.Plain.City -> ItemDetailsSnackbarMessage.CityCopied
-        ItemDetailsFieldType.Plain.Company -> ItemDetailsSnackbarMessage.CompanyCopied
-        ItemDetailsFieldType.Plain.CountryOrRegion -> ItemDetailsSnackbarMessage.CountryOrRegionCopied
-        ItemDetailsFieldType.Plain.County -> ItemDetailsSnackbarMessage.CountyCopied
-        ItemDetailsFieldType.Plain.CustomField -> ItemDetailsSnackbarMessage.CustomFieldCopied
-        ItemDetailsFieldType.Plain.Email -> ItemDetailsSnackbarMessage.EmailCopied
-        ItemDetailsFieldType.Plain.Facebook -> ItemDetailsSnackbarMessage.FacebookCopied
-        ItemDetailsFieldType.Plain.FirstName -> ItemDetailsSnackbarMessage.FirstNameCopied
-        ItemDetailsFieldType.Plain.Floor -> ItemDetailsSnackbarMessage.FloorCopied
-        ItemDetailsFieldType.Plain.FullName -> ItemDetailsSnackbarMessage.FullNameCopied
-        ItemDetailsFieldType.Plain.Gender -> ItemDetailsSnackbarMessage.GenderCopied
-        ItemDetailsFieldType.Plain.Instagram -> ItemDetailsSnackbarMessage.InstagramCopied
-        ItemDetailsFieldType.Plain.LastName -> ItemDetailsSnackbarMessage.LastNameCopied
-        ItemDetailsFieldType.Plain.LicenseNumber -> ItemDetailsSnackbarMessage.LicenseNumberCopied
-        ItemDetailsFieldType.Plain.LinkedIn -> ItemDetailsSnackbarMessage.LinkedInCopied
-        ItemDetailsFieldType.Plain.MiddleName -> ItemDetailsSnackbarMessage.MiddleNameCopied
-        ItemDetailsFieldType.Plain.Occupation -> ItemDetailsSnackbarMessage.OccupationCopied
-        ItemDetailsFieldType.Plain.Organization -> ItemDetailsSnackbarMessage.OrganizationCopied
-        ItemDetailsFieldType.Plain.PassportNumber -> ItemDetailsSnackbarMessage.PassportNumberCopied
-        ItemDetailsFieldType.Plain.PhoneNumber -> ItemDetailsSnackbarMessage.PhoneNumberCopied
-        ItemDetailsFieldType.Plain.Reddit -> ItemDetailsSnackbarMessage.RedditCopied
-        ItemDetailsFieldType.Plain.StateOrProvince -> ItemDetailsSnackbarMessage.StateOrProvinceCopied
-        ItemDetailsFieldType.Plain.StreetAddress -> ItemDetailsSnackbarMessage.StreetAddressCopied
-        ItemDetailsFieldType.Plain.TotpCode -> ItemDetailsSnackbarMessage.TotpCodeCopied
-        ItemDetailsFieldType.Plain.Username -> ItemDetailsSnackbarMessage.UsernameCopied
-        ItemDetailsFieldType.Plain.Website -> ItemDetailsSnackbarMessage.WebsiteCopied
-        ItemDetailsFieldType.Plain.XHandle -> ItemDetailsSnackbarMessage.XHandleCopied
-        ItemDetailsFieldType.Plain.Yahoo -> ItemDetailsSnackbarMessage.YahooCopied
-        ItemDetailsFieldType.Plain.ZipOrPostalCode -> ItemDetailsSnackbarMessage.ZipOrPostalCodeCopied
-        ItemDetailsFieldType.Plain.PublicKey -> ItemDetailsSnackbarMessage.PublicKeyCopied
-        ItemDetailsFieldType.Plain.SSID -> ItemDetailsSnackbarMessage.SSIDCopied
+        is ItemDetailsFieldType.Hidden.Cvv -> ItemDetailsSnackbarMessage.CvvCopied
+        is ItemDetailsFieldType.Hidden.Password -> ItemDetailsSnackbarMessage.PasswordCopied
+        is ItemDetailsFieldType.Hidden.Pin -> ItemDetailsSnackbarMessage.PinCopied
+        is ItemDetailsFieldType.Hidden.PrivateKey -> ItemDetailsSnackbarMessage.PrivateKeyCopied
+        is ItemDetailsFieldType.Hidden.SocialSecurityNumber -> ItemDetailsSnackbarMessage.SocialSecurityNumberCopied
+        is ItemDetailsFieldType.Copyable.Alias -> ItemDetailsSnackbarMessage.AliasCopied
+        is ItemDetailsFieldType.Copyable.BirthDate -> ItemDetailsSnackbarMessage.BirthDateCopied
+        is ItemDetailsFieldType.Copyable.CardNumber -> ItemDetailsSnackbarMessage.CardNumberCopied
+        is ItemDetailsFieldType.Copyable.City -> ItemDetailsSnackbarMessage.CityCopied
+        is ItemDetailsFieldType.Copyable.Company -> ItemDetailsSnackbarMessage.CompanyCopied
+        is ItemDetailsFieldType.Copyable.CountryOrRegion -> ItemDetailsSnackbarMessage.CountryOrRegionCopied
+        is ItemDetailsFieldType.Copyable.County -> ItemDetailsSnackbarMessage.CountyCopied
+        is ItemDetailsFieldType.Copyable.CustomField -> ItemDetailsSnackbarMessage.CustomFieldCopied
+        is ItemDetailsFieldType.Copyable.Email -> ItemDetailsSnackbarMessage.EmailCopied
+        is ItemDetailsFieldType.Copyable.Facebook -> ItemDetailsSnackbarMessage.FacebookCopied
+        is ItemDetailsFieldType.Copyable.FirstName -> ItemDetailsSnackbarMessage.FirstNameCopied
+        is ItemDetailsFieldType.Copyable.Floor -> ItemDetailsSnackbarMessage.FloorCopied
+        is ItemDetailsFieldType.Copyable.FullName -> ItemDetailsSnackbarMessage.FullNameCopied
+        is ItemDetailsFieldType.Copyable.Gender -> ItemDetailsSnackbarMessage.GenderCopied
+        is ItemDetailsFieldType.Copyable.Instagram -> ItemDetailsSnackbarMessage.InstagramCopied
+        is ItemDetailsFieldType.Copyable.LastName -> ItemDetailsSnackbarMessage.LastNameCopied
+        is ItemDetailsFieldType.Copyable.LicenseNumber -> ItemDetailsSnackbarMessage.LicenseNumberCopied
+        is ItemDetailsFieldType.Copyable.LinkedIn -> ItemDetailsSnackbarMessage.LinkedInCopied
+        is ItemDetailsFieldType.Copyable.MiddleName -> ItemDetailsSnackbarMessage.MiddleNameCopied
+        is ItemDetailsFieldType.Copyable.Occupation -> ItemDetailsSnackbarMessage.OccupationCopied
+        is ItemDetailsFieldType.Copyable.Organization -> ItemDetailsSnackbarMessage.OrganizationCopied
+        is ItemDetailsFieldType.Copyable.PassportNumber -> ItemDetailsSnackbarMessage.PassportNumberCopied
+        is ItemDetailsFieldType.Copyable.PhoneNumber -> ItemDetailsSnackbarMessage.PhoneNumberCopied
+        is ItemDetailsFieldType.Copyable.Reddit -> ItemDetailsSnackbarMessage.RedditCopied
+        is ItemDetailsFieldType.Copyable.StateOrProvince -> ItemDetailsSnackbarMessage.StateOrProvinceCopied
+        is ItemDetailsFieldType.Copyable.StreetAddress -> ItemDetailsSnackbarMessage.StreetAddressCopied
+        is ItemDetailsFieldType.Copyable.TotpCode -> ItemDetailsSnackbarMessage.TotpCodeCopied
+        is ItemDetailsFieldType.Copyable.Username -> ItemDetailsSnackbarMessage.UsernameCopied
+        is ItemDetailsFieldType.Copyable.Website -> ItemDetailsSnackbarMessage.WebsiteCopied
+        is ItemDetailsFieldType.Copyable.XHandle -> ItemDetailsSnackbarMessage.XHandleCopied
+        is ItemDetailsFieldType.Copyable.Yahoo -> ItemDetailsSnackbarMessage.YahooCopied
+        is ItemDetailsFieldType.Copyable.ZipOrPostalCode -> ItemDetailsSnackbarMessage.ZipOrPostalCodeCopied
+        is ItemDetailsFieldType.Copyable.PublicKey -> ItemDetailsSnackbarMessage.PublicKeyCopied
+        is ItemDetailsFieldType.Copyable.SSID -> ItemDetailsSnackbarMessage.SSIDCopied
     }.let { snackbarMessage -> snackbarDispatcher(snackbarMessage) }
 
     override fun updateItemDetailsContent(

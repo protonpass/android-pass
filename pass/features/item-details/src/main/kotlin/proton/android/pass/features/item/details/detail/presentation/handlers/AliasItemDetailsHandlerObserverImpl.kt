@@ -26,6 +26,7 @@ import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDet
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.Item
@@ -41,8 +42,9 @@ import javax.inject.Inject
 class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     override val encryptionContextProvider: EncryptionContextProvider,
     override val totpManager: TotpManager,
+    override val canDisplayTotp: CanDisplayTotp,
     private val observeAliasDetails: ObserveAliasDetails
-) : ItemDetailsHandlerObserver<ItemContents.Alias>(encryptionContextProvider, totpManager) {
+) : ItemDetailsHandlerObserver<ItemContents.Alias>(encryptionContextProvider, totpManager, canDisplayTotp) {
 
     override fun observe(
         share: Share,

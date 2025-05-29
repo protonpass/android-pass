@@ -32,6 +32,7 @@ import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.On
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnLinkClicked
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnPasskeyClicked
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnSharedVaultClicked
+import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnUpgrade
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnViewItemHistoryClicked
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnWifiNetworkQRClick
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.ViewReusedPasswords
@@ -104,6 +105,7 @@ internal fun ItemDetailsContent(
                 },
                 onEvent = { uiEvent ->
                     when (uiEvent) {
+                        is PassItemDetailsUiEvent.OnUpgrade -> OnUpgrade
                         is PassItemDetailsUiEvent.OnHiddenFieldClick -> OnHiddenFieldClicked(
                             state = uiEvent.state,
                             field = uiEvent.field

@@ -27,15 +27,15 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ExtraSectionContent
-import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemDiffs
-import proton.android.pass.domain.Totp
+import proton.android.pass.domain.ItemSection
+import proton.android.pass.domain.TotpState
 
 @Composable
 internal fun PassItemDetailsExtraSection(
     modifier: Modifier = Modifier,
     extraSectionContents: ImmutableList<ExtraSectionContent>,
-    customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, Totp>,
+    customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, TotpState>,
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs,
     onEvent: (PassItemDetailsUiEvent) -> Unit

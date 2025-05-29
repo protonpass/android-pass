@@ -67,6 +67,10 @@ fun ItemDetailsScreen(
         state = state,
         onEvent = { uiEvent ->
             when (uiEvent) {
+                ItemDetailsUiEvent.OnUpgrade ->
+                    ItemDetailsNavDestination.Upgrade
+                        .also(onNavigated)
+
                 ItemDetailsUiEvent.OnNavigateBack ->
                     ItemDetailsNavDestination.CloseScreen
                         .also(onNavigated)

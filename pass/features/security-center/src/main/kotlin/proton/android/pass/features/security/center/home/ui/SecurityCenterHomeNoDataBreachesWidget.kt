@@ -58,9 +58,7 @@ internal fun SecurityCenterHomeNoDataBreachesWidget(modifier: Modifier = Modifie
 }
 
 @[Preview Composable Suppress("FunctionMaxLength")]
-internal fun SecurityCenterHomeNoDataBreachesWPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+internal fun SecurityCenterHomeNoDataBreachesWPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             SecurityCenterHomeNoDataBreachesWidget(

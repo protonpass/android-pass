@@ -38,7 +38,7 @@ internal fun LoginMonitorInsecurePassWidget(modifier: Modifier = Modifier) {
 }
 
 @[Preview Composable]
-internal fun LoginMonitorInsecurePassWidgetPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun LoginMonitorInsecurePassWPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             LoginMonitorInsecurePassWidget()

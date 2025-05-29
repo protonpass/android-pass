@@ -19,7 +19,9 @@
 package proton.android.pass.domain
 
 import androidx.compose.runtime.Stable
+import kotlinx.serialization.Serializable
 
+@Serializable
 @Stable
 data class AliasMailbox(
     val id: Int,

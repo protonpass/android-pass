@@ -77,12 +77,12 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
         return itemContents.copy(
             cvv = updateHiddenStateValue(
                 hiddenState = itemContents.cvv,
-                shouldBeRevealed = revealedFields.contains(ItemDetailsFieldType.Hidden.Cvv),
+                shouldBeRevealed = revealedFields.any { it is ItemDetailsFieldType.Hidden.Cvv },
                 encryptionContextProvider = encryptionContextProvider
             ),
             pin = updateHiddenStateValue(
                 hiddenState = itemContents.pin,
-                shouldBeRevealed = revealedFields.contains(ItemDetailsFieldType.Hidden.Pin),
+                shouldBeRevealed = revealedFields.any { it is ItemDetailsFieldType.Hidden.Pin },
                 encryptionContextProvider = encryptionContextProvider
             ),
             customFields = updateHiddenCustomFieldContents(

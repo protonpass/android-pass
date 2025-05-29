@@ -38,7 +38,7 @@ import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.row.CounterRow
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.itemdetail.R
-import proton.android.pass.features.itemdetail.alias.banner.AliasContactsBanner
+import proton.android.pass.composecomponents.impl.item.details.sections.alias.AliasContactsBanner
 import me.proton.core.presentation.R as CoreR
 
 @Composable

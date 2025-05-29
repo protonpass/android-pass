@@ -18,93 +18,98 @@
 
 package proton.android.pass.commonpresentation.api.items.details.domain
 
+import proton.android.pass.domain.HiddenState
+
 sealed interface ItemDetailsFieldType {
 
-    sealed interface Plain : ItemDetailsFieldType {
+    sealed interface Copyable : ItemDetailsFieldType {
 
-        data object Alias : Plain
+        val text: String
 
-        data object BirthDate : Plain
+        data class Alias(override val text: String) : Copyable
 
-        data object CardNumber : Plain
+        data class BirthDate(override val text: String) : Copyable
 
-        data object City : Plain
+        data class CardNumber(override val text: String) : Copyable
 
-        data object Company : Plain
+        data class City(override val text: String) : Copyable
 
-        data object CountryOrRegion : Plain
+        data class Company(override val text: String) : Copyable
 
-        data object County : Plain
+        data class CountryOrRegion(override val text: String) : Copyable
 
-        data object CustomField : Plain
+        data class County(override val text: String) : Copyable
 
-        data object Email : Plain
+        data class CustomField(override val text: String) : Copyable
 
-        data object Facebook : Plain
+        data class Email(override val text: String) : Copyable
 
-        data object FirstName : Plain
+        data class Facebook(override val text: String) : Copyable
 
-        data object Floor : Plain
+        data class FirstName(override val text: String) : Copyable
 
-        data object FullName : Plain
+        data class Floor(override val text: String) : Copyable
 
-        data object Gender : Plain
+        data class FullName(override val text: String) : Copyable
 
-        data object Instagram : Plain
+        data class Gender(override val text: String) : Copyable
 
-        data object LastName : Plain
+        data class Instagram(override val text: String) : Copyable
 
-        data object LicenseNumber : Plain
+        data class LastName(override val text: String) : Copyable
 
-        data object LinkedIn : Plain
+        data class LicenseNumber(override val text: String) : Copyable
 
-        data object MiddleName : Plain
+        data class LinkedIn(override val text: String) : Copyable
 
-        data object Occupation : Plain
+        data class MiddleName(override val text: String) : Copyable
 
-        data object Organization : Plain
+        data class Occupation(override val text: String) : Copyable
 
-        data object PassportNumber : Plain
+        data class Organization(override val text: String) : Copyable
 
-        data object PhoneNumber : Plain
+        data class PassportNumber(override val text: String) : Copyable
 
-        data object Reddit : Plain
+        data class PhoneNumber(override val text: String) : Copyable
 
-        data object StateOrProvince : Plain
+        data class Reddit(override val text: String) : Copyable
 
-        data object StreetAddress : Plain
+        data class StateOrProvince(override val text: String) : Copyable
 
-        data object TotpCode : Plain
+        data class StreetAddress(override val text: String) : Copyable
 
-        data object Username : Plain
+        data class TotpCode(override val text: String) : Copyable
 
-        data object Website : Plain
+        data class Username(override val text: String) : Copyable
 
-        data object XHandle : Plain
+        data class Website(override val text: String) : Copyable
 
-        data object Yahoo : Plain
+        data class XHandle(override val text: String) : Copyable
 
-        data object ZipOrPostalCode : Plain
+        data class Yahoo(override val text: String) : Copyable
 
-        data object PublicKey : Plain
+        data class ZipOrPostalCode(override val text: String) : Copyable
 
-        data object SSID : Plain
+        data class PublicKey(override val text: String) : Copyable
+
+        data class SSID(override val text: String) : Copyable
     }
 
     sealed interface Hidden : ItemDetailsFieldType {
 
-        @JvmInline
-        value class CustomField(val index: Int) : Hidden
+        val hiddenState: HiddenState
 
-        data object Cvv : Hidden
+        data class CustomField(override val hiddenState: HiddenState, val index: Int) : Hidden
 
-        data object Password : Hidden
+        data class Cvv(override val hiddenState: HiddenState) : Hidden
 
-        data object Pin : Hidden
+        data class Password(override val hiddenState: HiddenState) : Hidden
 
-        data object PrivateKey : Hidden
+        data class Pin(override val hiddenState: HiddenState) : Hidden
 
-        data object SocialSecurityNumber : Hidden
+        data class PrivateKey(override val hiddenState: HiddenState) : Hidden
+
+        data class SocialSecurityNumber(override val hiddenState: HiddenState) : Hidden
 
     }
 

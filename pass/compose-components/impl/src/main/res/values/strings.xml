@@ -340,4 +340,26 @@
     <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
     <string name="mfa_limit_reached">2FA limit reached</string>
 
+    <string name="activity_in_last_two_weeks">Activity in the last 14 days</string>
+    <string name="contacts">Contacts</string>
+    <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
+    <string name="field_detail_display_name_title">Display name</string>
+    <string name="display_name_section_description">The display name when sending an email from this alias.</string>
+
+    <plurals name="alias_forwards_count">
+        <item quantity="one">%1$s forward</item>
+        <item quantity="other">%1$s forwards</item>
+    </plurals>
+    <plurals name="alias_replies_count">
+        <item quantity="one">%1$s reply</item>
+        <item quantity="other">%1$s replies</item>
+    </plurals>
+    <plurals name="alias_blocks_count">
+        <item quantity="one">%1$s block</item>
+        <item quantity="other">%1$s blocks</item>
+    </plurals>
+
+    <string name="banner_contacts_title">Did you know?</string>
+    <string name="banner_contacts_subtitle">Every time your alias receives an email from someone, a new contact is automatically created.</string>
+
 </resources>

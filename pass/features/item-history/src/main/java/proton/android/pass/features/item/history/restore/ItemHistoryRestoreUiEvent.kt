@@ -44,15 +44,8 @@ internal sealed interface ItemHistoryRestoreUiEvent {
 
     data object OnRestoreCancelClick : ItemHistoryRestoreUiEvent
 
-    data class OnSectionClick(
-        val section: String,
-        val field: ItemDetailsFieldType.Plain
-    ) : ItemHistoryRestoreUiEvent
-
-    data class OnHiddenFieldClick(
-        val state: HiddenState,
-        val field: ItemDetailsFieldType.Hidden
-    ) : ItemHistoryRestoreUiEvent
+    @JvmInline
+    value class OnFieldClick(val field: ItemDetailsFieldType) : ItemHistoryRestoreUiEvent
 
     data class OnHiddenFieldToggle(
         val selection: ItemHistoryRestoreSelection,

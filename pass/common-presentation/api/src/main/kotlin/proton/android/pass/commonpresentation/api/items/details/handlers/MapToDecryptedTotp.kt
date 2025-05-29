@@ -18,11 +18,12 @@
 
 package proton.android.pass.commonpresentation.api.items.details.handlers
 
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.domain.CustomFieldContent
 
 fun <T> Iterable<T>.mapToDecryptedTotp(
-    sectionIndex: Option<Int>,
+    sectionIndex: Option<Int> = None,
     decrypt: (String) -> String
 ): List<Pair<Pair<Option<Int>, Int>, String>> = mapIndexedNotNull { index, customFieldContent ->
     (customFieldContent as? CustomFieldContent.Totp)?.let {

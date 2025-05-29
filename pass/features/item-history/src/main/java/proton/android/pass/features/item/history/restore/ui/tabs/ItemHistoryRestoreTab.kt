@@ -32,6 +32,7 @@ import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEve
 import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent.OnLinkClick
 import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent.OnPasskeyClick
 import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent.OnSectionClick
+import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent.OnUpgrade
 import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent.OnWifiNetworkQRClick
 import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreSelection
 import proton.android.pass.features.item.history.restore.ui.ItemHistoryRestoreTopBar
@@ -59,6 +60,7 @@ internal fun ItemHistoryRestoreTab(
         itemColors = itemColors,
         onEvent = { uiEvent ->
             when (uiEvent) {
+                is PassItemDetailsUiEvent.OnUpgrade -> OnUpgrade
                 is PassItemDetailsUiEvent.OnSectionClick -> OnSectionClick(
                     section = uiEvent.section,
                     field = uiEvent.field

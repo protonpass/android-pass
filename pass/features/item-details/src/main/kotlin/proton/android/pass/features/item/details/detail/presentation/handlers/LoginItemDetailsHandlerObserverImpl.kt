@@ -196,22 +196,16 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         revealedHiddenFields: Map<ItemSection, Set<ItemDetailsFieldType.Hidden>>
     ): ItemContents {
         val revealedFields = revealedHiddenFields[ItemSection.Login] ?: emptyList()
-        val mutableCustomFields = itemContents.customFields.toMutableList()
-
-        mutableCustomFields.forEachIndexed { index, field ->
-            val shouldBeRevealed = revealedHiddenFields[ItemSection.CustomField]
-                ?.any { it is ItemDetailsFieldType.Hidden.CustomField && it.index == index } == true
-            mutableCustomFields[index] =
-                updateHiddenState(field, shouldBeRevealed, encryptionContextProvider)
-        }
-
         return itemContents.copy(
             password = updateHiddenStateValue(
                 hiddenState = itemContents.password,
                 shouldBeRevealed = revealedFields.contains(ItemDetailsFieldType.Hidden.Password),
                 encryptionContextProvider = encryptionContextProvider
             ),
-            customFields = mutableCustomFields
+            customFields = updateHiddenCustomFieldContents(
+                customFields = itemContents.customFields,
+                revealedHiddenFields = revealedHiddenFields[ItemSection.CustomField].orEmpty()
+            )
         )
     }
 

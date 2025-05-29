@@ -82,6 +82,10 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
                 hiddenState = itemContents.pin,
                 shouldBeRevealed = revealedFields.contains(ItemDetailsFieldType.Hidden.Pin),
                 encryptionContextProvider = encryptionContextProvider
+            ),
+            customFields = updateHiddenCustomFieldContents(
+                customFields = itemContents.customFields,
+                revealedHiddenFields = revealedHiddenFields[ItemSection.CustomField].orEmpty()
             )
         )
     }
@@ -126,6 +130,11 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
             attachments = calculateItemDiffType(
                 baseItemAttachments = baseAttachments,
                 otherItemAttachments = otherAttachments
+            ),
+            customFields = calculateItemDiffTypes(
+                encryptionContext = this@withEncryptionContext,
+                baseItemCustomFieldsContent = baseItemContents.customFields,
+                otherItemCustomFieldsContent = otherItemContents.customFields
             )
         )
     }

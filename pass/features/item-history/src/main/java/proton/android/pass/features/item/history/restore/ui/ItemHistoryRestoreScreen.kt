@@ -54,10 +54,6 @@ fun ItemHistoryRestoreScreen(
                     onEventConsumed(uiEvent.event)
                 }
 
-                is ItemHistoryRestoreUiEvent.OnHiddenFieldClick -> {
-                    onItemHiddenFieldClicked(uiEvent.state, uiEvent.field)
-                }
-
                 is ItemHistoryRestoreUiEvent.OnHiddenFieldToggle -> {
                     onToggleItemHiddenField(
                         selection = uiEvent.selection,
@@ -87,8 +83,8 @@ fun ItemHistoryRestoreScreen(
                     )
                 }
 
-                is ItemHistoryRestoreUiEvent.OnSectionClick -> {
-                    onItemFieldClicked(uiEvent.section, uiEvent.field)
+                is ItemHistoryRestoreUiEvent.OnFieldClick -> {
+                    onItemFieldClicked(uiEvent.field)
                 }
 
                 is ItemHistoryRestoreUiEvent.OnLinkClick -> {

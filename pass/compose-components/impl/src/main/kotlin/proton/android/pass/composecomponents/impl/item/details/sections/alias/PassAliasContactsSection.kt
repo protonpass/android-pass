@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemdetail.alias
+package proton.android.pass.composecomponents.impl.item.details.sections.alias
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
@@ -33,21 +33,20 @@ import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.counter.CounterText
 import proton.android.pass.composecomponents.impl.icon.Icon
+import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.row.CounterRow
 import proton.android.pass.composecomponents.impl.text.Text
-import proton.android.pass.features.itemdetail.R
-import proton.android.pass.composecomponents.impl.item.details.sections.alias.AliasContactsBanner
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-internal fun ContactsSection(
+internal fun PassAliasContactsSection(
     modifier: Modifier = Modifier,
     counter: Int,
     displayContactsBanner: Boolean,
-    onClick: () -> Unit,
-    onDismissContactsBanner: () -> Unit
+    onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     Column(
         modifier = modifier,
@@ -58,7 +57,7 @@ internal fun ContactsSection(
             title = stringResource(R.string.contacts),
             titleColor = ProtonTheme.colors.textNorm,
             isClickable = true,
-            onClick = onClick,
+            onClick = TODO(),
             accentBackgroundColor = PassTheme.colors.backgroundStrong,
             chevronTintColor = PassTheme.colors.textWeak,
             leadingContent = {
@@ -78,7 +77,10 @@ internal fun ContactsSection(
             } else null
         )
         AnimatedVisibility(displayContactsBanner) {
-            AliasContactsBanner { onDismissContactsBanner() }
+            AliasContactsBanner {
+                TODO()
+                // onEvent(OnDismissContactsBanner)
+            }
         }
         Text.CaptionWeak(text = stringResource(R.string.contacts_section_description))
     }
@@ -88,11 +90,10 @@ internal fun ContactsSection(
 internal fun ContactsSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            ContactsSection(
+            PassAliasContactsSection(
                 counter = 3,
                 displayContactsBanner = false,
-                onClick = {},
-                onDismissContactsBanner = {}
+                onEvent = {}
             )
         }
     }

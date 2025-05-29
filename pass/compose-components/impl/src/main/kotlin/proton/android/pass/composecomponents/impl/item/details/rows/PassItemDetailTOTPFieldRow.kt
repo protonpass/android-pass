@@ -43,7 +43,7 @@ import proton.android.pass.commonuimodels.api.masks.TextMask.TotpCode
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
-import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent.OnSectionClick
+import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent.OnFieldClick
 import proton.android.pass.composecomponents.impl.progress.PassTotpProgress
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ItemDiffType
@@ -72,9 +72,8 @@ internal fun PassItemDetailTOTPFieldRow(
             itemDiffType = itemDiffType,
             onClick = {
                 onEvent(
-                    OnSectionClick(
-                        section = totp.code,
-                        field = ItemDetailsFieldType.Plain.TotpCode
+                    OnFieldClick(
+                        field = ItemDetailsFieldType.Copyable.TotpCode(totp.code)
                     )
                 )
             },

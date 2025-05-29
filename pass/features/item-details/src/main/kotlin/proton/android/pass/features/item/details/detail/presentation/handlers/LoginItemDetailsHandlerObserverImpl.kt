@@ -205,7 +205,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         return itemContents.copy(
             password = updateHiddenStateValue(
                 hiddenState = itemContents.password,
-                shouldBeRevealed = revealedFields.contains(ItemDetailsFieldType.Hidden.Password),
+                shouldBeRevealed = revealedFields.any { it is ItemDetailsFieldType.Hidden.Password },
                 encryptionContextProvider = encryptionContextProvider
             ),
             customFields = updateHiddenCustomFieldContents(

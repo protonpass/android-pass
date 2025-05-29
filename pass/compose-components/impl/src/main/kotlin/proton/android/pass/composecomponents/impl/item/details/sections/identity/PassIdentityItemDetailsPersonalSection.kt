@@ -30,8 +30,8 @@ import proton.android.pass.composecomponents.impl.item.details.rows.addItemDetai
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.addCustomFieldRows
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
-import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.PersonalDetailsContent
 
 @Composable
@@ -48,7 +48,7 @@ internal fun PassIdentityItemDetailsPersonalSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_personal_first_name_title,
             section = firstName,
-            field = ItemDetailsFieldType.Plain.FirstName,
+            field = ItemDetailsFieldType.Copyable.FirstName(firstName),
             itemColors = itemColors,
             itemDiffType = itemDiffs.firstName,
             onEvent = onEvent
@@ -59,7 +59,7 @@ internal fun PassIdentityItemDetailsPersonalSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_personal_middle_name_title,
             section = middleName,
-            field = ItemDetailsFieldType.Plain.MiddleName,
+            field = ItemDetailsFieldType.Copyable.MiddleName(middleName),
             itemColors = itemColors,
             itemDiffType = itemDiffs.middleName,
             onEvent = onEvent
@@ -70,7 +70,7 @@ internal fun PassIdentityItemDetailsPersonalSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_personal_last_name_title,
             section = lastName,
-            field = ItemDetailsFieldType.Plain.LastName,
+            field = ItemDetailsFieldType.Copyable.LastName(lastName),
             itemColors = itemColors,
             itemDiffType = itemDiffs.lastName,
             onEvent = onEvent
@@ -81,7 +81,7 @@ internal fun PassIdentityItemDetailsPersonalSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_personal_full_name_title,
             section = fullName,
-            field = ItemDetailsFieldType.Plain.FullName,
+            field = ItemDetailsFieldType.Copyable.FullName(fullName),
             itemColors = itemColors,
             itemDiffType = itemDiffs.fullName,
             onEvent = onEvent
@@ -92,7 +92,7 @@ internal fun PassIdentityItemDetailsPersonalSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_personal_email_title,
             section = email,
-            field = ItemDetailsFieldType.Plain.Email,
+            field = ItemDetailsFieldType.Copyable.Email(email),
             itemColors = itemColors,
             itemDiffType = itemDiffs.email,
             onEvent = onEvent
@@ -103,7 +103,7 @@ internal fun PassIdentityItemDetailsPersonalSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_personal_gender_title,
             section = gender,
-            field = ItemDetailsFieldType.Plain.Gender,
+            field = ItemDetailsFieldType.Copyable.Gender(gender),
             itemColors = itemColors,
             itemDiffType = itemDiffs.gender,
             onEvent = onEvent
@@ -114,7 +114,7 @@ internal fun PassIdentityItemDetailsPersonalSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_personal_phone_title,
             section = phoneNumber,
-            field = ItemDetailsFieldType.Plain.PhoneNumber,
+            field = ItemDetailsFieldType.Copyable.PhoneNumber(phoneNumber),
             itemColors = itemColors,
             itemDiffType = itemDiffs.phoneNumber,
             onEvent = onEvent
@@ -125,7 +125,7 @@ internal fun PassIdentityItemDetailsPersonalSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_personal_birthday_title,
             section = birthdate,
-            field = ItemDetailsFieldType.Plain.BirthDate,
+            field = ItemDetailsFieldType.Copyable.BirthDate(birthdate),
             itemColors = itemColors,
             itemDiffType = itemDiffs.birthdate,
             onEvent = onEvent

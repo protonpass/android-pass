@@ -18,6 +18,9 @@
 
 package proton.android.pass.domain
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class AliasDetails(
     val email: String,
     val canModify: Boolean,
@@ -42,6 +45,7 @@ data class AliasDetails(
     }
 }
 
+@Serializable
 data class AliasStats(
     val forwardedEmails: Int,
     val repliedEmails: Int,

@@ -143,7 +143,7 @@ class SSHKeyDetailsHandlerObserverImpl @Inject constructor(
         return itemContents.copy(
             privateKey = updateHiddenStateValue(
                 hiddenState = itemContents.privateKey,
-                shouldBeRevealed = revealedFields.contains(ItemDetailsFieldType.Hidden.PrivateKey),
+                shouldBeRevealed = revealedFields.any { it is ItemDetailsFieldType.Hidden.PrivateKey },
                 encryptionContextProvider = encryptionContextProvider
             ),
             sectionContentList = mutableSections,

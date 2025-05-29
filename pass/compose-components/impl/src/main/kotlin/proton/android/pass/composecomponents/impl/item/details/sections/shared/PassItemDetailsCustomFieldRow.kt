@@ -65,9 +65,8 @@ internal fun PassItemDetailsCustomFieldRow(
             hiddenTextStyle = ProtonTheme.typography.defaultNorm,
             onClick = {
                 onEvent(
-                    PassItemDetailsUiEvent.OnHiddenFieldClick(
-                        state = customFieldContent.value,
-                        field = ItemDetailsFieldType.Hidden.CustomField(customFieldIndex)
+                    PassItemDetailsUiEvent.OnFieldClick(
+                        field = ItemDetailsFieldType.Hidden.CustomField(customFieldContent.value, customFieldIndex)
                     )
                 )
             },
@@ -76,7 +75,7 @@ internal fun PassItemDetailsCustomFieldRow(
                     PassItemDetailsUiEvent.OnHiddenFieldToggle(
                         isVisible = isVisible,
                         hiddenState = customFieldContent.value,
-                        fieldType = ItemDetailsFieldType.Hidden.CustomField(customFieldIndex),
+                        fieldType = ItemDetailsFieldType.Hidden.CustomField(customFieldContent.value, customFieldIndex),
                         fieldSection = customFieldSection
                     )
                 )
@@ -92,9 +91,8 @@ internal fun PassItemDetailsCustomFieldRow(
             itemDiffType = itemDiffType,
             onClick = {
                 onEvent(
-                    PassItemDetailsUiEvent.OnSectionClick(
-                        section = customFieldContent.value,
-                        field = ItemDetailsFieldType.Plain.CustomField
+                    PassItemDetailsUiEvent.OnFieldClick(
+                        field = ItemDetailsFieldType.Copyable.CustomField(customFieldContent.value)
                     )
                 )
             }

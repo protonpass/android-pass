@@ -44,15 +44,8 @@ internal sealed interface ItemDetailsUiEvent {
         internal val reason: ItemDetailsActionForbiddenReason?
     ) : ItemDetailsUiEvent
 
-    data class OnFieldClicked(
-        internal val text: String,
-        internal val field: ItemDetailsFieldType.Plain
-    ) : ItemDetailsUiEvent
-
-    data class OnHiddenFieldClicked(
-        internal val state: HiddenState,
-        internal val field: ItemDetailsFieldType.Hidden
-    ) : ItemDetailsUiEvent
+    @JvmInline
+    value class OnFieldClicked(internal val field: ItemDetailsFieldType) : ItemDetailsUiEvent
 
     data class OnHiddenFieldToggled(
         internal val isVisible: Boolean,

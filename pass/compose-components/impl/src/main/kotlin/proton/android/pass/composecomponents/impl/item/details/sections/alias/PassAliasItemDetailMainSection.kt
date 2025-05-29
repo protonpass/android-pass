@@ -111,9 +111,8 @@ private fun PassAliasItemDetailAddressRow(
             .contentDiff(itemDiffType = itemDiffType)
             .clickable {
                 onEvent(
-                    PassItemDetailsUiEvent.OnSectionClick(
-                        section = alias,
-                        field = ItemDetailsFieldType.Plain.Alias
+                    PassItemDetailsUiEvent.OnFieldClick(
+                        field = ItemDetailsFieldType.Copyable.Alias(alias)
                     )
                 )
             }

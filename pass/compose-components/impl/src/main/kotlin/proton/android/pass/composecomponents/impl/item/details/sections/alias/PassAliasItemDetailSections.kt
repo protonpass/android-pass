@@ -20,15 +20,20 @@ package proton.android.pass.composecomponents.impl.item.details.sections.alias
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.datetime.Instant
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent.OnAttachmentEvent
@@ -38,6 +43,7 @@ import proton.android.pass.composecomponents.impl.item.details.sections.shared.P
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.AliasMailbox
+import proton.android.pass.domain.AliasStats
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
@@ -52,6 +58,12 @@ internal fun PassAliasItemDetailSections(
     shareId: ShareId,
     vaultId: VaultId,
     contents: ItemContents.Alias,
+    isAliasCreatedByUser: Boolean,
+    slNote: String,
+    displayName: String,
+    stats: Option<AliasStats>,
+    contactsCount: Int,
+    displayContactsBanner: Boolean,
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs.Alias,
     mailboxes: ImmutableList<AliasMailbox>,
@@ -85,6 +97,37 @@ internal fun PassAliasItemDetailSections(
                 itemColors = itemColors,
                 itemDiffs = itemDiffs
             )
+        }
+
+        if (slNote.isNotBlank()) {
+            PassSharedItemDetailNoteSection(
+                title = buildString {
+                    append(stringResource(id = R.string.item_details_shared_section_note_title))
+                    append(" ${SpecialCharacters.DOT_SEPARATOR} ")
+                    append(stringResource(id = R.string.simple_login_brand_name))
+                },
+                note = slNote,
+                itemColors = itemColors,
+                itemDiffs = itemDiffs
+            )
+        }
+
+        if (isAliasCreatedByUser) {
+            PassAliasSenderNameSection(
+                text = displayName,
+                isLoading = true
+            )
+
+            PassAliasContactsSection(
+                modifier = Modifier.padding(bottom = Spacing.small),
+                displayContactsBanner = displayContactsBanner,
+                counter = contactsCount,
+                onEvent = onEvent
+            )
+        }
+
+        if (stats is Some) {
+            PassAliasStatsSection(stats = stats.value)
         }
 
         if (contents.customFields.isNotEmpty()) {

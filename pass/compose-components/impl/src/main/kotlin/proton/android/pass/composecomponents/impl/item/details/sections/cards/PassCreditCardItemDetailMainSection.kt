@@ -22,7 +22,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.toPersistentList
-import proton.android.pass.domain.ItemSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.masks.TextMask
 import proton.android.pass.composecomponents.impl.R
@@ -34,6 +33,7 @@ import proton.android.pass.composecomponents.impl.item.details.sections.shared.P
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.ItemSection
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
@@ -64,9 +64,8 @@ internal fun PassCreditCardItemDetailMainSection(
                 itemDiffType = itemDiffs.cardHolder,
                 onClick = {
                     onEvent(
-                        PassItemDetailsUiEvent.OnSectionClick(
-                            section = cardholder,
-                            field = ItemDetailsFieldType.Plain.Username
+                        PassItemDetailsUiEvent.OnFieldClick(
+                            field = ItemDetailsFieldType.Copyable.Username(cardholder)
                         )
                     )
                 }
@@ -85,9 +84,8 @@ internal fun PassCreditCardItemDetailMainSection(
                 isToggleable = true,
                 onClick = {
                     onEvent(
-                        PassItemDetailsUiEvent.OnSectionClick(
-                            section = cardNumber,
-                            field = ItemDetailsFieldType.Plain.CardNumber
+                        PassItemDetailsUiEvent.OnFieldClick(
+                            field = ItemDetailsFieldType.Copyable.CardNumber(cardNumber)
                         )
                     )
                 }
@@ -118,9 +116,8 @@ internal fun PassCreditCardItemDetailMainSection(
                 itemDiffType = itemDiffs.cvv,
                 onClick = {
                     onEvent(
-                        PassItemDetailsUiEvent.OnHiddenFieldClick(
-                            state = cvv,
-                            field = ItemDetailsFieldType.Hidden.Cvv
+                        PassItemDetailsUiEvent.OnFieldClick(
+                            field = ItemDetailsFieldType.Hidden.Cvv(cvv)
                         )
                     )
                 },
@@ -129,7 +126,7 @@ internal fun PassCreditCardItemDetailMainSection(
                         PassItemDetailsUiEvent.OnHiddenFieldToggle(
                             isVisible = isVisible,
                             hiddenState = cvv,
-                            fieldType = ItemDetailsFieldType.Hidden.Cvv,
+                            fieldType = ItemDetailsFieldType.Hidden.Cvv(cvv),
                             fieldSection = ItemSection.CreditCard
                         )
                     )
@@ -152,7 +149,7 @@ internal fun PassCreditCardItemDetailMainSection(
                         PassItemDetailsUiEvent.OnHiddenFieldToggle(
                             isVisible = isVisible,
                             hiddenState = pin,
-                            fieldType = ItemDetailsFieldType.Hidden.Pin,
+                            fieldType = ItemDetailsFieldType.Hidden.Pin(pin),
                             fieldSection = ItemSection.CreditCard
                         )
                     )

@@ -113,7 +113,7 @@ internal fun PassItemDetailFieldRow(
 internal fun MutableList<@Composable () -> Unit>.addItemDetailsFieldRow(
     @StringRes titleResId: Int,
     section: String,
-    field: ItemDetailsFieldType.Plain,
+    field: ItemDetailsFieldType.Copyable,
     itemColors: PassItemColors,
     itemDiffType: ItemDiffType,
     onEvent: (PassItemDetailsUiEvent) -> Unit
@@ -126,8 +126,7 @@ internal fun MutableList<@Composable () -> Unit>.addItemDetailsFieldRow(
             itemColors = itemColors,
             itemDiffType = itemDiffType,
             onClick = {
-                PassItemDetailsUiEvent.OnSectionClick(
-                    section = section,
+                PassItemDetailsUiEvent.OnFieldClick(
                     field = field
                 ).also(onEvent)
             }

@@ -76,30 +76,42 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     override fun updateHiddenFieldsContents(
         itemContents: ItemContents.Alias,
         revealedHiddenFields: Map<ItemSection, Set<ItemDetailsFieldType.Hidden>>
-    ): ItemContents = itemContents
+    ): ItemContents = itemContents.copy(
+        customFields = updateHiddenCustomFieldContents(
+            customFields = itemContents.customFields,
+            revealedHiddenFields = revealedHiddenFields[ItemSection.CustomField].orEmpty()
+        )
+    )
 
     override fun calculateItemDiffs(
         baseItemContents: ItemContents.Alias,
         otherItemContents: ItemContents.Alias,
         baseAttachments: List<Attachment>,
         otherAttachments: List<Attachment>
-    ): ItemDiffs = ItemDiffs.Alias(
-        title = calculateItemDiffType(
-            baseItemFieldValue = baseItemContents.title,
-            otherItemFieldValue = otherItemContents.title
-        ),
-        note = calculateItemDiffType(
-            baseItemFieldValue = baseItemContents.note,
-            otherItemFieldValue = otherItemContents.note
-        ),
-        aliasEmail = calculateItemDiffType(
-            baseItemFieldValue = baseItemContents.aliasEmail,
-            otherItemFieldValue = otherItemContents.aliasEmail
-        ),
-        attachments = calculateItemDiffType(
-            baseItemAttachments = baseAttachments,
-            otherItemAttachments = otherAttachments
+    ): ItemDiffs = encryptionContextProvider.withEncryptionContext {
+        ItemDiffs.Alias(
+            title = calculateItemDiffType(
+                baseItemFieldValue = baseItemContents.title,
+                otherItemFieldValue = otherItemContents.title
+            ),
+            note = calculateItemDiffType(
+                baseItemFieldValue = baseItemContents.note,
+                otherItemFieldValue = otherItemContents.note
+            ),
+            aliasEmail = calculateItemDiffType(
+                baseItemFieldValue = baseItemContents.aliasEmail,
+                otherItemFieldValue = otherItemContents.aliasEmail
+            ),
+            attachments = calculateItemDiffType(
+                baseItemAttachments = baseAttachments,
+                otherItemAttachments = otherAttachments
+            ),
+            customFields = calculateItemDiffTypes(
+                encryptionContext = this@withEncryptionContext,
+                baseItemCustomFieldsContent = baseItemContents.customFields,
+                otherItemCustomFieldsContent = otherItemContents.customFields
+            )
         )
-    )
+    }
 
 }

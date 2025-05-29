@@ -40,7 +40,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Totp
+import proton.android.pass.domain.TotpState
 import proton.android.pass.domain.VaultId
 
 @Composable
@@ -60,7 +60,7 @@ internal fun PassCreditCardItemDetailsSections(
     shouldDisplayItemHistoryButton: Boolean,
     shouldDisplayFileAttachments: Boolean,
     attachmentsState: AttachmentsState,
-    customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, Totp>,
+    customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, TotpState>,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(contents) {
     Column(

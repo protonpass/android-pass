@@ -29,19 +29,17 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonui.api.DateFormatUtils
-import proton.android.pass.commonuimodels.api.masks.TextMask
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
-import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailMaskedFieldRow
+import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailTOTPFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailsHiddenFieldRow
-import proton.android.pass.composecomponents.impl.progress.PassTotpProgress
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemSection
-import proton.android.pass.domain.Totp
+import proton.android.pass.domain.TotpState
 
 private const val HIDDEN_CUSTOM_FIELD_TEXT_LENGTH = 12
 
@@ -51,7 +49,7 @@ internal fun PassItemDetailsCustomFieldRow(
     customFieldIndex: Int,
     customFieldContent: CustomFieldContent,
     customFieldSection: ItemSection,
-    customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, Totp>,
+    customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, TotpState>,
     itemColors: PassItemColors,
     itemDiffType: ItemDiffType,
     onEvent: (PassItemDetailsUiEvent) -> Unit
@@ -107,26 +105,12 @@ internal fun PassItemDetailsCustomFieldRow(
                 ?.index
                 .toOption()
             customFieldTotps[sectionIndex to customFieldIndex]?.let { customFieldTotp ->
-                PassItemDetailMaskedFieldRow(
-                    icon = null,
+                PassItemDetailTOTPFieldRow(
+                    totp = customFieldTotp,
                     title = customFieldContent.label,
-                    maskedSubtitle = TextMask.TotpCode(customFieldTotp.code),
                     itemColors = itemColors,
                     itemDiffType = itemDiffType,
-                    onClick = {
-                        onEvent(
-                            PassItemDetailsUiEvent.OnSectionClick(
-                                section = customFieldTotp.code,
-                                field = ItemDetailsFieldType.Plain.TotpCode
-                            )
-                        )
-                    },
-                    contentInBetween = {
-                        PassTotpProgress(
-                            remainingSeconds = customFieldTotp.remainingSeconds,
-                            totalSeconds = customFieldTotp.totalSeconds
-                        )
-                    }
+                    onEvent = onEvent
                 )
             }
         }
@@ -152,7 +136,7 @@ internal fun PassItemDetailsCustomFieldRow(
 internal fun MutableList<@Composable () -> Unit>.addCustomFieldRows(
     customFields: List<CustomFieldContent>,
     customFieldSection: ItemSection,
-    customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, Totp>,
+    customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, TotpState>,
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs,
     onEvent: (PassItemDetailsUiEvent) -> Unit

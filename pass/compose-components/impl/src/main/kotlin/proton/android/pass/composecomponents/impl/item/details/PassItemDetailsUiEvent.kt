@@ -27,15 +27,8 @@ import proton.android.pass.domain.ShareId
 
 sealed interface PassItemDetailsUiEvent {
 
-    data class OnSectionClick(
-        val section: String,
-        val field: ItemDetailsFieldType.Plain
-    ) : PassItemDetailsUiEvent
-
-    data class OnHiddenFieldClick(
-        val state: HiddenState,
-        val field: ItemDetailsFieldType.Hidden
-    ) : PassItemDetailsUiEvent
+    @JvmInline
+    value class OnFieldClick(val field: ItemDetailsFieldType) : PassItemDetailsUiEvent
 
     data class OnHiddenFieldToggle(
         val isVisible: Boolean,

@@ -28,6 +28,7 @@ import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
+import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
 import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -36,6 +37,8 @@ import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryFeature.AliasManagementContacts
 import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
@@ -43,8 +46,14 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     override val encryptionContextProvider: EncryptionContextProvider,
     override val totpManager: TotpManager,
     override val canDisplayTotp: CanDisplayTotp,
-    private val observeAliasDetails: ObserveAliasDetails
-) : ItemDetailsHandlerObserver<ItemContents.Alias>(encryptionContextProvider, totpManager, canDisplayTotp) {
+    private val observeAliasDetails: ObserveAliasDetails,
+    private val observeAliasContacts: ObserveAliasContacts,
+    private val userPreferencesRepository: UserPreferencesRepository
+) : ItemDetailsHandlerObserver<ItemContents.Alias>(
+    encryptionContextProvider,
+    totpManager,
+    canDisplayTotp
+) {
 
     override fun observe(
         share: Share,
@@ -54,8 +63,10 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     ): Flow<ItemDetailState> = combine(
         observeItemContents(item),
         observeAliasDetails(item.shareId, item.id).onStart { emit(AliasDetails.EMPTY) },
-        observeCustomFieldTotps(item)
-    ) { aliasItemContents, aliasDetails, customFieldTotps ->
+        observeAliasContacts(item.shareId, item.id),
+        observeCustomFieldTotps(item),
+        userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementContacts)
+    ) { aliasItemContents, aliasDetails, aliasContacts, customFieldTotps, displayContactsBanner ->
         ItemDetailState.Alias(
             itemContents = aliasItemContents,
             itemId = item.id,
@@ -69,9 +80,11 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
             itemState = ItemState.from(item.state),
             itemDiffs = ItemDiffs.Alias(),
             itemShareCount = item.shareCount,
-            mailboxes = aliasDetails.mailboxes,
+            aliasDetails = aliasDetails,
+            aliasContacts = aliasContacts,
             attachmentsState = attachmentsState,
-            customFieldTotps = customFieldTotps
+            customFieldTotps = customFieldTotps,
+            displayContactsBanner = displayContactsBanner.value
         )
     }
 

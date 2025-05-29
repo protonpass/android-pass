@@ -59,16 +59,15 @@ internal fun PassIdentityItemDetailsContactSection(
                 itemDiffType = itemDiffs.socialSecurityNumber,
                 icon = null,
                 onClick = {
-                    PassItemDetailsUiEvent.OnHiddenFieldClick(
-                        state = socialSecurityNumber,
-                        field = ItemDetailsFieldType.Hidden.SocialSecurityNumber
+                    PassItemDetailsUiEvent.OnFieldClick(
+                        field = ItemDetailsFieldType.Hidden.SocialSecurityNumber(socialSecurityNumber)
                     ).also(onEvent)
                 },
                 onToggle = { isVisible ->
                     PassItemDetailsUiEvent.OnHiddenFieldToggle(
                         isVisible = isVisible,
                         hiddenState = socialSecurityNumber,
-                        fieldType = ItemDetailsFieldType.Hidden.SocialSecurityNumber,
+                        fieldType = ItemDetailsFieldType.Hidden.SocialSecurityNumber(socialSecurityNumber),
                         fieldSection = ItemSection.Identity.SocialSecurityNumber
                     ).also(onEvent)
                 }
@@ -80,7 +79,7 @@ internal fun PassIdentityItemDetailsContactSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_contact_passport_number_title,
             section = passportNumber,
-            field = ItemDetailsFieldType.Plain.PassportNumber,
+            field = ItemDetailsFieldType.Copyable.PassportNumber(passportNumber),
             itemColors = itemColors,
             itemDiffType = itemDiffs.passportNumber,
             onEvent = onEvent
@@ -91,7 +90,7 @@ internal fun PassIdentityItemDetailsContactSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_contact_license_number_title,
             section = licenseNumber,
-            field = ItemDetailsFieldType.Plain.LicenseNumber,
+            field = ItemDetailsFieldType.Copyable.LicenseNumber(licenseNumber),
             itemColors = itemColors,
             itemDiffType = itemDiffs.licenseNumber,
             onEvent = onEvent
@@ -102,7 +101,7 @@ internal fun PassIdentityItemDetailsContactSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_contact_website_title,
             section = website,
-            field = ItemDetailsFieldType.Plain.Website,
+            field = ItemDetailsFieldType.Copyable.Website(website),
             itemColors = itemColors,
             itemDiffType = itemDiffs.website,
             onEvent = onEvent
@@ -113,7 +112,7 @@ internal fun PassIdentityItemDetailsContactSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_contact_secondary_phone_number_title,
             section = secondPhoneNumber,
-            field = ItemDetailsFieldType.Plain.PhoneNumber,
+            field = ItemDetailsFieldType.Copyable.PhoneNumber(secondPhoneNumber),
             itemColors = itemColors,
             itemDiffType = itemDiffs.secondPhoneNumber,
             onEvent = onEvent
@@ -124,7 +123,7 @@ internal fun PassIdentityItemDetailsContactSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_contact_linkedin_title,
             section = linkedin,
-            field = ItemDetailsFieldType.Plain.LinkedIn,
+            field = ItemDetailsFieldType.Copyable.LinkedIn(linkedin),
             itemColors = itemColors,
             itemDiffType = itemDiffs.linkedin,
             onEvent = onEvent
@@ -135,7 +134,7 @@ internal fun PassIdentityItemDetailsContactSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_contact_x_handle_title,
             section = xHandle,
-            field = ItemDetailsFieldType.Plain.XHandle,
+            field = ItemDetailsFieldType.Copyable.XHandle(xHandle),
             itemColors = itemColors,
             itemDiffType = itemDiffs.xHandle,
             onEvent = onEvent
@@ -146,7 +145,7 @@ internal fun PassIdentityItemDetailsContactSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_contact_instagram_title,
             section = instagram,
-            field = ItemDetailsFieldType.Plain.Instagram,
+            field = ItemDetailsFieldType.Copyable.Instagram(instagram),
             itemColors = itemColors,
             itemDiffType = itemDiffs.instagram,
             onEvent = onEvent
@@ -157,7 +156,7 @@ internal fun PassIdentityItemDetailsContactSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_contact_facebook_title,
             section = facebook,
-            field = ItemDetailsFieldType.Plain.Facebook,
+            field = ItemDetailsFieldType.Copyable.Facebook(facebook),
             itemColors = itemColors,
             itemDiffType = itemDiffs.facebook,
             onEvent = onEvent
@@ -168,7 +167,7 @@ internal fun PassIdentityItemDetailsContactSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_contact_reddit_title,
             section = reddit,
-            field = ItemDetailsFieldType.Plain.Reddit,
+            field = ItemDetailsFieldType.Copyable.Reddit(reddit),
             itemColors = itemColors,
             itemDiffType = itemDiffs.reddit,
             onEvent = onEvent
@@ -179,7 +178,7 @@ internal fun PassIdentityItemDetailsContactSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_contact_yahoo_title,
             section = yahoo,
-            field = ItemDetailsFieldType.Plain.Yahoo,
+            field = ItemDetailsFieldType.Copyable.Yahoo(yahoo),
             itemColors = itemColors,
             itemDiffType = itemDiffs.yahoo,
             onEvent = onEvent

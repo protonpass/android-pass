@@ -27,11 +27,10 @@ import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsCo
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent
-import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent.OnHiddenFieldClick
+import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent.OnFieldClick
 import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent.OnHiddenFieldToggle
 import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent.OnLinkClick
 import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent.OnPasskeyClick
-import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent.OnSectionClick
 import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent.OnUpgrade
 import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent.OnWifiNetworkQRClick
 import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreSelection
@@ -61,13 +60,8 @@ internal fun ItemHistoryRestoreTab(
         onEvent = { uiEvent ->
             when (uiEvent) {
                 is PassItemDetailsUiEvent.OnUpgrade -> OnUpgrade
-                is PassItemDetailsUiEvent.OnSectionClick -> OnSectionClick(
-                    section = uiEvent.section,
-                    field = uiEvent.field
-                ).also(onEvent)
 
-                is PassItemDetailsUiEvent.OnHiddenFieldClick -> OnHiddenFieldClick(
-                    state = uiEvent.state,
+                is PassItemDetailsUiEvent.OnFieldClick -> OnFieldClick(
                     field = uiEvent.field
                 ).also(onEvent)
 

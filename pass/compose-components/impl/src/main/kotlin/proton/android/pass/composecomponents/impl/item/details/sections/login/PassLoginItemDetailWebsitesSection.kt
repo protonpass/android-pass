@@ -87,9 +87,8 @@ internal fun PassLoginItemDetailWebsitesSection(
                         onClick = { onEvent(PassItemDetailsUiEvent.OnLinkClick(websiteUrl)) },
                         onLongClick = {
                             onEvent(
-                                PassItemDetailsUiEvent.OnSectionClick(
-                                    section = websiteUrl,
-                                    field = ItemDetailsFieldType.Plain.Website
+                                PassItemDetailsUiEvent.OnFieldClick(
+                                    field = ItemDetailsFieldType.Copyable.Website(websiteUrl)
                                 )
                             )
                         },

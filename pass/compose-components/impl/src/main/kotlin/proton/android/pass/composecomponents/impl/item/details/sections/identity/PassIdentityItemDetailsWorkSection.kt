@@ -30,8 +30,8 @@ import proton.android.pass.composecomponents.impl.item.details.rows.addItemDetai
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.addCustomFieldRows
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
-import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.WorkDetailsContent
 
 @Composable
@@ -48,7 +48,7 @@ internal fun PassIdentityItemDetailsWorkSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_work_company_title,
             section = company,
-            field = ItemDetailsFieldType.Plain.Company,
+            field = ItemDetailsFieldType.Copyable.Company(company),
             itemColors = itemColors,
             itemDiffType = itemDiffs.company,
             onEvent = onEvent
@@ -59,7 +59,7 @@ internal fun PassIdentityItemDetailsWorkSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_work_occupation_title,
             section = jobTitle,
-            field = ItemDetailsFieldType.Plain.Occupation,
+            field = ItemDetailsFieldType.Copyable.Occupation(jobTitle),
             itemColors = itemColors,
             itemDiffType = itemDiffs.jobTitle,
             onEvent = onEvent
@@ -70,7 +70,7 @@ internal fun PassIdentityItemDetailsWorkSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_work_phone_number_title,
             section = workPhoneNumber,
-            field = ItemDetailsFieldType.Plain.PhoneNumber,
+            field = ItemDetailsFieldType.Copyable.PhoneNumber(workPhoneNumber),
             itemColors = itemColors,
             itemDiffType = itemDiffs.workPhoneNumber,
             onEvent = onEvent
@@ -81,7 +81,7 @@ internal fun PassIdentityItemDetailsWorkSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_work_email_title,
             section = workEmail,
-            field = ItemDetailsFieldType.Plain.Email,
+            field = ItemDetailsFieldType.Copyable.Email(workEmail),
             itemColors = itemColors,
             itemDiffType = itemDiffs.workEmail,
             onEvent = onEvent
@@ -92,7 +92,7 @@ internal fun PassIdentityItemDetailsWorkSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_work_personal_website_title,
             section = personalWebsite,
-            field = ItemDetailsFieldType.Plain.Website,
+            field = ItemDetailsFieldType.Copyable.Website(personalWebsite),
             itemColors = itemColors,
             itemDiffType = itemDiffs.personalWebsite,
             onEvent = onEvent

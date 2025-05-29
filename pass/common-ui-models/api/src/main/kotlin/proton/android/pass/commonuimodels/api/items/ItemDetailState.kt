@@ -24,7 +24,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
-import proton.android.pass.domain.AliasMailbox
+import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
@@ -32,6 +32,7 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.TotpState
+import proton.android.pass.domain.aliascontacts.AliasContacts
 import proton.android.pass.domain.items.ItemCategory
 
 @Stable
@@ -85,7 +86,9 @@ sealed interface ItemDetailState {
         override val itemShareCount: Int,
         override val attachmentsState: AttachmentsState,
         override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
-        val mailboxes: List<AliasMailbox>
+        val aliasDetails: AliasDetails,
+        val aliasContacts: AliasContacts,
+        val displayContactsBanner: Boolean
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Alias

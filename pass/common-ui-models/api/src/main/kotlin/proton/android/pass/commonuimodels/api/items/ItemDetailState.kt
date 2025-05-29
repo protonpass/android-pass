@@ -31,7 +31,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Totp
+import proton.android.pass.domain.TotpState
 import proton.android.pass.domain.items.ItemCategory
 
 @Stable
@@ -65,7 +65,7 @@ sealed interface ItemDetailState {
 
     val attachmentsState: AttachmentsState
 
-    val customFieldTotps: Map<Pair<Option<Int>, Int>, Totp>
+    val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>
 
     fun update(itemContents: ItemContents, itemDiffs: ItemDiffs = ItemDiffs.None): ItemDetailState
 
@@ -84,7 +84,7 @@ sealed interface ItemDetailState {
         override val itemDiffs: ItemDiffs.Alias,
         override val itemShareCount: Int,
         override val attachmentsState: AttachmentsState,
-        override val customFieldTotps: Map<Pair<Option<Int>, Int>, Totp>,
+        override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
         val mailboxes: List<AliasMailbox>
     ) : ItemDetailState {
 
@@ -124,7 +124,7 @@ sealed interface ItemDetailState {
         override val itemDiffs: ItemDiffs.CreditCard,
         override val itemShareCount: Int,
         override val attachmentsState: AttachmentsState,
-        override val customFieldTotps: Map<Pair<Option<Int>, Int>, Totp>
+        override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.CreditCard
@@ -163,7 +163,7 @@ sealed interface ItemDetailState {
         override val itemDiffs: ItemDiffs.Identity,
         override val itemShareCount: Int,
         override val attachmentsState: AttachmentsState,
-        override val customFieldTotps: Map<Pair<Option<Int>, Int>, Totp>
+        override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Identity
@@ -201,11 +201,11 @@ sealed interface ItemDetailState {
         override val itemState: ItemState,
         override val itemDiffs: ItemDiffs.Login,
         override val itemShareCount: Int,
-        override val customFieldTotps: Map<Pair<Option<Int>, Int>, Totp>,
+        override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
         override val attachmentsState: AttachmentsState,
         val canLoadExternalImages: Boolean,
         val passwordStrength: PasswordStrength,
-        val primaryTotp: Totp?,
+        val primaryTotp: TotpState?,
         val passkeys: List<UIPasskeyContent>,
         val loginMonitorState: LoginMonitorState
     ) : ItemDetailState {
@@ -246,7 +246,7 @@ sealed interface ItemDetailState {
         override val itemDiffs: ItemDiffs.Custom,
         override val itemShareCount: Int,
         override val attachmentsState: AttachmentsState,
-        override val customFieldTotps: Map<Pair<Option<Int>, Int>, Totp>
+        override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Custom
@@ -285,7 +285,7 @@ sealed interface ItemDetailState {
         override val itemDiffs: ItemDiffs.WifiNetwork,
         override val itemShareCount: Int,
         override val attachmentsState: AttachmentsState,
-        override val customFieldTotps: Map<Pair<Option<Int>, Int>, Totp>,
+        override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
         val svgQR: Option<String>
     ) : ItemDetailState {
 
@@ -325,7 +325,7 @@ sealed interface ItemDetailState {
         override val itemDiffs: ItemDiffs.SSHKey,
         override val itemShareCount: Int,
         override val attachmentsState: AttachmentsState,
-        override val customFieldTotps: Map<Pair<Option<Int>, Int>, Totp>
+        override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.SSHKey
@@ -364,7 +364,7 @@ sealed interface ItemDetailState {
         override val itemDiffs: ItemDiffs.Note,
         override val itemShareCount: Int,
         override val attachmentsState: AttachmentsState,
-        override val customFieldTotps: Map<Pair<Option<Int>, Int>, Totp>
+        override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Note
@@ -403,7 +403,7 @@ sealed interface ItemDetailState {
         override val itemDiffs: ItemDiffs.Unknown,
         override val itemShareCount: Int,
         override val attachmentsState: AttachmentsState,
-        override val customFieldTotps: Map<Pair<Option<Int>, Int>, Totp>
+        override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Unknown

@@ -32,24 +32,23 @@ import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.commonuimodels.api.masks.TextMask
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.item.PassPasswordStrengthItem
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
-import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailMaskedFieldRow
+import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailTOTPFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailsHiddenFieldRow
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailMainSectionContainer
-import proton.android.pass.composecomponents.impl.progress.PassTotpProgress
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.HiddenState
-import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
-import proton.android.pass.domain.Totp
+import proton.android.pass.domain.ItemSection
+import proton.android.pass.domain.TotpState
 import proton.android.pass.domain.items.ItemCategory
 import me.proton.core.presentation.R as CoreR
+import proton.android.pass.composecomponents.impl.R as CompR
 
 private const val HIDDEN_PASSWORD_TEXT_LENGTH = 12
 
@@ -60,7 +59,7 @@ internal fun PassLoginItemDetailMainSection(
     username: String,
     password: HiddenState,
     passwordStrength: PasswordStrength,
-    primaryTotp: Totp?,
+    primaryTotp: TotpState?,
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs.Login,
     onEvent: (PassItemDetailsUiEvent) -> Unit
@@ -144,26 +143,13 @@ internal fun PassLoginItemDetailMainSection(
 
     primaryTotp?.let { totp ->
         sections.add {
-            PassItemDetailMaskedFieldRow(
+            PassItemDetailTOTPFieldRow(
+                totp = totp,
                 icon = CoreR.drawable.ic_proton_lock,
-                title = stringResource(R.string.item_details_login_section_primary_totp_title),
-                maskedSubtitle = TextMask.TotpCode(totp.code),
+                title = stringResource(CompR.string.item_details_login_section_primary_totp_title),
                 itemColors = itemColors,
                 itemDiffType = itemDiffs.totp,
-                onClick = {
-                    onEvent(
-                        PassItemDetailsUiEvent.OnSectionClick(
-                            section = totp.code,
-                            field = ItemDetailsFieldType.Plain.TotpCode
-                        )
-                    )
-                },
-                contentInBetween = {
-                    PassTotpProgress(
-                        remainingSeconds = totp.remainingSeconds,
-                        totalSeconds = totp.totalSeconds
-                    )
-                }
+                onEvent = onEvent
             )
         }
     }
@@ -183,7 +169,7 @@ internal fun PassLoginItemDetailMainDiffPreview(@PreviewParameter(ThemePreviewPr
                 username = "username",
                 password = HiddenState.Concealed(""),
                 passwordStrength = PasswordStrength.Vulnerable,
-                primaryTotp = Totp(
+                primaryTotp = TotpState.Visible(
                     code = "123456",
                     remainingSeconds = 25,
                     totalSeconds = 30

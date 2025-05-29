@@ -84,18 +84,6 @@ internal sealed interface LoginDetailUiState {
     }
 }
 
-sealed interface TotpUiState {
-    data object Hidden : TotpUiState
-    data object Limited : TotpUiState
-
-    @Stable
-    data class Visible(
-        val code: String,
-        val remainingSeconds: Int,
-        val totalSeconds: Int
-    ) : TotpUiState
-}
-
 @Stable
 data class LinkedAliasItem(
     val shareId: ShareId,

@@ -21,6 +21,7 @@ package proton.android.pass.features.item.details.detail.presentation.handlers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import proton.android.pass.common.api.None
@@ -32,21 +33,23 @@ import proton.android.pass.commonpresentation.api.items.details.handlers.mapToDe
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
-import proton.android.pass.domain.Totp
+import proton.android.pass.domain.TotpState
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
 class CustomItemDetailsHandlerObserverImpl @Inject constructor(
     override val encryptionContextProvider: EncryptionContextProvider,
-    override val totpManager: TotpManager
-) : ItemDetailsHandlerObserver<ItemContents.Custom>(encryptionContextProvider, totpManager) {
+    override val totpManager: TotpManager,
+    override val canDisplayTotp: CanDisplayTotp
+) : ItemDetailsHandlerObserver<ItemContents.Custom>(encryptionContextProvider, totpManager, canDisplayTotp) {
 
     override fun observe(
         share: Share,
@@ -75,36 +78,44 @@ class CustomItemDetailsHandlerObserverImpl @Inject constructor(
         )
     }
 
-    private fun observeTotps(item: Item): Flow<Map<Pair<Option<Int>, Int>, Totp>> =
-        observeItemContents(item).flatMapLatest { contents ->
-            val decrypted = encryptionContextProvider.withEncryptionContextSuspendable {
-                val sectionCustomFields =
-                    contents.sectionContentList.flatMapIndexed { sectionIndex, sectionContent ->
-                        sectionContent.customFieldList.mapToDecryptedTotp(
-                            sectionIndex = sectionIndex.some(),
-                            decrypt = ::decrypt
-                        )
-                    }.toMap()
+    private fun observeTotps(item: Item): Flow<Map<Pair<Option<Int>, Int>, TotpState>> = combine(
+        observeItemContents(item),
+        canDisplayTotp(shareId = item.shareId, itemId = item.id)
+    ) { contents, canDisplayTotp -> Pair(contents, canDisplayTotp) }
+        .flatMapLatest { (contents, canDisplayTotp) ->
+            if (canDisplayTotp) {
+                val decrypted = encryptionContextProvider.withEncryptionContextSuspendable {
+                    val sectionCustomFields =
+                        contents.sectionContentList.flatMapIndexed { sectionIndex, sectionContent ->
+                            sectionContent.customFieldList.mapToDecryptedTotp(
+                                sectionIndex = sectionIndex.some(),
+                                decrypt = ::decrypt
+                            )
+                        }.toMap()
 
-                val customFields = contents.customFields.mapToDecryptedTotp(
-                    sectionIndex = None,
-                    decrypt = ::decrypt
-                ).toMap()
+                    val customFields = contents.customFields.mapToDecryptedTotp(
+                        sectionIndex = None,
+                        decrypt = ::decrypt
+                    ).toMap()
 
-                sectionCustomFields + customFields
+                    sectionCustomFields + customFields
+                }
+                val flows = decrypted.map { uri ->
+                    totpManager.observeCode(uri.value)
+                        .map {
+                            uri.key to TotpState.Visible(
+                                code = it.code,
+                                remainingSeconds = it.remainingSeconds,
+                                totalSeconds = it.totalSeconds
+                            )
+                        }
+                }
+                combine(flows) { it.toMap() }
+            } else {
+                flowOf(emptyMap())
             }
-            val flows = decrypted.map { uri ->
-                totpManager.observeCode(uri.value)
-                    .map {
-                        uri.key to Totp(
-                            code = it.code,
-                            remainingSeconds = it.remainingSeconds,
-                            totalSeconds = it.totalSeconds
-                        )
-                    }
-            }
-            combine(flows) { it.toMap() }
-        }.onStart { emit(emptyMap()) }
+        }
+        .onStart { emit(emptyMap()) }
 
     @Suppress("LongMethod")
     override fun updateHiddenFieldsContents(

@@ -338,4 +338,6 @@
     <string name="login_item_monitor_widget_missing_two_fa_title">Set up 2FA for more security</string>
     <string name="login_item_monitor_widget_missing_two_fa_subtitle">This service offers 2FA. Enable it for added account security.</string>
     <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
+    <string name="mfa_limit_reached">2FA limit reached</string>
+
 </resources>

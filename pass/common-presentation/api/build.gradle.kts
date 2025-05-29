@@ -41,4 +41,5 @@ dependencies {
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.totp.api)
+    implementation(projects.pass.data.api)
 }

@@ -41,6 +41,10 @@ fun ItemHistoryRestoreScreen(
         state = state,
         onEvent = { uiEvent ->
             when (uiEvent) {
+                ItemHistoryRestoreUiEvent.OnUpgrade -> {
+                    onNavigated(ItemHistoryNavDestination.Upgrade)
+                }
+
                 ItemHistoryRestoreUiEvent.OnBackClick -> {
                     ItemHistoryNavDestination.CloseScreen
                         .also(onNavigated)

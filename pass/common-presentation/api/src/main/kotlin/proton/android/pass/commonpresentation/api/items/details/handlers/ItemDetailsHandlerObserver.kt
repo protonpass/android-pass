@@ -229,6 +229,19 @@ abstract class ItemDetailsHandlerObserver<ITEM_CONTENTS : ItemContents>(
         customField
     }
 
+    protected fun updateHiddenCustomFieldContents(
+        customFields: List<CustomFieldContent>,
+        revealedHiddenFields: Set<ItemDetailsFieldType.Hidden>
+    ): List<CustomFieldContent> {
+        val mutableCustomFields = customFields.toMutableList()
+        customFields.forEachIndexed { index, field ->
+            val shouldBeRevealed = revealedHiddenFields
+                .any { it is ItemDetailsFieldType.Hidden.CustomField && it.index == index } == true
+            mutableCustomFields[index] = updateHiddenState(field, shouldBeRevealed, encryptionContextProvider)
+        }
+        return mutableCustomFields
+    }
+
     protected fun observeCustomFieldTotps(item: Item): Flow<Map<Pair<Option<Int>, Int>, Totp>> =
         observeItemContents(item).flatMapLatest { contents ->
             val decrypted = encryptionContextProvider.withEncryptionContextSuspendable {

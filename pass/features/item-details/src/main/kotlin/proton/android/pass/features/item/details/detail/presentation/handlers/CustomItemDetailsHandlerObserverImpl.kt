@@ -112,7 +112,6 @@ class CustomItemDetailsHandlerObserverImpl @Inject constructor(
         revealedHiddenFields: Map<ItemSection, Set<ItemDetailsFieldType.Hidden>>
     ): ItemContents {
         val mutableSections = itemContents.sectionContentList.toMutableList()
-        val mutableCustomFields = itemContents.customFields.toMutableList()
 
         mutableSections.forEachIndexed { sectionIndex, sectionContent ->
             val updatedCustomFields = sectionContent.customFieldList.mapIndexed { fieldIndex, field ->
@@ -123,15 +122,12 @@ class CustomItemDetailsHandlerObserverImpl @Inject constructor(
             mutableSections[sectionIndex] = sectionContent.copy(customFieldList = updatedCustomFields)
         }
 
-        mutableCustomFields.forEachIndexed { index, field ->
-            val shouldBeRevealed = revealedHiddenFields[ItemSection.CustomField]
-                ?.any { it is ItemDetailsFieldType.Hidden.CustomField && it.index == index } == true
-            mutableCustomFields[index] = updateHiddenState(field, shouldBeRevealed, encryptionContextProvider)
-        }
-
         return itemContents.copy(
             sectionContentList = mutableSections,
-            customFields = mutableCustomFields
+            customFields = updateHiddenCustomFieldContents(
+                customFields = itemContents.customFields,
+                revealedHiddenFields = revealedHiddenFields[ItemSection.CustomField].orEmpty()
+            )
         )
     }
 

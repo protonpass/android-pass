@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.combine
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.commonuimodels.api.items.DetailEvent
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanDisplayTotp
@@ -40,13 +41,18 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
     override val encryptionContextProvider: EncryptionContextProvider,
     override val totpManager: TotpManager,
     override val canDisplayTotp: CanDisplayTotp
-) : ItemDetailsHandlerObserver<ItemContents.Note>(encryptionContextProvider, totpManager, canDisplayTotp) {
+) : ItemDetailsHandlerObserver<ItemContents.Note, ItemDetailsFieldType.NoteItemAction>(
+    encryptionContextProvider = encryptionContextProvider,
+    totpManager = totpManager,
+    canDisplayTotp = canDisplayTotp
+) {
 
     override fun observe(
         share: Share,
         item: Item,
         attachmentsState: AttachmentsState,
-        savedStateEntries: Map<String, Any?>
+        savedStateEntries: Map<String, Any?>,
+        detailEvent: DetailEvent
     ): Flow<ItemDetailState> = combine(
         observeItemContents(item),
         observeCustomFieldTotps(item)
@@ -65,17 +71,18 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
             itemDiffs = ItemDiffs.Note(),
             itemShareCount = item.shareCount,
             attachmentsState = attachmentsState,
-            customFieldTotps = customFieldTotps
+            customFieldTotps = customFieldTotps,
+            detailEvent = detailEvent
         )
     }
 
     override fun updateHiddenFieldsContents(
         itemContents: ItemContents.Note,
-        revealedHiddenFields: Map<ItemSection, Set<ItemDetailsFieldType.Hidden>>
+        revealedHiddenCopyableFields: Map<ItemSection, Set<ItemDetailsFieldType.HiddenCopyable>>
     ): ItemContents = itemContents.copy(
         customFields = updateHiddenCustomFieldContents(
             customFields = itemContents.customFields,
-            revealedHiddenFields = revealedHiddenFields[ItemSection.CustomField].orEmpty()
+            revealedHiddenFields = revealedHiddenCopyableFields[ItemSection.CustomField].orEmpty()
         )
     )
 
@@ -105,4 +112,9 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
             )
         )
     }
+
+    override suspend fun performAction(
+        fieldType: ItemDetailsFieldType.NoteItemAction,
+        callback: suspend (DetailEvent) -> Unit
+    ) = Unit
 }

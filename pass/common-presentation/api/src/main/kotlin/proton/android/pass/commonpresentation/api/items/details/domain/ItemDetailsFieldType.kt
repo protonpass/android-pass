@@ -19,98 +19,112 @@
 package proton.android.pass.commonpresentation.api.items.details.domain
 
 import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 sealed interface ItemDetailsFieldType {
 
-    sealed interface Copyable : ItemDetailsFieldType {
+    sealed interface PlainCopyable : ItemDetailsFieldType {
 
         val text: String
 
-        data class Alias(override val text: String) : Copyable
+        data class Alias(override val text: String) : PlainCopyable
 
-        data class BirthDate(override val text: String) : Copyable
+        data class BirthDate(override val text: String) : PlainCopyable
 
-        data class CardNumber(override val text: String) : Copyable
+        data class CardNumber(override val text: String) : PlainCopyable
 
-        data class City(override val text: String) : Copyable
+        data class City(override val text: String) : PlainCopyable
 
-        data class Company(override val text: String) : Copyable
+        data class Company(override val text: String) : PlainCopyable
 
-        data class CountryOrRegion(override val text: String) : Copyable
+        data class CountryOrRegion(override val text: String) : PlainCopyable
 
-        data class County(override val text: String) : Copyable
+        data class County(override val text: String) : PlainCopyable
 
-        data class CustomField(override val text: String) : Copyable
+        data class CustomField(override val text: String) : PlainCopyable
 
-        data class Email(override val text: String) : Copyable
+        data class Email(override val text: String) : PlainCopyable
 
-        data class Facebook(override val text: String) : Copyable
+        data class Facebook(override val text: String) : PlainCopyable
 
-        data class FirstName(override val text: String) : Copyable
+        data class FirstName(override val text: String) : PlainCopyable
 
-        data class Floor(override val text: String) : Copyable
+        data class Floor(override val text: String) : PlainCopyable
 
-        data class FullName(override val text: String) : Copyable
+        data class FullName(override val text: String) : PlainCopyable
 
-        data class Gender(override val text: String) : Copyable
+        data class Gender(override val text: String) : PlainCopyable
 
-        data class Instagram(override val text: String) : Copyable
+        data class Instagram(override val text: String) : PlainCopyable
 
-        data class LastName(override val text: String) : Copyable
+        data class LastName(override val text: String) : PlainCopyable
 
-        data class LicenseNumber(override val text: String) : Copyable
+        data class LicenseNumber(override val text: String) : PlainCopyable
 
-        data class LinkedIn(override val text: String) : Copyable
+        data class LinkedIn(override val text: String) : PlainCopyable
 
-        data class MiddleName(override val text: String) : Copyable
+        data class MiddleName(override val text: String) : PlainCopyable
 
-        data class Occupation(override val text: String) : Copyable
+        data class Occupation(override val text: String) : PlainCopyable
 
-        data class Organization(override val text: String) : Copyable
+        data class Organization(override val text: String) : PlainCopyable
 
-        data class PassportNumber(override val text: String) : Copyable
+        data class PassportNumber(override val text: String) : PlainCopyable
 
-        data class PhoneNumber(override val text: String) : Copyable
+        data class PhoneNumber(override val text: String) : PlainCopyable
 
-        data class Reddit(override val text: String) : Copyable
+        data class Reddit(override val text: String) : PlainCopyable
 
-        data class StateOrProvince(override val text: String) : Copyable
+        data class StateOrProvince(override val text: String) : PlainCopyable
 
-        data class StreetAddress(override val text: String) : Copyable
+        data class StreetAddress(override val text: String) : PlainCopyable
 
-        data class TotpCode(override val text: String) : Copyable
+        data class TotpCode(override val text: String) : PlainCopyable
 
-        data class Username(override val text: String) : Copyable
+        data class Username(override val text: String) : PlainCopyable
 
-        data class Website(override val text: String) : Copyable
+        data class Website(override val text: String) : PlainCopyable
 
-        data class XHandle(override val text: String) : Copyable
+        data class XHandle(override val text: String) : PlainCopyable
 
-        data class Yahoo(override val text: String) : Copyable
+        data class Yahoo(override val text: String) : PlainCopyable
 
-        data class ZipOrPostalCode(override val text: String) : Copyable
+        data class ZipOrPostalCode(override val text: String) : PlainCopyable
 
-        data class PublicKey(override val text: String) : Copyable
+        data class PublicKey(override val text: String) : PlainCopyable
 
-        data class SSID(override val text: String) : Copyable
+        data class SSID(override val text: String) : PlainCopyable
     }
 
-    sealed interface Hidden : ItemDetailsFieldType {
+    sealed interface HiddenCopyable : ItemDetailsFieldType {
 
         val hiddenState: HiddenState
 
-        data class CustomField(override val hiddenState: HiddenState, val index: Int) : Hidden
+        data class CustomField(override val hiddenState: HiddenState, val index: Int) : HiddenCopyable
 
-        data class Cvv(override val hiddenState: HiddenState) : Hidden
+        data class Cvv(override val hiddenState: HiddenState) : HiddenCopyable
 
-        data class Password(override val hiddenState: HiddenState) : Hidden
+        data class Password(override val hiddenState: HiddenState) : HiddenCopyable
 
-        data class Pin(override val hiddenState: HiddenState) : Hidden
+        data class Pin(override val hiddenState: HiddenState) : HiddenCopyable
 
-        data class PrivateKey(override val hiddenState: HiddenState) : Hidden
+        data class PrivateKey(override val hiddenState: HiddenState) : HiddenCopyable
 
-        data class SocialSecurityNumber(override val hiddenState: HiddenState) : Hidden
+        data class SocialSecurityNumber(override val hiddenState: HiddenState) : HiddenCopyable
 
     }
+
+    sealed interface LoginItemAction : ItemDetailsFieldType
+    sealed interface NoteItemAction : ItemDetailsFieldType
+    sealed interface CreditCardItemAction : ItemDetailsFieldType
+    sealed interface AliasItemAction : ItemDetailsFieldType {
+        data object ContactBanner : AliasItemAction
+        data class ContactSection(val shareId: ShareId, val itemId: ItemId) : AliasItemAction
+    }
+    sealed interface IdentityItemAction : ItemDetailsFieldType
+    sealed interface CustomItemAction : ItemDetailsFieldType
+    sealed interface WifiNetworkItemAction : ItemDetailsFieldType
+    sealed interface SSHKeyItemAction : ItemDetailsFieldType
 
 }

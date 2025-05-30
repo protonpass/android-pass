@@ -36,7 +36,6 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.counter.CounterText
 import proton.android.pass.composecomponents.impl.icon.Icon
-import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.row.CounterRow
 import proton.android.pass.composecomponents.impl.text.Text
 import me.proton.core.presentation.R as CoreR
@@ -46,7 +45,8 @@ internal fun PassAliasContactsSection(
     modifier: Modifier = Modifier,
     counter: Int,
     displayContactsBanner: Boolean,
-    onEvent: (PassItemDetailsUiEvent) -> Unit
+    onClick: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     Column(
         modifier = modifier,
@@ -57,7 +57,7 @@ internal fun PassAliasContactsSection(
             title = stringResource(R.string.contacts),
             titleColor = ProtonTheme.colors.textNorm,
             isClickable = true,
-            onClick = TODO(),
+            onClick = onClick,
             accentBackgroundColor = PassTheme.colors.backgroundStrong,
             chevronTintColor = PassTheme.colors.textWeak,
             leadingContent = {
@@ -77,10 +77,7 @@ internal fun PassAliasContactsSection(
             } else null
         )
         AnimatedVisibility(displayContactsBanner) {
-            AliasContactsBanner {
-                TODO()
-                // onEvent(OnDismissContactsBanner)
-            }
+            AliasContactsBanner { onDismiss() }
         }
         Text.CaptionWeak(text = stringResource(R.string.contacts_section_description))
     }
@@ -93,7 +90,8 @@ internal fun ContactsSectionPreview(@PreviewParameter(ThemePreviewProvider::clas
             PassAliasContactsSection(
                 counter = 3,
                 displayContactsBanner = false,
-                onEvent = {}
+                onClick = {},
+                onDismiss = {}
             )
         }
     }

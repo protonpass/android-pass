@@ -22,6 +22,7 @@ import android.content.Context
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonui.api.ClassHolder
+import proton.android.pass.commonuimodels.api.items.DetailEvent
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -44,7 +45,7 @@ interface ItemDetailsHandler {
 
     @Suppress("LongParameterList")
     fun updateItemDetailsContent(
-        revealedHiddenFields: Map<ItemSection, Set<ItemDetailsFieldType.Hidden>>,
+        revealedHiddenFields: Map<ItemSection, Set<ItemDetailsFieldType.HiddenCopyable>>,
         itemCategory: ItemCategory,
         itemContents: ItemContents
     ): ItemContents
@@ -57,6 +58,7 @@ interface ItemDetailsHandler {
         otherAttachments: List<Attachment>
     ): ItemDiffs
 
+    fun consumeEvent(event: DetailEvent)
 }
 
 enum class ItemDetailsSource {

@@ -72,7 +72,7 @@ internal fun PassItemDetailCustomFieldsSection(
                         onClick = {
                             onEvent(
                                 PassItemDetailsUiEvent.OnFieldClick(
-                                    field = ItemDetailsFieldType.Copyable.CustomField(
+                                    field = ItemDetailsFieldType.PlainCopyable.CustomField(
                                         text = customFieldContent.value
                                     )
                                 )
@@ -91,7 +91,7 @@ internal fun PassItemDetailCustomFieldsSection(
                         onClick = {
                             onEvent(
                                 PassItemDetailsUiEvent.OnFieldClick(
-                                    field = ItemDetailsFieldType.Hidden.CustomField(
+                                    field = ItemDetailsFieldType.HiddenCopyable.CustomField(
                                         hiddenState = customFieldContent.value,
                                         index = index
                                     )
@@ -103,7 +103,7 @@ internal fun PassItemDetailCustomFieldsSection(
                                 PassItemDetailsUiEvent.OnHiddenFieldToggle(
                                     isVisible = isVisible,
                                     hiddenState = customFieldContent.value,
-                                    fieldType = ItemDetailsFieldType.Hidden.CustomField(
+                                    fieldType = ItemDetailsFieldType.HiddenCopyable.CustomField(
                                         hiddenState = customFieldContent.value,
                                         index = index
                                     ),

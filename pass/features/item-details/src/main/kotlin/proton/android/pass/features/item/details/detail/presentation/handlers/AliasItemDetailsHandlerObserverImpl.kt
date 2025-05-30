@@ -24,6 +24,8 @@ import kotlinx.coroutines.flow.onStart
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.commonuimodels.api.items.AliasDetailEvent
+import proton.android.pass.commonuimodels.api.items.DetailEvent
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanDisplayTotp
@@ -38,6 +40,7 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryBannerPreference
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryFeature.AliasManagementContacts
 import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
@@ -49,17 +52,18 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     private val observeAliasDetails: ObserveAliasDetails,
     private val observeAliasContacts: ObserveAliasContacts,
     private val userPreferencesRepository: UserPreferencesRepository
-) : ItemDetailsHandlerObserver<ItemContents.Alias>(
-    encryptionContextProvider,
-    totpManager,
-    canDisplayTotp
+) : ItemDetailsHandlerObserver<ItemContents.Alias, ItemDetailsFieldType.AliasItemAction>(
+    encryptionContextProvider = encryptionContextProvider,
+    totpManager = totpManager,
+    canDisplayTotp = canDisplayTotp
 ) {
 
     override fun observe(
         share: Share,
         item: Item,
         attachmentsState: AttachmentsState,
-        savedStateEntries: Map<String, Any?>
+        savedStateEntries: Map<String, Any?>,
+        detailEvent: DetailEvent
     ): Flow<ItemDetailState> = combine(
         observeItemContents(item),
         observeAliasDetails(item.shareId, item.id).onStart { emit(AliasDetails.EMPTY) },
@@ -84,17 +88,18 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
             aliasContacts = aliasContacts,
             attachmentsState = attachmentsState,
             customFieldTotps = customFieldTotps,
-            displayContactsBanner = displayContactsBanner.value
+            displayContactsBanner = displayContactsBanner.value,
+            detailEvent = detailEvent
         )
     }
 
     override fun updateHiddenFieldsContents(
         itemContents: ItemContents.Alias,
-        revealedHiddenFields: Map<ItemSection, Set<ItemDetailsFieldType.Hidden>>
+        revealedHiddenCopyableFields: Map<ItemSection, Set<ItemDetailsFieldType.HiddenCopyable>>
     ): ItemContents = itemContents.copy(
         customFields = updateHiddenCustomFieldContents(
             customFields = itemContents.customFields,
-            revealedHiddenFields = revealedHiddenFields[ItemSection.CustomField].orEmpty()
+            revealedHiddenFields = revealedHiddenCopyableFields[ItemSection.CustomField].orEmpty()
         )
     )
 
@@ -126,6 +131,26 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
                 baseItemCustomFieldsContent = baseItemContents.customFields,
                 otherItemCustomFieldsContent = otherItemContents.customFields
             )
+        )
+    }
+
+    override suspend fun performAction(
+        fieldType: ItemDetailsFieldType.AliasItemAction,
+        callback: suspend (DetailEvent) -> Unit
+    ) {
+        when (fieldType) {
+            ItemDetailsFieldType.AliasItemAction.ContactBanner -> dismissContactsBanner()
+            is ItemDetailsFieldType.AliasItemAction.ContactSection -> {
+                dismissContactsBanner()
+                callback(AliasDetailEvent.ContactSection(fieldType.shareId, fieldType.itemId))
+            }
+        }
+    }
+
+    fun dismissContactsBanner() {
+        userPreferencesRepository.setDisplayFeatureDiscoverBanner(
+            AliasManagementContacts,
+            FeatureDiscoveryBannerPreference.NotDisplay
         )
     }
 

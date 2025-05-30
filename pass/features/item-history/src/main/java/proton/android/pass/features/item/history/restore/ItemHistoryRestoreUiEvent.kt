@@ -51,7 +51,7 @@ internal sealed interface ItemHistoryRestoreUiEvent {
         val selection: ItemHistoryRestoreSelection,
         val isVisible: Boolean,
         val hiddenState: HiddenState,
-        val fieldType: ItemDetailsFieldType.Hidden,
+        val fieldType: ItemDetailsFieldType.HiddenCopyable,
         val fieldSection: ItemSection
     ) : ItemHistoryRestoreUiEvent
 

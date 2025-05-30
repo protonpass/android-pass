@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.combine
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.commonuimodels.api.items.DetailEvent
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanDisplayTotp
@@ -40,13 +41,18 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
     override val encryptionContextProvider: EncryptionContextProvider,
     override val totpManager: TotpManager,
     override val canDisplayTotp: CanDisplayTotp
-) : ItemDetailsHandlerObserver<ItemContents.Identity>(encryptionContextProvider, totpManager, canDisplayTotp) {
+) : ItemDetailsHandlerObserver<ItemContents.Identity, ItemDetailsFieldType.IdentityItemAction>(
+    encryptionContextProvider = encryptionContextProvider,
+    totpManager = totpManager,
+    canDisplayTotp = canDisplayTotp
+) {
 
     override fun observe(
         share: Share,
         item: Item,
         attachmentsState: AttachmentsState,
-        savedStateEntries: Map<String, Any?>
+        savedStateEntries: Map<String, Any?>,
+        detailEvent: DetailEvent
     ): Flow<ItemDetailState> = combine(
         observeItemContents(item),
         observeCustomFieldTotps(item)
@@ -65,13 +71,15 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
             itemShare = share,
             itemShareCount = item.shareCount,
             attachmentsState = attachmentsState,
-            customFieldTotps = customFieldTotps
+            customFieldTotps = customFieldTotps,
+            detailEvent = detailEvent
         )
     }
 
+    @Suppress("LongMethod")
     override fun updateHiddenFieldsContents(
         itemContents: ItemContents.Identity,
-        revealedHiddenFields: Map<ItemSection, Set<ItemDetailsFieldType.Hidden>>
+        revealedHiddenFields: Map<ItemSection, Set<ItemDetailsFieldType.HiddenCopyable>>
     ): ItemContents {
         val mutableSections = itemContents.extraSectionContentList.toMutableList()
         mutableSections.forEachIndexed { sectionIndex, sectionContent ->
@@ -79,7 +87,10 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
                 sectionContent.customFieldList.mapIndexed { fieldIndex, field ->
                     val shouldBeRevealed =
                         revealedHiddenFields[ItemSection.ExtraSection(sectionIndex)]
-                            ?.any { it is ItemDetailsFieldType.Hidden.CustomField && it.index == fieldIndex } == true
+                            ?.any {
+                                it is ItemDetailsFieldType.HiddenCopyable.CustomField &&
+                                    it.index == fieldIndex
+                            } == true
                     updateHiddenState(field, shouldBeRevealed, encryptionContextProvider)
                 }
             mutableSections[sectionIndex] =
@@ -89,34 +100,46 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
             personalDetailsContent = itemContents.personalDetailsContent.copy(
                 customFields = itemContents.personalDetailsContent.customFields.mapIndexed { fieldIndex, field ->
                     val shouldBeRevealed = revealedHiddenFields[ItemSection.Identity.Personal]
-                        ?.any { it is ItemDetailsFieldType.Hidden.CustomField && it.index == fieldIndex } == true
+                        ?.any {
+                            it is ItemDetailsFieldType.HiddenCopyable.CustomField &&
+                                it.index == fieldIndex
+                        } == true
                     updateHiddenState(field, shouldBeRevealed, encryptionContextProvider)
                 }
             ),
             workDetailsContent = itemContents.workDetailsContent.copy(
                 customFields = itemContents.workDetailsContent.customFields.mapIndexed { fieldIndex, field ->
                     val shouldBeRevealed = revealedHiddenFields[ItemSection.Identity.Work]
-                        ?.any { it is ItemDetailsFieldType.Hidden.CustomField && it.index == fieldIndex } == true
+                        ?.any {
+                            it is ItemDetailsFieldType.HiddenCopyable.CustomField &&
+                                it.index == fieldIndex
+                        } == true
                     updateHiddenState(field, shouldBeRevealed, encryptionContextProvider)
                 }
             ),
             contactDetailsContent = itemContents.contactDetailsContent.copy(
                 customFields = itemContents.contactDetailsContent.customFields.mapIndexed { fieldIndex, field ->
                     val shouldBeRevealed = revealedHiddenFields[ItemSection.Identity.Contact]
-                        ?.any { it is ItemDetailsFieldType.Hidden.CustomField && it.index == fieldIndex } == true
+                        ?.any {
+                            it is ItemDetailsFieldType.HiddenCopyable.CustomField &&
+                                it.index == fieldIndex
+                        } == true
                     updateHiddenState(field, shouldBeRevealed, encryptionContextProvider)
                 },
                 socialSecurityNumber = updateHiddenStateValue(
                     hiddenState = itemContents.contactDetailsContent.socialSecurityNumber,
                     shouldBeRevealed = revealedHiddenFields[ItemSection.Identity.SocialSecurityNumber]
-                        ?.any { it is ItemDetailsFieldType.Hidden.SocialSecurityNumber } == true,
+                        ?.any { it is ItemDetailsFieldType.HiddenCopyable.SocialSecurityNumber } == true,
                     encryptionContextProvider = encryptionContextProvider
                 )
             ),
             addressDetailsContent = itemContents.addressDetailsContent.copy(
                 customFields = itemContents.addressDetailsContent.customFields.mapIndexed { fieldIndex, field ->
                     val shouldBeRevealed = revealedHiddenFields[ItemSection.Identity.Address]
-                        ?.any { it is ItemDetailsFieldType.Hidden.CustomField && it.index == fieldIndex } == true
+                        ?.any {
+                            it is ItemDetailsFieldType.HiddenCopyable.CustomField &&
+                                it.index == fieldIndex
+                        } == true
                     updateHiddenState(field, shouldBeRevealed, encryptionContextProvider)
                 }
             ),
@@ -305,5 +328,10 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
             )
         )
     }
+
+    override suspend fun performAction(
+        fieldType: ItemDetailsFieldType.IdentityItemAction,
+        callback: suspend (DetailEvent) -> Unit
+    ) = Unit
 
 }

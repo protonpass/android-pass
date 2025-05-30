@@ -65,7 +65,7 @@ internal fun PassCreditCardItemDetailMainSection(
                 onClick = {
                     onEvent(
                         PassItemDetailsUiEvent.OnFieldClick(
-                            field = ItemDetailsFieldType.Copyable.Username(cardholder)
+                            field = ItemDetailsFieldType.PlainCopyable.Username(cardholder)
                         )
                     )
                 }
@@ -85,7 +85,7 @@ internal fun PassCreditCardItemDetailMainSection(
                 onClick = {
                     onEvent(
                         PassItemDetailsUiEvent.OnFieldClick(
-                            field = ItemDetailsFieldType.Copyable.CardNumber(cardNumber)
+                            field = ItemDetailsFieldType.PlainCopyable.CardNumber(cardNumber)
                         )
                     )
                 }
@@ -117,7 +117,7 @@ internal fun PassCreditCardItemDetailMainSection(
                 onClick = {
                     onEvent(
                         PassItemDetailsUiEvent.OnFieldClick(
-                            field = ItemDetailsFieldType.Hidden.Cvv(cvv)
+                            field = ItemDetailsFieldType.HiddenCopyable.Cvv(cvv)
                         )
                     )
                 },
@@ -126,7 +126,7 @@ internal fun PassCreditCardItemDetailMainSection(
                         PassItemDetailsUiEvent.OnHiddenFieldToggle(
                             isVisible = isVisible,
                             hiddenState = cvv,
-                            fieldType = ItemDetailsFieldType.Hidden.Cvv(cvv),
+                            fieldType = ItemDetailsFieldType.HiddenCopyable.Cvv(cvv),
                             fieldSection = ItemSection.CreditCard
                         )
                     )
@@ -149,7 +149,7 @@ internal fun PassCreditCardItemDetailMainSection(
                         PassItemDetailsUiEvent.OnHiddenFieldToggle(
                             isVisible = isVisible,
                             hiddenState = pin,
-                            fieldType = ItemDetailsFieldType.Hidden.Pin(pin),
+                            fieldType = ItemDetailsFieldType.HiddenCopyable.Pin(pin),
                             fieldSection = ItemSection.CreditCard
                         )
                     )

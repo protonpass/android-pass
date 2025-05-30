@@ -17,10 +17,10 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="open_attachments_error">Could not open attachment</string>
-  <string name="download_attachments_error">Could not download attachment</string>
-  <string name="share_attachments_error">Could not share attachment</string>
-  <string name="upload_attachments_error">Could not upload attachment</string>
+  <string name="open_attachments_error">Ni bilo mogoče odpreti priponke</string>
+  <string name="download_attachments_error">Ni bilo mogoče naložiti priponke</string>
+  <string name="share_attachments_error">Ni bilo mogoče deliti priponke</string>
+  <string name="upload_attachments_error">Ni bilo mogoče naložiti priponke</string>
   <string name="attachment_size_exceeded_error">The selected file exceeds the size limit. Please choose a file smaller than 100MB.</string>
   <string name="open_with">Odpri z:</string>
   <string name="share_with">Deli z:</string>

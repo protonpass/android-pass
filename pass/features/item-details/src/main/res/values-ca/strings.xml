@@ -25,11 +25,11 @@
   <string name="item_details_forbidden_actions_edit_upgrade">Només podeu editar elements a les vostres caixes fortes més antigues. Per editar aquest element, milloreu el vostre pla actual.</string>
   <string name="item_details_forbidden_actions_share_title">No es pot compartir.</string>
   <string name="item_details_forbidden_actions_share_limit">Heu assolit el límit de compartició de caixes fortes. Per a compartir més caixes fortes, milloreu el vostre pla actual.</string>
-  <string name="item_details_forbidden_actions_sharing_permission">No té els permisos necessaris per realitzar l\'acció sol·licitada.</string>
+  <string name="item_details_forbidden_actions_sharing_permission">No teniu prou permisos per realitzar aquesta acció.</string>
   <string name="item_details_forbidden_actions_share_trash">No podeu compartir aquest element perquè és a la paperera. Traieu-lo de la paperera abans d\'editar-lo.</string>
   <!-- Item details leave item -->
   <string name="item_details_leave_dialog_title">Voleu deixar aquest element?</string>
-  <string name="item_details_leave_dialog_message">Perdéreu l\'accés a aquest element i als seus detalls. Voleu continuar?</string>
+  <string name="item_details_leave_dialog_message">Perdreu l\'accés a aquest element i als seus detalls. Voleu continuar?</string>
   <string name="item_details_leave_item_message_error">S\'ha produït un error en deixar l\'element.</string>
   <string name="item_details_leave_item_message_success">S\'ha deixat l\'element.</string>
   <string name="item_details_snackbar_message_alias_copied">S\'ha copiat l\'àlies</string>
@@ -37,7 +37,7 @@
   <string name="item_details_snackbar_message_card_number_copied">S\'ha copiat el número de la targeta.</string>
   <string name="item_details_snackbar_message_city_copied">S\'ha copiat la ciutat.</string>
   <string name="item_details_snackbar_message_company_copied">S\'ha copiat l\'empresa.</string>
-  <string name="item_details_snackbar_message_country_or_region_copied">S\'ha copiat el país o la regió.</string>
+  <string name="item_details_snackbar_message_country_or_region_copied">S\'ha copiat el país o regió.</string>
   <string name="item_details_snackbar_message_county_copied">S\'ha copiat la província.</string>
   <string name="item_details_snackbar_message_custom_field_copied">S\'ha copiat el camp personalitzat</string>
   <string name="item_details_snackbar_message_cvv_copied">S\'ha copiat el codi de seguretat.</string>
@@ -59,7 +59,7 @@
   <string name="item_details_snackbar_message_phone_number_copied">S\'ha copiat el número de telèfon.</string>
   <string name="item_details_snackbar_message_pin_copied">S\'ha copiat el codi PIN</string>
   <string name="item_details_snackbar_message_reddit_copied">S\'ha copiat el compte Reddit.</string>
-  <string name="item_details_snackbar_message_social_security_number_copied">S\'ha copiat el número de la seguretat social.</string>
+  <string name="item_details_snackbar_message_social_security_number_copied">S\'ha copiat el número de la Seguretat Social.</string>
   <string name="item_details_snackbar_message_state_or_province_copied">S\'ha copiat l\'estat o la província.</string>
   <string name="item_details_snackbar_message_street_address_copied">S\'ha copiat l\'adreça postal.</string>
   <string name="item_details_snackbar_message_totp_copied">TOTP copiat</string>
@@ -70,7 +70,7 @@
   <string name="item_details_snackbar_message_zip_or_postal_code_copied">S\'ha copiat el codi postal.</string>
   <string name="item_details_snackbar_message_public_key_copied">S\'ha copiat la clau pública.</string>
   <string name="item_details_snackbar_message_private_key_copied">S\'ha copiat la clau privada.</string>
-  <string name="item_details_snackbar_message_ssid_copied">S\'ha copiat el SSID.</string>
+  <string name="item_details_snackbar_message_ssid_copied">S\'ha copiat l\'SSID.</string>
   <string name="open_with">Obre amb:</string>
   <string name="open_attachments_error">No s\'ha pogut obrir el adjunt.</string>
 </resources>

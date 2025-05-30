@@ -77,7 +77,7 @@ internal fun PassLoginItemDetailMainSection(
                 onClick = {
                     onEvent(
                         PassItemDetailsUiEvent.OnFieldClick(
-                            field = ItemDetailsFieldType.Copyable.Email(email)
+                            field = ItemDetailsFieldType.PlainCopyable.Email(email)
                         )
                     )
                 }
@@ -96,7 +96,7 @@ internal fun PassLoginItemDetailMainSection(
                 onClick = {
                     onEvent(
                         PassItemDetailsUiEvent.OnFieldClick(
-                            field = ItemDetailsFieldType.Copyable.Username(username)
+                            field = ItemDetailsFieldType.PlainCopyable.Username(username)
                         )
                     )
                 }
@@ -119,7 +119,7 @@ internal fun PassLoginItemDetailMainSection(
                 onClick = {
                     onEvent(
                         PassItemDetailsUiEvent.OnFieldClick(
-                            field = ItemDetailsFieldType.Hidden.Password(password)
+                            field = ItemDetailsFieldType.HiddenCopyable.Password(password)
                         )
                     )
                 },
@@ -128,7 +128,7 @@ internal fun PassLoginItemDetailMainSection(
                         PassItemDetailsUiEvent.OnHiddenFieldToggle(
                             isVisible = isVisible,
                             hiddenState = password,
-                            fieldType = ItemDetailsFieldType.Hidden.Password(password),
+                            fieldType = ItemDetailsFieldType.HiddenCopyable.Password(password),
                             fieldSection = ItemSection.Login
                         )
                     )

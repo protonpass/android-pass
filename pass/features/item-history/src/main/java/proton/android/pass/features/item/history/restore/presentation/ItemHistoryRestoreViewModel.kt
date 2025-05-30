@@ -144,7 +144,7 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     }
 
     private val revealedRevisionHiddenFieldsFlow = MutableStateFlow(
-        emptyMap<ItemSection, Set<ItemDetailsFieldType.Hidden>>()
+        emptyMap<ItemSection, Set<ItemDetailsFieldType.HiddenCopyable>>()
     )
 
     private val revisionItemDetailsStateFlow = revisionItemFlow.flatMapLatest { item ->
@@ -176,7 +176,7 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     }
 
     private val revealedCurrentHiddenFieldsFlow = MutableStateFlow(
-        emptyMap<ItemSection, Set<ItemDetailsFieldType.Hidden>>()
+        emptyMap<ItemSection, Set<ItemDetailsFieldType.HiddenCopyable>>()
     )
 
     private val currentItemDetailsStateFlow = currentItemFlow.flatMapLatest { item ->
@@ -216,7 +216,7 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     )
 
     private fun createItemDetailsStateFlow(
-        revealedHiddenFieldsFlow: Flow<Map<ItemSection, Set<ItemDetailsFieldType.Hidden>>>,
+        revealedHiddenFieldsFlow: Flow<Map<ItemSection, Set<ItemDetailsFieldType.HiddenCopyable>>>,
         itemDetailStateFlow: Flow<ItemDetailState>,
         itemDiffsFlow: Flow<ItemDiffs>
     ) = combine(
@@ -247,7 +247,7 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     internal fun onToggleItemHiddenField(
         selection: ItemHistoryRestoreSelection,
         isVisible: Boolean,
-        hiddenFieldType: ItemDetailsFieldType.Hidden,
+        hiddenFieldType: ItemDetailsFieldType.HiddenCopyable,
         itemSection: ItemSection
     ) {
         when (state.value) {

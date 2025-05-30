@@ -31,6 +31,8 @@ import kotlinx.datetime.Instant
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.SpecialCharacters
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType.AliasItemAction.ContactBanner
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType.AliasItemAction.ContactSection
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.R
@@ -122,7 +124,10 @@ internal fun PassAliasItemDetailSections(
                 modifier = Modifier.padding(bottom = Spacing.small),
                 displayContactsBanner = displayContactsBanner,
                 counter = contactsCount,
-                onEvent = onEvent
+                onClick = {
+                    onEvent(PassItemDetailsUiEvent.OnFieldClick(ContactSection(shareId, itemId)))
+                },
+                onDismiss = { onEvent(PassItemDetailsUiEvent.OnFieldClick(ContactBanner)) }
             )
         }
 

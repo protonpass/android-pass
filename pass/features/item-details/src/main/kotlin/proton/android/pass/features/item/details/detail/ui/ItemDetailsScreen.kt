@@ -26,9 +26,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.commonui.api.toClassHolder
+import proton.android.pass.commonuimodels.api.items.AliasDetailEvent
+import proton.android.pass.commonuimodels.api.items.DetailEvent
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.ItemState
 import proton.android.pass.features.item.details.detail.presentation.ItemDetailsEvent
+import proton.android.pass.features.item.details.detail.presentation.ItemDetailsState
 import proton.android.pass.features.item.details.detail.presentation.ItemDetailsViewModel
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.EditItem
@@ -51,7 +54,7 @@ fun ItemDetailsScreen(
     val state by state.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
-    LaunchedEffect(key1 = state.event) {
+    LaunchedEffect(state.event) {
         when (state.event) {
             ItemDetailsEvent.Idle -> Unit
 
@@ -61,6 +64,21 @@ fun ItemDetailsScreen(
         }
 
         onConsumeEvent(state.event)
+    }
+
+    when (val success = state) {
+        is ItemDetailsState.Success -> LaunchedEffect(success.itemDetailState.detailEvent) {
+            when (val event = success.itemDetailState.detailEvent) {
+                is AliasDetailEvent.ContactSection ->
+                    ItemDetailsNavDestination.ContactSection(event.shareId, event.itemId)
+                        .also(onNavigated)
+
+                DetailEvent.Idle -> {}
+            }
+            onConsumeInternalEvent(success.itemDetailState.detailEvent)
+        }
+
+        else -> {}
     }
 
     ItemDetailsContent(
@@ -144,6 +162,7 @@ fun ItemDetailsScreen(
                                 context = context.toClassHolder(),
                                 attachment = event.attachment
                             )
+
                         is AttachmentContentEvent.OnAttachmentOptions -> onNavigated(
                             OpenAttachmentOptions(
                                 shareId = event.shareId,
@@ -151,6 +170,7 @@ fun ItemDetailsScreen(
                                 attachmentId = event.attachmentId
                             )
                         )
+
                         AttachmentContentEvent.OnAddAttachment,
                         AttachmentContentEvent.UpsellAttachments,
                         AttachmentContentEvent.OnDeleteAllAttachments,
@@ -164,7 +184,7 @@ fun ItemDetailsScreen(
                     WifiNetworkQRClick(uiEvent.rawSvg)
                         .also(onNavigated)
 
-                is ItemDetailsUiEvent.ViewReusedPasswords ->
+                is ItemDetailsUiEvent.OnViewReusedPasswords ->
                     ViewReusedPasswords(uiEvent.shareId, uiEvent.itemId)
                         .also(onNavigated)
             }

@@ -31,6 +31,7 @@ import proton.android.pass.features.account.accountGraph
 import proton.android.pass.features.alias.contacts.AliasContactsNavigation
 import proton.android.pass.features.alias.contacts.aliasContactGraph
 import proton.android.pass.features.alias.contacts.create.navigation.CreateAliasContactNavItem
+import proton.android.pass.features.alias.contacts.detail.navigation.DetailAliasContactNavItem
 import proton.android.pass.features.alias.contacts.onboarding.navigation.OnBoardingAliasContactNavItem
 import proton.android.pass.features.alias.contacts.options.navigation.OptionsAliasContactNavItem
 import proton.android.pass.features.attachments.AttachmentsNavigation
@@ -1682,6 +1683,14 @@ fun NavGraphBuilder.appGraph(
                 is ItemDetailsNavDestination.ViewReusedPasswords -> appNavigator.navigate(
                     destination = LoginItemDetailsReusedPassNavItem,
                     route = LoginItemDetailsReusedPassNavItem.createNavRoute(
+                        shareId = itemDetailsNavDestination.shareId,
+                        itemId = itemDetailsNavDestination.itemId
+                    )
+                )
+
+                is ItemDetailsNavDestination.ContactSection -> appNavigator.navigate(
+                    destination = DetailAliasContactNavItem,
+                    route = DetailAliasContactNavItem.createNavRoute(
                         shareId = itemDetailsNavDestination.shareId,
                         itemId = itemDetailsNavDestination.itemId
                     )

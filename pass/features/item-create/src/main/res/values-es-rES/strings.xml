@@ -285,7 +285,7 @@
   <string name="template_crypto_wallet_field_note">Nota</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">Nombre completo</string>
-  <string name="template_driver_license_field_license_number">Número de licencia</string>
+  <string name="template_driver_license_field_license_number">Número de permiso</string>
   <string name="template_driver_license_field_issuing_state_country">Estado o país emisor</string>
   <string name="template_driver_license_field_expiry_date">Fecha de expiración</string>
   <string name="template_driver_license_field_date_of_birth">Fecha de nacimiento</string>

@@ -118,8 +118,8 @@
     <item quantity="other">%1$s respostes</item>
   </plurals>
   <plurals name="alias_blocks_count">
-    <item quantity="one">%1$s blocat</item>
-    <item quantity="other">%1$s blocats</item>
+    <item quantity="one">%1$s bloc</item>
+    <item quantity="other">%1$s blocs</item>
   </plurals>
   <string name="open_with">Obre amb:</string>
   <string name="open_attachments_error">No s\'ha pogut obrir el adjunt.</string>

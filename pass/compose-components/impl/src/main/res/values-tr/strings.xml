@@ -197,8 +197,8 @@
   <string name="item_details_shared_section_more_info_header_title">Diğer bilgiler</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">Diğer öge bilgileri simgesi</string>
   <string name="item_details_shared_section_more_info_item_id">Öge kimliği</string>
-  <string name="item_details_shared_section_more_info_vault_id">Kasa Kimliği</string>
-  <string name="item_details_shared_section_more_info_share_id">Paylaşım Kimliği</string>
+  <string name="item_details_shared_section_more_info_vault_id">Kasa kimliği</string>
+  <string name="item_details_shared_section_more_info_share_id">Paylaşım kimliği</string>
   <string name="item_details_wifi_network_label_ssid_name">Ad (SSID)</string>
   <string name="item_details_wifi_network_label_password">Parola</string>
   <string name="item_details_wifi_network_label_security">Güvenlik</string>

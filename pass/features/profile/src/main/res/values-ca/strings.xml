@@ -54,7 +54,7 @@
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">El vostre dispositiu no suporta claus d\'accés.</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">No s\'ha pogut comprovar la compatibilitat per a les claus d\'accés</string>
   <plurals name="profile_after_days">
-    <item quantity="one">Després de %d dia</item>
+    <item quantity="one">Després d\'%d dia</item>
     <item quantity="other">Després de %d dies</item>
   </plurals>
   <plurals name="profile_after_minutes">

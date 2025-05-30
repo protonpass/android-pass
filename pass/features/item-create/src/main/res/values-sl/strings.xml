@@ -179,7 +179,7 @@
   <string name="create_identity_item_creation_error">Identitete ni bilo mogoče ustvariti</string>
   <string name="create_identity_item_creation_success">Identiteta je bila ustvarjena</string>
   <string name="update_identity_item_creation_success">Identiteta je posodobljena</string>
-  <string name="update_identity_item_creation_error">Could not update identity</string>
+  <string name="update_identity_item_creation_error">Ni bilo mogoče posodobiti identitete</string>
   <!--  Common create items  -->
   <string name="title_create">Ustvari</string>
   <string name="changes_saved">Spremembe shranjene.</string>
@@ -225,7 +225,7 @@
   <string name="template_item_ssh_key">Ključ SSH</string>
   <string name="template_item_wifi_network">WiFi Network</string>
   <string name="template_item_bank_account">Bank Account</string>
-  <string name="template_item_crypto_wallet">Crypto Wallet</string>
+  <string name="template_item_crypto_wallet">Kripto denarnica</string>
   <string name="template_item_driver_license">Vozniško dovoljenje</string>
   <string name="template_item_medical_record">Zdravstveni karton</string>
   <string name="template_item_membership">Članstvo</string>
@@ -341,10 +341,10 @@
   <string name="update_custom_item_attachments_init_error">Problem retrieving custom item attachments</string>
   <string name="custom_item_link_attachments_error">Failed to link or unlink attachments to the custom item</string>
   <string name="custom_item_rename_attachments_error">Failed to rename custom item attachments</string>
-  <string name="create_custom_item_item_creation_error">Could not create custom item</string>
-  <string name="create_custom_item_item_creation_success">Custom item created</string>
+  <string name="create_custom_item_item_creation_error">Ni bilo mogoče ustvariti predmeta po meri</string>
+  <string name="create_custom_item_item_creation_success">Predmet po meri ustvarjen</string>
   <string name="update_custom_item_item_creation_success">Custom item updated</string>
-  <string name="update_custom_item_item_creation_error">Could not update custom item</string>
+  <string name="update_custom_item_item_creation_error">Ni bilo mogoče posodobiti predmeta po meri</string>
   <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Cannot create items</string>

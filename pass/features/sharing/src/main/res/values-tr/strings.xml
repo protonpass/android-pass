@@ -20,7 +20,7 @@
   <string name="sharing_can_view">Görüntüleyici</string>
   <string name="sharing_can_edit">Düzenleyici</string>
   <string name="sharing_can_manage">Yönetici</string>
-  <string name="sharing_can_manage_v2">Yönetici</string>
+  <string name="sharing_can_manage_v2">Sorumlu</string>
   <string name="sharing_can_view_description">Bu kasadaki ögeleri görüntüleyebilir.</string>
   <string name="sharing_can_edit_description">Bu kasadaki ögeleri oluşturabilir, düzenleyebilir, silebilir ve dışa aktarabilir.</string>
   <string name="sharing_can_manage_description">Bu kasaya erişme izni verebilir ya da geri alabilir.</string>
@@ -91,7 +91,7 @@
   <string name="share_role_viewer">Görüntüleyici</string>
   <string name="share_role_editor">Düzenleyici</string>
   <string name="share_role_admin">Yönetici</string>
-  <string name="share_role_manager">Yönetici</string>
+  <string name="share_role_manager">Sorumlu</string>
   <string name="share_role_owner">Sahibi</string>
   <string name="sharing_bottomsheet_transfer_ownership">Sahipliği aktar</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Sahibi olduğunuz son kasanın sahipliğini aktaramazsınız.</string>

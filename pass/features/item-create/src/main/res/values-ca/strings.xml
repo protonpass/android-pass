@@ -57,7 +57,7 @@
   <string name="custom_field_hidden_placeholder">Afegeix text ocult</string>
   <string name="custom_field_hidden_icon_content_description">Icona de camp personalitzat amagat</string>
   <string name="custom_field_text_placeholder">Afegeix text</string>
-  <string name="custom_field_date_placeholder">Afegeix una data</string>
+  <string name="custom_field_date_placeholder">Afegiu una data</string>
   <string name="custom_field_dialog_title">Nom del camp personalitzat</string>
   <string name="custom_field_dialog_body">Assigneu un nom al camp personalitzat</string>
   <string name="custom_field_dialog_placeholder">Per exemple, l\'ID d\'usuari, el PIN</string>
@@ -231,7 +231,7 @@
   <string name="template_item_membership">Subscripció</string>
   <string name="template_item_passport">Passaport</string>
   <string name="template_item_reward_program">Programa de recompenses</string>
-  <string name="template_item_social_security_number">Número de la seguretat social</string>
+  <string name="template_item_social_security_number">Número de la Seguretat Social</string>
   <!-- API Credential Fields -->
   <string name="template_api_credential_field_api_key">Clau API</string>
   <string name="template_api_credential_field_secret">Secret</string>
@@ -286,7 +286,7 @@
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">Nom complet</string>
   <string name="template_driver_license_field_license_number">Número de llicència</string>
-  <string name="template_driver_license_field_issuing_state_country">País o estat emissor</string>
+  <string name="template_driver_license_field_issuing_state_country">Estat/País emissor</string>
   <string name="template_driver_license_field_expiry_date">Data d\'expiració</string>
   <string name="template_driver_license_field_date_of_birth">Data de naixement</string>
   <string name="template_driver_license_field_class">Classe</string>
@@ -316,14 +316,14 @@
   <string name="template_passport_field_note">Nota</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Nom del programa</string>
-  <string name="template_reward_program_field_member_id">ID del membre</string>
+  <string name="template_reward_program_field_member_id">ID de membre</string>
   <string name="template_reward_program_field_points_balance">Saldo de punts</string>
   <string name="template_reward_program_field_expiry_date">Data d\'expiració</string>
   <string name="template_reward_program_field_tier_status">Nivell/Estat</string>
   <string name="template_reward_program_field_note">Nota</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">Nom complet</string>
-  <string name="template_social_security_number_field_ssn">Número de la seguretat social</string>
+  <string name="template_social_security_number_field_ssn">Número de la Seguretat Social</string>
   <string name="template_social_security_number_field_issuing_country">País emissor</string>
   <string name="template_social_security_number_field_note">Nota</string>
   <string name="template_header_technology">Tecnologia</string>
@@ -337,10 +337,10 @@
   <string name="add_public_key_placeholder">Afegeix una clau pública</string>
   <string name="add_private_key_placeholder">Afegeix una clau privada</string>
   <string name="add_ssid_name_placeholder">Afegeix un nom (SSID)</string>
-  <string name="create_custom_item_init_error">Hi ha hagut un problema recuperant els detalls de l\'element personalitzat</string>
-  <string name="update_custom_item_attachments_init_error">Hi ha hagut un problema recuperant els elements personalitzats adjunts</string>
-  <string name="custom_item_link_attachments_error">Ha fallat en vincular o desvincular els elements personalitzats adjunts</string>
-  <string name="custom_item_rename_attachments_error">Ha fallat en reanomenar els elements personalitzats adjunts</string>
+  <string name="create_custom_item_init_error">Hi ha hagut un problema en recuperar els detalls de l\'element personalitzat</string>
+  <string name="update_custom_item_attachments_init_error">Hi ha hagut un problema en recuperar els adjunts de l\'element personalitzat</string>
+  <string name="custom_item_link_attachments_error">No s\'ha pogut vincular o desvincular els adjunts a l\'element personalitzat</string>
+  <string name="custom_item_rename_attachments_error">No s\'ha pogut canviar el nom dels adjunts de l\'element personalitzat</string>
   <string name="create_custom_item_item_creation_error">No s\'ha pogut crear l\'element personalitzat</string>
   <string name="create_custom_item_item_creation_success">S\'ha creat l\'element personalitzat</string>
   <string name="update_custom_item_item_creation_success">S\'ha actualitzat l\'element personalitzat</string>

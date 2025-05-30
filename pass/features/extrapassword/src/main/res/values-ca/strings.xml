@@ -21,7 +21,7 @@
   <string name="configure_extra_password_title">Estableixi la contrasenya addicional</string>
   <string name="configure_extra_password_enter_extra_password">Contrasenya addicional</string>
   <string name="configure_extra_password_repeat_extra_password">Repeteix la contrasenya</string>
-  <string name="configure_extra_password_description">Se us demanarà aquesta contrasenya durant la sessió i quan canvieu d\'una altra aplicació Proton a Proton Pass al web.</string>
+  <string name="configure_extra_password_description">Se us demanarà aquesta contrasenya durant l\'inici de sessió i quan canvieu d\'una altra aplicació Proton a Proton Pass a la web.</string>
   <string name="configure_extra_password_warning">Precaució: no podreu accedir al vostre compte Pass si perdeu aquesta contrasenya.</string>
   <string name="configure_extra_password_mismatch">Les contrasenyes no coincideixen.</string>
   <string name="extra_password_options_remove">Esborra</string>

@@ -197,8 +197,8 @@
   <string name="item_details_shared_section_more_info_header_title">Mere info</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">Ikon for mere elementinformation</string>
   <string name="item_details_shared_section_more_info_item_id">Element-ID</string>
-  <string name="item_details_shared_section_more_info_vault_id">Vault ID</string>
-  <string name="item_details_shared_section_more_info_share_id">Share ID</string>
+  <string name="item_details_shared_section_more_info_vault_id">Boks-ID</string>
+  <string name="item_details_shared_section_more_info_share_id">Del-ID</string>
   <string name="item_details_wifi_network_label_ssid_name">Navn (SSID)</string>
   <string name="item_details_wifi_network_label_password">Adgangskode</string>
   <string name="item_details_wifi_network_label_security">Sikkerhed</string>

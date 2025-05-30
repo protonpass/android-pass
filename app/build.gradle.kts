@@ -452,7 +452,6 @@ dependencies {
     implementation(projects.pass.features.featureFlags)
     implementation(projects.pass.features.home)
     implementation(projects.pass.features.itemCreate)
-    implementation(projects.pass.features.itemDetailLegacy)
     implementation(projects.pass.features.migrate)
     implementation(projects.pass.features.onboarding)
     implementation(projects.pass.features.passkeys)

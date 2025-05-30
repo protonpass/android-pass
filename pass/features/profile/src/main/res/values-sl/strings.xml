@@ -12,7 +12,7 @@
   <string name="profile_option_autofill">Samodejno izpolnjevanje</string>
   <string name="profile_option_autofill_subtitle">Samodejno izpolnite svoja uporabniška imena in gesla.</string>
   <string name="profile_option_secure_links">Varne povezave</string>
-  <string name="profile_option_alias_management">Alias management</string>
+  <string name="profile_option_alias_management">Upravljanje vzdevkov</string>
   <string name="profile_error_biometry_failed_to_start">Biometrične avtentikacije ni bilo mogoče začeti</string>
   <string name="profile_error_biometry_failed_to_authenticate">Preverjanje pristnosti ni uspelo</string>
   <string name="profile_fingerprint_lock_enabled">Omogočeno zaklepanje s prstnim odtisom</string>

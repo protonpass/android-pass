@@ -91,7 +91,7 @@
   <string name="security_center_dark_web_monitor_found_in_breaches">Ni odkritih uhajanj podatkov</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Naslovi Proton</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Vzdevki hide-my-email</string>
-  <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving Proton addresses</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Napaka pri pridobivanju naslovov Proton</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Napaka pri pridobivanju vzdevkov Hide-my-email</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Ni spremljano</string>
   <string name="security_center_dark_web_monitor_see_all">Poglejte vse</string>

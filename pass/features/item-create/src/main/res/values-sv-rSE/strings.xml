@@ -328,7 +328,7 @@
   <string name="template_social_security_number_field_note">Anteckning</string>
   <string name="template_header_technology">Teknologi</string>
   <string name="template_header_finance">Finans</string>
-  <string name="template_header_title_personal">Personal</string>
+  <string name="template_header_title_personal">Privat</string>
   <string name="button_start_from_scratch">Börja från början</string>
   <string name="select_template_title">Anpassat objekt</string>
   <!-- Custom item screen -->
@@ -339,7 +339,7 @@
   <string name="add_ssid_name_placeholder">Lägg till namn (SSID)</string>
   <string name="create_custom_item_init_error">Problem att hämta anpassade objektdetaljer</string>
   <string name="update_custom_item_attachments_init_error">Problem att hämta anpassade objektbilagor</string>
-  <string name="custom_item_link_attachments_error">Failed to link or unlink attachments to the custom item</string>
+  <string name="custom_item_link_attachments_error">Det gick inte att länka eller ta bort länkning av bilagor till anpassat objekt</string>
   <string name="custom_item_rename_attachments_error">Misslyckades att byta namn på objektbilagor</string>
   <string name="create_custom_item_item_creation_error">Kunde inte skapa anpassat objekt</string>
   <string name="create_custom_item_item_creation_success">Anpassat objekt skapat</string>

@@ -26,7 +26,7 @@
   <string name="attachment_options_share">Deli</string>
   <string name="file_picker_open_error">Could not open file picker</string>
   <string name="media_picker_open_error">Could not open media picker</string>
-  <string name="camera_open_error">Could not open camera</string>
+  <string name="camera_open_error">Ni bilo mogoče odpreti kamere</string>
   <string name="camera_permission_explanation">Za to funkcijo je potrebno dovoljenje za kamero.</string>
   <string name="camera_permission_open_settings">Odpri nastavitve</string>
   <string name="delete_all_attachments_title">Delete all attachments?</string>
@@ -38,5 +38,5 @@
   <string name="storage_full_upgrade">Nadgradnja</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s od %2$s</string>
   <string name="attachments_saved_to_location_success">Attachment saved to location</string>
-  <string name="attachments_saved_to_location_error">Could not save attachment to location</string>
+  <string name="attachments_saved_to_location_error">Ni bilo mogoče shraniti priponke na lokacijo</string>
 </resources>

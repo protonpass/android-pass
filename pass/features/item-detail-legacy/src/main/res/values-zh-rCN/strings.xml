@@ -120,6 +120,6 @@
   <string name="open_attachments_error">无法打开附件</string>
   <string name="banner_contacts_title">你知道吗？</string>
   <string name="banner_contacts_subtitle">每次您的别名收到某人的电子邮件时，都会自动创建一个新的联系人。</string>
-  <string name="expand_note_more">more</string>
-  <string name="collapse_note_less">less</string>
+  <string name="expand_note_more">更多</string>
+  <string name="collapse_note_less">收起</string>
 </resources>

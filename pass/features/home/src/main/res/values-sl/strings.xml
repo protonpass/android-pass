@@ -29,7 +29,7 @@
   <string name="home_empty_vault_create_note">Ustvari opombo</string>
   <string name="home_empty_vault_create_credit_card">Ustvari plačilno kartico</string>
   <string name="home_empty_vault_create_identity">Ustvari identiteto</string>
-  <string name="home_empty_vault_create_custom_item">Create a custom item</string>
+  <string name="home_empty_vault_create_custom_item">Ustvari predmet po meri</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Napaka pri nalaganju predmetov</string>
   <string name="error_refreshing">Napaka pri izvajanju osvežitve</string>
   <string name="home_snackbar_login_moved_to_trash">Prijava premaknjena v smetnjak</string>
@@ -192,10 +192,10 @@
   <string name="home_snackbar_items_unpinned_error">Napaka pri odpenjanju predmetov</string>
   <string name="home_snackbar_items_alias_enabled_success">Alias enabled successfully</string>
   <string name="home_snackbar_items_alias_enabled_partial_success">Napaka pri omogočanju nekaterih vzdevkov</string>
-  <string name="home_snackbar_items_alias_enabled_error">Error enabling aliases</string>
+  <string name="home_snackbar_items_alias_enabled_error">Napaka pri omogočanju vzdevkov</string>
   <string name="home_snackbar_items_alias_disabled_success">Alias disabled successfully</string>
   <string name="home_snackbar_items_alias_disabled_partial_success">Napaka pri onemogočanju nekaterih vzdevkov</string>
-  <string name="home_snackbar_items_alias_disabled_error">Error disabling aliases</string>
+  <string name="home_snackbar_items_alias_disabled_error">Napaka pri onemogočanju vzdevkov</string>
   <string name="bulk_action_unpin">Odpni</string>
   <string name="bulk_action_pin">Pripni</string>
   <string name="bulk_action_enable_alias">Omogoči vzdevek</string>

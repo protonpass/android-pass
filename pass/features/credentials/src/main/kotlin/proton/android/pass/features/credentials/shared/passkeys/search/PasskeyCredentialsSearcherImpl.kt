@@ -75,7 +75,6 @@ internal class PasskeyCredentialsSearcherImpl @Inject constructor(
 
         val passkeyCredentialAction = createPasskeyCredentialAction(
             context = context,
-            option = option,
             credential = passkeyCredential
         )
 
@@ -108,7 +107,6 @@ internal class PasskeyCredentialsSearcherImpl @Inject constructor(
             pendingIntent = createPasskeyPendingIntent(
                 context = context,
                 credential = credential,
-                option = option,
                 passkeyItem = passkeyCredentialItem.passkeyItem,
                 isBiometricAuthRequired = isBiometricAuthRequired
             )
@@ -121,7 +119,6 @@ internal class PasskeyCredentialsSearcherImpl @Inject constructor(
     private fun createPasskeyPendingIntent(
         context: Context,
         credential: PasskeyCredential,
-        option: BeginGetPublicKeyCredentialOption,
         passkeyItem: PasskeyItem,
         isBiometricAuthRequired: Boolean
     ) = if (isBiometricAuthRequired) {
@@ -133,7 +130,6 @@ internal class PasskeyCredentialsSearcherImpl @Inject constructor(
         PasskeyCredentialUsageActivity.createPasskeyCredentialIntent(
             context = context,
             origin = credential.domain,
-            option = option,
             passkeyItem = passkeyItem
         )
     }.let { intent ->
@@ -145,30 +141,26 @@ internal class PasskeyCredentialsSearcherImpl @Inject constructor(
         )
     }
 
-    private fun createPasskeyCredentialAction(
-        context: Context,
-        option: BeginGetPublicKeyCredentialOption,
-        credential: PasskeyCredential
-    ) = PasskeyCredentialSelectionActivity.createPasskeyCredentialIntent(
-        context = context,
-        option = option,
-        origin = credential.domain
-    )
-        .let { intent ->
-            PendingIntent.getActivity(
-                context,
-                requestCode,
-                intent,
-                PENDING_INTENT_FLAGS
-            )
-        }
-        .let { pendingIntent ->
-            Action(
-                title = context.getString(R.string.passkey_credential_selection_action_title),
-                subtitle = context.getString(R.string.passkey_credential_selection_action_subtitle),
-                pendingIntent = pendingIntent
-            )
-        }
+    private fun createPasskeyCredentialAction(context: Context, credential: PasskeyCredential) =
+        PasskeyCredentialSelectionActivity.createPasskeyCredentialIntent(
+            context = context,
+            origin = credential.domain
+        )
+            .let { intent ->
+                PendingIntent.getActivity(
+                    context,
+                    requestCode,
+                    intent,
+                    PENDING_INTENT_FLAGS
+                )
+            }
+            .let { pendingIntent ->
+                Action(
+                    title = context.getString(R.string.passkey_credential_selection_action_title),
+                    subtitle = context.getString(R.string.passkey_credential_selection_action_subtitle),
+                    pendingIntent = pendingIntent
+                )
+            }
 
     private companion object {
 

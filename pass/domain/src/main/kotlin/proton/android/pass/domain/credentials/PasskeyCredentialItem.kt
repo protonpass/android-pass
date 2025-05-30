@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,23 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.passkeys
+package proton.android.pass.domain.credentials
 
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.PasskeyItem
 
-sealed interface PasskeySelection {
-    data object All : PasskeySelection
-    data class Allowed(val allowedPasskeys: List<PasskeyId>) : PasskeySelection
-}
+data class PasskeyCredentialItem(
+    val passkeyItem: PasskeyItem,
+    val displayName: String = passkeyItem.itemTitle
+) {
 
-interface GetPasskeysForDomain {
-
-    suspend operator fun invoke(
-        domain: String,
-        selection: PasskeySelection = PasskeySelection.All,
-        userId: UserId? = null
-    ): List<PasskeyItem>
+    val username: String = passkeyItem.passkey.userName
 
 }

@@ -19,16 +19,20 @@
 package proton.android.pass.features.item.details.detail.presentation.handlers
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.onStart
+import proton.android.pass.common.api.combineN
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
-import proton.android.pass.commonuimodels.api.items.AliasDetailEvent
+import proton.android.pass.commonuimodels.api.items.AliasDetailEvent.ContactSection
+import proton.android.pass.commonuimodels.api.items.AliasDetailEvent.CreateLoginFromAlias
 import proton.android.pass.commonuimodels.api.items.DetailEvent
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanDisplayTotp
+import proton.android.pass.data.api.usecases.ChangeAliasStatus
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
 import proton.android.pass.domain.AliasDetails
@@ -39,6 +43,7 @@ import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryBannerPreference
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryFeature.AliasManagementContacts
@@ -51,12 +56,16 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     override val canDisplayTotp: CanDisplayTotp,
     private val observeAliasDetails: ObserveAliasDetails,
     private val observeAliasContacts: ObserveAliasContacts,
-    private val userPreferencesRepository: UserPreferencesRepository
+    private val userPreferencesRepository: UserPreferencesRepository,
+    private val changeAliasStatus: ChangeAliasStatus
 ) : ItemDetailsHandlerObserver<ItemContents.Alias, ItemDetailsFieldType.AliasItemAction>(
     encryptionContextProvider = encryptionContextProvider,
     totpManager = totpManager,
     canDisplayTotp = canDisplayTotp
 ) {
+
+    private val isAliasStateTogglingState: MutableStateFlow<IsLoadingState> =
+        MutableStateFlow(IsLoadingState.NotLoading)
 
     override fun observe(
         share: Share,
@@ -64,13 +73,15 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
         attachmentsState: AttachmentsState,
         savedStateEntries: Map<String, Any?>,
         detailEvent: DetailEvent
-    ): Flow<ItemDetailState> = combine(
+    ): Flow<ItemDetailState> = combineN(
         observeItemContents(item),
         observeAliasDetails(item.shareId, item.id).onStart { emit(AliasDetails.EMPTY) },
         observeAliasContacts(item.shareId, item.id),
         observeCustomFieldTotps(item),
-        userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementContacts)
-    ) { aliasItemContents, aliasDetails, aliasContacts, customFieldTotps, displayContactsBanner ->
+        userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementContacts),
+        isAliasStateTogglingState
+    ) { aliasItemContents, aliasDetails, aliasContacts, customFieldTotps, displayContactsBanner,
+        isAliasStateToggling ->
         ItemDetailState.Alias(
             itemContents = aliasItemContents,
             itemId = item.id,
@@ -80,6 +91,7 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
             itemCreatedAt = item.createTime,
             itemModifiedAt = item.modificationTime,
             itemLastAutofillAtOption = item.lastAutofillTime,
+            isAliasStateToggling = isAliasStateToggling.value(),
             itemRevision = item.revision,
             itemState = ItemState.from(item.state),
             itemDiffs = ItemDiffs.Alias(),
@@ -142,7 +154,22 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
             ItemDetailsFieldType.AliasItemAction.ContactBanner -> dismissContactsBanner()
             is ItemDetailsFieldType.AliasItemAction.ContactSection -> {
                 dismissContactsBanner()
-                callback(AliasDetailEvent.ContactSection(fieldType.shareId, fieldType.itemId))
+                callback(ContactSection(fieldType.shareId, fieldType.itemId))
+            }
+
+            is ItemDetailsFieldType.AliasItemAction.CreateLoginFromAlias ->
+                callback(CreateLoginFromAlias(fieldType.alias, fieldType.shareId))
+            is ItemDetailsFieldType.AliasItemAction.ToggleAlias -> {
+                isAliasStateTogglingState.emit(IsLoadingState.Loading)
+                runCatching { changeAliasStatus(fieldType.shareId, fieldType.itemId, fieldType.value) }
+                    .onSuccess {
+                        PassLogger.i(TAG, "Alias status changed successfully")
+                    }
+                    .onFailure {
+                        PassLogger.w(TAG, "Error changing alias status")
+                        PassLogger.w(TAG, it)
+                    }
+                isAliasStateTogglingState.emit(IsLoadingState.NotLoading)
             }
         }
     }
@@ -154,4 +181,7 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
         )
     }
 
+    companion object {
+        private const val TAG = "AliasItemDetailsHandlerObserverImpl"
+    }
 }

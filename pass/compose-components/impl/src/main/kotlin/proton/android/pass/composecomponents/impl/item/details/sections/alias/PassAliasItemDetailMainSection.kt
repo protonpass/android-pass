@@ -20,23 +20,36 @@ package proton.android.pass.composecomponents.impl.item.details.sections.alias
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
+import androidx.compose.material.Switch
+import androidx.compose.material.SwitchDefaults
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType.AliasItemAction
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.R
@@ -51,13 +64,19 @@ import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun PassAliasItemDetailMainSection(
     modifier: Modifier = Modifier,
+    shareId: ShareId,
+    itemId: ItemId,
     alias: String,
     isAliasEnabled: Boolean,
+    isAliasCreatedByUser: Boolean,
+    isAliasStateToggling: Boolean,
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs.Alias,
     mailboxes: ImmutableList<AliasMailbox>,
@@ -67,8 +86,12 @@ internal fun PassAliasItemDetailMainSection(
 
     sections.add {
         PassAliasItemDetailAddressRow(
+            shareId = shareId,
+            itemId = itemId,
             alias = alias,
             isAliasEnabled = isAliasEnabled,
+            isAliasCreatedByUser = isAliasCreatedByUser,
+            isAliasStateToggling = isAliasStateToggling,
             itemColors = itemColors,
             itemDiffType = itemDiffs.aliasEmail,
             onEvent = onEvent
@@ -91,8 +114,12 @@ internal fun PassAliasItemDetailMainSection(
 @Composable
 private fun PassAliasItemDetailAddressRow(
     modifier: Modifier = Modifier,
+    shareId: ShareId,
+    itemId: ItemId,
     alias: String,
     isAliasEnabled: Boolean,
+    isAliasCreatedByUser: Boolean,
+    isAliasStateToggling: Boolean,
     itemColors: PassItemColors,
     itemDiffType: ItemDiffType,
     onEvent: (PassItemDetailsUiEvent) -> Unit
@@ -105,38 +132,81 @@ private fun PassAliasItemDetailAddressRow(
         }
     }
 
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .contentDiff(itemDiffType = itemDiffType)
-            .clickable {
-                onEvent(
-                    PassItemDetailsUiEvent.OnFieldClick(
-                        field = ItemDetailsFieldType.PlainCopyable.Alias(alias)
+    Box(modifier = modifier) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .contentDiff(itemDiffType = itemDiffType)
+                .clickable {
+                    onEvent(
+                        PassItemDetailsUiEvent.OnFieldClick(
+                            field = ItemDetailsFieldType.PlainCopyable.Alias(alias)
+                        )
                     )
+                }
+                .padding(Spacing.medium),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(Spacing.small)
+        ) {
+            Icon(
+                painter = painterResource(CoreR.drawable.ic_proton_envelope),
+                contentDescription = null,
+                tint = itemColors.norm
+            )
+            Column(Modifier.weight(1f)) {
+                SectionTitle(
+                    modifier = Modifier.padding(start = Spacing.small),
+                    text = stringResource(id = titleResourceId)
+                )
+
+                Spacer(modifier = Modifier.height(Spacing.small))
+
+                SectionSubtitle(
+                    modifier = Modifier.padding(start = Spacing.small),
+                    text = alias.asAnnotatedString()
+                )
+                Text(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(size = Radius.small))
+                        .clickable {
+                            onEvent(
+                                PassItemDetailsUiEvent.OnFieldClick(
+                                    field = AliasItemAction.CreateLoginFromAlias(alias, shareId)
+                                )
+                            )
+                        }
+                        .padding(Spacing.small),
+                    text = stringResource(R.string.alias_create_login_from_alias),
+                    color = PassTheme.colors.aliasInteractionNorm,
+                    textDecoration = TextDecoration.Underline
                 )
             }
-            .padding(Spacing.medium),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.small)
-    ) {
-        Icon(
-            painter = painterResource(CoreR.drawable.ic_proton_envelope),
-            contentDescription = null,
-            tint = itemColors.norm
-        )
-        Column {
-            SectionTitle(
-                modifier = Modifier.padding(start = Spacing.small),
-                text = stringResource(id = titleResourceId)
-            )
 
-            Spacer(modifier = Modifier.height(Spacing.small))
-
-            SectionSubtitle(
-                modifier = Modifier.padding(start = Spacing.small),
-                text = alias.asAnnotatedString()
-            )
+            if (isAliasCreatedByUser) {
+                if (isAliasStateToggling) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .padding(horizontal = Spacing.small)
+                            .size(size = 32.dp),
+                        color = itemColors.norm
+                    )
+                } else {
+                    Switch(
+                        checked = isAliasEnabled,
+                        onCheckedChange = {
+                            onEvent(
+                                PassItemDetailsUiEvent.OnFieldClick(
+                                    field = AliasItemAction.ToggleAlias(shareId, itemId, it)
+                                )
+                            )
+                        },
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = itemColors.norm,
+                            checkedTrackColor = itemColors.majorPrimary
+                        )
+                    )
+                }
+            }
         }
     }
 }

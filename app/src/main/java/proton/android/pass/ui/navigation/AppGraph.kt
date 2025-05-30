@@ -1695,6 +1695,15 @@ fun NavGraphBuilder.appGraph(
                         itemId = itemDetailsNavDestination.itemId
                     )
                 )
+
+                is ItemDetailsNavDestination.OnCreateLoginFromAlias -> appNavigator.navigate(
+                    destination = CreateLoginNavItem,
+                    route = CreateLoginNavItem.createNavRoute(
+                        emailOption = itemDetailsNavDestination.alias.some(),
+                        shareId = itemDetailsNavDestination.shareId.some()
+                    ),
+                    backDestination = HomeNavItem
+                )
             }
         }
     )

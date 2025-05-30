@@ -358,7 +358,7 @@
         <item quantity="one">%1$s block</item>
         <item quantity="other">%1$s blocks</item>
     </plurals>
-
+    <string name="alias_create_login_from_alias">Create login</string>
     <string name="banner_contacts_title">Did you know?</string>
     <string name="banner_contacts_subtitle">Every time your alias receives an email from someone, a new contact is automatically created.</string>
 

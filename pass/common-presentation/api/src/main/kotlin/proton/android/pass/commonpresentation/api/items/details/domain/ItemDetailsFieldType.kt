@@ -101,7 +101,8 @@ sealed interface ItemDetailsFieldType {
 
         val hiddenState: HiddenState
 
-        data class CustomField(override val hiddenState: HiddenState, val index: Int) : HiddenCopyable
+        data class CustomField(override val hiddenState: HiddenState, val index: Int) :
+            HiddenCopyable
 
         data class Cvv(override val hiddenState: HiddenState) : HiddenCopyable
 
@@ -119,9 +120,21 @@ sealed interface ItemDetailsFieldType {
     sealed interface NoteItemAction : ItemDetailsFieldType
     sealed interface CreditCardItemAction : ItemDetailsFieldType
     sealed interface AliasItemAction : ItemDetailsFieldType {
+        data class CreateLoginFromAlias(
+            val alias: String,
+            val shareId: ShareId
+        ) : AliasItemAction
+
+        data class ToggleAlias(
+            val shareId: ShareId,
+            val itemId: ItemId,
+            val value: Boolean
+        ) : AliasItemAction
+
         data object ContactBanner : AliasItemAction
         data class ContactSection(val shareId: ShareId, val itemId: ItemId) : AliasItemAction
     }
+
     sealed interface IdentityItemAction : ItemDetailsFieldType
     sealed interface CustomItemAction : ItemDetailsFieldType
     sealed interface WifiNetworkItemAction : ItemDetailsFieldType

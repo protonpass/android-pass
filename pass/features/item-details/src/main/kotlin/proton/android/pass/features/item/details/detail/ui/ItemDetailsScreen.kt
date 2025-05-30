@@ -34,6 +34,7 @@ import proton.android.pass.features.item.details.detail.presentation.ItemDetails
 import proton.android.pass.features.item.details.detail.presentation.ItemDetailsState
 import proton.android.pass.features.item.details.detail.presentation.ItemDetailsViewModel
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
+import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.ContactSection
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.EditItem
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.ItemActionForbidden
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.ItemHistory
@@ -41,6 +42,7 @@ import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNa
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.ItemSharing
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.ItemTrashMenu
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.ManageSharedVault
+import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.OnCreateLoginFromAlias
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.OpenAttachmentOptions
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.PasskeyDetails
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination.ViewReusedPasswords
@@ -70,9 +72,11 @@ fun ItemDetailsScreen(
         is ItemDetailsState.Success -> LaunchedEffect(success.itemDetailState.detailEvent) {
             when (val event = success.itemDetailState.detailEvent) {
                 is AliasDetailEvent.ContactSection ->
-                    ItemDetailsNavDestination.ContactSection(event.shareId, event.itemId)
+                    ContactSection(event.shareId, event.itemId)
                         .also(onNavigated)
-
+                is AliasDetailEvent.CreateLoginFromAlias ->
+                    OnCreateLoginFromAlias(event.alias, event.shareId)
+                        .also(onNavigated)
                 DetailEvent.Idle -> {}
             }
             onConsumeInternalEvent(success.itemDetailState.detailEvent)

@@ -93,4 +93,9 @@ sealed interface ItemDetailsNavDestination {
     data class ViewReusedPasswords(val shareId: ShareId, val itemId: ItemId) : ItemDetailsNavDestination
 
     data class ContactSection(val shareId: ShareId, val itemId: ItemId) : ItemDetailsNavDestination
+
+    data class OnCreateLoginFromAlias(
+        val alias: String,
+        val shareId: ShareId
+    ) : ItemDetailsNavDestination
 }

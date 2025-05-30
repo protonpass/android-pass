@@ -18,17 +18,9 @@
 
 package proton.android.pass.data.api.usecases.passkeys
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.Passkey
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.PasskeyId
-import proton.android.pass.domain.ShareId
-
-data class PasskeyItem(
-    val shareId: ShareId,
-    val itemId: ItemId,
-    val passkey: Passkey,
-    val itemTitle: String
-)
+import proton.android.pass.domain.PasskeyItem
 
 sealed interface PasskeySelection {
     data object All : PasskeySelection
@@ -36,5 +28,11 @@ sealed interface PasskeySelection {
 }
 
 interface GetPasskeysForDomain {
-    suspend operator fun invoke(domain: String, selection: PasskeySelection = PasskeySelection.All): List<PasskeyItem>
+
+    suspend operator fun invoke(
+        domain: String,
+        selection: PasskeySelection = PasskeySelection.All,
+        userId: UserId? = null
+    ): List<PasskeyItem>
+
 }

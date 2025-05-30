@@ -40,7 +40,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeysForDomain
-import proton.android.pass.data.api.usecases.passkeys.PasskeyItem
+import proton.android.pass.domain.PasskeyItem
 import proton.android.pass.features.passkeys.R
 import proton.android.pass.features.passkeys.select.SelectPasskeyUtils
 import proton.android.pass.features.passkeys.select.ui.SelectPasskeyActivity

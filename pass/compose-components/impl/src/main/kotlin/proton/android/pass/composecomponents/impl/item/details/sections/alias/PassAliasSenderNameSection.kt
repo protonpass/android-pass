@@ -47,10 +47,9 @@ import me.proton.core.presentation.R as CoreR
 internal fun PassAliasSenderNameSection(
     modifier: Modifier = Modifier,
     text: String,
-    title: String = stringResource(R.string.field_detail_display_name_title),
-    isLoading: Boolean
+    title: String = stringResource(R.string.field_detail_display_name_title)
 ) {
-    if (!isLoading && text.isNotBlank()) {
+    if (text.isNotBlank()) {
         Column(
             modifier = modifier,
             verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
@@ -90,8 +89,7 @@ internal fun SenderNameSectionPreview(@PreviewParameter(ThemePreviewProvider::cl
     PassTheme(isDark = input) {
         Surface {
             PassAliasSenderNameSection(
-                text = "John Doe",
-                isLoading = false
+                text = "John Doe"
             )
         }
     }

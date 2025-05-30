@@ -61,6 +61,7 @@ internal fun PassAliasItemDetailSections(
     vaultId: VaultId,
     contents: ItemContents.Alias,
     isAliasCreatedByUser: Boolean,
+    isAliasStateToggling: Boolean,
     slNote: String,
     displayName: String,
     stats: Option<AliasStats>,
@@ -85,8 +86,12 @@ internal fun PassAliasItemDetailSections(
         verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
         PassAliasItemDetailMainSection(
+            shareId = shareId,
+            itemId = itemId,
             alias = aliasEmail,
             isAliasEnabled = isEnabled,
+            isAliasCreatedByUser = isAliasCreatedByUser,
+            isAliasStateToggling = isAliasStateToggling,
             itemColors = itemColors,
             itemDiffs = itemDiffs,
             mailboxes = mailboxes,

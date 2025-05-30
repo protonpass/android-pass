@@ -28,8 +28,8 @@ import androidx.credentials.provider.PublicKeyCredentialEntry
 import kotlinx.coroutines.flow.first
 import kotlinx.serialization.json.Json
 import proton.android.pass.biometry.NeedsBiometricAuth
-import proton.android.pass.data.api.usecases.passkeys.GetPasskeysForDomain
-import proton.android.pass.data.api.usecases.passkeys.PasskeyItem
+import proton.android.pass.data.api.usecases.credentials.passkeys.GetPasskeyCredentialItems
+import proton.android.pass.domain.PasskeyItem
 import proton.android.pass.features.credentials.R
 import proton.android.pass.features.credentials.passkeys.selection.ui.PasskeyCredentialSelectionActivity
 import proton.android.pass.features.credentials.passkeys.usage.ui.PasskeyCredentialUsageActivity
@@ -41,7 +41,7 @@ import javax.inject.Inject
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 internal class PasskeyCredentialsSearcherImpl @Inject constructor(
-    private val getPasskeysForDomain: GetPasskeysForDomain,
+    private val getPasskeyCredentialItems: GetPasskeyCredentialItems,
     private val needsBiometricAuth: NeedsBiometricAuth,
     private val telemetryManager: TelemetryManager
 ) : PasskeyCredentialsSearcher {
@@ -97,23 +97,23 @@ internal class PasskeyCredentialsSearcherImpl @Inject constructor(
         context: Context,
         option: BeginGetPublicKeyCredentialOption,
         isBiometricAuthRequired: Boolean
-    ) = getPasskeysForDomain(
+    ) = getPasskeyCredentialItems(
         domain = credential.domain,
         selection = credential.passkeySelection
-    ).map { passkeyItem ->
+    ).map { passkeyCredentialItem ->
         PublicKeyCredentialEntry.Builder(
             context = context,
-            username = passkeyItem.passkey.userName,
+            username = passkeyCredentialItem.username,
             beginGetPublicKeyCredentialOption = option,
             pendingIntent = createPasskeyPendingIntent(
                 context = context,
                 credential = credential,
                 option = option,
-                passkeyItem = passkeyItem,
+                passkeyItem = passkeyCredentialItem.passkeyItem,
                 isBiometricAuthRequired = isBiometricAuthRequired
             )
         )
-            .setDisplayName(passkeyItem.itemTitle)
+            .setDisplayName(passkeyCredentialItem.displayName)
             .setAutoSelectAllowed(false)
             .build()
     }

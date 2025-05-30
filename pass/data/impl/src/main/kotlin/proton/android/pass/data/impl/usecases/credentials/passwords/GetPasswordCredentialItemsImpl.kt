@@ -23,14 +23,13 @@ import kotlinx.coroutines.flow.map
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.isReady
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.api.usecases.credentials.passwords.GetPasswordCredentialItems
 import proton.android.pass.data.api.usecases.shares.ObserveAutofillShares
+import proton.android.pass.data.impl.usecases.credentials.shared.getDisplayName
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
@@ -53,8 +52,6 @@ class GetPasswordCredentialItemsImpl @Inject constructor(
             .associateBy(Account::userId)
 
         return accountsMap.values.map { account ->
-            println("JIBIRI: account email -> ${account.email}")
-            println("JIBIRI: account username -> ${account.username}")
             observeAutofillShares(userId = account.userId)
                 .first()
                 .map(Share::id)
@@ -97,16 +94,6 @@ class GetPasswordCredentialItemsImpl @Inject constructor(
                     )
                 }
         }.flatten()
-    }
-
-    private fun Map<UserId, Account>.getDisplayName(userId: UserId, title: String): String {
-        if (this.size <= 1) {
-            return title
-        }
-
-        return (this[userId]?.username ?: this[userId]?.email)
-            ?.let { accountIdentifier -> "$title ${SpecialCharacters.DOT_SEPARATOR} $accountIdentifier" }
-            ?: title
     }
 
 }

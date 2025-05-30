@@ -40,9 +40,9 @@ import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.theme.SystemUIDisposableEffect
 import proton.android.pass.composecomponents.impl.theme.isDark
-import proton.android.pass.data.api.usecases.passkeys.PasskeyItem
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
+import proton.android.pass.domain.PasskeyItem
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.credentials.passkeys.selection.navigation.PasskeyCredentialSelectionNavEvent
 import proton.android.pass.features.credentials.passkeys.selection.presentation.PasskeyCredentialSelectionEvent

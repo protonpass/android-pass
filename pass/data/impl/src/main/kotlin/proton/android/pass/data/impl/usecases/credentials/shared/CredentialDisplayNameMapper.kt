@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,23 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.passkeys
+package proton.android.pass.data.impl.usecases.credentials.shared
 
+import me.proton.core.account.domain.entity.Account
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.domain.PasskeyId
-import proton.android.pass.domain.PasskeyItem
+import proton.android.pass.common.api.SpecialCharacters
 
-sealed interface PasskeySelection {
-    data object All : PasskeySelection
-    data class Allowed(val allowedPasskeys: List<PasskeyId>) : PasskeySelection
-}
+internal fun Map<UserId, Account>.getDisplayName(userId: UserId, title: String): String {
+    if (this.size <= 1) {
+        return title
+    }
 
-interface GetPasskeysForDomain {
-
-    suspend operator fun invoke(
-        domain: String,
-        selection: PasskeySelection = PasskeySelection.All,
-        userId: UserId? = null
-    ): List<PasskeyItem>
-
+    return (this[userId]?.username ?: this[userId]?.email)
+        ?.let { accountIdentifier -> "$title ${SpecialCharacters.DOT_SEPARATOR} $accountIdentifier" }
+        ?: title
 }

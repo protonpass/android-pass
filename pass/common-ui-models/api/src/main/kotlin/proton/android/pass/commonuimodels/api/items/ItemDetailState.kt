@@ -91,7 +91,8 @@ sealed interface ItemDetailState {
         override val detailEvent: DetailEvent,
         val aliasDetails: AliasDetails,
         val aliasContacts: AliasContacts,
-        val displayContactsBanner: Boolean
+        val displayContactsBanner: Boolean,
+        val isAliasStateToggling: Boolean
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Alias
@@ -431,6 +432,7 @@ sealed interface DetailEvent {
     data object Idle : AliasDetailEvent
 }
 sealed interface AliasDetailEvent : DetailEvent {
+    data class CreateLoginFromAlias(val alias: String, val shareId: ShareId) : AliasDetailEvent
     data class ContactSection(val shareId: ShareId, val itemId: ItemId) : AliasDetailEvent
 }
 

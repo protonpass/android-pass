@@ -58,6 +58,7 @@ internal fun PassItemDetailSections(
             customFieldTotps = customFieldTotps.toImmutableMap(),
             mailboxes = aliasDetails.mailboxes.toPersistentList(),
             isAliasCreatedByUser = aliasDetails.canModify,
+            isAliasStateToggling = isAliasStateToggling,
             slNote = aliasDetails.slNote,
             displayName = aliasDetails.name.orEmpty(),
             stats = aliasDetails.stats.toOption(),

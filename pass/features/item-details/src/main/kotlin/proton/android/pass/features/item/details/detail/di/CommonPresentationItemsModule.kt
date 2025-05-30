@@ -46,41 +46,41 @@ internal abstract class CommonPresentationItemsModule {
     @[Binds ViewModelScoped IntoMap ItemDetailsHandlerObserverKey(ItemCategory.Alias)]
     internal abstract fun bindAliasItemDetailsHandlerObserver(
         impl: AliasItemDetailsHandlerObserverImpl
-    ): ItemDetailsHandlerObserver<*>
+    ): ItemDetailsHandlerObserver<*, *>
 
     @[Binds ViewModelScoped IntoMap ItemDetailsHandlerObserverKey(ItemCategory.CreditCard)]
     internal abstract fun bindCreditCardItemDetailsHandlerObserver(
         impl: CreditCardItemDetailsHandlerObserverImpl
-    ): ItemDetailsHandlerObserver<*>
+    ): ItemDetailsHandlerObserver<*, *>
 
     @[Binds ViewModelScoped IntoMap ItemDetailsHandlerObserverKey(ItemCategory.Login)]
     internal abstract fun bindLoginItemDetailsHandlerObserver(
         impl: LoginItemDetailsHandlerObserverImpl
-    ): ItemDetailsHandlerObserver<*>
+    ): ItemDetailsHandlerObserver<*, *>
 
     @[Binds ViewModelScoped IntoMap ItemDetailsHandlerObserverKey(ItemCategory.Note)]
     internal abstract fun bindNoteItemDetailsHandlerObserver(
         impl: NoteItemDetailsHandlerObserverImpl
-    ): ItemDetailsHandlerObserver<*>
+    ): ItemDetailsHandlerObserver<*, *>
 
     @[Binds ViewModelScoped IntoMap ItemDetailsHandlerObserverKey(ItemCategory.Identity)]
     internal abstract fun bindIdentityItemDetailsHandlerObserver(
         impl: IdentityItemDetailsHandlerObserverImpl
-    ): ItemDetailsHandlerObserver<*>
+    ): ItemDetailsHandlerObserver<*, *>
 
     @[Binds ViewModelScoped IntoMap ItemDetailsHandlerObserverKey(ItemCategory.Custom)]
     internal abstract fun bindCustomItemDetailsHandlerObserver(
         impl: CustomItemDetailsHandlerObserverImpl
-    ): ItemDetailsHandlerObserver<*>
+    ): ItemDetailsHandlerObserver<*, *>
 
     @[Binds ViewModelScoped IntoMap ItemDetailsHandlerObserverKey(ItemCategory.WifiNetwork)]
     internal abstract fun bindWifiItemDetailsHandlerObserver(
         impl: WifiNetworkDetailsHandlerObserverImpl
-    ): ItemDetailsHandlerObserver<*>
+    ): ItemDetailsHandlerObserver<*, *>
 
     @[Binds ViewModelScoped IntoMap ItemDetailsHandlerObserverKey(ItemCategory.SSHKey)]
     internal abstract fun bindSSHKeyItemDetailsHandlerObserver(
         impl: SSHKeyDetailsHandlerObserverImpl
-    ): ItemDetailsHandlerObserver<*>
+    ): ItemDetailsHandlerObserver<*, *>
 
 }

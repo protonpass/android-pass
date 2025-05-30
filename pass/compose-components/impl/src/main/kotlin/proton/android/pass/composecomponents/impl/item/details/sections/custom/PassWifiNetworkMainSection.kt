@@ -83,7 +83,7 @@ fun PassWifiNetworkMainSection(
             onClick = {
                 onEvent(
                     PassItemDetailsUiEvent.OnFieldClick(
-                        field = ItemDetailsFieldType.Copyable.SSID(contents.ssid)
+                        field = ItemDetailsFieldType.PlainCopyable.SSID(contents.ssid)
                     )
                 )
             }
@@ -104,7 +104,7 @@ fun PassWifiNetworkMainSection(
             onClick = {
                 onEvent(
                     PassItemDetailsUiEvent.OnFieldClick(
-                        field = ItemDetailsFieldType.Hidden.Password(contents.password)
+                        field = ItemDetailsFieldType.HiddenCopyable.Password(contents.password)
                     )
                 )
             },
@@ -113,7 +113,7 @@ fun PassWifiNetworkMainSection(
                     PassItemDetailsUiEvent.OnHiddenFieldToggle(
                         isVisible = isVisible,
                         hiddenState = contents.password,
-                        fieldType = ItemDetailsFieldType.Hidden.Password(contents.password),
+                        fieldType = ItemDetailsFieldType.HiddenCopyable.Password(contents.password),
                         fieldSection = ItemSection.WifiNetwork
                     )
                 )

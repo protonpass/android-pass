@@ -33,8 +33,8 @@ import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.On
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnSharedVaultClicked
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnUpgrade
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnViewItemHistoryClicked
+import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnViewReusedPasswords
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.OnWifiNetworkQRClick
-import proton.android.pass.features.item.details.detail.ui.ItemDetailsUiEvent.ViewReusedPasswords
 
 @Composable
 internal fun ItemDetailsContent(
@@ -142,7 +142,7 @@ internal fun ItemDetailsContent(
                             OnWifiNetworkQRClick(uiEvent.rawSvg)
 
                         PassItemDetailsUiEvent.OnShowReusedPasswords ->
-                            ViewReusedPasswords(
+                            OnViewReusedPasswords(
                                 shareId = shareId,
                                 itemId = itemId
                             )

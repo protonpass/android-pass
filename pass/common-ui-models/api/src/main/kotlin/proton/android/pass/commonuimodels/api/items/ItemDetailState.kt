@@ -68,6 +68,8 @@ sealed interface ItemDetailState {
 
     val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>
 
+    val detailEvent: DetailEvent
+
     fun update(itemContents: ItemContents, itemDiffs: ItemDiffs = ItemDiffs.None): ItemDetailState
 
     @Stable
@@ -86,6 +88,7 @@ sealed interface ItemDetailState {
         override val itemShareCount: Int,
         override val attachmentsState: AttachmentsState,
         override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
+        override val detailEvent: DetailEvent,
         val aliasDetails: AliasDetails,
         val aliasContacts: AliasContacts,
         val displayContactsBanner: Boolean
@@ -109,7 +112,6 @@ sealed interface ItemDetailState {
 
             else -> this
         }
-
     }
 
     @Stable
@@ -127,7 +129,8 @@ sealed interface ItemDetailState {
         override val itemDiffs: ItemDiffs.CreditCard,
         override val itemShareCount: Int,
         override val attachmentsState: AttachmentsState,
-        override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>
+        override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
+        override val detailEvent: DetailEvent
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.CreditCard
@@ -166,7 +169,8 @@ sealed interface ItemDetailState {
         override val itemDiffs: ItemDiffs.Identity,
         override val itemShareCount: Int,
         override val attachmentsState: AttachmentsState,
-        override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>
+        override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
+        override val detailEvent: DetailEvent
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Identity
@@ -206,6 +210,7 @@ sealed interface ItemDetailState {
         override val itemShareCount: Int,
         override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
         override val attachmentsState: AttachmentsState,
+        override val detailEvent: DetailEvent,
         val canLoadExternalImages: Boolean,
         val passwordStrength: PasswordStrength,
         val primaryTotp: TotpState?,
@@ -249,7 +254,8 @@ sealed interface ItemDetailState {
         override val itemDiffs: ItemDiffs.Custom,
         override val itemShareCount: Int,
         override val attachmentsState: AttachmentsState,
-        override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>
+        override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
+        override val detailEvent: DetailEvent
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Custom
@@ -289,6 +295,7 @@ sealed interface ItemDetailState {
         override val itemShareCount: Int,
         override val attachmentsState: AttachmentsState,
         override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
+        override val detailEvent: DetailEvent,
         val svgQR: Option<String>
     ) : ItemDetailState {
 
@@ -328,7 +335,8 @@ sealed interface ItemDetailState {
         override val itemDiffs: ItemDiffs.SSHKey,
         override val itemShareCount: Int,
         override val attachmentsState: AttachmentsState,
-        override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>
+        override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
+        override val detailEvent: DetailEvent
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.SSHKey
@@ -367,7 +375,8 @@ sealed interface ItemDetailState {
         override val itemDiffs: ItemDiffs.Note,
         override val itemShareCount: Int,
         override val attachmentsState: AttachmentsState,
-        override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>
+        override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
+        override val detailEvent: DetailEvent
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Note
@@ -406,7 +415,8 @@ sealed interface ItemDetailState {
         override val itemDiffs: ItemDiffs.Unknown,
         override val itemShareCount: Int,
         override val attachmentsState: AttachmentsState,
-        override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>
+        override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
+        override val detailEvent: DetailEvent
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Unknown
@@ -416,3 +426,11 @@ sealed interface ItemDetailState {
     }
 
 }
+
+sealed interface DetailEvent {
+    data object Idle : AliasDetailEvent
+}
+sealed interface AliasDetailEvent : DetailEvent {
+    data class ContactSection(val shareId: ShareId, val itemId: ItemId) : AliasDetailEvent
+}
+

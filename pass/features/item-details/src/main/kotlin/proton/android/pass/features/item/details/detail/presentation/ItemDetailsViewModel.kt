@@ -40,6 +40,7 @@ import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDet
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.commonuimodels.api.items.DetailEvent
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.usecases.GetItemActions
@@ -108,7 +109,7 @@ class ItemDetailsViewModel @Inject constructor(
         }
 
     private val revealedHiddenFieldsFlow = MutableStateFlow(
-        emptyMap<ItemSection, Set<ItemDetailsFieldType.Hidden>>()
+        emptyMap<ItemSection, Set<ItemDetailsFieldType.HiddenCopyable>>()
     )
 
     private val itemDetailsStateFlow = itemFlow.flatMapLatest { item ->
@@ -166,6 +167,10 @@ class ItemDetailsViewModel @Inject constructor(
         eventFlow.compareAndSet(event, ItemDetailsEvent.Idle)
     }
 
+    internal fun onConsumeInternalEvent(event: DetailEvent) {
+        itemDetailsHandler.consumeEvent(event)
+    }
+
     internal fun onItemFieldClicked(fieldType: ItemDetailsFieldType) {
         viewModelScope.launch {
             itemDetailsHandler.onItemDetailsFieldClicked(fieldType)
@@ -180,7 +185,7 @@ class ItemDetailsViewModel @Inject constructor(
 
     internal fun onToggleItemHiddenField(
         isVisible: Boolean,
-        hiddenFieldType: ItemDetailsFieldType.Hidden,
+        hiddenFieldType: ItemDetailsFieldType.HiddenCopyable,
         hiddenFieldSection: ItemSection
     ) {
         when (state.value) {

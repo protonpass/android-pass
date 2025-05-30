@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.combine
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.commonuimodels.api.items.DetailEvent
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanDisplayTotp
@@ -40,13 +41,18 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
     override val encryptionContextProvider: EncryptionContextProvider,
     override val totpManager: TotpManager,
     override val canDisplayTotp: CanDisplayTotp
-) : ItemDetailsHandlerObserver<ItemContents.CreditCard>(encryptionContextProvider, totpManager, canDisplayTotp) {
+) : ItemDetailsHandlerObserver<ItemContents.CreditCard, ItemDetailsFieldType.CreditCardItemAction>(
+    encryptionContextProvider = encryptionContextProvider,
+    totpManager = totpManager,
+    canDisplayTotp = canDisplayTotp
+) {
 
     override fun observe(
         share: Share,
         item: Item,
         attachmentsState: AttachmentsState,
-        savedStateEntries: Map<String, Any?>
+        savedStateEntries: Map<String, Any?>,
+        detailEvent: DetailEvent
     ): Flow<ItemDetailState> = combine(
         observeItemContents(item),
         observeCustomFieldTotps(item)
@@ -65,29 +71,30 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
             itemDiffs = ItemDiffs.CreditCard(),
             itemShareCount = item.shareCount,
             attachmentsState = attachmentsState,
-            customFieldTotps = customFieldTotps
+            customFieldTotps = customFieldTotps,
+            detailEvent = detailEvent
         )
     }
 
     override fun updateHiddenFieldsContents(
         itemContents: ItemContents.CreditCard,
-        revealedHiddenFields: Map<ItemSection, Set<ItemDetailsFieldType.Hidden>>
+        revealedHiddenCopyableFields: Map<ItemSection, Set<ItemDetailsFieldType.HiddenCopyable>>
     ): ItemContents {
-        val revealedFields = revealedHiddenFields[ItemSection.CreditCard] ?: emptyList()
+        val revealedFields = revealedHiddenCopyableFields[ItemSection.CreditCard] ?: emptyList()
         return itemContents.copy(
             cvv = updateHiddenStateValue(
                 hiddenState = itemContents.cvv,
-                shouldBeRevealed = revealedFields.any { it is ItemDetailsFieldType.Hidden.Cvv },
+                shouldBeRevealed = revealedFields.any { it is ItemDetailsFieldType.HiddenCopyable.Cvv },
                 encryptionContextProvider = encryptionContextProvider
             ),
             pin = updateHiddenStateValue(
                 hiddenState = itemContents.pin,
-                shouldBeRevealed = revealedFields.any { it is ItemDetailsFieldType.Hidden.Pin },
+                shouldBeRevealed = revealedFields.any { it is ItemDetailsFieldType.HiddenCopyable.Pin },
                 encryptionContextProvider = encryptionContextProvider
             ),
             customFields = updateHiddenCustomFieldContents(
                 customFields = itemContents.customFields,
-                revealedHiddenFields = revealedHiddenFields[ItemSection.CustomField].orEmpty()
+                revealedHiddenFields = revealedHiddenCopyableFields[ItemSection.CustomField].orEmpty()
             )
         )
     }
@@ -141,4 +148,8 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
         )
     }
 
+    override suspend fun performAction(
+        fieldType: ItemDetailsFieldType.CreditCardItemAction,
+        callback: suspend (DetailEvent) -> Unit
+    ) = Unit
 }

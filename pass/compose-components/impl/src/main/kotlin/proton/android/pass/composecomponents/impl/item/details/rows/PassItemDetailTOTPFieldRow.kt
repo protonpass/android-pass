@@ -73,7 +73,7 @@ internal fun PassItemDetailTOTPFieldRow(
             onClick = {
                 onEvent(
                     OnFieldClick(
-                        field = ItemDetailsFieldType.Copyable.TotpCode(totp.code)
+                        field = ItemDetailsFieldType.PlainCopyable.TotpCode(totp.code)
                     )
                 )
             },

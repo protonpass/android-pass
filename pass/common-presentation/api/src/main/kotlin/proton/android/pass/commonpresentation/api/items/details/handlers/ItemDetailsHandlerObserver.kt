@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.onStart
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.commonuimodels.api.items.DetailEvent
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -46,7 +47,7 @@ import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.toItemContents
 import proton.android.pass.totp.api.TotpManager
 
-abstract class ItemDetailsHandlerObserver<ITEM_CONTENTS : ItemContents>(
+abstract class ItemDetailsHandlerObserver<ITEM_CONTENTS : ItemContents, FIELD_TYPE : ItemDetailsFieldType>(
     open val encryptionContextProvider: EncryptionContextProvider,
     open val totpManager: TotpManager,
     open val canDisplayTotp: CanDisplayTotp
@@ -56,12 +57,13 @@ abstract class ItemDetailsHandlerObserver<ITEM_CONTENTS : ItemContents>(
         share: Share,
         item: Item,
         attachmentsState: AttachmentsState,
-        savedStateEntries: Map<String, Any?>
+        savedStateEntries: Map<String, Any?>,
+        detailEvent: DetailEvent
     ): Flow<ItemDetailState>
 
     abstract fun updateHiddenFieldsContents(
         itemContents: ITEM_CONTENTS,
-        revealedHiddenFields: Map<ItemSection, Set<ItemDetailsFieldType.Hidden>>
+        revealedHiddenCopyableFields: Map<ItemSection, Set<ItemDetailsFieldType.HiddenCopyable>>
     ): ItemContents
 
     abstract fun calculateItemDiffs(
@@ -70,6 +72,8 @@ abstract class ItemDetailsHandlerObserver<ITEM_CONTENTS : ItemContents>(
         baseAttachments: List<Attachment>,
         otherAttachments: List<Attachment>
     ): ItemDiffs
+
+    abstract suspend fun performAction(fieldType: FIELD_TYPE, callback: suspend (DetailEvent) -> Unit)
 
     protected fun observeItemContents(item: Item): Flow<ITEM_CONTENTS> = flow {
         encryptionContextProvider.withEncryptionContext {
@@ -194,6 +198,7 @@ abstract class ItemDetailsHandlerObserver<ITEM_CONTENTS : ItemContents>(
             when {
                 otherAttachmentsMap[attachmentId] == null ->
                     diffMap[attachmentId] = ItemDiffType.Field
+
                 else -> diffMap[attachmentId] =
                     ItemDiffType.None
             }
@@ -216,8 +221,10 @@ abstract class ItemDetailsHandlerObserver<ITEM_CONTENTS : ItemContents>(
             encryptionContextProvider.withEncryptionContext {
                 HiddenState.Revealed(hiddenState.encrypted, decrypt(hiddenState.encrypted))
             }
+
         !shouldBeRevealed && hiddenState is HiddenState.Revealed ->
             HiddenState.Concealed(hiddenState.encrypted)
+
         else -> hiddenState
     }
 
@@ -226,20 +233,27 @@ abstract class ItemDetailsHandlerObserver<ITEM_CONTENTS : ItemContents>(
         shouldBeRevealed: Boolean,
         encryptionContextProvider: EncryptionContextProvider
     ): CustomFieldContent = if (customField is CustomFieldContent.Hidden) {
-        customField.copy(value = updateHiddenStateValue(customField.value, shouldBeRevealed, encryptionContextProvider))
+        customField.copy(
+            value = updateHiddenStateValue(
+                customField.value,
+                shouldBeRevealed,
+                encryptionContextProvider
+            )
+        )
     } else {
         customField
     }
 
     protected fun updateHiddenCustomFieldContents(
         customFields: List<CustomFieldContent>,
-        revealedHiddenFields: Set<ItemDetailsFieldType.Hidden>
+        revealedHiddenFields: Set<ItemDetailsFieldType.HiddenCopyable>
     ): List<CustomFieldContent> {
         val mutableCustomFields = customFields.toMutableList()
         customFields.forEachIndexed { index, field ->
             val shouldBeRevealed = revealedHiddenFields
-                .any { it is ItemDetailsFieldType.Hidden.CustomField && it.index == index } == true
-            mutableCustomFields[index] = updateHiddenState(field, shouldBeRevealed, encryptionContextProvider)
+                .any { it is ItemDetailsFieldType.HiddenCopyable.CustomField && it.index == index } == true
+            mutableCustomFields[index] =
+                updateHiddenState(field, shouldBeRevealed, encryptionContextProvider)
         }
         return mutableCustomFields
     }

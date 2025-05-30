@@ -48,7 +48,7 @@ internal fun PassIdentityItemDetailsAddressSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_address_organization_title,
             section = organization,
-            field = ItemDetailsFieldType.Copyable.Organization(organization),
+            field = ItemDetailsFieldType.PlainCopyable.Organization(organization),
             itemColors = itemColors,
             itemDiffType = itemDiffs.organization,
             onEvent = onEvent
@@ -59,7 +59,7 @@ internal fun PassIdentityItemDetailsAddressSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_address_street_address_title,
             section = streetAddress,
-            field = ItemDetailsFieldType.Copyable.StreetAddress(streetAddress),
+            field = ItemDetailsFieldType.PlainCopyable.StreetAddress(streetAddress),
             itemColors = itemColors,
             itemDiffType = itemDiffs.streetAddress,
             onEvent = onEvent
@@ -70,7 +70,7 @@ internal fun PassIdentityItemDetailsAddressSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_address_floor_title,
             section = floor,
-            field = ItemDetailsFieldType.Copyable.Floor(floor),
+            field = ItemDetailsFieldType.PlainCopyable.Floor(floor),
             itemColors = itemColors,
             itemDiffType = itemDiffs.floor,
             onEvent = onEvent
@@ -81,7 +81,7 @@ internal fun PassIdentityItemDetailsAddressSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_address_city_title,
             section = city,
-            field = ItemDetailsFieldType.Copyable.City(city),
+            field = ItemDetailsFieldType.PlainCopyable.City(city),
             itemColors = itemColors,
             itemDiffType = itemDiffs.city,
             onEvent = onEvent
@@ -92,7 +92,7 @@ internal fun PassIdentityItemDetailsAddressSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_address_zip_or_postal_code_title,
             section = zipOrPostalCode,
-            field = ItemDetailsFieldType.Copyable.ZipOrPostalCode(zipOrPostalCode),
+            field = ItemDetailsFieldType.PlainCopyable.ZipOrPostalCode(zipOrPostalCode),
             itemColors = itemColors,
             itemDiffType = itemDiffs.zipOrPostalCode,
             onEvent = onEvent
@@ -103,7 +103,7 @@ internal fun PassIdentityItemDetailsAddressSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_address_state_or_province_title,
             section = stateOrProvince,
-            field = ItemDetailsFieldType.Copyable.StateOrProvince(stateOrProvince),
+            field = ItemDetailsFieldType.PlainCopyable.StateOrProvince(stateOrProvince),
             itemColors = itemColors,
             itemDiffType = itemDiffs.stateOrProvince,
             onEvent = onEvent
@@ -114,7 +114,7 @@ internal fun PassIdentityItemDetailsAddressSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_address_county_title,
             section = county,
-            field = ItemDetailsFieldType.Copyable.County(county),
+            field = ItemDetailsFieldType.PlainCopyable.County(county),
             itemColors = itemColors,
             itemDiffType = itemDiffs.county,
             onEvent = onEvent
@@ -125,7 +125,7 @@ internal fun PassIdentityItemDetailsAddressSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_address_country_or_region_title,
             section = countryOrRegion,
-            field = ItemDetailsFieldType.Copyable.CountryOrRegion(countryOrRegion),
+            field = ItemDetailsFieldType.PlainCopyable.CountryOrRegion(countryOrRegion),
             itemColors = itemColors,
             itemDiffType = itemDiffs.countryOrRegion,
             onEvent = onEvent

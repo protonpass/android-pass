@@ -19,7 +19,12 @@
 package proton.android.pass.data.impl.usecases.credentials.passwords
 
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import me.proton.core.account.domain.entity.Account
+import me.proton.core.account.domain.entity.isReady
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
@@ -35,47 +40,73 @@ import proton.android.pass.domain.toItemContents
 import javax.inject.Inject
 
 class GetPasswordCredentialItemsImpl @Inject constructor(
+    private val accountManager: AccountManager,
     private val observeAutofillShares: ObserveAutofillShares,
     private val observeItems: ObserveItems,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : GetPasswordCredentialItems {
 
-    override suspend fun invoke(suggestion: Suggestion): List<PasswordCredentialItem> = observeAutofillShares()
-        .flatMapLatest { autofillShares ->
-            observeItems(
-                selection = ShareSelection.Shares(autofillShares.map(Share::id)),
-                itemState = ItemState.Active,
-                filter = ItemTypeFilter.Logins
-            )
-        }
-        .first()
-        .let { loginItems ->
-            encryptionContextProvider.withEncryptionContextSuspendable {
-                loginItems.map { loginItem ->
-                    loginItem.toItemContents<ItemContents.Login> { decrypt(it) }
+    override suspend fun invoke(suggestion: Suggestion): List<PasswordCredentialItem> {
+        val accountsMap = accountManager.getAccounts()
+            .map { accounts -> accounts.filter(Account::isReady) }
+            .first()
+            .associateBy(Account::userId)
+
+        return accountsMap.values.map { account ->
+            println("JIBIRI: account email -> ${account.email}")
+            println("JIBIRI: account username -> ${account.username}")
+            observeAutofillShares(userId = account.userId)
+                .first()
+                .map(Share::id)
+                .let { shareIds ->
+                    observeItems(
+                        userId = account.userId,
+                        selection = ShareSelection.Shares(shareIds),
+                        itemState = ItemState.Active,
+                        filter = ItemTypeFilter.Logins
+                    )
                 }
-            }
-        }
-        .filter { loginItemContents ->
-            when (suggestion) {
-                is Suggestion.PackageName -> {
-                    loginItemContents.packageInfoSet.any { packageInfo ->
-                        packageInfo.packageName.value == suggestion.value
+                .first()
+                .let { loginItems ->
+                    encryptionContextProvider.withEncryptionContextSuspendable {
+                        loginItems.map { loginItem ->
+                            loginItem.toItemContents<ItemContents.Login> { decrypt(it) }
+                        }
                     }
                 }
-                is Suggestion.Url -> {
-                    loginItemContents.urls.any { url ->
-                        url == suggestion.value
+                .filter { loginItemContents ->
+                    when (suggestion) {
+                        is Suggestion.PackageName -> {
+                            loginItemContents.packageInfoSet.any { packageInfo ->
+                                packageInfo.packageName.value == suggestion.value
+                            }
+                        }
+
+                        is Suggestion.Url -> {
+                            loginItemContents.urls.any { url ->
+                                url == suggestion.value
+                            }
+                        }
                     }
                 }
-            }
+                .map { loginItemContents ->
+                    PasswordCredentialItem(
+                        displayName = accountsMap.getDisplayName(account.userId, loginItemContents.title),
+                        username = loginItemContents.displayValue,
+                        encryptedPassword = loginItemContents.password.encrypted
+                    )
+                }
+        }.flatten()
+    }
+
+    private fun Map<UserId, Account>.getDisplayName(userId: UserId, title: String): String {
+        if (this.size <= 1) {
+            return title
         }
-        .map { loginItemContents ->
-            PasswordCredentialItem(
-                displayName = loginItemContents.title,
-                username = loginItemContents.displayValue,
-                encryptedPassword = loginItemContents.password.encrypted
-            )
-        }
+
+        return (this[userId]?.username ?: this[userId]?.email)
+            ?.let { accountIdentifier -> "$title ${SpecialCharacters.DOT_SEPARATOR} $accountIdentifier" }
+            ?: title
+    }
 
 }

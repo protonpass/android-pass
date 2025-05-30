@@ -92,7 +92,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Només podeu editar elements a les vostres caixes fortes més antigues. Per editar aquest element, milloreu el vostre pla actual.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">No podeu editar aquest element perquè és a la paperera. Si us plau, traieu-lo de la paperera abans d\'editar-lo.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">No es pot compartir.</string>
-  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">No té els permisos necessaris per realitzar l\'acció sol·licitada.</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">No teniu prou permisos per realitzar aquesta acció.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Heu assolit el límit de compartició de caixes fortes. Per a compartir més caixes fortes, milloreu el vostre pla actual.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">No podeu compartir aquest element perquè és a la paperera. Traieu-lo de la paperera abans de compartir-lo.</string>
   <string name="password_score_vulnerable">Vulnerable</string>
@@ -117,13 +117,13 @@
     <item quantity="other">%1$s respostes</item>
   </plurals>
   <plurals name="alias_blocks_count">
-    <item quantity="one">%1$s blocat</item>
-    <item quantity="other">%1$s blocats</item>
+    <item quantity="one">%1$s bloc</item>
+    <item quantity="other">%1$s blocs</item>
   </plurals>
   <string name="open_with">Obre amb:</string>
   <string name="open_attachments_error">No s\'ha pogut obrir el adjunt.</string>
   <string name="banner_contacts_title">Ho sabíeu?</string>
-  <string name="banner_contacts_subtitle">Cada vegada que el vostre àlies rep un correu electrònic, es crea automàticament un contacte de qui ho ha enviat.</string>
+  <string name="banner_contacts_subtitle">Cada vegada que el vostre àlies rep un correu electrònic, es crea automàticament un contacte del remitent.</string>
   <string name="expand_note_more">més</string>
   <string name="collapse_note_less">menys</string>
 </resources>

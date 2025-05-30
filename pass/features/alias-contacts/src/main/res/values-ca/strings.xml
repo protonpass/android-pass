@@ -24,7 +24,7 @@
   <string name="create_contact_title">Crea un contacte</string>
   <string name="detail_contact_title">Contactes</string>
   <string name="email_input_error">L\'adreça de correu electrònic no és vàlida.</string>
-  <string name="detail_contact_display_name" comment="sender email address">Es crea un contacte per a cada adreça de correu electrònic que enviï correus electrònics a o rebi correus electrònics de %1$s.</string>
+  <string name="detail_contact_display_name" comment="sender email address">Es crea un contacte per a cada adreça de correu electrònic que enviï a o rebi correus electrònics de %1$s.</string>
   <string name="empty_alias_contacts_title">Contactes de l\'àlies</string>
   <string name="empty_alias_contacts_body">Per mantenir la vostra adreça electrònica personal oculta, podeu crear un contacte d\'àlies que emmascari la vostra adreça.</string>
   <string name="empty_alias_contacts_learn_more">Més informació</string>
@@ -42,15 +42,15 @@
     <item quantity="other">%1$d enviats</item>
   </plurals>
   <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d blocat</item>
-    <item quantity="other">%1$d blocats</item>
+    <item quantity="one">%1$d bloquejat</item>
+    <item quantity="other">%1$d bloquejats</item>
   </plurals>
   <string name="blocked_addresses_subtitle">Adreces bloquejades</string>
   <string name="forwarding_addresses_subtitle">Adreces de reenviament</string>
   <string name="snackbar_contact_block_success">S\'ha bloqueat el contacte.</string>
   <string name="snackbar_contact_block_error">No s\'ha pogut bloquejar el contacte.</string>
   <string name="snackbar_contact_unblock_success">S\'ha desbloquejat el contacte.</string>
-  <string name="snackbar_contact_unblock_error">No s\'ha desbloquejat el contacte.</string>
+  <string name="snackbar_contact_unblock_error">No s\'ha pogut desbloquejar el contacte</string>
   <string name="snackbar_delete_contact_success">S\'ha eliminat el contacte.</string>
   <string name="snackbar_delete_contact_error">No s\'ha pogut eliminar el contacte.</string>
   <string name="snackbar_email_copied_success">S\'ha copiat el correu electrònic al porta-retalls.</string>

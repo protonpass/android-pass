@@ -197,7 +197,7 @@
   <string name="item_details_shared_section_more_info_header_title">Lisätiedot</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">Lisää kohteen tietoja -kuvake</string>
   <string name="item_details_shared_section_more_info_item_id">Kohteen ID</string>
-  <string name="item_details_shared_section_more_info_vault_id">Vault ID</string>
+  <string name="item_details_shared_section_more_info_vault_id">Holvin ID</string>
   <string name="item_details_shared_section_more_info_share_id">Share ID</string>
   <string name="item_details_wifi_network_label_ssid_name">Nimi (SSID)</string>
   <string name="item_details_wifi_network_label_password">Salasana</string>

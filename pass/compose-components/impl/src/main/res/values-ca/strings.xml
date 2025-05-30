@@ -271,8 +271,8 @@
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Activa la sincronització amb SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="one">Hem detectat que teniu %d àlies a SimpleLogin que no apareix en Proton Pass. Voleu importar-lo?</item>
-    <item quantity="other">Hem detectat que teniu %d àlies en SimpleLogin que no apareixen en Proton Pass. Voleu importar-los?</item>
+    <item quantity="one">Hem detectat que teniu %d àlies a SimpleLogin que no apareix a Proton Pass. Voleu importar-lo?</item>
+    <item quantity="other">Hem detectat que teniu %d àlies a SimpleLogin que no apareixen a Proton Pass. Voleu importar-los?</item>
   </plurals>
   <string name="simple_login_widget_action">Sincronitza els àlies</string>
   <!-- Verification codes -->

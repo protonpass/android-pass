@@ -120,10 +120,7 @@ internal fun PassAliasItemDetailSections(
         }
 
         if (isAliasCreatedByUser) {
-            PassAliasSenderNameSection(
-                text = displayName,
-                isLoading = true
-            )
+            PassAliasSenderNameSection(text = displayName)
 
             PassAliasContactsSection(
                 modifier = Modifier.padding(bottom = Spacing.small),

@@ -53,7 +53,10 @@ internal class PasskeyCredentialUsageViewModel @Inject constructor(
     )
 
     internal val stateFlow: StateFlow<PasskeyCredentialUsageState> = requestOptionFlow.mapLatest { requestOption ->
-        val request = requestOption.value() ?: return@mapLatest PasskeyCredentialUsageState.NotReady
+        val request = requestOption.value() ?: run {
+            PassLogger.w(TAG, "Received Passkey request is null")
+            return@mapLatest PasskeyCredentialUsageState.Cancel
+        }
 
         val response = resolveChallenge(request).getOrElse { error ->
             PassLogger.w(TAG, "Error resolving Passkey challenge")

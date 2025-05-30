@@ -143,15 +143,24 @@ internal class PasskeyCredentialSelectionActivity : FragmentActivity() {
         }
     }
 
-    private fun getPasskeySelectionRequest(): PasskeyCredentialSelectionRequest? = intent.extras
-        ?.let { extrasBundle ->
+    private fun getPasskeySelectionRequest(): PasskeyCredentialSelectionRequest? {
+        val passkeyCredentialOptions = PendingIntentHandler.retrieveBeginGetCredentialRequest(intent)
+            ?.beginGetCredentialOptions
+            ?.firstOrNull { it is BeginGetPublicKeyCredentialOption }
+            ?.let { it as BeginGetPublicKeyCredentialOption }
+            ?: run {
+                PassLogger.w(TAG, "Passkey selection request does not contain BeginGetPublicKeyCredentialOption")
+                return null
+            }
+
+        return intent.extras?.let { extrasBundle ->
             when (extrasBundle.getString(EXTRAS_REQUEST_TYPE_KEY)) {
                 PasskeyRequestType.SelectPasskey.name -> {
-                    createPasskeySelectRequest(extrasBundle)
+                    createPasskeySelectRequest(passkeyCredentialOptions, extrasBundle)
                 }
 
                 PasskeyRequestType.UsePasskey.name -> {
-                    createPasskeyUseRequest(extrasBundle)
+                    createPasskeyUseRequest(passkeyCredentialOptions, extrasBundle)
                 }
 
                 else -> {
@@ -160,40 +169,33 @@ internal class PasskeyCredentialSelectionActivity : FragmentActivity() {
                 }
             }
         }
+    }
 
-    private fun createPasskeySelectRequest(extrasBundle: Bundle): PasskeyCredentialSelectionRequest? {
-        val requestJson = extrasBundle.getString(EXTRAS_REQUEST_JSON) ?: run {
-            PassLogger.w(TAG, "Passkey selection request does not contain requestJson")
-            return null
-        }
-
+    private fun createPasskeySelectRequest(
+        options: BeginGetPublicKeyCredentialOption,
+        extrasBundle: Bundle
+    ): PasskeyCredentialSelectionRequest? {
         val requestOrigin = extrasBundle.getString(EXTRAS_REQUEST_ORIGIN) ?: run {
             PassLogger.w(TAG, "Passkey selection request does not contain requestOrigin")
             return null
         }
 
-        val clientDataHash = extrasBundle.getByteArray(EXTRAS_REQUEST_CLIENT_DATA_HASH)
-
         return PasskeyCredentialSelectionRequest.Select(
-            requestJson = requestJson,
+            requestJson = options.requestJson,
             requestOrigin = requestOrigin,
-            clientDataHash = clientDataHash
+            clientDataHash = options.clientDataHash
         )
     }
 
     @Suppress("ReturnCount")
-    private fun createPasskeyUseRequest(extrasBundle: Bundle): PasskeyCredentialSelectionRequest? {
-        val requestJson = extrasBundle.getString(EXTRAS_REQUEST_JSON) ?: run {
-            PassLogger.w(TAG, "Passkey usage request does not contain requestJson")
-            return null
-        }
-
+    private fun createPasskeyUseRequest(
+        options: BeginGetPublicKeyCredentialOption,
+        extrasBundle: Bundle
+    ): PasskeyCredentialSelectionRequest? {
         val requestOrigin = extrasBundle.getString(EXTRAS_REQUEST_ORIGIN) ?: run {
             PassLogger.w(TAG, "Passkey usage request does not contain requestOrigin")
             return null
         }
-
-        val clientDataHash = extrasBundle.getByteArray(EXTRAS_REQUEST_CLIENT_DATA_HASH)
 
         val shareId = extrasBundle.getString(EXTRAS_SHARE_ID)?.let(::ShareId) ?: run {
             PassLogger.w(TAG, "Passkey usage request does not contain ShareId")
@@ -211,9 +213,9 @@ internal class PasskeyCredentialSelectionActivity : FragmentActivity() {
         }
 
         return PasskeyCredentialSelectionRequest.Use(
-            requestJson = requestJson,
+            requestJson = options.requestJson,
             requestOrigin = requestOrigin,
-            clientDataHash = clientDataHash,
+            clientDataHash = options.clientDataHash,
             shareId = shareId,
             itemId = itemId,
             passkeyId = passKeyId
@@ -251,9 +253,7 @@ internal class PasskeyCredentialSelectionActivity : FragmentActivity() {
         private const val EXTRAS_SHARE_ID = "SHARE_ID"
         private const val EXTRAS_ITEM_ID = "ITEM_ID_ID"
         private const val EXTRAS_PASSKEY_ID = "PASSKEY_ID"
-        private const val EXTRAS_REQUEST_JSON = "REQUEST_JSON"
         private const val EXTRAS_REQUEST_ORIGIN = "REQUEST_ORIGIN"
-        private const val EXTRAS_REQUEST_CLIENT_DATA_HASH = "REQUEST_CLIENT_DATA_HASH"
 
         internal fun createPasskeyCredentialIntent(context: Context, passkeyItem: PasskeyItem): Intent = Intent(
             context,
@@ -267,11 +267,7 @@ internal class PasskeyCredentialSelectionActivity : FragmentActivity() {
             putExtra(EXTRAS_PASSKEY_ID, passkeyItem.passkey.id.value)
         }
 
-        internal fun createPasskeyCredentialIntent(
-            context: Context,
-            origin: String,
-            option: BeginGetPublicKeyCredentialOption
-        ): Intent = Intent(
+        internal fun createPasskeyCredentialIntent(context: Context, origin: String): Intent = Intent(
             context,
             PasskeyCredentialSelectionActivity::class.java
         ).apply {
@@ -279,8 +275,6 @@ internal class PasskeyCredentialSelectionActivity : FragmentActivity() {
 
             putExtra(EXTRAS_REQUEST_TYPE_KEY, PasskeyRequestType.SelectPasskey.name)
             putExtra(EXTRAS_REQUEST_ORIGIN, origin)
-            putExtra(EXTRAS_REQUEST_JSON, option.requestJson)
-            putExtra(EXTRAS_REQUEST_CLIENT_DATA_HASH, option.clientDataHash)
         }
 
     }

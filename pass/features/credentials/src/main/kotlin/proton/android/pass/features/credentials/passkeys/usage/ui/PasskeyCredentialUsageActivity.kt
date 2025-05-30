@@ -25,8 +25,8 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.credentials.GetCredentialResponse
+import androidx.credentials.GetPublicKeyCredentialOption
 import androidx.credentials.PublicKeyCredential
-import androidx.credentials.provider.BeginGetPublicKeyCredentialOption
 import androidx.credentials.provider.PendingIntentHandler
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
@@ -80,17 +80,23 @@ internal class PasskeyCredentialUsageActivity : FragmentActivity() {
 
     @Suppress("ReturnCount")
     private fun getPasskeyUsageRequest(): PasskeyCredentialUsageRequest? {
-        val requestJson = intent.getStringExtra(EXTRAS_REQUEST_JSON) ?: run {
-            PassLogger.w(TAG, "Passkey usage request does not contain requestJson")
-            return null
-        }
+        val passkeyCredentialOptions = PendingIntentHandler.retrieveProviderGetCredentialRequest(intent)
+            ?.credentialOptions
+            ?.firstOrNull { it is GetPublicKeyCredentialOption }
+            ?.let { it as GetPublicKeyCredentialOption }
+            ?: run {
+                PassLogger.w(TAG, "Passkey usage request does not contain GetPublicKeyCredentialOption")
+                return null
+            }
+
+        val requestJson = passkeyCredentialOptions.requestJson
+
+        val clientDataHash = passkeyCredentialOptions.clientDataHash
 
         val requestOrigin = intent.getStringExtra(EXTRAS_REQUEST_ORIGIN) ?: run {
             PassLogger.w(TAG, "Passkey usage request does not contain requestOrigin")
             return null
         }
-
-        val clientDataHash = intent.getByteArrayExtra(EXTRAS_REQUEST_CLIENT_DATA_HASH)
 
         val shareId = intent.getStringExtra(EXTRAS_SHARE_ID)?.let(::ShareId) ?: run {
             PassLogger.w(TAG, "Could not get ShareId")
@@ -144,9 +150,7 @@ internal class PasskeyCredentialUsageActivity : FragmentActivity() {
 
         private const val TAG = "PasskeyCredentialUsageActivity"
 
-        private const val EXTRAS_REQUEST_JSON = "REQUEST_JSON"
         private const val EXTRAS_REQUEST_ORIGIN = "REQUEST_ORIGIN"
-        private const val EXTRAS_REQUEST_CLIENT_DATA_HASH = "REQUEST_CLIENT_DATA_HASH"
         private const val EXTRAS_SHARE_ID = "SHARE_ID"
         private const val EXTRAS_ITEM_ID = "ITEM_ID_ID"
         private const val EXTRAS_PASSKEY_ID = "PASSKEY_ID"
@@ -154,7 +158,6 @@ internal class PasskeyCredentialUsageActivity : FragmentActivity() {
         internal fun createPasskeyCredentialIntent(
             context: Context,
             origin: String,
-            option: BeginGetPublicKeyCredentialOption,
             passkeyItem: PasskeyItem
         ): Intent = Intent(
             context,
@@ -163,8 +166,6 @@ internal class PasskeyCredentialUsageActivity : FragmentActivity() {
             setPackage(context.packageName)
 
             putExtra(EXTRAS_REQUEST_ORIGIN, origin)
-            putExtra(EXTRAS_REQUEST_JSON, option.requestJson)
-            putExtra(EXTRAS_REQUEST_CLIENT_DATA_HASH, option.clientDataHash)
             putExtra(EXTRAS_SHARE_ID, passkeyItem.shareId.id)
             putExtra(EXTRAS_ITEM_ID, passkeyItem.itemId.id)
             putExtra(EXTRAS_PASSKEY_ID, passkeyItem.passkey.id.value)

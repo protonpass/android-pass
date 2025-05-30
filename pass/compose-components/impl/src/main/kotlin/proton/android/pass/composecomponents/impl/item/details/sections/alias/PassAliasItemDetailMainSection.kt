@@ -112,7 +112,7 @@ private fun PassAliasItemDetailAddressRow(
             .clickable {
                 onEvent(
                     PassItemDetailsUiEvent.OnFieldClick(
-                        field = ItemDetailsFieldType.Copyable.Alias(alias)
+                        field = ItemDetailsFieldType.PlainCopyable.Alias(alias)
                     )
                 )
             }

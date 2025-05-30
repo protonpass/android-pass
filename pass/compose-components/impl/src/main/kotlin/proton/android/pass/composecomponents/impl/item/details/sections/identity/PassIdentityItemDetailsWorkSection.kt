@@ -48,7 +48,7 @@ internal fun PassIdentityItemDetailsWorkSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_work_company_title,
             section = company,
-            field = ItemDetailsFieldType.Copyable.Company(company),
+            field = ItemDetailsFieldType.PlainCopyable.Company(company),
             itemColors = itemColors,
             itemDiffType = itemDiffs.company,
             onEvent = onEvent
@@ -59,7 +59,7 @@ internal fun PassIdentityItemDetailsWorkSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_work_occupation_title,
             section = jobTitle,
-            field = ItemDetailsFieldType.Copyable.Occupation(jobTitle),
+            field = ItemDetailsFieldType.PlainCopyable.Occupation(jobTitle),
             itemColors = itemColors,
             itemDiffType = itemDiffs.jobTitle,
             onEvent = onEvent
@@ -70,7 +70,7 @@ internal fun PassIdentityItemDetailsWorkSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_work_phone_number_title,
             section = workPhoneNumber,
-            field = ItemDetailsFieldType.Copyable.PhoneNumber(workPhoneNumber),
+            field = ItemDetailsFieldType.PlainCopyable.PhoneNumber(workPhoneNumber),
             itemColors = itemColors,
             itemDiffType = itemDiffs.workPhoneNumber,
             onEvent = onEvent
@@ -81,7 +81,7 @@ internal fun PassIdentityItemDetailsWorkSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_work_email_title,
             section = workEmail,
-            field = ItemDetailsFieldType.Copyable.Email(workEmail),
+            field = ItemDetailsFieldType.PlainCopyable.Email(workEmail),
             itemColors = itemColors,
             itemDiffType = itemDiffs.workEmail,
             onEvent = onEvent
@@ -92,7 +92,7 @@ internal fun PassIdentityItemDetailsWorkSection(
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_work_personal_website_title,
             section = personalWebsite,
-            field = ItemDetailsFieldType.Copyable.Website(personalWebsite),
+            field = ItemDetailsFieldType.PlainCopyable.Website(personalWebsite),
             itemColors = itemColors,
             itemDiffType = itemDiffs.personalWebsite,
             onEvent = onEvent

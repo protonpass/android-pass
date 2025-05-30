@@ -50,7 +50,7 @@ internal sealed interface ItemDetailsUiEvent {
     data class OnHiddenFieldToggled(
         internal val isVisible: Boolean,
         internal val state: HiddenState,
-        internal val fieldType: ItemDetailsFieldType.Hidden,
+        internal val fieldType: ItemDetailsFieldType.HiddenCopyable,
         internal val fieldSection: ItemSection
     ) : ItemDetailsUiEvent
 
@@ -94,7 +94,7 @@ internal sealed interface ItemDetailsUiEvent {
     @JvmInline
     value class OnWifiNetworkQRClick(val rawSvg: String) : ItemDetailsUiEvent
 
-    data class ViewReusedPasswords(val shareId: ShareId, val itemId: ItemId) : ItemDetailsUiEvent
+    data class OnViewReusedPasswords(val shareId: ShareId, val itemId: ItemId) : ItemDetailsUiEvent
 
     data object OnUpgrade : ItemDetailsUiEvent
 }

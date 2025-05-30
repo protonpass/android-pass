@@ -31,6 +31,7 @@ import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCa
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.commonuimodels.api.items.DetailEvent
 import proton.android.pass.commonuimodels.api.items.ItemDetailNavScope
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.commonuimodels.api.items.LoginMonitorState
@@ -74,7 +75,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     private val duplicatedPasswordChecker: DuplicatedPasswordChecker,
     private val missingTfaChecker: MissingTfaChecker,
     private val telemetryManager: TelemetryManager
-) : ItemDetailsHandlerObserver<ItemContents.Login>(
+) : ItemDetailsHandlerObserver<ItemContents.Login, ItemDetailsFieldType.LoginItemAction>(
     encryptionContextProvider,
     totpManager,
     canDisplayTotp
@@ -84,7 +85,8 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         share: Share,
         item: Item,
         attachmentsState: AttachmentsState,
-        savedStateEntries: Map<String, Any?>
+        savedStateEntries: Map<String, Any?>,
+        detailEvent: DetailEvent
     ): Flow<ItemDetailState> = combine(
         observeItemContents(item),
         observePrimaryTotp(item),
@@ -120,7 +122,8 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             customFieldTotps = customFieldTotps,
             passkeys = loginItemContents.passkeys.map { passkey -> UIPasskeyContent.from(passkey) },
             attachmentsState = attachmentsState,
-            loginMonitorState = loginMonitorState
+            loginMonitorState = loginMonitorState,
+            detailEvent = detailEvent
         )
     }
 
@@ -199,18 +202,18 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
 
     override fun updateHiddenFieldsContents(
         itemContents: ItemContents.Login,
-        revealedHiddenFields: Map<ItemSection, Set<ItemDetailsFieldType.Hidden>>
+        revealedHiddenCopyableFields: Map<ItemSection, Set<ItemDetailsFieldType.HiddenCopyable>>
     ): ItemContents {
-        val revealedFields = revealedHiddenFields[ItemSection.Login] ?: emptyList()
+        val revealedFields = revealedHiddenCopyableFields[ItemSection.Login] ?: emptyList()
         return itemContents.copy(
             password = updateHiddenStateValue(
                 hiddenState = itemContents.password,
-                shouldBeRevealed = revealedFields.any { it is ItemDetailsFieldType.Hidden.Password },
+                shouldBeRevealed = revealedFields.any { it is ItemDetailsFieldType.HiddenCopyable.Password },
                 encryptionContextProvider = encryptionContextProvider
             ),
             customFields = updateHiddenCustomFieldContents(
                 customFields = itemContents.customFields,
-                revealedHiddenFields = revealedHiddenFields[ItemSection.CustomField].orEmpty()
+                revealedHiddenFields = revealedHiddenCopyableFields[ItemSection.CustomField].orEmpty()
             )
         )
     }
@@ -315,5 +318,10 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             }
         }
     }
+
+    override suspend fun performAction(
+        fieldType: ItemDetailsFieldType.LoginItemAction,
+        callback: suspend (DetailEvent) -> Unit
+    ) = Unit
 
 }

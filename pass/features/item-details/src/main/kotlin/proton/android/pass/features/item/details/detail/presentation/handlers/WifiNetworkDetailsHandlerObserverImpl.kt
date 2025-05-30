@@ -33,6 +33,7 @@ import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDet
 import proton.android.pass.commonpresentation.api.items.details.handlers.mapToDecryptedTotp
 import proton.android.pass.commonrust.api.WifiNetworkQRGenerator
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.commonuimodels.api.items.DetailEvent
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanDisplayTotp
@@ -52,13 +53,18 @@ class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
     override val totpManager: TotpManager,
     override val canDisplayTotp: CanDisplayTotp,
     private val wifiNetworkQRGenerator: WifiNetworkQRGenerator
-) : ItemDetailsHandlerObserver<ItemContents.WifiNetwork>(encryptionContextProvider, totpManager, canDisplayTotp) {
+) : ItemDetailsHandlerObserver<ItemContents.WifiNetwork, ItemDetailsFieldType.WifiNetworkItemAction>(
+    encryptionContextProvider = encryptionContextProvider,
+    totpManager = totpManager,
+    canDisplayTotp = canDisplayTotp
+) {
 
     override fun observe(
         share: Share,
         item: Item,
         attachmentsState: AttachmentsState,
-        savedStateEntries: Map<String, Any?>
+        savedStateEntries: Map<String, Any?>,
+        detailEvent: DetailEvent
     ): Flow<ItemDetailState> = combine(
         observeItemContents(item),
         observeTotps(item)
@@ -84,7 +90,8 @@ class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
                     decrypt(itemContents.password.encrypted)
                 },
                 wifiSecurity = itemContents.wifiSecurityType
-            ).getOrNull().toOption()
+            ).getOrNull().toOption(),
+            detailEvent = detailEvent
         )
     }
 
@@ -129,31 +136,33 @@ class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
 
     override fun updateHiddenFieldsContents(
         itemContents: ItemContents.WifiNetwork,
-        revealedHiddenFields: Map<ItemSection, Set<ItemDetailsFieldType.Hidden>>
+        revealedHiddenCopyableFields: Map<ItemSection, Set<ItemDetailsFieldType.HiddenCopyable>>
     ): ItemContents {
-        val revealedFields = revealedHiddenFields[ItemSection.WifiNetwork] ?: emptyList()
+        val revealedFields = revealedHiddenCopyableFields[ItemSection.WifiNetwork] ?: emptyList()
         val mutableSections = itemContents.sectionContentList.toMutableList()
         val mutableCustomFields = itemContents.customFields.toMutableList()
 
         mutableSections.forEachIndexed { sectionIndex, sectionContent ->
             val updatedCustomFields = sectionContent.customFieldList.mapIndexed { fieldIndex, field ->
-                val shouldBeRevealed = revealedHiddenFields[ItemSection.ExtraSection(sectionIndex)]
-                    ?.any { it is ItemDetailsFieldType.Hidden.CustomField && it.index == fieldIndex } == true
+                val shouldBeRevealed = revealedHiddenCopyableFields[ItemSection.ExtraSection(sectionIndex)]
+                    ?.any { it is ItemDetailsFieldType.HiddenCopyable.CustomField && it.index == fieldIndex } == true
                 updateHiddenState(field, shouldBeRevealed, encryptionContextProvider)
             }
             mutableSections[sectionIndex] = sectionContent.copy(customFieldList = updatedCustomFields)
         }
 
         mutableCustomFields.forEachIndexed { index, field ->
-            val shouldBeRevealed = revealedHiddenFields[ItemSection.CustomField]
-                ?.any { it is ItemDetailsFieldType.Hidden.CustomField && it.index == index } == true
+            val shouldBeRevealed = revealedHiddenCopyableFields[ItemSection.CustomField]
+                ?.any { it is ItemDetailsFieldType.HiddenCopyable.CustomField && it.index == index } == true
             mutableCustomFields[index] = updateHiddenState(field, shouldBeRevealed, encryptionContextProvider)
         }
 
         return itemContents.copy(
             password = updateHiddenStateValue(
                 hiddenState = itemContents.password,
-                shouldBeRevealed = revealedFields.contains(ItemDetailsFieldType.Hidden.Password(itemContents.password)),
+                shouldBeRevealed = revealedFields.contains(
+                    ItemDetailsFieldType.HiddenCopyable.Password(itemContents.password)
+                ),
                 encryptionContextProvider = encryptionContextProvider
             ),
             sectionContentList = mutableSections,
@@ -207,5 +216,10 @@ class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
             )
         )
     }
+
+    override suspend fun performAction(
+        fieldType: ItemDetailsFieldType.WifiNetworkItemAction,
+        callback: suspend (DetailEvent) -> Unit
+    ) = Unit
 
 }

@@ -65,7 +65,7 @@ internal fun PassSSHKeyMainSection(
             onClick = {
                 onEvent(
                     PassItemDetailsUiEvent.OnFieldClick(
-                        field = ItemDetailsFieldType.Copyable.PublicKey(contents.publicKey)
+                        field = ItemDetailsFieldType.PlainCopyable.PublicKey(contents.publicKey)
                     )
                 )
             }
@@ -85,7 +85,7 @@ internal fun PassSSHKeyMainSection(
             onClick = {
                 onEvent(
                     PassItemDetailsUiEvent.OnFieldClick(
-                        field = ItemDetailsFieldType.Hidden.PrivateKey(contents.privateKey)
+                        field = ItemDetailsFieldType.HiddenCopyable.PrivateKey(contents.privateKey)
                     )
                 )
             },
@@ -94,7 +94,7 @@ internal fun PassSSHKeyMainSection(
                     PassItemDetailsUiEvent.OnHiddenFieldToggle(
                         isVisible = isVisible,
                         hiddenState = contents.privateKey,
-                        fieldType = ItemDetailsFieldType.Hidden.PrivateKey(contents.privateKey),
+                        fieldType = ItemDetailsFieldType.HiddenCopyable.PrivateKey(contents.privateKey),
                         fieldSection = ItemSection.SSHKey
                     )
                 )

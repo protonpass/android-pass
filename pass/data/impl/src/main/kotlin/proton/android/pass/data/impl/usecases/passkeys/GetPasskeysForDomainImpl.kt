@@ -20,16 +20,17 @@ package proton.android.pass.data.impl.usecases.passkeys
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeysForDomain
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
-import proton.android.pass.data.api.usecases.passkeys.PasskeyItem
 import proton.android.pass.data.api.usecases.passkeys.PasskeySelection
 import proton.android.pass.data.api.usecases.shares.ObserveAutofillShares
 import proton.android.pass.data.impl.util.DomainUtils
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.PasskeyItem
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.log.api.PassLogger
@@ -43,14 +44,21 @@ class GetPasskeysForDomainImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : GetPasskeysForDomain {
 
-    override suspend fun invoke(domain: String, selection: PasskeySelection): List<PasskeyItem> {
+    override suspend fun invoke(
+        domain: String,
+        selection: PasskeySelection,
+        userId: UserId?
+    ): List<PasskeyItem> {
         val parsed = UrlSanitizer.getDomain(domain).getOrElse {
             PassLogger.w(TAG, "Could not get domain from $domain")
             return emptyList()
         }
 
-        val allItemsWithPasskeys = observeAutofillShares().flatMapLatest {
-            observeItemsWithPasskeys(shareSelection = ShareSelection.Shares(it.map { share -> share.id }))
+        val allItemsWithPasskeys = observeAutofillShares(userId = userId).flatMapLatest {
+            observeItemsWithPasskeys(
+                userId = userId,
+                shareSelection = ShareSelection.Shares(it.map { share -> share.id })
+            )
         }.first()
 
         val loginItems = encryptionContextProvider.withEncryptionContext {

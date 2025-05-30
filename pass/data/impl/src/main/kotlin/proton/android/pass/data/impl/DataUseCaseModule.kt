@@ -160,6 +160,7 @@ import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareShare
+import proton.android.pass.data.api.usecases.credentials.passkeys.GetPasskeyCredentialItems
 import proton.android.pass.data.api.usecases.credentials.passwords.GetPasswordCredentialItems
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
@@ -388,6 +389,7 @@ import proton.android.pass.data.impl.usecases.capabilities.CanCreateVaultImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanManageVaultAccessImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanMigrateVaultImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanShareShareImpl
+import proton.android.pass.data.impl.usecases.credentials.passkeys.GetPasskeyCredentialItemsImpl
 import proton.android.pass.data.impl.usecases.credentials.passwords.GetPasswordCredentialItemsImpl
 import proton.android.pass.data.impl.usecases.defaultvault.SetDefaultVaultImpl
 import proton.android.pass.data.impl.usecases.extrapassword.AuthWithExtraPasswordImpl
@@ -1207,5 +1209,8 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindGetPasswordCredentialItems(impl: GetPasswordCredentialItemsImpl): GetPasswordCredentialItems
+
+    @[Binds Singleton]
+    abstract fun bindGetPasskeyCredentialItems(impl: GetPasskeyCredentialItemsImpl): GetPasskeyCredentialItems
 
 }

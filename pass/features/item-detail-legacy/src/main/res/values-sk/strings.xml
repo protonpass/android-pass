@@ -132,6 +132,6 @@
   <string name="open_attachments_error">Prílohu sa nepodarilo otvoriť</string>
   <string name="banner_contacts_title">Vedeli ste?</string>
   <string name="banner_contacts_subtitle">Zakaždým, keď váš alias dostane od niekoho email, automaticky sa vytvorí nový kontakt.</string>
-  <string name="expand_note_more">more</string>
-  <string name="collapse_note_less">less</string>
+  <string name="expand_note_more">viac</string>
+  <string name="collapse_note_less">menej</string>
 </resources>

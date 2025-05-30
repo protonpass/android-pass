@@ -129,7 +129,7 @@
     <item quantity="other">%1$s blocks</item>
   </plurals>
   <string name="open_with">Odpri z:</string>
-  <string name="open_attachments_error">Could not open attachment</string>
+  <string name="open_attachments_error">Ni bilo mogoče odpreti priponke</string>
   <string name="banner_contacts_title">Did you know?</string>
   <string name="banner_contacts_subtitle">Every time your alias receives an email from someone, a new contact is automatically created.</string>
   <string name="expand_note_more">more</string>

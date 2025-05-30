@@ -130,5 +130,5 @@
     <item quantity="other">%1$s blocks</item>
   </plurals>
   <string name="open_with">Odpri z:</string>
-  <string name="open_attachments_error">Could not open attachment</string>
+  <string name="open_attachments_error">Ni bilo mogoče odpreti priponke</string>
 </resources>

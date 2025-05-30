@@ -124,6 +124,6 @@
   <string name="open_attachments_error">Liitettä ei voitu avata</string>
   <string name="banner_contacts_title">Tiesitkö?</string>
   <string name="banner_contacts_subtitle">Aina kun aliaksesi vastaanottaa viestin, luodaan automaattisesti uusi yhteystieto.</string>
-  <string name="expand_note_more">more</string>
-  <string name="collapse_note_less">less</string>
+  <string name="expand_note_more">enemmän</string>
+  <string name="collapse_note_less">vähemmän</string>
 </resources>

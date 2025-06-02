@@ -54,7 +54,7 @@ import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
-internal fun CreateAliasForm(
+internal fun AliasItemForm(
     modifier: Modifier = Modifier,
     aliasItemFormState: AliasItemFormState,
     isCreateMode: Boolean,

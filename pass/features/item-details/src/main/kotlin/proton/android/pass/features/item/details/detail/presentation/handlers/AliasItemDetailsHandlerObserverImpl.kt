@@ -47,12 +47,12 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryBannerPreference
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryFeature.AliasManagementContacts
-import proton.android.pass.totp.api.TotpManager
+import proton.android.pass.totp.api.ObserveTotpFromUri
 import javax.inject.Inject
 
 class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     override val encryptionContextProvider: EncryptionContextProvider,
-    override val totpManager: TotpManager,
+    override val observeTotpFromUri: ObserveTotpFromUri,
     override val canDisplayTotp: CanDisplayTotp,
     private val observeAliasDetails: ObserveAliasDetails,
     private val observeAliasContacts: ObserveAliasContacts,
@@ -60,7 +60,7 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     private val changeAliasStatus: ChangeAliasStatus
 ) : ItemDetailsHandlerObserver<ItemContents.Alias, ItemDetailsFieldType.AliasItemAction>(
     encryptionContextProvider = encryptionContextProvider,
-    totpManager = totpManager,
+    observeTotpFromUri = observeTotpFromUri,
     canDisplayTotp = canDisplayTotp
 ) {
 

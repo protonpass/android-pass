@@ -165,7 +165,7 @@ class BaseCreditCardViewModelTest {
     fun `emits downgraded mode if cannot perform paid action`() = runTest {
         canPerformPaidAction.setResult(false)
         instance.baseState.test {
-            assertThat(awaitItem().isDowngradedMode).isTrue()
+            assertThat(awaitItem().canPerformPaidAction).isTrue()
         }
     }
 

@@ -7,17 +7,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.CommonRegex.NON_DIGIT_REGEX
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.combineN
+import proton.android.pass.common.api.some
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -28,7 +33,15 @@ import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
+import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
+import proton.android.pass.features.itemcreate.common.CreditCardItemValidationError
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
+import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
+import proton.android.pass.features.itemcreate.common.ValidationError
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
@@ -41,6 +54,8 @@ abstract class BaseCreditCardViewModel(
     private val attachmentsHandler: AttachmentsHandler,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
+    private val customFieldHandler: CustomFieldHandler,
+    customFieldDraftRepository: CustomFieldDraftRepository,
     canPerformPaidAction: CanPerformPaidAction,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
@@ -48,8 +63,20 @@ abstract class BaseCreditCardViewModel(
     private val hasUserEditedContentState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     protected val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
+    private val focusedFieldState: MutableStateFlow<Option<CreditCardField>> =
+        MutableStateFlow<Option<CreditCardField>>(None)
 
     init {
+        customFieldDraftRepository.observeCustomFieldEvents()
+            .onEach {
+                onUserEditedContent()
+                when (it) {
+                    is DraftFormFieldEvent.FieldAdded -> onFieldAdded(it)
+                    is DraftFormFieldEvent.FieldRemoved -> onFieldRemoved(it)
+                    is DraftFormFieldEvent.FieldRenamed -> onFieldRenamed(it)
+                }
+            }
+            .launchIn(viewModelScope)
         attachmentsHandler.observeNewAttachments {
             onUserEditedContent()
             viewModelScope.launch {
@@ -66,7 +93,7 @@ abstract class BaseCreditCardViewModel(
         }.launchIn(viewModelScope)
     }
 
-    private val validationErrorsState: MutableStateFlow<Set<CreditCardValidationErrors>> =
+    private val validationErrorsState: MutableStateFlow<Set<ValidationError>> =
         MutableStateFlow(emptySet())
     protected val isItemSavedState: MutableStateFlow<ItemSavedState> =
         MutableStateFlow(ItemSavedState.Unknown)
@@ -82,7 +109,7 @@ abstract class BaseCreditCardViewModel(
         }
     val creditCardItemFormState: CreditCardItemFormState get() = creditCardItemFormMutableState
 
-    val baseState: StateFlow<BaseCreditCardUiState> = combineN(
+    internal val baseState: StateFlow<BaseCreditCardUiState> = combineN(
         isLoadingState,
         hasUserEditedContentState,
         validationErrorsState,
@@ -90,18 +117,20 @@ abstract class BaseCreditCardViewModel(
         canPerformPaidAction(),
         featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
-        attachmentsHandler.attachmentState
+        attachmentsHandler.attachmentState,
+        focusedFieldState
     ) { isLoading, hasUserEditedContent, validationErrors, isItemSaved, canPerformPaidAction,
-        isFileAttachmentsEnabled, displayFileAttachmentsOnboarding, attachmentsState ->
+        isFileAttachmentsEnabled, displayFileAttachmentsOnboarding, attachmentsState, focusedField ->
         BaseCreditCardUiState(
             isLoading = isLoading.value(),
             hasUserEditedContent = hasUserEditedContent,
             validationErrors = validationErrors.toPersistentSet(),
             isItemSaved = isItemSaved,
-            isDowngradedMode = !canPerformPaidAction,
+            canPerformPaidAction = canPerformPaidAction,
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
             isFileAttachmentsEnabled = isFileAttachmentsEnabled,
-            attachmentsState = attachmentsState
+            attachmentsState = attachmentsState,
+            focusedField = focusedField
         )
     }
         .stateIn(
@@ -114,7 +143,7 @@ abstract class BaseCreditCardViewModel(
         onUserEditedContent()
         creditCardItemFormMutableState = creditCardItemFormMutableState.copy(title = value)
         validationErrorsState.update {
-            it.toMutableSet().apply { remove(CreditCardValidationErrors.BlankTitle) }
+            it.toMutableSet().apply { remove(CommonFieldValidationError.BlankTitle) }
         }
     }
 
@@ -170,7 +199,7 @@ abstract class BaseCreditCardViewModel(
         creditCardItemFormMutableState =
             creditCardItemFormMutableState.copy(expirationDate = sanitisedValue)
         validationErrorsState.update {
-            it.toMutableSet().apply { remove(CreditCardValidationErrors.InvalidExpirationDate) }
+            it.toMutableSet().apply { remove(CreditCardItemValidationError.InvalidExpirationDate) }
         }
     }
 
@@ -269,6 +298,76 @@ abstract class BaseCreditCardViewModel(
     fun dismissFileAttachmentsOnboardingBanner() {
         viewModelScope.launch {
             userPreferencesRepository.setDisplayFileAttachmentsOnboarding(NotDisplay)
+        }
+    }
+
+    private fun onFieldRemoved(event: DraftFormFieldEvent.FieldRemoved) {
+        val (_, index) = event
+        creditCardItemFormMutableState = creditCardItemFormState.copy(
+            customFields = creditCardItemFormState.customFields
+                .toMutableList()
+                .apply { removeAt(index) }
+                .toPersistentList()
+        )
+    }
+
+    private fun onFieldRenamed(event: DraftFormFieldEvent.FieldRenamed) {
+        val (_, index, newLabel) = event
+        val updated = customFieldHandler.onCustomFieldRenamed(
+            customFieldList = creditCardItemFormState.customFields,
+            index = index,
+            newLabel = newLabel
+        )
+        creditCardItemFormMutableState = creditCardItemFormState.copy(customFields = updated)
+    }
+
+    private fun onFieldAdded(event: DraftFormFieldEvent.FieldAdded) {
+        val (_, label, type) = event
+        val added = customFieldHandler.onCustomFieldAdded(label, type)
+        creditCardItemFormMutableState = creditCardItemFormState.copy(
+            customFields = creditCardItemFormState.customFields + added
+        )
+        val identifier = CustomFieldIdentifier(
+            index = creditCardItemFormState.customFields.lastIndex,
+            type = type
+        )
+        focusedFieldState.update { CreditCardField.CustomField(identifier).some() }
+    }
+
+    private fun removeValidationErrors(vararg errors: ValidationError) {
+        validationErrorsState.update { currentValidationErrors ->
+            currentValidationErrors.toMutableSet().apply {
+                errors.forEach { error -> remove(error) }
+            }
+        }
+    }
+
+    internal fun onCustomFieldChange(id: CustomFieldIdentifier, value: String) {
+        removeValidationErrors(
+            CustomFieldValidationError.EmptyField(index = id.index),
+            CustomFieldValidationError.InvalidTotp(index = id.index)
+        )
+        val updated = customFieldHandler.onCustomFieldValueChanged(
+            customFieldIdentifier = id,
+            customFieldList = creditCardItemFormState.customFields,
+            value = value
+        )
+        creditCardItemFormMutableState = creditCardItemFormState.copy(
+            customFields = updated.toPersistentList()
+        )
+    }
+
+    internal fun onFocusChange(field: CreditCardField.CustomField, isFocused: Boolean) {
+        val customFields = customFieldHandler.onCustomFieldFocusedChanged(
+            customFieldIdentifier = field.field,
+            customFieldList = creditCardItemFormState.customFields,
+            isFocused = isFocused
+        )
+        creditCardItemFormMutableState = creditCardItemFormState.copy(customFields = customFields)
+        if (isFocused) {
+            focusedFieldState.update { field.some() }
+        } else {
+            focusedFieldState.update { None }
         }
     }
 

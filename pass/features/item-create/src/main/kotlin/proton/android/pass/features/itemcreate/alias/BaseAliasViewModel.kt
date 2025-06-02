@@ -25,28 +25,39 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.combineN
+import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.alias.draftrepositories.MailboxDraftRepository
 import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDraftRepository
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
+import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
+import proton.android.pass.features.itemcreate.common.ValidationError
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner
@@ -65,14 +76,29 @@ abstract class BaseAliasViewModel(
     private val attachmentsHandler: AttachmentsHandler,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
+    private val customFieldHandler: CustomFieldHandler,
+    canPerformPaidAction: CanPerformPaidAction,
+    customFieldDraftRepository: CustomFieldDraftRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
     private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     protected val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.Loading)
+    private val focusedFieldState: MutableStateFlow<Option<AliasField>> =
+        MutableStateFlow<Option<AliasField>>(None)
 
     init {
+        customFieldDraftRepository.observeCustomFieldEvents()
+            .onEach {
+                onUserEditedContent()
+                when (it) {
+                    is DraftFormFieldEvent.FieldAdded -> onFieldAdded(it)
+                    is DraftFormFieldEvent.FieldRemoved -> onFieldRemoved(it)
+                    is DraftFormFieldEvent.FieldRenamed -> onFieldRenamed(it)
+                }
+            }
+            .launchIn(viewModelScope)
         attachmentsHandler.observeNewAttachments {
             onUserEditedContent()
             viewModelScope.launch {
@@ -103,7 +129,7 @@ abstract class BaseAliasViewModel(
         MutableStateFlow(ItemSavedState.Unknown)
     protected val isAliasDraftSavedState: MutableStateFlow<AliasDraftSavedState> =
         MutableStateFlow(AliasDraftSavedState.Unknown)
-    protected val aliasItemValidationErrorsState: MutableStateFlow<Set<AliasItemValidationErrors>> =
+    protected val aliasItemValidationErrorsState: MutableStateFlow<Set<ValidationError>> =
         MutableStateFlow(emptySet())
     protected val isApplyButtonEnabledState: MutableStateFlow<IsButtonEnabled> =
         MutableStateFlow(IsButtonEnabled.Disabled)
@@ -126,7 +152,7 @@ abstract class BaseAliasViewModel(
     )
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    val baseAliasUiState: StateFlow<BaseAliasUiState> = combineN(
+    internal val baseAliasUiState: StateFlow<BaseAliasUiState> = combineN(
         aliasItemValidationErrorsState,
         isLoadingState,
         eventWrapperState,
@@ -134,10 +160,12 @@ abstract class BaseAliasViewModel(
         featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
         userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementOptions),
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
-        attachmentsHandler.attachmentState
+        attachmentsHandler.attachmentState,
+        canPerformPaidAction(),
+        focusedFieldState
     ) { aliasItemValidationErrors, isLoading, eventWrapper, hasUserEditedContent,
         isFileAttachmentEnabled, displayAdvancedOptionsBanner,
-        displayFileAttachmentsOnboarding, attachmentsState ->
+        displayFileAttachmentsOnboarding, attachmentsState, canPerformPaidAction, focusedField ->
         BaseAliasUiState(
             isDraft = isDraft,
             errorList = aliasItemValidationErrors,
@@ -152,7 +180,9 @@ abstract class BaseAliasViewModel(
             isFileAttachmentEnabled = isFileAttachmentEnabled,
             displayAdvancedOptionsBanner = displayAdvancedOptionsBanner.value,
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
-            attachmentsState = attachmentsState
+            attachmentsState = attachmentsState,
+            canPerformPaidAction = canPerformPaidAction,
+            focusedField = focusedField
         )
     }
         .stateIn(
@@ -248,6 +278,76 @@ abstract class BaseAliasViewModel(
                 AliasManagementOptions,
                 FeatureDiscoveryBannerPreference.NotDisplay
             )
+        }
+    }
+
+    private fun onFieldRemoved(event: DraftFormFieldEvent.FieldRemoved) {
+        val (_, index) = event
+        aliasItemFormMutableState = aliasItemFormState.copy(
+            customFields = aliasItemFormState.customFields
+                .toMutableList()
+                .apply { removeAt(index) }
+                .toPersistentList()
+        )
+    }
+
+    private fun onFieldRenamed(event: DraftFormFieldEvent.FieldRenamed) {
+        val (_, index, newLabel) = event
+        val updated = customFieldHandler.onCustomFieldRenamed(
+            customFieldList = aliasItemFormState.customFields,
+            index = index,
+            newLabel = newLabel
+        )
+        aliasItemFormMutableState = aliasItemFormState.copy(customFields = updated)
+    }
+
+    private fun onFieldAdded(event: DraftFormFieldEvent.FieldAdded) {
+        val (_, label, type) = event
+        val added = customFieldHandler.onCustomFieldAdded(label, type)
+        aliasItemFormMutableState = aliasItemFormState.copy(
+            customFields = aliasItemFormState.customFields + added
+        )
+        val identifier = CustomFieldIdentifier(
+            index = aliasItemFormState.customFields.lastIndex,
+            type = type
+        )
+        focusedFieldState.update { AliasField.CustomField(identifier).some() }
+    }
+
+    private fun removeValidationErrors(vararg errors: ValidationError) {
+        aliasItemValidationErrorsState.update { currentValidationErrors ->
+            currentValidationErrors.toMutableSet().apply {
+                errors.forEach { error -> remove(error) }
+            }
+        }
+    }
+
+    internal fun onCustomFieldChange(id: CustomFieldIdentifier, value: String) {
+        removeValidationErrors(
+            CustomFieldValidationError.EmptyField(index = id.index),
+            CustomFieldValidationError.InvalidTotp(index = id.index)
+        )
+        val updated = customFieldHandler.onCustomFieldValueChanged(
+            customFieldIdentifier = id,
+            customFieldList = aliasItemFormState.customFields,
+            value = value
+        )
+        aliasItemFormMutableState = aliasItemFormState.copy(
+            customFields = updated.toPersistentList()
+        )
+    }
+
+    internal fun onFocusChange(field: AliasField.CustomField, isFocused: Boolean) {
+        val customFields = customFieldHandler.onCustomFieldFocusedChanged(
+            customFieldIdentifier = field.field,
+            customFieldList = aliasItemFormState.customFields,
+            isFocused = isFocused
+        )
+        aliasItemFormMutableState = aliasItemFormState.copy(customFields = customFields)
+        if (isFocused) {
+            focusedFieldState.update { field.some() }
+        } else {
+            focusedFieldState.update { None }
         }
     }
 }

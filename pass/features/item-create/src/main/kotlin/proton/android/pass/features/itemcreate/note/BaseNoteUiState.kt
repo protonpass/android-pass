@@ -19,6 +19,8 @@
 package proton.android.pass.features.itemcreate.note
 
 import androidx.compose.runtime.Immutable
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ShareId
@@ -35,8 +37,8 @@ internal data class BaseNoteUiState(
     val isFileAttachmentsEnabled: Boolean,
     val isCustomItemEnabled: Boolean,
     val displayFileAttachmentsOnboarding: Boolean,
-    val canUseCustomFields: Boolean,
-    val focusedField: NoteField?,
+    val canPerformPaidAction: Boolean,
+    val focusedField: Option<NoteField>,
     val attachmentsState: AttachmentsState
 ) {
 
@@ -52,8 +54,8 @@ internal data class BaseNoteUiState(
             hasUserEditedContent = false,
             isFileAttachmentsEnabled = false,
             isCustomItemEnabled = false,
-            canUseCustomFields = false,
-            focusedField = null,
+            canPerformPaidAction = false,
+            focusedField = None,
             displayFileAttachmentsOnboarding = false,
             attachmentsState = AttachmentsState.Initial
         )

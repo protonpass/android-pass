@@ -36,14 +36,14 @@ import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.searchoptions.api.SearchSortingType
 
-sealed interface SearchInMode {
+internal sealed interface SearchInMode {
     data object OldestVaults : SearchInMode
     data object AllVaults : SearchInMode
     data object Uninitialized : SearchInMode
 }
 
 @Immutable
-data class SelectItemUiState(
+internal data class SelectItemUiState(
     val listUiState: SelectItemListUiState,
     val searchUiState: SearchUiState,
     val pinningUiState: PinningUiState
@@ -58,15 +58,18 @@ data class SelectItemUiState(
         pinningUiState.showPinning
 
     companion object {
+
         val Loading = SelectItemUiState(
             listUiState = SelectItemListUiState.Loading,
             searchUiState = SearchUiState.Initial,
             pinningUiState = PinningUiState.Initial
         )
+
     }
+
 }
 
-data class AccountSwitchUIState(
+internal data class AccountSwitchUIState(
     val selectedAccount: Option<UserId>,
     val accountList: List<AccountRowUIState>
 ) {
@@ -74,12 +77,12 @@ data class AccountSwitchUIState(
         get() = accountList.size > 1
 }
 
-data class AccountRowUIState(
+internal data class AccountRowUIState(
     val userId: UserId,
     val email: String
 )
 
-data class SelectItemListUiState(
+internal data class SelectItemListUiState(
     val isLoading: IsLoadingState,
     val isRefreshing: IsRefreshingState,
     val itemClickedEvent: AutofillItemClickedEvent,
@@ -91,13 +94,15 @@ data class SelectItemListUiState(
     val displayOnlyPrimaryVaultMessage: Boolean,
     val canUpgrade: Boolean,
     val displayCreateButton: Boolean,
-    val accountSwitchState: AccountSwitchUIState
+    val accountSwitchState: AccountSwitchUIState,
+    val isPasswordCredential: Boolean
 ) {
 
     val itemCount: Int =
         items.items.map { it.items }.flatten().count() + items.suggestions.count()
 
-    companion object {
+    internal companion object {
+
         val Loading = SelectItemListUiState(
             isLoading = IsLoadingState.Loading,
             isRefreshing = IsRefreshingState.NotRefreshing,
@@ -113,45 +118,53 @@ data class SelectItemListUiState(
             accountSwitchState = AccountSwitchUIState(
                 selectedAccount = None,
                 accountList = emptyList()
-            )
+            ),
+            isPasswordCredential = false
         )
+
     }
 }
 
-data class SelectItemListItems(
+internal data class SelectItemListItems(
     val suggestions: ImmutableList<ItemUiModel>,
     val items: ImmutableList<GroupedItemList>,
     val suggestionsForTitle: String
 ) {
+
     companion object {
+
         val Initial = SelectItemListItems(
             suggestions = persistentListOf(),
             items = persistentListOf(),
             suggestionsForTitle = ""
         )
     }
+
 }
 
 @Immutable
-data class SearchUiState(
+internal data class SearchUiState(
     val searchQuery: String,
     val inSearchMode: Boolean,
     val isProcessingSearch: IsProcessingSearchState,
     val searchInMode: SearchInMode
 
 ) {
+
     companion object {
+
         val Initial = SearchUiState(
             searchQuery = "",
             inSearchMode = false,
             isProcessingSearch = IsProcessingSearchState.NotLoading,
             searchInMode = SearchInMode.Uninitialized
         )
+
     }
 }
 
 @Immutable
-data class PinningUiState(
+internal data class PinningUiState(
     val inPinningMode: Boolean,
     val filteredItems: ImmutableList<GroupedItemList>,
     val unFilteredItems: PersistentList<ItemUiModel>,
@@ -161,11 +174,14 @@ data class PinningUiState(
     val itemCount = filteredItems.map { it.items }.flatten().count()
 
     companion object {
+
         val Initial = PinningUiState(
             inPinningMode = false,
             filteredItems = persistentListOf(),
             unFilteredItems = persistentListOf(),
             showPinning = false
         )
+
     }
+
 }

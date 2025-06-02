@@ -44,7 +44,7 @@ import proton.android.pass.features.selectitem.ui.SelectItemListUiState
 import proton.android.pass.features.selectitem.ui.SelectItemUiState
 import proton.android.pass.searchoptions.api.SearchSortingType
 
-class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiState> {
+internal class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiState> {
     override val values: Sequence<SelectItemUiState>
         get() = sequenceOf(
             SelectItemUiState(
@@ -69,7 +69,8 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     displayOnlyPrimaryVaultMessage = false,
                     canUpgrade = false,
                     displayCreateButton = true,
-                    accountSwitchState = AccountSwitchUIState(None, emptyList())
+                    accountSwitchState = AccountSwitchUIState(None, emptyList()),
+                    isPasswordCredential = false
                 ),
                 SearchUiState.Initial,
                 PinningUiState.Initial
@@ -99,7 +100,8 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     displayOnlyPrimaryVaultMessage = true,
                     canUpgrade = false,
                     displayCreateButton = true,
-                    accountSwitchState = AccountSwitchUIState(None, emptyList())
+                    accountSwitchState = AccountSwitchUIState(None, emptyList()),
+                    isPasswordCredential = false
                 ),
                 SearchUiState.Initial,
                 PinningUiState.Initial
@@ -117,7 +119,8 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     displayOnlyPrimaryVaultMessage = false,
                     canUpgrade = false,
                     displayCreateButton = true,
-                    accountSwitchState = AccountSwitchUIState(None, emptyList())
+                    accountSwitchState = AccountSwitchUIState(None, emptyList()),
+                    isPasswordCredential = false
                 ),
                 SearchUiState(
                     searchQuery = "query",

@@ -22,9 +22,11 @@ import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import me.proton.core.presentation.R
+import androidx.compose.ui.res.stringResource
+import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun PassVisibilityToggle(
@@ -40,11 +42,15 @@ fun PassVisibilityToggle(
     ) {
         Icon(
             painter = if (isVisible) {
-                painterResource(R.drawable.ic_proton_eye_slash)
+                painterResource(CoreR.drawable.ic_proton_eye_slash)
             } else {
-                painterResource(R.drawable.ic_proton_eye)
+                painterResource(CoreR.drawable.ic_proton_eye)
             },
-            contentDescription = null,
+            contentDescription = if (isVisible) {
+                stringResource(R.string.action_conceal)
+            } else {
+                stringResource(R.string.action_reveal)
+            },
             tint = itemColors.majorSecondary
         )
     }

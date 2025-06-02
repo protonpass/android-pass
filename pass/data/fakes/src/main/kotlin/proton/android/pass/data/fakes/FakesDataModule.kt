@@ -124,6 +124,7 @@ import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
 import proton.android.pass.data.api.usecases.attachments.ClearAttachments
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
+import proton.android.pass.data.api.usecases.attachments.ObserveAllItemRevisionAttachments
 import proton.android.pass.data.api.usecases.attachments.ObserveDetailItemAttachments
 import proton.android.pass.data.api.usecases.attachments.ObserveUpdateItemAttachments
 import proton.android.pass.data.api.usecases.attachments.RenameAttachments
@@ -341,6 +342,7 @@ import proton.android.pass.data.fakes.usecases.aliascontact.FakeObserveAliasCont
 import proton.android.pass.data.fakes.usecases.attachments.FakeClearAttachments
 import proton.android.pass.data.fakes.usecases.attachments.FakeDownloadAttachment
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
+import proton.android.pass.data.fakes.usecases.attachments.FakeObserveAllItemRevisionAttachments
 import proton.android.pass.data.fakes.usecases.attachments.FakeObserveDetailItemAttachments
 import proton.android.pass.data.fakes.usecases.attachments.FakeObserveUpdateItemAttachments
 import proton.android.pass.data.fakes.usecases.attachments.FakeRenameAttachments
@@ -1014,6 +1016,11 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindDownloadAttachment(impl: FakeDownloadAttachment): DownloadAttachment
+
+    @Binds
+    abstract fun bindObserveAllItemRevisionAttachments(
+        impl: FakeObserveAllItemRevisionAttachments
+    ): ObserveAllItemRevisionAttachments
 
     @Binds
     abstract fun bindObserveShareItemsCount(impl: FakeObserveShareItemsCount): ObserveShareItemsCount

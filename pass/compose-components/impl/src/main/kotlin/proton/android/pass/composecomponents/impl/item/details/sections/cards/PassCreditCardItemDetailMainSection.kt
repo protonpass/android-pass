@@ -30,6 +30,7 @@ import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDeta
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailMaskedFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailsHiddenFieldRow
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailMainSectionContainer
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailUpgradeRow
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemDiffs
@@ -48,6 +49,7 @@ internal fun PassCreditCardItemDetailMainSection(
     expirationDate: String,
     cvv: HiddenState,
     pin: HiddenState,
+    isDowngraded: Boolean,
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs.CreditCard,
     onEvent: (PassItemDetailsUiEvent) -> Unit
@@ -75,21 +77,30 @@ internal fun PassCreditCardItemDetailMainSection(
 
     if (cardNumber.isNotBlank()) {
         sections.add {
-            PassItemDetailMaskedFieldRow(
-                icon = CoreR.drawable.ic_proton_credit_card,
-                title = stringResource(R.string.item_details_credit_card_section_card_number_title),
-                maskedSubtitle = TextMask.CardNumber(cardNumber),
-                itemColors = itemColors,
-                itemDiffType = itemDiffs.cardNumber,
-                isToggleable = true,
-                onClick = {
-                    onEvent(
-                        PassItemDetailsUiEvent.OnFieldClick(
-                            field = ItemDetailsFieldType.PlainCopyable.CardNumber(cardNumber)
+            if (isDowngraded) {
+                PassItemDetailUpgradeRow(
+                    icon = CoreR.drawable.ic_proton_lock,
+                    label = stringResource(R.string.item_details_credit_card_section_card_number_title),
+                    passItemColors = itemColors,
+                    onUpgrade = { onEvent(PassItemDetailsUiEvent.OnUpgrade) }
+                )
+            } else {
+                PassItemDetailMaskedFieldRow(
+                    icon = CoreR.drawable.ic_proton_credit_card,
+                    title = stringResource(R.string.item_details_credit_card_section_card_number_title),
+                    maskedSubtitle = TextMask.CardNumber(cardNumber),
+                    itemColors = itemColors,
+                    itemDiffType = itemDiffs.cardNumber,
+                    isToggleable = true,
+                    onClick = {
+                        onEvent(
+                            PassItemDetailsUiEvent.OnFieldClick(
+                                field = ItemDetailsFieldType.PlainCopyable.CardNumber(cardNumber)
+                            )
                         )
-                    )
-                }
-            )
+                    }
+                )
+            }
         }
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.passkeys.select.ui.bottomsheet.selectpasskey
+package proton.android.pass.features.passkeys.select.ui.bottomsheet
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -35,11 +35,11 @@ fun SelectPasskeyBottomsheet(
     onDismiss: () -> Unit,
     viewModel: SelectPasskeyBottomsheetViewModel = hiltViewModel()
 ) {
+    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
-    val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(state.event) {
         when (val event = state.event) {
-            SelectPasskeyBottomsheetEvent.Idle -> {}
+            SelectPasskeyBottomsheetEvent.Idle -> Unit
             SelectPasskeyBottomsheetEvent.Close -> {
                 onDismiss()
             }
@@ -47,6 +47,7 @@ fun SelectPasskeyBottomsheet(
                 onPasskeySelected(event.passkey)
             }
         }
+
         viewModel.clearEvent()
     }
 

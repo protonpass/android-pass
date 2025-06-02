@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,33 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.passkeys.create.presentation
+package proton.android.pass.features.passkeys.select.presentation
 
-import androidx.compose.runtime.Immutable
-import proton.android.pass.preferences.ThemePreference
+import kotlinx.collections.immutable.ImmutableList
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.Passkey
+import javax.annotation.concurrent.Immutable
 
 @Immutable
-data class CreatePasskeyRequestData(
-    val domain: String,
-    val origin: String,
-    val username: String,
-    val request: String,
-    val rpName: String
+internal data class SelectPasskeyBottomsheetState(
+    internal val event: SelectPasskeyBottomsheetEvent,
+    internal val isLoading: IsLoadingState,
+    internal val passkeys: ImmutableList<Passkey>
 )
-
-@Immutable
-sealed interface CreatePasskeyAppState {
-
-    @Immutable
-    data object NotReady : CreatePasskeyAppState
-
-    @Immutable
-    data object Close : CreatePasskeyAppState
-
-    @Immutable
-    data class Ready(
-        val theme: ThemePreference,
-        val needsAuth: Boolean,
-        val data: CreatePasskeyRequestData
-    ) : CreatePasskeyAppState
-}

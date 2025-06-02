@@ -38,8 +38,10 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.ItemSavedState
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.ItemCreated
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.ItemCreationError
@@ -54,6 +56,7 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
+@Suppress("LongParameterList")
 @HiltViewModel
 class CreateCreditCardViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
@@ -69,6 +72,8 @@ class CreateCreditCardViewModel @Inject constructor(
     canPerformPaidAction: CanPerformPaidAction,
     observeDefaultVault: ObserveDefaultVault,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    customFieldHandler: CustomFieldHandler,
+    customFieldDraftRepository: CustomFieldDraftRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCreditCardViewModel(
     userPreferencesRepository = userPreferencesRepository,
@@ -76,6 +81,8 @@ class CreateCreditCardViewModel @Inject constructor(
     encryptionContextProvider = encryptionContextProvider,
     canPerformPaidAction = canPerformPaidAction,
     featureFlagsRepository = featureFlagsRepository,
+    customFieldHandler = customFieldHandler,
+    customFieldDraftRepository = customFieldDraftRepository,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
     private val navShareId: Option<ShareId> =
@@ -107,7 +114,7 @@ class CreateCreditCardViewModel @Inject constructor(
         tag = TAG
     )
 
-    val state: StateFlow<CreateCreditCardUiState> = combine(
+    internal val state: StateFlow<CreateCreditCardUiState> = combine(
         shareUiState,
         baseState
     ) { shareUiState, baseState ->

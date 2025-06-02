@@ -24,13 +24,15 @@ import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.PersistentSet
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
+import proton.android.pass.features.itemcreate.common.CreditCardItemValidationError
+import proton.android.pass.features.itemcreate.common.ValidationError
 
 @Composable
 fun CardDetails(
     modifier: Modifier = Modifier,
     creditCardItemFormState: CreditCardItemFormState,
     enabled: Boolean,
-    validationErrors: PersistentSet<CreditCardValidationErrors>,
+    validationErrors: PersistentSet<ValidationError>,
     onNameChanged: (String) -> Unit,
     onNumberChanged: (String) -> Unit,
     onCVVChanged: (String) -> Unit,
@@ -49,7 +51,7 @@ fun CardDetails(
         CardExpirationDateInput(
             value = creditCardItemFormState.expirationDate,
             enabled = enabled,
-            hasError = validationErrors.contains(CreditCardValidationErrors.InvalidExpirationDate),
+            hasError = validationErrors.contains(CreditCardItemValidationError.InvalidExpirationDate),
             onChange = onExpirationDateChanged
         )
         PassDivider()

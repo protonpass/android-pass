@@ -16,7 +16,7 @@ import proton.android.pass.features.itemcreate.creditcard.CreditCardContentEvent
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun CreditCardContent(
+internal fun CreditCardContent(
     modifier: Modifier = Modifier,
     state: BaseCreditCardUiState,
     creditCardItemFormState: CreditCardItemFormState,
@@ -35,7 +35,7 @@ fun CreditCardContent(
                 isLoading = state.isLoading || state.attachmentsState.loadingDraftAttachments.isNotEmpty(),
                 actionColor = PassTheme.colors.cardInteractionNormMajor1,
                 iconColor = PassTheme.colors.cardInteractionNormMajor2,
-                showUpgrade = state.isDowngradedMode,
+                showUpgrade = !state.canPerformPaidAction,
                 iconBackgroundColor = PassTheme.colors.cardInteractionNormMinor1,
                 selectedVault = selectedVault,
                 showVaultSelector = showVaultSelector,

@@ -46,7 +46,7 @@ import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.usecases.GetUserPlan
+import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.FileMetadata
@@ -74,7 +74,7 @@ abstract class BaseNoteViewModel(
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val customFieldHandler: CustomFieldHandler,
-    getUserPlan: GetUserPlan,
+    canPerformPaidAction: CanPerformPaidAction,
     customFieldDraftRepository: CustomFieldDraftRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
@@ -132,11 +132,11 @@ abstract class BaseNoteViewModel(
         featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
         featureFlagsRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1),
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
-        getUserPlan(),
+        canPerformPaidAction(),
         focusedFieldState
     ) { noteItemValidationErrors, isLoading, isItemSaved, hasUserEditedContent, attachmentsState,
         isFileAttachmentsEnabled, isCustomItemEnabled, displayFileAttachmentsOnboarding,
-        userPlan, focusedField ->
+        canPerformPaidAction, focusedField ->
         BaseNoteUiState(
             errorList = noteItemValidationErrors,
             isLoadingState = isLoading,
@@ -146,8 +146,8 @@ abstract class BaseNoteViewModel(
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
             isFileAttachmentsEnabled = isFileAttachmentsEnabled,
             isCustomItemEnabled = isCustomItemEnabled,
-            canUseCustomFields = userPlan.hasPlanWithAccess,
-            focusedField = focusedField.value()
+            canPerformPaidAction = canPerformPaidAction,
+            focusedField = focusedField
         )
     }
         .stateIn(

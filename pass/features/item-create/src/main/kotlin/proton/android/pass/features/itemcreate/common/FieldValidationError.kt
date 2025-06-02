@@ -40,3 +40,13 @@ sealed interface LoginItemValidationError : ValidationError {
     value class InvalidUrl(val index: Int) : LoginItemValidationError
     data object InvalidTotp : LoginItemValidationError
 }
+
+sealed interface CreditCardItemValidationError : ValidationError {
+    data object InvalidExpirationDate : CreditCardItemValidationError
+}
+
+sealed interface AliasItemValidationError : ValidationError {
+    data object BlankPrefix : AliasItemValidationError
+    data object InvalidAliasContent : AliasItemValidationError
+    data object NoMailboxes : AliasItemValidationError
+}

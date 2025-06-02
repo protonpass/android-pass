@@ -21,21 +21,25 @@ package proton.android.pass.features.itemcreate.creditcard
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentSetOf
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.ShareUiState
+import proton.android.pass.features.itemcreate.common.ValidationError
 
 @Immutable
-data class BaseCreditCardUiState(
+internal data class BaseCreditCardUiState(
     val isLoading: Boolean,
     val hasUserEditedContent: Boolean,
-    val validationErrors: PersistentSet<CreditCardValidationErrors>,
+    val validationErrors: PersistentSet<ValidationError>,
     val isItemSaved: ItemSavedState,
-    val isDowngradedMode: Boolean,
+    val canPerformPaidAction: Boolean,
     val displayFileAttachmentsOnboarding: Boolean,
     val isFileAttachmentsEnabled: Boolean,
-    val attachmentsState: AttachmentsState
+    val attachmentsState: AttachmentsState,
+    val focusedField: Option<CreditCardField>
 ) {
     companion object {
         val Initial = BaseCreditCardUiState(
@@ -43,15 +47,16 @@ data class BaseCreditCardUiState(
             hasUserEditedContent = false,
             validationErrors = persistentSetOf(),
             isItemSaved = ItemSavedState.Unknown,
-            isDowngradedMode = false,
+            canPerformPaidAction = false,
             displayFileAttachmentsOnboarding = false,
             isFileAttachmentsEnabled = false,
-            attachmentsState = AttachmentsState.Initial
+            attachmentsState = AttachmentsState.Initial,
+            focusedField = None
         )
     }
 }
 
-sealed interface CreateCreditCardUiState {
+internal sealed interface CreateCreditCardUiState {
     @Immutable
     data object NotInitialised : CreateCreditCardUiState
 
@@ -68,7 +73,7 @@ sealed interface CreateCreditCardUiState {
     ) : CreateCreditCardUiState
 }
 
-sealed interface UpdateCreditCardUiState {
+internal sealed interface UpdateCreditCardUiState {
     @Immutable
     data object NotInitialised : UpdateCreditCardUiState
 

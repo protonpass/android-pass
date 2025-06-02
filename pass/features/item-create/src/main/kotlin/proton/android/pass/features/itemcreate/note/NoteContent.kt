@@ -98,7 +98,7 @@ internal fun NoteContent(
             modifier = Modifier.padding(padding),
             noteItemFormState = noteItemFormState,
             focusedField = uiState.focusedField,
-            canUseCustomFields = uiState.canUseCustomFields,
+            canUseCustomFields = uiState.canPerformPaidAction,
             attachmentsState = uiState.attachmentsState,
             isFileAttachmentsEnabled = uiState.isFileAttachmentsEnabled,
             isCustomItemEnabled = uiState.isCustomItemEnabled,

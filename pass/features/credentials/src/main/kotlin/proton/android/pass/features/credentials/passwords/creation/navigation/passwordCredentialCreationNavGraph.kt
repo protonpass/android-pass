@@ -28,6 +28,7 @@ import proton.android.pass.features.itemcreate.bottomsheets.customfield.AddCusto
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldOptionsBottomSheetNavItem
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
 import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
+import proton.android.pass.features.itemcreate.dialogs.cannotcreateitems.navigation.CannotCreateItemsNavItem
 import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameDialogNavItem
 import proton.android.pass.features.itemcreate.dialogs.customfield.EditCustomFieldNameDialogNavItem
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation
@@ -44,7 +45,13 @@ import proton.android.pass.features.password.GeneratePasswordNavigation
 import proton.android.pass.features.password.dialog.mode.PasswordModeDialog
 import proton.android.pass.features.password.dialog.separator.WordSeparatorDialog
 import proton.android.pass.features.password.generatePasswordBottomsheetGraph
+import proton.android.pass.features.report.navigation.AccountSwitchNavItem
+import proton.android.pass.features.report.navigation.AccountSwitchNavigation
+import proton.android.pass.features.report.navigation.accountSwitchNavGraph
 import proton.android.pass.features.selectitem.navigation.SelectItem
+import proton.android.pass.features.selectitem.navigation.SelectItemNavigation
+import proton.android.pass.features.selectitem.navigation.SelectItemState
+import proton.android.pass.features.selectitem.navigation.selectItemGraph
 import proton.android.pass.features.vault.VaultNavigation
 import proton.android.pass.features.vault.bottomsheet.select.SelectVaultBottomsheet
 import proton.android.pass.features.vault.vaultGraph
@@ -54,9 +61,27 @@ import proton.android.pass.navigation.api.AppNavigator
 internal fun NavGraphBuilder.passwordCredentialCreationNavGraph(
     appNavigator: AppNavigator,
     initialCreateLoginUiState: InitialCreateLoginUiState,
+    selectItemState: SelectItemState.Password,
     onNavigate: (PasswordCredentialCreationNavEvent) -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit
 ) {
+    accountSwitchNavGraph { destination ->
+        when (destination) {
+            AccountSwitchNavigation.CreateItem -> dismissBottomSheet {
+                appNavigator.navigate(
+                    destination = CreateLoginNavItem,
+                    route = CreateLoginNavItem.createNavRoute()
+                )
+            }
+
+            AccountSwitchNavigation.CannotCreateItem -> dismissBottomSheet {
+                appNavigator.navigate(
+                    destination = CannotCreateItemsNavItem
+                )
+            }
+        }
+    }
+
     authGraph(
         canLogout = false,
         navigation = { destination ->
@@ -240,6 +265,30 @@ internal fun NavGraphBuilder.passwordCredentialCreationNavGraph(
                 GeneratePasswordNavigation.OnSelectPasswordMode -> appNavigator.navigate(
                     destination = PasswordModeDialog
                 )
+            }
+        }
+    )
+
+    selectItemGraph(
+        state = selectItemState,
+        onScreenShown = {},
+        onNavigate = { destination ->
+            when (destination) {
+                SelectItemNavigation.Cancel -> {
+                    onNavigate(PasswordCredentialCreationNavEvent.Cancel)
+                }
+
+                SelectItemNavigation.SelectAccount -> appNavigator.navigate(AccountSwitchNavItem)
+
+                SelectItemNavigation.Upgrade -> {
+                    onNavigate(PasswordCredentialCreationNavEvent.Upgrade)
+                }
+
+                SelectItemNavigation.AddItem,
+                is SelectItemNavigation.ItemSelected,
+                is SelectItemNavigation.SuggestionSelected,
+                is SelectItemNavigation.SortingBottomsheet,
+                is SelectItemNavigation.ItemOptions -> Unit
             }
         }
     )

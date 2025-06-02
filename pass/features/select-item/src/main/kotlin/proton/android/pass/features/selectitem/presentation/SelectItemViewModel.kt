@@ -245,7 +245,7 @@ class SelectItemViewModel @Inject constructor(
                 combine(flows) { it.toList().flatten().map(ItemData::DefaultItem) }
             }
 
-            is SelectItemState.Password -> {
+            is SelectItemState.Password.Select -> {
                 val flows = usersAutofillShares
                     .filter { it.matchesSelectedAccount(selectedAccount) }
                     .map { (userId, autofillShares) ->
@@ -499,6 +499,7 @@ class SelectItemViewModel @Inject constructor(
 
         val canUpgrade = upgradeInfo.getOrNull()?.isUpgradeAvailable == true
         val showCreateButton = selectItemState.map { it.showCreateButton }.value() == true
+        val isPasswordCredential = selectItemState.map { it.isPasswordCredential }.value() == true
 
         SelectItemListUiState(
             isLoading = isLoading,
@@ -512,11 +513,12 @@ class SelectItemViewModel @Inject constructor(
             displayOnlyPrimaryVaultMessage = accountData.displayOnlyPrimaryVaultMessage(shares),
             canUpgrade = canUpgrade,
             displayCreateButton = showCreateButton,
-            accountSwitchState = accountData.toAccountSwitchUIState()
+            accountSwitchState = accountData.toAccountSwitchUIState(),
+            isPasswordCredential = isPasswordCredential
         )
     }
 
-    val uiState: StateFlow<SelectItemUiState> = combine(
+    internal val uiState: StateFlow<SelectItemUiState> = combine(
         selectItemListUiStateFlow,
         searchWrapper,
         pinningUiStateFlow,
@@ -561,48 +563,48 @@ class SelectItemViewModel @Inject constructor(
             initialValue = SelectItemUiState.Loading
         )
 
-    fun onItemClicked(item: ItemUiModel) {
+    internal fun onItemClicked(item: ItemUiModel) {
         itemClickedFlow.update { AutofillItemClickedEvent.ItemClicked(item) }
     }
 
-    fun onSuggestionClicked(item: ItemUiModel) {
+    internal fun onSuggestionClicked(item: ItemUiModel) {
         itemClickedFlow.update { AutofillItemClickedEvent.SuggestionClicked(item) }
     }
 
-    fun onSearchQueryChange(query: String) {
+    internal fun onSearchQueryChange(query: String) {
         if (query.contains("\n")) return
 
         searchQueryState.update { query }
         isProcessingSearchState.update { IsProcessingSearchState.Loading }
     }
 
-    fun onStopSearching() {
+    internal fun onStopSearching() {
         searchQueryState.update { "" }
         isInSearchModeState.update { false }
     }
 
-    fun onEnterSearch() {
+    internal fun onEnterSearch() {
         searchQueryState.update { "" }
         isInSearchModeState.update { true }
     }
 
-    fun setInitialState(state: SelectItemState) {
+    internal fun setInitialState(state: SelectItemState) {
         selectItemStateFlow.update { state.toOption() }
     }
 
-    fun onScrolledToTop() {
+    internal fun onScrolledToTop() {
         shouldScrollToTopFlow.update { false }
     }
 
-    fun onEnterSeeAllPinsMode() {
+    internal fun onEnterSeeAllPinsMode() {
         isInSeeAllPinsModeState.update { true }
     }
 
-    fun onStopPinningMode() {
+    internal fun onStopPinningMode() {
         isInSeeAllPinsModeState.update { false }
     }
 
-    fun clearEvent() {
+    internal fun clearEvent() {
         itemClickedFlow.update { AutofillItemClickedEvent.None }
     }
 
@@ -658,6 +660,8 @@ class SelectItemViewModel @Inject constructor(
     }
 
     private fun getSuggestionsForPassword(state: SelectItemState.Password) = when (state) {
+        is SelectItemState.Password.Register -> flowOf(LoadingResult.Success(emptyList()))
+
         is SelectItemState.Password.Select -> selectedAccountFlow.flatMapLatest { userId ->
             getSuggestedAutofillItems(
                 itemTypeFilter = ItemTypeFilter.Logins,

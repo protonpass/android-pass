@@ -211,7 +211,7 @@ class LoginDetailScreenTest {
 
             waitUntilExists(hasText(title))
 
-            val passwordLabel = activity.getString(R.string.passkey_field_label)
+            val passwordLabel = activity.getString(R.string.password)
             onNode(hasText(passwordLabel)).performClick()
             assertEquals(password, clipboardManager.getContents())
         }

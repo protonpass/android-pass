@@ -102,17 +102,36 @@ sealed interface ItemDetailsFieldType {
         val hiddenState: HiddenState
 
         data class CustomField(override val hiddenState: HiddenState, val index: Int) :
-            HiddenCopyable
+            HiddenCopyable {
+            override fun equals(other: Any?): Boolean = other is CustomField && this.index == other.index
 
-        data class Cvv(override val hiddenState: HiddenState) : HiddenCopyable
+            override fun hashCode(): Int = index.hashCode()
+        }
 
-        data class Password(override val hiddenState: HiddenState) : HiddenCopyable
+        data class Cvv(override val hiddenState: HiddenState) : HiddenCopyable {
+            override fun equals(other: Any?) = other is Cvv
+            override fun hashCode() = javaClass.hashCode()
+        }
 
-        data class Pin(override val hiddenState: HiddenState) : HiddenCopyable
+        data class Password(override val hiddenState: HiddenState) : HiddenCopyable {
+            override fun equals(other: Any?) = other is Password
+            override fun hashCode() = javaClass.hashCode()
+        }
 
-        data class PrivateKey(override val hiddenState: HiddenState) : HiddenCopyable
+        data class Pin(override val hiddenState: HiddenState) : HiddenCopyable {
+            override fun equals(other: Any?) = other is Pin
+            override fun hashCode() = javaClass.hashCode()
+        }
 
-        data class SocialSecurityNumber(override val hiddenState: HiddenState) : HiddenCopyable
+        data class PrivateKey(override val hiddenState: HiddenState) : HiddenCopyable {
+            override fun equals(other: Any?) = other is PrivateKey
+            override fun hashCode() = javaClass.hashCode()
+        }
+
+        data class SocialSecurityNumber(override val hiddenState: HiddenState) : HiddenCopyable {
+            override fun equals(other: Any?) = other is SocialSecurityNumber
+            override fun hashCode() = javaClass.hashCode()
+        }
 
     }
 

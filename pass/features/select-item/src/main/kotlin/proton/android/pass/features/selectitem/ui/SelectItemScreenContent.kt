@@ -92,135 +92,146 @@ internal fun SelectItemScreenContent(
             }
         },
         topBar = {
-            val placeholder =
-                if (uiState.pinningUiState.inPinningMode && uiState.pinningUiState.showPinning) {
-                    stringResource(id = R.string.topbar_search_pinned_items)
+            if (uiState.listUiState.isPasswordCredential) {
+                BackArrowCircleIconButton(
+                    modifier = Modifier.padding(all = Spacing.medium),
+                    color = PassTheme.colors.interactionNorm,
+                    backgroundColor = PassTheme.colors.interactionNormMinor1,
+                    onUpClick = { onNavigate(SelectItemNavigation.Cancel) }
+                )
+            } else {
+                val placeholder = if (uiState.pinningUiState.inPinningMode && uiState.pinningUiState.showPinning) {
+                    R.string.topbar_search_pinned_items
                 } else {
                     when (uiState.searchUiState.searchInMode) {
-                        SearchInMode.AllVaults -> stringResource(id = R.string.topbar_search_query)
-                        SearchInMode.OldestVaults -> stringResource(id = R.string.topbar_search_query_oldest_vaults)
-                        SearchInMode.Uninitialized -> stringResource(id = R.string.topbar_search_query_uninitialized)
+                        SearchInMode.AllVaults -> R.string.topbar_search_query
+                        SearchInMode.OldestVaults -> R.string.topbar_search_query_oldest_vaults
+                        SearchInMode.Uninitialized -> R.string.topbar_search_query_uninitialized
                     }
-                }
+                }.let { placeholderResId -> stringResource(id = placeholderResId) }
 
-            SearchTopBar(
-                placeholderText = placeholder,
-                searchQuery = uiState.searchUiState.searchQuery,
-                inSearchMode = uiState.searchUiState.inSearchMode,
-                onSearchQueryChange = { onEvent(SelectItemEvent.SearchQueryChange(it)) },
-                onStopSearch = { onEvent(SelectItemEvent.StopSearching) },
-                onEnterSearch = { onEvent(SelectItemEvent.EnterSearch) },
-                drawerIcon = {
-                    BackArrowCircleIconButton(
-                        color = PassTheme.colors.loginInteractionNorm,
-                        backgroundColor = PassTheme.colors.loginInteractionNormMinor1,
-                        onUpClick = {
-                            when {
-                                uiState.searchUiState.inSearchMode -> {
-                                    onEvent(SelectItemEvent.StopSearching)
-                                }
+                SearchTopBar(
+                    placeholderText = placeholder,
+                    searchQuery = uiState.searchUiState.searchQuery,
+                    inSearchMode = uiState.searchUiState.inSearchMode,
+                    onSearchQueryChange = { onEvent(SelectItemEvent.SearchQueryChange(it)) },
+                    onStopSearch = { onEvent(SelectItemEvent.StopSearching) },
+                    onEnterSearch = { onEvent(SelectItemEvent.EnterSearch) },
+                    drawerIcon = {
+                        BackArrowCircleIconButton(
+                            color = PassTheme.colors.loginInteractionNorm,
+                            backgroundColor = PassTheme.colors.loginInteractionNormMinor1,
+                            onUpClick = {
+                                when {
+                                    uiState.searchUiState.inSearchMode -> {
+                                        onEvent(SelectItemEvent.StopSearching)
+                                    }
 
-                                uiState.pinningUiState.inPinningMode -> {
-                                    onEvent(SelectItemEvent.StopPinningMode)
-                                }
+                                    uiState.pinningUiState.inPinningMode -> {
+                                        onEvent(SelectItemEvent.StopPinningMode)
+                                    }
 
-                                else -> {
-                                    onNavigate(SelectItemNavigation.Cancel)
+                                    else -> {
+                                        onNavigate(SelectItemNavigation.Cancel)
+                                    }
                                 }
                             }
-                        }
-                    )
-                }
-            )
+                        )
+                    }
+                )
+            }
         }
     ) { padding ->
         Column(
             modifier = Modifier.padding(padding)
         ) {
-            with(uiState.listUiState.accountSwitchState) {
-                if (hasMultipleAccounts) {
-                    var isExpanded by remember { mutableStateOf(false) }
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Start
-                    ) {
-                        val selectedAccountText =
-                            accountList.find { it.userId == selectedAccount.value() }?.email
-                                ?: stringResource(R.string.all_accounts_item, accountList.size)
-
-                        TransparentTextButton(
-                            text = selectedAccountText,
-                            color = PassTheme.colors.textNorm,
-                            suffixIcon = CompR.drawable.ic_chevron_tiny_down,
-                            onClick = { isExpanded = !isExpanded }
-                        )
-                        DropdownMenu(
-                            modifier = Modifier
-                                .background(PassTheme.colors.inputBackgroundNorm),
-                            expanded = isExpanded,
-                            offset = DpOffset(x = Spacing.medium, y = 0.dp),
-                            onDismissRequest = { isExpanded = false }
+            if (uiState.listUiState.isPasswordCredential) {
+                SelectPasswordCredential(
+                    onSelectAccountClick = { onNavigate(SelectItemNavigation.SelectAccount) }
+                )
+            } else {
+                with(uiState.listUiState.accountSwitchState) {
+                    if (hasMultipleAccounts) {
+                        var isExpanded by remember { mutableStateOf(false) }
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Start
                         ) {
-                            if (selectedAccount is Some) {
-                                DropdownMenuItem(
-                                    onClick = {
-                                        isExpanded = false
-                                        onEvent(SelectItemEvent.SwitchAccount(None))
-                                    }
-                                ) {
-                                    Text.Body1Regular(
-                                        text = stringResource(
-                                            R.string.all_accounts_item,
-                                            accountList.size
+                            val selectedAccountText =
+                                accountList.find { it.userId == selectedAccount.value() }?.email
+                                    ?: stringResource(R.string.all_accounts_item, accountList.size)
+
+                            TransparentTextButton(
+                                text = selectedAccountText,
+                                color = PassTheme.colors.textNorm,
+                                suffixIcon = CompR.drawable.ic_chevron_tiny_down,
+                                onClick = { isExpanded = !isExpanded }
+                            )
+                            DropdownMenu(
+                                modifier = Modifier
+                                    .background(PassTheme.colors.inputBackgroundNorm),
+                                expanded = isExpanded,
+                                offset = DpOffset(x = Spacing.medium, y = 0.dp),
+                                onDismissRequest = { isExpanded = false }
+                            ) {
+                                if (selectedAccount is Some) {
+                                    DropdownMenuItem(
+                                        onClick = {
+                                            isExpanded = false
+                                            onEvent(SelectItemEvent.SwitchAccount(None))
+                                        }
+                                    ) {
+                                        Text.Body1Regular(
+                                            text = stringResource(
+                                                R.string.all_accounts_item,
+                                                accountList.size
+                                            )
                                         )
-                                    )
-                                }
-                            }
-                            accountList.filterNot { it.userId == selectedAccount.value() }.forEach {
-                                DropdownMenuItem(
-                                    onClick = {
-                                        isExpanded = false
-                                        onEvent(SelectItemEvent.SwitchAccount(Some(it.userId)))
                                     }
-                                ) {
-                                    Text.Body1Regular(text = it.email)
                                 }
+                                accountList.filterNot { it.userId == selectedAccount.value() }
+                                    .forEach {
+                                        DropdownMenuItem(
+                                            onClick = {
+                                                isExpanded = false
+                                                onEvent(SelectItemEvent.SwitchAccount(Some(it.userId)))
+                                            }
+                                        ) {
+                                            Text.Body1Regular(text = it.email)
+                                        }
+                                    }
                             }
                         }
                     }
                 }
-            }
 
-            if (uiState.shouldShowCarousel()) {
-                PinCarousel(
-                    modifier = Modifier.height(48.dp),
-                    list = uiState.pinningUiState.unFilteredItems,
-                    canLoadExternalImages = uiState.listUiState.canLoadExternalImages,
-                    onItemClick = {
-                        onEvent(SelectItemEvent.ItemClicked(it, false))
-                    },
-                    onSeeAllClick = { onEvent(SelectItemEvent.SeeAllPinned) }
-                )
-
-                if (uiState.pinningUiState.unFilteredItems.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(Spacing.medium))
-                }
-            }
-            SelectItemList(
-                uiState = uiState,
-                scrollState = verticalScroll,
-                onScrolledToTop = { onEvent(SelectItemEvent.ScrolledToTop) },
-                onItemOptionsClicked = { onEvent(SelectItemEvent.ItemOptionsClicked(it)) },
-                onItemClicked = { item, isLongClick ->
-                    onEvent(
-                        SelectItemEvent.ItemClicked(
-                            item,
-                            isLongClick
-                        )
+                if (uiState.shouldShowCarousel()) {
+                    PinCarousel(
+                        modifier = Modifier.height(48.dp),
+                        list = uiState.pinningUiState.unFilteredItems,
+                        canLoadExternalImages = uiState.listUiState.canLoadExternalImages,
+                        onItemClick = {
+                            onEvent(SelectItemEvent.ItemClicked(it, false))
+                        },
+                        onSeeAllClick = { onEvent(SelectItemEvent.SeeAllPinned) }
                     )
-                },
-                onNavigate = onNavigate
-            )
+
+                    if (uiState.pinningUiState.unFilteredItems.isNotEmpty()) {
+                        Spacer(modifier = Modifier.height(Spacing.medium))
+                    }
+                }
+
+                SelectItemList(
+                    uiState = uiState,
+                    scrollState = verticalScroll,
+                    onScrolledToTop = { onEvent(SelectItemEvent.ScrolledToTop) },
+                    onItemOptionsClicked = { onEvent(SelectItemEvent.ItemOptionsClicked(it)) },
+                    onItemClicked = { item, isLongClick ->
+                        onEvent(SelectItemEvent.ItemClicked(item, isLongClick))
+                    },
+                    onNavigate = onNavigate
+                )
+            }
         }
     }
 }

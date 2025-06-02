@@ -26,7 +26,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.stateIn
@@ -42,6 +41,7 @@ import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.toOption
 import proton.android.pass.features.credentials.R
 import proton.android.pass.features.credentials.shared.passwords.events.PasswordCredentialsTelemetryEvent
@@ -77,15 +77,16 @@ internal class PasswordCredentialCreationViewModel @Inject constructor(
         value = PasswordCredentialCreationStateEvent.Idle
     )
 
-    internal val stateFlow: StateFlow<PasswordCredentialCreationState> = combine(
+    internal val stateFlow: StateFlow<PasswordCredentialCreationState> = combineN(
         closeScreenFlow,
         requestOptionFlow,
         themePreferenceFlow,
         needsBiometricAuth(),
+        accountManager.getAccounts(AccountState.Ready),
         eventFlow
-    ) { shouldCloseScreen, requestOption, themePreference, isBiometricAuthRequired, event ->
+    ) { shouldCloseScreen, requestOption, themePreference, isBiometricAuthRequired, accounts, event ->
         if (shouldCloseScreen) {
-            return@combine PasswordCredentialCreationState.Close
+            return@combineN PasswordCredentialCreationState.Close
         }
 
         when (requestOption) {
@@ -97,6 +98,7 @@ internal class PasswordCredentialCreationViewModel @Inject constructor(
                             request = request,
                             themePreference = themePreference,
                             isBiometricAuthRequired = isBiometricAuthRequired,
+                            hasSingleAccount = accounts.size == 1,
                             event = event
                         )
                     }
@@ -146,12 +148,6 @@ internal class PasswordCredentialCreationViewModel @Inject constructor(
                     }
                 }
         }
-    }
-
-    private companion object {
-
-        private const val TAG = "PasswordCredentialCreationViewModel"
-
     }
 
 }

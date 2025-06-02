@@ -25,8 +25,8 @@ import androidx.compose.ui.test.hasAnySibling
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.onChildren
-import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.Module
@@ -43,6 +43,7 @@ import org.junit.Test
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
@@ -55,9 +56,8 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultId
-import proton.android.pass.features.itemdetail.ItemDetailNavigation
-import proton.android.pass.features.itemdetail.ItemDetailScreen
-import proton.android.pass.features.itemdetail.R
+import proton.android.pass.features.item.details.detail.ui.ItemDetailsScreen
+import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
@@ -127,8 +127,8 @@ class CreditCardDetailScreenTest {
         composeTestRule.apply {
             setContent {
                 PassTheme(isDark = true) {
-                    ItemDetailScreen(
-                        onNavigate = {}
+                    ItemDetailsScreen(
+                        onNavigated = {}
                     )
                 }
             }
@@ -148,15 +148,16 @@ class CreditCardDetailScreenTest {
         composeTestRule.apply {
             setContent {
                 PassTheme(isDark = true) {
-                    ItemDetailScreen(
-                        onNavigate = {}
+                    ItemDetailsScreen(
+                        onNavigated = {}
                     )
                 }
             }
             waitUntilExists(hasText(title))
 
-            val fieldName = activity.getString(R.string.credit_card_number_field_name)
-            val contentDescription = activity.getString(R.string.action_reveal_number)
+            val fieldName =
+                activity.getString(R.string.item_details_credit_card_section_card_number_title)
+            val contentDescription = activity.getString(R.string.action_reveal)
 
             onNode(hasText(fieldName)).onChildren()
                 .filterToOne(hasContentDescription(contentDescription))
@@ -166,6 +167,7 @@ class CreditCardDetailScreenTest {
         }
     }
 
+
     @Test
     fun toggleVerificationNumber() {
         val verificationNumber = "987"
@@ -173,15 +175,15 @@ class CreditCardDetailScreenTest {
         composeTestRule.apply {
             setContent {
                 PassTheme(isDark = true) {
-                    ItemDetailScreen(
-                        onNavigate = {}
+                    ItemDetailsScreen(
+                        onNavigated = {}
                     )
                 }
             }
             waitUntilExists(hasText(title))
 
-            val fieldName = activity.getString(R.string.credit_card_cvv_field_name)
-            val contentDescription = activity.getString(R.string.action_reveal_number)
+            val fieldName = activity.getString(R.string.item_details_credit_card_section_cvv_title)
+            val contentDescription = activity.getString(R.string.action_reveal)
 
             onNode(hasText(fieldName)).onChildren()
                 .filterToOne(hasContentDescription(contentDescription))
@@ -198,17 +200,17 @@ class CreditCardDetailScreenTest {
         composeTestRule.apply {
             setContent {
                 PassTheme(isDark = true) {
-                    ItemDetailScreen(
-                        onNavigate = {}
+                    ItemDetailsScreen(
+                        onNavigated = {}
                     )
                 }
             }
             waitUntilExists(hasText(title))
 
-            val fieldName = activity.getString(R.string.credit_card_pin_field_name)
+            val fieldName = activity.getString(R.string.item_details_credit_card_section_pin_title)
             onNodeWithText(fieldName).assertExists()
 
-            val contentDescription = activity.getString(R.string.action_reveal_number)
+            val contentDescription = activity.getString(R.string.action_reveal)
             onAllNodes(hasContentDescription(contentDescription))
                 .filterToOne(hasAnySibling(hasText(fieldName)))
                 .performClick()
@@ -220,25 +222,25 @@ class CreditCardDetailScreenTest {
     @Test
     fun doesNotDisplayEmptyCardHolder() {
         val title = performSetup(cardHolder = "")
-        testSectionDoesNotExist(title, R.string.credit_card_cardholder_field_name)
+        testSectionDoesNotExist(title, R.string.item_details_credit_card_section_cardholder_title)
     }
 
     @Test
     fun doesNotDisplayEmptyCardNumber() {
         val title = performSetup(number = "")
-        testSectionDoesNotExist(title, R.string.credit_card_number_field_name)
+        testSectionDoesNotExist(title, R.string.item_details_credit_card_section_card_number_title)
     }
 
     @Test
     fun doesNotDisplayEmptyPinNumber() {
         val title = performSetup(pin = "", verificationNumber = "")
-        testSectionDoesNotExist(title, R.string.credit_card_pin_field_name)
+        testSectionDoesNotExist(title, R.string.item_details_credit_card_section_pin_title)
     }
 
     @Test
     fun doesNotDisplayEmptyVerificationNumber() {
         val title = performSetup(verificationNumber = "")
-        testSectionDoesNotExist(title, R.string.credit_card_cvv_field_name)
+        testSectionDoesNotExist(title, R.string.item_details_credit_card_section_cvv_title)
     }
 
     @Test
@@ -248,14 +250,14 @@ class CreditCardDetailScreenTest {
         composeTestRule.apply {
             setContent {
                 PassTheme(isDark = true) {
-                    ItemDetailScreen(
-                        onNavigate = {}
+                    ItemDetailsScreen(
+                        onNavigated = {}
                     )
                 }
             }
             waitUntilExists(hasText(title))
 
-            val fieldName = activity.getString(R.string.credit_card_number_field_name)
+            val fieldName = activity.getString(R.string.item_details_credit_card_section_card_number_title)
             onNode(hasText(fieldName)).performClick()
         }
 
@@ -269,14 +271,14 @@ class CreditCardDetailScreenTest {
         composeTestRule.apply {
             setContent {
                 PassTheme(isDark = true) {
-                    ItemDetailScreen(
-                        onNavigate = {}
+                    ItemDetailsScreen(
+                        onNavigated = {}
                     )
                 }
             }
             waitUntilExists(hasText(title))
 
-            val fieldName = activity.getString(R.string.credit_card_cvv_field_name)
+            val fieldName = activity.getString(R.string.item_details_credit_card_section_cvv_title)
             onNode(hasText(fieldName)).performClick()
         }
 
@@ -302,9 +304,9 @@ class CreditCardDetailScreenTest {
         composeTestRule.apply {
             setContent {
                 PassTheme(isDark = true) {
-                    ItemDetailScreen(
-                        onNavigate = {
-                            if (it is ItemDetailNavigation.Upgrade) {
+                    ItemDetailsScreen(
+                        onNavigated = {
+                            if (it is ItemDetailsNavDestination.Upgrade) {
                                 checker.call(Unit)
                             }
                         }
@@ -320,20 +322,20 @@ class CreditCardDetailScreenTest {
             onNodeWithText(formattedExpirationDate).assertExists()
 
             // CVV can be revealed
-            val contentDescription = activity.getString(R.string.action_reveal_number)
+            val revealContentDescription = activity.getString(R.string.action_reveal)
             onAllNodes(hasText("••••")).assertCountEquals(2) // CVV and PIN
 
             // CVV
             onNode(hasText(cvv)).assertDoesNotExist()
             onAllNodes(hasText("••••"))[0]
                 .onChildren()
-                .filterToOne(hasContentDescription(contentDescription))
+                .filterToOne(hasContentDescription(revealContentDescription))
                 .performClick()
             onNode(hasText(cvv)).assertExists()
 
             // PIN
             onNode(hasText(pin)).assertDoesNotExist()
-            onNodeWithContentDescription(contentDescription).performClick()
+            onAllNodesWithContentDescription(revealContentDescription)[1].performClick()
             onNode(hasText(pin)).assertExists()
 
             // Can go to upgrade
@@ -348,8 +350,8 @@ class CreditCardDetailScreenTest {
         composeTestRule.apply {
             setContent {
                 PassTheme(isDark = true) {
-                    ItemDetailScreen(
-                        onNavigate = {}
+                    ItemDetailsScreen(
+                        onNavigated = {}
                     )
                 }
             }

@@ -70,7 +70,7 @@ internal class SelectItemUiStatePreviewProvider : PreviewParameterProvider<Selec
                     canUpgrade = false,
                     displayCreateButton = true,
                     accountSwitchState = AccountSwitchUIState(None, emptyList()),
-                    isPasswordCredential = false
+                    isPasswordCredentialCreation = false
                 ),
                 SearchUiState.Initial,
                 PinningUiState.Initial
@@ -101,7 +101,7 @@ internal class SelectItemUiStatePreviewProvider : PreviewParameterProvider<Selec
                     canUpgrade = false,
                     displayCreateButton = true,
                     accountSwitchState = AccountSwitchUIState(None, emptyList()),
-                    isPasswordCredential = false
+                    isPasswordCredentialCreation = false
                 ),
                 SearchUiState.Initial,
                 PinningUiState.Initial
@@ -120,7 +120,7 @@ internal class SelectItemUiStatePreviewProvider : PreviewParameterProvider<Selec
                     canUpgrade = false,
                     displayCreateButton = true,
                     accountSwitchState = AccountSwitchUIState(None, emptyList()),
-                    isPasswordCredential = false
+                    isPasswordCredentialCreation = false
                 ),
                 SearchUiState(
                     searchQuery = "query",

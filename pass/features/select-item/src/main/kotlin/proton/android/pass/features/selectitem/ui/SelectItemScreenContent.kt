@@ -92,7 +92,7 @@ internal fun SelectItemScreenContent(
             }
         },
         topBar = {
-            if (uiState.listUiState.isPasswordCredential) {
+            if (uiState.listUiState.isPasswordCredentialCreation) {
                 BackArrowCircleIconButton(
                     modifier = Modifier.padding(all = Spacing.medium),
                     color = PassTheme.colors.interactionNorm,
@@ -145,7 +145,7 @@ internal fun SelectItemScreenContent(
         Column(
             modifier = Modifier.padding(padding)
         ) {
-            if (uiState.listUiState.isPasswordCredential) {
+            if (uiState.listUiState.isPasswordCredentialCreation) {
                 SelectPasswordCredential(
                     onSelectAccountClick = { onNavigate(SelectItemNavigation.SelectAccount) }
                 )

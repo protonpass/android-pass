@@ -499,7 +499,7 @@ class SelectItemViewModel @Inject constructor(
 
         val canUpgrade = upgradeInfo.getOrNull()?.isUpgradeAvailable == true
         val showCreateButton = selectItemState.map { it.showCreateButton }.value() == true
-        val isPasswordCredential = selectItemState.map { it.isPasswordCredential }.value() == true
+        val isPasswordCredential = selectItemState.map { it.isPasswordCredentialCreation }.value() == true
 
         SelectItemListUiState(
             isLoading = isLoading,
@@ -514,7 +514,7 @@ class SelectItemViewModel @Inject constructor(
             canUpgrade = canUpgrade,
             displayCreateButton = showCreateButton,
             accountSwitchState = accountData.toAccountSwitchUIState(),
-            isPasswordCredential = isPasswordCredential
+            isPasswordCredentialCreation = isPasswordCredential
         )
     }
 

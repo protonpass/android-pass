@@ -157,6 +157,8 @@ internal class PasswordCredentialSelectionViewModel @Inject constructor(
                     password = password
                 )
             }
+        }.also {
+            telemetryManager.sendEvent(PasswordCredentialsTelemetryEvent.AuthDone)
         }
     }
 

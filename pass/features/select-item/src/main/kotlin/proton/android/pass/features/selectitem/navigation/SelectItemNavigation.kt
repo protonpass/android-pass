@@ -36,7 +36,8 @@ sealed class SelectItemState(
     val itemTypeFilter: ItemTypeFilter,
     val suggestionsTitle: String,
     val showPinnedItems: Boolean,
-    val showCreateButton: Boolean
+    val showCreateButton: Boolean,
+    val isPasswordCredential: Boolean = false
 ) {
     sealed class Autofill(
         filter: ItemTypeFilter,
@@ -81,13 +82,16 @@ sealed class SelectItemState(
         suggestionsTitle = title,
         itemTypeFilter = ItemTypeFilter.Logins,
         showPinnedItems = false,
-        showCreateButton = false
+        showCreateButton = false,
+        isPasswordCredential = true
     ) {
+
+        data class Register(internal val title: String) : Password(title = title)
 
         data class Select(
             internal val title: String,
             internal val suggestion: Suggestion
-        ) : Password(title)
+        ) : Password(title = title)
 
     }
 }

@@ -38,6 +38,7 @@ import proton.android.pass.features.credentials.passwords.creation.navigation.pa
 import proton.android.pass.features.credentials.passwords.creation.navigation.PasswordCredentialCreationNavEvent
 import proton.android.pass.features.credentials.passwords.creation.presentation.PasswordCredentialCreationState
 import proton.android.pass.features.itemcreate.login.CREATE_LOGIN_GRAPH
+import proton.android.pass.features.selectitem.navigation.SelectItem
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 
@@ -56,8 +57,12 @@ internal fun PasswordCredentialCreationContent(
         bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
     )
 
-    val startDestination = remember(key1 = isBiometricAuthRequired) {
-        if (isBiometricAuthRequired) AUTH_GRAPH else CREATE_LOGIN_GRAPH
+    val startDestination = remember(key1 = isBiometricAuthRequired, key2 = hasSingleAccount) {
+        when {
+            isBiometricAuthRequired -> AUTH_GRAPH
+            hasSingleAccount -> CREATE_LOGIN_GRAPH
+            else -> SelectItem.route
+        }
     }
 
     val bottomSheetJob: MutableState<Job?> = remember { mutableStateOf(null) }
@@ -73,6 +78,7 @@ internal fun PasswordCredentialCreationContent(
             passwordCredentialCreationNavGraph(
                 appNavigator = appNavigator,
                 initialCreateLoginUiState = initialCreateLoginUiState,
+                selectItemState = selectItemState,
                 onNavigate = onNavigate,
                 dismissBottomSheet = { block ->
                     onBottomSheetDismissed(

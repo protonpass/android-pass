@@ -48,6 +48,7 @@ fun SelectItemScreen(
         clearEvent = { viewModel.clearEvent() },
         onNavigate = onNavigate
     )
+
     SelectItemScreenContent(
         modifier = modifier,
         uiState = uiState,

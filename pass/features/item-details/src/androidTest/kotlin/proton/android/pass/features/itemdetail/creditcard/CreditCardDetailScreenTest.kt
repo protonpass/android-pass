@@ -335,7 +335,7 @@ class CreditCardDetailScreenTest {
 
             // PIN
             onNode(hasText(pin)).assertDoesNotExist()
-            onAllNodesWithContentDescription(revealContentDescription)[1].performClick()
+            onAllNodesWithContentDescription(revealContentDescription)[0].performClick()
             onNode(hasText(pin)).assertExists()
 
             // Can go to upgrade

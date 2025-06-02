@@ -61,6 +61,7 @@ internal fun PassCreditCardItemDetailsSections(
     shouldDisplayFileAttachments: Boolean,
     attachmentsState: AttachmentsState,
     customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, TotpState>,
+    isDowngraded: Boolean,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(contents) {
     Column(
@@ -73,6 +74,7 @@ internal fun PassCreditCardItemDetailsSections(
             expirationDate = expirationDate,
             cvv = cvv,
             pin = pin,
+            isDowngraded = isDowngraded,
             itemColors = itemColors,
             itemDiffs = itemDiffs,
             onEvent = onEvent

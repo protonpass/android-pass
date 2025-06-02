@@ -362,4 +362,6 @@
     <string name="banner_contacts_title">Did you know?</string>
     <string name="banner_contacts_subtitle">Every time your alias receives an email from someone, a new contact is automatically created.</string>
 
+    <string name="action_reveal">Reveal</string>
+    <string name="action_conceal">Conceal</string>
 </resources>

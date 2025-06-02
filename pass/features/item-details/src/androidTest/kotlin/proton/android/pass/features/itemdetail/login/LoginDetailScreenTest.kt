@@ -36,7 +36,7 @@ import org.junit.Test
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
-import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
@@ -51,11 +51,9 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultId
-import proton.android.pass.features.itemdetail.ItemDetailNavigation
-import proton.android.pass.features.itemdetail.ItemDetailScreen
-import proton.android.pass.features.itemdetail.R
+import proton.android.pass.features.item.details.detail.ui.ItemDetailsScreen
+import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.domain.TestShare
@@ -95,9 +93,6 @@ class LoginDetailScreenTest {
     lateinit var observeTotp: TestObserveTotpFromUri
 
     @Inject
-    lateinit var ffRepo: TestFeatureFlagsPreferenceRepository
-
-    @Inject
     lateinit var observeShare: FakeObserveShare
 
     @Inject
@@ -121,8 +116,8 @@ class LoginDetailScreenTest {
         composeTestRule.apply {
             setContent {
                 PassTheme(isDark = true) {
-                    ItemDetailScreen(
-                        onNavigate = {}
+                    ItemDetailsScreen(
+                        onNavigated = {}
                     )
                 }
             }
@@ -142,16 +137,16 @@ class LoginDetailScreenTest {
         composeTestRule.apply {
             setContent {
                 PassTheme(isDark = true) {
-                    ItemDetailScreen(
-                        onNavigate = {}
+                    ItemDetailsScreen(
+                        onNavigated = {}
                     )
                 }
             }
 
             waitUntilExists(hasText(title))
 
-            val concealedContentDescription = activity.getString(R.string.action_reveal_password)
-            val revealedContentDescription = activity.getString(R.string.action_conceal_password)
+            val concealedContentDescription = activity.getString(R.string.action_reveal)
+            val revealedContentDescription = activity.getString(R.string.action_conceal)
 
             onNodeWithContentDescription(concealedContentDescription).performClick()
             waitUntilExists(hasText(password))
@@ -168,8 +163,8 @@ class LoginDetailScreenTest {
         composeTestRule.apply {
             setContent {
                 PassTheme(isDark = true) {
-                    ItemDetailScreen(
-                        onNavigate = {}
+                    ItemDetailsScreen(
+                        onNavigated = {}
                     )
                 }
             }
@@ -188,8 +183,8 @@ class LoginDetailScreenTest {
         composeTestRule.apply {
             setContent {
                 PassTheme(isDark = true) {
-                    ItemDetailScreen(
-                        onNavigate = {}
+                    ItemDetailsScreen(
+                        onNavigated = {}
                     )
                 }
             }
@@ -208,15 +203,15 @@ class LoginDetailScreenTest {
         composeTestRule.apply {
             setContent {
                 PassTheme(isDark = true) {
-                    ItemDetailScreen(
-                        onNavigate = {}
+                    ItemDetailsScreen(
+                        onNavigated = {}
                     )
                 }
             }
 
             waitUntilExists(hasText(title))
 
-            val passwordLabel = activity.getString(R.string.field_password)
+            val passwordLabel = activity.getString(R.string.passkey_field_label)
             onNode(hasText(passwordLabel)).performClick()
             assertEquals(password, clipboardManager.getContents())
         }
@@ -231,15 +226,15 @@ class LoginDetailScreenTest {
         composeTestRule.apply {
             setContent {
                 PassTheme(isDark = true) {
-                    ItemDetailScreen(
-                        onNavigate = {}
+                    ItemDetailsScreen(
+                        onNavigated = {}
                     )
                 }
             }
 
             waitUntilExists(hasText(title))
 
-            val label = activity.getString(R.string.totp_section_title)
+            val label = activity.getString(R.string.item_details_login_section_primary_totp_title)
             onNode(hasText(label)).performClick()
             assertEquals(totpCode, clipboardManager.getContents())
         }
@@ -248,14 +243,16 @@ class LoginDetailScreenTest {
     @Test
     fun navigateToEdit() {
         val title = performSetup()
-        val checker = CallChecker<ItemUiModel>()
+        val checkerShareId = CallChecker<ShareId>()
+        val checkerItemId = CallChecker<ItemId>()
         composeTestRule.apply {
             setContent {
                 PassTheme(isDark = true) {
-                    ItemDetailScreen(
-                        onNavigate = {
-                            if (it is ItemDetailNavigation.OnEdit) {
-                                checker.call(it.itemUiModel)
+                    ItemDetailsScreen(
+                        onNavigated = {
+                            if (it is ItemDetailsNavDestination.EditItem) {
+                                checkerShareId.call(it.shareId)
+                                checkerItemId.call(it.itemId)
                             }
                         }
                     )
@@ -264,10 +261,10 @@ class LoginDetailScreenTest {
 
             waitUntilExists(hasText(title))
 
-            onNode(hasText(activity.getString(R.string.top_bar_edit_button_text))).performClick()
-            waitUntil { checker.isCalled }
-            assertEquals(SHARE_ID, checker.memory?.shareId?.id)
-            assertEquals(ITEM_ID, checker.memory?.id?.id)
+            onNode(hasText(activity.getString(R.string.action_edit))).performClick()
+            waitUntil { checkerItemId.isCalled && checkerShareId.isCalled }
+            assertEquals(SHARE_ID, checkerShareId.memory?.id)
+            assertEquals(ITEM_ID, checkerItemId.memory?.id)
         }
     }
 

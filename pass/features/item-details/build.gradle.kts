@@ -117,4 +117,18 @@ dependencies {
     androidTestImplementation(libs.androidx.lifecycle.viewmodel.savedstate)
     androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(libs.kotlinTest)
+
+    androidTestImplementation(projects.pass.biometry.fakes)
+    androidTestImplementation(projects.pass.clipboard.fakes)
+    androidTestImplementation(projects.pass.commonRust.fakes)
+    androidTestImplementation(projects.pass.commonTest)
+    androidTestImplementation(projects.pass.commonUi.fakes)
+    androidTestImplementation(projects.pass.crypto.fakes)
+    androidTestImplementation(projects.pass.data.fakes)
+    androidTestImplementation(projects.pass.notifications.fakes)
+    androidTestImplementation(projects.pass.passkeys.fakes)
+    androidTestImplementation(projects.pass.preferences.fakes)
+    androidTestImplementation(projects.pass.securityCenter.fakes)
+    androidTestImplementation(projects.pass.telemetry.fakes)
+    androidTestImplementation(projects.pass.totp.fakes)
 }

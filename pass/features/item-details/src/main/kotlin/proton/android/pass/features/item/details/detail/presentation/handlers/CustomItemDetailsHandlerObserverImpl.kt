@@ -43,16 +43,16 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.TotpState
 import proton.android.pass.domain.attachments.Attachment
-import proton.android.pass.totp.api.TotpManager
+import proton.android.pass.totp.api.ObserveTotpFromUri
 import javax.inject.Inject
 
 class CustomItemDetailsHandlerObserverImpl @Inject constructor(
     override val encryptionContextProvider: EncryptionContextProvider,
-    override val totpManager: TotpManager,
+    override val observeTotpFromUri: ObserveTotpFromUri,
     override val canDisplayTotp: CanDisplayTotp
 ) : ItemDetailsHandlerObserver<ItemContents.Custom, ItemDetailsFieldType.CustomItemAction>(
     encryptionContextProvider = encryptionContextProvider,
-    totpManager = totpManager,
+    observeTotpFromUri = observeTotpFromUri,
     canDisplayTotp = canDisplayTotp
 ) {
 
@@ -108,7 +108,7 @@ class CustomItemDetailsHandlerObserverImpl @Inject constructor(
                     sectionCustomFields + customFields
                 }
                 val flows = decrypted.map { uri ->
-                    totpManager.observeCode(uri.value)
+                    observeTotpFromUri(uri.value)
                         .map {
                             uri.key to TotpState.Visible(
                                 code = it.code,

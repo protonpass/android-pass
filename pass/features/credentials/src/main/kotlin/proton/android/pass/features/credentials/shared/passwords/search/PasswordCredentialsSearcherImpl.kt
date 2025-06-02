@@ -29,6 +29,7 @@ import androidx.credentials.provider.PasswordCredentialEntry
 import kotlinx.coroutines.flow.first
 import proton.android.pass.autofill.api.suggestions.PackageNameUrlSuggestionAdapter
 import proton.android.pass.biometry.NeedsBiometricAuth
+import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.api.usecases.credentials.passwords.GetPasswordCredentialItems
 import proton.android.pass.domain.credentials.PasswordCredentialItem
@@ -42,6 +43,7 @@ import javax.inject.Inject
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 internal class PasswordCredentialsSearcherImpl @Inject constructor(
+    private val assetLinkRepository: AssetLinkRepository,
     private val packageNameUrlSuggestionAdapter: PackageNameUrlSuggestionAdapter,
     private val getPasswordCredentialItems: GetPasswordCredentialItems,
     private val needsBiometricAuth: NeedsBiometricAuth,
@@ -65,9 +67,17 @@ internal class PasswordCredentialsSearcherImpl @Inject constructor(
         callingAppInfo: CallingAppInfo?,
         option: BeginGetPasswordOption
     ): Pair<List<PasswordCredentialEntry>, Action>? {
+        val callingPackageName = callingAppInfo?.packageName.orEmpty()
+
+        val url = assetLinkRepository.observeByPackageName(callingPackageName)
+            .first()
+            .firstOrNull()
+            ?.website
+            .orEmpty()
+
         val suggestion = packageNameUrlSuggestionAdapter.adapt(
-            packageName = PackageName(callingAppInfo?.packageName.orEmpty()),
-            url = callingAppInfo?.origin.orEmpty()
+            packageName = PackageName(value = callingPackageName),
+            url = url
         ).toSuggestion()
 
         val passwordCredentialEntries = createPasswordCredentialEntries(

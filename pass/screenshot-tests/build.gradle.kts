@@ -50,6 +50,7 @@ dependencies {
     implementation(projects.pass.features.account)
     implementation(projects.pass.features.auth)
     implementation(projects.pass.features.attachments)
+    implementation(projects.pass.features.credentials)
     implementation(projects.pass.features.home)
     implementation(projects.pass.features.itemCreate)
     implementation(projects.pass.features.itemDetails)

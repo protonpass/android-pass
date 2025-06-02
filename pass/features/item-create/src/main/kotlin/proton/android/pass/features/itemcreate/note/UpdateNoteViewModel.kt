@@ -43,8 +43,8 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
+import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.GetItemById
-import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.RenameAttachments
@@ -87,7 +87,7 @@ class UpdateNoteViewModel @Inject constructor(
     private val renameAttachments: RenameAttachments,
     private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
     clipboardManager: ClipboardManager,
-    getUserPlan: GetUserPlan,
+    canPerformPaidAction: CanPerformPaidAction,
     customFieldHandler: CustomFieldHandler,
     customFieldDraftRepository: CustomFieldDraftRepository,
     userPreferencesRepository: UserPreferencesRepository,
@@ -95,7 +95,7 @@ class UpdateNoteViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseNoteViewModel(
     clipboardManager = clipboardManager,
-    getUserPlan = getUserPlan,
+    canPerformPaidAction = canPerformPaidAction,
     userPreferencesRepository = userPreferencesRepository,
     snackbarDispatcher = snackbarDispatcher,
     attachmentsHandler = attachmentsHandler,

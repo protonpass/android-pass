@@ -26,9 +26,8 @@ import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
-import proton.android.pass.features.itemcreate.alias.AliasItemValidationErrors.BlankPrefix
-import proton.android.pass.features.itemcreate.alias.AliasItemValidationErrors.BlankTitle
-import proton.android.pass.features.itemcreate.alias.AliasItemValidationErrors.InvalidAliasContent
+import proton.android.pass.features.itemcreate.common.AliasItemValidationError
+import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.CreateUpdateTopBar
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -81,9 +80,9 @@ internal fun AliasContent(
             isEditAllowed = isEditAllowed,
             isLoading = uiState.isLoadingState.value(),
             showUpgrade = uiState.hasReachedAliasLimit,
-            onTitleRequiredError = uiState.errorList.contains(BlankTitle),
-            onAliasRequiredError = uiState.errorList.contains(BlankPrefix),
-            onInvalidAliasError = uiState.errorList.contains(InvalidAliasContent),
+            onTitleRequiredError = uiState.errorList.contains(CommonFieldValidationError.BlankTitle),
+            onAliasRequiredError = uiState.errorList.contains(AliasItemValidationError.BlankPrefix),
+            onInvalidAliasError = uiState.errorList.contains(AliasItemValidationError.InvalidAliasContent),
             onSuffixClick = { onEvent(AliasContentUiEvent.OnSuffixSelect) },
             onMailboxClick = { onEvent(AliasContentUiEvent.OnMailboxSelect) },
             onEvent = onEvent,

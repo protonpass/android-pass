@@ -38,6 +38,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toPersistentSet
 import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.applyIf
@@ -60,7 +61,7 @@ internal fun NoteItemForm(
     modifier: Modifier = Modifier,
     noteItemFormState: NoteItemFormState,
     canUseCustomFields: Boolean,
-    focusedField: NoteField?,
+    focusedField: Option<NoteField>,
     isFileAttachmentsEnabled: Boolean,
     isCustomItemEnabled: Boolean,
     displayFileAttachmentsOnboarding: Boolean,
@@ -72,8 +73,8 @@ internal fun NoteItemForm(
 ) {
     Box(modifier = modifier) {
         val currentStickyFormOption = remember(focusedField) {
-            when (focusedField) {
-                is NoteField.CustomField -> when (focusedField.field.type) {
+            when (val field = focusedField.value()) {
+                is NoteField.CustomField -> when (field.field.type) {
                     CustomFieldType.Totp -> CustomFieldStickyFormOptionsContentType.AddTotp
                     else -> CustomFieldStickyFormOptionsContentType.NoOption
                 }

@@ -27,7 +27,10 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.commonrust.api.AliasPrefixError
 import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.features.itemcreate.common.AliasItemValidationError
+import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
+import proton.android.pass.features.itemcreate.common.ValidationError
 import proton.android.pass.log.api.PassLogger
 
 @Parcelize
@@ -46,11 +49,11 @@ data class AliasItemFormState(
     val customFields: List<UICustomFieldContent>
 ) : Parcelable {
 
-    fun validate(allowEmptyTitle: Boolean, aliasPrefixValidator: AliasPrefixValidator): Set<AliasItemValidationErrors> {
-        val mutableSet = mutableSetOf<AliasItemValidationErrors>()
+    fun validate(allowEmptyTitle: Boolean, aliasPrefixValidator: AliasPrefixValidator): Set<ValidationError> {
+        val mutableSet = mutableSetOf<ValidationError>()
 
         if (!allowEmptyTitle) {
-            if (title.isBlank()) mutableSet.add(AliasItemValidationErrors.BlankTitle)
+            if (title.isBlank()) mutableSet.add(CommonFieldValidationError.BlankTitle)
         }
 
         aliasPrefixValidator.validate(prefix).onFailure {
@@ -62,7 +65,7 @@ data class AliasItemFormState(
             }
         }
 
-        if (selectedMailboxes.isEmpty()) mutableSet.add(AliasItemValidationErrors.NoMailboxes)
+        if (selectedMailboxes.isEmpty()) mutableSet.add(AliasItemValidationError.NoMailboxes)
 
         return mutableSet.toSet()
     }
@@ -89,18 +92,11 @@ data class AliasItemFormState(
     }
 }
 
-sealed interface AliasItemValidationErrors {
-    data object BlankTitle : AliasItemValidationErrors
-    data object BlankPrefix : AliasItemValidationErrors
-    data object InvalidAliasContent : AliasItemValidationErrors
-    data object NoMailboxes : AliasItemValidationErrors
-}
-
-fun AliasPrefixError.toError(): AliasItemValidationErrors = when (this) {
-    AliasPrefixError.DotAtTheBeginning -> AliasItemValidationErrors.InvalidAliasContent
-    AliasPrefixError.DotAtTheEnd -> AliasItemValidationErrors.InvalidAliasContent
-    AliasPrefixError.InvalidCharacter -> AliasItemValidationErrors.InvalidAliasContent
-    AliasPrefixError.PrefixEmpty -> AliasItemValidationErrors.BlankPrefix
-    AliasPrefixError.PrefixTooLong -> AliasItemValidationErrors.InvalidAliasContent
-    AliasPrefixError.TwoConsecutiveDots -> AliasItemValidationErrors.InvalidAliasContent
+fun AliasPrefixError.toError(): AliasItemValidationError = when (this) {
+    AliasPrefixError.DotAtTheBeginning -> AliasItemValidationError.InvalidAliasContent
+    AliasPrefixError.DotAtTheEnd -> AliasItemValidationError.InvalidAliasContent
+    AliasPrefixError.InvalidCharacter -> AliasItemValidationError.InvalidAliasContent
+    AliasPrefixError.PrefixEmpty -> AliasItemValidationError.BlankPrefix
+    AliasPrefixError.PrefixTooLong -> AliasItemValidationError.InvalidAliasContent
+    AliasPrefixError.TwoConsecutiveDots -> AliasItemValidationError.InvalidAliasContent
 }

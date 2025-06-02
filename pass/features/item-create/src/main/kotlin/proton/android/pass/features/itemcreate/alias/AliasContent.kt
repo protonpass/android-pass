@@ -72,7 +72,7 @@ internal fun AliasContent(
             )
         }
     ) { padding ->
-        CreateAliasForm(
+        AliasItemForm(
             modifier = Modifier.padding(padding),
             aliasItemFormState = aliasItemFormState,
             isCreateMode = isCreateMode,

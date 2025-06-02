@@ -37,7 +37,7 @@ sealed class SelectItemState(
     val suggestionsTitle: String,
     val showPinnedItems: Boolean,
     val showCreateButton: Boolean,
-    val isPasswordCredential: Boolean = false
+    val isPasswordCredentialCreation: Boolean = false
 ) {
     sealed class Autofill(
         filter: ItemTypeFilter,
@@ -78,20 +78,26 @@ sealed class SelectItemState(
         ) : Passkey(title, showPinnedItems = false, showCreateButton = false)
     }
 
-    sealed class Password(title: String) : SelectItemState(
+    sealed class Password(title: String, isPasswordCredentialCreation: Boolean) : SelectItemState(
         suggestionsTitle = title,
+        isPasswordCredentialCreation = isPasswordCredentialCreation,
         itemTypeFilter = ItemTypeFilter.Logins,
         showPinnedItems = false,
-        showCreateButton = false,
-        isPasswordCredential = true
+        showCreateButton = false
     ) {
 
-        data class Register(internal val title: String) : Password(title = title)
+        data class Register(internal val title: String) : Password(
+            title = title,
+            isPasswordCredentialCreation = true
+        )
 
         data class Select(
             internal val title: String,
             internal val suggestion: Suggestion
-        ) : Password(title = title)
+        ) : Password(
+            title = title,
+            isPasswordCredentialCreation = false
+        )
 
     }
 }

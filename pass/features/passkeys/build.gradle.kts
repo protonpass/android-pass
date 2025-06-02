@@ -50,7 +50,6 @@ androidComponents.beforeVariants { variant ->
 dependencies {
 
     implementation(libs.accompanist.navigation.material)
-    implementation(libs.androidx.credentials)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.ui)
@@ -86,15 +85,6 @@ dependencies {
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.data.api)
     implementation(projects.pass.domain)
-    implementation(projects.pass.features.auth)
-    implementation(projects.pass.features.accountSelector)
-    implementation(projects.pass.features.itemCreate)
-    implementation(projects.pass.features.itemCreate)
-    implementation(projects.pass.searchOptions.api)
-    implementation(projects.pass.features.searchOptions)
-    implementation(projects.pass.features.password)
-    implementation(projects.pass.features.selectItem)
-    implementation(projects.pass.features.vault)
     implementation(projects.pass.log.api)
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.api)

@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
@@ -60,14 +61,14 @@ import proton.android.pass.securitycenter.api.passwords.DuplicatedPasswordChecke
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
 import proton.android.pass.securitycenter.api.passwords.MissingTfaChecker
 import proton.android.pass.telemetry.api.TelemetryManager
-import proton.android.pass.totp.api.TotpManager
+import proton.android.pass.totp.api.ObserveTotpFromUri
 import javax.inject.Inject
 
 private const val REUSED_PASSWORD_DISPLAY_MODE_THRESHOLD = 5
 
 class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     override val encryptionContextProvider: EncryptionContextProvider,
-    override val totpManager: TotpManager,
+    override val observeTotpFromUri: ObserveTotpFromUri,
     override val canDisplayTotp: CanDisplayTotp,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val passwordStrengthCalculator: PasswordStrengthCalculator,
@@ -77,7 +78,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     private val telemetryManager: TelemetryManager
 ) : ItemDetailsHandlerObserver<ItemContents.Login, ItemDetailsFieldType.LoginItemAction>(
     encryptionContextProvider,
-    totpManager,
+    observeTotpFromUri,
     canDisplayTotp
 ) {
 
@@ -189,7 +190,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             }
             when {
                 totpUri.isBlank() -> flowOf(TotpState.Hidden)
-                canDisplayTotp -> totpManager.observeCode(totpUri).map { totpWrapper ->
+                canDisplayTotp -> observeTotpFromUri(totpUri).map { totpWrapper ->
                     TotpState.Visible(
                         code = totpWrapper.code,
                         remainingSeconds = totpWrapper.remainingSeconds,
@@ -198,6 +199,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                 }
                 else -> flowOf(TotpState.Limited)
             }
+                .onEach { println("VicLog - totp state: $it") }
         }
 
     override fun updateHiddenFieldsContents(

@@ -45,11 +45,11 @@ import proton.android.pass.domain.TotpState
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.toItemContents
-import proton.android.pass.totp.api.TotpManager
+import proton.android.pass.totp.api.ObserveTotpFromUri
 
 abstract class ItemDetailsHandlerObserver<ITEM_CONTENTS : ItemContents, FIELD_TYPE : ItemDetailsFieldType>(
     open val encryptionContextProvider: EncryptionContextProvider,
-    open val totpManager: TotpManager,
+    open val observeTotpFromUri: ObserveTotpFromUri,
     open val canDisplayTotp: CanDisplayTotp
 ) {
 
@@ -271,7 +271,7 @@ abstract class ItemDetailsHandlerObserver<ITEM_CONTENTS : ItemContents, FIELD_TY
                     flowOf(emptyMap())
                 } else {
                     val flows = decrypted.map { (key, uri) ->
-                        totpManager.observeCode(uri)
+                        observeTotpFromUri(uri)
                             .map { code ->
                                 key to TotpState.Visible(
                                     code = code.code,

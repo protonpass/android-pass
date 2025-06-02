@@ -131,7 +131,8 @@ sealed interface ItemDetailState {
         override val itemShareCount: Int,
         override val attachmentsState: AttachmentsState,
         override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
-        override val detailEvent: DetailEvent
+        override val detailEvent: DetailEvent,
+        val isDowngraded: Boolean
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.CreditCard

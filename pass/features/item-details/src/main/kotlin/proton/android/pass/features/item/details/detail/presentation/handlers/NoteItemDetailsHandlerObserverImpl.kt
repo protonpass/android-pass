@@ -34,16 +34,16 @@ import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.attachments.Attachment
-import proton.android.pass.totp.api.TotpManager
+import proton.android.pass.totp.api.ObserveTotpFromUri
 import javax.inject.Inject
 
 class NoteItemDetailsHandlerObserverImpl @Inject constructor(
     override val encryptionContextProvider: EncryptionContextProvider,
-    override val totpManager: TotpManager,
+    override val observeTotpFromUri: ObserveTotpFromUri,
     override val canDisplayTotp: CanDisplayTotp
 ) : ItemDetailsHandlerObserver<ItemContents.Note, ItemDetailsFieldType.NoteItemAction>(
     encryptionContextProvider = encryptionContextProvider,
-    totpManager = totpManager,
+    observeTotpFromUri = observeTotpFromUri,
     canDisplayTotp = canDisplayTotp
 ) {
 

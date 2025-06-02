@@ -21,6 +21,7 @@ package proton.android.pass.features.credentials.passwords.creation.presentation
 import androidx.compose.runtime.Immutable
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.features.itemcreate.login.InitialCreateLoginUiState
+import proton.android.pass.features.selectitem.navigation.SelectItemState
 import proton.android.pass.preferences.ThemePreference
 
 @Immutable
@@ -37,6 +38,7 @@ internal sealed interface PasswordCredentialCreationState {
         internal val request: PasswordCredentialCreationRequest,
         internal val themePreference: ThemePreference,
         internal val isBiometricAuthRequired: Boolean,
+        internal val hasSingleAccount: Boolean,
         internal val event: PasswordCredentialCreationStateEvent
     ) : PasswordCredentialCreationState {
 
@@ -50,6 +52,8 @@ internal sealed interface PasswordCredentialCreationState {
                 appName = request.appName
             )
         )
+
+        internal val selectItemState = SelectItemState.Password.Register(title = request.title)
 
     }
 

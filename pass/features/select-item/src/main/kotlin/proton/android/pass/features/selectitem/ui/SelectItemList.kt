@@ -45,7 +45,7 @@ import proton.android.pass.features.selectitem.previewproviders.SelectItemUiStat
 import proton.android.pass.searchoptions.api.SearchFilterType
 
 @Composable
-fun SelectItemList(
+internal fun SelectItemList(
     modifier: Modifier = Modifier,
     uiState: SelectItemUiState,
     scrollState: LazyListState = rememberLazyListState(),
@@ -101,7 +101,7 @@ fun SelectItemList(
                     emptyListMessage = stringResource(id = R.string.error_credentials_not_found),
                     canCreate = listUiState.displayCreateButton,
                     onCreateItemClick = {
-                        if (listUiState.accountSwitchState.accountList.size > 1) {
+                        if (listUiState.accountSwitchState.hasMultipleAccounts) {
                             onNavigate(SelectItemNavigation.SelectAccount)
                         } else {
                             onNavigate(SelectItemNavigation.AddItem)
@@ -168,12 +168,12 @@ fun SelectItemList(
     )
 }
 
-class ThemeAndSelectItemUiStateProvider :
+internal class ThemeAndSelectItemUiStateProvider :
     ThemePairPreviewProvider<SelectItemUiState>(SelectItemUiStatePreviewProvider())
 
 @Preview
 @Composable
-fun SelectItemListPreview(
+internal fun SelectItemListPreview(
     @PreviewParameter(ThemeAndSelectItemUiStateProvider::class) input: Pair<Boolean, SelectItemUiState>
 ) {
     PassTheme(isDark = input.first) {

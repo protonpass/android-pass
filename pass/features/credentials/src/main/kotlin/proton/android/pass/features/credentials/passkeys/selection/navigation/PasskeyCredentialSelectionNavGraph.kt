@@ -27,7 +27,7 @@ import proton.android.pass.features.auth.EnterPin
 import proton.android.pass.features.auth.authGraph
 import proton.android.pass.features.credentials.passkeys.selection.presentation.PasskeyCredentialSelectionActionAfterAuth
 import proton.android.pass.features.credentials.passkeys.selection.presentation.PasskeyCredentialSelectionEvent
-import proton.android.pass.features.passkeys.select.ui.bottomsheet.selectpasskey.selectPasskeyBottomsheetGraph
+import proton.android.pass.features.passkeys.select.navigation.selectPasskeyBottomsheetGraph
 import proton.android.pass.features.searchoptions.SearchOptionsNavigation
 import proton.android.pass.features.searchoptions.SortingBottomsheetNavItem
 import proton.android.pass.features.searchoptions.SortingLocation

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.passkeys.select.ui.bottomsheet.selectpasskey
+package proton.android.pass.features.passkeys.select.ui.bottomsheet
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
@@ -48,7 +48,7 @@ import proton.android.pass.domain.PasskeyId
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun SelectPasskeyBottomsheetContent(
+internal fun SelectPasskeyBottomsheetContent(
     modifier: Modifier = Modifier,
     isLoading: IsLoadingState,
     passkeys: ImmutableList<Passkey>,
@@ -103,7 +103,7 @@ internal fun passkeyItem(item: Passkey, onClick: () -> Unit): BottomSheetItem = 
 @Preview
 @Composable
 @Suppress("MagicNumber")
-fun SelectPasskeyBSContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun SelectPasskeyBSContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     val createPasskey = { id: String, domain: String, username: String ->
         Passkey(
             id = PasskeyId(id),
@@ -137,4 +137,3 @@ fun SelectPasskeyBSContentPreview(@PreviewParameter(ThemePreviewProvider::class)
         }
     }
 }
-

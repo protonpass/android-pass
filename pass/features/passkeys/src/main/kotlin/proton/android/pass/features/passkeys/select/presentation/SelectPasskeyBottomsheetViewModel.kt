@@ -31,7 +31,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
@@ -47,28 +46,7 @@ import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
-import javax.annotation.concurrent.Immutable
 import javax.inject.Inject
-
-@Immutable
-sealed interface SelectPasskeyBottomsheetEvent {
-    @Immutable
-    data object Idle : SelectPasskeyBottomsheetEvent
-
-    @Immutable
-    data object Close : SelectPasskeyBottomsheetEvent
-
-    @Immutable
-    @JvmInline
-    value class OnSelected(val passkey: Passkey) : SelectPasskeyBottomsheetEvent
-}
-
-@Immutable
-data class SelectPasskeyBottomsheetState(
-    val event: SelectPasskeyBottomsheetEvent,
-    val isLoading: IsLoadingState,
-    val passkeys: ImmutableList<Passkey>
-)
 
 @HiltViewModel
 class SelectPasskeyBottomsheetViewModel @Inject constructor(
@@ -79,13 +57,15 @@ class SelectPasskeyBottomsheetViewModel @Inject constructor(
 
     private val shareId: ShareId = savedStateHandleProvider.get()
         .require<String>(CommonNavArgId.ShareId.key)
-        .let { ShareId(it) }
+        .let(::ShareId)
+
     private val itemId: ItemId = savedStateHandleProvider.get()
         .require<String>(CommonNavArgId.ItemId.key)
-        .let { ItemId(it) }
+        .let(::ItemId)
 
-    private val eventFlow: MutableStateFlow<SelectPasskeyBottomsheetEvent> =
-        MutableStateFlow(SelectPasskeyBottomsheetEvent.Idle)
+    private val eventFlow: MutableStateFlow<SelectPasskeyBottomsheetEvent> = MutableStateFlow(
+        value = SelectPasskeyBottomsheetEvent.Idle
+    )
 
     private val itemFlow: Flow<LoadingResult<ImmutableList<Passkey>>> = oneShot {
         getPasskeys().fold(
@@ -94,7 +74,7 @@ class SelectPasskeyBottomsheetViewModel @Inject constructor(
         )
     }.asLoadingResult()
 
-    val state: StateFlow<SelectPasskeyBottomsheetState> = combine(
+    internal val stateFlow: StateFlow<SelectPasskeyBottomsheetState> = combine(
         eventFlow,
         itemFlow
     ) { event, itemResult ->
@@ -137,11 +117,11 @@ class SelectPasskeyBottomsheetViewModel @Inject constructor(
         )
     )
 
-    fun onPasskeySelected(passkey: Passkey) = viewModelScope.launch {
+    internal fun onPasskeySelected(passkey: Passkey) {
         eventFlow.update { SelectPasskeyBottomsheetEvent.OnSelected(passkey) }
     }
 
-    fun clearEvent() {
+    internal fun clearEvent() {
         eventFlow.update { SelectPasskeyBottomsheetEvent.Idle }
     }
 
@@ -157,8 +137,10 @@ class SelectPasskeyBottomsheetViewModel @Inject constructor(
         onFailure = { Result.failure(it) }
     )
 
-    companion object {
+    private companion object {
+
         private const val TAG = "SelectPasskeyBottomsheetViewModel"
+
     }
 
 }

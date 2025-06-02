@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,12 +16,22 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.passkeys.telemetry
+package proton.android.pass.features.passkeys.select.presentation
 
-import proton.android.pass.telemetry.api.TelemetryEvent.DeferredTelemetryEvent
+import proton.android.pass.domain.Passkey
+import javax.annotation.concurrent.Immutable
 
-data object CreatePromptDisplay : DeferredTelemetryEvent("passkey.create_prompt_display")
-data object CreateDone : DeferredTelemetryEvent("passkey.create_done")
-data object DisplaySuggestions : DeferredTelemetryEvent("passkey.display_suggestions")
-data object DisplayAllPasskeys : DeferredTelemetryEvent("passkey.display_all_passkeys")
-data object AuthDone : DeferredTelemetryEvent("passkey.auth_done")
+@Immutable
+internal sealed interface SelectPasskeyBottomsheetEvent {
+
+    @Immutable
+    data object Idle : SelectPasskeyBottomsheetEvent
+
+    @Immutable
+    data object Close : SelectPasskeyBottomsheetEvent
+
+    @Immutable
+    @JvmInline
+    value class OnSelected(val passkey: Passkey) : SelectPasskeyBottomsheetEvent
+
+}

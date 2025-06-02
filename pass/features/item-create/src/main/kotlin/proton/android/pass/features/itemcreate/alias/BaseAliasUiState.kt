@@ -19,17 +19,20 @@
 package proton.android.pass.features.itemcreate.alias
 
 import androidx.compose.runtime.Immutable
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.ShareUiState
+import proton.android.pass.features.itemcreate.common.ValidationError
 
 @Immutable
-data class BaseAliasUiState(
+internal data class BaseAliasUiState(
     val isDraft: Boolean,
-    val errorList: Set<AliasItemValidationErrors>,
+    val errorList: Set<ValidationError>,
     val isLoadingState: IsLoadingState,
     val itemSavedState: ItemSavedState,
     val isAliasDraftSavedState: AliasDraftSavedState,
@@ -41,7 +44,9 @@ data class BaseAliasUiState(
     val isFileAttachmentEnabled: Boolean,
     val displayFileAttachmentsOnboarding: Boolean,
     val attachmentsState: AttachmentsState,
-    val displayAdvancedOptionsBanner: Boolean
+    val displayAdvancedOptionsBanner: Boolean,
+    val canPerformPaidAction: Boolean,
+    val focusedField: Option<AliasField>
 ) {
     companion object {
         val Initial = BaseAliasUiState(
@@ -58,13 +63,15 @@ data class BaseAliasUiState(
             isFileAttachmentEnabled = false,
             displayFileAttachmentsOnboarding = false,
             displayAdvancedOptionsBanner = false,
-            attachmentsState = AttachmentsState.Initial
+            attachmentsState = AttachmentsState.Initial,
+            canPerformPaidAction = false,
+            focusedField = None
         )
     }
 }
 
 @Immutable
-data class CreateAliasUiState(
+internal data class CreateAliasUiState(
     val shareUiState: ShareUiState,
     val baseAliasUiState: BaseAliasUiState
 ) {
@@ -77,7 +84,7 @@ data class CreateAliasUiState(
 }
 
 @Immutable
-data class UpdateAliasUiState(
+internal data class UpdateAliasUiState(
     val selectedShareId: ShareId?,
     val canModify: Boolean,
     val baseAliasUiState: BaseAliasUiState

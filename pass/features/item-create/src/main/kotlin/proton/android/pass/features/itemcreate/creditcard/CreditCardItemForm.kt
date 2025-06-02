@@ -37,6 +37,8 @@ import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
+import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
+import proton.android.pass.features.itemcreate.common.ValidationError
 import proton.android.pass.features.itemcreate.creditcard.CreditCardContentEvent.OnAttachmentEvent
 import proton.android.pass.features.itemcreate.creditcard.CreditCardContentEvent.OnCVVChange
 import proton.android.pass.features.itemcreate.creditcard.CreditCardContentEvent.OnCVVFocusChange
@@ -53,7 +55,7 @@ fun CreditCardItemForm(
     modifier: Modifier = Modifier,
     creditCardItemFormState: CreditCardItemFormState,
     enabled: Boolean,
-    validationErrors: PersistentSet<CreditCardValidationErrors>,
+    validationErrors: PersistentSet<ValidationError>,
     displayFileAttachmentsOnboarding: Boolean,
     isFileAttachmentsEnabled: Boolean,
     attachmentsState: AttachmentsState,
@@ -82,7 +84,7 @@ fun CreditCardItemForm(
             value = creditCardItemFormState.title,
             requestFocus = true,
             onTitleRequiredError = validationErrors
-                .contains(CreditCardValidationErrors.BlankTitle),
+                .contains(CommonFieldValidationError.BlankTitle),
             enabled = enabled,
             isRounded = true,
             onChange = { onEvent(OnTitleChange(it)) }

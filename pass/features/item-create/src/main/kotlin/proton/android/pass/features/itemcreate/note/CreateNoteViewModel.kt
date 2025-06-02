@@ -49,8 +49,8 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.GetShareById
-import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
@@ -88,7 +88,7 @@ class CreateNoteViewModel @Inject constructor(
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
     clipboardManager: ClipboardManager,
-    getUserPlan: GetUserPlan,
+    canPerformPaidAction: CanPerformPaidAction,
     userPreferencesRepository: UserPreferencesRepository,
     observeVaults: ObserveVaultsWithItemCount,
     observeDefaultVault: ObserveDefaultVault,
@@ -99,7 +99,7 @@ class CreateNoteViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseNoteViewModel(
     clipboardManager = clipboardManager,
-    getUserPlan = getUserPlan,
+    canPerformPaidAction = canPerformPaidAction,
     userPreferencesRepository = userPreferencesRepository,
     snackbarDispatcher = snackbarDispatcher,
     attachmentsHandler = attachmentsHandler,

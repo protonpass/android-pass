@@ -59,6 +59,7 @@ import proton.android.pass.data.api.errors.AliasRateLimitError
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
@@ -76,8 +77,12 @@ import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.ItemCr
 import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.ItemLinkAttachmentsError
 import proton.android.pass.features.itemcreate.alias.draftrepositories.MailboxDraftRepository
 import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDraftRepository
+import proton.android.pass.features.itemcreate.common.AliasItemValidationError
+import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
@@ -109,6 +114,9 @@ open class CreateAliasViewModel @Inject constructor(
     observeUpgradeInfo: ObserveUpgradeInfo,
     observeDefaultVault: ObserveDefaultVault,
     attachmentsHandler: AttachmentsHandler,
+    customFieldHandler: CustomFieldHandler,
+    customFieldDraftRepository: CustomFieldDraftRepository,
+    canPerformPaidAction: CanPerformPaidAction,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseAliasViewModel(
@@ -118,6 +126,9 @@ open class CreateAliasViewModel @Inject constructor(
     attachmentsHandler = attachmentsHandler,
     snackbarDispatcher = snackbarDispatcher,
     featureFlagsRepository = featureFlagsRepository,
+    customFieldHandler = customFieldHandler,
+    customFieldDraftRepository = customFieldDraftRepository,
+    canPerformPaidAction = canPerformPaidAction,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
 
@@ -197,7 +208,7 @@ open class CreateAliasViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
-    val createAliasUiState: StateFlow<CreateAliasUiState> = combineN(
+    internal val createAliasUiState: StateFlow<CreateAliasUiState> = combineN(
         baseAliasUiState,
         shareUiState,
         aliasOptionsState,
@@ -267,8 +278,8 @@ open class CreateAliasViewModel @Inject constructor(
         aliasItemValidationErrorsState.update {
             it.toMutableSet()
                 .apply {
-                    remove(AliasItemValidationErrors.BlankTitle)
-                    remove(AliasItemValidationErrors.InvalidAliasContent)
+                    remove(CommonFieldValidationError.BlankTitle)
+                    remove(AliasItemValidationError.InvalidAliasContent)
                 }
         }
     }
@@ -290,8 +301,8 @@ open class CreateAliasViewModel @Inject constructor(
         aliasItemValidationErrorsState.update {
             it.toMutableSet()
                 .apply {
-                    remove(AliasItemValidationErrors.BlankPrefix)
-                    remove(AliasItemValidationErrors.InvalidAliasContent)
+                    remove(AliasItemValidationError.BlankPrefix)
+                    remove(AliasItemValidationError.InvalidAliasContent)
                 }
         }
         titlePrefixInSync = false

@@ -52,6 +52,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
+import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.UpdateAlias
@@ -74,6 +75,9 @@ import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.ItemUp
 import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.UpdateAppToUpdateItemError
 import proton.android.pass.features.itemcreate.alias.draftrepositories.MailboxDraftRepository
 import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDraftRepository
+import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -101,6 +105,9 @@ class UpdateAliasViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     attachmentsHandler: AttachmentsHandler,
+    customFieldHandler: CustomFieldHandler,
+    customFieldDraftRepository: CustomFieldDraftRepository,
+    canPerformPaidAction: CanPerformPaidAction,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseAliasViewModel(
     mailboxDraftRepository = mailboxDraftRepository,
@@ -109,6 +116,9 @@ class UpdateAliasViewModel @Inject constructor(
     attachmentsHandler = attachmentsHandler,
     snackbarDispatcher = snackbarDispatcher,
     featureFlagsRepository = featureFlagsRepository,
+    customFieldHandler = customFieldHandler,
+    customFieldDraftRepository = customFieldDraftRepository,
+    canPerformPaidAction = canPerformPaidAction,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
 
@@ -216,7 +226,7 @@ class UpdateAliasViewModel @Inject constructor(
         aliasItemFormMutableState = aliasItemFormState.copy(title = value)
         aliasItemValidationErrorsState.update {
             it.toMutableSet()
-                .apply { remove(AliasItemValidationErrors.BlankTitle) }
+                .apply { remove(CommonFieldValidationError.BlankTitle) }
         }
         isApplyButtonEnabledState.update { IsButtonEnabled.Enabled }
     }

@@ -40,6 +40,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.collections.immutable.toImmutableList
+import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
@@ -57,7 +58,6 @@ import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.alias.AliasAdvancedOptionsSection
 import proton.android.pass.features.itemcreate.alias.AliasDraftSavedState
 import proton.android.pass.features.itemcreate.alias.AliasItemFormState
-import proton.android.pass.features.itemcreate.alias.AliasItemValidationErrors
 import proton.android.pass.features.itemcreate.alias.AliasMailboxUiModel
 import proton.android.pass.features.itemcreate.alias.AliasOptionsUiModel
 import proton.android.pass.features.itemcreate.alias.AliasPrefixSuffixText
@@ -66,9 +66,10 @@ import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation
 import proton.android.pass.features.itemcreate.alias.BaseAliasUiState
 import proton.android.pass.features.itemcreate.alias.CloseScreenEvent
 import proton.android.pass.features.itemcreate.alias.MailboxSection
+import proton.android.pass.features.itemcreate.common.AliasItemValidationError
 
 @Composable
-fun CreateAliasBottomSheetContent(
+internal fun CreateAliasBottomSheetContent(
     modifier: Modifier = Modifier,
     state: BaseAliasUiState,
     aliasItemFormState: AliasItemFormState,
@@ -78,9 +79,9 @@ fun CreateAliasBottomSheetContent(
     onNavigate: (BaseAliasNavigation) -> Unit,
     showAdvancedOptionsInitially: Boolean = false
 ) {
-    val isBlankAliasError = state.errorList.contains(AliasItemValidationErrors.BlankPrefix)
+    val isBlankAliasError = state.errorList.contains(AliasItemValidationError.BlankPrefix)
     val isInvalidAliasError =
-        state.errorList.contains(AliasItemValidationErrors.InvalidAliasContent)
+        state.errorList.contains(AliasItemValidationError.InvalidAliasContent)
 
     var showAdvancedOptions by rememberSaveable { mutableStateOf(showAdvancedOptionsInitially) }
     val visibilityState = rememberAnimatedVisibilityState(initialState = true)
@@ -174,7 +175,9 @@ fun CreateAliasBottomSheetContentPreview(@PreviewParameter(ThemePreviewProvider:
                     isFileAttachmentEnabled = false,
                     displayFileAttachmentsOnboarding = false,
                     displayAdvancedOptionsBanner = false,
-                    attachmentsState = AttachmentsState.Initial
+                    attachmentsState = AttachmentsState.Initial,
+                    canPerformPaidAction = true,
+                    focusedField = None
                 ),
                 aliasItemFormState = AliasItemFormState(
                     title = "some title",

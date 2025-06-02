@@ -35,6 +35,8 @@ import proton.android.pass.domain.areItemContentsEqual
 import proton.android.pass.domain.toItemContents
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.ItemUpdate
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.AttachmentsInitError
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.InitError
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.ItemLinkAttachmentsError
@@ -50,6 +52,7 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
+@Suppress("LongParameterList")
 @HiltViewModel
 class UpdateCreditCardViewModel @Inject constructor(
     private val getItemById: ObserveItemById,
@@ -65,6 +68,8 @@ class UpdateCreditCardViewModel @Inject constructor(
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     attachmentsHandler: AttachmentsHandler,
     canPerformPaidAction: CanPerformPaidAction,
+    customFieldHandler: CustomFieldHandler,
+    customFieldDraftRepository: CustomFieldDraftRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCreditCardViewModel(
     userPreferencesRepository = userPreferencesRepository,
@@ -72,6 +77,8 @@ class UpdateCreditCardViewModel @Inject constructor(
     encryptionContextProvider = encryptionContextProvider,
     canPerformPaidAction = canPerformPaidAction,
     featureFlagsRepository = featureFlagsRepository,
+    customFieldHandler = customFieldHandler,
+    customFieldDraftRepository = customFieldDraftRepository,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
     private val navShareId: ShareId =
@@ -107,7 +114,7 @@ class UpdateCreditCardViewModel @Inject constructor(
         }
     }
 
-    val state: StateFlow<UpdateCreditCardUiState> = combine(
+    internal val state: StateFlow<UpdateCreditCardUiState> = combine(
         flowOf(navShareId),
         baseState,
         UpdateCreditCardUiState::Success

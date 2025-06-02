@@ -30,6 +30,7 @@ import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
@@ -42,6 +43,8 @@ import proton.android.pass.features.itemcreate.alias.CreateAliasViewModel
 import proton.android.pass.features.itemcreate.alias.IsEditAliasNavArg
 import proton.android.pass.features.itemcreate.alias.draftrepositories.MailboxDraftRepository
 import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDraftRepository
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
@@ -67,6 +70,9 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     observeDefaultVault: ObserveDefaultVault,
     attachmentsHandler: AttachmentsHandler,
     linkAttachmentsToItem: LinkAttachmentsToItem,
+    customFieldHandler: CustomFieldHandler,
+    customFieldDraftRepository: CustomFieldDraftRepository,
+    canPerformPaidAction: CanPerformPaidAction,
     mailboxDraftRepository: MailboxDraftRepository,
     suffixDraftRepository: SuffixDraftRepository,
     userPreferencesRepository: UserPreferencesRepository,
@@ -87,6 +93,9 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     observeDefaultVault = observeDefaultVault,
     attachmentsHandler = attachmentsHandler,
     linkAttachmentsToItem = linkAttachmentsToItem,
+    customFieldHandler = customFieldHandler,
+    customFieldDraftRepository = customFieldDraftRepository,
+    canPerformPaidAction = canPerformPaidAction,
     mailboxDraftRepository = mailboxDraftRepository,
     suffixDraftRepository = suffixDraftRepository,
     userPreferencesRepository = userPreferencesRepository,

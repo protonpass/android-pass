@@ -95,11 +95,10 @@ internal data class SelectItemListUiState(
     val canUpgrade: Boolean,
     val displayCreateButton: Boolean,
     val accountSwitchState: AccountSwitchUIState,
-    val isPasswordCredential: Boolean
+    val isPasswordCredentialCreation: Boolean
 ) {
 
-    val itemCount: Int =
-        items.items.map { it.items }.flatten().count() + items.suggestions.count()
+    val itemCount: Int = items.items.map { it.items }.flatten().count() + items.suggestions.count()
 
     internal companion object {
 
@@ -119,7 +118,7 @@ internal data class SelectItemListUiState(
                 selectedAccount = None,
                 accountList = emptyList()
             ),
-            isPasswordCredential = false
+            isPasswordCredentialCreation = false
         )
 
     }

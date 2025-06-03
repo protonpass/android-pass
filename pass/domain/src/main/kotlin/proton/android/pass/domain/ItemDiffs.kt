@@ -149,7 +149,16 @@ sealed interface ItemDiffs {
         override val customFields: List<ItemDiffType> = emptyList(),
         override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap(),
         private val extraCustomFields: List<List<ItemDiffType>> = emptyList()
-    ) : ItemDiffs
+    ) : ItemDiffs {
+
+        fun customField(section: ItemSection, index: Int): ItemDiffType = when (section) {
+            is ItemSection.ExtraSection ->
+                extraCustomFields.getOrElse(section.index) { emptyList() }
+            is ItemSection.CustomField -> customFields
+            else -> throw UnsupportedOperationException("cannot use section ${section::class.simpleName} ")
+        }.let { customFields -> customFields.getOrElse(index) { ItemDiffType.None } }
+
+    }
 
     data class WifiNetwork(
         override val title: ItemDiffType = ItemDiffType.None,
@@ -160,7 +169,16 @@ sealed interface ItemDiffs {
         override val customFields: List<ItemDiffType> = emptyList(),
         override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap(),
         private val extraCustomFields: List<List<ItemDiffType>> = emptyList()
-    ) : ItemDiffs
+    ) : ItemDiffs {
+
+        fun customField(section: ItemSection, index: Int): ItemDiffType = when (section) {
+            is ItemSection.ExtraSection ->
+                extraCustomFields.getOrElse(section.index) { emptyList() }
+            is ItemSection.CustomField -> customFields
+            else -> throw UnsupportedOperationException("cannot use section ${section::class.simpleName} ")
+        }.let { customFields -> customFields.getOrElse(index) { ItemDiffType.None } }
+
+    }
 
     data class SSHKey(
         override val title: ItemDiffType = ItemDiffType.None,
@@ -170,7 +188,17 @@ sealed interface ItemDiffs {
         override val customFields: List<ItemDiffType> = emptyList(),
         override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap(),
         private val extraCustomFields: List<List<ItemDiffType>> = emptyList()
-    ) : ItemDiffs
+    ) : ItemDiffs {
+
+        fun customField(section: ItemSection, index: Int): ItemDiffType = when (section) {
+            is ItemSection.ExtraSection ->
+                extraCustomFields.getOrElse(section.index) { emptyList() }
+
+            is ItemSection.CustomField -> customFields
+            else -> throw UnsupportedOperationException("cannot use section ${section::class.simpleName} ")
+        }.let { customFields -> customFields.getOrElse(index) { ItemDiffType.None } }
+
+    }
 
     data class Note(
         override val title: ItemDiffType = ItemDiffType.None,

@@ -358,8 +358,7 @@ open class CreateAliasViewModel @Inject constructor(
                     userId = userId,
                     shareId = shareId,
                     newAlias = NewAlias(
-                        title = aliasItemFormState.title,
-                        note = aliasItemFormState.note,
+                        contents = aliasItemFormState.toItemContents(),
                         prefix = aliasItemFormState.prefix,
                         aliasName = aliasItemFormState.senderName,
                         suffix = aliasSuffix.toDomain(),

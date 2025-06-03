@@ -161,9 +161,9 @@ class ItemRepositoryImpl @Inject constructor(
     ): Item = withUserAddress(userId) { userAddress ->
         val shareKey = shareKeyRepository.getLatestKeyForShare(share.id).first()
         val itemContents = ItemContents.Alias(
-            title = newAlias.title,
-            note = newAlias.note,
-            customFields = emptyList(),
+            title = newAlias.contents.title,
+            note = newAlias.contents.note,
+            customFields = newAlias.contents.customFields,
             aliasEmail = "" // Not used when creating the payload,
         )
         val body = createItem.create(shareKey, itemContents)
@@ -201,9 +201,9 @@ class ItemRepositoryImpl @Inject constructor(
         val request = runCatching {
             val itemBody = createItem.create(shareKey, contents)
             val aliasContents = ItemContents.Alias(
-                title = newAlias.title,
-                note = newAlias.note,
-                customFields = emptyList(),
+                title = newAlias.contents.title,
+                note = newAlias.contents.note,
+                customFields = newAlias.contents.customFields,
                 aliasEmail = "" // Not used when creating the payload
             )
             val aliasBody = createItem.create(shareKey, aliasContents)

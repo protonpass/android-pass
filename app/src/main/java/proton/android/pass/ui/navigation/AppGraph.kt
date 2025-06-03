@@ -1129,6 +1129,7 @@ fun NavGraphBuilder.appGraph(
             }
             when (it) {
                 BaseCreditCardNavigation.CloseScreen -> appNavigator.navigateBack()
+                BaseCreditCardNavigation.DismissBottomsheet -> dismissBottomSheet {}
                 is CreateCreditCardNavigation -> when (it) {
                     is CreateCreditCardNavigation.ItemCreated -> appNavigator.navigateBack()
                     is CreateCreditCardNavigation.SelectVault -> appNavigator.navigate(

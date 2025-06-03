@@ -30,7 +30,14 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.alias.bottomsheet.CreateAliasBottomSheet
 import proton.android.pass.features.itemcreate.alias.mailboxes.ui.SelectMailboxesBottomsheet
 import proton.android.pass.features.itemcreate.alias.suffixes.ui.SelectSuffixBottomsheet
+import proton.android.pass.features.itemcreate.bottomsheets.customfield.customFieldBottomSheetGraph
+import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
 import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
+import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNameNavigation
+import proton.android.pass.features.itemcreate.dialogs.customfield.customFieldNameDialogGraph
+import proton.android.pass.features.itemcreate.totp.INDEX_NAV_PARAMETER_KEY
+import proton.android.pass.features.itemcreate.totp.TOTP_NAV_PARAMETER_KEY
+import proton.android.pass.features.itemcreate.totp.createTotpGraph
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
@@ -100,6 +107,7 @@ data object AliasSelectMailboxBottomSheetNavItem : NavItem(
     navItemType = NavItemType.Bottomsheet
 )
 
+@Suppress("LongMethod")
 fun NavGraphBuilder.createAliasGraph(
     canUseAttachments: Boolean,
     canAddMailbox: Boolean,
@@ -136,4 +144,36 @@ fun NavGraphBuilder.createAliasGraph(
             onNavigate = onNavigate
         )
     }
+    customFieldBottomSheetGraph(
+        prefix = CustomFieldPrefix.CreateAlias,
+        onAddCustomFieldNavigate = { type, _ ->
+            onNavigate(BaseAliasNavigation.CustomFieldTypeSelected(type))
+        },
+        onEditCustomFieldNavigate = { title: String, index: Int, _: Option<Int> ->
+            onNavigate(BaseAliasNavigation.EditCustomField(title, index))
+        },
+        onRemoveCustomFieldNavigate = { onNavigate(BaseAliasNavigation.RemovedCustomField) },
+        onDismissBottomsheet = { onNavigate(BaseAliasNavigation.CloseBottomsheet) }
+    )
+    customFieldNameDialogGraph(CustomFieldPrefix.CreateAlias) {
+        when (it) {
+            is CustomFieldNameNavigation.CloseScreen -> {
+                onNavigate(BaseAliasNavigation.CloseScreen)
+            }
+        }
+    }
+    createTotpGraph(
+        prefix = CustomFieldPrefix.CreateAlias,
+        onSuccess = { totp, _, index ->
+            val values = buildMap<String, Any> {
+                put(TOTP_NAV_PARAMETER_KEY, totp)
+                index?.let { put(INDEX_NAV_PARAMETER_KEY, it) }
+            }
+            onNavigate(BaseAliasNavigation.TotpSuccess(values))
+        },
+        onCloseTotp = { onNavigate(BaseAliasNavigation.TotpCancel) },
+        onOpenImagePicker = { _, index ->
+            onNavigate(BaseAliasNavigation.OpenImagePicker(index.toOption()))
+        }
+    )
 }

@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.toPersistentSet
@@ -70,6 +71,7 @@ internal fun CreditCardItemForm(
 ) {
     LazyColumn(
         modifier = modifier
+            .testTag(CreditCardItemFormTag.LAZY_COLUMN)
             .fillMaxSize()
             .padding(Spacing.medium)
     ) {
@@ -147,4 +149,8 @@ internal fun CreditCardItemForm(
             }
         }
     }
+}
+
+object CreditCardItemFormTag {
+    const val LAZY_COLUMN = "credit_card_form_lazy_column"
 }

@@ -21,9 +21,11 @@ package proton.android.pass.features.itemcreate.creditcard
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performScrollToIndex
 import androidx.test.espresso.Espresso
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -188,6 +190,7 @@ class CreateCreditCardScreenTest {
                 expectedText = formattedExpirationDate
             )
 
+            onNodeWithTag(CreditCardItemFormTag.LAZY_COLUMN).performScrollToIndex(3)
             val noteText = activity.getString(CompR.string.field_note_title)
             onNode(hasText(noteText)).performScrollTo()
             writeTextAndWait(hasText(noteText), note)

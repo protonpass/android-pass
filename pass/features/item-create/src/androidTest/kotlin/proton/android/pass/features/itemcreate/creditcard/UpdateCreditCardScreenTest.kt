@@ -22,9 +22,11 @@ import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performScrollToIndex
 import androidx.compose.ui.test.performTextClearance
 import androidx.test.espresso.Espresso
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -130,6 +132,7 @@ class UpdateCreditCardScreenTest {
             onAllNodes(hasText(HIDDEN_FIELD_VALUE)).assertCountEquals(2)
 
             onNodeWithText(FORMATTED_EXPIRATION_DATE).assertExists()
+            onNodeWithTag(CreditCardItemFormTag.LAZY_COLUMN).performScrollToIndex(3)
             onNodeWithText(DEFAULT_NOTE).assertExists()
         }
     }
@@ -202,6 +205,7 @@ class UpdateCreditCardScreenTest {
             )
 
             // Note
+            onNodeWithTag(CreditCardItemFormTag.LAZY_COLUMN).performScrollToIndex(3)
             onNodeWithText(DEFAULT_NOTE).performScrollTo().performClick().performTextClearance()
             val noteText = activity.getString(CompR.string.field_note_title)
             onNode(hasText(noteText)).performScrollTo().performClick()

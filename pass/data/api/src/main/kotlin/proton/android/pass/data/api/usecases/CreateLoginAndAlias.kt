@@ -24,11 +24,11 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.entity.NewAlias
 
-interface CreateItemAndAlias {
+interface CreateLoginAndAlias {
     suspend operator fun invoke(
         userId: UserId? = null,
         shareId: ShareId,
-        itemContents: ItemContents,
+        itemContents: ItemContents.Login,
         newAlias: NewAlias
     ): Item
 }

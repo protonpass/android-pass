@@ -15,7 +15,7 @@ import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.toPath
 
-object CreateCreditCard : NavItem(
+object CreateCreditCardNavItem : NavItem(
     baseRoute = "creditcard/create/screen",
     optionalArgIds = listOf(CommonOptionalNavArgId.ShareId)
 ) {
@@ -39,7 +39,7 @@ sealed interface CreateCreditCardNavigation : BaseCreditCardNavigation {
 }
 
 fun NavGraphBuilder.createCreditCardGraph(canUseAttachments: Boolean, onNavigate: (BaseCreditCardNavigation) -> Unit) {
-    composable(CreateCreditCard) { navBackStack ->
+    composable(CreateCreditCardNavItem) { navBackStack ->
         val selectVault by navBackStack.savedStateHandle
             .getStateFlow<String?>(KEY_VAULT_SELECTED, null)
             .collectAsStateWithLifecycle()

@@ -19,15 +19,16 @@
 package proton.android.pass.features.itemcreate.creditcard
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.PersistentSet
+import kotlinx.collections.immutable.toPersistentSet
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
@@ -38,7 +39,9 @@ import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
 import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
+import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
 import proton.android.pass.features.itemcreate.common.ValidationError
+import proton.android.pass.features.itemcreate.common.customfields.customFieldsList
 import proton.android.pass.features.itemcreate.creditcard.CreditCardContentEvent.OnAttachmentEvent
 import proton.android.pass.features.itemcreate.creditcard.CreditCardContentEvent.OnCVVChange
 import proton.android.pass.features.itemcreate.creditcard.CreditCardContentEvent.OnCVVFocusChange
@@ -51,7 +54,7 @@ import proton.android.pass.features.itemcreate.creditcard.CreditCardContentEvent
 import proton.android.pass.features.itemcreate.creditcard.CreditCardContentEvent.OnTitleChange
 
 @Composable
-fun CreditCardItemForm(
+internal fun CreditCardItemForm(
     modifier: Modifier = Modifier,
     creditCardItemFormState: CreditCardItemFormState,
     enabled: Boolean,
@@ -59,60 +62,86 @@ fun CreditCardItemForm(
     displayFileAttachmentsOnboarding: Boolean,
     isFileAttachmentsEnabled: Boolean,
     attachmentsState: AttachmentsState,
+    canUseCustomFields: Boolean,
+    focusedField: CreditCardField?,
+    customFieldValidationErrors: ImmutableList<CustomFieldValidationError>,
     onEvent: (CreditCardContentEvent) -> Unit
 ) {
-    Column(
+    LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(Spacing.medium),
-        verticalArrangement = Arrangement.spacedBy(Spacing.small)
+            .padding(Spacing.medium)
     ) {
-        AnimatedVisibility(isFileAttachmentsEnabled && displayFileAttachmentsOnboarding) {
-            AttachmentBanner(Modifier.padding(bottom = Spacing.mediumSmall)) {
-                onEvent(CreditCardContentEvent.DismissAttachmentBanner)
+        item {
+            AnimatedVisibility(isFileAttachmentsEnabled && displayFileAttachmentsOnboarding) {
+                AttachmentBanner(Modifier.padding(bottom = Spacing.mediumSmall)) {
+                    onEvent(CreditCardContentEvent.DismissAttachmentBanner)
+                }
             }
         }
-        TitleSection(
-            modifier = Modifier.roundedContainerNorm()
-                .padding(
-                    start = Spacing.medium,
-                    top = Spacing.medium,
-                    end = Spacing.extraSmall,
-                    bottom = Spacing.medium
-                ),
-            value = creditCardItemFormState.title,
-            requestFocus = true,
-            onTitleRequiredError = validationErrors
-                .contains(CommonFieldValidationError.BlankTitle),
-            enabled = enabled,
-            isRounded = true,
-            onChange = { onEvent(OnTitleChange(it)) }
-        )
-        CardDetails(
-            creditCardItemFormState = creditCardItemFormState,
-            enabled = enabled,
-            validationErrors = validationErrors,
-            onNameChanged = { onEvent(OnNameChange(it)) },
-            onNumberChanged = { onEvent(OnNumberChange(it)) },
-            onCVVChanged = { onEvent(OnCVVChange(it)) },
-            onPinChanged = { onEvent(OnPinChange(it)) },
-            onExpirationDateChanged = { onEvent(OnExpirationDateChange(it)) },
-            onCVVFocusChange = { onEvent(OnCVVFocusChange(it)) },
-            onPinFocusChange = { onEvent(OnPinFocusChange(it)) }
-        )
-        SimpleNoteSection(
-            value = creditCardItemFormState.note,
-            enabled = enabled,
-            onChange = { onEvent(OnNoteChange(it)) }
-        )
-        if (isFileAttachmentsEnabled) {
-            AttachmentSection(
-                attachmentsState = attachmentsState,
-                isDetail = false,
-                itemColors = passItemColors(ItemCategory.CreditCard),
-                onEvent = { onEvent(OnAttachmentEvent(it)) }
+
+        item {
+            TitleSection(
+                modifier = Modifier.roundedContainerNorm()
+                    .padding(
+                        start = Spacing.medium,
+                        top = Spacing.medium,
+                        end = Spacing.extraSmall,
+                        bottom = Spacing.medium
+                    ),
+                value = creditCardItemFormState.title,
+                requestFocus = true,
+                onTitleRequiredError = validationErrors
+                    .contains(CommonFieldValidationError.BlankTitle),
+                enabled = enabled,
+                isRounded = true,
+                onChange = { onEvent(OnTitleChange(it)) }
             )
+        }
+        item {
+            CardDetails(
+                creditCardItemFormState = creditCardItemFormState,
+                enabled = enabled,
+                validationErrors = validationErrors,
+                onNameChanged = { onEvent(OnNameChange(it)) },
+                onNumberChanged = { onEvent(OnNumberChange(it)) },
+                onCVVChanged = { onEvent(OnCVVChange(it)) },
+                onPinChanged = { onEvent(OnPinChange(it)) },
+                onExpirationDateChanged = { onEvent(OnExpirationDateChange(it)) },
+                onCVVFocusChange = { onEvent(OnCVVFocusChange(it)) },
+                onPinFocusChange = { onEvent(OnPinFocusChange(it)) }
+            )
+        }
+        item {
+            SimpleNoteSection(
+                value = creditCardItemFormState.note,
+                enabled = enabled,
+                onChange = { onEvent(OnNoteChange(it)) }
+            )
+        }
+
+        customFieldsList(
+            modifier = Modifier.padding(vertical = Spacing.extraSmall),
+            customFields = creditCardItemFormState.customFields,
+            enabled = enabled,
+            errors = customFieldValidationErrors.toPersistentSet(),
+            isVisible = true,
+            canCreateCustomFields = canUseCustomFields,
+            sectionIndex = None,
+            focusedField = (focusedField as? CreditCardField.CustomField)?.field.toOption(),
+            itemCategory = ItemCategory.CreditCard,
+            onEvent = { onEvent(CreditCardContentEvent.OnCustomFieldEvent(it)) }
+        )
+
+        if (isFileAttachmentsEnabled) {
+            item {
+                AttachmentSection(
+                    attachmentsState = attachmentsState,
+                    isDetail = false,
+                    itemColors = passItemColors(ItemCategory.CreditCard),
+                    onEvent = { onEvent(OnAttachmentEvent(it)) }
+                )
+            }
         }
     }
 }

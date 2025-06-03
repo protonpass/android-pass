@@ -20,21 +20,22 @@ package proton.android.pass.features.itemcreate.alias
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toPersistentSet
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.SpecialCharacters
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
@@ -50,6 +51,8 @@ import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.alias.AliasContentUiEvent.OnAttachmentEvent
 import proton.android.pass.features.itemcreate.alias.banner.AliasAdvancedOptionsBanner
 import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
+import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
+import proton.android.pass.features.itemcreate.common.customfields.customFieldsList
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
@@ -69,122 +72,172 @@ internal fun AliasItemForm(
     displayAdvancedOptionsBanner: Boolean,
     isFileAttachmentsEnabled: Boolean,
     attachmentsState: AttachmentsState,
+    canUseCustomFields: Boolean,
+    focusedField: AliasField?,
+    customFieldValidationErrors: ImmutableList<CustomFieldValidationError>,
     onSuffixClick: () -> Unit,
     onMailboxClick: () -> Unit,
     onEvent: (AliasContentUiEvent) -> Unit
 ) {
-    Column(
+    LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(Spacing.medium),
-        verticalArrangement = Arrangement.spacedBy(Spacing.small)
+            .padding(Spacing.medium)
     ) {
-        AnimatedVisibility(visible = showUpgrade) {
-            InfoBanner(
-                backgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
-                text = stringResource(R.string.create_alias_content_limit_banner)
-            )
-        }
-
-        AnimatedVisibility(isFileAttachmentsEnabled && displayFileAttachmentsOnboarding) {
-            AttachmentBanner(Modifier.padding(bottom = Spacing.mediumSmall)) {
-                onEvent(AliasContentUiEvent.DismissAttachmentBanner)
+        item {
+            AnimatedVisibility(
+                modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                visible = showUpgrade
+            ) {
+                InfoBanner(
+                    backgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
+                    text = stringResource(R.string.create_alias_content_limit_banner)
+                )
             }
         }
 
-        TitleSection(
-            modifier = Modifier
-                .roundedContainerNorm()
-                .padding(
-                    start = Spacing.medium,
-                    top = Spacing.medium,
-                    end = Spacing.extraSmall,
-                    bottom = Spacing.medium
-                ),
-            value = aliasItemFormState.title,
-            requestFocus = !isLoading,
-            onTitleRequiredError = onTitleRequiredError,
-            enabled = isEditAllowed,
-            isRounded = true,
-            onChange = { onEvent(AliasContentUiEvent.OnTitleChange(it)) }
-        )
-
-        if (isCreateMode) {
-            CreateAliasSection(
-                state = aliasItemFormState,
-                onChange = { onEvent(AliasContentUiEvent.OnPrefixChange(it)) },
-                onSuffixClick = onSuffixClick,
-                canEdit = isEditAllowed,
-                canSelectSuffix = aliasItemFormState.aliasOptions.suffixes.size > 1,
-                onAdvancedOptionsClicked = { onEvent(AliasContentUiEvent.DismissAdvancedOptionsBanner) },
-                onAliasRequiredError = onAliasRequiredError,
-                onInvalidAliasError = onInvalidAliasError
-            )
-        } else {
-            DisplayAliasSection(
-                state = aliasItemFormState,
-                isLoading = isLoading
-            )
-        }
-        AnimatedVisibility(displayAdvancedOptionsBanner) {
-            AliasAdvancedOptionsBanner {
-                onEvent(AliasContentUiEvent.DismissAdvancedOptionsBanner)
+        item {
+            AnimatedVisibility(
+                modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                visible = isFileAttachmentsEnabled && displayFileAttachmentsOnboarding
+            ) {
+                AttachmentBanner(Modifier.padding(bottom = Spacing.mediumSmall)) {
+                    onEvent(AliasContentUiEvent.DismissAttachmentBanner)
+                }
             }
         }
 
-        MailboxSection(
-            isBottomSheet = false,
-            selectedMailboxes = aliasItemFormState.selectedMailboxes.toPersistentList(),
-            isCreateMode = isCreateMode,
-            isEditAllowed = isEditAllowed && aliasItemFormState.aliasOptions.mailboxes.size > 1,
-            isLoading = isLoading,
-            onMailboxClick = onMailboxClick
-        )
+        item {
+            TitleSection(
+                modifier = Modifier
+                    .padding(vertical = Spacing.extraSmall)
+                    .roundedContainerNorm()
+                    .padding(
+                        start = Spacing.medium,
+                        top = Spacing.medium,
+                        end = Spacing.extraSmall,
+                        bottom = Spacing.medium
+                    ),
+                value = aliasItemFormState.title,
+                requestFocus = !isLoading,
+                onTitleRequiredError = onTitleRequiredError,
+                enabled = isEditAllowed,
+                isRounded = true,
+                onChange = { onEvent(AliasContentUiEvent.OnTitleChange(it)) }
+            )
+        }
 
-        SimpleNoteSection(
-            value = aliasItemFormState.note,
-            enabled = isEditAllowed,
-            onChange = { onEvent(AliasContentUiEvent.OnNoteChange(it)) }
-        )
+        item {
+            if (isCreateMode) {
+                CreateAliasSection(
+                    modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                    state = aliasItemFormState,
+                    onChange = { onEvent(AliasContentUiEvent.OnPrefixChange(it)) },
+                    onSuffixClick = onSuffixClick,
+                    canEdit = isEditAllowed,
+                    canSelectSuffix = aliasItemFormState.aliasOptions.suffixes.size > 1,
+                    onAdvancedOptionsClicked = { onEvent(AliasContentUiEvent.DismissAdvancedOptionsBanner) },
+                    onAliasRequiredError = onAliasRequiredError,
+                    onInvalidAliasError = onInvalidAliasError
+                )
+            } else {
+                DisplayAliasSection(
+                    modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                    state = aliasItemFormState,
+                    isLoading = isLoading
+                )
+            }
+        }
+        item {
+            AnimatedVisibility(
+                modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                visible = displayAdvancedOptionsBanner
+            ) {
+                AliasAdvancedOptionsBanner {
+                    onEvent(AliasContentUiEvent.DismissAdvancedOptionsBanner)
+                }
+            }
+        }
+
+        item {
+            MailboxSection(
+                modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                isBottomSheet = false,
+                selectedMailboxes = aliasItemFormState.selectedMailboxes.toPersistentList(),
+                isCreateMode = isCreateMode,
+                isEditAllowed = isEditAllowed && aliasItemFormState.aliasOptions.mailboxes.size > 1,
+                isLoading = isLoading,
+                onMailboxClick = onMailboxClick
+            )
+        }
+
+        item {
+            SimpleNoteSection(
+                modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                value = aliasItemFormState.note,
+                enabled = isEditAllowed,
+                onChange = { onEvent(AliasContentUiEvent.OnNoteChange(it)) }
+            )
+        }
 
         aliasItemFormState.slNote?.let { slNote ->
-            SimpleNoteSection(
-                label = buildString {
-                    append(stringResource(id = CompR.string.field_note_title))
-                    append(" ${SpecialCharacters.DOT_SEPARATOR} ")
-                    append(stringResource(id = CompR.string.simple_login_brand_name))
-                },
-                labelIcon = {
-                    Icon(
-                        modifier = Modifier
-                            .clickable { onEvent(AliasContentUiEvent.OnSlNoteInfoClick) }
-                            .size(size = 16.dp),
-                        painter = painterResource(CoreR.drawable.ic_proton_question_circle),
-                        contentDescription = stringResource(id = R.string.sl_note_info_content_description),
-                        tint = PassTheme.colors.textWeak
-                    )
-                },
-                value = slNote,
-                enabled = isEditAllowed,
-                onChange = { onEvent(AliasContentUiEvent.OnSLNoteChange(it)) }
-            )
+            item {
+                SimpleNoteSection(
+                    modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                    label = buildString {
+                        append(stringResource(id = CompR.string.field_note_title))
+                        append(" ${SpecialCharacters.DOT_SEPARATOR} ")
+                        append(stringResource(id = CompR.string.simple_login_brand_name))
+                    },
+                    labelIcon = {
+                        Icon(
+                            modifier = Modifier
+                                .clickable { onEvent(AliasContentUiEvent.OnSlNoteInfoClick) }
+                                .size(size = 16.dp),
+                            painter = painterResource(CoreR.drawable.ic_proton_question_circle),
+                            contentDescription = stringResource(id = R.string.sl_note_info_content_description),
+                            tint = PassTheme.colors.textWeak
+                        )
+                    },
+                    value = slNote,
+                    enabled = isEditAllowed,
+                    onChange = { onEvent(AliasContentUiEvent.OnSLNoteChange(it)) }
+                )
+            }
         }
         if (isCreateMode || isAliasCreatedByUser) {
-            SenderNameSection(
-                value = aliasItemFormState.senderName.orEmpty(),
-                enabled = isEditAllowed,
-                onChange = { onEvent(AliasContentUiEvent.OnSenderNameChange(it)) }
-            )
+            item {
+                SenderNameSection(
+                    modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                    value = aliasItemFormState.senderName.orEmpty(),
+                    enabled = isEditAllowed,
+                    onChange = { onEvent(AliasContentUiEvent.OnSenderNameChange(it)) }
+                )
+            }
         }
 
+        customFieldsList(
+            modifier = Modifier.padding(vertical = Spacing.extraSmall),
+            customFields = aliasItemFormState.customFields,
+            enabled = isEditAllowed,
+            errors = customFieldValidationErrors.toPersistentSet(),
+            isVisible = true,
+            canCreateCustomFields = canUseCustomFields,
+            sectionIndex = None,
+            focusedField = (focusedField as? AliasField.CustomField)?.field.toOption(),
+            itemCategory = ItemCategory.Alias,
+            onEvent = { onEvent(AliasContentUiEvent.OnCustomFieldEvent(it)) }
+        )
+
         if (isFileAttachmentsEnabled) {
-            AttachmentSection(
-                attachmentsState = attachmentsState,
-                isDetail = false,
-                itemColors = passItemColors(ItemCategory.Alias),
-                onEvent = { onEvent(OnAttachmentEvent(it)) }
-            )
+            item {
+                AttachmentSection(
+                    attachmentsState = attachmentsState,
+                    isDetail = false,
+                    itemColors = passItemColors(ItemCategory.Alias),
+                    onEvent = { onEvent(OnAttachmentEvent(it)) }
+                )
+            }
         }
     }
 }

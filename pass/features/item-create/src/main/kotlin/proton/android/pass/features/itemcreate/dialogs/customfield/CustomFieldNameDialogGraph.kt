@@ -56,6 +56,7 @@ class CustomFieldNameDialogNavItem(prefix: CustomFieldPrefix) : NavItem(
     companion object {
         val CreateLogin = CustomFieldNameDialogNavItem(CustomFieldPrefix.CreateLogin)
         val CreateAlias = CustomFieldNameDialogNavItem(CustomFieldPrefix.CreateAlias)
+        val CreateCreditCard = CustomFieldNameDialogNavItem(CustomFieldPrefix.CreateCreditCard)
         val CreateIdentity = CustomFieldNameDialogNavItem(CustomFieldPrefix.CreateIdentity)
     }
 }
@@ -82,6 +83,7 @@ class EditCustomFieldNameDialogNavItem(val prefix: CustomFieldPrefix) : NavItem(
     companion object {
         val CreateLogin = EditCustomFieldNameDialogNavItem(CustomFieldPrefix.CreateLogin)
         val CreateAlias = EditCustomFieldNameDialogNavItem(CustomFieldPrefix.CreateAlias)
+        val CreateCreditCard = EditCustomFieldNameDialogNavItem(CustomFieldPrefix.CreateCreditCard)
         val CreateIdentity = EditCustomFieldNameDialogNavItem(CustomFieldPrefix.CreateIdentity)
     }
 }

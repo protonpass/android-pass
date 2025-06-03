@@ -18,6 +18,8 @@
 
 package proton.android.pass.features.itemcreate.creditcard
 
+import proton.android.pass.common.api.Option
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
@@ -40,4 +42,18 @@ sealed interface BaseCreditCardNavigation {
 
     @JvmInline
     value class OpenDraftAttachmentOptions(val uri: URI) : BaseCreditCardNavigation
+
+    data object AddCustomField : BaseCreditCardNavigation
+    data class CustomFieldTypeSelected(val type: CustomFieldType) : BaseCreditCardNavigation
+
+    data class CustomFieldOptions(val currentValue: String, val index: Int) : BaseCreditCardNavigation
+    data class EditCustomField(val currentValue: String, val index: Int) : BaseCreditCardNavigation
+    data object RemovedCustomField : BaseCreditCardNavigation
+
+    @JvmInline
+    value class TotpSuccess(val results: Map<String, Any>) : BaseCreditCardNavigation
+    data object TotpCancel : BaseCreditCardNavigation
+
+    @JvmInline
+    value class OpenImagePicker(val index: Option<Int>) : BaseCreditCardNavigation
 }

@@ -48,6 +48,8 @@ import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.alias.draftrepositories.MailboxDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDraftRepositoryImpl
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -261,7 +263,10 @@ class CreateAliasViewModelTest {
         attachmentsHandler = FakeAttachmentHandler(),
         userPreferencesRepository = TestPreferenceRepository(),
         mailboxDraftRepository = MailboxDraftRepositoryImpl(),
-        suffixDraftRepository = SuffixDraftRepositoryImpl()
+        suffixDraftRepository = SuffixDraftRepositoryImpl(),
+        customFieldHandler = CustomFieldHandlerImpl(TestEncryptionContextProvider()),
+        customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
+        canPerformPaidAction = TestCanPerformPaidAction()
     ).apply {
         setDraftStatus(isDraft)
     }

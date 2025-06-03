@@ -18,6 +18,8 @@
 
 package proton.android.pass.features.itemcreate.alias
 
+import proton.android.pass.common.api.Option
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
@@ -62,4 +64,18 @@ sealed interface BaseAliasNavigation {
 
     @JvmInline
     value class OpenDraftAttachmentOptions(val uri: URI) : BaseAliasNavigation
+
+    data object AddCustomField : BaseAliasNavigation
+    data class CustomFieldTypeSelected(val type: CustomFieldType) : BaseAliasNavigation
+
+    data class CustomFieldOptions(val currentValue: String, val index: Int) : BaseAliasNavigation
+    data class EditCustomField(val currentValue: String, val index: Int) : BaseAliasNavigation
+    data object RemovedCustomField : BaseAliasNavigation
+
+    @JvmInline
+    value class TotpSuccess(val results: Map<String, Any>) : BaseAliasNavigation
+    data object TotpCancel : BaseAliasNavigation
+
+    @JvmInline
+    value class OpenImagePicker(val index: Option<Int>) : BaseAliasNavigation
 }

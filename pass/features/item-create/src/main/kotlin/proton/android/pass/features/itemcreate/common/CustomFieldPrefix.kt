@@ -18,6 +18,10 @@
 
 package proton.android.pass.features.itemcreate.common
 
+import proton.android.pass.features.itemcreate.alias.CreateAliasNavItem
+import proton.android.pass.features.itemcreate.alias.EditAliasNavItem
+import proton.android.pass.features.itemcreate.creditcard.CreateCreditCardNavItem
+import proton.android.pass.features.itemcreate.creditcard.EditCreditCardNavItem
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.CreateCustomItemNavItem
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.UpdateCustomItemNavItem
 import proton.android.pass.features.itemcreate.identity.navigation.CreateIdentityNavItem
@@ -31,8 +35,12 @@ import proton.android.pass.navigation.api.NavItem
 enum class CustomFieldPrefix {
     CreateLogin,
     UpdateLogin,
+    CreateAlias,
+    UpdateAlias,
     CreateNote,
     UpdateNote,
+    CreateCreditCard,
+    UpdateCreditCard,
     CreateIdentity,
     UpdateIdentity,
     CreateCustomItem,
@@ -48,9 +56,25 @@ enum class CustomFieldPrefix {
             }
         }
 
+        fun fromAlias(navItem: NavItem?): CustomFieldPrefix = when (navItem) {
+            CreateAliasNavItem -> CreateAlias
+            EditAliasNavItem -> UpdateAlias
+            else -> {
+                throw IllegalArgumentException("Unknown NavItem: $navItem")
+            }
+        }
+
         fun fromNote(navItem: NavItem?): CustomFieldPrefix = when (navItem) {
             CreateNoteNavItem -> CreateNote
             UpdateNoteNavItem -> UpdateNote
+            else -> {
+                throw IllegalArgumentException("Unknown NavItem: $navItem")
+            }
+        }
+
+        fun fromCreditCard(navItem: NavItem?): CustomFieldPrefix = when (navItem) {
+            CreateCreditCardNavItem -> CreateCreditCard
+            EditCreditCardNavItem -> UpdateCreditCard
             else -> {
                 throw IllegalArgumentException("Unknown NavItem: $navItem")
             }

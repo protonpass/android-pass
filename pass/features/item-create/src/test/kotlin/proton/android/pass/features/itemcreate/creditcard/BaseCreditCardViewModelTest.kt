@@ -29,7 +29,9 @@ import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.common.UIHiddenState
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
@@ -55,12 +57,15 @@ class BaseCreditCardViewModelTest {
             featureFlagsRepository = featureFlagsRepository,
             savedStateHandleProvider = TestSavedStateHandleProvider(),
             attachmentsHandler = FakeAttachmentHandler(),
-            userPreferencesRepository = TestPreferenceRepository()
+            userPreferencesRepository = TestPreferenceRepository(),
+            customFieldHandler = CustomFieldHandlerImpl(TestEncryptionContextProvider()),
+            customFieldDraftRepository = CustomFieldDraftRepositoryImpl()
         ) {}
     }
 
     @Test
     fun `should start with the initial state`() = runTest {
+        canPerformPaidAction.setResult(false)
         instance.baseState.test {
             assertThat(awaitItem()).isEqualTo(BaseCreditCardUiState.Initial)
         }
@@ -159,14 +164,6 @@ class BaseCreditCardViewModelTest {
         instance.onPinChanged("")
         instance.onPinFocusChanged(false)
         assertThat(instance.creditCardItemFormState.pin).isInstanceOf(UIHiddenState.Empty::class.java)
-    }
-
-    @Test
-    fun `emits downgraded mode if cannot perform paid action`() = runTest {
-        canPerformPaidAction.setResult(false)
-        instance.baseState.test {
-            assertThat(awaitItem().canPerformPaidAction).isTrue()
-        }
     }
 
     @Test

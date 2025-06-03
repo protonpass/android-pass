@@ -42,8 +42,8 @@ import proton.android.pass.features.auth.authGraph
 import proton.android.pass.features.itemcreate.alias.AliasSelectMailboxBottomSheetNavItem
 import proton.android.pass.features.itemcreate.alias.AliasSelectSuffixBottomSheetNavItem
 import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation
-import proton.android.pass.features.itemcreate.alias.CreateAlias
 import proton.android.pass.features.itemcreate.alias.CreateAliasBottomSheet
+import proton.android.pass.features.itemcreate.alias.CreateAliasNavItem
 import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation
 import proton.android.pass.features.itemcreate.alias.createAliasGraph
 import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomSheetMode.AutofillCreditCard
@@ -60,7 +60,7 @@ import proton.android.pass.features.itemcreate.common.customsection.CustomSectio
 import proton.android.pass.features.itemcreate.common.customsection.CustomSectionOptionsBottomSheetNavItem
 import proton.android.pass.features.itemcreate.common.customsection.EditCustomSectionNameDialogNavItem
 import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation
-import proton.android.pass.features.itemcreate.creditcard.CreateCreditCard
+import proton.android.pass.features.itemcreate.creditcard.CreateCreditCardNavItem
 import proton.android.pass.features.itemcreate.creditcard.CreateCreditCardNavigation
 import proton.android.pass.features.itemcreate.creditcard.UpdateCreditCardNavigation
 import proton.android.pass.features.itemcreate.creditcard.createCreditCardGraph
@@ -412,6 +412,31 @@ internal fun NavGraphBuilder.autofillActivityGraph(
 
                 BaseAliasNavigation.AddMailbox ->
                     throw IllegalStateException("Cannot add mailbox from autofill")
+
+                BaseAliasNavigation.AddCustomField -> appNavigator.navigate(
+                    destination = AddCustomFieldBottomSheetNavItem.CreateAlias,
+                    route = AddCustomFieldBottomSheetNavItem.CreateAlias.buildRoute(None)
+                )
+                is BaseAliasNavigation.CustomFieldOptions -> appNavigator.navigate(
+                    destination = CustomFieldOptionsBottomSheetNavItem.CreateAlias,
+                    route = CustomFieldOptionsBottomSheetNavItem.CreateAlias.buildRoute(
+                        index = it.index,
+                        sectionIndex = None,
+                        currentTitle = it.currentValue
+                    )
+                )
+                is BaseAliasNavigation.CustomFieldTypeSelected -> TODO()
+                is BaseAliasNavigation.EditCustomField -> TODO()
+                is BaseAliasNavigation.OpenImagePicker -> appNavigator.navigate(
+                    destination = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateAlias),
+                    route = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateAlias)
+                        .createNavRoute(None, it.index),
+                    backDestination = CreateAliasNavItem
+                )
+                BaseAliasNavigation.RemovedCustomField -> dismissBottomSheet {}
+                BaseAliasNavigation.TotpCancel -> appNavigator.navigateBack()
+                is BaseAliasNavigation.TotpSuccess ->
+                    appNavigator.navigateBackWithResult(it.results)
             }
         }
     )
@@ -439,6 +464,31 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                 is BaseCreditCardNavigation.UpsellAttachments,
                 BaseCreditCardNavigation.AddAttachment ->
                     throw IllegalStateException("Cannot use attachment from autofill")
+
+                BaseCreditCardNavigation.AddCustomField -> appNavigator.navigate(
+                    destination = AddCustomFieldBottomSheetNavItem.CreateCreditCard,
+                    route = AddCustomFieldBottomSheetNavItem.CreateCreditCard.buildRoute(None)
+                )
+                is BaseCreditCardNavigation.CustomFieldOptions -> appNavigator.navigate(
+                    destination = CustomFieldOptionsBottomSheetNavItem.CreateCreditCard,
+                    route = CustomFieldOptionsBottomSheetNavItem.CreateCreditCard.buildRoute(
+                        index = it.index,
+                        sectionIndex = None,
+                        currentTitle = it.currentValue
+                    )
+                )
+                is BaseCreditCardNavigation.CustomFieldTypeSelected -> TODO()
+                is BaseCreditCardNavigation.EditCustomField -> TODO()
+                is BaseCreditCardNavigation.OpenImagePicker -> appNavigator.navigate(
+                    destination = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateCreditCard),
+                    route = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateCreditCard)
+                        .createNavRoute(None, it.index),
+                    backDestination = CreateCreditCardNavItem
+                )
+                BaseCreditCardNavigation.RemovedCustomField -> dismissBottomSheet {}
+                BaseCreditCardNavigation.TotpCancel -> appNavigator.navigateBack()
+                is BaseCreditCardNavigation.TotpSuccess ->
+                    appNavigator.navigateBackWithResult(it.results)
             }
         }
     )
@@ -542,8 +592,8 @@ internal fun NavGraphBuilder.autofillActivityGraph(
             when (it) {
                 is CreateItemBottomsheetNavigation.CreateAlias -> dismissBottomSheet {
                     appNavigator.navigate(
-                        destination = CreateAlias,
-                        route = CreateAlias.createNavRoute(it.shareId)
+                        destination = CreateAliasNavItem,
+                        route = CreateAliasNavItem.createNavRoute(it.shareId)
                     )
                 }
 
@@ -556,8 +606,8 @@ internal fun NavGraphBuilder.autofillActivityGraph(
 
                 is CreateItemBottomsheetNavigation.CreateCreditCard -> dismissBottomSheet {
                     appNavigator.navigate(
-                        destination = CreateCreditCard,
-                        route = CreateCreditCard.createNavRoute(it.shareId)
+                        destination = CreateCreditCardNavItem,
+                        route = CreateCreditCardNavItem.createNavRoute(it.shareId)
                     )
                 }
 

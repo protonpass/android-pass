@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableMap
-import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.datetime.Instant
 import proton.android.pass.common.api.Option
@@ -62,6 +61,10 @@ internal fun PassIdentityItemDetailsSections(
     shouldDisplayFileAttachments: Boolean,
     attachmentsState: AttachmentsState,
     customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, TotpState>,
+    personalDetailTotps: ImmutableMap<Pair<Option<Int>, Int>, TotpState>,
+    addressDetailTotps: ImmutableMap<Pair<Option<Int>, Int>, TotpState>,
+    workDetailTotps: ImmutableMap<Pair<Option<Int>, Int>, TotpState>,
+    contactDetailTotps: ImmutableMap<Pair<Option<Int>, Int>, TotpState>,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(contents) {
     Column(
@@ -71,6 +74,7 @@ internal fun PassIdentityItemDetailsSections(
         if (personalDetailsContent.hasPersonalDetails) {
             PassIdentityItemDetailsPersonalSection(
                 personalDetailsContent = personalDetailsContent,
+                personalDetailTotps = personalDetailTotps,
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,
                 onEvent = onEvent
@@ -80,6 +84,7 @@ internal fun PassIdentityItemDetailsSections(
         if (addressDetailsContent.hasAddressDetails) {
             PassIdentityItemDetailsAddressSection(
                 addressDetailsContent = addressDetailsContent,
+                addressDetailTotps = addressDetailTotps,
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,
                 onEvent = onEvent
@@ -89,6 +94,7 @@ internal fun PassIdentityItemDetailsSections(
         if (contactDetailsContent.hasContactDetails) {
             PassIdentityItemDetailsContactSection(
                 contactDetailsContent = contactDetailsContent,
+                contactDetailTotps = contactDetailTotps,
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,
                 onEvent = onEvent
@@ -98,6 +104,7 @@ internal fun PassIdentityItemDetailsSections(
         if (workDetailsContent.hasWorkDetails) {
             PassIdentityItemDetailsWorkSection(
                 workDetailsContent = workDetailsContent,
+                workDetailTotps = workDetailTotps,
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,
                 onEvent = onEvent
@@ -107,7 +114,7 @@ internal fun PassIdentityItemDetailsSections(
         if (extraSectionContentList.isNotEmpty()) {
             PassItemDetailsExtraSection(
                 extraSectionContents = extraSectionContentList.toPersistentList(),
-                customFieldTotps = persistentMapOf(),
+                customFieldTotps = customFieldTotps,
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,
                 onEvent = onEvent

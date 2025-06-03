@@ -71,6 +71,7 @@ internal fun AliasItemForm(
     displayFileAttachmentsOnboarding: Boolean,
     displayAdvancedOptionsBanner: Boolean,
     isFileAttachmentsEnabled: Boolean,
+    isCustomTypeEnabled: Boolean,
     attachmentsState: AttachmentsState,
     canUseCustomFields: Boolean,
     focusedField: AliasField?,
@@ -216,18 +217,20 @@ internal fun AliasItemForm(
             }
         }
 
-        customFieldsList(
-            modifier = Modifier.padding(vertical = Spacing.extraSmall),
-            customFields = aliasItemFormState.customFields,
-            enabled = isEditAllowed,
-            errors = customFieldValidationErrors.toPersistentSet(),
-            isVisible = true,
-            canCreateCustomFields = canUseCustomFields,
-            sectionIndex = None,
-            focusedField = (focusedField as? AliasField.CustomField)?.field.toOption(),
-            itemCategory = ItemCategory.Alias,
-            onEvent = { onEvent(AliasContentUiEvent.OnCustomFieldEvent(it)) }
-        )
+        if (isCustomTypeEnabled) {
+            customFieldsList(
+                modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                customFields = aliasItemFormState.customFields,
+                enabled = isEditAllowed,
+                errors = customFieldValidationErrors.toPersistentSet(),
+                isVisible = true,
+                canCreateCustomFields = canUseCustomFields,
+                sectionIndex = None,
+                focusedField = (focusedField as? AliasField.CustomField)?.field.toOption(),
+                itemCategory = ItemCategory.Alias,
+                onEvent = { onEvent(AliasContentUiEvent.OnCustomFieldEvent(it)) }
+            )
+        }
 
         if (isFileAttachmentsEnabled) {
             item {

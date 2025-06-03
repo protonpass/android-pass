@@ -384,8 +384,7 @@ class CreateLoginViewModel @Inject constructor(
                 shareId = shareId,
                 itemContents = contents,
                 newAlias = NewAlias(
-                    title = aliasItemFormState.title,
-                    note = aliasItemFormState.note,
+                    contents = aliasItemFormState.toItemContents(),
                     prefix = aliasItemFormState.prefix,
                     suffix = aliasItemFormState.selectedSuffix.toDomain(),
                     aliasName = aliasItemFormState.senderName,

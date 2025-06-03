@@ -28,6 +28,7 @@ import java.net.URI
 sealed interface BaseCreditCardNavigation {
     data object Upgrade : BaseCreditCardNavigation
     data object CloseScreen : BaseCreditCardNavigation
+    data object DismissBottomsheet : BaseCreditCardNavigation
     data object AddAttachment : BaseCreditCardNavigation
     data object UpsellAttachments : BaseCreditCardNavigation
 

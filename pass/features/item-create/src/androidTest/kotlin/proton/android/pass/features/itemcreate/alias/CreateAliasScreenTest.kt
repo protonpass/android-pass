@@ -44,6 +44,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.domain.AliasMailbox
+import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
@@ -188,8 +189,12 @@ class CreateAliasScreenTest {
         assertThat(memoryItem.shareId).isEqualTo(ShareId(SHARE_ID))
 
         val alias = NewAlias(
-            title = title,
-            note = note,
+            contents = ItemContents.Alias(
+                title = title,
+                note = note,
+                customFields = emptyList(),
+                aliasEmail = "test-alias.test@test.test"
+            ),
             prefix = expectedPrefix,
             suffix = DEFAULT_SUFFIX,
             aliasName = null,

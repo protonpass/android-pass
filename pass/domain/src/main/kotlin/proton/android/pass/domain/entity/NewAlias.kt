@@ -20,10 +20,10 @@ package proton.android.pass.domain.entity
 
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.AliasSuffix
+import proton.android.pass.domain.ItemContents
 
 data class NewAlias(
-    val title: String,
-    val note: String,
+    val contents: ItemContents.Alias,
     val prefix: String,
     val aliasName: String?,
     val suffix: AliasSuffix,

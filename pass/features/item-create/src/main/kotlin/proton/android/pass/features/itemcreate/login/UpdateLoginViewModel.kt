@@ -334,8 +334,7 @@ class UpdateLoginViewModel @Inject constructor(
                 userId = userId,
                 shareId = shareId,
                 newAlias = NewAlias(
-                    title = aliasItemFormState.title,
-                    note = aliasItemFormState.note,
+                    contents = aliasItemFormState.toItemContents(),
                     prefix = aliasItemFormState.prefix,
                     suffix = aliasItemFormState.selectedSuffix.toDomain(),
                     aliasName = aliasItemFormState.senderName,

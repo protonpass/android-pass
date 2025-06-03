@@ -116,11 +116,13 @@ abstract class BaseCreditCardViewModel(
         isItemSavedState,
         canPerformPaidAction(),
         featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
+        featureFlagsRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1),
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
         attachmentsHandler.attachmentState,
         focusedFieldState
     ) { isLoading, hasUserEditedContent, validationErrors, isItemSaved, canPerformPaidAction,
-        isFileAttachmentsEnabled, displayFileAttachmentsOnboarding, attachmentsState, focusedField ->
+        isFileAttachmentsEnabled, isCustomTypeEnabled, displayFileAttachmentsOnboarding,
+        attachmentsState, focusedField ->
         BaseCreditCardUiState(
             isLoading = isLoading.value(),
             hasUserEditedContent = hasUserEditedContent,
@@ -129,6 +131,7 @@ abstract class BaseCreditCardViewModel(
             canPerformPaidAction = canPerformPaidAction,
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
             isFileAttachmentsEnabled = isFileAttachmentsEnabled,
+            isCustomTypeEnabled = isCustomTypeEnabled,
             attachmentsState = attachmentsState,
             focusedField = focusedField
         )

@@ -20,8 +20,17 @@ package proton.android.pass.features.item.details.detail.presentation.handlers
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.combineN
+import proton.android.pass.common.api.some
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
+import proton.android.pass.commonpresentation.api.items.details.handlers.mapToDecryptedTotp
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.DetailEvent
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
@@ -33,6 +42,7 @@ import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.TotpState
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.totp.api.ObserveTotpFromUri
 import javax.inject.Inject
@@ -53,10 +63,15 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
         attachmentsState: AttachmentsState,
         savedStateEntries: Map<String, Any?>,
         detailEvent: DetailEvent
-    ): Flow<ItemDetailState> = combine(
+    ): Flow<ItemDetailState> = combineN(
         observeItemContents(item),
-        observeCustomFieldTotps(item)
-    ) { identityItemContents, customFieldTotps ->
+        observeTotps(item),
+        observePersonalDetailTotps(item),
+        observeAddressDetailTotps(item),
+        observeWorkDetailTotps(item),
+        observeContactDetailTotps(item)
+    ) { identityItemContents, customFieldTotps, personalDetailTotps, addressDetailTotps,
+        workDetailTotps, contactDetailTotps ->
         ItemDetailState.Identity(
             itemContents = identityItemContents,
             itemId = item.id,
@@ -72,7 +87,11 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
             itemShareCount = item.shareCount,
             attachmentsState = attachmentsState,
             customFieldTotps = customFieldTotps,
-            detailEvent = detailEvent
+            detailEvent = detailEvent,
+            personalDetailsTotps = personalDetailTotps,
+            addressDetailsTotps = addressDetailTotps,
+            contactDetailsTotps = contactDetailTotps,
+            workDetailsTotps = workDetailTotps
         )
     }
 
@@ -334,4 +353,100 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
         callback: suspend (DetailEvent) -> Unit
     ) = Unit
 
+    private fun observeGenericTotps(
+        item: Item,
+        extractTotps: suspend (ItemContents.Identity) -> Map<Pair<Option<Int>, Int>, String>
+    ): Flow<Map<Pair<Option<Int>, Int>, TotpState>> = combine(
+        observeItemContents(item),
+        canDisplayTotp(shareId = item.shareId, itemId = item.id)
+    ) { contents, canDisplayTotp -> contents to canDisplayTotp }
+        .flatMapLatest { (contents, canDisplayTotp) ->
+            if (!canDisplayTotp) return@flatMapLatest flowOf(emptyMap())
+
+            val decrypted = extractTotps(contents)
+
+            val flows = decrypted.map { (index, uri) ->
+                observeTotpFromUri(uri).map {
+                    index to TotpState.Visible(
+                        code = it.code,
+                        remainingSeconds = it.remainingSeconds,
+                        totalSeconds = it.totalSeconds
+                    )
+                }
+            }
+
+            combine(flows) { it.toMap() }
+        }
+        .onStart { emit(emptyMap()) }
+
+    private fun observeTotps(item: Item): Flow<Map<Pair<Option<Int>, Int>, TotpState>> =
+        observeGenericTotps(item) { contents ->
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                val sectionCustomFields = contents.extraSectionContentList
+                    .flatMapIndexed { sectionIndex, sectionContent ->
+                        sectionContent.customFieldList.mapToDecryptedTotp(
+                            sectionIndex = sectionIndex.some(),
+                            decrypt = ::decrypt
+                        )
+                    }
+                    .toMap()
+
+                val customFields = contents.customFields
+                    .mapToDecryptedTotp(
+                        sectionIndex = None,
+                        decrypt = ::decrypt
+                    )
+                    .toMap()
+
+                sectionCustomFields + customFields
+            }
+        }
+
+    private fun observePersonalDetailTotps(item: Item): Flow<Map<Pair<Option<Int>, Int>, TotpState>> =
+        observeGenericTotps(item) { contents ->
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                contents.personalDetailsContent.customFields
+                    .mapToDecryptedTotp(
+                        sectionIndex = None,
+                        decrypt = ::decrypt
+                    )
+                    .toMap()
+            }
+        }
+
+    private fun observeAddressDetailTotps(item: Item): Flow<Map<Pair<Option<Int>, Int>, TotpState>> =
+        observeGenericTotps(item) { contents ->
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                contents.addressDetailsContent.customFields
+                    .mapToDecryptedTotp(
+                        sectionIndex = None,
+                        decrypt = ::decrypt
+                    )
+                    .toMap()
+            }
+        }
+
+    private fun observeWorkDetailTotps(item: Item): Flow<Map<Pair<Option<Int>, Int>, TotpState>> =
+        observeGenericTotps(item) { contents ->
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                contents.workDetailsContent.customFields
+                    .mapToDecryptedTotp(
+                        sectionIndex = None,
+                        decrypt = ::decrypt
+                    )
+                    .toMap()
+            }
+        }
+
+    private fun observeContactDetailTotps(item: Item): Flow<Map<Pair<Option<Int>, Int>, TotpState>> =
+        observeGenericTotps(item) { contents ->
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                contents.contactDetailsContent.customFields
+                    .mapToDecryptedTotp(
+                        sectionIndex = None,
+                        decrypt = ::decrypt
+                    )
+                    .toMap()
+            }
+        }
 }

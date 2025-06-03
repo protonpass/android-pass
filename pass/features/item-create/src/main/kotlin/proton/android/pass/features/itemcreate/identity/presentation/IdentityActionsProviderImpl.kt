@@ -489,7 +489,10 @@ class IdentityActionsProviderImpl @Inject constructor(
                 id = content.id
             )
 
-            is UICustomFieldContent.Date -> throw IllegalStateException("Date field not supported")
+            is UICustomFieldContent.Date -> UICustomFieldContent.Date(
+                label = newLabel,
+                value = content.value
+            )
         }
         identityItemFormMutableState = when (customExtraField) {
             is AddressCustomField -> identityItemFormMutableState.copy(
@@ -862,8 +865,10 @@ class IdentityActionsProviderImpl @Inject constructor(
                     id = content.id
                 )
 
-                is UICustomFieldContent.Date ->
-                    throw IllegalStateException("Date field not supported")
+                is UICustomFieldContent.Date -> UICustomFieldContent.Date(
+                    label = content.label,
+                    value = field.value.toLong()
+                )
             }
         }
         return when (field.sectionType) {

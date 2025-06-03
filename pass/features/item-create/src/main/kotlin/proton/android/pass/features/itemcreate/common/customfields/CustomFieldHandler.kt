@@ -92,7 +92,6 @@ class CustomFieldHandlerImpl @Inject constructor(
                 id = field.id
             )
 
-
             is UICustomFieldContent.Date -> UICustomFieldContent.Date(
                 label = field.label,
                 value = value.toLong()

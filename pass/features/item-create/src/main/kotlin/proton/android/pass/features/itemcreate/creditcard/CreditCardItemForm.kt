@@ -76,7 +76,10 @@ internal fun CreditCardItemForm(
             .padding(Spacing.medium)
     ) {
         item {
-            AnimatedVisibility(isFileAttachmentsEnabled && displayFileAttachmentsOnboarding) {
+            AnimatedVisibility(
+                modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                visible = isFileAttachmentsEnabled && displayFileAttachmentsOnboarding
+            ) {
                 AttachmentBanner(Modifier.padding(bottom = Spacing.mediumSmall)) {
                     onEvent(CreditCardContentEvent.DismissAttachmentBanner)
                 }
@@ -85,7 +88,9 @@ internal fun CreditCardItemForm(
 
         item {
             TitleSection(
-                modifier = Modifier.roundedContainerNorm()
+                modifier = Modifier
+                    .padding(vertical = Spacing.extraSmall)
+                    .roundedContainerNorm()
                     .padding(
                         start = Spacing.medium,
                         top = Spacing.medium,
@@ -103,6 +108,7 @@ internal fun CreditCardItemForm(
         }
         item {
             CardDetails(
+                modifier = Modifier.padding(vertical = Spacing.extraSmall),
                 creditCardItemFormState = creditCardItemFormState,
                 enabled = enabled,
                 validationErrors = validationErrors,
@@ -117,6 +123,7 @@ internal fun CreditCardItemForm(
         }
         item {
             SimpleNoteSection(
+                modifier = Modifier.padding(vertical = Spacing.extraSmall),
                 value = creditCardItemFormState.note,
                 enabled = enabled,
                 onChange = { onEvent(OnNoteChange(it)) }

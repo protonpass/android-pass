@@ -42,7 +42,7 @@ import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.ConfirmNewUserInvite
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.CreateItem
-import proton.android.pass.data.api.usecases.CreateItemAndAlias
+import proton.android.pass.data.api.usecases.CreateLoginAndAlias
 import proton.android.pass.data.api.usecases.CreatePin
 import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.DeleteItems
@@ -265,7 +265,7 @@ import proton.android.pass.data.impl.usecases.ClearTrashImpl
 import proton.android.pass.data.impl.usecases.ClearUserDataImpl
 import proton.android.pass.data.impl.usecases.ConfirmNewUserInviteImpl
 import proton.android.pass.data.impl.usecases.CreateAliasImpl
-import proton.android.pass.data.impl.usecases.CreateItemAndAliasImpl
+import proton.android.pass.data.impl.usecases.CreateLoginAndAliasImpl
 import proton.android.pass.data.impl.usecases.CreateItemImpl
 import proton.android.pass.data.impl.usecases.CreatePinImpl
 import proton.android.pass.data.impl.usecases.CreateVaultImpl
@@ -610,7 +610,7 @@ abstract class DataUseCaseModule {
     abstract fun bindGetVaultWithItemCountById(impl: GetVaultWithItemCountByIdImpl): GetVaultWithItemCountById
 
     @Binds
-    abstract fun bindCreateItemAndAlias(impl: CreateItemAndAliasImpl): CreateItemAndAlias
+    abstract fun bindCreateItemAndAlias(impl: CreateLoginAndAliasImpl): CreateLoginAndAlias
 
     @Binds
     abstract fun bindAddSearchEntry(impl: AddSearchEntryImpl): AddSearchEntry

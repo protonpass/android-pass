@@ -425,8 +425,24 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                         currentTitle = it.currentValue
                     )
                 )
-                is BaseAliasNavigation.CustomFieldTypeSelected -> TODO()
-                is BaseAliasNavigation.EditCustomField -> TODO()
+                is BaseAliasNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = CustomFieldNameDialogNavItem.CreateAlias,
+                        route = CustomFieldNameDialogNavItem.CreateAlias.buildRoute(type = it.type),
+                        backDestination = CreateAliasNavItem
+                    )
+                }
+                is BaseAliasNavigation.EditCustomField -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = EditCustomFieldNameDialogNavItem.CreateAlias,
+                        route = EditCustomFieldNameDialogNavItem.CreateAlias.buildRoute(
+                            index = it.index,
+                            sectionIndex = None,
+                            currentValue = it.currentValue
+                        ),
+                        backDestination = CreateAliasNavItem
+                    )
+                }
                 is BaseAliasNavigation.OpenImagePicker -> appNavigator.navigate(
                     destination = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateAlias),
                     route = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateAlias)
@@ -477,8 +493,24 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                         currentTitle = it.currentValue
                     )
                 )
-                is BaseCreditCardNavigation.CustomFieldTypeSelected -> TODO()
-                is BaseCreditCardNavigation.EditCustomField -> TODO()
+                is BaseCreditCardNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = CustomFieldNameDialogNavItem.CreateCreditCard,
+                        route = CustomFieldNameDialogNavItem.CreateCreditCard.buildRoute(type = it.type),
+                        backDestination = CreateCreditCardNavItem
+                    )
+                }
+                is BaseCreditCardNavigation.EditCustomField -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = EditCustomFieldNameDialogNavItem.CreateCreditCard,
+                        route = EditCustomFieldNameDialogNavItem.CreateCreditCard.buildRoute(
+                            index = it.index,
+                            sectionIndex = None,
+                            currentValue = it.currentValue
+                        ),
+                        backDestination = CreateCreditCardNavItem
+                    )
+                }
                 is BaseCreditCardNavigation.OpenImagePicker -> appNavigator.navigate(
                     destination = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateCreditCard),
                     route = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateCreditCard)
@@ -489,6 +521,8 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                 BaseCreditCardNavigation.TotpCancel -> appNavigator.navigateBack()
                 is BaseCreditCardNavigation.TotpSuccess ->
                     appNavigator.navigateBackWithResult(it.results)
+
+                BaseCreditCardNavigation.DismissBottomsheet -> dismissBottomSheet {}
             }
         }
     )

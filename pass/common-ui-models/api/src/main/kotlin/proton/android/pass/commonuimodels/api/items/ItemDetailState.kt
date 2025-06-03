@@ -172,7 +172,11 @@ sealed interface ItemDetailState {
         override val itemShareCount: Int,
         override val attachmentsState: AttachmentsState,
         override val customFieldTotps: Map<Pair<Option<Int>, Int>, TotpState>,
-        override val detailEvent: DetailEvent
+        override val detailEvent: DetailEvent,
+        val personalDetailsTotps: Map<Pair<Option<Int>, Int>, TotpState>,
+        val addressDetailsTotps: Map<Pair<Option<Int>, Int>, TotpState>,
+        val contactDetailsTotps: Map<Pair<Option<Int>, Int>, TotpState>,
+        val workDetailsTotps: Map<Pair<Option<Int>, Int>, TotpState>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Identity

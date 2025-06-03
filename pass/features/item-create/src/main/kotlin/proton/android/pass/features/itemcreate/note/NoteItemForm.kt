@@ -39,6 +39,8 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toPersistentSet
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.none
+import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.applyIf
@@ -138,7 +140,9 @@ internal fun NoteItemForm(
                         isVisible = true,
                         canCreateCustomFields = canUseCustomFields,
                         sectionIndex = None,
-                        focusedField = (focusedField as? NoteField.CustomField)?.field.toOption(),
+                        focusedField = focusedField.flatMap {
+                            (it as? NoteField.CustomField)?.field?.some() ?: none()
+                        },
                         itemCategory = ItemCategory.Note,
                         onEvent = { onEvent(NoteContentUiEvent.OnCustomFieldEvent(it)) }
                     )

@@ -65,10 +65,10 @@ interface ItemRepository {
         newAlias: NewAlias
     ): Item
 
-    suspend fun createItemAndAlias(
+    suspend fun createLoginAndAlias(
         userId: UserId,
         shareId: ShareId,
-        contents: ItemContents,
+        contents: ItemContents.Login,
         newAlias: NewAlias
     ): Item
 

@@ -41,7 +41,7 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestCreateItem
-import proton.android.pass.data.fakes.usecases.TestCreateItemAndAlias
+import proton.android.pass.data.fakes.usecases.TestCreateLoginAndAlias
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.TestObserveItems
@@ -91,7 +91,7 @@ internal class CreateLoginNavItemViewModelTest {
     private lateinit var clipboardManager: TestClipboardManager
     private lateinit var accountManager: TestAccountManager
     private lateinit var createItem: TestCreateItem
-    private lateinit var createItemAndAlias: TestCreateItemAndAlias
+    private lateinit var createItemAndAlias: TestCreateLoginAndAlias
     private lateinit var observeVaults: TestObserveVaultsWithItemCount
     private lateinit var telemetryManager: TestTelemetryManager
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
@@ -104,7 +104,7 @@ internal class CreateLoginNavItemViewModelTest {
         clipboardManager = TestClipboardManager()
         accountManager = TestAccountManager()
         createItem = TestCreateItem()
-        createItemAndAlias = TestCreateItemAndAlias()
+        createItemAndAlias = TestCreateLoginAndAlias()
         observeVaults = TestObserveVaultsWithItemCount()
         telemetryManager = TestTelemetryManager()
         snackbarDispatcher = TestSnackbarDispatcher()
@@ -119,7 +119,7 @@ internal class CreateLoginNavItemViewModelTest {
             savedStateHandleProvider = TestSavedStateHandleProvider(),
             encryptionContextProvider = encryptionContextProvider,
             passwordStrengthCalculator = TestPasswordStrengthCalculator(),
-            createItemAndAlias = createItemAndAlias,
+            createLoginAndAlias = createItemAndAlias,
             observeVaults = observeVaults,
             observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) },
             telemetryManager = telemetryManager,

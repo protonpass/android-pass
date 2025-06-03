@@ -190,10 +190,10 @@ class ItemRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun createItemAndAlias(
+    override suspend fun createLoginAndAlias(
         userId: UserId,
         shareId: ShareId,
-        contents: ItemContents,
+        contents: ItemContents.Login,
         newAlias: NewAlias
     ): Item = withUserAddress(userId) { userAddress ->
         val share = shareRepository.getById(userId, shareId)
@@ -201,7 +201,7 @@ class ItemRepositoryImpl @Inject constructor(
         val request = runCatching {
             val itemBody = createItem.create(shareKey, contents)
             val aliasContents = ItemContents.Alias(
-                title = newAlias.contents.title,
+                title = contents.title,
                 note = newAlias.contents.note,
                 customFields = newAlias.contents.customFields,
                 aliasEmail = "" // Not used when creating the payload

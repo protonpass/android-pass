@@ -47,7 +47,7 @@ import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCreateItem
-import proton.android.pass.data.fakes.usecases.TestCreateItemAndAlias
+import proton.android.pass.data.fakes.usecases.TestCreateLoginAndAlias
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
@@ -97,7 +97,7 @@ class CreateLoginScreenTest {
     lateinit var createItem: TestCreateItem
 
     @Inject
-    lateinit var createItemAndAlias: TestCreateItemAndAlias
+    lateinit var createItemAndAlias: TestCreateLoginAndAlias
 
     @Inject
     lateinit var accountManager: TestAccountManager

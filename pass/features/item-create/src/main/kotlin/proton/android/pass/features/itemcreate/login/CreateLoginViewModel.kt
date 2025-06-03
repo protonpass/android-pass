@@ -60,7 +60,7 @@ import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.CreateItem
-import proton.android.pass.data.api.usecases.CreateItemAndAlias
+import proton.android.pass.data.api.usecases.CreateLoginAndAlias
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
@@ -109,7 +109,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CreateLoginViewModel @Inject constructor(
     private val createItem: CreateItem,
-    private val createItemAndAlias: CreateItemAndAlias,
+    private val createLoginAndAlias: CreateLoginAndAlias,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
@@ -379,7 +379,7 @@ class CreateLoginViewModel @Inject constructor(
 
         val contents = loginItemFormState.toItemContents(emailValidator = emailValidator)
         runCatching {
-            createItemAndAlias(
+            createLoginAndAlias(
                 userId = userId,
                 shareId = shareId,
                 itemContents = contents,

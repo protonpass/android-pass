@@ -7,7 +7,7 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 
-object EditCreditCard : NavItem(
+object EditCreditCardNavItem : NavItem(
     baseRoute = "creditcard/edit/screen",
     navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)
 ) {
@@ -19,7 +19,7 @@ sealed interface UpdateCreditCardNavigation : BaseCreditCardNavigation {
 }
 
 fun NavGraphBuilder.updateCreditCardGraph(onNavigate: (BaseCreditCardNavigation) -> Unit) {
-    composable(EditCreditCard) {
+    composable(EditCreditCardNavItem) {
         UpdateCreditCardScreen(
             onNavigate = onNavigate
         )

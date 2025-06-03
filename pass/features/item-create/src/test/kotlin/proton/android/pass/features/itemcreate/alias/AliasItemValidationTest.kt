@@ -22,6 +22,8 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import proton.android.pass.commonrust.api.AliasPrefixError
 import proton.android.pass.commonrust.fakes.TestAliasPrefixValidator
+import proton.android.pass.features.itemcreate.common.AliasItemValidationError
+import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 
 class AliasItemValidationTest {
 
@@ -31,7 +33,7 @@ class AliasItemValidationTest {
 
         val res = item.validate(allowEmptyTitle = false, aliasPrefixValidator = successValidator)
         assertThat(res.size).isEqualTo(1)
-        assertThat(res.first()).isEqualTo(AliasItemValidationErrors.BlankTitle)
+        assertThat(res.first()).isEqualTo(CommonFieldValidationError.BlankTitle)
     }
 
     @Test
@@ -51,7 +53,7 @@ class AliasItemValidationTest {
             aliasPrefixValidator = errorValidator(AliasPrefixError.PrefixEmpty)
         )
         assertThat(res.size).isEqualTo(1)
-        assertThat(res.first()).isEqualTo(AliasItemValidationErrors.BlankPrefix)
+        assertThat(res.first()).isEqualTo(AliasItemValidationError.BlankPrefix)
     }
 
     @Test
@@ -63,7 +65,7 @@ class AliasItemValidationTest {
             aliasPrefixValidator = errorValidator(AliasPrefixError.InvalidCharacter)
         )
         assertThat(res.size).isEqualTo(1)
-        assertThat(res.first()).isEqualTo(AliasItemValidationErrors.InvalidAliasContent)
+        assertThat(res.first()).isEqualTo(AliasItemValidationError.InvalidAliasContent)
     }
 
     private fun itemWithContents(title: String = "sometitle", prefix: String = "somealias"): AliasItemFormState =

@@ -47,7 +47,10 @@ import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.domain.toItemContents
 import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.ItemSavedState
+import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.common.ShareUiState
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
@@ -70,6 +73,7 @@ class CreateCreditCardViewModelTest {
     private lateinit var telemetryManager: TestTelemetryManager
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var featureFlagsRepository: TestFeatureFlagsPreferenceRepository
+    private lateinit var canPerformPaidAction: TestCanPerformPaidAction
 
     @Before
     fun setUp() {
@@ -79,6 +83,7 @@ class CreateCreditCardViewModelTest {
         telemetryManager = TestTelemetryManager()
         snackbarDispatcher = TestSnackbarDispatcher()
         featureFlagsRepository = TestFeatureFlagsPreferenceRepository()
+        canPerformPaidAction = TestCanPerformPaidAction()
         instance = CreateCreditCardViewModel(
             accountManager = TestAccountManager().apply {
                 sendPrimaryUserId(UserId("user-id"))
@@ -89,18 +94,21 @@ class CreateCreditCardViewModelTest {
             encryptionContextProvider = TestEncryptionContextProvider(),
             observeVaults = observeVaults,
             telemetryManager = telemetryManager,
-            canPerformPaidAction = TestCanPerformPaidAction().apply { setResult(true) },
+            canPerformPaidAction = canPerformPaidAction,
             inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
             observeDefaultVault = TestObserveDefaultVault(),
             featureFlagsRepository = featureFlagsRepository,
             linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
             attachmentsHandler = FakeAttachmentHandler(),
-            userPreferencesRepository = TestPreferenceRepository()
+            userPreferencesRepository = TestPreferenceRepository(),
+            customFieldHandler = CustomFieldHandlerImpl(TestEncryptionContextProvider()),
+            customFieldDraftRepository = CustomFieldDraftRepositoryImpl()
         )
     }
 
     @Test
     fun `create item without title should return a BlankTitle validation error`() = runTest {
+        canPerformPaidAction.setResult(false)
         val vault = TestVault.create(shareId = ShareId("shareId"), name = "Share")
         val vaultWithItemCount = VaultWithItemCount(
             vault = vault,
@@ -123,9 +131,7 @@ class CreateCreditCardViewModelTest {
             assertThat(awaitItem()).isEqualTo(
                 state.copy(
                     baseState = state.baseState.copy(
-                        validationErrors = persistentSetOf(
-                            CreditCardValidationErrors.BlankTitle
-                        )
+                        validationErrors = persistentSetOf(CommonFieldValidationError.BlankTitle)
                     )
                 )
             )
@@ -134,6 +140,8 @@ class CreateCreditCardViewModelTest {
 
     @Test
     fun `given valid data when a create item event should return a success event`() = runTest {
+        canPerformPaidAction.setResult(false)
+
         val item = TestObserveItems.createCreditCard()
         val vault = sendInitialVault(item.shareId)
         val initialState = CreateCreditCardUiState.Success(

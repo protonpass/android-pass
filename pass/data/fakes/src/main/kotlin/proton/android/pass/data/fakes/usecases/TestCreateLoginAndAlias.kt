@@ -19,7 +19,7 @@
 package proton.android.pass.data.fakes.usecases
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.CreateItemAndAlias
+import proton.android.pass.data.api.usecases.CreateLoginAndAlias
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
@@ -28,7 +28,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TestCreateItemAndAlias @Inject constructor() : CreateItemAndAlias {
+class TestCreateLoginAndAlias @Inject constructor() : CreateLoginAndAlias {
 
     private var result: Result<Item> = Result.failure(IllegalStateException("Result not set"))
     private var invoked = false
@@ -42,7 +42,7 @@ class TestCreateItemAndAlias @Inject constructor() : CreateItemAndAlias {
     override suspend fun invoke(
         userId: UserId?,
         shareId: ShareId,
-        itemContents: ItemContents,
+        itemContents: ItemContents.Login,
         newAlias: NewAlias
     ): Item {
         invoked = true

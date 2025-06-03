@@ -53,7 +53,7 @@ import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.ConfirmNewUserInvite
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.CreateItem
-import proton.android.pass.data.api.usecases.CreateItemAndAlias
+import proton.android.pass.data.api.usecases.CreateLoginAndAlias
 import proton.android.pass.data.api.usecases.CreatePin
 import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.DeleteItems
@@ -264,7 +264,7 @@ import proton.android.pass.data.fakes.usecases.TestClearUserData
 import proton.android.pass.data.fakes.usecases.TestConfirmNewUserInvite
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestCreateItem
-import proton.android.pass.data.fakes.usecases.TestCreateItemAndAlias
+import proton.android.pass.data.fakes.usecases.TestCreateLoginAndAlias
 import proton.android.pass.data.fakes.usecases.TestCreatePin
 import proton.android.pass.data.fakes.usecases.TestCreateVault
 import proton.android.pass.data.fakes.usecases.TestDeleteAllSearchEntry
@@ -489,7 +489,7 @@ abstract class FakesDataModule {
     abstract fun bindGetVaultWithItemCountById(impl: TestGetVaultWithItemCountById): GetVaultWithItemCountById
 
     @Binds
-    abstract fun bindCreateItemAndAlias(impl: TestCreateItemAndAlias): CreateItemAndAlias
+    abstract fun bindCreateItemAndAlias(impl: TestCreateLoginAndAlias): CreateLoginAndAlias
 
     @Binds
     abstract fun bindDeleteVault(impl: TestDeleteVault): DeleteVault

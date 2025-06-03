@@ -97,10 +97,10 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun createItemAndAlias(
+    override suspend fun createLoginAndAlias(
         userId: UserId,
         shareId: ShareId,
-        contents: ItemContents,
+        contents: ItemContents.Login,
         newAlias: NewAlias
     ): Item {
         TODO("Not yet implemented")

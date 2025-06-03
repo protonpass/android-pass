@@ -20,8 +20,9 @@ package proton.android.pass.features.itemcreate.alias
 
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.ShareId
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
 
-sealed interface AliasContentUiEvent {
+internal sealed interface AliasContentUiEvent {
 
     data object Back : AliasContentUiEvent
 
@@ -60,4 +61,7 @@ sealed interface AliasContentUiEvent {
     data object OnSuffixSelect : AliasContentUiEvent
 
     data object OnMailboxSelect : AliasContentUiEvent
+
+    @JvmInline
+    value class OnCustomFieldEvent(val event: CustomFieldEvent) : AliasContentUiEvent
 }

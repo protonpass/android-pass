@@ -57,6 +57,8 @@ class AddCustomFieldBottomSheetNavItem(val prefix: CustomFieldPrefix) : NavItem(
 
     companion object {
         val CreateLogin = AddCustomFieldBottomSheetNavItem(CustomFieldPrefix.CreateLogin)
+        val CreateAlias = AddCustomFieldBottomSheetNavItem(CustomFieldPrefix.CreateAlias)
+        val CreateCreditCard = AddCustomFieldBottomSheetNavItem(CustomFieldPrefix.CreateCreditCard)
         val CreateIdentity = AddCustomFieldBottomSheetNavItem(CustomFieldPrefix.CreateIdentity)
     }
 }
@@ -86,6 +88,8 @@ class CustomFieldOptionsBottomSheetNavItem(val prefix: CustomFieldPrefix) : NavI
 
     companion object {
         val CreateLogin = CustomFieldOptionsBottomSheetNavItem(CustomFieldPrefix.CreateLogin)
+        val CreateAlias = CustomFieldOptionsBottomSheetNavItem(CustomFieldPrefix.CreateAlias)
+        val CreateCreditCard = CustomFieldOptionsBottomSheetNavItem(CustomFieldPrefix.CreateCreditCard)
         val CreateIdentity = CustomFieldOptionsBottomSheetNavItem(CustomFieldPrefix.CreateIdentity)
     }
 }

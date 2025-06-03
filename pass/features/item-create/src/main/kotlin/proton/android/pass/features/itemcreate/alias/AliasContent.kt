@@ -23,12 +23,14 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.features.itemcreate.common.AliasItemValidationError
 import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.CreateUpdateTopBar
+import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -89,7 +91,12 @@ internal fun AliasContent(
             isFileAttachmentsEnabled = uiState.isFileAttachmentEnabled && canUseAttachments,
             displayAdvancedOptionsBanner = uiState.displayAdvancedOptionsBanner && isCreateMode,
             displayFileAttachmentsOnboarding = uiState.displayFileAttachmentsOnboarding,
-            attachmentsState = uiState.attachmentsState
+            attachmentsState = uiState.attachmentsState,
+            canUseCustomFields = uiState.canPerformPaidAction,
+            customFieldValidationErrors = uiState.errorList
+                .filterIsInstance<CustomFieldValidationError>()
+                .toPersistentList(),
+            focusedField = uiState.focusedField.value()
         )
     }
 }

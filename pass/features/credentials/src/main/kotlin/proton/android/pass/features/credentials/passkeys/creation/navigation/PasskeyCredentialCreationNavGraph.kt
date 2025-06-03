@@ -31,6 +31,7 @@ import proton.android.pass.features.itemcreate.alias.AliasSelectMailboxBottomShe
 import proton.android.pass.features.itemcreate.alias.AliasSelectSuffixBottomSheetNavItem
 import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation
 import proton.android.pass.features.itemcreate.alias.CreateAliasBottomSheet
+import proton.android.pass.features.itemcreate.alias.CreateAliasNavItem
 import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation
 import proton.android.pass.features.itemcreate.alias.createAliasGraph
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.AddCustomFieldBottomSheetNavItem
@@ -171,6 +172,58 @@ internal fun NavGraphBuilder.passkeyCredentialCreationNavGraph(
                     throw IllegalStateException("Cannot use attachments from PasskeyCredentialCreation")
                 BaseAliasNavigation.AddMailbox ->
                     throw IllegalStateException("Cannot add mailbox from PasskeyCredentialCreation")
+
+                BaseAliasNavigation.AddCustomField -> appNavigator.navigate(
+                    destination = AddCustomFieldBottomSheetNavItem.CreateAlias,
+                    route = AddCustomFieldBottomSheetNavItem.CreateAlias.buildRoute(None)
+                )
+
+                is BaseAliasNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = CustomFieldNameDialogNavItem.CreateAlias,
+                        route = CustomFieldNameDialogNavItem.CreateAlias.buildRoute(
+                            type = destination.type,
+                            sectionIndex = None
+                        ),
+                        backDestination = CreateAliasNavItem
+                    )
+                }
+
+                is BaseAliasNavigation.CustomFieldOptions -> appNavigator.navigate(
+                    destination = CustomFieldOptionsBottomSheetNavItem.CreateAlias,
+                    route = CustomFieldOptionsBottomSheetNavItem.CreateAlias.buildRoute(
+                        index = destination.index,
+                        sectionIndex = None,
+                        currentTitle = destination.currentValue
+                    )
+                )
+
+                is BaseAliasNavigation.EditCustomField -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = EditCustomFieldNameDialogNavItem.CreateAlias,
+                        route = EditCustomFieldNameDialogNavItem.CreateAlias.buildRoute(
+                            index = destination.index,
+                            sectionIndex = None,
+                            currentValue = destination.currentValue
+                        ),
+                        backDestination = CreateAliasNavItem
+                    )
+                }
+
+                BaseAliasNavigation.RemovedCustomField -> dismissBottomSheet {}
+
+                BaseAliasNavigation.TotpCancel -> appNavigator.navigateBack()
+                is BaseAliasNavigation.TotpSuccess ->
+                    appNavigator.navigateBackWithResult(destination.results)
+
+                is BaseAliasNavigation.OpenImagePicker -> appNavigator.navigate(
+                    destination = PhotoPickerTotpNavItem.CreateAlias,
+                    route = PhotoPickerTotpNavItem.CreateAlias.createNavRoute(
+                        sectionIndex = None,
+                        index = destination.index
+                    ),
+                    backDestination = CreateAliasNavItem
+                )
             }
         }
     )
@@ -306,17 +359,14 @@ internal fun NavGraphBuilder.passkeyCredentialCreationNavGraph(
 
                 // Updates cannot happen
                 is BaseLoginNavigation.OnUpdateLoginEvent -> Unit
-                is BaseLoginNavigation.OpenImagePicker -> {
-                    val prefix = CustomFieldPrefix.fromLogin(backDestination)
-                    appNavigator.navigate(
-                        destination = PhotoPickerTotpNavItem(prefix),
-                        route = PhotoPickerTotpNavItem(prefix).createNavRoute(
-                            sectionIndex = None,
-                            index = destination.index
-                        ),
-                        backDestination = CreateLoginNavItem
-                    )
-                }
+                is BaseLoginNavigation.OpenImagePicker -> appNavigator.navigate(
+                    destination = PhotoPickerTotpNavItem.CreateLogin,
+                    route = PhotoPickerTotpNavItem.CreateLogin.createNavRoute(
+                        sectionIndex = None,
+                        index = destination.index
+                    ),
+                    backDestination = CreateLoginNavItem
+                )
 
                 BaseLoginNavigation.TotpCancel -> appNavigator.navigateBack()
                 is BaseLoginNavigation.TotpSuccess -> appNavigator.navigateBackWithResult(

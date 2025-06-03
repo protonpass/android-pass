@@ -20,6 +20,7 @@ package proton.android.pass.features.itemcreate.dialogs.customfield
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.common.api.getOrElse
@@ -44,7 +45,7 @@ class CustomFieldNameDialogNavItem(prefix: CustomFieldPrefix) : NavItem(
     navArgIds = listOf(CustomFieldTypeNavArgId, CustomSectionIndexNavArgId),
     navItemType = NavItemType.Dialog
 ) {
-    fun buildRoute(type: CustomFieldType, sectionIndex: Option<Int>) = buildString {
+    fun buildRoute(type: CustomFieldType, sectionIndex: Option<Int> = None) = buildString {
         append(baseRoute)
         append(SpecialCharacters.SLASH)
         append(type.name)
@@ -54,6 +55,7 @@ class CustomFieldNameDialogNavItem(prefix: CustomFieldPrefix) : NavItem(
 
     companion object {
         val CreateLogin = CustomFieldNameDialogNavItem(CustomFieldPrefix.CreateLogin)
+        val CreateAlias = CustomFieldNameDialogNavItem(CustomFieldPrefix.CreateAlias)
         val CreateIdentity = CustomFieldNameDialogNavItem(CustomFieldPrefix.CreateIdentity)
     }
 }
@@ -65,7 +67,7 @@ class EditCustomFieldNameDialogNavItem(val prefix: CustomFieldPrefix) : NavItem(
 ) {
     fun buildRoute(
         index: Int,
-        sectionIndex: Option<Int>,
+        sectionIndex: Option<Int> = None,
         currentValue: String
     ) = buildString {
         append(baseRoute)
@@ -79,6 +81,7 @@ class EditCustomFieldNameDialogNavItem(val prefix: CustomFieldPrefix) : NavItem(
 
     companion object {
         val CreateLogin = EditCustomFieldNameDialogNavItem(CustomFieldPrefix.CreateLogin)
+        val CreateAlias = EditCustomFieldNameDialogNavItem(CustomFieldPrefix.CreateAlias)
         val CreateIdentity = EditCustomFieldNameDialogNavItem(CustomFieldPrefix.CreateIdentity)
     }
 }

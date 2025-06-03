@@ -46,7 +46,7 @@ object IsEditAliasNavArg : OptionalNavArgId {
     override val navType = NavType.BoolType
 }
 
-object CreateAlias : NavItem(
+object CreateAliasNavItem : NavItem(
     baseRoute = "alias/create/screen",
     optionalArgIds = listOf(CommonOptionalNavArgId.ShareId, AliasOptionalNavArgId.Title)
 ) {
@@ -105,7 +105,7 @@ fun NavGraphBuilder.createAliasGraph(
     canAddMailbox: Boolean,
     onNavigate: (BaseAliasNavigation) -> Unit
 ) {
-    composable(CreateAlias) { navBackStack ->
+    composable(CreateAliasNavItem) { navBackStack ->
         val selectVault by navBackStack.savedStateHandle
             .getStateFlow<String?>(KEY_VAULT_SELECTED, null)
             .collectAsStateWithLifecycle()

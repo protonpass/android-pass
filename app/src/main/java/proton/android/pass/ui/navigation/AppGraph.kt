@@ -90,10 +90,10 @@ import proton.android.pass.features.item.trash.trashmenu.navigation.ItemTrashMen
 import proton.android.pass.features.itemcreate.alias.AliasSelectMailboxBottomSheetNavItem
 import proton.android.pass.features.itemcreate.alias.AliasSelectSuffixBottomSheetNavItem
 import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation
-import proton.android.pass.features.itemcreate.alias.CreateAlias
 import proton.android.pass.features.itemcreate.alias.CreateAliasBottomSheet
+import proton.android.pass.features.itemcreate.alias.CreateAliasNavItem
 import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation
-import proton.android.pass.features.itemcreate.alias.EditAlias
+import proton.android.pass.features.itemcreate.alias.EditAliasNavItem
 import proton.android.pass.features.itemcreate.alias.UpdateAliasNavigation
 import proton.android.pass.features.itemcreate.alias.createUpdateCreditCardGraph
 import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomSheetMode
@@ -109,9 +109,9 @@ import proton.android.pass.features.itemcreate.common.customsection.CustomSectio
 import proton.android.pass.features.itemcreate.common.customsection.CustomSectionOptionsBottomSheetNavItem
 import proton.android.pass.features.itemcreate.common.customsection.EditCustomSectionNameDialogNavItem
 import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation
-import proton.android.pass.features.itemcreate.creditcard.CreateCreditCard
+import proton.android.pass.features.itemcreate.creditcard.CreateCreditCardNavItem
 import proton.android.pass.features.itemcreate.creditcard.CreateCreditCardNavigation
-import proton.android.pass.features.itemcreate.creditcard.EditCreditCard
+import proton.android.pass.features.itemcreate.creditcard.EditCreditCardNavItem
 import proton.android.pass.features.itemcreate.creditcard.UpdateCreditCardNavigation
 import proton.android.pass.features.itemcreate.creditcard.createUpdateAliasGraph
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.BaseCustomItemNavigation
@@ -302,14 +302,14 @@ fun NavGraphBuilder.appGraph(
                         )
 
                         ItemTypeUiState.Note -> CreateNoteNavItem to CreateNoteNavItem.createNavRoute(it.shareId)
-                        ItemTypeUiState.Alias -> CreateAlias to CreateAlias.createNavRoute(it.shareId)
+                        ItemTypeUiState.Alias -> CreateAliasNavItem to CreateAliasNavItem.createNavRoute(it.shareId)
                         ItemTypeUiState.Password ->
                             GeneratePasswordBottomsheet to GeneratePasswordBottomsheet.buildRoute(
                                 mode = GeneratePasswordBottomsheetModeValue.CopyAndClose
                             )
 
                         ItemTypeUiState.CreditCard ->
-                            CreateCreditCard to CreateCreditCard.createNavRoute(it.shareId)
+                            CreateCreditCardNavItem to CreateCreditCardNavItem.createNavRoute(it.shareId)
 
                         ItemTypeUiState.Identity ->
                             CreateIdentityNavItem to CreateIdentityNavItem.createNavRoute(it.shareId)
@@ -332,8 +332,8 @@ fun NavGraphBuilder.appGraph(
 
                 is HomeNavigation.EditAlias -> {
                     appNavigator.navigate(
-                        EditAlias,
-                        EditAlias.createNavRoute(it.shareId, it.itemId)
+                        EditAliasNavItem,
+                        EditAliasNavItem.createNavRoute(it.shareId, it.itemId)
                     )
                 }
 
@@ -352,8 +352,8 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 is HomeNavigation.EditCreditCard -> appNavigator.navigate(
-                    EditCreditCard,
-                    EditCreditCard.createNavRoute(it.shareId, it.itemId)
+                    EditCreditCardNavItem,
+                    EditCreditCardNavItem.createNavRoute(it.shareId, it.itemId)
                 )
 
                 is HomeNavigation.EditIdentity -> appNavigator.navigate(
@@ -528,8 +528,8 @@ fun NavGraphBuilder.appGraph(
                 when (it) {
                     is CreateItemBottomsheetNavigation.CreateAlias ->
                         appNavigator.navigate(
-                            CreateAlias,
-                            CreateAlias.createNavRoute(it.shareId)
+                            CreateAliasNavItem,
+                            CreateAliasNavItem.createNavRoute(it.shareId)
                         )
 
                     is CreateItemBottomsheetNavigation.CreateLogin ->
@@ -561,8 +561,8 @@ fun NavGraphBuilder.appGraph(
 
                     is CreateItemBottomsheetNavigation.CreateCreditCard ->
                         appNavigator.navigate(
-                            CreateCreditCard,
-                            CreateCreditCard.createNavRoute(it.shareId)
+                            CreateCreditCardNavItem,
+                            CreateCreditCardNavItem.createNavRoute(it.shareId)
                         )
 
                     is CreateItemBottomsheetNavigation.CreateIdentity ->
@@ -1122,6 +1122,11 @@ fun NavGraphBuilder.appGraph(
     createUpdateCreditCardGraph(
         canUseAttachments = true,
         onNavigate = {
+            val backDestination = when {
+                appNavigator.hasDestinationInStack(CreateCreditCardNavItem) -> CreateCreditCardNavItem
+                appNavigator.hasDestinationInStack(EditCreditCardNavItem) -> EditCreditCardNavItem
+                else -> null
+            }
             when (it) {
                 BaseCreditCardNavigation.CloseScreen -> appNavigator.navigateBack()
                 is CreateCreditCardNavigation -> when (it) {
@@ -1167,6 +1172,57 @@ fun NavGraphBuilder.appGraph(
                         destination = UpsellNavItem,
                         route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
                     )
+
+                BaseCreditCardNavigation.AddCustomField -> dismissBottomSheet {
+                    val prefix = CustomFieldPrefix.fromCreditCard(backDestination)
+                    appNavigator.navigate(
+                        destination = AddCustomFieldBottomSheetNavItem(prefix),
+                        route = AddCustomFieldBottomSheetNavItem(prefix).buildRoute()
+                    )
+                }
+                is BaseCreditCardNavigation.CustomFieldOptions -> {
+                    val prefix = CustomFieldPrefix.fromCreditCard(backDestination)
+                    appNavigator.navigate(
+                        destination = CustomFieldOptionsBottomSheetNavItem(prefix),
+                        route = CustomFieldOptionsBottomSheetNavItem(prefix).buildRoute(
+                            index = it.index,
+                            currentTitle = it.currentValue
+                        )
+                    )
+                }
+                is BaseCreditCardNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
+                    val prefix = CustomFieldPrefix.fromCreditCard(backDestination)
+                    appNavigator.navigate(
+                        destination = CustomFieldNameDialogNavItem(prefix),
+                        route = CustomFieldNameDialogNavItem(prefix).buildRoute(it.type),
+                        backDestination = backDestination
+                    )
+                }
+                is BaseCreditCardNavigation.EditCustomField -> dismissBottomSheet {
+                    val prefix = CustomFieldPrefix.fromCreditCard(backDestination)
+                    appNavigator.navigate(
+                        destination = EditCustomFieldNameDialogNavItem(prefix),
+                        route = EditCustomFieldNameDialogNavItem(prefix).buildRoute(
+                            index = it.index,
+                            sectionIndex = None,
+                            currentValue = it.currentValue
+                        ),
+                        backDestination = backDestination
+                    )
+                }
+
+                is BaseCreditCardNavigation.OpenImagePicker -> {
+                    val prefix = CustomFieldPrefix.fromCreditCard(backDestination)
+                    appNavigator.navigate(
+                        destination = PhotoPickerTotpNavItem(prefix),
+                        route = PhotoPickerTotpNavItem(prefix).createNavRoute(index = it.index),
+                        backDestination = backDestination
+                    )
+                }
+                BaseCreditCardNavigation.RemovedCustomField -> dismissBottomSheet {}
+                BaseCreditCardNavigation.TotpCancel -> appNavigator.navigateBack()
+                is BaseCreditCardNavigation.TotpSuccess ->
+                    appNavigator.navigateBackWithResult(it.results)
             }
         }
     )
@@ -1174,6 +1230,11 @@ fun NavGraphBuilder.appGraph(
         canUseAttachments = true,
         canAddMailbox = true,
         onNavigate = {
+            val backDestination = when {
+                appNavigator.hasDestinationInStack(CreateAliasNavItem) -> CreateAliasNavItem
+                appNavigator.hasDestinationInStack(EditAliasNavItem) -> EditAliasNavItem
+                else -> null
+            }
             when (it) {
                 is BaseAliasNavigation.OnCreateAliasEvent -> when (val event = it.event) {
                     is CreateAliasNavigation.Created -> appNavigator.navigateBack()
@@ -1233,6 +1294,56 @@ fun NavGraphBuilder.appGraph(
                 BaseAliasNavigation.AddMailbox -> dismissBottomSheet {
                     appNavigator.navigate(SimpleLoginSyncMailboxCreateNavItem)
                 }
+
+                BaseAliasNavigation.AddCustomField -> dismissBottomSheet {
+                    val prefix = CustomFieldPrefix.fromAlias(backDestination)
+                    appNavigator.navigate(
+                        destination = AddCustomFieldBottomSheetNavItem(prefix),
+                        route = AddCustomFieldBottomSheetNavItem(prefix).buildRoute()
+                    )
+                }
+                is BaseAliasNavigation.CustomFieldOptions -> {
+                    val prefix = CustomFieldPrefix.fromAlias(backDestination)
+                    appNavigator.navigate(
+                        destination = CustomFieldOptionsBottomSheetNavItem(prefix),
+                        route = CustomFieldOptionsBottomSheetNavItem(prefix).buildRoute(
+                            index = it.index,
+                            currentTitle = it.currentValue
+                        )
+                    )
+                }
+                is BaseAliasNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
+                    val prefix = CustomFieldPrefix.fromAlias(backDestination)
+                    appNavigator.navigate(
+                        destination = CustomFieldNameDialogNavItem(prefix),
+                        route = CustomFieldNameDialogNavItem(prefix).buildRoute(it.type),
+                        backDestination = backDestination
+                    )
+                }
+                is BaseAliasNavigation.EditCustomField -> dismissBottomSheet {
+                    val prefix = CustomFieldPrefix.fromAlias(backDestination)
+                    appNavigator.navigate(
+                        destination = EditCustomFieldNameDialogNavItem(prefix),
+                        route = EditCustomFieldNameDialogNavItem(prefix).buildRoute(
+                            index = it.index,
+                            sectionIndex = None,
+                            currentValue = it.currentValue
+                        ),
+                        backDestination = backDestination
+                    )
+                }
+                is BaseAliasNavigation.OpenImagePicker -> {
+                    val prefix = CustomFieldPrefix.fromAlias(backDestination)
+                    appNavigator.navigate(
+                        destination = PhotoPickerTotpNavItem(prefix),
+                        route = PhotoPickerTotpNavItem(prefix).createNavRoute(index = it.index),
+                        backDestination = backDestination
+                    )
+                }
+                BaseAliasNavigation.RemovedCustomField -> dismissBottomSheet {}
+                BaseAliasNavigation.TotpCancel -> appNavigator.navigateBack()
+                is BaseAliasNavigation.TotpSuccess ->
+                    appNavigator.navigateBackWithResult(it.results)
             }
         }
     )
@@ -1536,12 +1647,12 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 is ItemDetailsNavDestination.EditItem -> when (itemDetailsNavDestination.itemCategory) {
-                    ItemCategory.Alias -> EditAlias to EditAlias.createNavRoute(
+                    ItemCategory.Alias -> EditAliasNavItem to EditAliasNavItem.createNavRoute(
                         shareId = itemDetailsNavDestination.shareId,
                         itemId = itemDetailsNavDestination.itemId
                     )
 
-                    ItemCategory.CreditCard -> EditCreditCard to EditCreditCard.createNavRoute(
+                    ItemCategory.CreditCard -> EditCreditCardNavItem to EditCreditCardNavItem.createNavRoute(
                         shareId = itemDetailsNavDestination.shareId,
                         itemId = itemDetailsNavDestination.itemId
                     )
@@ -2434,11 +2545,11 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.hasDestinationInStack(SimpleLoginSyncManagementNavItem) ->
                         appNavigator.popUpTo(SimpleLoginSyncManagementNavItem)
 
-                    appNavigator.hasDestinationInStack(CreateAlias) ->
-                        appNavigator.popUpTo(CreateAlias)
+                    appNavigator.hasDestinationInStack(CreateAliasNavItem) ->
+                        appNavigator.popUpTo(CreateAliasNavItem)
 
-                    appNavigator.hasDestinationInStack(EditAlias) ->
-                        appNavigator.popUpTo(EditAlias)
+                    appNavigator.hasDestinationInStack(EditAliasNavItem) ->
+                        appNavigator.popUpTo(EditAliasNavItem)
                 }
 
                 is SimpleLoginSyncNavDestination.CloseScreen -> appNavigator.navigateBack(

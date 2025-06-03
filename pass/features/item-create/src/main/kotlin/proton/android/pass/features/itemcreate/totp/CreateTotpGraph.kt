@@ -49,6 +49,12 @@ data class CameraTotpNavItem(val prefix: CustomFieldPrefix) : NavItem(
         ).toPath()
         append(path)
     }
+
+    companion object {
+        val CreateLogin = CameraTotpNavItem(CustomFieldPrefix.CreateLogin)
+        val CreateAlias = CameraTotpNavItem(CustomFieldPrefix.CreateAlias)
+        val CreateIdentity = CameraTotpNavItem(CustomFieldPrefix.CreateIdentity)
+    }
 }
 
 data class PhotoPickerTotpNavItem(val prefix: CustomFieldPrefix) : NavItem(
@@ -65,6 +71,12 @@ data class PhotoPickerTotpNavItem(val prefix: CustomFieldPrefix) : NavItem(
             TotpOptionalNavArgId.TotpIndexField.key to (index.value() ?: -1)
         ).toPath()
         append(path)
+    }
+
+    companion object {
+        val CreateLogin = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateLogin)
+        val CreateAlias = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateAlias)
+        val CreateIdentity = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateIdentity)
     }
 }
 

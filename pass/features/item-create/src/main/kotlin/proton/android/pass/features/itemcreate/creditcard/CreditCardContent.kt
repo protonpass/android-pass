@@ -5,11 +5,12 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.features.itemcreate.common.CreateUpdateTopBar
+import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
 import proton.android.pass.features.itemcreate.creditcard.CreditCardContentEvent.Submit
 import proton.android.pass.features.itemcreate.creditcard.CreditCardContentEvent.Up
 import proton.android.pass.features.itemcreate.creditcard.CreditCardContentEvent.Upgrade
@@ -60,52 +61,14 @@ internal fun CreditCardContent(
             isFileAttachmentsEnabled = state.isFileAttachmentsEnabled && canUseAttachments,
             displayFileAttachmentsOnboarding = state.displayFileAttachmentsOnboarding,
             attachmentsState = state.attachmentsState,
+            canUseCustomFields = state.canPerformPaidAction,
+            customFieldValidationErrors = state.validationErrors
+                .filterIsInstance<CustomFieldValidationError>()
+                .toPersistentList(),
+            focusedField = state.focusedField.value(),
             onEvent = onEvent
         )
     }
-}
-
-sealed interface CreditCardContentEvent {
-    data object Up : CreditCardContentEvent
-    data object Upgrade : CreditCardContentEvent
-
-    @JvmInline
-    value class Submit(val shareId: ShareId) : CreditCardContentEvent
-
-    @JvmInline
-    value class OnNameChange(val value: String) : CreditCardContentEvent
-
-    @JvmInline
-    value class OnNumberChange(val value: String) : CreditCardContentEvent
-
-    @JvmInline
-    value class OnCVVChange(val value: String) : CreditCardContentEvent
-
-    @JvmInline
-    value class OnCVVFocusChange(val isFocused: Boolean) : CreditCardContentEvent
-
-    @JvmInline
-    value class OnPinChange(val value: String) : CreditCardContentEvent
-
-    @JvmInline
-    value class OnPinFocusChange(val isFocused: Boolean) : CreditCardContentEvent
-
-    @JvmInline
-    value class OnExpirationDateChange(val value: String) : CreditCardContentEvent
-
-    @JvmInline
-    value class OnNoteChange(val value: String) : CreditCardContentEvent
-
-    @JvmInline
-    value class OnTitleChange(val value: String) : CreditCardContentEvent
-
-    @JvmInline
-    value class OnVaultSelect(val shareId: ShareId) : CreditCardContentEvent
-
-    @JvmInline
-    value class OnAttachmentEvent(val event: AttachmentContentEvent) : CreditCardContentEvent
-
-    data object DismissAttachmentBanner : CreditCardContentEvent
 }
 
 

@@ -43,6 +43,9 @@ import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsTo
 import proton.android.pass.data.fakes.usecases.attachments.FakeRenameAttachments
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.ItemUpdate
+import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
+import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
@@ -94,7 +97,9 @@ class UpdateCreditCardViewModelTest {
             linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
             renameAttachments = FakeRenameAttachments(),
             userPreferencesRepository = TestPreferenceRepository(),
-            pendingAttachmentLinkRepository = pendingAttachmentLinkRepository
+            pendingAttachmentLinkRepository = pendingAttachmentLinkRepository,
+            customFieldHandler = CustomFieldHandlerImpl(TestEncryptionContextProvider()),
+            customFieldDraftRepository = CustomFieldDraftRepositoryImpl()
         )
     }
 
@@ -109,7 +114,7 @@ class UpdateCreditCardViewModelTest {
             assertThat(state).isInstanceOf(UpdateCreditCardUiState.Success::class.java)
 
             val casted = state as UpdateCreditCardUiState.Success
-            val expected = persistentSetOf(CreditCardValidationErrors.BlankTitle)
+            val expected = persistentSetOf(CommonFieldValidationError.BlankTitle)
             assertThat(casted.baseState.validationErrors).isEqualTo(expected)
         }
     }

@@ -33,20 +33,34 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
+import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation.AddCustomField
+import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation.CustomFieldOptions
+import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation.DeleteAllAttachments
+import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation.OnCreateAliasEvent
+import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation.OpenDraftAttachmentOptions
+import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation.Upgrade
 import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation.Created
 import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation.SelectVault
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.common.ShareError.EmptyShareList
 import proton.android.pass.features.itemcreate.common.ShareError.SharesNotAvailable
 import proton.android.pass.features.itemcreate.common.ShareUiState
+import proton.android.pass.features.itemcreate.common.UICustomFieldContent
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
+import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
+import proton.android.pass.features.itemcreate.custom.createupdate.ui.DatePickerModal
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
 
@@ -65,8 +79,9 @@ fun CreateAliasScreen(
         }
     }
 
-    var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
+    var showDatePickerForField: Option<CustomFieldIdentifier> by remember { mutableStateOf(None) }
 
+    var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
     PerformActionAfterKeyboardHide(
         action = actionAfterKeyboardHide,
         clearAction = { actionAfterKeyboardHide = null }
@@ -129,7 +144,7 @@ fun CreateAliasScreen(
                     is AliasContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
                     is AliasContentUiEvent.OnVaultSelect ->
                         actionAfterKeyboardHide =
-                            { onNavigate(BaseAliasNavigation.OnCreateAliasEvent(SelectVault(event.shareId))) }
+                            { onNavigate(OnCreateAliasEvent(SelectVault(event.shareId))) }
 
                     is AliasContentUiEvent.OnPrefixChange -> viewModel.onPrefixChange(event.prefix)
                     is AliasContentUiEvent.OnUpgrade ->
@@ -142,7 +157,7 @@ fun CreateAliasScreen(
                             AttachmentContentEvent.OnAddAttachment ->
                                 onNavigate(BaseAliasNavigation.AddAttachment)
                             AttachmentContentEvent.OnDeleteAllAttachments -> onNavigate(
-                                BaseAliasNavigation.DeleteAllAttachments(
+                                DeleteAllAttachments(
                                     uiState.baseAliasUiState.attachmentsState.allToUnlink
                                 )
                             )
@@ -153,7 +168,7 @@ fun CreateAliasScreen(
                                     mimetype = event.event.mimetype
                                 )
                             is AttachmentContentEvent.OnDraftAttachmentOptions -> onNavigate(
-                                BaseAliasNavigation.OpenDraftAttachmentOptions(event.event.uri)
+                                OpenDraftAttachmentOptions(event.event.uri)
                             )
                             is AttachmentContentEvent.OnAttachmentOpen,
                             is AttachmentContentEvent.OnAttachmentOptions ->
@@ -177,6 +192,45 @@ fun CreateAliasScreen(
                         onNavigate(BaseAliasNavigation.SelectMailbox)
                     AliasContentUiEvent.OnSuffixSelect ->
                         onNavigate(BaseAliasNavigation.SelectSuffix)
+
+                    is AliasContentUiEvent.OnCustomFieldEvent ->
+                        when (val event = event.event) {
+                            is CustomFieldEvent.OnAddField -> {
+                                actionAfterKeyboardHide = { onNavigate(AddCustomField) }
+                            }
+
+                            is CustomFieldEvent.OnFieldOptions -> {
+                                actionAfterKeyboardHide = {
+                                    onNavigate(
+                                        CustomFieldOptions(
+                                            currentValue = event.label,
+                                            index = event.field.index
+                                        )
+                                    )
+                                }
+                            }
+
+                            is CustomFieldEvent.OnValueChange -> {
+                                viewModel.onCustomFieldChange(event.field, event.value)
+                            }
+
+                            CustomFieldEvent.Upgrade -> {
+                                actionAfterKeyboardHide = { onNavigate(Upgrade) }
+                            }
+
+                            is CustomFieldEvent.FocusRequested ->
+                                viewModel.onFocusChange(
+                                    field = AliasField.CustomField(event.field),
+                                    isFocused = event.isFocused
+                                )
+
+                            is CustomFieldEvent.OnFieldClick -> when (event.field.type) {
+                                CustomFieldType.Date -> {
+                                    showDatePickerForField = Some(event.field)
+                                }
+                                else -> throw IllegalStateException("Unhandled action")
+                            }
+                        }
                 }
             }
         )
@@ -192,6 +246,17 @@ fun CreateAliasScreen(
                 actionAfterKeyboardHide = { onNavigate(BaseAliasNavigation.CloseScreen) }
             }
         )
+        showDatePickerForField.value()?.let { fieldIdentifier ->
+            val selectedDate = viewModel.aliasItemFormState
+                .customFields[fieldIdentifier.index] as UICustomFieldContent.Date
+            DatePickerModal(
+                selectedDate = selectedDate.value,
+                onDateSelected = {
+                    viewModel.onCustomFieldChange(fieldIdentifier, it.toString())
+                },
+                onDismiss = { showDatePickerForField = None }
+            )
+        }
     }
 
     ItemSavedLaunchedEffect(

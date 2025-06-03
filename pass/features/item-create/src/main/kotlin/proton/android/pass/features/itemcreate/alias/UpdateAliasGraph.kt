@@ -27,7 +27,7 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 
-object EditAlias : NavItem(
+object EditAliasNavItem : NavItem(
     baseRoute = "alias/edit",
     navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId),
     optionalArgIds = emptyList()
@@ -42,7 +42,7 @@ object EditAlias : NavItem(
     ExperimentalComposeUiApi::class
 )
 fun NavGraphBuilder.updateAliasGraph(onNavigate: (BaseAliasNavigation) -> Unit) {
-    composable(EditAlias) {
+    composable(EditAliasNavItem) {
         UpdateAlias(
             onNavigate = onNavigate
         )

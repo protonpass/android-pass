@@ -28,7 +28,7 @@ import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
-import proton.android.pass.data.fakes.usecases.TestGetUserPlan
+import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
 import proton.android.pass.features.itemcreate.note.BaseNoteUiState.Companion.Initial
@@ -42,6 +42,7 @@ internal class BaseNoteViewModelTest {
     @get:Rule
     val dispatcherRule = MainDispatcherRule()
 
+    private lateinit var canPerformPaidAction: TestCanPerformPaidAction
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var featureFlagsPreferenceRepository: TestFeatureFlagsPreferenceRepository
     private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
@@ -52,6 +53,7 @@ internal class BaseNoteViewModelTest {
         snackbarDispatcher = TestSnackbarDispatcher()
         savedStateHandleProvider = TestSavedStateHandleProvider()
         featureFlagsPreferenceRepository = TestFeatureFlagsPreferenceRepository()
+        canPerformPaidAction = TestCanPerformPaidAction()
         baseNoteViewModel = object : BaseNoteViewModel(
             snackbarDispatcher = snackbarDispatcher,
             featureFlagsRepository = featureFlagsPreferenceRepository,
@@ -60,13 +62,14 @@ internal class BaseNoteViewModelTest {
             savedStateHandleProvider = savedStateHandleProvider,
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
             customFieldHandler = CustomFieldHandlerImpl(TestEncryptionContextProvider()),
-            getUserPlan = TestGetUserPlan(),
+            canPerformPaidAction = canPerformPaidAction,
             clipboardManager = TestClipboardManager()
         ) {}
     }
 
     @Test
     fun `should start with the initial state`() = runTest {
+        canPerformPaidAction.setResult(false)
         baseNoteViewModel.baseNoteUiState.test {
             assertThat(awaitItem()).isEqualTo(Initial)
         }

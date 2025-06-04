@@ -157,6 +157,15 @@ internal fun AddressDetails(
                     )
                     onEvent(OnFieldChange(fieldChange))
                 },
+                onClick = {
+                    onEvent(
+                        IdentityContentEvent.OnCustomFieldClick(
+                            index = index,
+                            customFieldType = value.toCustomFieldType(),
+                            customExtraField = AddressCustomField
+                        )
+                    )
+                },
                 onFocusChange = { idx, isFocused ->
                     onEvent(IdentityContentEvent.OnCustomFieldFocused(idx, isFocused, AddressCustomField))
                 },

@@ -32,12 +32,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
+import proton.android.pass.features.itemcreate.common.UICustomFieldContent
+import proton.android.pass.features.itemcreate.custom.createupdate.ui.DatePickerModal
 import proton.android.pass.features.itemcreate.identity.navigation.BaseIdentityNavigation
 import proton.android.pass.features.itemcreate.identity.navigation.BaseIdentityNavigation.AddAttachment
 import proton.android.pass.features.itemcreate.identity.navigation.BaseIdentityNavigation.AddExtraSection
@@ -51,7 +57,14 @@ import proton.android.pass.features.itemcreate.identity.navigation.CreateIdentit
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent
 import proton.android.pass.features.itemcreate.identity.navigation.UpdateIdentityNavigation
 import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.AddIdentityFieldType
+import proton.android.pass.features.itemcreate.identity.presentation.FieldChange
 import proton.android.pass.features.itemcreate.identity.presentation.UpdateIdentityViewModel
+import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.AddressCustomField
+import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ContactCustomField
+import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.CustomExtraField
+import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ExtraSectionCustomField
+import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.PersonalCustomField
+import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.WorkCustomField
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
 
 @Composable
@@ -61,6 +74,9 @@ fun UpdateIdentityScreen(
     onNavigate: (BaseIdentityNavigation) -> Unit
 ) {
     val context = LocalContext.current
+
+    var showDatePickerForField: Option<Pair<CustomExtraField, Int>> by remember { mutableStateOf(None) }
+
     var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
     PerformActionAfterKeyboardHide(
         action = actionAfterKeyboardHide,
@@ -192,6 +208,13 @@ fun UpdateIdentityScreen(
                     is IdentityContentEvent.OnSocialSecurityNumberFieldFocusChanged -> {
                         viewModel.onSocialSecurityNumberFieldFocusChange(it.isFocused)
                     }
+
+                    is IdentityContentEvent.OnCustomFieldClick -> when (it.customFieldType) {
+                        CustomFieldType.Date -> {
+                            showDatePickerForField = Some(it.customExtraField to it.index)
+                        }
+                        else -> throw IllegalStateException("Unhandled action")
+                    }
                 }
             }
         )
@@ -206,6 +229,28 @@ fun UpdateIdentityScreen(
                 actionAfterKeyboardHide = { onNavigate(BaseIdentityNavigation.CloseScreen) }
             }
         )
+        showDatePickerForField.value()?.let { (customField, index) ->
+            val field = when (customField) {
+                AddressCustomField -> viewModel.getFormState().uiAddressDetails.customFields
+                ContactCustomField -> viewModel.getFormState().uiContactDetails.customFields
+                is ExtraSectionCustomField -> viewModel.getFormState().uiExtraSections[customField.index].customFields
+                PersonalCustomField -> viewModel.getFormState().uiPersonalDetails.customFields
+                WorkCustomField -> viewModel.getFormState().uiWorkDetails.customFields
+            }[index] as UICustomFieldContent.Date
+            DatePickerModal(
+                selectedDate = field.value,
+                onDateSelected = {
+                    val fieldChange = FieldChange.CustomField(
+                        sectionType = IdentitySectionType.from(customField),
+                        customFieldType = CustomFieldType.Date,
+                        index = index,
+                        value = it.toString()
+                    )
+                    viewModel.onFieldChange(fieldChange)
+                },
+                onDismiss = { showDatePickerForField = None }
+            )
+        }
     }
     ItemSavedLaunchedEffect(
         isItemSaved = state.getItemSavedState(),

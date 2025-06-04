@@ -46,6 +46,7 @@ import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.attachments.Attachment
@@ -55,9 +56,12 @@ import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
 import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
+import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.ValidationError
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
+import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
+import proton.android.pass.features.itemcreate.common.formprocessor.NoteItemFormProcessor
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
@@ -74,6 +78,8 @@ abstract class BaseNoteViewModel(
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val customFieldHandler: CustomFieldHandler,
+    private val noteItemFormProcessor: NoteItemFormProcessor,
+    private val encryptionContextProvider: EncryptionContextProvider,
     canPerformPaidAction: CanPerformPaidAction,
     customFieldDraftRepository: CustomFieldDraftRepository,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -335,6 +341,29 @@ abstract class BaseNoteViewModel(
                     }
                 }
                 .onFailure { PassLogger.d(TAG, it, "Failed on getting clipboard content") }
+        }
+    }
+
+    protected suspend fun isFormStateValid(originalCustomFields: List<UICustomFieldContent> = emptyList()): Boolean {
+        val result = encryptionContextProvider.withEncryptionContextSuspendable {
+            noteItemFormProcessor.process(
+                NoteItemFormProcessor.Input(
+                    formState = noteItemFormState,
+                    originalCustomFields = originalCustomFields
+                ),
+                ::decrypt,
+                ::encrypt
+            )
+        }
+        return when (result) {
+            is FormProcessingResult.Error -> {
+                noteItemValidationErrorsState.update { result.errors }
+                false
+            }
+            is FormProcessingResult.Success -> {
+                noteItemFormMutableState = result.sanitized
+                true
+            }
         }
     }
 

@@ -38,7 +38,7 @@ sealed interface CustomFieldValidationError : ValidationError {
 sealed interface LoginItemValidationError : ValidationError {
     @JvmInline
     value class InvalidUrl(val index: Int) : LoginItemValidationError
-    data object InvalidTotp : LoginItemValidationError
+    data object InvalidPrimaryTotp : LoginItemValidationError
 }
 
 sealed interface CreditCardItemValidationError : ValidationError {
@@ -49,4 +49,18 @@ sealed interface AliasItemValidationError : ValidationError {
     data object BlankPrefix : AliasItemValidationError
     data object InvalidAliasContent : AliasItemValidationError
     data object NoMailboxes : AliasItemValidationError
+}
+
+sealed interface IdentityItemValidationError : ValidationError {
+    @JvmInline
+    value class PersonalDetailsInvalidTotp(val index: Int) : IdentityItemValidationError
+
+    @JvmInline
+    value class AddressDetailsInvalidTotp(val index: Int) : IdentityItemValidationError
+
+    @JvmInline
+    value class ContactDetailsInvalidTotp(val index: Int) : IdentityItemValidationError
+
+    @JvmInline
+    value class WorkDetailsInvalidTotp(val index: Int) : IdentityItemValidationError
 }

@@ -59,6 +59,7 @@ import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
+import proton.android.pass.features.itemcreate.common.validator.CustomItemFormStateValidator
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -79,10 +80,11 @@ class UpdateCustomItemViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val attachmentsHandler: AttachmentsHandler,
-    private val customFieldHandler: CustomFieldHandler,
     private val renameAttachments: RenameAttachments,
     private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
     private val totpManager: TotpManager,
+    customFieldHandler: CustomFieldHandler,
+    customItemFormStateValidator: CustomItemFormStateValidator,
     canPerformPaidAction: CanPerformPaidAction,
     linkAttachmentsToItem: LinkAttachmentsToItem,
     userPreferencesRepository: UserPreferencesRepository,
@@ -103,6 +105,7 @@ class UpdateCustomItemViewModel @Inject constructor(
     customFieldDraftRepository = customFieldDraftRepository,
     clipboardManager = clipboardManager,
     totpManager = totpManager,
+    customItemFormStateValidator = customItemFormStateValidator,
     appDispatchers = appDispatchers,
     savedStateHandleProvider = savedStateHandleProvider
 ) {

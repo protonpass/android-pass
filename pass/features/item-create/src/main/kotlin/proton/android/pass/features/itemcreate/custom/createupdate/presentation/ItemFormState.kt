@@ -20,25 +20,15 @@ package proton.android.pass.features.itemcreate.custom.createupdate.presentation
 
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.parcelize.Parcelize
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.some
-import proton.android.pass.crypto.api.context.EncryptionContext
-import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.domain.ExtraSectionContent
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.WifiSecurityType
-import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
-import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.common.UIHiddenState
-import proton.android.pass.features.itemcreate.common.ValidationError
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
-import proton.android.pass.totp.api.TotpManager
 
 @Parcelize
 @Immutable
@@ -97,85 +87,6 @@ data class ItemFormState(
         customFieldList = itemContents.customFields.map(UICustomFieldContent.Companion::from),
         sectionList = itemContents.sectionContentList.map(::UIExtraSection)
     )
-
-    suspend fun validate(
-        originalCustomFields: List<UICustomFieldContent>,
-        originalSections: List<UIExtraSection>,
-        totpManager: TotpManager,
-        encryptionContextProvider: EncryptionContextProvider
-    ): Set<ValidationError> {
-        val errors = mutableSetOf<ValidationError>()
-        if (title.isBlank()) errors.add(CommonFieldValidationError.BlankTitle)
-
-        encryptionContextProvider.withEncryptionContextSuspendable {
-            errors += validateTotpFields(
-                entries = customFieldList,
-                originalEntriesById = originalCustomFields
-                    .filterIsInstance<UICustomFieldContent.Totp>()
-                    .associateBy { it.id },
-                sectionIndex = None,
-                totpManager = totpManager,
-                encryptionContext = this
-            )
-
-            sectionList.forEachIndexed { sectionIndex, section ->
-                errors += validateTotpFields(
-                    entries = section.customFields,
-                    originalEntriesById = originalSections.getOrNull(sectionIndex)
-                        ?.customFields
-                        .orEmpty()
-                        .filterIsInstance<UICustomFieldContent.Totp>()
-                        .associateBy { it.id },
-                    sectionIndex = sectionIndex.some(),
-                    totpManager = totpManager,
-                    encryptionContext = this
-                )
-            }
-        }
-
-        return errors.toSet()
-    }
-
-    private suspend fun validateTotpFields(
-        entries: List<UICustomFieldContent>,
-        originalEntriesById: Map<String, UICustomFieldContent.Totp>,
-        sectionIndex: Option<Int>,
-        totpManager: TotpManager,
-        encryptionContext: EncryptionContext
-    ): Set<ValidationError> {
-        val errors = mutableSetOf<ValidationError>()
-        entries.forEachIndexed { index, entry ->
-            if (entry !is UICustomFieldContent.Totp) return@forEachIndexed
-            val decrypted = encryptionContext.decrypt(entry.value.encrypted)
-            if (decrypted.isBlank()) {
-                errors.add(CustomFieldValidationError.EmptyField(sectionIndex, index))
-                return@forEachIndexed
-            }
-            val original = originalEntriesById[entry.id]
-                ?.let { encryptionContext.decrypt(it.value.encrypted) }
-                .orEmpty()
-            val result = totpManager.sanitiseToSave(original, decrypted)
-
-            result.fold(
-                onSuccess = { sanitisedUri ->
-                    totpManager.parse(sanitisedUri).getOrElse {
-                        errors.add(CustomFieldValidationError.InvalidTotp(sectionIndex, index))
-                    }
-
-                    val totpCodeResult =
-                        runCatching { totpManager.observeCode(sanitisedUri).firstOrNull() }
-                    if (totpCodeResult.isFailure) {
-                        errors.add(CustomFieldValidationError.InvalidTotp(sectionIndex, index))
-                    }
-                },
-                onFailure = {
-                    errors.add(CustomFieldValidationError.InvalidTotp(sectionIndex, index))
-                }
-            )
-        }
-
-        return errors
-    }
 
     fun toItemContents(): ItemContents = when (itemStaticFields) {
         ItemStaticFields.Custom -> ItemContents.Custom(

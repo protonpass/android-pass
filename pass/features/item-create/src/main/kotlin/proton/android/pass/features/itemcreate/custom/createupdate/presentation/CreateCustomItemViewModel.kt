@@ -62,6 +62,7 @@ import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
+import proton.android.pass.features.itemcreate.common.validator.CustomItemFormStateValidator
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.TemplateTypeNavArgId
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateSpecificIntent.OnVaultSelected
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateSpecificIntent.PrefillTemplate
@@ -98,6 +99,7 @@ class CreateCustomItemViewModel @Inject constructor(
     customFieldDraftRepository: CustomFieldDraftRepository,
     clipboardManager: ClipboardManager,
     totpManager: TotpManager,
+    customItemFormStateValidator: CustomItemFormStateValidator,
     appDispatchers: AppDispatchers,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCustomItemViewModel(
@@ -112,6 +114,7 @@ class CreateCustomItemViewModel @Inject constructor(
     customFieldDraftRepository = customFieldDraftRepository,
     clipboardManager = clipboardManager,
     totpManager = totpManager,
+    customItemFormStateValidator = customItemFormStateValidator,
     appDispatchers = appDispatchers,
     savedStateHandleProvider = savedStateHandleProvider
 ) {

@@ -310,7 +310,7 @@ internal class CreateLoginNavItemViewModelTest {
 
             assertThat(item.baseLoginUiState.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
             assertThat(item.baseLoginUiState.validationErrors).isEqualTo(
-                setOf(LoginItemValidationError.InvalidTotp)
+                setOf(LoginItemValidationError.InvalidPrimaryTotp)
             )
 
             val message = snackbarDispatcher.snackbarMessage.first().value()!!

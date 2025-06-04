@@ -26,8 +26,10 @@ import dagger.hilt.components.SingletonComponent
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.common.UIHiddenState
+import proton.android.pass.features.itemcreate.creditcard.CreditCardItemFormState
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemFormState
 import proton.android.pass.features.itemcreate.login.LoginItemFormState
+import proton.android.pass.features.itemcreate.note.NoteItemFormState
 import proton.android.pass.totp.api.TotpManager
 
 @Module
@@ -43,6 +45,16 @@ abstract class FormProcessorModuleBinds {
     abstract fun bindLoginItemFormProcessor(
         impl: LoginItemFormProcessor
     ): FormProcessor<LoginItemFormProcessor.Input, LoginItemFormState>
+
+    @Binds
+    abstract fun bindCreditCardItemFormProcessor(
+        impl: CreditCardItemFormProcessor
+    ): FormProcessor<CreditCardItemFormProcessor.Input, CreditCardItemFormState>
+
+    @Binds
+    abstract fun bindNoteItemFormProcessor(
+        impl: NoteItemFormProcessor
+    ): FormProcessor<NoteItemFormProcessor.Input, NoteItemFormState>
 
     @Binds
     abstract fun bindPrimaryTotpFormProcessor(

@@ -68,8 +68,8 @@ class CustomItemFormProcessor @Inject constructor(
             decrypt = decrypt,
             encrypt = encrypt
         )
-        if (customFieldResult is FormProcessingResult.Error) {
-            errors.addAll(customFieldResult.errors)
+        if (sectionResult is FormProcessingResult.Error) {
+            errors.addAll(sectionResult.errors)
         }
         return if (
             errors.isEmpty() &&

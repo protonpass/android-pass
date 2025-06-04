@@ -56,7 +56,9 @@ import proton.android.pass.domain.toItemContents
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.ItemUpdate
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
+import proton.android.pass.features.itemcreate.common.formprocessor.NoteItemFormProcessor
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.AttachmentsInitError
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.InitError
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.ItemLinkAttachmentsError
@@ -90,6 +92,7 @@ class UpdateNoteViewModel @Inject constructor(
     canPerformPaidAction: CanPerformPaidAction,
     customFieldHandler: CustomFieldHandler,
     customFieldDraftRepository: CustomFieldDraftRepository,
+    noteItemFormProcessor: NoteItemFormProcessor,
     userPreferencesRepository: UserPreferencesRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -101,6 +104,8 @@ class UpdateNoteViewModel @Inject constructor(
     attachmentsHandler = attachmentsHandler,
     customFieldHandler = customFieldHandler,
     customFieldDraftRepository = customFieldDraftRepository,
+    noteItemFormProcessor = noteItemFormProcessor,
+    encryptionContextProvider = encryptionContextProvider,
     featureFlagsRepository = featureFlagsRepository,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
@@ -115,6 +120,7 @@ class UpdateNoteViewModel @Inject constructor(
         ItemId(savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key))
 
     private var itemOption: Option<Item> = None
+    private var originalCustomFields: List<UICustomFieldContent> = emptyList()
 
     init {
         viewModelScope.launch(coroutineExceptionHandler) {
@@ -152,7 +158,6 @@ class UpdateNoteViewModel @Inject constructor(
                     PassLogger.w(TAG, "Get attachments error")
                     snackbarDispatcher(AttachmentsInitError)
                 }
-                itemOption = item.some()
                 onNoteItemReceived(item)
             }
 
@@ -163,7 +168,9 @@ class UpdateNoteViewModel @Inject constructor(
         itemOption = item.some()
         if (noteItemFormState == NoteItemFormState.Empty) {
             noteItemFormMutableState = encryptionContextProvider.withEncryptionContext {
-                NoteItemFormState(item.toItemContents { decrypt(it) })
+                val formState = NoteItemFormState(item.toItemContents { decrypt(it) })
+                originalCustomFields = formState.customFields
+                formState
             }
         }
     }
@@ -172,6 +179,8 @@ class UpdateNoteViewModel @Inject constructor(
     fun updateItem(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
         val initialItem = itemOption
         if (initialItem == None) return@launch
+        if (!isFormStateValid(originalCustomFields)) return@launch
+
         isLoadingState.update { IsLoadingState.Loading }
         val userId = accountManager.getPrimaryUserId()
             .first { userId -> userId != null }

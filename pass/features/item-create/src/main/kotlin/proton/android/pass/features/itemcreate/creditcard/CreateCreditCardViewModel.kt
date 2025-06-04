@@ -42,6 +42,7 @@ import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
+import proton.android.pass.features.itemcreate.common.formprocessor.CreditCardItemFormProcessor
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.ItemCreated
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.ItemCreationError
@@ -74,6 +75,7 @@ class CreateCreditCardViewModel @Inject constructor(
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     customFieldHandler: CustomFieldHandler,
     customFieldDraftRepository: CustomFieldDraftRepository,
+    creditCardItemFormProcessor: CreditCardItemFormProcessor,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCreditCardViewModel(
     userPreferencesRepository = userPreferencesRepository,
@@ -83,6 +85,7 @@ class CreateCreditCardViewModel @Inject constructor(
     featureFlagsRepository = featureFlagsRepository,
     customFieldHandler = customFieldHandler,
     customFieldDraftRepository = customFieldDraftRepository,
+    creditCardItemFormProcessor = creditCardItemFormProcessor,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
     private val navShareId: Option<ShareId> =
@@ -134,8 +137,7 @@ class CreateCreditCardViewModel @Inject constructor(
     }
 
     fun createItem() = viewModelScope.launch {
-        val shouldCreate = validateItem()
-        if (!shouldCreate) return@launch
+        if (!isFormStateValid()) return@launch
 
         isLoadingState.update { IsLoadingState.Loading }
         val vault = when (val state = shareUiState.value) {

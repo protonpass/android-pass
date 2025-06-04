@@ -30,6 +30,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.ShareUiState
+import proton.android.pass.features.itemcreate.common.ValidationError
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ExtraField
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.FocusedField
 
@@ -96,7 +97,7 @@ sealed interface IdentityUiState {
         else -> IsLoadingState.NotLoading
     }
 
-    fun getValidationErrors(): PersistentSet<IdentityValidationErrors> = when (this) {
+    fun getValidationErrors(): PersistentSet<ValidationError> = when (this) {
         is CreateIdentity -> sharedState.validationErrors
         is UpdateIdentity -> sharedState.validationErrors
         else -> persistentSetOf()

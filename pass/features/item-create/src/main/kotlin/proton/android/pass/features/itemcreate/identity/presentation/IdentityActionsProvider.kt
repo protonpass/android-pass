@@ -32,6 +32,7 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
+import proton.android.pass.features.itemcreate.common.ValidationError
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Birthdate
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.County
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.CustomExtraField
@@ -92,7 +93,7 @@ interface IdentityActionsProvider : IdentityFormActions {
 data class IdentitySharedUiState(
     val isLoadingState: IsLoadingState,
     val hasUserEditedContent: Boolean,
-    val validationErrors: PersistentSet<IdentityValidationErrors>,
+    val validationErrors: PersistentSet<ValidationError>,
     val isItemSaved: ItemSavedState,
     val extraFields: PersistentSet<ExtraField>,
     val focusedField: Option<FocusedField>,

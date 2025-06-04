@@ -341,7 +341,7 @@ abstract class BaseLoginViewModel(
                 primaryTotp = UIHiddenState.Revealed(encrypt(newValue), newValue)
             )
         }
-        removeValidationErrors(LoginItemValidationError.InvalidTotp)
+        removeValidationErrors(LoginItemValidationError.InvalidPrimaryTotp)
     }
 
     internal fun onWebsiteChange(value: String, index: Int) {
@@ -463,7 +463,7 @@ abstract class BaseLoginViewModel(
     }
 
     private suspend fun showInvalidTOTP(): Boolean {
-        addValidationError(LoginItemValidationError.InvalidTotp)
+        addValidationError(LoginItemValidationError.InvalidPrimaryTotp)
         snackbarDispatcher(LoginSnackbarMessages.InvalidTotpError)
         return false
     }

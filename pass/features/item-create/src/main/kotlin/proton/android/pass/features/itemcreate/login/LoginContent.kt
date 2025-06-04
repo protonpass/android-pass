@@ -92,7 +92,7 @@ internal fun LoginContent(
             primaryEmail = uiState.primaryEmail,
             isUpdate = isUpdate,
             isEditAllowed = uiState.isLoadingState == IsLoadingState.NotLoading,
-            isTotpError = uiState.validationErrors.contains(LoginItemValidationError.InvalidTotp),
+            isTotpError = uiState.validationErrors.contains(LoginItemValidationError.InvalidPrimaryTotp),
             isTitleError = uiState.validationErrors.contains(CommonFieldValidationError.BlankTitle),
             focusLastWebsite = uiState.focusLastWebsite,
             websitesWithErrors = uiState.validationErrors

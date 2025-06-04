@@ -16,24 +16,11 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.common.validator
+package proton.android.pass.features.itemcreate.common.formprocessor
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import proton.android.pass.features.itemcreate.common.ValidationError
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class ValidatorModule {
-
-    @Binds
-    abstract fun bindUICustomFieldValidator(
-        impl: UICustomFieldContentValidator
-    ): Validator<UICustomFieldContentValidator.Input>
-
-    @Binds
-    abstract fun bindCustomItemFormStateValidator(
-        impl: CustomItemFormStateValidator
-    ): Validator<CustomItemFormStateValidator.Input>
+sealed class FormProcessingResult<T> {
+    data class Success<T>(val sanitized: T) : FormProcessingResult<T>()
+    data class Error<T>(val errors: Set<ValidationError>) : FormProcessingResult<T>()
 }

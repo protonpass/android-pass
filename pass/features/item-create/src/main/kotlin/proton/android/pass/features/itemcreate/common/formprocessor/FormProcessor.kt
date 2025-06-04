@@ -16,10 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.common.validator
+package proton.android.pass.features.itemcreate.common.formprocessor
 
-import proton.android.pass.features.itemcreate.common.ValidationError
+import me.proton.core.crypto.common.keystore.EncryptedString
 
-interface Validator<T> {
-    suspend fun validate(input: T): Set<ValidationError>
+interface FormProcessor<T, R> {
+    suspend fun process(
+        input: T,
+        decrypt: (EncryptedString) -> String,
+        encrypt: (String) -> EncryptedString
+    ): FormProcessingResult<R>
 }

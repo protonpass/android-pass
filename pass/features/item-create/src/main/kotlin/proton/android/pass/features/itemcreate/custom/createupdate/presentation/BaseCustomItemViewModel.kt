@@ -66,7 +66,8 @@ import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.ValidationError
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
-import proton.android.pass.features.itemcreate.common.validator.CustomItemFormStateValidator
+import proton.android.pass.features.itemcreate.common.formprocessor.CustomItemFormProcessor
+import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnCustomFieldChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnTitleChanged
 import proton.android.pass.log.api.PassLogger
@@ -157,7 +158,7 @@ abstract class BaseCustomItemViewModel(
     private val totpManager: TotpManager,
     private val appDispatchers: AppDispatchers,
     private val canPerformPaidAction: CanPerformPaidAction,
-    private val customItemFormStateValidator: CustomItemFormStateValidator,
+    private val customItemFormProcessor: CustomItemFormProcessor,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -450,15 +451,27 @@ abstract class BaseCustomItemViewModel(
         originalCustomFields: List<UICustomFieldContent> = emptyList(),
         originalSections: List<UIExtraSection> = emptyList()
     ): Boolean {
-        val validationErrors = customItemFormStateValidator.validate(
-            CustomItemFormStateValidator.Input(
-                itemFormState = itemFormState,
-                originalCustomFields = originalCustomFields,
-                originalSections = originalSections
+        val result = encryptionContextProvider.withEncryptionContextSuspendable {
+            customItemFormProcessor.process(
+                CustomItemFormProcessor.Input(
+                    formState = itemFormState,
+                    originalCustomFields = originalCustomFields,
+                    originalSections = originalSections
+                ),
+                ::decrypt,
+                ::encrypt
             )
-        )
-        validationErrorsState.update { validationErrors }
-        return validationErrors.isEmpty()
+        }
+        return when (result) {
+            is FormProcessingResult.Error -> {
+                validationErrorsState.update { result.errors }
+                false
+            }
+            is FormProcessingResult.Success -> {
+                itemFormState = result.sanitized
+                true
+            }
+        }
     }
 
     protected fun updateLoadingState(isLoading: IsLoadingState) {

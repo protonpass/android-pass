@@ -62,6 +62,7 @@ import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
+import proton.android.pass.features.itemcreate.common.formprocessor.NoteItemFormProcessor
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.ItemCreationError
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.ItemLinkAttachmentsError
@@ -95,6 +96,7 @@ class CreateNoteViewModel @Inject constructor(
     attachmentsHandler: AttachmentsHandler,
     customFieldHandler: CustomFieldHandler,
     customFieldDraftRepository: CustomFieldDraftRepository,
+    noteItemFormProcessor: NoteItemFormProcessor,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseNoteViewModel(
@@ -105,6 +107,8 @@ class CreateNoteViewModel @Inject constructor(
     attachmentsHandler = attachmentsHandler,
     customFieldHandler = customFieldHandler,
     customFieldDraftRepository = customFieldDraftRepository,
+    noteItemFormProcessor = noteItemFormProcessor,
+    encryptionContextProvider = encryptionContextProvider,
     featureFlagsRepository = featureFlagsRepository,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
@@ -153,54 +157,49 @@ class CreateNoteViewModel @Inject constructor(
     )
 
     fun createNote(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
-        val noteItem = noteItemFormMutableState
-        val noteItemValidationErrors = noteItem.validate()
-        if (noteItemValidationErrors.isNotEmpty()) {
-            noteItemValidationErrorsState.update { noteItemValidationErrors }
-        } else {
-            isLoadingState.update { IsLoadingState.Loading }
-            val userId = accountManager.getPrimaryUserId()
-                .first { userId -> userId != null }
-            if (userId != null) {
-                runCatching { getShare(userId, shareId) }
-                    .onFailure { PassLogger.e(TAG, it, "Error getting share") }
-                    .mapCatching { share ->
-                        val itemContents = noteItem.toItemContents()
-                        itemRepository.createItem(userId, share, itemContents)
-                    }
-                    .onFailure {
-                        PassLogger.w(TAG, "Create item error")
+        if (!isFormStateValid()) return@launch
+        isLoadingState.update { IsLoadingState.Loading }
+        val userId = accountManager.getPrimaryUserId()
+            .first { userId -> userId != null }
+        if (userId != null) {
+            runCatching { getShare(userId, shareId) }
+                .onFailure { PassLogger.e(TAG, it, "Error getting share") }
+                .mapCatching { share ->
+                    val itemContents = noteItemFormState.toItemContents()
+                    itemRepository.createItem(userId, share, itemContents)
+                }
+                .onFailure {
+                    PassLogger.w(TAG, "Create item error")
+                    PassLogger.w(TAG, it)
+                    snackbarDispatcher(ItemCreationError)
+                }
+                .onSuccess { item ->
+                    snackbarDispatcher(NoteCreated)
+                    runCatching {
+                        if (isFileAttachmentsEnabled()) {
+                            linkAttachmentsToItem(item.shareId, item.id, item.revision)
+                        }
+                    }.onFailure {
+                        PassLogger.w(TAG, "Link attachment error")
                         PassLogger.w(TAG, it)
-                        snackbarDispatcher(ItemCreationError)
+                        snackbarDispatcher(ItemLinkAttachmentsError)
                     }
-                    .onSuccess { item ->
-                        snackbarDispatcher(NoteCreated)
-                        runCatching {
-                            if (isFileAttachmentsEnabled()) {
-                                linkAttachmentsToItem(item.shareId, item.id, item.revision)
-                            }
-                        }.onFailure {
-                            PassLogger.w(TAG, "Link attachment error")
-                            PassLogger.w(TAG, it)
-                            snackbarDispatcher(ItemLinkAttachmentsError)
+                    inAppReviewTriggerMetrics.incrementItemCreatedCount()
+                    isItemSavedState.update {
+                        encryptionContextProvider.withEncryptionContext {
+                            ItemSavedState.Success(
+                                item.id,
+                                item.toUiModel(this@withEncryptionContext)
+                            )
                         }
-                        inAppReviewTriggerMetrics.incrementItemCreatedCount()
-                        isItemSavedState.update {
-                            encryptionContextProvider.withEncryptionContext {
-                                ItemSavedState.Success(
-                                    item.id,
-                                    item.toUiModel(this@withEncryptionContext)
-                                )
-                            }
-                        }
-                        telemetryManager.sendEvent(ItemCreate(EventItemType.Note))
                     }
-            } else {
-                PassLogger.i(TAG, "Empty User Id")
-                snackbarDispatcher(ItemCreationError)
-            }
-            isLoadingState.update { IsLoadingState.NotLoading }
+                    telemetryManager.sendEvent(ItemCreate(EventItemType.Note))
+                }
+        } else {
+            PassLogger.i(TAG, "Empty User Id")
+            snackbarDispatcher(ItemCreationError)
         }
+        isLoadingState.update { IsLoadingState.NotLoading }
     }
 
     fun changeVault(shareId: ShareId) = viewModelScope.launch {

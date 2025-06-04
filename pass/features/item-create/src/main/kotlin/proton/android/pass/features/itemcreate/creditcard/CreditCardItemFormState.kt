@@ -25,12 +25,9 @@ import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
-import proton.android.pass.features.itemcreate.common.CreditCardItemValidationError
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.UIHiddenState.Companion.from
-import proton.android.pass.features.itemcreate.common.ValidationError
 
 @Parcelize
 @Immutable
@@ -58,14 +55,6 @@ data class CreditCardItemFormState(
         customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
     )
 
-    fun validate(): Set<ValidationError> {
-        val mutableSet = mutableSetOf<ValidationError>()
-        if (title.isBlank()) mutableSet.add(CommonFieldValidationError.BlankTitle)
-        if (expirationDate.isNotBlank() && !expirationDateRegex.matches(expirationDate))
-            mutableSet.add(CreditCardItemValidationError.InvalidExpirationDate)
-        return mutableSet.toSet()
-    }
-
     fun toItemContents(): ItemContents = ItemContents.CreditCard(
         title = title,
         note = note,
@@ -92,7 +81,6 @@ data class CreditCardItemFormState(
     fun sanitise(): CreditCardItemFormState = copy(expirationDate = ExpirationDateProtoMapper.toProto(expirationDate))
 
     companion object {
-        private val expirationDateRegex = Regex("^(0[1-9]|1[0-2])\\d{2}\$")
 
         fun default(encryptionContext: EncryptionContext) = CreditCardItemFormState(
             title = "",

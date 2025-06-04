@@ -38,10 +38,13 @@ import proton.android.pass.features.itemcreate.common.CreditCardItemValidationEr
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
 import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
+import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.ValidationError
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
+import proton.android.pass.features.itemcreate.common.formprocessor.CreditCardItemFormProcessor
+import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
@@ -55,6 +58,7 @@ abstract class BaseCreditCardViewModel(
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val customFieldHandler: CustomFieldHandler,
+    private val creditCardItemFormProcessor: CreditCardItemFormProcessor,
     customFieldDraftRepository: CustomFieldDraftRepository,
     canPerformPaidAction: CanPerformPaidAction,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -211,13 +215,27 @@ abstract class BaseCreditCardViewModel(
         creditCardItemFormMutableState = creditCardItemFormMutableState.copy(note = value)
     }
 
-    protected fun validateItem(): Boolean {
-        val validationErrors = creditCardItemFormMutableState.validate()
-        if (validationErrors.isNotEmpty()) {
-            validationErrorsState.update { validationErrors }
-            return false
+    protected suspend fun isFormStateValid(originalCustomFields: List<UICustomFieldContent> = emptyList()): Boolean {
+        val result = encryptionContextProvider.withEncryptionContextSuspendable {
+            creditCardItemFormProcessor.process(
+                CreditCardItemFormProcessor.Input(
+                    formState = creditCardItemFormState,
+                    originalCustomFields = originalCustomFields
+                ),
+                ::decrypt,
+                ::encrypt
+            )
         }
-        return true
+        return when (result) {
+            is FormProcessingResult.Error -> {
+                validationErrorsState.update { result.errors }
+                false
+            }
+            is FormProcessingResult.Success -> {
+                creditCardItemFormMutableState = result.sanitized
+                true
+            }
+        }
     }
 
     protected fun onUserEditedContent() {

@@ -71,8 +71,6 @@ import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.domain.CustomFieldType
-import proton.android.pass.domain.Item
-import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.domain.tooltips.Tooltip
@@ -90,6 +88,8 @@ import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.ValidationError
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
+import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
+import proton.android.pass.features.itemcreate.common.formprocessor.LoginItemFormProcessor
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
@@ -116,6 +116,7 @@ abstract class BaseLoginViewModel(
     private val customFieldHandler: CustomFieldHandler,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val customFieldDraftRepository: CustomFieldDraftRepository,
+    private val loginItemFormProcessor: LoginItemFormProcessor,
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
     observeTooltipEnabled: ObserveTooltipEnabled,
@@ -405,53 +406,31 @@ abstract class BaseLoginViewModel(
         attachmentsHandler.onClearAttachments()
     }
 
-    @Suppress("ReturnCount")
-    protected suspend fun validateItem(
-        oldItem: Option<Item>,
-        originalTotpCustomFields: List<UICustomFieldContent.Totp>
+    protected suspend fun isFormStateValid(
+        originalPrimaryTotp: Option<UIHiddenState> = None,
+        originalTotpCustomFields: List<UICustomFieldContent.Totp> = emptyList()
     ): Boolean {
-        val websites = sanitizeWebsites(loginItemFormState.urls)
-        val itemType = oldItem.map { it.itemType as ItemType.Login }
-        val (originalTotpUri, editedTotpUri) = encryptionContextProvider.withEncryptionContext {
-            itemType.map { decrypt(it.primaryTotp) }.value().orEmpty() to
-                decrypt(loginItemFormState.primaryTotp.encrypted)
+        val result = encryptionContextProvider.withEncryptionContextSuspendable {
+            loginItemFormProcessor.process(
+                LoginItemFormProcessor.Input(
+                    originalPrimaryTotp = originalPrimaryTotp,
+                    originalCustomFields = originalTotpCustomFields,
+                    formState = loginItemFormState
+                ),
+                ::decrypt,
+                ::encrypt
+            )
         }
-
-        val sanitisedUri = totpManager.sanitiseToSave(originalTotpUri, editedTotpUri)
-            .getOrElse { return showInvalidTOTP() }
-
-        if (editedTotpUri.isNotBlank()) {
-            val topCodeResult = runCatching { totpManager.observeCode(sanitisedUri).firstOrNull() }
-
-            if (topCodeResult.isFailure) {
-                return showInvalidTOTP()
+        return when (result) {
+            is FormProcessingResult.Error -> {
+                loginItemValidationErrorsState.update { result.errors }
+                false
+            }
+            is FormProcessingResult.Success -> {
+                loginItemFormMutableState = result.sanitized
+                true
             }
         }
-
-        val totpHiddenState = encryptionContextProvider.withEncryptionContext {
-            UIHiddenState.Revealed(encrypt(sanitisedUri), sanitisedUri)
-        }
-
-        val (customFields, hasCustomFieldErrors) = validateCustomFields(
-            loginItemFormState.customFields,
-            originalTotpCustomFields
-        )
-        if (hasCustomFieldErrors) {
-            return false
-        }
-
-        loginItemFormMutableState = loginItemFormState.copy(
-            urls = websites,
-            primaryTotp = totpHiddenState,
-            customFields = customFields
-        )
-
-        val loginItemValidationErrors = loginItemFormState.validate()
-        if (loginItemValidationErrors.isNotEmpty()) {
-            loginItemValidationErrorsState.update { loginItemValidationErrors }
-            return false
-        }
-        return true
     }
 
     private fun removeValidationErrors(vararg errors: ValidationError) {
@@ -460,112 +439,6 @@ abstract class BaseLoginViewModel(
                 errors.forEach { error -> remove(error) }
             }
         }
-    }
-
-    private suspend fun showInvalidTOTP(): Boolean {
-        addValidationError(LoginItemValidationError.InvalidPrimaryTotp)
-        snackbarDispatcher(LoginSnackbarMessages.InvalidTotpError)
-        return false
-    }
-
-    private suspend fun validateCustomFields(
-        editedCustomFields: List<UICustomFieldContent>,
-        originalTotpCustomFields: List<UICustomFieldContent.Totp>
-    ): Pair<List<UICustomFieldContent>, Boolean> {
-        var hasCustomFieldErrors = false
-        val fields = editedCustomFields.mapIndexed { idx, field ->
-            when (field) {
-                is UICustomFieldContent.Hidden -> field
-                is UICustomFieldContent.Text -> field
-                is UICustomFieldContent.Totp -> {
-                    val (validated, hasErrors) = validateTotpField(
-                        field,
-                        idx,
-                        originalTotpCustomFields
-                    )
-                    if (hasErrors) {
-                        PassLogger.i(TAG, "TOTP custom field on index $idx had errors")
-                        hasCustomFieldErrors = true
-                    }
-                    validated
-                }
-                is UICustomFieldContent.Date ->
-                    throw IllegalStateException("Date field not supported")
-            }
-        }
-
-        return fields to hasCustomFieldErrors
-    }
-
-    @Suppress("ReturnCount", "LongMethod")
-    private suspend fun validateTotpField(
-        field: UICustomFieldContent.Totp,
-        index: Int,
-        originalCustomFields: List<UICustomFieldContent.Totp>
-    ): Pair<UICustomFieldContent.Totp, Boolean> {
-        val content = when (val hiddenState = field.value) {
-            is UIHiddenState.Revealed -> hiddenState.clearText
-            is UIHiddenState.Concealed -> {
-                encryptionContextProvider.withEncryptionContext {
-                    decrypt(hiddenState.encrypted)
-                }
-            }
-
-            is UIHiddenState.Empty -> ""
-        }
-
-        if (content.isBlank()) {
-            addValidationError(CustomFieldValidationError.EmptyField(None, index))
-            return field to true
-        }
-
-        val originalUri = encryptionContextProvider.withEncryptionContext {
-            val value = originalCustomFields.find { it.id == field.id }?.value
-            if (value != null) {
-                decrypt(value.encrypted)
-            } else {
-                ""
-            }
-        }
-        val sanitisedUri = totpManager.sanitiseToSave(originalUri, content)
-            .getOrElse { _ ->
-                addValidationError(CustomFieldValidationError.InvalidTotp(None, index))
-                return field to true
-            }
-        if (sanitisedUri.isNotBlank()) {
-            totpManager.parse(sanitisedUri).getOrElse {
-                addValidationError(CustomFieldValidationError.InvalidTotp(None, index))
-                return field to true
-            }
-
-            val totpCodeResult = runCatching { totpManager.observeCode(sanitisedUri).firstOrNull() }
-            if (totpCodeResult.isFailure) {
-                addValidationError(CustomFieldValidationError.InvalidTotp(None, index))
-                return field to true
-            }
-        }
-        val encryptedSanitized = encryptionContextProvider.withEncryptionContext {
-            encrypt(sanitisedUri)
-        }
-
-        return UICustomFieldContent.Totp(
-            label = field.label,
-            value = when (field.value) {
-                is UIHiddenState.Revealed -> {
-                    UIHiddenState.Revealed(
-                        encrypted = encryptedSanitized,
-                        clearText = sanitisedUri
-                    )
-                }
-
-                is UIHiddenState.Concealed -> {
-                    UIHiddenState.Concealed(encryptedSanitized)
-                }
-
-                is UIHiddenState.Empty -> UIHiddenState.Empty(encryptedSanitized)
-            },
-            id = field.id
-        ) to false
     }
 
     private fun sanitizeWebsites(websites: List<String>): List<String> = websites.map { url ->
@@ -810,12 +683,6 @@ abstract class BaseLoginViewModel(
                     isExpandedByPreference = displayUsernameFieldPreference.value
                 )
             }
-    }
-
-    private fun addValidationError(error: ValidationError) {
-        loginItemValidationErrorsState.update { errors ->
-            errors.toMutableSet().apply { add(error) }
-        }
     }
 
     protected fun updatePrimaryTotpIfNeeded(

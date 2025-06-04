@@ -28,13 +28,9 @@ import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.toEncryptedByteArray
-import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
-import proton.android.pass.features.itemcreate.common.LoginItemValidationError
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
-import proton.android.pass.features.itemcreate.common.ValidationError
 
 @Parcelize
 @Immutable
@@ -62,21 +58,6 @@ data class LoginItemFormState(
     @IgnoredOnParcel
     internal val isExpanded: Boolean =
         isExpandedByContent || isExpandedByUser || isExpandedByPreference
-
-    internal fun validate(): Set<ValidationError> = mutableSetOf<ValidationError>().apply {
-        if (title.isBlank()) {
-            add(CommonFieldValidationError.BlankTitle)
-        }
-
-        urls.forEachIndexed { idx, url ->
-            if (url.isNotBlank()) {
-                val validation = UrlSanitizer.sanitize(url)
-                if (validation.isFailure) {
-                    add(LoginItemValidationError.InvalidUrl(idx))
-                }
-            }
-        }
-    }
 
     internal fun toItemContents(emailValidator: EmailValidator): ItemContents.Login {
         val itemEmail = when {

@@ -61,8 +61,8 @@ import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
-import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
 import proton.android.pass.features.itemcreate.common.formprocessor.CustomItemFormProcessor
+import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
 import proton.android.pass.features.itemcreate.custom.createupdate.navigation.TemplateTypeNavArgId
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateSpecificIntent.OnVaultSelected
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.CreateSpecificIntent.PrefillTemplate
@@ -221,7 +221,6 @@ class CreateCustomItemViewModel @Inject constructor(
     private fun onSubmitCreate(shareId: ShareId) {
         viewModelScope.launch {
             if (!isFormStateValid()) return@launch
-            cleanupTotpDataToSave()
             updateLoadingState(IsLoadingState.Loading)
             runCatching {
                 createItem(

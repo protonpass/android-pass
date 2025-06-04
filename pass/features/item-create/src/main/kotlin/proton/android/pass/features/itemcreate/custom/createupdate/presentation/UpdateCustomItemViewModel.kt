@@ -153,7 +153,6 @@ class UpdateCustomItemViewModel @Inject constructor(
     private fun onSubmitUpdate() {
         viewModelScope.launch {
             if (!isFormStateValid(originalCustomFields, originalSections)) return@launch
-            cleanupTotpDataToSave(originalCustomFields, originalSections)
             updateLoadingState(IsLoadingState.Loading)
             runCatching {
                 val userId = accountManager.getPrimaryUserId().first()

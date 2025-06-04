@@ -21,29 +21,26 @@ package proton.android.pass.features.itemcreate.common.formprocessor
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
-import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.common.ValidationError
-import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemFormState
+import proton.android.pass.features.itemcreate.note.NoteItemFormState
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class CustomItemFormProcessor @Inject constructor(
-    private val customFieldFormProcessor: CustomFieldFormProcessorType,
-    private val sectionFormProcessor: SectionFormProcessorType
-) : FormProcessor<CustomItemFormProcessor.Input, ItemFormState> {
+class NoteItemFormProcessor @Inject constructor(
+    private val customFieldFormProcessor: CustomFieldFormProcessorType
+) : FormProcessor<NoteItemFormProcessor.Input, NoteItemFormState> {
 
     data class Input(
         val originalCustomFields: List<UICustomFieldContent>,
-        val originalSections: List<UIExtraSection>,
-        val formState: ItemFormState
+        val formState: NoteItemFormState
     )
 
     override suspend fun process(
         input: Input,
         decrypt: (EncryptedString) -> String,
         encrypt: (String) -> EncryptedString
-    ): FormProcessingResult<ItemFormState> {
+    ): FormProcessingResult<NoteItemFormState> {
         val errors = mutableSetOf<ValidationError>()
 
         if (input.formState.title.isBlank()) {
@@ -51,7 +48,7 @@ class CustomItemFormProcessor @Inject constructor(
         }
         val customFieldResult = customFieldFormProcessor.process(
             input = UICustomFieldContentFormProcessor.Input(
-                customFields = input.formState.customFieldList,
+                customFields = input.formState.customFields,
                 originalCustomFields = input.originalCustomFields
             ),
             decrypt = decrypt,
@@ -60,26 +57,13 @@ class CustomItemFormProcessor @Inject constructor(
         if (customFieldResult is FormProcessingResult.Error) {
             errors.addAll(customFieldResult.errors)
         }
-        val sectionResult = sectionFormProcessor.process(
-            input = UISectionContentFormProcessor.Input(
-                sections = input.formState.sectionList,
-                originalSections = input.originalSections
-            ),
-            decrypt = decrypt,
-            encrypt = encrypt
-        )
-        if (sectionResult is FormProcessingResult.Error) {
-            errors.addAll(sectionResult.errors)
-        }
         return if (
             errors.isEmpty() &&
-            customFieldResult is FormProcessingResult.Success &&
-            sectionResult is FormProcessingResult.Success
+            customFieldResult is FormProcessingResult.Success
         ) {
             FormProcessingResult.Success(
                 input.formState.copy(
-                    customFieldList = customFieldResult.sanitized,
-                    sectionList = sectionResult.sanitized
+                    customFields = customFieldResult.sanitized
                 )
             )
         } else {

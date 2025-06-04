@@ -85,6 +85,7 @@ import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
+import proton.android.pass.features.itemcreate.common.formprocessor.LoginItemFormProcessor
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.AttachmentsInitError
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.InitError
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.ItemLinkAttachmentsError
@@ -128,6 +129,7 @@ class UpdateLoginViewModel @Inject constructor(
     customFieldHandler: CustomFieldHandler,
     userPreferencesRepository: UserPreferencesRepository,
     customFieldDraftRepository: CustomFieldDraftRepository,
+    loginItemFormProcessor: LoginItemFormProcessor,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseLoginViewModel(
     accountManager = accountManager,
@@ -147,6 +149,7 @@ class UpdateLoginViewModel @Inject constructor(
     userPreferencesRepository = userPreferencesRepository,
     featureFlagsRepository = featureFlagsRepository,
     customFieldDraftRepository = customFieldDraftRepository,
+    loginItemFormProcessor = loginItemFormProcessor,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
     private val navShareId: ShareId = savedStateHandleProvider.get()
@@ -219,9 +222,9 @@ class UpdateLoginViewModel @Inject constructor(
 
     internal fun updateItem(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
         val currentItem = itemOption.value() ?: return@launch
-        val shouldUpdate = validateItem(currentItem.some(), originalTotpCustomFields)
-        if (!shouldUpdate) return@launch
-
+        val originalPrimaryTotp = UIHiddenState.Concealed((currentItem.itemType as ItemType.Login).primaryTotp)
+            .some()
+        if (!isFormStateValid(originalPrimaryTotp, originalTotpCustomFields)) return@launch
         isLoadingState.update { IsLoadingState.Loading }
         val loginItem = loginItemFormState.toItemContents(emailValidator = emailValidator)
         val userId = accountManager.getPrimaryUserId()

@@ -36,7 +36,9 @@ import proton.android.pass.domain.toItemContents
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.ItemUpdate
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
+import proton.android.pass.features.itemcreate.common.formprocessor.CreditCardItemFormProcessor
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.AttachmentsInitError
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.InitError
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.ItemLinkAttachmentsError
@@ -70,6 +72,7 @@ class UpdateCreditCardViewModel @Inject constructor(
     canPerformPaidAction: CanPerformPaidAction,
     customFieldHandler: CustomFieldHandler,
     customFieldDraftRepository: CustomFieldDraftRepository,
+    creditCardItemFormProcessor: CreditCardItemFormProcessor,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCreditCardViewModel(
     userPreferencesRepository = userPreferencesRepository,
@@ -79,6 +82,7 @@ class UpdateCreditCardViewModel @Inject constructor(
     featureFlagsRepository = featureFlagsRepository,
     customFieldHandler = customFieldHandler,
     customFieldDraftRepository = customFieldDraftRepository,
+    creditCardItemFormProcessor = creditCardItemFormProcessor,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
     private val navShareId: ShareId =
@@ -87,6 +91,7 @@ class UpdateCreditCardViewModel @Inject constructor(
         savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key)
     )
     private var itemOption: Option<Item> = None
+    private var originalCustomFields: List<UICustomFieldContent> = emptyList()
 
     init {
         viewModelScope.launch {
@@ -124,9 +129,9 @@ class UpdateCreditCardViewModel @Inject constructor(
         initialValue = UpdateCreditCardUiState.NotInitialised
     )
 
-    private fun onCreditCardItemReceived(item: Item) {
+    private suspend fun onCreditCardItemReceived(item: Item) {
         itemOption = item.some()
-        encryptionContextProvider.withEncryptionContext {
+        encryptionContextProvider.withEncryptionContextSuspendable {
             val default = CreditCardItemFormState.default(this)
             if (creditCardItemFormState.compare(default, this)) {
                 val itemContents = item.toItemContents<ItemContents.CreditCard> { decrypt(it) }
@@ -134,14 +139,14 @@ class UpdateCreditCardViewModel @Inject constructor(
                     ExpirationDateProtoMapper.fromProto(itemContents.expirationDate)
                 creditCardItemFormMutableState =
                     CreditCardItemFormState(itemContents.copy(expirationDate = expirationDate))
+                originalCustomFields = creditCardItemFormState.customFields
             }
         }
     }
 
     @Suppress("LongMethod")
     fun update() = viewModelScope.launch {
-        val canUpdate = validateItem()
-        if (!canUpdate) {
+        if (!isFormStateValid(originalCustomFields)) {
             PassLogger.i(TAG, "Cannot update credit card")
             return@launch
         }

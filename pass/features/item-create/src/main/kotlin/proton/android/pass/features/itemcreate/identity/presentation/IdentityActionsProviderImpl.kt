@@ -67,6 +67,7 @@ import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent.Companion.createCustomField
 import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.common.UIHiddenState
+import proton.android.pass.features.itemcreate.common.ValidationError
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.ItemLinkAttachmentsError
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.ItemRenameAttachmentsError
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.AddressCustomField
@@ -132,7 +133,7 @@ class IdentityActionsProviderImpl @Inject constructor(
     private val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
     private val hasUserEditedContentState: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    private val validationErrorsState: MutableStateFlow<Set<IdentityValidationErrors>> =
+    private val validationErrorsState: MutableStateFlow<Set<ValidationError>> =
         MutableStateFlow(emptySet())
     private val isItemSavedState: MutableStateFlow<ItemSavedState> =
         MutableStateFlow(ItemSavedState.Unknown)

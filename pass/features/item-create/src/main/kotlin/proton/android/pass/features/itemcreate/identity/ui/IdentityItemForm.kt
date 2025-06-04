@@ -44,6 +44,7 @@ import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
+import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.customfields.AddSectionButton
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnAttachmentEvent
@@ -52,7 +53,6 @@ import proton.android.pass.features.itemcreate.identity.navigation.IdentityConte
 import proton.android.pass.features.itemcreate.identity.presentation.FieldChange
 import proton.android.pass.features.itemcreate.identity.presentation.IdentityItemFormState
 import proton.android.pass.features.itemcreate.identity.presentation.IdentityUiState
-import proton.android.pass.features.itemcreate.identity.presentation.IdentityValidationErrors
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.AddressDetailsField
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ContactDetailsField
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.PersonalDetailsField
@@ -116,7 +116,7 @@ fun IdentityItemForm(
             value = identityItemFormState.title,
             requestFocus = true,
             onTitleRequiredError = identityUiState.getValidationErrors()
-                .contains(IdentityValidationErrors.BlankTitle),
+                .contains(CommonFieldValidationError.BlankTitle),
             enabled = enabled,
             isRounded = true,
             onChange = { onEvent(OnFieldChange(FieldChange.Title(it))) }

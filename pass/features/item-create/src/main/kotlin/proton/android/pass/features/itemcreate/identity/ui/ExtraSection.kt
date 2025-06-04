@@ -35,6 +35,7 @@ import proton.android.pass.features.itemcreate.common.customfields.AddCustomFiel
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEntry
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnAddExtraSectionCustomField
+import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnCustomFieldClick
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnCustomFieldFocused
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnCustomFieldOptions
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnFieldChange
@@ -75,6 +76,15 @@ fun ExtraSection(
                     )
                     onEvent(OnFieldChange(fieldChange))
                 },
+                onClick = {
+                    onEvent(
+                        OnCustomFieldClick(
+                            index = index,
+                            customFieldType = value.toCustomFieldType(),
+                            customExtraField = ExtraSectionCustomField(sectionIndex)
+                        )
+                    )
+                },
                 onFocusChange = { idx, isFocused ->
                     onEvent(OnCustomFieldFocused(idx, isFocused, ExtraSectionCustomField(sectionIndex)))
                 },
@@ -91,7 +101,7 @@ fun ExtraSection(
             RequestFocusLaunchedEffect(
                 focusRequester = focusRequester,
                 requestFocus = field?.extraField is ExtraSectionCustomField &&
-                    (field.extraField as? ExtraSectionCustomField)?.index == sectionIndex &&
+                    field.extraField.index == sectionIndex &&
                     field.index == index,
                 callback = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
             )

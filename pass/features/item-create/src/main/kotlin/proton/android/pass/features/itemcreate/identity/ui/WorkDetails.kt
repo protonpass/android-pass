@@ -141,6 +141,15 @@ internal fun WorkDetails(
                     )
                     onEvent(OnFieldChange(fieldChange))
                 },
+                onClick = {
+                    onEvent(
+                        IdentityContentEvent.OnCustomFieldClick(
+                            index = index,
+                            customFieldType = value.toCustomFieldType(),
+                            customExtraField = WorkCustomField
+                        )
+                    )
+                },
                 onFocusChange = { idx, isFocused ->
                     onEvent(IdentityContentEvent.OnCustomFieldFocused(idx, isFocused, WorkCustomField))
                 },

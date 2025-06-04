@@ -174,6 +174,15 @@ internal fun PersonalDetails(
                     )
                     onEvent(OnFieldChange(fieldChange))
                 },
+                onClick = {
+                    onEvent(
+                        IdentityContentEvent.OnCustomFieldClick(
+                            index = index,
+                            customFieldType = value.toCustomFieldType(),
+                            customExtraField = PersonalCustomField
+                        )
+                    )
+                },
                 onFocusChange = { idx, isFocused ->
                     onEvent(IdentityContentEvent.OnCustomFieldFocused(idx, isFocused, PersonalCustomField))
                 },

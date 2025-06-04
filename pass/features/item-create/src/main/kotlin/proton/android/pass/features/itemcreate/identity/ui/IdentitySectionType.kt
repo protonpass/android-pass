@@ -20,6 +20,12 @@ package proton.android.pass.features.itemcreate.identity.ui
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.AddressCustomField
+import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ContactCustomField
+import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.CustomExtraField
+import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ExtraSectionCustomField
+import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.PersonalCustomField
+import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.WorkCustomField
 
 sealed interface IdentitySectionType {
     @Parcelize
@@ -36,4 +42,14 @@ sealed interface IdentitySectionType {
 
     @Parcelize
     data class ExtraSection(val index: Int) : IdentitySectionType, Parcelable
+
+    companion object {
+        fun from(customExtraField: CustomExtraField): IdentitySectionType = when (customExtraField) {
+            is PersonalCustomField -> PersonalDetails
+            is AddressCustomField -> AddressDetails
+            is ContactCustomField -> ContactDetails
+            is WorkCustomField -> WorkDetails
+            is ExtraSectionCustomField -> ExtraSection(customExtraField.index)
+        }
+    }
 }

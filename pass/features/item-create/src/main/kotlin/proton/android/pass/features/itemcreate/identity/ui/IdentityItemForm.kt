@@ -216,8 +216,9 @@ fun IdentityItemForm(
                 sectionTitle = section.title,
                 isCollapsed = isGroupCollapsed.contains(ExtraSection(sectionIndex)),
                 onClick = {
-                    if (isGroupCollapsed.contains(ExtraSection(sectionIndex))) {
-                        isGroupCollapsed.remove(ExtraSection(sectionIndex))
+                    val section = ExtraSection(sectionIndex)
+                    if (isGroupCollapsed.contains(section)) {
+                        isGroupCollapsed.remove(section)
                     } else {
                         isGroupCollapsed.add(ExtraSection(sectionIndex))
                     }

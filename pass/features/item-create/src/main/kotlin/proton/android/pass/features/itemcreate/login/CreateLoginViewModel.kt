@@ -87,6 +87,7 @@ import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
+import proton.android.pass.features.itemcreate.common.formprocessor.LoginItemFormProcessor
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.AliasRateLimited
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.CannotCreateMoreAliases
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.EmailNotValidated
@@ -117,8 +118,8 @@ class CreateLoginViewModel @Inject constructor(
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val generatePasskey: GeneratePasskey,
     private val workerLauncher: WorkerLauncher,
-    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     passwordStrengthCalculator: PasswordStrengthCalculator,
     accountManager: AccountManager,
     clipboardManager: ClipboardManager,
@@ -134,6 +135,7 @@ class CreateLoginViewModel @Inject constructor(
     customFieldHandler: CustomFieldHandler,
     userPreferencesRepository: UserPreferencesRepository,
     customFieldDraftRepository: CustomFieldDraftRepository,
+    loginItemFormProcessor: LoginItemFormProcessor,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseLoginViewModel(
     accountManager = accountManager,
@@ -153,6 +155,7 @@ class CreateLoginViewModel @Inject constructor(
     customFieldHandler = customFieldHandler,
     featureFlagsRepository = featureFlagsRepository,
     customFieldDraftRepository = customFieldDraftRepository,
+    loginItemFormProcessor = loginItemFormProcessor,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
     private val navShareId: Option<ShareId> = savedStateHandleProvider.get()
@@ -304,9 +307,7 @@ class CreateLoginViewModel @Inject constructor(
     }
 
     internal fun createItem() = viewModelScope.launch(coroutineExceptionHandler) {
-        val shouldCreate = validateItem(None, emptyList())
-        if (!shouldCreate) return@launch
-
+        if (!isFormStateValid()) return@launch
         isLoadingState.update { IsLoadingState.Loading }
         val vault = when (val state = shareUiState.value) {
             is ShareUiState.Error -> null

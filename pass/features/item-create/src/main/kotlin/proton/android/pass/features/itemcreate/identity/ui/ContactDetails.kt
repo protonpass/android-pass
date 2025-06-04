@@ -207,6 +207,15 @@ internal fun ContactDetails(
                     )
                     onEvent(OnFieldChange(fieldChange))
                 },
+                onClick = {
+                    onEvent(
+                        IdentityContentEvent.OnCustomFieldClick(
+                            index = index,
+                            customFieldType = value.toCustomFieldType(),
+                            customExtraField = ContactCustomField
+                        )
+                    )
+                },
                 onFocusChange = { idx, isFocused ->
                     onEvent(
                         IdentityContentEvent.OnCustomFieldFocused(

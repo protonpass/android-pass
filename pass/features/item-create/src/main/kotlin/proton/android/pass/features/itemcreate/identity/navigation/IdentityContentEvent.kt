@@ -19,6 +19,7 @@
 package proton.android.pass.features.itemcreate.identity.navigation
 
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.identity.presentation.FieldChange
@@ -36,6 +37,12 @@ sealed interface IdentityContentEvent {
 
     @JvmInline
     value class OnVaultSelect(val shareId: ShareId) : IdentityContentEvent
+
+    data class OnCustomFieldClick(
+        val index: Int,
+        val customFieldType: CustomFieldType,
+        val customExtraField: CustomExtraField
+    ) : IdentityContentEvent
 
     data class OnCustomFieldOptions(
         val index: Int,

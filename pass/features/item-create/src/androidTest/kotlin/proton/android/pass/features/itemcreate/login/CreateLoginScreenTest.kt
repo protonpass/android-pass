@@ -281,7 +281,6 @@ class CreateLoginScreenTest {
         val totpCustomFieldValue = "TOTPSECRET"
 
         createItem.sendItem(Result.success(TestObserveItems.createLogin()))
-        totpManager.addSanitisedSaveResult(Result.success(""))
         totpManager.addSanitisedSaveResult(Result.success(totpCustomFieldValue))
 
         val textCustomField = CustomFieldContent.Text(
@@ -400,7 +399,7 @@ class CreateLoginScreenTest {
                 totpCustomField
             ),
             packageInfoSet = emptySet(),
-            primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(""), ""),
+            primaryTotp = HiddenState.Empty(TestEncryptionContext.encrypt("")),
             password = HiddenState.Empty(TestEncryptionContext.encrypt("")),
             urls = emptyList(),
             passkeys = emptyList()

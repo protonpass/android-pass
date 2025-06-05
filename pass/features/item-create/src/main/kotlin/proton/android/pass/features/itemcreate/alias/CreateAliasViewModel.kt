@@ -49,7 +49,6 @@ import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
-import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
@@ -83,6 +82,7 @@ import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
+import proton.android.pass.features.itemcreate.common.formprocessor.AliasItemFormProcessorType
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
@@ -104,7 +104,6 @@ open class CreateAliasViewModel @Inject constructor(
     protected val draftRepository: DraftRepository,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val aliasPrefixValidator: AliasPrefixValidator,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
     private val mailboxDraftRepository: MailboxDraftRepository,
     private val suffixDraftRepository: SuffixDraftRepository,
@@ -117,6 +116,7 @@ open class CreateAliasViewModel @Inject constructor(
     customFieldHandler: CustomFieldHandler,
     customFieldDraftRepository: CustomFieldDraftRepository,
     canPerformPaidAction: CanPerformPaidAction,
+    aliasItemFormProcessor: AliasItemFormProcessorType,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseAliasViewModel(
@@ -129,6 +129,8 @@ open class CreateAliasViewModel @Inject constructor(
     customFieldHandler = customFieldHandler,
     customFieldDraftRepository = customFieldDraftRepository,
     canPerformPaidAction = canPerformPaidAction,
+    aliasItemFormProcessor = aliasItemFormProcessor,
+    encryptionContextProvider = encryptionContextProvider,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
 
@@ -315,18 +317,7 @@ open class CreateAliasViewModel @Inject constructor(
             return@launch
         }
 
-        val aliasItemValidationErrors = aliasItem.validate(
-            allowEmptyTitle = isDraft,
-            aliasPrefixValidator = aliasPrefixValidator
-        )
-        if (aliasItemValidationErrors.isNotEmpty()) {
-            PassLogger.w(
-                TAG,
-                "Cannot create alias as there are validation errors: $aliasItemValidationErrors"
-            )
-            aliasItemValidationErrorsState.update { aliasItemValidationErrors }
-            return@launch
-        }
+        if (!isFormStateValid()) return@launch
 
         if (isDraft) {
             PassLogger.d(TAG, "Creating draft alias")

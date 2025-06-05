@@ -26,7 +26,6 @@ import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
-import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.DraftRepository
@@ -45,6 +44,7 @@ import proton.android.pass.features.itemcreate.alias.draftrepositories.MailboxDr
 import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDraftRepository
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
+import proton.android.pass.features.itemcreate.common.formprocessor.AliasItemFormProcessorType
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
@@ -66,7 +66,6 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     draftRepository: DraftRepository,
     inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     encryptionContextProvider: EncryptionContextProvider,
-    aliasPrefixValidator: AliasPrefixValidator,
     observeDefaultVault: ObserveDefaultVault,
     attachmentsHandler: AttachmentsHandler,
     linkAttachmentsToItem: LinkAttachmentsToItem,
@@ -75,6 +74,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     canPerformPaidAction: CanPerformPaidAction,
     mailboxDraftRepository: MailboxDraftRepository,
     suffixDraftRepository: SuffixDraftRepository,
+    aliasItemFormProcessor: AliasItemFormProcessorType,
     userPreferencesRepository: UserPreferencesRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository
 ) : CreateAliasViewModel(
@@ -89,7 +89,6 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     savedStateHandleProvider = savedStateHandleProvider,
     inAppReviewTriggerMetrics = inAppReviewTriggerMetrics,
     encryptionContextProvider = encryptionContextProvider,
-    aliasPrefixValidator = aliasPrefixValidator,
     observeDefaultVault = observeDefaultVault,
     attachmentsHandler = attachmentsHandler,
     linkAttachmentsToItem = linkAttachmentsToItem,
@@ -99,6 +98,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     mailboxDraftRepository = mailboxDraftRepository,
     suffixDraftRepository = suffixDraftRepository,
     userPreferencesRepository = userPreferencesRepository,
+    aliasItemFormProcessor = aliasItemFormProcessor,
     featureFlagsRepository = featureFlagsRepository
 ) {
 

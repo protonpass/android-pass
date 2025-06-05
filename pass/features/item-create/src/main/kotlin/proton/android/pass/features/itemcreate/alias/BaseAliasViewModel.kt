@@ -46,6 +46,7 @@ import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.FileMetadata
@@ -55,9 +56,13 @@ import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDra
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
 import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
+import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.ValidationError
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
+import proton.android.pass.features.itemcreate.common.formprocessor.AliasItemFormProcessor
+import proton.android.pass.features.itemcreate.common.formprocessor.AliasItemFormProcessorType
+import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner
@@ -77,6 +82,8 @@ abstract class BaseAliasViewModel(
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val customFieldHandler: CustomFieldHandler,
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val aliasItemFormProcessor: AliasItemFormProcessorType,
     canPerformPaidAction: CanPerformPaidAction,
     customFieldDraftRepository: CustomFieldDraftRepository,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -350,6 +357,29 @@ abstract class BaseAliasViewModel(
             focusedFieldState.update { field.some() }
         } else {
             focusedFieldState.update { None }
+        }
+    }
+
+    protected suspend fun isFormStateValid(originalCustomFields: List<UICustomFieldContent> = emptyList()): Boolean {
+        val result = encryptionContextProvider.withEncryptionContextSuspendable {
+            aliasItemFormProcessor.process(
+                AliasItemFormProcessor.Input(
+                    formState = aliasItemFormState,
+                    originalCustomFields = originalCustomFields
+                ),
+                ::decrypt,
+                ::encrypt
+            )
+        }
+        return when (result) {
+            is FormProcessingResult.Error -> {
+                aliasItemValidationErrorsState.update { result.errors }
+                false
+            }
+            is FormProcessingResult.Success -> {
+                aliasItemFormMutableState = result.sanitized
+                true
+            }
         }
     }
 }

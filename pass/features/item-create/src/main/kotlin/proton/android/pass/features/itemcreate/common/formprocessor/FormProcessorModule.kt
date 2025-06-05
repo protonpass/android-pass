@@ -23,6 +23,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.features.itemcreate.alias.AliasItemFormState
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.common.UIHiddenState
@@ -61,6 +62,11 @@ abstract class FormProcessorModuleBinds {
     abstract fun bindIdentityItemFormProcessor(
         impl: IdentityItemFormProcessor
     ): FormProcessor<IdentityItemFormProcessor.Input, IdentityItemFormState>
+
+    @Binds
+    abstract fun bindAliasItemFormProcessor(
+        impl: AliasItemFormProcessor
+    ): FormProcessor<AliasItemFormProcessor.Input, AliasItemFormState>
 
     @Binds
     abstract fun bindPrimaryTotpFormProcessor(

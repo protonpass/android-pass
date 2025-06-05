@@ -78,4 +78,7 @@ sealed interface BaseAliasNavigation {
 
     @JvmInline
     value class OpenImagePicker(val index: Option<Int>) : BaseAliasNavigation
+
+    @JvmInline
+    value class ScanTotp(val index: Option<Int>) : BaseAliasNavigation
 }

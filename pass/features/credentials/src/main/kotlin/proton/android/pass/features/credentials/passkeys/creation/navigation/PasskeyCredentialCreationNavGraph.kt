@@ -224,6 +224,12 @@ internal fun NavGraphBuilder.passkeyCredentialCreationNavGraph(
                     ),
                     backDestination = CreateAliasNavItem
                 )
+
+                is BaseAliasNavigation.ScanTotp -> appNavigator.navigate(
+                    destination = CameraTotpNavItem(CustomFieldPrefix.CreateAlias),
+                    route = CameraTotpNavItem(CustomFieldPrefix.CreateAlias)
+                        .createNavRoute(None, destination.index)
+                )
             }
         }
     )

@@ -40,6 +40,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -117,6 +118,7 @@ open class CreateAliasViewModel @Inject constructor(
     customFieldDraftRepository: CustomFieldDraftRepository,
     canPerformPaidAction: CanPerformPaidAction,
     aliasItemFormProcessor: AliasItemFormProcessorType,
+    clipboardManager: ClipboardManager,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseAliasViewModel(
@@ -130,6 +132,7 @@ open class CreateAliasViewModel @Inject constructor(
     customFieldDraftRepository = customFieldDraftRepository,
     canPerformPaidAction = canPerformPaidAction,
     aliasItemFormProcessor = aliasItemFormProcessor,
+    clipboardManager = clipboardManager,
     encryptionContextProvider = encryptionContextProvider,
     savedStateHandleProvider = savedStateHandleProvider
 ) {

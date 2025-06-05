@@ -86,8 +86,8 @@ import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
+import proton.android.pass.features.itemcreate.common.formprocessor.LoginItemFormProcessorType
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
-import proton.android.pass.features.itemcreate.common.formprocessor.LoginItemFormProcessor
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.AliasRateLimited
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.CannotCreateMoreAliases
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.EmailNotValidated
@@ -135,7 +135,7 @@ class CreateLoginViewModel @Inject constructor(
     customFieldHandler: CustomFieldHandler,
     userPreferencesRepository: UserPreferencesRepository,
     customFieldDraftRepository: CustomFieldDraftRepository,
-    loginItemFormProcessor: LoginItemFormProcessor,
+    loginItemFormProcessor: LoginItemFormProcessorType,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseLoginViewModel(
     accountManager = accountManager,

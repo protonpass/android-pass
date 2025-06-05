@@ -90,6 +90,7 @@ import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHa
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
 import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
 import proton.android.pass.features.itemcreate.common.formprocessor.LoginItemFormProcessor
+import proton.android.pass.features.itemcreate.common.formprocessor.LoginItemFormProcessorType
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
@@ -116,7 +117,7 @@ abstract class BaseLoginViewModel(
     private val customFieldHandler: CustomFieldHandler,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val customFieldDraftRepository: CustomFieldDraftRepository,
-    private val loginItemFormProcessor: LoginItemFormProcessor,
+    private val loginItemFormProcessor: LoginItemFormProcessorType,
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
     observeTooltipEnabled: ObserveTooltipEnabled,

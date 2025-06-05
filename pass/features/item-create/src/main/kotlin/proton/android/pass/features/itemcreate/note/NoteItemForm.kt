@@ -54,7 +54,6 @@ import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
 import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
 import proton.android.pass.features.itemcreate.common.StickyTotpOptions
-import proton.android.pass.features.itemcreate.common.customfields.CustomFieldStickyFormOptionsContentType
 import proton.android.pass.features.itemcreate.common.customfields.customFieldsList
 import proton.android.pass.features.itemcreate.note.NoteContentUiEvent.OnAttachmentEvent
 
@@ -74,19 +73,9 @@ internal fun NoteItemForm(
     onEvent: (NoteContentUiEvent) -> Unit
 ) {
     Box(modifier = modifier) {
-        val currentStickyFormOption = remember(focusedField) {
-            when (val field = focusedField.value()) {
-                is NoteField.CustomField -> when (field.field.type) {
-                    CustomFieldType.Totp -> CustomFieldStickyFormOptionsContentType.AddTotp
-                    else -> CustomFieldStickyFormOptionsContentType.NoOption
-                }
-
-                else -> CustomFieldStickyFormOptionsContentType.NoOption
-            }
+        val isCurrentStickyVisible = remember(focusedField) {
+            (focusedField.value() as? NoteField.CustomField)?.field?.type == CustomFieldType.Totp
         }
-
-        val isCurrentStickyVisible =
-            currentStickyFormOption != CustomFieldStickyFormOptionsContentType.NoOption
 
         Column(
             modifier = Modifier
@@ -210,28 +199,22 @@ internal fun NoteItemForm(
                 .imePadding(),
             visible = isCurrentStickyVisible
         ) {
-            when (currentStickyFormOption) {
-                CustomFieldStickyFormOptionsContentType.AddTotp -> {
-                    val context = LocalContext.current
-                    val hasCamera = remember(LocalContext.current) {
-                        context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)
-                    }
-
-                    StickyTotpOptions(
-                        hasCamera = hasCamera,
-                        passItemColors = passItemColors(ItemCategory.Note),
-                        onPasteCode = {
-                            onEvent(NoteContentUiEvent.PasteTotp)
-                        },
-                        onScanCode = {
-                            val focusedField = focusedField.value() as? NoteField.CustomField
-                            onEvent(NoteContentUiEvent.OnScanTotp(focusedField?.field?.index.toOption()))
-                        }
-                    )
-                }
-
-                CustomFieldStickyFormOptionsContentType.NoOption -> {}
+            val context = LocalContext.current
+            val hasCamera = remember(LocalContext.current) {
+                context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)
             }
+
+            StickyTotpOptions(
+                hasCamera = hasCamera,
+                passItemColors = passItemColors(ItemCategory.Note),
+                onPasteCode = {
+                    onEvent(NoteContentUiEvent.PasteTotp)
+                },
+                onScanCode = {
+                    val focusedField = focusedField.value() as? NoteField.CustomField
+                    onEvent(NoteContentUiEvent.OnScanTotp(focusedField?.field?.index.toOption()))
+                }
+            )
         }
     }
 }

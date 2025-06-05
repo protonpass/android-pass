@@ -9,6 +9,7 @@ import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentSet
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -18,6 +19,8 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.CommonRegex.NON_DIGIT_REGEX
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -30,6 +33,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
@@ -46,6 +50,7 @@ import proton.android.pass.features.itemcreate.common.customfields.CustomFieldId
 import proton.android.pass.features.itemcreate.common.formprocessor.CreditCardFormProcessorType
 import proton.android.pass.features.itemcreate.common.formprocessor.CreditCardItemFormProcessor
 import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
@@ -60,6 +65,7 @@ abstract class BaseCreditCardViewModel(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val customFieldHandler: CustomFieldHandler,
     private val creditCardItemFormProcessor: CreditCardFormProcessorType,
+    private val clipboardManager: ClipboardManager,
     customFieldDraftRepository: CustomFieldDraftRepository,
     canPerformPaidAction: CanPerformPaidAction,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -393,6 +399,51 @@ abstract class BaseCreditCardViewModel(
         }
     }
 
+    fun onPasteTotp() {
+        viewModelScope.launch(Dispatchers.IO) {
+            onUserEditedContent()
+            clipboardManager.getClipboardContent()
+                .onSuccess { clipboardContent ->
+                    withContext(Dispatchers.Main) {
+                        when (val field = focusedFieldState.value.value()) {
+                            is CreditCardField.CustomField -> {
+                                val sanitisedContent = clipboardContent
+                                    .replace(" ", "")
+                                    .replace("\n", "")
+                                val updated = customFieldHandler.onCustomFieldValueChanged(
+                                    customFieldIdentifier = field.field,
+                                    customFieldList = creditCardItemFormState.customFields,
+                                    value = sanitisedContent
+                                )
+                                creditCardItemFormMutableState = creditCardItemFormState.copy(
+                                    customFields = updated
+                                )
+                            }
+
+                            else -> {}
+                        }
+                    }
+                }
+                .onFailure { PassLogger.d(TAG, it, "Failed on getting clipboard content") }
+        }
+    }
+
+    fun setTotp(navTotpUri: String, navTotpIndex: Int) {
+        onUserEditedContent()
+        val identifier = CustomFieldIdentifier(
+            index = navTotpIndex,
+            type = CustomFieldType.Totp
+        )
+        val updated = customFieldHandler.onCustomFieldValueChanged(
+            customFieldIdentifier = identifier,
+            customFieldList = creditCardItemFormState.customFields,
+            value = navTotpUri
+        )
+        creditCardItemFormMutableState = creditCardItemFormState.copy(
+            customFields = updated
+        )
+    }
+
     companion object {
         @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
         const val CVV_MAX_LENGTH = 4
@@ -402,5 +453,7 @@ abstract class BaseCreditCardViewModel(
 
         @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
         const val EXPIRATION_DATE_MAX_LENGTH = 4
+
+        private const val TAG = "BaseCreditCardViewModel"
     }
 }

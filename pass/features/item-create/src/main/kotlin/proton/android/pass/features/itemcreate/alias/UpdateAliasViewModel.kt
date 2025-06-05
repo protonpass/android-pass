@@ -37,6 +37,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.util.kotlin.takeIfNotBlank
+import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -111,6 +112,7 @@ class UpdateAliasViewModel @Inject constructor(
     customFieldDraftRepository: CustomFieldDraftRepository,
     canPerformPaidAction: CanPerformPaidAction,
     aliasItemFormProcessor: AliasItemFormProcessorType,
+    clipboardManager: ClipboardManager,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseAliasViewModel(
     mailboxDraftRepository = mailboxDraftRepository,
@@ -123,6 +125,7 @@ class UpdateAliasViewModel @Inject constructor(
     customFieldDraftRepository = customFieldDraftRepository,
     canPerformPaidAction = canPerformPaidAction,
     aliasItemFormProcessor = aliasItemFormProcessor,
+    clipboardManager = clipboardManager,
     encryptionContextProvider = encryptionContextProvider,
     savedStateHandleProvider = savedStateHandleProvider
 ) {

@@ -26,6 +26,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -36,6 +37,8 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.combineN
@@ -48,6 +51,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
@@ -63,6 +67,7 @@ import proton.android.pass.features.itemcreate.common.customfields.CustomFieldId
 import proton.android.pass.features.itemcreate.common.formprocessor.AliasItemFormProcessor
 import proton.android.pass.features.itemcreate.common.formprocessor.AliasItemFormProcessorType
 import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner
@@ -84,6 +89,7 @@ abstract class BaseAliasViewModel(
     private val customFieldHandler: CustomFieldHandler,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val aliasItemFormProcessor: AliasItemFormProcessorType,
+    private val clipboardManager: ClipboardManager,
     canPerformPaidAction: CanPerformPaidAction,
     customFieldDraftRepository: CustomFieldDraftRepository,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -381,5 +387,54 @@ abstract class BaseAliasViewModel(
                 true
             }
         }
+    }
+
+    fun onPasteTotp() {
+        viewModelScope.launch(Dispatchers.IO) {
+            onUserEditedContent()
+            clipboardManager.getClipboardContent()
+                .onSuccess { clipboardContent ->
+                    withContext(Dispatchers.Main) {
+                        when (val field = focusedFieldState.value.value()) {
+                            is AliasField.CustomField -> {
+                                val sanitisedContent = clipboardContent
+                                    .replace(" ", "")
+                                    .replace("\n", "")
+                                val updated = customFieldHandler.onCustomFieldValueChanged(
+                                    customFieldIdentifier = field.field,
+                                    customFieldList = aliasItemFormState.customFields,
+                                    value = sanitisedContent
+                                )
+                                aliasItemFormMutableState = aliasItemFormState.copy(
+                                    customFields = updated
+                                )
+                            }
+
+                            else -> {}
+                        }
+                    }
+                }
+                .onFailure { PassLogger.d(TAG, it, "Failed on getting clipboard content") }
+        }
+    }
+
+    fun setTotp(navTotpUri: String, navTotpIndex: Int) {
+        onUserEditedContent()
+        val identifier = CustomFieldIdentifier(
+            index = navTotpIndex,
+            type = CustomFieldType.Totp
+        )
+        val updated = customFieldHandler.onCustomFieldValueChanged(
+            customFieldIdentifier = identifier,
+            customFieldList = aliasItemFormState.customFields,
+            value = navTotpUri
+        )
+        aliasItemFormMutableState = aliasItemFormState.copy(
+            customFields = updated
+        )
+    }
+
+    companion object {
+        private const val TAG = "BaseAliasViewModel"
     }
 }

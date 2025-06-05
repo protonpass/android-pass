@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.itemcreate.alias
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
@@ -117,9 +118,25 @@ fun NavGraphBuilder.createAliasGraph(
         val selectVault by navBackStack.savedStateHandle
             .getStateFlow<String?>(KEY_VAULT_SELECTED, null)
             .collectAsStateWithLifecycle()
+        val navTotpUri by navBackStack.savedStateHandle
+            .getStateFlow<String?>(TOTP_NAV_PARAMETER_KEY, null)
+            .collectAsStateWithLifecycle()
 
+        LaunchedEffect(navTotpUri) {
+            navBackStack.savedStateHandle.remove<String?>(TOTP_NAV_PARAMETER_KEY)
+        }
+
+        val navTotpIndex by navBackStack.savedStateHandle
+            .getStateFlow<Int?>(INDEX_NAV_PARAMETER_KEY, null)
+            .collectAsStateWithLifecycle()
+
+        LaunchedEffect(navTotpIndex) {
+            navBackStack.savedStateHandle.remove<Int?>(INDEX_NAV_PARAMETER_KEY)
+        }
         CreateAliasScreen(
             selectVault = selectVault.toOption().map { ShareId(it) }.value(),
+            navTotpUri = navTotpUri,
+            navTotpIndex = navTotpIndex,
             canUseAttachments = canUseAttachments,
             onNavigate = onNavigate
         )

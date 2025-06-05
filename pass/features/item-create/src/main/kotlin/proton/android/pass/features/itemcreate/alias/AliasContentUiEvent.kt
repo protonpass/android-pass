@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.itemcreate.alias
 
+import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
@@ -64,4 +65,9 @@ internal sealed interface AliasContentUiEvent {
 
     @JvmInline
     value class OnCustomFieldEvent(val event: CustomFieldEvent) : AliasContentUiEvent
+
+    data object PasteTotp : AliasContentUiEvent
+
+    @JvmInline
+    value class OnScanTotp(val index: Option<Int>) : AliasContentUiEvent
 }

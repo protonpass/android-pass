@@ -23,6 +23,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.crypto.common.keystore.EncryptedString
+import proton.android.pass.features.itemcreate.alias.AliasItemFormState
 import proton.android.pass.features.itemcreate.creditcard.CreditCardItemFormState
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemFormState
 import proton.android.pass.features.itemcreate.identity.presentation.IdentityItemFormState
@@ -59,6 +60,11 @@ abstract class FakesFormProcessorModule {
     abstract fun bindIdentityItemFormProcessor(
         impl: FakeIdentityItemFormProcessor
     ): FormProcessor<IdentityItemFormProcessor.Input, IdentityItemFormState>
+
+    @Binds
+    abstract fun bindAliasItemFormProcessor(
+        impl: FakeAliasItemFormProcessor
+    ): FormProcessor<AliasItemFormProcessor.Input, AliasItemFormState>
 }
 
 @Singleton
@@ -136,4 +142,19 @@ class FakeIdentityItemFormProcessor @Inject constructor() :
         decrypt: (EncryptedString) -> String,
         encrypt: (String) -> EncryptedString
     ): FormProcessingResult<IdentityItemFormState> = result ?: FormProcessingResult.Success(input.formState)
+}
+
+@Singleton
+class FakeAliasItemFormProcessor @Inject constructor() :
+    FormProcessor<AliasItemFormProcessor.Input, AliasItemFormState> {
+    private var result: FormProcessingResult<AliasItemFormState>? = null
+
+    fun setResult(result: FormProcessingResult<AliasItemFormState>) {
+        this.result = result
+    }
+    override suspend fun process(
+        input: AliasItemFormProcessor.Input,
+        decrypt: (EncryptedString) -> String,
+        encrypt: (String) -> EncryptedString
+    ): FormProcessingResult<AliasItemFormState> = result ?: FormProcessingResult.Success(input.formState)
 }

@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -75,6 +76,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     mailboxDraftRepository: MailboxDraftRepository,
     suffixDraftRepository: SuffixDraftRepository,
     aliasItemFormProcessor: AliasItemFormProcessorType,
+    clipboardManager: ClipboardManager,
     userPreferencesRepository: UserPreferencesRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository
 ) : CreateAliasViewModel(
@@ -99,6 +101,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     suffixDraftRepository = suffixDraftRepository,
     userPreferencesRepository = userPreferencesRepository,
     aliasItemFormProcessor = aliasItemFormProcessor,
+    clipboardManager = clipboardManager,
     featureFlagsRepository = featureFlagsRepository
 ) {
 

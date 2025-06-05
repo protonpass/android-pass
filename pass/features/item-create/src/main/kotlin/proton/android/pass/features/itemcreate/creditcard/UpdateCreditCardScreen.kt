@@ -36,6 +36,7 @@ import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigati
 import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation.OpenAttachmentOptions
 import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation.OpenDraftAttachmentOptions
 import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation.Upgrade
+import proton.android.pass.features.itemcreate.creditcard.CreditCardField.CustomField
 import proton.android.pass.features.itemcreate.custom.createupdate.ui.DatePickerModal
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
@@ -44,10 +45,16 @@ import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardH
 @Composable
 fun UpdateCreditCardScreen(
     modifier: Modifier = Modifier,
+    navTotpUri: String? = null,
+    navTotpIndex: Int? = null,
     viewModel: UpdateCreditCardViewModel = hiltViewModel(),
     onNavigate: (BaseCreditCardNavigation) -> Unit
 ) {
     val context = LocalContext.current
+    LaunchedEffect(navTotpUri) {
+        navTotpUri ?: return@LaunchedEffect
+        viewModel.setTotp(navTotpUri, navTotpIndex ?: -1)
+    }
 
     var showDatePickerForField: Option<CustomFieldIdentifier> by remember { mutableStateOf(None) }
 
@@ -198,7 +205,7 @@ fun UpdateCreditCardScreen(
 
                                     is CustomFieldEvent.FocusRequested ->
                                         viewModel.onFocusChange(
-                                            field = CreditCardField.CustomField(event.field),
+                                            field = CustomField(event.field),
                                             isFocused = event.isFocused
                                         )
 
@@ -209,6 +216,11 @@ fun UpdateCreditCardScreen(
                                         else -> throw IllegalStateException("Unhandled action")
                                     }
                                 }
+
+                            is CreditCardContentEvent.OnScanTotp ->
+                                actionAfterKeyboardHide =
+                                    { onNavigate(BaseCreditCardNavigation.ScanTotp(it.index)) }
+                            CreditCardContentEvent.PasteTotp -> viewModel.onPasteTotp()
                         }
                     }
                 )

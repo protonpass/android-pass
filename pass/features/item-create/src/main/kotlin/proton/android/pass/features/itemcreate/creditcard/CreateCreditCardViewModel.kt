@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -76,6 +77,7 @@ class CreateCreditCardViewModel @Inject constructor(
     customFieldHandler: CustomFieldHandler,
     customFieldDraftRepository: CustomFieldDraftRepository,
     creditCardItemFormProcessor: CreditCardFormProcessorType,
+    clipboardManager: ClipboardManager,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCreditCardViewModel(
     userPreferencesRepository = userPreferencesRepository,
@@ -86,6 +88,7 @@ class CreateCreditCardViewModel @Inject constructor(
     customFieldHandler = customFieldHandler,
     customFieldDraftRepository = customFieldDraftRepository,
     creditCardItemFormProcessor = creditCardItemFormProcessor,
+    clipboardManager = clipboardManager,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
     private val navShareId: Option<ShareId> =

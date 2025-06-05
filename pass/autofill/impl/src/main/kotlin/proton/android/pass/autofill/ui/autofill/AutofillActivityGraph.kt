@@ -453,6 +453,12 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                 BaseAliasNavigation.TotpCancel -> appNavigator.navigateBack()
                 is BaseAliasNavigation.TotpSuccess ->
                     appNavigator.navigateBackWithResult(it.results)
+
+                is BaseAliasNavigation.ScanTotp -> appNavigator.navigate(
+                    destination = CameraTotpNavItem(CustomFieldPrefix.CreateAlias),
+                    route = CameraTotpNavItem(CustomFieldPrefix.CreateAlias)
+                        .createNavRoute(None, it.index)
+                )
             }
         }
     )
@@ -523,6 +529,11 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                     appNavigator.navigateBackWithResult(it.results)
 
                 BaseCreditCardNavigation.DismissBottomsheet -> dismissBottomSheet {}
+                is BaseCreditCardNavigation.ScanTotp -> appNavigator.navigate(
+                    destination = CameraTotpNavItem(CustomFieldPrefix.CreateCreditCard),
+                    route = CameraTotpNavItem(CustomFieldPrefix.CreateCreditCard)
+                        .createNavRoute(None, it.index)
+                )
             }
         }
     )

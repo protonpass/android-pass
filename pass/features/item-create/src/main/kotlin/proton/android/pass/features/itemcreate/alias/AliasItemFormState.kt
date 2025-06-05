@@ -25,13 +25,9 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonrust.api.AliasPrefixError
-import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.features.itemcreate.common.AliasItemValidationError
-import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
-import proton.android.pass.features.itemcreate.common.ValidationError
-import proton.android.pass.log.api.PassLogger
 
 @Parcelize
 @Immutable
@@ -49,27 +45,6 @@ data class AliasItemFormState(
     val customFields: List<UICustomFieldContent>
 ) : Parcelable {
 
-    fun validate(allowEmptyTitle: Boolean, aliasPrefixValidator: AliasPrefixValidator): Set<ValidationError> {
-        val mutableSet = mutableSetOf<ValidationError>()
-
-        if (!allowEmptyTitle) {
-            if (title.isBlank()) mutableSet.add(CommonFieldValidationError.BlankTitle)
-        }
-
-        aliasPrefixValidator.validate(prefix).onFailure {
-            if (it is AliasPrefixError) {
-                mutableSet.add(it.toError())
-            } else {
-                PassLogger.w(TAG, "Error validating alias prefix")
-                PassLogger.w(TAG, it)
-            }
-        }
-
-        if (selectedMailboxes.isEmpty()) mutableSet.add(AliasItemValidationError.NoMailboxes)
-
-        return mutableSet.toSet()
-    }
-
     internal fun toItemContents(): ItemContents.Alias = ItemContents.Alias(
         title = title,
         note = note,
@@ -78,7 +53,6 @@ data class AliasItemFormState(
     )
 
     companion object {
-        private const val TAG = "AliasItemFormState"
         const val MAX_PREFIX_LENGTH: Int = 40
 
         fun default(title: Option<String>): AliasItemFormState = when (title) {

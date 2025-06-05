@@ -68,6 +68,8 @@ import proton.android.pass.features.itemcreate.common.UICustomFieldContent.Compa
 import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.ValidationError
+import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
+import proton.android.pass.features.itemcreate.common.formprocessor.IdentityItemFormProcessor
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.ItemLinkAttachmentsError
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.ItemRenameAttachmentsError
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.AddressCustomField
@@ -118,6 +120,7 @@ class IdentityActionsProviderImpl @Inject constructor(
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
     private val renameAttachments: RenameAttachments,
     private val userPreferencesRepository: UserPreferencesRepository,
+    private val identityItemFormProcessor: IdentityItemFormProcessor,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : IdentityActionsProvider {
 
@@ -543,13 +546,37 @@ class IdentityActionsProviderImpl @Inject constructor(
 
     override fun getFormState(): IdentityItemFormState = identityItemFormMutableState
 
-    override fun isFormStateValid(): Boolean {
-        val validationErrors = identityItemFormMutableState.validate()
-        if (validationErrors.isNotEmpty()) {
-            validationErrorsState.update { validationErrors }
-            return false
+    override suspend fun isFormStateValid(
+        originalPersonalCustomFields: List<UICustomFieldContent>,
+        originalAddressCustomFields: List<UICustomFieldContent>,
+        originalContactCustomFields: List<UICustomFieldContent>,
+        originalWorkCustomFields: List<UICustomFieldContent>,
+        originalSections: List<UIExtraSection>
+    ): Boolean {
+        val result = encryptionContextProvider.withEncryptionContextSuspendable {
+            identityItemFormProcessor.process(
+                IdentityItemFormProcessor.Input(
+                    formState = getFormState(),
+                    originalPersonalCustomFields = originalPersonalCustomFields,
+                    originalAddressCustomFields = originalAddressCustomFields,
+                    originalContactCustomFields = originalContactCustomFields,
+                    originalWorkCustomFields = originalWorkCustomFields,
+                    originalSections = originalSections
+                ),
+                ::decrypt,
+                ::encrypt
+            )
         }
-        return true
+        return when (result) {
+            is FormProcessingResult.Error -> {
+                validationErrorsState.update { result.errors }
+                false
+            }
+            is FormProcessingResult.Success -> {
+                identityItemFormMutableState = result.sanitized
+                true
+            }
+        }
     }
 
     override fun clearDraftData() {

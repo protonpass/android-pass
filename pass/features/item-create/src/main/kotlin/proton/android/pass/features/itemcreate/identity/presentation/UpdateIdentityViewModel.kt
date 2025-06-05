@@ -39,6 +39,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.UpdateItem
+import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.areItemContentsEqual
@@ -46,6 +47,8 @@ import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.domain.toItemContents
 import proton.android.pass.features.itemcreate.ItemCreate
+import proton.android.pass.features.itemcreate.common.UICustomFieldContent
+import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.InitError
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.ItemUpdateError
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.ItemUpdated
@@ -76,6 +79,12 @@ class UpdateIdentityViewModel @Inject constructor(
         savedStateHandleProvider.get().require<String>(CommonNavArgId.ItemId.key)
             .let(::ItemId)
 
+    var originalPersonalCustomFields: List<UICustomFieldContent> = emptyList()
+    var originalAddressCustomFields: List<UICustomFieldContent> = emptyList()
+    var originalContactCustomFields: List<UICustomFieldContent> = emptyList()
+    var originalWorkCustomFields: List<UICustomFieldContent> = emptyList()
+    var originalSections: List<UIExtraSection> = emptyList()
+
     init {
         viewModelScope.launch {
             identityActionsProvider.observeActions(this)
@@ -102,7 +111,16 @@ class UpdateIdentityViewModel @Inject constructor(
     private suspend fun getItem() {
         identityActionsProvider.updateLoadingState(IsLoadingState.Loading)
         runCatching { getItemById(navShareId, navItemId) }
-            .onSuccess { identityActionsProvider.onItemReceivedState(it) }
+            .onSuccess { item: Item ->
+                identityActionsProvider.onItemReceivedState(item)
+                getFormState().let {
+                    originalPersonalCustomFields = it.uiPersonalDetails.customFields
+                    originalAddressCustomFields = it.uiAddressDetails.customFields
+                    originalContactCustomFields = it.uiContactDetails.customFields
+                    originalWorkCustomFields = it.uiWorkDetails.customFields
+                    originalSections = it.uiExtraSections
+                }
+            }
             .onFailure {
                 PassLogger.i(TAG, it, "Get by id error")
                 snackbarDispatcher(InitError)

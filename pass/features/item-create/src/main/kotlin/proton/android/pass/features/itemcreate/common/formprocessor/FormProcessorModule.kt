@@ -28,6 +28,7 @@ import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.creditcard.CreditCardItemFormState
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemFormState
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityItemFormState
 import proton.android.pass.features.itemcreate.login.LoginItemFormState
 import proton.android.pass.features.itemcreate.note.NoteItemFormState
 import proton.android.pass.totp.api.TotpManager
@@ -55,6 +56,11 @@ abstract class FormProcessorModuleBinds {
     abstract fun bindNoteItemFormProcessor(
         impl: NoteItemFormProcessor
     ): FormProcessor<NoteItemFormProcessor.Input, NoteItemFormState>
+
+    @Binds
+    abstract fun bindIdentityItemFormProcessor(
+        impl: IdentityItemFormProcessor
+    ): FormProcessor<IdentityItemFormProcessor.Input, IdentityItemFormState>
 
     @Binds
     abstract fun bindPrimaryTotpFormProcessor(

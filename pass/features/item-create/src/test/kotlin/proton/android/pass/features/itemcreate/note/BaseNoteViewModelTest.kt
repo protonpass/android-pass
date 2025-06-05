@@ -31,6 +31,7 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
+import proton.android.pass.features.itemcreate.common.formprocessor.FakeNoteItemFormProcessor
 import proton.android.pass.features.itemcreate.note.BaseNoteUiState.Companion.Initial
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
@@ -63,7 +64,9 @@ internal class BaseNoteViewModelTest {
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
             customFieldHandler = CustomFieldHandlerImpl(TestEncryptionContextProvider()),
             canPerformPaidAction = canPerformPaidAction,
-            clipboardManager = TestClipboardManager()
+            clipboardManager = TestClipboardManager(),
+            encryptionContextProvider = TestEncryptionContextProvider(),
+            noteItemFormProcessor = FakeNoteItemFormProcessor()
         ) {}
     }
 

@@ -55,6 +55,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
+import proton.android.pass.features.itemcreate.common.formprocessor.FakeLoginItemFormProcessor
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
@@ -118,7 +119,8 @@ class UpdateLoginViewModelTest {
             renameAttachments = FakeRenameAttachments(),
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
             pendingAttachmentLinkRepository = FakePendingAttachmentLinkRepository(),
-            customFieldHandler = CustomFieldHandlerImpl(encryptionContextProvider)
+            customFieldHandler = CustomFieldHandlerImpl(encryptionContextProvider),
+            loginItemFormProcessor = FakeLoginItemFormProcessor()
         )
     }
 

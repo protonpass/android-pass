@@ -51,6 +51,8 @@ import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
+import proton.android.pass.features.itemcreate.common.formprocessor.FakeCreditCardItemFormProcessor
+import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
@@ -74,6 +76,7 @@ class CreateCreditCardViewModelTest {
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var featureFlagsRepository: TestFeatureFlagsPreferenceRepository
     private lateinit var canPerformPaidAction: TestCanPerformPaidAction
+    private lateinit var creditCardItemFormProcessor: FakeCreditCardItemFormProcessor
 
     @Before
     fun setUp() {
@@ -84,6 +87,7 @@ class CreateCreditCardViewModelTest {
         snackbarDispatcher = TestSnackbarDispatcher()
         featureFlagsRepository = TestFeatureFlagsPreferenceRepository()
         canPerformPaidAction = TestCanPerformPaidAction()
+        creditCardItemFormProcessor = FakeCreditCardItemFormProcessor()
         instance = CreateCreditCardViewModel(
             accountManager = TestAccountManager().apply {
                 sendPrimaryUserId(UserId("user-id"))
@@ -102,7 +106,8 @@ class CreateCreditCardViewModelTest {
             attachmentsHandler = FakeAttachmentHandler(),
             userPreferencesRepository = TestPreferenceRepository(),
             customFieldHandler = CustomFieldHandlerImpl(TestEncryptionContextProvider()),
-            customFieldDraftRepository = CustomFieldDraftRepositoryImpl()
+            customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
+            creditCardItemFormProcessor = creditCardItemFormProcessor
         )
     }
 
@@ -116,7 +121,9 @@ class CreateCreditCardViewModelTest {
             trashedItemCount = 0
         )
         observeVaults.sendResult(Result.success(listOf(vaultWithItemCount)))
-
+        creditCardItemFormProcessor.setResult(
+            FormProcessingResult.Error(setOf(CommonFieldValidationError.BlankTitle))
+        )
         instance.createItem()
 
         val state = CreateCreditCardUiState.Success(

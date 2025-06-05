@@ -68,6 +68,8 @@ import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.LoginItemValidationError
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
+import proton.android.pass.features.itemcreate.common.formprocessor.FakeLoginItemFormProcessor
+import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.passkeys.fakes.TestGeneratePasskey
@@ -97,6 +99,7 @@ internal class CreateLoginNavItemViewModelTest {
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
     private lateinit var encryptionContextProvider: EncryptionContextProvider
+    private lateinit var loginItemFormProcessor: FakeLoginItemFormProcessor
 
     @Before
     fun setUp() {
@@ -110,6 +113,7 @@ internal class CreateLoginNavItemViewModelTest {
         snackbarDispatcher = TestSnackbarDispatcher()
         observeUpgradeInfo = TestObserveUpgradeInfo()
         encryptionContextProvider = TestEncryptionContextProvider()
+        loginItemFormProcessor = FakeLoginItemFormProcessor()
         instance = CreateLoginViewModel(
             accountManager = accountManager,
             createItem = createItem,
@@ -137,7 +141,8 @@ internal class CreateLoginNavItemViewModelTest {
             linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
             attachmentsHandler = FakeAttachmentHandler(),
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
-            customFieldHandler = CustomFieldHandlerImpl(encryptionContextProvider)
+            customFieldHandler = CustomFieldHandlerImpl(encryptionContextProvider),
+            loginItemFormProcessor = loginItemFormProcessor
         )
     }
 
@@ -145,6 +150,9 @@ internal class CreateLoginNavItemViewModelTest {
     fun `when a create item event without title should return a BlankTitle validation error`() = runTest {
         val vault = TestVault.create(shareId = ShareId("shareId"), name = "Share")
         val vaultWithItemCount = VaultWithItemCount(vault, 1, 0)
+        loginItemFormProcessor.setResult(
+            FormProcessingResult.Error(setOf(CommonFieldValidationError.BlankTitle))
+        )
         observeVaults.sendResult(Result.success(listOf(vaultWithItemCount)))
 
         instance.createItem()
@@ -298,6 +306,9 @@ internal class CreateLoginNavItemViewModelTest {
         val shareId = ShareId("shareId")
         setInitialContents()
         sendInitialVault(shareId)
+        loginItemFormProcessor.setResult(
+            FormProcessingResult.Error(setOf(LoginItemValidationError.InvalidPrimaryTotp))
+        )
         val uri = "invalid://uri"
         totpManager.setSanitisedEditResult(Result.success(uri))
         totpManager.addSanitisedSaveResult(Result.failure(RuntimeException()))
@@ -312,9 +323,6 @@ internal class CreateLoginNavItemViewModelTest {
             assertThat(item.baseLoginUiState.validationErrors).isEqualTo(
                 setOf(LoginItemValidationError.InvalidPrimaryTotp)
             )
-
-            val message = snackbarDispatcher.snackbarMessage.first().value()!!
-            assertThat(message).isInstanceOf(LoginSnackbarMessages.InvalidTotpError::class.java)
         }
     }
 

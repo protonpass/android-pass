@@ -85,7 +85,7 @@ import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
-import proton.android.pass.features.itemcreate.common.formprocessor.LoginItemFormProcessor
+import proton.android.pass.features.itemcreate.common.formprocessor.LoginItemFormProcessorType
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.AttachmentsInitError
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.InitError
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.ItemLinkAttachmentsError
@@ -129,7 +129,7 @@ class UpdateLoginViewModel @Inject constructor(
     customFieldHandler: CustomFieldHandler,
     userPreferencesRepository: UserPreferencesRepository,
     customFieldDraftRepository: CustomFieldDraftRepository,
-    loginItemFormProcessor: LoginItemFormProcessor,
+    loginItemFormProcessor: LoginItemFormProcessorType,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseLoginViewModel(
     accountManager = accountManager,

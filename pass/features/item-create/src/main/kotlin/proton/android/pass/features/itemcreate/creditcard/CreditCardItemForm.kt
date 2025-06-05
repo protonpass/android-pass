@@ -149,6 +149,7 @@ internal fun CreditCardItemForm(
         if (isFileAttachmentsEnabled) {
             item {
                 AttachmentSection(
+                    modifier = Modifier.padding(vertical = Spacing.extraSmall),
                     attachmentsState = attachmentsState,
                     isDetail = false,
                     itemColors = passItemColors(ItemCategory.CreditCard),

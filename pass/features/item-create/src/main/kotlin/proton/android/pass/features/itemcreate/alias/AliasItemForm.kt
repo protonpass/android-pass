@@ -84,7 +84,7 @@ internal fun AliasItemForm(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .padding(Spacing.medium)
+            .padding(horizontal = Spacing.medium)
     ) {
         item {
             AnimatedVisibility(
@@ -241,6 +241,7 @@ internal fun AliasItemForm(
         if (isFileAttachmentsEnabled) {
             item {
                 AttachmentSection(
+                    modifier = Modifier.padding(vertical = Spacing.extraSmall),
                     attachmentsState = attachmentsState,
                     isDetail = false,
                     itemColors = passItemColors(ItemCategory.Alias),

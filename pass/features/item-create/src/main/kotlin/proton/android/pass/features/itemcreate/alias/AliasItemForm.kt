@@ -21,6 +21,7 @@ package proton.android.pass.features.itemcreate.alias
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -87,10 +88,11 @@ internal fun AliasItemForm(
     ) {
         item {
             AnimatedVisibility(
-                modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                modifier = Modifier.fillMaxWidth(),
                 visible = showUpgrade
             ) {
                 InfoBanner(
+                    modifier = Modifier.padding(vertical = Spacing.extraSmall),
                     backgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
                     text = stringResource(R.string.create_alias_content_limit_banner)
                 )
@@ -99,10 +101,12 @@ internal fun AliasItemForm(
 
         item {
             AnimatedVisibility(
-                modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                modifier = Modifier.fillMaxWidth(),
                 visible = isFileAttachmentsEnabled && displayFileAttachmentsOnboarding
             ) {
-                AttachmentBanner(Modifier.padding(bottom = Spacing.mediumSmall)) {
+                AttachmentBanner(
+                    modifier = Modifier.padding(vertical = Spacing.small)
+                ) {
                     onEvent(AliasContentUiEvent.DismissAttachmentBanner)
                 }
             }
@@ -111,7 +115,7 @@ internal fun AliasItemForm(
         item {
             TitleSection(
                 modifier = Modifier
-                    .padding(vertical = Spacing.extraSmall)
+                    .padding(vertical = Spacing.small)
                     .roundedContainerNorm()
                     .padding(
                         start = Spacing.medium,
@@ -151,10 +155,12 @@ internal fun AliasItemForm(
         }
         item {
             AnimatedVisibility(
-                modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                modifier = Modifier.fillMaxWidth(),
                 visible = displayAdvancedOptionsBanner
             ) {
-                AliasAdvancedOptionsBanner {
+                AliasAdvancedOptionsBanner(
+                    modifier = Modifier.padding(vertical = Spacing.extraSmall)
+                ) {
                     onEvent(AliasContentUiEvent.DismissAdvancedOptionsBanner)
                 }
             }

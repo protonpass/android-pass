@@ -128,10 +128,10 @@ internal fun LoginItemForm(
         ) {
             item {
                 AnimatedVisibility(
-                    modifier = Modifier.padding(bottom = Spacing.mediumSmall),
+                    modifier = Modifier.fillMaxWidth(),
                     visible = isFileAttachmentsEnabled && displayFileAttachmentsOnboarding
                 ) {
-                    AttachmentBanner {
+                    AttachmentBanner(modifier = Modifier.padding(vertical = Spacing.small)) {
                         onEvent(LoginContentEvent.DismissAttachmentBanner)
                     }
                 }
@@ -139,7 +139,7 @@ internal fun LoginItemForm(
             item {
                 TitleSection(
                     modifier = Modifier
-                        .padding(bottom = Spacing.small)
+                        .padding(vertical = Spacing.small)
                         .roundedContainerNorm()
                         .padding(
                             start = Spacing.medium,

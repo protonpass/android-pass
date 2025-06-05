@@ -80,22 +80,26 @@ internal fun NoteItemForm(
                     CustomFieldType.Totp -> CustomFieldStickyFormOptionsContentType.AddTotp
                     else -> CustomFieldStickyFormOptionsContentType.NoOption
                 }
+
                 else -> CustomFieldStickyFormOptionsContentType.NoOption
             }
         }
 
-        val isCurrentStickyVisible = currentStickyFormOption != CustomFieldStickyFormOptionsContentType.NoOption
+        val isCurrentStickyVisible =
+            currentStickyFormOption != CustomFieldStickyFormOptionsContentType.NoOption
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = Spacing.medium)
                 .padding(horizontal = Spacing.medium),
             verticalArrangement = Arrangement.spacedBy(Spacing.small)
         ) {
 
-            AnimatedVisibility(isFileAttachmentsEnabled && displayFileAttachmentsOnboarding) {
-                AttachmentBanner(Modifier.padding(bottom = Spacing.mediumSmall)) {
+            AnimatedVisibility(
+                modifier = Modifier.fillMaxWidth(),
+                visible = isFileAttachmentsEnabled && displayFileAttachmentsOnboarding
+            ) {
+                AttachmentBanner(modifier = Modifier.padding(vertical = Spacing.small)) {
                     onEvent(NoteContentUiEvent.DismissAttachmentBanner)
                 }
             }

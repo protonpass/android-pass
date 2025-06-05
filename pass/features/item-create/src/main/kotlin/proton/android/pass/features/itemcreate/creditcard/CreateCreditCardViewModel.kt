@@ -42,7 +42,7 @@ import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
-import proton.android.pass.features.itemcreate.common.formprocessor.CreditCardItemFormProcessor
+import proton.android.pass.features.itemcreate.common.formprocessor.CreditCardFormProcessorType
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.ItemCreated
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.ItemCreationError
@@ -75,7 +75,7 @@ class CreateCreditCardViewModel @Inject constructor(
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     customFieldHandler: CustomFieldHandler,
     customFieldDraftRepository: CustomFieldDraftRepository,
-    creditCardItemFormProcessor: CreditCardItemFormProcessor,
+    creditCardItemFormProcessor: CreditCardFormProcessorType,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCreditCardViewModel(
     userPreferencesRepository = userPreferencesRepository,

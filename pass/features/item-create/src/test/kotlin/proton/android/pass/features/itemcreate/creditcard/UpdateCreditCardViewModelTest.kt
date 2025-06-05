@@ -46,6 +46,8 @@ import proton.android.pass.features.itemcreate.ItemUpdate
 import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
+import proton.android.pass.features.itemcreate.common.formprocessor.FakeCreditCardItemFormProcessor
+import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
@@ -69,6 +71,7 @@ class UpdateCreditCardViewModelTest {
     private lateinit var accountManager: TestAccountManager
     private lateinit var featureFlagsRepository: TestFeatureFlagsPreferenceRepository
     private lateinit var pendingAttachmentLinkRepository: PendingAttachmentLinkRepository
+    private lateinit var creditCardItemFormProcessor: FakeCreditCardItemFormProcessor
 
     @Before
     fun setup() {
@@ -78,6 +81,7 @@ class UpdateCreditCardViewModelTest {
         updateItem = TestUpdateItem()
         featureFlagsRepository = TestFeatureFlagsPreferenceRepository()
         pendingAttachmentLinkRepository = FakePendingAttachmentLinkRepository()
+        creditCardItemFormProcessor = FakeCreditCardItemFormProcessor()
         accountManager = TestAccountManager()
         accountManager.sendPrimaryUserId(UserId("user-id"))
         instance = UpdateCreditCardViewModel(
@@ -99,7 +103,8 @@ class UpdateCreditCardViewModelTest {
             userPreferencesRepository = TestPreferenceRepository(),
             pendingAttachmentLinkRepository = pendingAttachmentLinkRepository,
             customFieldHandler = CustomFieldHandlerImpl(TestEncryptionContextProvider()),
-            customFieldDraftRepository = CustomFieldDraftRepositoryImpl()
+            customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
+            creditCardItemFormProcessor = creditCardItemFormProcessor
         )
     }
 
@@ -107,7 +112,9 @@ class UpdateCreditCardViewModelTest {
     fun `update item without title should return a BlankTitle validation error`() = runTest {
         val item = TestObserveItems.createCreditCard(title = "")
         getItemById.emitValue(Result.success(item))
-
+        creditCardItemFormProcessor.setResult(
+            FormProcessingResult.Error(setOf(CommonFieldValidationError.BlankTitle))
+        )
         instance.update()
         instance.state.test {
             val state = awaitItem()

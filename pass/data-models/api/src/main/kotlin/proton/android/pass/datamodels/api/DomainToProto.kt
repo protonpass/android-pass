@@ -295,12 +295,15 @@ private fun List<CustomFieldContent>.mapToExtraFields(encryptionContext: Encrypt
 
             is CustomFieldContent.Date -> extraField {
                 fieldName = customField.label
-                timestamp = extraTimestampField {
-                    timestamp = timestamp {
-                        seconds = customField.value / MILLIS_IN_SECOND
-                        nanos = (customField.value % MILLIS_IN_SECOND * NANOS_IN_MILLI).toInt()
+                customField.value.value()?.let {
+                    timestamp = extraTimestampField {
+                        timestamp = timestamp {
+                            seconds = it / MILLIS_IN_SECOND
+                            nanos = (it % MILLIS_IN_SECOND * NANOS_IN_MILLI).toInt()
+                        }
                     }
                 }
+
             }
         }
     }

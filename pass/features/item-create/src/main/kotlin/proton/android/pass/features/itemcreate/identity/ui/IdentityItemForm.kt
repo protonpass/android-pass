@@ -22,6 +22,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -94,11 +95,14 @@ fun IdentityItemForm(
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
-        AnimatedVisibility(identityUiState.showFileAttachmentsBanner()) {
+        AnimatedVisibility(
+            modifier = Modifier.fillMaxWidth(),
+            visible = identityUiState.showFileAttachmentsBanner()
+        ) {
             AttachmentBanner(
                 modifier = Modifier
                     .padding(horizontal = Spacing.medium)
-                    .padding(bottom = Spacing.mediumSmall)
+                    .padding(vertical = Spacing.small)
             ) {
                 onEvent(IdentityContentEvent.DismissAttachmentBanner)
             }
@@ -106,6 +110,7 @@ fun IdentityItemForm(
         TitleSection(
             modifier = Modifier
                 .padding(horizontal = Spacing.medium)
+                .padding(vertical = Spacing.small)
                 .roundedContainerNorm()
                 .padding(
                     start = Spacing.medium,

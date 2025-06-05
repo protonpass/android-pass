@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.itemcreate.common.formprocessor
 
+import proton.android.pass.features.itemcreate.alias.AliasItemFormState
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.creditcard.CreditCardItemFormState
@@ -34,6 +35,8 @@ typealias CustomItemFormProcessorType =
     FormProcessor<CustomItemFormProcessor.Input, ItemFormState>
 typealias IdentityItemFormProcessorType =
     FormProcessor<IdentityItemFormProcessor.Input, IdentityItemFormState>
+typealias AliasItemFormProcessorType =
+    FormProcessor<AliasItemFormProcessor.Input, AliasItemFormState>
 typealias NoteItemFormProcessorType =
     FormProcessor<NoteItemFormProcessor.Input, NoteItemFormState>
 typealias CustomFieldFormProcessorType =

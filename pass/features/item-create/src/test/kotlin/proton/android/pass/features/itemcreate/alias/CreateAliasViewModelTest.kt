@@ -28,7 +28,6 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
-import proton.android.pass.commonrust.fakes.TestAliasPrefixValidator
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
@@ -50,6 +49,7 @@ import proton.android.pass.features.itemcreate.alias.draftrepositories.MailboxDr
 import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepositoryImpl
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
+import proton.android.pass.features.itemcreate.common.formprocessor.FakeAliasItemFormProcessor
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -256,7 +256,6 @@ class CreateAliasViewModelTest {
         draftRepository = draftRepository,
         inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
         encryptionContextProvider = TestEncryptionContextProvider(),
-        aliasPrefixValidator = TestAliasPrefixValidator(),
         observeDefaultVault = TestObserveDefaultVault(),
         featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
         linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
@@ -266,7 +265,8 @@ class CreateAliasViewModelTest {
         suffixDraftRepository = SuffixDraftRepositoryImpl(),
         customFieldHandler = CustomFieldHandlerImpl(TestEncryptionContextProvider()),
         customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
-        canPerformPaidAction = TestCanPerformPaidAction()
+        canPerformPaidAction = TestCanPerformPaidAction(),
+        aliasItemFormProcessor = FakeAliasItemFormProcessor()
     ).apply {
         setDraftStatus(isDraft)
     }

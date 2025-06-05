@@ -44,6 +44,7 @@ import proton.android.pass.features.credentials.passkeys.creation.presentation.P
 import proton.android.pass.features.credentials.passkeys.creation.presentation.PasskeyCredentialCreationState
 import proton.android.pass.features.credentials.passkeys.creation.presentation.PasskeyCredentialCreationViewModel
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.passkeys.api.ParseCreatePasskeyRequest
 import javax.inject.Inject
 
@@ -52,6 +53,9 @@ internal class PasskeyCredentialCreationActivity : FragmentActivity() {
 
     @Inject
     internal lateinit var parseCreatePasskeyRequest: ParseCreatePasskeyRequest
+
+    @Inject
+    internal lateinit var snackbarDispatcher: SnackbarDispatcher
 
     private val viewModel: PasskeyCredentialCreationViewModel by viewModels()
 
@@ -73,6 +77,12 @@ internal class PasskeyCredentialCreationActivity : FragmentActivity() {
                 }
             }
         }
+    }
+
+    override fun onStop() {
+        snackbarDispatcher.reset()
+
+        super.onStop()
     }
 
     private fun setContent(state: PasskeyCredentialCreationState.Ready) {

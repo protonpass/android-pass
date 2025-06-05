@@ -43,9 +43,14 @@ import proton.android.pass.features.credentials.passwords.creation.presentation.
 import proton.android.pass.features.credentials.passwords.creation.presentation.PasswordCredentialCreationRequest
 import proton.android.pass.features.credentials.passwords.creation.presentation.PasswordCredentialCreationState
 import proton.android.pass.features.credentials.passwords.creation.presentation.PasswordCredentialCreationViewModel
+import proton.android.pass.notifications.api.SnackbarDispatcher
+import javax.inject.Inject
 
 @[AndroidEntryPoint RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)]
 internal class PasswordCredentialCreationActivity : FragmentActivity() {
+
+    @Inject
+    internal lateinit var snackbarDispatcher: SnackbarDispatcher
 
     private val viewModel: PasswordCredentialCreationViewModel by viewModels()
 
@@ -67,6 +72,12 @@ internal class PasswordCredentialCreationActivity : FragmentActivity() {
                 }
             }
         }
+    }
+
+    override fun onStop() {
+        snackbarDispatcher.reset()
+
+        super.onStop()
     }
 
     private fun setContent(state: PasswordCredentialCreationState.Ready) {

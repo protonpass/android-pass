@@ -21,6 +21,8 @@ package proton.android.pass.features.itemcreate.common
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
+import proton.android.pass.common.api.some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.CustomFieldType
@@ -47,13 +49,13 @@ sealed interface UICustomFieldContent : Parcelable {
 
     @Immutable
     @Parcelize
-    data class Date(override val label: String, val value: Long) : UICustomFieldContent
+    data class Date(override val label: String, val value: Long?) : UICustomFieldContent
 
     fun toCustomFieldContent() = when (this) {
         is Text -> CustomFieldContent.Text(label, value)
         is Hidden -> CustomFieldContent.Hidden(label, value.toHiddenState())
         is Totp -> CustomFieldContent.Totp(label, value.toHiddenState())
-        is Date -> CustomFieldContent.Date(label, value)
+        is Date -> CustomFieldContent.Date(label, value.toOption())
     }
 
     fun toCustomFieldType(): CustomFieldType = when (this) {
@@ -97,7 +99,7 @@ sealed interface UICustomFieldContent : Parcelable {
             is CustomFieldContent.Text -> Text(state.label, state.value)
             is CustomFieldContent.Hidden -> Hidden(state.label, UIHiddenState.from(state.value))
             is CustomFieldContent.Totp -> Totp(state.label, UIHiddenState.from(state.value), generateUniqueID())
-            is CustomFieldContent.Date -> Date(state.label, state.value)
+            is CustomFieldContent.Date -> Date(state.label, state.value.value())
         }
 
         fun from(state: CustomFieldContent.Totp) =
@@ -136,7 +138,7 @@ sealed interface UICustomFieldContent : Parcelable {
                 val value = System.currentTimeMillis()
                 CustomFieldContent.Date(
                     label = label.trim(),
-                    value = value
+                    value = value.some()
                 )
             }
         }.let(Companion::from)

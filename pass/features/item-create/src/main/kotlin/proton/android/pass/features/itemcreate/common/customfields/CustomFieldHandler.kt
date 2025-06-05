@@ -94,7 +94,7 @@ class CustomFieldHandlerImpl @Inject constructor(
 
             is UICustomFieldContent.Date -> UICustomFieldContent.Date(
                 label = field.label,
-                value = value.toLong()
+                value = value.toLongOrNull()
             )
         }
         return customFieldList.toMutableList().apply {

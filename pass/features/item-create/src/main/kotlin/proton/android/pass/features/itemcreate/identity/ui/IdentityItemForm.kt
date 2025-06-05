@@ -245,11 +245,8 @@ fun IdentityItemForm(
         }
         if (canUseCustomFields) {
             Column(
-                modifier = Modifier.padding(
-                    vertical = Spacing.small,
-                    horizontal = Spacing.medium
-                ),
-                verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+                modifier = Modifier.padding(horizontal = Spacing.medium),
+                verticalArrangement = Arrangement.spacedBy(Spacing.small)
             ) {
                 PassDivider()
                 AddSectionButton(
@@ -263,8 +260,8 @@ fun IdentityItemForm(
         if (identityUiState.showFileAttachments() && canUseAttachments) {
             AttachmentSection(
                 modifier = Modifier
-                    .padding(horizontal = Spacing.medium)
-                    .padding(bottom = Spacing.small),
+                    .padding(bottom = Spacing.extraSmall)
+                    .padding(horizontal = Spacing.medium),
                 attachmentsState = identityUiState.getAttachmentsState(),
                 isDetail = false,
                 itemColors = passItemColors(ItemCategory.Identity),

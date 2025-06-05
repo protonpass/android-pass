@@ -18,13 +18,19 @@
 
 package proton.android.pass.features.itemcreate.creditcard
 
+import android.content.pm.PackageManager
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.PersistentSet
@@ -38,10 +44,12 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
 import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
+import proton.android.pass.features.itemcreate.common.StickyTotpOptions
 import proton.android.pass.features.itemcreate.common.ValidationError
 import proton.android.pass.features.itemcreate.common.customfields.customFieldsList
 import proton.android.pass.features.itemcreate.creditcard.CreditCardContentEvent.OnAttachmentEvent
@@ -70,92 +78,123 @@ internal fun CreditCardItemForm(
     customFieldValidationErrors: ImmutableList<CustomFieldValidationError>,
     onEvent: (CreditCardContentEvent) -> Unit
 ) {
-    LazyColumn(
-        modifier = modifier
-            .testTag(CreditCardItemFormTag.LAZY_COLUMN)
-            .fillMaxSize()
-            .padding(horizontal = Spacing.medium)
-    ) {
-        item {
-            AnimatedVisibility(
-                modifier = Modifier.fillMaxWidth(),
-                visible = isFileAttachmentsEnabled && displayFileAttachmentsOnboarding
-            ) {
-                AttachmentBanner(modifier = Modifier.padding(vertical = Spacing.small)) {
-                    onEvent(CreditCardContentEvent.DismissAttachmentBanner)
+    Box(modifier = modifier) {
+        val isCurrentStickyVisible = remember(focusedField) {
+            (focusedField as? CreditCardField.CustomField)?.field?.type == CustomFieldType.Totp
+        }
+
+        LazyColumn(
+            modifier = Modifier
+                .testTag(CreditCardItemFormTag.LAZY_COLUMN)
+                .fillMaxSize()
+                .padding(horizontal = Spacing.medium)
+        ) {
+            item {
+                AnimatedVisibility(
+                    modifier = Modifier.fillMaxWidth(),
+                    visible = isFileAttachmentsEnabled && displayFileAttachmentsOnboarding
+                ) {
+                    AttachmentBanner(modifier = Modifier.padding(vertical = Spacing.small)) {
+                        onEvent(CreditCardContentEvent.DismissAttachmentBanner)
+                    }
+                }
+            }
+
+            item {
+                TitleSection(
+                    modifier = Modifier
+                        .padding(vertical = Spacing.small)
+                        .roundedContainerNorm()
+                        .padding(
+                            start = Spacing.medium,
+                            top = Spacing.medium,
+                            end = Spacing.extraSmall,
+                            bottom = Spacing.medium
+                        ),
+                    value = creditCardItemFormState.title,
+                    requestFocus = true,
+                    onTitleRequiredError = validationErrors
+                        .contains(CommonFieldValidationError.BlankTitle),
+                    enabled = enabled,
+                    isRounded = true,
+                    onChange = { onEvent(OnTitleChange(it)) }
+                )
+            }
+            item {
+                CardDetails(
+                    modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                    creditCardItemFormState = creditCardItemFormState,
+                    enabled = enabled,
+                    validationErrors = validationErrors,
+                    onNameChanged = { onEvent(OnNameChange(it)) },
+                    onNumberChanged = { onEvent(OnNumberChange(it)) },
+                    onCVVChanged = { onEvent(OnCVVChange(it)) },
+                    onPinChanged = { onEvent(OnPinChange(it)) },
+                    onExpirationDateChanged = { onEvent(OnExpirationDateChange(it)) },
+                    onCVVFocusChange = { onEvent(OnCVVFocusChange(it)) },
+                    onPinFocusChange = { onEvent(OnPinFocusChange(it)) }
+                )
+            }
+            item {
+                SimpleNoteSection(
+                    modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                    value = creditCardItemFormState.note,
+                    enabled = enabled,
+                    onChange = { onEvent(OnNoteChange(it)) }
+                )
+            }
+
+            if (isCustomTypeEnabled) {
+                customFieldsList(
+                    modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                    customFields = creditCardItemFormState.customFields,
+                    enabled = enabled,
+                    errors = customFieldValidationErrors.toPersistentSet(),
+                    isVisible = true,
+                    canCreateCustomFields = canUseCustomFields,
+                    sectionIndex = None,
+                    focusedField = (focusedField as? CreditCardField.CustomField)?.field.toOption(),
+                    itemCategory = ItemCategory.CreditCard,
+                    onEvent = { onEvent(CreditCardContentEvent.OnCustomFieldEvent(it)) }
+                )
+            }
+
+            if (isFileAttachmentsEnabled) {
+                item {
+                    AttachmentSection(
+                        modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                        attachmentsState = attachmentsState,
+                        isDetail = false,
+                        itemColors = passItemColors(ItemCategory.CreditCard),
+                        onEvent = { onEvent(OnAttachmentEvent(it)) }
+                    )
                 }
             }
         }
 
-        item {
-            TitleSection(
-                modifier = Modifier
-                    .padding(vertical = Spacing.small)
-                    .roundedContainerNorm()
-                    .padding(
-                        start = Spacing.medium,
-                        top = Spacing.medium,
-                        end = Spacing.extraSmall,
-                        bottom = Spacing.medium
-                    ),
-                value = creditCardItemFormState.title,
-                requestFocus = true,
-                onTitleRequiredError = validationErrors
-                    .contains(CommonFieldValidationError.BlankTitle),
-                enabled = enabled,
-                isRounded = true,
-                onChange = { onEvent(OnTitleChange(it)) }
-            )
-        }
-        item {
-            CardDetails(
-                modifier = Modifier.padding(vertical = Spacing.extraSmall),
-                creditCardItemFormState = creditCardItemFormState,
-                enabled = enabled,
-                validationErrors = validationErrors,
-                onNameChanged = { onEvent(OnNameChange(it)) },
-                onNumberChanged = { onEvent(OnNumberChange(it)) },
-                onCVVChanged = { onEvent(OnCVVChange(it)) },
-                onPinChanged = { onEvent(OnPinChange(it)) },
-                onExpirationDateChanged = { onEvent(OnExpirationDateChange(it)) },
-                onCVVFocusChange = { onEvent(OnCVVFocusChange(it)) },
-                onPinFocusChange = { onEvent(OnPinFocusChange(it)) }
-            )
-        }
-        item {
-            SimpleNoteSection(
-                modifier = Modifier.padding(vertical = Spacing.extraSmall),
-                value = creditCardItemFormState.note,
-                enabled = enabled,
-                onChange = { onEvent(OnNoteChange(it)) }
-            )
-        }
-
-        if (isCustomTypeEnabled) {
-            customFieldsList(
-                modifier = Modifier.padding(vertical = Spacing.extraSmall),
-                customFields = creditCardItemFormState.customFields,
-                enabled = enabled,
-                errors = customFieldValidationErrors.toPersistentSet(),
-                isVisible = true,
-                canCreateCustomFields = canUseCustomFields,
-                sectionIndex = None,
-                focusedField = (focusedField as? CreditCardField.CustomField)?.field.toOption(),
-                itemCategory = ItemCategory.CreditCard,
-                onEvent = { onEvent(CreditCardContentEvent.OnCustomFieldEvent(it)) }
-            )
-        }
-
-        if (isFileAttachmentsEnabled) {
-            item {
-                AttachmentSection(
-                    modifier = Modifier.padding(vertical = Spacing.extraSmall),
-                    attachmentsState = attachmentsState,
-                    isDetail = false,
-                    itemColors = passItemColors(ItemCategory.CreditCard),
-                    onEvent = { onEvent(OnAttachmentEvent(it)) }
-                )
+        AnimatedVisibility(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .imePadding(),
+            visible = isCurrentStickyVisible
+        ) {
+            val context = LocalContext.current
+            val hasCamera = remember(LocalContext.current) {
+                context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)
             }
+
+            StickyTotpOptions(
+                hasCamera = hasCamera,
+                passItemColors = passItemColors(ItemCategory.CreditCard),
+                onPasteCode = {
+                    onEvent(CreditCardContentEvent.PasteTotp)
+                },
+                onScanCode = {
+                    val focusedField = focusedField as? CreditCardField.CustomField
+                    onEvent(CreditCardContentEvent.OnScanTotp(focusedField?.field?.index.toOption()))
+                }
+            )
         }
     }
 }

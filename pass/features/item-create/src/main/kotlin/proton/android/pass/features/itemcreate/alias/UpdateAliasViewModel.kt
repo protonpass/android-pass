@@ -77,7 +77,9 @@ import proton.android.pass.features.itemcreate.alias.draftrepositories.MailboxDr
 import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDraftRepository
 import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
+import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
+import proton.android.pass.features.itemcreate.common.formprocessor.AliasItemFormProcessorType
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -108,6 +110,7 @@ class UpdateAliasViewModel @Inject constructor(
     customFieldHandler: CustomFieldHandler,
     customFieldDraftRepository: CustomFieldDraftRepository,
     canPerformPaidAction: CanPerformPaidAction,
+    aliasItemFormProcessor: AliasItemFormProcessorType,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseAliasViewModel(
     mailboxDraftRepository = mailboxDraftRepository,
@@ -119,6 +122,8 @@ class UpdateAliasViewModel @Inject constructor(
     customFieldHandler = customFieldHandler,
     customFieldDraftRepository = customFieldDraftRepository,
     canPerformPaidAction = canPerformPaidAction,
+    aliasItemFormProcessor = aliasItemFormProcessor,
+    encryptionContextProvider = encryptionContextProvider,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
 
@@ -135,6 +140,7 @@ class UpdateAliasViewModel @Inject constructor(
         .let(::ItemId)
 
     private var itemOption: Option<Item> = None
+    private var originalCustomFields: List<UICustomFieldContent> = emptyList()
 
     private var mailboxesChanged = false
     private var isSLNoteChanged = false
@@ -270,6 +276,7 @@ class UpdateAliasViewModel @Inject constructor(
                 }
             }
         }
+        originalCustomFields = aliasItemFormState.customFields
     }
 
     private suspend fun showError(
@@ -286,8 +293,7 @@ class UpdateAliasViewModel @Inject constructor(
     @Suppress("LongMethod")
     internal fun updateAlias() {
         viewModelScope.launch(coroutineExceptionHandler) {
-            val canUpdate = canUpdateAlias()
-            if (!canUpdate) {
+            if (!isFormStateValid(originalCustomFields)) {
                 PassLogger.i(TAG, "Cannot update alias")
                 return@launch
             }
@@ -354,19 +360,6 @@ class UpdateAliasViewModel @Inject constructor(
                 isLoadingState.update { IsLoadingState.NotLoading }
             }
         }
-    }
-
-    private fun canUpdateAlias(): Boolean {
-        val aliasItemValidationErrors = aliasItemFormState.validate(
-            allowEmptyTitle = false,
-            aliasPrefixValidator = aliasPrefixValidator
-        )
-        if (aliasItemValidationErrors.isNotEmpty()) {
-            PassLogger.i(TAG, "alias item validation has failed: $aliasItemValidationErrors")
-            aliasItemValidationErrorsState.update { aliasItemValidationErrors }
-            return false
-        }
-        return true
     }
 
     private fun createUpdateAliasBody(): UpdateAliasContent {

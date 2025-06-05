@@ -43,6 +43,7 @@ import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.ValidationError
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
+import proton.android.pass.features.itemcreate.common.formprocessor.CreditCardFormProcessorType
 import proton.android.pass.features.itemcreate.common.formprocessor.CreditCardItemFormProcessor
 import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
@@ -58,7 +59,7 @@ abstract class BaseCreditCardViewModel(
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val customFieldHandler: CustomFieldHandler,
-    private val creditCardItemFormProcessor: CreditCardItemFormProcessor,
+    private val creditCardItemFormProcessor: CreditCardFormProcessorType,
     customFieldDraftRepository: CustomFieldDraftRepository,
     canPerformPaidAction: CanPerformPaidAction,
     savedStateHandleProvider: SavedStateHandleProvider

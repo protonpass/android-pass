@@ -20,7 +20,7 @@ package proton.android.pass.features.itemcreate.common.formprocessor
 
 import proton.android.pass.features.itemcreate.common.ValidationError
 
-sealed class FormProcessingResult<T> {
-    data class Success<T>(val sanitized: T) : FormProcessingResult<T>()
-    data class Error<T>(val errors: Set<ValidationError>) : FormProcessingResult<T>()
+sealed interface FormProcessingResult<T> {
+    data class Success<T>(val sanitized: T) : FormProcessingResult<T>
+    data class Error<T>(val errors: Set<ValidationError>) : FormProcessingResult<T>
 }

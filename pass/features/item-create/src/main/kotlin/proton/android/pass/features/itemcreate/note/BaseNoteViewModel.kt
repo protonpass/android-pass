@@ -62,6 +62,7 @@ import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHa
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
 import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
 import proton.android.pass.features.itemcreate.common.formprocessor.NoteItemFormProcessor
+import proton.android.pass.features.itemcreate.common.formprocessor.NoteItemFormProcessorType
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
@@ -78,7 +79,7 @@ abstract class BaseNoteViewModel(
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val customFieldHandler: CustomFieldHandler,
-    private val noteItemFormProcessor: NoteItemFormProcessor,
+    private val noteItemFormProcessor: NoteItemFormProcessorType,
     private val encryptionContextProvider: EncryptionContextProvider,
     canPerformPaidAction: CanPerformPaidAction,
     customFieldDraftRepository: CustomFieldDraftRepository,

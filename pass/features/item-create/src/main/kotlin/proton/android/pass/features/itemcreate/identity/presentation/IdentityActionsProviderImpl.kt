@@ -895,7 +895,7 @@ class IdentityActionsProviderImpl @Inject constructor(
 
                 is UICustomFieldContent.Date -> UICustomFieldContent.Date(
                     label = content.label,
-                    value = field.value.toLong()
+                    value = field.value.toLongOrNull()
                 )
             }
         }

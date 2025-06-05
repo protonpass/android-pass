@@ -155,12 +155,12 @@ internal fun PersonalDetails(
                 )
             }
         }
-        uiPersonalDetails.customFields.forEachIndexed { index, value ->
+        uiPersonalDetails.customFields.forEachIndexed { index, entry ->
             val focusRequester = remember { FocusRequester() }
             CustomFieldEntry(
                 modifier = Modifier.focusRequester(focusRequester),
                 passItemColors = passItemColors(ItemCategory.Identity),
-                entry = value,
+                entry = entry,
                 canEdit = enabled,
                 isError = false,
                 errorMessage = "",
@@ -168,7 +168,7 @@ internal fun PersonalDetails(
                 onValueChange = {
                     val fieldChange = FieldChange.CustomField(
                         sectionType = PersonalDetails,
-                        customFieldType = value.toCustomFieldType(),
+                        customFieldType = entry.toCustomFieldType(),
                         index = index,
                         value = it
                     )
@@ -178,7 +178,7 @@ internal fun PersonalDetails(
                     onEvent(
                         IdentityContentEvent.OnCustomFieldClick(
                             index = index,
-                            customFieldType = value.toCustomFieldType(),
+                            customFieldType = entry.toCustomFieldType(),
                             customExtraField = PersonalCustomField
                         )
                     )
@@ -186,7 +186,7 @@ internal fun PersonalDetails(
                 onFocusChange = { idx, isFocused ->
                     onEvent(IdentityContentEvent.OnCustomFieldFocused(idx, isFocused, PersonalCustomField))
                 },
-                onOptionsClick = { onEvent(OnCustomFieldOptions(index, value.label, PersonalCustomField)) }
+                onOptionsClick = { onEvent(OnCustomFieldOptions(index, entry.label, PersonalCustomField)) }
             )
             RequestFocusLaunchedEffect(
                 focusRequester = focusRequester,

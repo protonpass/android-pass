@@ -20,6 +20,7 @@ package proton.android.pass.features.itemcreate.creditcard
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
@@ -73,14 +74,14 @@ internal fun CreditCardItemForm(
         modifier = modifier
             .testTag(CreditCardItemFormTag.LAZY_COLUMN)
             .fillMaxSize()
-            .padding(Spacing.medium)
+            .padding(horizontal = Spacing.medium)
     ) {
         item {
             AnimatedVisibility(
-                modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                modifier = Modifier.fillMaxWidth(),
                 visible = isFileAttachmentsEnabled && displayFileAttachmentsOnboarding
             ) {
-                AttachmentBanner(Modifier.padding(bottom = Spacing.mediumSmall)) {
+                AttachmentBanner(modifier = Modifier.padding(vertical = Spacing.small)) {
                     onEvent(CreditCardContentEvent.DismissAttachmentBanner)
                 }
             }
@@ -89,7 +90,7 @@ internal fun CreditCardItemForm(
         item {
             TitleSection(
                 modifier = Modifier
-                    .padding(vertical = Spacing.extraSmall)
+                    .padding(vertical = Spacing.small)
                     .roundedContainerNorm()
                     .padding(
                         start = Spacing.medium,

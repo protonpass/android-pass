@@ -28,7 +28,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
@@ -78,7 +77,7 @@ class ItemDetailsHandlerImpl @Inject constructor(
     ): Flow<ItemDetailState> = combine(
         oneShot { observeShare(item.shareId).first() },
         attachmentsFlow(item, source),
-        detailEventFlow.onEach { PassLogger.i("VicLog", it.toString()) },
+        detailEventFlow,
         ::Triple
     )
         .flatMapLatest { (share, attachments, detailEvent) ->

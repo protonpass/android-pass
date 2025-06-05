@@ -127,8 +127,10 @@ internal fun PassItemDetailCustomFieldsSection(
 
                     is CustomFieldContent.Date -> {
                         val pattern = stringResource(R.string.custom_field_date_format)
-                        val date = remember(pattern, customFieldContent.value) {
-                            DateFormatUtils.formatDateFromMillis(pattern, customFieldContent.value)
+                        val date: String = remember(pattern, customFieldContent.value) {
+                            customFieldContent.value.value()?.let {
+                                DateFormatUtils.formatDateFromMillis(pattern, it)
+                            }.orEmpty()
                         }
                         PassItemDetailFieldRow(
                             modifier = modifier,

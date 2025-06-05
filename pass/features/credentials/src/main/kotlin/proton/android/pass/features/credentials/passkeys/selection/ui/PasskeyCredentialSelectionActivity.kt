@@ -51,9 +51,14 @@ import proton.android.pass.features.credentials.passkeys.selection.presentation.
 import proton.android.pass.features.credentials.passkeys.selection.presentation.PasskeyCredentialSelectionViewModel
 import proton.android.pass.features.credentials.shared.passkeys.domain.PasskeyRequestType
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarDispatcher
+import javax.inject.Inject
 
 @[AndroidEntryPoint RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)]
 internal class PasskeyCredentialSelectionActivity : FragmentActivity() {
+
+    @Inject
+    internal lateinit var snackbarDispatcher: SnackbarDispatcher
 
     private val viewModel: PasskeyCredentialSelectionViewModel by viewModels()
 
@@ -73,6 +78,12 @@ internal class PasskeyCredentialSelectionActivity : FragmentActivity() {
                 }
             }
         }
+    }
+
+    override fun onStop() {
+        snackbarDispatcher.reset()
+
+        super.onStop()
     }
 
     private fun setContent(state: PasskeyCredentialSelectionState.Ready) {

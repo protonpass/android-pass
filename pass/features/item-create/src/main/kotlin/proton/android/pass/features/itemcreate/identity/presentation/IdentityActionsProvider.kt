@@ -32,6 +32,8 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
+import proton.android.pass.features.itemcreate.common.UICustomFieldContent
+import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.common.ValidationError
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Birthdate
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.County
@@ -58,7 +60,13 @@ interface IdentityFormActions {
     fun onFieldChange(field: FieldChange)
     fun observeActions(coroutineScope: CoroutineScope)
     fun getFormState(): IdentityItemFormState
-    fun isFormStateValid(): Boolean
+    suspend fun isFormStateValid(
+        originalPersonalCustomFields: List<UICustomFieldContent> = emptyList(),
+        originalAddressCustomFields: List<UICustomFieldContent> = emptyList(),
+        originalContactCustomFields: List<UICustomFieldContent> = emptyList(),
+        originalWorkCustomFields: List<UICustomFieldContent> = emptyList(),
+        originalSections: List<UIExtraSection> = emptyList()
+    ): Boolean
     fun clearDraftData()
     fun onCustomFieldFocusChange(
         index: Int,

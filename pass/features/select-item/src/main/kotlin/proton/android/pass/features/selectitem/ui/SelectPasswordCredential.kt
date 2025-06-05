@@ -68,16 +68,14 @@ internal fun SelectPasswordCredential(modifier: Modifier = Modifier, onSelectAcc
                 text = stringResource(id = R.string.select_item_save_credential_subtitle),
                 textAlign = TextAlign.Center
             )
-        }
 
-        PassCircleButton(
-            modifier = Modifier
-                .align(alignment = Alignment.BottomCenter)
-                .padding(all = Spacing.medium),
-            text = stringResource(id = R.string.select_item_save_credential_button),
-            isLoading = false,
-            onClick = onSelectAccountClick
-        )
+            PassCircleButton(
+                modifier = Modifier.padding(all = Spacing.medium),
+                text = stringResource(id = R.string.select_item_save_credential_button),
+                isLoading = false,
+                onClick = onSelectAccountClick
+            )
+        }
     }
 }
 

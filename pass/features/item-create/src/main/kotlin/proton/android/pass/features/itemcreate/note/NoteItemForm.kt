@@ -224,7 +224,7 @@ internal fun NoteItemForm(
                             onEvent(NoteContentUiEvent.PasteTotp)
                         },
                         onScanCode = {
-                            val focusedField = focusedField as? NoteField.CustomField
+                            val focusedField = focusedField.value() as? NoteField.CustomField
                             onEvent(NoteContentUiEvent.OnScanTotp(focusedField?.field?.index.toOption()))
                         }
                     )

@@ -25,7 +25,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
@@ -199,7 +198,6 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                 }
                 else -> flowOf(TotpState.Limited)
             }
-                .onEach { println("VicLog - totp state: $it") }
         }
 
     override fun updateHiddenFieldsContents(

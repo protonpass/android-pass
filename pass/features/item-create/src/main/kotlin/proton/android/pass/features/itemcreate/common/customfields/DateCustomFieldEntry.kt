@@ -63,7 +63,9 @@ internal fun DateCustomFieldEntry(
 ) {
     val pattern = stringResource(R.string.custom_field_date_pattern)
     val date = remember(pattern, content.value) {
-        DateFormatUtils.formatDateFromMillis(pattern, content.value)
+        content.value?.let {
+            DateFormatUtils.formatDateFromMillis(pattern, it)
+        }.orEmpty()
     }
     ProtonTextField(
         modifier = modifier

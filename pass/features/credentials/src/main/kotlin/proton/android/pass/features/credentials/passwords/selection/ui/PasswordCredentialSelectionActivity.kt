@@ -51,6 +51,7 @@ import proton.android.pass.features.credentials.passwords.selection.presentation
 import proton.android.pass.features.credentials.passwords.selection.presentation.PasswordCredentialSelectionViewModel
 import proton.android.pass.features.credentials.shared.passwords.domain.PasswordRequestType
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @[AndroidEntryPoint RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)]
@@ -58,6 +59,9 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
 
     @Inject
     internal lateinit var packageNameUrlSuggestionAdapter: PackageNameUrlSuggestionAdapter
+
+    @Inject
+    internal lateinit var snackbarDispatcher: SnackbarDispatcher
 
     private val viewModel: PasswordCredentialSelectionViewModel by viewModels()
 
@@ -77,6 +81,12 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
                 }
             }
         }
+    }
+
+    override fun onStop() {
+        snackbarDispatcher.reset()
+
+        super.onStop()
     }
 
     private fun setContent(state: PasswordCredentialSelectionState.Ready) {

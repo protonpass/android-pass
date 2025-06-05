@@ -106,7 +106,7 @@ internal fun CustomItemForm(
                     modifier = Modifier.fillMaxWidth().padding(horizontal = Spacing.medium),
                     visible = shouldShowAttachmentBanner
                 ) {
-                    AttachmentBanner(Modifier.padding(bottom = Spacing.mediumSmall)) {
+                    AttachmentBanner(Modifier.padding(vertical = Spacing.small)) {
                         onEvent(ItemContentEvent.DismissAttachmentBanner)
                     }
                 }
@@ -115,7 +115,7 @@ internal fun CustomItemForm(
                 TitleSection(
                     modifier = Modifier
                         .padding(horizontal = Spacing.medium)
-                        .padding(bottom = Spacing.extraSmall)
+                        .padding(vertical = Spacing.small)
                         .roundedContainerNorm()
                         .padding(
                             start = Spacing.medium,

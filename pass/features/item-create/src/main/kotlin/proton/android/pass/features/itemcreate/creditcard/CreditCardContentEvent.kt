@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.itemcreate.creditcard
 
+import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
@@ -66,4 +67,9 @@ internal sealed interface CreditCardContentEvent {
 
     @JvmInline
     value class OnCustomFieldEvent(val event: CustomFieldEvent) : CreditCardContentEvent
+
+    data object PasteTotp : CreditCardContentEvent
+
+    @JvmInline
+    value class OnScanTotp(val index: Option<Int>) : CreditCardContentEvent
 }

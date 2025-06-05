@@ -47,6 +47,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
+import proton.android.pass.features.itemcreate.alias.AliasField.CustomField
 import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation.AddCustomField
 import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation.CustomFieldOptions
 import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation.DeleteAllAttachments
@@ -68,10 +69,17 @@ import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardH
 @Composable
 fun UpdateAlias(
     modifier: Modifier = Modifier,
+    navTotpUri: String? = null,
+    navTotpIndex: Int? = null,
     onNavigate: (BaseAliasNavigation) -> Unit,
     viewModel: UpdateAliasViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
+
+    LaunchedEffect(navTotpUri) {
+        navTotpUri ?: return@LaunchedEffect
+        viewModel.setTotp(navTotpUri, navTotpIndex ?: -1)
+    }
 
     var showDatePickerForField: Option<CustomFieldIdentifier> by remember { mutableStateOf(None) }
 
@@ -125,7 +133,7 @@ fun UpdateAlias(
 
                     is AliasContentUiEvent.OnTitleChange -> viewModel.onTitleChange(it.title)
                     AliasContentUiEvent.OnUpgrade ->
-                        actionAfterKeyboardHide = { onNavigate(BaseAliasNavigation.Upgrade) }
+                        actionAfterKeyboardHide = { onNavigate(Upgrade) }
 
                     is AliasContentUiEvent.Submit -> viewModel.updateAlias()
                     is AliasContentUiEvent.OnPrefixChange,
@@ -220,7 +228,7 @@ fun UpdateAlias(
 
                             is CustomFieldEvent.FocusRequested ->
                                 viewModel.onFocusChange(
-                                    field = AliasField.CustomField(event.field),
+                                    field = CustomField(event.field),
                                     isFocused = event.isFocused
                                 )
 
@@ -231,6 +239,11 @@ fun UpdateAlias(
                                 else -> throw IllegalStateException("Unhandled action")
                             }
                         }
+
+                    is AliasContentUiEvent.OnScanTotp ->
+                        actionAfterKeyboardHide =
+                            { onNavigate(BaseAliasNavigation.ScanTotp(it.index)) }
+                    AliasContentUiEvent.PasteTotp -> viewModel.onPasteTotp()
                 }
             }
         )

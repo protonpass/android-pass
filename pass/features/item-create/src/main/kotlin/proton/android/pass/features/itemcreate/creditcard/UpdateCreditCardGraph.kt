@@ -1,5 +1,8 @@
 package proton.android.pass.features.itemcreate.creditcard
 
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
@@ -28,8 +31,26 @@ sealed interface UpdateCreditCardNavigation : BaseCreditCardNavigation {
 }
 
 fun NavGraphBuilder.updateCreditCardGraph(onNavigate: (BaseCreditCardNavigation) -> Unit) {
-    composable(EditCreditCardNavItem) {
+    composable(EditCreditCardNavItem) { navBackStack ->
+        val navTotpUri by navBackStack.savedStateHandle
+            .getStateFlow<String?>(TOTP_NAV_PARAMETER_KEY, null)
+            .collectAsStateWithLifecycle()
+
+        LaunchedEffect(navTotpUri) {
+            navBackStack.savedStateHandle.remove<String?>(TOTP_NAV_PARAMETER_KEY)
+        }
+
+        val navTotpIndex by navBackStack.savedStateHandle
+            .getStateFlow<Int?>(INDEX_NAV_PARAMETER_KEY, null)
+            .collectAsStateWithLifecycle()
+
+        LaunchedEffect(navTotpIndex) {
+            navBackStack.savedStateHandle.remove<Int?>(INDEX_NAV_PARAMETER_KEY)
+        }
+
         UpdateCreditCardScreen(
+            navTotpUri = navTotpUri,
+            navTotpIndex = navTotpIndex,
             onNavigate = onNavigate
         )
     }

@@ -1224,6 +1224,14 @@ fun NavGraphBuilder.appGraph(
                 BaseCreditCardNavigation.TotpCancel -> appNavigator.navigateBack()
                 is BaseCreditCardNavigation.TotpSuccess ->
                     appNavigator.navigateBackWithResult(it.results)
+
+                is BaseCreditCardNavigation.ScanTotp -> {
+                    val prefix = CustomFieldPrefix.fromCreditCard(backDestination)
+                    appNavigator.navigate(
+                        destination = CameraTotpNavItem(prefix),
+                        route = CameraTotpNavItem(prefix).createNavRoute(None, it.index)
+                    )
+                }
             }
         }
     )
@@ -1345,6 +1353,14 @@ fun NavGraphBuilder.appGraph(
                 BaseAliasNavigation.TotpCancel -> appNavigator.navigateBack()
                 is BaseAliasNavigation.TotpSuccess ->
                     appNavigator.navigateBackWithResult(it.results)
+
+                is BaseAliasNavigation.ScanTotp -> {
+                    val prefix = CustomFieldPrefix.fromAlias(backDestination)
+                    appNavigator.navigate(
+                        destination = CameraTotpNavItem(prefix),
+                        route = CameraTotpNavItem(prefix).createNavRoute(None, it.index)
+                    )
+                }
             }
         }
     )

@@ -38,7 +38,7 @@ import proton.android.pass.features.itemcreate.ItemUpdate
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
-import proton.android.pass.features.itemcreate.common.formprocessor.CreditCardItemFormProcessor
+import proton.android.pass.features.itemcreate.common.formprocessor.CreditCardFormProcessorType
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.AttachmentsInitError
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.InitError
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.ItemLinkAttachmentsError
@@ -72,7 +72,7 @@ class UpdateCreditCardViewModel @Inject constructor(
     canPerformPaidAction: CanPerformPaidAction,
     customFieldHandler: CustomFieldHandler,
     customFieldDraftRepository: CustomFieldDraftRepository,
-    creditCardItemFormProcessor: CreditCardItemFormProcessor,
+    creditCardItemFormProcessor: CreditCardFormProcessorType,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCreditCardViewModel(
     userPreferencesRepository = userPreferencesRepository,

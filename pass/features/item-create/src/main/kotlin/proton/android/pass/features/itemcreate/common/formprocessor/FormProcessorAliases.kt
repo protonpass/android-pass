@@ -20,7 +20,22 @@ package proton.android.pass.features.itemcreate.common.formprocessor
 
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIExtraSection
+import proton.android.pass.features.itemcreate.creditcard.CreditCardItemFormState
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.ItemFormState
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityItemFormState
+import proton.android.pass.features.itemcreate.login.LoginItemFormState
+import proton.android.pass.features.itemcreate.note.NoteItemFormState
 
+typealias CreditCardFormProcessorType =
+    FormProcessor<CreditCardItemFormProcessor.Input, CreditCardItemFormState>
+typealias LoginItemFormProcessorType =
+    FormProcessor<LoginItemFormProcessor.Input, LoginItemFormState>
+typealias CustomItemFormProcessorType =
+    FormProcessor<CustomItemFormProcessor.Input, ItemFormState>
+typealias IdentityItemFormProcessorType =
+    FormProcessor<IdentityItemFormProcessor.Input, IdentityItemFormState>
+typealias NoteItemFormProcessorType =
+    FormProcessor<NoteItemFormProcessor.Input, NoteItemFormState>
 typealias CustomFieldFormProcessorType =
     FormProcessor<UICustomFieldContentFormProcessor.Input, List<UICustomFieldContent>>
 typealias SectionFormProcessorType =

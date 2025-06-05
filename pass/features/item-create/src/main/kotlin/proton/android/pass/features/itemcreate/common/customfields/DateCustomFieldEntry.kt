@@ -41,6 +41,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
+import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.composecomponents.impl.utils.passItemColors
@@ -56,6 +57,7 @@ internal fun DateCustomFieldEntry(
     index: Int,
     isLoading: Boolean,
     onClick: () -> Unit,
+    onChange: (String) -> Unit,
     onFocusChange: (Int, Boolean) -> Unit,
     onOptionsClick: () -> Unit,
     showLeadingIcon: Boolean,
@@ -106,6 +108,10 @@ internal fun DateCustomFieldEntry(
                 modifier = Modifier.padding(end = Spacing.small),
                 horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
             ) {
+                if (content.value != null) {
+                    SmallCrossIconButton { onChange("") }
+                }
+
                 CustomFieldOptionsButton(
                     backgroundColor = passItemColors.minorPrimary,
                     tint = passItemColors.majorSecondary,
@@ -128,6 +134,7 @@ internal fun DateCustomFieldEntryPreview(
                 content = UICustomFieldContent.Date(label = "label", value = 1_710_150_000_000L),
                 isLoading = input.second,
                 index = 0,
+                onChange = {},
                 onClick = {},
                 onFocusChange = { _, _ -> },
                 onOptionsClick = {},

@@ -29,6 +29,5 @@ interface IdentityFieldDraftRepository {
     fun addField(extraField: ExtraField, focus: Boolean)
     fun clearAddedFields()
     fun observeLastAddedExtraField(): Flow<Option<FocusedField>>
-    fun resetLastAddedExtraField()
     fun addCustomFieldIndex(index: Int)
 }

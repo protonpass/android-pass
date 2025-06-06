@@ -62,12 +62,6 @@ import proton.android.pass.features.itemcreate.identity.navigation.IdentityConte
 import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.AddIdentityFieldType
 import proton.android.pass.features.itemcreate.identity.presentation.CreateIdentityViewModel
 import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.AddressCustomField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ContactCustomField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.CustomExtraField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ExtraSectionCustomField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.PersonalCustomField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.WorkCustomField
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
 
@@ -86,7 +80,9 @@ fun CreateIdentityScreen(
         }
     }
 
-    var showDatePickerForField: Option<Pair<CustomExtraField, Int>> by remember { mutableStateOf(None) }
+    var showDatePickerForField: Option<Pair<IdentityField.CustomField, Int>> by remember {
+        mutableStateOf(None)
+    }
 
     var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
     PerformActionAfterKeyboardHide(
@@ -142,7 +138,7 @@ fun CreateIdentityScreen(
                     }
 
                     is IdentityContentEvent.OnCustomFieldOptions -> {
-                        viewModel.updateSelectedSection(it.customExtraField)
+                        viewModel.updateSelectedSection(it.field)
                         actionAfterKeyboardHide = {
                             onNavigate(CustomFieldOptions(it.label, it.index))
                         }
@@ -209,9 +205,9 @@ fun CreateIdentityScreen(
                     IdentityContentEvent.DismissAttachmentBanner ->
                         viewModel.dismissFileAttachmentsOnboarding()
 
-                    is IdentityContentEvent.OnCustomFieldClick -> when (it.customExtraField.type) {
+                    is IdentityContentEvent.OnCustomFieldClick -> when (it.field.customFieldType) {
                         CustomFieldType.Date -> {
-                            showDatePickerForField = Some(it.customExtraField to it.index)
+                            showDatePickerForField = Some(it.field to it.index)
                         }
                         else -> throw IllegalStateException("Unhandled action")
                     }
@@ -233,18 +229,23 @@ fun CreateIdentityScreen(
             }
         )
         showDatePickerForField.value()?.let { (customField, index) ->
-            val field = when (customField) {
-                is AddressCustomField -> viewModel.getFormState().uiAddressDetails.customFields
-                is ContactCustomField -> viewModel.getFormState().uiContactDetails.customFields
-                is ExtraSectionCustomField -> viewModel.getFormState().uiExtraSections[customField.index].customFields
-                is PersonalCustomField -> viewModel.getFormState().uiPersonalDetails.customFields
-                is WorkCustomField -> viewModel.getFormState().uiWorkDetails.customFields
+            val field = when (customField.sectionType) {
+                is IdentitySectionType.AddressDetails ->
+                    viewModel.getFormState().uiAddressDetails.customFields
+                is IdentitySectionType.ContactDetails ->
+                    viewModel.getFormState().uiContactDetails.customFields
+                is IdentitySectionType.ExtraSection ->
+                    viewModel.getFormState().uiExtraSections[customField.index].customFields
+                is IdentitySectionType.PersonalDetails ->
+                    viewModel.getFormState().uiPersonalDetails.customFields
+                is IdentitySectionType.WorkDetails ->
+                    viewModel.getFormState().uiWorkDetails.customFields
             }[index] as UICustomFieldContent.Date
             DatePickerModal(
                 selectedDate = field.value,
                 onDateSelected = {
                     val identityField = IdentityField.CustomField(
-                        sectionType = IdentitySectionType.from(customField),
+                        sectionType = customField.sectionType,
                         customFieldType = CustomFieldType.Date,
                         index = index
                     )

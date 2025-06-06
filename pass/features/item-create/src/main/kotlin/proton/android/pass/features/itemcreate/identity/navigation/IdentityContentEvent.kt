@@ -22,7 +22,6 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.CustomExtraField
 
 sealed interface IdentityContentEvent {
 
@@ -46,13 +45,13 @@ sealed interface IdentityContentEvent {
 
     data class OnCustomFieldClick(
         val index: Int,
-        val customExtraField: CustomExtraField
+        val field: IdentityField.CustomField
     ) : IdentityContentEvent
 
     data class OnCustomFieldOptions(
         val index: Int,
         val label: String,
-        val customExtraField: CustomExtraField
+        val field: IdentityField.CustomField
     ) : IdentityContentEvent
 
     data object OnAddPersonalDetailField : IdentityContentEvent

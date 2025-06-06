@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -39,6 +38,8 @@ import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.AddIdentityFieldType
 import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.IdentityFieldsSectionNavArgId
 import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.IdentitySectionIndexNavArgId
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
+import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType
 import javax.inject.Inject
 
 @HiltViewModel
@@ -57,19 +58,16 @@ class IdentityFieldsViewModel @Inject constructor(
     private val eventFlow: MutableStateFlow<IdentityFieldsEvent> =
         MutableStateFlow(IdentityFieldsEvent.Idle)
 
-    private val fieldFlow: Flow<PersistentSet<ExtraField>> = combine(
-        flowOf(
-            identityFieldDraftRepository.getSectionFields(
-                clazz = addIdentityFieldType.toExtraField(),
-                extraSectionIndex = sectionIndex
-            )
+    private val fieldFlow: Flow<PersistentSet<IdentityField>> = combine(
+        identityFieldDraftRepository.observeSectionFields(
+            addIdentityFieldType.toSection(sectionIndex), sectionIndex
         ),
         canPerformPaidAction()
-    ) { sectionFields: Set<ExtraField>, isPaidPlan: Boolean ->
+    ) { sectionFields: Set<IdentityField>, isPaidPlan: Boolean ->
         if (isPaidPlan) {
             sectionFields
         } else {
-            sectionFields.filterNot { it is CustomExtraField }
+            sectionFields.filterNot { it is IdentityField.CustomField }
         }.toPersistentSet()
     }
 
@@ -80,9 +78,9 @@ class IdentityFieldsViewModel @Inject constructor(
             initialValue = IdentityFieldsUiState.Initial
         )
 
-    fun onFieldClick(extraField: ExtraField) {
+    fun onFieldClick(extraField: IdentityField) {
         identityFieldDraftRepository.addField(extraField, true)
-        if (extraField is CustomExtraField) {
+        if (extraField is IdentityField.CustomField) {
             draftRepository.save(DRAFT_IDENTITY_CUSTOM_FIELD_KEY, extraField)
             eventFlow.update { IdentityFieldsEvent.OnAddCustomExtraField }
         } else {
@@ -95,11 +93,11 @@ class IdentityFieldsViewModel @Inject constructor(
     }
 }
 
-fun AddIdentityFieldType.toExtraField(): Class<out ExtraField> = when (this) {
-    AddIdentityFieldType.Personal -> PersonalDetailsField::class.java
-    AddIdentityFieldType.Contact -> ContactDetailsField::class.java
-    AddIdentityFieldType.Address -> AddressDetailsField::class.java
-    AddIdentityFieldType.Work -> WorkDetailsField::class.java
-    AddIdentityFieldType.Extra -> ExtraSectionField::class.java
+fun AddIdentityFieldType.toSection(sectionIndex: Int): IdentitySectionType = when (this) {
+    AddIdentityFieldType.Personal -> IdentitySectionType.PersonalDetails
+    AddIdentityFieldType.Contact -> IdentitySectionType.ContactDetails
+    AddIdentityFieldType.Address -> IdentitySectionType.AddressDetails
+    AddIdentityFieldType.Work -> IdentitySectionType.WorkDetails
+    AddIdentityFieldType.Extra -> IdentitySectionType.ExtraSection(sectionIndex)
 }
 

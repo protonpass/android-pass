@@ -31,7 +31,6 @@ import proton.android.pass.domain.Vault
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.ValidationError
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ExtraField
 
 sealed interface IdentityUiState {
     @Immutable
@@ -102,7 +101,7 @@ sealed interface IdentityUiState {
         else -> persistentSetOf()
     }
 
-    fun getExtraFields(): PersistentSet<ExtraField> = when (this) {
+    fun getExtraFields(): PersistentSet<IdentityField> = when (this) {
         is CreateIdentity -> sharedState.extraFields
         is UpdateIdentity -> sharedState.extraFields
         else -> persistentSetOf()

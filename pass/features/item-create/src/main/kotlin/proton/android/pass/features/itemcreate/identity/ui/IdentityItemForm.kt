@@ -61,10 +61,7 @@ import proton.android.pass.features.itemcreate.identity.navigation.IdentityConte
 import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
 import proton.android.pass.features.itemcreate.identity.presentation.IdentityItemFormState
 import proton.android.pass.features.itemcreate.identity.presentation.IdentityUiState
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.AddressDetailsField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ContactDetailsField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.PersonalDetailsField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.WorkDetailsField
+import proton.android.pass.features.itemcreate.identity.presentation.section
 import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType.AddressDetails
 import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType.ContactDetails
 import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType.ExtraSection
@@ -154,7 +151,7 @@ fun IdentityItemForm(
                     modifier = Modifier.padding(horizontal = Spacing.medium),
                     enabled = enabled,
                     uiPersonalDetails = identityItemFormState.uiPersonalDetails,
-                    extraFields = extraFields.filterIsInstance<PersonalDetailsField>()
+                    extraFields = extraFields.filter { it.section() == PersonalDetails }
                         .toPersistentSet(),
                     showAddPersonalDetailsButton = identityUiState.showAddPersonalDetailsButton(),
                     focusedField = focusedField,
@@ -177,7 +174,7 @@ fun IdentityItemForm(
                     modifier = Modifier.padding(horizontal = Spacing.medium),
                     enabled = enabled,
                     uiAddressDetails = identityItemFormState.uiAddressDetails,
-                    extraFields = extraFields.filterIsInstance<AddressDetailsField>()
+                    extraFields = extraFields.filter { it.section() == AddressDetails }
                         .toPersistentSet(),
                     focusedField = focusedField,
                     showAddAddressDetailsButton = identityUiState.showAddAddressDetailsButton(),
@@ -200,7 +197,7 @@ fun IdentityItemForm(
                     modifier = Modifier.padding(horizontal = Spacing.medium),
                     enabled = enabled,
                     uiContactDetails = identityItemFormState.uiContactDetails,
-                    extraFields = extraFields.filterIsInstance<ContactDetailsField>()
+                    extraFields = extraFields.filter { it.section() == ContactDetails }
                         .toPersistentSet(),
                     focusedField = focusedField,
                     showAddContactDetailsButton = identityUiState.showAddContactDetailsButton(),
@@ -223,7 +220,7 @@ fun IdentityItemForm(
                     modifier = Modifier.padding(horizontal = Spacing.medium),
                     enabled = enabled,
                     uiWorkDetails = identityItemFormState.uiWorkDetails,
-                    extraFields = extraFields.filterIsInstance<WorkDetailsField>()
+                    extraFields = extraFields.filter { it.section() == WorkDetails }
                         .toPersistentSet(),
                     focusedField = focusedField,
                     showAddWorkDetailsButton = identityUiState.showAddWorkDetailsButton(),

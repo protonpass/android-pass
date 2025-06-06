@@ -53,7 +53,6 @@ import proton.android.pass.features.itemcreate.identity.presentation.UIContactDe
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ContactCustomField
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ContactDetailsField
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Facebook
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.FocusedField
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Instagram
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Linkedin
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Reddit
@@ -77,7 +76,7 @@ internal fun ContactDetails(
     uiContactDetails: UIContactDetails,
     enabled: Boolean,
     extraFields: PersistentSet<ContactDetailsField>,
-    focusedField: Option<FocusedField>,
+    focusedField: Option<IdentityField>,
     showAddContactDetailsButton: Boolean,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
@@ -138,7 +137,7 @@ internal fun ContactDetails(
                 LinkedinInput(
                     value = uiContactDetails.linkedin,
                     enabled = enabled,
-                    requestFocus = field?.extraField is Linkedin,
+                    requestFocus = field is IdentityField.Linkedin,
                     onChange = { onEvent(OnFieldChange(IdentityField.Linkedin, it)) },
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.Linkedin, it)) }
                 )
@@ -148,7 +147,7 @@ internal fun ContactDetails(
                 RedditInput(
                     value = uiContactDetails.reddit,
                     enabled = enabled,
-                    requestFocus = field?.extraField is Reddit,
+                    requestFocus = field is IdentityField.Reddit,
                     onChange = { onEvent(OnFieldChange(IdentityField.Reddit, it)) },
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.Reddit, it)) }
                 )
@@ -158,7 +157,7 @@ internal fun ContactDetails(
                 FacebookInput(
                     value = uiContactDetails.facebook,
                     enabled = enabled,
-                    requestFocus = field?.extraField is Facebook,
+                    requestFocus = field is IdentityField.Facebook,
                     onChange = { onEvent(OnFieldChange(IdentityField.Facebook, it)) },
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.Facebook, it)) }
                 )
@@ -168,7 +167,7 @@ internal fun ContactDetails(
                 YahooInput(
                     value = uiContactDetails.yahoo,
                     enabled = enabled,
-                    requestFocus = field?.extraField is Yahoo,
+                    requestFocus = field is IdentityField.Yahoo,
                     onChange = { onEvent(OnFieldChange(IdentityField.Yahoo, it)) },
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.Yahoo, it)) }
                 )
@@ -178,7 +177,7 @@ internal fun ContactDetails(
                 InstagramInput(
                     value = uiContactDetails.instagram,
                     enabled = enabled,
-                    requestFocus = field?.extraField is Instagram,
+                    requestFocus = field is IdentityField.Instagram,
                     onChange = { onEvent(OnFieldChange(IdentityField.Instagram, it)) },
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.Instagram, it)) }
                 )
@@ -226,7 +225,9 @@ internal fun ContactDetails(
             )
             RequestFocusLaunchedEffect(
                 focusRequester = focusRequester,
-                requestFocus = field?.extraField is ContactCustomField && field.index == index
+                requestFocus = field is IdentityField.CustomField &&
+                    field.sectionType is ContactDetails &&
+                    field.index == index
             )
         }
         if (showAddContactDetailsButton) {

@@ -97,7 +97,7 @@ fun NavGraphBuilder.updateNoteGraph(onNavigate: (BaseNoteNavigation) -> Unit) {
     }
     createTotpGraph(
         prefix = CustomFieldPrefix.UpdateNote,
-        onSuccess = { totp, _, index ->
+        onSuccess = { totp, _, _, index ->
             val values = buildMap<String, Any> {
                 put(TOTP_NAV_PARAMETER_KEY, totp)
                 index?.let { put(INDEX_NAV_PARAMETER_KEY, it) }
@@ -105,7 +105,7 @@ fun NavGraphBuilder.updateNoteGraph(onNavigate: (BaseNoteNavigation) -> Unit) {
             onNavigate(BaseNoteNavigation.TotpSuccess(values))
         },
         onCloseTotp = { onNavigate(BaseNoteNavigation.TotpCancel) },
-        onOpenImagePicker = { _, index ->
+        onOpenImagePicker = { _, _, index ->
             onNavigate(BaseNoteNavigation.OpenImagePicker(index.toOption()))
         }
     )

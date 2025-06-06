@@ -20,11 +20,12 @@ package proton.android.pass.features.itemcreate.identity.navigation
 
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
-import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.AddIdentityFieldType
+import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType
 import java.net.URI
 
 sealed interface BaseIdentityNavigation {
@@ -70,4 +71,16 @@ sealed interface BaseIdentityNavigation {
 
     @JvmInline
     value class OpenDraftAttachmentOptions(val uri: URI) : BaseIdentityNavigation
+
+    @JvmInline
+    value class TotpSuccess(val results: Map<String, Any>) : BaseIdentityNavigation
+    data object TotpCancel : BaseIdentityNavigation
+
+    data class OpenImagePicker(
+        val specialIndex: Option<Int>,
+        val sectionIndex: Option<Int>,
+        val index: Option<Int>
+    ) : BaseIdentityNavigation
+
+    data class ScanTotp(val section: IdentitySectionType, val index: Int) : BaseIdentityNavigation
 }

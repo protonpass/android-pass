@@ -63,7 +63,6 @@ import proton.android.pass.features.itemcreate.identity.presentation.IdentityIte
 import proton.android.pass.features.itemcreate.identity.presentation.IdentityUiState
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.AddressDetailsField
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ContactDetailsField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.CustomExtraField
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.PersonalDetailsField
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.WorkDetailsField
 import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType.AddressDetails
@@ -99,7 +98,7 @@ fun IdentityItemForm(
     val canUseCustomFields = remember(identityUiState) { identityUiState.getCanUseCustomFields() }
     Box(modifier = modifier) {
         val isCurrentStickyVisible = remember(focusedField) {
-            (focusedField.value()?.extraField as? CustomExtraField)?.type == CustomFieldType.Totp
+            (focusedField.value() as? IdentityField.CustomField)?.customFieldType == CustomFieldType.Totp
         }
 
         Column(

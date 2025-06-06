@@ -40,7 +40,6 @@ import proton.android.pass.features.itemcreate.identity.navigation.IdentityConte
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnFieldChange
 import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ExtraSectionCustomField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.FocusedField
 
 @Composable
 fun ExtraSection(
@@ -48,7 +47,7 @@ fun ExtraSection(
     section: UIExtraSection,
     enabled: Boolean,
     sectionIndex: Int,
-    focusedField: Option<FocusedField>,
+    focusedField: Option<IdentityField>,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     val field = focusedField.value()
@@ -98,8 +97,9 @@ fun ExtraSection(
             )
             RequestFocusLaunchedEffect(
                 focusRequester = focusRequester,
-                requestFocus = field?.extraField is ExtraSectionCustomField &&
-                    field.extraField.index == sectionIndex &&
+                requestFocus = field is IdentityField.CustomField &&
+                    field.sectionType is IdentitySectionType.ExtraSection &&
+                    field.sectionType.index == sectionIndex &&
                     field.index == index
             )
         }

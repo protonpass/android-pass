@@ -301,11 +301,10 @@ fun IdentityItemForm(
                 hasCamera = hasCamera,
                 passItemColors = passItemColors(ItemCategory.Identity),
                 onPasteCode = {
-                    // onEvent(IdentityContentEvent.PasteTotp)
+                    onEvent(IdentityContentEvent.PasteTotp)
                 },
                 onScanCode = {
-                    // val focusedField = focusedField.value() as? NoteField.CustomField
-                    // onEvent(IdentityContentEvent.OnScanTotp(focusedField?.field?.index.toOption()))
+
                 }
             )
         }

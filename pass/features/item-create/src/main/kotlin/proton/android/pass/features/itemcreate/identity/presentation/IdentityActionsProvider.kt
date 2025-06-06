@@ -78,6 +78,7 @@ interface IdentityFormActions {
     suspend fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment)
     suspend fun retryUploadDraftAttachment(metadata: FileMetadata)
     suspend fun dismissFileAttachmentsOnboardingBanner()
+    suspend fun pasteTotp()
 
     fun onSocialSecurityNumberFieldFocusChange(isFocused: Boolean)
 }

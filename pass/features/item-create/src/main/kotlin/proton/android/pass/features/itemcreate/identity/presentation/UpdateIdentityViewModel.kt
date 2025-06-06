@@ -185,6 +185,10 @@ class UpdateIdentityViewModel @Inject constructor(
         viewModelScope.launch { identityActionsProvider.dismissFileAttachmentsOnboardingBanner() }
     }
 
+    fun onPasteTotp() {
+        viewModelScope.launch { identityActionsProvider.pasteTotp() }
+    }
+
     companion object {
         private const val TAG = "UpdateIdentityViewModel"
     }

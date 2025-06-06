@@ -33,6 +33,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.combineN
@@ -103,7 +106,7 @@ import proton.android.pass.preferences.value
 import java.net.URI
 import javax.inject.Inject
 
-@Suppress("TooManyFunctions", "LargeClass")
+@Suppress("TooManyFunctions", "LargeClass", "LongParameterList")
 @ViewModelScoped
 class IdentityActionsProviderImpl @Inject constructor(
     private val draftRepository: DraftRepository,
@@ -119,6 +122,8 @@ class IdentityActionsProviderImpl @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val identityItemFormProcessor: IdentityItemFormProcessor,
     private val customFieldHandler: CustomFieldHandler,
+    private val appDispatchers: AppDispatchers,
+    private val clipboardManager: ClipboardManager,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : IdentityActionsProvider {
 
@@ -950,6 +955,28 @@ class IdentityActionsProviderImpl @Inject constructor(
                         )
                     )
                 }
+        }
+    }
+
+    override suspend fun pasteTotp() {
+        withContext(appDispatchers.io) {
+            onUserEditedContent()
+            clipboardManager.getClipboardContent()
+                .onSuccess { clipboardContent ->
+                    withContext(appDispatchers.main) {
+                        when (val field = focusedFieldState.value.value()) {
+                            is IdentityField.CustomField -> {
+                                val sanitisedContent = clipboardContent
+                                    .replace(" ", "")
+                                    .replace("\n", "")
+                                onFieldChange(field, sanitisedContent)
+                            }
+
+                            else -> {}
+                        }
+                    }
+                }
+                .onFailure { PassLogger.d(TAG, it, "Failed on getting clipboard content") }
         }
     }
 

@@ -35,37 +35,15 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTit
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.features.itemcreate.R
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.AddressCustomField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.AddressDetailsField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Birthdate
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ContactCustomField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ContactDetailsField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.County
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ExtraField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ExtraSectionCustomField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Facebook
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.FirstName
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Floor
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Gender
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Instagram
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.LastName
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Linkedin
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.MiddleName
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.PersonalCustomField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.PersonalDetailsField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.PersonalWebsite
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Reddit
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.WorkCustomField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.WorkDetailsField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.WorkEmail
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.WorkPhoneNumber
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Yahoo
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
+import proton.android.pass.features.itemcreate.identity.presentation.section
+import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType
 
 @Composable
 fun IdentityFieldsBottomSheetContent(
     modifier: Modifier = Modifier,
-    fieldSet: ImmutableSet<ExtraField>,
-    onFieldClick: (ExtraField) -> Unit
+    fieldSet: ImmutableSet<IdentityField>,
+    onFieldClick: (IdentityField) -> Unit
 ) {
     Column(modifier = modifier.bottomSheet(), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
@@ -73,16 +51,16 @@ fun IdentityFieldsBottomSheetContent(
             style = PassTheme.typography.body3Weak()
         )
         fieldSet.firstOrNull()?.let {
-            val title = when (it) {
-                is PersonalDetailsField ->
+            val title = when (it.section()) {
+                is IdentitySectionType.PersonalDetails ->
                     stringResource(R.string.identity_section_personal_details)
-                is AddressDetailsField ->
+                is IdentitySectionType.AddressDetails ->
                     stringResource(R.string.identity_section_address_details)
-                is ContactDetailsField ->
+                is IdentitySectionType.ContactDetails ->
                     stringResource(R.string.identity_section_contact_details)
-                is WorkDetailsField ->
+                is IdentitySectionType.WorkDetails ->
                     stringResource(R.string.identity_section_work_details)
-                is ExtraSectionCustomField -> ""
+                is IdentitySectionType.ExtraSection -> ""
             }
             if (title.isNotBlank()) {
                 BottomSheetTitle(
@@ -96,31 +74,28 @@ fun IdentityFieldsBottomSheetContent(
     }
 }
 
-internal fun extraOption(extraField: ExtraField, onClick: (ExtraField) -> Unit): BottomSheetItem =
+internal fun extraOption(extraField: IdentityField, onClick: (IdentityField) -> Unit): BottomSheetItem =
     object : BottomSheetItem {
         override val title: @Composable () -> Unit
             get() = {
                 val titleResId = when (extraField) {
-                    FirstName -> R.string.identity_add_field_first_name
-                    MiddleName -> R.string.identity_add_field_middle_name
-                    LastName -> R.string.identity_add_field_last_name
-                    Birthdate -> R.string.identity_add_field_birthdate
-                    Gender -> R.string.identity_add_field_gender
-                    Floor -> R.string.identity_add_field_floor
-                    County -> R.string.identity_add_field_county
-                    Linkedin -> R.string.identity_add_field_linkedin
-                    Reddit -> R.string.identity_add_field_reddit
-                    Facebook -> R.string.identity_add_field_facebook
-                    Yahoo -> R.string.identity_add_field_yahoo
-                    Instagram -> R.string.identity_add_field_instagram
-                    PersonalWebsite -> R.string.identity_add_field_personal_website
-                    WorkPhoneNumber -> R.string.identity_add_field_work_phone_number
-                    WorkEmail -> R.string.identity_add_field_work_email_address
-                    is AddressCustomField,
-                    is ContactCustomField,
-                    is PersonalCustomField,
-                    is WorkCustomField,
-                    is ExtraSectionCustomField -> R.string.identity_add_field_custom_field
+                    IdentityField.FirstName -> R.string.identity_add_field_first_name
+                    IdentityField.MiddleName -> R.string.identity_add_field_middle_name
+                    IdentityField.LastName -> R.string.identity_add_field_last_name
+                    IdentityField.Birthdate -> R.string.identity_add_field_birthdate
+                    IdentityField.Gender -> R.string.identity_add_field_gender
+                    IdentityField.Floor -> R.string.identity_add_field_floor
+                    IdentityField.County -> R.string.identity_add_field_county
+                    IdentityField.Linkedin -> R.string.identity_add_field_linkedin
+                    IdentityField.Reddit -> R.string.identity_add_field_reddit
+                    IdentityField.Facebook -> R.string.identity_add_field_facebook
+                    IdentityField.Yahoo -> R.string.identity_add_field_yahoo
+                    IdentityField.Instagram -> R.string.identity_add_field_instagram
+                    IdentityField.PersonalWebsite -> R.string.identity_add_field_personal_website
+                    IdentityField.WorkPhoneNumber -> R.string.identity_add_field_work_phone_number
+                    IdentityField.WorkEmail -> R.string.identity_add_field_work_email_address
+                    is IdentityField.CustomField -> R.string.identity_add_field_custom_field
+                    else -> throw IllegalStateException("Unknown extra field: $extraField")
                 }
                 BottomSheetItemTitle(
                     text = stringResource(titleResId),

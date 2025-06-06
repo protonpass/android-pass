@@ -49,13 +49,6 @@ import proton.android.pass.features.itemcreate.identity.navigation.IdentityConte
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnFocusChange
 import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
 import proton.android.pass.features.itemcreate.identity.presentation.UIPersonalDetails
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Birthdate
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.FirstName
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Gender
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.LastName
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.MiddleName
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.PersonalCustomField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.PersonalDetailsField
 import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType.PersonalDetails
 import proton.android.pass.features.itemcreate.identity.ui.inputfields.BirthdateInput
 import proton.android.pass.features.itemcreate.identity.ui.inputfields.EmailInput
@@ -71,7 +64,7 @@ internal fun PersonalDetails(
     modifier: Modifier = Modifier,
     uiPersonalDetails: UIPersonalDetails,
     enabled: Boolean,
-    extraFields: PersistentSet<PersonalDetailsField>,
+    extraFields: PersistentSet<IdentityField>,
     focusedField: Option<IdentityField>,
     showAddPersonalDetailsButton: Boolean,
     onEvent: (IdentityContentEvent) -> Unit
@@ -103,7 +96,7 @@ internal fun PersonalDetails(
                 onChange = { onEvent(OnFieldChange(IdentityField.PhoneNumber, it)) }
             )
 
-            if (extraFields.contains(FirstName)) {
+            if (extraFields.contains(IdentityField.FirstName)) {
                 PassDivider()
                 FirstNameInput(
                     value = uiPersonalDetails.firstName,
@@ -113,7 +106,7 @@ internal fun PersonalDetails(
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.FirstName, it)) }
                 )
             }
-            if (extraFields.contains(MiddleName)) {
+            if (extraFields.contains(IdentityField.MiddleName)) {
                 PassDivider()
                 MiddleNameInput(
                     value = uiPersonalDetails.middleName,
@@ -123,7 +116,7 @@ internal fun PersonalDetails(
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.MiddleName, it)) }
                 )
             }
-            if (extraFields.contains(LastName)) {
+            if (extraFields.contains(IdentityField.LastName)) {
                 PassDivider()
                 LastNameInput(
                     value = uiPersonalDetails.lastName,
@@ -133,7 +126,7 @@ internal fun PersonalDetails(
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.LastName, it)) }
                 )
             }
-            if (extraFields.contains(Birthdate)) {
+            if (extraFields.contains(IdentityField.Birthdate)) {
                 PassDivider()
                 BirthdateInput(
                     value = uiPersonalDetails.birthdate,
@@ -143,7 +136,7 @@ internal fun PersonalDetails(
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.Birthdate, it)) }
                 )
             }
-            if (extraFields.contains(Gender)) {
+            if (extraFields.contains(IdentityField.Gender)) {
                 PassDivider()
                 GenderInput(
                     value = uiPersonalDetails.gender,
@@ -156,7 +149,6 @@ internal fun PersonalDetails(
         }
         uiPersonalDetails.customFields.forEachIndexed { index, entry ->
             val focusRequester = remember { FocusRequester() }
-            val customExtraField = PersonalCustomField(entry.toCustomFieldType())
             val identityField = IdentityField.CustomField(
                 sectionType = PersonalDetails,
                 customFieldType = entry.toCustomFieldType(),
@@ -175,17 +167,14 @@ internal fun PersonalDetails(
                 },
                 onClick = {
                     onEvent(
-                        IdentityContentEvent.OnCustomFieldClick(
-                            index = index,
-                            customExtraField = customExtraField
-                        )
+                        IdentityContentEvent.OnCustomFieldClick(index, identityField)
                     )
                 },
                 onFocusChange = { idx, isFocused ->
                     onEvent(OnFocusChange(identityField, isFocused))
                 },
                 onOptionsClick = {
-                    onEvent(OnCustomFieldOptions(index, entry.label, customExtraField))
+                    onEvent(OnCustomFieldOptions(index, entry.label, identityField))
                 }
             )
             RequestFocusLaunchedEffect(

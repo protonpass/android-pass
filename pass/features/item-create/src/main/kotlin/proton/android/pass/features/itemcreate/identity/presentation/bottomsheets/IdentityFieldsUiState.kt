@@ -21,10 +21,11 @@ package proton.android.pass.features.itemcreate.identity.presentation.bottomshee
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentSetOf
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
 
 @Stable
 data class IdentityFieldsUiState(
-    val fieldSet: ImmutableSet<ExtraField>,
+    val fieldSet: ImmutableSet<IdentityField>,
     val event: IdentityFieldsEvent
 ) {
     companion object {

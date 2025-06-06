@@ -27,6 +27,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -266,7 +267,8 @@ class CreateAliasViewModelTest {
         customFieldHandler = CustomFieldHandlerImpl(TestEncryptionContextProvider()),
         customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
         canPerformPaidAction = TestCanPerformPaidAction(),
-        aliasItemFormProcessor = FakeAliasItemFormProcessor()
+        aliasItemFormProcessor = FakeAliasItemFormProcessor(),
+        clipboardManager = TestClipboardManager()
     ).apply {
         setDraftStatus(isDraft)
     }

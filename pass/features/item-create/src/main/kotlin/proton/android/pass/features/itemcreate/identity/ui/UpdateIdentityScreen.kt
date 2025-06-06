@@ -64,6 +64,7 @@ import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardH
 @Composable
 fun UpdateIdentityScreen(
     modifier: Modifier = Modifier,
+    totpNavParams: TotpNavParams?,
     viewModel: UpdateIdentityViewModel = hiltViewModel(),
     onNavigate: (BaseIdentityNavigation) -> Unit
 ) {
@@ -71,6 +72,10 @@ fun UpdateIdentityScreen(
 
     var showDatePickerForField: Option<Pair<IdentityField.CustomField, Int>> by remember {
         mutableStateOf(None)
+    }
+
+    TotpSetLaunchEffect(totpNavParams) { field, uri ->
+        viewModel.onFieldChange(field, uri)
     }
 
     var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
@@ -202,7 +207,9 @@ fun UpdateIdentityScreen(
                         else -> throw IllegalStateException("Unhandled action")
                     }
 
-                    is IdentityContentEvent.OnScanTotp -> TODO()
+                    is IdentityContentEvent.OnScanTotp ->
+                        actionAfterKeyboardHide =
+                            { onNavigate(BaseIdentityNavigation.ScanTotp(it.section, it.index)) }
                     IdentityContentEvent.PasteTotp -> viewModel.onPasteTotp()
                 }
             }

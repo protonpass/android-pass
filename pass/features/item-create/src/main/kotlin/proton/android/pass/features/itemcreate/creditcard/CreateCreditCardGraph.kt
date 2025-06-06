@@ -96,7 +96,7 @@ fun NavGraphBuilder.createCreditCardGraph(canUseAttachments: Boolean, onNavigate
     }
     createTotpGraph(
         prefix = CustomFieldPrefix.CreateCreditCard,
-        onSuccess = { totp, _, index ->
+        onSuccess = { totp, _, _, index ->
             val values = buildMap<String, Any> {
                 put(TOTP_NAV_PARAMETER_KEY, totp)
                 index?.let { put(INDEX_NAV_PARAMETER_KEY, it) }
@@ -104,7 +104,7 @@ fun NavGraphBuilder.createCreditCardGraph(canUseAttachments: Boolean, onNavigate
             onNavigate(BaseCreditCardNavigation.TotpSuccess(values))
         },
         onCloseTotp = { onNavigate(BaseCreditCardNavigation.TotpCancel) },
-        onOpenImagePicker = { _, index ->
+        onOpenImagePicker = { _, _, index ->
             onNavigate(BaseCreditCardNavigation.OpenImagePicker(index.toOption()))
         }
     )

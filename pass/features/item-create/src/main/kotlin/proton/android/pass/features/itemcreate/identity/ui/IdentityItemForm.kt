@@ -301,7 +301,9 @@ fun IdentityItemForm(
                     onEvent(IdentityContentEvent.PasteTotp)
                 },
                 onScanCode = {
-
+                    val focusedField = focusedField.value() as? IdentityField.CustomField
+                        ?: return@StickyTotpOptions
+                    onEvent(IdentityContentEvent.OnScanTotp(focusedField.sectionType, focusedField.index))
                 }
             )
         }

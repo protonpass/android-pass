@@ -20,6 +20,13 @@ package proton.android.pass.features.itemcreate.identity.ui
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import proton.android.pass.common.api.Option
+
+private const val PERSONAL_DETAILS_INDEX = 0
+private const val ADDRESS_DETAILS_INDEX = 1
+private const val CONTACT_DETAILS_INDEX = 2
+private const val WORK_DETAILS_INDEX = 3
+private const val EXTRA_SECTION_INDEX = 4
 
 sealed interface IdentitySectionType {
     @Parcelize
@@ -36,4 +43,23 @@ sealed interface IdentitySectionType {
 
     @Parcelize
     data class ExtraSection(val index: Int) : IdentitySectionType, Parcelable
+
+    companion object {
+        fun IdentitySectionType.toIndex(): Int = when (this) {
+            PersonalDetails -> PERSONAL_DETAILS_INDEX
+            AddressDetails -> ADDRESS_DETAILS_INDEX
+            ContactDetails -> CONTACT_DETAILS_INDEX
+            WorkDetails -> WORK_DETAILS_INDEX
+            is ExtraSection -> EXTRA_SECTION_INDEX
+        }
+
+        fun from(index: Int, sectionIndex: Option<Int>): IdentitySectionType = when (index) {
+            PERSONAL_DETAILS_INDEX -> PersonalDetails
+            ADDRESS_DETAILS_INDEX -> AddressDetails
+            CONTACT_DETAILS_INDEX -> ContactDetails
+            WORK_DETAILS_INDEX -> WorkDetails
+            EXTRA_SECTION_INDEX -> ExtraSection(sectionIndex.value() ?: 0)
+            else -> throw IllegalStateException("Unknown index $index")
+        }
+    }
 }

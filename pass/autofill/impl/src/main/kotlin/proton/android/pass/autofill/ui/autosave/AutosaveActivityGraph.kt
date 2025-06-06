@@ -132,7 +132,7 @@ fun NavGraphBuilder.autosaveActivityGraph(
                     val prefix = CustomFieldPrefix.fromLogin(backDestination)
                     appNavigator.navigate(
                         destination = CameraTotpNavItem(prefix),
-                        route = CameraTotpNavItem(prefix).createNavRoute(None, it.index)
+                        route = CameraTotpNavItem(prefix).createNavRoute(index = it.index)
                     )
                 }
 
@@ -187,7 +187,7 @@ fun NavGraphBuilder.autosaveActivityGraph(
                     val prefix = CustomFieldPrefix.fromLogin(backDestination)
                     appNavigator.navigate(
                         destination = PhotoPickerTotpNavItem(prefix),
-                        route = PhotoPickerTotpNavItem(prefix).createNavRoute(None, it.index),
+                        route = PhotoPickerTotpNavItem(prefix).createNavRoute(index = it.index),
                         backDestination = CreateLoginNavItem
                     )
                 }

@@ -31,6 +31,7 @@ import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.toPath
 
 const val TOTP_NAV_PARAMETER_KEY = "totp_nav_parameter_key"
+const val SPECIAL_SECTION_INDEX_NAV_PARAMETER_KEY = "special_index_nav_parameter_key"
 const val SECTION_INDEX_NAV_PARAMETER_KEY = "section_index_nav_parameter_key"
 const val INDEX_NAV_PARAMETER_KEY = "index_nav_parameter_key"
 
@@ -41,9 +42,15 @@ data class CameraTotpNavItem(val prefix: CustomFieldPrefix) : NavItem(
         TotpOptionalNavArgId.TotpIndexField
     )
 ) {
-    fun createNavRoute(sectionIndex: Option<Int>, index: Option<Int>) = buildString {
+    fun createNavRoute(
+        specialSectionIndex: Option<Int> = None,
+        sectionIndex: Option<Int> = None,
+        index: Option<Int>
+    ) = buildString {
         append(baseRoute)
         val path = mapOf(
+            TotpOptionalNavArgId.TotpSpecialSectionIndexField.key to
+                (specialSectionIndex.value() ?: -1),
             TotpOptionalNavArgId.TotpSectionIndexField.key to (sectionIndex.value() ?: -1),
             TotpOptionalNavArgId.TotpIndexField.key to (index.value() ?: -1)
         ).toPath()
@@ -60,13 +67,22 @@ data class CameraTotpNavItem(val prefix: CustomFieldPrefix) : NavItem(
 data class PhotoPickerTotpNavItem(val prefix: CustomFieldPrefix) : NavItem(
     baseRoute = "$prefix/totp/photopicker",
     optionalArgIds = listOf(
+        TotpOptionalNavArgId.TotpSpecialSectionIndexField,
         TotpOptionalNavArgId.TotpSectionIndexField,
         TotpOptionalNavArgId.TotpIndexField
     )
 ) {
-    fun createNavRoute(sectionIndex: Option<Int> = None, index: Option<Int>) = buildString {
+    fun createNavRoute(
+        specialSectionIndex: Option<Int> = None,
+        sectionIndex: Option<Int> = None,
+        index: Option<Int>
+    ) = buildString {
         append(baseRoute)
         val path = mapOf(
+            TotpOptionalNavArgId.TotpSpecialSectionIndexField.key to (
+                specialSectionIndex.value()
+                    ?: -1
+                ),
             TotpOptionalNavArgId.TotpSectionIndexField.key to (sectionIndex.value() ?: -1),
             TotpOptionalNavArgId.TotpIndexField.key to (index.value() ?: -1)
         ).toPath()
@@ -81,6 +97,10 @@ data class PhotoPickerTotpNavItem(val prefix: CustomFieldPrefix) : NavItem(
 }
 
 enum class TotpOptionalNavArgId : OptionalNavArgId {
+    TotpSpecialSectionIndexField {
+        override val key: String = "specialSectionIndex"
+        override val navType: NavType<*> = NavType.IntType
+    },
     TotpSectionIndexField {
         override val key: String = "sectionIndex"
         override val navType: NavType<*> = NavType.IntType
@@ -93,11 +113,14 @@ enum class TotpOptionalNavArgId : OptionalNavArgId {
 
 fun NavGraphBuilder.createTotpGraph(
     prefix: CustomFieldPrefix,
-    onSuccess: (String, Int?, Int?) -> Unit,
+    onSuccess: (String, Int?, Int?, Int?) -> Unit,
     onCloseTotp: () -> Unit,
-    onOpenImagePicker: (Int?, Int?) -> Unit
+    onOpenImagePicker: (Int?, Int?, Int?) -> Unit
 ) {
     composable(CameraTotpNavItem(prefix)) { backStackEntry ->
+        val totpSpecialSectionIndexField =
+            backStackEntry.arguments?.getInt(TotpOptionalNavArgId.TotpSpecialSectionIndexField.key)
+                .takeIf { a: Int? -> a != null && a >= 0 }
         val totpSectionIndexField =
             backStackEntry.arguments?.getInt(TotpOptionalNavArgId.TotpSectionIndexField.key)
                 .takeIf { a: Int? -> a != null && a >= 0 }
@@ -106,13 +129,18 @@ fun NavGraphBuilder.createTotpGraph(
                 .takeIf { a: Int? -> a != null && a >= 0 }
         CameraPreviewTotp(
             onUriReceived = { uri ->
-                onSuccess(uri, totpSectionIndexField, totpIndexField)
+                onSuccess(uri, totpSpecialSectionIndexField, totpSectionIndexField, totpIndexField)
             },
-            onOpenImagePicker = { onOpenImagePicker(totpSectionIndexField, totpIndexField) },
+            onOpenImagePicker = {
+                onOpenImagePicker(totpSpecialSectionIndexField, totpSectionIndexField, totpIndexField)
+            },
             onClosePreview = onCloseTotp
         )
     }
     composable(PhotoPickerTotpNavItem(prefix)) { backStackEntry ->
+        val totpSpecialSectionIndexField =
+            backStackEntry.arguments?.getInt(TotpOptionalNavArgId.TotpSpecialSectionIndexField.key)
+                .takeIf { a: Int? -> a != null && a >= 0 }
         val totpSectionIndexField =
             backStackEntry.arguments?.getInt(TotpOptionalNavArgId.TotpSectionIndexField.key)
                 .takeIf { a: Int? -> a != null && a >= 0 }
@@ -121,7 +149,7 @@ fun NavGraphBuilder.createTotpGraph(
                 .takeIf { a: Int? -> a != null && a >= 0 }
         PhotoPickerTotpScreen(
             onQrReceived = { uri ->
-                onSuccess(uri, totpSectionIndexField, totpIndexField)
+                onSuccess(uri, totpSpecialSectionIndexField, totpSectionIndexField, totpIndexField)
             },
             onQrNotDetected = onCloseTotp,
             onPhotoPickerDismissed = onCloseTotp

@@ -339,13 +339,14 @@ class IdentityActionsProviderImpl @Inject constructor(
             .delete<CustomExtraField>(DRAFT_IDENTITY_CUSTOM_FIELD_KEY)
             .value()
             ?: return
+        val section = IdentitySectionType.from(customExtraField)
         val field = encryptionContextProvider.withEncryptionContext {
             createCustomField(type, label, this)
         }
         identityItemFormMutableState = when (customExtraField) {
             is AddressCustomField -> {
-                val addressDetails = identityItemFormMutableState.uiAddressDetails
-                identityItemFormMutableState.copy(
+                val addressDetails = identityItemFormState.uiAddressDetails
+                identityItemFormState.copy(
                     uiAddressDetails = addressDetails.copy(
                         customFields = addressDetails.customFields + field
                     )
@@ -353,8 +354,8 @@ class IdentityActionsProviderImpl @Inject constructor(
             }
 
             is ContactCustomField -> {
-                val contactDetails = identityItemFormMutableState.uiContactDetails
-                identityItemFormMutableState.copy(
+                val contactDetails = identityItemFormState.uiContactDetails
+                identityItemFormState.copy(
                     uiContactDetails = contactDetails.copy(
                         customFields = contactDetails.customFields + field
                     )
@@ -362,8 +363,8 @@ class IdentityActionsProviderImpl @Inject constructor(
             }
 
             is PersonalCustomField -> {
-                val personalDetails = identityItemFormMutableState.uiPersonalDetails
-                identityItemFormMutableState.copy(
+                val personalDetails = identityItemFormState.uiPersonalDetails
+                identityItemFormState.copy(
                     uiPersonalDetails = personalDetails.copy(
                         customFields = personalDetails.customFields + field
                     )
@@ -371,8 +372,8 @@ class IdentityActionsProviderImpl @Inject constructor(
             }
 
             is WorkCustomField -> {
-                val workDetails = identityItemFormMutableState.uiWorkDetails
-                identityItemFormMutableState.copy(
+                val workDetails = identityItemFormState.uiWorkDetails
+                identityItemFormState.copy(
                     uiWorkDetails = workDetails.copy(
                         customFields = workDetails.customFields + field
                     )
@@ -380,8 +381,8 @@ class IdentityActionsProviderImpl @Inject constructor(
             }
 
             is ExtraSectionCustomField -> {
-                val extraSection = identityItemFormMutableState.uiExtraSections
-                identityItemFormMutableState.copy(
+                val extraSection = identityItemFormState.uiExtraSections
+                identityItemFormState.copy(
                     uiExtraSections = extraSection.toMutableList()
                         .apply {
                             set(
@@ -395,6 +396,19 @@ class IdentityActionsProviderImpl @Inject constructor(
                 )
             }
         }
+        val focusedIndex = when (section) {
+            IdentitySectionType.AddressDetails ->
+                identityItemFormState.uiAddressDetails.customFields.lastIndex
+            IdentitySectionType.ContactDetails ->
+                identityItemFormState.uiContactDetails.customFields.lastIndex
+            IdentitySectionType.PersonalDetails ->
+                identityItemFormState.uiPersonalDetails.customFields.lastIndex
+            IdentitySectionType.WorkDetails ->
+                identityItemFormState.uiWorkDetails.customFields.lastIndex
+            is IdentitySectionType.ExtraSection ->
+                identityItemFormState.uiExtraSections[section.index].customFields.lastIndex
+        }
+        focusedFieldState.update { IdentityField.CustomField(section, type, focusedIndex).some() }
     }
 
     private fun onRemoveCustomField(event: DraftFormFieldEvent.FieldRemoved) {

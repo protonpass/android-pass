@@ -49,11 +49,6 @@ import proton.android.pass.features.itemcreate.identity.navigation.IdentityConte
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnFocusChange
 import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
 import proton.android.pass.features.itemcreate.identity.presentation.UIWorkDetails
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.PersonalWebsite
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.WorkCustomField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.WorkDetailsField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.WorkEmail
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.WorkPhoneNumber
 import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType.WorkDetails
 import proton.android.pass.features.itemcreate.identity.ui.inputfields.CompanyInput
 import proton.android.pass.features.itemcreate.identity.ui.inputfields.JobTitleInput
@@ -66,7 +61,7 @@ internal fun WorkDetails(
     modifier: Modifier = Modifier,
     uiWorkDetails: UIWorkDetails,
     enabled: Boolean,
-    extraFields: PersistentSet<WorkDetailsField>,
+    extraFields: PersistentSet<IdentityField>,
     focusedField: Option<IdentityField>,
     showAddWorkDetailsButton: Boolean,
     onEvent: (IdentityContentEvent) -> Unit
@@ -91,7 +86,7 @@ internal fun WorkDetails(
                 enabled = enabled,
                 onChange = { onEvent(OnFieldChange(IdentityField.JobTitle, it)) }
             )
-            if (extraFields.contains(PersonalWebsite)) {
+            if (extraFields.contains(IdentityField.PersonalWebsite)) {
                 PassDivider()
                 PersonalWebsiteInput(
                     value = uiWorkDetails.personalWebsite,
@@ -101,7 +96,7 @@ internal fun WorkDetails(
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.PersonalWebsite, it)) }
                 )
             }
-            if (extraFields.contains(WorkPhoneNumber)) {
+            if (extraFields.contains(IdentityField.WorkPhoneNumber)) {
                 PassDivider()
                 WorkPhoneNumberInput(
                     value = uiWorkDetails.workPhoneNumber,
@@ -111,7 +106,7 @@ internal fun WorkDetails(
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.WorkPhoneNumber, it)) }
                 )
             }
-            if (extraFields.contains(WorkEmail)) {
+            if (extraFields.contains(IdentityField.WorkEmail)) {
                 PassDivider()
                 WorkEmailInput(
                     value = uiWorkDetails.workEmail,
@@ -124,7 +119,6 @@ internal fun WorkDetails(
         }
         uiWorkDetails.customFields.forEachIndexed { index, entry ->
             val focusRequester = remember { FocusRequester() }
-            val customExtraField = WorkCustomField(entry.toCustomFieldType())
             val identityField = IdentityField.CustomField(
                 sectionType = WorkDetails,
                 customFieldType = entry.toCustomFieldType(),
@@ -143,17 +137,14 @@ internal fun WorkDetails(
                 },
                 onClick = {
                     onEvent(
-                        IdentityContentEvent.OnCustomFieldClick(
-                            index = index,
-                            customExtraField = customExtraField
-                        )
+                        IdentityContentEvent.OnCustomFieldClick(index, identityField)
                     )
                 },
                 onFocusChange = { idx, isFocused ->
                     onEvent(OnFocusChange(identityField, isFocused))
                 },
                 onOptionsClick = {
-                    onEvent(OnCustomFieldOptions(index, entry.label, customExtraField))
+                    onEvent(OnCustomFieldOptions(index, entry.label, identityField))
                 }
             )
             RequestFocusLaunchedEffect(

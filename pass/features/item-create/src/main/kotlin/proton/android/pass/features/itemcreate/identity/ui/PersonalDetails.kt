@@ -51,7 +51,6 @@ import proton.android.pass.features.itemcreate.identity.presentation.IdentityFie
 import proton.android.pass.features.itemcreate.identity.presentation.UIPersonalDetails
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Birthdate
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.FirstName
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.FocusedField
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Gender
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.LastName
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.MiddleName
@@ -73,7 +72,7 @@ internal fun PersonalDetails(
     uiPersonalDetails: UIPersonalDetails,
     enabled: Boolean,
     extraFields: PersistentSet<PersonalDetailsField>,
-    focusedField: Option<FocusedField>,
+    focusedField: Option<IdentityField>,
     showAddPersonalDetailsButton: Boolean,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
@@ -109,7 +108,7 @@ internal fun PersonalDetails(
                 FirstNameInput(
                     value = uiPersonalDetails.firstName,
                     enabled = enabled,
-                    requestFocus = field?.extraField is FirstName,
+                    requestFocus = field is IdentityField.FirstName,
                     onChange = { onEvent(OnFieldChange(IdentityField.FirstName, it)) },
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.FirstName, it)) }
                 )
@@ -119,7 +118,7 @@ internal fun PersonalDetails(
                 MiddleNameInput(
                     value = uiPersonalDetails.middleName,
                     enabled = enabled,
-                    requestFocus = field?.extraField is MiddleName,
+                    requestFocus = field is IdentityField.MiddleName,
                     onChange = { onEvent(OnFieldChange(IdentityField.MiddleName, it)) },
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.MiddleName, it)) }
                 )
@@ -129,7 +128,7 @@ internal fun PersonalDetails(
                 LastNameInput(
                     value = uiPersonalDetails.lastName,
                     enabled = enabled,
-                    requestFocus = field?.extraField is LastName,
+                    requestFocus = field is IdentityField.LastName,
                     onChange = { onEvent(OnFieldChange(IdentityField.LastName, it)) },
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.LastName, it)) }
                 )
@@ -139,7 +138,7 @@ internal fun PersonalDetails(
                 BirthdateInput(
                     value = uiPersonalDetails.birthdate,
                     enabled = enabled,
-                    requestFocus = field?.extraField is Birthdate,
+                    requestFocus = field is IdentityField.Birthdate,
                     onChange = { onEvent(OnFieldChange(IdentityField.Birthdate, it)) },
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.Birthdate, it)) }
                 )
@@ -149,7 +148,7 @@ internal fun PersonalDetails(
                 GenderInput(
                     value = uiPersonalDetails.gender,
                     enabled = enabled,
-                    requestFocus = field?.extraField is Gender,
+                    requestFocus = field is IdentityField.Gender,
                     onChange = { onEvent(OnFieldChange(IdentityField.Gender, it)) },
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.Gender, it)) }
                 )
@@ -191,7 +190,9 @@ internal fun PersonalDetails(
             )
             RequestFocusLaunchedEffect(
                 focusRequester = focusRequester,
-                requestFocus = field?.extraField is PersonalCustomField && field.index == index
+                requestFocus = field is IdentityField.CustomField &&
+                    field.sectionType is PersonalDetails &&
+                    field.index == index
             )
         }
         if (showAddPersonalDetailsButton) {

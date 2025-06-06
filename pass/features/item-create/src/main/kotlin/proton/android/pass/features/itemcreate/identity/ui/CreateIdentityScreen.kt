@@ -215,6 +215,9 @@ fun CreateIdentityScreen(
                         }
                         else -> throw IllegalStateException("Unhandled action")
                     }
+
+                    is IdentityContentEvent.OnScanTotp -> TODO()
+                    IdentityContentEvent.PasteTotp -> viewModel.onPasteTotp()
                 }
             }
         )

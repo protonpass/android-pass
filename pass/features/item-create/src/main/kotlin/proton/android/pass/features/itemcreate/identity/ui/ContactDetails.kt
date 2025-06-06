@@ -50,13 +50,6 @@ import proton.android.pass.features.itemcreate.identity.navigation.IdentityConte
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnFocusChange
 import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
 import proton.android.pass.features.itemcreate.identity.presentation.UIContactDetails
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ContactCustomField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ContactDetailsField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Facebook
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Instagram
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Linkedin
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Reddit
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Yahoo
 import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType.ContactDetails
 import proton.android.pass.features.itemcreate.identity.ui.inputfields.FacebookInput
 import proton.android.pass.features.itemcreate.identity.ui.inputfields.InstagramInput
@@ -75,7 +68,7 @@ internal fun ContactDetails(
     modifier: Modifier = Modifier,
     uiContactDetails: UIContactDetails,
     enabled: Boolean,
-    extraFields: PersistentSet<ContactDetailsField>,
+    extraFields: PersistentSet<IdentityField>,
     focusedField: Option<IdentityField>,
     showAddContactDetailsButton: Boolean,
     onEvent: (IdentityContentEvent) -> Unit
@@ -132,7 +125,7 @@ internal fun ContactDetails(
                 onChange = { onEvent(OnFieldChange(IdentityField.SecondPhoneNumber, it)) }
             )
 
-            if (extraFields.contains(Linkedin)) {
+            if (extraFields.contains(IdentityField.Linkedin)) {
                 PassDivider()
                 LinkedinInput(
                     value = uiContactDetails.linkedin,
@@ -142,7 +135,7 @@ internal fun ContactDetails(
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.Linkedin, it)) }
                 )
             }
-            if (extraFields.contains(Reddit)) {
+            if (extraFields.contains(IdentityField.Reddit)) {
                 PassDivider()
                 RedditInput(
                     value = uiContactDetails.reddit,
@@ -152,7 +145,7 @@ internal fun ContactDetails(
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.Reddit, it)) }
                 )
             }
-            if (extraFields.contains(Facebook)) {
+            if (extraFields.contains(IdentityField.Facebook)) {
                 PassDivider()
                 FacebookInput(
                     value = uiContactDetails.facebook,
@@ -162,7 +155,7 @@ internal fun ContactDetails(
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.Facebook, it)) }
                 )
             }
-            if (extraFields.contains(Yahoo)) {
+            if (extraFields.contains(IdentityField.Yahoo)) {
                 PassDivider()
                 YahooInput(
                     value = uiContactDetails.yahoo,
@@ -172,7 +165,7 @@ internal fun ContactDetails(
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.Yahoo, it)) }
                 )
             }
-            if (extraFields.contains(Instagram)) {
+            if (extraFields.contains(IdentityField.Instagram)) {
                 PassDivider()
                 InstagramInput(
                     value = uiContactDetails.instagram,
@@ -185,7 +178,6 @@ internal fun ContactDetails(
         }
         uiContactDetails.customFields.forEachIndexed { index, entry ->
             val focusRequester = remember { FocusRequester() }
-            val customExtraField = ContactCustomField(entry.toCustomFieldType())
             val identityField = IdentityField.CustomField(
                 sectionType = ContactDetails,
                 customFieldType = entry.toCustomFieldType(),
@@ -203,24 +195,13 @@ internal fun ContactDetails(
                     onEvent(OnFieldChange(identityField, it))
                 },
                 onClick = {
-                    onEvent(
-                        IdentityContentEvent.OnCustomFieldClick(
-                            index = index,
-                            customExtraField = customExtraField
-                        )
-                    )
+                    onEvent(IdentityContentEvent.OnCustomFieldClick(index, identityField))
                 },
                 onFocusChange = { idx, isFocused ->
                     onEvent(OnFocusChange(identityField, isFocused))
                 },
                 onOptionsClick = {
-                    onEvent(
-                        OnCustomFieldOptions(
-                            index = index,
-                            label = entry.label,
-                            customExtraField = customExtraField
-                        )
-                    )
+                    onEvent(OnCustomFieldOptions(index, entry.label, identityField))
                 }
             )
             RequestFocusLaunchedEffect(

@@ -35,23 +35,21 @@ import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.common.ValidationError
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Birthdate
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.County
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.CustomExtraField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ExtraField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Facebook
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.FirstName
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Floor
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Gender
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Instagram
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.LastName
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Linkedin
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.MiddleName
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.PersonalWebsite
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Reddit
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.WorkEmail
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.WorkPhoneNumber
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Yahoo
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField.Birthdate
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField.County
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField.Facebook
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField.FirstName
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField.Floor
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField.Gender
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField.Instagram
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField.LastName
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField.Linkedin
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField.MiddleName
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField.PersonalWebsite
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField.Reddit
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField.WorkEmail
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField.WorkPhoneNumber
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField.Yahoo
 import java.net.URI
 
 @Suppress("ComplexInterface", "TooManyFunctions")
@@ -87,7 +85,7 @@ interface IdentityActionsProvider : IdentityFormActions {
     fun observeSharedState(): Flow<IdentitySharedUiState>
     fun updateLoadingState(loadingState: IsLoadingState)
     suspend fun onItemSavedState(item: Item)
-    fun updateSelectedSection(customExtraField: CustomExtraField)
+    fun updateSelectedSection(customExtraField: IdentityField.CustomField)
     suspend fun onItemReceivedState(item: Item)
     fun getReceivedItem(): Item
     fun observeReceivedItem(): Flow<Option<Item>>
@@ -98,7 +96,7 @@ data class IdentitySharedUiState(
     val hasUserEditedContent: Boolean,
     val validationErrors: PersistentSet<ValidationError>,
     val isItemSaved: ItemSavedState,
-    val extraFields: PersistentSet<ExtraField>,
+    val extraFields: PersistentSet<IdentityField>,
     val focusedField: Option<IdentityField>,
     val canUseCustomFields: Boolean,
     val displayFileAttachmentsOnboarding: Boolean,

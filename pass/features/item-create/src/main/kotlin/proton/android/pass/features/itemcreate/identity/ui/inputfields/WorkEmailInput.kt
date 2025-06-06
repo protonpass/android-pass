@@ -42,7 +42,7 @@ internal fun WorkEmailInput(
     enabled: Boolean,
     requestFocus: Boolean = false,
     onChange: (String) -> Unit,
-    onClearFocus: () -> Unit
+    onFocusChange: (Boolean) -> Unit
 ) {
     val focusRequester = remember { FocusRequester() }
     ProtonTextField(
@@ -70,7 +70,8 @@ internal fun WorkEmailInput(
             if (value.isNotEmpty()) {
                 SmallCrossIconButton(enabled = true) { onChange("") }
             }
-        }
+        },
+        onFocusChange = onFocusChange
     )
-    RequestFocusLaunchedEffect(focusRequester, requestFocus, onClearFocus)
+    RequestFocusLaunchedEffect(focusRequester, requestFocus)
 }

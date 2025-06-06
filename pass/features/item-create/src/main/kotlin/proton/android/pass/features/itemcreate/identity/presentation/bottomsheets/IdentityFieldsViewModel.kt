@@ -27,19 +27,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import proton.android.pass.common.api.asLoadingResult
-import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.repositories.DRAFT_IDENTITY_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
-import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
+import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.AddIdentityFieldType
 import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.IdentityFieldsSectionNavArgId
 import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.IdentitySectionIndexNavArgId
@@ -49,7 +45,7 @@ import javax.inject.Inject
 class IdentityFieldsViewModel @Inject constructor(
     private val identityFieldDraftRepository: IdentityFieldDraftRepository,
     private val draftRepository: DraftRepository,
-    observeUpgradeInfo: ObserveUpgradeInfo,
+    canPerformPaidAction: CanPerformPaidAction,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -68,9 +64,7 @@ class IdentityFieldsViewModel @Inject constructor(
                 extraSectionIndex = sectionIndex
             )
         ),
-        observeUpgradeInfo().distinctUntilChanged().asLoadingResult().map { result ->
-            result.getOrNull()?.plan?.let { it.isPaidPlan || it.isTrialPlan } ?: false
-        }
+        canPerformPaidAction()
     ) { sectionFields: Set<ExtraField>, isPaidPlan: Boolean ->
         if (isPaidPlan) {
             sectionFields

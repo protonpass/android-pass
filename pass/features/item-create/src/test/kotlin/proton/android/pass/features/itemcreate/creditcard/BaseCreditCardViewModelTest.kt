@@ -24,6 +24,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.commonpresentation.fakes.attachments.FakeAttachmentHandler
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
@@ -61,7 +62,8 @@ class BaseCreditCardViewModelTest {
             userPreferencesRepository = TestPreferenceRepository(),
             customFieldHandler = CustomFieldHandlerImpl(TestEncryptionContextProvider()),
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
-            creditCardItemFormProcessor = FakeCreditCardItemFormProcessor()
+            creditCardItemFormProcessor = FakeCreditCardItemFormProcessor(),
+            clipboardManager = TestClipboardManager()
         ) {}
     }
 

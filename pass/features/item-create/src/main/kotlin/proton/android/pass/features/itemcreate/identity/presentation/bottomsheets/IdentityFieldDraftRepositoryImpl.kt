@@ -21,61 +21,89 @@ package proton.android.pass.features.itemcreate.identity.presentation.bottomshee
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import proton.android.pass.domain.CustomFieldType
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
+import proton.android.pass.features.itemcreate.identity.presentation.section
+import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class IdentityFieldDraftRepositoryImpl @Inject constructor() : IdentityFieldDraftRepository {
 
-    private val extraFieldsStateFlow = MutableStateFlow<Set<ExtraField>>(emptySet())
+    private val extraFieldsStateFlow: MutableStateFlow<Set<IdentityField>> =
+        MutableStateFlow<Set<IdentityField>>(emptySet())
 
-    private fun getAvailableFieldsMap(sectionIndex: Int): Map<Class<out ExtraField>, Set<ExtraField>> = mapOf(
-        PersonalDetailsField::class.java to setOf(
-            FirstName,
-            MiddleName,
-            LastName,
-            Birthdate,
-            Gender,
-            PersonalCustomField(type = CustomFieldType.Text) // Placeholder type
+    private fun getAvailableFieldsMap(sectionIndex: Int): Map<IdentitySectionType, Set<IdentityField>> = mapOf(
+        IdentitySectionType.PersonalDetails to setOf(
+            IdentityField.FirstName,
+            IdentityField.MiddleName,
+            IdentityField.LastName,
+            IdentityField.Birthdate,
+            IdentityField.Gender,
+            IdentityField.CustomField(
+                sectionType = IdentitySectionType.PersonalDetails,
+                customFieldType = CustomFieldType.Text, // Placeholder type
+                index = 0 // Placeholder index
+            )
         ),
-        AddressDetailsField::class.java to setOf(
-            Floor,
-            County,
-            AddressCustomField(type = CustomFieldType.Text) // Placeholder type
+        IdentitySectionType.AddressDetails to setOf(
+            IdentityField.Floor,
+            IdentityField.County,
+            IdentityField.CustomField(
+                sectionType = IdentitySectionType.AddressDetails,
+                customFieldType = CustomFieldType.Text, // Placeholder type
+                index = 0 // Placeholder index
+            )
         ),
-        ContactDetailsField::class.java to setOf(
-            Linkedin,
-            Reddit,
-            Facebook,
-            Yahoo,
-            Instagram,
-            ContactCustomField(type = CustomFieldType.Text) // Placeholder type
+        IdentitySectionType.ContactDetails to setOf(
+            IdentityField.Linkedin,
+            IdentityField.Reddit,
+            IdentityField.Facebook,
+            IdentityField.Yahoo,
+            IdentityField.Instagram,
+            IdentityField.CustomField(
+                sectionType = IdentitySectionType.ContactDetails,
+                customFieldType = CustomFieldType.Text, // Placeholder type
+                index = 0 // Placeholder index
+            )
         ),
-        WorkDetailsField::class.java to setOf(
-            PersonalWebsite,
-            WorkPhoneNumber,
-            WorkEmail,
-            WorkCustomField(type = CustomFieldType.Text) // Placeholder type
+        IdentitySectionType.WorkDetails to setOf(
+            IdentityField.PersonalWebsite,
+            IdentityField.WorkPhoneNumber,
+            IdentityField.WorkEmail,
+            IdentityField.CustomField(
+                sectionType = IdentitySectionType.WorkDetails,
+                customFieldType = CustomFieldType.Text, // Placeholder type
+                index = 0 // Placeholder index
+            )
         ),
-        ExtraSectionField::class.java to setOf(
-            ExtraSectionCustomField(type = CustomFieldType.Text, sectionIndex) // Placeholder type
+        IdentitySectionType.ExtraSection(sectionIndex) to setOf(
+            IdentityField.CustomField(
+                sectionType = IdentitySectionType.ExtraSection(sectionIndex),
+                customFieldType = CustomFieldType.Text, // Placeholder type
+                index = 0 // Placeholder index
+            )
         )
     )
 
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : ExtraField> getSectionFields(clazz: Class<T>, extraSectionIndex: Int): Set<T> {
-        val available = getAvailableFieldsMap(extraSectionIndex)[clazz] as? Set<T> ?: emptySet()
-        val selected = extraFieldsStateFlow.value.filterIsInstance(clazz).toSet()
-        val selectedWithoutCustomField =
-            selected - available.filter { it is CustomExtraField }.toSet()
-        return available - selectedWithoutCustomField
-    }
+    override fun observeSectionFields(section: IdentitySectionType, sectionIndex: Int): Flow<Set<IdentityField>> =
+        combine(
+            flowOf(getAvailableFieldsMap(sectionIndex)).map { it[section] ?: emptySet() },
+            extraFieldsStateFlow.map { it.filter { it.section() == section } }
+        ) { available, selected ->
+            val selectedWithoutCustomField =
+                selected - available.filter { it is IdentityField.CustomField }.toSet()
+            available - selectedWithoutCustomField
+        }
 
-    override fun observeExtraFields(): Flow<Set<ExtraField>> = extraFieldsStateFlow.asStateFlow()
+    override fun observeExtraFields(): Flow<Set<IdentityField>> = extraFieldsStateFlow.asStateFlow()
 
-    override fun addField(extraField: ExtraField, focus: Boolean) {
+    override fun addField(extraField: IdentityField, focus: Boolean) {
         extraFieldsStateFlow.update { it + extraField }
     }
 

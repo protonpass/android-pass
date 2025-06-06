@@ -39,7 +39,6 @@ import proton.android.pass.features.itemcreate.identity.navigation.IdentityConte
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnCustomFieldOptions
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnFieldChange
 import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ExtraSectionCustomField
 
 @Composable
 fun ExtraSection(
@@ -57,7 +56,6 @@ fun ExtraSection(
     ) {
         section.customFields.forEachIndexed { index, value ->
             val focusRequester = remember { FocusRequester() }
-            val customExtraField = ExtraSectionCustomField(value.toCustomFieldType(), sectionIndex)
             val identityField = IdentityField.CustomField(
                 sectionType = IdentitySectionType.ExtraSection(sectionIndex),
                 customFieldType = value.toCustomFieldType(),
@@ -75,24 +73,13 @@ fun ExtraSection(
                     onEvent(OnFieldChange(identityField, it))
                 },
                 onClick = {
-                    onEvent(
-                        OnCustomFieldClick(
-                            index = index,
-                            customExtraField = customExtraField
-                        )
-                    )
+                    onEvent(OnCustomFieldClick(index, identityField))
                 },
                 onFocusChange = { idx, isFocused ->
                     onEvent(IdentityContentEvent.OnFocusChange(identityField, isFocused))
                 },
                 onOptionsClick = {
-                    onEvent(
-                        OnCustomFieldOptions(
-                            index = index,
-                            label = value.label,
-                            customExtraField = customExtraField
-                        )
-                    )
+                    onEvent(OnCustomFieldOptions(index, value.label, identityField))
                 }
             )
             RequestFocusLaunchedEffect(

@@ -62,3 +62,44 @@ sealed interface IdentityField {
         val index: Int
     ) : IdentityField
 }
+
+fun IdentityField.section(): IdentitySectionType = when (this) {
+    IdentityField.FirstName,
+    IdentityField.MiddleName,
+    IdentityField.LastName,
+    IdentityField.Birthdate,
+    IdentityField.Gender,
+    IdentityField.Title,
+    IdentityField.FullName,
+    IdentityField.SocialSecurityNumber,
+    IdentityField.PassportNumber,
+    IdentityField.LicenseNumber -> IdentitySectionType.PersonalDetails
+
+    IdentityField.Floor,
+    IdentityField.County,
+    IdentityField.StreetAddress,
+    IdentityField.City,
+    IdentityField.StateOrProvince,
+    IdentityField.ZipOrPostalCode,
+    IdentityField.CountryOrRegion -> IdentitySectionType.AddressDetails
+
+    IdentityField.Facebook,
+    IdentityField.Linkedin,
+    IdentityField.Reddit,
+    IdentityField.Yahoo,
+    IdentityField.Instagram,
+    IdentityField.XHandle,
+    IdentityField.PhoneNumber,
+    IdentityField.SecondPhoneNumber,
+    IdentityField.Email -> IdentitySectionType.ContactDetails
+
+    IdentityField.WorkEmail,
+    IdentityField.WorkPhoneNumber,
+    IdentityField.JobTitle,
+    IdentityField.Company,
+    IdentityField.PersonalWebsite,
+    IdentityField.Website,
+    IdentityField.Organization -> IdentitySectionType.WorkDetails
+
+    is IdentityField.CustomField -> this.sectionType
+}

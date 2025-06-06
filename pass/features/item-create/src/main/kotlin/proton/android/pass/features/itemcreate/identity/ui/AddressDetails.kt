@@ -49,10 +49,6 @@ import proton.android.pass.features.itemcreate.identity.navigation.IdentityConte
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnFocusChange
 import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
 import proton.android.pass.features.itemcreate.identity.presentation.UIAddressDetails
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.AddressCustomField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.AddressDetailsField
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.County
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Floor
 import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType.AddressDetails
 import proton.android.pass.features.itemcreate.identity.ui.inputfields.CityInput
 import proton.android.pass.features.itemcreate.identity.ui.inputfields.CountryOrRegionInput
@@ -68,7 +64,7 @@ internal fun AddressDetails(
     modifier: Modifier = Modifier,
     uiAddressDetails: UIAddressDetails,
     enabled: Boolean,
-    extraFields: PersistentSet<AddressDetailsField>,
+    extraFields: PersistentSet<IdentityField>,
     focusedField: Option<IdentityField>,
     showAddAddressDetailsButton: Boolean,
     onEvent: (IdentityContentEvent) -> Unit
@@ -117,7 +113,7 @@ internal fun AddressDetails(
                 enabled = enabled,
                 onChange = { onEvent(OnFieldChange(IdentityField.CountryOrRegion, it)) }
             )
-            if (extraFields.contains(Floor)) {
+            if (extraFields.contains(IdentityField.Floor)) {
                 PassDivider()
                 FloorInput(
                     value = uiAddressDetails.floor,
@@ -127,7 +123,7 @@ internal fun AddressDetails(
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.Floor, it)) }
                 )
             }
-            if (extraFields.contains(County)) {
+            if (extraFields.contains(IdentityField.County)) {
                 PassDivider()
                 CountyInput(
                     value = uiAddressDetails.county,
@@ -140,7 +136,6 @@ internal fun AddressDetails(
         }
         uiAddressDetails.customFields.forEachIndexed { index, entry ->
             val focusRequester = remember { FocusRequester() }
-            val customExtraField = AddressCustomField(entry.toCustomFieldType())
             val identityField = IdentityField.CustomField(
                 sectionType = AddressDetails,
                 customFieldType = entry.toCustomFieldType(),
@@ -158,18 +153,13 @@ internal fun AddressDetails(
                     onEvent(OnFieldChange(identityField, it))
                 },
                 onClick = {
-                    onEvent(
-                        IdentityContentEvent.OnCustomFieldClick(
-                            index = index,
-                            customExtraField = customExtraField
-                        )
-                    )
+                    onEvent(IdentityContentEvent.OnCustomFieldClick(index, identityField))
                 },
                 onFocusChange = { idx, isFocused ->
                     onEvent(OnFocusChange(identityField, isFocused))
                 },
                 onOptionsClick = {
-                    onEvent(OnCustomFieldOptions(index, entry.label, customExtraField))
+                    onEvent(OnCustomFieldOptions(index, entry.label, identityField))
                 }
             )
             RequestFocusLaunchedEffect(

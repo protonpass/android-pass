@@ -46,7 +46,8 @@ import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEn
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnCustomFieldOptions
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnFieldChange
-import proton.android.pass.features.itemcreate.identity.presentation.FieldChange
+import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnFocusChange
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
 import proton.android.pass.features.itemcreate.identity.presentation.UIPersonalDetails
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Birthdate
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.FirstName
@@ -88,19 +89,19 @@ internal fun PersonalDetails(
             FullNameInput(
                 value = uiPersonalDetails.fullName,
                 enabled = enabled,
-                onChange = { onEvent(OnFieldChange(FieldChange.FullName(it))) }
+                onChange = { onEvent(OnFieldChange(IdentityField.FullName, it)) }
             )
             PassDivider()
             EmailInput(
                 value = uiPersonalDetails.email,
                 enabled = enabled,
-                onChange = { onEvent(OnFieldChange(FieldChange.Email(it))) }
+                onChange = { onEvent(OnFieldChange(IdentityField.Email, it)) }
             )
             PassDivider()
             PhoneNumberInput(
                 value = uiPersonalDetails.phoneNumber,
                 enabled = enabled,
-                onChange = { onEvent(OnFieldChange(FieldChange.PhoneNumber(it))) }
+                onChange = { onEvent(OnFieldChange(IdentityField.PhoneNumber, it)) }
             )
 
             if (extraFields.contains(FirstName)) {
@@ -109,8 +110,8 @@ internal fun PersonalDetails(
                     value = uiPersonalDetails.firstName,
                     enabled = enabled,
                     requestFocus = field?.extraField is FirstName,
-                    onChange = { onEvent(OnFieldChange(FieldChange.FirstName(it))) },
-                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
+                    onChange = { onEvent(OnFieldChange(IdentityField.FirstName, it)) },
+                    onFocusChange = { onEvent(OnFocusChange(IdentityField.FirstName, it)) }
                 )
             }
             if (extraFields.contains(MiddleName)) {
@@ -119,9 +120,8 @@ internal fun PersonalDetails(
                     value = uiPersonalDetails.middleName,
                     enabled = enabled,
                     requestFocus = field?.extraField is MiddleName,
-                    onChange = { onEvent(OnFieldChange(FieldChange.MiddleName(it))) },
-                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
-
+                    onChange = { onEvent(OnFieldChange(IdentityField.MiddleName, it)) },
+                    onFocusChange = { onEvent(OnFocusChange(IdentityField.MiddleName, it)) }
                 )
             }
             if (extraFields.contains(LastName)) {
@@ -130,8 +130,8 @@ internal fun PersonalDetails(
                     value = uiPersonalDetails.lastName,
                     enabled = enabled,
                     requestFocus = field?.extraField is LastName,
-                    onChange = { onEvent(OnFieldChange(FieldChange.LastName(it))) },
-                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
+                    onChange = { onEvent(OnFieldChange(IdentityField.LastName, it)) },
+                    onFocusChange = { onEvent(OnFocusChange(IdentityField.LastName, it)) }
                 )
             }
             if (extraFields.contains(Birthdate)) {
@@ -140,8 +140,8 @@ internal fun PersonalDetails(
                     value = uiPersonalDetails.birthdate,
                     enabled = enabled,
                     requestFocus = field?.extraField is Birthdate,
-                    onChange = { onEvent(OnFieldChange(FieldChange.Birthdate(it))) },
-                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
+                    onChange = { onEvent(OnFieldChange(IdentityField.Birthdate, it)) },
+                    onFocusChange = { onEvent(OnFocusChange(IdentityField.Birthdate, it)) }
                 )
             }
             if (extraFields.contains(Gender)) {
@@ -150,13 +150,19 @@ internal fun PersonalDetails(
                     value = uiPersonalDetails.gender,
                     enabled = enabled,
                     requestFocus = field?.extraField is Gender,
-                    onChange = { onEvent(OnFieldChange(FieldChange.Gender(it))) },
-                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
+                    onChange = { onEvent(OnFieldChange(IdentityField.Gender, it)) },
+                    onFocusChange = { onEvent(OnFocusChange(IdentityField.Gender, it)) }
                 )
             }
         }
         uiPersonalDetails.customFields.forEachIndexed { index, entry ->
             val focusRequester = remember { FocusRequester() }
+            val customExtraField = PersonalCustomField(entry.toCustomFieldType())
+            val identityField = IdentityField.CustomField(
+                sectionType = PersonalDetails,
+                customFieldType = entry.toCustomFieldType(),
+                index = index
+            )
             CustomFieldEntry(
                 modifier = Modifier.focusRequester(focusRequester),
                 passItemColors = passItemColors(ItemCategory.Identity),
@@ -166,32 +172,26 @@ internal fun PersonalDetails(
                 errorMessage = "",
                 index = index,
                 onValueChange = {
-                    val fieldChange = FieldChange.CustomField(
-                        sectionType = PersonalDetails,
-                        customFieldType = entry.toCustomFieldType(),
-                        index = index,
-                        value = it
-                    )
-                    onEvent(OnFieldChange(fieldChange))
+                    onEvent(OnFieldChange(identityField, it))
                 },
                 onClick = {
                     onEvent(
                         IdentityContentEvent.OnCustomFieldClick(
                             index = index,
-                            customFieldType = entry.toCustomFieldType(),
-                            customExtraField = PersonalCustomField
+                            customExtraField = customExtraField
                         )
                     )
                 },
                 onFocusChange = { idx, isFocused ->
-                    onEvent(IdentityContentEvent.OnCustomFieldFocused(idx, isFocused, PersonalCustomField))
+                    onEvent(OnFocusChange(identityField, isFocused))
                 },
-                onOptionsClick = { onEvent(OnCustomFieldOptions(index, entry.label, PersonalCustomField)) }
+                onOptionsClick = {
+                    onEvent(OnCustomFieldOptions(index, entry.label, customExtraField))
+                }
             )
             RequestFocusLaunchedEffect(
                 focusRequester = focusRequester,
-                requestFocus = field?.extraField is PersonalCustomField && field.index == index,
-                callback = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
+                requestFocus = field?.extraField is PersonalCustomField && field.index == index
             )
         }
         if (showAddPersonalDetailsButton) {

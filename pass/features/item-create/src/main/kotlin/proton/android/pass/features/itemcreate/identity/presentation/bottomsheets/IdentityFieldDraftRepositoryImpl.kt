@@ -27,6 +27,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
+import proton.android.pass.domain.CustomFieldType
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -44,12 +45,12 @@ class IdentityFieldDraftRepositoryImpl @Inject constructor() : IdentityFieldDraf
             LastName,
             Birthdate,
             Gender,
-            PersonalCustomField
+            PersonalCustomField(type = CustomFieldType.Text) // Placeholder type
         ),
         AddressDetailsField::class.java to setOf(
             Floor,
             County,
-            AddressCustomField
+            AddressCustomField(type = CustomFieldType.Text) // Placeholder type
         ),
         ContactDetailsField::class.java to setOf(
             Linkedin,
@@ -57,16 +58,16 @@ class IdentityFieldDraftRepositoryImpl @Inject constructor() : IdentityFieldDraf
             Facebook,
             Yahoo,
             Instagram,
-            ContactCustomField
+            ContactCustomField(type = CustomFieldType.Text) // Placeholder type
         ),
         WorkDetailsField::class.java to setOf(
             PersonalWebsite,
             WorkPhoneNumber,
             WorkEmail,
-            WorkCustomField
+            WorkCustomField(type = CustomFieldType.Text) // Placeholder type
         ),
         ExtraSectionField::class.java to setOf(
-            ExtraSectionCustomField(sectionIndex)
+            ExtraSectionCustomField(type = CustomFieldType.Text, sectionIndex) // Placeholder type
         )
     )
 
@@ -90,11 +91,6 @@ class IdentityFieldDraftRepositoryImpl @Inject constructor() : IdentityFieldDraf
             field is Some && field.value !is CustomExtraField -> FocusedField(0, field.value).some()
             else -> None
         }
-    }
-
-    override fun resetLastAddedExtraField() {
-        lastAddedExtraFieldStateFlow.update { None }
-        lastAddedExtraFieldIndexStateFlow.update { None }
     }
 
     override fun addField(extraField: ExtraField, focus: Boolean) {

@@ -47,7 +47,8 @@ import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEn
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnCustomFieldOptions
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnFieldChange
-import proton.android.pass.features.itemcreate.identity.presentation.FieldChange
+import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnFocusChange
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
 import proton.android.pass.features.itemcreate.identity.presentation.UIContactDetails
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ContactCustomField
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ContactDetailsField
@@ -93,48 +94,43 @@ internal fun ContactDetails(
                 value = uiContactDetails.socialSecurityNumber,
                 enabled = enabled,
                 onChange = { newSocialSecurityNumber ->
-                    OnFieldChange(
-                        value = FieldChange.SocialSecurityNumber(
-                            value = newSocialSecurityNumber
-                        )
-                    ).also(onEvent)
+                    OnFieldChange(IdentityField.SocialSecurityNumber, newSocialSecurityNumber)
+                        .also(onEvent)
                 },
                 onFocusChange = { isFocused ->
-                    IdentityContentEvent.OnSocialSecurityNumberFieldFocusChanged(
-                        isFocused = isFocused,
-                        socialSecurityNumberHiddenState = uiContactDetails.socialSecurityNumber
-                    ).also(onEvent)
+                    OnFocusChange(IdentityField.SocialSecurityNumber, isFocused)
+                        .also(onEvent)
                 }
             )
             PassDivider()
             PassportNumberInput(
                 value = uiContactDetails.passportNumber,
                 enabled = enabled,
-                onChange = { onEvent(OnFieldChange(FieldChange.PassportNumber(it))) }
+                onChange = { onEvent(OnFieldChange(IdentityField.PassportNumber, it)) }
             )
             PassDivider()
             LicenseNumberInput(
                 value = uiContactDetails.licenseNumber,
                 enabled = enabled,
-                onChange = { onEvent(OnFieldChange(FieldChange.LicenseNumber(it))) }
+                onChange = { onEvent(OnFieldChange(IdentityField.LicenseNumber, it)) }
             )
             PassDivider()
             WebsiteInput(
                 value = uiContactDetails.website,
                 enabled = enabled,
-                onChange = { onEvent(OnFieldChange(FieldChange.Website(it))) }
+                onChange = { onEvent(OnFieldChange(IdentityField.Website, it)) }
             )
             PassDivider()
             XHandleInput(
                 value = uiContactDetails.xHandle,
                 enabled = enabled,
-                onChange = { onEvent(OnFieldChange(FieldChange.XHandle(it))) }
+                onChange = { onEvent(OnFieldChange(IdentityField.XHandle, it)) }
             )
             PassDivider()
             SecondPhoneNumberInput(
                 value = uiContactDetails.secondPhoneNumber,
                 enabled = enabled,
-                onChange = { onEvent(OnFieldChange(FieldChange.SecondPhoneNumber(it))) }
+                onChange = { onEvent(OnFieldChange(IdentityField.SecondPhoneNumber, it)) }
             )
 
             if (extraFields.contains(Linkedin)) {
@@ -143,8 +139,8 @@ internal fun ContactDetails(
                     value = uiContactDetails.linkedin,
                     enabled = enabled,
                     requestFocus = field?.extraField is Linkedin,
-                    onChange = { onEvent(OnFieldChange(FieldChange.Linkedin(it))) },
-                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
+                    onChange = { onEvent(OnFieldChange(IdentityField.Linkedin, it)) },
+                    onFocusChange = { onEvent(OnFocusChange(IdentityField.Linkedin, it)) }
                 )
             }
             if (extraFields.contains(Reddit)) {
@@ -153,8 +149,8 @@ internal fun ContactDetails(
                     value = uiContactDetails.reddit,
                     enabled = enabled,
                     requestFocus = field?.extraField is Reddit,
-                    onChange = { onEvent(OnFieldChange(FieldChange.Reddit(it))) },
-                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
+                    onChange = { onEvent(OnFieldChange(IdentityField.Reddit, it)) },
+                    onFocusChange = { onEvent(OnFocusChange(IdentityField.Reddit, it)) }
                 )
             }
             if (extraFields.contains(Facebook)) {
@@ -163,8 +159,8 @@ internal fun ContactDetails(
                     value = uiContactDetails.facebook,
                     enabled = enabled,
                     requestFocus = field?.extraField is Facebook,
-                    onChange = { onEvent(OnFieldChange(FieldChange.Facebook(it))) },
-                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
+                    onChange = { onEvent(OnFieldChange(IdentityField.Facebook, it)) },
+                    onFocusChange = { onEvent(OnFocusChange(IdentityField.Facebook, it)) }
                 )
             }
             if (extraFields.contains(Yahoo)) {
@@ -173,8 +169,8 @@ internal fun ContactDetails(
                     value = uiContactDetails.yahoo,
                     enabled = enabled,
                     requestFocus = field?.extraField is Yahoo,
-                    onChange = { onEvent(OnFieldChange(FieldChange.Yahoo(it))) },
-                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
+                    onChange = { onEvent(OnFieldChange(IdentityField.Yahoo, it)) },
+                    onFocusChange = { onEvent(OnFocusChange(IdentityField.Yahoo, it)) }
                 )
             }
             if (extraFields.contains(Instagram)) {
@@ -183,62 +179,54 @@ internal fun ContactDetails(
                     value = uiContactDetails.instagram,
                     enabled = enabled,
                     requestFocus = field?.extraField is Instagram,
-                    onChange = { onEvent(OnFieldChange(FieldChange.Instagram(it))) },
-                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
+                    onChange = { onEvent(OnFieldChange(IdentityField.Instagram, it)) },
+                    onFocusChange = { onEvent(OnFocusChange(IdentityField.Instagram, it)) }
                 )
             }
         }
-        uiContactDetails.customFields.forEachIndexed { index, value ->
+        uiContactDetails.customFields.forEachIndexed { index, entry ->
             val focusRequester = remember { FocusRequester() }
+            val customExtraField = ContactCustomField(entry.toCustomFieldType())
+            val identityField = IdentityField.CustomField(
+                sectionType = ContactDetails,
+                customFieldType = entry.toCustomFieldType(),
+                index = index
+            )
             CustomFieldEntry(
                 modifier = Modifier.focusRequester(focusRequester),
                 passItemColors = passItemColors(ItemCategory.Identity),
-                entry = value,
+                entry = entry,
                 canEdit = enabled,
                 isError = false,
                 errorMessage = "",
                 index = index,
                 onValueChange = {
-                    val fieldChange = FieldChange.CustomField(
-                        sectionType = ContactDetails,
-                        customFieldType = value.toCustomFieldType(),
-                        index = index,
-                        value = it
-                    )
-                    onEvent(OnFieldChange(fieldChange))
+                    onEvent(OnFieldChange(identityField, it))
                 },
                 onClick = {
                     onEvent(
                         IdentityContentEvent.OnCustomFieldClick(
                             index = index,
-                            customFieldType = value.toCustomFieldType(),
-                            customExtraField = ContactCustomField
+                            customExtraField = customExtraField
                         )
                     )
                 },
                 onFocusChange = { idx, isFocused ->
-                    onEvent(
-                        IdentityContentEvent.OnCustomFieldFocused(
-                            idx,
-                            isFocused,
-                            ContactCustomField
-                        )
-                    )
+                    onEvent(OnFocusChange(identityField, isFocused))
                 },
                 onOptionsClick = {
                     onEvent(
                         OnCustomFieldOptions(
-                            index,
-                            value.label,
-                            ContactCustomField
+                            index = index,
+                            label = entry.label,
+                            customExtraField = customExtraField
                         )
                     )
                 }
             )
             RequestFocusLaunchedEffect(
                 focusRequester = focusRequester,
-                requestFocus = field?.extraField is ContactCustomField && field.index == index,
-                callback = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
+                requestFocus = field?.extraField is ContactCustomField && field.index == index
             )
         }
         if (showAddContactDetailsButton) {

@@ -46,7 +46,8 @@ import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEn
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnCustomFieldOptions
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnFieldChange
-import proton.android.pass.features.itemcreate.identity.presentation.FieldChange
+import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnFocusChange
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
 import proton.android.pass.features.itemcreate.identity.presentation.UIAddressDetails
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.AddressCustomField
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.AddressDetailsField
@@ -85,37 +86,37 @@ internal fun AddressDetails(
             OrganizationInput(
                 value = uiAddressDetails.organization,
                 enabled = enabled,
-                onChange = { onEvent(OnFieldChange(FieldChange.Organization(it))) }
+                onChange = { onEvent(OnFieldChange(IdentityField.Organization, it)) }
             )
             PassDivider()
             StreetAddressInput(
                 value = uiAddressDetails.streetAddress,
                 enabled = enabled,
-                onChange = { onEvent(OnFieldChange(FieldChange.StreetAddress(it))) }
+                onChange = { onEvent(OnFieldChange(IdentityField.StreetAddress, it)) }
             )
             PassDivider()
             ZipOrPostalCodeInput(
                 value = uiAddressDetails.zipOrPostalCode,
                 enabled = enabled,
-                onChange = { onEvent(OnFieldChange(FieldChange.ZipOrPostalCode(it))) }
+                onChange = { onEvent(OnFieldChange(IdentityField.ZipOrPostalCode, it)) }
             )
             PassDivider()
             CityInput(
                 value = uiAddressDetails.city,
                 enabled = enabled,
-                onChange = { onEvent(OnFieldChange(FieldChange.City(it))) }
+                onChange = { onEvent(OnFieldChange(IdentityField.City, it)) }
             )
             PassDivider()
             StateOrProvinceInput(
                 value = uiAddressDetails.stateOrProvince,
                 enabled = enabled,
-                onChange = { onEvent(OnFieldChange(FieldChange.StateOrProvince(it))) }
+                onChange = { onEvent(OnFieldChange(IdentityField.StateOrProvince, it)) }
             )
             PassDivider()
             CountryOrRegionInput(
                 value = uiAddressDetails.countryOrRegion,
                 enabled = enabled,
-                onChange = { onEvent(OnFieldChange(FieldChange.CountryOrRegion(it))) }
+                onChange = { onEvent(OnFieldChange(IdentityField.CountryOrRegion, it)) }
             )
             if (extraFields.contains(Floor)) {
                 PassDivider()
@@ -123,8 +124,8 @@ internal fun AddressDetails(
                     value = uiAddressDetails.floor,
                     enabled = enabled,
                     requestFocus = field?.extraField is Floor,
-                    onChange = { onEvent(OnFieldChange(FieldChange.Floor(it))) },
-                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
+                    onChange = { onEvent(OnFieldChange(IdentityField.Floor, it)) },
+                    onFocusChange = { onEvent(OnFocusChange(IdentityField.Floor, it)) }
                 )
             }
             if (extraFields.contains(County)) {
@@ -133,48 +134,48 @@ internal fun AddressDetails(
                     value = uiAddressDetails.county,
                     enabled = enabled,
                     requestFocus = field?.extraField is County,
-                    onChange = { onEvent(OnFieldChange(FieldChange.County(it))) },
-                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
+                    onChange = { onEvent(OnFieldChange(IdentityField.County, it)) },
+                    onFocusChange = { onEvent(OnFocusChange(IdentityField.County, it)) }
                 )
             }
         }
-        uiAddressDetails.customFields.forEachIndexed { index, value ->
+        uiAddressDetails.customFields.forEachIndexed { index, entry ->
             val focusRequester = remember { FocusRequester() }
+            val customExtraField = AddressCustomField(entry.toCustomFieldType())
+            val identityField = IdentityField.CustomField(
+                sectionType = AddressDetails,
+                customFieldType = entry.toCustomFieldType(),
+                index = index
+            )
             CustomFieldEntry(
                 modifier = Modifier.focusRequester(focusRequester),
                 passItemColors = passItemColors(ItemCategory.Identity),
-                entry = value,
+                entry = entry,
                 canEdit = enabled,
                 isError = false,
                 errorMessage = "",
                 index = index,
                 onValueChange = {
-                    val fieldChange = FieldChange.CustomField(
-                        sectionType = AddressDetails,
-                        customFieldType = value.toCustomFieldType(),
-                        index = index,
-                        value = it
-                    )
-                    onEvent(OnFieldChange(fieldChange))
+                    onEvent(OnFieldChange(identityField, it))
                 },
                 onClick = {
                     onEvent(
                         IdentityContentEvent.OnCustomFieldClick(
                             index = index,
-                            customFieldType = value.toCustomFieldType(),
-                            customExtraField = AddressCustomField
+                            customExtraField = customExtraField
                         )
                     )
                 },
                 onFocusChange = { idx, isFocused ->
-                    onEvent(IdentityContentEvent.OnCustomFieldFocused(idx, isFocused, AddressCustomField))
+                    onEvent(OnFocusChange(identityField, isFocused))
                 },
-                onOptionsClick = { onEvent(OnCustomFieldOptions(index, value.label, AddressCustomField)) }
+                onOptionsClick = {
+                    onEvent(OnCustomFieldOptions(index, entry.label, customExtraField))
+                }
             )
             RequestFocusLaunchedEffect(
                 focusRequester = focusRequester,
-                requestFocus = field?.extraField is AddressCustomField && field.index == index,
-                callback = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
+                requestFocus = field?.extraField is AddressCustomField && field.index == index
             )
 
         }

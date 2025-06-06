@@ -49,7 +49,6 @@ import proton.android.pass.features.itemcreate.identity.navigation.IdentityConte
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnFocusChange
 import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
 import proton.android.pass.features.itemcreate.identity.presentation.UIWorkDetails
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.FocusedField
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.PersonalWebsite
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.WorkCustomField
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.WorkDetailsField
@@ -68,7 +67,7 @@ internal fun WorkDetails(
     uiWorkDetails: UIWorkDetails,
     enabled: Boolean,
     extraFields: PersistentSet<WorkDetailsField>,
-    focusedField: Option<FocusedField>,
+    focusedField: Option<IdentityField>,
     showAddWorkDetailsButton: Boolean,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
@@ -97,7 +96,7 @@ internal fun WorkDetails(
                 PersonalWebsiteInput(
                     value = uiWorkDetails.personalWebsite,
                     enabled = enabled,
-                    requestFocus = field?.extraField is PersonalWebsite,
+                    requestFocus = field is IdentityField.PersonalWebsite,
                     onChange = { onEvent(OnFieldChange(IdentityField.PersonalWebsite, it)) },
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.PersonalWebsite, it)) }
                 )
@@ -107,7 +106,7 @@ internal fun WorkDetails(
                 WorkPhoneNumberInput(
                     value = uiWorkDetails.workPhoneNumber,
                     enabled = enabled,
-                    requestFocus = field?.extraField is WorkPhoneNumber,
+                    requestFocus = field is IdentityField.WorkPhoneNumber,
                     onChange = { onEvent(OnFieldChange(IdentityField.WorkPhoneNumber, it)) },
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.WorkPhoneNumber, it)) }
                 )
@@ -117,7 +116,7 @@ internal fun WorkDetails(
                 WorkEmailInput(
                     value = uiWorkDetails.workEmail,
                     enabled = enabled,
-                    requestFocus = field?.extraField is WorkEmail,
+                    requestFocus = field is IdentityField.WorkEmail,
                     onChange = { onEvent(OnFieldChange(IdentityField.WorkEmail, it)) },
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.WorkEmail, it)) }
                 )
@@ -159,7 +158,9 @@ internal fun WorkDetails(
             )
             RequestFocusLaunchedEffect(
                 focusRequester = focusRequester,
-                requestFocus = field?.extraField is WorkCustomField && field.index == index
+                requestFocus = field is IdentityField.CustomField &&
+                    field.sectionType is WorkDetails &&
+                    field.index == index
             )
         }
         if (showAddWorkDetailsButton) {

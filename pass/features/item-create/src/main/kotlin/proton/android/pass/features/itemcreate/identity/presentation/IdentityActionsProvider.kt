@@ -42,7 +42,6 @@ import proton.android.pass.features.itemcreate.identity.presentation.bottomsheet
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Facebook
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.FirstName
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Floor
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.FocusedField
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Gender
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Instagram
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.LastName
@@ -99,7 +98,7 @@ data class IdentitySharedUiState(
     val validationErrors: PersistentSet<ValidationError>,
     val isItemSaved: ItemSavedState,
     val extraFields: PersistentSet<ExtraField>,
-    val focusedField: Option<FocusedField>,
+    val focusedField: Option<IdentityField>,
     val canUseCustomFields: Boolean,
     val displayFileAttachmentsOnboarding: Boolean,
     val isFileAttachmentsEnabled: Boolean,

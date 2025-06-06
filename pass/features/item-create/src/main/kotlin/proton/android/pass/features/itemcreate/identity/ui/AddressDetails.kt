@@ -53,7 +53,6 @@ import proton.android.pass.features.itemcreate.identity.presentation.bottomsheet
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.AddressDetailsField
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.County
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Floor
-import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.FocusedField
 import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType.AddressDetails
 import proton.android.pass.features.itemcreate.identity.ui.inputfields.CityInput
 import proton.android.pass.features.itemcreate.identity.ui.inputfields.CountryOrRegionInput
@@ -70,7 +69,7 @@ internal fun AddressDetails(
     uiAddressDetails: UIAddressDetails,
     enabled: Boolean,
     extraFields: PersistentSet<AddressDetailsField>,
-    focusedField: Option<FocusedField>,
+    focusedField: Option<IdentityField>,
     showAddAddressDetailsButton: Boolean,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
@@ -123,7 +122,7 @@ internal fun AddressDetails(
                 FloorInput(
                     value = uiAddressDetails.floor,
                     enabled = enabled,
-                    requestFocus = field?.extraField is Floor,
+                    requestFocus = field is IdentityField.Floor,
                     onChange = { onEvent(OnFieldChange(IdentityField.Floor, it)) },
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.Floor, it)) }
                 )
@@ -133,7 +132,7 @@ internal fun AddressDetails(
                 CountyInput(
                     value = uiAddressDetails.county,
                     enabled = enabled,
-                    requestFocus = field?.extraField is County,
+                    requestFocus = field is IdentityField.County,
                     onChange = { onEvent(OnFieldChange(IdentityField.County, it)) },
                     onFocusChange = { onEvent(OnFocusChange(IdentityField.County, it)) }
                 )
@@ -175,7 +174,9 @@ internal fun AddressDetails(
             )
             RequestFocusLaunchedEffect(
                 focusRequester = focusRequester,
-                requestFocus = field?.extraField is AddressCustomField && field.index == index
+                requestFocus = field is IdentityField.CustomField &&
+                    field.sectionType is IdentitySectionType.ContactDetails &&
+                    field.index == index
             )
 
         }

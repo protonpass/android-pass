@@ -140,6 +140,7 @@ class IdentityActionsProviderImpl @Inject constructor(
         MutableStateFlow(emptySet())
     private val isItemSavedState: MutableStateFlow<ItemSavedState> =
         MutableStateFlow(ItemSavedState.Unknown)
+    private val focusedFieldState: MutableStateFlow<Option<IdentityField>> = MutableStateFlow(None)
 
     @Suppress("LongMethod")
     override fun onFieldChange(field: IdentityField, value: String) {
@@ -339,7 +340,6 @@ class IdentityActionsProviderImpl @Inject constructor(
         identityItemFormMutableState = when (customExtraField) {
             is AddressCustomField -> {
                 val addressDetails = identityItemFormMutableState.uiAddressDetails
-                identityFieldDraftRepository.addCustomFieldIndex(addressDetails.customFields.size)
                 identityItemFormMutableState.copy(
                     uiAddressDetails = addressDetails.copy(
                         customFields = addressDetails.customFields + field
@@ -349,7 +349,6 @@ class IdentityActionsProviderImpl @Inject constructor(
 
             is ContactCustomField -> {
                 val contactDetails = identityItemFormMutableState.uiContactDetails
-                identityFieldDraftRepository.addCustomFieldIndex(contactDetails.customFields.size)
                 identityItemFormMutableState.copy(
                     uiContactDetails = contactDetails.copy(
                         customFields = contactDetails.customFields + field
@@ -359,7 +358,6 @@ class IdentityActionsProviderImpl @Inject constructor(
 
             is PersonalCustomField -> {
                 val personalDetails = identityItemFormMutableState.uiPersonalDetails
-                identityFieldDraftRepository.addCustomFieldIndex(personalDetails.customFields.size)
                 identityItemFormMutableState.copy(
                     uiPersonalDetails = personalDetails.copy(
                         customFields = personalDetails.customFields + field
@@ -369,7 +367,6 @@ class IdentityActionsProviderImpl @Inject constructor(
 
             is WorkCustomField -> {
                 val workDetails = identityItemFormMutableState.uiWorkDetails
-                identityFieldDraftRepository.addCustomFieldIndex(workDetails.customFields.size)
                 identityItemFormMutableState.copy(
                     uiWorkDetails = workDetails.copy(
                         customFields = workDetails.customFields + field
@@ -379,9 +376,6 @@ class IdentityActionsProviderImpl @Inject constructor(
 
             is ExtraSectionCustomField -> {
                 val extraSection = identityItemFormMutableState.uiExtraSections
-                identityFieldDraftRepository.addCustomFieldIndex(
-                    extraSection[customExtraField.index].customFields.size
-                )
                 identityItemFormMutableState.copy(
                     uiExtraSections = extraSection.toMutableList()
                         .apply {
@@ -674,6 +668,12 @@ class IdentityActionsProviderImpl @Inject constructor(
 
             else -> {}
         }
+
+        if (isFocused) {
+            focusedFieldState.update { field.some() }
+        } else {
+            focusedFieldState.update { None }
+        }
     }
 
     override fun openDraftAttachment(
@@ -690,7 +690,7 @@ class IdentityActionsProviderImpl @Inject constructor(
         validationErrorsState.map { it.toPersistentSet() },
         isItemSavedState,
         identityFieldDraftRepository.observeExtraFields().map(Set<ExtraField>::toPersistentSet),
-        identityFieldDraftRepository.observeLastAddedExtraField(),
+        focusedFieldState,
         canPerformPaidAction(),
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding().map { it.value() },
         featureFlagsRepository[FeatureFlag.FILE_ATTACHMENTS_V1],

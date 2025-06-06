@@ -19,15 +19,10 @@
 package proton.android.pass.features.itemcreate.identity.presentation.bottomsheets
 
 import kotlinx.coroutines.flow.Flow
-import proton.android.pass.common.api.Option
-
-data class FocusedField(val index: Int, val extraField: ExtraField)
 
 interface IdentityFieldDraftRepository {
     fun <T : ExtraField> getSectionFields(clazz: Class<T>, extraSectionIndex: Int): Set<T>
     fun observeExtraFields(): Flow<Set<ExtraField>>
     fun addField(extraField: ExtraField, focus: Boolean)
     fun clearAddedFields()
-    fun observeLastAddedExtraField(): Flow<Option<FocusedField>>
-    fun addCustomFieldIndex(index: Int)
 }

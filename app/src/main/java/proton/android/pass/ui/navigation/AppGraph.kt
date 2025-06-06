@@ -21,6 +21,7 @@ package proton.android.pass.ui.navigation
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.commonuimodels.api.items.ItemDetailNavScope
 import proton.android.pass.domain.features.PaidFeature
@@ -134,6 +135,8 @@ import proton.android.pass.features.itemcreate.identity.navigation.UpdateIdentit
 import proton.android.pass.features.itemcreate.identity.navigation.UpdateIdentityNavigation
 import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.IdentityFieldsBottomSheet
 import proton.android.pass.features.itemcreate.identity.navigation.createUpdateIdentityGraph
+import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType
+import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType.Companion.toIndex
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation
 import proton.android.pass.features.itemcreate.login.CreateLoginNavItem
 import proton.android.pass.features.itemcreate.login.CreateLoginNavigation
@@ -878,7 +881,7 @@ fun NavGraphBuilder.appGraph(
                     val prefix = CustomFieldPrefix.fromLogin(backDestination)
                     appNavigator.navigate(
                         destination = CameraTotpNavItem(prefix),
-                        route = CameraTotpNavItem(prefix).createNavRoute(None, it.index)
+                        route = CameraTotpNavItem(prefix).createNavRoute(index = it.index)
                     )
                 }
 
@@ -958,7 +961,7 @@ fun NavGraphBuilder.appGraph(
                     val prefix = CustomFieldPrefix.fromLogin(backDestination)
                     appNavigator.navigate(
                         destination = PhotoPickerTotpNavItem(prefix),
-                        route = PhotoPickerTotpNavItem(prefix).createNavRoute(None, it.index),
+                        route = PhotoPickerTotpNavItem(prefix).createNavRoute(index = it.index),
                         backDestination = backDestination
                     )
                 }
@@ -1090,7 +1093,7 @@ fun NavGraphBuilder.appGraph(
                     val prefix = CustomFieldPrefix.fromNote(backDestination)
                     appNavigator.navigate(
                         destination = CameraTotpNavItem(prefix),
-                        route = CameraTotpNavItem(prefix).createNavRoute(None, it.index)
+                        route = CameraTotpNavItem(prefix).createNavRoute(index = it.index)
                     )
                 }
 
@@ -1229,7 +1232,7 @@ fun NavGraphBuilder.appGraph(
                     val prefix = CustomFieldPrefix.fromCreditCard(backDestination)
                     appNavigator.navigate(
                         destination = CameraTotpNavItem(prefix),
-                        route = CameraTotpNavItem(prefix).createNavRoute(None, it.index)
+                        route = CameraTotpNavItem(prefix).createNavRoute(index = it.index)
                     )
                 }
             }
@@ -1358,7 +1361,7 @@ fun NavGraphBuilder.appGraph(
                     val prefix = CustomFieldPrefix.fromAlias(backDestination)
                     appNavigator.navigate(
                         destination = CameraTotpNavItem(prefix),
-                        route = CameraTotpNavItem(prefix).createNavRoute(None, it.index)
+                        route = CameraTotpNavItem(prefix).createNavRoute(index = it.index)
                     )
                 }
             }
@@ -1490,6 +1493,37 @@ fun NavGraphBuilder.appGraph(
                         destination = UpsellNavItem,
                         route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
                     )
+
+                is BaseIdentityNavigation.ScanTotp -> {
+                    val prefix = CustomFieldPrefix.fromIdentity(backDestination)
+                    appNavigator.navigate(
+                        destination = CameraTotpNavItem(prefix),
+                        route = CameraTotpNavItem(prefix)
+                            .createNavRoute(
+                                specialSectionIndex = it.section.toIndex().some(),
+                                sectionIndex = (it.section as? IdentitySectionType.ExtraSection)
+                                    ?.index
+                                    .toOption(),
+                                index = it.index.some()
+                            )
+                    )
+                }
+                is BaseIdentityNavigation.OpenImagePicker -> {
+                    val prefix = CustomFieldPrefix.fromIdentity(backDestination)
+                    appNavigator.navigate(
+                        destination = PhotoPickerTotpNavItem(prefix),
+                        route = PhotoPickerTotpNavItem(prefix).createNavRoute(
+                            specialSectionIndex = it.specialIndex,
+                            sectionIndex = it.sectionIndex,
+                            index = it.index
+                        ),
+                        backDestination = backDestination
+                    )
+                }
+
+                BaseIdentityNavigation.TotpCancel -> appNavigator.navigateBack()
+                is BaseIdentityNavigation.TotpSuccess ->
+                    appNavigator.navigateBackWithResult(it.results)
             }
         }
     )
@@ -1619,7 +1653,10 @@ fun NavGraphBuilder.appGraph(
                 val prefix = CustomFieldPrefix.fromCustomItem(backDestination)
                 appNavigator.navigate(
                     destination = CameraTotpNavItem(prefix),
-                    route = CameraTotpNavItem(prefix).createNavRoute(it.sectionIndex, it.index.some())
+                    route = CameraTotpNavItem(prefix).createNavRoute(
+                        sectionIndex = it.sectionIndex,
+                        index = it.index.some()
+                    )
                 )
             }
 
@@ -1627,7 +1664,10 @@ fun NavGraphBuilder.appGraph(
                 val prefix = CustomFieldPrefix.fromCustomItem(backDestination)
                 appNavigator.navigate(
                     destination = PhotoPickerTotpNavItem(prefix),
-                    route = PhotoPickerTotpNavItem(prefix).createNavRoute(it.sectionIndex, it.index.some()),
+                    route = PhotoPickerTotpNavItem(prefix).createNavRoute(
+                        sectionIndex = it.sectionIndex,
+                        index = it.index.some()
+                    ),
                     backDestination = backDestination
                 )
             }

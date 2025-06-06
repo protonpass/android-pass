@@ -18,10 +18,10 @@
 
 package proton.android.pass.features.itemcreate.identity.navigation
 
-import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
+import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType
 
 sealed interface IdentityContentEvent {
 
@@ -72,6 +72,5 @@ sealed interface IdentityContentEvent {
 
     data object PasteTotp : IdentityContentEvent
 
-    @JvmInline
-    value class OnScanTotp(val index: Option<Int>) : IdentityContentEvent
+    data class OnScanTotp(val section: IdentitySectionType, val index: Int) : IdentityContentEvent
 }

@@ -57,7 +57,8 @@ import java.net.URI
 
 @Suppress("ComplexInterface", "TooManyFunctions")
 interface IdentityFormActions {
-    fun onFieldChange(field: FieldChange)
+    fun onFieldChange(field: IdentityField, value: String)
+    fun onFocusChange(field: IdentityField, isFocused: Boolean)
     fun observeActions(coroutineScope: CoroutineScope)
     fun getFormState(): IdentityItemFormState
     suspend fun isFormStateValid(
@@ -68,11 +69,6 @@ interface IdentityFormActions {
         originalSections: List<UIExtraSection> = emptyList()
     ): Boolean
     fun clearDraftData()
-    fun onCustomFieldFocusChange(
-        index: Int,
-        focused: Boolean,
-        customExtraField: CustomExtraField
-    )
 
     fun openDraftAttachment(
         contextHolder: ClassHolder<Context>,
@@ -95,7 +91,6 @@ interface IdentityActionsProvider : IdentityFormActions {
     suspend fun onItemReceivedState(item: Item)
     fun getReceivedItem(): Item
     fun observeReceivedItem(): Flow<Option<Item>>
-    fun resetLastAddedFieldFocus()
 }
 
 data class IdentitySharedUiState(

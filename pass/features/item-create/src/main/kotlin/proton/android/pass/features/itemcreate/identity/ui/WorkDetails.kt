@@ -46,7 +46,8 @@ import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEn
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnCustomFieldOptions
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnFieldChange
-import proton.android.pass.features.itemcreate.identity.presentation.FieldChange
+import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnFocusChange
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
 import proton.android.pass.features.itemcreate.identity.presentation.UIWorkDetails
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.FocusedField
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.PersonalWebsite
@@ -83,13 +84,13 @@ internal fun WorkDetails(
             CompanyInput(
                 value = uiWorkDetails.company,
                 enabled = enabled,
-                onChange = { onEvent(OnFieldChange(FieldChange.Company(it))) }
+                onChange = { onEvent(OnFieldChange(IdentityField.Company, it)) }
             )
             PassDivider()
             JobTitleInput(
                 value = uiWorkDetails.jobTitle,
                 enabled = enabled,
-                onChange = { onEvent(OnFieldChange(FieldChange.JobTitle(it))) }
+                onChange = { onEvent(OnFieldChange(IdentityField.JobTitle, it)) }
             )
             if (extraFields.contains(PersonalWebsite)) {
                 PassDivider()
@@ -97,8 +98,8 @@ internal fun WorkDetails(
                     value = uiWorkDetails.personalWebsite,
                     enabled = enabled,
                     requestFocus = field?.extraField is PersonalWebsite,
-                    onChange = { onEvent(OnFieldChange(FieldChange.PersonalWebsite(it))) },
-                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
+                    onChange = { onEvent(OnFieldChange(IdentityField.PersonalWebsite, it)) },
+                    onFocusChange = { onEvent(OnFocusChange(IdentityField.PersonalWebsite, it)) }
                 )
             }
             if (extraFields.contains(WorkPhoneNumber)) {
@@ -107,8 +108,8 @@ internal fun WorkDetails(
                     value = uiWorkDetails.workPhoneNumber,
                     enabled = enabled,
                     requestFocus = field?.extraField is WorkPhoneNumber,
-                    onChange = { onEvent(OnFieldChange(FieldChange.WorkPhoneNumber(it))) },
-                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
+                    onChange = { onEvent(OnFieldChange(IdentityField.WorkPhoneNumber, it)) },
+                    onFocusChange = { onEvent(OnFocusChange(IdentityField.WorkPhoneNumber, it)) }
                 )
             }
             if (extraFields.contains(WorkEmail)) {
@@ -117,48 +118,48 @@ internal fun WorkDetails(
                     value = uiWorkDetails.workEmail,
                     enabled = enabled,
                     requestFocus = field?.extraField is WorkEmail,
-                    onChange = { onEvent(OnFieldChange(FieldChange.WorkEmail(it))) },
-                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
+                    onChange = { onEvent(OnFieldChange(IdentityField.WorkEmail, it)) },
+                    onFocusChange = { onEvent(OnFocusChange(IdentityField.WorkEmail, it)) }
                 )
             }
         }
-        uiWorkDetails.customFields.forEachIndexed { index, value ->
+        uiWorkDetails.customFields.forEachIndexed { index, entry ->
             val focusRequester = remember { FocusRequester() }
+            val customExtraField = WorkCustomField(entry.toCustomFieldType())
+            val identityField = IdentityField.CustomField(
+                sectionType = WorkDetails,
+                customFieldType = entry.toCustomFieldType(),
+                index = index
+            )
             CustomFieldEntry(
                 modifier = Modifier.focusRequester(focusRequester),
                 passItemColors = passItemColors(ItemCategory.Identity),
-                entry = value,
+                entry = entry,
                 canEdit = enabled,
                 isError = false,
                 errorMessage = "",
                 index = index,
                 onValueChange = {
-                    val fieldChange = FieldChange.CustomField(
-                        sectionType = WorkDetails,
-                        customFieldType = value.toCustomFieldType(),
-                        index = index,
-                        value = it
-                    )
-                    onEvent(OnFieldChange(fieldChange))
+                    onEvent(OnFieldChange(identityField, it))
                 },
                 onClick = {
                     onEvent(
                         IdentityContentEvent.OnCustomFieldClick(
                             index = index,
-                            customFieldType = value.toCustomFieldType(),
-                            customExtraField = WorkCustomField
+                            customExtraField = customExtraField
                         )
                     )
                 },
                 onFocusChange = { idx, isFocused ->
-                    onEvent(IdentityContentEvent.OnCustomFieldFocused(idx, isFocused, WorkCustomField))
+                    onEvent(OnFocusChange(identityField, isFocused))
                 },
-                onOptionsClick = { onEvent(OnCustomFieldOptions(index, value.label, WorkCustomField)) }
+                onOptionsClick = {
+                    onEvent(OnCustomFieldOptions(index, entry.label, customExtraField))
+                }
             )
             RequestFocusLaunchedEffect(
                 focusRequester = focusRequester,
-                requestFocus = field?.extraField is WorkCustomField && field.index == index,
-                callback = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
+                requestFocus = field?.extraField is WorkCustomField && field.index == index
             )
         }
         if (showAddWorkDetailsButton) {

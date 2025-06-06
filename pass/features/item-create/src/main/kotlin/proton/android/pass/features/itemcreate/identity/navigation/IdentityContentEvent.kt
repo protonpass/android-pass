@@ -19,10 +19,8 @@
 package proton.android.pass.features.itemcreate.identity.navigation
 
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
-import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ShareId
-import proton.android.pass.features.itemcreate.common.UIHiddenState
-import proton.android.pass.features.itemcreate.identity.presentation.FieldChange
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.CustomExtraField
 
 sealed interface IdentityContentEvent {
@@ -32,27 +30,27 @@ sealed interface IdentityContentEvent {
     @JvmInline
     value class Submit(val shareId: ShareId) : IdentityContentEvent
 
-    @JvmInline
-    value class OnFieldChange(val value: FieldChange) : IdentityContentEvent
+    data class OnFieldChange(
+        val field: IdentityField,
+        val value: String
+    ) : IdentityContentEvent
+
+    data class OnFocusChange(
+        val field: IdentityField,
+        val isFocused: Boolean
+    ) : IdentityContentEvent
 
     @JvmInline
     value class OnVaultSelect(val shareId: ShareId) : IdentityContentEvent
 
     data class OnCustomFieldClick(
         val index: Int,
-        val customFieldType: CustomFieldType,
         val customExtraField: CustomExtraField
     ) : IdentityContentEvent
 
     data class OnCustomFieldOptions(
         val index: Int,
         val label: String,
-        val customExtraField: CustomExtraField
-    ) : IdentityContentEvent
-
-    data class OnCustomFieldFocused(
-        val index: Int,
-        val isFocused: Boolean,
         val customExtraField: CustomExtraField
     ) : IdentityContentEvent
 
@@ -67,16 +65,8 @@ sealed interface IdentityContentEvent {
 
     data class OnExtraSectionOptions(val index: Int, val label: String) : IdentityContentEvent
 
-    data object ClearLastAddedFieldFocus : IdentityContentEvent
-
     @JvmInline
     value class OnAttachmentEvent(val event: AttachmentContentEvent) : IdentityContentEvent
 
     data object DismissAttachmentBanner : IdentityContentEvent
-
-    data class OnSocialSecurityNumberFieldFocusChanged(
-        internal val isFocused: Boolean,
-        internal val socialSecurityNumberHiddenState: UIHiddenState
-    ) : IdentityContentEvent
-
 }

@@ -18,9 +18,13 @@
 
 package proton.android.pass.features.itemcreate.identity.presentation.bottomsheets
 
+import proton.android.pass.domain.CustomFieldType
+
 sealed interface ExtraField
 
-sealed interface CustomExtraField
+sealed interface CustomExtraField {
+    val type: CustomFieldType
+}
 
 sealed interface PersonalDetailsField : ExtraField
 
@@ -34,7 +38,10 @@ data object Birthdate : PersonalDetailsField
 
 data object Gender : PersonalDetailsField
 
-data object PersonalCustomField : PersonalDetailsField, CustomExtraField
+@JvmInline
+value class PersonalCustomField(
+    override val type: CustomFieldType
+) : PersonalDetailsField, CustomExtraField
 
 sealed interface AddressDetailsField : ExtraField
 
@@ -42,7 +49,10 @@ data object Floor : AddressDetailsField
 
 data object County : AddressDetailsField
 
-data object AddressCustomField : AddressDetailsField, CustomExtraField
+@JvmInline
+value class AddressCustomField(
+    override val type: CustomFieldType
+) : AddressDetailsField, CustomExtraField
 
 sealed interface ContactDetailsField : ExtraField
 
@@ -56,7 +66,10 @@ data object Yahoo : ContactDetailsField
 
 data object Instagram : ContactDetailsField
 
-data object ContactCustomField : ContactDetailsField, CustomExtraField
+@JvmInline
+value class ContactCustomField(
+    override val type: CustomFieldType
+) : ContactDetailsField, CustomExtraField
 
 sealed interface WorkDetailsField : ExtraField
 
@@ -66,8 +79,14 @@ data object WorkPhoneNumber : WorkDetailsField
 
 data object WorkEmail : WorkDetailsField
 
-data object WorkCustomField : WorkDetailsField, CustomExtraField
+@JvmInline
+value class WorkCustomField(
+    override val type: CustomFieldType
+) : WorkDetailsField, CustomExtraField
 
 sealed interface ExtraSectionField : ExtraField
 
-data class ExtraSectionCustomField(val index: Int) : ExtraSectionField, CustomExtraField
+data class ExtraSectionCustomField(
+    override val type: CustomFieldType,
+    val index: Int
+) : ExtraSectionField, CustomExtraField

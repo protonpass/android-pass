@@ -36,10 +36,9 @@ import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEn
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnAddExtraSectionCustomField
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnCustomFieldClick
-import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnCustomFieldFocused
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnCustomFieldOptions
 import proton.android.pass.features.itemcreate.identity.navigation.IdentityContentEvent.OnFieldChange
-import proton.android.pass.features.itemcreate.identity.presentation.FieldChange
+import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ExtraSectionCustomField
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.FocusedField
 
@@ -59,6 +58,12 @@ fun ExtraSection(
     ) {
         section.customFields.forEachIndexed { index, value ->
             val focusRequester = remember { FocusRequester() }
+            val customExtraField = ExtraSectionCustomField(value.toCustomFieldType(), sectionIndex)
+            val identityField = IdentityField.CustomField(
+                sectionType = IdentitySectionType.ExtraSection(sectionIndex),
+                customFieldType = value.toCustomFieldType(),
+                index = index
+            )
             CustomFieldEntry(
                 modifier = Modifier.focusRequester(focusRequester),
                 passItemColors = passItemColors(ItemCategory.Identity),
@@ -68,32 +73,25 @@ fun ExtraSection(
                 errorMessage = "",
                 index = index,
                 onValueChange = {
-                    val fieldChange = FieldChange.CustomField(
-                        sectionType = IdentitySectionType.ExtraSection(sectionIndex),
-                        customFieldType = value.toCustomFieldType(),
-                        index = index,
-                        value = it
-                    )
-                    onEvent(OnFieldChange(fieldChange))
+                    onEvent(OnFieldChange(identityField, it))
                 },
                 onClick = {
                     onEvent(
                         OnCustomFieldClick(
                             index = index,
-                            customFieldType = value.toCustomFieldType(),
-                            customExtraField = ExtraSectionCustomField(sectionIndex)
+                            customExtraField = customExtraField
                         )
                     )
                 },
                 onFocusChange = { idx, isFocused ->
-                    onEvent(OnCustomFieldFocused(idx, isFocused, ExtraSectionCustomField(sectionIndex)))
+                    onEvent(IdentityContentEvent.OnFocusChange(identityField, isFocused))
                 },
                 onOptionsClick = {
                     onEvent(
                         OnCustomFieldOptions(
                             index = index,
                             label = value.label,
-                            customExtraField = ExtraSectionCustomField(sectionIndex)
+                            customExtraField = customExtraField
                         )
                     )
                 }
@@ -102,8 +100,7 @@ fun ExtraSection(
                 focusRequester = focusRequester,
                 requestFocus = field?.extraField is ExtraSectionCustomField &&
                     field.extraField.index == sectionIndex &&
-                    field.index == index,
-                callback = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
+                    field.index == index
             )
         }
         AddCustomFieldButton(

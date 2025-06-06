@@ -129,7 +129,7 @@ fun NavGraphBuilder.updateCustomItemGraph(onNavigate: (BaseCustomItemNavigation)
         }
         createTotpGraph(
             prefix = CustomFieldPrefix.UpdateCustomItem,
-            onSuccess = { totp, sectionIndex, index ->
+            onSuccess = { totp, _, sectionIndex, index ->
                 val values = buildMap<String, Any> {
                     put(TOTP_NAV_PARAMETER_KEY, totp)
                     sectionIndex?.let { put(SECTION_INDEX_NAV_PARAMETER_KEY, it) }
@@ -138,7 +138,7 @@ fun NavGraphBuilder.updateCustomItemGraph(onNavigate: (BaseCustomItemNavigation)
                 onNavigate(BaseCustomItemNavigation.TotpSuccess(values))
             },
             onCloseTotp = { onNavigate(BaseCustomItemNavigation.TotpCancel) },
-            onOpenImagePicker = { sectionIndex, index ->
+            onOpenImagePicker = { _, sectionIndex, index ->
                 onNavigate(
                     BaseCustomItemNavigation.OpenImagePicker(
                         sectionIndex = sectionIndex.toOption(),

@@ -181,7 +181,7 @@ fun NavGraphBuilder.createAliasGraph(
     }
     createTotpGraph(
         prefix = CustomFieldPrefix.CreateAlias,
-        onSuccess = { totp, _, index ->
+        onSuccess = { totp, _, _, index ->
             val values = buildMap<String, Any> {
                 put(TOTP_NAV_PARAMETER_KEY, totp)
                 index?.let { put(INDEX_NAV_PARAMETER_KEY, it) }
@@ -189,7 +189,7 @@ fun NavGraphBuilder.createAliasGraph(
             onNavigate(BaseAliasNavigation.TotpSuccess(values))
         },
         onCloseTotp = { onNavigate(BaseAliasNavigation.TotpCancel) },
-        onOpenImagePicker = { _, index ->
+        onOpenImagePicker = { _, _, index ->
             onNavigate(BaseAliasNavigation.OpenImagePicker(index.toOption()))
         }
     )

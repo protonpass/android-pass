@@ -18,9 +18,13 @@
 
 package proton.android.pass.features.itemcreate.identity.navigation
 
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.customFieldBottomSheetGraph
@@ -31,7 +35,13 @@ import proton.android.pass.features.itemcreate.dialogs.customfield.CustomFieldNa
 import proton.android.pass.features.itemcreate.dialogs.customfield.customFieldNameDialogGraph
 import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.IdentityFieldsNavigation
 import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.identityFieldsGraph
+import proton.android.pass.features.itemcreate.identity.ui.TotpNavParams
 import proton.android.pass.features.itemcreate.identity.ui.UpdateIdentityScreen
+import proton.android.pass.features.itemcreate.totp.INDEX_NAV_PARAMETER_KEY
+import proton.android.pass.features.itemcreate.totp.SECTION_INDEX_NAV_PARAMETER_KEY
+import proton.android.pass.features.itemcreate.totp.SPECIAL_SECTION_INDEX_NAV_PARAMETER_KEY
+import proton.android.pass.features.itemcreate.totp.TOTP_NAV_PARAMETER_KEY
+import proton.android.pass.features.itemcreate.totp.createTotpGraph
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
@@ -49,13 +59,47 @@ sealed interface UpdateIdentityNavigation {
     data class IdentityUpdated(val shareId: ShareId, val itemId: ItemId) : BaseIdentityNavigation
 }
 
+@Suppress("LongMethod")
 fun NavGraphBuilder.updateIdentityGraph(onNavigate: (BaseIdentityNavigation) -> Unit) {
     navigation(
         route = UPDATE_IDENTITY_GRAPH,
         startDestination = UpdateIdentityNavItem.route
     ) {
-        composable(UpdateIdentityNavItem) {
+        composable(UpdateIdentityNavItem) { navBackStack ->
+            val navTotpUri by navBackStack.savedStateHandle
+                .getStateFlow<String?>(TOTP_NAV_PARAMETER_KEY, null)
+                .collectAsStateWithLifecycle()
+            val navTotpSectionIndex by navBackStack.savedStateHandle
+                .getStateFlow<Int?>(SECTION_INDEX_NAV_PARAMETER_KEY, null)
+                .collectAsStateWithLifecycle()
+            val navTotpSpecialIndex by navBackStack.savedStateHandle
+                .getStateFlow<Int?>(SPECIAL_SECTION_INDEX_NAV_PARAMETER_KEY, null)
+                .collectAsStateWithLifecycle()
+            val navTotpIndex by navBackStack.savedStateHandle
+                .getStateFlow<Int?>(INDEX_NAV_PARAMETER_KEY, null)
+                .collectAsStateWithLifecycle()
+            val totpNavParams = navTotpUri?.let {
+                TotpNavParams(
+                    uri = it,
+                    specialSectionIndex = navTotpSpecialIndex.toOption(),
+                    sectionIndex = navTotpSectionIndex.toOption(),
+                    index = navTotpIndex.toOption()
+                )
+            }
+            LaunchedEffect(navTotpUri) {
+                navBackStack.savedStateHandle.remove<String?>(TOTP_NAV_PARAMETER_KEY)
+            }
+            LaunchedEffect(navTotpSectionIndex) {
+                navBackStack.savedStateHandle.remove<Int?>(SECTION_INDEX_NAV_PARAMETER_KEY)
+            }
+            LaunchedEffect(navTotpSpecialIndex) {
+                navBackStack.savedStateHandle.remove<Int?>(SPECIAL_SECTION_INDEX_NAV_PARAMETER_KEY)
+            }
+            LaunchedEffect(navTotpIndex) {
+                navBackStack.savedStateHandle.remove<Int?>(INDEX_NAV_PARAMETER_KEY)
+            }
             UpdateIdentityScreen(
+                totpNavParams = totpNavParams,
                 onNavigate = onNavigate
             )
         }
@@ -96,6 +140,28 @@ fun NavGraphBuilder.updateIdentityGraph(onNavigate: (BaseIdentityNavigation) -> 
                     onNavigate(BaseIdentityNavigation.RemoveCustomSection)
             }
         }
+        createTotpGraph(
+            prefix = CustomFieldPrefix.UpdateIdentity,
+            onSuccess = { totp, specialIndex, sectionIndex, index ->
+                val values = buildMap<String, Any> {
+                    put(TOTP_NAV_PARAMETER_KEY, totp)
+                    specialIndex?.let { put(SPECIAL_SECTION_INDEX_NAV_PARAMETER_KEY, it) }
+                    sectionIndex?.let { put(SECTION_INDEX_NAV_PARAMETER_KEY, it) }
+                    index?.let { put(INDEX_NAV_PARAMETER_KEY, it) }
+                }
+                onNavigate(BaseIdentityNavigation.TotpSuccess(values))
+            },
+            onCloseTotp = { onNavigate(BaseIdentityNavigation.TotpCancel) },
+            onOpenImagePicker = { specialIndex, sectionIndex, index ->
+                onNavigate(
+                    BaseIdentityNavigation.OpenImagePicker(
+                        specialIndex = specialIndex.toOption(),
+                        sectionIndex = sectionIndex.toOption(),
+                        index = index.toOption()
+                    )
+                )
+            }
+        )
     }
 }
 

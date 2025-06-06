@@ -98,7 +98,7 @@ fun NavGraphBuilder.createNoteGraph(onNavigate: (BaseNoteNavigation) -> Unit) {
             onNavigate(event)
         },
         onRemoveCustomFieldNavigate = {
-            val event = BaseNoteNavigation.NoteCustomFieldNavigation(CustomFieldNavigation.RemovedCustomField)
+            val event = NoteCustomFieldNavigation(CustomFieldNavigation.RemovedCustomField)
             onNavigate(event)
         },
         onDismissBottomsheet = { onNavigate(BaseNoteNavigation.DismissBottomsheet) }
@@ -112,7 +112,7 @@ fun NavGraphBuilder.createNoteGraph(onNavigate: (BaseNoteNavigation) -> Unit) {
     }
     createTotpGraph(
         prefix = CustomFieldPrefix.CreateNote,
-        onSuccess = { totp, _, index ->
+        onSuccess = { totp, _, _, index ->
             val values = buildMap<String, Any> {
                 put(TOTP_NAV_PARAMETER_KEY, totp)
                 index?.let { put(INDEX_NAV_PARAMETER_KEY, it) }
@@ -120,7 +120,7 @@ fun NavGraphBuilder.createNoteGraph(onNavigate: (BaseNoteNavigation) -> Unit) {
             onNavigate(BaseNoteNavigation.TotpSuccess(values))
         },
         onCloseTotp = { onNavigate(BaseNoteNavigation.TotpCancel) },
-        onOpenImagePicker = { _, index ->
+        onOpenImagePicker = { _, _, index ->
             onNavigate(BaseNoteNavigation.OpenImagePicker(index.toOption()))
         }
     )

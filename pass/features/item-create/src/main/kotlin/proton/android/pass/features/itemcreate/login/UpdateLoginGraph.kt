@@ -111,7 +111,7 @@ fun NavGraphBuilder.updateLoginGraph(canUseAttachments: Boolean, onNavigate: (Ba
         }
         createTotpGraph(
             prefix = CustomFieldPrefix.UpdateLogin,
-            onSuccess = { totp, sectionIndex, index ->
+            onSuccess = { totp, _, sectionIndex, index ->
                 val values = buildMap<String, Any> {
                     put(TOTP_NAV_PARAMETER_KEY, totp)
                     sectionIndex?.let { put(SECTION_INDEX_NAV_PARAMETER_KEY, it) }
@@ -120,7 +120,7 @@ fun NavGraphBuilder.updateLoginGraph(canUseAttachments: Boolean, onNavigate: (Ba
                 onNavigate(BaseLoginNavigation.TotpSuccess(values))
             },
             onCloseTotp = { onNavigate(BaseLoginNavigation.TotpCancel) },
-            onOpenImagePicker = { _, index ->
+            onOpenImagePicker = { _, _, index ->
                 onNavigate(BaseLoginNavigation.OpenImagePicker(index.toOption()))
             }
         )

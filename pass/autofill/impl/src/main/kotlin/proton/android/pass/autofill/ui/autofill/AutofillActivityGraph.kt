@@ -32,6 +32,7 @@ import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.autofill.ui.autofill.AutofillEvent.AutofillItemSelected
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsBottomSheetNavItem
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsNavDestination
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.itemOptionsNavGraph
@@ -75,6 +76,8 @@ import proton.android.pass.features.itemcreate.identity.navigation.CreateIdentit
 import proton.android.pass.features.itemcreate.identity.navigation.UpdateIdentityNavigation
 import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.IdentityFieldsBottomSheet
 import proton.android.pass.features.itemcreate.identity.navigation.createIdentityGraph
+import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType
+import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType.Companion.toIndex
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation
 import proton.android.pass.features.itemcreate.login.CreateLoginNavItem
 import proton.android.pass.features.itemcreate.login.CreateLoginNavigation
@@ -257,7 +260,7 @@ internal fun NavGraphBuilder.autofillActivityGraph(
 
                 is BaseLoginNavigation.OnCreateLoginEvent -> when (val event = it.event) {
                     is CreateLoginNavigation.LoginCreated -> {
-                        onEvent(AutofillEvent.AutofillItemSelected(event.itemUiModel.toAutoFillItem()))
+                        onEvent(AutofillItemSelected(event.itemUiModel.toAutoFillItem()))
                     }
 
                     is CreateLoginNavigation.LoginCreatedWithPasskey -> {
@@ -275,7 +278,7 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                 is BaseLoginNavigation.ScanTotp -> appNavigator.navigate(
                     destination = CameraTotpNavItem(CustomFieldPrefix.CreateLogin),
                     route = CameraTotpNavItem(CustomFieldPrefix.CreateLogin)
-                        .createNavRoute(None, it.index)
+                        .createNavRoute(index = it.index)
                 )
 
                 BaseLoginNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
@@ -345,7 +348,7 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                 is BaseLoginNavigation.OpenImagePicker -> appNavigator.navigate(
                     destination = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateLogin),
                     route = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateLogin)
-                        .createNavRoute(None, it.index),
+                        .createNavRoute(index = it.index),
                     backDestination = CreateLoginNavItem
                 )
 
@@ -446,7 +449,7 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                 is BaseAliasNavigation.OpenImagePicker -> appNavigator.navigate(
                     destination = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateAlias),
                     route = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateAlias)
-                        .createNavRoute(None, it.index),
+                        .createNavRoute(index = it.index),
                     backDestination = CreateAliasNavItem
                 )
                 BaseAliasNavigation.RemovedCustomField -> dismissBottomSheet {}
@@ -457,7 +460,7 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                 is BaseAliasNavigation.ScanTotp -> appNavigator.navigate(
                     destination = CameraTotpNavItem(CustomFieldPrefix.CreateAlias),
                     route = CameraTotpNavItem(CustomFieldPrefix.CreateAlias)
-                        .createNavRoute(None, it.index)
+                        .createNavRoute(index = it.index)
                 )
             }
         }
@@ -520,7 +523,7 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                 is BaseCreditCardNavigation.OpenImagePicker -> appNavigator.navigate(
                     destination = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateCreditCard),
                     route = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateCreditCard)
-                        .createNavRoute(None, it.index),
+                        .createNavRoute(index = it.index),
                     backDestination = CreateCreditCardNavItem
                 )
                 BaseCreditCardNavigation.RemovedCustomField -> dismissBottomSheet {}
@@ -532,7 +535,7 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                 is BaseCreditCardNavigation.ScanTotp -> appNavigator.navigate(
                     destination = CameraTotpNavItem(CustomFieldPrefix.CreateCreditCard),
                     route = CameraTotpNavItem(CustomFieldPrefix.CreateCreditCard)
-                        .createNavRoute(None, it.index)
+                        .createNavRoute(index = it.index)
                 )
             }
         }
@@ -629,6 +632,32 @@ internal fun NavGraphBuilder.autofillActivityGraph(
                 is BaseIdentityNavigation.DeleteAllAttachments,
                 is BaseIdentityNavigation.OpenDraftAttachmentOptions ->
                     throw IllegalStateException("Cannot use attachments from autofill")
+
+                is BaseIdentityNavigation.ScanTotp -> appNavigator.navigate(
+                    destination = CameraTotpNavItem(CustomFieldPrefix.CreateIdentity),
+                    route = CameraTotpNavItem(CustomFieldPrefix.CreateIdentity)
+                        .createNavRoute(
+                            specialSectionIndex = it.section.toIndex().some(),
+                            sectionIndex = (it.section as? IdentitySectionType.ExtraSection)
+                                ?.index
+                                .toOption(),
+                            index = it.index.some()
+                        )
+                )
+
+                is BaseIdentityNavigation.OpenImagePicker -> appNavigator.navigate(
+                    destination = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateIdentity),
+                    route = PhotoPickerTotpNavItem(CustomFieldPrefix.CreateIdentity).createNavRoute(
+                        specialSectionIndex = it.specialIndex,
+                        sectionIndex = it.sectionIndex,
+                        index = it.index
+                    ),
+                    backDestination = CreateIdentityNavItem
+                )
+
+                BaseIdentityNavigation.TotpCancel -> appNavigator.navigateBack()
+                is BaseIdentityNavigation.TotpSuccess ->
+                    appNavigator.navigateBackWithResult(it.results)
             }
         }
     )

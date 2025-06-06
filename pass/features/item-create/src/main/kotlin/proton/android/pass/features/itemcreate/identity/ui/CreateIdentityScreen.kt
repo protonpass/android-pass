@@ -69,6 +69,7 @@ import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardH
 fun CreateIdentityScreen(
     modifier: Modifier = Modifier,
     selectVault: ShareId?,
+    totpNavParams: TotpNavParams?,
     canUseAttachments: Boolean,
     viewModel: CreateIdentityViewModel = hiltViewModel(),
     onNavigate: (BaseIdentityNavigation) -> Unit
@@ -78,6 +79,9 @@ fun CreateIdentityScreen(
         if (selectVault != null) {
             viewModel.onVaultSelect(selectVault)
         }
+    }
+    TotpSetLaunchEffect(totpNavParams) { field, uri ->
+        viewModel.onFieldChange(field, uri)
     }
 
     var showDatePickerForField: Option<Pair<IdentityField.CustomField, Int>> by remember {
@@ -209,10 +213,14 @@ fun CreateIdentityScreen(
                         CustomFieldType.Date -> {
                             showDatePickerForField = Some(it.field to it.index)
                         }
+
                         else -> throw IllegalStateException("Unhandled action")
                     }
 
-                    is IdentityContentEvent.OnScanTotp -> TODO()
+                    is IdentityContentEvent.OnScanTotp ->
+                        actionAfterKeyboardHide =
+                            { onNavigate(BaseIdentityNavigation.ScanTotp(it.section, it.index)) }
+
                     IdentityContentEvent.PasteTotp -> viewModel.onPasteTotp()
                 }
             }
@@ -232,12 +240,16 @@ fun CreateIdentityScreen(
             val field = when (customField.sectionType) {
                 is IdentitySectionType.AddressDetails ->
                     viewModel.getFormState().uiAddressDetails.customFields
+
                 is IdentitySectionType.ContactDetails ->
                     viewModel.getFormState().uiContactDetails.customFields
+
                 is IdentitySectionType.ExtraSection ->
                     viewModel.getFormState().uiExtraSections[customField.index].customFields
+
                 is IdentitySectionType.PersonalDetails ->
                     viewModel.getFormState().uiPersonalDetails.customFields
+
                 is IdentitySectionType.WorkDetails ->
                     viewModel.getFormState().uiWorkDetails.customFields
             }[index] as UICustomFieldContent.Date

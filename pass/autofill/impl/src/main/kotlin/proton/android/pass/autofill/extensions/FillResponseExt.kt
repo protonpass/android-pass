@@ -24,6 +24,7 @@ import android.service.autofill.FillRequest
 import android.service.autofill.FillResponse
 import android.service.autofill.SaveInfo
 import proton.android.pass.autofill.RequestFlags
+import proton.android.pass.autofill.ThirdPartyModeProvider
 import proton.android.pass.autofill.entities.AssistField
 import proton.android.pass.autofill.entities.asAndroid
 import proton.android.pass.autofill.extensions.MultiStepUtils.addPasswordToState
@@ -59,44 +60,47 @@ sealed interface SaveSessionType {
     data object NotAutoSaveable : SaveSessionType
 }
 
+@Suppress("LongMethod")
 internal fun FillResponse.Builder.addSaveInfo(
     request: FillRequest,
     cluster: NodeCluster,
-    packageName: PackageName
+    packageName: PackageName,
+    thirdPartyModeProvider: ThirdPartyModeProvider
 ) {
     val currentClientState = request.clientState ?: Bundle()
     val autofillSessionId = request.id
-
+    val isBrowser3PEnabled = runCatching {
+        thirdPartyModeProvider.isThirdPartyModeEnabled(packageName.value)
+    }.fold(
+        onSuccess = { it },
+        onFailure = { false }
+    )
     val saveSessionType = getSaveSessionType(cluster, currentClientState, packageName)
     val saveInfo = when (saveSessionType) {
         SaveSessionType.NotAutoSaveable -> return
         is SaveSessionType.UsernameAndPassword -> {
             PassLogger.d(TAG, "UsernameAndPassword session")
-
             val usernameFieldId = saveSessionType.usernameField.id.asAndroid().autofillId
             val passwordFieldId = saveSessionType.passwordField.id.asAndroid().autofillId
-            val ids = listOf(usernameFieldId, passwordFieldId)
             currentClientState.addUsernameToState(autofillSessionId, usernameFieldId)
             currentClientState.addPasswordToState(autofillSessionId, passwordFieldId)
             setClientState(currentClientState)
-            SaveInfo.Builder(
-                SaveInfo.SAVE_DATA_TYPE_USERNAME or SaveInfo.SAVE_DATA_TYPE_PASSWORD,
-                ids.toTypedArray()
-            ).applyFlags(request.flags)
+            val type = SaveInfo.SAVE_DATA_TYPE_USERNAME or SaveInfo.SAVE_DATA_TYPE_PASSWORD
+            val requiredIds = arrayOf(usernameFieldId, passwordFieldId)
+            SaveInfo.Builder(type, requiredIds)
+                .apply { if (!isBrowser3PEnabled) applyFlags(request.flags) }
         }
 
         is SaveSessionType.Username -> {
             PassLogger.d(TAG, "Only username session")
 
             val usernameFieldId = saveSessionType.field.id.asAndroid().autofillId
-            val ids = listOf(usernameFieldId)
             currentClientState.addUsernameToState(autofillSessionId, usernameFieldId)
             setClientState(currentClientState)
 
-            val builder = SaveInfo.Builder(
-                SaveInfo.SAVE_DATA_TYPE_USERNAME or SaveInfo.SAVE_DATA_TYPE_EMAIL_ADDRESS,
-                ids.toTypedArray()
-            )
+            val type = SaveInfo.SAVE_DATA_TYPE_USERNAME or SaveInfo.SAVE_DATA_TYPE_EMAIL_ADDRESS
+            val requiredIds = arrayOf(usernameFieldId)
+            val builder = SaveInfo.Builder(type, requiredIds)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 PassLogger.d(TAG, "Adding FLAG_DELAY_SAVE")
                 builder.setFlags(SaveInfo.FLAG_DELAY_SAVE)
@@ -108,9 +112,9 @@ internal fun FillResponse.Builder.addSaveInfo(
             PassLogger.d(TAG, "Only password session")
 
             val passwordFieldId = saveSessionType.passwordField.id.asAndroid().autofillId
-            val ids = mutableListOf(passwordFieldId)
+            val requiredIds = mutableListOf(passwordFieldId)
             saveSessionType.storedUsername.map { usernameInfo ->
-                ids.add(usernameInfo.fieldId)
+                requiredIds.add(usernameInfo.fieldId)
                 currentClientState.addUsernameToState(usernameInfo.sessionId, usernameInfo.fieldId)
                 PassLogger.d(TAG, "Also added username to state")
             }
@@ -125,10 +129,8 @@ internal fun FillResponse.Builder.addSaveInfo(
             }
 
             setClientState(currentClientState)
-            SaveInfo.Builder(
-                saveInfoType,
-                ids.toTypedArray()
-            ).applyFlags(request.flags)
+            SaveInfo.Builder(saveInfoType, requiredIds.toTypedArray())
+                .apply { if (!isBrowser3PEnabled) applyFlags(request.flags) }
         }
     }
 

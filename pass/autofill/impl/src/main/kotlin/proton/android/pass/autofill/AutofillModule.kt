@@ -23,6 +23,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.autofill.api.AutofillManager
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -30,4 +31,7 @@ abstract class AutofillModule {
 
     @Binds
     abstract fun bindAutofillManager(impl: AutofillManagerImpl): AutofillManager
+
+    @[Binds Singleton]
+    internal abstract fun bindThirdPartyModeProvider(impl: ThirdPartyModeProviderImpl): ThirdPartyModeProvider
 }

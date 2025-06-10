@@ -67,7 +67,8 @@ object AutoFillHandler {
         cancellationSignal: CancellationSignal,
         autofillServiceManager: AutofillServiceManager,
         telemetryManager: TelemetryManager,
-        accountManager: AccountManager
+        accountManager: AccountManager,
+        thirdPartyModeProvider: ThirdPartyModeProvider
     ) {
         val windowNode = getWindowNodes(request.fillContexts).lastOrNull()
         if (windowNode?.rootViewNode == null) {
@@ -88,7 +89,8 @@ object AutoFillHandler {
                 request = request,
                 autofillServiceManager = autofillServiceManager,
                 telemetryManager = telemetryManager,
-                accountManager = accountManager
+                accountManager = accountManager,
+                thirdPartyModeProvider = thirdPartyModeProvider
             )
 
             callback.onSuccess(response.value())
@@ -106,7 +108,8 @@ object AutoFillHandler {
         request: FillRequest,
         autofillServiceManager: AutofillServiceManager,
         telemetryManager: TelemetryManager,
-        accountManager: AccountManager
+        accountManager: AccountManager,
+        thirdPartyModeProvider: ThirdPartyModeProvider
     ): Option<FillResponse> {
         val shouldAutofill = shouldAutofill(
             context = context,
@@ -156,16 +159,19 @@ object AutoFillHandler {
             packageName = applicationPackageName,
             assistInfo = assistInfo,
             request = request,
-            telemetryManager = telemetryManager
+            telemetryManager = telemetryManager,
+            thirdPartyModeProvider = thirdPartyModeProvider
         )
     }
 
+    @Suppress("LongParameterList")
     private suspend fun generateResponse(
         datasetList: List<Dataset>,
         packageName: PackageName,
         assistInfo: AssistInfo,
         request: FillRequest,
-        telemetryManager: TelemetryManager
+        telemetryManager: TelemetryManager,
+        thirdPartyModeProvider: ThirdPartyModeProvider
     ): Option<FillResponse> {
         if (datasetList.isEmpty()) {
             PassLogger.i(TAG, "No dataset found")
@@ -178,7 +184,8 @@ object AutoFillHandler {
         responseBuilder.addSaveInfo(
             request = request,
             cluster = assistInfo.cluster,
-            packageName = packageName
+            packageName = packageName,
+            thirdPartyModeProvider = thirdPartyModeProvider
         )
 
         return if (!currentCoroutineContext().isActive) {

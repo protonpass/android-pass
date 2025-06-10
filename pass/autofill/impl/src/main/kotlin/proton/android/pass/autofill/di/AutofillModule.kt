@@ -22,6 +22,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.autofill.ThirdPartyModeProvider
+import proton.android.pass.autofill.ThirdPartyModeProviderImpl
 import proton.android.pass.autofill.api.suggestions.PackageNameUrlSuggestionAdapter
 import proton.android.pass.autofill.extensions.PackageNameUrlSuggestionAdapterImpl
 import javax.inject.Singleton
@@ -33,5 +35,8 @@ internal abstract class AutofillModule {
     internal abstract fun bindPackageNameUrlSuggestionAdapter(
         impl: PackageNameUrlSuggestionAdapterImpl
     ): PackageNameUrlSuggestionAdapter
+
+    @[Binds Singleton]
+    internal abstract fun bindThirdPartyModeProvider(impl: ThirdPartyModeProviderImpl): ThirdPartyModeProvider
 
 }

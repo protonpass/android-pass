@@ -48,6 +48,9 @@ class ProtonPassAutofillService : AutofillService() {
     lateinit var accountManager: AccountManager
 
     @Inject
+    lateinit var thirdPartyModeProvider: ThirdPartyModeProvider
+
+    @Inject
     lateinit var ffRepo: FeatureFlagsPreferencesRepository
 
     override fun onConnected() {
@@ -83,7 +86,8 @@ class ProtonPassAutofillService : AutofillService() {
             cancellationSignal = cancellationSignal,
             autofillServiceManager = autofillServiceManager,
             telemetryManager = telemetryManager,
-            accountManager = accountManager
+            accountManager = accountManager,
+            thirdPartyModeProvider = thirdPartyModeProvider
         )
     }
 

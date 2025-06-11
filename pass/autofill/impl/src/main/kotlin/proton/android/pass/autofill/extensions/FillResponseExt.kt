@@ -73,7 +73,10 @@ internal fun FillResponse.Builder.addSaveInfo(
         thirdPartyModeProvider.isThirdPartyModeEnabled(packageName.value)
     }.fold(
         onSuccess = { it },
-        onFailure = { false }
+        onFailure = {
+            PassLogger.d(TAG, it, "Failed to check if 3P mode is enabled")
+            false
+        }
     )
     val saveSessionType = getSaveSessionType(cluster, currentClientState, packageName)
     val saveInfo = when (saveSessionType) {

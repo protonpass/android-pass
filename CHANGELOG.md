@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.31.4 (2025-06-11)
+
+### Fixes :bug:
+
+- Autofill and autosave improvements.
+
 ## 1.31.3 (2025-05-09)
 
 ### Fixes :bug:

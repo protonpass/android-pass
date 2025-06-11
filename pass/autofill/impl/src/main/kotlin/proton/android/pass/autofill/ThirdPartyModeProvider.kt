@@ -46,13 +46,13 @@ class ThirdPartyModeProviderImpl @Inject constructor(
         val cursor = context.contentResolver.query(uri, projection, null, null, null)
             ?: throw UnsupportedOperationException("ContentProvider unavailable: $authority")
 
-        cursor.use { cursor ->
-            if (cursor.moveToFirst()) {
-                val index = cursor.getColumnIndex(COLUMN_STATE)
+        cursor.use {
+            if (it.moveToFirst()) {
+                val index = it.getColumnIndex(COLUMN_STATE)
                 if (index == -1) {
                     throw IllegalStateException("Column '$COLUMN_STATE' not found in cursor")
                 }
-                return cursor.getInt(index) != 0
+                return it.getInt(index) != 0
             } else {
                 throw IllegalStateException("Empty cursor when querying $uri")
             }

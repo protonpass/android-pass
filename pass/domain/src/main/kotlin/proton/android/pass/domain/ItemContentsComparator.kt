@@ -19,10 +19,21 @@
 package proton.android.pass.domain
 
 import me.proton.core.crypto.common.keystore.EncryptedString
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 
 private fun HiddenState.compareDecrypted(other: HiddenState, decrypt: (EncryptedString) -> String): Int {
     val (decryptedThis, decryptedOther) = decrypt(this.encrypted) to decrypt(other.encrypted)
     return decryptedThis.compareTo(decryptedOther)
+}
+
+private fun Option<Long>.compareToOption(other: Option<Long>): Int = when {
+    this is None && other is None -> 0
+    this is None -> -1
+    other is None -> 1
+    this is Some && other is Some -> this.value.compareTo(other.value)
+    else -> throw IllegalStateException("Can't compare $this and $other")
 }
 
 private fun CustomFieldContent.compareDecrypted(b: CustomFieldContent, decrypt: (EncryptedString) -> String): Int {
@@ -38,6 +49,9 @@ private fun CustomFieldContent.compareDecrypted(b: CustomFieldContent, decrypt: 
 
         this is CustomFieldContent.Totp && b is CustomFieldContent.Totp ->
             this.value.compareDecrypted(b.value, decrypt)
+
+        this is CustomFieldContent.Date && b is CustomFieldContent.Date ->
+            this.value.compareToOption(b.value)
 
         else -> this::class.simpleName!!.compareTo(b::class.simpleName!!)
     }

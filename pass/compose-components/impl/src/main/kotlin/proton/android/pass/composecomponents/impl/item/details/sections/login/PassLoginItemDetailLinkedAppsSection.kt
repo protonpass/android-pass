@@ -46,9 +46,8 @@ internal fun PassLoginItemDetailLinkedAppsSection(
     itemDiffs: ItemDiffs.Login
 ) {
 
-    val (linkedAppsSectionItemDiffType, linkedAppsFieldsItemDiffTypes) = remember(itemDiffs) {
-        itemDiffs.linkedApps
-    }
+    val (linkedAppsSectionItemDiffType, linkedAppsFieldsItemDiffTypes) =
+        remember(itemDiffs) { itemDiffs.linkedApps }
 
     Column(
         modifier = modifier
@@ -72,7 +71,7 @@ internal fun PassLoginItemDetailLinkedAppsSection(
                 packageInfoUi = packageInfoUi,
                 isEditable = isEditable,
                 onLinkedAppDelete = onLinkedAppDelete,
-                itemDiffType = linkedAppsFieldsItemDiffTypes[index]
+                itemDiffType = linkedAppsFieldsItemDiffTypes.getOrElse(index) { ItemDiffType.None }
             )
         }
     }

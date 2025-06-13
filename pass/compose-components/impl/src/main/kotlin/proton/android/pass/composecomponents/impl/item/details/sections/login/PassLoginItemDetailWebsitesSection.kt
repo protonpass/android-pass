@@ -93,7 +93,7 @@ internal fun PassLoginItemDetailWebsitesSection(
                             )
                         },
                         itemColors = itemColors,
-                        itemDiffType = webFieldsItemDiffTypes[index]
+                        itemDiffType = webFieldsItemDiffTypes.getOrElse(index) { ItemDiffType.None }
                     )
                 }
             }

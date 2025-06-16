@@ -63,6 +63,14 @@ internal fun PassItemDetailTOTPFieldRow(
 ) {
     when (totp) {
         TotpState.Limited -> TotpUpgradeContent(onUpgrade = { onEvent(PassItemDetailsUiEvent.OnUpgrade) })
+        TotpState.Empty -> PassItemDetailMaskedFieldRow(
+            modifier = modifier,
+            icon = icon,
+            title = title,
+            itemColors = itemColors,
+            itemDiffType = itemDiffType
+        )
+
         is TotpState.Visible -> PassItemDetailMaskedFieldRow(
             modifier = modifier,
             icon = icon,
@@ -70,13 +78,7 @@ internal fun PassItemDetailTOTPFieldRow(
             maskedSubtitle = TotpCode(totp.code),
             itemColors = itemColors,
             itemDiffType = itemDiffType,
-            onClick = {
-                onEvent(
-                    OnFieldClick(
-                        field = ItemDetailsFieldType.PlainCopyable.TotpCode(totp.code)
-                    )
-                )
-            },
+            onClick = { onEvent(OnFieldClick(ItemDetailsFieldType.PlainCopyable.TotpCode(totp.code))) },
             contentInBetween = {
                 PassTotpProgress(
                     remainingSeconds = totp.remainingSeconds,

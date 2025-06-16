@@ -117,15 +117,19 @@ class WifiNetworkDetailsHandlerObserverImpl @Inject constructor(
 
                     sectionCustomFields + customFields
                 }
-                val flows = decrypted.map { uri ->
-                    observeTotpFromUri(uri.value)
-                        .map {
-                            uri.key to TotpState.Visible(
-                                code = it.code,
-                                remainingSeconds = it.remainingSeconds,
-                                totalSeconds = it.totalSeconds
-                            )
-                        }
+                val flows = decrypted.map { (key, uri) ->
+                    if (uri.isBlank()) {
+                        flowOf(key to TotpState.Empty)
+                    } else {
+                        observeTotpFromUri(uri)
+                            .map { code ->
+                                key to TotpState.Visible(
+                                    code = code.code,
+                                    remainingSeconds = code.remainingSeconds,
+                                    totalSeconds = code.totalSeconds
+                                )
+                            }
+                    }
                 }
                 combine(flows) { it.toMap() }
             } else {

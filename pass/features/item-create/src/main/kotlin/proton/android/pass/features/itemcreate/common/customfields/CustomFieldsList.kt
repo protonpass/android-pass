@@ -70,15 +70,10 @@ internal fun LazyListScope.customFieldsList(
                 entry = entry,
                 canEdit = enabled,
                 showLeadingIcon = false,
-                isError = errors.contains(CustomFieldValidationError.EmptyField(sectionIndex, index)) ||
-                    errors.contains(CustomFieldValidationError.InvalidTotp(sectionIndex, index)),
+                isError = errors.contains(CustomFieldValidationError.InvalidTotp(sectionIndex, index)),
                 errorMessage = when {
-                    errors.contains(CustomFieldValidationError.EmptyField(sectionIndex, index)) ->
-                        stringResource(R.string.field_cannot_be_empty)
-
                     errors.contains(CustomFieldValidationError.InvalidTotp(sectionIndex, index)) ->
                         stringResource(R.string.create_login_invalid_totp)
-
                     else -> ""
                 },
                 index = index,

@@ -365,13 +365,18 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
 
             val decrypted = extractTotps(contents)
 
-            val flows = decrypted.map { (index, uri) ->
-                observeTotpFromUri(uri).map {
-                    index to TotpState.Visible(
-                        code = it.code,
-                        remainingSeconds = it.remainingSeconds,
-                        totalSeconds = it.totalSeconds
-                    )
+            val flows = decrypted.map { (key, uri) ->
+                if (uri.isBlank()) {
+                    flowOf(key to TotpState.Empty)
+                } else {
+                    observeTotpFromUri(uri)
+                        .map { code ->
+                            key to TotpState.Visible(
+                                code = code.code,
+                                remainingSeconds = code.remainingSeconds,
+                                totalSeconds = code.totalSeconds
+                            )
+                        }
                 }
             }
 

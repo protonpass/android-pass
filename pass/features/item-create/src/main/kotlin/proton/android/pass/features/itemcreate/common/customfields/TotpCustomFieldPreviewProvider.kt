@@ -37,14 +37,6 @@ internal class TotpCustomFieldPreviewProvider : PreviewParameterProvider<TotpCus
                     TotpCustomFieldInput(
                         text,
                         false,
-                        CustomFieldValidationError.EmptyField(index = 1),
-                        showLeadingIcon
-                    )
-                )
-                yield(
-                    TotpCustomFieldInput(
-                        text,
-                        false,
                         CustomFieldValidationError.InvalidTotp(index = 1),
                         showLeadingIcon
                     )

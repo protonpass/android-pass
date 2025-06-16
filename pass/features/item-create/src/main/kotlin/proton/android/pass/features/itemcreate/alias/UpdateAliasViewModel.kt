@@ -45,7 +45,6 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
-import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
@@ -62,9 +61,10 @@ import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.RenameAttachments
 import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.ItemUpdate
 import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.AliasUpdated
@@ -98,7 +98,6 @@ class UpdateAliasViewModel @Inject constructor(
     private val updateAliasUseCase: UpdateAlias,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
-    private val aliasPrefixValidator: AliasPrefixValidator,
     private val getItemById: GetItemById,
     private val observeAliasDetails: ObserveAliasDetails,
     private val renameAttachments: RenameAttachments,
@@ -246,9 +245,10 @@ class UpdateAliasViewModel @Inject constructor(
             mailboxDraftRepository.toggleMailboxById(it.id)
         }
         AliasDetailsUiModel(aliasDetails).also { details ->
-            val alias = item.itemType as ItemType.Alias
-            val email = alias.aliasEmail
-            val (prefix, suffix) = AliasUtils.extractPrefixSuffix(email)
+            val itemContents: ItemContents.Alias = encryptionContextProvider.withEncryptionContext {
+                item.toItemContents { decrypt(it) }
+            }
+            val (prefix, suffix) = AliasUtils.extractPrefixSuffix(itemContents.aliasEmail)
             val selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, false, "")
             if (aliasDetails.canModify) {
                 canModifyAliasStateFlow.update { true }
@@ -259,24 +259,24 @@ class UpdateAliasViewModel @Inject constructor(
                     aliasOptions = AliasOptionsUiModel(emptyList(), details.availableMailboxes),
                     selectedSuffix = selectedSuffix,
                     selectedMailboxes = details.mailboxes.toSet(),
-                    aliasToBeCreated = email,
+                    aliasToBeCreated = itemContents.aliasEmail,
                     slNote = aliasDetails.slNote.takeIfNotBlank(),
-                    senderName = aliasDetails.name?.takeIfNotBlank()
+                    senderName = aliasDetails.name?.takeIfNotBlank(),
+                    customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
                 )
             } else {
-                aliasItemFormMutableState = encryptionContextProvider.withEncryptionContext {
-                    aliasItemFormState.copy(
-                        title = decrypt(item.title),
-                        note = decrypt(item.note),
-                        prefix = prefix,
-                        aliasOptions = AliasOptionsUiModel(emptyList(), details.availableMailboxes),
-                        selectedSuffix = selectedSuffix,
-                        selectedMailboxes = details.mailboxes.toSet(),
-                        aliasToBeCreated = email,
-                        slNote = aliasDetails.slNote.takeIfNotBlank(),
-                        senderName = aliasDetails.name?.takeIfNotBlank()
-                    )
-                }
+                aliasItemFormMutableState = aliasItemFormState.copy(
+                    title = itemContents.title,
+                    note = itemContents.note,
+                    prefix = prefix,
+                    aliasOptions = AliasOptionsUiModel(emptyList(), details.availableMailboxes),
+                    selectedSuffix = selectedSuffix,
+                    selectedMailboxes = details.mailboxes.toSet(),
+                    aliasToBeCreated = itemContents.aliasEmail,
+                    slNote = aliasDetails.slNote.takeIfNotBlank(),
+                    senderName = aliasDetails.name?.takeIfNotBlank(),
+                    customFields = itemContents.customFields.map { UICustomFieldContent.from(it) }
+                )
             }
         }
         originalCustomFields = aliasItemFormState.customFields

@@ -76,7 +76,6 @@ import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
-import proton.android.pass.totp.api.TotpManager
 import java.net.URI
 
 sealed interface BaseItemFormIntent
@@ -149,12 +148,11 @@ abstract class BaseCustomItemViewModel(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val customFieldDraftRepository: CustomFieldDraftRepository,
     private val attachmentsHandler: AttachmentsHandler,
-    private val customFieldHandler: CustomFieldHandler,
+    protected val customFieldHandler: CustomFieldHandler,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val clipboardManager: ClipboardManager,
-    private val totpManager: TotpManager,
     private val appDispatchers: AppDispatchers,
     private val canPerformPaidAction: CanPerformPaidAction,
     private val customItemFormProcessor: CustomItemFormProcessor,

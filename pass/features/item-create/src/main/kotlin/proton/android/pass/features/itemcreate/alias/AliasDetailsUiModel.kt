@@ -24,12 +24,16 @@ data class AliasDetailsUiModel(
     val email: String,
     val mailboxes: List<AliasMailboxUiModel>,
     val availableMailboxes: List<AliasMailboxUiModel>,
-    val stats: AliasStatsUiModel
+    val stats: AliasStatsUiModel,
+    val slNote: String,
+    val name: String?
 ) {
     constructor(aliasDetails: AliasDetails) : this(
         email = aliasDetails.email,
         mailboxes = aliasDetails.mailboxes.map(::AliasMailboxUiModel),
         availableMailboxes = aliasDetails.availableMailboxes.map(::AliasMailboxUiModel),
-        stats = aliasDetails.stats.let(::AliasStatsUiModel)
+        stats = aliasDetails.stats.let(::AliasStatsUiModel),
+        slNote = aliasDetails.slNote,
+        name = aliasDetails.name
     )
 }

@@ -37,6 +37,7 @@ import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.totp.fakes.TestTotpManager
 
 internal class BaseNoteViewModelTest {
 
@@ -62,7 +63,7 @@ internal class BaseNoteViewModelTest {
             userPreferencesRepository = TestPreferenceRepository(),
             savedStateHandleProvider = savedStateHandleProvider,
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
-            customFieldHandler = CustomFieldHandlerImpl(TestEncryptionContextProvider()),
+            customFieldHandler = CustomFieldHandlerImpl(TestTotpManager(), TestEncryptionContextProvider()),
             canPerformPaidAction = canPerformPaidAction,
             clipboardManager = TestClipboardManager(),
             encryptionContextProvider = TestEncryptionContextProvider(),

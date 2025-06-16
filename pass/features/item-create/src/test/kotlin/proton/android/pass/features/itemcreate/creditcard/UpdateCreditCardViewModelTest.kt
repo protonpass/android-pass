@@ -57,6 +57,7 @@ import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.totp.fakes.TestTotpManager
 
 class UpdateCreditCardViewModelTest {
 
@@ -103,7 +104,7 @@ class UpdateCreditCardViewModelTest {
             renameAttachments = FakeRenameAttachments(),
             userPreferencesRepository = TestPreferenceRepository(),
             pendingAttachmentLinkRepository = pendingAttachmentLinkRepository,
-            customFieldHandler = CustomFieldHandlerImpl(TestEncryptionContextProvider()),
+            customFieldHandler = CustomFieldHandlerImpl(TestTotpManager(), TestEncryptionContextProvider()),
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
             creditCardItemFormProcessor = creditCardItemFormProcessor,
             clipboardManager = TestClipboardManager()

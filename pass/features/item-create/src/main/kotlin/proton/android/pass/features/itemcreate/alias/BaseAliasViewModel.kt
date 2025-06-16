@@ -86,7 +86,7 @@ abstract class BaseAliasViewModel(
     private val attachmentsHandler: AttachmentsHandler,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
-    private val customFieldHandler: CustomFieldHandler,
+    protected val customFieldHandler: CustomFieldHandler,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val aliasItemFormProcessor: AliasItemFormProcessorType,
     private val clipboardManager: ClipboardManager,

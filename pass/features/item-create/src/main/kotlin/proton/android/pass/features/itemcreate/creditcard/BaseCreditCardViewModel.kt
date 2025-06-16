@@ -63,7 +63,7 @@ abstract class BaseCreditCardViewModel(
     private val attachmentsHandler: AttachmentsHandler,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
-    private val customFieldHandler: CustomFieldHandler,
+    protected val customFieldHandler: CustomFieldHandler,
     private val creditCardItemFormProcessor: CreditCardFormProcessorType,
     private val clipboardManager: ClipboardManager,
     customFieldDraftRepository: CustomFieldDraftRepository,

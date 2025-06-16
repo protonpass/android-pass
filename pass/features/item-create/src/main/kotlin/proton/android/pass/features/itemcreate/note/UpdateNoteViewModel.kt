@@ -164,14 +164,16 @@ class UpdateNoteViewModel @Inject constructor(
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 
-    private fun onNoteItemReceived(item: Item) {
+    private suspend fun onNoteItemReceived(item: Item) {
         itemOption = item.some()
         if (noteItemFormState == NoteItemFormState.Empty) {
-            noteItemFormMutableState = encryptionContextProvider.withEncryptionContext {
-                val formState = NoteItemFormState(item.toItemContents { decrypt(it) })
-                originalCustomFields = formState.customFields
-                formState
+            val formState = encryptionContextProvider.withEncryptionContextSuspendable {
+                NoteItemFormState(item.toItemContents { decrypt(it) })
             }
+            originalCustomFields = formState.customFields
+            noteItemFormMutableState = formState.copy(
+                customFields = customFieldHandler.sanitiseForEditingCustomFields(formState.customFields)
+            )
         }
     }
 

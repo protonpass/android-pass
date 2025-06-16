@@ -35,7 +35,7 @@ internal fun PassItemDetailMaskedFieldRow(
     modifier: Modifier = Modifier,
     @DrawableRes icon: Int?,
     title: String,
-    maskedSubtitle: TextMask,
+    maskedSubtitle: TextMask? = null,
     itemColors: PassItemColors,
     itemDiffType: ItemDiffType = ItemDiffType.None,
     isSelectable: Boolean = false,
@@ -49,7 +49,13 @@ internal fun PassItemDetailMaskedFieldRow(
         modifier = modifier,
         icon = icon,
         title = title,
-        subtitle = if (isMasked) maskedSubtitle.masked else maskedSubtitle.unmasked,
+        subtitle = maskedSubtitle?.let {
+            if (isMasked) {
+                maskedSubtitle.masked
+            } else {
+                maskedSubtitle.unmasked
+            }
+        } ?: "",
         itemColors = itemColors,
         itemDiffType = itemDiffType,
         isSelectable = isSelectable,

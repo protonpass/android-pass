@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.features.itemcreate.common.CustomFieldValidationError
 import proton.android.pass.features.itemcreate.common.CustomFieldValidationError.InvalidTotp
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
@@ -56,12 +55,6 @@ class UICustomFieldContentFormProcessor @Inject constructor(
             when (entry) {
                 is UICustomFieldContent.Totp -> {
                     val decrypted = decrypt(entry.value.encrypted)
-                    if (decrypted.isBlank()) {
-                        allErrors.add(
-                            CustomFieldValidationError.EmptyField(input.sectionIndex, index)
-                        )
-                    }
-
                     val originalDecrypted = originalEntriesById[entry.id]
                         ?.let { decrypt(it.value.encrypted) }
                         .orEmpty()

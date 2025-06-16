@@ -19,11 +19,13 @@
 package proton.android.pass.features.itemcreate.common.customfields
 
 import dagger.hilt.android.scopes.ViewModelScoped
+import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent.Companion.createCustomField
 import proton.android.pass.features.itemcreate.common.UIHiddenState
+import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
 interface CustomFieldHandler {
@@ -47,11 +49,14 @@ interface CustomFieldHandler {
         customFieldList: List<UICustomFieldContent>,
         isFocused: Boolean
     ): List<UICustomFieldContent>
+
+    fun sanitiseForEditingCustomFields(customFieldList: List<UICustomFieldContent>): List<UICustomFieldContent>
 }
 
 @ViewModelScoped
 class CustomFieldHandlerImpl @Inject constructor(
-    val encryptionContextProvider: EncryptionContextProvider
+    private val totpManager: TotpManager,
+    private val encryptionContextProvider: EncryptionContextProvider
 ) : CustomFieldHandler {
 
     override fun onCustomFieldAdded(label: String, customFieldType: CustomFieldType): UICustomFieldContent =
@@ -126,6 +131,46 @@ class CustomFieldHandlerImpl @Inject constructor(
                 )
             }
         }
+    }
+
+    override fun sanitiseForEditingCustomFields(
+        customFieldList: List<UICustomFieldContent>
+    ): List<UICustomFieldContent> = encryptionContextProvider.withEncryptionContext {
+        customFieldList.map { sanitizeField(it, ::decrypt, ::encrypt) }
+    }
+
+    private fun sanitizeField(
+        field: UICustomFieldContent,
+        decrypt: (EncryptedString) -> String,
+        encrypt: (String) -> EncryptedString
+    ): UICustomFieldContent = when (field) {
+        is UICustomFieldContent.Totp -> sanitizeTotp(field, decrypt, encrypt)
+        else -> field
+    }
+
+    private fun sanitizeTotp(
+        field: UICustomFieldContent.Totp,
+        decrypt: (EncryptedString) -> String,
+        encrypt: (String) -> EncryptedString
+    ): UICustomFieldContent.Totp {
+        val rawUri = field.value.extract(decrypt = decrypt)
+        return if (rawUri.isBlank()) {
+            field
+        } else {
+            val cleaned = totpManager.sanitiseToEdit(rawUri).getOrNull() ?: rawUri
+            field.copy(
+                value = UIHiddenState.Revealed(
+                    encrypted = encrypt(cleaned),
+                    clearText = cleaned
+                )
+            )
+        }
+    }
+
+    private fun UIHiddenState.extract(decrypt: (String) -> String): String = when (this) {
+        is UIHiddenState.Concealed -> decrypt(encrypted)
+        is UIHiddenState.Revealed -> clearText
+        is UIHiddenState.Empty -> ""
     }
 
     private fun createHiddenState(value: String): UIHiddenState = encryptionContextProvider.withEncryptionContext {

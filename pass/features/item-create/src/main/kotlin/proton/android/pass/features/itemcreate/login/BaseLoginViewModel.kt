@@ -114,7 +114,7 @@ abstract class BaseLoginViewModel(
     private val disableTooltip: DisableTooltip,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val attachmentsHandler: AttachmentsHandler,
-    private val customFieldHandler: CustomFieldHandler,
+    protected val customFieldHandler: CustomFieldHandler,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val customFieldDraftRepository: CustomFieldDraftRepository,
     private val loginItemFormProcessor: LoginItemFormProcessorType,

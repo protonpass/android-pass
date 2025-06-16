@@ -141,7 +141,7 @@ internal class CreateLoginNavItemViewModelTest {
             linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
             attachmentsHandler = FakeAttachmentHandler(),
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
-            customFieldHandler = CustomFieldHandlerImpl(encryptionContextProvider),
+            customFieldHandler = CustomFieldHandlerImpl(TestTotpManager(), encryptionContextProvider),
             loginItemFormProcessor = loginItemFormProcessor
         )
     }

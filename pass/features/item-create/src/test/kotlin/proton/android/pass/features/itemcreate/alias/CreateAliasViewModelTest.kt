@@ -63,6 +63,7 @@ import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestShare
 import proton.android.pass.test.domain.TestVault
+import proton.android.pass.totp.fakes.TestTotpManager
 
 class CreateAliasViewModelTest {
 
@@ -264,7 +265,7 @@ class CreateAliasViewModelTest {
         userPreferencesRepository = TestPreferenceRepository(),
         mailboxDraftRepository = MailboxDraftRepositoryImpl(),
         suffixDraftRepository = SuffixDraftRepositoryImpl(),
-        customFieldHandler = CustomFieldHandlerImpl(TestEncryptionContextProvider()),
+        customFieldHandler = CustomFieldHandlerImpl(TestTotpManager(), TestEncryptionContextProvider()),
         customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
         canPerformPaidAction = TestCanPerformPaidAction(),
         aliasItemFormProcessor = FakeAliasItemFormProcessor(),

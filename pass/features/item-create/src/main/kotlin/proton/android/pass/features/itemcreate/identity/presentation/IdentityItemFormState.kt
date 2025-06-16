@@ -28,12 +28,10 @@ import proton.android.pass.domain.ExtraSectionContent
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.PersonalDetailsContent
 import proton.android.pass.domain.WorkDetailsContent
-import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.UIHiddenState.Companion.from
-import proton.android.pass.features.itemcreate.common.ValidationError
 
 @Parcelize
 @Immutable
@@ -45,21 +43,6 @@ data class IdentityItemFormState(
     val uiWorkDetails: UIWorkDetails,
     val uiExtraSections: List<UIExtraSection>
 ) : Parcelable {
-
-    constructor(itemContents: ItemContents.Identity) : this(
-        title = itemContents.title,
-        uiPersonalDetails = UIPersonalDetails(itemContents.personalDetailsContent),
-        uiAddressDetails = UIAddressDetails(itemContents.addressDetailsContent),
-        uiContactDetails = UIContactDetails(itemContents.contactDetailsContent),
-        uiWorkDetails = UIWorkDetails(itemContents.workDetailsContent),
-        uiExtraSections = itemContents.extraSectionContentList.map(::UIExtraSection)
-    )
-
-    fun validate(): Set<ValidationError> {
-        val mutableSet = mutableSetOf<ValidationError>()
-        if (title.isBlank()) mutableSet.add(CommonFieldValidationError.BlankTitle)
-        return mutableSet.toSet()
-    }
 
     fun toItemContents(): ItemContents = ItemContents.Identity(
         title = title,

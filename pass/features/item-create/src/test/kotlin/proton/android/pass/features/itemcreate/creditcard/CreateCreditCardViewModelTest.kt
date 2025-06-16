@@ -106,7 +106,7 @@ class CreateCreditCardViewModelTest {
             linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
             attachmentsHandler = FakeAttachmentHandler(),
             userPreferencesRepository = TestPreferenceRepository(),
-            customFieldHandler = CustomFieldHandlerImpl(TestEncryptionContextProvider()),
+            customFieldHandler = CustomFieldHandlerImpl(TestTotpManager(), TestEncryptionContextProvider()),
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
             creditCardItemFormProcessor = creditCardItemFormProcessor,
             clipboardManager = TestClipboardManager()

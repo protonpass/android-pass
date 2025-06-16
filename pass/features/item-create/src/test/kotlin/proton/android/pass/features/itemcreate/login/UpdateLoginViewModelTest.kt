@@ -119,7 +119,7 @@ class UpdateLoginViewModelTest {
             renameAttachments = FakeRenameAttachments(),
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
             pendingAttachmentLinkRepository = FakePendingAttachmentLinkRepository(),
-            customFieldHandler = CustomFieldHandlerImpl(encryptionContextProvider),
+            customFieldHandler = CustomFieldHandlerImpl(TestTotpManager(), encryptionContextProvider),
             loginItemFormProcessor = FakeLoginItemFormProcessor()
         )
     }

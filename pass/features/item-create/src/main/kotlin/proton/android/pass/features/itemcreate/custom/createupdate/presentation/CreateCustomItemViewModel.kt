@@ -76,7 +76,6 @@ import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
-import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
 @Suppress("LongParameterList")
@@ -98,7 +97,6 @@ class CreateCustomItemViewModel @Inject constructor(
     observeDefaultVault: ObserveDefaultVault,
     customFieldDraftRepository: CustomFieldDraftRepository,
     clipboardManager: ClipboardManager,
-    totpManager: TotpManager,
     customItemFormProcessor: CustomItemFormProcessor,
     appDispatchers: AppDispatchers,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -113,7 +111,6 @@ class CreateCustomItemViewModel @Inject constructor(
     encryptionContextProvider = encryptionContextProvider,
     customFieldDraftRepository = customFieldDraftRepository,
     clipboardManager = clipboardManager,
-    totpManager = totpManager,
     customItemFormProcessor = customItemFormProcessor,
     appDispatchers = appDispatchers,
     savedStateHandleProvider = savedStateHandleProvider

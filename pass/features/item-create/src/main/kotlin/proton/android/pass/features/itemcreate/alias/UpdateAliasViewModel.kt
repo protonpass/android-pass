@@ -239,48 +239,50 @@ class UpdateAliasViewModel @Inject constructor(
         isApplyButtonEnabledState.update { IsButtonEnabled.Enabled }
     }
 
-    private fun onAliasDetails(aliasDetails: AliasDetails, item: Item) {
+    private suspend fun onAliasDetails(aliasDetails: AliasDetails, item: Item) {
         mailboxDraftRepository.addMailboxes(aliasDetails.availableMailboxes.toSet())
         aliasDetails.mailboxes.forEach {
             mailboxDraftRepository.toggleMailboxById(it.id)
         }
-        AliasDetailsUiModel(aliasDetails).also { details ->
-            val itemContents: ItemContents.Alias = encryptionContextProvider.withEncryptionContext {
-                item.toItemContents { decrypt(it) }
-            }
-            val (prefix, suffix) = AliasUtils.extractPrefixSuffix(itemContents.aliasEmail)
-            val selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, false, "")
-            if (aliasDetails.canModify) {
-                canModifyAliasStateFlow.update { true }
-            }
-            if (aliasItemFormState.title.isNotBlank() || aliasItemFormState.note.isNotBlank()) {
-                aliasItemFormMutableState = aliasItemFormState.copy(
-                    prefix = prefix,
-                    aliasOptions = AliasOptionsUiModel(emptyList(), details.availableMailboxes),
-                    selectedSuffix = selectedSuffix,
-                    selectedMailboxes = details.mailboxes.toSet(),
-                    aliasToBeCreated = itemContents.aliasEmail,
-                    slNote = aliasDetails.slNote.takeIfNotBlank(),
-                    senderName = aliasDetails.name?.takeIfNotBlank(),
-                    customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
-                )
-            } else {
-                aliasItemFormMutableState = aliasItemFormState.copy(
-                    title = itemContents.title,
-                    note = itemContents.note,
-                    prefix = prefix,
-                    aliasOptions = AliasOptionsUiModel(emptyList(), details.availableMailboxes),
-                    selectedSuffix = selectedSuffix,
-                    selectedMailboxes = details.mailboxes.toSet(),
-                    aliasToBeCreated = itemContents.aliasEmail,
-                    slNote = aliasDetails.slNote.takeIfNotBlank(),
-                    senderName = aliasDetails.name?.takeIfNotBlank(),
-                    customFields = itemContents.customFields.map { UICustomFieldContent.from(it) }
-                )
-            }
+        val details = AliasDetailsUiModel(aliasDetails)
+        val contents: ItemContents.Alias = encryptionContextProvider.withEncryptionContextSuspendable {
+            item.toItemContents { decrypt(it) }
         }
+
+        val (prefix, suffix) = AliasUtils.extractPrefixSuffix(contents.aliasEmail)
+        val selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, false, "")
+
+        canModifyAliasStateFlow.update { aliasDetails.canModify }
+
+        aliasItemFormMutableState = buildAliasFormState(
+            current = aliasItemFormState,
+            contents = contents,
+            details = details,
+            prefix = prefix,
+            selectedSuffix = selectedSuffix
+        )
         originalCustomFields = aliasItemFormState.customFields
     }
+
+    private fun buildAliasFormState(
+        current: AliasItemFormState,
+        contents: ItemContents.Alias,
+        details: AliasDetailsUiModel,
+        prefix: String,
+        selectedSuffix: AliasSuffixUiModel
+    ): AliasItemFormState = current.copy(
+        title = current.title.ifBlank { contents.title },
+        note = current.note.ifBlank { contents.note },
+        prefix = prefix,
+        aliasOptions = AliasOptionsUiModel(emptyList(), details.availableMailboxes),
+        selectedSuffix = selectedSuffix,
+        selectedMailboxes = details.mailboxes.toSet(),
+        aliasToBeCreated = contents.aliasEmail,
+        slNote = details.slNote.takeIfNotBlank(),
+        senderName = details.name?.takeIfNotBlank(),
+        customFields = contents.customFields.map(UICustomFieldContent.Companion::from)
+            .let { customFieldHandler.sanitiseForEditingCustomFields(it) }
+    )
 
     private suspend fun showError(
         message: String,

@@ -37,6 +37,7 @@ import proton.android.pass.features.itemcreate.common.formprocessor.FakeCreditCa
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.totp.fakes.TestTotpManager
 
 class BaseCreditCardViewModelTest {
 
@@ -60,7 +61,7 @@ class BaseCreditCardViewModelTest {
             savedStateHandleProvider = TestSavedStateHandleProvider(),
             attachmentsHandler = FakeAttachmentHandler(),
             userPreferencesRepository = TestPreferenceRepository(),
-            customFieldHandler = CustomFieldHandlerImpl(TestEncryptionContextProvider()),
+            customFieldHandler = CustomFieldHandlerImpl(TestTotpManager(), TestEncryptionContextProvider()),
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
             creditCardItemFormProcessor = FakeCreditCardItemFormProcessor(),
             clipboardManager = TestClipboardManager()

@@ -37,7 +37,6 @@ import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
@@ -57,7 +56,6 @@ import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIExtraSection
-import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.formprocessor.CustomItemFormProcessor
 import proton.android.pass.log.api.PassLogger
@@ -67,7 +65,6 @@ import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
-import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
 @Suppress("LongParameterList")
@@ -82,7 +79,6 @@ class UpdateCustomItemViewModel @Inject constructor(
     private val attachmentsHandler: AttachmentsHandler,
     private val renameAttachments: RenameAttachments,
     private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
-    private val totpManager: TotpManager,
     customFieldHandler: CustomFieldHandler,
     customItemFormProcessor: CustomItemFormProcessor,
     canPerformPaidAction: CanPerformPaidAction,
@@ -104,7 +100,6 @@ class UpdateCustomItemViewModel @Inject constructor(
     encryptionContextProvider = encryptionContextProvider,
     customFieldDraftRepository = customFieldDraftRepository,
     clipboardManager = clipboardManager,
-    totpManager = totpManager,
     customItemFormProcessor = customItemFormProcessor,
     appDispatchers = appDispatchers,
     savedStateHandleProvider = savedStateHandleProvider
@@ -233,38 +228,18 @@ class UpdateCustomItemViewModel @Inject constructor(
 
             originalCustomFields = formState.customFieldList
             originalSections = formState.sectionList
-            val customFieldsForEdit = formState.customFieldList.map { entry ->
-                cleanupTotpDataToEdit(entry, this)
-            }
+
             val sectionsForEdit = formState.sectionList.map { section ->
                 section.copy(
-                    customFields = section.customFields.map { entry ->
-                        cleanupTotpDataToEdit(entry, this)
-                    }
+                    customFields = customFieldHandler.sanitiseForEditingCustomFields(section.customFields)
                 )
             }
             itemFormState = formState.copy(
-                customFieldList = customFieldsForEdit,
+                customFieldList = customFieldHandler.sanitiseForEditingCustomFields(formState.customFieldList),
                 sectionList = sectionsForEdit
             )
         }
     }
-
-    private fun cleanupTotpDataToEdit(entry: UICustomFieldContent, encryptionContext: EncryptionContext) =
-        when (entry) {
-            !is UICustomFieldContent.Totp -> entry
-            else -> {
-                val updatedValue = encryptionContext.decrypt(entry.value.encrypted)
-                val sanitised = totpManager.sanitiseToEdit(updatedValue)
-                    .getOrDefault(updatedValue)
-                entry.copy(
-                    value = UIHiddenState.Revealed(
-                        encrypted = encryptionContext.encrypt(sanitised),
-                        clearText = sanitised
-                    )
-                )
-            }
-        }
 
     private fun onOpenAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
         viewModelScope.launch {

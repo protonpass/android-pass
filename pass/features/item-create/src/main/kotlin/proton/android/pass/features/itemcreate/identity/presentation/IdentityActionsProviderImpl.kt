@@ -765,7 +765,24 @@ class IdentityActionsProviderImpl @Inject constructor(
                 identityFieldDraftRepository.addField(field, false)
             }
         }
-        identityItemFormMutableState = IdentityItemFormState(itemContents)
+
+        identityItemFormMutableState = IdentityItemFormState(
+            title = itemContents.title,
+            uiPersonalDetails = UIPersonalDetails(itemContents.personalDetailsContent).apply {
+                copy(customFields = customFieldHandler.sanitiseForEditingCustomFields(this.customFields))
+            },
+            uiAddressDetails = UIAddressDetails(itemContents.addressDetailsContent).apply {
+                copy(customFields = customFieldHandler.sanitiseForEditingCustomFields(this.customFields))
+            },
+            uiContactDetails = UIContactDetails(itemContents.contactDetailsContent).apply {
+                copy(customFields = customFieldHandler.sanitiseForEditingCustomFields(this.customFields))
+            },
+            uiWorkDetails = UIWorkDetails(itemContents.workDetailsContent).apply {
+                copy(customFields = customFieldHandler.sanitiseForEditingCustomFields(this.customFields))
+            },
+            uiExtraSections = itemContents.extraSectionContentList.map(::UIExtraSection)
+                .map { it.copy(customFields = customFieldHandler.sanitiseForEditingCustomFields(it.customFields)) }
+        )
     }
 
     private suspend fun getItemAttachments(item: Item) {

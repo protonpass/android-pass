@@ -95,7 +95,7 @@ internal class BaseLoginViewModelTest {
             featureFlagsRepository = featureFlagsPreferenceRepository,
             attachmentsHandler = FakeAttachmentHandler(),
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
-            customFieldHandler = CustomFieldHandlerImpl(encryptionContextProvider),
+            customFieldHandler = CustomFieldHandlerImpl(totpManager, encryptionContextProvider),
             loginItemFormProcessor = FakeLoginItemFormProcessor()
         ) {}
     }

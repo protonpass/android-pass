@@ -371,10 +371,7 @@ abstract class BaseCreditCardViewModel(
     }
 
     internal fun onCustomFieldChange(id: CustomFieldIdentifier, value: String) {
-        removeValidationErrors(
-            CustomFieldValidationError.EmptyField(index = id.index),
-            CustomFieldValidationError.InvalidTotp(index = id.index)
-        )
+        removeValidationErrors(CustomFieldValidationError.InvalidTotp(index = id.index))
         val updated = customFieldHandler.onCustomFieldValueChanged(
             customFieldIdentifier = id,
             customFieldList = creditCardItemFormState.customFields,

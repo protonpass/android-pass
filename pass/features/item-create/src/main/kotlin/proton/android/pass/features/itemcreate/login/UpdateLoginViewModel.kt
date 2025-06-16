@@ -20,7 +20,6 @@ package proton.android.pass.features.itemcreate.login
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -65,7 +64,6 @@ import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.work.WorkerItem
 import proton.android.pass.data.api.work.WorkerLauncher
 import proton.android.pass.domain.CustomField
-import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -280,32 +278,8 @@ class UpdateLoginViewModel @Inject constructor(
                     is HiddenState.Revealed -> UIHiddenState.Concealed(hiddenState.encrypted)
                 }
 
-                val uiCustomFieldList = itemContents.customFields.map { customFieldContent ->
-                    customFieldContent.toUICustomFieldContent(this@withEncryptionContext)
-                }.toImmutableList()
-
-                originalTotpCustomFields =
-                    uiCustomFieldList.filterIsInstance<UICustomFieldContent.Totp>()
-                val sanitisedToEditCustomField = uiCustomFieldList.map { uiCustomFieldContent ->
-                    if (uiCustomFieldContent is UICustomFieldContent.Totp) {
-                        val uri = when (val totp = uiCustomFieldContent.value) {
-                            is UIHiddenState.Concealed -> decrypt(totp.encrypted)
-                            is UIHiddenState.Empty -> ""
-                            is UIHiddenState.Revealed -> totp.clearText
-                        }
-                        val sanitisedUri = getDisplayTotp(uri)
-                        UICustomFieldContent.Totp(
-                            label = uiCustomFieldContent.label,
-                            value = UIHiddenState.Revealed(
-                                encrypted = encrypt(sanitisedUri),
-                                clearText = sanitisedUri
-                            ),
-                            id = uiCustomFieldContent.id
-                        )
-                    } else {
-                        uiCustomFieldContent
-                    }
-                }
+                val customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
+                originalTotpCustomFields = customFields.filterIsInstance<UICustomFieldContent.Totp>()
 
                 loginItemFormMutableState = loginItemFormState.copy(
                     title = itemContents.title,
@@ -319,7 +293,7 @@ class UpdateLoginViewModel @Inject constructor(
                     note = itemContents.note,
                     packageInfoSet = item.packageInfoSet.map(::PackageInfoUi).toSet(),
                     primaryTotp = UIHiddenState.Revealed(encrypt(decryptedTotp), decryptedTotp),
-                    customFields = sanitisedToEditCustomField,
+                    customFields = customFieldHandler.sanitiseForEditingCustomFields(customFields),
                     passkeys = itemContents.passkeys.map { UIPasskeyContent.from(it) },
                     isExpandedByContent = itemContents.itemEmail.isNotBlank() && itemContents.itemUsername.isNotBlank()
                 )
@@ -445,27 +419,6 @@ class UpdateLoginViewModel @Inject constructor(
                     telemetryManager.sendEvent(MFAUpdated)
                 }
             }
-        }
-    }
-
-    private fun CustomFieldContent.toUICustomFieldContent(encryptionContext: EncryptionContext): UICustomFieldContent {
-        val uiCustomFieldContent = UICustomFieldContent.from(this)
-        return if (uiCustomFieldContent is UICustomFieldContent.Totp) {
-            val uri = when (val value = uiCustomFieldContent.value) {
-                is UIHiddenState.Concealed -> encryptionContext.decrypt(value.encrypted)
-                is UIHiddenState.Empty -> ""
-                is UIHiddenState.Revealed -> value.clearText
-            }
-            UICustomFieldContent.Totp(
-                label = label,
-                value = UIHiddenState.Revealed(
-                    encrypted = encryptionContext.encrypt(uri),
-                    clearText = uri
-                ),
-                id = uiCustomFieldContent.id
-            )
-        } else {
-            uiCustomFieldContent
         }
     }
 

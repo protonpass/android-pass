@@ -273,14 +273,18 @@ abstract class ItemDetailsHandlerObserver<ITEM_CONTENTS : ItemContents, FIELD_TY
                     flowOf(emptyMap())
                 } else {
                     val flows = decrypted.map { (key, uri) ->
-                        observeTotpFromUri(uri)
-                            .map { code ->
-                                key to TotpState.Visible(
-                                    code = code.code,
-                                    remainingSeconds = code.remainingSeconds,
-                                    totalSeconds = code.totalSeconds
-                                )
-                            }
+                        if (uri.isBlank()) {
+                            flowOf(key to TotpState.Empty)
+                        } else {
+                            observeTotpFromUri(uri)
+                                .map { code ->
+                                    key to TotpState.Visible(
+                                        code = code.code,
+                                        remainingSeconds = code.remainingSeconds,
+                                        totalSeconds = code.totalSeconds
+                                    )
+                                }
+                        }
                     }
                     combine(flows) { it.toMap() }
                 }

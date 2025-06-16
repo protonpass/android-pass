@@ -28,8 +28,6 @@ sealed interface CommonFieldValidationError : ValidationError {
 }
 
 sealed interface CustomFieldValidationError : ValidationError {
-    data class EmptyField(val sectionIndex: Option<Int> = None, val index: Int) :
-        CustomFieldValidationError
 
     data class InvalidTotp(val sectionIndex: Option<Int> = None, val index: Int) :
         CustomFieldValidationError

@@ -155,9 +155,6 @@ internal fun TotpCustomFieldEntryPreview(
                 ),
                 isError = customFieldInput.error != null,
                 errorMessage = when (customFieldInput.error) {
-                    is CustomFieldValidationError.EmptyField ->
-                        stringResource(R.string.field_cannot_be_empty)
-
                     is CustomFieldValidationError.InvalidTotp ->
                         stringResource(R.string.totp_create_login_field_invalid)
 

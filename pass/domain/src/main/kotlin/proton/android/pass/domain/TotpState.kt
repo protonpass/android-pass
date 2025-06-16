@@ -23,6 +23,7 @@ import androidx.compose.runtime.Stable
 sealed interface TotpState {
     data object Hidden : TotpState
     data object Limited : TotpState
+    data object Empty : TotpState
 
     @Stable
     data class Visible(

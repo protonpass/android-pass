@@ -19,7 +19,7 @@
 package proton.android.pass.composecomponents.impl.item.details.sections.notes
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -39,6 +39,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.buttons.TransparentTextButton
 import proton.android.pass.composecomponents.impl.container.roundedContainer
@@ -56,7 +57,7 @@ fun ExpandableText(
     var isTextOverflowing by remember { mutableStateOf(false) }
     var textLayoutResult by remember { mutableStateOf<TextLayoutResult?>(null) }
 
-    Box(
+    Column(
         modifier = modifier
             .animateContentSize()
             .roundedContainer(
@@ -64,10 +65,13 @@ fun ExpandableText(
                 borderColor = ProtonTheme.colors.separatorNorm
             )
     ) {
+        val isButtonShowing = isTextOverflowing || isExpanded
         SelectionContainer(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(Spacing.medium)
+                .padding(top = Spacing.medium)
+                .padding(horizontal = Spacing.medium)
+                .applyIf(!isButtonShowing, ifTrue = { padding(bottom = Spacing.medium) })
         ) {
             Text(
                 modifier = textModifier,
@@ -82,9 +86,9 @@ fun ExpandableText(
                 color = textColor
             )
         }
-        if (isTextOverflowing || isExpanded) {
+        if (isButtonShowing) {
             TransparentTextButton(
-                modifier = Modifier.align(Alignment.BottomEnd),
+                modifier = Modifier.align(Alignment.End),
                 text = if (isExpanded) {
                     stringResource(R.string.collapse_expanded_text)
                 } else {

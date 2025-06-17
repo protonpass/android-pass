@@ -24,12 +24,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -157,6 +160,7 @@ internal fun NoteItemForm(
                 }
             } else {
                 Column(
+                    modifier = Modifier.verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.spacedBy(Spacing.small)
                 ) {
                     NoteTitle(
@@ -167,15 +171,13 @@ internal fun NoteItemForm(
                         enabled = enabled,
                         onValueChanged = { onEvent(NoteContentUiEvent.OnTitleChange(it)) }
                     )
-                    val shouldApplyNoteWeight =
+                    val shouldApplyNoteMinHeight =
                         remember(isFileAttachmentsEnabled, attachmentsState) {
                             !isFileAttachmentsEnabled || !attachmentsState.hasAnyAttachment
                         }
                     FullNoteSection(
-                        modifier = Modifier
-                            .applyIf(shouldApplyNoteWeight, ifTrue = { Modifier.weight(1f) }),
                         textFieldModifier = Modifier
-                            .applyIf(shouldApplyNoteWeight, ifTrue = { Modifier.weight(1f) })
+                            .applyIf(shouldApplyNoteMinHeight, ifTrue = { defaultMinSize(minHeight = 600.dp) })
                             .fillMaxWidth(),
                         enabled = enabled,
                         value = noteItemFormState.note,

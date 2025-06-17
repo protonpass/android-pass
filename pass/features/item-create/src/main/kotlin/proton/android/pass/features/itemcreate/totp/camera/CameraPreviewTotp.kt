@@ -18,14 +18,13 @@
 
 package proton.android.pass.features.itemcreate.totp.camera
 
-import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
+import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
@@ -50,13 +49,13 @@ fun CameraPreviewTotp(
             onDismiss = onClosePreview
         )
     } else {
-        val activity = LocalContext.current as Activity
+        val activity = LocalActivity.current
         CameraPermissionContent(
             modifier = modifier,
             onRequestPermission = { cameraPermissionState.launchPermissionRequest() },
             onOpenAppSettings = {
                 try {
-                    activity.startActivity(
+                    activity?.startActivity(
                         Intent(
                             Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
                             Uri.fromParts("package", activity.packageName, null)

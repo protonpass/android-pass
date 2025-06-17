@@ -19,15 +19,14 @@
 package proton.android.pass.features.home.onboardingtips
 
 import android.Manifest
-import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -45,7 +44,7 @@ fun NotificationPermissionLaunchedEffect(
         val permissionState =
             rememberPermissionState(permission = Manifest.permission.POST_NOTIFICATIONS)
         val status = permissionState.status
-        val activity = LocalContext.current as Activity
+        val activity = LocalActivity.current
 
         LaunchedEffect(status.isGranted) {
             onPermissionChanged(status.isGranted)
@@ -61,7 +60,7 @@ fun NotificationPermissionLaunchedEffect(
 
                 status.shouldShowRationale && shouldRequestPermissions -> {
                     try {
-                        activity.startActivity(
+                        activity?.startActivity(
                             Intent(
                                 Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
                                 Uri.fromParts("package", activity.packageName, null)

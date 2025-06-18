@@ -10,7 +10,7 @@
   <string name="action_credit_card">信用卡</string>
   <string name="action_password">密碼</string>
   <string name="action_identity">身分識別</string>
-  <string name="action_more">More</string>
+  <string name="action_more">更多</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">替應用程式或網頁新增登入詳細資料</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">取得電子郵件別名以使用新的應用程式</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">記下一個 PIN 碼、代碼或自己的筆記</string>
@@ -49,7 +49,7 @@
   <string name="bottomsheet_custom_field_type_text">文字</string>
   <string name="bottomsheet_custom_field_type_hidden">隱藏</string>
   <string name="bottomsheet_custom_field_type_totp">雙重驗證一次性驗證碼金鑰(TOTP)</string>
-  <string name="bottomsheet_custom_field_type_date">Date</string>
+  <string name="bottomsheet_custom_field_type_date">日期</string>
   <string name="bottomsheet_custom_field_option_edit">編輯名稱</string>
   <string name="bottomsheet_custom_field_option_remove">移除欄位</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">移除自訂欄位</string>
@@ -166,12 +166,12 @@
   <string name="identity_add_field_personal_website">個人網站網址</string>
   <string name="identity_add_field_work_phone_number">工作電話號碼</string>
   <string name="identity_add_field_work_email_address">工作電子郵件</string>
-  <string name="identity_add_field_custom_field">Custom field</string>
+  <string name="identity_add_field_custom_field">自訂欄位</string>
   <string name="identity_section_personal_details">個人資訊</string>
   <string name="identity_section_address_details">Address details</string>
   <string name="identity_section_contact_details">聯絡人詳細資料</string>
   <string name="identity_section_work_details">Work details</string>
-  <string name="identity_bottomsheet_add_field">Add field</string>
+  <string name="identity_bottomsheet_add_field">新增欄位</string>
   <string name="create_identity_init_error">Problem retrieving identity details</string>
   <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
   <string name="identity_link_attachments_error">Failed to link or unlink attachments to the identity</string>
@@ -190,7 +190,6 @@
   <string name="close_scree_icon_content_description">關閉螢幕按鈕</string>
   <string name="totp_paste_code_action">貼上代碼</string>
   <string name="totp_scan_code_action">掃描碼</string>
-  <string name="field_cannot_be_empty">此欄無法空白</string>
   <string name="camera_permission_explanation">此功能需要鏡頭權限</string>
   <string name="camera_permission_open_settings">開啟設定</string>
   <!--  TOTP limit  -->
@@ -224,9 +223,9 @@
   <string name="template_item_software_license">Software License</string>
   <string name="template_item_ssh_key">SSH Key</string>
   <string name="template_item_wifi_network">WiFi Network</string>
-  <string name="template_item_bank_account">Bank Account</string>
+  <string name="template_item_bank_account">銀行帳號</string>
   <string name="template_item_crypto_wallet">Crypto Wallet</string>
-  <string name="template_item_driver_license">Driver License</string>
+  <string name="template_item_driver_license">駕照</string>
   <string name="template_item_medical_record">Medical Record</string>
   <string name="template_item_membership">Membership</string>
   <string name="template_item_passport">護照</string>
@@ -254,13 +253,13 @@
   <string name="template_server_field_note">備注</string>
   <!-- Software License Fields -->
   <string name="template_software_license_field_license_key">License Key</string>
-  <string name="template_software_license_field_product">Product</string>
+  <string name="template_software_license_field_product">產品</string>
   <string name="template_software_license_field_expiry_date">Expiry Date</string>
   <string name="template_software_license_field_owner">擁有者</string>
   <string name="template_software_license_field_note">備注</string>
   <!-- SSH Key Fields -->
   <string name="template_ssh_key_field_private_key">Private Key</string>
-  <string name="template_ssh_key_field_public_key">Public Key</string>
+  <string name="template_ssh_key_field_public_key">公開金鑰</string>
   <string name="template_ssh_key_field_username">使用者名稱</string>
   <string name="template_ssh_key_field_host">主機</string>
   <string name="template_ssh_key_field_note">備注</string>
@@ -271,13 +270,13 @@
   <string name="template_bank_account_field_bank_name">Bank Name</string>
   <string name="template_bank_account_field_account_number">Account Number</string>
   <string name="template_bank_account_field_routing_number">Routing Number</string>
-  <string name="template_bank_account_field_account_type">Account Type</string>
+  <string name="template_bank_account_field_account_type">帳號類型</string>
   <string name="template_bank_account_field_iban">國際銀行帳號</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
   <string name="template_bank_account_field_holder_name">Holder Name</string>
   <string name="template_bank_account_field_note">備注</string>
   <!-- Crypto Wallet Fields -->
-  <string name="template_crypto_wallet_field_wallet_name">Wallet Name</string>
+  <string name="template_crypto_wallet_field_wallet_name">錢包名稱</string>
   <string name="template_crypto_wallet_field_address">地址</string>
   <string name="template_crypto_wallet_field_private_key">Private Key</string>
   <string name="template_crypto_wallet_field_seed_phrase">Seed Phrase</string>
@@ -288,7 +287,7 @@
   <string name="template_driver_license_field_license_number">License Number</string>
   <string name="template_driver_license_field_issuing_state_country">Issuing State/Country</string>
   <string name="template_driver_license_field_expiry_date">Expiry Date</string>
-  <string name="template_driver_license_field_date_of_birth">Date of Birth</string>
+  <string name="template_driver_license_field_date_of_birth">出生日期</string>
   <string name="template_driver_license_field_class">Class</string>
   <string name="template_driver_license_field_note">備注</string>
   <!-- Medical Record Fields -->
@@ -308,10 +307,10 @@
   <string name="template_membership_field_note">備注</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">全名</string>
-  <string name="template_passport_field_passport_number">Passport Number</string>
+  <string name="template_passport_field_passport_number">護照號碼</string>
   <string name="template_passport_field_country">國家</string>
   <string name="template_passport_field_expiry_date">Expiry Date</string>
-  <string name="template_passport_field_date_of_birth">Date of Birth</string>
+  <string name="template_passport_field_date_of_birth">出生日期</string>
   <string name="template_passport_field_issuing_authority">Issuing Authority</string>
   <string name="template_passport_field_note">備注</string>
   <!-- Reward Program Fields -->
@@ -328,14 +327,14 @@
   <string name="template_social_security_number_field_note">備注</string>
   <string name="template_header_technology">技術</string>
   <string name="template_header_finance">金融</string>
-  <string name="template_header_title_personal">Personal</string>
+  <string name="template_header_title_personal">個人</string>
   <string name="button_start_from_scratch">Start from scratch</string>
   <string name="select_template_title">Custom item</string>
   <!-- Custom item screen -->
-  <string name="add_custom_field_button">Add field</string>
+  <string name="add_custom_field_button">新增欄位</string>
   <string name="add_section_button">Add section</string>
-  <string name="add_public_key_placeholder">Add public key</string>
-  <string name="add_private_key_placeholder">Add private key</string>
+  <string name="add_public_key_placeholder">新增公鑰</string>
+  <string name="add_private_key_placeholder">新增私鑰</string>
   <string name="add_ssid_name_placeholder">Add name (SSID)</string>
   <string name="create_custom_item_init_error">Problem retrieving custom item details</string>
   <string name="update_custom_item_attachments_init_error">Problem retrieving custom item attachments</string>

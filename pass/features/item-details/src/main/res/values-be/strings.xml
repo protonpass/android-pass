@@ -73,4 +73,10 @@
   <string name="item_details_snackbar_message_ssid_copied">SSID скапіяваны</string>
   <string name="open_with">Адкрыць праз:</string>
   <string name="open_attachments_error">Немагчыма адкрыць далучэнне</string>
+  <string name="passkey_detail_bottomsheet_title">Ключ доступу</string>
+  <string name="passkey_detail_bottomsheet_username">Імя карыстальніка</string>
+  <string name="passkey_detail_bottomsheet_domain">Дамен</string>
+  <string name="passkey_detail_bottomsheet_key">Ключ</string>
+  <string name="passkey_detail_bottomsheet_created">Створана</string>
+  <string name="login_item_reused_passwords_subtitle">Элементы з вашага сховішча, якія выкарыстоўваць гэты пароль.</string>
 </resources>

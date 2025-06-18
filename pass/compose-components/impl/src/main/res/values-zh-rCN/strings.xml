@@ -294,4 +294,34 @@
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <string name="show_network_qr_code">显示网络二维码</string>
+  <string name="expand_collpased_text">更多</string>
+  <string name="collapse_expanded_text">收起</string>
+  <string name="login_item_monitor_widget_weak_pass_title">弱密码</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">此帐户易受攻击，请访问服务并更改您的密码。</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="other">%d 其他登录使用相同密码</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">设置 2FA 以获得更多安全</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">该服务提供 2FA。启用它可提高账户安全性。</string>
+  <string name="login_item_reused_passwords_subtitle">使用此密码的保险库项目。</string>
+  <string name="mfa_limit_reached">已达 2FA 数量上限</string>
+  <string name="activity_in_last_two_weeks">最近 14 天的活动</string>
+  <string name="contacts">联系人</string>
+  <string name="contacts_section_description">要隐藏您的个人电子邮件地址，您可以创建一个别名联系人来掩盖您的地址。</string>
+  <string name="field_detail_display_name_title">显示名称</string>
+  <string name="display_name_section_description">使用此别名发送电子邮件时的显示名称。</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="other">%1$s 转发</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="other">%1$s 回复</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="other">%1$s 屏蔽</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">创建登录</string>
+  <string name="banner_contacts_title">你知道吗？</string>
+  <string name="banner_contacts_subtitle">每次您的别名收到某人的电子邮件时，都会自动创建一个新的联系人。</string>
+  <string name="action_reveal">显示</string>
+  <string name="action_conceal">隐藏</string>
 </resources>

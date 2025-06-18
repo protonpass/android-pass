@@ -45,7 +45,7 @@
   <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
   <string name="sharing_vault_invitation_accept">加入共享的保管庫</string>
   <string name="sharing_item_invitation_title">Shared item invitation</string>
-  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s 想與你分享項目</string>
   <string name="sharing_item_invitation_accept">Accept and view the item</string>
   <string name="sharing_invite_more">Invite more…</string>
   <string name="sharing_snackbar_invite_accepted">邀請已接受</string>

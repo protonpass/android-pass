@@ -48,7 +48,7 @@
   <string name="action_confirm">Confirma</string>
   <string name="action_cancel">Cancel·la</string>
   <string name="action_continue">Continua</string>
-  <string name="action_retry">Torna a provar</string>
+  <string name="action_retry">Torna-ho a provar</string>
   <string name="action_edit">Editar</string>
   <string name="action_add">Afegeix</string>
   <string name="action_delete">Elimina</string>
@@ -73,8 +73,8 @@
   <string name="indicator_no_network">Fora de línia</string>
   <!-- Icon content description -->
   <string name="missing_app_icon_content_description">Icona de Falta una aplicació</string>
-  <string name="add_item_icon_content_description">Icona d\'Afegeix un element</string>
-  <string name="navigate_back_icon_content_description">Icona de Torna enrere</string>
+  <string name="add_item_icon_content_description">Icona Afegeix un element</string>
+  <string name="navigate_back_icon_content_description">Icona de tornar enrere</string>
   <!-- Vault selector -->
   <string name="vault_selector_title">Caixa forta</string>
   <!-- Bottom bar -->
@@ -86,12 +86,12 @@
   <string name="most_recent_today">Avui</string>
   <string name="most_recent_yesterday">Ahir</string>
   <string name="most_recent_this_week">Aquesta setmana</string>
-  <string name="most_recent_last_two_weeks">Les últimes dues setmanes</string>
+  <string name="most_recent_last_two_weeks">Les dues últimes setmanes</string>
   <string name="most_recent_last_30_days">L\'últim mes</string>
   <string name="most_recent_last_60_days">Els últims 60 dies</string>
   <string name="most_recent_last_90_days">Els últims 90 dies</string>
   <string name="most_recent_within_the_last_year">En l\'últim any</string>
-  <string name="most_recent_more_than_1_year">Més d\'1 any</string>
+  <string name="most_recent_more_than_1_year">Fa més d\'1 any</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Icona de cerca</string>
   <!-- Select Vault BottomSheet -->
@@ -101,7 +101,7 @@
   </plurals>
   <!-- Confirm close dialog -->
   <string name="confirm_close_dialog_title">Voleu descartar els canvis?</string>
-  <string name="confirm_close_dialog_message">Hi ha modificacions que no s\'han desat. Segur que voleu descartar-les?</string>
+  <string name="confirm_close_dialog_message">Hi ha modificacions sense desar. Segur que voleu descartar-les?</string>
   <string name="confirm_close_dialog_close_button">Descarta</string>
   <!-- Upgrade -->
   <string name="upgrade">Millora</string>
@@ -161,7 +161,7 @@
   <string name="item_details_identity_section_personal_email_title">Adreça de correu electrònic</string>
   <string name="item_details_identity_section_personal_gender_title">Gènere</string>
   <string name="item_details_identity_section_personal_phone_title">Número de telèfon</string>
-  <string name="item_details_identity_section_personal_birthday_title">Aniversari</string>
+  <string name="item_details_identity_section_personal_birthday_title">Data de naixement</string>
   <string name="item_details_identity_section_address_title">Detalls de l\'adreça</string>
   <string name="item_details_identity_section_address_organization_title">Organització</string>
   <string name="item_details_identity_section_address_street_address_title">Adreça postal o apartat de correus</string>
@@ -309,4 +309,38 @@
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <string name="show_network_qr_code">Mostra el codi QR de la xarxa</string>
+  <string name="expand_collpased_text">més</string>
+  <string name="collapse_expanded_text">menys</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Contrasenya feble</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Aquest compte és vulnerable, visiteu el servei i canvieu la contrasenya.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d altre inici de sessió fa servir la mateixa contrasenya.</item>
+    <item quantity="other">%d altres inicis de sessió fan servir la mateixa contrasenya.</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Configureu A2F per a més seguretat</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Aquest servei ofereix A2F. Habiliteu-lo per a augmentar la seguretat del compte.</string>
+  <string name="login_item_reused_passwords_subtitle">Elements de les vostres caixes fortes que utilitzen aquesta contrasenya.</string>
+  <string name="mfa_limit_reached">S\'ha assolit el límit de 2FA</string>
+  <string name="activity_in_last_two_weeks">Activitat en els darrers 14 dies</string>
+  <string name="contacts">Contactes</string>
+  <string name="contacts_section_description">Per mantenir la vostra adreça electrònica personal oculta, podeu crear un contacte d\'àlies que emmascari la vostra adreça.</string>
+  <string name="field_detail_display_name_title">Nom per a mostrar</string>
+  <string name="display_name_section_description">Aquest és el nom per a mostrar quan s\'envia un correu electrònic des d\'aquest àlies.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s reenviament</item>
+    <item quantity="other">%1$s reenviaments</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s resposta</item>
+    <item quantity="other">%1$s respostes</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s blocat</item>
+    <item quantity="other">%1$s blocats</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">Crea un inici de sessió</string>
+  <string name="banner_contacts_title">Ho sabíeu?</string>
+  <string name="banner_contacts_subtitle">Cada vegada que el vostre àlies rep un correu electrònic, es crea automàticament un contacte del remitent.</string>
+  <string name="action_reveal">Mostra</string>
+  <string name="action_conceal">Oculta</string>
 </resources>

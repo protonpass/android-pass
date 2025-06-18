@@ -73,4 +73,10 @@
   <string name="item_details_snackbar_message_ssid_copied">SSID kopiert</string>
   <string name="open_with">Öffnen mit:</string>
   <string name="open_attachments_error">Der Anhang konnte nicht geöffnet werden</string>
+  <string name="passkey_detail_bottomsheet_title">Passkey</string>
+  <string name="passkey_detail_bottomsheet_username">Benutzername</string>
+  <string name="passkey_detail_bottomsheet_domain">Domain</string>
+  <string name="passkey_detail_bottomsheet_key">Key</string>
+  <string name="passkey_detail_bottomsheet_created">Erstellt</string>
+  <string name="login_item_reused_passwords_subtitle">Einträge aus deinen Tresoren, die dieses Passwort verwenden.</string>
 </resources>

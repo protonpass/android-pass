@@ -23,7 +23,7 @@
   <string name="account_settings_list_item_extra_password_header">Contrasenya addicional per a Proton Pass</string>
   <string name="account_settings_list_item_extra_password_header_set">Estableix una contrasenya addicional per a Proton Pass</string>
   <string name="account_settings_list_item_extra_password_active">Actiu</string>
-  <string name="account_settings_list_item_extra_password_description">Es requerirà la contrasenya addicional per a utilitzar Pass. Actua com una contrasenya addicional a més de la contrasenya de Proton.</string>
+  <string name="account_settings_list_item_extra_password_description">Es requerirà la contrasenya addicional per a utilitzar Pass. Actua com una contrasenya extra a més de la contrasenya de Proton.</string>
   <string name="account_settings_list_item_security_keys_hint_not_set">No definit</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- Management screen -->
+  <string name="simple_login_sync_management_title">E-mail álnév kezelés</string>
+  <string name="simple_login_sync_management_domain_label">Domain név</string>
+  <string name="simple_login_sync_management_domain_title">Alapértelmezett domain az e-mail álnevekhez</string>
+  <string name="simple_login_sync_management_domain_option_blank">Nincs kijelölve</string>
+  <string name="simple_login_sync_management_mailboxes_label">Postafiókok</string>
+  <string name="simple_login_sync_management_mailboxes_description">A postafiók ahová az álnévre küldött e-mailek továbbításra kerülnek. Ez a szokásos postafiókja, pl. Gmail, Outlook, Proton Mail stb.</string>
+  <string name="simple_login_sync_management_mailbox_default">Alapértelmezett</string>
+  <string name="simple_login_sync_management_mailbox_unverified">Ellenőrizetlen postafiók</string>
+  <string name="simple_login_sync_management_mailbox_unverified_change">Nem ellenőrzött postafiók változás</string>
+  <string name="simple_login_sync_management_vault_title">SimpleLogin szinkronizálás</string>
+  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Hiba történt az SL álnév adatainak lekérdezésében</string>
+  <string name="simple_login_sync_management_mailboxes_title">Alapértelmezett postafiók az e-mail álnevekhez</string>
+  <string name="simple_login_sync_management_dialog_title_domains">Alapértelmezett domain az e-mail álnevekhez</string>
+  <string name="simple_login_sync_management_dialog_title_mailboxes">Alapértelmezett postafiók az e-mail álnevekhez</string>
+  <!-- Settings screen -->
+  <string name="simple_login_sync_settings_title">E-mail álnevek szinkronizálása</string>
+  <string name="simple_login_sync_enable_snackbar_error">Hiba történt a SimpleLogin álnevek szinkronizálásának engedélyezésében</string>
+  <string name="simple_login_sync_enable_snackbar_success">SimpleLogin álnevek szinkronizálása sikeresen engedélyezve</string>
+  <!-- Mailbox create screen -->
+  <string name="simple_login_sync_mailbox_create_title">Postafiók létrehozása</string>
+  <string name="simple_login_sync_mailbox_create_message_error">Hiba történt a postafiók hozzáadásában</string>
+  <!-- Mailbox change screen -->
+  <string name="simple_login_sync_mailbox_change_title">Postafiók váltása</string>
+  <string name="simple_login_sync_mailbox_change_message_error">Hiba történt a postafiók váltásakor</string>
+  <string name="simple_login_sync_mailbox_change_email_already_in_use_message_error">Az email már használatban van</string>
+  <!-- Mailbox verify screen -->
+  <string name="simple_login_sync_mailbox_verify_title">A postafiók megerősítése</string>
+  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Küldtünk egy ellenőrző kódot %s-nak. Írja be az alábbiakban:</string>
+  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">az e-mail címe</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Érvénytelen postafiók ellenőrző kód</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">Érvénytelen postafiók ellenőrző kód korlát elérve, a postafiók törlésre került</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_error">Hiba történt a postafiók megerősítésében</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_success">Postafiók sikeresen ellenőrizve</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">Hiba történt az ellenőrző kód elküldésekor</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Ellenőrző kód sikeresen elküldve</string>
+  <!-- Mailbox delete screen -->
+  <string name="simple_login_sync_mailbox_delete_title">Postafiók törlése</string>
+  <string name="simple_login_sync_mailbox_delete_subtitle">A %s postafiókot használó összes álnév is törlésre kerül. Ha továbbra is szeretne e-maileket kapni, helyezze át ezeket az álneveket egy másik postafiókba:</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Álnevek áthelyezése</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">Postafiókba</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete">Postafiók törlése</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Postafiók áthelyezése és törlése</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_error">Hiba történt a postafiók törlésekor</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_success">Postafiók sikeresen törölve</string>
+  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Álnevek áthelyezése a</string>
+  <string name="simple_login_sync_mailbox_delete_warning">Vegye figyelembe, hogy a törlés után az álneveket nem lehet visszaállítani</string>
+  <!-- Domain select screen -->
+  <string name="simple_login_sync_domain_select_title">Alapértelmezett domain név</string>
+  <string name="simple_login_sync_domain_select_title_none">nincs</string>
+  <string name="simple_login_sync_domain_select_description_none">Nincs domain név</string>
+  <string name="simple_login_sync_domain_select_description_custom">Domain neve</string>
+  <string name="simple_login_sync_domain_select_description_free">Nyilvános domain név</string>
+  <string name="simple_login_sync_domain_select_description_premium">Prémium domain név</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">Hiba történt az SL álnevek domain nevének lekérdezésekor</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">Hiba történt az SL álnevek domain nevének frissítésekor</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SL álnevek domain neve sikeresen frissítve</string>
+  <!-- Mailbox options screen -->
+  <string name="simple_login_sync_mailbox_options_snackbar_options_error">Nem sikerült megjeleníteni a postafiók beállításait</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_error">Hiba történt az alapértelmezett postafiók frissítésekor</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Az alapértelmezett postafiók sikeresen frissítve</string>
+  <string name="simple_login_sync_mailbox_change_email_option">Postafiók váltása</string>
+  <string name="simple_login_sync_mailbox_cancel_change_email_option">Postafiókváltás visszavonása</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">Hiba történt a postafiók e-mail váltásának visszavonásában</string>
+  <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">Postafiók e-mail váltás visszavonva</string>
+  <!-- Shared -->
+  <string name="simple_login_sync_shared_default_vault_title">Alapértelmezett SL tároló</string>
+  <string name="simple_login_sync_shared_default_vault_description">SimpleLogin e-mail álnevek ebbe a tárolóba kerülnek importálásra.</string>
+</resources>

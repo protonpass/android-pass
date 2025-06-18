@@ -27,4 +27,7 @@
   <string name="topbar_search_query_oldest_vaults">Buscar en sus bóvedas antiguas…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Buscar…</string>
   <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">Todas las cuentas (%1$s)</string>
+  <string name="select_item_save_credential_title">Guardar las credenciales de la contraseña</string>
+  <string name="select_item_save_credential_subtitle">Seleccione una cuenta para guardar las credenciales.</string>
+  <string name="select_item_save_credential_button">Seleccionar la cuenta</string>
 </resources>

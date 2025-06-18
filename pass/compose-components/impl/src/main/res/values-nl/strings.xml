@@ -309,4 +309,38 @@
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <string name="show_network_qr_code">Toon Netwerk QR-Code</string>
+  <string name="expand_collpased_text">meer</string>
+  <string name="collapse_expanded_text">minder</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Zwak wachtwoord</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Dit account is kwetsbaar, bezoek de service en wijzig uw wachtwoord.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d andere login gebruikt hetzelfde wachtwoord</item>
+    <item quantity="other">%d andere logins gebruiken hetzelfde wachtwoord</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">2FA instellen voor meer beveiliging</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Deze service biedt 2FA aan. Schakel het in voor extra accountveiligheid.</string>
+  <string name="login_item_reused_passwords_subtitle">Items van uw kluis die dit wachtwoord gebruiken.</string>
+  <string name="mfa_limit_reached">2FA-limiet bereikt</string>
+  <string name="activity_in_last_two_weeks">Activiteiten tijdens de voorbije 14 dagen</string>
+  <string name="contacts">Contacten</string>
+  <string name="contacts_section_description">Om uw persoonlijke e-mailadres verborgen te houden, kunt u een alias-contactpersoon maken die uw adres maskert.</string>
+  <string name="field_detail_display_name_title">Weergavenaam</string>
+  <string name="display_name_section_description">De weergavenaam bij het verzenden van een e-mail van deze alias.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s doorgestuurd</item>
+    <item quantity="other">%1$s doorgestuurd</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s reactie</item>
+    <item quantity="other">%1$s reacties</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s blok</item>
+    <item quantity="other">%1$s blokken</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">Login aanmaken</string>
+  <string name="banner_contacts_title">Wist u dat?</string>
+  <string name="banner_contacts_subtitle">Elke keer dat uw alias een e-mail van iemand ontvangt, wordt een nieuwe contactpersoon automatisch aangemaakt.</string>
+  <string name="action_reveal">Toon</string>
+  <string name="action_conceal">Verbergen</string>
 </resources>

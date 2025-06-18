@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="on_boarding_autofill_content">Hagyja a Proton Passra a bejelentkezések kitöltését. Nem kell gépelnie vagy másolgatnia.</string>
+  <string name="on_boarding_autofill_title">Azonnali bejelentkezés alkalmazásokba</string>
+  <string name="on_boarding_autofill_button">Automatikus kitöltés a Proton Passzal</string>
+  <string name="on_boarding_fingerprint_content">Állítsa a Proton Pass alkalmazást ujjlenyomatos feloldásra, így csak ön férhet hozzá.</string>
+  <string name="on_boarding_fingerprint_title">Védje az érzékeny adatait</string>
+  <string name="on_boarding_fingerprint_button">Ujjlenyomatos feloldás engedélyezése</string>
+  <string name="on_boarding_last_page_content">Ne adja meg az igazi e-mail címét. Inkább rejtse el e-mail álnevekkel - egy Proton Pass különlegesség.</string>
+  <string name="on_boarding_last_page_title">Felügyelje mi kerül a levelesládájába</string>
+  <string name="on_boarding_last_page_button">A Proton Pass használatának elkezdése</string>
+  <string name="on_boarding_skip">Most nem</string>
+  <string name="on_boarding_tutorial">Nézze meg a bemutató videót a Proton Pass használatáról</string>
+  <string name="on_boarding_pending_invite_content">Biztonsági okokból, az elérése jóváhagyást igényel.</string>
+  <string name="on_boarding_pending_invite_title">A megosztott adatok elérése függőben van</string>
+  <string name="on_boarding_pending_invite_button">További információk a Proton Passról</string>
+  <string name="error_biometry_failed_to_start">Biometrikus hitelesítés indítása nem sikerült</string>
+  <string name="error_biometry_failed_to_authenticate">Hitelesítés sikertelen</string>
+  <string name="settings_fingerprint_lock_enabled">Ujjlenyomatos feloldás bekapcsolva</string>
+  <string name="error_performing_operation">Hiba a művelet során</string>
+  <string name="onboarding_slide_1_title">Minden jelszava.</string>
+  <string name="onboarding_slide_2_title">Védje meg postafiókját.</string>
+  <string name="onboarding_slide_3_title">Legyen tájékozott.</string>
+  <string name="onboarding_slide_4_title">Biztonságos megosztás.</string>
+  <string name="onboarding_slide_1_subtitle">Biztonságosan, egy helyen, és a legmegbízhatóbb adatvédelmi név által védve.</string>
+  <string name="onboarding_slide_2_subtitle">Használja a Hide-My-Email álneveket az adathalász fenyegetések ellen.</string>
+  <string name="onboarding_slide_3_subtitle">Jelszavak és érzékeny információk biztonságos és zökkenőmentes megosztása.</string>
+  <string name="onboarding_slide_4_subtitle">Riasztást kap, ha az Ön e-mail címe megtalálható a sötét weben.</string>
+  <string name="create_an_account_button">Fiók létrehozása</string>
+  <string name="sign_in_button">Bejelentkezés</string>
+</resources>

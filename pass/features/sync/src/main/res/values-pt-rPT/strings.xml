@@ -17,13 +17,24 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="sync_item_empty">Cofre vazio</string>
   <plurals name="sync_item_count">
-    <item quantity="one">%d item</item>
-    <item quantity="other">%d itens</item>
+    <item quantity="one">%d item transferido</item>
+    <item quantity="other">%d itens transferidos</item>
   </plurals>
-  <string name="sync_progress_item_count">%1$d de %2$d itens</string>
+  <plurals name="sync_finished_item_count">
+    <item quantity="one">%d item sincronizado</item>
+    <item quantity="other">%d itens sincronizados</item>
+  </plurals>
+  <string name="sync_progress_item_count">A transferir %1$d de %2$d itens</string>
   <string name="sync_dialog_title">A sincronizar itens...</string>
-  <string name="sync_dialog_subtitle">Estamos a descarregar e a desencriptar os seus itens. Isto pode demorar alguns minutos.</string>
-  <string name="sync_dialog_confirm_button">Continuar</string>
+  <string name="sync_dialog_title_error">Erro de sincronização</string>
+  <string name="sync_dialog_title_success">A sincronização está concluída.</string>
+  <string name="sync_dialog_subtitle">Estamos a transferir e a desencriptar os seus itens. Isto pode demorar alguns minutos.</string>
+  <string name="sync_dialog_subtitle_error">Ocorreu um erro ao transferir e desencriptar os seus itens. Tente novamente.</string>
+  <string name="sync_dialog_subtitle_success">Os Seus itens foram transferidos e desencriptados.</string>
   <string name="sync_item_not_started">Não iniciado</string>
+  <string name="sync_item_failed">Erro de sincronização</string>
+  <string name="sync_dialog_title_inserting">A inserir os itens…</string>
+  <string name="sync_dialog_subtitle_inserting">A completar o último passo. Falta pouco.</string>
 </resources>

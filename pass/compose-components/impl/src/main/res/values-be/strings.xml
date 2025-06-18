@@ -339,4 +339,46 @@
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">дд ММММ гггг</string>
   <string name="show_network_qr_code">Паказаць QR-код сеткі</string>
+  <string name="expand_collpased_text">больш</string>
+  <string name="collapse_expanded_text">менш</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Ненадзейны пароль</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Гэты ўліковы запіс з\'яўляецца ўразлівым. Наведайце сэрвіс і змяніце пароль.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d запіс уваходу выкарыстоўвае такі ж самы пароль</item>
+    <item quantity="few">%d запісы ўваходу выкарыстоўваюць такі ж самы пароль</item>
+    <item quantity="many">%d запісаў уваходу выкарыстоўваюць такі ж самы пароль</item>
+    <item quantity="other">%d запісаў уваходу выкарыстоўваюць такі ж самы пароль</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Наладзьце 2ФА для большай бяспекі</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Гэты сэрвіс прапануе 2ФА. Уключыце гэту функцыю, каб дадаць бяспеку ўліковаму запісу.</string>
+  <string name="login_item_reused_passwords_subtitle">Элементы з вашага сховішча, якія выкарыстоўваць гэты пароль.</string>
+  <string name="mfa_limit_reached">Дасягнута абмежаванне 2ФА</string>
+  <string name="activity_in_last_two_weeks">Актыўнасць за апошнія 14 дзён</string>
+  <string name="contacts">Кантакты</string>
+  <string name="contacts_section_description">Вы можаце стварыць кантакт псеўданіма, які замаскіруе ваш адрас. Гэта дазволіць захаваць ваш персанальны адрас электроннай пошты схаваным.</string>
+  <string name="field_detail_display_name_title">Бачнае імя</string>
+  <string name="display_name_section_description">Бачнае імя пры адпраўцы ліста з гэтага псеўданіма.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s перасылка</item>
+    <item quantity="few">%1$s перасылкі</item>
+    <item quantity="many">%1$s перасылак</item>
+    <item quantity="other">%1$s перасылак</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s адказ</item>
+    <item quantity="few">%1$s адказы</item>
+    <item quantity="many">%1$s адказаў</item>
+    <item quantity="other">%1$s адказаў</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s блакіроўка</item>
+    <item quantity="few">%1$s блакіроўкі</item>
+    <item quantity="many">%1$s блакіровак</item>
+    <item quantity="other">%1$s блакіровак</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">Стварыць запіс уваходу</string>
+  <string name="banner_contacts_title">Ці ведалі вы што?</string>
+  <string name="banner_contacts_subtitle">Новы кантакт ствараецца аўтаматычна. Гэта адбываецца кожны раз, калі ваш псеўданім атрымлівае ліст ад каго-небудзь.</string>
+  <string name="action_reveal">Паказаць</string>
+  <string name="action_conceal">Схаваць</string>
 </resources>

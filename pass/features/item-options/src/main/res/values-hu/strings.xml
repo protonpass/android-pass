@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="item_options_alias_trash_dialog_title">Áthelyezés a Lomtárba</string>
+  <string name="item_options_alias_trash_dialog_message">A Lomtárban lévő e-mail álnevek továbbra is továbbítják az e-maileket. Ha nem szeretne e-maileket kapni azon a álneven, inkább tiltsa le.</string>
+  <string name="item_options_alias_trash_dialog_checkbox_text">Ne emlékeztessen újra</string>
+  <string name="item_options_alias_trash_dialog_button_text_disable">Inkább letiltom</string>
+  <string name="item_options_alias_trash_dialog_button_text_trash">Áthelyezés a Lomtárba</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">Hiba történt az e-mail álnév letiltása közben</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">E-mail álnév letiltva</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">Hiba történt az e-mail álnév lomtárba való áthelyezésekor</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">E-mail álnév a Lomtárba helyezve</string>
+</resources>

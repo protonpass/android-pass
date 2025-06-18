@@ -190,7 +190,6 @@
   <string name="close_scree_icon_content_description">画面を閉じるボタン</string>
   <string name="totp_paste_code_action">コードを貼り付け</string>
   <string name="totp_scan_code_action">コードをスキャン</string>
-  <string name="field_cannot_be_empty">このフィールドを空にすることはできません</string>
   <string name="camera_permission_explanation">この機能を利用するにはカメラへのアクセス許可が必要です。</string>
   <string name="camera_permission_open_settings">設定を開く</string>
   <!--  TOTP limit  -->

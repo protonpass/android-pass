@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="add_attachment_take_a_photo">Fotó készítése</string>
+  <string name="add_attachment_choose_a_photo_or_video">Válasszon egy fényképet vagy videót</string>
+  <string name="add_attachment_choose_a_file">Válasszon egy fájlt</string>
+  <string name="attachment_options_rename">Átnevezés</string>
+  <string name="attachment_options_delete">Törlés</string>
+  <string name="attachment_options_download">Letöltés</string>
+  <string name="attachment_options_share">Megosztás</string>
+  <string name="file_picker_open_error">Nem sikerült megnyitni a fájlválasztót</string>
+  <string name="media_picker_open_error">Nem sikerült megnyitni a médiaválasztót</string>
+  <string name="camera_open_error">Nem sikerült megnyitni a kamerát</string>
+  <string name="camera_permission_explanation">A kamerához való hozzáférés szükséges a funkció használatához.</string>
+  <string name="camera_permission_open_settings">Beállítások megnyitása</string>
+  <string name="delete_all_attachments_title">Törli az összes mellékletet?</string>
+  <string name="delete_all_attachments_subtitle">Ezt a műveletet nem lehet visszavonni</string>
+  <string name="delete_all_attachments_confirm">Összes törlése</string>
+  <string name="rename_attachment_dialog_title">Fájl átnevezése</string>
+  <string name="storage_full_title">A tárhelye majdnem megtelt.</string>
+  <string name="storage_full_body">Előfizetés a tárhely növeléséhez.</string>
+  <string name="storage_full_upgrade">Csomagváltás</string>
+  <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s / %2$s</string>
+  <string name="attachments_saved_to_location_success">A melléklet elmentve a tárhelyre</string>
+  <string name="attachments_saved_to_location_error">A mellékletet nem sikerült elmenteni a tárhelyre</string>
+</resources>

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="autofill_authenticate_prompt">Ottieni da Proton Pass</string>
+  <string name="autofill_authenticate_prompt">Ottieni da Proton Pass</string>
   <string name="error_loading_items">Caricamento degli elementi non riuscito</string>
-  <string name="inline_suggestions_open_app">Apri Proton Pass</string>
-  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Effettua l\'upgrade per compilare automaticamente</string>
-  <string name="autofill_associate_web_app_name_dialog_title">Sei sicuro di voler usare le credenziali di \"%s\" per questa applicazione o sito web?</string>
-  <string name="autofill_dialog_associate_and_autofill">Associa e usa sempre</string>
-  <string name="autofill_dialog_just_autofill">Usa una volta</string>
+  <string name="inline_suggestions_open_app">Apri Proton Pass</string>
+  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Passa a un piano a pagamento per la compilazione automatica</string>
+  <string name="autofill_associate_web_app_name_dialog_title">Sei sicuro di voler compilare questa pagina con le credenziali di \"%s\"?</string>
+  <string name="autofill_dialog_associate_and_autofill">Associa e compila</string>
+  <string name="autofill_dialog_just_autofill">Compila</string>
   <string name="autofill_dialog_cancel">Annulla</string>
-  <string name="autofill_notification_copy_to_clipboard">TOTP copiato negli appunti</string>
-  <string name="autofill_dialog_associate_title">Usa il login</string>
-  <string name="autofill_user_logged_out">Effettua nuovamente l\'accesso nell\'applicazione.</string>
-  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Compila automaticamente i dettagli della carta</string>
-  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">La compilazione automatica dei dettagli di una carta è una funzionalità a pagamento. Effettua l\'upgrade a un piano a pagamento per compilare automaticamente i dettagli della carta.</string>
-  <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Conferma l\'azione</string>
-  <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Sei sicuro di voler compilare automaticamente le credenziali in questo sito web?. L\'applicazione da cui hai aperto il sito web può avere accesso alle credenziali dopo la compilazione automatica.</string>
-  <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Compila automaticamente</string>
+  <string name="autofill_notification_copy_to_clipboard">TOTP copiato</string>
+  <string name="autofill_dialog_associate_title">Compila la pagina</string>
+  <string name="autofill_user_logged_out">Effettua nuovamente l\'accesso nell\'applicazione</string>
+  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Compila con i dettagli della carta</string>
+  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Passa a un piano a pagamento per la compilazione automatica con i dettagli della carta</string>
+  <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Applicazione sospetta</string>
+  <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">L\'applicazione da cui hai aperto il sito web può avere accesso alle credenziali che inserisci nella pagina. Sei sicuro di voler compilare questa pagina?</string>
+  <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Compila</string>
 </resources>

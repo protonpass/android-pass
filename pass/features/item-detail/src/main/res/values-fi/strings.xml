@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="action_open">Avaa</string>
+  <string name="action_copy">Kopioi</string>
+  <!-- Detail -->
+  <string name="detail_init_error">Ongelma noudettaessa kohteen tietoja</string>
+  <string name="top_bar_edit_button_text">Muokkaa</string>
+  <!-- Alias details -->
+  <string name="field_alias_title">Aliaksen osoite</string>
+  <string name="field_alias_disabled_title">Aliasosoite (ei käytössä)</string>
+  <string name="alias_copied_to_clipboard">Alias kopioitiin</string>
+  <string name="alias_detail_field_mailboxes_title">Ohjaa osoitteeseen</string>
+  <string name="alias_create_login_from_alias">Luo kirjautumistieto</string>
+  <!-- Note details -->
+  <string name="field_detail_note_title">Muistiinpano</string>
+  <string name="note_detail_copy_note_to_clipboard">Kopioi muistiinpano</string>
+  <string name="note_copied_to_clipboard">Muistiinpano kopioitiin leikepöydälle</string>
+  <!-- Login details -->
+  <string name="email_copied_to_clipboard">Sähköpostiosoite kopioitiin</string>
+  <string name="username_copied_to_clipboard">Käyttäjätunnus kopioitiin</string>
+  <string name="password_copied_to_clipboard">Salasana kopioitiin</string>
+  <string name="website_copied_to_clipboard">Verkkosivusto kopioitiin</string>
+  <string name="totp_copied_to_clipboard">TOTP-koodi kopioitiin</string>
+  <string name="field_copied_to_clipboard">Kenttä kopioitiin</string>
+  <string name="move_item_to_trash_message">Kohde siirrettiin roskakoriin</string>
+  <string name="error_move_item_to_trash_message">Virhe siirrettäessä roskakoriin</string>
+  <string name="item_permanently_deleted_message">Kohde poistettiin pysyvästi</string>
+  <string name="item_permanently_deleted_message_error">Virhe poistettaessa kohdetta</string>
+  <string name="item_restored_message">Kohde palautettiin</string>
+  <string name="item_restored_message_error">Virhe palautettaessa kohdetta</string>
+  <string name="item_monitor_exclude_message">Kohde poissuljettiin valvonnasta</string>
+  <string name="item_monitor_exclude_message_error">Virhe poissuljettaessa kohdetta valvonnasta</string>
+  <string name="item_monitor_include_message">Kohde sisällytettiin valvontaan</string>
+  <string name="item_monitor_include_message_error">Virhe lisättäessä kohdetta valvontaan</string>
+  <string name="alias_change_status_error">Virhe vaihdettaessa aliaksen tilaa</string>
+  <string name="login_item_generate_totp_error">Virhe luotaessa kaksivaiheisen tunnistautumisen vahvistuskoodia</string>
+  <string name="login_item_view_alias_button">Näytä alias</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Heikko salasana</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Tämä tili on vaarassa. Käy vaihtamassa salasanasi palvelun tiliasetuksista.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d toinen kirjautumistieto käyttää samaa salasanaa</item>
+    <item quantity="other">%d muuta kirjautumistietoa käyttää samaa salasanaa</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Vahvista suojausta määrittämällä 2FA</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Palvelu mahdollistaa kaksivaiheisen tunnistautumisen. Paranna tilin suojausta ottamalla se käyttöön.</string>
+  <string name="login_item_reused_passwords_subtitle">Holviesi tätä salasanaa käyttävät kohteet.</string>
+  <string name="field_email">Sähköpostiosoite</string>
+  <string name="field_username">Käyttäjätunnus</string>
+  <string name="field_username_or_email">Käyttäjätunnus tai sähköpostiosoite</string>
+  <string name="field_password">Salasana</string>
+  <string name="websites_section_title">Verkkosivustot</string>
+  <string name="totp_section_title">Vahvistuskoodi (TOTP)</string>
+  <string name="action_reveal_password">Näytä salasana</string>
+  <string name="action_conceal_password">Piilota salasana</string>
+  <string name="action_reveal_number">Näytä numero</string>
+  <string name="action_conceal_number">Piilota numero</string>
+  <string name="share_button_content_description">Avaa jakaminen -painike</string>
+  <string name="open_menu_icon_content_description">Avaa valikko -painike</string>
+  <string name="mfa_limit_reached">Kaksivaiheisen tunnistautumisen rajoitus on saavutettu</string>
+  <string name="mfa_icon_content_description">Kasivaiheisen tunnistautumisen kuvake</string>
+  <string name="custom_field_text_icon_description">Mukautettu tekstikenttä</string>
+  <string name="custom_field_hidden_icon_description">Mukautettu piilotettu kenttä</string>
+  <string name="custom_field_totp_icon_description">Mukautettu 2FA-todennuksen kenttä</string>
+  <!-- Credit card details -->
+  <string name="credit_card_cardholder_field_name">Kortinhaltijan nimi</string>
+  <string name="credit_card_number_field_name">Kortin numero</string>
+  <string name="credit_card_cvv_field_name">Turvakoodi</string>
+  <string name="credit_card_pin_field_name">PIN-koodi</string>
+  <string name="credit_card_expiration_date_field_name">Voimassaolo päättyy</string>
+  <string name="credit_card_cardholder_copied_to_clipboard">Kortinhaltija kopioitiin leikepöydälle</string>
+  <string name="credit_card_number_copied_to_clipboard">Kortin numero kopioitiin leikepöydälle</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Turvakoodi kopioitiin leikepöydälle</string>
+  <!-- Bottomsheet -->
+  <string name="move_to_trash_item_detail_bottom_sheet">Siirrä roskakoriin</string>
+  <string name="migrate_item_detail_bottom_sheet">Siirrä toiseen holviin</string>
+  <!-- More info -->
+  <string name="date_today">Tänään %s</string>
+  <string name="date_yesterday">Eilen %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd. LLLL HH.mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd. LLLL yyyy HH.mm</string>
+  <string name="item_detail_cannot_perform_action_edit_title">Muokkaus ei ole mahdollista</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Oikeutesi eivät riitä kohteen muokkaukseen.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Voit muokata vain vanhimpien holviesi kohteita. Muokkaa kohdetta päivittämällä nykyinen tilauksesi.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Et voi muokata kohdetta, koska se on roskakorissa. Siirrä se ensin pois roskakorista.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Jakaminen ei ole mahdollista</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Oikeutesi eivät riitä tämän holvin jakamiseen.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Olet saavuttanut holvien jakorajoituksen. Jaa lisää holveja päivittämällä nykyinen tilauksesi.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Et voi jakaa kohdetta, koska se on roskakorissa. Siirrä se ensin pois roskakorista.</string>
+  <string name="password_score_vulnerable">Haavoittuvainen</string>
+  <string name="password_score_weak">Heikko</string>
+  <string name="password_score_strong">Vahva</string>
+  <string name="passkey_detail_bottomsheet_title">Pääsyavain</string>
+  <string name="passkey_detail_bottomsheet_username">Käyttäjätunnus</string>
+  <string name="passkey_detail_bottomsheet_domain">Verkkotunnus</string>
+  <string name="passkey_detail_bottomsheet_key">Avain</string>
+  <string name="passkey_detail_bottomsheet_created">Luotu</string>
+  <string name="activity_in_last_two_weeks">Tapahtumat viimeisten kahden viikon ajalta</string>
+  <string name="contacts">Yhteystiedot</string>
+  <string name="contacts_section_description">Voit pitää henkilökohtaisen sähköpostiosoitteesi piilossa luomalla aliasyhteystiedon, joka naamioi sen.</string>
+  <string name="field_detail_display_name_title">Näyttönimi</string>
+  <string name="display_name_section_description">Näyttönimi, kun lähetät sähköpostia tästä aliaksesta.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s ohjaus</item>
+    <item quantity="other">%1$s ohjausta</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s vastaus</item>
+    <item quantity="other">%1$s vastausta</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s esto</item>
+    <item quantity="other">%1$s estoa</item>
+  </plurals>
+  <string name="open_with">Avaa käyttäen:</string>
+  <string name="open_attachments_error">Liitettä ei voitu avata</string>
+</resources>

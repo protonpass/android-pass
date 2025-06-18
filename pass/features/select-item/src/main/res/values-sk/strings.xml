@@ -27,4 +27,7 @@
   <string name="topbar_search_query_oldest_vaults">Hľadať vo vašich najstarších trezoroch…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Hľadať…</string>
   <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">Všetky účty (%1$s)</string>
+  <string name="select_item_save_credential_title">Uložiť prihlasovacie údaje hesla</string>
+  <string name="select_item_save_credential_subtitle">Vyberte účet, do ktorého chcete uložiť prihlasovacie údaje.</string>
+  <string name="select_item_save_credential_button">Vyberte účet</string>
 </resources>

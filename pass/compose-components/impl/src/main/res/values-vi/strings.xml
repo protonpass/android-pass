@@ -294,4 +294,34 @@
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <string name="show_network_qr_code">Show Network QR Code</string>
+  <string name="expand_collpased_text">more</string>
+  <string name="collapse_expanded_text">less</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Mật khẩu yếu</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Tài khoản này không an toàn, hãy tới dịch vụ và thay đổi mật khẩu.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="other">%d lần đăng nhập khác sử dụng cùng mật khẩu</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Thiết lập xác minh 2 bước để an toàn hơn</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Dịch vụ này hỗ trợ mã bí mật 2FA. Hãy khởi tạo nó để tăng cường bảo mật cho tài khoản của bạn.</string>
+  <string name="login_item_reused_passwords_subtitle">Các nội dung khác sử dụng cùng mật khẩu này.</string>
+  <string name="mfa_limit_reached">Đã dạt giới hạn 2FA</string>
+  <string name="activity_in_last_two_weeks">Hoạt động trong 14 ngày qua</string>
+  <string name="contacts">Danh bạ</string>
+  <string name="contacts_section_description">Để giữ địa chỉ email cá nhân của bạn ẩn, bạn có thể tạo một liên hệ bí danh che giấu địa chỉ của bạn.</string>
+  <string name="field_detail_display_name_title">Tên hiển thị</string>
+  <string name="display_name_section_description">Tên hiển thị khi gửi email từ bí danh này.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="other">%1$s chuyển tiếp</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="other">%1$s phản hồi</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="other">%1$s khối</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">Tạo đăng nhập</string>
+  <string name="banner_contacts_title">Did you know?</string>
+  <string name="banner_contacts_subtitle">Every time your alias receives an email from someone, a new contact is automatically created.</string>
+  <string name="action_reveal">Reveal</string>
+  <string name="action_conceal">Conceal</string>
 </resources>

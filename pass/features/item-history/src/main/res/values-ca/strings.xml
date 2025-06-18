@@ -30,7 +30,7 @@
   <string name="item_history_timeline_snackbar_message_error">S\'ha produït un error en obtenir les revisions dels elements</string>
   <string name="reset_history_bottomsheet_option">Restableix l\'historial</string>
   <string name="reset_history_dialog_title">Voleu restablir l\'historial d\'aquest element?</string>
-  <string name="reset_history_dialog_body">En restablir l\'historial, se suprimiran permanentment totes les versions anteriors i no es podrà desfer.</string>
+  <string name="reset_history_dialog_body">En restablir l\'historial, se suprimiran permanentment totes les versions anteriors i no es podran desfer.</string>
   <string name="reset_history_action">Restableix</string>
   <string name="reset_history_dialog_snackbar_message_error">S\'ha produït un error durant el restabliment.</string>
   <string name="reset_history_dialog_snackbar_message_success">S\'ha restablert l\'historial de l\'element.</string>

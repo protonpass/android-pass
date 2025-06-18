@@ -309,4 +309,38 @@
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <string name="show_network_qr_code">Vis netværks-QR-kode</string>
+  <string name="expand_collpased_text">mere</string>
+  <string name="collapse_expanded_text">mindre</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Svag adgangskode</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Denne konto er sårbar. Besøg tjenesten og skift din adgangskode.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d andet login bruger samme adgangskode</item>
+    <item quantity="other">%d andre logins bruger samme adgangskode</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Indstil 2FA for mere sikkerhed</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Denne tjeneste tilbyder 2FA. Aktivér det for at få ekstra kontosikkerhed.</string>
+  <string name="login_item_reused_passwords_subtitle">Elementer fra dine bokse, der bruger denne adgangskode.</string>
+  <string name="mfa_limit_reached">2FA-grænse nået</string>
+  <string name="activity_in_last_two_weeks">Aktivitet de sidste 14 dage</string>
+  <string name="contacts">Kontakter</string>
+  <string name="contacts_section_description">Hvis du vil holde din personlige e-mailadresse skjult, kan du oprette en alias-kontakt, der maskerer din adresse.</string>
+  <string name="field_detail_display_name_title">Vist navn</string>
+  <string name="display_name_section_description">Det viste navn, når der sendes en e-mail fra dette alias.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s videresendelse</item>
+    <item quantity="other">%1$s videresendelser</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s svar</item>
+    <item quantity="other">%1$s svar</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s blokering</item>
+    <item quantity="other">%1$s blokeringer</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">Opret login</string>
+  <string name="banner_contacts_title">Vidste du?</string>
+  <string name="banner_contacts_subtitle">Hver gang dit alias modtager en e-mail fra nogen, oprettes der automatisk en ny kontakt.</string>
+  <string name="action_reveal">Vis</string>
+  <string name="action_conceal">Skjul</string>
 </resources>

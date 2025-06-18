@@ -23,5 +23,5 @@
   <string name="upload_attachments_error">Could not upload attachment</string>
   <string name="attachment_size_exceeded_error">The selected file exceeds the size limit. Please choose a file smaller than 100MB.</string>
   <string name="open_with">Open with:</string>
-  <string name="share_with">Share with:</string>
+  <string name="share_with">請共享:</string>
 </resources>

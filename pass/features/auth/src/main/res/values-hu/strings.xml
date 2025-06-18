@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="enter_your_pin_code">Adja meg a PIN kódot</string>
+  <string name="unlock">Feloldás</string>
+  <plurals name="enter_your_pin_code_error">
+    <item quantity="one">Helytelen PIN-kód. %d próbálkozás maradt.</item>
+    <item quantity="other">Helytelen PIN-kód. %d próbálkozás maradt.</item>
+  </plurals>
+  <string name="auth_unlock_app_title">Proton Pass feloldása</string>
+  <string name="auth_unlock_app_subtitle">Adja meg a mesterjelszót: %s</string>
+  <string name="auth_unlock_app_extra_password_subtitle">Írja be az extra jelszót a %s-hoz!</string>
+  <string name="auth_unlock_app_subtitle_account_switch">Adja meg a mesterjelszót ehhez:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Írja be az extra jelszót ehhez:</string>
+  <string name="auth_master_password_label">Mesterjelszó</string>
+  <string name="auth_action_reveal_password">Mesterjelszó felfedése</string>
+  <string name="auth_action_conceal_password">Mesterjelszó elrejtése</string>
+  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Inkább a PIN-kód használata</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Használjon inkább ujjlenyomatot</string>
+  <string name="auth_unlock_button">Feloldás</string>
+  <string name="auth_error_empty_password">Jelszó nem lehet üres</string>
+  <string name="auth_error_pin_cannot_be_empty">A PIN-kód nem lehet üres</string>
+  <string name="auth_extra_password_label">Írja be az extra jelszavát</string>
+  <string name="auth_extra_password_error">Hiba az extra jelszóval történő hitelesítéskor</string>
+  <string name="auth_extra_password_too_many_attempts">Túl sok sikertelen bejelentkezési kísérlet. Kijelentkeztetésre került.</string>
+  <string name="auth_error_wrong_password_no_attempts">Hibás jelszó</string>
+  <plurals name="auth_error_wrong_password">
+    <item quantity="one">Helytelen jelszó. %d próbálkozás maradt</item>
+    <item quantity="other">Helytelen jelszó. %d próbálkozás maradt</item>
+  </plurals>
+  <plurals name="auth_attempts_remaining">
+    <item quantity="one">%d próbálkozás maradt</item>
+    <item quantity="other">%d próbálkozás maradt</item>
+  </plurals>
+  <string name="auth_pin_too_many_attempts">Túl sok hibás pin kód próbálkozás. Minden felhasználója ki lesz jelentkeztetve.</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Túl sok sikertelen PIN-kód próbálkozás</string>
+</resources>

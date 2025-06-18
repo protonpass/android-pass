@@ -17,13 +17,17 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="select_item_only_searching_in_oldest_vaults">Your plan only allows to use items in your oldest vaults.</string>
+  <string name="select_item_only_searching_in_oldest_vaults">O seu plano só permite usar itens nos seus cofres mais antigos.</string>
   <string name="error_credentials_not_found">Não foram encontradas credenciais correspondentes.</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">Sugestões para %s</string>
   <string name="error_loading_items">Não foi possível carregar os itens.</string>
   <string name="topbar_search_query">Pesquisar em todos os cofres…</string>
-  <string name="topbar_search_pinned_items">Search in Pinned…</string>
-  <string name="topbar_search_query_oldest_vaults">Search in your oldest vaults…</string>
-  <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Search…</string>
+  <string name="topbar_search_pinned_items">Pesquisar em Fixados…</string>
+  <string name="topbar_search_query_oldest_vaults">Pesquisar nos seus cofres mais antigos…</string>
+  <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Pesquisar…</string>
+  <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">Todas as contas (%1$s)</string>
+  <string name="select_item_save_credential_title">Guardar as credenciais da palavra-passe</string>
+  <string name="select_item_save_credential_subtitle">Selecione uma conta para guardar as credenciais.</string>
+  <string name="select_item_save_credential_button">Selecionar uma conta</string>
 </resources>

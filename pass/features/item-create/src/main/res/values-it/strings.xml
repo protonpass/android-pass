@@ -190,7 +190,6 @@
   <string name="close_scree_icon_content_description">Pulsante chiudi schermata</string>
   <string name="totp_paste_code_action">Incolla il codice</string>
   <string name="totp_scan_code_action">Scansiona un codice</string>
-  <string name="field_cannot_be_empty">Campo necessario</string>
   <string name="camera_permission_explanation">Consenti l\'accesso alla fotocamera per usare questa funzionalità.</string>
   <string name="camera_permission_open_settings">Apri le impostazioni</string>
   <!--  TOTP limit  -->

@@ -6,6 +6,17 @@
 
 ### Other
 
+## 1.32.0 (2025-06-18)
+
+### Features :tada:
+
+- Integrate password sign in with Credential Manager
+
+### Other
+
+- Updated translations.
+- Updated core libraries.
+
 ## 1.31.4 (2025-06-11)
 
 ### Fixes :bug:

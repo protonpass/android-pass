@@ -190,7 +190,6 @@
   <string name="close_scree_icon_content_description">Buton închidere fereastră</string>
   <string name="totp_paste_code_action">Lipire cod</string>
   <string name="totp_scan_code_action">Scanare cod</string>
-  <string name="field_cannot_be_empty">Acest câmp nu poate fi gol.</string>
   <string name="camera_permission_explanation">Este necesar accesul la cameră pentru ca funcția să fie disponibilă.</string>
   <string name="camera_permission_open_settings">Deschidere setări</string>
   <!--  TOTP limit  -->

@@ -73,4 +73,10 @@
   <string name="item_details_snackbar_message_ssid_copied">SSID zkopírováno</string>
   <string name="open_with">Otevřít pomocí:</string>
   <string name="open_attachments_error">Nepodařilo se otevřít přílohu</string>
+  <string name="passkey_detail_bottomsheet_title">Přístupový klíč</string>
+  <string name="passkey_detail_bottomsheet_username">Uživatelské jméno</string>
+  <string name="passkey_detail_bottomsheet_domain">Doména</string>
+  <string name="passkey_detail_bottomsheet_key">Klíč</string>
+  <string name="passkey_detail_bottomsheet_created">Vytvořeno</string>
+  <string name="login_item_reused_passwords_subtitle">Položky z vašich trezorů, které používají toto heslo.</string>
 </resources>

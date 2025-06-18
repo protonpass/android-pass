@@ -73,4 +73,10 @@
   <string name="item_details_snackbar_message_ssid_copied">SSID가 복사되었습니다</string>
   <string name="open_with">열기:</string>
   <string name="open_attachments_error">첨부파일을 열 수 없습니다</string>
+  <string name="passkey_detail_bottomsheet_title">패스키</string>
+  <string name="passkey_detail_bottomsheet_username">사용자 이름</string>
+  <string name="passkey_detail_bottomsheet_domain">도메인</string>
+  <string name="passkey_detail_bottomsheet_key">키</string>
+  <string name="passkey_detail_bottomsheet_created">생성함</string>
+  <string name="login_item_reused_passwords_subtitle">이 비밀번호를 사용하는 금고 내 항목의 목록입니다.</string>
 </resources>

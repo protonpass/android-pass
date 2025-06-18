@@ -339,4 +339,46 @@
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <string name="show_network_qr_code">Pokaż kod QR sieci</string>
+  <string name="expand_collpased_text">więcej</string>
+  <string name="collapse_expanded_text">mniej</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Słabe hasło</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Konto jest zagrożone. Przejdź do usługi i zmień hasło.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">Tego hasła używa jeszcze %d inne dane logowania</item>
+    <item quantity="few">Tego hasła używają jeszcze %d inne dane logowania</item>
+    <item quantity="many">Tego hasła używa jeszcze %d innych danych logowania</item>
+    <item quantity="other">Tego hasła używa jeszcze %d innych danych logowania</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Skonfiguruj uwierzytelnianie dwustopniowe dla większego bezpieczeństwa</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Usługa oferuje uwierzytelnianie dwustopniowe. Włącz je, aby zwiększyć bezpieczeństwo konta.</string>
+  <string name="login_item_reused_passwords_subtitle">Dane logowania w sejfie, które używają tego hasła.</string>
+  <string name="mfa_limit_reached">Limit uwierzytelniania dwustopniowego został osiągnięty</string>
+  <string name="activity_in_last_two_weeks">Aktywność w ciągu ostatnich 14 dni</string>
+  <string name="contacts">Kontakty</string>
+  <string name="contacts_section_description">Aby ukryć osobisty adres e-mail, możesz utworzyć alias.</string>
+  <string name="field_detail_display_name_title">Nazwa wyświetlana</string>
+  <string name="display_name_section_description">Nazwa wyświetlana podczas wysyłania wiadomości z tego aliasu.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s przekierowana</item>
+    <item quantity="few">%1$s przekierowane</item>
+    <item quantity="many">%1$s przekierowanych</item>
+    <item quantity="other">%1$s przekierowanych</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s wysłana</item>
+    <item quantity="few">%1$s wysłane</item>
+    <item quantity="many">%1$s wysłanych</item>
+    <item quantity="other">%1$s wysłanych</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s zablokowana</item>
+    <item quantity="few">%1$s zablokowane</item>
+    <item quantity="many">%1$s zablokowanych</item>
+    <item quantity="other">%1$s zablokowanych</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">Utwórz dane logowania</string>
+  <string name="banner_contacts_title">Czy wiesz?</string>
+  <string name="banner_contacts_subtitle">Za każdym razem, gdy Twój alias otrzyma wiadomość, zostanie automatycznie utworzony nowy kontakt.</string>
+  <string name="action_reveal">Pokaż</string>
+  <string name="action_conceal">Ukryj</string>
 </resources>

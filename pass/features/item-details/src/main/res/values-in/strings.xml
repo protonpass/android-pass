@@ -73,4 +73,10 @@
   <string name="item_details_snackbar_message_ssid_copied">SSID disalin</string>
   <string name="open_with">Buka dengan:</string>
   <string name="open_attachments_error">Gagal membuka lampiran</string>
+  <string name="passkey_detail_bottomsheet_title">Passkey</string>
+  <string name="passkey_detail_bottomsheet_username">Nama pengguna</string>
+  <string name="passkey_detail_bottomsheet_domain">Domain</string>
+  <string name="passkey_detail_bottomsheet_key">Kunci</string>
+  <string name="passkey_detail_bottomsheet_created">Dibuat</string>
+  <string name="login_item_reused_passwords_subtitle">Item pada brankas Anda yang menggunakan kata sandi ini.</string>
 </resources>

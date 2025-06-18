@@ -190,7 +190,6 @@
   <string name="close_scree_icon_content_description">Gumb za zapiranje zaslona</string>
   <string name="totp_paste_code_action">Prilepi kodo</string>
   <string name="totp_scan_code_action">Optično preberi kodo</string>
-  <string name="field_cannot_be_empty">To polje ne more biti prazno</string>
   <string name="camera_permission_explanation">Za to funkcijo je potrebno dovoljenje za kamero.</string>
   <string name="camera_permission_open_settings">Odpri nastavitve</string>
   <!--  TOTP limit  -->

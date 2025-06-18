@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="select_item_only_searching_in_oldest_vaults">A csomagja csak a legrégebbi tárolókban lévő elemek használatát teszi lehetővé.</string>
+  <string name="error_credentials_not_found">Nem találtunk megfelelő hitelesítő adatokat</string>
+  <!-- Placeholder will contain the domain / app name we are trying to autofill -->
+  <string name="select_item_suggestions_for_placeholder">Javaslatok: %s</string>
+  <string name="error_loading_items">Nem sikerült az elemek betöltése</string>
+  <string name="topbar_search_query">Keresés az összes tárolóban…</string>
+  <string name="topbar_search_pinned_items">Keresés a kitűzöttek között...</string>
+  <string name="topbar_search_query_oldest_vaults">Keresés a legrégebbi tárolóiban…</string>
+  <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Keresés…</string>
+  <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">Minden fiók (%1$s)</string>
+  <string name="select_item_save_credential_title">Jelszó hitelesítő adat mentése</string>
+  <string name="select_item_save_credential_subtitle">Válasszon ki egy fiókot a hitelesítő adatok mentéséhez.</string>
+  <string name="select_item_save_credential_button">Fiók kiválasztása</string>
+</resources>

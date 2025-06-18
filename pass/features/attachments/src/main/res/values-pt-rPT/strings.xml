@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="add_attachment_take_a_photo">Tirar uma foto</string>
+  <string name="add_attachment_choose_a_photo_or_video">Escolha uma foto ou vídeo</string>
+  <string name="add_attachment_choose_a_file">Escolha um ficheiro</string>
+  <string name="attachment_options_rename">Mudar o nome</string>
+  <string name="attachment_options_delete">Eliminar</string>
+  <string name="attachment_options_download">Transferir</string>
+  <string name="attachment_options_share">Partilhar</string>
+  <string name="file_picker_open_error">Não foi possível abrir o seletor de ficheiros.</string>
+  <string name="media_picker_open_error">Não foi possível abrir o seletor de média.</string>
+  <string name="camera_open_error">Não foi possível abrir a câmara.</string>
+  <string name="camera_permission_explanation">É necessária a autorização da câmara para que esta função esteja disponível.</string>
+  <string name="camera_permission_open_settings">Abrir as definições</string>
+  <string name="delete_all_attachments_title">Eliminar todos os anexos?</string>
+  <string name="delete_all_attachments_subtitle">Esta acção não pode ser desfeita.</string>
+  <string name="delete_all_attachments_confirm">Eliminar tudo</string>
+  <string name="rename_attachment_dialog_title">Alterar o nome do ficheiro</string>
+  <string name="storage_full_title">O armazenamento está quase cheio.</string>
+  <string name="storage_full_body">Melhore o seu plano para aumentar o seu armazenamento.</string>
+  <string name="storage_full_upgrade">Actualizar</string>
+  <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s de %2$s</string>
+  <string name="attachments_saved_to_location_success">O anexo foi guardado na localização.</string>
+  <string name="attachments_saved_to_location_error">Não foi possível guardar o anexo à localização.</string>
+</resources>

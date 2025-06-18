@@ -73,4 +73,10 @@
   <string name="item_details_snackbar_message_ssid_copied">SSID 已复制</string>
   <string name="open_with">打开方式：</string>
   <string name="open_attachments_error">无法打开附件</string>
+  <string name="passkey_detail_bottomsheet_title">通行密钥</string>
+  <string name="passkey_detail_bottomsheet_username">用户名</string>
+  <string name="passkey_detail_bottomsheet_domain">域名</string>
+  <string name="passkey_detail_bottomsheet_key">密钥</string>
+  <string name="passkey_detail_bottomsheet_created">创建时间</string>
+  <string name="login_item_reused_passwords_subtitle">使用此密码的保险库项目。</string>
 </resources>

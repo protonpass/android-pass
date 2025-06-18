@@ -190,7 +190,6 @@
   <string name="close_scree_icon_content_description">Ekranı kapat düğmesi</string>
   <string name="totp_paste_code_action">Kodu yapıştır</string>
   <string name="totp_scan_code_action">Kodu tara</string>
-  <string name="field_cannot_be_empty">Bu alan boş olamaz</string>
   <string name="camera_permission_explanation">Bu özelliği kullanabilmek için kameraya erişme izni verilmelidir.</string>
   <string name="camera_permission_open_settings">Ayarları aç</string>
   <!--  TOTP limit  -->

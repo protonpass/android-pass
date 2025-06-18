@@ -31,7 +31,7 @@
   <string name="unblock_button">Desbloqueja el contacte</string>
   <string name="block_button">Bloqueja el contacte</string>
   <string name="contact_created_date" comment="date of creation">Creat fa %1$s</string>
-  <string name="no_activity_contact">Cap activitat en els darrers 14 dies.</string>
+  <string name="no_activity_contact">No hi ha hagut cap activitat en els darrers 14 dies.</string>
   <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">en els darrers 14 dies</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
     <item quantity="one">%1$d reenviat</item>
@@ -55,7 +55,7 @@
   <string name="snackbar_delete_contact_error">No s\'ha pogut eliminar el contacte.</string>
   <string name="snackbar_email_copied_success">S\'ha copiat el correu electrònic al porta-retalls.</string>
   <string name="contact_option_send_email">Envia un correu electrònic</string>
-  <string name="contact_option_copy_address">Copia l\'adreça de reenviament</string>
+  <string name="contact_option_copy_address">Copieu l\'adreça de reenviament</string>
   <string name="contact_option_block_contact">Bloqueja el contacte</string>
   <string name="contact_option_unblock_contact">Desbloqueja el contacte</string>
   <string name="contact_option_delete">Elimina</string>

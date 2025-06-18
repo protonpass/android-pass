@@ -294,4 +294,34 @@
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">yyyy LLLL dd</string>
   <string name="show_network_qr_code">네트워크 QR 코드 보이기</string>
+  <string name="expand_collpased_text">더 보기</string>
+  <string name="collapse_expanded_text">덜 보기</string>
+  <string name="login_item_monitor_widget_weak_pass_title">약한 비밀번호</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">이 계정은 취약합니다. 서비스를 방문하여 비밀번호를 변경하십시오.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="other">%d개의 다른 로그인이 같은 비밀번호를 사용하고 있습니다</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">더 나은 보안을 위해 2단계 인증 설정</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">이 서비스는 2단계 인증을 지원합니다. 향상된 계정 보안을 위해 활성화 해주세요.</string>
+  <string name="login_item_reused_passwords_subtitle">이 비밀번호를 사용하는 금고 내 항목의 목록입니다.</string>
+  <string name="mfa_limit_reached">2단계 인증 제한 도달</string>
+  <string name="activity_in_last_two_weeks">지난 14일간 활동</string>
+  <string name="contacts">연락처</string>
+  <string name="contacts_section_description">개인 이메일을 비공개로 유지하려면 별칭 연락처를 만들어 보세요.</string>
+  <string name="field_detail_display_name_title">표시되는 이름</string>
+  <string name="display_name_section_description">이 별칭으로부터 이메일이 전송되면 표시되는 이름입니다.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="other">%1$s개 가져오기</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="other">%1$s개 답장</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="other">%1$s개 차단</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">로그인 생성</string>
+  <string name="banner_contacts_title">알고 계셨나요?</string>
+  <string name="banner_contacts_subtitle">별칭이 누군가로부터 이메일을 받을 때마다, 새로운 연락처가 자동으로 생성됩니다.</string>
+  <string name="action_reveal">표시</string>
+  <string name="action_conceal">가리기</string>
 </resources>

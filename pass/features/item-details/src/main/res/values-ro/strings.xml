@@ -73,4 +73,10 @@
   <string name="item_details_snackbar_message_ssid_copied">SSID s-a copiat.</string>
   <string name="open_with">Deschideți cu:</string>
   <string name="open_attachments_error">Atașamentul nu a putut fi deschis.</string>
+  <string name="passkey_detail_bottomsheet_title">Cheie de acces</string>
+  <string name="passkey_detail_bottomsheet_username">Nume utilizator</string>
+  <string name="passkey_detail_bottomsheet_domain">Domeniu</string>
+  <string name="passkey_detail_bottomsheet_key">Cheia</string>
+  <string name="passkey_detail_bottomsheet_created">Creată la</string>
+  <string name="login_item_reused_passwords_subtitle">Articole din seifuri care folosesc această parolă.</string>
 </resources>

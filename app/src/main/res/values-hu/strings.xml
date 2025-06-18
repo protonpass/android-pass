@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="twenty_vaults">20 tároló</string>
+  <string name="unlimited_email_alias">Korlátlan számú e-mail álnév</string>
+  <string name="custom_fields">Egyéni mezők</string>
+  <string name="restart_to_complete_the_update">Indítsa újra a frissítés befejezéséhez</string>
+  <string name="action_restart">Újraindítás</string>
+  <string name="shortcut_share_logs_title">Naplók megosztása</string>
+  <string name="no_account_found">Nem található fiók</string>
+  <string name="no_session_found">Nem található munkamenet</string>
+  <string name="auth_with_extra_password_failed">A hitelesítés extra jelszóval nem sikerült</string>
+  <string name="auth_only_1_proton_account_failed">Csak 1 ingyenes Proton-fiók engedélyezett.</string>
+</resources>

@@ -5,7 +5,7 @@
   <string name="autofill_notification_copy_to_clipboard_title">時間性單次驗證代碼</string>
   <string name="autofill_notification_copy_to_clipboard_body">已將時間性單次驗證代碼複製到剪貼簿</string>
   <string name="new_item_invite_notification_title">New item invite received</string>
-  <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s wants to share an item with you.</string>
+  <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s 想與你分享項目</string>
   <string name="new_vault_invite_notification_title">New vault invite received</string>
   <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s wants to share a vault with you.</string>
 </resources>

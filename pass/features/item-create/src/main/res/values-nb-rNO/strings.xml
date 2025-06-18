@@ -190,7 +190,6 @@
   <string name="close_scree_icon_content_description">Knapp for å lukke skjermbildet</string>
   <string name="totp_paste_code_action">Lim inn kode</string>
   <string name="totp_scan_code_action">Skann kode</string>
-  <string name="field_cannot_be_empty">Feltet kan ikke stå tomt</string>
   <string name="camera_permission_explanation">Kameratillatelse kreves for at denne funksjonen skal være tilgjengelig.</string>
   <string name="camera_permission_open_settings">Åpne innstillinger</string>
   <!--  TOTP limit  -->

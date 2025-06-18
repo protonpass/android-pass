@@ -73,4 +73,10 @@
   <string name="item_details_snackbar_message_ssid_copied">SSID kopiert</string>
   <string name="open_with">Åpne med:</string>
   <string name="open_attachments_error">Kunne ikke åpne vedlegg</string>
+  <string name="passkey_detail_bottomsheet_title">Tilgangsnøkkel</string>
+  <string name="passkey_detail_bottomsheet_username">Brukernavn</string>
+  <string name="passkey_detail_bottomsheet_domain">Domene</string>
+  <string name="passkey_detail_bottomsheet_key">Nøkkel</string>
+  <string name="passkey_detail_bottomsheet_created">Opprettet</string>
+  <string name="login_item_reused_passwords_subtitle">Elementer fra hvelvene dine som bruker dette passordet.</string>
 </resources>

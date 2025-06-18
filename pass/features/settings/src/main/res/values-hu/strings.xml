@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="title_settings">Beállítások</string>
+  <string name="settings_autofill_section_title">Automatikus kitöltés</string>
+  <string name="settings_autofill_preference_title">Automatikus kitöltés</string>
+  <string name="settings_autofill_preference_description">Gyors és könnyű bejelentkezéshez használja a Proton Passt a felhasználónevek és jelszavak kitöltéséhez.</string>
+  <string name="settings_authentication_section_title">Azonosítás</string>
+  <string name="settings_authentication_preference_title">Ujjlenyomatos feloldás</string>
+  <string name="settings_authentication_preference_description_enabled">Nyissa meg gyorsan és biztonságosan az alkalmazást az ujjlenyomatával.</string>
+  <string name="settings_authentication_preference_description_no_fingerprint">Nem használhatja az ujjlenyomatát az alkalmazásban, mert az eszközön nincsenek ujjlenyomatok regisztrálva.</string>
+  <string name="settings_appearance_preference_title">Téma</string>
+  <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">A rendszerrel megegyező</string>
+  <string name="settings_appearance_preference_subtitle_light">Világos mód</string>
+  <string name="settings_appearance_preference_subtitle_dark">Sötét mód</string>
+  <string name="settings_fingerprint_lock_enabled">Ujjlenyomatos feloldás bekapcsolva</string>
+  <string name="settings_error_performing_operation">Hiba a művelet során</string>
+  <string name="settings_option_clipboard">Vágólap</string>
+  <string name="settings_application_section_title">Alkalmazás</string>
+  <string name="settings_option_view_logs">Napló megtekintése</string>
+  <string name="settings_option_force_sync">Szinkronizálás kényszerítése</string>
+  <string name="settings_about_section_title">Névjegy</string>
+  <string name="settings_option_privacy_policy">Adatvédelmi irányelvek</string>
+  <string name="settings_option_terms_of_service">Szolgáltatási feltételek</string>
+  <string name="settings_privacy_section_title">Adatvédelem</string>
+  <string name="settings_use_favicons_preference_title">Web ikonok használata</string>
+  <string name="settings_use_favicons_preference_subtitle">Döntse el, hogy megjelenjenek-e a web ikonok az elemeknél.</string>
+  <string name="settings_allow_screenshots_preference_title">Képernyőkép engedélyezése</string>
+  <string name="settings_allow_screenshots_preference_subtitle">Engedélyezésekor készíthet képernyőképet az alkalmazásról.</string>
+  <string name="settings_clear_icon_cache_success">Ikon gyorsítótár ürítve</string>
+  <string name="settings_clear_icon_cache_error">Nem sikerült az ikon gyorsítótár ürítése</string>
+  <string name="settings_share_telemetry">Névtelen használati adatok megosztása</string>
+  <string name="settings_share_crashes">Névtelen összeomlási jelentések megosztása</string>
+  <string name="settings_preference_updated">A beállítások frissítve</string>
+  <string name="settings_display_section_title">Megjelenítés</string>
+  <string name="settings_preference_display_username">A felhasználónév mező mindig látható</string>
+  <string name="settings_preference_display_autofill_pinning">A rögzített elemek az automatikus kitöltésen mindig láthatók</string>
+  <string name="view_logs_title">Napló megtekintése</string>
+  <string name="clipboard_bottomsheet_title">Vágólap</string>
+  <string name="clipboard_option_clear_clipboard_label">Vágólap ürítése</string>
+  <string name="clipboard_option_copy_totp_code">Hitelesítés kód másolása</string>
+  <string name="clipboard_option_copy_totp_code_hint">Hitelesítés kódok automatikus másolása az automatikus kitöltés használata közben.</string>
+  <string name="clipboard_option_clear_clipboard_never">Soha</string>
+  <string name="clipboard_option_clear_clipboard_after_60_seconds">1 perc után</string>
+  <string name="clipboard_option_clear_clipboard_after_180_seconds">3 perc után</string>
+  <string name="settings_use_digital_asset_link_preference_title">Digitális eszközhivatkozások engedélyezése</string>
+  <string name="settings_use_digital_asset_link_preference_subtitle">A webhely tulajdonjogának ellenőrzése egy Android-alkalmazás és egy webhely között.</string>
+</resources>

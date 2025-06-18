@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2025 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="open_attachments_error">Não foi possível abrir o anexo.</string>
+  <string name="download_attachments_error">Não foi possível transferir o anexo.</string>
+  <string name="share_attachments_error">Não foi possível partilhar o anexo.</string>
+  <string name="upload_attachments_error">Erro ao enviar o anexo</string>
+  <string name="attachment_size_exceeded_error">O ficheiro selecionado excede o limite de tamanho. Escolha um ficheiro inferior a 100 MB.</string>
+  <string name="open_with">Abrir com:</string>
+  <string name="share_with">Partilhar com:</string>
+</resources>

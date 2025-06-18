@@ -73,4 +73,10 @@
   <string name="item_details_snackbar_message_ssid_copied">SSID kopioitiin</string>
   <string name="open_with">Avaa käyttäen:</string>
   <string name="open_attachments_error">Liitettä ei voitu avata</string>
+  <string name="passkey_detail_bottomsheet_title">Pääsyavain</string>
+  <string name="passkey_detail_bottomsheet_username">Käyttäjätunnus</string>
+  <string name="passkey_detail_bottomsheet_domain">Verkkotunnus</string>
+  <string name="passkey_detail_bottomsheet_key">Avain</string>
+  <string name="passkey_detail_bottomsheet_created">Luotu</string>
+  <string name="login_item_reused_passwords_subtitle">Holviesi tätä salasanaa käyttävät kohteet.</string>
 </resources>

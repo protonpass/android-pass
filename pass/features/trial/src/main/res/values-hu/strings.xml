@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Üdvözlő ajándék</string>
+  <string name="trial_subtitle">Élvezze a következő szintű jelszókezelést</string>
+  <string name="trial_feature_1">20 tároló</string>
+  <string name="trial_feature_3">Beépített kétlépcsős hitelesítés</string>
+  <string name="trial_feature_4">Egyéni mezők</string>
+  <string name="trial_button_text">Váltás nagyobb csomagra</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">%d nap maradt a prémium funkciók kipróbálására</item>
+    <item quantity="other">%d nap maradt a prémium funkciók kipróbálására</item>
+  </plurals>
+  <string name="trial_learn_more">További információk</string>
+</resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="snackbar_create_vault_success">Tároló létrehozva</string>
+  <string name="snackbar_create_vault_error">Tároló nem lett létrehozva</string>
+  <string name="snackbar_cannot_create_more_vaults_error">Nem hozhat létre több tárolót</string>
+  <string name="snackbar_edit_vault_success">Tároló módosítva</string>
+  <string name="snackbar_edit_vault_error">Tároló nem lett szerkesztve</string>
+  <string name="snackbar_delete_vault_success">Tároló törölve</string>
+  <string name="snackbar_delete_vault_error">Tároló nem lett törölve</string>
+  <string name="snackbar_leave_vault_success">Tároló elhagyva</string>
+  <string name="snackbar_leave_vault_error">A tároló elhagyása nem sikerült</string>
+  <string name="snackbar_retrieve_vault_error">Tároló nem található</string>
+  <string name="snackbar_find_vault_error">Nem található a kiválasztott tároló</string>
+  <string name="snackbar_get_vault_list_error">A tárolók listájának betöltése nem sikerült</string>
+  <string name="vault_delete_dialog_title">Tároló törlése</string>
+  <string name="vault_delete_dialog_body">Ez véglegesen törli a __VAULT_NAME__ tárolót és annak minden tartalmát. A törlés megerősítéséhez írja be a tároló nevét.</string>
+  <string name="vault_delete_dialog_placeholder">Tároló neve</string>
+  <string name="vault_delete_dialog_cancel_action">Mégsem</string>
+  <string name="vault_delete_dialog_delete_action">Törlés</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Ez a tároló %1$s-t tartalmaz. Törlésével minden más felhasználó számára megszűnik a hozzáférés.</string>
+  <string name="vault_leave_dialog_title">Tároló elhagyása</string>
+  <string name="vault_leave_dialog_body">Ez eltávolítja a hozzáférést a(z) __VAULT_NAME__ tárolóhoz és annak teljes tartalmához. Biztos, hogy ki akarsz lépni?</string>
+  <string name="vault_leave_dialog_cancel_action">Mégsem</string>
+  <string name="vault_leave_dialog_leave_action">Elhagyás</string>
+  <string name="bottomsheet_close_icon_content_description">Tároló létrehozás bezárása</string>
+  <string name="bottomsheet_create_vault_button">Tároló létrehozása</string>
+  <string name="bottomsheet_edit_vault_button">Mentés</string>
+  <string name="bottomsheet_cannot_create_more_vaults">Elérte a létrehozható tárolók számát. Előfizetésének módosításakor korlátlan számú tárolót hozhat létre.</string>
+  <string name="bottomsheet_cannot_select_not_primary_vault">A többi tároló kezeléséhez nagyobb csomagra kell váltania.</string>
+  <string name="bottomsheet_upgrade_now">Váltás nagyobb csomagra</string>
+  <string name="bottomsheet_edit">Szerkesztés</string>
+  <string name="bottomsheet_migrate">Összes elem áthelyezése egy másik tárolóba</string>
+  <string name="bottomsheet_delete_vault">Tároló törlése</string>
+  <string name="bottomsheet_share_vault">Megosztás</string>
+  <string name="bottomsheet_leave_vault">Tároló elhagyása</string>
+  <string name="bottomsheet_view_members">Tagok megtekintése</string>
+  <string name="bottomsheet_manage_access">Hozzáférés kezelése</string>
+  <string name="bottomsheet_select_vault_read_only">Csak megnézni tudja</string>
+  <string name="bottomsheet_select_vault_only_oldest_vaults">Csak a legrégebbi tárolóiban hozhat létre elemeket</string>
+  <string name="vault_title">Tároló</string>
+</resources>

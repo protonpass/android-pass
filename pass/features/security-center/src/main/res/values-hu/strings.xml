@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- Home screen -->
+  <string name="security_center_home_top_bar_title">Pass Monitor</string>
+  <string name="security_center_home_dark_web_monitoring_title">Dark web figyelés</string>
+  <string name="security_center_home_widget_breaches_title">Adatvédelmi incidens észlelve</string>
+  <string name="security_center_home_widget_breaches_subtitle">Az e-mail címe legalább 1 adatvédelmi incidensben kiszivárgott.</string>
+  <string name="security_center_home_widget_no_breaches_subtitle">Értesüljön arról, ha e-mail címe, jelszava vagy más személyes adatai kiszivárogtak.</string>
+  <string name="security_center_home_row_no_data_breaches_subtitle">Nincs adatvédelmi incidens észlelve</string>
+  <string name="security_center_home_row_data_breaches_title">Dark web figyelmeztetés</string>
+  <string name="security_center_home_row_data_breaches_subtitle">Adatvédelmi incidensek észlelve</string>
+  <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
+  <string name="security_center_home_row_sentinel_subtitle">Fejlett fiók védelmi program</string>
+  <string name="security_center_home_row_insecure_passwords_title">Gyenge jelszavak</string>
+  <string name="security_center_home_row_insecure_passwords_subtitle">Változtassa meg a jelszavait</string>
+  <string name="security_center_home_row_reused_passwords_title">Újrahasznált jelszavak</string>
+  <string name="security_center_home_row_reused_passwords_subtitle">Hozzon létre egyedi jelszavakat</string>
+  <string name="security_center_home_row_missing_tfa_title">Kétlépcsős hitelesítés kikapcsolva</string>
+  <string name="security_center_home_row_missing_tfa_subtitle">Kapcsolja be a kétlépcsős hitelesítést nagyobb biztonságért</string>
+  <string name="security_center_home_row_excludes_items_title">Kizárás a megfigyelésből</string>
+  <string name="security_center_home_row_excludes_items_subtitle">Ezek az elemek veszélynek vannak kitéve</string>
+  <string name="security_center_get_breaches_error">Nem sikerült az adatvédelmi incidensek betöltése</string>
+  <string name="security_center_home_section_password_health">Jelszó-egészség</string>
+  <!-- Sentinel bottom sheet -->
+  <string name="security_center_sentinel_title">Proton Sentinel</string>
+  <string name="security_center_sentinel_subtitle">A Proton Sentinel egy komplex MI rendszerekkel vezérelt, fejlett fiókvédelmi program, amely szakemberek folyamatos támogatásával védi a támadóktól és biztonsági fenyegetésekről.</string>
+  <string name="security_center_sentinel_button_enable">Proton Sentinel bekapcsolása</string>
+  <string name="security_center_sentinel_button_disable">Proton Sentinel kikapcsolása</string>
+  <string name="security_center_sentinel_snackbar_message_enable_canceled">Proton Sentinel védelem bekapcsolása visszavonva</string>
+  <string name="security_center_sentinel_snackbar_message_enable_error">Hiba történt a Proton Sentinel bekapcsolása során. Kérjük próbálja meg újra.</string>
+  <string name="security_center_sentinel_snackbar_message_disable_canceled">Proton Sentinel védelem kikapcsolása visszavonva</string>
+  <string name="security_center_sentinel_snackbar_message_disable_error">Hiba történt a Proton Sentinel kikapcsolása során. Kérjük próbálja meg újra.</string>
+  <!-- Weak passwords screen -->
+  <string name="security_center_weak_pass_top_bar_title">Gyenge jelszavak</string>
+  <string name="security_center_weak_pass_top_bar_subtitle">A gyenge jelszavakat könnyeben ki lehet találni. Hozzon létre erős jelszavakat, a fiókjai biztonsága érdekében.</string>
+  <!-- Reused passwords screen -->
+  <string name="security_center_reused_pass_top_bar_title">Újrahasznált jelszavak</string>
+  <string name="security_center_reused_pass_top_bar_subtitle">Hozzon létre egyedi jelszavakat minden fiókhoz, a biztonság növelése érdekében.</string>
+  <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Használatban még %1$d helyen</string>
+  <!-- Missing 2FA -->
+  <string name="security_center_missing_tfa_top_bar_title">Kétlépcsős hitelesítés kikapcsolva</string>
+  <string name="security_center_missing_tfa_top_bar_subtitle">További biztonságért, állítson be kétlépcsős hitelesítést a következő fiókokon.</string>
+  <!-- Excluded items screen -->
+  <string name="security_center_excluded_items_top_bar_title">Kizárt elemek</string>
+  <!-- Dark web monitor -->
+  <string name="security_center_dark_web_monitor_top_bar_title">Dark web figyelés</string>
+  <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Legutolsó ellenőrzés: %s</string>
+  <string name="security_center_dark_web_monitor_custom_emails_title">Egyéni e-mail címek</string>
+  <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Nem ellenőrzött</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Új egyéni e-mail cím hozzáadása</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_button">Hozzáadás</string>
+  <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
+    <item quantity="one">Használva %d bejelentkezéshez</item>
+    <item quantity="other">Használva %d bejelentkezéshez</item>
+  </plurals>
+  <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
+    <item quantity="one">%d adatszivárgás észlelve</item>
+    <item quantity="other">%d adatszivárgás észlelve</item>
+  </plurals>
+  <string name="security_center_dark_web_monitor_custom_emails_loading_error">Hiba az egyéni e-mail címek betöltésekor</string>
+  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Nem sikerült lekérni az e-mail címeket</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_remove">Eltávolítás</string>
+  <string name="security_center_dark_web_monitor_latest_breach_on">Legutolsó adatszivárgás: %s</string>
+  <plurals name="security_center_dark_web_monitor_found_in_breaches">
+    <item quantity="one">Megtalálva %s adatszivárgásba</item>
+    <item quantity="other">Megtalálva %s adatszivárgásba</item>
+  </plurals>
+  <string name="security_center_dark_web_monitor_found_in_breaches">Nem észleltünk adatszivárgást</string>
+  <string name="security_center_dark_web_monitor_proton_addresses">Proton címek</string>
+  <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email álnevek</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Hiba a Proton címek lekérdezésében</string>
+  <string name="security_center_dark_web_monitor_alias_addresses_error">Hiba történt a Hide-my-email álnevek lekérése során</string>
+  <string name="security_center_dark_web_monitor_monitoring_disabled">Nem figyelt</string>
+  <string name="security_center_dark_web_monitor_see_all">Összes megjelenítése</string>
+  <string name="security_center_dark_web_monitor_no_proton_addresses">Nincs Proton cím</string>
+  <string name="security_center_dark_web_monitor_no_aliases">Nincsenek e-mail álnevek</string>
+  <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Hiba történt a ellenőrző kód elküldésekor. Próbálja meg újra később.</string>
+  <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Hiba történt az e-mail eltávolításakor. Próbálja meg újra később.</string>
+  <!-- Add custom email monitoring -->
+  <string name="security_center_custom_email_top_bar_title">Egyéni e-mail cím figyelés</string>
+  <string name="security_center_custom_email_email_address_placeholder">E-mail cím</string>
+  <string name="security_center_custom_email_invalid_address">Érvénytelen e-mail cím</string>
+  <string name="security_center_custom_email_continue">Folytatás</string>
+  <string name="security_center_custom_email_already_verified">E-mail cím már ellenőrizve</string>
+  <string name="security_center_custom_email_error_adding">Hiba történt a e-mail cím hozzáadása során</string>
+  <!-- Verify email monitoring -->
+  <string name="security_center_verify_email_title">E-mail cím megerősítése</string>
+  <string name="security_center_verify_email_subtitle">Elküldtünk egy ellenőrző kódot ide: %s. Kérjük, írja be:</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_success">Új megerősítést küldtünk, kérjük, ellenőrizze a beérkezett üzeneteket.</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_error">Hiba történt a ellenőrző kód elküldésekor. Próbálja meg újra később.</string>
+  <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Túl sok érvénytelen megerősítés. Egyéni e-mail eltávolítása.</string>
+  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Érvénytelen ellenőrző kód</string>
+  <string name="security_center_verify_email_snackbar_message_verification_error">Hiba történt az e-mail megerősítésében. Kérjük, próbálja meg később újra.</string>
+  <!-- Verify email monitoring -->
+  <string name="security_center_verify_report_title_detected">Adatvédelmi incidens észlelve:</string>
+  <string name="security_center_verify_report_title_none">Nincs észlelt adatvédelmi incidens:</string>
+  <!-- Email breach report -->
+  <string name="security_center_email_report_used_in_header">Felhasználva</string>
+  <string name="security_center_email_report_breaches_header">Adatszivárgások</string>
+  <string name="security_center_email_report_resolved_breaches_header">Megoldott adatszivárgások</string>
+  <string name="security_center_email_report_mark_as_resolved">Megjelölés megoldottként</string>
+  <string name="security_center_email_report_snackbar_marked_as_resolved_success">Az adatvédelmi incidens megoldottnak jelöve</string>
+  <string name="security_center_email_report_snackbar_marked_as_resolved_error">Nem sikerült megoldottként megjelölni</string>
+  <string name="security_center_email_report_snackbar_get_breaches_error">Nem sikerült az adatvédelmi incidensek betöltése</string>
+  <string name="security_center_email_report_options_menu">Adatvédelmi incidens bejelentés beállítási menüje</string>
+  <!-- Breach report detail-->
+  <string name="security_center_report_detail_your_exposed_information">Az ön kiszivárgott információi</string>
+  <string name="security_center_report_detail_subtitle">Az adatai kiszivárogtak. A felfedezés időpontja: __DATE__</string>
+  <string name="security_center_report_detail_details">Részletek</string>
+  <string name="security_center_report_detail_password">Jelszó</string>
+  <string name="security_center_report_detail_recommended_actions">Javasolt műveletek</string>
+  <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">A felfedett információ a(z) %s szolgáltatásból szivárgott ki. Az Proton fiókjának adatai biztonságban és titkosítva maradnak.</string>
+  <string name="security_center_report_detail_learn_more">További információk</string>
+  <string name="security_center_report_detail_snackbar_error">Az adatvédelmi incidens adatainak betöltése nem sikerült</string>
+  <string name="security_center_report_detail_excluded_from_monitoring">Kizárás a megfigyelésből</string>
+  <string name="security_center_report_resolve_confirmation_dialog_title">Minden adatszivárgás megoldása?</string>
+  <string name="security_center_report_resolve_confirmation_dialog_message">Minden jelenlegi adatvédelmi incidenst megoldottnak jelöl. A jövőbeni adatvédelmi incidensek esetén értesítjük.</string>
+  <!-- Proton list -->
+  <string name="security_center_proton_list_top_bar_title">Proton címek</string>
+  <string name="security_center_proton_list_no_breaches_detected">Nem észleltünk adatszivárgást</string>
+  <string name="security_center_proton_list_excluded_from_monitoring">Kizárva a megfigyelésből</string>
+  <string name="security_center_proton_list_error">Nem sikerült betölteni a címeket</string>
+  <string name="security_center_proton_list_included_in_monitoring">Engedélyezze a figyelést, hogy értesítést kapjon, ha a Proton-címei kiszivárogtak.</string>
+  <string name="security_center_proton_list_options_menu">Proton képernyő-beállítások menüje</string>
+  <string name="security_center_proton_list_not_monitored">Nem figyelt</string>
+  <!-- Address Bottomsheet options -->
+  <string name="security_center_address_bottomsheet_disable_monitoring">Figyelés szüneteltetése</string>
+  <string name="security_center_address_bottomsheet_enable_monitoring">Figyelés folytatása</string>
+  <string name="security_center_address_bottomsheet_remove_custom_email">Egyéni e-mail eltávolítása</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">Hiba történt a figyelés szüneteltetésekor</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">Hiba történt a figyelés folytatásakor</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">Nem sikerült eltávolítani az egyéni e-mailt</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">A figyelés folytatva</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">A figyelés szüneteltetve</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">Egyéni e-mail eltávolítva</string>
+  <!-- Alias list -->
+  <string name="security_center_alias_list_top_bar_title">Hide-my-email álnevek</string>
+  <string name="security_center_alias_list_excluded_from_monitoring">Kizárva a megfigyelésből</string>
+  <string name="security_center_alias_list_error">Nem sikerült betölteni a címeket</string>
+  <string name="security_center_alias_list_included_in_monitoring">Engedélyezze a figyelést, hogy értesítést kapjon, ha a Hide-my-email álnevei kiszivárogtak.</string>
+  <string name="security_center_alias_list_monitored">Figyelve</string>
+  <string name="security_center_alias_list_custom_email_message">Az saját domain névvel létrehozott álnevek nincsenek figyelve, ezeket egyéni e-mail figyelésként adhatja hozzá.</string>
+  <string name="security_center_alias_list_options_menu">E-mail álnév képernyő-beállítások menüje</string>
+  <!-- Dark web help dialogs -->
+  <string name="dark_web_help_dialog_title">Adatbiztonság</string>
+  <string name="dark_web_help_dialog_subtitle">A Proton soha nem osztja meg az adatait harmadik felekkel. Az adatok a Proton domain neveinek a Dark Weben való keresésből származnak.</string>
+  <!-- Cannot add custom emails -->
+  <string name="dark_web_cannot_add_custom_emails_dialog_title">Nem lehet egyéni e-mailt hozzáadni</string>
+  <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Elérte az egyéni e-mailek számának határát.</string>
+</resources>

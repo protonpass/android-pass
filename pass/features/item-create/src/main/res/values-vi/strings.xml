@@ -190,7 +190,6 @@
   <string name="close_scree_icon_content_description">Nút đóng màn hình</string>
   <string name="totp_paste_code_action">Dán mã</string>
   <string name="totp_scan_code_action">Quét mã</string>
-  <string name="field_cannot_be_empty">Trường này không đươc để trống</string>
   <string name="camera_permission_explanation">Quyền truy cập máy ảnh là cần thiết để tính năng này hoạt động.</string>
   <string name="camera_permission_open_settings">Mở cài đặt</string>
   <!--  TOTP limit  -->

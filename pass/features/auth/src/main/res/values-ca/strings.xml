@@ -20,8 +20,8 @@
   <string name="enter_your_pin_code">Introduïu el codi PIN</string>
   <string name="unlock">Desbloqueja</string>
   <plurals name="enter_your_pin_code_error">
-    <item quantity="one">Codi PIN incorrecte. %d intent restant.</item>
-    <item quantity="other">Codi PIN incorrecte. %d intents restants.</item>
+    <item quantity="one">El codi PIN és incorrecte. Us queda %d intent.</item>
+    <item quantity="other">El codi PIN és incorrecte. Us queden %d intents.</item>
   </plurals>
   <string name="auth_unlock_app_title">Desbloqueja Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Introduïu la contrasenya principal per a %s</string>
@@ -41,13 +41,13 @@
   <string name="auth_extra_password_too_many_attempts">Hi ha hagut massa intents fallits d\'inici de sessió. Se us ha tancat la sessió.</string>
   <string name="auth_error_wrong_password_no_attempts">La contrasenya no és correcta.</string>
   <plurals name="auth_error_wrong_password">
-    <item quantity="one">Contrasenya incorrecta. %d intent restant.</item>
-    <item quantity="other">Contrasenya incorrecta. %d intents restants.</item>
+    <item quantity="one">La contrasenya és incorrecta. Us queda %d intent.</item>
+    <item quantity="other">La contrasenya és incorrecta. Us queden %d intents.</item>
   </plurals>
   <plurals name="auth_attempts_remaining">
-    <item quantity="one">Queda %d intent.</item>
-    <item quantity="other">Queden %d intents.</item>
+    <item quantity="one">Us queda %d intent.</item>
+    <item quantity="other">Us queden %d intents.</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Hi ha hagut massa intents fallits del codi PIN. S\'està tancant la sessió de tots els vostres usuaris.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Hi ha hagut massa intents fallits del codi PIN</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Hi ha hagut massa intents incorrectes del codi PIN</string>
 </resources>

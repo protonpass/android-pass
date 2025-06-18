@@ -339,4 +339,46 @@
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <string name="show_network_qr_code">Показать QR-код сети</string>
+  <string name="expand_collpased_text">more</string>
+  <string name="collapse_expanded_text">less</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Ненадежный пароль</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Этот аккаунт уязвим, посетите службу и смените пароль.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d другое имя пользователя использует тот же пароль</item>
+    <item quantity="few">%d других имен пользователей используют тот же пароль</item>
+    <item quantity="many">%d других имен пользователей используют тот же пароль</item>
+    <item quantity="other">%d других имен пользователей используют тот же пароль</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Настройте двухфакторную идентификацию для повышения безопасности</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Эта служба предлагает двухфакторную аутентификацию. Включите ее, чтобы обеспечить дополнительную безопасность аккаунта.</string>
+  <string name="login_item_reused_passwords_subtitle">Элементы из ваших хранилищ, которые используют этот пароль.</string>
+  <string name="mfa_limit_reached">Достигнут предел двухфакторных идентификаций</string>
+  <string name="activity_in_last_two_weeks">Активности за последние 14 дней</string>
+  <string name="contacts">Контакты</string>
+  <string name="contacts_section_description">Чтобы скрыть свой личный адрес электронной почты, вы можете создать контакт псевдонима, который будет маскировать ваш адрес.</string>
+  <string name="field_detail_display_name_title">Отображаемое имя</string>
+  <string name="display_name_section_description">Отображаемое имя при отправке электронной почты с этого псевдонима.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s пересылка</item>
+    <item quantity="few">%1$s пересылки</item>
+    <item quantity="many">%1$s пересылок</item>
+    <item quantity="other">%1$s пересылок</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s ответ</item>
+    <item quantity="few">%1$s ответа</item>
+    <item quantity="many">%1$s ответов</item>
+    <item quantity="other">%1$s ответов</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s блокировка</item>
+    <item quantity="few">%1$s блокировки</item>
+    <item quantity="many">%1$s блокировок</item>
+    <item quantity="other">%1$s блокировок</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">Создать логин</string>
+  <string name="banner_contacts_title">Вы знали?</string>
+  <string name="banner_contacts_subtitle">Каждый раз, когда ваш псевдоним получает письмо от кого-то, новый контакт создается автоматически.</string>
+  <string name="action_reveal">Reveal</string>
+  <string name="action_conceal">Conceal</string>
 </resources>

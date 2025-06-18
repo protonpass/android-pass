@@ -22,7 +22,7 @@
   <string name="simple_login_sync_management_domain_label">網域</string>
   <string name="simple_login_sync_management_domain_title">Default domain for aliases</string>
   <string name="simple_login_sync_management_domain_option_blank">Not selected</string>
-  <string name="simple_login_sync_management_mailboxes_label">Mailboxes</string>
+  <string name="simple_login_sync_management_mailboxes_label">電郵信箱</string>
   <string name="simple_login_sync_management_mailboxes_description">Mailbox is where emails sent to an alias are forwarded to. It\'s your usual mailbox, e.g. Gmail, Outlook, Proton Mail, etc.</string>
   <string name="simple_login_sync_management_mailbox_default">預設值</string>
   <string name="simple_login_sync_management_mailbox_unverified">Unverified mailbox</string>

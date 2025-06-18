@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="biometric_prompt_title">App bloccata</string>
-  <string name="biometric_prompt_title_setup">Configura la biometria</string>
-  <string name="biometric_prompt_subtitle">Sblocca con il blocco del dispositivo</string>
+  <string name="biometric_prompt_title_setup">Configura la biometria</string>
+  <string name="biometric_prompt_subtitle">Sblocca con la biometria</string>
   <string name="biometric_prompt_cancel">Annulla</string>
 </resources>

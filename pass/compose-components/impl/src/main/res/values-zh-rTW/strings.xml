@@ -195,12 +195,12 @@
   <string name="item_details_shared_section_more_info_header_title">更多資訊</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
   <string name="item_details_shared_section_more_info_item_id">項目 ID</string>
-  <string name="item_details_shared_section_more_info_vault_id">Vault ID</string>
+  <string name="item_details_shared_section_more_info_vault_id">保管庫 ID</string>
   <string name="item_details_shared_section_more_info_share_id">Share ID</string>
   <string name="item_details_wifi_network_label_ssid_name">Name (SSID)</string>
   <string name="item_details_wifi_network_label_password">密碼</string>
-  <string name="item_details_wifi_network_label_security">Security</string>
-  <string name="item_details_ssh_key_label_public_key">Public key</string>
+  <string name="item_details_wifi_network_label_security">安全保護</string>
+  <string name="item_details_ssh_key_label_public_key">公開金鑰</string>
   <string name="item_details_ssh_key_label_private_key">Private key</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
   <!-- Passkeys -->
@@ -239,7 +239,7 @@
     <item quantity="other">%d秒</item>
   </plurals>
   <plurals name="aliases_count">
-    <item quantity="other">%d aliases</item>
+    <item quantity="other">%d 別名</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">已複製備註</string>
@@ -294,4 +294,34 @@
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <string name="show_network_qr_code">Show Network QR Code</string>
+  <string name="expand_collpased_text">更多</string>
+  <string name="collapse_expanded_text">較少</string>
+  <string name="login_item_monitor_widget_weak_pass_title">弱密碼</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">This account is vulnerable, visit the service and change your password.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="other">%d other logins use the same password</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">為更好安全設定雙重驗證</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">This service offers 2FA. Enable it for added account security.</string>
+  <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
+  <string name="mfa_limit_reached">雙重驗證已達上限</string>
+  <string name="activity_in_last_two_weeks">Activity in the last 14 days</string>
+  <string name="contacts">通訊錄</string>
+  <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
+  <string name="field_detail_display_name_title">顯示名稱</string>
+  <string name="display_name_section_description">The display name when sending an email from this alias.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="other">%1$s 封已轉寄</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="other">%1$s 則回覆</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="other">%1$s 封已阻擋</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">創建登入</string>
+  <string name="banner_contacts_title">您知道嗎？</string>
+  <string name="banner_contacts_subtitle">Every time your alias receives an email from someone, a new contact is automatically created.</string>
+  <string name="action_reveal">顯示</string>
+  <string name="action_conceal">隱藏</string>
 </resources>

@@ -27,4 +27,7 @@
   <string name="topbar_search_query_oldest_vaults">ძებნა თქვენს უძველეს საცავებში…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">ძებნა…</string>
   <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">ყველა ანგარიში (%1$s)</string>
+  <string name="select_item_save_credential_title">Save password credential</string>
+  <string name="select_item_save_credential_subtitle">Select an account to save credential in.</string>
+  <string name="select_item_save_credential_button">Select account</string>
 </resources>

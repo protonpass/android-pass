@@ -73,4 +73,10 @@
   <string name="item_details_snackbar_message_ssid_copied">SSID gekopieerd</string>
   <string name="open_with">Openen met</string>
   <string name="open_attachments_error">Kon bijlage niet openen</string>
+  <string name="passkey_detail_bottomsheet_title">Toegangssleutel</string>
+  <string name="passkey_detail_bottomsheet_username">Gebruikersnaam</string>
+  <string name="passkey_detail_bottomsheet_domain">Domein</string>
+  <string name="passkey_detail_bottomsheet_key">Sleutel</string>
+  <string name="passkey_detail_bottomsheet_created">Aangemaakt</string>
+  <string name="login_item_reused_passwords_subtitle">Items van uw kluis die dit wachtwoord gebruiken.</string>
 </resources>

@@ -17,7 +17,7 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="add_attachment_take_a_photo">Feu una foto</string>
+  <string name="add_attachment_take_a_photo">Feu una fotografia</string>
   <string name="add_attachment_choose_a_photo_or_video">Escolliu una foto o un vídeo</string>
   <string name="add_attachment_choose_a_file">Trieu un fitxer</string>
   <string name="attachment_options_rename">Canvia el nom</string>
@@ -25,9 +25,9 @@
   <string name="attachment_options_download">Descarrega</string>
   <string name="attachment_options_share">Comparteix</string>
   <string name="file_picker_open_error">No s\'ha pogut obrir el selector de fitxers.</string>
-  <string name="media_picker_open_error">No s\'ha pogut obrir el selector de medià.</string>
+  <string name="media_picker_open_error">No s\'ha pogut obrir el selector de mèdia.</string>
   <string name="camera_open_error">No s\'ha pogut obrir la càmera.</string>
-  <string name="camera_permission_explanation">El permís de càmera és necessari perquè aquesta característica estigui disponible.</string>
+  <string name="camera_permission_explanation">Cal el permís a la càmera perquè aquesta característica estigui disponible.</string>
   <string name="camera_permission_open_settings">Obre les preferències</string>
   <string name="delete_all_attachments_title">Voleu eliminar tots els fitxers adjunts?</string>
   <string name="delete_all_attachments_subtitle">Aquesta acció no es pot desfer.</string>

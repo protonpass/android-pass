@@ -17,8 +17,9 @@
   <string name="vault_delete_dialog_placeholder">Nome do cofre</string>
   <string name="vault_delete_dialog_cancel_action">Cancelar</string>
   <string name="vault_delete_dialog_delete_action">Eliminar</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">Este cofre contém %1$s. Eliminá-la irá remover o acesso para todos os outros utilizadores.</string>
   <string name="vault_leave_dialog_title">Deixar o cofre</string>
-  <string name="vault_leave_dialog_body">Isto removerá o seu acesso do cofre __VAULT_NAME__ e todo o seu conteúdo. Tem certeza que deseja deixá-lo?</string>
+  <string name="vault_leave_dialog_body">Isto removerá o seu acesso do cofre __VAULT_NAME__ e todo o seu conteúdo. Tem a certeza que deseja deixá-lo?</string>
   <string name="vault_leave_dialog_cancel_action">Cancelar</string>
   <string name="vault_leave_dialog_leave_action">Deixar</string>
   <string name="bottomsheet_close_icon_content_description">Fechar o cofre criado</string>
@@ -35,6 +36,6 @@
   <string name="bottomsheet_view_members">Ver os membros</string>
   <string name="bottomsheet_manage_access">Gerir o acesso</string>
   <string name="bottomsheet_select_vault_read_only">Só pode ler</string>
-  <string name="bottomsheet_select_vault_only_oldest_vaults">You can only create items in your oldest vaults</string>
+  <string name="bottomsheet_select_vault_only_oldest_vaults">Só pode criar itens nos seus cofres mais antigos</string>
   <string name="vault_title">Cofre</string>
 </resources>

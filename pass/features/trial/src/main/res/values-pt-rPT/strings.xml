@@ -5,10 +5,10 @@
   <string name="trial_feature_1">20 cofres</string>
   <string name="trial_feature_3">Autenticador A2F integrado</string>
   <string name="trial_feature_4">Campos personalizados</string>
-  <string name="trial_button_text">Upgrade now</string>
+  <string name="trial_button_text">Actualizar agora</string>
   <plurals name="trial_days_left">
-    <item quantity="one">1 day left to try premium features</item>
-    <item quantity="other">Ainda tem %d dias de teste gratuito.</item>
+    <item quantity="one">Ainda tem %d dia de teste gratuito para as funcionalidades premium.</item>
+    <item quantity="other">Ainda tem %d dias de teste gratuito para as funcionalidades premium.</item>
   </plurals>
-  <string name="trial_learn_more">Saber mais</string>
+  <string name="trial_learn_more">Saiba mais</string>
 </resources>

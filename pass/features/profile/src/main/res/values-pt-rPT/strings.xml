@@ -7,15 +7,16 @@
   <string name="profile_security">Segurança</string>
   <string name="profile_option_feedback">Comentários</string>
   <string name="profile_option_import_export">Importar/exportar</string>
-  <string name="profile_option_tutorial">How to use Proton Pass</string>
+  <string name="profile_option_tutorial">Como utilizar o Proton Pass</string>
   <string name="profile_option_rating">Avaliar a aplicação</string>
   <string name="profile_option_autofill">Preenchimento automático</string>
   <string name="profile_option_autofill_subtitle">Preencha automaticamente os seus nomes de utilizador e palavras-passe.</string>
+  <string name="profile_option_secure_links">Ligação segura</string>
+  <string name="profile_option_alias_management">Gestão de alias</string>
   <string name="profile_error_biometry_failed_to_start">Não foi possível iniciar a autenticação biométrica.</string>
   <string name="profile_error_biometry_failed_to_authenticate">Erro ao autenticar</string>
-  <string name="profile_fingerprint_lock_enabled">O desbloqueio por impressão digital foi ativado.</string>
-  <string name="profile_fingerprint_lock_disabled">O desbloqueio por impressão digital foi desativado.</string>
-  <string name="profile_error_performing_operation">Ocorreu um erro durante a operação.</string>
+  <string name="profile_fingerprint_lock_enabled">O bloqueio por impressão digital foi ativado.</string>
+  <string name="profile_fingerprint_lock_disabled">O desbloqueio de impressão digital foi desativado.</string>
   <string name="profile_app_version_copied_to_clipboard">A versão da aplicação foi copiada.</string>
   <string name="feedback_option_reddit">Descubra o Proton no Reddit</string>
   <string name="feedback_option_mail">Envie-nos uma mensagem</string>
@@ -27,24 +28,60 @@
   <string name="app_lock_ten_minutes">Após 10 minutos</string>
   <string name="app_lock_one_hour">Após 1 hora</string>
   <string name="app_lock_four_hours">Após 4 horas</string>
-  <string name="profile_account_plan_name_trial">Pass Plus trial</string>
+  <string name="profile_account_plan_name_trial">Avaliação do Pass Plus</string>
   <string name="app_lock_config_none">Nenhum</string>
   <string name="app_lock_config_biometric">Biométrico</string>
   <string name="app_lock_config_pin_code">Código PIN</string>
   <string name="app_lock_config_app_lock_time">Bloqueio automático</string>
+  <string name="app_lock_config_password">Palavra-passe</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Utiliza o bloqueio do sistema quando o biométrico não funciona</string>
   <string name="configure_pin_set_pin_code">Definir o código PIN</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Desbloqueie a aplicação com este código.</string>
-  <string name="configure_pin_enter_pin_code">Introduzir o código PIN</string>
+  <string name="configure_pin_enter_pin_code">Introduzar o código PIN</string>
   <string name="configure_pin_repeat_pin_code">Repetir o código PIN</string>
   <string name="configure_pin_continue">Continuar</string>
   <string name="configure_pin_pin_does_not_match">O código PIN não corresponde.</string>
-  <string name="configure_pin_pin_too_short">O código PIN é demasiado curto.</string>
+  <string name="configure_pin_pin_too_short">O código PIN é muito curto.</string>
   <string name="configure_pin_pin_cannot_be_blank">O código PIN não pode estar vazio.</string>
   <string name="configure_pin_pin_lock_enabled">O bloqueio por código PIN foi ativado.</string>
   <string name="configure_pin_pin_lock_disabled">O bloqueio por código PIN foi desativado.</string>
   <string name="profile_option_lock_with">Bloquear com</string>
   <string name="profile_option_unlock_with">Desbloquear com</string>
   <string name="profile_option_change_pin_code">Alterar o código PIN</string>
-  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung Browser is set as the default browser. It does not support autofill by external password managers.</string>
+  <string name="profile_passkey_support_section_title">Chaves de acesso</string>
+  <string name="profile_passkey_support_subtitle_supported">As chaves de acesso são suportadas.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">A sua versão do Android não suporta as chaves de acesso.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_credential_manager">O seu dispositivo não suporta as chaves de acesso.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_unknown">Não foi possível verificar o suporte para as chaves de acesso.</string>
+  <plurals name="profile_after_days">
+    <item quantity="one">Após %d dia</item>
+    <item quantity="other">Após %d dias</item>
+  </plurals>
+  <plurals name="profile_after_minutes">
+    <item quantity="one">Após %d minuto</item>
+    <item quantity="other">Após %d minutos</item>
+  </plurals>
+  <plurals name="profile_after_hours">
+    <item quantity="one">Após %d hora</item>
+    <item quantity="other">Após %d horas</item>
+  </plurals>
+  <string name="profile_less_than_a_minute">Menos de um minuto</string>
+  <string name="account_switcher_manage_account">Gerir a conta</string>
+  <string name="account_switcher_sign_in">Iniciar sessão</string>
+  <string name="account_switcher_sign_out">Terminar sessão</string>
+  <string name="account_switcher_switch_to">Mudar para</string>
+  <string name="account_switcher_add_account">Adicionar uma conta</string>
+  <string name="account_switcher_remove">Remover</string>
+  <string name="filtered_by_logins">A lista foi filtrada por inícios de sessão. Os itens eliminados não são exibidos.</string>
+  <string name="filtered_by_logins_with_mfa">A lista foi filtrada por inícios de sessão com TOTP. Os itens eliminados não são exibidos.</string>
+  <string name="filtered_by_aliases">A lista foi filtrada por aliases. Os itens eliminados não são exibidos.</string>
+  <string name="filtered_by_notes">A lista foi filtrada por notas. Os itens eliminados não são exibidos.</string>
+  <string name="filtered_by_credit_cards">A lista foi filtrada por cartões de crédito. Os itens eliminados não são exibidos.</string>
+  <string name="filtered_by_identities">A lista foi filtrada por identidades. Os itens eliminados não são exibidos.</string>
+  <string name="filtered_by_custom_items">A lista foi filtrada por itens personalizados. Os itens eliminados não são mostrados.</string>
+  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Precisa de mudar para %1$s para poder geri-lo.</string>
+  <string name="account_switch_confirmation_title">Gerir a conta</string>
+  <string name="account_switch_confirmation_confirm">Alternar e gerir</string>
+  <string name="profile_storage_data_title">Armazenamento</string>
+  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s de %2$s</string>
 </resources>

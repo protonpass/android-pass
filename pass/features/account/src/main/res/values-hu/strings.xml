@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="account_title">Fiók</string>
+  <string name="account_recovery_title">Fiók és helyreállítás</string>
+  <string name="account_username_label">Felhasználónév</string>
+  <string name="account_subscription_label">Előfizetési csomag</string>
+  <string name="account_permanently_delete_warning">Ezzel véglegesen törlődik fiókja és minden ahhoz kapcsolódó adat. A fiók többé nem állítható vissza.</string>
+  <string name="account_delete_account">Fiók törlése</string>
+  <string name="account_delete_account_icon_content_description">Fiók törlése gomb</string>
+  <string name="account_sign_out">Kijelentkezés</string>
+  <string name="account_sign_out_icon_content_description">Kijelentkezés gomb</string>
+  <string name="account_manage_account">Fiók kezelése</string>
+  <string name="account_manage_account_icon_content_description">Fiók kezelése gomb</string>
+  <string name="account_manage_subscription">Előfizetés kezelése</string>
+  <string name="account_get_user_info_error">Nem sikerült lekérdezni a felhasználói adatokat</string>
+  <string name="manage_subscription_icon_content_description">Előfizetés kezelése gomb</string>
+  <string name="account_settings_list_item_password_header">Jelszó módosítása</string>
+  <string name="account_settings_list_item_recovery_header">Helyreállítási e-mail cím</string>
+  <string name="account_settings_list_item_security_keys">Hitelesítési kulcsok</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">Nincs beállítva</string>
+  <string name="account_settings_list_item_password_hint_grace">Jelszó visszaállítási kérelem függőben</string>
+  <string name="account_settings_list_item_password_hint_insecure">Jelszó visszaállítás kész</string>
+  <string name="account_settings_list_item_extra_password_header">Extra jelszó a Proton Passzhoz</string>
+  <string name="account_settings_list_item_extra_password_header_set">Állítson be extra jelszót a Proton Pass számára</string>
+  <string name="account_settings_list_item_extra_password_active">Aktív</string>
+  <string name="account_settings_list_item_extra_password_description">A Pass használatához szüksége lesz az extra jelszóra. Ez kiegészítő jelszóként működik a Proton jelszava mellett.</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">Nincs beállítva</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s  </string>
+  <plurals name="account_settings_list_item_security_keys_hint_many">
+    <item quantity="one">%d hitelesítési kulcs beállítva</item>
+    <item quantity="other">%d hitelesítési kulcs beállítva</item>
+  </plurals>
+</resources>

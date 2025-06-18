@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="on_boarding_autofill_content">Permita que o Proton Pass preencha os detalhes de início de sessão para você. Sem necessidade de introduzir ou copiar e colar dados.</string>
+  <string name="on_boarding_autofill_content">Deixe que o Proton Pass preencha os dados de início de sessão por si. Não é necessário escrever ou copiar e colar.</string>
   <string name="on_boarding_autofill_title">Inicie sessão nas aplicações instantaneamente</string>
   <string name="on_boarding_autofill_button">Beneficie do preenchimento automático com o Proton Pass.</string>
   <string name="on_boarding_fingerprint_content">Configure o Proton Pass para desbloquear com a sua impressão digital, assim, apenas você terá acesso.</string>
   <string name="on_boarding_fingerprint_title">Proteja os seus dados mais sensíveis</string>
-  <string name="on_boarding_fingerprint_button">Ativar o desbloqueio por impressão digital</string>
-  <string name="on_boarding_last_page_content">Stop sharing your real email address. Instead, hide it with email aliases—a Proton Pass exclusive.</string>
+  <string name="on_boarding_fingerprint_button">Ativar o bloqueio por impressão digital</string>
+  <string name="on_boarding_last_page_content">Pare de partilhar o seu e-mail real. Em vez disso, oculte-o com aliases de e-mail—uma funcionalidade exclusiva do Proton Pass.</string>
   <string name="on_boarding_last_page_title">Controle o que chega na sua caixa de entrada.</string>
   <string name="on_boarding_last_page_button">Comece a utilizar o Proton Pass</string>
   <string name="on_boarding_skip">Agora não</string>
-  <string name="on_boarding_tutorial">Watch a short video on how to use Proton Pass</string>
-  <string name="on_boarding_pending_invite_content">For security reasons, your access needs to be confirmed.</string>
-  <string name="on_boarding_pending_invite_title">Pending access to the shared data</string>
-  <string name="on_boarding_pending_invite_button">Learn more about Proton Pass</string>
+  <string name="on_boarding_tutorial">Assista a um vídeo curto sobre como utilizar o Proton Pass</string>
+  <string name="on_boarding_pending_invite_content">Por motivos de segurança, o seu acesso precisa ser confirmado.</string>
+  <string name="on_boarding_pending_invite_title">Acesso pendente aos dados partilhados</string>
+  <string name="on_boarding_pending_invite_button">Saiba mais sobre o Proton Pass</string>
   <string name="error_biometry_failed_to_start">Não foi possível iniciar a autenticação biométrica.</string>
   <string name="error_biometry_failed_to_authenticate">Erro de autenticação</string>
-  <string name="settings_fingerprint_lock_enabled">O desbloqueio por impressão digital foi ativado.</string>
+  <string name="settings_fingerprint_lock_enabled">O bloqueio por impressão digital foi ativado.</string>
   <string name="error_performing_operation">Ocorreu um erro durante a operação.</string>
+  <string name="onboarding_slide_1_title">Todas as suas palavras-passe.</string>
+  <string name="onboarding_slide_2_title">Proteja a sua caixa de entrada.</string>
+  <string name="onboarding_slide_3_title">Mantenha-se informado.</string>
+  <string name="onboarding_slide_4_title">Partilha segura.</string>
+  <string name="onboarding_slide_1_subtitle">Com segurança num só lugar e protegido pelo nome mais fiável em privacidade.</string>
+  <string name="onboarding_slide_2_subtitle">Utilize aliases hide-my-email contra ameaças de phishing.</string>
+  <string name="onboarding_slide_3_subtitle">Partilhe palavras-passe e informações confidenciais de forma segura e fácil.</string>
+  <string name="onboarding_slide_4_subtitle">Receba alertas quando o seu e-mail for encontrado na Dark Web.</string>
+  <string name="create_an_account_button">Criar uma conta</string>
+  <string name="sign_in_button">Iniciar sessão</string>
 </resources>

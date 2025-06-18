@@ -90,7 +90,7 @@
   <string name="security_center_dark_web_monitor_monitoring_disabled">Não monitorado</string>
   <string name="security_center_dark_web_monitor_see_all">Ver tudo</string>
   <string name="security_center_dark_web_monitor_no_proton_addresses">Sem endereços da Proton</string>
-  <string name="security_center_dark_web_monitor_no_aliases">Nenhum endereço alternativo</string>
+  <string name="security_center_dark_web_monitor_no_aliases">Nenhum alias</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Ocorreu um erro ao enviar o código de verificação. Tente novamente mais tarde.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Houve um erro ao remover o e-mail. Tente novamente mais tarde.</string>
   <!-- Add custom email monitoring -->

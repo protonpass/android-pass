@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="item_details_toolbar_content_description_menu_button">Gomb a menüpontok megjelenítéséhez</string>
+  <!-- Item details forbidden actions -->
+  <string name="item_details_forbidden_actions_edit_title">Nem szerkeszthető</string>
+  <string name="item_details_forbidden_actions_edit_permission">Nem szerkesztheti ezt az elemet, mert nincs elegendő jogosultsága.</string>
+  <string name="item_details_forbidden_actions_edit_trash">Ez az elem nem szerkeszthető, mert a lomtárban van. Szerkesztéshez helyezze át a lomtárból.</string>
+  <string name="item_details_forbidden_actions_edit_upgrade">Csak a legrégebbi tárolóiban lévő elemeket szerkesztheti. Kérjük, váltson nagyobb csomagra, az elem szerkesztéséhez.</string>
+  <string name="item_details_forbidden_actions_share_title">Nem lehet megosztani</string>
+  <string name="item_details_forbidden_actions_share_limit">Elérte a tároló megosztási korlátot. További tárolók megosztásához, kérjük váltson nagyobb csomagra.</string>
+  <string name="item_details_forbidden_actions_sharing_permission">Nincs elég jogosultsága a műveletet végrehajtásához.</string>
+  <string name="item_details_forbidden_actions_share_trash">Ez az elem nem osztható meg, mert a lomtárban van. A megosztáshoz helyezze át a lomtárból.</string>
+  <!-- Item details leave item -->
+  <string name="item_details_leave_dialog_title">Elhagyja ezt az elemet?</string>
+  <string name="item_details_leave_dialog_message">Elveszti a hozzáférést ehhez az elemhez és annak adataihoz. Szeretné folytatni?</string>
+  <string name="item_details_leave_item_message_error">Hiba történt az elem elhagyásában</string>
+  <string name="item_details_leave_item_message_success">Az elemet sikeresen elhagyta</string>
+  <string name="item_details_snackbar_message_alias_copied">E-mail álnév másolva</string>
+  <string name="item_details_snackbar_message_birthdate_copied">Születési dátum másolva</string>
+  <string name="item_details_snackbar_message_card_number_copied">Kártyaszám másolva</string>
+  <string name="item_details_snackbar_message_city_copied">Város másolva</string>
+  <string name="item_details_snackbar_message_company_copied">Cég másolva</string>
+  <string name="item_details_snackbar_message_country_or_region_copied">Ország vagy régió másolva</string>
+  <string name="item_details_snackbar_message_county_copied">Megye másolva</string>
+  <string name="item_details_snackbar_message_custom_field_copied">Egyéni mező másolva</string>
+  <string name="item_details_snackbar_message_cvv_copied">Biztonsági kód másolva</string>
+  <string name="item_details_snackbar_message_email_copied">E-mail cím másolva</string>
+  <string name="item_details_snackbar_message_facebook_copied">Facebook másolva</string>
+  <string name="item_details_snackbar_message_first_name_copied">Utónév másolva</string>
+  <string name="item_details_snackbar_message_floor_copied">Emelet másolva</string>
+  <string name="item_details_snackbar_message_full_name_copied">Teljes név másolva</string>
+  <string name="item_details_snackbar_message_gender_copied">Neme másolva</string>
+  <string name="item_details_snackbar_message_instagram_copied">Instagram másolva</string>
+  <string name="item_details_snackbar_message_last_name_copied">Vezetéknév másolva</string>
+  <string name="item_details_snackbar_message_license_number_copied">Jogosítvány szám másolva</string>
+  <string name="item_details_snackbar_message_linkedin_copied">LinkedIn másolva</string>
+  <string name="item_details_snackbar_message_middle_name_copied">Közép név másolva</string>
+  <string name="item_details_snackbar_message_occupation_copied">Foglalkozás másolva</string>
+  <string name="item_details_snackbar_message_organization_copied">Szervezet másolva</string>
+  <string name="item_details_snackbar_message_passport_number_copied">Útlevél szám másolva</string>
+  <string name="item_details_snackbar_message_password_copied">Jelszó másolva</string>
+  <string name="item_details_snackbar_message_phone_number_copied">Telefonszám másolva</string>
+  <string name="item_details_snackbar_message_pin_copied">PIN kód másolva</string>
+  <string name="item_details_snackbar_message_reddit_copied">Reddit másolva</string>
+  <string name="item_details_snackbar_message_social_security_number_copied">Társadalom biztosítási szám másolva</string>
+  <string name="item_details_snackbar_message_state_or_province_copied">Állam vagy tartomány másolva</string>
+  <string name="item_details_snackbar_message_street_address_copied">Utca cím másolva</string>
+  <string name="item_details_snackbar_message_totp_copied">TOTP másolva</string>
+  <string name="item_details_snackbar_message_username_copied">Felhasználónév másolva</string>
+  <string name="item_details_snackbar_message_website_copied">Website URL másolva</string>
+  <string name="item_details_snackbar_message_x_handle_copied">X név másolva</string>
+  <string name="item_details_snackbar_message_yahoo_copied">Yahoo másolva</string>
+  <string name="item_details_snackbar_message_zip_or_postal_code_copied">Irányítószám másolva</string>
+  <string name="item_details_snackbar_message_public_key_copied">Nyilvános kulcs másolva</string>
+  <string name="item_details_snackbar_message_private_key_copied">Privát kulcs másolva</string>
+  <string name="item_details_snackbar_message_ssid_copied">SSID másolva</string>
+  <string name="open_with">Megnyitás a következővel:</string>
+  <string name="open_attachments_error">Nem sikerült megnyitni a mellékletet</string>
+  <string name="passkey_detail_bottomsheet_title">Hitelesítő kulcs</string>
+  <string name="passkey_detail_bottomsheet_username">Felhasználónév</string>
+  <string name="passkey_detail_bottomsheet_domain">Domain név</string>
+  <string name="passkey_detail_bottomsheet_key">Kulcs</string>
+  <string name="passkey_detail_bottomsheet_created">Létrehozva</string>
+  <string name="login_item_reused_passwords_subtitle">A tárolókból származó elemek, amelyek ezt a jelszót használják.</string>
+</resources>

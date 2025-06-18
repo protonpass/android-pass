@@ -5,5 +5,9 @@
   <string name="custom_fields">Campos personalizados</string>
   <string name="restart_to_complete_the_update">Reinicie para concluir a actualização</string>
   <string name="action_restart">Reiniciar</string>
-  <string name="shortcut_share_logs_title">Share logs</string>
+  <string name="shortcut_share_logs_title">Partilhar registos</string>
+  <string name="no_account_found">Nenhuma conta encontrada</string>
+  <string name="no_session_found">Nenhuma sessão encontrada</string>
+  <string name="auth_with_extra_password_failed">Falha na autenticação com a palavra-passe adicional</string>
+  <string name="auth_only_1_proton_account_failed">Só é permitida uma conta gratuita da Proton.</string>
 </resources>

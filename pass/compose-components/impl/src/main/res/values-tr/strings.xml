@@ -309,4 +309,38 @@
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <string name="show_network_qr_code">Ağ kare kodunu görüntüle</string>
+  <string name="expand_collpased_text">daha fazla</string>
+  <string name="collapse_expanded_text">daha az</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Zayıf Parola</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Bu hesap ele geçirilebilir. Hizmeti ziyaret edin ve parolanızı değiştirin.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d oturum açma kaydı aynı parolayı kullanıyor</item>
+    <item quantity="other">%d oturum açma kaydı aynı parolayı kullanıyor</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Güvenliği artırmak için iki adımlı doğrulamayı açın</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Bu hizmet iki adımlı doğrulama sağlıyor. Hesap güvenliğini artırmak için bunu kullanın.</string>
+  <string name="login_item_reused_passwords_subtitle">Kasalarınızda bu parolayı kullanan ögeler.</string>
+  <string name="mfa_limit_reached">İki adımlı doğrulama sınırına ulaşıldı</string>
+  <string name="activity_in_last_two_weeks">Son 14 gündeki etkinlikler</string>
+  <string name="contacts">Kişiler</string>
+  <string name="contacts_section_description">Kişisel e-posta adresinizi gizli tutmak için bir takma ad kişisi oluşturarak adresinizi gizleyebilirsiniz.</string>
+  <string name="field_detail_display_name_title">Görüntülenecek ad</string>
+  <string name="display_name_section_description">Bu takma ad ile e-posta gönderilirken görüntülenecek ad.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s iletme</item>
+    <item quantity="other">%1$s iletme</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s yanıtlama</item>
+    <item quantity="other">%1$s yanıtlama</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s engelleme</item>
+    <item quantity="other">%1$s engelleme</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">Oturum açma kaydı oluştur</string>
+  <string name="banner_contacts_title">Biliyor muydunuz?</string>
+  <string name="banner_contacts_subtitle">Takma adınız birinden bir e-posta aldığında otomatik olarak yeni bir kişi oluşturulur.</string>
+  <string name="action_reveal">Görüntüle</string>
+  <string name="action_conceal">Gizle</string>
 </resources>

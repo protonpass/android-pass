@@ -190,7 +190,6 @@
   <string name="close_scree_icon_content_description">Кнопка закрытия экрана</string>
   <string name="totp_paste_code_action">Вставить код</string>
   <string name="totp_scan_code_action">Сканировать код</string>
-  <string name="field_cannot_be_empty">Это поле не может быть пустым</string>
   <string name="camera_permission_explanation">Разрешение на использование камеры необходимо для этой функции.</string>
   <string name="camera_permission_open_settings">Открыть настройки</string>
   <!--  TOTP limit  -->

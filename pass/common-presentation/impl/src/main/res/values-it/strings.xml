@@ -18,10 +18,10 @@
   -->
 <resources>
   <string name="open_attachments_error">Impossibile aprire l\'allegato</string>
-  <string name="download_attachments_error">Impossibile scaricare l\'allegato</string>
-  <string name="share_attachments_error">Impossibile condividere l\'allegato</string>
-  <string name="upload_attachments_error">Impossibile caricare l\'allegato</string>
-  <string name="attachment_size_exceeded_error">Il file selezionato supera il limite di dimensione. Scegli un file di dimensioni inferiori a 100MB.</string>
+  <string name="download_attachments_error">Scaricamento dell\'allegato non riuscito</string>
+  <string name="share_attachments_error">Condivisione dell\'allegato non riuscita</string>
+  <string name="upload_attachments_error">Caricamento dell\'allegato non riuscito</string>
+  <string name="attachment_size_exceeded_error">Limite di dimensione (100MB) superato</string>
   <string name="open_with">Apri con:</string>
   <string name="share_with">Condividi con:</string>
 </resources>

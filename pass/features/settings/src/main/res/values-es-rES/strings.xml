@@ -22,7 +22,7 @@
   <string name="settings_option_privacy_policy">Política de privacidad</string>
   <string name="settings_option_terms_of_service">Términos de servicio</string>
   <string name="settings_privacy_section_title">Privacidad</string>
-  <string name="settings_use_favicons_preference_title">Utilizar iconos web</string>
+  <string name="settings_use_favicons_preference_title">Usar los iconos web</string>
   <string name="settings_use_favicons_preference_subtitle">Decide si quieres ver los íconos de sitio web en tus elementos.</string>
   <string name="settings_allow_screenshots_preference_title">Permitir capturas de pantalla</string>
   <string name="settings_allow_screenshots_preference_subtitle">Si está activado, podrás tomar capturas de pantalla de la aplicación.</string>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="biometric_prompt_title">Az alkalmazás zárolt</string>
+  <string name="biometric_prompt_title_setup">Biometrikus hitelesítés beállítása</string>
+  <string name="biometric_prompt_subtitle">Oldja fel az eszköz feloldásával</string>
+  <string name="biometric_prompt_cancel">Mégsem</string>
+</resources>

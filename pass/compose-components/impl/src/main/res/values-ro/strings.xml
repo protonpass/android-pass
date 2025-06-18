@@ -324,4 +324,42 @@
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">zz LLLL aaaa</string>
   <string name="show_network_qr_code">Afișare cod QR rețea</string>
+  <string name="expand_collpased_text">mai mult</string>
+  <string name="collapse_expanded_text">mai puțin</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Parolă slabă</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Acest cont este vulnerabil, accesați serviciul și schimbați-vă parola.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">Alte autentificări care folosesc aceeași parolă: %d</item>
+    <item quantity="few">Alte autentificări care folosesc aceeași parolă: %d</item>
+    <item quantity="other">Alte autentificări care folosesc aceeași parolă: %d</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Setați A2F pentru mai multă securitate</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Acest serviciu oferă A2A. Activați-l pentru securitate suplimentară a contului.</string>
+  <string name="login_item_reused_passwords_subtitle">Articole din seifuri care folosesc această parolă.</string>
+  <string name="mfa_limit_reached">Limită A2F atinsă.</string>
+  <string name="activity_in_last_two_weeks">Activitate în ultimele 14 zile</string>
+  <string name="contacts">Contacte</string>
+  <string name="contacts_section_description">Pentru a vă păstra adresa de e-mail personală ascunsă, puteți crea un alias de contact care vă maschează adresa.</string>
+  <string name="field_detail_display_name_title">Nume afișat</string>
+  <string name="display_name_section_description">Numele afișat când se trimite un mesaj de la acest alias.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">Redirecționări: %1$s</item>
+    <item quantity="few">Redirecționări: %1$s</item>
+    <item quantity="other">Redirecționări: %1$s</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">Răspunsuri: %1$s</item>
+    <item quantity="few">Răspunsuri: %1$s</item>
+    <item quantity="other">Răspunsuri: %1$s</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">Blocări: %1$s</item>
+    <item quantity="few">Blocări: %1$s</item>
+    <item quantity="other">Blocări: %1$s</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">Creare autentificare</string>
+  <string name="banner_contacts_title">Știați că?</string>
+  <string name="banner_contacts_subtitle">De fiecare dată când aliasul primește un mesaj de la cineva, este creat automat un contact.</string>
+  <string name="action_reveal">Dezvăluire</string>
+  <string name="action_conceal">Ascundere</string>
 </resources>

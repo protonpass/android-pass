@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!--Create screen-->
+  <string name="secure_links_create_title">Biztonságos hivatkozás megosztása</string>
+  <string name="secure_links_create_row_expiration_title">A hivatkozás lejárata</string>
+  <string name="secure_links_create_row_expiration_options_one_hour">1 óra</string>
+  <string name="secure_links_create_row_expiration_options_one_day">1 nap</string>
+  <string name="secure_links_create_row_expiration_options_seven_days">7 nap</string>
+  <string name="secure_links_create_row_expiration_options_fourteen_days">14 nap</string>
+  <string name="secure_links_create_row_expiration_options_thirty_days">30 nap</string>
+  <string name="secure_links_create_row_max_views_title">Korlátozott számú megtekintés</string>
+  <string name="secure_links_create_row_max_views_subtitle">Maximálisan megtekinthető: %d</string>
+  <string name="secure_links_create_button_generate">Biztonságos link generálás</string>
+  <string name="secure_links_create_snackbar_message_error">Hiba történt a biztonságos hivatkozás létrehozása közben</string>
+  <!--Overview screen-->
+  <string name="secure_links_overview_widget_expiration_title">Lejár:</string>
+  <string name="secure_links_overview_widget_max_views_title">Megtekinthető:</string>
+  <string name="secure_links_overview_widget_open_times_title">Megnyitva:</string>
+  <plurals name="secure_links_overview_widget_max_views_limited">
+    <item quantity="one">%d alkalommal</item>
+    <item quantity="other">%d alkalommal</item>
+  </plurals>
+  <string name="secure_links_overview_widget_max_views_unlimited">Korlátlan</string>
+  <string name="secure_links_overview_button_view_all_links">Az összes biztonságos hivatkozás megtekintése</string>
+  <!--List screen-->
+  <string name="secure_links_list_title">Biztonságos hivatkozások</string>
+  <string name="secure_links_list_empty_title">Nincsenek biztonságos linkek</string>
+  <string name="secure_links_list_empty_subtitle">Biztonságos hivatkozások létrehozását egy elem részleteinek megosztási lehetőségeiből kezdheti el</string>
+  <string name="secure_links_list_expiration_description">Lejár: %s</string>
+  <string name="secure_links_list_expired_description">Lejárt</string>
+  <plurals name="secure_links_list_viewed_times_description">
+    <item quantity="one">%d megtekintés</item>
+    <item quantity="other">%d megtekintés</item>
+  </plurals>
+  <string name="secure_links_list_snackbar_message_links_fetch_error">Egy hiba történt a biztonságos hivatkozások lekérése során</string>
+  <string name="secure_links_list_header_title_inactive">Inaktív linkek</string>
+  <!--Shared-->
+  <string name="secure_links_shared_action_copy_link">Hivatkozás másolása</string>
+  <string name="secure_links_shared_action_share_link">Hivatkozás megosztása</string>
+  <string name="secure_links_shared_action_delete_link">Link eltávolítása</string>
+  <string name="secure_links_shared_action_delete_link_inactive">Inaktív link eltávolítása</string>
+  <string name="secure_links_shared_action_delete_links_inactive">Minden inaktív link eltávolítása</string>
+  <string name="secure_links_shared_snackbar_message_link_copied">Biztonságos hivatkozás másolva</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">A biztonságos hivatkozás törlése le lett állítva</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_error">Hiba történt a biztonságos hivatkozás törlése közben</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Az inaktív biztonságos hivatkozások törlése le lett állítva</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">Hiba történt az inaktív biztonságos hivatkozások törlése közben.</string>
+</resources>

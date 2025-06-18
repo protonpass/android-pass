@@ -309,4 +309,38 @@
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <string name="show_network_qr_code">Visa nätverkets QR-kod</string>
+  <string name="expand_collpased_text">mer</string>
+  <string name="collapse_expanded_text">mindre</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Svagt lösenord</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Detta konto är sårbart, besök tjänsten och ändra ditt lösenord.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d annan inloggning använder samma lösenord</item>
+    <item quantity="other">%d andra inloggningar använder samma lösenord</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Ställ in 2FA för mer säkerhet</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Denna tjänst erbjuder 2FA. Aktivera det för extra kontosäkerhet.</string>
+  <string name="login_item_reused_passwords_subtitle">Objekt från dina valv som använder detta lösenord.</string>
+  <string name="mfa_limit_reached">2FA-gränsen uppnådd</string>
+  <string name="activity_in_last_two_weeks">Aktivitet under de senaste 14 dagarna</string>
+  <string name="contacts">Kontakter</string>
+  <string name="contacts_section_description">För att hålla din personliga e-postadress dold kan du skapa en aliaskontakt som maskerar din adress.</string>
+  <string name="field_detail_display_name_title">Visningsnamn</string>
+  <string name="display_name_section_description">Visningsnamnet när du skickar ett e-postmeddelande från detta alias.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s vidarebefordran</item>
+    <item quantity="other">%1$s vidarebefordringar</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s svar</item>
+    <item quantity="other">%1$s svar</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s blockering</item>
+    <item quantity="other">%1$s blockeringar</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">Skapa inloggning</string>
+  <string name="banner_contacts_title">Visste du att?</string>
+  <string name="banner_contacts_subtitle">Varje gång ditt alias tar emot ett e-postmeddelande från någon så kommer en ny kontakt att skapas automatiskt.</string>
+  <string name="action_reveal">Avslöja</string>
+  <string name="action_conceal">Dölj</string>
 </resources>

@@ -190,7 +190,6 @@
   <string name="close_scree_icon_content_description">Tlačidlo zatvorenia obrazovky</string>
   <string name="totp_paste_code_action">Vložiť kód</string>
   <string name="totp_scan_code_action">Skenovať kód</string>
-  <string name="field_cannot_be_empty">Toto pole nemôže byť prázdne</string>
   <string name="camera_permission_explanation">Na sprístupnenie tejto funkcie sa vyžaduje prístup k fotoaparátu.</string>
   <string name="camera_permission_open_settings">Otvoriť nastavenia</string>
   <!--  TOTP limit  -->

@@ -27,4 +27,7 @@
   <string name="topbar_search_query_oldest_vaults">Cerca a les teves cambres més antigues…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Cerca…</string>
   <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">Tots els comptes (%1$s)</string>
+  <string name="select_item_save_credential_title">Deseu les credencials de la contrasenya</string>
+  <string name="select_item_save_credential_subtitle">Seleccioneu un compte per desar la credencial.</string>
+  <string name="select_item_save_credential_button">Seleccioneu un compte</string>
 </resources>

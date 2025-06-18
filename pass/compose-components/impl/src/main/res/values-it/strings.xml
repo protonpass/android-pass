@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Sorting -->
-  <string name="sort_by_title_asc">Nome (A-Z)</string>
-  <string name="sort_by_title_desc">Nome (Z-A)</string>
-  <string name="sort_by_creation_asc">Dal meno recente al più recente</string>
-  <string name="sort_by_creation_desc">Dal più recente al meno recente</string>
-  <string name="sort_by_modification_date">Utilizzati di recente</string>
+  <string name="sort_by_title_asc">Nome (ascendente)</string>
+  <string name="sort_by_title_desc">Nome (discendente)</string>
+  <string name="sort_by_creation_asc">Creazione (ascendente)</string>
+  <string name="sort_by_creation_desc">Creazione (discendente)</string>
+  <string name="sort_by_modification_date">Utilimo utilizzo</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Tutto</string>
   <string name="item_list_header_pinned_search_results">Fissati</string>
   <string name="item_list_header_logins_type">Login</string>
-  <string name="item_list_header_logins_totp_type">Login con TOTP</string>
+  <string name="item_list_header_logins_totp_type">Login con 2FA</string>
   <string name="item_list_header_aliases_type">Alias</string>
   <string name="item_list_header_notes_type">Note</string>
   <string name="item_list_header_credit_cards_type">Carte</string>
@@ -21,29 +21,29 @@
   <string name="item_list_header_identities_type">Identità</string>
   <string name="item_list_header_custom_type">Elementi personalizzati</string>
   <string name="item_list_header_shared_with_me">Condivisi con me</string>
-  <string name="item_list_header_shared_by_me">Condiviso da me</string>
+  <string name="item_list_header_shared_by_me">Condivisi da me</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Conferma</string>
   <string name="bottomsheet_cancel_button">Annulla</string>
-  <string name="bottomsheet_move_to_trash">Sposta nel cestino</string>
+  <string name="bottomsheet_move_to_trash">Sposta nel cestino</string>
   <string name="bottomsheet_pin_item">Fissa</string>
   <string name="bottomsheet_unpin_item">Non fissare</string>
-  <string name="bottomsheet_view_item_history">Visualizza la cronologia</string>
-  <string name="bottomsheet_monitor_exclude">Escludi dal monitoraggio</string>
-  <string name="bottomsheet_monitor_include">Includi nel monitoraggio</string>
+  <string name="bottomsheet_view_item_history">Visualizza la cronologia</string>
+  <string name="bottomsheet_monitor_exclude">Escludi dal monitoraggio</string>
+  <string name="bottomsheet_monitor_include">Includi nel monitoraggio</string>
   <string name="bottomsheet_migrate_item">Sposta in un\'altra cassaforte</string>
-  <string name="bottomsheet_copy_item_note">Copia la nota</string>
+  <string name="bottomsheet_copy_item_note">Copia la nota</string>
   <string name="bottomsheet_delete_permanently">Elimina definitivamente</string>
-  <string name="bottomsheet_restore">Ripristina</string>
+  <string name="bottomsheet_restore">Reimposta</string>
   <string name="bottomsheet_leave">Abbandona</string>
   <string name="bottomsheet_no_actions">Nessuna azione disponibile</string>
   <!-- Actions -->
-  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Apri menu azioni elemento</string>
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Menu azioni per l\'elemento</string>
   <string name="action_upgrade_now">Effettua l\'upgrade</string>
   <string name="action_not_now">Non adesso</string>
   <string name="action_learn_more">Scopri di più</string>
   <string name="action_enable">Abilita</string>
-  <string name="action_view_details">Visualizza i dettagli</string>
+  <string name="action_view_details">Visualizza i dettagli</string>
   <string name="action_see_all">Mostra tutto</string>
   <string name="action_confirm">Conferma</string>
   <string name="action_cancel">Annulla</string>
@@ -52,34 +52,34 @@
   <string name="action_edit">Modifica</string>
   <string name="action_add">Aggiungi</string>
   <string name="action_delete">Elimina</string>
-  <string name="action_make_default">Rendi predefinito</string>
+  <string name="action_make_default">Segna come predefinito</string>
   <string name="action_verify">Verifica</string>
   <string name="action_close">Chiudi</string>
   <string name="action_update">Aggiorna</string>
   <!-- Empty list -->
-  <string name="empty_list_title">Aggiungi un elemento</string>
+  <string name="empty_list_title">Aggiungi un elemento</string>
   <string name="empty_search_results_title">Nessun risultato trovato</string>
-  <string name="empty_list_open_extension">Apri l\'estensione per browser</string>
-  <string name="empty_list_create_item_button">Crea un nuovo elemento</string>
+  <string name="empty_list_open_extension">Apri l\'estensione per browser</string>
+  <string name="empty_list_create_item_button">Crea un elemento</string>
   <!-- Field -->
   <string name="field_title_title">Nome</string>
   <string name="field_title_hint">Senza nome</string>
   <string name="field_title_required">Nome necessario</string>
-  <string name="small_cross_icon_content_description">Icona croce piccola</string>
+  <string name="small_cross_icon_content_description">Rimuovi</string>
   <string name="field_note_title">Nota</string>
-  <string name="field_note_hint">Aggiungi nota</string>
-  <string name="linked_apps_title">App associate</string>
+  <string name="field_note_hint">Aggiungi una nota</string>
+  <string name="linked_apps_title">Applicazioni associate</string>
   <!-- Indicator that indicates lack of internet connectivity -->
-  <string name="indicator_no_network">Offline</string>
+  <string name="indicator_no_network">Nessuna connessione a Internet</string>
   <!-- Icon content description -->
-  <string name="missing_app_icon_content_description">Icona app mancante</string>
-  <string name="add_item_icon_content_description">Icona aggiungi elemento</string>
-  <string name="navigate_back_icon_content_description">Icona torna indietro</string>
+  <string name="missing_app_icon_content_description">App mancante</string>
+  <string name="add_item_icon_content_description">Aggiungi un elemento</string>
+  <string name="navigate_back_icon_content_description">Indietro</string>
   <!-- Vault selector -->
   <string name="vault_selector_title">Cassaforte</string>
   <!-- Bottom bar -->
-  <string name="bottom_bar_list_items_icon_content_description">Lista elementi</string>
-  <string name="bottom_bar_add_item_icon_content_description">Aggiungi un elemento</string>
+  <string name="bottom_bar_list_items_icon_content_description">Lista degli elementi</string>
+  <string name="bottom_bar_add_item_icon_content_description">Aggiungi un elemento</string>
   <string name="bottom_bar_profile_icon_content_description">Profilo</string>
   <string name="bottom_bar_security_center_icon_content_description">Centro sicurezza</string>
   <!-- List group by most recents -->
@@ -91,23 +91,23 @@
   <string name="most_recent_last_60_days">Ultimi 60 giorni</string>
   <string name="most_recent_last_90_days">Ultimi 90 giorni</string>
   <string name="most_recent_within_the_last_year">Ultimi 365 giorni</string>
-  <string name="most_recent_more_than_1_year">Oltre gli ultimi 365 giorni</string>
+  <string name="most_recent_more_than_1_year">Oltre gli ultimi 365 giorni</string>
   <!-- Search Top Bar -->
-  <string name="search_topbar_icon_content_description">Icona ricerca</string>
+  <string name="search_topbar_icon_content_description">Cerca</string>
   <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
     <item quantity="one">1 elemento</item>
     <item quantity="other">%d elementi</item>
   </plurals>
   <!-- Confirm close dialog -->
-  <string name="confirm_close_dialog_title">Scarta le modifiche</string>
-  <string name="confirm_close_dialog_message">Sei sicuro di voler scartare le modifiche?</string>
+  <string name="confirm_close_dialog_title">Scarta le modifiche</string>
+  <string name="confirm_close_dialog_message">Sei sicuro di voler scartare le modifiche?</string>
   <string name="confirm_close_dialog_close_button">Scarta</string>
   <!-- Upgrade -->
   <string name="upgrade">Effettua l\'upgrade</string>
   <!-- Advanced options -->
-  <string name="show_advanced_options">Mostra le opzioni avanzate</string>
-  <string name="hide_advanced_options">Nascondi le opzioni avanzate</string>
+  <string name="show_advanced_options">Mostra le opzioni avanzate</string>
+  <string name="hide_advanced_options">Nascondi le opzioni avanzate</string>
   <!-- Labels -->
   <string name="label_password_strength_strong">Sicura</string>
   <string name="label_password_strength_vulnerable">Vulnerabile</string>
@@ -152,38 +152,38 @@
   <string name="item_details_login_section_username_title">Nome utente</string>
   <string name="item_details_login_section_password_title">Password</string>
   <string name="item_details_login_section_primary_totp_title">Token 2FA (TOTP)</string>
-  <string name="item_details_login_section_websites_title">Siti web</string>
+  <string name="item_details_login_section_websites_title">Sito web</string>
   <string name="item_details_identity_section_personal_title">Informazioni personali</string>
   <string name="item_details_identity_section_personal_first_name_title">Nome</string>
   <string name="item_details_identity_section_personal_middle_name_title">Secondo nome</string>
   <string name="item_details_identity_section_personal_last_name_title">Cognome</string>
   <string name="item_details_identity_section_personal_full_name_title">Nome completo</string>
   <string name="item_details_identity_section_personal_email_title">Indirizzo email</string>
-  <string name="item_details_identity_section_personal_gender_title">Sesso</string>
+  <string name="item_details_identity_section_personal_gender_title">Genere</string>
   <string name="item_details_identity_section_personal_phone_title">Numero di telefono</string>
   <string name="item_details_identity_section_personal_birthday_title">Compleanno</string>
-  <string name="item_details_identity_section_address_title">Dettagli dell\'indirizzo</string>
+  <string name="item_details_identity_section_address_title">Dettagli sull\'indirizzo</string>
   <string name="item_details_identity_section_address_organization_title">Organizzazione</string>
   <string name="item_details_identity_section_address_street_address_title">Indirizzo o casella postale</string>
   <string name="item_details_identity_section_address_floor_title">Piano</string>
   <string name="item_details_identity_section_address_city_title">Città</string>
-  <string name="item_details_identity_section_address_zip_or_postal_code_title">CAP</string>
+  <string name="item_details_identity_section_address_zip_or_postal_code_title">Codice postale (CAP)</string>
   <string name="item_details_identity_section_address_state_or_province_title">Regione</string>
   <string name="item_details_identity_section_address_county_title">Provincia</string>
   <string name="item_details_identity_section_address_country_or_region_title">Paese</string>
-  <string name="item_details_identity_section_contact_title">Dettagli di contatto</string>
+  <string name="item_details_identity_section_contact_title">Informazioni identificative</string>
   <string name="item_details_identity_section_contact_social_security_number_title">Codice fiscale</string>
   <string name="item_details_identity_section_contact_passport_number_title">Passaporto</string>
   <string name="item_details_identity_section_contact_license_number_title">Patente</string>
   <string name="item_details_identity_section_contact_website_title">Sito web</string>
-  <string name="item_details_identity_section_contact_x_handle_title">Nome utente X</string>
-  <string name="item_details_identity_section_contact_secondary_phone_number_title">Numero di telefono secondario</string>
+  <string name="item_details_identity_section_contact_x_handle_title">Account X</string>
+  <string name="item_details_identity_section_contact_secondary_phone_number_title">Numero di telefono secondario</string>
   <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
   <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
   <string name="item_details_identity_section_contact_facebook_title">Facebook</string>
   <string name="item_details_identity_section_contact_yahoo_title">Yahoo</string>
   <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
-  <string name="item_details_identity_section_work_title">Dettagli di lavoro</string>
+  <string name="item_details_identity_section_work_title">Dettagli sull\'impiego</string>
   <string name="item_details_identity_section_work_company_title">Azienda</string>
   <string name="item_details_identity_section_work_occupation_title">Impiego</string>
   <string name="item_details_identity_section_work_email_title">Indirizzo email lavorativo</string>
@@ -192,24 +192,24 @@
   <string name="item_details_shared_section_note_title">Nota</string>
   <string name="item_details_shared_section_item_history_last_autofill_title">Ultima compilazione automatica</string>
   <string name="item_details_shared_section_item_history_created_title">Creazione</string>
-  <string name="item_details_shared_section_item_history_modified_times_title">Modificato (%d)</string>
-  <string name="item_details_shared_section_item_history_button_view">Visualizza la cronologia dell\'elemento</string>
-  <string name="item_details_shared_section_more_info_header_title">Altre informazioni</string>
-  <string name="item_details_shared_section_more_info_header_icon_content_description">Altre informazioni sull\'elemento</string>
+  <string name="item_details_shared_section_item_history_modified_times_title">Modifica (%d)</string>
+  <string name="item_details_shared_section_item_history_button_view">Cronologia dell\'elemento</string>
+  <string name="item_details_shared_section_more_info_header_title">Mostra altro</string>
+  <string name="item_details_shared_section_more_info_header_icon_content_description">Mostra altro</string>
   <string name="item_details_shared_section_more_info_item_id">ID elemento</string>
-  <string name="item_details_shared_section_more_info_vault_id">ID della cassaforte</string>
-  <string name="item_details_shared_section_more_info_share_id">ID di condivisione</string>
+  <string name="item_details_shared_section_more_info_vault_id">ID cassaforte</string>
+  <string name="item_details_shared_section_more_info_share_id">ID condivisione</string>
   <string name="item_details_wifi_network_label_ssid_name">Nome (SSID)</string>
   <string name="item_details_wifi_network_label_password">Password</string>
   <string name="item_details_wifi_network_label_security">Sicurezza</string>
   <string name="item_details_ssh_key_label_public_key">Chiave pubblica</string>
   <string name="item_details_ssh_key_label_private_key">Chiave privata</string>
-  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">La versione della tua applicazione non è più supportata. Aggiorna l\'applicazione.</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Aggiorna l\'applicazione per continuare a usarla</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Passkey</string>
   <!-- Upgrade -->
   <string name="dialog_upgrade_plan_title">Effettua l\'upgrade</string>
-  <string name="dialog_upgrade_plan_message">Questa funzionalità non è disponibile per gli utenti con un piano gratuito. Effettua l\'upgrade per utilizzarla insieme ad altre fantastiche funzionalità.</string>
+  <string name="dialog_upgrade_plan_message">Passa a un piano a pagamento per utilizzare questa e altre fantastiche funzionalità</string>
   <string name="dialog_upgrade_plan_action_confirm">Effettua l\'upgrade</string>
   <string name="dialog_upgrade_plan_action_cancel">Non adesso</string>
   <!-- Words -->
@@ -217,7 +217,7 @@
   <string name="email_address_invalid">Indirizzo email non valido</string>
   <string name="password">Password</string>
   <!-- Tooltips -->
-  <string name="tooltip_dismiss_button_content_description">Pulsante per chiudere questo suggerimento e non mostrarlo più</string>
+  <string name="tooltip_dismiss_button_content_description">Ignora</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
     <item quantity="one">%d anno</item>
@@ -253,45 +253,45 @@
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Nota copiata</string>
-  <string name="snack_bar_message_item_migration_error">Si è verificato un errore nello spostamento di questo elemento</string>
-  <string name="snack_bar_message_item_monitor_excluded_success">Elemento escluso dal monitoraggio</string>
-  <string name="snack_bar_message_item_monitor_excluded_error">Si è verificato un errore nell\'esclusione dell\'elemento dal monitoraggio</string>
-  <string name="snack_bar_message_item_monitor_included_success">Elemento incluso nel monitoraggio</string>
-  <string name="snack_bar_message_item_monitor_included_error">Si è verificato un errore nell\'inclusione dell\'elemento nel monitoraggio</string>
+  <string name="snack_bar_message_item_migration_error">Spostamento dell\'elemento non riuscito</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">Elemento escluso dal monitoraggio</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">Esclusione dell\'elemento dal monitoraggio non riuscita</string>
+  <string name="snack_bar_message_item_monitor_included_success">Elemento incluso nel monitoraggio</string>
+  <string name="snack_bar_message_item_monitor_included_error">Inclusione dell\'elemento nel monitoraggio non riuscita</string>
   <string name="snack_bar_message_item_pinned_success">Elemento fissato</string>
-  <string name="snack_bar_message_item_pinned_error">Fissaggio dell\'elemento non riuscito</string>
-  <string name="snack_bar_message_item_unpinned_success">Elemento non più fissato</string>
-  <string name="snack_bar_message_item_unpinned_error">Annullamento del fissaggio dell\'elemento non riuscito</string>
-  <string name="snack_bar_message_item_trashed_success">Elemento spostato nel cestino</string>
-  <string name="snack_bar_message_item_trashed_error">Si è verificato un errore nello spostamento nel cestino di questo elemento</string>
-  <string name="snack_bar_message_item_restore_success">Elemento ripristinato</string>
-  <string name="snack_bar_message_item_restore_error">Si è verificato un errore nel ripristino di questo elemento</string>
+  <string name="snack_bar_message_item_pinned_error">Fissaggio dell\'elemento non riuscito</string>
+  <string name="snack_bar_message_item_unpinned_success">Elemento non più fissato</string>
+  <string name="snack_bar_message_item_unpinned_error">Annullamento del fissaggio dell\'elemento non riuscito</string>
+  <string name="snack_bar_message_item_trashed_success">Elemento spostato nel cestino</string>
+  <string name="snack_bar_message_item_trashed_error">Spostamento del messaggio nel cestino non riuscito</string>
+  <string name="snack_bar_message_item_restore_success">Elemento recuperato</string>
+  <string name="snack_bar_message_item_restore_error">Recupero dell\'elemento non riuscito</string>
   <string name="snack_bar_message_item_delete_success">Elemento eliminato</string>
-  <string name="snack_bar_message_item_delete_error">Si è verificato un errore nell\'eliminazione di questo elemento</string>
+  <string name="snack_bar_message_item_delete_error">Eliminazione dell\'elemento non riuscita</string>
   <!-- Simple Login -->
-  <string name="simple_login_widget_title">Attiva la sincronizzazione con SimpleLogin</string>
+  <string name="simple_login_widget_title">Abilita la sincronizzazione con SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="one">Abbiamo rilevato che hai %d alias presente in SimpleLogin ma mancante in Proton Pass. Desideri importarlo?</item>
-    <item quantity="other">Abbiamo rilevato che hai %d alias presenti in SimpleLogin ma mancanti in Proton Pass. Desideri importarli?</item>
+    <item quantity="one">Hai %d alias presente in SimpleLogin che è mancante in Proton Pass. Vuoi importare questo alias?</item>
+    <item quantity="other">Hai %d alias presenti in SimpleLogin che sono mancanti in Proton Pass. Vuoi importare questi alias?</item>
   </plurals>
-  <string name="simple_login_widget_action">Sincronizza gli alias</string>
+  <string name="simple_login_widget_action">Sincronizza gli alias</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Non hai ricevuto il codice?</string>
-  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Controlla se nella cartella Spam è presente un\'email denominata \"%s\"</string>
-  <string name="verification_code_suggestion_subject_new_email_address">Conferma il tuo indirizzo email per Proton Pass</string>
-  <string name="verification_code_suggestion_subject_new_mailbox">Per favore conferma la tua casella di posta</string>
-  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Se non riesci a trovare questa email, puoi %s.</string>
-  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">chiedere un nuovo codice</string>
+  <string name="verification_code_not_received">Codice non ricevuto</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Cerca un\'email intitolata \"%s\" nella cartella spam</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Conferma l\'indirizzo email per Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Conferma la casella di posta</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Se non trovi questo messaggio, %s.</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">chiedi un nuovo codice</string>
   <string name="field_display_name_title">Nome visualizzato</string>
   <!-- Attachments -->
   <plurals name="attachment_file_amount">
-    <item quantity="one">%1$s file</item>
-    <item quantity="other">%1$s file</item>
+    <item quantity="one">%1$s file allegato</item>
+    <item quantity="other">%1$s file allegati</item>
   </plurals>
   <string name="attachment_title">Allegati</string>
-  <string name="attachment_no_files">Carica file dal dispositivo</string>
-  <string name="attachment_add_file">Allega un file</string>
-  <string name="attachment_row_upload_failed">Caricamento non riuscito</string>
+  <string name="attachment_no_files">Carica un file dal dispositivo</string>
+  <string name="attachment_add_file">Allega un file</string>
+  <string name="attachment_row_upload_failed">Caricamento non riuscito</string>
   <string name="attachment_row_retry">Riprova</string>
   <string name="options_menu_content_description">Menu opzioni</string>
   <!-- Items -->
@@ -307,6 +307,40 @@
     <item quantity="one">%d membro</item>
     <item quantity="other">%d membri</item>
   </plurals>
-  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">gg/MMMM/aaaa</string>
-  <string name="show_network_qr_code">Mostra codice QR della rete</string>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
+  <string name="show_network_qr_code">Mostra il codice QR della rete</string>
+  <string name="expand_collpased_text">Mostra altro</string>
+  <string name="collapse_expanded_text">Mostra meno</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Password debole</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Questo account è vulnerabile, visita il servizio e cambia la password.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d altro login utilizza la stessa password</item>
+    <item quantity="other">Altri %d login utilizzano la stessa password</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Configura 2FA per maggiore sicurezza</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Questo servizio offre 2FA. Abilitalo per una maggiore sicurezza dell\'account.</string>
+  <string name="login_item_reused_passwords_subtitle">Elementi delle tue casseforti che utilizzano questa password.</string>
+  <string name="mfa_limit_reached">Limite 2FA raggiunto</string>
+  <string name="activity_in_last_two_weeks">Attività negli ultimi 14 giorni</string>
+  <string name="contacts">Contatti</string>
+  <string name="contacts_section_description">Per mantenere il tuo indirizzo email nascosto, puoi creare un contatto alias che maschererà il tuo indirizzo</string>
+  <string name="field_detail_display_name_title">Nome visualizzato</string>
+  <string name="display_name_section_description">Il nome visualizzato quando si invia un\'email da questo alias.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s inoltro</item>
+    <item quantity="other">%1$s inoltri</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s risposta</item>
+    <item quantity="other">%1$s risposte</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s blocco</item>
+    <item quantity="other">%1$s blocchi</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">Crea un login</string>
+  <string name="banner_contacts_title">Lo sapevi?</string>
+  <string name="banner_contacts_subtitle">Ogni volta che il tuo alias riceve un\'email da qualcuno, viene creato automaticamente un contatto.</string>
+  <string name="action_reveal">Mostra</string>
+  <string name="action_conceal">Nascondi</string>
 </resources>

@@ -339,4 +339,46 @@
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <string name="show_network_qr_code">Pokaži QR kodo omrežja</string>
+  <string name="expand_collpased_text">more</string>
+  <string name="collapse_expanded_text">less</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Šibko geslo</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Ta račun je ranljiv, obiščite storitev in spremenite geslo.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d druga prijava uporablja isto geslo</item>
+    <item quantity="two">%d drugi prijavi uporabljata isto geslo</item>
+    <item quantity="few">%d druge prijave uporabljajo isto geslo</item>
+    <item quantity="other">%d drugih prijav uporablja isto geslo</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Nastavite 2FA za večjo varnost</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Ta storitev ponuja 2FA. Omogočite ga za dodatno varnost računa.</string>
+  <string name="login_item_reused_passwords_subtitle">Predmeti iz vaših trezorjev, ki uporabljajo to geslo.</string>
+  <string name="mfa_limit_reached">Dosežena je omejitev za 2FA</string>
+  <string name="activity_in_last_two_weeks">Activity in the last 14 days</string>
+  <string name="contacts">Stiki</string>
+  <string name="contacts_section_description">Če želite skriti svoj osebni e-poštni naslov, lahko ustvarite kontakt z vzdevkom, ki prikrije vaš naslov.</string>
+  <string name="field_detail_display_name_title">Prikazno ime</string>
+  <string name="display_name_section_description">The display name when sending an email from this alias.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s forward</item>
+    <item quantity="two">%1$s forwards</item>
+    <item quantity="few">%1$s forwards</item>
+    <item quantity="other">%1$s forwards</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s odgovor</item>
+    <item quantity="two">%1$s replies</item>
+    <item quantity="few">%1$s replies</item>
+    <item quantity="other">%1$s replies</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s block</item>
+    <item quantity="two">%1$s blocks</item>
+    <item quantity="few">%1$s blocks</item>
+    <item quantity="other">%1$s blocks</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">Ustvarite prijavo</string>
+  <string name="banner_contacts_title">Did you know?</string>
+  <string name="banner_contacts_subtitle">Every time your alias receives an email from someone, a new contact is automatically created.</string>
+  <string name="action_reveal">Reveal</string>
+  <string name="action_conceal">Conceal</string>
 </resources>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="item_details_toolbar_content_description_menu_button">Botão para exibir as opções de menu</string>
+  <!-- Item details forbidden actions -->
+  <string name="item_details_forbidden_actions_edit_title">Não é possível editar.</string>
+  <string name="item_details_forbidden_actions_edit_permission">Não pode editar este item porque não tem permissões suficientes para fazer isso.</string>
+  <string name="item_details_forbidden_actions_edit_trash">Não pode editar este item porque ele está no lixo. Mova-o para fora do lixo antes de editá-lo.</string>
+  <string name="item_details_forbidden_actions_edit_upgrade">Só pode editar itens nos seus cofres mais antigos. Para editar este item, melhore o seu plano atual.</string>
+  <string name="item_details_forbidden_actions_share_title">Não é possível partilhar.</string>
+  <string name="item_details_forbidden_actions_share_limit">Atingiu o limite de partilhas de cofre. Para partilhar mais cofres, melhore o seu plano atual.</string>
+  <string name="item_details_forbidden_actions_sharing_permission">Não tem permissões suficientes para executar esta ação.</string>
+  <string name="item_details_forbidden_actions_share_trash">Não pode partilhar este item porque ele está no lixo. Mova-o para fora do lixo antes de editá-lo.</string>
+  <!-- Item details leave item -->
+  <string name="item_details_leave_dialog_title">Deixar este item?</string>
+  <string name="item_details_leave_dialog_message">Perderá o acesso a este item e aos seus detalhes. Deseja continuar?</string>
+  <string name="item_details_leave_item_message_error">Ocorreu um erro ao deixar o item.</string>
+  <string name="item_details_leave_item_message_success">O item foi deixado.</string>
+  <string name="item_details_snackbar_message_alias_copied">Alias copiado</string>
+  <string name="item_details_snackbar_message_birthdate_copied">A data de nascimento foi copiada.</string>
+  <string name="item_details_snackbar_message_card_number_copied">Número do cartão de crédito copiado</string>
+  <string name="item_details_snackbar_message_city_copied">A cidade foi copiada.</string>
+  <string name="item_details_snackbar_message_company_copied">A empresa foi copiada.</string>
+  <string name="item_details_snackbar_message_country_or_region_copied">A região ou o país foi copiado.</string>
+  <string name="item_details_snackbar_message_county_copied">O distrito foi copiado.</string>
+  <string name="item_details_snackbar_message_custom_field_copied">O campo personalizado foi copiado.</string>
+  <string name="item_details_snackbar_message_cvv_copied">Número de verificação copiado</string>
+  <string name="item_details_snackbar_message_email_copied">O endereço de e-mail foi copiado.</string>
+  <string name="item_details_snackbar_message_facebook_copied">A conta do Facebook foi copiada.</string>
+  <string name="item_details_snackbar_message_first_name_copied">O primeiro nome foi copiado.</string>
+  <string name="item_details_snackbar_message_floor_copied">O andar foi copiado.</string>
+  <string name="item_details_snackbar_message_full_name_copied">O nome completo foi copiado.</string>
+  <string name="item_details_snackbar_message_gender_copied">O género foi copiado.</string>
+  <string name="item_details_snackbar_message_instagram_copied">A conta do Instagram foi copiada.</string>
+  <string name="item_details_snackbar_message_last_name_copied">O apelido foi copiado.</string>
+  <string name="item_details_snackbar_message_license_number_copied">O número de licença foi copiado.</string>
+  <string name="item_details_snackbar_message_linkedin_copied">A conta de LinkedIn foi copiada.</string>
+  <string name="item_details_snackbar_message_middle_name_copied">O segundo nome foi copiado.</string>
+  <string name="item_details_snackbar_message_occupation_copied">A profissão foi copiada.</string>
+  <string name="item_details_snackbar_message_organization_copied">A organização foi copiada.</string>
+  <string name="item_details_snackbar_message_passport_number_copied">O número de passaporte foi copiado.</string>
+  <string name="item_details_snackbar_message_password_copied">A palavra-passe foi copiada.</string>
+  <string name="item_details_snackbar_message_phone_number_copied">O número de telefone foi copiado.</string>
+  <string name="item_details_snackbar_message_pin_copied">O código PIN foi copiado.</string>
+  <string name="item_details_snackbar_message_reddit_copied">A conta do Reddit foi copiada.</string>
+  <string name="item_details_snackbar_message_social_security_number_copied">O número de segurança social foi copiado.</string>
+  <string name="item_details_snackbar_message_state_or_province_copied">O estado ou o distrito foi copiado.</string>
+  <string name="item_details_snackbar_message_street_address_copied">O endereço postal foi copiado.</string>
+  <string name="item_details_snackbar_message_totp_copied">TOTP copiado</string>
+  <string name="item_details_snackbar_message_username_copied">O nome de utilizador foi copiado.</string>
+  <string name="item_details_snackbar_message_website_copied">O URL do sítio web foi copiado.</string>
+  <string name="item_details_snackbar_message_x_handle_copied">A conta do X foi copiada.</string>
+  <string name="item_details_snackbar_message_yahoo_copied">A conta Yahoo foi copiada.</string>
+  <string name="item_details_snackbar_message_zip_or_postal_code_copied">O código postal foi copiado.</string>
+  <string name="item_details_snackbar_message_public_key_copied">A chave pública foi copiada.</string>
+  <string name="item_details_snackbar_message_private_key_copied">A chave privada foi copiada.</string>
+  <string name="item_details_snackbar_message_ssid_copied">O SSID foi copiado.</string>
+  <string name="open_with">Abrir com:</string>
+  <string name="open_attachments_error">Não foi possível abrir o anexo.</string>
+  <string name="passkey_detail_bottomsheet_title">Chave de acesso</string>
+  <string name="passkey_detail_bottomsheet_username">Nome de utilizador</string>
+  <string name="passkey_detail_bottomsheet_domain">Domínio</string>
+  <string name="passkey_detail_bottomsheet_key">Chave</string>
+  <string name="passkey_detail_bottomsheet_created">Criação</string>
+  <string name="login_item_reused_passwords_subtitle">Itens dos seus cofres que utilizam esta palavra-passe.</string>
+</resources>

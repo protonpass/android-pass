@@ -28,7 +28,7 @@
   <string name="app_lock_ten_minutes">Després de 10 minuts</string>
   <string name="app_lock_one_hour">Després d\'1 hora</string>
   <string name="app_lock_four_hours">Després de 4 hores</string>
-  <string name="profile_account_plan_name_trial">Prova Pass Plus</string>
+  <string name="profile_account_plan_name_trial">Prova de Pass Plus</string>
   <string name="app_lock_config_none">Cap</string>
   <string name="app_lock_config_biometric">Biomètric</string>
   <string name="app_lock_config_pin_code">Codi PIN</string>
@@ -43,7 +43,7 @@
   <string name="configure_pin_pin_does_not_match">El codi PIN no coincideix.</string>
   <string name="configure_pin_pin_too_short">El codi PIN és massa curt.</string>
   <string name="configure_pin_pin_cannot_be_blank">El codi PIN no pot estar buit.</string>
-  <string name="configure_pin_pin_lock_enabled">Bloqueig amb codi PIN activat</string>
+  <string name="configure_pin_pin_lock_enabled">S\'ha activat el bloqueig amb codi PIN</string>
   <string name="configure_pin_pin_lock_disabled">S\'ha desactivat el bloqueig amb codi PIN.</string>
   <string name="profile_option_lock_with">Bloqueja amb</string>
   <string name="profile_option_unlock_with">Desbloqueja amb</string>
@@ -51,7 +51,7 @@
   <string name="profile_passkey_support_section_title">Claus d\'accés</string>
   <string name="profile_passkey_support_subtitle_supported">Les claus d\'accés són compatibles</string>
   <string name="profile_passkey_support_subtitle_not_supported_android_version">La vostra versió d\'Android no admet claus de pas.</string>
-  <string name="profile_passkey_support_subtitle_not_supported_credential_manager">El vostre dispositiu no suporta claus d\'accés.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_credential_manager">El vostre dispositiu no admet claus d\'accés.</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">No s\'ha pogut comprovar la compatibilitat per a les claus d\'accés</string>
   <plurals name="profile_after_days">
     <item quantity="one">Després d\'%d dia</item>
@@ -79,9 +79,9 @@
   <string name="filtered_by_credit_cards">La llista es filtra per targetes de crèdit. Els elements de la paperera no es mostren</string>
   <string name="filtered_by_identities">La llista es filtra per identitats. Els elements de la paperera no es mostren.</string>
   <string name="filtered_by_custom_items">La llista es filtra per elements personalitzats. Els elements de la paperera no es mostren.</string>
-  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Heu de canviar a %1$s per gestionar-lo.</string>
+  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Heu de canviar a %1$s per gestionar-ho.</string>
   <string name="account_switch_confirmation_title">Gestiona el compte</string>
-  <string name="account_switch_confirmation_confirm">Canvia de compte i gestiona\'l</string>
+  <string name="account_switch_confirmation_confirm">Canvia de compte i gestiona-lo</string>
   <string name="profile_storage_data_title">Emmagatzematge</string>
   <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s de %2$s</string>
 </resources>

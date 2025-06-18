@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="action_open">Odpri</string>
+  <string name="action_copy">Kopiraj</string>
+  <!-- Detail -->
+  <string name="detail_init_error">Težava pri pridobivanju podrobnosti predmeta</string>
+  <string name="top_bar_edit_button_text">Uredi</string>
+  <!-- Alias details -->
+  <string name="field_alias_title">Vzdevek naslova</string>
+  <string name="field_alias_disabled_title">Alias address (disabled)</string>
+  <string name="alias_copied_to_clipboard">Vzdevek je kopiran</string>
+  <string name="alias_detail_field_mailboxes_title">Posredovanje na</string>
+  <string name="alias_create_login_from_alias">Ustvarite prijavo</string>
+  <!-- Note details -->
+  <string name="field_detail_note_title">Opomba</string>
+  <string name="note_detail_copy_note_to_clipboard">Kopiraj opombo</string>
+  <string name="note_copied_to_clipboard">Opomba kopirana v odložišče</string>
+  <!-- Login details -->
+  <string name="email_copied_to_clipboard">E-poštni naslov je kopiran</string>
+  <string name="username_copied_to_clipboard">Uporabniško ime je kopirano</string>
+  <string name="password_copied_to_clipboard">Geslo je bilo kopirano</string>
+  <string name="website_copied_to_clipboard">Spletna stran kopirana</string>
+  <string name="totp_copied_to_clipboard">TOTP kopiran</string>
+  <string name="field_copied_to_clipboard">Polje kopirano</string>
+  <string name="move_item_to_trash_message">Predmet premaknjen v smetnjak</string>
+  <string name="error_move_item_to_trash_message">Napaka pri premikanju v smetnjak</string>
+  <string name="item_permanently_deleted_message">Predmet je trajno izbrisan</string>
+  <string name="item_permanently_deleted_message_error">Napaka pri brisanju predmeta</string>
+  <string name="item_restored_message">Predmet je bil obnovljen.</string>
+  <string name="item_restored_message_error">Napaka pri obnovitvi predmeta</string>
+  <string name="item_monitor_exclude_message">Predmet je bil izključen iz spremljanja.</string>
+  <string name="item_monitor_exclude_message_error">Pri izključevanju predmeta iz spremljanja je prišlo do napake</string>
+  <string name="item_monitor_include_message">Predmet je bil vključen v spremljanje.</string>
+  <string name="item_monitor_include_message_error">Pri vključitvi predmeta v nadzor je prišlo do napake</string>
+  <string name="alias_change_status_error">Pri spreminjanju statusa vzdevka je prišlo do napak</string>
+  <string name="login_item_generate_totp_error">Napaka pri ustvarjanju kode 2FA</string>
+  <string name="login_item_view_alias_button">Prikaži vzdevek</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Šibko geslo</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Ta račun je ranljiv, obiščite storitev in spremenite geslo.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d druga prijava uporablja isto geslo</item>
+    <item quantity="two">%d drugi prijavi uporabljata isto geslo</item>
+    <item quantity="few">%d druge prijave uporabljajo isto geslo</item>
+    <item quantity="other">%d drugih prijav uporablja isto geslo</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Nastavite 2FA za večjo varnost</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Ta storitev ponuja 2FA. Omogočite ga za dodatno varnost računa.</string>
+  <string name="login_item_reused_passwords_subtitle">Predmeti iz vaših trezorjev, ki uporabljajo to geslo.</string>
+  <string name="field_email">E-poštni naslov</string>
+  <string name="field_username">Uporabniško ime</string>
+  <string name="field_username_or_email">Uporabniško ime ali elektronski naslov</string>
+  <string name="field_password">Geslo</string>
+  <string name="websites_section_title">Spletne strani</string>
+  <string name="totp_section_title">Žeton 2FA (TOTP)</string>
+  <string name="action_reveal_password">Razkrij geslo</string>
+  <string name="action_conceal_password">Skrij geslo</string>
+  <string name="action_reveal_number">Pokaži številko</string>
+  <string name="action_conceal_number">Skrij številko</string>
+  <string name="share_button_content_description">Odpri gumb za skupno rabo</string>
+  <string name="open_menu_icon_content_description">Gumb za odpiranje menija</string>
+  <string name="mfa_limit_reached">Dosežena je omejitev za 2FA</string>
+  <string name="mfa_icon_content_description">Ikona 2FA</string>
+  <string name="custom_field_text_icon_description">Besedilno polje po meri</string>
+  <string name="custom_field_hidden_icon_description">Skrito polje po meri</string>
+  <string name="custom_field_totp_icon_description">Polje po meri 2FA</string>
+  <!-- Credit card details -->
+  <string name="credit_card_cardholder_field_name">Ime na kartici</string>
+  <string name="credit_card_number_field_name">Številka kartice</string>
+  <string name="credit_card_cvv_field_name">Varnostna koda</string>
+  <string name="credit_card_pin_field_name">PIN koda</string>
+  <string name="credit_card_expiration_date_field_name">Datum poteka</string>
+  <string name="credit_card_cardholder_copied_to_clipboard">Imetnik kartice kopiran v odložišče</string>
+  <string name="credit_card_number_copied_to_clipboard">Številka kartice je bila kopirana v odložišče</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Varnostna koda je bila kopirana v odložišče</string>
+  <!-- Bottomsheet -->
+  <string name="move_to_trash_item_detail_bottom_sheet">Premakni v smetnjak</string>
+  <string name="migrate_item_detail_bottom_sheet">Premakni v drug trezor</string>
+  <!-- More info -->
+  <string name="date_today">Danes %s</string>
+  <string name="date_yesterday">Včeraj %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <string name="item_detail_cannot_perform_action_edit_title">Ni mogoče urejati</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Tega predmeta ne morete urejati, ker za to nimate dovolj dovoljenj.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Dovoljeno vam je samo urejanje predmetov v vaših najstarejših trezorjih. Če želite urediti ta predmet, nadgradite svoj trenutni paket.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Tega predmeta ne morete urejati, ker je v smetnjaku. Pred urejanjem ga premaknite iz smetnjaka.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Ni mogoče deliti</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nimate dovolj dovoljenj za skupno rabo tega trezorja.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Dosegli ste omejitev skupne rabe trezorja. Če želite deliti več trezorjev, nadgradite svoj trenutni paket.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Tega predmeta ne morete urejati, ker je v smetnjaku. Pred urejanjem ga premaknite iz smetnjaka.</string>
+  <string name="password_score_vulnerable">Ranljivo</string>
+  <string name="password_score_weak">Šibko</string>
+  <string name="password_score_strong">Močno</string>
+  <string name="passkey_detail_bottomsheet_title">Identifikacijski ključ</string>
+  <string name="passkey_detail_bottomsheet_username">Uporabniško ime</string>
+  <string name="passkey_detail_bottomsheet_domain">Domena</string>
+  <string name="passkey_detail_bottomsheet_key">Ključ</string>
+  <string name="passkey_detail_bottomsheet_created">Ustvarjeno</string>
+  <string name="activity_in_last_two_weeks">Activity in the last 14 days</string>
+  <string name="contacts">Stiki</string>
+  <string name="contacts_section_description">Če želite skriti svoj osebni e-poštni naslov, lahko ustvarite kontakt z vzdevkom, ki prikrije vaš naslov.</string>
+  <string name="field_detail_display_name_title">Prikazno ime</string>
+  <string name="display_name_section_description">The display name when sending an email from this alias.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s forward</item>
+    <item quantity="two">%1$s forwards</item>
+    <item quantity="few">%1$s forwards</item>
+    <item quantity="other">%1$s forwards</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s odgovor</item>
+    <item quantity="two">%1$s replies</item>
+    <item quantity="few">%1$s replies</item>
+    <item quantity="other">%1$s replies</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s block</item>
+    <item quantity="two">%1$s blocks</item>
+    <item quantity="few">%1$s blocks</item>
+    <item quantity="other">%1$s blocks</item>
+  </plurals>
+  <string name="open_with">Odpri z:</string>
+  <string name="open_attachments_error">Ni bilo mogoče odpreti priponke</string>
+</resources>

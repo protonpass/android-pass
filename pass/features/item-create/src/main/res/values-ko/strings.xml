@@ -190,7 +190,6 @@
   <string name="close_scree_icon_content_description">스크린 버튼 닫기</string>
   <string name="totp_paste_code_action">붙여넣기</string>
   <string name="totp_scan_code_action">코드 스캔</string>
-  <string name="field_cannot_be_empty">이 칸은 비워둘 수 없습니다</string>
   <string name="camera_permission_explanation">이 기능을 사용하기 위해 카메라 권한이 필요합니다.</string>
   <string name="camera_permission_open_settings">설정 열기</string>
   <!--  TOTP limit  -->
@@ -274,7 +273,7 @@
   <string name="template_bank_account_field_account_type">계정 유형</string>
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
-  <string name="template_bank_account_field_holder_name">Holder Name</string>
+  <string name="template_bank_account_field_holder_name">예금주 이름</string>
   <string name="template_bank_account_field_note">메모</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">지갑 이름</string>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="configure_extra_password_continue">Continuar</string>
+  <string name="configure_extra_password_title">Definir uma palavra-passe adicional</string>
+  <string name="configure_extra_password_enter_extra_password">Palavra-passe adicional</string>
+  <string name="configure_extra_password_repeat_extra_password">Repita a palavra-passe</string>
+  <string name="configure_extra_password_description">Será solicitado a esta palavra-passe durante o início de sessão e quando mudar de outra aplicação Proton para o Proton Pass na web.</string>
+  <string name="configure_extra_password_warning">Atenção: não poderá aceder à sua conta do Pass se perder esta palavra-passe.</string>
+  <string name="configure_extra_password_mismatch">As 2 palavras-passe não correspondem.</string>
+  <string name="extra_password_options_remove">Remover</string>
+  <string name="info_extra_password_title">Palavra-passe adicional</string>
+  <string name="info_extra_password_body">Proteja o Proton Pass com uma palavra-passe adicional.</string>
+  <string name="info_extra_password_button">Definir uma palavra-passe adicional</string>
+  <string name="configure_extra_password_cannot_be_blank">A palavra-passe não pode estar vazia.</string>
+  <string name="configure_extra_password_password_too_short">A palavra-passe adicional deve ter pelo menos 8 caracteres.</string>
+  <string name="confirm_extra_password_title">Definir uma palavra-passe adicional</string>
+  <string name="confirm_extra_password_body">Será desconectado e terá de iniciar sessão novamente em todos os seus outros dispositivos.</string>
+  <string name="confirm_extra_password_error">Não foi possível configurar uma palavra-passe adicional.</string>
+  <string name="confirm_extra_password_success">A palavra-passe adicional está configurada.</string>
+</resources>

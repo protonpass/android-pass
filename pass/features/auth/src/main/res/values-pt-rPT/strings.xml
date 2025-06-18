@@ -17,7 +17,7 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="enter_your_pin_code">Insira o seu código PIN</string>
+  <string name="enter_your_pin_code">Introduza o seu código PIN</string>
   <string name="unlock">Desbloquear</string>
   <plurals name="enter_your_pin_code_error">
     <item quantity="one">PIN incorreto. Resta %d tentativa.</item>
@@ -25,17 +25,29 @@
   </plurals>
   <string name="auth_unlock_app_title">Desbloquear Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Introduza a sua palavra-passe principal para %s</string>
+  <string name="auth_unlock_app_extra_password_subtitle">Introduza a sua palavra-passe adicional para %s</string>
+  <string name="auth_unlock_app_subtitle_account_switch">Introduza a sua palavra-passe principal para:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Introduza a palavra-passe adicional para:</string>
   <string name="auth_master_password_label">Palavra-passe principal</string>
   <string name="auth_action_reveal_password">Mostrar a palavra-passe principal</string>
   <string name="auth_action_conceal_password">Ocultar a palavra-passe principal</string>
-  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Em vez disso, introduzir o PIN</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Em vez disso, introduzir a impressão digital</string>
+  <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Em vez disso, Introduzar o PIN</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Usa a impressão digital em vez disso</string>
   <string name="auth_unlock_button">Desbloquear</string>
-  <string name="auth_error_verifying_password">Erro ao verificar a sua palavra-passe</string>
   <string name="auth_error_empty_password">A palavra-passe não pode estar vazia.</string>
   <string name="auth_error_pin_cannot_be_empty">O código PIN não pode estar vazio.</string>
+  <string name="auth_extra_password_label">Introduza a sua palavra-passe adicional</string>
+  <string name="auth_extra_password_error">Erro na autenticação com a palavra-passe adicional</string>
+  <string name="auth_extra_password_too_many_attempts">Muitas tentativas de início de sessão não funcionaram. Foi desconectado.</string>
+  <string name="auth_error_wrong_password_no_attempts">Palavra-passe incorreta</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Palavra-passe incorreta. Resta %d tentativa</item>
     <item quantity="other">Palavra-passe incorreta. Restam %d tentativas</item>
   </plurals>
+  <plurals name="auth_attempts_remaining">
+    <item quantity="one">%d tentativa restante</item>
+    <item quantity="other">%d tentativas restantes</item>
+  </plurals>
+  <string name="auth_pin_too_many_attempts">Muitas tentativas de introdução de código PIN não funcionaram. Todos os seus utilizadores foram desconectados.</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Demasiados erros de início de sessão com o código PIN</string>
 </resources>

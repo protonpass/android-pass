@@ -190,7 +190,6 @@
   <string name="close_scree_icon_content_description">Sulje ruutu -painike</string>
   <string name="totp_paste_code_action">Liitä koodi</string>
   <string name="totp_scan_code_action">Skannaa koodi</string>
-  <string name="field_cannot_be_empty">Kenttä ei voi olla tyhjä</string>
   <string name="camera_permission_explanation">Ominaisuus tarvitsee kameran käyttöoikeuden.</string>
   <string name="camera_permission_open_settings">Avaa asetukset</string>
   <!--  TOTP limit  -->

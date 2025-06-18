@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="description_field_label">Mi a probléma?</string>
+  <string name="description_field_hint">Írja le a problémát, minél részletesebben, annál jobb. Ha van hibaüzenet, tudassa velünk, hogy az mit tartalmaz.</string>
+  <string name="email_field_label">E-mail</string>
+  <string name="email_field_hint">e-mail</string>
+  <string name="attach_image_button">Kép csatolása</string>
+  <string name="categories_title">Mi a probléma?</string>
+  <string name="report_toolbar_title">Hibajelentés</string>
+  <string name="send_report_button">Bejelentés küldése</string>
+  <string name="cancel_tips_button">Mégse</string>
+  <string name="contact_us_button">Kapcsolatfelvétel</string>
+  <string name="hint_tips_screen">Nem működött?</string>
+  <string name="report_reason_autofill">Automatikus kitöltés</string>
+  <string name="report_reason_sharing">Megosztás</string>
+  <string name="report_reason_sync">Szinkronizálás</string>
+  <string name="report_reason_passkeys">Hozzáférési kulcsok</string>
+  <string name="report_reason_other">Egyéb</string>
+  <string name="tips_title">Gyors javítások: %1$s</string>
+  <string name="tips_subtitle">Ezek a tippek segíthetnek problémája gyorsabban megoldásában.</string>
+  <string name="autofill_tip_restart">Próbálja meg ki és be kapcsolni az automatikus kitöltési szolgáltatást.</string>
+  <string name="autofill_tip_browser">Használjon egy másik böngészőt.</string>
+  <string name="sharing_tip_vault_sharing_guide">Problémák a tároló megosztásával? Nézze meg az útmutatónkat.</string>
+  <string name="sharing_tip_secure_links_guide">Problémák a biztonságos linkkel? Nézze meg az útmutatónkat.</string>
+  <string name="sync_tip_force_refresh">Üres a képernyője? Próbálja meg az erőltetett szinkronizálást.</string>
+  <string name="send_logs_label">Napló küldése</string>
+  <string name="report_sending_success">A jelentés sikeresen elküldve.</string>
+  <string name="report_sending_error">A jelentést nem lehetettet elküldeni.</string>
+  <string name="tips_passkey_check_guide">Ha bármilyen problémája van, nézze meg az útmutatónkat.</string>
+  <string name="tips_passkey_android_not_supported">Az Android verziója túl régi. Próbálja meg frissíteni a készülék rendszerét.</string>
+  <string name="tips_passkeys_credential_manager_not_supported">Az eszköz gyártója nem biztosít hitelesítő adatokat kezelő eszközt.</string>
+  <string name="tips_passkey_supported">A hozzáférési kulcsok támogatva vannak</string>
+  <string name="tips_passkey_not_supported">A hozzáférési kulcsok nincsenek támogatva</string>
+  <string name="report_steps" comment="Indicator showing report progress">%1$d / %2$d lépés</string>
+  <string name="description_cannot_be_blank">A leírás nem lehet üres</string>
+  <string name="description_is_too_short">A leírás túl rövid</string>
+  <string name="description_is_too_long">A leírás túl hosszú</string>
+  <string name="email_cannot_be_blank">Az e-mail cím nem lehet üres</string>
+  <string name="email_invalid">Érvénytelen e-mail cím</string>
+</resources>

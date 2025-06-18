@@ -25,5 +25,5 @@
   <string name="snackbar_item_move_to_trash_error">No s\'ha pogut moure a la paperera.</string>
   <string name="snackbar_item_copy_email_success">S\'ha copiat el correu electrònic al porta-retalls.</string>
   <string name="snackbar_item_copy_username_success">S\'ha copiat el nom d\'usuari al porta-retalls.</string>
-  <string name="snackbar_item_copy_password_success">La contrasenya s\'ha copiat al porta-retalls.</string>
+  <string name="snackbar_item_copy_password_success">S\'ha copiat la contrasenya al porta-retalls.</string>
 </resources>

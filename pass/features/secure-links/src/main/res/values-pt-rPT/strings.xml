@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!--Create screen-->
+  <string name="secure_links_create_title">Partilhar uma ligação segura</string>
+  <string name="secure_links_create_row_expiration_title">O link expira após</string>
+  <string name="secure_links_create_row_expiration_options_one_hour">1 hora</string>
+  <string name="secure_links_create_row_expiration_options_one_day">1dia</string>
+  <string name="secure_links_create_row_expiration_options_seven_days">7 dias</string>
+  <string name="secure_links_create_row_expiration_options_fourteen_days">14 dias</string>
+  <string name="secure_links_create_row_expiration_options_thirty_days">30 dias</string>
+  <string name="secure_links_create_row_max_views_title">Restringir o número de visualizações</string>
+  <string name="secure_links_create_row_max_views_subtitle">Máximo de visualizações: %d</string>
+  <string name="secure_links_create_button_generate">Gerar uma ligação segura</string>
+  <string name="secure_links_create_snackbar_message_error">Ocorreu um erro ao gerar uma ligação segura.</string>
+  <!--Overview screen-->
+  <string name="secure_links_overview_widget_expiration_title">Expira em:</string>
+  <string name="secure_links_overview_widget_max_views_title">Pode ser visto:</string>
+  <string name="secure_links_overview_widget_open_times_title">Aberto:</string>
+  <plurals name="secure_links_overview_widget_max_views_limited">
+    <item quantity="one">%d vez</item>
+    <item quantity="other">%d vezes</item>
+  </plurals>
+  <string name="secure_links_overview_widget_max_views_unlimited">Ilimitado</string>
+  <string name="secure_links_overview_button_view_all_links">Consultar todos as suas ligações seguras</string>
+  <!--List screen-->
+  <string name="secure_links_list_title">Ligações seguras</string>
+  <string name="secure_links_list_empty_title">Nenhuma ligação segura</string>
+  <string name="secure_links_list_empty_subtitle">Pode começar a criar ligações seguras a partir das opções de partilha de itens.</string>
+  <string name="secure_links_list_expiration_description">Expira em %s</string>
+  <string name="secure_links_list_expired_description">Expirado</string>
+  <plurals name="secure_links_list_viewed_times_description">
+    <item quantity="one">%d vista</item>
+    <item quantity="other">%d vistas</item>
+  </plurals>
+  <string name="secure_links_list_snackbar_message_links_fetch_error">Ocorreu um erro ao obter as ligações seguras.</string>
+  <string name="secure_links_list_header_title_inactive">Ligações inativas</string>
+  <!--Shared-->
+  <string name="secure_links_shared_action_copy_link">Copiar a ligação</string>
+  <string name="secure_links_shared_action_share_link">Partilhar a ligação</string>
+  <string name="secure_links_shared_action_delete_link">Remover a ligação</string>
+  <string name="secure_links_shared_action_delete_link_inactive">Remover a ligação inativa</string>
+  <string name="secure_links_shared_action_delete_links_inactive">Remover todas as ligações inativas</string>
+  <string name="secure_links_shared_snackbar_message_link_copied">Ligação segura copiada</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">A eliminação da ligação segura foi cancelada.</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_error">Ocorreu um erro ao eliminar a ligação segura.</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">A eliminação de ligações seguras inativas foi cancelada.</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">Ocorreu um erro ao eliminar ligações seguras inativas.</string>
+</resources>

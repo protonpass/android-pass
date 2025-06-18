@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="action_open">Открыть</string>
+  <string name="action_copy">Копировать</string>
+  <!-- Detail -->
+  <string name="detail_init_error">Проблема с получением сведений об элементе</string>
+  <string name="top_bar_edit_button_text">Редактировать</string>
+  <!-- Alias details -->
+  <string name="field_alias_title">Адрес псевдонима</string>
+  <string name="field_alias_disabled_title">Адрес псевдонима (отключен)</string>
+  <string name="alias_copied_to_clipboard">Псевдоним скопирован</string>
+  <string name="alias_detail_field_mailboxes_title">Пересылка на</string>
+  <string name="alias_create_login_from_alias">Создать логин</string>
+  <!-- Note details -->
+  <string name="field_detail_note_title">Заметка</string>
+  <string name="note_detail_copy_note_to_clipboard">Скопировать заметку</string>
+  <string name="note_copied_to_clipboard">Заметка скопирована в буфер обмена</string>
+  <!-- Login details -->
+  <string name="email_copied_to_clipboard">Адрес электронной почты скопирован</string>
+  <string name="username_copied_to_clipboard">Имя пользователя скопировано</string>
+  <string name="password_copied_to_clipboard">Пароль скопирован</string>
+  <string name="website_copied_to_clipboard">Веб-сайт скопирован</string>
+  <string name="totp_copied_to_clipboard">TOTP скопирован</string>
+  <string name="field_copied_to_clipboard">Поле скопировано</string>
+  <string name="move_item_to_trash_message">Элемент перемещён в Корзину</string>
+  <string name="error_move_item_to_trash_message">Ошибка при перемещении в корзину</string>
+  <string name="item_permanently_deleted_message">Элемент удален окончательно</string>
+  <string name="item_permanently_deleted_message_error">Ошибка удаления элемента</string>
+  <string name="item_restored_message">Элемент восстановлен</string>
+  <string name="item_restored_message_error">Ошибка при восстановлении элемента</string>
+  <string name="item_monitor_exclude_message">Элемент успешно удален из мониторинга</string>
+  <string name="item_monitor_exclude_message_error">Произошла ошибка при исключении элемента из мониторинга</string>
+  <string name="item_monitor_include_message">Элемент успешно включен в мониторинг</string>
+  <string name="item_monitor_include_message_error">Произошла ошибка при включении элемента в мониторинг</string>
+  <string name="alias_change_status_error">Произошла ошибка при изменении состояния псевдонима</string>
+  <string name="login_item_generate_totp_error">Ошибка при генерации кода 2FA</string>
+  <string name="login_item_view_alias_button">Посмотреть псевдоним</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Ненадежный пароль</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Этот аккаунт уязвим, посетите службу и смените пароль.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d другое имя пользователя использует тот же пароль</item>
+    <item quantity="few">%d других имен пользователей используют тот же пароль</item>
+    <item quantity="many">%d других имен пользователей используют тот же пароль</item>
+    <item quantity="other">%d других имен пользователей используют тот же пароль</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Настройте двухфакторную идентификацию для повышения безопасности</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Эта служба предлагает двухфакторную аутентификацию. Включите ее, чтобы обеспечить дополнительную безопасность аккаунта.</string>
+  <string name="login_item_reused_passwords_subtitle">Элементы из ваших хранилищ, которые используют этот пароль.</string>
+  <string name="field_email">Адрес эл. почты</string>
+  <string name="field_username">Имя пользователя</string>
+  <string name="field_username_or_email">Имя пользователя или адрес электронной почты</string>
+  <string name="field_password">Пароль</string>
+  <string name="websites_section_title">Веб-сайты</string>
+  <string name="totp_section_title">Токен 2ФА (TOTP)</string>
+  <string name="action_reveal_password">Показать пароль</string>
+  <string name="action_conceal_password">Скрыть пароль</string>
+  <string name="action_reveal_number">Показать номер</string>
+  <string name="action_conceal_number">Скрыть номер</string>
+  <string name="share_button_content_description">Открыть кнопку \"поделиться\"</string>
+  <string name="open_menu_icon_content_description">Кнопка чтобы открыть меню</string>
+  <string name="mfa_limit_reached">Достигнут предел двухфакторных идентификаций</string>
+  <string name="mfa_icon_content_description">2FA icon</string>
+  <string name="custom_field_text_icon_description">Текстовое настраиваемое поле</string>
+  <string name="custom_field_hidden_icon_description">Скрытое настраиваемое поле</string>
+  <string name="custom_field_totp_icon_description">Настраиваемое поле 2FA</string>
+  <!-- Credit card details -->
+  <string name="credit_card_cardholder_field_name">Имя на карте</string>
+  <string name="credit_card_number_field_name">Номер карты</string>
+  <string name="credit_card_cvv_field_name">Код безопасности</string>
+  <string name="credit_card_pin_field_name">PIN-код</string>
+  <string name="credit_card_expiration_date_field_name">Срок действия</string>
+  <string name="credit_card_cardholder_copied_to_clipboard">Владелец карты скопирован в буфер обмена</string>
+  <string name="credit_card_number_copied_to_clipboard">Номер карты скопирован в буфер обмена</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Код безопасности скопирован в буфер обмена</string>
+  <!-- Bottomsheet -->
+  <string name="move_to_trash_item_detail_bottom_sheet">Переместить в корзину</string>
+  <string name="migrate_item_detail_bottom_sheet">Переместить в другое хранилище</string>
+  <!-- More info -->
+  <string name="date_today">Сегодня %s</string>
+  <string name="date_yesterday">Вчера %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <string name="item_detail_cannot_perform_action_edit_title">Невозможно отредактировать</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Вы не можете редактировать этот элемент, потому что у вас для этого недостаточно прав.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Вы можете редактировать элементы только в самых старых хранилищах. Чтобы отредактировать этот элемент, пожалуйста, обновите текущий тариф.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Вы не можете отредактировать этот элемент, потому что он находится в корзине. Пожалуйста, переместите его из корзины, прежде чем редактировать.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Невозможно поделиться</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">У вас недостаточно прав для совместного использования этого хранилища.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Вы достигли предела общего доступа к хранилищу. Для того, чтобы поделиться большим количеством хранилищ, улучшите ваш текущий тариф.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Вы не можете поделиться этим элементом, потому что он находится в корзине. Переместите его из корзины перед тем, как делиться доступом.</string>
+  <string name="password_score_vulnerable">Уязвимый</string>
+  <string name="password_score_weak">Слабый</string>
+  <string name="password_score_strong">Надежный</string>
+  <string name="passkey_detail_bottomsheet_title">Ключ доступа</string>
+  <string name="passkey_detail_bottomsheet_username">Имя пользователя</string>
+  <string name="passkey_detail_bottomsheet_domain">Домен</string>
+  <string name="passkey_detail_bottomsheet_key">Ключ</string>
+  <string name="passkey_detail_bottomsheet_created">Создано</string>
+  <string name="activity_in_last_two_weeks">Активности за последние 14 дней</string>
+  <string name="contacts">Контакты</string>
+  <string name="contacts_section_description">Чтобы скрыть свой личный адрес электронной почты, вы можете создать контакт псевдонима, который будет маскировать ваш адрес.</string>
+  <string name="field_detail_display_name_title">Отображаемое имя</string>
+  <string name="display_name_section_description">Отображаемое имя при отправке электронной почты с этого псевдонима.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s пересылка</item>
+    <item quantity="few">%1$s пересылки</item>
+    <item quantity="many">%1$s пересылок</item>
+    <item quantity="other">%1$s пересылок</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s ответ</item>
+    <item quantity="few">%1$s ответа</item>
+    <item quantity="many">%1$s ответов</item>
+    <item quantity="other">%1$s ответов</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s блокировка</item>
+    <item quantity="few">%1$s блокировки</item>
+    <item quantity="many">%1$s блокировок</item>
+    <item quantity="other">%1$s блокировок</item>
+  </plurals>
+  <string name="open_with">Открыть с помощью:</string>
+  <string name="open_attachments_error">Не удалось открыть вложение</string>
+</resources>

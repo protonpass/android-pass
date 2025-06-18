@@ -27,4 +27,7 @@
   <string name="topbar_search_query_oldest_vaults">가장 오래된 금고 내에서 검색…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">검색...</string>
   <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">모든 계정 (%1$s)</string>
+  <string name="select_item_save_credential_title">비밀번호 자격 증명 저장</string>
+  <string name="select_item_save_credential_subtitle">자격 증명을 저장할 계정을 선택하세요.</string>
+  <string name="select_item_save_credential_button">계정 선택</string>
 </resources>

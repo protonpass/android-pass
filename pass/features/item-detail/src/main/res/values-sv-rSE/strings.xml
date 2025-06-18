@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="action_open">Öppna</string>
+  <string name="action_copy">Kopiera</string>
+  <!-- Detail -->
+  <string name="detail_init_error">Problem att hämta objektdetaljer</string>
+  <string name="top_bar_edit_button_text">Redigera</string>
+  <!-- Alias details -->
+  <string name="field_alias_title">Alias-adress</string>
+  <string name="field_alias_disabled_title">Alias-adress (inaktiverad)</string>
+  <string name="alias_copied_to_clipboard">Alias kopierat</string>
+  <string name="alias_detail_field_mailboxes_title">Vidarebefordrar till</string>
+  <string name="alias_create_login_from_alias">Skapa inloggning</string>
+  <!-- Note details -->
+  <string name="field_detail_note_title">Anteckning</string>
+  <string name="note_detail_copy_note_to_clipboard">Kopiera anteckning</string>
+  <string name="note_copied_to_clipboard">Anteckning kopierad till urklipp</string>
+  <!-- Login details -->
+  <string name="email_copied_to_clipboard">E-postadress kopierad</string>
+  <string name="username_copied_to_clipboard">Användarnamn kopierat</string>
+  <string name="password_copied_to_clipboard">Lösenord kopierat</string>
+  <string name="website_copied_to_clipboard">Webbplats kopierad</string>
+  <string name="totp_copied_to_clipboard">TOTP kopierat</string>
+  <string name="field_copied_to_clipboard">Fält kopierat</string>
+  <string name="move_item_to_trash_message">Objekt flyttat till papperskorg</string>
+  <string name="error_move_item_to_trash_message">Gick inte flytta till papperskorg</string>
+  <string name="item_permanently_deleted_message">Objekt permanent borttaget</string>
+  <string name="item_permanently_deleted_message_error">Fel vid borttagning av objekt</string>
+  <string name="item_restored_message">Objekt återställt</string>
+  <string name="item_restored_message_error">Fel vid återställning av objekt</string>
+  <string name="item_monitor_exclude_message">Objekt exkluderat från övervakning</string>
+  <string name="item_monitor_exclude_message_error">Det uppstod ett fel när objekt skulle exkluderas från övervakning</string>
+  <string name="item_monitor_include_message">Objekt inkluderat i övervakning</string>
+  <string name="item_monitor_include_message_error">Det uppstod ett fel när objekt skulle inkluderas i övervakning</string>
+  <string name="alias_change_status_error">Det uppstod ett fel när statusen för alias skulle ändras</string>
+  <string name="login_item_generate_totp_error">Gick inte generera 2FA-kod</string>
+  <string name="login_item_view_alias_button">Visa alias</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Svagt lösenord</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Detta konto är sårbart, besök tjänsten och ändra ditt lösenord.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d annan inloggning använder samma lösenord</item>
+    <item quantity="other">%d andra inloggningar använder samma lösenord</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Ställ in 2FA för mer säkerhet</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Denna tjänst erbjuder 2FA. Aktivera det för extra kontosäkerhet.</string>
+  <string name="login_item_reused_passwords_subtitle">Objekt från dina valv som använder detta lösenord.</string>
+  <string name="field_email">E-postadress</string>
+  <string name="field_username">Användarnamn</string>
+  <string name="field_username_or_email">Användarnamn eller e-postadress</string>
+  <string name="field_password">Lösenord</string>
+  <string name="websites_section_title">Webbplatser</string>
+  <string name="totp_section_title">2FA-token (TOTP)</string>
+  <string name="action_reveal_password">Visa lösenord</string>
+  <string name="action_conceal_password">Dölj lösenord</string>
+  <string name="action_reveal_number">Avslöja nummer</string>
+  <string name="action_conceal_number">Dölj nummer</string>
+  <string name="share_button_content_description">Öppna delningsknapp</string>
+  <string name="open_menu_icon_content_description">Knapp för “Öppna meny“</string>
+  <string name="mfa_limit_reached">2FA-gränsen uppnådd</string>
+  <string name="mfa_icon_content_description">2FA-ikon</string>
+  <string name="custom_field_text_icon_description">Anpassat textfält</string>
+  <string name="custom_field_hidden_icon_description">Dolt anpassat fält</string>
+  <string name="custom_field_totp_icon_description">Anpassat 2FA-fält</string>
+  <!-- Credit card details -->
+  <string name="credit_card_cardholder_field_name">Namn på kort</string>
+  <string name="credit_card_number_field_name">Kortnummer</string>
+  <string name="credit_card_cvv_field_name">Säkerhetskod</string>
+  <string name="credit_card_pin_field_name">PIN-kod</string>
+  <string name="credit_card_expiration_date_field_name">Utgångsdatum</string>
+  <string name="credit_card_cardholder_copied_to_clipboard">Kortinnehavare kopierad till urklipp</string>
+  <string name="credit_card_number_copied_to_clipboard">Kortnummer kopierat till urklipp</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Säkerhetskod kopierat till urklipp</string>
+  <!-- Bottomsheet -->
+  <string name="move_to_trash_item_detail_bottom_sheet">Flytta till papperskorg</string>
+  <string name="migrate_item_detail_bottom_sheet">Flytta till annat valv</string>
+  <!-- More info -->
+  <string name="date_today">Idag %s</string>
+  <string name="date_yesterday">Igår %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <string name="item_detail_cannot_perform_action_edit_title">Kan inte redigera</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Du kan inte redigera detta objekt eftersom du inte har tillräckligt med behörighet för att göra det.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Du får endast redigera objekt i dina äldsta valv. För att kunna redigera detta objekt, uppgradera ditt nuvarande paket.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Du kan inte redigera detta objekt eftersom det är i papperskorgen. Flytta det från papperskorgen innan du redigerar det.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Kan inte dela</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Du har inte tillräckligt med behörigheter för att dela detta valv.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Du har nått gränsen för valvdelning. För att dela fler valv, uppgradera ditt nuvarande paket.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Du kan inte dela detta objekt eftersom det ligger i papperskorgen. Flytta den ur papperskorgen innan du delar det.</string>
+  <string name="password_score_vulnerable">Sårbart</string>
+  <string name="password_score_weak">Svagt</string>
+  <string name="password_score_strong">Starkt</string>
+  <string name="passkey_detail_bottomsheet_title">Passkey</string>
+  <string name="passkey_detail_bottomsheet_username">Användarnamn</string>
+  <string name="passkey_detail_bottomsheet_domain">Domän</string>
+  <string name="passkey_detail_bottomsheet_key">Nyckel</string>
+  <string name="passkey_detail_bottomsheet_created">Skapad</string>
+  <string name="activity_in_last_two_weeks">Aktivitet under de senaste 14 dagarna</string>
+  <string name="contacts">Kontakter</string>
+  <string name="contacts_section_description">För att hålla din personliga e-postadress dold kan du skapa en aliaskontakt som maskerar din adress.</string>
+  <string name="field_detail_display_name_title">Visningsnamn</string>
+  <string name="display_name_section_description">Visningsnamnet när du skickar ett e-postmeddelande från detta alias.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s vidarebefordran</item>
+    <item quantity="other">%1$s vidarebefordringar</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s svar</item>
+    <item quantity="other">%1$s svar</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s blockering</item>
+    <item quantity="other">%1$s blockeringar</item>
+  </plurals>
+  <string name="open_with">Öppna med:</string>
+  <string name="open_attachments_error">Kunde inte öppna bilaga</string>
+</resources>

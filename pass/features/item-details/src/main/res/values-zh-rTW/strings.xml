@@ -73,4 +73,10 @@
   <string name="item_details_snackbar_message_ssid_copied">SSID copied</string>
   <string name="open_with">Open with:</string>
   <string name="open_attachments_error">Could not open attachment</string>
+  <string name="passkey_detail_bottomsheet_title">密碼金鑰</string>
+  <string name="passkey_detail_bottomsheet_username">使用者名稱</string>
+  <string name="passkey_detail_bottomsheet_domain">網域</string>
+  <string name="passkey_detail_bottomsheet_key">金鑰</string>
+  <string name="passkey_detail_bottomsheet_created">已創建</string>
+  <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
 </resources>

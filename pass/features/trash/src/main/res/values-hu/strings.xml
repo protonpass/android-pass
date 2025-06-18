@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="bottomsheet_delete_permanently">Végleges törlés</string>
+  <string name="alert_confirm_delete_item_dialog_title">Végleges törlés?</string>
+  <string name="alert_confirm_delete_item_dialog_message">Ez a művelet visszavonhatatlan.</string>
+  <string name="alert_confirm_delete_item_dialog_shared_warning_message">Ez a tétel jelenleg meg van osztva. Törlésével az összes többi felhasználó számára megszűnik a hozzáférés.</string>
+  <string name="alias_dialog_move_to_trash_title">Áthelyezés a Lomtárba?</string>
+  <string name="alias_dialog_move_to_trash_content">Ha az egyik e-mail álnevét a Lomtárba helyezi annak az e-mail továbbítása le lesz állítva.</string>
+  <string name="alias_dialog_move_to_trash_confirm">Jóváhagyás</string>
+  <string name="delete_alias_confirm">Törölje, soha nem lesz rá szükségem</string>
+  <string name="delete_alias_title">%s törlése</string>
+  <string name="delete_alias_enabled_subtitle">"Kérjük, vegye figyelembe, hogy a törlés után az álnév nem állítható vissza. Lehet, hogy inkább az álnév letiltását szeretné? "</string>
+  <string name="delete_alias_disabled_subtitle">Vegye figyelembe, hogy a törlés után az e-mail álnév nem állítható vissza. Az álnév már le van tiltva, és nem továbbítja az e-maileket a postafiókjába.</string>
+  <plurals name="bulk_delete_alias_title">
+    <item quantity="one">%d e-mail álnév végleges törlésére készül</item>
+    <item quantity="other">%d e-mail álnév végleges törlésére készül</item>
+  </plurals>
+  <string name="bulk_delete_alias_subtitle">Vegye figyelembe, hogy a törlés után az e-mail álneveket nem lehet visszaállítani</string>
+  <string name="bulk_delete_alias_confirm">Értettem, soha nem lesz rájuk szükségem.</string>
+  <string name="delete_alias_disable">E-mail álnév letiltása</string>
+</resources>

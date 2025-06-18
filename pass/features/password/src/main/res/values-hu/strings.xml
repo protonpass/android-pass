@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_password_copy">Másolás és bezárás</string>
+  <string name="password_copied_to_clipboard">Jelszó másolva</string>
+  <string name="bottomsheet_generate_password_title">Jelszó létrehozása</string>
+  <string name="password_type">Típus</string>
+  <string name="special_characters">Speciális karakterek (!&amp;*)</string>
+  <plurals name="character_count">
+    <item quantity="one">%s karakter</item>
+    <item quantity="other">%s karakter</item>
+  </plurals>
+  <plurals name="word_count">
+    <item quantity="one">%s szó</item>
+    <item quantity="other">%s szó</item>
+  </plurals>
+  <string name="word_separator">Szóelválasztó</string>
+  <string name="bottomsheet_option_capital_letters">Nagybetűk (A-Z)</string>
+  <string name="bottomsheet_option_capitalise">Nagy kezdőbetű</string>
+  <string name="bottomsheet_option_include_numbers">Számok is (0-9)</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Kötőjelek ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Szóközök</string>
+  <string name="bottomsheet_option_word_separator_periods">Pontok ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Vesszők ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Aláhúzások ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Számok</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Számok és szimbólumok</string>
+  <string name="regenerate_password_icon_content_description">Jelszó újragenerálása gomb</string>
+  <string name="password_mode_memorable">Megjegyezhető jelszó</string>
+  <string name="password_mode_random">Véletlenszerű jelszó</string>
+  <string name="password_mode_icon">Jelszó mód ikon</string>
+  <string name="password_words_separator_icon">Jelszó szóelválasztó</string>
+</resources>

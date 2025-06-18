@@ -5,27 +5,57 @@
   <string name="sort_by_title_desc">Título (Z-A)</string>
   <string name="sort_by_creation_asc">Do mais antigo para o mais recente</string>
   <string name="sort_by_creation_desc">Do mais recente para o mais antigo</string>
-  <string name="sort_by_modification_date">Mais recente</string>
+  <string name="sort_by_modification_date">Utilização recente</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Todos</string>
   <string name="item_list_header_pinned_search_results">Fixado</string>
-  <string name="item_list_header_logins_type">Inícios de sessão</string>
+  <string name="item_list_header_logins_type">Logins</string>
+  <string name="item_list_header_logins_totp_type">Inícios de sessão com TOTP</string>
   <string name="item_list_header_aliases_type">Aliases</string>
   <string name="item_list_header_notes_type">Notas</string>
-  <string name="item_list_header_credit_cards_type">Credit cards</string>
+  <string name="item_list_header_credit_cards_type">Cartões de crédito</string>
   <plurals name="item_list_header_results">
     <item quantity="one">resultado</item>
     <item quantity="other">resultados</item>
   </plurals>
+  <string name="item_list_header_identities_type">Identidades</string>
+  <string name="item_list_header_custom_type">Itens personalizados</string>
+  <string name="item_list_header_shared_with_me">Partilhado comigo</string>
+  <string name="item_list_header_shared_by_me">Partilhado por mim</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Confirmar</string>
   <string name="bottomsheet_cancel_button">Cancelar</string>
   <string name="bottomsheet_move_to_trash">Mover para o lixo</string>
   <string name="bottomsheet_pin_item">Fixar</string>
   <string name="bottomsheet_unpin_item">Desafixar</string>
+  <string name="bottomsheet_view_item_history">Mostrar o histórico</string>
+  <string name="bottomsheet_monitor_exclude">Excluir da monitorização</string>
+  <string name="bottomsheet_monitor_include">Incluir na monitorização</string>
+  <string name="bottomsheet_migrate_item">Mover para outro cofre</string>
+  <string name="bottomsheet_copy_item_note">Copiar nota</string>
+  <string name="bottomsheet_delete_permanently">Eliminar permanentemente</string>
+  <string name="bottomsheet_restore">Restaurar</string>
+  <string name="bottomsheet_leave">Deixar</string>
+  <string name="bottomsheet_no_actions">Nenhuma ação disponível</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Abrir o menu de acção do item</string>
   <string name="action_upgrade_now">Actualizar agora</string>
+  <string name="action_not_now">Agora não</string>
+  <string name="action_learn_more">Saiba mais</string>
+  <string name="action_enable">Ativar</string>
+  <string name="action_view_details">Ver os detalhes</string>
+  <string name="action_see_all">Ver tudo</string>
+  <string name="action_confirm">Confirmar</string>
+  <string name="action_cancel">Cancelar</string>
+  <string name="action_continue">Continuar</string>
+  <string name="action_retry">Repetir</string>
+  <string name="action_edit">Editar</string>
+  <string name="action_add">Adicionar</string>
+  <string name="action_delete">Eliminar</string>
+  <string name="action_make_default">Tornar predefinido</string>
+  <string name="action_verify">Verificar</string>
+  <string name="action_close">Fechar</string>
+  <string name="action_update">Atualizar</string>
   <!-- Empty list -->
   <string name="empty_list_title">Adicione o seu primeiro item</string>
   <string name="empty_search_results_title">Nenhum resultado encontrado</string>
@@ -51,12 +81,13 @@
   <string name="bottom_bar_list_items_icon_content_description">Itens da lista</string>
   <string name="bottom_bar_add_item_icon_content_description">Adicionar um item</string>
   <string name="bottom_bar_profile_icon_content_description">Perfil</string>
+  <string name="bottom_bar_security_center_icon_content_description">Centro de segurança</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Hoje</string>
   <string name="most_recent_yesterday">Ontem</string>
   <string name="most_recent_this_week">Esta semana</string>
   <string name="most_recent_last_two_weeks">Últimas duas semanas</string>
-  <string name="most_recent_last_30_days">Últimos 30 dias</string>
+  <string name="most_recent_last_30_days">Último mês</string>
   <string name="most_recent_last_60_days">Últimos 60 dias</string>
   <string name="most_recent_last_90_days">Últimos 90 dias</string>
   <string name="most_recent_within_the_last_year">Dentro do último ano</string>
@@ -70,7 +101,7 @@
   </plurals>
   <!-- Confirm close dialog -->
   <string name="confirm_close_dialog_title">Descartar as alterações?</string>
-  <string name="confirm_close_dialog_message">Tem alterações não guardadas. Tem certeza de que deseja descartá-las?</string>
+  <string name="confirm_close_dialog_message">Tem alterações não guardadas. Tem a certeza de que deseja descartá-las?</string>
   <string name="confirm_close_dialog_close_button">Descartar</string>
   <!-- Upgrade -->
   <string name="upgrade">Actualizar</string>
@@ -78,10 +109,238 @@
   <string name="show_advanced_options">Opções avançadas</string>
   <string name="hide_advanced_options">Ocultar as opções avançadas</string>
   <!-- Labels -->
-  <string name="label_password_strength_strong">Strong</string>
-  <string name="label_password_strength_vulnerable">Vulnerable</string>
-  <string name="label_password_strength_weak">Weak</string>
+  <string name="label_password_strength_strong">Forte</string>
+  <string name="label_password_strength_vulnerable">Vulnerável</string>
+  <string name="label_password_strength_weak">Fraco</string>
   <!-- Pinning -->
-  <string name="pinning_carousel_see_all">See all</string>
-  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
+  <string name="pinning_carousel_see_all">Ver tudo</string>
+  <!-- Dates -->
+  <string name="date_today" comment="Pattern to display today's date and time. (e.g. Today 10:25)">Hoje %s</string>
+  <string name="date_yesterday" comment="Pattern to display yesterday's date and time. (e.g. Yesterday 10:25)">Ontem %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to 12 Feb 12:34
+    -->
+  <string name="date_full_date_format_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <!--
+   Pattern used when displaying a date including the year.
+   It would translate to 12 Feb 2023 12:34
+   -->
+  <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
+  <!-- Items -->
+  <string name="item_details_alias_section_alias_title">Endereço do alias</string>
+  <string name="item_details_alias_section_alias_disabled_title">Endereço do alias (desativado)</string>
+  <string name="item_details_alias_section_mailboxes_title">A encaminhar para</string>
+  <string name="item_details_credit_card_section_cardholder_title">Nome no cartão</string>
+  <string name="item_details_credit_card_section_card_number_title">Número do cartão</string>
+  <string name="item_details_credit_card_section_expiration_date_title">Expira em</string>
+  <string name="item_details_credit_card_section_cvv_title">Código de segurança</string>
+  <string name="item_details_credit_card_section_pin_title">Código PIN</string>
+  <string name="item_details_login_section_email_title">Endereço de e-mail</string>
+  <string name="item_details_login_section_username_title">Nome de utilizador</string>
+  <string name="item_details_login_section_password_title">Palavra-passe</string>
+  <string name="item_details_login_section_primary_totp_title">Token A2F (TOTP)</string>
+  <string name="item_details_login_section_websites_title">Sítios web</string>
+  <string name="item_details_identity_section_personal_title">Detalhes pessoais</string>
+  <string name="item_details_identity_section_personal_first_name_title">Primeiro nome</string>
+  <string name="item_details_identity_section_personal_middle_name_title">Segundo nome</string>
+  <string name="item_details_identity_section_personal_last_name_title">Último nome</string>
+  <string name="item_details_identity_section_personal_full_name_title">Nome completo</string>
+  <string name="item_details_identity_section_personal_email_title">Endereço de e-mail</string>
+  <string name="item_details_identity_section_personal_gender_title">Sexo</string>
+  <string name="item_details_identity_section_personal_phone_title">Número de telefone</string>
+  <string name="item_details_identity_section_personal_birthday_title">Data de nascimento</string>
+  <string name="item_details_identity_section_address_title">Detalhes do endereço</string>
+  <string name="item_details_identity_section_address_organization_title">Organização</string>
+  <string name="item_details_identity_section_address_street_address_title">Endereço, caixa postal</string>
+  <string name="item_details_identity_section_address_floor_title">Piso</string>
+  <string name="item_details_identity_section_address_city_title">Cidade</string>
+  <string name="item_details_identity_section_address_zip_or_postal_code_title">Código postal</string>
+  <string name="item_details_identity_section_address_state_or_province_title">Estado ou província</string>
+  <string name="item_details_identity_section_address_county_title">Província</string>
+  <string name="item_details_identity_section_address_country_or_region_title">País ou região</string>
+  <string name="item_details_identity_section_contact_title">Detalhes do contacto</string>
+  <string name="item_details_identity_section_contact_social_security_number_title">Número de segurança social</string>
+  <string name="item_details_identity_section_contact_passport_number_title">Número do passaporte</string>
+  <string name="item_details_identity_section_contact_license_number_title">Número da carta de condução/licença</string>
+  <string name="item_details_identity_section_contact_website_title">Sítio web</string>
+  <string name="item_details_identity_section_contact_x_handle_title">Conta do X</string>
+  <string name="item_details_identity_section_contact_secondary_phone_number_title">Número de telefone secundário</string>
+  <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
+  <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
+  <string name="item_details_identity_section_contact_facebook_title">Facebook</string>
+  <string name="item_details_identity_section_contact_yahoo_title">Yahoo</string>
+  <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
+  <string name="item_details_identity_section_work_title">Detalhes do trabalho</string>
+  <string name="item_details_identity_section_work_company_title">Empresa</string>
+  <string name="item_details_identity_section_work_occupation_title">Profissão</string>
+  <string name="item_details_identity_section_work_email_title">Endereço de e-mail de trabalho</string>
+  <string name="item_details_identity_section_work_phone_number_title">Número de telefone do trabalho</string>
+  <string name="item_details_identity_section_work_personal_website_title">Sítio web pessoal</string>
+  <string name="item_details_shared_section_note_title">Nota</string>
+  <string name="item_details_shared_section_item_history_last_autofill_title">Último preenchimento automático</string>
+  <string name="item_details_shared_section_item_history_created_title">Criado</string>
+  <string name="item_details_shared_section_item_history_modified_times_title">Modificado (%d)</string>
+  <string name="item_details_shared_section_item_history_button_view">Ver o histórico do item</string>
+  <string name="item_details_shared_section_more_info_header_title">Mais informações</string>
+  <string name="item_details_shared_section_more_info_header_icon_content_description">Ícone de informações adicionais sobre o item</string>
+  <string name="item_details_shared_section_more_info_item_id">ID do item</string>
+  <string name="item_details_shared_section_more_info_vault_id">ID do cofre</string>
+  <string name="item_details_shared_section_more_info_share_id">ID de partilha</string>
+  <string name="item_details_wifi_network_label_ssid_name">Nome (SSID)</string>
+  <string name="item_details_wifi_network_label_password">Palavra-passe</string>
+  <string name="item_details_wifi_network_label_security">Segurança</string>
+  <string name="item_details_ssh_key_label_public_key">Chave pública</string>
+  <string name="item_details_ssh_key_label_private_key">Chave privada</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">A versão da aplicação não é mais suportada. Atualize a sua aplicação.</string>
+  <!-- Passkeys -->
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Chave de acesso</string>
+  <!-- Upgrade -->
+  <string name="dialog_upgrade_plan_title">Melhorar o plano?</string>
+  <string name="dialog_upgrade_plan_message">Esta funcionalidade não está disponível para utilizadores do plano gratuito. Se quiser desfrutar desta e de outras funcionalidades interessantes, melhore o seu plano e experimente!</string>
+  <string name="dialog_upgrade_plan_action_confirm">Actualizar</string>
+  <string name="dialog_upgrade_plan_action_cancel">Agora não</string>
+  <!-- Words -->
+  <string name="email_address">Endereço de e-mail</string>
+  <string name="email_address_invalid">O endereço de e-mail é inválido.</string>
+  <string name="password">Palavra-passe</string>
+  <!-- Tooltips -->
+  <string name="tooltip_dismiss_button_content_description">Botão para descartar esta dica e não mostrá-la novamente</string>
+  <!-- Time units -->
+  <plurals name="time_unit_years">
+    <item quantity="one">%d ano</item>
+    <item quantity="other">%d anos</item>
+  </plurals>
+  <plurals name="time_unit_months">
+    <item quantity="one">%d mês</item>
+    <item quantity="other">%d meses</item>
+  </plurals>
+  <plurals name="time_unit_weeks">
+    <item quantity="one">%d semana</item>
+    <item quantity="other">%d semanas</item>
+  </plurals>
+  <plurals name="time_unit_days">
+    <item quantity="one">%d dia</item>
+    <item quantity="other">%d dias</item>
+  </plurals>
+  <plurals name="time_unit_hours">
+    <item quantity="one">%d hora</item>
+    <item quantity="other">%d horas</item>
+  </plurals>
+  <plurals name="time_unit_minutes">
+    <item quantity="one">%d minuto</item>
+    <item quantity="other">%d minutos</item>
+  </plurals>
+  <plurals name="time_unit_seconds">
+    <item quantity="one">%d segundo</item>
+    <item quantity="other">%d segundos</item>
+  </plurals>
+  <plurals name="aliases_count">
+    <item quantity="one">%d alias</item>
+    <item quantity="other">%d aliases</item>
+  </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">Nota copiada</string>
+  <string name="snack_bar_message_item_migration_error">Ocorreu um erro ao migrar este item.</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">O item excluído da monitorização.</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">Ocorreu um erro ao excluir o item da monitorização.</string>
+  <string name="snack_bar_message_item_monitor_included_success">O item foi incluído na monitorização.</string>
+  <string name="snack_bar_message_item_monitor_included_error">Ocorreu um erro ao incluir o item na monitorização.</string>
+  <string name="snack_bar_message_item_pinned_success">O item foi fixado.</string>
+  <string name="snack_bar_message_item_pinned_error">Ocorreu um erro ao fixar este item.</string>
+  <string name="snack_bar_message_item_unpinned_success">O item foi desfixado.</string>
+  <string name="snack_bar_message_item_unpinned_error">Ocorreu um erro ao desfixar este item.</string>
+  <string name="snack_bar_message_item_trashed_success">O item foi movido no lixo.</string>
+  <string name="snack_bar_message_item_trashed_error">Ocorreu um erro ao mover este item no lixo.</string>
+  <string name="snack_bar_message_item_restore_success">O item foi restaurado.</string>
+  <string name="snack_bar_message_item_restore_error">Ocorreu um erro ao restaurar este item.</string>
+  <string name="snack_bar_message_item_delete_success">O item foi eliminado.</string>
+  <string name="snack_bar_message_item_delete_error">Ocorreu um erro ao eliminar este item.</string>
+  <!-- Simple Login -->
+  <string name="simple_login_widget_title">Ativar a sincronização com SimpleLogin</string>
+  <plurals name="simple_login_widget_pending_aliases_message">
+    <item quantity="one">Detetámos que tem %d alias que está presente no SimpleLogin, mas está ausente no Proton Pass. Gostaria de importá-lo?</item>
+    <item quantity="other">Detetámos que tem %d aliases que estão presentes no SimpleLogin, mas estão ausentes no Proton Pass. Gostaria de sincronizá-los?</item>
+  </plurals>
+  <string name="simple_login_widget_action">Sincronizar os aliases</string>
+  <!-- Verification codes -->
+  <string name="verification_code_not_received">Não recebeu o código?</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Verifique na sua pasta de Spam um email chamado «%s».</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Confirme o seu endereço de e-mail para o Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Confirme a sua caixa de correio.</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Se não conseguir encontrar este e-mail, pode %s.</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">pedir um novo código</string>
+  <string name="field_display_name_title">Nome exibido</string>
+  <!-- Attachments -->
+  <plurals name="attachment_file_amount">
+    <item quantity="one">%1$s ficheiro</item>
+    <item quantity="other">%1$s ficheiros</item>
+  </plurals>
+  <string name="attachment_title">Anexos</string>
+  <string name="attachment_no_files">Enviar ficheiros a partir do seu dispositivo</string>
+  <string name="attachment_add_file">Anexar um ficheiro</string>
+  <string name="attachment_row_upload_failed">Erro no carregamento</string>
+  <string name="attachment_row_retry">Repetir</string>
+  <string name="options_menu_content_description">Menu de opções</string>
+  <!-- Items -->
+  <plurals name="shared_items_count">
+    <item quantity="one">%d item partilhado</item>
+    <item quantity="other">%d itens partilhados</item>
+  </plurals>
+  <plurals name="users_count">
+    <item quantity="one">%d utilizador</item>
+    <item quantity="other">%d utilizadores</item>
+  </plurals>
+  <plurals name="members_count">
+    <item quantity="one">%d membro</item>
+    <item quantity="other">%d membros</item>
+  </plurals>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
+  <string name="show_network_qr_code">Mostrar o código QR da rede</string>
+  <string name="expand_collpased_text">mais</string>
+  <string name="collapse_expanded_text">menos</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Palavra-passe fraca</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Esta conta está vulnerável. Consulte o serviço e altere a sua palavra-passe.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d outro início de sessão usa a mesma palavra-passe.</item>
+    <item quantity="other">%d outros inícios de sessão usam a mesma palavra-passe.</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Configure a autenticação A2F para mais segurança</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Este serviço oferece autenticação de dois fatores (A2F). Ative-a para aumentar a segurança da sua conta.</string>
+  <string name="login_item_reused_passwords_subtitle">Itens dos seus cofres que utilizam esta palavra-passe.</string>
+  <string name="mfa_limit_reached">Limite A2F atingido</string>
+  <string name="activity_in_last_two_weeks">Atividade nos últimos 14 dias</string>
+  <string name="contacts">Contactos</string>
+  <string name="contacts_section_description">Para manter o seu endereço de e-mail pessoal oculto, pode criar um alias de contacto para ocultar o seu endereço.</string>
+  <string name="field_detail_display_name_title">Nome exibido</string>
+  <string name="display_name_section_description">O nome a mostrar ao enviar um email deste alias.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s encaminhamento</item>
+    <item quantity="other">%1$s encaminhamentos</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s resposta</item>
+    <item quantity="other">%1$s respostas</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s bloqueado</item>
+    <item quantity="other">%1$s bloqueados</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">Criar um início de sessão</string>
+  <string name="banner_contacts_title">Sabia?</string>
+  <string name="banner_contacts_subtitle">Cada vez que o seu alias recebe um e-mail de alguém, um contato é criado automaticamente.</string>
+  <string name="action_reveal">Mostrar</string>
+  <string name="action_conceal">Ocultar</string>
 </resources>

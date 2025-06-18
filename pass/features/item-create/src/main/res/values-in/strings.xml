@@ -190,7 +190,6 @@
   <string name="close_scree_icon_content_description">Tombol tutup layar</string>
   <string name="totp_paste_code_action">Tempelkan kode</string>
   <string name="totp_scan_code_action">Pindai kode</string>
-  <string name="field_cannot_be_empty">Kolom ini harus diisi</string>
   <string name="camera_permission_explanation">Izin kamera diperlukan agar fitur ini tersedia.</string>
   <string name="camera_permission_open_settings">Buka pengaturan</string>
   <!--  TOTP limit  -->

@@ -17,5 +17,5 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="navegador_aberto_com">Abra com:</string>
+  <string name="browser_open_with">Abra com:</string>
 </resources>

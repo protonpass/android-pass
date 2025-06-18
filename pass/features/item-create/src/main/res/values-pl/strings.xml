@@ -190,7 +190,6 @@
   <string name="close_scree_icon_content_description">Ikona zamknij okno</string>
   <string name="totp_paste_code_action">Wklej kod</string>
   <string name="totp_scan_code_action">Skanuj kod</string>
-  <string name="field_cannot_be_empty">Pole nie może być puste</string>
   <string name="camera_permission_explanation">Ta funkcja potrzebuje uprawnienia do aparatu.</string>
   <string name="camera_permission_open_settings">Otwórz ustawienia</string>
   <!--  TOTP limit  -->

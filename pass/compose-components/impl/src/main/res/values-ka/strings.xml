@@ -309,4 +309,38 @@
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <string name="show_network_qr_code">Show Network QR Code</string>
+  <string name="expand_collpased_text">more</string>
+  <string name="collapse_expanded_text">less</string>
+  <string name="login_item_monitor_widget_weak_pass_title">პაროლი სუსტია</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">ეს ანგარიში მოწყვლადია. მიმართეთ სერვისს და შეცვალეთ თქვენი პაროლი.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d სხვა მომხმარებელი იყენებს ამ პაროლს</item>
+    <item quantity="other">%d სხვა მომხმარებელი იყენებს ამ პაროლს</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">მოირგეთ 2FA მეტი უსაფრთხოებისთვის</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">ეს სერვისი გთავაზობთ 2FA-ს. ჩართეთ ის დამატებითი ანგარიშის უსაფრთხოებისთვის.</string>
+  <string name="login_item_reused_passwords_subtitle">ელემენტები თქვენი საცავებიდან, რომლებიც ამ პაროლს იყენებს.</string>
+  <string name="mfa_limit_reached">მიღწეულია 2FA-ის ლიმიტი</string>
+  <string name="activity_in_last_two_weeks">აქტივობა ბოლო 14 დღეში</string>
+  <string name="contacts">კონტაქტები</string>
+  <string name="contacts_section_description">იმისათვის, რომ თქვენი პირადი ელფოსტის მისამართი დამალული დარჩეს, შეგიძლიათ, შექმნათ ფსევდონიმი კონტაქტი, რომელიც თქვენს მისამართს შენიღბავს.</string>
+  <string name="field_detail_display_name_title">საჩვენებელი სახელი</string>
+  <string name="display_name_section_description">საჩვენებელი სახელი, როცა ელფოსტას ამ ფსევდონიმიდან აგზავნით.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s გადაგზავნილი</item>
+    <item quantity="other">%1$s გადაგზავნილი</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s პასუხი</item>
+    <item quantity="other">%1$s პასუხი</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s დაბლოკილი</item>
+    <item quantity="other">%1$s დაბლოკილი</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">შესვლის შექმნა</string>
+  <string name="banner_contacts_title">იცოდით?</string>
+  <string name="banner_contacts_subtitle">ყოველთვის, როცა თქვენი ფსევდონიმი ელფოსტის მიიღებს, ახალი კონტაქტი ავტომატურად იქნება.</string>
+  <string name="action_reveal">Reveal</string>
+  <string name="action_conceal">Conceal</string>
 </resources>

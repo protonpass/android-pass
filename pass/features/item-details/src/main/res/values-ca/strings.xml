@@ -21,7 +21,7 @@
   <!-- Item details forbidden actions -->
   <string name="item_details_forbidden_actions_edit_title">No es pot editar.</string>
   <string name="item_details_forbidden_actions_edit_permission">No podeu editar aquest element perquè no teniu prou permisos per a fer-ho.</string>
-  <string name="item_details_forbidden_actions_edit_trash">No podeu editar aquest element perquè és a la paperera. Si us plau, traieu-lo de la paperera abans d\'editar-lo.</string>
+  <string name="item_details_forbidden_actions_edit_trash">No podeu editar aquest element perquè és a la paperera. Traieu-lo de la paperera abans d\'editar-lo.</string>
   <string name="item_details_forbidden_actions_edit_upgrade">Només podeu editar elements a les vostres caixes fortes més antigues. Per editar aquest element, milloreu el vostre pla actual.</string>
   <string name="item_details_forbidden_actions_share_title">No es pot compartir.</string>
   <string name="item_details_forbidden_actions_share_limit">Heu assolit el límit de compartició de caixes fortes. Per a compartir més caixes fortes, milloreu el vostre pla actual.</string>
@@ -42,15 +42,15 @@
   <string name="item_details_snackbar_message_custom_field_copied">S\'ha copiat el camp personalitzat</string>
   <string name="item_details_snackbar_message_cvv_copied">S\'ha copiat el codi de seguretat.</string>
   <string name="item_details_snackbar_message_email_copied">S\'ha copiat l\'adreça de correu electrònic.</string>
-  <string name="item_details_snackbar_message_facebook_copied">S\'ha copiat el compte Facebook.</string>
+  <string name="item_details_snackbar_message_facebook_copied">S\'ha copiat el compte de Facebook.</string>
   <string name="item_details_snackbar_message_first_name_copied">S\'ha copiat el nom.</string>
   <string name="item_details_snackbar_message_floor_copied">S\'ha copiat la planta.</string>
   <string name="item_details_snackbar_message_full_name_copied">S\'ha copiat el nom complet.</string>
   <string name="item_details_snackbar_message_gender_copied">S\'ha copiat el gènere.</string>
-  <string name="item_details_snackbar_message_instagram_copied">S\'ha copiat el compte Instagram.</string>
+  <string name="item_details_snackbar_message_instagram_copied">S\'ha copiat el compte d\'Instagram.</string>
   <string name="item_details_snackbar_message_last_name_copied">S\'ha copiat el cognom.</string>
   <string name="item_details_snackbar_message_license_number_copied">S\'ha copiat el número de llicència.</string>
-  <string name="item_details_snackbar_message_linkedin_copied">S\'ha copiat el compte LinkedIn.</string>
+  <string name="item_details_snackbar_message_linkedin_copied">S\'ha copiat el compte de LinkedIn.</string>
   <string name="item_details_snackbar_message_middle_name_copied">S\'ha copiat el segon nom.</string>
   <string name="item_details_snackbar_message_occupation_copied">S\'ha copiat l\'ocupació.</string>
   <string name="item_details_snackbar_message_organization_copied">S\'ha copiat l\'organització.</string>
@@ -59,18 +59,24 @@
   <string name="item_details_snackbar_message_phone_number_copied">S\'ha copiat el número de telèfon.</string>
   <string name="item_details_snackbar_message_pin_copied">S\'ha copiat el codi PIN</string>
   <string name="item_details_snackbar_message_reddit_copied">S\'ha copiat el compte Reddit.</string>
-  <string name="item_details_snackbar_message_social_security_number_copied">S\'ha copiat el número de la Seguretat Social.</string>
+  <string name="item_details_snackbar_message_social_security_number_copied">S\'ha copiat el número de la seguretat social.</string>
   <string name="item_details_snackbar_message_state_or_province_copied">S\'ha copiat l\'estat o la província.</string>
   <string name="item_details_snackbar_message_street_address_copied">S\'ha copiat l\'adreça postal.</string>
   <string name="item_details_snackbar_message_totp_copied">TOTP copiat</string>
   <string name="item_details_snackbar_message_username_copied">S\'ha copiat el nom d\'usuari</string>
   <string name="item_details_snackbar_message_website_copied">S\'ha copiat l\'URL del lloc web</string>
   <string name="item_details_snackbar_message_x_handle_copied">S\'ha copat el compte X.</string>
-  <string name="item_details_snackbar_message_yahoo_copied">S\'ha copiat el compte Yahoo.</string>
+  <string name="item_details_snackbar_message_yahoo_copied">S\'ha copiat el compte de Yahoo.</string>
   <string name="item_details_snackbar_message_zip_or_postal_code_copied">S\'ha copiat el codi postal.</string>
   <string name="item_details_snackbar_message_public_key_copied">S\'ha copiat la clau pública.</string>
   <string name="item_details_snackbar_message_private_key_copied">S\'ha copiat la clau privada.</string>
   <string name="item_details_snackbar_message_ssid_copied">S\'ha copiat l\'SSID.</string>
   <string name="open_with">Obre amb:</string>
   <string name="open_attachments_error">No s\'ha pogut obrir el adjunt.</string>
+  <string name="passkey_detail_bottomsheet_title">Clau d\'accés</string>
+  <string name="passkey_detail_bottomsheet_username">Nom d\'usuari</string>
+  <string name="passkey_detail_bottomsheet_domain">Domini</string>
+  <string name="passkey_detail_bottomsheet_key">Clau</string>
+  <string name="passkey_detail_bottomsheet_created">Creada</string>
+  <string name="login_item_reused_passwords_subtitle">Elements de les vostres caixes fortes que utilitzen aquesta contrasenya.</string>
 </resources>

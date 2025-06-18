@@ -190,7 +190,6 @@
   <string name="close_scree_icon_content_description">Cerrar botón de pantalla</string>
   <string name="totp_paste_code_action">Pegar código</string>
   <string name="totp_scan_code_action">Escanear código</string>
-  <string name="field_cannot_be_empty">Este campo no puede estar vacío</string>
   <string name="camera_permission_explanation">Se requiere el permiso de cámara para que esta función esté disponible.</string>
   <string name="camera_permission_open_settings">Abrir ajustes</string>
   <!--  TOTP limit  -->

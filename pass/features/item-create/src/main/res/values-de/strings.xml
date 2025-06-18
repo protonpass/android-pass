@@ -190,7 +190,6 @@
   <string name="close_scree_icon_content_description">Schaltfläche \"Fenster schließen\"</string>
   <string name="totp_paste_code_action">Code einfügen</string>
   <string name="totp_scan_code_action">Code scannen</string>
-  <string name="field_cannot_be_empty">Dieses Feld darf nicht leer bleiben</string>
   <string name="camera_permission_explanation">Für diese Funktion ist die Kamera-Berechtigung notwendig.</string>
   <string name="camera_permission_open_settings">Einstellungen öffnen</string>
   <!--  TOTP limit  -->

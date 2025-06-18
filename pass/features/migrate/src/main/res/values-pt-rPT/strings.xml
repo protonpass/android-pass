@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <plurals name="migrate_item_confirm_title_bottom_sheet">
-    <item quantity="one">Move %d item to the following vault?</item>
-    <item quantity="other">Move %d items to the following vault?</item>
+    <item quantity="one">Mover %d item para o seguinte cofre?</item>
+    <item quantity="other">Mover %d itens para o seguinte cofre?</item>
   </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Mover todos os itens para o seguinte cofre?</string>
   <string name="migrate_item_confirm_confirm_button">Mover</string>
-  <string name="migrate_item_success_snackbar">Items moved</string>
-  <string name="migrate_item_error_snackbar">Error moving the items</string>
-  <string name="migrate_item_some_not_migrated_error_snackbar">Error moving some of the items</string>
+  <string name="migrate_item_success_snackbar">Itens movidos</string>
+  <string name="migrate_item_error_snackbar">Erro ao mover os itens</string>
+  <string name="migrate_item_some_not_migrated_error_snackbar">Erro ao mover alguns dos itens</string>
+  <string name="migrate_item_warning_history">Ao mover itens entre cofres, manteremos até as últimas 50 modificações realizadas em cada item.</string>
+  <string name="migrate_item_warning_secure_link">As ligações seguras do item serão removidas quando ele for movido para outro cofre.</string>
   <string name="migrate_all_items_success_snackbar">Todos os itens foram movidos.</string>
   <string name="migrate_all_items_error_snackbar">Erro ao mover todos os itens do cofre</string>
   <string name="migrate_init_error_snackbar">Não foi possível preparar o ecrã de migração.</string>
-  <string name="migrate_disabled_vault_reason_no_permission">You cannot create items in this vault</string>
-  <string name="migrate_disabled_vault_reason_same_vault">You cannot move an item to the same vault</string>
+  <string name="migrate_disabled_vault_reason_no_permission">Não pode criar itens neste cofre.</string>
+  <string name="migrate_disabled_vault_reason_same_vault">Não pode mover um item para o mesmo cofre.</string>
+  <plurals name="migrate_items_shared_warning_title">
+    <item quantity="one">Mover o item para outro cofre?</item>
+    <item quantity="other">Mover %d itens para outro cofre?</item>
+  </plurals>
+  <string name="migrate_item_shared_warning_message">Este item está atualmente partilhado. Movê-lo para outro cofre removerá o acesso de todos os outros utilizadores.</string>
+  <plurals name="migrate_items_shared_warning_message">
+    <item quantity="one">%d item está atualmente partilhado. Movê-lo para outro cofre removerá o acesso de todos os outros utilizadores.</item>
+    <item quantity="other">%d itens são atualmente partilhados. Movê-los para outro cofre removerá o acesso de todos os outros utilizadores.</item>
+  </plurals>
 </resources>

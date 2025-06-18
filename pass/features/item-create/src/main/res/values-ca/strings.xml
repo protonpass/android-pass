@@ -12,7 +12,7 @@
   <string name="action_identity">Identitat</string>
   <string name="action_more">Més</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Afegeix els detalls d\'inici de sessió per a una aplicació o lloc web</string>
-  <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Obteniu un àlies de correu electrònic per utilitzar en aplicacions noves</string>
+  <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Obtingueu un àlies de correu electrònic per utilitzar en aplicacions noves</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Apunteu-vos un PIN, un codi o una nota</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Emmagatzemeu de forma segura la informació de pagament</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Empleneu les vostres dades personals</string>
@@ -42,7 +42,7 @@
   <string name="create_login_init_error">Hi ha hagut un problema en recuperar els detalls de l\'inici de sessió</string>
   <string name="create_login_invalid_totp">El contingut 2FA no és vàlid</string>
   <string name="update_login_attachments_init_error">Hi ha hagut un problema en recuperar els adjunts de l\'inici de sessió</string>
-  <string name="login_link_attachments_error">No s\'ha pogut vincular ni desvincular els fitxers adjunts a l\'inici de sessió.</string>
+  <string name="login_link_attachments_error">No s\'ha pogut vincular o desvincular els fitxers adjunts a l\'inici de sessió.</string>
   <string name="login_rename_attachments_error">No s\'ha pogut canviar el nom dels fitxers adjunts de l\'inici de sessió.</string>
   <string name="login_created">S\'ha creat l\'inici de sessió</string>
   <string name="bottomsheet_modify_alias_title">Modifica l\'àlies</string>
@@ -57,7 +57,7 @@
   <string name="custom_field_hidden_placeholder">Afegeix text ocult</string>
   <string name="custom_field_hidden_icon_content_description">Icona de camp personalitzat amagat</string>
   <string name="custom_field_text_placeholder">Afegeix text</string>
-  <string name="custom_field_date_placeholder">Afegiu una data</string>
+  <string name="custom_field_date_placeholder">Afegeix una data</string>
   <string name="custom_field_dialog_title">Nom del camp personalitzat</string>
   <string name="custom_field_dialog_body">Assigneu un nom al camp personalitzat</string>
   <string name="custom_field_dialog_placeholder">Per exemple, l\'ID d\'usuari, el PIN</string>
@@ -69,7 +69,7 @@
   <string name="create_note_item_update_error">No s\'ha pogut actualitzar la nota</string>
   <string name="create_note_init_error">Hi ha hagut un problema en recuperar els detalls de la nota</string>
   <string name="update_note_attachments_init_error">Hi ha hagut un problema en recuperar els adjunts de la nota</string>
-  <string name="note_link_attachments_error">No s\'ha pogut vincular ni desvincular els fitxers adjunts a la nota.</string>
+  <string name="note_link_attachments_error">No s\'ha pogut vincular o desvincular els fitxers adjunts a la nota.</string>
   <string name="note_rename_attachments_error">No s\'ha pogut canviar el nom dels adjunts de la nota.</string>
   <string name="note_created">S\'ha creat la nota</string>
   <!-- Create Alias -->
@@ -83,19 +83,19 @@
   <string name="alias_bottomsheet_suffix_title">Sufix</string>
   <string name="create_alias_item_creation_error">No s\'ha pogut crear l\'àlies</string>
   <string name="create_alias_cannot_create_more_aliases_error">No podeu crear més àlies</string>
-  <string name="create_alias_email_not_validated_error">No podeu crear àlies sense validar primer el vostre correu electrònic</string>
+  <string name="create_alias_email_not_validated_error">No podeu crear àlies sense validar abans el vostre correu electrònic</string>
   <string name="alias_rate_limited">Hi ha massa àlies creats recentment</string>
   <string name="create_alias_item_update_error">No s\'ha pogut actualitzar l\'àlies</string>
   <string name="create_alias_init_error">Hi ha hagut un problema en recuperar els detalls de l\'àlies</string>
   <string name="update_alias_attachments_init_error">Hi ha hagut un problema en recuperar els adjunts de l\'àlies</string>
-  <string name="alias_link_attachments_error">No s\'ha pogut vincular ni desvincular els fitxers adjunts amb l\'àlies.</string>
+  <string name="alias_link_attachments_error">No s\'ha pogut vincular o desvincular els fitxers adjunts amb l\'àlies.</string>
   <string name="alias_rename_attachments_error">No s\'ha pogut canviar el nom dels adjunts de l\'àlies.</string>
   <string name="alias_created">S\'ha creat l\'àlies</string>
   <string name="cannot_retrieve_alias_options">No es poden recuperar les opcions d\'àlies</string>
   <string name="alias_mailbox_dialog_title">Envia a</string>
   <string name="sl_note_info_title">Què és una nota de SimpleLogin?</string>
   <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">En Pass, una nota d\'element es xifra amb la clau de xifratge de l\'element i només els usuaris que tenen accés a l\'element poden veure la nota.</string>
-  <string name="sl_note_info_message_part2">Ni tan sols Proton ni SimpleLogin hi poden accedir.</string>
+  <string name="sl_note_info_message_part2">Ni tan sols Proton o SimpleLogin hi poden accedir.</string>
   <string name="sl_note_info_message_part3">Les notes de SimpleLogin s\'emmagatzemen al mateix lloc que les adreces d\'àlies i, tot i que estan protegides per xifratge en repòs, no estan xifrades d\'extrem a extrem, és a dir, qualsevol persona amb accés a la base de dades SimpleLogin pot llegir-les.</string>
   <string name="sl_note_info_content_description">Mostra el diàleg d\'informació de la nota SL</string>
   <!-- Create note -->
@@ -116,7 +116,7 @@
   <string name="create_credit_card_item_creation_success">S\'ha creat la targeta de crèdit</string>
   <string name="credit_card_init_error">Hi ha hagut un problema en recuperar els detalls de la targeta de crèdit</string>
   <string name="update_credit_card_attachments_init_error">Hi ha hagut un problema en recuperar els adjunts de la targeta de crèdit</string>
-  <string name="credit_card_link_attachments_error">No s\'han pogut vincular ni desvincular els fitxers adjunts a la targeta de crèdit.</string>
+  <string name="credit_card_link_attachments_error">No s\'han pogut vincular o desvincular els fitxers adjunts a la targeta de crèdit.</string>
   <string name="credit_card_rename_attachments_error">No s\'ha pogut canviar el nom dels fitxers adjunts de la targeta de crèdit.</string>
   <string name="credit_card_item_update_error">No s\'ha pogut actualitzar la targeta de crèdit</string>
   <!-- Create Identity -->
@@ -170,11 +170,11 @@
   <string name="identity_section_personal_details">Detalls personals</string>
   <string name="identity_section_address_details">Detalls de l\'adreça</string>
   <string name="identity_section_contact_details">Detalls del contacte</string>
-  <string name="identity_section_work_details">Detalls del treball</string>
+  <string name="identity_section_work_details">Detalls de la feina</string>
   <string name="identity_bottomsheet_add_field">Afegeix un camp</string>
-  <string name="create_identity_init_error">Hi ha hagut un problema en recuperar els detalls d\'identitat</string>
+  <string name="create_identity_init_error">Hi ha hagut un problema en recuperar els detalls de la identitat</string>
   <string name="update_identity_attachments_init_error">Hi ha hagut un problema en recuperar els adjunts de la identitat</string>
-  <string name="identity_link_attachments_error">No s\'ha pogut vincular ni desvincular els fitxers adjunts a la identitat.</string>
+  <string name="identity_link_attachments_error">No s\'ha pogut vincular o desvincular els fitxers adjunts a la identitat.</string>
   <string name="identity_rename_attachments_error">No s\'ha pogut canviar el nom dels fitxers adjunts de la identitat.</string>
   <string name="create_identity_item_creation_error">No s\'ha pogut crear la identitat.</string>
   <string name="create_identity_item_creation_success">S\'ha creat la identitat.</string>
@@ -190,8 +190,7 @@
   <string name="close_scree_icon_content_description">Botó de tancament de pantalla</string>
   <string name="totp_paste_code_action">Enganxa el codi</string>
   <string name="totp_scan_code_action">Escaneja el codi</string>
-  <string name="field_cannot_be_empty">Aquest camp no pot estar buit.</string>
-  <string name="camera_permission_explanation">El permís de càmera és necessari perquè aquesta característica estigui disponible.</string>
+  <string name="camera_permission_explanation">Cal el permís a la càmera perquè aquesta característica estigui disponible.</string>
   <string name="camera_permission_open_settings">Obre les preferències</string>
   <!--  TOTP limit  -->
   <string name="mfa_limit_reached">S\'ha assolit el límit de 2FA</string>
@@ -218,7 +217,7 @@
   <string name="suffix_subtitle_public_domain">Domini públic</string>
   <string name="suffix_subtitle_private_domain">El vostre domini</string>
   <!-- Templates -->
-  <string name="template_item_api_credential">Credencials d\'API</string>
+  <string name="template_item_api_credential">Credencial d\'API</string>
   <string name="template_item_database">Base de dades</string>
   <string name="template_item_server">Servidor</string>
   <string name="template_item_software_license">Llicència de programari</string>
@@ -316,7 +315,7 @@
   <string name="template_passport_field_note">Nota</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Nom del programa</string>
-  <string name="template_reward_program_field_member_id">ID de membre</string>
+  <string name="template_reward_program_field_member_id">ID del membre</string>
   <string name="template_reward_program_field_points_balance">Saldo de punts</string>
   <string name="template_reward_program_field_expiry_date">Data d\'expiració</string>
   <string name="template_reward_program_field_tier_status">Nivell/Estat</string>

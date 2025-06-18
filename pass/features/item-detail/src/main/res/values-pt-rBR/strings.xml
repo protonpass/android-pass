@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="action_open">Abrir</string>
+  <string name="action_copy">Copiar</string>
+  <!-- Detail -->
+  <string name="detail_init_error">Problema ao recuperar os detalhes do item.</string>
+  <string name="top_bar_edit_button_text">Editar</string>
+  <!-- Alias details -->
+  <string name="field_alias_title">Endereço do alias</string>
+  <string name="field_alias_disabled_title">Endereço alternativo (desativado)</string>
+  <string name="alias_copied_to_clipboard">Alias copiado</string>
+  <string name="alias_detail_field_mailboxes_title">Encaminhamento para</string>
+  <string name="alias_create_login_from_alias">Criar início de sessão</string>
+  <!-- Note details -->
+  <string name="field_detail_note_title">Nota</string>
+  <string name="note_detail_copy_note_to_clipboard">Copiar nota</string>
+  <string name="note_copied_to_clipboard">Nota copiada para a área de transferência</string>
+  <!-- Login details -->
+  <string name="email_copied_to_clipboard">Endereço de e-mail copiado</string>
+  <string name="username_copied_to_clipboard">Nome de usuário copiado</string>
+  <string name="password_copied_to_clipboard">Senha copiada</string>
+  <string name="website_copied_to_clipboard">Site copiado</string>
+  <string name="totp_copied_to_clipboard">TOTP copiado</string>
+  <string name="field_copied_to_clipboard">Campo copiado</string>
+  <string name="move_item_to_trash_message">Item movido para a lixeira</string>
+  <string name="error_move_item_to_trash_message">Erro ao mover para a lixeira</string>
+  <string name="item_permanently_deleted_message">Item excluído permanentemente</string>
+  <string name="item_permanently_deleted_message_error">Erro ao excluir item</string>
+  <string name="item_restored_message">Item restaurado</string>
+  <string name="item_restored_message_error">Erro ao restaurar item</string>
+  <string name="item_monitor_exclude_message">O item foi excluído do monitoramento.</string>
+  <string name="item_monitor_exclude_message_error">Ocorreu um erro ao excluir o item do monitoramento</string>
+  <string name="item_monitor_include_message">O item foi incluído no monitoramento.</string>
+  <string name="item_monitor_include_message_error">Ocorreu um erro ao incluir o item no monitoramento</string>
+  <string name="alias_change_status_error">Houve um erro ao alterar o status do endereço alternativo</string>
+  <string name="login_item_generate_totp_error">Erro ao gerar código A2F</string>
+  <string name="login_item_view_alias_button">Visualizar alias</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Senha fraca</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Esta conta está vulnerável, visite o serviço e altere sua senha.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d outro início de sessão usa a mesma senha</item>
+    <item quantity="other">%d outros inícios de sessão usam a mesma senha</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Configure A2F para mais segurança</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Este serviço oferece autenticação de dois fatores (A2F). Ative-a para aumentar a segurança da sua conta.</string>
+  <string name="login_item_reused_passwords_subtitle">Itens dos seus cofres que usam esta senha.</string>
+  <string name="field_email">Endereço de e-mail</string>
+  <string name="field_username">Nome de usuário</string>
+  <string name="field_username_or_email">Nome de usuário ou endereço de e-mail</string>
+  <string name="field_password">Senha</string>
+  <string name="websites_section_title">Sites</string>
+  <string name="totp_section_title">Token A2F (TOTP)</string>
+  <string name="action_reveal_password">Mostrar senha</string>
+  <string name="action_conceal_password">Ocultar senha</string>
+  <string name="action_reveal_number">Exibir número</string>
+  <string name="action_conceal_number">Ocultar número</string>
+  <string name="share_button_content_description">Abrir botão de compartilhar</string>
+  <string name="open_menu_icon_content_description">Botão de abrir menu</string>
+  <string name="mfa_limit_reached">Limite A2F atingido</string>
+  <string name="mfa_icon_content_description">Ícone de A2F</string>
+  <string name="custom_field_text_icon_description">Campo personalizado de texto</string>
+  <string name="custom_field_hidden_icon_description">Campo personalizado oculto</string>
+  <string name="custom_field_totp_icon_description">Campo personalizado A2F</string>
+  <!-- Credit card details -->
+  <string name="credit_card_cardholder_field_name">Nome no cartão</string>
+  <string name="credit_card_number_field_name">Número do cartão</string>
+  <string name="credit_card_cvv_field_name">Código de segurança</string>
+  <string name="credit_card_pin_field_name">Código PIN</string>
+  <string name="credit_card_expiration_date_field_name">Data de expiração</string>
+  <string name="credit_card_cardholder_copied_to_clipboard">Nome do titular do cartão copiado para a área de transferência</string>
+  <string name="credit_card_number_copied_to_clipboard">Número do cartão copiado para a área de transferência</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Código de segurança copiado para a área de transferência</string>
+  <!-- Bottomsheet -->
+  <string name="move_to_trash_item_detail_bottom_sheet">Mover para a lixeira</string>
+  <string name="migrate_item_detail_bottom_sheet">Mover para outro cofre</string>
+  <!-- More info -->
+  <string name="date_today">Hoje %s</string>
+  <string name="date_yesterday">Ontem %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <string name="item_detail_cannot_perform_action_edit_title">Não pode editar</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Você não pode editar porque você não tem permissão suficiente.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Você só tem permissão para editar itens nos cofres mais antigos. Para editar este item, atualize seu plano atual.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Você não pode editar este item porque ele está na lixeira. Retire-o da lixeira antes de editá-lo.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Não pode compartilhar</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Você não tem permissões suficientes para compartilhar este cofre.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Você atingiu o limite de compartilhamento de cofre. Para compartilhar mais cofres, faça upgrade do seu plano atual.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Você não pode compartilhar este item porque ele está na lixeira. Retire-o da lixeira antes de compartilhá-lo.</string>
+  <string name="password_score_vulnerable">Vulnerável</string>
+  <string name="password_score_weak">Fraco</string>
+  <string name="password_score_strong">Forte</string>
+  <string name="passkey_detail_bottomsheet_title">Chave de acesso</string>
+  <string name="passkey_detail_bottomsheet_username">Nome de usuário</string>
+  <string name="passkey_detail_bottomsheet_domain">Domínio</string>
+  <string name="passkey_detail_bottomsheet_key">Chave</string>
+  <string name="passkey_detail_bottomsheet_created">Criado</string>
+  <string name="activity_in_last_two_weeks">Atividade nos últimos 14 dias</string>
+  <string name="contacts">Contatos</string>
+  <string name="contacts_section_description">Para manter seu endereço de e-mail pessoal oculto, você pode criar um contato alias que oculte seu endereço.</string>
+  <string name="field_detail_display_name_title">Nome de exibição</string>
+  <string name="display_name_section_description">O nome de exibição ao enviar um e-mail deste alias.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s encaminhado</item>
+    <item quantity="other">%1$s encaminhados</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s resposta</item>
+    <item quantity="other">%1$s respostas</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s bloqueado</item>
+    <item quantity="other">%1$s bloqueados</item>
+  </plurals>
+  <string name="open_with">Abrir com:</string>
+  <string name="open_attachments_error">Erro ao abrir o anexo</string>
+</resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="upsell_monitor_title">Mantenha-se mais seguro conectado</string>
+  <string name="upsell_dark_web_monitoring_subtitle">A monitorização da Dark Web está disponível com um plano pago. Melhore o seu plano para acesso imediato.</string>
+  <string name="upsell_missing_2fa_subtitle">Consulte uma lista de sítios web onde pode adicionar um segundo fator de autenticação para proteger a sua presença online. Melhore o seu plano para acesso imediato.</string>
+  <string name="upsell_sentinel_subtitle">Desbloqueie funcionalidades de segurança avançada e registos detalhados para proteger a sua presença online.</string>
+  <string name="upsell_paid_feature_file_attachments">Anexos de ficheiro</string>
+  <string name="upsell_paid_feature_dark_web_monitoring">Monitoramento da Dark Web</string>
+  <string name="upsell_paid_feature_sentinel">Proton Sentinel</string>
+  <string name="upsell_paid_feature_authenticator">Autenticador A2F integrado</string>
+  <string name="upsell_paid_feature_unlimited_aliases">Aliases ilimitados do hide-my-email</string>
+  <string name="upsell_paid_feature_vault_sharing">Partilha de cofre (até 10 pessoas)</string>
+  <string name="upsell_paid_feature_secure_links">Ligações seguras</string>
+  <string name="upsell_paid_feature_advance_alias_management">Gestão avançada de alias</string>
+  <string name="upsell_paid_feature_authenticator_essential">Exigir A2F para a organização</string>
+  <string name="upsell_paid_feature_sso_essential">Integração SSO (em breve)</string>
+  <string name="upsell_paid_feature_advance_alias_management_title">Gerir os seus aliases</string>
+  <string name="upsell_paid_feature_advance_alias_management_subtitle">A gestão avançada de aliases está disponível com um plano pago. Melhore o seu plano para acesso imediato.</string>
+  <string name="upsell_paid_feature_item_sharing_title">Partilhe rapidamente um item</string>
+  <string name="upsell_paid_feature_item_sharing_subtitle">Melhore o seu plano hoje para poder partilhar um item com qualquer utilizador do Pass. E aproveite outras funcionalidades premium:</string>
+  <string name="upsell_paid_feature_file_attachments_title">Anexos de ficheiro</string>
+  <string name="upsell_button_upgrade">Obter Pass Plus</string>
+  <string name="upsell_button_upgrade_essentials">Obter Pass Business</string>
+</resources>

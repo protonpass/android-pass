@@ -309,4 +309,38 @@
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <string name="show_network_qr_code">Afficher le QR code du réseau</string>
+  <string name="expand_collpased_text">plus</string>
+  <string name="collapse_expanded_text">moins</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Mot de passe faible</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Ce compte est vulnérable. Rendez-vous sur le service et changez votre mot de passe.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d autre identifiant utilise le même mot de passe.</item>
+    <item quantity="other">%d autres identifiants utilisent le même mot de passe.</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Configurez l\'A2F pour plus de sécurité</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Ce service propose l\'A2F. Activez-la pour améliorer votre sécurité.</string>
+  <string name="login_item_reused_passwords_subtitle">Éléments de vos coffres-forts qui utilisent ce mot de passe.</string>
+  <string name="mfa_limit_reached">La limite de l\'A2F est atteinte.</string>
+  <string name="activity_in_last_two_weeks">Activité au cours des 14 derniers jours</string>
+  <string name="contacts">Contacts</string>
+  <string name="contacts_section_description">Pour masquer votre adresse e-mail personnelle, vous pouvez créer un alias qui la dissimule.</string>
+  <string name="field_detail_display_name_title">Nom d\'affichage</string>
+  <string name="display_name_section_description">Il s\'agit du nom d\'affichage lors de l\'envoi d\'un message depuis cet alias.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s transféré</item>
+    <item quantity="other">%1$s transférés</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s réponse</item>
+    <item quantity="other">%1$s réponses</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s bloqué</item>
+    <item quantity="other">%1$s bloqués</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">Créer un identifiant</string>
+  <string name="banner_contacts_title">Le saviez-vous ?</string>
+  <string name="banner_contacts_subtitle">Chaque fois que votre alias reçoit un e-mail, un contact est automatiquement créé.</string>
+  <string name="action_reveal">Afficher</string>
+  <string name="action_conceal">Masquer</string>
 </resources>

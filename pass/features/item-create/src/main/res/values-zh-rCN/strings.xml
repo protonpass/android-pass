@@ -190,7 +190,6 @@
   <string name="close_scree_icon_content_description">关闭屏幕按钮</string>
   <string name="totp_paste_code_action">粘贴代码</string>
   <string name="totp_scan_code_action">扫描代码</string>
-  <string name="field_cannot_be_empty">此字段不能为空</string>
   <string name="camera_permission_explanation">此功能需要相机权限才能使用.</string>
   <string name="camera_permission_open_settings">打开设置</string>
   <!--  TOTP limit  -->

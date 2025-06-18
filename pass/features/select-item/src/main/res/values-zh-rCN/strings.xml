@@ -27,4 +27,7 @@
   <string name="topbar_search_query_oldest_vaults">搜索您最早的保险库……</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">搜索…</string>
   <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">所有帐户 (%1$s)</string>
+  <string name="select_item_save_credential_title">保存密码凭证</string>
+  <string name="select_item_save_credential_subtitle">请选择要保存凭证的账户。</string>
+  <string name="select_item_save_credential_button">选择账户</string>
 </resources>

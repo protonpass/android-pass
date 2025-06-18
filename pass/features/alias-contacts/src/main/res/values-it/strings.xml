@@ -17,14 +17,14 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="create_contact_button">Crea contatto</string>
+  <string name="create_contact_button">Crea un contatto</string>
   <string name="save_contact_alias">Salva</string>
-  <string name="snackbar_contact_create_success">Contatto creato con successo</string>
-  <string name="snackbar_contact_create_error">Creazione del contatto fallita</string>
-  <string name="create_contact_title">Crea contatto</string>
+  <string name="snackbar_contact_create_success">Contatto creato</string>
+  <string name="snackbar_contact_create_error">Creazione del contatto non riuscita</string>
+  <string name="create_contact_title">Crea un contatto</string>
   <string name="detail_contact_title">Contatti</string>
-  <string name="email_input_error">Indirizzo email non valido</string>
-  <string name="detail_contact_display_name" comment="sender email address">Viene creato un contatto per ogni indirizzo e-mail che invia e-mail o riceve e-mail da %1$s</string>
+  <string name="email_input_error">Indirizzo email non valido</string>
+  <string name="detail_contact_display_name" comment="sender email address">Viene creato un contatto per ogni indirizzo email che invia o riceve messaggi da %1$s</string>
   <string name="empty_alias_contacts_title">Contatti alias</string>
   <string name="empty_alias_contacts_body">Per mantenere il tuo indirizzo email nascosto, puoi creare un contatto alias che maschererà il tuo indirizzo</string>
   <string name="empty_alias_contacts_learn_more">Scopri di più</string>

@@ -294,4 +294,34 @@
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <string name="show_network_qr_code">Tampilkan Kode QR Jaringan</string>
+  <string name="expand_collpased_text">lebih banyak</string>
+  <string name="collapse_expanded_text">lebih sedikit</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Kata Sandi Lemah</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Akun ini terindikasi rentan. Kunjungi layanan keamanan kami dan ubah kata sandi Anda.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="other">%d entri masuk lainnya menggunakan kata sandi yang sama</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Atur 2FA untuk keamanan yang lebih</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Layanan ini menawarkan 2FA. Aktifkan fitur ini untuk meningkatkan keamanan akun.</string>
+  <string name="login_item_reused_passwords_subtitle">Item pada brankas Anda yang menggunakan kata sandi ini.</string>
+  <string name="mfa_limit_reached">Batas 2FA tercapai</string>
+  <string name="activity_in_last_two_weeks">Aktivitas dalam 14 hari terakhir</string>
+  <string name="contacts">Kontak</string>
+  <string name="contacts_section_description">Untuk menjaga agar alamat email pribadi Anda tetap tersembunyi, Anda dapat membuat kontak alias yang menyamarkan alamat Anda.</string>
+  <string name="field_detail_display_name_title">Nama tampilan</string>
+  <string name="display_name_section_description">Nama tampilan ketika mengirimkan email dari alias ini.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="other">%1$s penerusan</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="other">%1$s balasan</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="other">%1$s pemblokiran</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">Buat entri masuk</string>
+  <string name="banner_contacts_title">Tahukah Anda?</string>
+  <string name="banner_contacts_subtitle">Setiap kali alias Anda menerima email dari orang lain, kontak baru akan dibuat secara otomatis.</string>
+  <string name="action_reveal">Tampilkan</string>
+  <string name="action_conceal">Sembunyikan</string>
 </resources>

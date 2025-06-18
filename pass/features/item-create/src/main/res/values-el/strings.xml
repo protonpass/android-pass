@@ -190,7 +190,6 @@
   <string name="close_scree_icon_content_description">Κουμπί κλεισίματος οθόνης</string>
   <string name="totp_paste_code_action">Επικόλληση κώδικα</string>
   <string name="totp_scan_code_action">Κωδικός σάρωσης</string>
-  <string name="field_cannot_be_empty">Αυτό το πεδίο δεν μπορεί να είναι κενό</string>
   <string name="camera_permission_explanation">Απαιτείται άδεια κάμερας για να είναι διαθέσιμη αυτή η λειτουργία.</string>
   <string name="camera_permission_open_settings">Άνοιγμα ρυθμίσεων</string>
   <!--  TOTP limit  -->

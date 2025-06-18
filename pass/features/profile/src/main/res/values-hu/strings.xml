@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="profile_screen_title">Profil</string>
+  <string name="profile_option_settings">Beállítások</string>
+  <string name="profile_option_account">Fiók</string>
+  <string name="profile_help_center">Súgóközpont</string>
+  <string name="profile_security">Biztonság</string>
+  <string name="profile_option_feedback">Visszajelzés</string>
+  <string name="profile_option_import_export">Importálás és exportálás</string>
+  <string name="profile_option_tutorial">A Proton Pass használata</string>
+  <string name="profile_option_rating">Értékelje az alkalmazást</string>
+  <string name="profile_option_autofill">Automatikus kitöltés</string>
+  <string name="profile_option_autofill_subtitle">A felhasználónevek és jelszavak automatikus kitöltése.</string>
+  <string name="profile_option_secure_links">Biztonságos hivatkozások</string>
+  <string name="profile_option_alias_management">E-mail álnév kezelés</string>
+  <string name="profile_error_biometry_failed_to_start">Biometrikus hitelesítés indítása nem sikerült</string>
+  <string name="profile_error_biometry_failed_to_authenticate">Hitelesítés sikertelen</string>
+  <string name="profile_fingerprint_lock_enabled">Ujjlenyomatos feloldás bekapcsolva</string>
+  <string name="profile_fingerprint_lock_disabled">Ujjlenyomatos feloldás kikapcsolva</string>
+  <string name="profile_app_version_copied_to_clipboard">Verziószám másolva</string>
+  <string name="feedback_option_reddit">Keresse a Protont a Redditen</string>
+  <string name="feedback_option_mail">Küldjön üzenetet nekünk</string>
+  <string name="feedback_option_vote_new_features">Szavazzon új funkciókra</string>
+  <string name="app_lock_immediately">Azonnal</string>
+  <string name="app_lock_one_minute">1 perc után</string>
+  <string name="app_lock_two_minutes">2 perc után</string>
+  <string name="app_lock_five_minutes">5 perc után</string>
+  <string name="app_lock_ten_minutes">10 perc után</string>
+  <string name="app_lock_one_hour">1 óra után</string>
+  <string name="app_lock_four_hours">5 óra után</string>
+  <string name="profile_account_plan_name_trial">Pass Plus próbaverzió</string>
+  <string name="app_lock_config_none">Nincs</string>
+  <string name="app_lock_config_biometric">Biometrikus</string>
+  <string name="app_lock_config_pin_code">PIN kód</string>
+  <string name="app_lock_config_app_lock_time">Automatikus zárolás</string>
+  <string name="app_lock_config_password">Jelszó</string>
+  <string name="app_lock_config_use_system_lock_when_biometric_fails">Rendszer zárolás használata a biometrikus hibája esetén</string>
+  <string name="configure_pin_set_pin_code">PIN kód beállítása</string>
+  <string name="configure_pin_unlock_the_app_with_this_code">Zárolás az alábbi kóddal</string>
+  <string name="configure_pin_enter_pin_code">Írjon be a PIN kódot</string>
+  <string name="configure_pin_repeat_pin_code">PIN megismétlése</string>
+  <string name="configure_pin_continue">Folytatás</string>
+  <string name="configure_pin_pin_does_not_match">A PIN-kód nem egyezik</string>
+  <string name="configure_pin_pin_too_short">A PIN-kód túl rövid</string>
+  <string name="configure_pin_pin_cannot_be_blank">A PIN-kód nem lehet üres</string>
+  <string name="configure_pin_pin_lock_enabled">PIN-kód zárolás bekapcsolva</string>
+  <string name="configure_pin_pin_lock_disabled">PIN-kód zárolás kikapcsolva</string>
+  <string name="profile_option_lock_with">Zárolás módja</string>
+  <string name="profile_option_unlock_with">Feloldás módja</string>
+  <string name="profile_option_change_pin_code">PIN-kód megváltoztatása</string>
+  <string name="profile_passkey_support_section_title">Hozzáférési kulcsok</string>
+  <string name="profile_passkey_support_subtitle_supported">Hozzáférési kulcsok támogatva</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">Az Ön Android verziója nem támogatja a jelkulcsokat.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Az ön eszköze nem támogatja a hozzáférési kulcsokat</string>
+  <string name="profile_passkey_support_subtitle_not_supported_unknown">Nem lehet ellenőrizni a hozzáférési kulcs támogatását</string>
+  <plurals name="profile_after_days">
+    <item quantity="one">%d nap után</item>
+    <item quantity="other">%d nap után</item>
+  </plurals>
+  <plurals name="profile_after_minutes">
+    <item quantity="one">%d perc után</item>
+    <item quantity="other">%d perc után</item>
+  </plurals>
+  <plurals name="profile_after_hours">
+    <item quantity="one">%d óra után</item>
+    <item quantity="other">%d óra után</item>
+  </plurals>
+  <string name="profile_less_than_a_minute">Kevesebb, mint egy perc</string>
+  <string name="account_switcher_manage_account">Fiók kezelése</string>
+  <string name="account_switcher_sign_in">Bejelentkezés</string>
+  <string name="account_switcher_sign_out">Kijelentkezés</string>
+  <string name="account_switcher_switch_to">Átállítás</string>
+  <string name="account_switcher_add_account">Fiók hozzáadása</string>
+  <string name="account_switcher_remove">Eltávolítás</string>
+  <string name="filtered_by_logins">Bejelentkezések alapján szűrve. A lomtárban lévő elemek nem jelennek meg</string>
+  <string name="filtered_by_logins_with_mfa">Bejelentkezések TOTP-vel alapján szűrve. A lomtárban lévő elemek nem jelennek meg</string>
+  <string name="filtered_by_aliases">E-mail álnevek alapján szűrve. A lomtárban lévő elemek nem jelennek meg</string>
+  <string name="filtered_by_notes">Jegyzetek alapján szűrve. A lomtárban lévő elemek nem jelennek meg</string>
+  <string name="filtered_by_credit_cards">Bankkártya alapján szűrve. A lomtárban lévő elemek nem jelennek meg</string>
+  <string name="filtered_by_identities">Személyazonosságok szerint szűrve. A lomtárban lévő elemek nem jelennek meg</string>
+  <string name="filtered_by_custom_items">Egyéni elemek alapján szűrve. A törölt elemek nem jelennek meg</string>
+  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">A kezeléshez át kell állítania %1$s-re</string>
+  <string name="account_switch_confirmation_title">Fiók kezelése</string>
+  <string name="account_switch_confirmation_confirm">Átállítás és kezelés</string>
+  <string name="profile_storage_data_title">Tárhely</string>
+  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s / %2$s</string>
+</resources>

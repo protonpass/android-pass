@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="sync_channel">Sincronizzazione</string>
-  <string name="sync_channel_description">Sincronizzazione degli elementi</string>
-  <string name="syncing_vaults">Sincronizzazione di casseforti ed elementi in corso</string>
-  <string name="logging_out_free_users">Rimozione degli altri utenti gratuiti in corso</string>
+  <string name="sync_channel_description">Sincronizzazione degli elementi</string>
+  <string name="syncing_vaults">Sincronizzazione di casseforti ed elementi in corso</string>
+  <string name="logging_out_free_users">Rimozione degli account gratuiti eccessivi in corso</string>
 </resources>

@@ -73,4 +73,10 @@
   <string name="item_details_snackbar_message_ssid_copied">Le SSID a été copié.</string>
   <string name="open_with">Ouvrir avec :</string>
   <string name="open_attachments_error">La pièce jointe n\'a pu être ouverte.</string>
+  <string name="passkey_detail_bottomsheet_title">Clé d\'accès</string>
+  <string name="passkey_detail_bottomsheet_username">Nom d\'utilisateur</string>
+  <string name="passkey_detail_bottomsheet_domain">Domaine</string>
+  <string name="passkey_detail_bottomsheet_key">Clé</string>
+  <string name="passkey_detail_bottomsheet_created">Créé le</string>
+  <string name="login_item_reused_passwords_subtitle">Éléments de vos coffres-forts qui utilisent ce mot de passe.</string>
 </resources>

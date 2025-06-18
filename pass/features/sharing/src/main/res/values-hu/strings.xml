@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="sharing_can_view">Megtekintésre jogosult</string>
+  <string name="sharing_can_edit">Szerkesztő</string>
+  <string name="sharing_can_manage">Adminisztrátor</string>
+  <string name="sharing_can_manage_v2">Menedzser</string>
+  <string name="sharing_can_view_description">Megtekintheti a tárolóban lévő elemeket.</string>
+  <string name="sharing_can_edit_description">Létrehozhat, szerkesztheti, törölheti és exportálhatja a tároló elemeit.</string>
+  <string name="sharing_can_manage_description">Megadhat és megvonhat elérést ehhez a tárolóhoz.</string>
+  <plurals name="sharing_item_count">
+    <item quantity="one">%d elem</item>
+    <item quantity="other">%d elemek</item>
+  </plurals>
+  <plurals name="sharing_member_count">
+    <item quantity="one">%d tag</item>
+    <item quantity="other">%d tag</item>
+  </plurals>
+  <string name="sharing_member_count_header">Tagok</string>
+  <string name="shared_via_title">Megosztva:</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">A elem megosztása: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">A tároló megosztása: %s</string>
+  <string name="share_with_title">Megosztás:</string>
+  <string name="share_with_email_hint">E-mail cím</string>
+  <string name="share_with_email_error">Érvénytelen e-mail cím</string>
+  <string name="share_with_email_cannot_invite_outside_org">Nem hívhat meg embereket a szervezetén kívül, lépjen kapcsolatba a szervezet adminisztrátorával</string>
+  <string name="share_with_email_email_already_added">Ezt az e-mail címet már hozzáadta</string>
+  <string name="share_permissions_title">Elérési szint megadása</string>
+  <string name="sharing_reject_invitation">Meghívó elutasítása</string>
+  <string name="sharing_vault_invitation_title">Megosztott tároló értesítés</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s szeretne megosztani önnel egy tárolót.</string>
+  <string name="sharing_vault_invitation_accept">Csatlakozás megosztott tárolóhoz</string>
+  <string name="sharing_item_invitation_title">Megosztott elem meghívó</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s szeretne megosztani önnel egy elemet.</string>
+  <string name="sharing_item_invitation_accept">Elfogadás és az elem megtekintése</string>
+  <string name="sharing_invite_more">Tőbb meghívása…</string>
+  <string name="sharing_snackbar_invite_accepted">Meghívás elfogadva</string>
+  <string name="sharing_snackbar_invite_accept_error">Hiba a meghívás elfogadásakor</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Nem sikerült a meghívás elfogadása, mert elérte a tárolók maximális számát</string>
+  <string name="sharing_snackbar_invite_rejected">Meghívás elutasítva</string>
+  <string name="sharing_snackbar_invite_reject_error">Hiba a meghívás elutasításakor</string>
+  <string name="sharing_snackbar_invite_sent_success">Meghívó elküldve</string>
+  <string name="sharing_snackbar_invite_sent_error">A meghívó elküldése nem sikerült</string>
+  <string name="sharing_snackbar_invite_new_users_error">Nem tud meghívókat küldeni új felhasználóknak</string>
+  <string name="sharing_snackbar_invite_free_user_error">Csak fizető felhasználóknak küldhet meghívókat az elemekre.</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">A cím már meghívást kapott</string>
+  <string name="sharing_snackbar_get_vault_members_error">A tároló tagjainak betöltése nem sikerült</string>
+  <string name="sharing_snackbar_change_permission_success">Az engedélyek megváltoztak</string>
+  <string name="sharing_snackbar_change_permission_error">Nem lehet megváltoztatni az engedélyeket</string>
+  <string name="sharing_snackbar_remove_member_success">Tag eltávolítva a tárolóról</string>
+  <string name="sharing_snackbar_remove_member_error">Nem sikerült az eltávolítás a tárolóról</string>
+  <string name="sharing_snackbar_fetch_member_error">Hiba történt a tagok lekérdezésében</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">Hiba történt a függőben lévő meghívók lekérdezésében</string>
+  <string name="share_summary_title">Áttekintés és megosztás</string>
+  <string name="share_summary_share_vault">Tároló megosztása</string>
+  <string name="share_summary_share_item">Elem megosztása</string>
+  <string name="share_summary_vault_title">Tároló</string>
+  <string name="share_summary_item_title">Elem</string>
+  <string name="share_summary_access_level_title">Hozzáférési szint</string>
+  <string name="share_manage_vault_share_with_more_people">Megosztás több emberrel</string>
+  <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
+    <item quantity="one">%d meghívó maradt</item>
+    <item quantity="other">%d meghívó maradt</item>
+  </plurals>
+  <plurals name="share_manage_vault_item_count">
+    <item quantity="one">%d elem</item>
+    <item quantity="other">%d elemek</item>
+  </plurals>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Meghívó elküldve</string>
+  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Fiók létrehozására várakozik</string>
+  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Hozzáférés megerősítése</string>
+  <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Meghívók</string>
+  <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Tagok</string>
+  <string name="share_manage_vault_current_user_indicator">Ön</string>
+  <string name="share_role_viewer">Néző</string>
+  <string name="share_role_editor">Szerkesztő</string>
+  <string name="share_role_admin">Adminisztrátor</string>
+  <string name="share_role_manager">Menedzser</string>
+  <string name="share_role_owner">Tulajdonos</string>
+  <string name="sharing_bottomsheet_transfer_ownership">Tulajdonjog átadása</string>
+  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Az utolsó tároló tulajdonjogát nem adhatja át.</string>
+  <string name="sharing_bottomsheet_remove_access">Hozzáférés visszavonása</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Megadhatja és visszavonhatja a hozzáférést ehhez az elemhez.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Szerkesztheti és törölheti ezt az elemet.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Megnézheti ezt a elemet.</string>
+  <string name="sharing_bottomsheet_resend_invite">Meghívó újraküldése</string>
+  <string name="sharing_bottomsheet_cancel_invite">Meghívás visszavonása</string>
+  <string name="sharing_transfer_ownership_confirm_title">Tulajdonjog átadása</string>
+  <string name="sharing_transfer_ownership_confirm_message">Átadja a tároló tulajdonjogát a következőnek: %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Meghívás törölve</string>
+  <string name="sharing_snackbar_cancel_invite_error">Hiba a meghívás törlésekor</string>
+  <string name="sharing_snackbar_resend_invite_success">Meghívás újraküldve</string>
+  <string name="sharing_snackbar_resend_invite_error">Hiba a meghívás újraküldésekor</string>
+  <string name="sharing_snackbar_confirm_invite_success">Meghívás jóváhagyva</string>
+  <string name="sharing_snackbar_confirm_invite_error">Hiba a meghívás jóváhagyásakor</string>
+  <string name="sharing_snackbar_too_many_invites_sent">A címet már túl sokszor meghívták</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Tulajdonjog átadva</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Hiba a tulajdonjog átadásakor</string>
+  <string name="sharing_invites_info_dialog_title">Tagság korlát</string>
+  <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
+    <item quantity="one">Ez a tároló legfeljebb %1$d tagot tartalmazhat. Még %2$d meghívó maradt.</item>
+    <item quantity="other">Ez a tároló legfeljebb %1$d tagot tartalmazhat. Még %2$d meghívó maradt.</item>
+  </plurals>
+  <string name="sharing_limit_reached">Ez a tároló elérte a tagok és meghívók határát.</string>
+  <string name="sharing_invites_info_upgrade_text">Váltson nagyobb csomagra, hogy másokat is meghívhasson.</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Megosztás</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Tároló megosztása</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Áthelyezés egy megosztott tárolóba</string>
+  <string name="sharing_from_item_vault_limit_reached_upgrade">Váltson nagyobb csomagra, hogy több tárolót hozzon létre.</string>
+  <string name="sharing_from_item_vault_limit_reached">Elérte a tárolók maximális számát</string>
+  <string name="share_with_suggestions_title">Javaslatok</string>
+  <string name="share_with_recents_title">Friss</string>
+  <string name="share_with_remove_email_content_description">E-mail eltávolítása</string>
+  <string name="share_with_user_shared_title">Más Proton Pass felhasználókkal</string>
+  <string name="share_with_user_shared_description">Hasznos az állandó megosztáshoz.</string>
+  <string name="share_with_manage_shared_item_title">Hozzáférés kezelése</string>
+  <string name="share_with_manage_shared_item_description">Lásd a tagok és engedélyek áttekintését.</string>
+  <string name="share_with_secure_link_shared_title">Biztonságos hivatkozáson keresztül</string>
+  <string name="share_with_secure_link_shared_description">Egyszeri megosztásra.</string>
+  <string name="sharing_edit_permissions_set_access_level_all_members">Minden tag hozzáférési szintjének beállítása</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">Hozzáférési szint beillátása %s</string>
+  <string name="sharing_edit_permissions_remove_user">Felhasználó eltávolítása</string>
+  <string name="sharing_error_dialog_title">Ismeretlen hiba</string>
+  <string name="sharing_error_dialog_message">Hiba történt a meghívó elküldésében ehhez a tárolóhoz. Ha a probléma továbbra is fennáll, kérjük, forduljon az ügyfélszolgálathoz.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">Nem lehet címeket meghívni</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">Pár címet nem lehet meghívni</string>
+</resources>

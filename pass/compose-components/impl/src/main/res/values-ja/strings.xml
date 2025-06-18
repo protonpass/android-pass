@@ -294,4 +294,34 @@
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <string name="show_network_qr_code">ネットワークのQRコードを表示</string>
+  <string name="expand_collpased_text">more</string>
+  <string name="collapse_expanded_text">less</string>
+  <string name="login_item_monitor_widget_weak_pass_title">弱いパスワード</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">このアカウントは脆弱です。サービスにアクセスしてパスワードを変更してください。</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="other">%d件の他のログインで同じパスワードが使用されています</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">2要素認証を設定するとより安全になります</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">このサービスは 2FA を提供します。アカウントのセキュリティを強化するには、これを有効にしてください。</string>
+  <string name="login_item_reused_passwords_subtitle">このパスワードを使用する保管庫内のアイテム。</string>
+  <string name="mfa_limit_reached">2要素認証 制限に達しました</string>
+  <string name="activity_in_last_two_weeks">過去14日間のアクティビティ</string>
+  <string name="contacts">連絡先</string>
+  <string name="contacts_section_description">個人のメールアドレスを隠すために、アドレスをマスクするエイリアス連絡先を作成することができます。</string>
+  <string name="field_detail_display_name_title">表示名</string>
+  <string name="display_name_section_description">このエイリアスからメールを送る際の表示名</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="other">%1$s件の転送</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="other">%1$s件の返信</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="other">%1$s件のブロック</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">ログイン情報を作成</string>
+  <string name="banner_contacts_title">ご存知ですか？</string>
+  <string name="banner_contacts_subtitle">エイリアスが誰かからメールを受け取るたびに、新しい連絡先が自動的に作成されます。</string>
+  <string name="action_reveal">Reveal</string>
+  <string name="action_conceal">Conceal</string>
 </resources>

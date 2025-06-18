@@ -3,24 +3,17 @@
   <string name="autofill_authenticate_prompt">Obter do Proton Pass</string>
   <string name="error_loading_items">Não foi possível carregar os itens.</string>
   <string name="inline_suggestions_open_app">Abrir o Proton Pass</string>
-  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Upgrade to autofill</string>
+  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Melhorar para beneficiar do preenchimento automático</string>
   <string name="autofill_associate_web_app_name_dialog_title">Utilizar os dados de início de sessão de \"%s\" nesta aplicação ou sítio web.</string>
   <string name="autofill_dialog_associate_and_autofill">Utilizar sempre</string>
   <string name="autofill_dialog_just_autofill">Utilizar uma vez</string>
   <string name="autofill_dialog_cancel">Cancelar</string>
-  <string name="autofill_notification_copy_to_clipboard">TOTP has been copied to clipboard</string>
+  <string name="autofill_notification_copy_to_clipboard">O código TOTP foi copiado para a área de transferência.</string>
   <string name="autofill_dialog_associate_title">Utilizar o início de sessão?</string>
-  <string name="snackbar_item_move_to_trash_success">O item foi movido para o lixo.</string>
-  <string name="snackbar_item_move_to_trash_error">Não foi possível mover para o lixo.</string>
-  <string name="snackbar_item_copy_username_success">O nome de utilizador foi copiado para a área de transferência.</string>
-  <string name="snackbar_item_copy_password_success">A palavra-passe foi copiada para a área de transferência.</string>
-  <string name="snackbar_item_copy_clipboard_error">Não foi possível copiar para a área de transferência.</string>
   <string name="autofill_user_logged_out">Foi desconectado. Abre a aplicação e inicie sessão novamente.</string>
-  <string name="bottomsheet_copy_password">Copiar a palavra-passe</string>
-  <string name="bottomsheet_copy_username">Copiar o nome de utilizador</string>
-  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Autofill card details</string>
-  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Autofilling credit card details is a paid feature. If you want Proton Pass to automatically enter your card details for you in apps and websites, please upgrade to a paid plan.</string>
-  <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Confirm your action</string>
-  <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">You are about to autofill your credentials into a website that\'s opened by your current app. The app can have access to the credential after autofill - only do it if you trust the app.</string>
+  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Preencher automaticamente os detalhes do cartão</string>
+  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">O preenchimento automático dos detalhes do cartão de crédito é uma funcionalidade pago. Se deseja que o Proton Pass Introduza automaticamente os detalhes do seu cartão em aplicações e sítios web, melhore o seu plano para um plano pago.</string>
+  <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Confirmar a sua ação</string>
+  <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Está prestes a preencher automaticamente as suas credenciais num sítio web aberto pela sua aplicação atual. A aplicação pode ter acesso às credenciais após o preenchimento automático — só faça isso se confiar na aplicação.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Preenchimento automático</string>
 </resources>

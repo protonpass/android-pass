@@ -73,4 +73,10 @@
   <string name="item_details_snackbar_message_ssid_copied">SSID copied</string>
   <string name="open_with">Mở bằng:</string>
   <string name="open_attachments_error">Could not open attachment</string>
+  <string name="passkey_detail_bottomsheet_title">Khóa truy cập</string>
+  <string name="passkey_detail_bottomsheet_username">Tên người dùng</string>
+  <string name="passkey_detail_bottomsheet_domain">Tên miền</string>
+  <string name="passkey_detail_bottomsheet_key">Chìa khóa</string>
+  <string name="passkey_detail_bottomsheet_created">Đã tạo</string>
+  <string name="login_item_reused_passwords_subtitle">Các nội dung khác sử dụng cùng mật khẩu này.</string>
 </resources>

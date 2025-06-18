@@ -73,4 +73,10 @@
   <string name="item_details_snackbar_message_ssid_copied">SSID скопирован</string>
   <string name="open_with">Открыть с помощью:</string>
   <string name="open_attachments_error">Не удалось открыть вложение</string>
+  <string name="passkey_detail_bottomsheet_title">Ключ доступа</string>
+  <string name="passkey_detail_bottomsheet_username">Имя пользователя</string>
+  <string name="passkey_detail_bottomsheet_domain">Домен</string>
+  <string name="passkey_detail_bottomsheet_key">Ключ</string>
+  <string name="passkey_detail_bottomsheet_created">Создано</string>
+  <string name="login_item_reused_passwords_subtitle">Элементы из ваших хранилищ, которые используют этот пароль.</string>
 </resources>

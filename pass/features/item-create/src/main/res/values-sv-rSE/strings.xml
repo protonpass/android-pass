@@ -190,7 +190,6 @@
   <string name="close_scree_icon_content_description">Knapp för “Stäng skärm“</string>
   <string name="totp_paste_code_action">Klistra in kod</string>
   <string name="totp_scan_code_action">Skanna kod</string>
-  <string name="field_cannot_be_empty">Detta fält kan inte vara tomt</string>
   <string name="camera_permission_explanation">Tillåtelse för kamera krävs för att denna funktion ska vara tillgänglig.</string>
   <string name="camera_permission_open_settings">Öppna inställningar</string>
   <!--  TOTP limit  -->

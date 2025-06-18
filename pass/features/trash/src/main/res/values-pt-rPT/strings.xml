@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="trash_action_restore">Restaurar</string>
   <string name="bottomsheet_delete_permanently">Eliminar permanentemente</string>
   <string name="alert_confirm_delete_item_dialog_title">Eliminar permanentemente?</string>
   <string name="alert_confirm_delete_item_dialog_message">Esta ação é irreversível.</string>
+  <string name="alert_confirm_delete_item_dialog_shared_warning_message">Este item está atualmente partilhado. Eliminá-lo removerá o acesso de todos os outros utilizadores.</string>
   <string name="alias_dialog_move_to_trash_title">Mover para o lixo?</string>
   <string name="alias_dialog_move_to_trash_content">Se mover um alias para o lixo, deixará de encaminhar os e-mails para a sua caixa de correio.</string>
   <string name="alias_dialog_move_to_trash_confirm">Confirmar</string>
+  <string name="delete_alias_confirm">Elimine-o. Nunca vou precisar dele</string>
+  <string name="delete_alias_title">Eliminar %s</string>
+  <string name="delete_alias_enabled_subtitle">"Uma vez eliminado, o alias não pode ser restaurado. Talvez queira desativar o alias em vez disso? "</string>
+  <string name="delete_alias_disabled_subtitle">Uma vez eliminado, o alias não pode ser restaurado. O alias já está desativado e não encaminhará e-mails para a sua caixa de entrada.</string>
+  <plurals name="bulk_delete_alias_title">
+    <item quantity="one">Está prestes a eliminar permanentemente %d alias.</item>
+    <item quantity="other">Está prestes a eliminar permanentemente %d aliases.</item>
+  </plurals>
+  <string name="bulk_delete_alias_subtitle">Uma vez eliminado, os aliases não podem ser restaurados.</string>
+  <string name="bulk_delete_alias_confirm">Entendido, nunca vou precisar deles.</string>
+  <string name="delete_alias_disable">Desativar o alias</string>
 </resources>

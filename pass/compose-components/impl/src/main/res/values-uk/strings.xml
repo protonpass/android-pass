@@ -201,9 +201,9 @@
   <string name="item_details_shared_section_more_info_header_title">Докладніше</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">Додаткові значки інформації про елемент</string>
   <string name="item_details_shared_section_more_info_item_id">ID елемента</string>
-  <string name="item_details_shared_section_more_info_vault_id">Vault ID</string>
-  <string name="item_details_shared_section_more_info_share_id">Share ID</string>
-  <string name="item_details_wifi_network_label_ssid_name">Name (SSID)</string>
+  <string name="item_details_shared_section_more_info_vault_id">ID сховища</string>
+  <string name="item_details_shared_section_more_info_share_id">Поділитись ID</string>
+  <string name="item_details_wifi_network_label_ssid_name">Назва (SSID)</string>
   <string name="item_details_wifi_network_label_password">Пароль</string>
   <string name="item_details_wifi_network_label_security">Безпека</string>
   <string name="item_details_ssh_key_label_public_key">Відкритий ключ</string>
@@ -338,5 +338,47 @@
     <item quantity="other">%d учасників</item>
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">дд ММММ рррр</string>
-  <string name="show_network_qr_code">Show Network QR Code</string>
+  <string name="show_network_qr_code">Показати QR-код мережі</string>
+  <string name="expand_collpased_text">більше</string>
+  <string name="collapse_expanded_text">менше</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Слабкий пароль</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Цей обліковий запис вразливий, відвідайте сервіс та змініть ваш пароль.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d обліковий запис використовує той самий пароль</item>
+    <item quantity="few">%d облікові записи використовують той самий пароль</item>
+    <item quantity="many">%d облікових записів використовують той самий пароль</item>
+    <item quantity="other">%d облікових записів використовують той самий пароль</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Налаштуйте 2FA для більшої безпеки</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Цей сервіс пропонує 2FA. Увімкніть це для додаткової безпеки облікового запису.</string>
+  <string name="login_item_reused_passwords_subtitle">Записи входу з ваших сховищ, які використовують цей пароль.</string>
+  <string name="mfa_limit_reached">Досягнуто обмеження 2FA</string>
+  <string name="activity_in_last_two_weeks">Активність за останні 14 днів</string>
+  <string name="contacts">Контакти</string>
+  <string name="contacts_section_description">Щоб приховати свою особисту електронну адресу, ви можете створити псевдонім контакту, який замаскує вашу адресу.</string>
+  <string name="field_detail_display_name_title">Ім\'я</string>
+  <string name="display_name_section_description">Ім\'я, яке показуватиметься під час надсилання електронного листа з цього псевдоніму.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s пересилання</item>
+    <item quantity="few">%1$s пересилання</item>
+    <item quantity="many">%1$s пересилань</item>
+    <item quantity="other">%1$s пересилань</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s відповідь</item>
+    <item quantity="few">%1$s відповіді</item>
+    <item quantity="many">%1$s відповідей</item>
+    <item quantity="other">%1$s відповідей</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s блок</item>
+    <item quantity="few">%1$s блоки</item>
+    <item quantity="many">%1$s блоків</item>
+    <item quantity="other">%1$s блоків</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">Створити запис входу</string>
+  <string name="banner_contacts_title">Чи знали ви?</string>
+  <string name="banner_contacts_subtitle">Щоразу, коли ваш псевдонім отримує лист від когось, автоматично створюється новий контакт.</string>
+  <string name="action_reveal">Reveal</string>
+  <string name="action_conceal">Conceal</string>
 </resources>

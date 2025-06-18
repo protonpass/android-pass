@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="autofill_authenticate_prompt">Megszerzés Proton Pass-ból</string>
+  <string name="error_loading_items">Nem sikerült az elemek betöltése</string>
+  <string name="inline_suggestions_open_app">Proton Pass megnyitása</string>
+  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Automatikus kitöltéshez váltson nagyobb csomagra</string>
+  <string name="autofill_associate_web_app_name_dialog_title">\"%s\" bejelentkezési adatok használata az alkalmazáshoz vagy weboldalhoz.</string>
+  <string name="autofill_dialog_associate_and_autofill">Mindig használja</string>
+  <string name="autofill_dialog_just_autofill">Egyszer használja</string>
+  <string name="autofill_dialog_cancel">Mégsem</string>
+  <string name="autofill_notification_copy_to_clipboard">TOTP kód a vágólapra másolva</string>
+  <string name="autofill_dialog_associate_title">Bejelentkezés használata?</string>
+  <string name="autofill_user_logged_out">Ön kijelentkezett. Jelentkezzen be újra az alkalmazás megnyitásával.</string>
+  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Kártya automatikus kitöltés információk</string>
+  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Bankkártyák automatikus kitöltése egy fizetős funkció. Ha szeretné használni a Proton Pass ezen funkcióját alkalmazásokban és weblapokon, kérjük váltson nagyobb csomagra.</string>
+  <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Művelet megerősítése</string>
+  <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">A bejelentkezési adatai kitöltésére készül egy weboldalon, ami az aktuális alkalmazásban van megnyitva. Az alkalmazás hozzáférhet a bejelentkezési adataihoz - csak akkor folytassa ha megbízik az alkalmazásban.</string>
+  <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Automatikus kitöltés</string>
+</resources>

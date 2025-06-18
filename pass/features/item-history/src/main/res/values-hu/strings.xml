@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="item_history_restore_action">Visszaállítás</string>
+  <string name="item_history_restore_confirmation_dialog_title">Visszaállítja ezt a verziót?</string>
+  <string name="item_history_restore_confirmation_dialog_message" comment="The item will be reverted to a version from an specific date, for instance: Your current item will revert to the version from 19 February 2024 at 09:30">Az aktuális elem visszaáll a %1$s verzióra</string>
+  <string name="item_history_restore_snackbar_message_error">Hiba történt az elem előző verziójának visszaállításában</string>
+  <string name="item_history_restore_snackbar_message_success">Az elem előző verziója sikeresen visszaállítva</string>
+  <string name="item_history_restore_tab_title_current">Jelenlegi</string>
+  <string name="item_history_timeline_title">Előzmények</string>
+  <string name="item_history_timeline_node_child_title">Módosítva</string>
+  <string name="item_history_timeline_node_leaf_title">Létrehozva</string>
+  <string name="item_history_timeline_node_root_title">Jelenlegi verzió</string>
+  <string name="item_history_timeline_snackbar_message_error">Hiba történt az elem előző verzióinak lekérdezésében</string>
+  <string name="reset_history_bottomsheet_option">Előzmények törlése</string>
+  <string name="reset_history_dialog_title">Törli az elem előzményeit?</string>
+  <string name="reset_history_dialog_body">Az előzmények törlése véglegesen törli az összes korábbi verziót, és nem vonható vissza.</string>
+  <string name="reset_history_action">Törlés</string>
+  <string name="reset_history_dialog_snackbar_message_error">Hiba történt az előzmények törléskor</string>
+  <string name="reset_history_dialog_snackbar_message_success">Elem előzmények törölve</string>
+</resources>

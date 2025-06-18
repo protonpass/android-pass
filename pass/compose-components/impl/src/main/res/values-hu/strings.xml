@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">Cím (A-Z)</string>
+  <string name="sort_by_title_desc">Cím (Z-A)</string>
+  <string name="sort_by_creation_asc">Legrégebbitől a legújabbig</string>
+  <string name="sort_by_creation_desc">Legújabbtól a legrégebbiig</string>
+  <string name="sort_by_modification_date">Legutóbb használt</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">Mind</string>
+  <string name="item_list_header_pinned_search_results">Kitűzött</string>
+  <string name="item_list_header_logins_type">Bejelentkezések</string>
+  <string name="item_list_header_logins_totp_type">Bejelentkezések TOTP-vel</string>
+  <string name="item_list_header_aliases_type">E-mail álnevek</string>
+  <string name="item_list_header_notes_type">Megjegyzések</string>
+  <string name="item_list_header_credit_cards_type">Bankkártyák</string>
+  <plurals name="item_list_header_results">
+    <item quantity="one">eredmény</item>
+    <item quantity="other">eredmény</item>
+  </plurals>
+  <string name="item_list_header_identities_type">Személyazonosságok</string>
+  <string name="item_list_header_custom_type">Egyéni elemek</string>
+  <string name="item_list_header_shared_with_me">Velem megosztva</string>
+  <string name="item_list_header_shared_by_me">Általam megosztva</string>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">Jóváhagyás</string>
+  <string name="bottomsheet_cancel_button">Mégsem</string>
+  <string name="bottomsheet_move_to_trash">Áthelyezés a lomtárba</string>
+  <string name="bottomsheet_pin_item">Rögzítés</string>
+  <string name="bottomsheet_unpin_item">Feloldás</string>
+  <string name="bottomsheet_view_item_history">Előzmények megtekintése</string>
+  <string name="bottomsheet_monitor_exclude">Kizárás a megfigyelésből</string>
+  <string name="bottomsheet_monitor_include">Bevonás a megfigyelésbe</string>
+  <string name="bottomsheet_migrate_item">Áthelyezés másik tárolóba</string>
+  <string name="bottomsheet_copy_item_note">Jegyzet másolása</string>
+  <string name="bottomsheet_delete_permanently">Végleges törlés</string>
+  <string name="bottomsheet_restore">Visszaállítás</string>
+  <string name="bottomsheet_leave">Elhagyás</string>
+  <string name="bottomsheet_no_actions">Nincs elérhető művelet</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Az elem művelet menüjének megnyitása</string>
+  <string name="action_upgrade_now">Váltás nagyobb csomagra</string>
+  <string name="action_not_now">Most nem</string>
+  <string name="action_learn_more">További információk</string>
+  <string name="action_enable">Engedélyezés</string>
+  <string name="action_view_details">Részletek megtekintése</string>
+  <string name="action_see_all">Összes megjelenítése</string>
+  <string name="action_confirm">Megerősítés</string>
+  <string name="action_cancel">Mégsem</string>
+  <string name="action_continue">Tovább</string>
+  <string name="action_retry">Újra</string>
+  <string name="action_edit">Szerkesztés</string>
+  <string name="action_add">Hozzáadás</string>
+  <string name="action_delete">Törlés</string>
+  <string name="action_make_default">Beállítás alapértelmezettként</string>
+  <string name="action_verify">Megerősítés</string>
+  <string name="action_close">Bezárás</string>
+  <string name="action_update">Frissítés</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">Adja hozzá az első elemet</string>
+  <string name="empty_search_results_title">Nincs találat</string>
+  <string name="empty_list_open_extension">Webbővítmény megnyitása</string>
+  <string name="empty_list_create_item_button">Új elem létrehozása</string>
+  <!-- Field -->
+  <string name="field_title_title">Cím</string>
+  <string name="field_title_hint">Névtelen</string>
+  <string name="field_title_required">Cím megadása kötelező</string>
+  <string name="small_cross_icon_content_description">Kis kereszt ikon</string>
+  <string name="field_note_title">Megjegyzés</string>
+  <string name="field_note_hint">Jegyzet hozzáadása</string>
+  <string name="linked_apps_title">Összekapcsolt alkalmazások</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">Offline</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">Hiányzó alkalmazás ikon</string>
+  <string name="add_item_icon_content_description">Elem hozzáadása ikon</string>
+  <string name="navigate_back_icon_content_description">Vissza navigálás ikon</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">Tároló</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">Elemek listázása</string>
+  <string name="bottom_bar_add_item_icon_content_description">Új elem</string>
+  <string name="bottom_bar_profile_icon_content_description">Profil</string>
+  <string name="bottom_bar_security_center_icon_content_description">Biztonsági központ</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">Ma</string>
+  <string name="most_recent_yesterday">Tegnap</string>
+  <string name="most_recent_this_week">Ez a hét</string>
+  <string name="most_recent_last_two_weeks">Elmúlt két hét</string>
+  <string name="most_recent_last_30_days">Múlt hónap</string>
+  <string name="most_recent_last_60_days">Elmúlt 60 nap</string>
+  <string name="most_recent_last_90_days">Elmúlt 90 nap</string>
+  <string name="most_recent_within_the_last_year">Az elmúlt egy évben</string>
+  <string name="most_recent_more_than_1_year">1 évnél régebb</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">Keresés ikon</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="one">1 elem</item>
+    <item quantity="other">%d elemek</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">Módosítások elvetése?</string>
+  <string name="confirm_close_dialog_message">Nem mentett módosításai vannak, biztos, hogy elveti?</string>
+  <string name="confirm_close_dialog_close_button">Elvetés</string>
+  <!-- Upgrade -->
+  <string name="upgrade">Váltás nagyobb csomagra</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">Speciális beállítások</string>
+  <string name="hide_advanced_options">Speciális beállítások elrejtése</string>
+  <!-- Labels -->
+  <string name="label_password_strength_strong">Erős</string>
+  <string name="label_password_strength_vulnerable">Sebezhető</string>
+  <string name="label_password_strength_weak">Gyenge</string>
+  <!-- Pinning -->
+  <string name="pinning_carousel_see_all">Összes megjelenítése</string>
+  <!-- Dates -->
+  <string name="date_today" comment="Pattern to display today's date and time. (e.g. Today 10:25)">Ma %s</string>
+  <string name="date_yesterday" comment="Pattern to display yesterday's date and time. (e.g. Yesterday 10:25)">Tegnap %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">LLLL dd HH:mm</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to 12 Feb 12:34
+    -->
+  <string name="date_full_date_format_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">yyyy LLLL dd HH:mm</string>
+  <!--
+   Pattern used when displaying a date including the year.
+   It would translate to 12 Feb 2023 12:34
+   -->
+  <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
+  <!-- Items -->
+  <string name="item_details_alias_section_alias_title">E-mail álnév cím</string>
+  <string name="item_details_alias_section_alias_disabled_title">E-mail álnév (letiltva)</string>
+  <string name="item_details_alias_section_mailboxes_title">Továbbítási cím</string>
+  <string name="item_details_credit_card_section_cardholder_title">A kártyán szereplő név</string>
+  <string name="item_details_credit_card_section_card_number_title">Kártyaszám</string>
+  <string name="item_details_credit_card_section_expiration_date_title">Lejárati dátum</string>
+  <string name="item_details_credit_card_section_cvv_title">Biztonsági kód</string>
+  <string name="item_details_credit_card_section_pin_title">PIN-kód</string>
+  <string name="item_details_login_section_email_title">E-mail cím</string>
+  <string name="item_details_login_section_username_title">Felhasználónév</string>
+  <string name="item_details_login_section_password_title">Jelszó</string>
+  <string name="item_details_login_section_primary_totp_title">Kétlépcsős token (TOTP)</string>
+  <string name="item_details_login_section_websites_title">Weboldalak</string>
+  <string name="item_details_identity_section_personal_title">Személyes adatok</string>
+  <string name="item_details_identity_section_personal_first_name_title">Keresztnév</string>
+  <string name="item_details_identity_section_personal_middle_name_title">Középső név</string>
+  <string name="item_details_identity_section_personal_last_name_title">Vezetéknév</string>
+  <string name="item_details_identity_section_personal_full_name_title">Teljes név</string>
+  <string name="item_details_identity_section_personal_email_title">E-mail cím</string>
+  <string name="item_details_identity_section_personal_gender_title">Neme</string>
+  <string name="item_details_identity_section_personal_phone_title">Telefonszám</string>
+  <string name="item_details_identity_section_personal_birthday_title">Születésnap</string>
+  <string name="item_details_identity_section_address_title">Cím részletei</string>
+  <string name="item_details_identity_section_address_organization_title">Szervezet</string>
+  <string name="item_details_identity_section_address_street_address_title">Utca, házszám, postafiók</string>
+  <string name="item_details_identity_section_address_floor_title">Emelet</string>
+  <string name="item_details_identity_section_address_city_title">Város</string>
+  <string name="item_details_identity_section_address_zip_or_postal_code_title">Irányítószám</string>
+  <string name="item_details_identity_section_address_state_or_province_title">Állam vagy tartomány</string>
+  <string name="item_details_identity_section_address_county_title">Ország</string>
+  <string name="item_details_identity_section_address_country_or_region_title">Országod vagy régiód</string>
+  <string name="item_details_identity_section_contact_title">Névjegy részletei</string>
+  <string name="item_details_identity_section_contact_social_security_number_title">Társadalombiztosítási szám</string>
+  <string name="item_details_identity_section_contact_passport_number_title">Útlevélszám</string>
+  <string name="item_details_identity_section_contact_license_number_title">Engedélyszám</string>
+  <string name="item_details_identity_section_contact_website_title">Honlap</string>
+  <string name="item_details_identity_section_contact_x_handle_title">X felhasználónév</string>
+  <string name="item_details_identity_section_contact_secondary_phone_number_title">Másodlagos telefonszám</string>
+  <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
+  <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
+  <string name="item_details_identity_section_contact_facebook_title">Facebook</string>
+  <string name="item_details_identity_section_contact_yahoo_title">Yahoo</string>
+  <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
+  <string name="item_details_identity_section_work_title">Munka adatai</string>
+  <string name="item_details_identity_section_work_company_title">Cég</string>
+  <string name="item_details_identity_section_work_occupation_title">Foglalkozás</string>
+  <string name="item_details_identity_section_work_email_title">Munkahelyi e-mail cím</string>
+  <string name="item_details_identity_section_work_phone_number_title">Munkahelyi telefonszám</string>
+  <string name="item_details_identity_section_work_personal_website_title">Saját weboldal</string>
+  <string name="item_details_shared_section_note_title">Megjegyzés</string>
+  <string name="item_details_shared_section_item_history_last_autofill_title">Legutóbbi automatikus kitöltés</string>
+  <string name="item_details_shared_section_item_history_created_title">Létrehozva</string>
+  <string name="item_details_shared_section_item_history_modified_times_title">Módosítva: (%d)</string>
+  <string name="item_details_shared_section_item_history_button_view">Előzmények megtekintése</string>
+  <string name="item_details_shared_section_more_info_header_title">További információk</string>
+  <string name="item_details_shared_section_more_info_header_icon_content_description">Több elem az információ ikonnál</string>
+  <string name="item_details_shared_section_more_info_item_id">Elem azonosító</string>
+  <string name="item_details_shared_section_more_info_vault_id">Tároló ID</string>
+  <string name="item_details_shared_section_more_info_share_id">Megosztás azonosító</string>
+  <string name="item_details_wifi_network_label_ssid_name">SSID neve</string>
+  <string name="item_details_wifi_network_label_password">Jelszó</string>
+  <string name="item_details_wifi_network_label_security">Biztonság</string>
+  <string name="item_details_ssh_key_label_public_key">Nyilvános kulcs</string>
+  <string name="item_details_ssh_key_label_private_key">Privát kulcs</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Az alkalmazás ezen verziója már nem támogatott, kérjük frissítse.</string>
+  <!-- Passkeys -->
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Hozzáférési kulcs</string>
+  <!-- Upgrade -->
+  <string name="dialog_upgrade_plan_title">Díjcsomag változtatása?</string>
+  <string name="dialog_upgrade_plan_message">Ez a funkció nem érhető el az ingyenes csomagban. Ha szeretné használni ezt és további érdekes funkciókat, kérjük váltson előfizetéses csomagra.</string>
+  <string name="dialog_upgrade_plan_action_confirm">Csomagváltás</string>
+  <string name="dialog_upgrade_plan_action_cancel">Most nem</string>
+  <!-- Words -->
+  <string name="email_address">E-mail cím</string>
+  <string name="email_address_invalid">Érvénytelen e-mail cím</string>
+  <string name="password">Jelszó</string>
+  <!-- Tooltips -->
+  <string name="tooltip_dismiss_button_content_description">Gomb a tooltip elvetéséhez, és nem jeleníti meg újra</string>
+  <!-- Time units -->
+  <plurals name="time_unit_years">
+    <item quantity="one">%d év</item>
+    <item quantity="other">%d év</item>
+  </plurals>
+  <plurals name="time_unit_months">
+    <item quantity="one">%d hónap</item>
+    <item quantity="other">%d hónap</item>
+  </plurals>
+  <plurals name="time_unit_weeks">
+    <item quantity="one">%d hét</item>
+    <item quantity="other">%d hét</item>
+  </plurals>
+  <plurals name="time_unit_days">
+    <item quantity="one">%d nap</item>
+    <item quantity="other">%d nap</item>
+  </plurals>
+  <plurals name="time_unit_hours">
+    <item quantity="one">%d óra</item>
+    <item quantity="other">%d óra</item>
+  </plurals>
+  <plurals name="time_unit_minutes">
+    <item quantity="one">%d perc</item>
+    <item quantity="other">%d perc</item>
+  </plurals>
+  <plurals name="time_unit_seconds">
+    <item quantity="one">%d másodperc</item>
+    <item quantity="other">%d másodperc</item>
+  </plurals>
+  <plurals name="aliases_count">
+    <item quantity="one">%d e-mail álnév</item>
+    <item quantity="other">%d e-mail álnév</item>
+  </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">Jegyzet másolva</string>
+  <string name="snack_bar_message_item_migration_error">Hiba történt az elem áthelyezésekor</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">Sikeresen kizárt elem a megfigyelésből</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">Hiba történt a elem kizárásakor a figyelésből</string>
+  <string name="snack_bar_message_item_monitor_included_success">Az elem sikeresen hozzáadva a figyeléshez</string>
+  <string name="snack_bar_message_item_monitor_included_error">Hiba történt az elem hozzáadásakor a figyeléshez</string>
+  <string name="snack_bar_message_item_pinned_success">Elem rögzítve</string>
+  <string name="snack_bar_message_item_pinned_error">Hiba történt az elem rögzítésekor</string>
+  <string name="snack_bar_message_item_unpinned_success">Elem feloldva</string>
+  <string name="snack_bar_message_item_unpinned_error">Hiba történt az elem feloldásakor</string>
+  <string name="snack_bar_message_item_trashed_success">Az elem a lomtárba helyezve</string>
+  <string name="snack_bar_message_item_trashed_error">Egy hiba történt az elem lomtárba helyezése során</string>
+  <string name="snack_bar_message_item_restore_success">Elem sikeresen visszaállítva</string>
+  <string name="snack_bar_message_item_restore_error">Egy hiba történt az elem visszaállítása során.</string>
+  <string name="snack_bar_message_item_delete_success">Elem sikeresen törölve</string>
+  <string name="snack_bar_message_item_delete_error">Egy hiba történt ez az elem törlése során.</string>
+  <!-- Simple Login -->
+  <string name="simple_login_widget_title">Simplelogin szinkronizálás bekapcsolása</string>
+  <plurals name="simple_login_widget_pending_aliases_message">
+    <item quantity="one">%d olyan álneve van, amely megtalálható a SimpleLoginban, de hiányzik a Proton Passból. Szeretné importálni?</item>
+    <item quantity="other">%d olyan álneve van, amely megtalálható a SimpleLoginban, de hiányzik a Proton Passból. Szeretné importálni?</item>
+  </plurals>
+  <string name="simple_login_widget_action">E-mail álnév szinkronizálása</string>
+  <!-- Verification codes -->
+  <string name="verification_code_not_received">Nem kapta meg a kódot?</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Kérjük, ellenőrizze a levélszemétben a \"%s\" nevű e-mailt.</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Kérjük, erősítse meg a Proton Pass e-mail címét</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Kérjük, erősítse meg postafiókját</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Ha nem talál olyan e-mailt, akkor %s.</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">új kód kérése</string>
+  <string name="field_display_name_title">Megjelenítendő név</string>
+  <!-- Attachments -->
+  <plurals name="attachment_file_amount">
+    <item quantity="one">%1$s fájl</item>
+    <item quantity="other">%1$s fájl</item>
+  </plurals>
+  <string name="attachment_title">Mellékletek</string>
+  <string name="attachment_no_files">Fájlok feltöltése az eszközéről</string>
+  <string name="attachment_add_file">Fájl csatolása</string>
+  <string name="attachment_row_upload_failed">Sikertelen feltöltés</string>
+  <string name="attachment_row_retry">Újra</string>
+  <string name="options_menu_content_description">Beállítások menü</string>
+  <!-- Items -->
+  <plurals name="shared_items_count">
+    <item quantity="one">%d megosztott elem</item>
+    <item quantity="other">%d megosztott elem</item>
+  </plurals>
+  <plurals name="users_count">
+    <item quantity="one">%d felhasználó</item>
+    <item quantity="other">%d felhasználók</item>
+  </plurals>
+  <plurals name="members_count">
+    <item quantity="one">%d tag</item>
+    <item quantity="other">%d tag</item>
+  </plurals>
+  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">yyyy LLLL dd</string>
+  <string name="show_network_qr_code">Hálózati QR Kód megjelenítése</string>
+  <string name="expand_collpased_text">több</string>
+  <string name="collapse_expanded_text">kevesebb</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Gyenge jelszó</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Ez a fiók sérülékeny, látogasson el a szolgáltatáshoz, és változtassa meg jelszavát.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d másik bejelentkezés ugyanazt a jelszót használja</item>
+    <item quantity="other">%d másik bejelentkezés ugyanazt a jelszót használja</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Kapcsolja be a kétlépcsős hitelesítést nagyobb biztonságért</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Ez a szolgáltatás kétlépcsős hitelesítést tesz lehetővé. Engedélyezze a biztonság növelése érdekében.</string>
+  <string name="login_item_reused_passwords_subtitle">A tárolókból származó elemek, amelyek ezt a jelszót használják.</string>
+  <string name="mfa_limit_reached">Kétlépcsős kód korlát elérve</string>
+  <string name="activity_in_last_two_weeks">Tevékenység az elmúlt 14 napban</string>
+  <string name="contacts">Névjegyek</string>
+  <string name="contacts_section_description">Személyes e-mail címének elrejtése érdekében létrehozhat egy álnév kapcsolatot, amely elrejti a címét.</string>
+  <string name="field_detail_display_name_title">Megjelenítendő név</string>
+  <string name="display_name_section_description">A megjelenített név, amikor e-mailt küld erről az álnévről.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s továbbítás</item>
+    <item quantity="other">%1$s továbbítás</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s válasz</item>
+    <item quantity="other">%1$s válasz</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s tiltás</item>
+    <item quantity="other">%1$s tiltás</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">Bejelentkezés létrehozása</string>
+  <string name="banner_contacts_title">Tudta?</string>
+  <string name="banner_contacts_subtitle">Minden alkalommal, amikor az álneve e-mailt kap valakitől, automatikusan létrejön egy új kapcsolat.</string>
+  <string name="action_reveal">Felfed</string>
+  <string name="action_conceal">Elrejt</string>
+</resources>

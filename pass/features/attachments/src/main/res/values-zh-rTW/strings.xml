@@ -17,13 +17,13 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="add_attachment_take_a_photo">Take a photo</string>
+  <string name="add_attachment_take_a_photo">拍照</string>
   <string name="add_attachment_choose_a_photo_or_video">Choose a photo or video</string>
   <string name="add_attachment_choose_a_file">Choose a file</string>
   <string name="attachment_options_rename">重新命名</string>
   <string name="attachment_options_delete">刪除</string>
-  <string name="attachment_options_download">Download</string>
-  <string name="attachment_options_share">Share</string>
+  <string name="attachment_options_download">下載</string>
+  <string name="attachment_options_share">共享</string>
   <string name="file_picker_open_error">Could not open file picker</string>
   <string name="media_picker_open_error">Could not open media picker</string>
   <string name="camera_open_error">Could not open camera</string>
@@ -32,7 +32,7 @@
   <string name="delete_all_attachments_title">Delete all attachments?</string>
   <string name="delete_all_attachments_subtitle">This action cannot be undone</string>
   <string name="delete_all_attachments_confirm">全部刪除</string>
-  <string name="rename_attachment_dialog_title">Rename file</string>
+  <string name="rename_attachment_dialog_title">重新命名檔案</string>
   <string name="storage_full_title">Your storage is almost full.</string>
   <string name="storage_full_body">Upgrade to increase your storage capacity.</string>
   <string name="storage_full_upgrade">升級</string>

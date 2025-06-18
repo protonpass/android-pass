@@ -3,7 +3,9 @@
   <string name="updates_notification_channel_name">Atualizações</string>
   <string name="autofill_notification_channel_name">Preenchimento automático</string>
   <string name="autofill_notification_copy_to_clipboard_title">Código TOTP</string>
-  <string name="autofill_notification_copy_to_clipboard_body">TOTP has been copied to clipboard</string>
-  <string name="updates_new_invite_received_title">Recebeu um convite</string>
-  <string name="updates_new_invite_received_message">Foi convidado/a para um cofre. Abra o aplicativo para ver o convite e aceitá-lo.</string>
+  <string name="autofill_notification_copy_to_clipboard_body">O código TOTP foi copiado para a área de transferência.</string>
+  <string name="new_item_invite_notification_title">Un novo item convidado foi recebido.</string>
+  <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s deseja partilhar um item consigo.</string>
+  <string name="new_vault_invite_notification_title">Um novo convite para o cofre foi recebido.</string>
+  <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s quer partilhar um cofre consigo.</string>
 </resources>

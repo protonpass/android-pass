@@ -309,4 +309,38 @@
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">pp kkkk vvvv</string>
   <string name="show_network_qr_code">Näytä verkon QR-koodi</string>
+  <string name="expand_collpased_text">enemmän</string>
+  <string name="collapse_expanded_text">vähemmän</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Heikko salasana</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Tämä tili on vaarassa. Käy vaihtamassa salasanasi palvelun tiliasetuksista.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d toinen kirjautumistieto käyttää samaa salasanaa</item>
+    <item quantity="other">%d muuta kirjautumistietoa käyttää samaa salasanaa</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Vahvista suojausta määrittämällä 2FA</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Palvelu mahdollistaa kaksivaiheisen tunnistautumisen. Paranna tilin suojausta ottamalla se käyttöön.</string>
+  <string name="login_item_reused_passwords_subtitle">Holviesi tätä salasanaa käyttävät kohteet.</string>
+  <string name="mfa_limit_reached">Kaksivaiheisen tunnistautumisen rajoitus on saavutettu</string>
+  <string name="activity_in_last_two_weeks">Tapahtumat viimeisten kahden viikon ajalta</string>
+  <string name="contacts">Yhteystiedot</string>
+  <string name="contacts_section_description">Voit pitää henkilökohtaisen sähköpostiosoitteesi piilossa luomalla aliasyhteystiedon, joka naamioi sen.</string>
+  <string name="field_detail_display_name_title">Näyttönimi</string>
+  <string name="display_name_section_description">Näyttönimi, kun lähetät sähköpostia tästä aliaksesta.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s ohjaus</item>
+    <item quantity="other">%1$s ohjausta</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s vastaus</item>
+    <item quantity="other">%1$s vastausta</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s esto</item>
+    <item quantity="other">%1$s estoa</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">Luo kirjautumistieto</string>
+  <string name="banner_contacts_title">Tiesitkö?</string>
+  <string name="banner_contacts_subtitle">Aina kun aliaksesi vastaanottaa viestin, luodaan automaattisesti uusi yhteystieto.</string>
+  <string name="action_reveal">Paljasta</string>
+  <string name="action_conceal">Piilota</string>
 </resources>

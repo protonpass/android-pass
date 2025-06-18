@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="configure_extra_password_continue">Tovább</string>
+  <string name="configure_extra_password_title">Extra jelszó beállítása</string>
+  <string name="configure_extra_password_enter_extra_password">Extra jelszó</string>
+  <string name="configure_extra_password_repeat_extra_password">Jelszó ismét</string>
+  <string name="configure_extra_password_description">Ezt a jelszót a bejelentkezéskor kell majd megadnia, valamint amikor valamelyik webes Proton alkalmazásról a Proton Pass webes alkalmazásra vált.</string>
+  <string name="configure_extra_password_warning">Figyelem: Ha elveszíti ezt a jelszót, nem fog tudni hozzáférni a fiókjához.</string>
+  <string name="configure_extra_password_mismatch">A jelszavak nem egyeznek</string>
+  <string name="extra_password_options_remove">Eltávolítás</string>
+  <string name="info_extra_password_title">Extra jelszó</string>
+  <string name="info_extra_password_body">Védje a Proton Pass-t egy extra jelszóval.</string>
+  <string name="info_extra_password_button">Extra jelszó beállítása</string>
+  <string name="configure_extra_password_cannot_be_blank">A jelszó nem lehet üres</string>
+  <string name="configure_extra_password_password_too_short">Az extra jelszónak legalább 8 karakterből kell állnia</string>
+  <string name="confirm_extra_password_title">Extra jelszó beállítása</string>
+  <string name="confirm_extra_password_body">A rendszer kijelentkezteti, és az összes többi eszközén újra be kell jelentkeznie.</string>
+  <string name="confirm_extra_password_error">Nem sikerült extra jelszót beállítani</string>
+  <string name="confirm_extra_password_success">Extra jelszó beállítva</string>
+</resources>

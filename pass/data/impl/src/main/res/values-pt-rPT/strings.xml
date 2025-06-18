@@ -20,4 +20,5 @@
   <string name="sync_channel">Sincronizar</string>
   <string name="sync_channel_description">Canal de notificações para a sincronização de itens</string>
   <string name="syncing_vaults">A sincronizar de cofres e itens</string>
+  <string name="logging_out_free_users">A terminar a sessão dos utilizadores gratuitos adicionais</string>
 </resources>

@@ -190,7 +190,6 @@
   <string name="close_scree_icon_content_description">ეკრანის დახურვის ღილაკი</string>
   <string name="totp_paste_code_action">კოდის ჩასმა</string>
   <string name="totp_scan_code_action">კოდის სკანირება</string>
-  <string name="field_cannot_be_empty">ეს ველი ცარიელი ვერ იქნება</string>
   <string name="camera_permission_explanation">ამ ფუნქციას კამერასთან წვდომა სჭირდება.</string>
   <string name="camera_permission_open_settings">მორგების ფანჯრის გახსნა</string>
   <!--  TOTP limit  -->

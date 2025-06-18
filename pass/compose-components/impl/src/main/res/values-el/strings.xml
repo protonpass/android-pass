@@ -309,4 +309,38 @@
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">ηη ΜΜΜΜ εεεε</string>
   <string name="show_network_qr_code">Εμφάνιση κωδικού QR του δικτύου</string>
+  <string name="expand_collpased_text">περισσότερα</string>
+  <string name="collapse_expanded_text">λιγότερα</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Αδύναμος Κωδικός Πρόσβασης</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Αυτός ο λογαριασμός είναι ευάλωτος, επισκεφθείτε την υπηρεσία και αλλάξτε τον κωδικό πρόσβασής σας.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d άλλη σύνδεση χρησιμοποιεί τον ίδιο κωδικό πρόσβασης</item>
+    <item quantity="other">%d άλλες συνδέσεις χρησιμοποιούν τον ίδιο κωδικό πρόσβασης</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Ρυθμίστε το 2FA για περισσότερη ασφάλεια</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Αυτή η υπηρεσία προσφέρει 2FA. Ενεργοποιήστε το για πρόσθετη ασφάλεια λογαριασμού.</string>
+  <string name="login_item_reused_passwords_subtitle">Στοιχεία από τις κρύπτες σας που χρησιμοποιούν αυτόν τον κωδικό πρόσβασης.</string>
+  <string name="mfa_limit_reached">Επιτεύχθηκε το όριο 2FA</string>
+  <string name="activity_in_last_two_weeks">Δραστηριότητα στις τελευταίες 14 ημέρες</string>
+  <string name="contacts">Επαφές</string>
+  <string name="contacts_section_description">Για να διατηρήσετε κρυφή την προσωπική σας διεύθυνση ηλεκτρονικού ταχυδρομείου, μπορείτε να δημιουργήσετε μια ψευδώνυμη επαφή που καλύπτει τη διεύθυνσή σας.</string>
+  <string name="field_detail_display_name_title">Προβολή του ονόματος</string>
+  <string name="display_name_section_description">Το εμφανιζόμενο όνομα κατά την αποστολή ενός μηνύματος ηλεκτρονικού ταχυδρομείου από αυτό το ψευδώνυμο.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s προώθηση</item>
+    <item quantity="other">%1$s προωθήσεις</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s απάντηση</item>
+    <item quantity="other">%1$s απαντήσεις</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s μπλοκ</item>
+    <item quantity="other">%1$s μπλοκ</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">Δημιουργία στοιχείων σύνδεσης</string>
+  <string name="banner_contacts_title">Γνωρίζετε;</string>
+  <string name="banner_contacts_subtitle">Κάθε φορά που το ψευδώνυμό σας λαμβάνει ένα μήνυμα ηλεκτρονικού ταχυδρομείου από κάποιον, μια νέα επαφή δημιουργείται αυτόματα.</string>
+  <string name="action_reveal">Αποκάλυψη</string>
+  <string name="action_conceal">Απόκρυψη</string>
 </resources>

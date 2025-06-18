@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="account_title">Conta</string>
+  <string name="account_recovery_title">Conta e recuperação</string>
   <string name="account_username_label">Nome de utilizador</string>
   <string name="account_subscription_label">Plano de subscrição</string>
   <string name="account_permanently_delete_warning">Isto vai eliminar permanentemente a sua conta e todos os seus dados. Não poderá reativar esta conta.</string>
@@ -8,9 +9,25 @@
   <string name="account_delete_account_icon_content_description">Botão de eliminação da conta</string>
   <string name="account_sign_out">Terminar sessão</string>
   <string name="account_sign_out_icon_content_description">Botão de terminar sessão</string>
-  <string name="account_manage_account">Manage account</string>
-  <string name="account_manage_account_icon_content_description">Manage account button</string>
+  <string name="account_manage_account">Gerir a conta</string>
+  <string name="account_manage_account_icon_content_description">Botão de gestão de conta</string>
   <string name="account_manage_subscription">Gerir a subscrição</string>
   <string name="account_get_user_info_error">Não foi possível recuperar as informações do utilizador.</string>
   <string name="manage_subscription_icon_content_description">Botão de gestão da subscrição</string>
+  <string name="account_settings_list_item_password_header">Alterar a palavra-passe</string>
+  <string name="account_settings_list_item_recovery_header">E-mail de recuperação</string>
+  <string name="account_settings_list_item_security_keys">Chaves de segurança</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">Não definido</string>
+  <string name="account_settings_list_item_password_hint_grace">O pedido de reposição da palavra-passe encontra-se pendente</string>
+  <string name="account_settings_list_item_password_hint_insecure">Pedido de reposição da palavra-passe concluído</string>
+  <string name="account_settings_list_item_extra_password_header">Palavra-passe adicional para o Proton Pass</string>
+  <string name="account_settings_list_item_extra_password_header_set">Configurar a palavra-passe adicional para o Proton Pass</string>
+  <string name="account_settings_list_item_extra_password_active">Ativo</string>
+  <string name="account_settings_list_item_extra_password_description">A palavra-passe adicional será requerida para usar o Pas. Ela funciona como uma palavra-passe adicional acima da palavra-passe da Proton.</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">Não definido</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
+  <plurals name="account_settings_list_item_security_keys_hint_many">
+    <item quantity="one">%d chave de segurança definida</item>
+    <item quantity="other">%d chaves de segurança definidas</item>
+  </plurals>
 </resources>

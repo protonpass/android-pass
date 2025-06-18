@@ -339,4 +339,46 @@
   </plurals>
   <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <string name="show_network_qr_code">Zobrazit QR kód sítě</string>
+  <string name="expand_collpased_text">více</string>
+  <string name="collapse_expanded_text">méně</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Slabé heslo</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Tento účet je zranitelný, navštivte službu a změňte si heslo.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d jiné přihlášení používá stejné heslo</item>
+    <item quantity="few">%d jiná přihlášení používají stejné heslo</item>
+    <item quantity="many">%d jiných přihlášení používá stejné heslo</item>
+    <item quantity="other">%d jiných přihlášení používá stejné heslo</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Nastavte 2FA pro větší bezpečnost</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Tato služba nabízí 2FA. Povolte to pro zvýšení zabezpečení účtu.</string>
+  <string name="login_item_reused_passwords_subtitle">Položky z vašich trezorů, které používají toto heslo.</string>
+  <string name="mfa_limit_reached">Dosažen limit 2FA</string>
+  <string name="activity_in_last_two_weeks">Aktivita za posledních 14 dní</string>
+  <string name="contacts">Kontakty</string>
+  <string name="contacts_section_description">Chcete-li uchovat vaši osobní e-mailovou adresu v soukromí, můžete pro ni vytvořit alias kontakt, který vaši adresu zamaskuje.</string>
+  <string name="field_detail_display_name_title">Zobrazované jméno</string>
+  <string name="display_name_section_description">Zobrazované jméno při odesílání e-mailu z tohoto aliasu.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s přeposlání</item>
+    <item quantity="few">%1$s přeposlání</item>
+    <item quantity="many">%1$s přeposlání</item>
+    <item quantity="other">%1$s přeposlání</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s odpověď</item>
+    <item quantity="few">%1$s odpovědi</item>
+    <item quantity="many">%1$s odpovědí</item>
+    <item quantity="other">%1$s odpovědí</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s blokování</item>
+    <item quantity="few">%1$s blokování</item>
+    <item quantity="many">%1$s blokování</item>
+    <item quantity="other">%1$s blokování</item>
+  </plurals>
+  <string name="alias_create_login_from_alias">Vytvořit přihlášení</string>
+  <string name="banner_contacts_title">Věděli jste?</string>
+  <string name="banner_contacts_subtitle">Pokaždé, když váš alias od někoho obdrží e-mail, automaticky se vytvoří nový kontakt.</string>
+  <string name="action_reveal">Odhalit</string>
+  <string name="action_conceal">Skrýt</string>
 </resources>

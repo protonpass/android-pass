@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="action_open">Megnyitás</string>
+  <string name="action_copy">Másolás</string>
+  <!-- Detail -->
+  <string name="detail_init_error">Az elem adatainak betöltése nem sikerült</string>
+  <string name="top_bar_edit_button_text">Szerkesztés</string>
+  <!-- Alias details -->
+  <string name="field_alias_title">E-mail álnév cím</string>
+  <string name="field_alias_disabled_title">E-mail álnév (letiltva)</string>
+  <string name="alias_copied_to_clipboard">E-mail álnév másolva</string>
+  <string name="alias_detail_field_mailboxes_title">Továbbítási cím</string>
+  <string name="alias_create_login_from_alias">Bejelentkezés létrehozása</string>
+  <!-- Note details -->
+  <string name="field_detail_note_title">Megjegyzés</string>
+  <string name="note_detail_copy_note_to_clipboard">Jegyzet másolása</string>
+  <string name="note_copied_to_clipboard">Jegyzet a vágólapra másolva</string>
+  <!-- Login details -->
+  <string name="email_copied_to_clipboard">E-mail cím másolva</string>
+  <string name="username_copied_to_clipboard">Felhasználónév másolva</string>
+  <string name="password_copied_to_clipboard">Jelszó másolva</string>
+  <string name="website_copied_to_clipboard">Weboldal másolva</string>
+  <string name="totp_copied_to_clipboard">TOTP másolva</string>
+  <string name="field_copied_to_clipboard">Mező másolva</string>
+  <string name="move_item_to_trash_message">A elem a lomtárba került</string>
+  <string name="error_move_item_to_trash_message">Hiba a Lomtárba áthelyezésekor</string>
+  <string name="item_permanently_deleted_message">Elem véglegesen törölve</string>
+  <string name="item_permanently_deleted_message_error">Hiba az elem törlésekor</string>
+  <string name="item_restored_message">Elem helyreállítva</string>
+  <string name="item_restored_message_error">Hiba az elem helyreállításakor</string>
+  <string name="item_monitor_exclude_message">Az elem kikerült a figyelésből</string>
+  <string name="item_monitor_exclude_message_error">Hiba történt a elem kizárásakor a figyelésből</string>
+  <string name="item_monitor_include_message">Az elem sikeresen hozzáadva a figyeléshez</string>
+  <string name="item_monitor_include_message_error">Hiba történt az elem hozzáadásakor a figyeléshez</string>
+  <string name="alias_change_status_error">Hiba történt az álnév státuszának megváltoztatásakor</string>
+  <string name="login_item_generate_totp_error">Hiba a kétlépcsős kód létrehozásakor</string>
+  <string name="login_item_view_alias_button">Álnév megjelenítése</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Gyenge jelszó</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Ez a fiók sérülékeny, látogasson el a szolgáltatáshoz, és változtassa meg jelszavát.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d másik bejelentkezés ugyanazt a jelszót használja</item>
+    <item quantity="other">%d másik bejelentkezés ugyanazt a jelszót használja</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Kapcsolja be a kétlépcsős hitelesítést nagyobb biztonságért</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Ez a szolgáltatás kétlépcsős hitelesítést tesz lehetővé. Engedélyezze a biztonság növelése érdekében.</string>
+  <string name="login_item_reused_passwords_subtitle">A tárolókból származó elemek, amelyek ezt a jelszót használják.</string>
+  <string name="field_email">E-mail cím</string>
+  <string name="field_username">Felhasználónév</string>
+  <string name="field_username_or_email">Felhasználónév vagy e-mail cím</string>
+  <string name="field_password">Jelszó</string>
+  <string name="websites_section_title">Weboldalak</string>
+  <string name="totp_section_title">Kétlépcsős token (TOTP)</string>
+  <string name="action_reveal_password">Jelszó felfedése</string>
+  <string name="action_conceal_password">Jelszó elrejtése</string>
+  <string name="action_reveal_number">Szám felfedése</string>
+  <string name="action_conceal_number">Szám elrejtése</string>
+  <string name="share_button_content_description">Megosztás megnyitása gomb</string>
+  <string name="open_menu_icon_content_description">Menü megnyitása gomb</string>
+  <string name="mfa_limit_reached">Kétlépcsős kód korlát elérve</string>
+  <string name="mfa_icon_content_description">Kétlépcsős hitelesítés ikon</string>
+  <string name="custom_field_text_icon_description">Szöveges egyéni mező</string>
+  <string name="custom_field_hidden_icon_description">Rejtett egyéni mező</string>
+  <string name="custom_field_totp_icon_description">Kétlépcsős kód egyéni mező</string>
+  <!-- Credit card details -->
+  <string name="credit_card_cardholder_field_name">A kártyán szereplő név</string>
+  <string name="credit_card_number_field_name">Kártyaszám</string>
+  <string name="credit_card_cvv_field_name">Biztonsági kód</string>
+  <string name="credit_card_pin_field_name">PIN kód</string>
+  <string name="credit_card_expiration_date_field_name">Lejárati dátum</string>
+  <string name="credit_card_cardholder_copied_to_clipboard">A kártyatulajdonos a vágólapra másolva</string>
+  <string name="credit_card_number_copied_to_clipboard">A kártyaszám a vágólapra másolva</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">A biztonsági kód a vágólapra másolva</string>
+  <!-- Bottomsheet -->
+  <string name="move_to_trash_item_detail_bottom_sheet">Áthelyezés a lomtárba</string>
+  <string name="migrate_item_detail_bottom_sheet">Áthelyezés másik tárolóba</string>
+  <!-- More info -->
+  <string name="date_today">Ma %s</string>
+  <string name="date_yesterday">Tegnap %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">LLLL dd HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">yyyy LLLL dd HH:mm</string>
+  <string name="item_detail_cannot_perform_action_edit_title">Nem szerkeszthető</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Nem szerkesztheti ezt az elemet, mert nincs elegendő jogosultsága.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Csak a legrégebbi tárolóiban lévő elemeket szerkesztheti. Kérjük, váltson nagyobb csomagra, az elem szerkesztéséhez.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Ez az elem nem szerkeszthető, mert a lomtárban van. Szerkesztéshez helyezze át a lomtárból.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nem lehet megosztani</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nincs elegendő jogosultsága a tároló megosztásához.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Elérte a tároló megosztási korlátot. További tárolók megosztásához, kérjük váltson nagyobb csomagra.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Ez az elem nem osztható meg, mert a lomtárban van. A megosztáshoz helyezze át a lomtárból.</string>
+  <string name="password_score_vulnerable">Sebezhető</string>
+  <string name="password_score_weak">Gyenge</string>
+  <string name="password_score_strong">Erős</string>
+  <string name="passkey_detail_bottomsheet_title">Hitelesítő kulcs</string>
+  <string name="passkey_detail_bottomsheet_username">Felhasználónév</string>
+  <string name="passkey_detail_bottomsheet_domain">Domain név</string>
+  <string name="passkey_detail_bottomsheet_key">Kulcs</string>
+  <string name="passkey_detail_bottomsheet_created">Létrehozva</string>
+  <string name="activity_in_last_two_weeks">Tevékenység az elmúlt 14 napban</string>
+  <string name="contacts">Névjegyek</string>
+  <string name="contacts_section_description">Személyes e-mail címének elrejtése érdekében létrehozhat egy álnév kapcsolatot, amely elrejti a címét.</string>
+  <string name="field_detail_display_name_title">Megjelenítendő név</string>
+  <string name="display_name_section_description">A megjelenített név, amikor e-mailt küld erről az álnévről.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s továbbítás</item>
+    <item quantity="other">%1$s továbbítás</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s válasz</item>
+    <item quantity="other">%1$s válasz</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s tiltás</item>
+    <item quantity="other">%1$s tiltás</item>
+  </plurals>
+  <string name="open_with">Megnyitás a következővel:</string>
+  <string name="open_attachments_error">Nem sikerült megnyitni a mellékletet</string>
+</resources>

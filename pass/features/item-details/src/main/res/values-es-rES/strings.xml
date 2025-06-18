@@ -73,4 +73,10 @@
   <string name="item_details_snackbar_message_ssid_copied">Se ha copiado el SSID.</string>
   <string name="open_with">Abrir con:</string>
   <string name="open_attachments_error">Error al abrir el archivo adjunto</string>
+  <string name="passkey_detail_bottomsheet_title">Clave de acceso</string>
+  <string name="passkey_detail_bottomsheet_username">Nombre de usuario</string>
+  <string name="passkey_detail_bottomsheet_domain">Dominio</string>
+  <string name="passkey_detail_bottomsheet_key">Clave</string>
+  <string name="passkey_detail_bottomsheet_created">Creada</string>
+  <string name="login_item_reused_passwords_subtitle">Elementos de las cajas fuertes que usan esta contraseña.</string>
 </resources>

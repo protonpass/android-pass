@@ -190,7 +190,6 @@
   <string name="close_scree_icon_content_description">Sluit scherm knop</string>
   <string name="totp_paste_code_action">Code plakken</string>
   <string name="totp_scan_code_action">Scan code</string>
-  <string name="field_cannot_be_empty">Dit veld mag niet leeg zijn</string>
   <string name="camera_permission_explanation">Cameratoestemming vereist om deze functie beschikbaar te maken.</string>
   <string name="camera_permission_open_settings">Instellingen openen</string>
   <!--  TOTP limit  -->

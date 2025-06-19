@@ -18,6 +18,7 @@
 
 package proton.android.pass.autofill.ui.autofill
 
+import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -41,14 +42,12 @@ import proton.android.pass.account.api.AccountOrchestrators
 import proton.android.pass.account.api.Orchestrator
 import proton.android.pass.autofill.api.suggestions.PackageNameUrlSuggestionAdapter
 import proton.android.pass.autofill.entities.AutofillAppState
-import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_EXTRAS_BUNDLE
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.NotValidAutofillUiState
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.UninitialisedAutofillUiState
 import proton.android.pass.biometry.NeedsBiometricAuth
-import proton.android.pass.common.api.Option
-import proton.android.pass.commonui.api.require
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.ThemePreference
@@ -61,16 +60,14 @@ class AutofillActivityViewModel @Inject constructor(
     private val accountOrchestrators: AccountOrchestrators,
     private val accountManager: AccountManager,
     private val toastManager: ToastManager,
-    private val savedStateHandle: SavedStateHandle,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val packageNameUrlSuggestionAdapter: PackageNameUrlSuggestionAdapter,
+    savedStateHandle: SavedStateHandle,
     userPreferencesRepository: UserPreferencesRepository,
     needsBiometricAuth: NeedsBiometricAuth
 ) : ViewModel() {
 
     private val closeScreenFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
-
-    private val appInitialState = getAutofillAppState()
 
     private val copyTotpToClipboardPreferenceState = userPreferencesRepository
         .getCopyTotpToClipboardEnabled()
@@ -84,19 +81,37 @@ class AutofillActivityViewModel @Inject constructor(
         themePreferenceState,
         needsBiometricAuth(),
         copyTotpToClipboardPreferenceState,
-        closeScreenFlow
-    ) { themePreference, needsAuth, copyTotpToClipboard, closeScreen ->
-        val (appState, selectedAutofillItem) = appInitialState
+        closeScreenFlow,
+        savedStateHandle.getStateFlow<Bundle?>(ARG_EXTRAS_BUNDLE, null)
+    ) { themePreference, needsAuth, copyTotpToClipboard, closeScreen, extrasBundle ->
         when {
             closeScreen -> AutofillUiState.CloseScreen
-            !appInitialState.appState.isValid() -> NotValidAutofillUiState
-            else -> AutofillUiState.StartAutofillUiState(
-                themePreference = themePreference.value(),
-                needsAuth = needsAuth,
-                autofillAppState = appState,
-                copyTotpToClipboardPreference = copyTotpToClipboard.value(),
-                selectedAutofillItem = selectedAutofillItem
-            )
+            extrasBundle == null -> UninitialisedAutofillUiState
+            else -> {
+                try {
+                    val extras = AutofillIntentExtras.fromExtras(extrasBundle)
+                    val appState = AutofillAppState(
+                        autofillData = extras.first,
+                        packageNameUrlSuggestionAdapter = packageNameUrlSuggestionAdapter
+                    )
+
+                    if (!appState.isValid()) {
+                        NotValidAutofillUiState
+                    } else {
+                        AutofillUiState.StartAutofillUiState(
+                            themePreference = themePreference.value(),
+                            needsAuth = needsAuth,
+                            autofillAppState = appState,
+                            copyTotpToClipboardPreference = copyTotpToClipboard.value(),
+                            selectedAutofillItem = extras.second
+                        )
+                    }
+                } catch (e: Exception) {
+                    PassLogger.w(TAG, e)
+                    PassLogger.w(TAG, "Failed to parse extras bundle")
+                    NotValidAutofillUiState
+                }
+            }
         }
     }
         .stateIn(
@@ -130,22 +145,7 @@ class AutofillActivityViewModel @Inject constructor(
         }
     }
 
-    private fun getAutofillAppState(): AppState {
-        val extras = AutofillIntentExtras.fromExtras(
-            bundle = savedStateHandle.require(ARG_EXTRAS_BUNDLE)
-        )
-        return AppState(
-            appState = AutofillAppState(
-                autofillData = extras.first,
-                packageNameUrlSuggestionAdapter = packageNameUrlSuggestionAdapter
-            ),
-            selectedAutofillItem = extras.second
-        )
+    companion object {
+        private const val TAG = "AutofillActivityViewModel"
     }
-
-    internal data class AppState(
-        val appState: AutofillAppState,
-        val selectedAutofillItem: Option<AutofillItem>
-    )
-
 }

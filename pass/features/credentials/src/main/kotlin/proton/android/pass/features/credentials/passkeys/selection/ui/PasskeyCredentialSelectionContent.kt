@@ -61,7 +61,7 @@ internal fun PasskeyCredentialSelectionContent(
         bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
     )
 
-    val startDestination = remember(isBiometricAuthRequired) {
+    val startDestination = remember {
         if (isBiometricAuthRequired) AUTH_GRAPH else SelectItem.route
     }
 

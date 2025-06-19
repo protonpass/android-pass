@@ -60,7 +60,7 @@ internal fun PasswordCredentialSelectionContent(
         bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
     )
 
-    val startDestination = remember(key1 = isBiometricAuthRequired) {
+    val startDestination = remember {
         if (isBiometricAuthRequired) AUTH_GRAPH else SelectItem.route
     }
 

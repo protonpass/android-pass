@@ -49,6 +49,7 @@ internal fun WifiNetworkContent(
             value = itemStaticFields.password,
             passwordStrength = PasswordStrength.None,
             isEditAllowed = isEditAllowed,
+            showLeadingIcon = false,
             onChange = {
                 onEvent(ItemContentEvent.OnFieldValueChange(FieldChange.Password, it))
             },

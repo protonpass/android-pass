@@ -111,6 +111,7 @@ internal fun PassItemDetailsCustomFieldRow(
             customFieldTotps[sectionIndex to customFieldIndex]?.let { customFieldTotp ->
                 PassItemDetailTOTPFieldRow(
                     totp = customFieldTotp,
+                    icon = null,
                     title = customFieldContent.label,
                     itemColors = itemColors,
                     itemDiffType = itemDiffType,

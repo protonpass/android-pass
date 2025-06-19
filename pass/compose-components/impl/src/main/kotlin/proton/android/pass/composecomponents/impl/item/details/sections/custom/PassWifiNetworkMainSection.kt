@@ -59,8 +59,6 @@ import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.WifiSecurityType
 import proton.android.pass.domain.items.ItemCategory
-import me.proton.core.presentation.R as CoreR
-import proton.android.pass.composecomponents.impl.R as CompR
 
 private const val HIDDEN_PRIVATE_KEY_TEXT_LENGTH = 12
 
@@ -75,7 +73,7 @@ fun PassWifiNetworkMainSection(
 ) {
     RoundedCornersColumn(modifier = modifier) {
         PassItemDetailFieldRow(
-            icon = CompR.drawable.ic_wifi,
+            icon = null,
             title = stringResource(R.string.item_details_wifi_network_label_ssid_name),
             subtitle = contents.ssid,
             itemColors = itemColors,
@@ -92,7 +90,7 @@ fun PassWifiNetworkMainSection(
         PassDivider()
 
         PassItemDetailsHiddenFieldRow(
-            icon = CoreR.drawable.ic_proton_key,
+            icon = null,
             title = stringResource(R.string.item_details_wifi_network_label_password),
             hiddenState = contents.password,
             hiddenTextLength = HIDDEN_PRIVATE_KEY_TEXT_LENGTH,
@@ -123,7 +121,7 @@ fun PassWifiNetworkMainSection(
         PassDivider()
 
         PassItemDetailFieldRow(
-            icon = CoreR.drawable.ic_proton_lock,
+            icon = null,
             title = stringResource(R.string.item_details_wifi_network_label_security),
             subtitle = getWifiSecurityTypeText(contents.wifiSecurityType),
             itemColors = itemColors,
@@ -137,8 +135,9 @@ fun PassWifiNetworkMainSection(
                 modifier = modifier
                     .fillMaxWidth()
                     .clickable(onClick = { onEvent(OnWifiNetworkQRClick(svgQR.value)) })
-                    .padding(all = Spacing.medium)
-                    .padding(vertical = Spacing.small),
+                    .padding(horizontal = Spacing.medium)
+                    .padding(start = Spacing.small)
+                    .padding(vertical = Spacing.mediumLarge),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
             ) {

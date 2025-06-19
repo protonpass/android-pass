@@ -148,6 +148,7 @@ internal fun AddressDetails(
                 canEdit = enabled,
                 isError = false,
                 errorMessage = "",
+                showLeadingIcon = false,
                 index = index,
                 onValueChange = {
                     onEvent(OnFieldChange(identityField, it))

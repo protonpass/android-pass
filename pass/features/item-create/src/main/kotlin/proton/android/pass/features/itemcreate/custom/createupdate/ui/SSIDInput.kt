@@ -29,9 +29,7 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
-import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.features.itemcreate.R
-import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun SSIDInput(
@@ -42,7 +40,7 @@ internal fun SSIDInput(
 ) {
     ProtonTextField(
         modifier = modifier.padding(
-            start = Spacing.none,
+            start = Spacing.medium,
             top = Spacing.medium,
             end = Spacing.extraSmall,
             bottom = Spacing.medium
@@ -53,16 +51,10 @@ internal fun SSIDInput(
         onChange = onChange,
         onFocusChange = {},
         textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed),
-        leadingIcon = {
-            Icon.Default(
-                id = CompR.drawable.ic_wifi,
-                tint = ProtonTheme.colors.iconWeak
-            )
-        },
-        trailingIcon = if (text.isNotEmpty()) {
-            { SmallCrossIconButton { onChange("") } }
-        } else {
-            null
+        trailingIcon = {
+            if (text.isNotEmpty()) {
+                SmallCrossIconButton { onChange("") }
+            }
         },
         label = {
             ProtonTextFieldLabel(

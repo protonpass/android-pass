@@ -124,21 +124,6 @@ android {
         dataBinding = true // required by Core presentation
     }
 
-    signingConfigs {
-        register("signingKeystore") {
-            storeFile = file("$rootDir/keystore/ProtonMail.keystore")
-            storePassword = "${privateProperties["keyStorePassword"]}"
-            keyAlias = "ProtonMail"
-            keyPassword = "${privateProperties["keyStoreKeyPassword"]}"
-        }
-        register("uploadKeystore") {
-            storeFile = file("$rootDir/keystore/upload-keystore")
-            storePassword = "${privateProperties["uploadStorePassword"]}"
-            keyAlias = "upload"
-            keyPassword = "${privateProperties["uploadStorePassword"]}"
-        }
-    }
-
     buildTypes {
         debug {
             isDebuggable = true
@@ -162,13 +147,7 @@ android {
                 isRemoveUnusedResources = true
                 file("proguard").listFiles()?.forEach { proguardFile(it) }
             }
-            signingConfig = if (isApkBuild) {
-                println("Using signing keystore")
-                signingConfigs["signingKeystore"]
-            } else {
-                println("Using upload keystore")
-                signingConfigs["uploadKeystore"]
-            }
+            signingConfig = signingConfigs.getByName("debug")
         }
         create("benchmarkRelease") {
             signingConfig = signingConfigs.getByName("debug")

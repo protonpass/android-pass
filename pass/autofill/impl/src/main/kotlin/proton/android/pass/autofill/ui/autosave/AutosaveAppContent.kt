@@ -35,7 +35,6 @@ import proton.android.pass.commonui.api.onBottomSheetDismissed
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.features.auth.AUTH_GRAPH
 import proton.android.pass.features.itemcreate.login.CREATE_LOGIN_GRAPH
-import proton.android.pass.features.selectitem.navigation.SelectItem
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 

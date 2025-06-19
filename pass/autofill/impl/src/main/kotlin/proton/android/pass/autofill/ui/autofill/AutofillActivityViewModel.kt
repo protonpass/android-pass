@@ -88,7 +88,7 @@ class AutofillActivityViewModel @Inject constructor(
             closeScreen -> AutofillUiState.CloseScreen
             extrasBundle == null -> UninitialisedAutofillUiState
             else -> {
-                try {
+                runCatching {
                     val extras = AutofillIntentExtras.fromExtras(extrasBundle)
                     val appState = AutofillAppState(
                         autofillData = extras.first,
@@ -106,11 +106,14 @@ class AutofillActivityViewModel @Inject constructor(
                             selectedAutofillItem = extras.second
                         )
                     }
-                } catch (e: Exception) {
-                    PassLogger.w(TAG, e)
-                    PassLogger.w(TAG, "Failed to parse extras bundle")
-                    NotValidAutofillUiState
-                }
+                }.fold(
+                    onFailure = {
+                        PassLogger.w(TAG, it)
+                        PassLogger.w(TAG, "Failed to parse extras bundle")
+                        NotValidAutofillUiState
+                    },
+                    onSuccess = { it }
+                )
             }
         }
     }

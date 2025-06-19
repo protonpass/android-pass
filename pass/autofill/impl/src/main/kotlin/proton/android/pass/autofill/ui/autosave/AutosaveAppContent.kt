@@ -35,6 +35,7 @@ import proton.android.pass.commonui.api.onBottomSheetDismissed
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.features.auth.AUTH_GRAPH
 import proton.android.pass.features.itemcreate.login.CREATE_LOGIN_GRAPH
+import proton.android.pass.features.selectitem.navigation.SelectItem
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 
@@ -58,11 +59,14 @@ fun AutosaveAppContent(
     )
     val bottomSheetJob: MutableState<Job?> = remember { mutableStateOf(null) }
 
+    val startDestination = remember {
+        if (needsAuth) AUTH_GRAPH else CREATE_LOGIN_GRAPH
+    }
     PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {
         NavHost(
             modifier = modifier.defaultMinSize(minHeight = 200.dp),
             navController = appNavigator.navController,
-            startDestination = if (needsAuth) AUTH_GRAPH else CREATE_LOGIN_GRAPH
+            startDestination = startDestination
         ) {
             autosaveActivityGraph(
                 appNavigator = appNavigator,

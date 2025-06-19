@@ -56,6 +56,7 @@ internal fun PassItemDetailTOTPFieldRow(
     modifier: Modifier = Modifier,
     totp: TotpState,
     icon: Int? = null,
+    showLeadingIcon: Boolean = true,
     title: String,
     itemColors: PassItemColors,
     itemDiffType: ItemDiffType,
@@ -68,7 +69,8 @@ internal fun PassItemDetailTOTPFieldRow(
             icon = icon,
             title = title,
             itemColors = itemColors,
-            itemDiffType = itemDiffType
+            itemDiffType = itemDiffType,
+            showLeadingIcon = showLeadingIcon
         )
 
         is TotpState.Visible -> PassItemDetailMaskedFieldRow(
@@ -78,6 +80,7 @@ internal fun PassItemDetailTOTPFieldRow(
             maskedSubtitle = TotpCode(totp.code),
             itemColors = itemColors,
             itemDiffType = itemDiffType,
+            showLeadingIcon = showLeadingIcon,
             onClick = { onEvent(OnFieldClick(ItemDetailsFieldType.PlainCopyable.TotpCode(totp.code))) },
             contentInBetween = {
                 PassTotpProgress(

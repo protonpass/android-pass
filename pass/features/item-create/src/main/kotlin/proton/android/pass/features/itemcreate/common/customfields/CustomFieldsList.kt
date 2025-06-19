@@ -44,6 +44,7 @@ internal fun LazyListScope.customFieldsList(
     enabled: Boolean,
     errors: PersistentSet<CustomFieldValidationError>,
     isVisible: Boolean,
+    showLeadingIcon: Boolean = true,
     canCreateCustomFields: Boolean,
     sectionIndex: Option<Int>,
     focusedField: Option<CustomFieldIdentifier>,
@@ -69,6 +70,7 @@ internal fun LazyListScope.customFieldsList(
                 passItemColors = passItemColors(itemCategory),
                 entry = entry,
                 canEdit = enabled,
+                showLeadingIcon = showLeadingIcon,
                 isError = errors.contains(CustomFieldValidationError.InvalidTotp(sectionIndex, index)),
                 errorMessage = when {
                     errors.contains(CustomFieldValidationError.InvalidTotp(sectionIndex, index)) ->

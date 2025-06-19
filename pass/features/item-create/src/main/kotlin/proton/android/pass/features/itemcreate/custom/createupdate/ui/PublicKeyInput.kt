@@ -24,15 +24,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
-import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
-import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.features.itemcreate.R
-import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun PublicKeyInput(
@@ -43,7 +40,7 @@ internal fun PublicKeyInput(
 ) {
     ProtonTextField(
         modifier = modifier.padding(
-            start = Spacing.none,
+            start = Spacing.medium,
             top = Spacing.medium,
             end = Spacing.extraSmall,
             bottom = Spacing.medium
@@ -54,16 +51,10 @@ internal fun PublicKeyInput(
         onChange = onChange,
         onFocusChange = {},
         textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed),
-        leadingIcon = {
-            Icon.Default(
-                id = CoreR.drawable.ic_proton_text_align_left,
-                tint = PassTheme.colors.textWeak
-            )
-        },
-        trailingIcon = if (text.isNotEmpty()) {
-            { SmallCrossIconButton { onChange("") } }
-        } else {
-            null
+        trailingIcon = {
+            if (text.isNotEmpty()) {
+                SmallCrossIconButton { onChange("") }
+            }
         },
         label = {
             ProtonTextFieldLabel(

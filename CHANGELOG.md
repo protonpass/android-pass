@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.32.1 (2025-06-19)
+
+### Fixes :bug:
+
+- Bug fixes and improvements.
+
 ## 1.32.0 (2025-06-18)
 
 ### Features :tada:

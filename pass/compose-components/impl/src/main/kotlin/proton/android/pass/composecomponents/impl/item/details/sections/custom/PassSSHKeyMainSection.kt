@@ -43,7 +43,6 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemSection
 import proton.android.pass.domain.items.ItemCategory
-import me.proton.core.presentation.R as CoreR
 
 private const val HIDDEN_PRIVATE_KEY_TEXT_LENGTH = 12
 
@@ -57,7 +56,7 @@ internal fun PassSSHKeyMainSection(
 ) {
     RoundedCornersColumn(modifier = modifier) {
         PassItemDetailFieldRow(
-            icon = CoreR.drawable.ic_proton_text_align_left,
+            icon = null,
             title = stringResource(R.string.item_details_ssh_key_label_public_key),
             subtitle = contents.publicKey,
             itemColors = itemColors,
@@ -74,7 +73,7 @@ internal fun PassSSHKeyMainSection(
         PassDivider()
 
         PassItemDetailsHiddenFieldRow(
-            icon = CoreR.drawable.ic_proton_key,
+            icon = null,
             title = stringResource(R.string.item_details_ssh_key_label_private_key),
             hiddenState = contents.privateKey,
             hiddenTextLength = HIDDEN_PRIVATE_KEY_TEXT_LENGTH,

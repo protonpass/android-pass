@@ -55,6 +55,7 @@ internal fun PassItemDetailCustomFieldsSection(
     customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, TotpState>,
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs,
+    showLeadingIcon: Boolean = true,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     Column(
@@ -70,6 +71,7 @@ internal fun PassItemDetailCustomFieldsSection(
                         subtitle = customFieldContent.value,
                         itemColors = itemColors,
                         itemDiffType = itemDiffs.customField(index),
+                        showLeadingIcon = showLeadingIcon,
                         onClick = {
                             onEvent(
                                 PassItemDetailsUiEvent.OnFieldClick(
@@ -88,6 +90,7 @@ internal fun PassItemDetailCustomFieldsSection(
                         hiddenTextLength = HIDDEN_CUSTOM_FIELD_TEXT_LENGTH,
                         itemColors = itemColors,
                         itemDiffType = itemDiffs.customField(index),
+                        showLeadingIcon = showLeadingIcon,
                         hiddenTextStyle = ProtonTheme.typography.defaultNorm,
                         onClick = {
                             onEvent(
@@ -119,6 +122,7 @@ internal fun PassItemDetailCustomFieldsSection(
                             PassItemDetailTOTPFieldRow(
                                 totp = customFieldTotp,
                                 icon = CoreR.drawable.ic_proton_lock,
+                                showLeadingIcon = showLeadingIcon,
                                 title = customFieldContent.label,
                                 itemColors = itemColors,
                                 itemDiffType = itemDiffs.customField(index),
@@ -137,6 +141,7 @@ internal fun PassItemDetailCustomFieldsSection(
                         PassItemDetailFieldRow(
                             modifier = modifier,
                             icon = CoreR.drawable.ic_proton_calendar_today,
+                            showLeadingIcon = showLeadingIcon,
                             title = customFieldContent.label,
                             subtitle = date,
                             itemColors = itemColors,

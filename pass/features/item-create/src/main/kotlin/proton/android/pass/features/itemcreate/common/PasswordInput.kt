@@ -38,6 +38,7 @@ import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
@@ -56,6 +57,7 @@ internal fun PasswordInput(
     modifier: Modifier = Modifier,
     placeholder: String = stringResource(id = R.string.field_password_hint),
     isEditAllowed: Boolean,
+    showLeadingIcon: Boolean = true,
     onChange: (String) -> Unit,
     onFocus: (Boolean) -> Unit
 ) {
@@ -66,12 +68,14 @@ internal fun PasswordInput(
     }
 
     ProtonTextField(
-        modifier = modifier.padding(
-            start = Spacing.none,
-            top = Spacing.medium,
-            end = Spacing.extraSmall,
-            bottom = Spacing.medium
-        ),
+        modifier = modifier
+            .padding(
+                start = Spacing.none,
+                top = Spacing.medium,
+                end = Spacing.extraSmall,
+                bottom = Spacing.medium
+            )
+            .applyIf(!showLeadingIcon, { padding(start = Spacing.medium) }),
         value = text,
         editable = isEditAllowed,
         moveToNextOnEnter = true,
@@ -84,11 +88,13 @@ internal fun PasswordInput(
         onChange = onChange,
         label = { PasswordInputLabel(passwordStrength) },
         placeholder = { ProtonTextFieldPlaceHolder(text = placeholder) },
-        leadingIcon = { PasswordInputLeadingIcon(passwordStrength) },
-        trailingIcon = if (value is UIHiddenState.Revealed && text.isNotEmpty()) {
-            { SmallCrossIconButton { onChange("") } }
-        } else {
-            null
+        leadingIcon = if (showLeadingIcon) {
+            { PasswordInputLeadingIcon(passwordStrength) }
+        } else null,
+        trailingIcon = {
+            if (value is UIHiddenState.Revealed && text.isNotEmpty()) {
+                SmallCrossIconButton { onChange("") }
+            }
         },
         visualTransformation = visualTransformation,
         onFocusChange = { onFocus(it) }

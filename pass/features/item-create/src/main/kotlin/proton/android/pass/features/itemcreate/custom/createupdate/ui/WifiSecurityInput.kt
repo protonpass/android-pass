@@ -37,12 +37,10 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.form.ChevronDownIcon
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
-import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.stringhelpers.getWifiSecurityTypeText
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.domain.WifiSecurityType
 import proton.android.pass.features.itemcreate.R
-import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun WifiSecurityInput(
@@ -59,17 +57,14 @@ internal fun WifiSecurityInput(
                 onClick = { onClick(wifiSecurityType) }
             )
             .padding(
-                vertical = Spacing.medium,
-                horizontal = Spacing.mediumSmall
+                start = Spacing.medium,
+                top = Spacing.medium,
+                end = Spacing.mediumSmall,
+                bottom = Spacing.medium
             ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(space = Spacing.mediumSmall)
     ) {
-        Icon.Default(
-            id = CoreR.drawable.ic_proton_lock,
-            tint = ProtonTheme.colors.iconWeak
-        )
-
         Column(
             modifier = Modifier.weight(1f)
         ) {

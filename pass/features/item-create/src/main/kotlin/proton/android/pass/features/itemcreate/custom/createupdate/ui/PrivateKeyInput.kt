@@ -18,9 +18,6 @@
 
 package proton.android.pass.features.itemcreate.custom.createupdate.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -34,11 +31,9 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
-import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.login.PASSWORD_CONCEALED_LENGTH
-import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun PrivateKeyInput(
@@ -54,39 +49,29 @@ internal fun PrivateKeyInput(
         is UIHiddenState.Empty -> "" to VisualTransformation.None
     }
 
-    Box(modifier = modifier) {
-        ProtonTextField(
-            modifier = Modifier.padding(
-                start = Spacing.none,
-                top = Spacing.medium,
-                end = Spacing.extraSmall,
-                bottom = Spacing.medium
-            ),
-            value = text,
-            editable = isEditAllowed,
-            moveToNextOnEnter = true,
-            singleLine = false,
-            textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed),
-            onChange = onChange,
-            label = { ProtonTextFieldLabel(text = stringResource(R.string.template_ssh_key_field_private_key)) },
-            placeholder = {
-                ProtonTextFieldPlaceHolder(text = stringResource(R.string.add_private_key_placeholder))
-            },
-            leadingIcon = {
-                Icon.Default(
-                    id = CoreR.drawable.ic_proton_key,
-                    tint = ProtonTheme.colors.iconWeak
-                )
-            },
-            trailingIcon = {
-                Row(horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)) {
-                    if (text.isNotEmpty()) {
-                        SmallCrossIconButton { onChange("") }
-                    }
-                }
-            },
-            visualTransformation = visualTransformation,
-            onFocusChange = onFocusChange
-        )
-    }
+    ProtonTextField(
+        modifier = modifier.padding(
+            start = Spacing.medium,
+            top = Spacing.medium,
+            end = Spacing.extraSmall,
+            bottom = Spacing.medium
+        ),
+        value = text,
+        editable = isEditAllowed,
+        moveToNextOnEnter = true,
+        singleLine = false,
+        textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed),
+        onChange = onChange,
+        label = { ProtonTextFieldLabel(text = stringResource(R.string.template_ssh_key_field_private_key)) },
+        placeholder = {
+            ProtonTextFieldPlaceHolder(text = stringResource(R.string.add_private_key_placeholder))
+        },
+        trailingIcon = {
+            if (text.isNotEmpty()) {
+                SmallCrossIconButton { onChange("") }
+            }
+        },
+        visualTransformation = visualTransformation,
+        onFocusChange = onFocusChange
+    )
 }

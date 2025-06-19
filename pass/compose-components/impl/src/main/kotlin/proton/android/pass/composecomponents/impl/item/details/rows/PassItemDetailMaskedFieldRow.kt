@@ -34,6 +34,7 @@ import proton.android.pass.domain.ItemDiffType
 internal fun PassItemDetailMaskedFieldRow(
     modifier: Modifier = Modifier,
     @DrawableRes icon: Int?,
+    showLeadingIcon: Boolean = true,
     title: String,
     maskedSubtitle: TextMask? = null,
     itemColors: PassItemColors,
@@ -48,6 +49,7 @@ internal fun PassItemDetailMaskedFieldRow(
     PassItemDetailFieldRow(
         modifier = modifier,
         icon = icon,
+        showLeadingIcon = showLeadingIcon,
         title = title,
         subtitle = maskedSubtitle?.let {
             if (isMasked) {

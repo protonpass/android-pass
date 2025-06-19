@@ -53,6 +53,7 @@ import proton.android.pass.domain.ItemDiffType
 internal fun PassItemDetailsHiddenFieldRow(
     modifier: Modifier = Modifier,
     @DrawableRes icon: Int?,
+    showLeadingIcon: Boolean = true,
     title: String,
     hiddenState: HiddenState,
     hiddenTextLength: Int,
@@ -90,9 +91,9 @@ internal fun PassItemDetailsHiddenFieldRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
-        icon?.let { iconResId ->
+        if (showLeadingIcon && icon != null) {
             Icon(
-                painter = painterResource(id = iconResId),
+                painter = painterResource(id = icon),
                 contentDescription = null,
                 tint = itemColors.norm
             )

@@ -50,6 +50,7 @@ import proton.android.pass.domain.ItemDiffType
 internal fun PassItemDetailFieldRow(
     modifier: Modifier = Modifier,
     @DrawableRes icon: Int?,
+    showLeadingIcon: Boolean = true,
     title: String,
     subtitle: String,
     itemColors: PassItemColors,
@@ -70,9 +71,9 @@ internal fun PassItemDetailFieldRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
-        icon?.let { iconResId ->
+        if (showLeadingIcon && icon != null) {
             Icon(
-                painter = painterResource(id = iconResId),
+                painter = painterResource(id = icon),
                 contentDescription = null,
                 tint = itemColors.norm
             )
@@ -121,6 +122,7 @@ internal fun MutableList<@Composable () -> Unit>.addItemDetailsFieldRow(
     add {
         PassItemDetailFieldRow(
             icon = null,
+            showLeadingIcon = false,
             title = stringResource(id = titleResId),
             subtitle = section,
             itemColors = itemColors,

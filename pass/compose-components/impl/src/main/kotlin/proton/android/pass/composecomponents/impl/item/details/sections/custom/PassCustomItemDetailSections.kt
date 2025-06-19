@@ -73,6 +73,7 @@ internal fun PassCustomItemDetailSections(
                 customFieldTotps = customFieldTotps,
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,
+                showLeadingIcon = false,
                 onEvent = onEvent
             )
         }

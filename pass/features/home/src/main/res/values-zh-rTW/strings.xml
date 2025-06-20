@@ -4,9 +4,9 @@
   <string name="home_empty_vault_title">您的保管庫是空的</string>
   <string name="home_empty_vault_subtitle">開始創建您第一個項目</string>
   <string name="home_empty_vault_login_title">No logins found</string>
-  <string name="home_empty_vault_login_subtitle">Get started by creating your first login item.</string>
+  <string name="home_empty_vault_login_subtitle">開始創建您的第一個登入項目。</string>
   <string name="home_empty_vault_aliases_title">No aliases found</string>
-  <string name="home_empty_vault_aliases_subtitle">Get started by creating your first alias item.</string>
+  <string name="home_empty_vault_aliases_subtitle">開始創建您第一個別名項目</string>
   <string name="home_empty_vault_notes_title">No notes found</string>
   <string name="home_empty_vault_notes_subtitle">Get started by creating your first note item.</string>
   <string name="home_empty_vault_logins_mfa_title">No logins with TOTP found</string>

@@ -221,7 +221,7 @@
   <string name="template_item_database">Database</string>
   <string name="template_item_server">伺服器</string>
   <string name="template_item_software_license">Software License</string>
-  <string name="template_item_ssh_key">SSH Key</string>
+  <string name="template_item_ssh_key">SSH 金鑰</string>
   <string name="template_item_wifi_network">WiFi Network</string>
   <string name="template_item_bank_account">銀行帳號</string>
   <string name="template_item_crypto_wallet">Crypto Wallet</string>
@@ -288,14 +288,14 @@
   <string name="template_driver_license_field_issuing_state_country">Issuing State/Country</string>
   <string name="template_driver_license_field_expiry_date">Expiry Date</string>
   <string name="template_driver_license_field_date_of_birth">出生日期</string>
-  <string name="template_driver_license_field_class">Class</string>
+  <string name="template_driver_license_field_class">類別</string>
   <string name="template_driver_license_field_note">備注</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Patient Name</string>
   <string name="template_medical_record_field_record_number">Record Number</string>
   <string name="template_medical_record_field_medical_conditions">Medical Conditions</string>
   <string name="template_medical_record_field_medications">Medications</string>
-  <string name="template_medical_record_field_doctor">Doctor</string>
+  <string name="template_medical_record_field_doctor">醫生</string>
   <string name="template_medical_record_field_hospital">Hospital</string>
   <string name="template_medical_record_field_note">備注</string>
   <!-- Membership Fields -->

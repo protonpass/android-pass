@@ -50,7 +50,6 @@ val atlasProxyToken: String? = privateProperties.getProperty("PROXY_TOKEN")
 val customEnvUrl: String? = System.getenv("PROD_ENV_URL")
 val isCustomBuild: Boolean = !System.getenv("PROD_ENV_URL").isNullOrBlank()
 val isApkBuild: Boolean = project.findProperty("apkBuild") == "true"
-val debugKeystorePath: File = file(File(rootDir, "app/${System.getenv("DEBUG_KEYSTORE_FILE")}"))
 
 println(
     """
@@ -125,15 +124,6 @@ android {
         dataBinding = true // required by Core presentation
     }
 
-    signingConfigs {
-        create("release") {
-            storeFile = debugKeystorePath
-            storePassword = "android"
-            keyAlias = "androiddebugkey"
-            keyPassword = "android"
-        }
-    }
-
     buildTypes {
         debug {
             isDebuggable = true
@@ -157,6 +147,7 @@ android {
                 isRemoveUnusedResources = true
                 file("proguard").listFiles()?.forEach { proguardFile(it) }
             }
+            signingConfig = signingConfigs.getByName("debug")
         }
         create("benchmarkRelease") {
             signingConfig = signingConfigs.getByName("debug")

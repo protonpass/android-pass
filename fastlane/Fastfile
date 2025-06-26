@@ -17,13 +17,6 @@ default_platform(:android)
 
 platform :android do
 
-  desc "Publish prod black build to firebase group"
-  lane :deployToFirebaseProdGroup do
-    sh("../tools/private/ci/installFirebase.sh")
-    sh("../tools/private/ci/setupGoogleJson.sh")
-    sh("../tools/private/ci/uploadApkToFirebase.sh playBlack")
-  end
-
   desc "Publish internal prod bundle"
   lane :deployToPlayInternal do
      upload_to_play_store(

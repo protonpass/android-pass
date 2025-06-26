@@ -17,14 +17,6 @@ default_platform(:android)
 
 platform :android do
 
-  desc "Run instrumentation tests"
-  lane :instrumentationTests do
-    sh("../tools/private/ci/installFirebase.sh")
-    sh("../tools/private/ci/setupGoogleJson.sh")
-    sh("../tools/private/ci/setupGoogleCloud.sh")
-    gradle(task: "runFlank")
-  end
-
   desc "Publish dev build to firebase group"
   lane :deployToFirebaseDevGroup do
     sh("../tools/private/ci/installFirebase.sh")

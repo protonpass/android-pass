@@ -17,11 +17,6 @@ default_platform(:android)
 
 platform :android do
 
-  desc "Assemble the DevDebug E2E apk"
-  lane :assembleE2EDevDebug do
-    gradle(task: ":pass:autofill:e2e-app:assembleDevDebug")
-  end
-
   desc "Assemble the androidTest apks"
   lane :assembleDebugAndroidTest do
     gradle(task: "assembleDebugAndroidTest")

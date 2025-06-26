@@ -17,11 +17,6 @@ default_platform(:android)
 
 platform :android do
 
-  desc "Assemble the androidTest apks"
-  lane :assembleDebugAndroidTest do
-    gradle(task: "assembleDebugAndroidTest")
-  end
-
   desc "Run Unit tests"
   lane :unitTests do
     gradle(task: "testDebugUnitTest")

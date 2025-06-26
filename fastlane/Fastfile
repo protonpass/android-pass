@@ -17,11 +17,6 @@ default_platform(:android)
 
 platform :android do
 
-  desc "Assemble the AlphaProdDebug apk"
-  lane :assembleAlphaProdDebug do
-    gradle(task: ":app:assembleAlphaProdDebug")
-  end
-
   desc "Assemble the AlphaProdRelease apk"
   lane :assembleAlphaProdRelease do
     gradle(task: ":app:assembleAlphaProdRelease -PapkBuild=true")

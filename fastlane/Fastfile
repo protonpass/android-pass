@@ -17,11 +17,6 @@ default_platform(:android)
 
 platform :android do
 
-  desc "Assemble the DevBlackDebug apk"
-  lane :assembleDevBlackDebug do
-    gradle(task: ":app:assembleDevBlackDebug")
-  end
-
   desc "Assemble the DevBlackRelease apk"
   lane :assembleDevBlackRelease do
     gradle(task: ":app:assembleDevBlackRelease -PapkBuild=true")
@@ -65,11 +60,6 @@ platform :android do
   desc "Assemble the androidTest apks"
   lane :assembleDebugAndroidTest do
     gradle(task: "assembleDebugAndroidTest")
-  end
-
-  desc "Assemble DevBlackDebug and AndroidTest apks"
-  lane :assembleDevBlackDebugWithAndroidTests do
-    gradle(tasks: [":app:assembleDevBlackDebug", "assembleDebugAndroidTest", "assembleDevDebugAndroidTest"])
   end
 
   desc "Run Unit tests"

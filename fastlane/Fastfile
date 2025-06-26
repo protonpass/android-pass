@@ -17,11 +17,6 @@ default_platform(:android)
 
 platform :android do
 
-  desc "Run code analysis"
-  lane :analyse do
-    gradle(task: "multiModuleDetekt")
-  end
-
   desc "Run dependency guard"
   lane :dependencyGuard do
     gradle(task: "dependencyGuard")

@@ -17,11 +17,6 @@ default_platform(:android)
 
 platform :android do
 
-  desc "Creates the PlayProdRelease bundle"
-  lane :buildPlayProdReleaseBundle do
-    gradle(task: ":app:bundlePlayProdRelease")
-  end
-
   desc "Creates the PlayProdRelease apk"
   lane :buildPlayProdReleaseApk do
     gradle(task: ":app:assemblePlayProdRelease -PapkBuild=true")

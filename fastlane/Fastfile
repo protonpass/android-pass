@@ -17,12 +17,6 @@ default_platform(:android)
 
 platform :android do
 
-  desc "Run Unit tests"
-  lane :unitTests do
-    gradle(task: "testDebugUnitTest")
-    gradle(task: "testDevDebugUnitTest -x :pass:screenshot-tests:testDevDebugUnitTest")
-  end
-
   desc "Verify screenshot tests"
   lane :verifyScreenshotTests do
     gradle(task: "verifyPaparazziDevDebug")

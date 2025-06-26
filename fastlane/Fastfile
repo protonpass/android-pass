@@ -17,11 +17,6 @@ default_platform(:android)
 
 platform :android do
 
-  desc "Run dependency guard"
-  lane :dependencyGuard do
-    gradle(task: "dependencyGuard")
-  end
-
   desc "Assemble the DevBlackDebug apk"
   lane :assembleDevBlackDebug do
     gradle(task: ":app:assembleDevBlackDebug")

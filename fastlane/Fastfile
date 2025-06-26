@@ -17,11 +17,6 @@ default_platform(:android)
 
 platform :android do
 
-  desc "Assemble the PlayProdDebug apk"
-  lane :assemblePlayProdDebug do
-    gradle(task: ":app:assemblePlayProdDebug")
-  end
-
   desc "Assemble the PlayBlackRelease apk"
   lane :assemblePlayBlackRelease do
     gradle(task: ":app:assemblePlayBlackRelease -PapkBuild=true")

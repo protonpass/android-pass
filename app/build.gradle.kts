@@ -564,4 +564,5 @@ play {
     serviceAccountCredentials.set(file("tmp/play-service-account.json"))
     track.set("internal")
     releaseStatus.set(com.github.triplet.gradle.androidpublisher.ReleaseStatus.DRAFT)
+    artifactDir.set(file("signedArtifacts"))
 }

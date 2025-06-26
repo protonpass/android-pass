@@ -17,11 +17,6 @@ default_platform(:android)
 
 platform :android do
 
-  desc "Creates the PlayProdRelease apk"
-  lane :buildPlayProdReleaseApk do
-    gradle(task: ":app:assemblePlayProdRelease -PapkBuild=true")
-  end
-
   desc "Assemble the DevDebug E2E apk"
   lane :assembleE2EDevDebug do
     gradle(task: ":pass:autofill:e2e-app:assembleDevDebug")

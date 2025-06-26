@@ -33,6 +33,7 @@ plugins {
     alias(libs.plugins.gradlePlugin.proton.environmentConfig)
     alias(libs.plugins.gradlePlugin.dependency.guard)
     alias(libs.plugins.gradlePlugin.compose.compiler)
+    alias(libs.plugins.gradlePlugin.play)
 }
 
 val privateProperties = Properties().apply {
@@ -557,4 +558,10 @@ dependencyGuard {
 baselineProfile {
     saveInSrc = true
     dexLayoutOptimization = true
+}
+
+play {
+    serviceAccountCredentials.set(file("tmp/play-service-account.json"))
+    track.set("internal")
+    releaseStatus.set(com.github.triplet.gradle.androidpublisher.ReleaseStatus.DRAFT)
 }

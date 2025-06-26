@@ -17,11 +17,6 @@ default_platform(:android)
 
 platform :android do
 
-  desc "Verify screenshot tests"
-  lane :verifyScreenshotTests do
-    gradle(task: "verifyPaparazziDevDebug")
-  end
-
   desc "Run instrumentation tests"
   lane :instrumentationTests do
     sh("../tools/private/ci/installFirebase.sh")

@@ -17,13 +17,6 @@ default_platform(:android)
 
 platform :android do
 
-  desc "Publish dev build to firebase group"
-  lane :deployToFirebaseDevGroup do
-    sh("../tools/private/ci/installFirebase.sh")
-    sh("../tools/private/ci/setupGoogleJson.sh")
-    sh("../tools/private/ci/uploadApkToFirebase.sh devBlack")
-  end
-
   desc "Publish alpha build to firebase group"
   lane :deployToFirebaseAlphaGroup do
     sh("../tools/private/ci/installFirebase.sh")

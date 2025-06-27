@@ -33,7 +33,7 @@
   <string name="security_center_home_row_reused_passwords_title">Újrahasznált jelszavak</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Hozzon létre egyedi jelszavakat</string>
   <string name="security_center_home_row_missing_tfa_title">Kétlépcsős hitelesítés kikapcsolva</string>
-  <string name="security_center_home_row_missing_tfa_subtitle">Kapcsolja be a kétlépcsős hitelesítést nagyobb biztonságért</string>
+  <string name="security_center_home_row_missing_tfa_subtitle">Kapcsolja be a kétlépcsős hitelesítést a nagyobb biztonságért</string>
   <string name="security_center_home_row_excludes_items_title">Kizárás a megfigyelésből</string>
   <string name="security_center_home_row_excludes_items_subtitle">Ezek az elemek veszélynek vannak kitéve</string>
   <string name="security_center_get_breaches_error">Nem sikerült az adatvédelmi incidensek betöltése</string>

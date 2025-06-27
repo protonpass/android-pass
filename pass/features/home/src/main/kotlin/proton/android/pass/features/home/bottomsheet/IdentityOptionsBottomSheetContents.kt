@@ -156,7 +156,7 @@ internal fun IdentityOptionsBSContentsPreview(
                         note = "Note content",
                         personalDetailsContent = PersonalDetailsContent.EMPTY.copy(fullName = "full name"),
                         addressDetailsContent = AddressDetailsContent.EMPTY,
-                        contactDetailsContent = ContactDetailsContent.EMPTY,
+                        contactDetailsContent = ContactDetailsContent.default { "" },
                         workDetailsContent = WorkDetailsContent.EMPTY,
                         extraSectionContentList = emptyList(),
                         customFields = emptyList()

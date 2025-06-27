@@ -60,7 +60,7 @@ class IdentityRowPreviewProvider : PreviewParameterProvider<IdentityRowParameter
                         customFields = emptyList()
                     ),
                     addressDetailsContent = AddressDetailsContent.EMPTY,
-                    contactDetailsContent = ContactDetailsContent.EMPTY,
+                    contactDetailsContent = ContactDetailsContent.default { "" },
                     workDetailsContent = WorkDetailsContent.EMPTY,
                     extraSectionContentList = emptyList(),
                     customFields = emptyList()

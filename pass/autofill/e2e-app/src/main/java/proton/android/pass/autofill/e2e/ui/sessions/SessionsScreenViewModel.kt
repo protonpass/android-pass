@@ -21,6 +21,7 @@ package proton.android.pass.autofill.e2e.ui.sessions
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.FileObserver
 import androidx.compose.runtime.Stable
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModel
@@ -57,12 +58,28 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SessionsScreenViewModel @Inject constructor(
-    @ApplicationContext context: Context
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
 
     private val isLoadingFlow: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.Loading)
     private val refreshFlow: MutableStateFlow<Boolean> = MutableStateFlow(true)
+
+    private val dirObserver = object : FileObserver(
+        DebugUtils.autofillDumpDir(context).absolutePath,
+        CREATE or MOVED_TO or CLOSE_WRITE
+    ) {
+        override fun onEvent(event: Int, path: String?) {
+            if (path != null) {
+                refreshFlow.update { true }
+                isLoadingFlow.update { IsLoadingState.Loading }
+            }
+        }
+    }
+
+    init {
+        dirObserver.startWatching()
+    }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private val sessionsFlow = refreshFlow
@@ -96,6 +113,11 @@ class SessionsScreenViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = SessionsScreenUiState.Loading
     )
+
+    override fun onCleared() {
+        super.onCleared()
+        dirObserver.stopWatching()
+    }
 
     fun refresh() = viewModelScope.launch {
         refreshFlow.update { true }
@@ -145,10 +167,9 @@ class SessionsScreenViewModel @Inject constructor(
         asSessions.toImmutableList()
     }
 
-
-    fun startShareIntent(session: AutofillSession, context: ClassHolder<Context>) =
+    fun startShareIntent(session: AutofillSession, contextHolder: ClassHolder<Context>) =
         viewModelScope.launch(Dispatchers.IO) {
-            context.get().map { ctx ->
+            contextHolder.get().map { ctx ->
                 val intent = Intent(Intent.ACTION_SEND)
                 intent.type = "*/*"
                 val dumpDir = DebugUtils.autofillDumpDir(ctx)

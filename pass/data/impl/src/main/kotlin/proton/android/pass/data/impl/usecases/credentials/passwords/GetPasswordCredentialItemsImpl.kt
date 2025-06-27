@@ -30,6 +30,7 @@ import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.api.usecases.credentials.passwords.GetPasswordCredentialItems
 import proton.android.pass.data.api.usecases.shares.ObserveAutofillShares
 import proton.android.pass.data.impl.usecases.credentials.shared.getDisplayName
+import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
@@ -86,6 +87,7 @@ class GetPasswordCredentialItemsImpl @Inject constructor(
                         }
                     }
                 }
+                .filter { it.displayValue.isNotBlank() && it.password !is HiddenState.Empty }
                 .map { loginItemContents ->
                     PasswordCredentialItem(
                         displayName = accountsMap.getDisplayName(account.userId, loginItemContents.title),

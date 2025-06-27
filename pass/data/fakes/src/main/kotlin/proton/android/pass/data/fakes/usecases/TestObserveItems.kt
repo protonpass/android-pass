@@ -262,7 +262,9 @@ class TestObserveItems @Inject constructor() : ObserveItems {
                     countryOrRegion = "Country",
                     organization = "Organization"
                 ),
-                contactDetailsContent = ContactDetailsContent.EMPTY,
+                contactDetailsContent = ContactDetailsContent.default {
+                    TestEncryptionContext.encrypt(it)
+                },
                 workDetailsContent = WorkDetailsContent.EMPTY,
                 extraSectionContentList = emptyList(),
                 customFields = emptyList()

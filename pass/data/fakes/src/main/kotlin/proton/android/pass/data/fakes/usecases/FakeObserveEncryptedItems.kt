@@ -258,7 +258,7 @@ class FakeObserveEncryptedItems @Inject constructor() : ObserveEncryptedItems {
                     countryOrRegion = "Country",
                     organization = "Organization"
                 ),
-                contactDetailsContent = ContactDetailsContent.EMPTY,
+                contactDetailsContent = ContactDetailsContent.default { "" },
                 workDetailsContent = WorkDetailsContent.EMPTY,
                 extraSectionContentList = emptyList(),
                 customFields = emptyList()

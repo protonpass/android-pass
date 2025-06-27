@@ -496,8 +496,8 @@ data class ContactDetailsContent(
     }
 
     companion object {
-        val EMPTY = ContactDetailsContent(
-            socialSecurityNumber = HiddenState.Empty(""),
+        fun default(encrypt: (EncryptedString) -> String) = ContactDetailsContent(
+            socialSecurityNumber = HiddenState.Empty(encrypt("")),
             passportNumber = "",
             licenseNumber = "",
             website = "",

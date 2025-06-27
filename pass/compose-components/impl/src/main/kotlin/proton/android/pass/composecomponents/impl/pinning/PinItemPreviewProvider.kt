@@ -135,7 +135,7 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
                 note = "",
                 personalDetailsContent = PersonalDetailsContent.EMPTY,
                 addressDetailsContent = AddressDetailsContent.EMPTY,
-                contactDetailsContent = ContactDetailsContent.EMPTY,
+                contactDetailsContent = ContactDetailsContent.default { "" },
                 workDetailsContent = WorkDetailsContent.EMPTY,
                 extraSectionContentList = emptyList(),
                 customFields = emptyList()

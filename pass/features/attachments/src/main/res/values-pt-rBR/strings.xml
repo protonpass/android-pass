@@ -19,7 +19,7 @@
 <resources>
   <string name="add_attachment_take_a_photo">Tirar uma foto</string>
   <string name="add_attachment_choose_a_photo_or_video">Escolha uma foto ou vídeo</string>
-  <string name="add_attachment_choose_a_file">Escolha um arquivo</string>
+  <string name="add_attachment_choose_a_file">Escolher um arquivo</string>
   <string name="attachment_options_rename">Renomear</string>
   <string name="attachment_options_delete">Excluir</string>
   <string name="attachment_options_download">Baixar</string>
@@ -34,7 +34,7 @@
   <string name="delete_all_attachments_confirm">Excluir tudo</string>
   <string name="rename_attachment_dialog_title">Renomear arquivo</string>
   <string name="storage_full_title">Seu armazenamento está quase cheio.</string>
-  <string name="storage_full_body">Faça uma atualização para aumentar sua capacidade de armazenamento.</string>
+  <string name="storage_full_body">Faça um upgrade para aumentar sua capacidade de armazenamento.</string>
   <string name="storage_full_upgrade">Fazer upgrade</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s de %2$s</string>
   <string name="attachments_saved_to_location_success">O anexo foi salvo na localização.</string>

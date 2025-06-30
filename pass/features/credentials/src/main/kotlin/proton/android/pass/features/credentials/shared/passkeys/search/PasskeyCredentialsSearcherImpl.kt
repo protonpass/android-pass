@@ -123,6 +123,7 @@ internal class PasskeyCredentialsSearcherImpl @Inject constructor(
         isBiometricAuthRequired: Boolean
     ) = if (isBiometricAuthRequired) {
         PasskeyCredentialSelectionActivity.createPasskeyCredentialIntent(
+            origin = credential.domain,
             context = context,
             passkeyItem = passkeyItem
         )

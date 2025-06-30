@@ -1748,6 +1748,10 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
+                is ItemDetailsNavDestination.CloneItem -> dismissBottomSheet {
+                    appNavigator.navigateBack()
+                }
+
                 is ItemDetailsNavDestination.PasskeyDetails -> appNavigator.navigate(
                     destination = ViewPasskeyDetailsBottomSheet,
                     route = ViewPasskeyDetailsBottomSheet.buildRoute(

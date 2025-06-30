@@ -31,6 +31,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.FlowUtils.oneShot
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -44,6 +46,7 @@ import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.items.UpdateItemFlag
 import proton.android.pass.data.api.usecases.shares.ObserveShare
+import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -237,6 +240,20 @@ class ItemDetailsMenuViewModel @Inject constructor(
             }
 
             actionFlow.update { BottomSheetItemAction.None }
+        }
+    }
+
+    internal fun onCloneItem() {
+        when (state.value.itemOption) {
+            None -> actionFlow.update { BottomSheetItemAction.None }
+            is Some -> {
+                eventFlow.update {
+                    ItemDetailsMenuEvent.OnItemClone(
+                        shareId = shareId,
+                        itemType = (state.value.itemOption as Some<Item>).value.itemType
+                    )
+                }
+            }
         }
     }
 

@@ -18,24 +18,23 @@
 
 package proton.android.pass.features.itemcreate.launchedeffects
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.commonui.api.findActivity
 
 @Composable
 fun InAppReviewTriggerLaunchedEffect(
     triggerCondition: Boolean,
     viewModel: InAppReviewTriggerViewModel = hiltViewModel()
 ) {
-    val activity = LocalContext.current.findActivity()
+    val activity = LocalActivity.current
     val shouldRequestReview by viewModel.shouldRequestReview.collectAsStateWithLifecycle()
     LaunchedEffect(triggerCondition) {
         if (triggerCondition && shouldRequestReview) {
-            viewModel.requestReview(activity.value())
+            viewModel.requestReview(activity)
         }
     }
 }

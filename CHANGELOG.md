@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.32.3 (2025-06-30)
+
+### Fixes :bug:
+
+- Bug fixes and improvements.
+
 ## 1.32.2 (2025-06-27)
 
 ### Fixes :bug:

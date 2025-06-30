@@ -241,6 +241,7 @@ fun HomeScreen(
             BottomSheetItemAction.Remove,
             BottomSheetItemAction.Restore,
             BottomSheetItemAction.ResetHistory,
+            BottomSheetItemAction.Clone,
             BottomSheetItemAction.Trash -> return@LaunchedEffect
         }
     }

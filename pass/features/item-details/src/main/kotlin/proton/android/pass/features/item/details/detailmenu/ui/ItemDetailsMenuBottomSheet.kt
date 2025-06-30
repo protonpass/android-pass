@@ -57,6 +57,13 @@ fun ItemDetailsMenuBottomSheet(
                 ).also(onNavigated)
             }
 
+            is ItemDetailsMenuEvent.OnItemClone -> {
+                ItemDetailsNavDestination.CloneItem(
+                    shareId = event.shareId,
+                    itemType = event.itemType
+                ).also(onNavigated)
+            }
+
             ItemDetailsMenuEvent.OnItemNoteCopied,
             ItemDetailsMenuEvent.OnItemMigrationError,
             ItemDetailsMenuEvent.OnItemMonitorExcluded,
@@ -85,6 +92,7 @@ fun ItemDetailsMenuBottomSheet(
                 ItemDetailsMenuUiEvent.OnUnpinItemClicked -> onUnpinItem()
                 ItemDetailsMenuUiEvent.OnExcludeItemMonitorClicked -> onExcludeItemFromMonitoring()
                 ItemDetailsMenuUiEvent.OnIncludeItemMonitorClicked -> onIncludeItemInMonitoring()
+                ItemDetailsMenuUiEvent.OnCloneItemClicked -> onCloneItem()
                 ItemDetailsMenuUiEvent.OnTrashItemClicked -> onTrashItem()
                 ItemDetailsMenuUiEvent.OnLeaveItemClicked -> onLeaveItem()
             }

@@ -34,7 +34,7 @@ internal sealed interface ItemDetailsMenuUiEvent {
 
     data object OnUnpinItemClicked : ItemDetailsMenuUiEvent
 
-    data object OnCloneItemClicked: ItemDetailsMenuUiEvent
+    data object OnCloneItemClicked : ItemDetailsMenuUiEvent
 
     data object OnTrashItemClicked : ItemDetailsMenuUiEvent
 

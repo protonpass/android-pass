@@ -393,6 +393,11 @@ fun NavGraphBuilder.appGraph(
                     UpdateCustomItemNavItem.createNavRoute(it.shareId, it.itemId)
                 )
 
+                is HomeNavigation.CloneCustomItem -> appNavigator.navigate(
+                    CreateCustomItemNavItem,
+                    CreateCustomItemNavItem.createNavRoute(it.shareId.some(), it.itemId.some())
+                )
+
                 is HomeNavigation.ItemDetail -> appNavigator.navigate(
                     destination = ItemDetailsNavItem,
                     route = ItemDetailsNavItem.createNavRoute(it.shareId, it.itemId)
@@ -1776,43 +1781,34 @@ fun NavGraphBuilder.appGraph(
                     val shareId = itemDetailsNavDestination.shareId.some()
                     val itemId = itemDetailsNavDestination.itemId.some()
                     when (itemDetailsNavDestination.category) {
-                        ItemCategory.Login -> {
-                            appNavigator.navigate(
-                                destination = CreateLoginNavItem,
-                                backDestination = HomeNavItem,
-                                route = CreateLoginNavItem.createNavRoute(shareId, itemId)
-                            )
-                        }
+                        ItemCategory.Login -> appNavigator.navigate(
+                            destination = CreateLoginNavItem,
+                            backDestination = HomeNavItem,
+                            route = CreateLoginNavItem.createNavRoute(shareId, itemId)
+                        )
 
-                        ItemCategory.Note -> {
-                            appNavigator.navigate(
-                                destination = CreateNoteNavItem,
-                                backDestination = HomeNavItem,
-                                route = CreateNoteNavItem.createNavRoute(shareId, itemId)
-                            )
-                        }
+                        ItemCategory.Note -> appNavigator.navigate(
+                            destination = CreateNoteNavItem,
+                            backDestination = HomeNavItem,
+                            route = CreateNoteNavItem.createNavRoute(shareId, itemId)
+                        )
 
-                        ItemCategory.CreditCard -> {
-                            appNavigator.navigate(
-                                destination = CreateCreditCardNavItem,
-                                backDestination = HomeNavItem,
-                                route = CreateCreditCardNavItem.createNavRoute(shareId, itemId)
-                            )
-                        }
+                        ItemCategory.CreditCard -> appNavigator.navigate(
+                            destination = CreateCreditCardNavItem,
+                            backDestination = HomeNavItem,
+                            route = CreateCreditCardNavItem.createNavRoute(shareId, itemId)
+                        )
 
-                        ItemCategory.Identity -> {
-                            appNavigator.navigate(
-                                destination = CreateIdentityNavItem,
-                                backDestination = HomeNavItem,
-                                route = CreateIdentityNavItem.createNavRoute(shareId, itemId)
-                            )
-                        }
+                        ItemCategory.Identity -> appNavigator.navigate(
+                            destination = CreateIdentityNavItem,
+                            backDestination = HomeNavItem,
+                            route = CreateIdentityNavItem.createNavRoute(shareId, itemId)
+                        )
 
-                        ItemCategory.WifiNetwork -> Unit
-
-                        ItemCategory.SSHKey -> Unit
-
-                        ItemCategory.Custom -> Unit
+                        ItemCategory.WifiNetwork, ItemCategory.SSHKey, ItemCategory.Custom -> appNavigator.navigate(
+                            CreateCustomItemNavItem,
+                            CreateCustomItemNavItem.createNavRoute(shareId, itemId)
+                        )
 
                         ItemCategory.Alias, ItemCategory.Password, ItemCategory.Unknown -> Unit // No-opt
                     }

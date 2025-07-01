@@ -48,8 +48,6 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toUiModel
-import proton.android.pass.commonuimodels.api.PackageInfoUi
-import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRepository
@@ -71,8 +69,6 @@ import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
-import proton.android.pass.features.itemcreate.common.UICustomFieldContent.Companion.from
-import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.formprocessor.NoteItemFormProcessor
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow

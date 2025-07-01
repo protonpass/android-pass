@@ -36,6 +36,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAct
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemRow
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import proton.android.pass.composecomponents.impl.bottomsheet.clone
 import proton.android.pass.composecomponents.impl.bottomsheet.noOptions
 import proton.android.pass.composecomponents.impl.bottomsheet.pin
 import proton.android.pass.composecomponents.impl.bottomsheet.unpin
@@ -60,6 +61,7 @@ internal fun CustomItemOptionsBottomSheetContents(
     onPinned: (ShareId, ItemId) -> Unit,
     onUnpinned: (ShareId, ItemId) -> Unit,
     onViewHistory: (ShareId, ItemId) -> Unit,
+    onClone: (ShareId, ItemId) -> Unit,
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit
@@ -83,6 +85,13 @@ internal fun CustomItemOptionsBottomSheetContents(
 
             if (canUpdate) {
                 add(edit(itemUiModel, onEdit))
+            }
+
+            if (itemUiModel.category.isCloneable()) {
+                add(clone { onClone(itemUiModel.shareId, itemUiModel.id) })
+            }
+
+            if (canUpdate) {
                 add(moveToTrash(itemUiModel, onMoveToTrash))
             }
 
@@ -138,6 +147,7 @@ internal fun CustomItemOptionsContentsPreview(
                 onUnpinned = { _, _ -> },
                 onViewHistory = { _, _ -> },
                 onEdit = { _, _ -> },
+                onClone = { _, _ -> },
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },
                 isFreePlan = input.second,

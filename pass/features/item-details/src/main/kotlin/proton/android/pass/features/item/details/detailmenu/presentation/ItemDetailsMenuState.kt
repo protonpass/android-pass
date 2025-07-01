@@ -22,11 +22,9 @@ import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.some
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.domain.Item
-import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.items.ItemCategory
 
@@ -74,7 +72,7 @@ internal data class ItemDetailsMenuState(
     }
 
     internal val canCloneItem: Boolean by lazy {
-        itemOption.value()?.itemType?.isClonable() == true
+        itemOption.value()?.itemType?.category?.isCloneable() == true
     }
 
     internal val canTrashItem: Boolean = when (itemActionsOption) {
@@ -108,9 +106,4 @@ internal data class ItemDetailsMenuState(
 
     }
 
-}
-
-private fun ItemType.isClonable() : Boolean = when (this) {
-    is ItemType.Alias -> false
-    else -> true
 }

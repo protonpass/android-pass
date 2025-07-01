@@ -317,6 +317,12 @@ fun HomeScreen(
                                 onNavigateEvent(HomeNavigation.EditLogin(shareId, itemId))
                             }
                         },
+                        onClone = remember {
+                            { shareId, itemId ->
+                                scope.launch { bottomSheetState.hide() }
+                                onNavigateEvent(HomeNavigation.CloneLogin(shareId, itemId))
+                            }
+                        },
                         onMoveToTrash = remember {
                             {
                                 scope.launch { bottomSheetState.hide() }

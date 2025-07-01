@@ -28,6 +28,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.customFieldBottomSheetGraph
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
@@ -57,14 +58,25 @@ object CreateLoginDefaultEmailArg : OptionalNavArgId {
 
 object CreateLoginNavItem : NavItem(
     baseRoute = "login/create",
-    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId, CreateLoginDefaultEmailArg)
+    optionalArgIds = listOf(
+        CommonOptionalNavArgId.ShareId,
+        CommonOptionalNavArgId.ItemId,
+        CreateLoginDefaultEmailArg
+    )
 ) {
-    fun createNavRoute(shareId: Option<ShareId> = None, emailOption: Option<String> = None) = buildString {
+    fun createNavRoute(
+        shareId: Option<ShareId> = None,
+                       // ItemID of the item to be cloned
+                       itemId: Option<ItemId> = None,
+                       emailOption: Option<String> = None) = buildString {
         append(baseRoute)
 
         mutableMapOf<String, Any>().apply {
             if (shareId is Some) {
                 set(CommonOptionalNavArgId.ShareId.key, shareId.value.id)
+            }
+            if (itemId is Some) {
+                set(CommonOptionalNavArgId.ItemId.key, itemId.value.id)
             }
             if (emailOption is Some) {
                 set(CreateLoginDefaultEmailArg.key, emailOption.value)

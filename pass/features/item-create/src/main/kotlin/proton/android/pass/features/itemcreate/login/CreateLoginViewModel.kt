@@ -18,12 +18,14 @@
 
 package proton.android.pass.features.itemcreate.login
 
+import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
@@ -52,6 +54,7 @@ import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toUiModel
+import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -59,8 +62,10 @@ import proton.android.pass.data.api.errors.AliasRateLimitError
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateLoginAndAlias
+import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
@@ -71,19 +76,24 @@ import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.work.WorkerItem
 import proton.android.pass.data.api.work.WorkerLauncher
 import proton.android.pass.domain.CustomField
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.domain.entity.NewAlias
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.MFACreated
+import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.alias.AliasItemFormState
 import proton.android.pass.features.itemcreate.alias.AliasMailboxUiModel
 import proton.android.pass.features.itemcreate.alias.CreateAliasViewModel
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
+import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.formprocessor.LoginItemFormProcessorType
@@ -119,6 +129,8 @@ class CreateLoginViewModel @Inject constructor(
     private val generatePasskey: GeneratePasskey,
     private val workerLauncher: WorkerLauncher,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
+    private val getItemById: GetItemById,
+    @ApplicationContext private val context: Context,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     passwordStrengthCalculator: PasswordStrengthCalculator,
     accountManager: AccountManager,
@@ -162,6 +174,11 @@ class CreateLoginViewModel @Inject constructor(
         .get<String>(CommonOptionalNavArgId.ShareId.key)
         .toOption()
         .map(::ShareId)
+
+    private val navItemId: Option<ItemId> = savedStateHandleProvider.get()
+        .get<String>(CommonOptionalNavArgId.ItemId.key)
+        .toOption()
+        .map(::ItemId)
 
     private val initialEmail: Option<String> = savedStateHandleProvider.get()
         .get<String>(CreateLoginDefaultEmailArg.key)
@@ -217,6 +234,33 @@ class CreateLoginViewModel @Inject constructor(
 
     internal fun changeVault(shareId: ShareId) {
         selectedShareIdMutableState = Some(shareId)
+    }
+
+    internal suspend fun cloneContents() {
+        val shareId = navShareId.value() ?: return
+        val itemId = navItemId.value() ?: return
+        val item = getItemById(shareId = shareId, itemId = itemId)
+
+        val currentValue = loginItemFormState
+        encryptionContextProvider.withEncryptionContext {
+            val itemContents = item.toItemContents<ItemContents.Login> { decrypt(it) }
+            val customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
+            loginItemFormMutableState = currentValue.copy(
+                title = context.getString(R.string.title_clone, decrypt(item.title)),
+                note = decrypt(item.note),
+                email = itemContents.itemEmail,
+                username = itemContents.itemUsername,
+                password = UIHiddenState.Concealed(itemContents.password.encrypted),
+                passwordStrength = passwordStrengthCalculator.calculateStrength(
+                    password = decrypt(itemContents.password.encrypted)
+                ),
+                urls = itemContents.urls,
+                packageInfoSet = itemContents.packageInfoSet.map { PackageInfoUi(it) }.toSet(),
+                primaryTotp = UIHiddenState.Concealed(itemContents.primaryTotp.encrypted),
+                customFields = customFieldHandler.sanitiseForEditingCustomFields(customFields),
+                passkeys = itemContents.passkeys.map { UIPasskeyContent.from(it) }
+            )
+        }
     }
 
     @Suppress("ComplexMethod", "LongMethod")

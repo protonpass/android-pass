@@ -250,7 +250,7 @@ class ItemDetailsMenuViewModel @Inject constructor(
                 eventFlow.update {
                     ItemDetailsMenuEvent.OnItemClone(
                         shareId = shareId,
-                        itemType = (state.value.itemOption as Some<Item>).value.itemType
+                        itemId = itemId
                     )
                 }
             }

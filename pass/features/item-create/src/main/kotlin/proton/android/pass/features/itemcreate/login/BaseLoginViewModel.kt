@@ -109,7 +109,7 @@ abstract class BaseLoginViewModel(
     private val totpManager: TotpManager,
     private val draftRepository: DraftRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val passwordStrengthCalculator: PasswordStrengthCalculator,
+    protected val passwordStrengthCalculator: PasswordStrengthCalculator,
     protected val emailValidator: EmailValidator,
     private val disableTooltip: DisableTooltip,
     private val userPreferencesRepository: UserPreferencesRepository,

@@ -78,6 +78,11 @@ fun CreateLoginScreen(
         initialContents ?: return@OneTimeLaunchedEffect
         viewModel.setInitialContents(initialContents)
     }
+
+    LaunchedEffect(Unit) {
+        viewModel.cloneContents()
+    }
+
     val uiState by viewModel.createLoginUiState.collectAsStateWithLifecycle()
 
     var showDatePickerForField: Option<CustomFieldIdentifier> by remember { mutableStateOf(None) }

@@ -60,7 +60,7 @@ fun ItemDetailsMenuBottomSheet(
             is ItemDetailsMenuEvent.OnItemClone -> {
                 ItemDetailsNavDestination.CloneItem(
                     shareId = event.shareId,
-                    itemType = event.itemType
+                    itemId = event.itemId
                 ).also(onNavigated)
             }
 

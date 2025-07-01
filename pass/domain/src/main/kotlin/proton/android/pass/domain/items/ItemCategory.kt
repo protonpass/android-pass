@@ -42,7 +42,7 @@ enum class ItemCategory(val value: Int) {
     SSHKey(ITEM_CATEGORY_SSH_KEY);
 
     fun isCloneable(): Boolean = when (this) {
-        Alias -> false
+        Alias, Password, Unknown -> false
         else -> true
     }
 }

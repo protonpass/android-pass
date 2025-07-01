@@ -30,6 +30,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.CustomFieldType
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.WifiSecurityType
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.customFieldBottomSheetGraph
@@ -64,13 +65,24 @@ internal object TemplateTypeNavArgId : OptionalNavArgId {
 
 object CreateCustomItemNavItem : NavItem(
     baseRoute = "customitem/create/screen",
-    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId, TemplateTypeNavArgId)
+    optionalArgIds = listOf(
+        CommonOptionalNavArgId.ShareId,
+        CommonOptionalNavArgId.ItemId,
+        TemplateTypeNavArgId
+    )
 ) {
-    fun createNavRoute(shareId: Option<ShareId> = None, templateType: Option<TemplateType> = None) = buildString {
+    fun createNavRoute(
+        shareId: Option<ShareId> = None,
+        itemId: Option<ItemId> = None,
+        templateType: Option<TemplateType> = None
+    ) = buildString {
         append(baseRoute)
         val map = mutableMapOf<String, Any>()
         if (shareId is Some) {
             map[CommonOptionalNavArgId.ShareId.key] = shareId.value.id
+        }
+        if (itemId is Some) {
+            map[CommonOptionalNavArgId.ItemId.key] = itemId.value.id
         }
         map[TemplateTypeNavArgId.key] = templateType.value()?.id ?: -1
         val path = map.toPath()

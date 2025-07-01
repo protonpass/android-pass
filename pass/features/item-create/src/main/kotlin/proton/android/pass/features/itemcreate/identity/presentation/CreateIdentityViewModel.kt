@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.itemcreate.identity.presentation
 
+import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
@@ -25,6 +26,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -40,12 +42,16 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CreateItem
+import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemCreate
+import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
@@ -61,11 +67,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CreateIdentityViewModel @Inject constructor(
+    private val encryptionContextProvider: EncryptionContextProvider,
     private val createItem: CreateItem,
     private val identityActionsProvider: IdentityActionsProvider,
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val snackbarDispatcher: SnackbarDispatcher,
+    private val getItemById: GetItemById,
+    @ApplicationContext private val context: Context,
     observeVaults: ObserveVaultsWithItemCount,
     observeDefaultVault: ObserveDefaultVault,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -75,6 +84,11 @@ class CreateIdentityViewModel @Inject constructor(
         savedStateHandleProvider.get().get<String>(CommonOptionalNavArgId.ShareId.key)
             .toOption()
             .map(::ShareId)
+
+    private val navItemId: Option<ItemId> =
+        savedStateHandleProvider.get().get<String>(CommonOptionalNavArgId.ItemId.key)
+            .toOption()
+            .map(::ItemId)
 
     init {
         viewModelScope.launch {
@@ -121,6 +135,17 @@ class CreateIdentityViewModel @Inject constructor(
 
     fun onVaultSelect(shareId: ShareId) {
         selectedShareIdMutableState = Some(shareId)
+    }
+
+    suspend fun cloneContents() {
+        val shareId = navShareId.value() ?: return
+        val itemId = navItemId.value() ?: return
+        val item = getItemById(shareId = shareId, itemId = itemId)
+        val encryptedTitle = encryptionContextProvider.withEncryptionContext {
+            val decryptedTitle = context.getString(R.string.title_clone, decrypt(item.title))
+            return@withEncryptionContext encrypt(decryptedTitle)
+        }
+        identityActionsProvider.onItemReceivedState(item.copy(title = encryptedTitle))
     }
 
     fun onSubmit(shareId: ShareId) = viewModelScope.launch {

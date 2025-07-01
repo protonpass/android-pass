@@ -84,6 +84,10 @@ fun CreateIdentityScreen(
         viewModel.onFieldChange(field, uri)
     }
 
+    LaunchedEffect(Unit) {
+        viewModel.cloneContents()
+    }
+
     var showDatePickerForField: Option<Pair<IdentityField.CustomField, Int>> by remember {
         mutableStateOf(None)
     }

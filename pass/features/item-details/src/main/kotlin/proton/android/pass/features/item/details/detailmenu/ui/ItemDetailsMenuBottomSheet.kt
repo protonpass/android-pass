@@ -58,10 +58,16 @@ fun ItemDetailsMenuBottomSheet(
             }
 
             is ItemDetailsMenuEvent.OnItemClone -> {
-                ItemDetailsNavDestination.CloneItem(
-                    shareId = event.shareId,
-                    itemId = event.itemId
-                ).also(onNavigated)
+                val category = state.itemOption.value()?.itemType?.category
+                if (category != null) {
+                    ItemDetailsNavDestination.CloneItem(
+                        shareId = event.shareId,
+                        itemId = event.itemId,
+                        category = category
+                    ).also(onNavigated)
+                } else {
+                    onNavigated(ItemDetailsNavDestination.CloseScreen)
+                }
             }
 
             ItemDetailsMenuEvent.OnItemNoteCopied,

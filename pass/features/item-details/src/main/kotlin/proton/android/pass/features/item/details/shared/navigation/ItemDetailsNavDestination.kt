@@ -39,7 +39,8 @@ sealed interface ItemDetailsNavDestination {
 
     data class CloneItem(
         val shareId: ShareId,
-        val itemId: ItemId
+        val itemId: ItemId,
+        val category: ItemCategory
     ) : ItemDetailsNavDestination
 
     @JvmInline

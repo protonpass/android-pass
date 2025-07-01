@@ -22,9 +22,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.customFieldBottomSheetGraph
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
@@ -43,13 +45,16 @@ import proton.android.pass.navigation.api.toPath
 
 object CreateNoteNavItem : NavItem(
     baseRoute = "note/create",
-    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId)
+    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId, CommonOptionalNavArgId.ItemId)
 ) {
-    fun createNavRoute(shareId: Option<ShareId>) = buildString {
+    fun createNavRoute(shareId: Option<ShareId>, itemId: Option<ItemId> = None) = buildString {
         append(baseRoute)
         val map = mutableMapOf<String, Any>()
         if (shareId is Some) {
             map[CommonOptionalNavArgId.ShareId.key] = shareId.value.id
+        }
+        if (itemId is Some) {
+            map[CommonOptionalNavArgId.ItemId.key] = itemId.value.id
         }
         val path = map.toPath()
         append(path)

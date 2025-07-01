@@ -361,6 +361,13 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
+                is HomeNavigation.CloneNote -> {
+                    appNavigator.navigate(
+                        CreateNoteNavItem,
+                        CreateNoteNavItem.createNavRoute(it.shareId.some(), it.itemId.some())
+                    )
+                }
+
                 is HomeNavigation.EditCreditCard -> appNavigator.navigate(
                     EditCreditCardNavItem,
                     EditCreditCardNavItem.createNavRoute(it.shareId, it.itemId)
@@ -1756,14 +1763,38 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 is ItemDetailsNavDestination.CloneItem -> dismissBottomSheet {
-                    appNavigator.navigate(
-                        destination = CreateLoginNavItem,
-                        backDestination = HomeNavItem,
-                        route = CreateLoginNavItem.createNavRoute(
-                            shareId = itemDetailsNavDestination.shareId.some(),
-                            itemId = itemDetailsNavDestination.itemId.some()
-                        )
-                    )
+                    val shareId = itemDetailsNavDestination.shareId.some()
+                    val itemId = itemDetailsNavDestination.itemId.some()
+                    when (itemDetailsNavDestination.category) {
+                        ItemCategory.Login -> {
+                            appNavigator.navigate(
+                                destination = CreateLoginNavItem,
+                                backDestination = HomeNavItem,
+                                route = CreateLoginNavItem.createNavRoute(shareId, itemId)
+                            )
+                        }
+
+                        ItemCategory.Note -> {
+                            appNavigator.navigate(
+                                destination = CreateNoteNavItem,
+                                backDestination = HomeNavItem,
+                                route = CreateNoteNavItem.createNavRoute(shareId, itemId)
+                            )
+                        }
+
+                        ItemCategory.CreditCard -> Unit
+
+                        ItemCategory.Identity -> Unit
+
+                        ItemCategory.WifiNetwork -> Unit
+
+                        ItemCategory.SSHKey -> Unit
+
+                        ItemCategory.Custom -> Unit
+
+                        ItemCategory.Alias, ItemCategory.Password, ItemCategory.Unknown -> Unit // No-opt
+                    }
+
                 }
 
                 is ItemDetailsNavDestination.PasskeyDetails -> appNavigator.navigate(

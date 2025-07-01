@@ -91,6 +91,8 @@ sealed interface HomeNavigation {
 
     data class EditNote(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
 
+    data class CloneNote(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
+
     data class EditAlias(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
 
     data class EditCreditCard(val shareId: ShareId, val itemId: ItemId) : HomeNavigation

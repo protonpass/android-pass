@@ -84,6 +84,10 @@ fun CreateNoteScreen(
         viewModel.setTotp(navTotpUri, navTotpIndex ?: -1)
     }
 
+    LaunchedEffect(Unit) {
+        viewModel.cloneContents()
+    }
+
     var showDatePickerForField: Option<CustomFieldIdentifier> by remember { mutableStateOf(None) }
     var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
     PerformActionAfterKeyboardHide(

@@ -443,6 +443,12 @@ fun HomeScreen(
                                 onNavigateEvent(HomeNavigation.EditNote(shareId, itemId))
                             }
                         },
+                        onClone = remember {
+                            { shareId, itemId ->
+                                scope.launch { bottomSheetState.hide() }
+                                onNavigateEvent(HomeNavigation.CloneNote(shareId, itemId))
+                            }
+                        },
                         onMoveToTrash = remember {
                             {
                                 scope.launch { bottomSheetState.hide() }

@@ -373,6 +373,11 @@ fun NavGraphBuilder.appGraph(
                     EditCreditCardNavItem.createNavRoute(it.shareId, it.itemId)
                 )
 
+                is HomeNavigation.CloneCreditCard -> appNavigator.navigate(
+                    CreateCreditCardNavItem,
+                    CreateCreditCardNavItem.createNavRoute(it.shareId.some(), it.itemId.some())
+                )
+
                 is HomeNavigation.EditIdentity -> appNavigator.navigate(
                     UpdateIdentityNavItem,
                     UpdateIdentityNavItem.createNavRoute(it.shareId, it.itemId)
@@ -1782,7 +1787,13 @@ fun NavGraphBuilder.appGraph(
                             )
                         }
 
-                        ItemCategory.CreditCard -> Unit
+                        ItemCategory.CreditCard -> {
+                            appNavigator.navigate(
+                                destination = CreateCreditCardNavItem,
+                                backDestination = HomeNavItem,
+                                route = CreateCreditCardNavItem.createNavRoute(shareId, itemId)
+                            )
+                        }
 
                         ItemCategory.Identity -> Unit
 

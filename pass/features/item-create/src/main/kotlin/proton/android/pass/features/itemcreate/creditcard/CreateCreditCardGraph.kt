@@ -9,6 +9,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.customFieldBottomSheetGraph
 import proton.android.pass.features.itemcreate.common.CustomFieldPrefix
@@ -25,13 +26,16 @@ import proton.android.pass.navigation.api.toPath
 
 object CreateCreditCardNavItem : NavItem(
     baseRoute = "creditcard/create/screen",
-    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId)
+    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId, CommonOptionalNavArgId.ItemId)
 ) {
-    fun createNavRoute(shareId: Option<ShareId> = None) = buildString {
+    fun createNavRoute(shareId: Option<ShareId> = None, itemId: Option<ItemId> = None) = buildString {
         append(baseRoute)
         val map = mutableMapOf<String, Any>()
         if (shareId is Some) {
             map[CommonOptionalNavArgId.ShareId.key] = shareId.value.id
+        }
+        if (itemId is Some) {
+            map[CommonOptionalNavArgId.ItemId.key] = itemId.value.id
         }
         val path = map.toPath()
         append(path)

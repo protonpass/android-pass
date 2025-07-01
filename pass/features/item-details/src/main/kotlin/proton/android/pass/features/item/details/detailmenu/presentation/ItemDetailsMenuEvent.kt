@@ -18,7 +18,7 @@
 
 package proton.android.pass.features.item.details.detailmenu.presentation
 
-import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
 internal sealed interface ItemDetailsMenuEvent {
@@ -49,7 +49,7 @@ internal sealed interface ItemDetailsMenuEvent {
 
     data object OnItemUnpinningError : ItemDetailsMenuEvent
 
-    data class OnItemClone(val shareId: ShareId, val itemType: ItemType) : ItemDetailsMenuEvent
+    data class OnItemClone(val shareId: ShareId, val itemId: ItemId) : ItemDetailsMenuEvent
 
     data object OnItemTrashed : ItemDetailsMenuEvent
 

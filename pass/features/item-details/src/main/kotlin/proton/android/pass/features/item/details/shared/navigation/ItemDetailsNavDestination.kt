@@ -21,7 +21,6 @@ package proton.android.pass.features.item.details.shared.navigation
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsActionForbiddenReason
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.items.ItemCategory
@@ -40,7 +39,7 @@ sealed interface ItemDetailsNavDestination {
 
     data class CloneItem(
         val shareId: ShareId,
-        val itemType: ItemType
+        val itemId: ItemId
     ) : ItemDetailsNavDestination
 
     @JvmInline

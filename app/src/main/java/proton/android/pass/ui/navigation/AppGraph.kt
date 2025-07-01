@@ -383,6 +383,11 @@ fun NavGraphBuilder.appGraph(
                     UpdateIdentityNavItem.createNavRoute(it.shareId, it.itemId)
                 )
 
+                is HomeNavigation.CloneIdentity -> appNavigator.navigate(
+                    CreateIdentityNavItem,
+                    CreateIdentityNavItem.createNavRoute(it.shareId.some(), it.itemId.some())
+                )
+
                 is HomeNavigation.EditCustomItem -> appNavigator.navigate(
                     UpdateCustomItemNavItem,
                     UpdateCustomItemNavItem.createNavRoute(it.shareId, it.itemId)
@@ -1795,7 +1800,13 @@ fun NavGraphBuilder.appGraph(
                             )
                         }
 
-                        ItemCategory.Identity -> Unit
+                        ItemCategory.Identity -> {
+                            appNavigator.navigate(
+                                destination = CreateIdentityNavItem,
+                                backDestination = HomeNavItem,
+                                route = CreateIdentityNavItem.createNavRoute(shareId, itemId)
+                            )
+                        }
 
                         ItemCategory.WifiNetwork -> Unit
 

@@ -66,9 +66,10 @@ object CreateLoginNavItem : NavItem(
 ) {
     fun createNavRoute(
         shareId: Option<ShareId> = None,
-                       // ItemID of the item to be cloned
-                       itemId: Option<ItemId> = None,
-                       emailOption: Option<String> = None) = buildString {
+        // ItemID of the item to be cloned
+        itemId: Option<ItemId> = None,
+        emailOption: Option<String> = None
+    ) = buildString {
         append(baseRoute)
 
         mutableMapOf<String, Any>().apply {

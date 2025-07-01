@@ -105,6 +105,8 @@ sealed interface HomeNavigation {
 
     data class EditCustomItem(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
 
+    data class CloneCustomItem(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
+
     data class ItemDetail(
         val shareId: ShareId,
         val itemId: ItemId,

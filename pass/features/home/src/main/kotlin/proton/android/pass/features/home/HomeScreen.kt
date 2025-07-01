@@ -513,6 +513,12 @@ fun HomeScreen(
                                 onNavigateEvent(HomeNavigation.EditCreditCard(shareId, itemId))
                             }
                         },
+                        onClone = remember {
+                            { shareId, itemId ->
+                                scope.launch { bottomSheetState.hide() }
+                                onNavigateEvent(HomeNavigation.CloneCreditCard(shareId, itemId))
+                            }
+                        },
                         onMoveToTrash = remember {
                             {
                                 scope.launch { bottomSheetState.hide() }

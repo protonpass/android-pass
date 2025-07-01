@@ -1,11 +1,13 @@
 package proton.android.pass.features.itemcreate.creditcard
 
+import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -27,21 +29,32 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toUiModel
+import proton.android.pass.commonuimodels.api.PackageInfoUi
+import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState.NotLoading
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CreateItem
+import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.domain.CreditCardType
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.ItemSavedState
+import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
+import proton.android.pass.features.itemcreate.common.UICustomFieldContent
+import proton.android.pass.features.itemcreate.common.UICustomFieldContent.Companion.from
+import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.formprocessor.CreditCardFormProcessorType
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
@@ -68,6 +81,8 @@ class CreateCreditCardViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
+    private val getItemById: GetItemById,
+    @ApplicationContext private val context: Context,
     userPreferencesRepository: UserPreferencesRepository,
     attachmentsHandler: AttachmentsHandler,
     observeVaults: ObserveVaultsWithItemCount,
@@ -94,7 +109,12 @@ class CreateCreditCardViewModel @Inject constructor(
     private val navShareId: Option<ShareId> =
         savedStateHandleProvider.get().get<String>(CommonOptionalNavArgId.ShareId.key)
             .toOption()
-            .map { ShareId(it) }
+            .map(::ShareId)
+
+    private val navItemId: Option<ItemId> =
+        savedStateHandleProvider.get().get<String>(CommonOptionalNavArgId.ItemId.key)
+            .toOption()
+            .map(::ItemId)
 
     @OptIn(SavedStateHandleSaveableApi::class)
     private var selectedShareIdMutableState: Option<ShareId> by savedStateHandleProvider.get()
@@ -137,6 +157,29 @@ class CreateCreditCardViewModel @Inject constructor(
     fun changeVault(shareId: ShareId) {
         onUserEditedContent()
         selectedShareIdMutableState = Some(shareId)
+    }
+
+    suspend fun cloneContents() {
+        val shareId = navShareId.value() ?: return
+        val itemId = navItemId.value() ?: return
+        val item = getItemById(shareId = shareId, itemId = itemId)
+
+        val currentValue = creditCardItemFormState
+        encryptionContextProvider.withEncryptionContext {
+            val itemContents = item.toItemContents<ItemContents.CreditCard> { decrypt(it) }
+            val customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
+            creditCardItemFormMutableState = currentValue.copy(
+                title = context.getString(R.string.title_clone, decrypt(item.title)),
+                note = decrypt(item.note),
+                cardHolder = itemContents.cardHolder,
+                type = itemContents.type,
+                number = itemContents.number,
+                cvv = UIHiddenState.Concealed(itemContents.cvv.encrypted),
+                pin = UIHiddenState.Concealed(itemContents.pin.encrypted),
+                expirationDate = itemContents.expirationDate,
+                customFields = customFieldHandler.sanitiseForEditingCustomFields(customFields)
+            )
+        }
     }
 
     fun createItem() = viewModelScope.launch {

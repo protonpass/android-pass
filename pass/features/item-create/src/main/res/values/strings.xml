@@ -213,6 +213,7 @@
     <string name="update_identity_item_creation_error">Could not update identity</string>
     <!--  Common create items  -->
     <string name="title_create">Create</string>
+    <string name="title_clone" comment="Default title when cloning an item. Placeholder is the title of the item being cloned.">%s (copied)</string>
     <string name="changes_saved">Changes saved</string>
     <!--  TOTP  -->
     <string name="totp_create_login_field_title">2FA secret key (TOTP)</string>

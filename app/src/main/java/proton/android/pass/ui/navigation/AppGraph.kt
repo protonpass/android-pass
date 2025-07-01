@@ -347,6 +347,13 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
+                is HomeNavigation.CloneLogin -> {
+                    appNavigator.navigate(
+                        CreateLoginNavItem,
+                        CreateLoginNavItem.createNavRoute(it.shareId.some(), it.itemId.some())
+                    )
+                }
+
                 is HomeNavigation.EditNote -> {
                     appNavigator.navigate(
                         UpdateNoteNavItem,
@@ -1749,7 +1756,14 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 is ItemDetailsNavDestination.CloneItem -> dismissBottomSheet {
-                    appNavigator.navigateBack()
+                    appNavigator.navigate(
+                        destination = CreateLoginNavItem,
+                        backDestination = HomeNavItem,
+                        route = CreateLoginNavItem.createNavRoute(
+                            shareId = itemDetailsNavDestination.shareId.some(),
+                            itemId = itemDetailsNavDestination.itemId.some()
+                        )
+                    )
                 }
 
                 is ItemDetailsNavDestination.PasskeyDetails -> appNavigator.navigate(

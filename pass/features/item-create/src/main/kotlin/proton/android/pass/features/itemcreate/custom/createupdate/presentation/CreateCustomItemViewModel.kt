@@ -49,16 +49,23 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CreateItem
+import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.WifiSecurityType
+import proton.android.pass.domain.toItemContents
 import proton.android.pass.features.itemcreate.ItemCreate
+import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
+import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.formprocessor.CustomItemFormProcessor
@@ -87,6 +94,7 @@ class CreateCustomItemViewModel @Inject constructor(
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
+    private val getItemById: GetItemById,
     canPerformPaidAction: CanPerformPaidAction,
     linkAttachmentsToItem: LinkAttachmentsToItem,
     attachmentsHandler: AttachmentsHandler,
@@ -120,6 +128,11 @@ class CreateCustomItemViewModel @Inject constructor(
         savedStateHandleProvider.get().get<String>(CommonOptionalNavArgId.ShareId.key)
             .toOption()
             .map(::ShareId)
+
+    private val navItemId: Option<ItemId> =
+        savedStateHandleProvider.get().get<String>(CommonOptionalNavArgId.ItemId.key)
+            .toOption()
+            .map(::ItemId)
 
     private val navTemplateType: Option<TemplateType> =
         savedStateHandleProvider.get().require<Int>(TemplateTypeNavArgId.key)
@@ -243,6 +256,55 @@ class CreateCustomItemViewModel @Inject constructor(
 
     private fun onVaultSelected(shareId: ShareId) {
         selectedShareIdMutableState = Some(shareId)
+    }
+
+    suspend fun cloneContents() {
+        val shareId = navShareId.value() ?: return
+        val itemId = navItemId.value() ?: return
+        val item = getItemById(shareId = shareId, itemId = itemId)
+        encryptionContextProvider.withEncryptionContext {
+            val staticFields: ItemStaticFields
+            val customFields: List<UICustomFieldContent>
+            val extraSections: List<UIExtraSection>
+
+            val type = item.itemType
+            when (type) {
+                is ItemType.WifiNetwork -> {
+                    staticFields = ItemStaticFields.WifiNetwork(
+                        ssid = type.ssid,
+                        password = UIHiddenState.Concealed(type.password),
+                        wifiSecurityType = type.wifiSecurityType
+                    )
+                    val itemContents = item.toItemContents<ItemContents.WifiNetwork> { decrypt(it) }
+                    customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
+                    extraSections = itemContents.sectionContentList.map { UIExtraSection(it) }
+                }
+
+                is ItemType.SSHKey -> {
+                    staticFields = ItemStaticFields.SSHKey(
+                        publicKey = type.publicKey,
+                        privateKey = UIHiddenState.Concealed(type.privateKey)
+                    )
+                    val itemContents = item.toItemContents<ItemContents.SSHKey> { decrypt(it) }
+                    customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
+                    extraSections = itemContents.sectionContentList.map { UIExtraSection(it) }
+                }
+
+                is ItemType.Custom -> {
+                    staticFields = ItemStaticFields.Custom
+                    val itemContents = item.toItemContents<ItemContents.Custom> { decrypt(it) }
+                    customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
+                    extraSections = itemContents.sectionContentList.map { UIExtraSection(it) }
+                }
+                else -> throw IllegalStateException("Not a custom item type")
+            }
+            itemFormState = itemFormState.copy(
+                title = context.getString(R.string.title_clone, decrypt(item.title)),
+                itemStaticFields = staticFields,
+                customFieldList = customFields,
+                sectionList = extraSections
+            )
+        }
     }
 
     companion object {

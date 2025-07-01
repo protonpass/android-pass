@@ -608,6 +608,10 @@ fun HomeScreen(
                             scope.launch { bottomSheetState.hide() }
                             onNavigateEvent(HomeNavigation.EditCustomItem(shareId, itemId))
                         },
+                        onClone = { shareId, itemId ->
+                            scope.launch { bottomSheetState.hide() }
+                            onNavigateEvent(HomeNavigation.CloneCustomItem(shareId, itemId))
+                        },
                         onMoveToTrash = {
                             scope.launch { bottomSheetState.hide() }
                             homeViewModel.sendItemsToTrash(listOf(it))

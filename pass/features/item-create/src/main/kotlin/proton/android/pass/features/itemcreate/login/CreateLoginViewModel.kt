@@ -62,7 +62,6 @@ import proton.android.pass.data.api.errors.AliasRateLimitError
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.api.repositories.DraftRepository
-import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateLoginAndAlias
 import proton.android.pass.data.api.usecases.GetItemById

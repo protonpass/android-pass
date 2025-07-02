@@ -64,3 +64,10 @@
  # kept. Suspend functions are wrapped in continuations where the type argument
  # is used.
  -keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
+
+-keepclassmembers class *$Companion {
+    public static kotlinx.serialization.KSerializer serializer(...);
+}
+-keepclassmembers class kotlinx.serialization.SerializersKt {
+    public static kotlinx.serialization.KSerializer serializer(...);
+}

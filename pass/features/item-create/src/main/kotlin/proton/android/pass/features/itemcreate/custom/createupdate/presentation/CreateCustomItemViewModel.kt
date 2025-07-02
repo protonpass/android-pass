@@ -262,7 +262,7 @@ class CreateCustomItemViewModel @Inject constructor(
         val shareId = navShareId.value() ?: return
         val itemId = navItemId.value() ?: return
         val item = getItemById(shareId = shareId, itemId = itemId)
-        encryptionContextProvider.withEncryptionContext {
+        encryptionContextProvider.withEncryptionContextSuspendable {
             val staticFields: ItemStaticFields
             val customFields: List<UICustomFieldContent>
             val extraSections: List<UIExtraSection>

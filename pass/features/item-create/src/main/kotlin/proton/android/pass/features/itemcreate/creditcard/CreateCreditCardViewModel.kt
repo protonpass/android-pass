@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -78,7 +77,6 @@ class CreateCreditCardViewModel @Inject constructor(
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
     private val getItemById: GetItemById,
-    @ApplicationContext private val context: Context,
     userPreferencesRepository: UserPreferencesRepository,
     attachmentsHandler: AttachmentsHandler,
     observeVaults: ObserveVaultsWithItemCount,
@@ -155,13 +153,13 @@ class CreateCreditCardViewModel @Inject constructor(
         selectedShareIdMutableState = Some(shareId)
     }
 
-    suspend fun cloneContents() {
+    suspend fun cloneContents(context: Context) {
         val shareId = navShareId.value() ?: return
         val itemId = navItemId.value() ?: return
         val item = getItemById(shareId = shareId, itemId = itemId)
 
         val currentValue = creditCardItemFormState
-        encryptionContextProvider.withEncryptionContext {
+        encryptionContextProvider.withEncryptionContextSuspendable {
             val itemContents = item.toItemContents<ItemContents.CreditCard> { decrypt(it) }
             val customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
             creditCardItemFormMutableState = currentValue.copy(

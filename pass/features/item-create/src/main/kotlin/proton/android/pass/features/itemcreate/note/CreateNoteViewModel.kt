@@ -25,7 +25,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -97,7 +96,6 @@ class CreateNoteViewModel @Inject constructor(
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
     private val getItemById: GetItemById,
-    @ApplicationContext private val context: Context,
     clipboardManager: ClipboardManager,
     canPerformPaidAction: CanPerformPaidAction,
     userPreferencesRepository: UserPreferencesRepository,
@@ -171,13 +169,13 @@ class CreateNoteViewModel @Inject constructor(
         initialValue = CreateNoteUiState.Initial
     )
 
-    suspend fun cloneContents() {
+    suspend fun cloneContents(context: Context) {
         val shareId = navShareId.value() ?: return
         val itemId = navItemId.value() ?: return
         val item = getItemById(shareId = shareId, itemId = itemId)
 
         val currentValue = noteItemFormState
-        encryptionContextProvider.withEncryptionContext {
+        encryptionContextProvider.withEncryptionContextSuspendable {
             val itemContents = item.toItemContents<ItemContents.Note> { decrypt(it) }
             val customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
             noteItemFormMutableState = currentValue.copy(

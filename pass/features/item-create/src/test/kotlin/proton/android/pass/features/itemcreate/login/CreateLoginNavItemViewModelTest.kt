@@ -40,6 +40,7 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
+import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestCreateLoginAndAlias
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
@@ -142,7 +143,8 @@ internal class CreateLoginNavItemViewModelTest {
             attachmentsHandler = FakeAttachmentHandler(),
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
             customFieldHandler = CustomFieldHandlerImpl(TestTotpManager(), encryptionContextProvider),
-            loginItemFormProcessor = loginItemFormProcessor
+            loginItemFormProcessor = loginItemFormProcessor,
+            getItemById = FakeGetItemById()
         )
     }
 

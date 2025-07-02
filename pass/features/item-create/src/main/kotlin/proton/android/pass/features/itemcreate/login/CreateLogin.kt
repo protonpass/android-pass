@@ -80,7 +80,7 @@ fun CreateLoginScreen(
     }
 
     LaunchedEffect(Unit) {
-        viewModel.cloneContents()
+        viewModel.cloneContents(context)
     }
 
     val uiState by viewModel.createLoginUiState.collectAsStateWithLifecycle()

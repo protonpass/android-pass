@@ -85,7 +85,7 @@ fun CreateIdentityScreen(
     }
 
     LaunchedEffect(Unit) {
-        viewModel.cloneContents()
+        viewModel.cloneContents(context)
     }
 
     var showDatePickerForField: Option<Pair<IdentityField.CustomField, Int>> by remember {

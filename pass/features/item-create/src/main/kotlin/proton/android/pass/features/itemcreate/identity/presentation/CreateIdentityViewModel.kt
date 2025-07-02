@@ -26,7 +26,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -74,7 +73,6 @@ class CreateIdentityViewModel @Inject constructor(
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val getItemById: GetItemById,
-    @ApplicationContext private val context: Context,
     observeVaults: ObserveVaultsWithItemCount,
     observeDefaultVault: ObserveDefaultVault,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -137,13 +135,13 @@ class CreateIdentityViewModel @Inject constructor(
         selectedShareIdMutableState = Some(shareId)
     }
 
-    suspend fun cloneContents() {
+    suspend fun cloneContents(context: Context) {
         val shareId = navShareId.value() ?: return
         val itemId = navItemId.value() ?: return
         val item = getItemById(shareId = shareId, itemId = itemId)
-        val encryptedTitle = encryptionContextProvider.withEncryptionContext {
+        val encryptedTitle = encryptionContextProvider.withEncryptionContextSuspendable {
             val decryptedTitle = context.getString(R.string.title_clone, decrypt(item.title))
-            return@withEncryptionContext encrypt(decryptedTitle)
+            return@withEncryptionContextSuspendable encrypt(decryptedTitle)
         }
         identityActionsProvider.onItemReceivedState(item.copy(title = encryptedTitle))
     }

@@ -25,7 +25,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
@@ -129,7 +128,6 @@ class CreateLoginViewModel @Inject constructor(
     private val workerLauncher: WorkerLauncher,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
     private val getItemById: GetItemById,
-    @ApplicationContext private val context: Context,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     passwordStrengthCalculator: PasswordStrengthCalculator,
     accountManager: AccountManager,
@@ -235,13 +233,13 @@ class CreateLoginViewModel @Inject constructor(
         selectedShareIdMutableState = Some(shareId)
     }
 
-    internal suspend fun cloneContents() {
+    internal suspend fun cloneContents(context: Context) {
         val shareId = navShareId.value() ?: return
         val itemId = navItemId.value() ?: return
         val item = getItemById(shareId = shareId, itemId = itemId)
 
         val currentValue = loginItemFormState
-        encryptionContextProvider.withEncryptionContext {
+        encryptionContextProvider.withEncryptionContextSuspendable {
             val itemContents = item.toItemContents<ItemContents.Login> { decrypt(it) }
             val customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
             loginItemFormMutableState = currentValue.copy(

@@ -68,7 +68,7 @@ fun CreateCreditCardScreen(
     }
 
     LaunchedEffect(Unit) {
-        viewModel.cloneContents()
+        viewModel.cloneContents(context)
     }
 
     var showDatePickerForField: Option<CustomFieldIdentifier> by remember { mutableStateOf(None) }

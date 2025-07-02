@@ -19,7 +19,9 @@
 package proton.android.pass.common.api
 
 import androidx.compose.runtime.Stable
+import kotlinx.serialization.Serializable
 
+@Serializable
 @Stable
 sealed interface Option<out A> {
 
@@ -49,6 +51,7 @@ sealed interface Option<out A> {
     }
 }
 
+@Serializable
 object None : Option<Nothing> {
     override fun isEmpty(): Boolean = true
 
@@ -57,6 +60,7 @@ object None : Option<Nothing> {
     override fun <R> map(block: (Nothing) -> R): Option<R> = None
 }
 
+@Serializable
 data class Some<out T>(val value: T) : Option<T> {
 
     override fun isEmpty(): Boolean = false

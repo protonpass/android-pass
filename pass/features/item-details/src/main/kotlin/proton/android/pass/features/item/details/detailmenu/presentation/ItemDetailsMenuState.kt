@@ -27,6 +27,9 @@ import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.domain.items.ItemCategory.Alias
+import proton.android.pass.domain.items.ItemCategory.Password
+import proton.android.pass.domain.items.ItemCategory.Unknown
 
 @Stable
 internal data class ItemDetailsMenuState(
@@ -72,7 +75,7 @@ internal data class ItemDetailsMenuState(
     }
 
     internal val canCloneItem: Boolean by lazy {
-        itemOption.value()?.itemType?.category?.isCloneable() == true
+        itemOption.value()?.itemType?.category?.isCloneable == true
     }
 
     internal val canTrashItem: Boolean = when (itemActionsOption) {
@@ -107,3 +110,9 @@ internal data class ItemDetailsMenuState(
     }
 
 }
+
+private val ItemCategory.isCloneable: Boolean
+    get() = when (this) {
+        Alias, Password, Unknown -> false
+        else -> true
+    }

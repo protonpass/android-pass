@@ -39,10 +39,5 @@ enum class ItemCategory(val value: Int) {
     Identity(ITEM_CATEGORY_IDENTITY),
     Custom(ITEM_CATEGORY_CUSTOM),
     WifiNetwork(ITEM_CATEGORY_WIFI_NETWORK),
-    SSHKey(ITEM_CATEGORY_SSH_KEY);
-
-    fun isCloneable(): Boolean = when (this) {
-        Alias, Password, Unknown -> false
-        else -> true
-    }
+    SSHKey(ITEM_CATEGORY_SSH_KEY)
 }

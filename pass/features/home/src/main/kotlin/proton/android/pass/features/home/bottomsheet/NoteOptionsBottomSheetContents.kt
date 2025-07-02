@@ -108,9 +108,7 @@ internal fun NoteOptionsBottomSheetContents(
                 add(edit(itemUiModel, onEdit))
             }
 
-            if (itemUiModel.category.isCloneable()) {
-                add(clone { onClone(itemUiModel.shareId, itemUiModel.id) })
-            }
+            add(clone { onClone(itemUiModel.shareId, itemUiModel.id) })
 
             if (canUpdate) {
                 add(moveToTrash(itemUiModel, onMoveToTrash))

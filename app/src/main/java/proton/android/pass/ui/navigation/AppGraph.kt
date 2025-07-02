@@ -1806,8 +1806,9 @@ fun NavGraphBuilder.appGraph(
                         )
 
                         ItemCategory.WifiNetwork, ItemCategory.SSHKey, ItemCategory.Custom -> appNavigator.navigate(
-                            CreateCustomItemNavItem,
-                            CreateCustomItemNavItem.createNavRoute(shareId, itemId)
+                            destination = CreateCustomItemNavItem,
+                            backDestination = HomeNavItem,
+                            route = CreateCustomItemNavItem.createNavRoute(shareId, itemId)
                         )
 
                         ItemCategory.Alias, ItemCategory.Password, ItemCategory.Unknown -> Unit // No-opt

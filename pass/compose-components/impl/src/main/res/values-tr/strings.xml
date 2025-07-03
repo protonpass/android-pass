@@ -307,8 +307,7 @@
     <item quantity="one">%d üye</item>
     <item quantity="other">%d üye</item>
   </plurals>
-  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
-  <string name="show_network_qr_code">Ağ kare kodunu görüntüle</string>
+    <string name="show_network_qr_code">Ağ kare kodunu görüntüle</string>
   <string name="expand_collpased_text">daha fazla</string>
   <string name="collapse_expanded_text">daha az</string>
   <string name="login_item_monitor_widget_weak_pass_title">Zayıf Parola</string>

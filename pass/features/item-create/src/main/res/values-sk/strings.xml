@@ -344,8 +344,7 @@
   <string name="create_custom_item_item_creation_success">Vlastná položka vytvorená</string>
   <string name="update_custom_item_item_creation_success">Vlastná položka aktualizovaná</string>
   <string name="update_custom_item_item_creation_error">Nepodarilo sa aktualizovať vlastnú položku</string>
-  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd. MMMM yyyy</string>
-  <!-- Cannot create items dialog -->
+    <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Nie je možné vytvoriť položky</string>
   <string name="cannot_create_items_dialog_message">Nemáte žiadne trezory s prístupom editora alebo administrátora. Skúste si ich vytvoriť v hlavnej aplikácii alebo požiadajte o podporu správcu vašej organizácie.</string>
   <string name="wifi_security_type_field_label">Typ zabezpečenia</string>

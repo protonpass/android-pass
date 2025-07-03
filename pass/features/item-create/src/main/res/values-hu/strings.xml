@@ -344,8 +344,7 @@
   <string name="create_custom_item_item_creation_success">Egyéni elem létrehozva</string>
   <string name="update_custom_item_item_creation_success">Egyéni elem frissítve</string>
   <string name="update_custom_item_item_creation_error">Nem sikerült frissíteni az egyéni elemet</string>
-  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">yyyy LLLL dd</string>
-  <!-- Cannot create items dialog -->
+    <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Nem lehet elemeket létrehozni</string>
   <string name="cannot_create_items_dialog_message">Önnek nincs szerkesztői vagy adminisztrátori hozzáféréssel rendelkező tárolója. Próbáljon meg létrehozni egyet a főalkalmazásban, vagy kérjen támogatást a szervezet rendszergazdájától.</string>
   <string name="wifi_security_type_field_label">A biztonság típusa</string>

@@ -292,8 +292,7 @@
   <plurals name="members_count">
     <item quantity="other">%d명 회원</item>
   </plurals>
-  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">yyyy LLLL dd</string>
-  <string name="show_network_qr_code">네트워크 QR 코드 보이기</string>
+    <string name="show_network_qr_code">네트워크 QR 코드 보이기</string>
   <string name="expand_collpased_text">더 보기</string>
   <string name="collapse_expanded_text">덜 보기</string>
   <string name="login_item_monitor_widget_weak_pass_title">약한 비밀번호</string>

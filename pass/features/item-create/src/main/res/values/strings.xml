@@ -397,7 +397,7 @@
     <string name="update_custom_item_item_creation_success">Custom item updated</string>
     <string name="update_custom_item_item_creation_error">Could not update custom item</string>
 
-    <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
+    <string name="custom_field_date_pattern" translatable="false" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
 
     <!-- Cannot create items dialog -->
     <string name="cannot_create_items_dialog_title">Cannot create items</string>

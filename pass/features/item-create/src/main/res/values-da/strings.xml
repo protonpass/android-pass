@@ -344,8 +344,7 @@
   <string name="create_custom_item_item_creation_success">Brugerdefineret element oprettet</string>
   <string name="update_custom_item_item_creation_success">Brugerdefineret element opdateret</string>
   <string name="update_custom_item_item_creation_error">Kunne ikke opdatere brugerdefineret element</string>
-  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
-  <!-- Cannot create items dialog -->
+    <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Kan ikke oprette elementer</string>
   <string name="cannot_create_items_dialog_message">Du har ikke nogen bokse med redaktør- eller administratoradgang. Prøv at oprette en i hovedappen, eller spørg din organisations administrator om hjælp.</string>
   <string name="wifi_security_type_field_label">Sikkerhedstype</string>

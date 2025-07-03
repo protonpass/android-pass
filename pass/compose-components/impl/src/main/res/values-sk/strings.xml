@@ -337,8 +337,7 @@
     <item quantity="many">%d členovia</item>
     <item quantity="other">%d členovia</item>
   </plurals>
-  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
-  <string name="show_network_qr_code">Zobraziť QR kód siete</string>
+    <string name="show_network_qr_code">Zobraziť QR kód siete</string>
   <string name="expand_collpased_text">viac</string>
   <string name="collapse_expanded_text">menej</string>
   <string name="login_item_monitor_widget_weak_pass_title">Slabé heslo</string>

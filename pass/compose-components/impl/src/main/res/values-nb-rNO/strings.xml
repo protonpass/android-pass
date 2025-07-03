@@ -307,8 +307,7 @@
     <item quantity="one">%d medlem</item>
     <item quantity="other">%d medlemmer</item>
   </plurals>
-  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
-  <string name="show_network_qr_code">Vis QR-kode for nettverk</string>
+    <string name="show_network_qr_code">Vis QR-kode for nettverk</string>
   <string name="expand_collpased_text">mer</string>
   <string name="collapse_expanded_text">mindre</string>
   <string name="login_item_monitor_widget_weak_pass_title">Svakt passord</string>

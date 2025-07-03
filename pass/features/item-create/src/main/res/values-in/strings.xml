@@ -344,8 +344,7 @@
   <string name="create_custom_item_item_creation_success">Item khusus dibuat</string>
   <string name="update_custom_item_item_creation_success">Item khusus diperbarui</string>
   <string name="update_custom_item_item_creation_error">Tidak dapat memperbarui item khusus</string>
-  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
-  <!-- Cannot create items dialog -->
+    <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Tidak dapat membuat item</string>
   <string name="cannot_create_items_dialog_message">Anda tidak memiliki brankas dengan akses editor atau admin. Cobalah untuk membuat brankas baru pada aplikasi utama atau mintalah dukungan kepada administrator organisasi Anda.</string>
   <string name="wifi_security_type_field_label">Jenis keamanan</string>

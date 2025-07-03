@@ -344,8 +344,7 @@
   <string name="create_custom_item_item_creation_success">Το προσαρμοσμένο στοιχείο δημιουργήθηκε</string>
   <string name="update_custom_item_item_creation_success">Το προσαρμοσμένο στοιχείο ενημερώθηκε</string>
   <string name="update_custom_item_item_creation_error">Δεν ήταν δυνατή η ενημέρωση του προσαρμοσμένου στοιχείου</string>
-  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
-  <!-- Cannot create items dialog -->
+    <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Δεν είναι δυνατή η δημιουργία στοιχείων</string>
   <string name="cannot_create_items_dialog_message">Δεν έχετε κρύπτες με πρόσβαση συντάκτη ή διαχειριστή. Δοκιμάστε να δημιουργήσετε μία στην κύρια εφαρμογή ή ζητήστε υποστήριξη από τον διαχειριστή του οργανισμού σας.</string>
   <string name="wifi_security_type_field_label">Τύπος ασφάλειας</string>

@@ -123,7 +123,7 @@ internal fun PassItemDetailsCustomFieldRow(
         is CustomFieldContent.Date -> {
             val pattern = stringResource(R.string.custom_field_date_format)
             val date = remember(pattern, customFieldContent.value) {
-                customFieldContent.value.value()?.let {
+                customFieldContent.value?.let {
                     DateFormatUtils.formatDateFromMillis(pattern, it)
                 }
             }.orEmpty()

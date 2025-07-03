@@ -178,14 +178,12 @@ abstract class ItemDetailsHandlerObserver<ITEM_CONTENTS : ItemContents, FIELD_TY
         else -> ItemDiffType.Field
     }
 
-    protected fun calculateItemDiffType(
-        baseItemFieldValue: Option<Long>,
-        otherItemFieldValue: Option<Long>
-    ): ItemDiffType = if (baseItemFieldValue == otherItemFieldValue) {
-        ItemDiffType.None
-    } else {
-        ItemDiffType.Content
-    }
+    protected fun calculateItemDiffType(baseItemFieldValue: Long?, otherItemFieldValue: Long?): ItemDiffType =
+        if (baseItemFieldValue == otherItemFieldValue) {
+            ItemDiffType.None
+        } else {
+            ItemDiffType.Content
+        }
 
     protected fun calculateItemDiffType(
         baseItemAttachments: List<Attachment>,

@@ -20,8 +20,6 @@ package proton.android.pass.datamodels.api
 
 import com.google.protobuf.Timestamp
 import kotlinx.datetime.Instant
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.some
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.domain.AddressDetails
 import proton.android.pass.domain.ByteArrayWrapper
@@ -255,12 +253,10 @@ fun ItemV1.ExtraField.toDomain(context: EncryptionContext): CustomField {
             CustomField.Date(
                 label = this.fieldName,
                 value = if (isEmpty) {
-                    None
+                    null
                 } else {
-                    (
-                        this.timestamp.timestamp.seconds * MILLIS_IN_SECOND +
-                            this.timestamp.timestamp.nanos / NANOS_IN_MILLI
-                        ).some()
+                    this.timestamp.timestamp.seconds * MILLIS_IN_SECOND +
+                        this.timestamp.timestamp.nanos / NANOS_IN_MILLI
                 }
             )
         }

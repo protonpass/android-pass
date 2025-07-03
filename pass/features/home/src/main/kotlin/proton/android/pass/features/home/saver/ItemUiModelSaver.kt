@@ -21,32 +21,15 @@ package proton.android.pass.features.home.saver
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.mapSaver
 import kotlinx.datetime.Instant
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.polymorphic
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
 
 val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
-    val optionLongModule = SerializersModule {
-        polymorphic(Option::class) {
-            subclass(None::class, None.serializer())
-            subclass(Some::class, Some.serializer(Long.serializer()) as KSerializer<Some<*>>)
-        }
-    }
-    val moduleJson = Json {
-        serializersModule = optionLongModule
-        classDiscriminator = "type"
-    }
     val itemId = "item_id"
     val userId = "user_id"
     val shareId = "share_id"
@@ -66,7 +49,7 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
                     itemId to itemUiModel.id.id,
                     userId to itemUiModel.userId.id,
                     shareId to itemUiModel.shareId.id,
-                    itemContent to moduleJson.encodeToString(itemUiModel.contents),
+                    itemContent to Json.encodeToString(itemUiModel.contents),
                     createTime to itemUiModel.createTime.toString(),
                     modificationTime to itemUiModel.modificationTime.toString(),
                     lastAutofillTime to itemUiModel.lastAutofillTime?.toString(),
@@ -84,7 +67,7 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
                     id = ItemId(id = values[itemId] as String),
                     userId = UserId(id = values[userId] as String),
                     shareId = ShareId(id = values[shareId] as String),
-                    contents = moduleJson.decodeFromString(values[itemContent] as String),
+                    contents = Json.decodeFromString(values[itemContent] as String),
                     state = 0,
                     createTime = (values[createTime] as String).let { Instant.parse(it) },
                     modificationTime = (values[modificationTime] as String).let { Instant.parse(it) },

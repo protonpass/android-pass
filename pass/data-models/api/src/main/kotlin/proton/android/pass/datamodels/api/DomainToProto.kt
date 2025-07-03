@@ -296,7 +296,7 @@ private fun List<CustomFieldContent>.mapToExtraFields(encryptionContext: Encrypt
             is CustomFieldContent.Date -> extraField {
                 fieldName = customField.label
                 timestamp = extraTimestampField {
-                    customField.value.value()?.let {
+                    customField.value?.let {
                         timestamp = timestamp {
                             seconds = it / MILLIS_IN_SECOND
                             nanos = (it % MILLIS_IN_SECOND * NANOS_IN_MILLI).toInt()

@@ -20,7 +20,6 @@ package proton.android.pass.domain
 
 import kotlinx.serialization.Serializable
 import me.proton.core.crypto.common.keystore.EncryptedString
-import proton.android.pass.common.api.Option
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.items.ItemCategory
 
@@ -38,7 +37,7 @@ sealed interface CustomField {
     data class Totp(override val label: String, val value: EncryptedString) : CustomField
 
     @Serializable
-    data class Date(override val label: String, val value: Option<Long>) : CustomField
+    data class Date(override val label: String, val value: Long?) : CustomField
 
     data object Unknown : CustomField {
         override val label: String = "UNKNOWN"

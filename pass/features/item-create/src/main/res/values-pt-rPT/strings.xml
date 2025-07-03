@@ -344,8 +344,7 @@
   <string name="create_custom_item_item_creation_success">O item personalizado foi criado.</string>
   <string name="update_custom_item_item_creation_success">O item personalizado foi atualizado.</string>
   <string name="update_custom_item_item_creation_error">Não foi possível atualizar o item personalizado.</string>
-  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
-  <!-- Cannot create items dialog -->
+    <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Não é possível criar itens.</string>
   <string name="cannot_create_items_dialog_message">Não tem cofres com acesso de editor ou de administrador. Tente criar um cofre na aplicação principal ou peça ajuda ao administrador da sua organização.</string>
   <string name="wifi_security_type_field_label">Tipo de segurança</string>

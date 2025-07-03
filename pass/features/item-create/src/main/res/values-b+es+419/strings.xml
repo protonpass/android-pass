@@ -344,7 +344,6 @@
   <string name="create_custom_item_item_creation_success">Elemento personalizado creado</string>
   <string name="update_custom_item_item_creation_success">Elemento personalizado actualizado</string>
   <string name="update_custom_item_item_creation_error">No se pudo actualizar el elemento personalizado.</string>
-  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
   <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">No se pueden crear los elementos</string>
   <string name="cannot_create_items_dialog_message">No tiene bóvedas con acceso a editor o administrador. Cree una en la aplicación principal o pida ayuda al administrador de su organización.</string>

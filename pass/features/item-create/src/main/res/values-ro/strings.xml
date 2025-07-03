@@ -344,8 +344,7 @@
   <string name="create_custom_item_item_creation_success">S-a creat articolul personalizat.</string>
   <string name="update_custom_item_item_creation_success">S-a actualizat articolul personalizat.</string>
   <string name="update_custom_item_item_creation_error">Nu s-a putut actualiza articolul personalizat.</string>
-  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">zz LLLL aaaa</string>
-  <!-- Cannot create items dialog -->
+    <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Nu se pot crea articole</string>
   <string name="cannot_create_items_dialog_message">Nu aveți seifuri cu acces de editor sau de administrator. Încercați să creați unul în aplicația principală sau solicitați asistență administratorului organizației proprii.</string>
   <string name="wifi_security_type_field_label">Tip de securitate</string>

@@ -344,8 +344,7 @@
   <string name="create_custom_item_item_creation_success">Anpassat objekt skapat</string>
   <string name="update_custom_item_item_creation_success">Anpassat objekt uppdaterat</string>
   <string name="update_custom_item_item_creation_error">Kunde inte uppdatera anpassat objekt</string>
-  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
-  <!-- Cannot create items dialog -->
+    <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Kan inte skapa objekt</string>
   <string name="cannot_create_items_dialog_message">Du har inga valv med redigerings- eller administratörsåtkomst. Prova skapa ett i huvudappen eller be din organisations administratör om support.</string>
   <string name="wifi_security_type_field_label">Säkerhetstyp</string>

@@ -292,8 +292,7 @@
   <plurals name="members_count">
     <item quantity="other">%d 位成員</item>
   </plurals>
-  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
-  <string name="show_network_qr_code">Show Network QR Code</string>
+    <string name="show_network_qr_code">Show Network QR Code</string>
   <string name="expand_collpased_text">更多</string>
   <string name="collapse_expanded_text">較少</string>
   <string name="login_item_monitor_widget_weak_pass_title">弱密碼</string>

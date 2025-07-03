@@ -344,8 +344,7 @@
   <string name="create_custom_item_item_creation_success">Elemento personalizzato creato</string>
   <string name="update_custom_item_item_creation_success">Elemento personalizzato aggiornato</string>
   <string name="update_custom_item_item_creation_error">Impossibile aggiornare l\'elemento personalizzato</string>
-  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">gg/MMMM/yyyy</string>
-  <!-- Cannot create items dialog -->
+    <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Impossibile creare elementi</string>
   <string name="cannot_create_items_dialog_message">Non hai alcuna cassaforte con accesso da editor o amministratore. Prova a crearne una nell\'app principale o chiedi supporto all\'amministratore della tua organizzazione.</string>
   <string name="wifi_security_type_field_label">Sicurezza Wi-Fi</string>

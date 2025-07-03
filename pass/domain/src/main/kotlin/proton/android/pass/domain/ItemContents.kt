@@ -23,7 +23,6 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.crypto.common.keystore.EncryptedString
-import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.domain.entity.PackageInfo
 
@@ -41,7 +40,7 @@ sealed interface CustomFieldContent {
     data class Totp(override val label: String, val value: HiddenState) : CustomFieldContent
 
     @Serializable
-    data class Date(override val label: String, val value: Option<Long>) : CustomFieldContent
+    data class Date(override val label: String, val value: Long?) : CustomFieldContent
 }
 
 @Stable

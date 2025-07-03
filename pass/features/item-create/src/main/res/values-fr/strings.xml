@@ -344,8 +344,7 @@
   <string name="create_custom_item_item_creation_success">L\'élément personnalisé a été créé.</string>
   <string name="update_custom_item_item_creation_success">L\'élément personnalisé a été mis à jour.</string>
   <string name="update_custom_item_item_creation_error">La mise à jour de l\'élément personnalisé n\'a pas abouti.</string>
-  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
-  <!-- Cannot create items dialog -->
+    <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">La création des éléments n\'a pas abouti</string>
   <string name="cannot_create_items_dialog_message">Vous n\'avez pas de coffre-fort avec un accès éditeur ou administrateur. Essayez d\'en créer un dans l\'application principale ou demandez de l\'aide à l\'administrateur de votre organisation.</string>
   <string name="wifi_security_type_field_label">Type de sécurité</string>

@@ -344,8 +344,7 @@
   <string name="create_custom_item_item_creation_success">Пользовательский элемент создан</string>
   <string name="update_custom_item_item_creation_success">Пользовательский элемент обновлен</string>
   <string name="update_custom_item_item_creation_error">Не удалось обновить пользовательский элемент</string>
-  <string name="custom_field_date_pattern" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
-  <!-- Cannot create items dialog -->
+    <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Невозможно создать элементы</string>
   <string name="cannot_create_items_dialog_message">У вас нет ни одного хранилища с правами редактора или администратора. Попробуйте создать его в основном приложении или обратитесь за поддержкой к администратору вашей организации.</string>
   <string name="wifi_security_type_field_label">Тип безопасности</string>

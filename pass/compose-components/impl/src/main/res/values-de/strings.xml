@@ -307,8 +307,7 @@
     <item quantity="one">%d Mitglied</item>
     <item quantity="other">%d Mitglieder</item>
   </plurals>
-  <string name="custom_field_date_format" comment="It would translate to 12 February 2023">TT MMMM JJJJ</string>
-  <string name="show_network_qr_code">QR-Code des Netzwerks anzeigen</string>
+    <string name="show_network_qr_code">QR-Code des Netzwerks anzeigen</string>
   <string name="expand_collpased_text">mehr</string>
   <string name="collapse_expanded_text">weniger</string>
   <string name="login_item_monitor_widget_weak_pass_title">Schwaches Kennwort</string>

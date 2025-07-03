@@ -316,7 +316,7 @@
         <item quantity="other">%d members</item>
     </plurals>
 
-    <string name="custom_field_date_format" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
+    <string name="custom_field_date_format" translatable="false" comment="It would translate to 12 February 2023">dd LLLL yyyy</string>
 
     <string name="wifi_security_unspecified" translatable="false">Unspecified</string>
     <string name="wifi_security_wpa" translatable="false">WPA</string>

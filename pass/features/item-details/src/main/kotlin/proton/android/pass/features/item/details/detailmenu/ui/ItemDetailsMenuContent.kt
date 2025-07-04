@@ -82,7 +82,7 @@ internal fun ItemDetailsMenuContent(
         }
 
         if (canDuplicateItem) {
-            duplicate (
+            duplicate(
                 onClick = { onEvent(ItemDetailsMenuUiEvent.OnCloneItemClicked) }
             ).also(::add)
         }

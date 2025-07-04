@@ -344,7 +344,7 @@
   <string name="create_custom_item_item_creation_success">Niestandardowy element został utworzony</string>
   <string name="update_custom_item_item_creation_success">Niestandardowy element został zaktualizowany</string>
   <string name="update_custom_item_item_creation_error">Nie można zaktualizować niestandardowego elementu</string>
-    <!-- Cannot create items dialog -->
+  <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Nie można utworzyć elementów</string>
   <string name="cannot_create_items_dialog_message">Nie masz żadnych sejfów z dostępem edytora lub administratora. Spróbuj utworzyć sejf w głównej aplikacji lub poproś administratora organizacji o wsparcie.</string>
   <string name="wifi_security_type_field_label">Typ zabezpieczenia</string>

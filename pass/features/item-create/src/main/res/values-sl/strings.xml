@@ -344,7 +344,7 @@
   <string name="create_custom_item_item_creation_success">Predmet po meri ustvarjen</string>
   <string name="update_custom_item_item_creation_success">Custom item updated</string>
   <string name="update_custom_item_item_creation_error">Ni bilo mogoče posodobiti predmeta po meri</string>
-    <!-- Cannot create items dialog -->
+  <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Cannot create items</string>
   <string name="cannot_create_items_dialog_message">Nimate nobenih trezorjev z dostopom urejevalnika ali skrbnika. Poskusite ustvariti trezor v glavni aplikaciji ali prosite skrbnika vaše organizacije za pomoč.</string>
   <string name="wifi_security_type_field_label">Vrsta varnosti</string>

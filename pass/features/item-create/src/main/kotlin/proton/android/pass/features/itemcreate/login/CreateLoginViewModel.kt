@@ -233,7 +233,7 @@ class CreateLoginViewModel @Inject constructor(
         selectedShareIdMutableState = Some(shareId)
     }
 
-    internal suspend fun cloneContents(context: Context) {
+    internal suspend fun duplicateContents(context: Context) {
         val shareId = navShareId.value() ?: return
         val itemId = navItemId.value() ?: return
         val item = getItemById(shareId = shareId, itemId = itemId)
@@ -243,7 +243,7 @@ class CreateLoginViewModel @Inject constructor(
             val itemContents = item.toItemContents<ItemContents.Login> { decrypt(it) }
             val customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
             loginItemFormMutableState = currentValue.copy(
-                title = context.getString(R.string.title_clone, decrypt(item.title)),
+                title = context.getString(R.string.title_duplicate, decrypt(item.title)),
                 note = decrypt(item.note),
                 email = itemContents.itemEmail,
                 username = itemContents.itemUsername,

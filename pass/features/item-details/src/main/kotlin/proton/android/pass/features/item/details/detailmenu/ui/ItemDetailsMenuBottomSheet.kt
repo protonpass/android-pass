@@ -60,7 +60,7 @@ fun ItemDetailsMenuBottomSheet(
             is ItemDetailsMenuEvent.OnItemClone -> {
                 val category = state.itemOption.value()?.itemType?.category
                 if (category != null) {
-                    ItemDetailsNavDestination.CloneItem(
+                    ItemDetailsNavDestination.DuplicateItem(
                         shareId = event.shareId,
                         itemId = event.itemId,
                         category = category

@@ -74,8 +74,8 @@ internal data class ItemDetailsMenuState(
         }
     }
 
-    internal val canCloneItem: Boolean by lazy {
-        itemOption.value()?.itemType?.category?.isCloneable == true
+    internal val canDuplicateItem: Boolean by lazy {
+        itemOption.value()?.itemType?.category?.isDuplicateable == true
     }
 
     internal val canTrashItem: Boolean = when (itemActionsOption) {
@@ -111,7 +111,7 @@ internal data class ItemDetailsMenuState(
 
 }
 
-private val ItemCategory.isCloneable: Boolean
+private val ItemCategory.isDuplicateable: Boolean
     get() = when (this) {
         Alias, Password, Unknown -> false
         else -> true

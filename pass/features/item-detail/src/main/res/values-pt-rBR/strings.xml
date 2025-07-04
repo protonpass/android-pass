@@ -7,7 +7,7 @@
   <string name="top_bar_edit_button_text">Editar</string>
   <!-- Alias details -->
   <string name="field_alias_title">Endereço do alias</string>
-  <string name="field_alias_disabled_title">Endereço alternativo (desativado)</string>
+  <string name="field_alias_disabled_title">Endereço de alias (desativado)</string>
   <string name="alias_copied_to_clipboard">Alias copiado</string>
   <string name="alias_detail_field_mailboxes_title">Encaminhamento para</string>
   <string name="alias_create_login_from_alias">Criar início de sessão</string>

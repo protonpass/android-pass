@@ -344,7 +344,7 @@
   <string name="create_custom_item_item_creation_success">自定义项已创建</string>
   <string name="update_custom_item_item_creation_success">自定义项已更新</string>
   <string name="update_custom_item_item_creation_error">无法更新自定义项</string>
-    <!-- Cannot create items dialog -->
+  <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">无法创建项目</string>
   <string name="cannot_create_items_dialog_message">您没有任何具有编辑或管理员权限的保险库。请尝试在主应用程序中创建一个，或向您组织的管理员寻求支持。</string>
   <string name="wifi_security_type_field_label">安全类型</string>

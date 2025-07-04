@@ -344,7 +344,7 @@
   <string name="create_custom_item_item_creation_success">Vlastní položka vytvořena</string>
   <string name="update_custom_item_item_creation_success">Vlastní položka aktualizována</string>
   <string name="update_custom_item_item_creation_error">Nebylo možné aktualizovat vlastní položku</string>
-    <!-- Cannot create items dialog -->
+  <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Nelze vytvářet položky</string>
   <string name="cannot_create_items_dialog_message">Nemáte žádné trezory s přístupem editora nebo správce. Zkuste vytvořit trezor v hlavní aplikaci nebo požádejte vašeho správce organizace o podporu.</string>
   <string name="wifi_security_type_field_label">Typ zabezpečení</string>

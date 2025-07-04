@@ -307,7 +307,7 @@
     <item quantity="one">%d membro</item>
     <item quantity="other">%d membros</item>
   </plurals>
-    <string name="show_network_qr_code">Exibir o código QR da rede</string>
+  <string name="show_network_qr_code">Exibir o código QR da rede</string>
   <string name="expand_collpased_text">mais</string>
   <string name="collapse_expanded_text">menos</string>
   <string name="login_item_monitor_widget_weak_pass_title">Senha fraca</string>

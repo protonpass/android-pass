@@ -344,7 +344,7 @@
   <string name="create_custom_item_item_creation_success">Власний елемент створено</string>
   <string name="update_custom_item_item_creation_success">Власний елемент оновлено</string>
   <string name="update_custom_item_item_creation_error">Не вдалося оновити власний елемент</string>
-    <!-- Cannot create items dialog -->
+  <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Не вдалося створити елементи</string>
   <string name="cannot_create_items_dialog_message">У вас немає жодного сховища з правами редактора або адміністратора. Спробуйте створити його в головному застосунку або зверніться за підтримкою до адміністратора вашої організації.</string>
   <string name="wifi_security_type_field_label">Тип безпеки</string>

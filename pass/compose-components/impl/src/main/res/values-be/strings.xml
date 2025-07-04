@@ -104,9 +104,9 @@
     <item quantity="other">%d элементаў</item>
   </plurals>
   <!-- Confirm close dialog -->
-  <string name="confirm_close_dialog_title">Скасаваць змены?</string>
-  <string name="confirm_close_dialog_message">У вас ёсць незахаваныя змены. Вы сапраўды хочаце скасаваць іх?</string>
-  <string name="confirm_close_dialog_close_button">Скасаваць</string>
+  <string name="confirm_close_dialog_title">Адхіліць змены?</string>
+  <string name="confirm_close_dialog_message">У вас ёсць незахаваныя змены. Вы сапраўды хочаце адхіліць іх?</string>
+  <string name="confirm_close_dialog_close_button">Адхіліць</string>
   <!-- Upgrade -->
   <string name="upgrade">Палепшыць</string>
   <!-- Advanced options -->
@@ -337,7 +337,7 @@
     <item quantity="many">%d удзельнікаў</item>
     <item quantity="other">%d удзельнікаў</item>
   </plurals>
-    <string name="show_network_qr_code">Паказаць QR-код сеткі</string>
+  <string name="show_network_qr_code">Паказаць QR-код сеткі</string>
   <string name="expand_collpased_text">больш</string>
   <string name="collapse_expanded_text">менш</string>
   <string name="login_item_monitor_widget_weak_pass_title">Ненадзейны пароль</string>

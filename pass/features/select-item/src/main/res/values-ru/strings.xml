@@ -29,5 +29,5 @@
   <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">Все аккаунты (%1$s)</string>
   <string name="select_item_save_credential_title">Save password credential</string>
   <string name="select_item_save_credential_subtitle">Select an account to save credential in.</string>
-  <string name="select_item_save_credential_button">Select account</string>
+  <string name="select_item_save_credential_button">Выбрать аккаунт</string>
 </resources>

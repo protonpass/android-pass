@@ -20,7 +20,7 @@
   <string name="sharing_can_view">閲覧者</string>
   <string name="sharing_can_edit">編集者</string>
   <string name="sharing_can_manage">管理者</string>
-  <string name="sharing_can_manage_v2">Manager</string>
+  <string name="sharing_can_manage_v2">管理者</string>
   <string name="sharing_can_view_description">この 保管庫 内のアイテムを表示できます。</string>
   <string name="sharing_can_edit_description">このフォルダー内のアイテムを作成、編集、削除、エクスポートすることができます。</string>
   <string name="sharing_can_manage_description">この保管庫へのアクセスを許可および取り消しできます。</string>
@@ -87,7 +87,7 @@
   <string name="share_role_viewer">閲覧者</string>
   <string name="share_role_editor">編集者</string>
   <string name="share_role_admin">管理者</string>
-  <string name="share_role_manager">Manager</string>
+  <string name="share_role_manager">管理者</string>
   <string name="share_role_owner">所有者</string>
   <string name="sharing_bottomsheet_transfer_ownership">所有権の移転</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">最後に所有していた保管庫を譲渡することはできません。</string>

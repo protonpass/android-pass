@@ -307,7 +307,7 @@
     <item quantity="one">%d μέλος</item>
     <item quantity="other">%d μέλη</item>
   </plurals>
-    <string name="show_network_qr_code">Εμφάνιση κωδικού QR του δικτύου</string>
+  <string name="show_network_qr_code">Εμφάνιση κωδικού QR του δικτύου</string>
   <string name="expand_collpased_text">περισσότερα</string>
   <string name="collapse_expanded_text">λιγότερα</string>
   <string name="login_item_monitor_widget_weak_pass_title">Αδύναμος Κωδικός Πρόσβασης</string>

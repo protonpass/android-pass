@@ -337,9 +337,9 @@
     <item quantity="many">%d участников</item>
     <item quantity="other">%d участников</item>
   </plurals>
-    <string name="show_network_qr_code">Показать QR-код сети</string>
-  <string name="expand_collpased_text">more</string>
-  <string name="collapse_expanded_text">less</string>
+  <string name="show_network_qr_code">Показать QR-код сети</string>
+  <string name="expand_collpased_text">больше</string>
+  <string name="collapse_expanded_text">меньше</string>
   <string name="login_item_monitor_widget_weak_pass_title">Ненадежный пароль</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Этот аккаунт уязвим, посетите службу и смените пароль.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
@@ -378,6 +378,6 @@
   <string name="alias_create_login_from_alias">Создать логин</string>
   <string name="banner_contacts_title">Вы знали?</string>
   <string name="banner_contacts_subtitle">Каждый раз, когда ваш псевдоним получает письмо от кого-то, новый контакт создается автоматически.</string>
-  <string name="action_reveal">Reveal</string>
-  <string name="action_conceal">Conceal</string>
+  <string name="action_reveal">Показать</string>
+  <string name="action_conceal">Скрыть</string>
 </resources>

@@ -337,7 +337,7 @@
     <item quantity="few">%d člani</item>
     <item quantity="other">%d članov</item>
   </plurals>
-    <string name="show_network_qr_code">Pokaži QR kodo omrežja</string>
+  <string name="show_network_qr_code">Pokaži QR kodo omrežja</string>
   <string name="expand_collpased_text">more</string>
   <string name="collapse_expanded_text">less</string>
   <string name="login_item_monitor_widget_weak_pass_title">Šibko geslo</string>

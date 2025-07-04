@@ -337,7 +337,7 @@
     <item quantity="many">%d учасників</item>
     <item quantity="other">%d учасників</item>
   </plurals>
-    <string name="show_network_qr_code">Показати QR-код мережі</string>
+  <string name="show_network_qr_code">Показати QR-код мережі</string>
   <string name="expand_collpased_text">більше</string>
   <string name="collapse_expanded_text">менше</string>
   <string name="login_item_monitor_widget_weak_pass_title">Слабкий пароль</string>

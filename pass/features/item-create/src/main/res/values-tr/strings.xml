@@ -344,7 +344,7 @@
   <string name="create_custom_item_item_creation_success">Özel öge oluşturuldu</string>
   <string name="update_custom_item_item_creation_success">Özel öge güncellendi</string>
   <string name="update_custom_item_item_creation_error">Özel öge güncellenemedi</string>
-    <!-- Cannot create items dialog -->
+  <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Ögeler oluşturulamadı</string>
   <string name="cannot_create_items_dialog_message">Düzenleyicisi veya yöneticisi olduğunuz herhangi bir kasa yok. Ana uygulamadan bir kasa oluşturmayı deneyin veya kuruluşunuzun yöneticisinden destek isteyin.</string>
   <string name="wifi_security_type_field_label">Güvenlik türü</string>

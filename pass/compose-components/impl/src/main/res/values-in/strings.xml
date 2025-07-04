@@ -292,7 +292,7 @@
   <plurals name="members_count">
     <item quantity="other">%d anggota</item>
   </plurals>
-    <string name="show_network_qr_code">Tampilkan Kode QR Jaringan</string>
+  <string name="show_network_qr_code">Tampilkan Kode QR Jaringan</string>
   <string name="expand_collpased_text">lebih banyak</string>
   <string name="collapse_expanded_text">lebih sedikit</string>
   <string name="login_item_monitor_widget_weak_pass_title">Kata Sandi Lemah</string>

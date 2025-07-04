@@ -344,7 +344,7 @@
   <string name="create_custom_item_item_creation_success">Aangepast item gemaakt</string>
   <string name="update_custom_item_item_creation_success">Aangepast item bijgewerkt</string>
   <string name="update_custom_item_item_creation_error">Kan aangepast item niet bijwerken</string>
-    <!-- Cannot create items dialog -->
+  <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Kan geen items maken</string>
   <string name="cannot_create_items_dialog_message">U heeft geen kluizen met editor of admin toegang. Probeer er één aan te maken in de hoofdapplicatie, of vraag de beheerder van uw organisatie om ondersteuning.</string>
   <string name="wifi_security_type_field_label">Beveiligingstype</string>

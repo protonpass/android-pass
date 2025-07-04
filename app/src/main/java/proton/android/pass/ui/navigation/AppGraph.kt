@@ -347,7 +347,7 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
-                is HomeNavigation.CloneLogin -> {
+                is HomeNavigation.DuplicateLogin -> {
                     appNavigator.navigate(
                         CreateLoginNavItem,
                         CreateLoginNavItem.createNavRoute(it.shareId.some(), it.itemId.some())
@@ -361,7 +361,7 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
-                is HomeNavigation.CloneNote -> {
+                is HomeNavigation.DuplicateNote -> {
                     appNavigator.navigate(
                         CreateNoteNavItem,
                         CreateNoteNavItem.createNavRoute(it.shareId.some(), it.itemId.some())
@@ -373,7 +373,7 @@ fun NavGraphBuilder.appGraph(
                     EditCreditCardNavItem.createNavRoute(it.shareId, it.itemId)
                 )
 
-                is HomeNavigation.CloneCreditCard -> appNavigator.navigate(
+                is HomeNavigation.DuplicateCreditCard -> appNavigator.navigate(
                     CreateCreditCardNavItem,
                     CreateCreditCardNavItem.createNavRoute(it.shareId.some(), it.itemId.some())
                 )
@@ -383,7 +383,7 @@ fun NavGraphBuilder.appGraph(
                     UpdateIdentityNavItem.createNavRoute(it.shareId, it.itemId)
                 )
 
-                is HomeNavigation.CloneIdentity -> appNavigator.navigate(
+                is HomeNavigation.DuplicateIdentity -> appNavigator.navigate(
                     CreateIdentityNavItem,
                     CreateIdentityNavItem.createNavRoute(it.shareId.some(), it.itemId.some())
                 )
@@ -393,7 +393,7 @@ fun NavGraphBuilder.appGraph(
                     UpdateCustomItemNavItem.createNavRoute(it.shareId, it.itemId)
                 )
 
-                is HomeNavigation.CloneCustomItem -> appNavigator.navigate(
+                is HomeNavigation.DuplicateCustomItem -> appNavigator.navigate(
                     CreateCustomItemNavItem,
                     CreateCustomItemNavItem.createNavRoute(it.shareId.some(), it.itemId.some())
                 )
@@ -1777,7 +1777,7 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
-                is ItemDetailsNavDestination.CloneItem -> dismissBottomSheet {
+                is ItemDetailsNavDestination.DuplicateItem -> dismissBottomSheet {
                     val shareId = itemDetailsNavDestination.shareId.some()
                     val itemId = itemDetailsNavDestination.itemId.some()
                     when (itemDetailsNavDestination.category) {

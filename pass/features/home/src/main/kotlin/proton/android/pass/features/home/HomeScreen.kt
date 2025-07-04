@@ -241,7 +241,7 @@ fun HomeScreen(
             BottomSheetItemAction.Remove,
             BottomSheetItemAction.Restore,
             BottomSheetItemAction.ResetHistory,
-            BottomSheetItemAction.Clone,
+            BottomSheetItemAction.Duplicate,
             BottomSheetItemAction.Trash -> return@LaunchedEffect
         }
     }
@@ -317,10 +317,10 @@ fun HomeScreen(
                                 onNavigateEvent(HomeNavigation.EditLogin(shareId, itemId))
                             }
                         },
-                        onClone = remember {
+                        onDuplicate = remember {
                             { shareId, itemId ->
                                 scope.launch { bottomSheetState.hide() }
-                                onNavigateEvent(HomeNavigation.CloneLogin(shareId, itemId))
+                                onNavigateEvent(HomeNavigation.DuplicateLogin(shareId, itemId))
                             }
                         },
                         onMoveToTrash = remember {
@@ -443,10 +443,10 @@ fun HomeScreen(
                                 onNavigateEvent(HomeNavigation.EditNote(shareId, itemId))
                             }
                         },
-                        onClone = remember {
+                        onDuplicate = remember {
                             { shareId, itemId ->
                                 scope.launch { bottomSheetState.hide() }
-                                onNavigateEvent(HomeNavigation.CloneNote(shareId, itemId))
+                                onNavigateEvent(HomeNavigation.DuplicateNote(shareId, itemId))
                             }
                         },
                         onMoveToTrash = remember {
@@ -513,10 +513,10 @@ fun HomeScreen(
                                 onNavigateEvent(HomeNavigation.EditCreditCard(shareId, itemId))
                             }
                         },
-                        onClone = remember {
+                        onDuplicate = remember {
                             { shareId, itemId ->
                                 scope.launch { bottomSheetState.hide() }
-                                onNavigateEvent(HomeNavigation.CloneCreditCard(shareId, itemId))
+                                onNavigateEvent(HomeNavigation.DuplicateCreditCard(shareId, itemId))
                             }
                         },
                         onMoveToTrash = remember {
@@ -567,9 +567,9 @@ fun HomeScreen(
                             scope.launch { bottomSheetState.hide() }
                             onNavigateEvent(HomeNavigation.EditIdentity(shareId, itemId))
                         },
-                        onClone = { shareId, itemId ->
+                        onDuplicate = { shareId, itemId ->
                             scope.launch { bottomSheetState.hide() }
-                            onNavigateEvent(HomeNavigation.CloneIdentity(shareId, itemId))
+                            onNavigateEvent(HomeNavigation.DuplicateIdentity(shareId, itemId))
                         },
                         onMoveToTrash = {
                             scope.launch { bottomSheetState.hide() }
@@ -608,9 +608,9 @@ fun HomeScreen(
                             scope.launch { bottomSheetState.hide() }
                             onNavigateEvent(HomeNavigation.EditCustomItem(shareId, itemId))
                         },
-                        onClone = { shareId, itemId ->
+                        onDuplicate = { shareId, itemId ->
                             scope.launch { bottomSheetState.hide() }
-                            onNavigateEvent(HomeNavigation.CloneCustomItem(shareId, itemId))
+                            onNavigateEvent(HomeNavigation.DuplicateCustomItem(shareId, itemId))
                         },
                         onMoveToTrash = {
                             scope.launch { bottomSheetState.hide() }

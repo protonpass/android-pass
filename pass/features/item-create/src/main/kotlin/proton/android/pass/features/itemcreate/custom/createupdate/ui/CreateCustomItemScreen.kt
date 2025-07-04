@@ -99,7 +99,7 @@ fun CreateCustomItemScreen(
     }
 
     LaunchedEffect(Unit) {
-        viewModel.cloneContents()
+        viewModel.duplicateContents()
     }
 
     var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }

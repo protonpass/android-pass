@@ -135,12 +135,12 @@ class CreateIdentityViewModel @Inject constructor(
         selectedShareIdMutableState = Some(shareId)
     }
 
-    suspend fun cloneContents(context: Context) {
+    suspend fun duplicateContents(context: Context) {
         val shareId = navShareId.value() ?: return
         val itemId = navItemId.value() ?: return
         val item = getItemById(shareId = shareId, itemId = itemId)
         val encryptedTitle = encryptionContextProvider.withEncryptionContextSuspendable {
-            val decryptedTitle = context.getString(R.string.title_clone, decrypt(item.title))
+            val decryptedTitle = context.getString(R.string.title_duplicate, decrypt(item.title))
             return@withEncryptionContextSuspendable encrypt(decryptedTitle)
         }
         identityActionsProvider.onItemReceivedState(item.copy(title = encryptedTitle))

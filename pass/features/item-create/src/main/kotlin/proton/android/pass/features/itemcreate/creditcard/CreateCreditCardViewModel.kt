@@ -153,7 +153,7 @@ class CreateCreditCardViewModel @Inject constructor(
         selectedShareIdMutableState = Some(shareId)
     }
 
-    suspend fun cloneContents(context: Context) {
+    suspend fun duplicateContents(context: Context) {
         val shareId = navShareId.value() ?: return
         val itemId = navItemId.value() ?: return
         val item = getItemById(shareId = shareId, itemId = itemId)
@@ -163,7 +163,7 @@ class CreateCreditCardViewModel @Inject constructor(
             val itemContents = item.toItemContents<ItemContents.CreditCard> { decrypt(it) }
             val customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
             creditCardItemFormMutableState = currentValue.copy(
-                title = context.getString(R.string.title_clone, decrypt(item.title)),
+                title = context.getString(R.string.title_duplicate, decrypt(item.title)),
                 note = decrypt(item.note),
                 cardHolder = itemContents.cardHolder,
                 type = itemContents.type,

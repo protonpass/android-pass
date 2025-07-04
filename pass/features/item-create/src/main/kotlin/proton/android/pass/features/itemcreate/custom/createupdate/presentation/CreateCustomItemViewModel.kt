@@ -258,7 +258,7 @@ class CreateCustomItemViewModel @Inject constructor(
         selectedShareIdMutableState = Some(shareId)
     }
 
-    suspend fun cloneContents() {
+    suspend fun duplicateContents() {
         val shareId = navShareId.value() ?: return
         val itemId = navItemId.value() ?: return
         val item = getItemById(shareId = shareId, itemId = itemId)
@@ -299,7 +299,7 @@ class CreateCustomItemViewModel @Inject constructor(
                 else -> throw IllegalStateException("Not a custom item type")
             }
             itemFormState = itemFormState.copy(
-                title = context.getString(R.string.title_clone, decrypt(item.title)),
+                title = context.getString(R.string.title_duplicate, decrypt(item.title)),
                 itemStaticFields = staticFields,
                 customFieldList = customFields,
                 sectionList = extraSections

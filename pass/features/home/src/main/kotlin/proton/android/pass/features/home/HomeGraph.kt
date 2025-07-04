@@ -87,25 +87,25 @@ sealed interface HomeNavigation {
 
     data class EditLogin(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
 
-    data class CloneLogin(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
+    data class DuplicateLogin(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
 
     data class EditNote(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
 
-    data class CloneNote(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
+    data class DuplicateNote(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
 
     data class EditAlias(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
 
     data class EditCreditCard(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
 
-    data class CloneCreditCard(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
+    data class DuplicateCreditCard(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
 
     data class EditIdentity(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
 
-    data class CloneIdentity(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
+    data class DuplicateIdentity(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
 
     data class EditCustomItem(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
 
-    data class CloneCustomItem(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
+    data class DuplicateCustomItem(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
 
     data class ItemDetail(
         val shareId: ShareId,

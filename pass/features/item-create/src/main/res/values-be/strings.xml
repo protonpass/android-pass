@@ -344,7 +344,7 @@
   <string name="create_custom_item_item_creation_success">Карыстальніцкі элемент створаны</string>
   <string name="update_custom_item_item_creation_success">Карыстальніцкі элемент абноўлены</string>
   <string name="update_custom_item_item_creation_error">Немагчыма абнавіць карыстальніцкі элемент</string>
-    <!-- Cannot create items dialog -->
+  <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Немагчыма стварыць элементы</string>
   <string name="cannot_create_items_dialog_message">У вас адсутнічаюць сховішчы з магчымасцю рэдагавання або доступам адміністратара. Паспрабуйце стварыць яго ў галоўнай праграме або папрасіце дапамагчы з гэтым адміністратара вашай арганізацыі.</string>
   <string name="wifi_security_type_field_label">Тып бяспекі</string>

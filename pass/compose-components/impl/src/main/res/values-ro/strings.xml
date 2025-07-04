@@ -322,7 +322,7 @@
     <item quantity="few">%d membri</item>
     <item quantity="other">%d de membri</item>
   </plurals>
-    <string name="show_network_qr_code">Afișare cod QR rețea</string>
+  <string name="show_network_qr_code">Afișare cod QR rețea</string>
   <string name="expand_collpased_text">mai mult</string>
   <string name="collapse_expanded_text">mai puțin</string>
   <string name="login_item_monitor_widget_weak_pass_title">Parolă slabă</string>

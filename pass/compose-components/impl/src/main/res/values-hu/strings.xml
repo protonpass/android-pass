@@ -307,7 +307,7 @@
     <item quantity="one">%d tag</item>
     <item quantity="other">%d tag</item>
   </plurals>
-    <string name="show_network_qr_code">Hálózati QR Kód megjelenítése</string>
+  <string name="show_network_qr_code">Hálózati QR Kód megjelenítése</string>
   <string name="expand_collpased_text">több</string>
   <string name="collapse_expanded_text">kevesebb</string>
   <string name="login_item_monitor_widget_weak_pass_title">Gyenge jelszó</string>

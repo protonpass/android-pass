@@ -344,7 +344,7 @@
   <string name="create_custom_item_item_creation_success">Mukautettu kohde luotiin</string>
   <string name="update_custom_item_item_creation_success">Mukautettu kohde päivitettiin</string>
   <string name="update_custom_item_item_creation_error">Mukautettua kohdetta ei voitu päivittää</string>
-    <!-- Cannot create items dialog -->
+  <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Kohteiden luonti ei onnistu</string>
   <string name="cannot_create_items_dialog_message">Sinulla ei ole holveja muokkaus- tai hallintaoikeuksilla. Yritä luoda holvi pääsovellukseen tai ole yhteydessä organisatiosi tukeen.</string>
   <string name="wifi_security_type_field_label">Suojauksen tyyppi</string>

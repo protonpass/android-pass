@@ -344,7 +344,7 @@
   <string name="create_custom_item_item_creation_success">커스텀 항목 복사됨</string>
   <string name="update_custom_item_item_creation_success">커스텀 항목 업데이트됨</string>
   <string name="update_custom_item_item_creation_error">커스텀 항목 업데이트 실패</string>
-    <!-- Cannot create items dialog -->
+  <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">항목을 생성할 수 없습니다</string>
   <string name="cannot_create_items_dialog_message">편집자 또는 관리자 접근 권한이 있는 금고가 없습니다. 기본 앱에서 생성하거나 조직의 관리자에게 지원을 요청하십시오.</string>
   <string name="wifi_security_type_field_label">보안 유형</string>

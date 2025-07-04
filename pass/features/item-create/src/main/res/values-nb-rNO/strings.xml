@@ -344,7 +344,7 @@
   <string name="create_custom_item_item_creation_success">Tilpasset element opprettet</string>
   <string name="update_custom_item_item_creation_success">Tilpasset element oppdatert</string>
   <string name="update_custom_item_item_creation_error">Kunne ikke oppdatere tilpasset element</string>
-    <!-- Cannot create items dialog -->
+  <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Kan ikke opprette elementer</string>
   <string name="cannot_create_items_dialog_message">Du har ingen hvelv med redigerings- eller administratortilgang. Prøv å opprette en i hovedappen, eller be organisasjonens administrator om støtte.</string>
   <string name="wifi_security_type_field_label">Sikkerhetstype</string>

@@ -344,7 +344,7 @@
   <string name="create_custom_item_item_creation_success">Elemento personalizado creado</string>
   <string name="update_custom_item_item_creation_success">Elemento personalizado actualizado</string>
   <string name="update_custom_item_item_creation_error">No se ha podido actualizar el elemento personalizado.</string>
-    <!-- Cannot create items dialog -->
+  <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">No se pueden crear los elementos</string>
   <string name="cannot_create_items_dialog_message">No tienes ninguna caja fuerte con permiso de editor o de administrador. Intenta crear una en la aplicación principal o solicita ayuda al administrador de tu organización.</string>
   <string name="wifi_security_type_field_label">Tipo de seguridad</string>

@@ -344,7 +344,7 @@
   <string name="create_custom_item_item_creation_success">Benutzerdefinierter Eintrag erstellt</string>
   <string name="update_custom_item_item_creation_success">Benutzerdefinierter Eintrag aktualisiert</string>
   <string name="update_custom_item_item_creation_error">Benutzerdefinierter Eintrag konnte nicht aktualisiert werden</string>
-    <!-- Cannot create items dialog -->
+  <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Kann keine Einträge erstellen</string>
   <string name="cannot_create_items_dialog_message">Du hast keine Tresore mit Bearbeitungs- oder Admin-Zugang. Versuche, einen in der Hauptanwendung zu erstellen, oder bitte den Administrator deiner Organisation um Unterstützung.</string>
   <string name="wifi_security_type_field_label">Sicherheitstyp</string>

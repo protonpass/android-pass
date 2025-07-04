@@ -195,8 +195,8 @@
   <string name="item_details_shared_section_more_info_header_title">詳細はこちら</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">アイテム情報アイコン</string>
   <string name="item_details_shared_section_more_info_item_id">アイテム ID</string>
-  <string name="item_details_shared_section_more_info_vault_id">Vault ID</string>
-  <string name="item_details_shared_section_more_info_share_id">Share ID</string>
+  <string name="item_details_shared_section_more_info_vault_id">保管庫 ID</string>
+  <string name="item_details_shared_section_more_info_share_id">共有ID</string>
   <string name="item_details_wifi_network_label_ssid_name">名前（SSID）</string>
   <string name="item_details_wifi_network_label_password">パスワード</string>
   <string name="item_details_wifi_network_label_security">セキュリティ</string>
@@ -292,9 +292,9 @@
   <plurals name="members_count">
     <item quantity="other">%d 人のメンバー</item>
   </plurals>
-    <string name="show_network_qr_code">ネットワークのQRコードを表示</string>
-  <string name="expand_collpased_text">more</string>
-  <string name="collapse_expanded_text">less</string>
+  <string name="show_network_qr_code">ネットワークのQRコードを表示</string>
+  <string name="expand_collpased_text">詳細</string>
+  <string name="collapse_expanded_text">隠す</string>
   <string name="login_item_monitor_widget_weak_pass_title">弱いパスワード</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">このアカウントは脆弱です。サービスにアクセスしてパスワードを変更してください。</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
@@ -321,6 +321,6 @@
   <string name="alias_create_login_from_alias">ログイン情報を作成</string>
   <string name="banner_contacts_title">ご存知ですか？</string>
   <string name="banner_contacts_subtitle">エイリアスが誰かからメールを受け取るたびに、新しい連絡先が自動的に作成されます。</string>
-  <string name="action_reveal">Reveal</string>
-  <string name="action_conceal">Conceal</string>
+  <string name="action_reveal">見せる</string>
+  <string name="action_conceal">隠す</string>
 </resources>

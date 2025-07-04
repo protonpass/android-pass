@@ -273,7 +273,7 @@
   <string name="template_bank_account_field_account_type">Tipo de conta</string>
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
-  <string name="template_bank_account_field_holder_name">Nome do Titular</string>
+  <string name="template_bank_account_field_holder_name">Nome do titular</string>
   <string name="template_bank_account_field_note">Nota</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">Nome da carteira</string>
@@ -284,7 +284,7 @@
   <string name="template_crypto_wallet_field_note">Nota</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">Nome completo</string>
-  <string name="template_driver_license_field_license_number">Número da Licença</string>
+  <string name="template_driver_license_field_license_number">Número da licença</string>
   <string name="template_driver_license_field_issuing_state_country">Estado/país Emissor</string>
   <string name="template_driver_license_field_expiry_date">Data de validade</string>
   <string name="template_driver_license_field_date_of_birth">Data de nascimento</string>
@@ -344,7 +344,7 @@
   <string name="create_custom_item_item_creation_success">Item personalizado criado</string>
   <string name="update_custom_item_item_creation_success">item personalizado atualizado</string>
   <string name="update_custom_item_item_creation_error">Não foi possível atualizar o item personalizado</string>
-    <!-- Cannot create items dialog -->
+  <!-- Cannot create items dialog -->
   <string name="cannot_create_items_dialog_title">Não é possível criar itens.</string>
   <string name="cannot_create_items_dialog_message">Você não tem nenhum cofre com acesso de editor ou administrador. Tente criar um, no aplicativo principal ou peça suporte ao administrador da sua organização.</string>
   <string name="wifi_security_type_field_label">Tipo de segurança</string>

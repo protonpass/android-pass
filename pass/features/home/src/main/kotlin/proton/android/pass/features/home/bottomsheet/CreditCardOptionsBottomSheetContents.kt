@@ -23,7 +23,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemLis
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemRow
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
-import proton.android.pass.composecomponents.impl.bottomsheet.clone
+import proton.android.pass.composecomponents.impl.bottomsheet.duplicate
 import proton.android.pass.composecomponents.impl.bottomsheet.noOptions
 import proton.android.pass.composecomponents.impl.bottomsheet.pin
 import proton.android.pass.composecomponents.impl.bottomsheet.unpin
@@ -54,7 +54,7 @@ internal fun CreditCardOptionsBottomSheetContents(
     onUnpinned: (ShareId, ItemId) -> Unit,
     onViewHistory: (ShareId, ItemId) -> Unit,
     onEdit: (ShareId, ItemId) -> Unit,
-    onClone: (ShareId, ItemId) -> Unit,
+    onDuplicate: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit
 ) {
@@ -94,7 +94,7 @@ internal fun CreditCardOptionsBottomSheetContents(
                 add(edit(itemUiModel, onEdit))
             }
 
-            add(clone { onClone(itemUiModel.shareId, itemUiModel.id) })
+            add(duplicate { onDuplicate(itemUiModel.shareId, itemUiModel.id) })
 
             if (canUpdate) {
                 add(moveToTrash(itemUiModel, onMoveToTrash))
@@ -186,7 +186,7 @@ internal fun CreditCardOptionsBottomSheetContentsPreview(
                 onUnpinned = { _, _ -> },
                 onViewHistory = { _, _ -> },
                 onEdit = { _, _ -> },
-                onClone = { _, _ -> },
+                onDuplicate = { _, _ -> },
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },
                 isFreePlan = input.second,

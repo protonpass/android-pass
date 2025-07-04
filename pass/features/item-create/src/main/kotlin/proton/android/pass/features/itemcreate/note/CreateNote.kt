@@ -85,7 +85,7 @@ fun CreateNoteScreen(
     }
 
     LaunchedEffect(Unit) {
-        viewModel.cloneContents(context)
+        viewModel.duplicateContents(context)
     }
 
     var showDatePickerForField: Option<CustomFieldIdentifier> by remember { mutableStateOf(None) }

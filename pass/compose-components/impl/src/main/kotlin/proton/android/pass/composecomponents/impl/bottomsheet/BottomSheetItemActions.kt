@@ -34,7 +34,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 
 @Stable
 enum class BottomSheetItemAction {
-    None, Pin, Unpin, History, Migrate, MonitorExclude, MonitorInclude, Remove, Restore, Trash, ResetHistory, Clone
+    None, Pin, Unpin, History, Migrate, MonitorExclude, MonitorInclude, Remove, Restore, Trash, ResetHistory, Duplicate
 }
 
 fun copyNote(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
@@ -310,15 +310,15 @@ fun leave(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
 
 }
 
-fun clone(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+fun duplicate(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit = {
-        BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_clone))
+        BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_duplicate))
     }
 
     override val subtitle: @Composable (() -> Unit)? = null
 
     override val leftIcon: @Composable (() -> Unit) = {
-        BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_squares)
+        BottomSheetItemIcon(iconId = R.drawable.ic_squares_plus)
     }
 
     override val endIcon: (@Composable () -> Unit)? = null

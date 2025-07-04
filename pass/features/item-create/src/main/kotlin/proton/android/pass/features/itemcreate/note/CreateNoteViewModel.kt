@@ -169,7 +169,7 @@ class CreateNoteViewModel @Inject constructor(
         initialValue = CreateNoteUiState.Initial
     )
 
-    suspend fun cloneContents(context: Context) {
+    suspend fun duplicateContents(context: Context) {
         val shareId = navShareId.value() ?: return
         val itemId = navItemId.value() ?: return
         val item = getItemById(shareId = shareId, itemId = itemId)
@@ -179,7 +179,7 @@ class CreateNoteViewModel @Inject constructor(
             val itemContents = item.toItemContents<ItemContents.Note> { decrypt(it) }
             val customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
             noteItemFormMutableState = currentValue.copy(
-                title = context.getString(R.string.title_clone, decrypt(item.title)),
+                title = context.getString(R.string.title_duplicate, decrypt(item.title)),
                 note = decrypt(item.note),
                 customFields = customFieldHandler.sanitiseForEditingCustomFields(customFields)
             )

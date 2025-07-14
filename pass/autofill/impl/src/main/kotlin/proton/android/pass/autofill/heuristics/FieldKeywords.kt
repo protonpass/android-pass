@@ -105,8 +105,11 @@ private val DEFAULT_DENIED_KEYWORDS = setOf(
     "message",
     MOZILLA_BROWSER_PREFIX
 )
+
+@Suppress("ForbiddenComment")
 internal val DENIED_USERNAME_KEYWORDS = setOf(
-    "connectionsroletag" // discord specific
+    "connectionsroletag", // discord specific
+    "toot_text" // Mastodon specific
 )
 
 internal val fieldKeywordsList = setOf(

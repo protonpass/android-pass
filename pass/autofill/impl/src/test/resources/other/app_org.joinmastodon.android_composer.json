@@ -1,0 +1,536 @@
+{
+  "rootContent": {
+    "id": 1589472882,
+    "className": "android.widget.FrameLayout",
+    "isImportantForAutofill": true,
+    "children": [
+      {
+        "id": 515850222,
+        "className": "android.widget.FrameLayout",
+        "isImportantForAutofill": true,
+        "children": [
+          {
+            "id": 515880013,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": 515909804,
+                "className": "android.widget.LinearLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": 515939595,
+                    "className": "android.widget.ScrollView",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": 515969386,
+                        "className": "android.view.ViewGroup",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": 515999177,
+                            "className": "android.widget.Button",
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "hintKeywordList": [
+                              "",
+                              "settings"
+                            ]
+                          },
+                          {
+                            "id": 516028968,
+                            "className": "android.widget.TextView",
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "hintKeywordList": [
+                              ""
+                            ]
+                          }
+                        ],
+                        "hintKeywordList": [
+                          "toolbar"
+                        ]
+                      },
+                      {
+                        "id": 516058759,
+                        "className": "android.widget.FrameLayout",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": 516088550,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "loading"
+                            ]
+                          },
+                          {
+                            "id": 516118341,
+                            "className": "android.widget.LinearLayout",
+                            "isImportantForAutofill": true
+                          },
+                          {
+                            "id": 516148132,
+                            "className": "android.view.ViewGroup",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": 516177923,
+                                "className": "android.widget.FrameLayout",
+                                "isImportantForAutofill": true,
+                                "children": [
+                                  {
+                                    "id": 516207714,
+                                    "className": "androidx.recyclerview.widget.RecyclerView",
+                                    "children": [
+                                      {
+                                        "id": 516237505,
+                                        "className": "android.widget.LinearLayout",
+                                        "isImportantForAutofill": true,
+                                        "hintKeywordList": [
+                                          "load_more_error"
+                                        ]
+                                      }
+                                    ],
+                                    "hintKeywordList": [
+                                      "list"
+                                    ]
+                                  },
+                                  {
+                                    "id": 516267296,
+                                    "className": "android.widget.TextView",
+                                    "isImportantForAutofill": true,
+                                    "text": "",
+                                    "hintKeywordList": [
+                                      "",
+                                      "empty_text"
+                                    ]
+                                  },
+                                  {
+                                    "id": 516297087,
+                                    "className": "android.widget.Button",
+                                    "isImportantForAutofill": true,
+                                    "text": "",
+                                    "hintKeywordList": [
+                                      "",
+                                      "empty_button"
+                                    ]
+                                  },
+                                  {
+                                    "id": 516326878,
+                                    "className": "android.widget.FrameLayout",
+                                    "isImportantForAutofill": true,
+                                    "children": [
+                                      {
+                                        "id": 516356669,
+                                        "className": "android.view.View",
+                                        "isImportantForAutofill": true,
+                                        "hintKeywordList": [
+                                          "donation_banner"
+                                        ]
+                                      }
+                                    ],
+                                    "hintKeywordList": [
+                                      "bottom_overlays"
+                                    ]
+                                  },
+                                  {
+                                    "id": 516386460,
+                                    "className": "android.widget.FrameLayout",
+                                    "isImportantForAutofill": true,
+                                    "hintKeywordList": [
+                                      "new_posts_btn_wrap"
+                                    ]
+                                  }
+                                ],
+                                "hintKeywordList": [
+                                  "content_wrap"
+                                ]
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "refresh_layout"
+                            ]
+                          }
+                        ],
+                        "hintKeywordList": [
+                          "appkit_loader_content"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "scroller"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "appkit_loader_root"
+                ]
+              },
+              {
+                "id": 516416251,
+                "className": "android.widget.LinearLayout",
+                "isImportantForAutofill": true
+              },
+              {
+                "id": 516446042,
+                "className": "android.widget.LinearLayout",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "appkit_loader_root"
+                ]
+              },
+              {
+                "id": 516475833,
+                "className": "android.widget.LinearLayout",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "appkit_loader_root"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "fragment_wrap"
+            ]
+          },
+          {
+            "id": 516505624,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": 516535415,
+                "className": "android.widget.LinearLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": 516565206,
+                    "className": "android.widget.FrameLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": 516594997,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "Home",
+                        "hintKeywordList": [
+                          "Home",
+                          "label"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "tab_home"
+                    ]
+                  },
+                  {
+                    "id": 516624788,
+                    "className": "android.widget.FrameLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": 516654579,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "Explore",
+                        "hintKeywordList": [
+                          "Explore",
+                          "label"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "tab_search"
+                    ]
+                  },
+                  {
+                    "id": 516684370,
+                    "className": "android.widget.FrameLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": 516714161,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          "",
+                          "notifications_badge"
+                        ]
+                      },
+                      {
+                        "id": 516743952,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "Notifications",
+                        "hintKeywordList": [
+                          "Notifications",
+                          "label"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "tab_notifications"
+                    ]
+                  },
+                  {
+                    "id": 516773743,
+                    "className": "android.widget.FrameLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": 516803534,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "Profile",
+                        "hintKeywordList": [
+                          "Profile",
+                          "label"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "tab_profile"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "tabbar"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "tabbar_wrap"
+            ]
+          },
+          {
+            "id": 516833325,
+            "className": "android.view.ViewGroup",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": 516863116,
+                "className": "android.widget.TextView",
+                "isImportantForAutofill": true,
+                "text": "",
+                "hintKeywordList": [
+                  ""
+                ]
+              },
+              {
+                "id": 516892907,
+                "className": "android.widget.Button",
+                "isImportantForAutofill": true,
+                "text": "",
+                "hintKeywordList": [
+                  "",
+                  "publish"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "toolbar"
+            ]
+          },
+          {
+            "id": 516922698,
+            "className": "android.widget.ProgressBar",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "progress"
+            ]
+          },
+          {
+            "id": 516952489,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": 516982280,
+                "className": "android.widget.ScrollView",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": 517012071,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": 517041862,
+                        "className": "android.widget.FrameLayout",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "reply_wrap"
+                        ]
+                      },
+                      {
+                        "id": 517071653,
+                        "className": "android.widget.ScrollView",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": 517101444,
+                            "className": "android.widget.TextView",
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "hintKeywordList": [
+                              "",
+                              "name"
+                            ]
+                          },
+                          {
+                            "id": 517131235,
+                            "className": "android.widget.TextView",
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "hintKeywordList": [
+                              "",
+                              "username"
+                            ]
+                          },
+                          {
+                            "id": 517161026,
+                            "className": "android.widget.LinearLayout",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": 517190817,
+                                "className": "android.widget.TextView",
+                                "isImportantForAutofill": true,
+                                "text": "Public",
+                                "hintKeywordList": [
+                                  "Public",
+                                  "visibility_text1"
+                                ]
+                              },
+                              {
+                                "id": 517220608,
+                                "className": "android.widget.TextView",
+                                "isImportantForAutofill": true,
+                                "text": "",
+                                "hintKeywordList": [
+                                  "",
+                                  "visibility_text2"
+                                ]
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "btn_visibility"
+                            ]
+                          },
+                          {
+                            "id": 517250399,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "content_warning_wrap"
+                            ]
+                          },
+                          {
+                            "id": 517280190,
+                            "className": "android.widget.FrameLayout",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": 515820431,
+                                "className": "android.widget.EditText",
+                                "isImportantForAutofill": true,
+                                "text": "",
+                                "isFocused": true,
+                                "inputType": 147457,
+                                "hintKeywordList": [
+                                  "",
+                                  "toot_text",
+                                  "Type or paste what’s on your mind"
+                                ]
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "toot_text_wrap"
+                            ]
+                          },
+                          {
+                            "id": 517309981,
+                            "className": "android.widget.RelativeLayout",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "poll_wrap"
+                            ]
+                          },
+                          {
+                            "id": 517339772,
+                            "className": "android.widget.HorizontalScrollView",
+                            "isImportantForAutofill": true,
+                            "hintKeywordList": [
+                              "attachments_scroller"
+                            ]
+                          }
+                        ],
+                        "hintKeywordList": [
+                          "inner_scroller"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "compose_main_ll"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "outer_scroller"
+                ]
+              },
+              {
+                "id": 517369563,
+                "className": "android.widget.LinearLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": 517399354,
+                    "className": "android.widget.FrameLayout",
+                    "isImportantForAutofill": true
+                  },
+                  {
+                    "id": 517429145,
+                    "className": "android.view.View",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "bottom_bar_autocomplete_divider"
+                    ]
+                  },
+                  {
+                    "id": 517458936,
+                    "className": "android.widget.TextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "hintKeywordList": [
+                      "",
+                      "char_counter"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "bottom_bar"
+                ]
+              },
+              {
+                "id": 517488727,
+                "className": "android.widget.LinearLayout",
+                "isImportantForAutofill": true
+              }
+            ],
+            "hintKeywordList": [
+              "appkit_content"
+            ]
+          }
+        ],
+        "hintKeywordList": [
+          "fragment_wrap"
+        ]
+      }
+    ]
+  },
+  "packageName": "org.joinmastodon.android"
+}

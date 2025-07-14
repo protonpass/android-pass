@@ -51,6 +51,15 @@ class OtherAutofillTest : BaseAutofillTest() {
         )
     }
 
+    @Test
+    fun `do not autofill anything on mastodon new post`() {
+        runOtherAutofillTest(
+            file = "other/app_org.joinmastodon.android_composer.json",
+            item = loginItem(),
+            allowEmptyFields = true
+        )
+    }
+
     private fun loginItem(): AutofillItem = AutofillItem.Login(
         itemId = "123",
         shareId = "123",

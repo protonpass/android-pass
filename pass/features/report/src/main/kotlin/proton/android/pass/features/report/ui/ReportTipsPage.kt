@@ -57,6 +57,7 @@ import proton.android.pass.passkeys.api.PasskeySupport.NotSupportedReason.Androi
 import proton.android.pass.passkeys.api.PasskeySupport.NotSupportedReason.CredentialManagerUnsupported
 
 @Composable
+@Suppress("CyclomaticComplexMethod")
 internal fun ReportTipsPage(
     modifier: Modifier = Modifier,
     passkeySupportOption: Option<PasskeySupport>,
@@ -98,6 +99,10 @@ internal fun ReportTipsPage(
                 )
                 TipRow(
                     text = stringResource(R.string.autofill_tip_browser)
+                )
+                TipRow(
+                    text = stringResource(R.string.autofill_tip_another_website),
+                    onClick = { onEvent(ReportNavContentEvent.OpenTestPage) }
                 )
             }
 

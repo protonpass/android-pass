@@ -22,8 +22,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.features.report.navigation.ReportNavContentEvent
 import proton.android.pass.features.report.navigation.ReportNavDestination
 import proton.android.pass.features.report.presentation.ReportEvent
@@ -44,6 +46,8 @@ fun ReportScreen(
         }
         viewModel.onEventConsumed(state.reportEvent)
     }
+
+    val context = LocalContext.current
     ReportContent(
         modifier = modifier,
         onEvent = { event ->
@@ -51,6 +55,7 @@ fun ReportScreen(
                 ReportNavContentEvent.Close -> onNavigated(ReportNavDestination.CloseScreen)
                 ReportNavContentEvent.OpenAutofillSettings -> viewModel.openAutofillSettings()
                 ReportNavContentEvent.SubmitReport -> viewModel.trySendingBugReport()
+                ReportNavContentEvent.OpenTestPage -> BrowserUtils.openWebsite(context, TEST_AUTOFILL_URL)
                 is ReportNavContentEvent.OnDescriptionChange -> viewModel.onDescriptionChange(event.value)
                 is ReportNavContentEvent.OnEmailChange -> viewModel.onEmailChange(event.value)
                 is ReportNavContentEvent.OnSendLogsChange -> viewModel.onSendLogsChange(event.value)
@@ -64,3 +69,5 @@ fun ReportScreen(
         state = state
     )
 }
+
+private const val TEST_AUTOFILL_URL = "https://account.proton.me/login"

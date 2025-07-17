@@ -49,7 +49,6 @@ import proton.android.pass.features.report.navigation.ReportNavContentEvent
 import proton.android.pass.features.report.presentation.ReportFormData
 import proton.android.pass.features.report.presentation.ReportState
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun ReportContent(
     modifier: Modifier = Modifier,

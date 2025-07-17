@@ -27,6 +27,7 @@ sealed interface ReportNavContentEvent {
     data object OpenAutofillSettings : ReportNavContentEvent
     data object SubmitReport : ReportNavContentEvent
     data object CancelReason : ReportNavContentEvent
+    data object OpenTestPage : ReportNavContentEvent
 
     @JvmInline
     value class OnReasonChange(val value: ReportReason) : ReportNavContentEvent

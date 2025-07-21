@@ -49,6 +49,7 @@ import proton.android.pass.commonui.api.isCollapsedSaver
 import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
+import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.labels.CollapsibleSectionHeader
 import proton.android.pass.composecomponents.impl.utils.passItemColors
@@ -216,6 +217,17 @@ internal fun CustomItemForm(
                     isEnabled = itemSharedProperties.isFormEnabled,
                     passItemColors = passItemColors(ItemCategory.Custom),
                     onClick = { onEvent(ItemContentEvent.OnAddSection) }
+                )
+            }
+            item {
+                PassDivider(
+                    modifier = Modifier.padding(horizontal = Spacing.medium).padding(vertical = Spacing.extraSmall)
+                )
+                SimpleNoteSection(
+                    modifier = Modifier.padding(horizontal = Spacing.medium).padding(vertical = Spacing.extraSmall),
+                    value = itemFormState.note,
+                    enabled = itemSharedProperties.isFormEnabled,
+                    onChange = { onEvent(ItemContentEvent.OnFieldValueChange(FieldChange.Note, it)) }
                 )
             }
             if (itemSharedProperties.showFileAttachments) {

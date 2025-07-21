@@ -57,14 +57,16 @@ data class ItemFormState(
     val title: String,
     val itemStaticFields: ItemStaticFields,
     val customFieldList: List<UICustomFieldContent>,
-    val sectionList: List<UIExtraSection>
+    val sectionList: List<UIExtraSection>,
+    val note: String
 ) : Parcelable {
 
     constructor(itemContents: ItemContents.Custom) : this(
         title = itemContents.title,
         itemStaticFields = ItemStaticFields.Custom,
         customFieldList = itemContents.customFields.map(UICustomFieldContent.Companion::from),
-        sectionList = itemContents.sectionContentList.map(::UIExtraSection)
+        sectionList = itemContents.sectionContentList.map(::UIExtraSection),
+        note = itemContents.note
     )
 
     constructor(itemContents: ItemContents.WifiNetwork) : this(
@@ -75,7 +77,8 @@ data class ItemFormState(
             wifiSecurityType = itemContents.wifiSecurityType
         ),
         customFieldList = itemContents.customFields.map(UICustomFieldContent.Companion::from),
-        sectionList = itemContents.sectionContentList.map(::UIExtraSection)
+        sectionList = itemContents.sectionContentList.map(::UIExtraSection),
+        note = itemContents.note
     )
 
     constructor(itemContents: ItemContents.SSHKey) : this(
@@ -85,13 +88,14 @@ data class ItemFormState(
             privateKey = UIHiddenState.from(itemContents.privateKey)
         ),
         customFieldList = itemContents.customFields.map(UICustomFieldContent.Companion::from),
-        sectionList = itemContents.sectionContentList.map(::UIExtraSection)
+        sectionList = itemContents.sectionContentList.map(::UIExtraSection),
+        note = itemContents.note
     )
 
     fun toItemContents(): ItemContents = when (itemStaticFields) {
         ItemStaticFields.Custom -> ItemContents.Custom(
             title = title,
-            note = "",
+            note = note,
             customFields = customFieldList.map(UICustomFieldContent::toCustomFieldContent),
             sectionContentList = sectionList.map {
                 ExtraSectionContent(
@@ -103,7 +107,7 @@ data class ItemFormState(
 
         is ItemStaticFields.SSHKey -> ItemContents.SSHKey(
             title = title,
-            note = "",
+            note = note,
             publicKey = itemStaticFields.publicKey,
             privateKey = itemStaticFields.privateKey.toHiddenState(),
             customFields = customFieldList.map(UICustomFieldContent::toCustomFieldContent),
@@ -117,7 +121,7 @@ data class ItemFormState(
 
         is ItemStaticFields.WifiNetwork -> ItemContents.WifiNetwork(
             title = title,
-            note = "",
+            note = note,
             ssid = itemStaticFields.ssid,
             password = itemStaticFields.password.toHiddenState(),
             wifiSecurityType = itemStaticFields.wifiSecurityType,
@@ -142,7 +146,8 @@ data class ItemFormState(
             title = "",
             itemStaticFields = ItemStaticFields.Custom,
             customFieldList = emptyList(),
-            sectionList = emptyList()
+            sectionList = emptyList(),
+            note = ""
         )
     }
 }

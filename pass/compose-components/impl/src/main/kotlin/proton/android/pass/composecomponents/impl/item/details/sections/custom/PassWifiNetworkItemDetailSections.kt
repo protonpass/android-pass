@@ -35,6 +35,7 @@ import proton.android.pass.composecomponents.impl.item.details.sections.shared.P
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsExtraSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
@@ -93,6 +94,14 @@ internal fun PassWifiNetworkItemDetailSections(
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,
                 onEvent = onEvent
+            )
+        }
+
+        if (contents.note.isNotBlank()) {
+            PassSharedItemDetailNoteSection(
+                note = contents.note,
+                itemColors = itemColors,
+                itemDiffs = itemDiffs
             )
         }
 

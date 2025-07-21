@@ -54,6 +54,7 @@ import proton.android.pass.features.itemcreate.custom.createupdate.navigation.Cr
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.ClearDraft
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnCustomFieldChanged
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnNoteChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnPasswordChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnPasswordFocusedChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnPrivateKeyChanged
@@ -149,6 +150,9 @@ fun CreateCustomItemScreen(
 
                         FieldChange.Title ->
                             viewModel.processIntent(OnTitleChanged(it.value as String))
+
+                        FieldChange.Note ->
+                            viewModel.processIntent(OnNoteChanged(it.value as String))
                     }
 
                     is ItemContentEvent.OnFieldFocusChange -> when (it.field) {

@@ -30,7 +30,8 @@ internal enum class FieldChange {
     PublicKey,
     SSID,
     Title,
-    WifiSecurityType
+    WifiSecurityType,
+    Note
 }
 
 internal sealed interface ItemContentEvent {

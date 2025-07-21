@@ -68,6 +68,7 @@ import proton.android.pass.features.itemcreate.common.customfields.CustomFieldId
 import proton.android.pass.features.itemcreate.common.formprocessor.CustomItemFormProcessor
 import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnCustomFieldChanged
+import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnNoteChanged
 import proton.android.pass.features.itemcreate.custom.createupdate.presentation.BaseCustomItemCommonIntent.OnTitleChanged
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -84,6 +85,9 @@ sealed interface BaseCustomItemCommonIntent : BaseItemFormIntent {
 
     @JvmInline
     value class OnTitleChanged(val value: String) : BaseCustomItemCommonIntent
+
+    @JvmInline
+    value class OnNoteChanged(val value: String) : BaseCustomItemCommonIntent
 
     @JvmInline
     value class OnSSIDChanged(val value: String) : BaseCustomItemCommonIntent
@@ -178,6 +182,7 @@ abstract class BaseCustomItemViewModel(
         when (intent) {
             BaseCustomItemCommonIntent.ViewModelObserve -> onViewModelObserve()
             is OnTitleChanged -> onTitleChange(intent.value)
+            is OnNoteChanged -> onNoteChange(intent.value)
             is OnCustomFieldChanged -> onCustomFieldChange(intent.field, intent.value)
             BaseCustomItemCommonIntent.ClearDraft -> onClearDraft()
             is BaseCustomItemCommonIntent.OnCustomFieldFocusedChanged ->
@@ -436,6 +441,11 @@ abstract class BaseCustomItemViewModel(
     private fun onTitleChange(field: String) {
         onUserEditedContent()
         itemFormState = itemFormState.copy(title = field)
+    }
+
+    private fun onNoteChange(value: String) {
+        onUserEditedContent()
+        itemFormState = itemFormState.copy(note = value)
     }
 
     private fun onUserEditedContent() {

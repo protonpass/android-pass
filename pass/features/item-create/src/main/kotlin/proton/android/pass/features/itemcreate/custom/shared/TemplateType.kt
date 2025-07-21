@@ -43,8 +43,7 @@ enum class TemplateType(
             Field(R.string.template_api_credential_field_api_key, CustomFieldType.Hidden),
             Field(R.string.template_api_credential_field_secret, CustomFieldType.Hidden),
             Field(R.string.template_api_credential_field_expiry_date, CustomFieldType.Date),
-            Field(R.string.template_api_credential_field_permissions, CustomFieldType.Text),
-            Field(R.string.template_api_credential_field_note, CustomFieldType.Text)
+            Field(R.string.template_api_credential_field_permissions, CustomFieldType.Text)
         )
     ),
     DATABASE(
@@ -57,8 +56,7 @@ enum class TemplateType(
             Field(R.string.template_database_field_port, CustomFieldType.Text),
             Field(R.string.template_database_field_username, CustomFieldType.Text),
             Field(R.string.template_database_field_password, CustomFieldType.Hidden),
-            Field(R.string.template_database_field_database_type, CustomFieldType.Text),
-            Field(R.string.template_database_field_note, CustomFieldType.Text)
+            Field(R.string.template_database_field_database_type, CustomFieldType.Text)
         )
     ),
     SERVER(
@@ -71,8 +69,7 @@ enum class TemplateType(
             Field(R.string.template_server_field_hostname, CustomFieldType.Text),
             Field(R.string.template_server_field_os, CustomFieldType.Text),
             Field(R.string.template_server_field_username, CustomFieldType.Text),
-            Field(R.string.template_server_field_password, CustomFieldType.Hidden),
-            Field(R.string.template_server_field_note, CustomFieldType.Text)
+            Field(R.string.template_server_field_password, CustomFieldType.Hidden)
         )
     ),
     SOFTWARE_LICENSE(
@@ -84,8 +81,7 @@ enum class TemplateType(
             Field(R.string.template_software_license_field_license_key, CustomFieldType.Hidden),
             Field(R.string.template_software_license_field_product, CustomFieldType.Text),
             Field(R.string.template_software_license_field_expiry_date, CustomFieldType.Date),
-            Field(R.string.template_software_license_field_owner, CustomFieldType.Text),
-            Field(R.string.template_software_license_field_note, CustomFieldType.Text)
+            Field(R.string.template_software_license_field_owner, CustomFieldType.Text)
         )
     ),
     SSH_KEY(
@@ -95,8 +91,7 @@ enum class TemplateType(
         iconResId = CoreR.drawable.ic_proton_filing_cabinet,
         fields = listOf(
             Field(R.string.template_ssh_key_field_username, CustomFieldType.Text),
-            Field(R.string.template_ssh_key_field_host, CustomFieldType.Text),
-            Field(R.string.template_ssh_key_field_note, CustomFieldType.Text)
+            Field(R.string.template_ssh_key_field_host, CustomFieldType.Text)
         )
     ),
     WIFI_NETWORK(
@@ -104,9 +99,7 @@ enum class TemplateType(
         category = Category.TECHNOLOGY,
         titleResId = R.string.template_item_wifi_network,
         iconResId = CompR.drawable.ic_wifi,
-        fields = listOf(
-            Field(R.string.template_wifi_network_field_note, CustomFieldType.Text)
-        )
+        fields = listOf()
     ),
     BANK_ACCOUNT(
         id = 7,
@@ -120,8 +113,7 @@ enum class TemplateType(
             Field(R.string.template_bank_account_field_account_type, CustomFieldType.Text),
             Field(R.string.template_bank_account_field_iban, CustomFieldType.Hidden),
             Field(R.string.template_bank_account_field_swift_bic, CustomFieldType.Text),
-            Field(R.string.template_bank_account_field_holder_name, CustomFieldType.Text),
-            Field(R.string.template_bank_account_field_note, CustomFieldType.Text)
+            Field(R.string.template_bank_account_field_holder_name, CustomFieldType.Text)
         )
     ),
     CRYPTO_WALLET(
@@ -134,8 +126,7 @@ enum class TemplateType(
             Field(R.string.template_crypto_wallet_field_address, CustomFieldType.Text),
             Field(R.string.template_crypto_wallet_field_private_key, CustomFieldType.Hidden),
             Field(R.string.template_crypto_wallet_field_seed_phrase, CustomFieldType.Hidden),
-            Field(R.string.template_crypto_wallet_field_network, CustomFieldType.Text),
-            Field(R.string.template_crypto_wallet_field_note, CustomFieldType.Text)
+            Field(R.string.template_crypto_wallet_field_network, CustomFieldType.Text)
         )
     ),
     DRIVER_LICENSE(
@@ -149,8 +140,7 @@ enum class TemplateType(
             Field(R.string.template_driver_license_field_issuing_state_country, CustomFieldType.Text),
             Field(R.string.template_driver_license_field_expiry_date, CustomFieldType.Date),
             Field(R.string.template_driver_license_field_date_of_birth, CustomFieldType.Date),
-            Field(R.string.template_driver_license_field_class, CustomFieldType.Text),
-            Field(R.string.template_driver_license_field_note, CustomFieldType.Text)
+            Field(R.string.template_driver_license_field_class, CustomFieldType.Text)
         )
     ),
     MEDICAL_RECORD(
@@ -164,8 +154,7 @@ enum class TemplateType(
             Field(R.string.template_medical_record_field_medical_conditions, CustomFieldType.Hidden),
             Field(R.string.template_medical_record_field_medications, CustomFieldType.Hidden),
             Field(R.string.template_medical_record_field_doctor, CustomFieldType.Text),
-            Field(R.string.template_medical_record_field_hospital, CustomFieldType.Text),
-            Field(R.string.template_medical_record_field_note, CustomFieldType.Text)
+            Field(R.string.template_medical_record_field_hospital, CustomFieldType.Text)
         )
     ),
     MEMBERSHIP(
@@ -178,8 +167,7 @@ enum class TemplateType(
             Field(R.string.template_membership_field_membership_id, CustomFieldType.Text),
             Field(R.string.template_membership_field_member_name, CustomFieldType.Text),
             Field(R.string.template_membership_field_expiry_date, CustomFieldType.Date),
-            Field(R.string.template_membership_field_tier_level, CustomFieldType.Text),
-            Field(R.string.template_membership_field_note, CustomFieldType.Text)
+            Field(R.string.template_membership_field_tier_level, CustomFieldType.Text)
         )
     ),
     PASSPORT(
@@ -193,8 +181,7 @@ enum class TemplateType(
             Field(R.string.template_passport_field_country, CustomFieldType.Text),
             Field(R.string.template_passport_field_expiry_date, CustomFieldType.Date),
             Field(R.string.template_passport_field_date_of_birth, CustomFieldType.Date),
-            Field(R.string.template_passport_field_issuing_authority, CustomFieldType.Text),
-            Field(R.string.template_passport_field_note, CustomFieldType.Text)
+            Field(R.string.template_passport_field_issuing_authority, CustomFieldType.Text)
         )
     ),
     REWARD_PROGRAM(
@@ -207,8 +194,7 @@ enum class TemplateType(
             Field(R.string.template_reward_program_field_member_id, CustomFieldType.Text),
             Field(R.string.template_reward_program_field_points_balance, CustomFieldType.Text),
             Field(R.string.template_reward_program_field_expiry_date, CustomFieldType.Date),
-            Field(R.string.template_reward_program_field_tier_status, CustomFieldType.Text),
-            Field(R.string.template_reward_program_field_note, CustomFieldType.Text)
+            Field(R.string.template_reward_program_field_tier_status, CustomFieldType.Text)
         )
     ),
     SOCIAL_SECURITY_NUMBER(
@@ -219,8 +205,7 @@ enum class TemplateType(
         fields = listOf(
             Field(R.string.template_social_security_number_field_full_name, CustomFieldType.Text),
             Field(R.string.template_social_security_number_field_ssn, CustomFieldType.Hidden),
-            Field(R.string.template_social_security_number_field_issuing_country, CustomFieldType.Text),
-            Field(R.string.template_social_security_number_field_note, CustomFieldType.Text)
+            Field(R.string.template_social_security_number_field_issuing_country, CustomFieldType.Text)
         )
     );
 

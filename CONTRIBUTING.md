@@ -1,7 +1,10 @@
 # Contributing
 
-Before working on a new feature, please get in touch with us at pass[at]proton.me to avoid duplication.
-We can also discuss the best way to implement it.
+Before working on a new feature, please fill in [the ProtonMail support form](https://proton.me/support/contact) and select Proton Pass in the topic.
+
+If you have a sensitive inquiry that requires absolute secrecy and which cannot go through our regular support system, you can email us directly and securely at contact@proton.me.
+
+However, the response time for this will be longer than if using our support form.
 
 ## Pull Request Process
 

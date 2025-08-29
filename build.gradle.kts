@@ -113,6 +113,21 @@ protonDetekt {
 }
 
 allprojects {
+    // Force Java toolchain to 17 for everything
+    plugins.withType<JavaPlugin> {
+        extensions.configure<JavaPluginExtension> {
+            toolchain {
+                languageVersion.set(JavaLanguageVersion.of(17))
+            }
+        }
+    }
+
+    // Force Kotlin jvmTarget = 17 for all subprojects
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+        kotlinOptions {
+            jvmTarget = "17"
+        }
+    }
     tasks.withType(org.jetbrains.kotlin.gradle.dsl.KotlinCompile::class.java).configureEach {
         kotlinOptions {
             // Trigger this with:

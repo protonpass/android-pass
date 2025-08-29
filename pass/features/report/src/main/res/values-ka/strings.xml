@@ -37,6 +37,7 @@
   <string name="tips_subtitle">ეს მინიშნებები დაგეხმარებათ, თქვენი პრობლემა უსწრაფესად გადაჭრათ.</string>
   <string name="autofill_tip_restart">სცადეთ გამორთოთ და ჩართოთ ავტოშევსების სერვისი.</string>
   <string name="autofill_tip_browser">სცადეთ სხვა ბრაუზერი.</string>
+  <string name="autofill_tip_another_website">Try it in another website.</string>
   <string name="sharing_tip_vault_sharing_guide">პრობლემები გაქვთ საცავის გაზიარებასთან? ნახეთ ჩვენი გიდი</string>
   <string name="sharing_tip_secure_links_guide">პრობლემები გაქვთ დაცულ ბმულებთან? ნახეთ ჩვენი გიდი</string>
   <string name="sync_tip_force_refresh">თქვენი ეკრანი ცარიელია? სცადეთ, ძალით სინქრონიზაცია გააკეთოთ.</string>

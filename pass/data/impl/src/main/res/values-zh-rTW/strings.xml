@@ -20,5 +20,5 @@
   <string name="sync_channel">同步</string>
   <string name="sync_channel_description">用於項目同步的通知頻道</string>
   <string name="syncing_vaults">同步保管庫和項目</string>
-  <string name="logging_out_free_users">Logging out extra free users</string>
+  <string name="logging_out_free_users">登出額外的免費使用者</string>
 </resources>

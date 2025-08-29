@@ -37,6 +37,7 @@
   <string name="tips_subtitle">ヒントはあなたの問題をより迅速に解決するために役立ちます。</string>
   <string name="autofill_tip_restart">自動入力サービスを無効にしてから再度有効にしてみてください。</string>
   <string name="autofill_tip_browser">他のブラウザをお試しください。</string>
+  <string name="autofill_tip_another_website">ほかのウェブサイトでお試しください。</string>
   <string name="sharing_tip_vault_sharing_guide">保管庫の共有に問題がありますか？ガイドを参照してください。</string>
   <string name="sharing_tip_secure_links_guide">セキュアリンクに問題がありますか？ガイドを参照してください。</string>
   <string name="sync_tip_force_refresh">画面に何もありませんか？強制同期を試してみてください。</string>

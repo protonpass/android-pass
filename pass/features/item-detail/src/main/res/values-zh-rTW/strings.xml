@@ -3,11 +3,11 @@
   <string name="action_open">開啟</string>
   <string name="action_copy">複製</string>
   <!-- Detail -->
-  <string name="detail_init_error">Problem retrieving item details</string>
+  <string name="detail_init_error">擷取項目詳細資料時發生問題</string>
   <string name="top_bar_edit_button_text">編輯</string>
   <!-- Alias details -->
   <string name="field_alias_title">別名位址</string>
-  <string name="field_alias_disabled_title">Alias address (disabled)</string>
+  <string name="field_alias_disabled_title">別名位址 (已停用)</string>
   <string name="alias_copied_to_clipboard">已複製別名</string>
   <string name="alias_detail_field_mailboxes_title">轉寄至</string>
   <string name="alias_create_login_from_alias">創建登入</string>
@@ -28,21 +28,21 @@
   <string name="item_permanently_deleted_message_error">刪除項目錯誤</string>
   <string name="item_restored_message">項目已還原</string>
   <string name="item_restored_message_error">還原項目錯誤</string>
-  <string name="item_monitor_exclude_message">Item successfully excluded from monitoring</string>
-  <string name="item_monitor_exclude_message_error">There was an error excluding item from monitoring</string>
-  <string name="item_monitor_include_message">Item successfully included in monitoring</string>
-  <string name="item_monitor_include_message_error">There was an error including item in monitoring</string>
-  <string name="alias_change_status_error">There was an error changing the alias status</string>
+  <string name="item_monitor_exclude_message">已成功將項目排除監控</string>
+  <string name="item_monitor_exclude_message_error">將項目排除監控時發生錯誤</string>
+  <string name="item_monitor_include_message">已成功將項目納入監控</string>
+  <string name="item_monitor_include_message_error">將項目納入監控時發生錯誤</string>
+  <string name="alias_change_status_error">變更別名狀態時發生錯誤</string>
   <string name="login_item_generate_totp_error">雙重驗證生成條碼錯誤</string>
   <string name="login_item_view_alias_button">檢視別名</string>
   <string name="login_item_monitor_widget_weak_pass_title">弱密碼</string>
-  <string name="login_item_monitor_widget_weak_pass_subtitle">This account is vulnerable, visit the service and change your password.</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">這個帳號有風險，請造訪該服務並變更您的密碼字元.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
-    <item quantity="other">%d other logins use the same password</item>
+    <item quantity="other">%d 個其他登入使用相同密碼</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">為更好安全設定雙重驗證</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">This service offers 2FA. Enable it for added account security.</string>
-  <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">此服務提供雙重驗證。啟用此功能以加強帳號安全。</string>
+  <string name="login_item_reused_passwords_subtitle">來自您保管庫中使用此密碼的項目。</string>
   <string name="field_email">電子郵件地址</string>
   <string name="field_username">使用者名稱</string>
   <string name="field_username_or_email">使用者名稱或電子郵件位址</string>
@@ -88,13 +88,13 @@
     -->
   <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
   <string name="item_detail_cannot_perform_action_edit_title">無法編輯</string>
-  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">You cannot edit this item because you don\'t have enough permissions to do so.</string>
-  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">You are only allowed to edit items in your oldest vaults. In order to edit this item, please upgrade your current plan.</string>
-  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">You cannot edit this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">您無法編輯此項目，因為您沒有足夠的權限來執行此操作。</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">您只能編輯您最舊的保管庫中的項目。為了編輯此項目，請升級您目前的方案。</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">您無法編輯此項目，因為它在垃圾桶中。請將它從垃圾桶中移出，然後再編輯它。</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">無法分享</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">You don\'t have enough permissions to share this vault.</string>
-  <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
-  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">You cannot share this item because it\'s in the trash. Please move it out of the trash before sharing it.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">您沒有足夠權限共享此保管庫。</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">您已達到保管庫共享限制。為了共享更多保管庫，請升級您的目前方案。</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">您無法共享此項目，因為它在垃圾桶中。請將它從垃圾桶中移出，然後再共享它。</string>
   <string name="password_score_vulnerable">具有風險</string>
   <string name="password_score_weak">弱</string>
   <string name="password_score_strong">強</string>
@@ -103,11 +103,11 @@
   <string name="passkey_detail_bottomsheet_domain">網域</string>
   <string name="passkey_detail_bottomsheet_key">金鑰</string>
   <string name="passkey_detail_bottomsheet_created">已創建</string>
-  <string name="activity_in_last_two_weeks">Activity in the last 14 days</string>
+  <string name="activity_in_last_two_weeks">最近 14 天內的活動</string>
   <string name="contacts">通訊錄</string>
-  <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
+  <string name="contacts_section_description">為了隱藏您的個人電郵位址，您可以建立一個別名聯絡人以遮罩您的位址。</string>
   <string name="field_detail_display_name_title">顯示名稱</string>
-  <string name="display_name_section_description">The display name when sending an email from this alias.</string>
+  <string name="display_name_section_description">從此別名傳送電子郵件時的顯示名稱。</string>
   <plurals name="alias_forwards_count">
     <item quantity="other">%1$s 封已轉寄</item>
   </plurals>
@@ -117,6 +117,6 @@
   <plurals name="alias_blocks_count">
     <item quantity="other">%1$s 封已阻擋</item>
   </plurals>
-  <string name="open_with">Open with:</string>
-  <string name="open_attachments_error">Could not open attachment</string>
+  <string name="open_with">開啟方式：</string>
+  <string name="open_attachments_error">無法開啟附件</string>
 </resources>

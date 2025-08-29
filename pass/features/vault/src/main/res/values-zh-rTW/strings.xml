@@ -17,7 +17,7 @@
   <string name="vault_delete_dialog_placeholder">保管庫名稱</string>
   <string name="vault_delete_dialog_cancel_action">取消</string>
   <string name="vault_delete_dialog_delete_action">刪除</string>
-  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">This vault holds %1$s. Deleting it will remove access for all other users.</string>
+  <string name="vault_delete_dialog_shared_items_warning" comment="The placeholder will be replaced by the number of shared items, e.g 2 shared items">此保管庫包含 %1$s。刪除此保管庫將會移除所有其他使用者的存取權限。</string>
   <string name="vault_leave_dialog_title">離開保管庫</string>
   <string name="vault_leave_dialog_body">此將移除您存取__VAULT_NAME__保管庫的權限及全部內容。確定要離開?</string>
   <string name="vault_leave_dialog_cancel_action">取消</string>
@@ -35,7 +35,7 @@
   <string name="bottomsheet_leave_vault">離開保管庫</string>
   <string name="bottomsheet_view_members">檢視成員</string>
   <string name="bottomsheet_manage_access">管理存取權限</string>
-  <string name="bottomsheet_select_vault_read_only">You can only view</string>
+  <string name="bottomsheet_select_vault_read_only">您只能查看</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">您僅能在最舊的保管庫創建項目</string>
   <string name="vault_title">保管庫</string>
 </resources>

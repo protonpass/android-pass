@@ -18,7 +18,7 @@
     <item quantity="other">結果</item>
   </plurals>
   <string name="item_list_header_identities_type">身份</string>
-  <string name="item_list_header_custom_type">Custom items</string>
+  <string name="item_list_header_custom_type">自訂項目</string>
   <string name="item_list_header_shared_with_me">與我共享</string>
   <string name="item_list_header_shared_by_me">共享的項目</string>
   <!-- Bottomsheets -->
@@ -35,6 +35,7 @@
   <string name="bottomsheet_delete_permanently">永久刪除</string>
   <string name="bottomsheet_restore">還原</string>
   <string name="bottomsheet_leave">退出</string>
+  <string name="bottomsheet_duplicate">複製</string>
   <string name="bottomsheet_no_actions">沒有可用的操作</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">開啟項目行為清單</string>
@@ -136,10 +137,10 @@
    Pattern used when displaying a date including the year.
    It would translate to 12 Feb 2023 12:34
    -->
-  <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
+  <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">yyyy LLL dd HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">別名地址</string>
-  <string name="item_details_alias_section_alias_disabled_title">Alias address (disabled)</string>
+  <string name="item_details_alias_section_alias_disabled_title">別名位址 (已停用)</string>
   <string name="item_details_alias_section_mailboxes_title">轉寄至</string>
   <string name="item_details_credit_card_section_cardholder_title">持卡人姓名</string>
   <string name="item_details_credit_card_section_card_number_title">信用卡號</string>
@@ -160,54 +161,54 @@
   <string name="item_details_identity_section_personal_gender_title">性別</string>
   <string name="item_details_identity_section_personal_phone_title">電話號碼</string>
   <string name="item_details_identity_section_personal_birthday_title">生日</string>
-  <string name="item_details_identity_section_address_title">Address details</string>
+  <string name="item_details_identity_section_address_title">位址詳細資料</string>
   <string name="item_details_identity_section_address_organization_title">組織機構</string>
-  <string name="item_details_identity_section_address_street_address_title">Street address, P.O. box</string>
+  <string name="item_details_identity_section_address_street_address_title">街道地址、郵政信箱</string>
   <string name="item_details_identity_section_address_floor_title">樓層</string>
   <string name="item_details_identity_section_address_city_title">市</string>
-  <string name="item_details_identity_section_address_zip_or_postal_code_title">ZIP or postal code</string>
+  <string name="item_details_identity_section_address_zip_or_postal_code_title">郵遞區號</string>
   <string name="item_details_identity_section_address_state_or_province_title">州或省</string>
   <string name="item_details_identity_section_address_county_title">縣/市</string>
-  <string name="item_details_identity_section_address_country_or_region_title">Country or region</string>
+  <string name="item_details_identity_section_address_country_or_region_title">國家或地區</string>
   <string name="item_details_identity_section_contact_title">聯絡人詳細資料</string>
   <string name="item_details_identity_section_contact_social_security_number_title">社會安全碼(SSN)</string>
   <string name="item_details_identity_section_contact_passport_number_title">護照號碼</string>
   <string name="item_details_identity_section_contact_license_number_title">許可證號碼</string>
   <string name="item_details_identity_section_contact_website_title">網站</string>
-  <string name="item_details_identity_section_contact_x_handle_title">X-Handle</string>
-  <string name="item_details_identity_section_contact_secondary_phone_number_title">Secondary phone number</string>
+  <string name="item_details_identity_section_contact_x_handle_title">X 帳號</string>
+  <string name="item_details_identity_section_contact_secondary_phone_number_title">次要電話號碼</string>
   <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
   <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
   <string name="item_details_identity_section_contact_facebook_title">Facebook</string>
   <string name="item_details_identity_section_contact_yahoo_title">Yahoo</string>
   <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
-  <string name="item_details_identity_section_work_title">Work details</string>
+  <string name="item_details_identity_section_work_title">工作詳細資料</string>
   <string name="item_details_identity_section_work_company_title">公司</string>
-  <string name="item_details_identity_section_work_occupation_title">Occupation</string>
+  <string name="item_details_identity_section_work_occupation_title">職業</string>
   <string name="item_details_identity_section_work_email_title">工作電子郵件</string>
   <string name="item_details_identity_section_work_phone_number_title">工作電話號碼</string>
-  <string name="item_details_identity_section_work_personal_website_title">Personal website</string>
+  <string name="item_details_identity_section_work_personal_website_title">個人網站</string>
   <string name="item_details_shared_section_note_title">備注</string>
   <string name="item_details_shared_section_item_history_last_autofill_title">上次自動填滿</string>
   <string name="item_details_shared_section_item_history_created_title">創建日期</string>
-  <string name="item_details_shared_section_item_history_modified_times_title">Modified (%d)</string>
+  <string name="item_details_shared_section_item_history_modified_times_title">已修改 (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">歷史記錄</string>
   <string name="item_details_shared_section_more_info_header_title">更多資訊</string>
-  <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
+  <string name="item_details_shared_section_more_info_header_icon_content_description">更多項目資訊圖示</string>
   <string name="item_details_shared_section_more_info_item_id">項目 ID</string>
   <string name="item_details_shared_section_more_info_vault_id">保管庫 ID</string>
-  <string name="item_details_shared_section_more_info_share_id">Share ID</string>
-  <string name="item_details_wifi_network_label_ssid_name">Name (SSID)</string>
+  <string name="item_details_shared_section_more_info_share_id">分享 ID</string>
+  <string name="item_details_wifi_network_label_ssid_name">名稱 (SSID)</string>
   <string name="item_details_wifi_network_label_password">密碼</string>
   <string name="item_details_wifi_network_label_security">安全保護</string>
   <string name="item_details_ssh_key_label_public_key">公開金鑰</string>
-  <string name="item_details_ssh_key_label_private_key">Private key</string>
-  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
+  <string name="item_details_ssh_key_label_private_key">私有金鑰</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">應用程式版本不再支援，請更新您的應用程式。</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">密碼金鑰</string>
   <!-- Upgrade -->
   <string name="dialog_upgrade_plan_title">升級方案?</string>
-  <string name="dialog_upgrade_plan_message">This feature is not available for free tier users. If you want to enjoy this along with other cool features, upgrade your plan and give it a try!</string>
+  <string name="dialog_upgrade_plan_message">此功能不適用於免費層使用者。如果您想享受此功能以及其他酷炫功能，請升級您的方案並嘗試看看！</string>
   <string name="dialog_upgrade_plan_action_confirm">升級</string>
   <string name="dialog_upgrade_plan_action_cancel">現在不要</string>
   <!-- Words -->
@@ -215,7 +216,7 @@
   <string name="email_address_invalid">無效的電子郵件位址</string>
   <string name="password">密碼</string>
   <!-- Tooltips -->
-  <string name="tooltip_dismiss_button_content_description">Button to dismiss this tooltip and not show it again</string>
+  <string name="tooltip_dismiss_button_content_description">關閉此工具提示且不再顯示的按鈕</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
     <item quantity="other">%d 年</item>
@@ -243,34 +244,34 @@
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">已複製備註</string>
-  <string name="snack_bar_message_item_migration_error">There was an error migrating this item</string>
-  <string name="snack_bar_message_item_monitor_excluded_success">Item successfully excluded from monitoring</string>
-  <string name="snack_bar_message_item_monitor_excluded_error">There was an error excluding item from monitoring</string>
-  <string name="snack_bar_message_item_monitor_included_success">Item successfully included in monitoring</string>
-  <string name="snack_bar_message_item_monitor_included_error">There was an error including item in monitoring</string>
+  <string name="snack_bar_message_item_migration_error">遷移此項目時發生錯誤</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">項目已成功排除監控</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">排除項目監控時發生錯誤</string>
+  <string name="snack_bar_message_item_monitor_included_success">項目已成功包含在監控中</string>
+  <string name="snack_bar_message_item_monitor_included_error">包含項目在監控中時發生錯誤</string>
   <string name="snack_bar_message_item_pinned_success">項目成功標記</string>
   <string name="snack_bar_message_item_pinned_error">釘選此項目發生錯誤</string>
   <string name="snack_bar_message_item_unpinned_success">項目成功取消標記</string>
   <string name="snack_bar_message_item_unpinned_error">取消釘選此項目發生錯誤</string>
-  <string name="snack_bar_message_item_trashed_success">Item successfully trashed</string>
-  <string name="snack_bar_message_item_trashed_error">There was an error trashing this item</string>
-  <string name="snack_bar_message_item_restore_success">Item successfully restored</string>
-  <string name="snack_bar_message_item_restore_error">There was an error restoring this item</string>
-  <string name="snack_bar_message_item_delete_success">Item successfully deleted</string>
-  <string name="snack_bar_message_item_delete_error">There was an error deleting this item</string>
+  <string name="snack_bar_message_item_trashed_success">項目已成功移至垃圾桶</string>
+  <string name="snack_bar_message_item_trashed_error">將此項目移至垃圾桶時發生錯誤</string>
+  <string name="snack_bar_message_item_restore_success">項目已成功還原</string>
+  <string name="snack_bar_message_item_restore_error">還原此項目時發生錯誤</string>
+  <string name="snack_bar_message_item_delete_success">項目已成功刪除</string>
+  <string name="snack_bar_message_item_delete_error">刪除此項目時發生錯誤</string>
   <!-- Simple Login -->
-  <string name="simple_login_widget_title">Enable SimpleLogin sync</string>
+  <string name="simple_login_widget_title">啟用 SimpleLogin 同步</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="other">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
+    <item quantity="other">我們偵測到您有 %d 個別名存在於 SimpleLogin ，但未同步到 Proton Pass。是否要匯入？</item>
   </plurals>
   <string name="simple_login_widget_action">同步別名</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
-  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Please check in your Spam for an email called “%s“</string>
-  <string name="verification_code_suggestion_subject_new_email_address">Please confirm your email address for Proton Pass</string>
-  <string name="verification_code_suggestion_subject_new_mailbox">Please confirm your mailbox</string>
-  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">If you can\'t find such email, you can %s.</string>
-  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">request a new code</string>
+  <string name="verification_code_not_received">沒收到驗證碼嗎？</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">請檢查您的垃圾郵件，以尋找主題為「%s」的電子郵件</string>
+  <string name="verification_code_suggestion_subject_new_email_address">請確認您的 Proton Pass 電郵位址</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">請確認您的電郵信箱</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">如果您找不到此電子郵件，您可以 %s。</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">要求新代碼</string>
   <string name="field_display_name_title">顯示名稱</string>
   <!-- Attachments -->
   <plurals name="attachment_file_amount">
@@ -281,10 +282,10 @@
   <string name="attachment_add_file">附加檔案</string>
   <string name="attachment_row_upload_failed">上傳失敗</string>
   <string name="attachment_row_retry">再試一次</string>
-  <string name="options_menu_content_description">Options menu</string>
+  <string name="options_menu_content_description">選項功能表</string>
   <!-- Items -->
   <plurals name="shared_items_count">
-    <item quantity="other">%d shared items</item>
+    <item quantity="other">%d 個共享項目</item>
   </plurals>
   <plurals name="users_count">
     <item quantity="other">%d 位使用者</item>
@@ -292,23 +293,23 @@
   <plurals name="members_count">
     <item quantity="other">%d 位成員</item>
   </plurals>
-  <string name="show_network_qr_code">Show Network QR Code</string>
+  <string name="show_network_qr_code">顯示網路 QR 碼</string>
   <string name="expand_collpased_text">更多</string>
   <string name="collapse_expanded_text">較少</string>
   <string name="login_item_monitor_widget_weak_pass_title">弱密碼</string>
-  <string name="login_item_monitor_widget_weak_pass_subtitle">This account is vulnerable, visit the service and change your password.</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">這個帳號有風險，請造訪該服務並變更您的密碼字元.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
-    <item quantity="other">%d other logins use the same password</item>
+    <item quantity="other">%d 個其他登入使用相同密碼</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">為更好安全設定雙重驗證</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">This service offers 2FA. Enable it for added account security.</string>
-  <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">此服務提供雙重驗證。啟用此功能以加強帳號安全。</string>
+  <string name="login_item_reused_passwords_subtitle">來自您保管庫中使用此密碼的項目。</string>
   <string name="mfa_limit_reached">雙重驗證已達上限</string>
-  <string name="activity_in_last_two_weeks">Activity in the last 14 days</string>
+  <string name="activity_in_last_two_weeks">最近 14 天內的活動</string>
   <string name="contacts">通訊錄</string>
-  <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
+  <string name="contacts_section_description">為了隱藏您的個人電郵位址，您可以建立一個別名聯絡人以遮罩您的位址。</string>
   <string name="field_detail_display_name_title">顯示名稱</string>
-  <string name="display_name_section_description">The display name when sending an email from this alias.</string>
+  <string name="display_name_section_description">從此別名傳送電子郵件時的顯示名稱。</string>
   <plurals name="alias_forwards_count">
     <item quantity="other">%1$s 封已轉寄</item>
   </plurals>
@@ -320,7 +321,7 @@
   </plurals>
   <string name="alias_create_login_from_alias">創建登入</string>
   <string name="banner_contacts_title">您知道嗎？</string>
-  <string name="banner_contacts_subtitle">Every time your alias receives an email from someone, a new contact is automatically created.</string>
+  <string name="banner_contacts_subtitle">每當您的別名從某人收到一封電子郵件時，就會自動建立一個新的聯絡人。</string>
   <string name="action_reveal">顯示</string>
   <string name="action_conceal">隱藏</string>
 </resources>

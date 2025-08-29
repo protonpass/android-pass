@@ -24,14 +24,14 @@
   </plurals>
   <string name="auth_unlock_app_title">解鎖 Proton Pass</string>
   <string name="auth_unlock_app_subtitle">輸入 %s 的主密碼</string>
-  <string name="auth_unlock_app_extra_password_subtitle">Enter the extra password for %s</string>
-  <string name="auth_unlock_app_subtitle_account_switch">Enter the master password for:</string>
-  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Enter the extra password for:</string>
+  <string name="auth_unlock_app_extra_password_subtitle">輸入 %s 的第二密碼</string>
+  <string name="auth_unlock_app_subtitle_account_switch">輸入主要密碼，用於:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">輸入第二密碼：</string>
   <string name="auth_master_password_label">主密碼</string>
   <string name="auth_action_reveal_password">顯示主密碼</string>
   <string name="auth_action_conceal_password">隱藏主密碼</string>
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">改為輸入 PIN</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Use fingerprint instead</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">改用指紋</string>
   <string name="auth_unlock_button">解鎖</string>
   <string name="auth_error_empty_password">密碼不能為空</string>
   <string name="auth_error_pin_cannot_be_empty">Pin碼不能為空白</string>
@@ -45,6 +45,6 @@
   <plurals name="auth_attempts_remaining">
     <item quantity="other">剩餘 %d 次嘗試機會</item>
   </plurals>
-  <string name="auth_pin_too_many_attempts">Too many failed pin attempts. All your users are being logged out.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
+  <string name="auth_pin_too_many_attempts">過多的個人識別號碼嘗試失敗。您的所有使用者將被登出。</string>
+  <string name="auth_pin_too_many_attempts_dismiss">PIN 嘗試失敗次數過多</string>
 </resources>

@@ -10,7 +10,7 @@
   <string name="on_boarding_last_page_title">管理收件匣內容</string>
   <string name="on_boarding_last_page_button">開始使用 Proton Pass</string>
   <string name="on_boarding_skip">稍後再說</string>
-  <string name="on_boarding_tutorial">Watch a short video on how to use Proton Pass</string>
+  <string name="on_boarding_tutorial">觀看短片以了解如何使用 Proton Pass</string>
   <string name="on_boarding_pending_invite_content">基於安全性理由，您的存取需要得到確認.</string>
   <string name="on_boarding_pending_invite_title">暫緩存取分享的資料</string>
   <string name="on_boarding_pending_invite_button">了解更多關於Proton Pass</string>
@@ -18,14 +18,14 @@
   <string name="error_biometry_failed_to_authenticate">驗證失敗</string>
   <string name="settings_fingerprint_lock_enabled">已啟用指紋鎖</string>
   <string name="error_performing_operation">處理過程中出錯</string>
-  <string name="onboarding_slide_1_title">All your passwords.</string>
-  <string name="onboarding_slide_2_title">Protect your inbox.</string>
-  <string name="onboarding_slide_3_title">Stay Informed.</string>
+  <string name="onboarding_slide_1_title">您的所有密碼字元。</string>
+  <string name="onboarding_slide_2_title">保護您的收件匣。</string>
+  <string name="onboarding_slide_3_title">掌握最新資訊。</string>
   <string name="onboarding_slide_4_title">安全分享.</string>
-  <string name="onboarding_slide_1_subtitle">Securely in one place and protected by the most trusted name in privacy.</string>
-  <string name="onboarding_slide_2_subtitle">Use Hide-My-Email aliases against phishing threats.</string>
-  <string name="onboarding_slide_3_subtitle">Share passwords and sensitive information securely and effortlessly.</string>
-  <string name="onboarding_slide_4_subtitle">Get alerts when your email is found on the Dark web.</string>
+  <string name="onboarding_slide_1_subtitle">安全地集中存放，並得到最受信賴的隱私保護。</string>
+  <string name="onboarding_slide_2_subtitle">使用隱藏電子郵件別名抵禦網路釣魚威脅。</string>
+  <string name="onboarding_slide_3_subtitle">安全且輕鬆地共享密碼字元與敏感資訊。</string>
+  <string name="onboarding_slide_4_subtitle">當您的電郵位址在暗網上被發現時，接收警示。</string>
   <string name="create_an_account_button">創建帳號</string>
   <string name="sign_in_button">登錄</string>
 </resources>

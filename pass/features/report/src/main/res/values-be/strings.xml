@@ -37,6 +37,7 @@
   <string name="tips_subtitle">Гэтыя парады дапамогуць вам хутчэй вырашыць праблему.</string>
   <string name="autofill_tip_restart">Паспрабуйце адключыць, а потым зноў уключыць сэрвіс аўтазапаўнення.</string>
   <string name="autofill_tip_browser">Паспрабуйце іншы браўзер.</string>
+  <string name="autofill_tip_another_website">Паспрабуйце гэта на іншым вэб-сайце.</string>
   <string name="sharing_tip_vault_sharing_guide">Узніклі праблемы з абагульваннем сховішча? Паглядзіце наш дапаможнік.</string>
   <string name="sharing_tip_secure_links_guide">Узніклі праблемы з бяспечнымі спасылкамі? Паглядзіце наш дапаможнік.</string>
   <string name="sync_tip_force_refresh">На экране нічога не адлюстравалася? Паспрабуйце зрабіць прымусовую сінхранізацыю.</string>

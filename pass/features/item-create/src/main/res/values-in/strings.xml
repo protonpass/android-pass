@@ -182,6 +182,7 @@
   <string name="update_identity_item_creation_error">Identitas tidak dapat diperbarui</string>
   <!--  Common create items  -->
   <string name="title_create">Buat</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (copied)</string>
   <string name="changes_saved">Perubahan disimpan</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Kunci rahasia 2FA (TOTP)</string>
@@ -236,36 +237,30 @@
   <string name="template_api_credential_field_secret">Secret</string>
   <string name="template_api_credential_field_expiry_date">Tanggal Kedaluwarsa</string>
   <string name="template_api_credential_field_permissions">Perizinan</string>
-  <string name="template_api_credential_field_note">Catatan</string>
   <!-- Database Fields -->
   <string name="template_database_field_host">Host</string>
   <string name="template_database_field_port">Port</string>
   <string name="template_database_field_username">Nama pengguna</string>
   <string name="template_database_field_password">Kata sandi</string>
   <string name="template_database_field_database_type">Jenis Basis Data</string>
-  <string name="template_database_field_note">Catatan</string>
   <!-- Server Fields -->
   <string name="template_server_field_ip_address">Alamat IP</string>
   <string name="template_server_field_hostname">Nama Host</string>
   <string name="template_server_field_os">Sistem Operasi</string>
   <string name="template_server_field_username">Nama pengguna</string>
   <string name="template_server_field_password">Kata sandi</string>
-  <string name="template_server_field_note">Catatan</string>
   <!-- Software License Fields -->
   <string name="template_software_license_field_license_key">Kunci Lisensi</string>
   <string name="template_software_license_field_product">Produk</string>
   <string name="template_software_license_field_expiry_date">Tanggal Kedaluwarsa</string>
   <string name="template_software_license_field_owner">Pemilik</string>
-  <string name="template_software_license_field_note">Catatan</string>
   <!-- SSH Key Fields -->
   <string name="template_ssh_key_field_private_key">Kunci Pribadi</string>
   <string name="template_ssh_key_field_public_key">Kunci Publik</string>
   <string name="template_ssh_key_field_username">Nama pengguna</string>
   <string name="template_ssh_key_field_host">Host</string>
-  <string name="template_ssh_key_field_note">Catatan</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_name">Nama (SSID)</string>
-  <string name="template_wifi_network_field_note">Catatan</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Nama Bank</string>
   <string name="template_bank_account_field_account_number">Nomor Rekening</string>
@@ -274,14 +269,12 @@
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
   <string name="template_bank_account_field_holder_name">Nama Pemegang Akun</string>
-  <string name="template_bank_account_field_note">Catatan</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">Nama Dompet</string>
   <string name="template_crypto_wallet_field_address">Alamat</string>
   <string name="template_crypto_wallet_field_private_key">Kunci Pribadi</string>
   <string name="template_crypto_wallet_field_seed_phrase">Frasa Benih</string>
   <string name="template_crypto_wallet_field_network">Jaringan</string>
-  <string name="template_crypto_wallet_field_note">Catatan</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">Nama Lengkap</string>
   <string name="template_driver_license_field_license_number">Nomor Lisensi</string>
@@ -289,7 +282,6 @@
   <string name="template_driver_license_field_expiry_date">Tanggal Kedaluwarsa</string>
   <string name="template_driver_license_field_date_of_birth">Tanggal Lahir</string>
   <string name="template_driver_license_field_class">Kelas</string>
-  <string name="template_driver_license_field_note">Catatan</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Nama Pasien</string>
   <string name="template_medical_record_field_record_number">Nomor Rekaman</string>
@@ -297,14 +289,12 @@
   <string name="template_medical_record_field_medications">Pengobatan</string>
   <string name="template_medical_record_field_doctor">Dokter</string>
   <string name="template_medical_record_field_hospital">Rumah Sakit</string>
-  <string name="template_medical_record_field_note">Catatan</string>
   <!-- Membership Fields -->
   <string name="template_membership_field_organization_name">Nama Organisasi</string>
   <string name="template_membership_field_membership_id">ID Keanggotaan</string>
   <string name="template_membership_field_member_name">Nama Anggota</string>
   <string name="template_membership_field_expiry_date">Tanggal Kedaluwarsa</string>
   <string name="template_membership_field_tier_level">Tingkat/Level Keanggotaan</string>
-  <string name="template_membership_field_note">Catatan</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">Nama Lengkap</string>
   <string name="template_passport_field_passport_number">Nomor Paspor</string>
@@ -312,19 +302,16 @@
   <string name="template_passport_field_expiry_date">Tanggal Kedaluwarsa</string>
   <string name="template_passport_field_date_of_birth">Tanggal Lahir</string>
   <string name="template_passport_field_issuing_authority">Otoritas Penerbit</string>
-  <string name="template_passport_field_note">Catatan</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Nama Program</string>
   <string name="template_reward_program_field_member_id">ID Anggota</string>
   <string name="template_reward_program_field_points_balance">Saldo</string>
   <string name="template_reward_program_field_expiry_date">Tanggal Kedaluwarsa</string>
   <string name="template_reward_program_field_tier_status">Tingkatan/Status</string>
-  <string name="template_reward_program_field_note">Catatan</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">Nama Lengkap</string>
   <string name="template_social_security_number_field_ssn">Nomor Jaminan Sosial</string>
   <string name="template_social_security_number_field_issuing_country">Negara Penerbit</string>
-  <string name="template_social_security_number_field_note">Catatan</string>
   <string name="template_header_technology">Teknologi</string>
   <string name="template_header_finance">Keuangan</string>
   <string name="template_header_title_personal">Pribadi</string>

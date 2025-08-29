@@ -17,7 +17,7 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="select_item_only_searching_in_oldest_vaults">Your plan only allows to use items in your oldest vaults.</string>
+  <string name="select_item_only_searching_in_oldest_vaults">您的方案僅允許在您最舊的保管庫中使用項目。</string>
   <string name="error_credentials_not_found">找不到相對應的憑證</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">給 %s 的建議</string>
@@ -26,8 +26,8 @@
   <string name="topbar_search_pinned_items">於標籤中搜尋…</string>
   <string name="topbar_search_query_oldest_vaults">於最舊的保存庫搜尋…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">搜尋…</string>
-  <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">All accounts (%1$s)</string>
-  <string name="select_item_save_credential_title">Save password credential</string>
-  <string name="select_item_save_credential_subtitle">Select an account to save credential in.</string>
+  <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">所有帳號 (%1$s)</string>
+  <string name="select_item_save_credential_title">儲存密碼憑證</string>
+  <string name="select_item_save_credential_subtitle">選取要儲存憑證的帳號。</string>
   <string name="select_item_save_credential_button">選取帳號</string>
 </resources>

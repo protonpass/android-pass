@@ -132,18 +132,18 @@
   <string name="trash_deleting_items_success">Articolele au fost șterse.</string>
   <!-- Alerts -->
   <string name="alert_confirm_clear_trash_title">Goliți gunoiul?</string>
-  <string name="alert_confirm_clear_trash_message">Sigur doriți să goliți gunoiul? Toate articolele din gunoi vor fi șterse definitiv.</string>
+  <string name="alert_confirm_clear_trash_message">Goliți gunoiul? Toate articolele din gunoi vor fi șterse definitiv.</string>
   <string name="alert_confirm_restore_all_title">Restaurați toate articolele?</string>
-  <string name="alert_confirm_restore_all_message">Sigur doriți să ștergeți toate articolele selectate?</string>
+  <string name="alert_confirm_restore_all_message">Ștergeți toate articolele selectate?</string>
   <plurals name="alert_confirm_restore_items_title">
     <item quantity="one">Restaurați %d articol?</item>
     <item quantity="few">Restaurați %d articole?</item>
     <item quantity="other">Restaurați %d de articole?</item>
   </plurals>
   <plurals name="alert_confirm_restore_items_message">
-    <item quantity="one">Sigur doriți să restaurați articolul din gunoi?</item>
-    <item quantity="few">Sigur doriți să restaurați %d articole din gunoi?</item>
-    <item quantity="other">Sigur doriți să restaurați %d de articole din gunoi?</item>
+    <item quantity="one">Restaurați articolul din gunoi?</item>
+    <item quantity="few">Restaurați %d articole din gunoi?</item>
+    <item quantity="other">Restaurați %d de articole din gunoi?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_title">
     <item quantity="one">Mutați %d articol în gunoi?</item>
@@ -151,9 +151,9 @@
     <item quantity="other">Mutați %d de articole în gunoi?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">Sigur doriți să mutați articolul în gunoi?</item>
-    <item quantity="few">Sigur doriți să mutați %d articole în gunoi?</item>
-    <item quantity="other">Sigur doriți să mutați %d de articole în gunoi?</item>
+    <item quantity="one">Mutați articolul în gunoi?</item>
+    <item quantity="few">Mutați %d articole în gunoi?</item>
+    <item quantity="other">Mutați %d de articole în gunoi?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="one">Ștergeți permanent %d articol?</item>
@@ -161,9 +161,9 @@
     <item quantity="other">Ștergeți permanent %d de articole?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
-    <item quantity="one">Sigur doriți să ștergeți acest articol? Această acțiune nu e reversibilă.</item>
-    <item quantity="few">Sigur doriți să ștergeți %d articole? Această acțiune nu e reversibilă.</item>
-    <item quantity="other">Sigur doriți să ștergeți %d de articole? Această acțiune nu e reversibilă.</item>
+    <item quantity="one">Ștergeți acest articol? Această acțiune nu e reversibilă.</item>
+    <item quantity="few">Ștergeți %d articole? Această acțiune nu e reversibilă.</item>
+    <item quantity="other">Ștergeți %d de articole? Această acțiune nu e reversibilă.</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_shared_warning_message">
     <item quantity="one">Este partajat %d articol. Dacă îl ștergeți, ceilalți utilizatori nu-l vor mai putea accesa.</item>

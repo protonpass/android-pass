@@ -21,9 +21,9 @@
   <string name="sharing_can_edit">Chỉnh sửa</string>
   <string name="sharing_can_manage">Quản trị viên</string>
   <string name="sharing_can_manage_v2">Manager</string>
-  <string name="sharing_can_view_description">Cho phép xem nội dung trong kho lưu trữ này.</string>
-  <string name="sharing_can_edit_description">Cho phép tạo, chỉnh sửa, xóa và xuất nội dung trong kho lưu trữ này.</string>
-  <string name="sharing_can_manage_description">Cho phép cấp và thu hồi quyền truy cập vào kho lưu trữ này.</string>
+  <string name="sharing_can_view_description">Cho phép xem nội dung trong két sắt này.</string>
+  <string name="sharing_can_edit_description">Cho phép tạo, chỉnh sửa, xóa và xuất nội dung trong két sắt này.</string>
+  <string name="sharing_can_manage_description">Cho phép cấp và thu hồi quyền truy cập vào két sắt này.</string>
   <plurals name="sharing_item_count">
     <item quantity="other">%d nội dung</item>
   </plurals>
@@ -32,8 +32,8 @@
   </plurals>
   <string name="sharing_member_count_header">Thành viên</string>
   <string name="shared_via_title">Chia sẻ qua</string>
-  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Item sharing: %s</string>
-  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Vault sharing: %s</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Mục chia sẻ cho: %s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Két sắt chia sẻ cho: %s</string>
   <string name="share_with_title">Chia sẻ với</string>
   <string name="share_with_email_hint">Địa chỉ email</string>
   <string name="share_with_email_error">Địa chỉ email không hợp lệ</string>
@@ -41,16 +41,16 @@
   <string name="share_with_email_email_already_added">Bạn đã thêm email này rồi</string>
   <string name="share_permissions_title">Thiết lập cấp độ truy cập</string>
   <string name="sharing_reject_invitation">Từ chối lời mời</string>
-  <string name="sharing_vault_invitation_title">Lời mời chia sẻ kho</string>
-  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s muốn chia sẻ một kho với bạn.</string>
-  <string name="sharing_vault_invitation_accept">Tham gia kho chia sẻ</string>
+  <string name="sharing_vault_invitation_title">Lời mời chia sẻ dùng két sắt</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s muốn chia sẻ một két sắt với bạn.</string>
+  <string name="sharing_vault_invitation_accept">Tham gia dùng két sắt</string>
   <string name="sharing_item_invitation_title">Lời mời chia sẻ mục</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s muốn chia sẻ một mục với bạn.</string>
   <string name="sharing_item_invitation_accept">Chấp nhận và xem mục</string>
   <string name="sharing_invite_more">Mời thêm...</string>
   <string name="sharing_snackbar_invite_accepted">Đã chấp nhận lời mời</string>
   <string name="sharing_snackbar_invite_accept_error">Lỗi khi chấp nhận lời mời</string>
-  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Không thể chấp nhận lời mời vì bạn đã đạt đến số lượng kho lưu trữ tối đa</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Không thể chấp nhận lời mời vì bạn đã đạt đến số lượng két sắt tối đa</string>
   <string name="sharing_snackbar_invite_rejected">Đã từ chối lời mời</string>
   <string name="sharing_snackbar_invite_reject_error">Lỗi khi từ chối lời mời</string>
   <string name="sharing_snackbar_invite_sent_success">Đã gửi lời mời</string>
@@ -58,17 +58,17 @@
   <string name="sharing_snackbar_invite_new_users_error">Cannot send invites to new users</string>
   <string name="sharing_snackbar_invite_free_user_error">Item invites are only allowed to be sent to paid users</string>
   <string name="sharing_snackbar_invite_user_already_invited_error">Address has already been invited</string>
-  <string name="sharing_snackbar_get_vault_members_error">Không thể lấy thành viên kho lưu trữ</string>
+  <string name="sharing_snackbar_get_vault_members_error">Không thể lấy thành viên két sắt</string>
   <string name="sharing_snackbar_change_permission_success">Đã thay đổi quyền</string>
   <string name="sharing_snackbar_change_permission_error">Không thể thay đổi quyền</string>
-  <string name="sharing_snackbar_remove_member_success">Đã xóa thành viên khỏi kho lưu trữ</string>
-  <string name="sharing_snackbar_remove_member_error">Không thể xóa khỏi kho lưu trữ</string>
+  <string name="sharing_snackbar_remove_member_success">Đã xóa thành viên khỏi két sắt</string>
+  <string name="sharing_snackbar_remove_member_error">Không thể xóa khỏi két sắt</string>
   <string name="sharing_snackbar_fetch_member_error">Đã xảy ra lỗi khi truy xuất thành viên</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Đã xảy ra lỗi khi truy xuất lời mời đang chờ</string>
   <string name="share_summary_title">Xem lại và chia sẻ</string>
-  <string name="share_summary_share_vault">Chia sẽ kho lưu trữ</string>
+  <string name="share_summary_share_vault">Chia sẻ két sắt</string>
   <string name="share_summary_share_item">Chia sẻ mục</string>
-  <string name="share_summary_vault_title">Kho lưu trữ</string>
+  <string name="share_summary_vault_title">Két sắt</string>
   <string name="share_summary_item_title">Mục</string>
   <string name="share_summary_access_level_title">Cấp độ truy cập</string>
   <string name="share_manage_vault_share_with_more_people">Chia sẽ với nhiều người hơn</string>
@@ -90,7 +90,7 @@
   <string name="share_role_manager">Manager</string>
   <string name="share_role_owner">Chủ sở hữu</string>
   <string name="sharing_bottomsheet_transfer_ownership">Chuyển quyền sở hữu</string>
-  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Bạn không thể chuyển quyền sở hữu kho lưu trữ cuối cùng của mình.</string>
+  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Bạn không thể chuyển quyền sở hữu két sắt cuối cùng của mình.</string>
   <string name="sharing_bottomsheet_remove_access">Thu hồi quyền truy cập</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Có thể cấp và thu hồi quyền truy cập vào mục này.</string>
   <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
@@ -98,7 +98,7 @@
   <string name="sharing_bottomsheet_resend_invite">Gửi lại lời mời</string>
   <string name="sharing_bottomsheet_cancel_invite">Hủy lời mời</string>
   <string name="sharing_transfer_ownership_confirm_title">Chuyển quyền sở hữu</string>
-  <string name="sharing_transfer_ownership_confirm_message">Chuyển quyền sở hữu của kho lưu trữ này cho %s?</string>
+  <string name="sharing_transfer_ownership_confirm_message">Chuyển quyền sở hữu của két sắt này cho %s?</string>
   <string name="sharing_snackbar_cancel_invite_success">Đã hủy lời mời</string>
   <string name="sharing_snackbar_cancel_invite_error">Lỗi khi hủy lời mời</string>
   <string name="sharing_snackbar_resend_invite_success">Đã gửi lại lời mời</string>
@@ -112,13 +112,13 @@
   <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
     <item quantity="other">Kho lưu trữ này có thể có %1$d thành viên. Bạn vẫn còn %2$d lời mời.</item>
   </plurals>
-  <string name="sharing_limit_reached">Kho lưu trữ này đã đạt đến giới hạn thành viên và lời mời.</string>
+  <string name="sharing_limit_reached">Két sắt này đã đạt đến giới hạn thành viên và lời mời.</string>
   <string name="sharing_invites_info_upgrade_text">Nâng cấp ngay để mời thêm.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Chia sẻ</string>
-  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Chia sẽ kho lưu trữ này</string>
-  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Chuyển đến một kho lưu trữ được chia sẻ</string>
-  <string name="sharing_from_item_vault_limit_reached_upgrade">Nâng cấp để tạo thêm kho lưu trữ</string>
-  <string name="sharing_from_item_vault_limit_reached">Bạn đã đạt đến giới hạn kho lưu trữ</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Chia sẽ két sắt này</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Chuyển đến một két sắt được chia sẻ</string>
+  <string name="sharing_from_item_vault_limit_reached_upgrade">Nâng cấp để tạo thêm két sắt</string>
+  <string name="sharing_from_item_vault_limit_reached">Bạn đã đạt đến giới hạn két sắt</string>
   <string name="share_with_suggestions_title">Các gợi ý</string>
   <string name="share_with_recents_title">Gần đây</string>
   <string name="share_with_remove_email_content_description">Xoá email</string>
@@ -132,7 +132,7 @@
   <string name="sharing_edit_permissions_set_access_level_single_member">Đặt cấp độ truy cập cho %s</string>
   <string name="sharing_edit_permissions_remove_user">Xóa người dùng</string>
   <string name="sharing_error_dialog_title">Lỗi không xác định</string>
-  <string name="sharing_error_dialog_message">Đã xảy ra lỗi khi gửi lời mời cho kho. Nếu sự cố vẫn tiếp diễn, vui lòng liên hệ với dịch vụ hỗ trợ khách hàng.</string>
+  <string name="sharing_error_dialog_message">Đã xảy ra lỗi khi gửi lời mời dùng két sắt này. Nếu sự cố vẫn tiếp diễn, vui lòng liên hệ với dịch vụ hỗ trợ khách hàng.</string>
   <string name="sharing_with_no_addresses_can_be_invited">Không thể mời địa chỉ</string>
   <string name="sharing_with_some_addresses_cannot_be_invited">Không thể mời một số email</string>
 </resources>

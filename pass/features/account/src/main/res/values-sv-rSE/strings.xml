@@ -21,7 +21,7 @@
   <string name="account_settings_list_item_password_hint_grace">Lösenordsåterställning väntar</string>
   <string name="account_settings_list_item_password_hint_insecure">Lösenordsåterställning redo</string>
   <string name="account_settings_list_item_extra_password_header">Extralösenord för Proton Pass</string>
-  <string name="account_settings_list_item_extra_password_header_set">Ställ in extralösenord för Proton Pass</string>
+  <string name="account_settings_list_item_extra_password_header_set">Ställ in extra lösenord för Proton Pass</string>
   <string name="account_settings_list_item_extra_password_active">Aktiv</string>
   <string name="account_settings_list_item_extra_password_description">Extralösenordet kommer att krävas för att använda Pass. Det fungerar som ett extra lösenord utöver ditt Proton-lösenord.</string>
   <string name="account_settings_list_item_security_keys_hint_not_set">Inte inställt</string>

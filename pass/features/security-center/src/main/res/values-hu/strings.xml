@@ -27,7 +27,7 @@
   <string name="security_center_home_row_data_breaches_title">Dark web figyelmeztetés</string>
   <string name="security_center_home_row_data_breaches_subtitle">Adatvédelmi incidensek észlelve</string>
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
-  <string name="security_center_home_row_sentinel_subtitle">Fejlett fiók védelmi program</string>
+  <string name="security_center_home_row_sentinel_subtitle">Fejlett fiókvédelmi program</string>
   <string name="security_center_home_row_insecure_passwords_title">Gyenge jelszavak</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">Változtassa meg a jelszavait</string>
   <string name="security_center_home_row_reused_passwords_title">Újrahasznált jelszavak</string>

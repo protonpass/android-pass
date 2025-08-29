@@ -28,7 +28,7 @@
   <string name="cancel_tips_button">Avbryt</string>
   <string name="contact_us_button">Kontakta oss</string>
   <string name="hint_tips_screen">Fungerade det inte?</string>
-  <string name="report_reason_autofill">Autofyll</string>
+  <string name="report_reason_autofill">Fyll automatiskt</string>
   <string name="report_reason_sharing">Delning</string>
   <string name="report_reason_sync">Synkronisera</string>
   <string name="report_reason_passkeys">Passkeys</string>
@@ -37,6 +37,7 @@
   <string name="tips_subtitle">Dessa tips kan hjälpa dig att lösa ditt problem snabbare.</string>
   <string name="autofill_tip_restart">Testa inaktivera och aktivera autofylltjänsten</string>
   <string name="autofill_tip_browser">Prova annan webbläsare.</string>
+  <string name="autofill_tip_another_website">Prova det i annan webbplats.</string>
   <string name="sharing_tip_vault_sharing_guide">Har du problem med valvdelning? Kolla vår guide.</string>
   <string name="sharing_tip_secure_links_guide">Har du problem med säkra länkar? Kolla vår guide.</string>
   <string name="sync_tip_force_refresh">Är din skärm tom? Prova göra en tvångssynkronisering.</string>

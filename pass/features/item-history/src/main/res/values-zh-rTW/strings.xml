@@ -19,19 +19,19 @@
 <resources>
   <string name="item_history_restore_action">還原</string>
   <string name="item_history_restore_confirmation_dialog_title">還原此版本?</string>
-  <string name="item_history_restore_confirmation_dialog_message" comment="The item will be reverted to a version from an specific date, for instance: Your current item will revert to the version from 19 February 2024 at 09:30">Your current item will revert to the version from %1$s</string>
-  <string name="item_history_restore_snackbar_message_error">There was an error restoring item revision</string>
-  <string name="item_history_restore_snackbar_message_success">Item revision restored successfully</string>
-  <string name="item_history_restore_tab_title_current">Current</string>
+  <string name="item_history_restore_confirmation_dialog_message" comment="The item will be reverted to a version from an specific date, for instance: Your current item will revert to the version from 19 February 2024 at 09:30">您目前的項目將還原為 %1$s 的版本</string>
+  <string name="item_history_restore_snackbar_message_error">還原項目修訂時發生錯誤</string>
+  <string name="item_history_restore_snackbar_message_success">項目修訂已成功還原</string>
+  <string name="item_history_restore_tab_title_current">目前</string>
   <string name="item_history_timeline_title">歷程記錄</string>
   <string name="item_history_timeline_node_child_title">已修改</string>
   <string name="item_history_timeline_node_leaf_title">創建日期</string>
   <string name="item_history_timeline_node_root_title">目前版本</string>
-  <string name="item_history_timeline_snackbar_message_error">There was an error fetching item revisions</string>
-  <string name="reset_history_bottomsheet_option">Reset History</string>
-  <string name="reset_history_dialog_title">Reset history for this item?</string>
-  <string name="reset_history_dialog_body">Resetting history will permanently delete all past versions and cannot be undone.</string>
+  <string name="item_history_timeline_snackbar_message_error">擷取項目修訂時發生錯誤</string>
+  <string name="reset_history_bottomsheet_option">重設歷史記錄</string>
+  <string name="reset_history_dialog_title">重設此項目的歷史紀錄？</string>
+  <string name="reset_history_dialog_body">重設歷史記錄將永久刪除所有過去的版本且無法復原。</string>
   <string name="reset_history_action">重設</string>
-  <string name="reset_history_dialog_snackbar_message_error">There was an error resetting</string>
-  <string name="reset_history_dialog_snackbar_message_success">Item history reset</string>
+  <string name="reset_history_dialog_snackbar_message_error">重設時發生錯誤</string>
+  <string name="reset_history_dialog_snackbar_message_success">項目歷史紀錄已重設</string>
 </resources>

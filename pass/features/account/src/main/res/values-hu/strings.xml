@@ -21,7 +21,7 @@
   <string name="account_settings_list_item_password_hint_grace">Jelszó visszaállítási kérelem függőben</string>
   <string name="account_settings_list_item_password_hint_insecure">Jelszó visszaállítás kész</string>
   <string name="account_settings_list_item_extra_password_header">Extra jelszó a Proton Passzhoz</string>
-  <string name="account_settings_list_item_extra_password_header_set">Állítson be extra jelszót a Proton Pass számára</string>
+  <string name="account_settings_list_item_extra_password_header_set">Extra jelszó beállítása a Proton Pass számára</string>
   <string name="account_settings_list_item_extra_password_active">Aktív</string>
   <string name="account_settings_list_item_extra_password_description">A Pass használatához szüksége lesz az extra jelszóra. Ez kiegészítő jelszóként működik a Proton jelszava mellett.</string>
   <string name="account_settings_list_item_security_keys_hint_not_set">Nincs beállítva</string>

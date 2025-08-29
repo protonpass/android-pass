@@ -17,21 +17,21 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="item_details_toolbar_content_description_menu_button">Button for displaying menu options</string>
+  <string name="item_details_toolbar_content_description_menu_button">顯示選單選項的按鈕</string>
   <!-- Item details forbidden actions -->
   <string name="item_details_forbidden_actions_edit_title">無法編輯</string>
-  <string name="item_details_forbidden_actions_edit_permission">You cannot edit this item because you don\'t have enough permissions to do so.</string>
-  <string name="item_details_forbidden_actions_edit_trash">You cannot edit this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
-  <string name="item_details_forbidden_actions_edit_upgrade">You are only allowed to edit items in your oldest vaults. In order to edit this item, please upgrade your current plan.</string>
+  <string name="item_details_forbidden_actions_edit_permission">您無法編輯此項目，因為您沒有足夠的權限這麼做。</string>
+  <string name="item_details_forbidden_actions_edit_trash">您無法編輯此項目，因為它在垃圾桶中。請將它從垃圾桶中移出，然後再編輯它。</string>
+  <string name="item_details_forbidden_actions_edit_upgrade">您只能編輯您最舊的保管庫中的項目。為了編輯此項目，請升級您目前的方案。</string>
   <string name="item_details_forbidden_actions_share_title">無法分享</string>
-  <string name="item_details_forbidden_actions_share_limit">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
-  <string name="item_details_forbidden_actions_sharing_permission">You don\'t have enough permissions to perform this action.</string>
-  <string name="item_details_forbidden_actions_share_trash">You cannot share this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
+  <string name="item_details_forbidden_actions_share_limit">您已達到保管庫共享限制。為了共享更多保管庫，請升級您的目前方案。</string>
+  <string name="item_details_forbidden_actions_sharing_permission">您沒有足夠的權限執行此動作。</string>
+  <string name="item_details_forbidden_actions_share_trash">您無法共享此項目，因為它在垃圾桶中。請將它從垃圾桶中移出，然後再編輯它。</string>
   <!-- Item details leave item -->
-  <string name="item_details_leave_dialog_title">Leave this Item?</string>
-  <string name="item_details_leave_dialog_message">You will lose access to this item and its details. Do you want to continue?</string>
-  <string name="item_details_leave_item_message_error">There was an error leaving the item</string>
-  <string name="item_details_leave_item_message_success">Item successfully left</string>
+  <string name="item_details_leave_dialog_title">要離開此項目嗎？</string>
+  <string name="item_details_leave_dialog_message">您將會失去存取此項目及其詳細資料。您要繼續嗎？</string>
+  <string name="item_details_leave_item_message_error">離開項目時發生錯誤</string>
+  <string name="item_details_leave_item_message_success">已成功離開項目</string>
   <string name="item_details_snackbar_message_alias_copied">已複製 X handle</string>
   <string name="item_details_snackbar_message_birthdate_copied">已複製生日</string>
   <string name="item_details_snackbar_message_card_number_copied">已複製信用卡卡號</string>
@@ -68,15 +68,15 @@
   <string name="item_details_snackbar_message_x_handle_copied">已複製 X handle</string>
   <string name="item_details_snackbar_message_yahoo_copied">已複製 Yahoo</string>
   <string name="item_details_snackbar_message_zip_or_postal_code_copied">已複製郵遞區號</string>
-  <string name="item_details_snackbar_message_public_key_copied">Public key copied</string>
-  <string name="item_details_snackbar_message_private_key_copied">Private key copied</string>
-  <string name="item_details_snackbar_message_ssid_copied">SSID copied</string>
-  <string name="open_with">Open with:</string>
-  <string name="open_attachments_error">Could not open attachment</string>
+  <string name="item_details_snackbar_message_public_key_copied">已複製公開金鑰</string>
+  <string name="item_details_snackbar_message_private_key_copied">已複製私人金鑰</string>
+  <string name="item_details_snackbar_message_ssid_copied">SSID 已複製</string>
+  <string name="open_with">開啟方式：</string>
+  <string name="open_attachments_error">無法開啟附件</string>
   <string name="passkey_detail_bottomsheet_title">密碼金鑰</string>
   <string name="passkey_detail_bottomsheet_username">使用者名稱</string>
   <string name="passkey_detail_bottomsheet_domain">網域</string>
   <string name="passkey_detail_bottomsheet_key">金鑰</string>
   <string name="passkey_detail_bottomsheet_created">已創建</string>
-  <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
+  <string name="login_item_reused_passwords_subtitle">來自您保管庫中使用此密碼的項目。</string>
 </resources>

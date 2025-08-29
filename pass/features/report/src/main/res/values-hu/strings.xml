@@ -37,6 +37,7 @@
   <string name="tips_subtitle">Ezek a tippek segíthetnek problémája gyorsabban megoldásában.</string>
   <string name="autofill_tip_restart">Próbálja meg ki és be kapcsolni az automatikus kitöltési szolgáltatást.</string>
   <string name="autofill_tip_browser">Használjon egy másik böngészőt.</string>
+  <string name="autofill_tip_another_website">Próbálja meg egy másik weboldalon.</string>
   <string name="sharing_tip_vault_sharing_guide">Problémák a tároló megosztásával? Nézze meg az útmutatónkat.</string>
   <string name="sharing_tip_secure_links_guide">Problémák a biztonságos linkkel? Nézze meg az útmutatónkat.</string>
   <string name="sync_tip_force_refresh">Üres a képernyője? Próbálja meg az erőltetett szinkronizálást.</string>

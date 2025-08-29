@@ -182,6 +182,7 @@
   <string name="update_identity_item_creation_error">Não foi possível atualizar a identidade</string>
   <!--  Common create items  -->
   <string name="title_create">Criar</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (copiado)</string>
   <string name="changes_saved">Alterações salvas</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Chave secreta A2F (TOTP)</string>
@@ -236,36 +237,30 @@
   <string name="template_api_credential_field_secret">Segredo</string>
   <string name="template_api_credential_field_expiry_date">Data de validade</string>
   <string name="template_api_credential_field_permissions">Permissões</string>
-  <string name="template_api_credential_field_note">Nota</string>
   <!-- Database Fields -->
   <string name="template_database_field_host">Servidor</string>
   <string name="template_database_field_port">Porta</string>
   <string name="template_database_field_username">Nome de usuário</string>
   <string name="template_database_field_password">Senha</string>
   <string name="template_database_field_database_type">Tipo do banco de dados</string>
-  <string name="template_database_field_note">Nota</string>
   <!-- Server Fields -->
   <string name="template_server_field_ip_address">Endereço IP</string>
   <string name="template_server_field_hostname">Nome do anfitrião</string>
   <string name="template_server_field_os">Sistema operacional</string>
   <string name="template_server_field_username">Nome de usuário</string>
   <string name="template_server_field_password">Senha</string>
-  <string name="template_server_field_note">Nota</string>
   <!-- Software License Fields -->
   <string name="template_software_license_field_license_key">Chave de licença</string>
   <string name="template_software_license_field_product">Produto</string>
   <string name="template_software_license_field_expiry_date">Data de validade</string>
   <string name="template_software_license_field_owner">Proprietário</string>
-  <string name="template_software_license_field_note">Nota</string>
   <!-- SSH Key Fields -->
   <string name="template_ssh_key_field_private_key">Chave privada</string>
   <string name="template_ssh_key_field_public_key">Chave pública</string>
   <string name="template_ssh_key_field_username">Nome de usuário</string>
   <string name="template_ssh_key_field_host">Servidor</string>
-  <string name="template_ssh_key_field_note">Nota</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_name">Nome (SSID)</string>
-  <string name="template_wifi_network_field_note">Nota</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Nome do banco</string>
   <string name="template_bank_account_field_account_number">Número da conta</string>
@@ -274,14 +269,12 @@
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
   <string name="template_bank_account_field_holder_name">Nome do titular</string>
-  <string name="template_bank_account_field_note">Nota</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">Nome da carteira</string>
   <string name="template_crypto_wallet_field_address">Endereço</string>
   <string name="template_crypto_wallet_field_private_key">Chave privada</string>
   <string name="template_crypto_wallet_field_seed_phrase">Frase de recuperação</string>
   <string name="template_crypto_wallet_field_network">Rede</string>
-  <string name="template_crypto_wallet_field_note">Nota</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">Nome completo</string>
   <string name="template_driver_license_field_license_number">Número da licença</string>
@@ -289,7 +282,6 @@
   <string name="template_driver_license_field_expiry_date">Data de validade</string>
   <string name="template_driver_license_field_date_of_birth">Data de nascimento</string>
   <string name="template_driver_license_field_class">Classe</string>
-  <string name="template_driver_license_field_note">Nota</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Nome do paciente</string>
   <string name="template_medical_record_field_record_number">Número de registro</string>
@@ -297,14 +289,12 @@
   <string name="template_medical_record_field_medications">Medicamentos</string>
   <string name="template_medical_record_field_doctor">Médico</string>
   <string name="template_medical_record_field_hospital">Hospital</string>
-  <string name="template_medical_record_field_note">Nota</string>
   <!-- Membership Fields -->
   <string name="template_membership_field_organization_name">Nome da organização</string>
   <string name="template_membership_field_membership_id">Identificação da associação</string>
   <string name="template_membership_field_member_name">Nome do membro</string>
   <string name="template_membership_field_expiry_date">Data de expiração</string>
   <string name="template_membership_field_tier_level">Camada/Nível</string>
-  <string name="template_membership_field_note">Nota</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">Nome completo</string>
   <string name="template_passport_field_passport_number">Número de passaporte</string>
@@ -312,19 +302,16 @@
   <string name="template_passport_field_expiry_date">Data de expiração</string>
   <string name="template_passport_field_date_of_birth">Data de nascimento</string>
   <string name="template_passport_field_issuing_authority">Autoridade emissora</string>
-  <string name="template_passport_field_note">Nota</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Nome do programa</string>
   <string name="template_reward_program_field_member_id">ID de membro</string>
   <string name="template_reward_program_field_points_balance">Saldo de pontos</string>
   <string name="template_reward_program_field_expiry_date">Data de expiração</string>
   <string name="template_reward_program_field_tier_status">Nível</string>
-  <string name="template_reward_program_field_note">Nota</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">Nome completo</string>
   <string name="template_social_security_number_field_ssn">Número de segurança social</string>
   <string name="template_social_security_number_field_issuing_country">País emissor</string>
-  <string name="template_social_security_number_field_note">Nota</string>
   <string name="template_header_technology">Tecnologia</string>
   <string name="template_header_finance">Finanças</string>
   <string name="template_header_title_personal">Pessoal</string>

@@ -49,7 +49,7 @@
   <string name="bottomsheet_custom_field_type_text">Văn bản</string>
   <string name="bottomsheet_custom_field_type_hidden">Ẩn</string>
   <string name="bottomsheet_custom_field_type_totp">Mã bảo mật 2FA (TOTP)</string>
-  <string name="bottomsheet_custom_field_type_date">Date</string>
+  <string name="bottomsheet_custom_field_type_date">Ngày</string>
   <string name="bottomsheet_custom_field_option_edit">Sửa tên</string>
   <string name="bottomsheet_custom_field_option_remove">Xóa trường</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Xóa trường tùy chỉnh</string>
@@ -57,7 +57,7 @@
   <string name="custom_field_hidden_placeholder">Thêm văn bản ẩn</string>
   <string name="custom_field_hidden_icon_content_description">Biểu tượng trường nội dung tùy chỉnh ẩn</string>
   <string name="custom_field_text_placeholder">Thêm văn bản</string>
-  <string name="custom_field_date_placeholder">Add date</string>
+  <string name="custom_field_date_placeholder">Thêm ngày</string>
   <string name="custom_field_dialog_title">Tên trường tùy chọn</string>
   <string name="custom_field_dialog_body">Cho trường tùy chọn của bạn một cái tên</string>
   <string name="custom_field_dialog_placeholder">Vd. ID người dùng, mã PIN</string>
@@ -182,6 +182,7 @@
   <string name="update_identity_item_creation_error">Không thể cập nhật danh tính</string>
   <!--  Common create items  -->
   <string name="title_create">Tạo</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (đã sao chép)</string>
   <string name="changes_saved">Đã lưu thay đổi</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Mã bảo mật 2FA (TOTP)</string>
@@ -198,18 +199,18 @@
   <string name="mfa_icon_content_description">biểu tượng 2FA</string>
   <string name="create_alias_content_limit_banner">Bạn đã đạt giới hạn bí danh bạn có thể tạo. Tạo không giới hạn bí danh khi bạn nâng cấp gói đăng ký của mình.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Bạn cần cập nhật app để có thể thay đổi mục</string>
-  <string name="remove_passkey_dialog_title">Bạn muốn xóa passkey này ?</string>
-  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Bạn chuẩn bị xóa passkey cho người dùng \'%1$s\' cho \'%2$s\'. Xác nhận ?</string>
+  <string name="remove_passkey_dialog_title">Bạn muốn xóa chìa khóa truy cập này ?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Bạn chuẩn bị xóa chìa khóa truy cập của người dùng \'%1$s\' cho \'%2$s\'. Bạn có chắc không?</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Tệp đính kèm</string>
   <string name="banner_body_attachments">Bạn có thể đính kèm tệp vào các mục để tổ chức tốt hơn</string>
   <string name="open_with">Mở bằng:</string>
-  <string name="banner_advanced_options_title">Did you know?</string>
+  <string name="banner_advanced_options_title">Bạn có biết không?</string>
   <string name="banner_advanced_options_subtitle">Tap the gear icon to customize the alias the way you want.</string>
-  <string name="banner_custom_domain_title">Did you know?</string>
+  <string name="banner_custom_domain_title">Bạn có biết không?</string>
   <string name="banner_custom_domain_subtitle">By adding your domain, you can create aliases like hi@my-domain.com.</string>
   <string name="banner_custom_domain_button">Thêm tên miền</string>
-  <string name="banner_mailbox_title">Did you know?</string>
+  <string name="banner_mailbox_title">Bạn có biết không?</string>
   <string name="banner_mailbox_subtitle">Share aliases with others by adding their inbox as an additional mailbox.</string>
   <string name="banner_mailbox_button">Thêm hộp thư</string>
   <!-- Suffix -->
@@ -221,10 +222,10 @@
   <string name="template_item_database">Database</string>
   <string name="template_item_server">Máy chủ</string>
   <string name="template_item_software_license">Software License</string>
-  <string name="template_item_ssh_key">SSH Key</string>
-  <string name="template_item_wifi_network">WiFi Network</string>
+  <string name="template_item_ssh_key">Chìa khóa SSH</string>
+  <string name="template_item_wifi_network">Mạng WiFi</string>
   <string name="template_item_bank_account">Bank Account</string>
-  <string name="template_item_crypto_wallet">Crypto Wallet</string>
+  <string name="template_item_crypto_wallet">Ví tiền điện tử</string>
   <string name="template_item_driver_license">Driver License</string>
   <string name="template_item_medical_record">Medical Record</string>
   <string name="template_item_membership">Membership</string>
@@ -232,40 +233,34 @@
   <string name="template_item_reward_program">Reward Program</string>
   <string name="template_item_social_security_number">Social Security Number</string>
   <!-- API Credential Fields -->
-  <string name="template_api_credential_field_api_key">API Key</string>
+  <string name="template_api_credential_field_api_key">Chìa khóa API</string>
   <string name="template_api_credential_field_secret">Secret</string>
   <string name="template_api_credential_field_expiry_date">Expiry Date</string>
   <string name="template_api_credential_field_permissions">Quyền</string>
-  <string name="template_api_credential_field_note">Ghi chú</string>
   <!-- Database Fields -->
   <string name="template_database_field_host">Host</string>
   <string name="template_database_field_port">Cổng</string>
   <string name="template_database_field_username">Tên tài khoản</string>
   <string name="template_database_field_password">Mật khẩu</string>
   <string name="template_database_field_database_type">Database Type</string>
-  <string name="template_database_field_note">Ghi chú</string>
   <!-- Server Fields -->
   <string name="template_server_field_ip_address">Địa chỉ IP</string>
   <string name="template_server_field_hostname">Hostname</string>
   <string name="template_server_field_os">Operating System</string>
   <string name="template_server_field_username">Tên tài khoản</string>
   <string name="template_server_field_password">Mật khẩu</string>
-  <string name="template_server_field_note">Ghi chú</string>
   <!-- Software License Fields -->
   <string name="template_software_license_field_license_key">License Key</string>
   <string name="template_software_license_field_product">Product</string>
   <string name="template_software_license_field_expiry_date">Expiry Date</string>
   <string name="template_software_license_field_owner">Chủ sở hữu</string>
-  <string name="template_software_license_field_note">Ghi chú</string>
   <!-- SSH Key Fields -->
   <string name="template_ssh_key_field_private_key">Private Key</string>
   <string name="template_ssh_key_field_public_key">Public Key</string>
   <string name="template_ssh_key_field_username">Tên người dùng</string>
   <string name="template_ssh_key_field_host">Host</string>
-  <string name="template_ssh_key_field_note">Ghi chú</string>
   <!-- WiFi Network Fields -->
-  <string name="template_wifi_network_field_name">Name (SSID)</string>
-  <string name="template_wifi_network_field_note">Ghi chú</string>
+  <string name="template_wifi_network_field_name">Tên mạng (SSID)</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Bank Name</string>
   <string name="template_bank_account_field_account_number">Account Number</string>
@@ -274,22 +269,19 @@
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
   <string name="template_bank_account_field_holder_name">Holder Name</string>
-  <string name="template_bank_account_field_note">Ghi chú</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">Wallet Name</string>
   <string name="template_crypto_wallet_field_address">Địa chỉ</string>
   <string name="template_crypto_wallet_field_private_key">Private Key</string>
   <string name="template_crypto_wallet_field_seed_phrase">Seed Phrase</string>
   <string name="template_crypto_wallet_field_network">Mạng</string>
-  <string name="template_crypto_wallet_field_note">Ghi chú</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">Tên đầy đủ</string>
   <string name="template_driver_license_field_license_number">License Number</string>
   <string name="template_driver_license_field_issuing_state_country">Issuing State/Country</string>
   <string name="template_driver_license_field_expiry_date">Expiry Date</string>
   <string name="template_driver_license_field_date_of_birth">Date of Birth</string>
-  <string name="template_driver_license_field_class">Class</string>
-  <string name="template_driver_license_field_note">Ghi chú</string>
+  <string name="template_driver_license_field_class">Hạng</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Patient Name</string>
   <string name="template_medical_record_field_record_number">Record Number</string>
@@ -297,14 +289,12 @@
   <string name="template_medical_record_field_medications">Medications</string>
   <string name="template_medical_record_field_doctor">Doctor</string>
   <string name="template_medical_record_field_hospital">Hospital</string>
-  <string name="template_medical_record_field_note">Ghi chú</string>
   <!-- Membership Fields -->
   <string name="template_membership_field_organization_name">Organization Name</string>
-  <string name="template_membership_field_membership_id">Membership ID</string>
+  <string name="template_membership_field_membership_id">Số ID hội viên</string>
   <string name="template_membership_field_member_name">Member Name</string>
   <string name="template_membership_field_expiry_date">Expiry Date</string>
   <string name="template_membership_field_tier_level">Tier/Level</string>
-  <string name="template_membership_field_note">Ghi chú</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">Tên đầy đủ</string>
   <string name="template_passport_field_passport_number">Passport Number</string>
@@ -312,19 +302,16 @@
   <string name="template_passport_field_expiry_date">Expiry Date</string>
   <string name="template_passport_field_date_of_birth">Date of Birth</string>
   <string name="template_passport_field_issuing_authority">Issuing Authority</string>
-  <string name="template_passport_field_note">Ghi chú</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Program Name</string>
-  <string name="template_reward_program_field_member_id">Member ID</string>
+  <string name="template_reward_program_field_member_id">Số ID thành viên</string>
   <string name="template_reward_program_field_points_balance">Points Balance</string>
   <string name="template_reward_program_field_expiry_date">Expiry Date</string>
   <string name="template_reward_program_field_tier_status">Tier/Status</string>
-  <string name="template_reward_program_field_note">Ghi chú</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">Tên đầy đủ</string>
   <string name="template_social_security_number_field_ssn">Social Security Number</string>
   <string name="template_social_security_number_field_issuing_country">Issuing Country</string>
-  <string name="template_social_security_number_field_note">Ghi chú</string>
   <string name="template_header_technology">Technology</string>
   <string name="template_header_finance">Finance</string>
   <string name="template_header_title_personal">Personal</string>

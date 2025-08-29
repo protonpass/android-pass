@@ -37,6 +37,7 @@
   <string name="tips_subtitle">这些提示可以帮助您更快地解决问题。</string>
   <string name="autofill_tip_restart">尝试禁用和启用自动填充服务。</string>
   <string name="autofill_tip_browser">尝试其他浏览器。</string>
+  <string name="autofill_tip_another_website">在其他网站上试试。</string>
   <string name="sharing_tip_vault_sharing_guide">在保险库共享方面遇到问题？请参考我们的指南。</string>
   <string name="sharing_tip_secure_links_guide">安全链接有问题？请参考我们的指南。</string>
   <string name="sync_tip_force_refresh">您的屏幕为空？请尝试强制同步。</string>

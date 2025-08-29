@@ -30,11 +30,12 @@
   <string name="bottomsheet_view_item_history">Xem lịch sử</string>
   <string name="bottomsheet_monitor_exclude">Bỏ qua theo dõi</string>
   <string name="bottomsheet_monitor_include">Thêm vào theo dõi</string>
-  <string name="bottomsheet_migrate_item">Chuyển đến kho lưu trữ khác</string>
+  <string name="bottomsheet_migrate_item">Chuyển đến một két sắt khác</string>
   <string name="bottomsheet_copy_item_note">Sao chép ghi chú</string>
   <string name="bottomsheet_delete_permanently">Xóa vĩnh viễn</string>
   <string name="bottomsheet_restore">Khôi phục</string>
   <string name="bottomsheet_leave">Thoát</string>
+  <string name="bottomsheet_duplicate">Duplicate</string>
   <string name="bottomsheet_no_actions">Không có hành động nào khả dụng</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Mở menu hành động mục</string>
@@ -75,7 +76,7 @@
   <string name="add_item_icon_content_description">Thêm biểu tượng nội dung</string>
   <string name="navigate_back_icon_content_description">Biểu tượng quay lại</string>
   <!-- Vault selector -->
-  <string name="vault_selector_title">Kho lưu trữ</string>
+  <string name="vault_selector_title">Két sắt</string>
   <!-- Bottom bar -->
   <string name="bottom_bar_list_items_icon_content_description">Liệt kê nội dung</string>
   <string name="bottom_bar_add_item_icon_content_description">Thêm nội dung</string>
@@ -195,16 +196,16 @@
   <string name="item_details_shared_section_more_info_header_title">Thông tin thêm</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">Thông tin thêm</string>
   <string name="item_details_shared_section_more_info_item_id">Item ID</string>
-  <string name="item_details_shared_section_more_info_vault_id">Vault ID</string>
-  <string name="item_details_shared_section_more_info_share_id">Share ID</string>
-  <string name="item_details_wifi_network_label_ssid_name">Name (SSID)</string>
+  <string name="item_details_shared_section_more_info_vault_id">Số ID két sắt</string>
+  <string name="item_details_shared_section_more_info_share_id">Số Share ID</string>
+  <string name="item_details_wifi_network_label_ssid_name">Tên mạng (SSID)</string>
   <string name="item_details_wifi_network_label_password">Mật khẩu</string>
   <string name="item_details_wifi_network_label_security">Security</string>
-  <string name="item_details_ssh_key_label_public_key">Public key</string>
-  <string name="item_details_ssh_key_label_private_key">Private key</string>
+  <string name="item_details_ssh_key_label_public_key">Chìa khóa công khai</string>
+  <string name="item_details_ssh_key_label_private_key">Chìa khóa riêng tư</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Phiên bản ứng dụng nay không còn được hỗ trợ, vui lòng cập nhật.</string>
   <!-- Passkeys -->
-  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Khóa truy cập</string>
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Chìa khóa truy cập</string>
   <!-- Upgrade -->
   <string name="dialog_upgrade_plan_title">Nâng cấp gói người dùng?</string>
   <string name="dialog_upgrade_plan_message">Tính năng này không khả dụng với người dùng miễn phí. Nếu muốn sử dụng cùng các tính năng hữu ích khác, hãy nâng cấp gói người dùng và trải nghiệm thử.</string>
@@ -293,8 +294,8 @@
     <item quantity="other">%d thành viên</item>
   </plurals>
   <string name="show_network_qr_code">Show Network QR Code</string>
-  <string name="expand_collpased_text">more</string>
-  <string name="collapse_expanded_text">less</string>
+  <string name="expand_collpased_text">thêm</string>
+  <string name="collapse_expanded_text">bớt</string>
   <string name="login_item_monitor_widget_weak_pass_title">Mật khẩu yếu</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Tài khoản này không an toàn, hãy tới dịch vụ và thay đổi mật khẩu.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
@@ -302,7 +303,7 @@
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Thiết lập xác minh 2 bước để an toàn hơn</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Dịch vụ này hỗ trợ mã bí mật 2FA. Hãy khởi tạo nó để tăng cường bảo mật cho tài khoản của bạn.</string>
-  <string name="login_item_reused_passwords_subtitle">Các nội dung khác sử dụng cùng mật khẩu này.</string>
+  <string name="login_item_reused_passwords_subtitle">Các mục khác trong két sắt có sử dụng mật khẩu này.</string>
   <string name="mfa_limit_reached">Đã dạt giới hạn 2FA</string>
   <string name="activity_in_last_two_weeks">Hoạt động trong 14 ngày qua</string>
   <string name="contacts">Danh bạ</string>

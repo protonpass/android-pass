@@ -182,6 +182,7 @@
   <string name="update_identity_item_creation_error">Не атрымалася абнавіць ідэнтычнасць:</string>
   <!--  Common create items  -->
   <string name="title_create">Стварыць</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (скапіявана)</string>
   <string name="changes_saved">Змены захаваны</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Сакрэтны ключ 2ФА (TOTP)</string>
@@ -236,36 +237,30 @@
   <string name="template_api_credential_field_secret">Сакрэт</string>
   <string name="template_api_credential_field_expiry_date">Тэрмін дзеяння</string>
   <string name="template_api_credential_field_permissions">Дазволы</string>
-  <string name="template_api_credential_field_note">Нататка</string>
   <!-- Database Fields -->
   <string name="template_database_field_host">Вузел</string>
   <string name="template_database_field_port">Порт</string>
   <string name="template_database_field_username">Імя карыстальніка</string>
   <string name="template_database_field_password">Пароль</string>
   <string name="template_database_field_database_type">Тып базы даных</string>
-  <string name="template_database_field_note">Нататка</string>
   <!-- Server Fields -->
   <string name="template_server_field_ip_address">IP-адрас</string>
   <string name="template_server_field_hostname">Імя вузла</string>
   <string name="template_server_field_os">Аперацыйная сістэма</string>
   <string name="template_server_field_username">Імя карыстальніка</string>
   <string name="template_server_field_password">Пароль</string>
-  <string name="template_server_field_note">Нататка</string>
   <!-- Software License Fields -->
   <string name="template_software_license_field_license_key">Ліцэнзійны ключ</string>
   <string name="template_software_license_field_product">Прадукт</string>
   <string name="template_software_license_field_expiry_date">Тэрмін дзеяння</string>
   <string name="template_software_license_field_owner">Уладальнік</string>
-  <string name="template_software_license_field_note">Нататка</string>
   <!-- SSH Key Fields -->
   <string name="template_ssh_key_field_private_key">Прыватны ключ</string>
   <string name="template_ssh_key_field_public_key">Публічны ключ</string>
   <string name="template_ssh_key_field_username">Імя карыстальніка</string>
   <string name="template_ssh_key_field_host">Вузел</string>
-  <string name="template_ssh_key_field_note">Нататка</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_name">Назва (SSID)</string>
-  <string name="template_wifi_network_field_note">Нататка</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Назва банка</string>
   <string name="template_bank_account_field_account_number">Нумар рахунка</string>
@@ -274,14 +269,12 @@
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
   <string name="template_bank_account_field_holder_name">Імя трымальніка</string>
-  <string name="template_bank_account_field_note">Нататка</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">Назва кашалька</string>
   <string name="template_crypto_wallet_field_address">Адрас</string>
   <string name="template_crypto_wallet_field_private_key">Прыватны ключ</string>
   <string name="template_crypto_wallet_field_seed_phrase">Seed-фраза</string>
   <string name="template_crypto_wallet_field_network">Сетка</string>
-  <string name="template_crypto_wallet_field_note">Нататка</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">Поўнае імя</string>
   <string name="template_driver_license_field_license_number">Нумар ліцэнзіі</string>
@@ -289,7 +282,6 @@
   <string name="template_driver_license_field_expiry_date">Тэрмін дзеяння</string>
   <string name="template_driver_license_field_date_of_birth">Дата нараджэння</string>
   <string name="template_driver_license_field_class">Клас</string>
-  <string name="template_driver_license_field_note">Нататка</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Імя пацыента</string>
   <string name="template_medical_record_field_record_number">Нумар запісу</string>
@@ -297,14 +289,12 @@
   <string name="template_medical_record_field_medications">Медыкаменты</string>
   <string name="template_medical_record_field_doctor">Урач</string>
   <string name="template_medical_record_field_hospital">Бальніца</string>
-  <string name="template_medical_record_field_note">Нататка</string>
   <!-- Membership Fields -->
   <string name="template_membership_field_organization_name">Назва арганізацыі</string>
   <string name="template_membership_field_membership_id">Ідэнт. удзельніка</string>
   <string name="template_membership_field_member_name">Імя ўдзельніка</string>
   <string name="template_membership_field_expiry_date">Тэрмін дзеяння</string>
   <string name="template_membership_field_tier_level">Узровень</string>
-  <string name="template_membership_field_note">Нататка</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">Поўнае імя</string>
   <string name="template_passport_field_passport_number">Нумар пашпарта</string>
@@ -312,19 +302,16 @@
   <string name="template_passport_field_expiry_date">Тэрмін дзеяння</string>
   <string name="template_passport_field_date_of_birth">Дата нараджэння</string>
   <string name="template_passport_field_issuing_authority">Орган, які выдаў</string>
-  <string name="template_passport_field_note">Нататка</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Назва праграмы</string>
   <string name="template_reward_program_field_member_id">Ідэнт. удзельніка</string>
   <string name="template_reward_program_field_points_balance">Баланс балаў</string>
   <string name="template_reward_program_field_expiry_date">Тэрмін дзеяння</string>
   <string name="template_reward_program_field_tier_status">Узровень/статус</string>
-  <string name="template_reward_program_field_note">Нататка</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">Поўнае імя</string>
   <string name="template_social_security_number_field_ssn">Нумар сацыяльнага страхавання</string>
   <string name="template_social_security_number_field_issuing_country">Краіна, якая выдала</string>
-  <string name="template_social_security_number_field_note">Нататка</string>
   <string name="template_header_technology">Тэхналогіі</string>
   <string name="template_header_finance">Фінансы</string>
   <string name="template_header_title_personal">Асабісты</string>

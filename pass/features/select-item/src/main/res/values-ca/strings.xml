@@ -29,5 +29,5 @@
   <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">Tots els comptes (%1$s)</string>
   <string name="select_item_save_credential_title">Deseu les credencials de la contrasenya</string>
   <string name="select_item_save_credential_subtitle">Seleccioneu un compte per desar la credencial.</string>
-  <string name="select_item_save_credential_button">Seleccioneu un compte</string>
+  <string name="select_item_save_credential_button">Selecciona un compte</string>
 </resources>

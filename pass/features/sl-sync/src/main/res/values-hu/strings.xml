@@ -68,7 +68,7 @@
   <string name="simple_login_sync_domain_select_title">Alapértelmezett domain név</string>
   <string name="simple_login_sync_domain_select_title_none">nincs</string>
   <string name="simple_login_sync_domain_select_description_none">Nincs domain név</string>
-  <string name="simple_login_sync_domain_select_description_custom">Domain neve</string>
+  <string name="simple_login_sync_domain_select_description_custom">Saját domain név</string>
   <string name="simple_login_sync_domain_select_description_free">Nyilvános domain név</string>
   <string name="simple_login_sync_domain_select_description_premium">Prémium domain név</string>
   <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">Hiba történt az SL álnevek domain nevének lekérdezésekor</string>

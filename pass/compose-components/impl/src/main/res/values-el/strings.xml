@@ -36,6 +36,7 @@
   <string name="bottomsheet_delete_permanently">Οριστική διαγραφή</string>
   <string name="bottomsheet_restore">Επαναφορά</string>
   <string name="bottomsheet_leave">Αποχώρηση</string>
+  <string name="bottomsheet_duplicate">Διπλότυπο</string>
   <string name="bottomsheet_no_actions">Δεν υπάρχει διαθέσιμες λειτουργίες</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Άνοιγμα μενού ενεργειών στοιχείου</string>

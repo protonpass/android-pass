@@ -182,6 +182,7 @@
   <string name="update_identity_item_creation_error">Nu s-a putut actualiza identitatea.</string>
   <!--  Common create items  -->
   <string name="title_create">Creare</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (copiat)</string>
   <string name="changes_saved">Modificările s-au salvat.</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Cheie secretă A2F (TOTP)</string>
@@ -199,7 +200,7 @@
   <string name="create_alias_content_limit_banner">Ați atins limita aliasurilor pe care le puteți crea. Puteți creați un număr nelimitat de aliasuri dacă vă modificați abonamentul.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Aplicația trebuie actualizată pentru a edita acest articol.</string>
   <string name="remove_passkey_dialog_title">Eliminați această cheie de acces?</string>
-  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Sunteți pe cale să eliminați cheia de acces pentru utilizatorul „%1$s” pentru „%2$s”. Confirmați?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Veți elimina cheia de acces pentru utilizatorul „%1$s” pentru „%2$s”. Confirmați?</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Atașamente</string>
   <string name="banner_body_attachments">Puteți atașa fișiere la articole pentru o organizare mai bună.</string>
@@ -236,36 +237,30 @@
   <string name="template_api_credential_field_secret">Secret</string>
   <string name="template_api_credential_field_expiry_date">Data expirării</string>
   <string name="template_api_credential_field_permissions">Permisiuni</string>
-  <string name="template_api_credential_field_note">Notiță</string>
   <!-- Database Fields -->
   <string name="template_database_field_host">Gazdă</string>
   <string name="template_database_field_port">Port</string>
   <string name="template_database_field_username">Nume de utilizator</string>
   <string name="template_database_field_password">Parola</string>
   <string name="template_database_field_database_type">Tip bază de date</string>
-  <string name="template_database_field_note">Notiță</string>
   <!-- Server Fields -->
   <string name="template_server_field_ip_address">Adresa IP</string>
   <string name="template_server_field_hostname">Nume gazdă</string>
   <string name="template_server_field_os">Sistem de operare</string>
   <string name="template_server_field_username">Nume de utilizator</string>
   <string name="template_server_field_password">Parola</string>
-  <string name="template_server_field_note">Notiță</string>
   <!-- Software License Fields -->
   <string name="template_software_license_field_license_key">Cheie licență</string>
   <string name="template_software_license_field_product">Produs</string>
   <string name="template_software_license_field_expiry_date">Data expirării</string>
   <string name="template_software_license_field_owner">Proprietar</string>
-  <string name="template_software_license_field_note">Notiță</string>
   <!-- SSH Key Fields -->
   <string name="template_ssh_key_field_private_key">Cheie privată</string>
   <string name="template_ssh_key_field_public_key">Cheie publică</string>
   <string name="template_ssh_key_field_username">Nume de utilizator</string>
   <string name="template_ssh_key_field_host">Gazdă</string>
-  <string name="template_ssh_key_field_note">Notiță</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_name">Nume (SSID)</string>
-  <string name="template_wifi_network_field_note">Notiță</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Nume bancă</string>
   <string name="template_bank_account_field_account_number">Număr cont</string>
@@ -274,14 +269,12 @@
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
   <string name="template_bank_account_field_holder_name">Nume titular</string>
-  <string name="template_bank_account_field_note">Notiță</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">Nume portofel</string>
   <string name="template_crypto_wallet_field_address">Adresa</string>
   <string name="template_crypto_wallet_field_private_key">Cheie privată</string>
   <string name="template_crypto_wallet_field_seed_phrase">Fraza de bază</string>
   <string name="template_crypto_wallet_field_network">Rețea</string>
-  <string name="template_crypto_wallet_field_note">Notiță</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">Nume complet</string>
   <string name="template_driver_license_field_license_number">Număr licență</string>
@@ -289,7 +282,6 @@
   <string name="template_driver_license_field_expiry_date">Data expirării</string>
   <string name="template_driver_license_field_date_of_birth">Data nașterii</string>
   <string name="template_driver_license_field_class">Clasa</string>
-  <string name="template_driver_license_field_note">Notiță</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Nume pacient</string>
   <string name="template_medical_record_field_record_number">Număr de înregistrare</string>
@@ -297,14 +289,12 @@
   <string name="template_medical_record_field_medications">Tratamente medicamentoase</string>
   <string name="template_medical_record_field_doctor">Doctor</string>
   <string name="template_medical_record_field_hospital">Spital</string>
-  <string name="template_medical_record_field_note">Notiță</string>
   <!-- Membership Fields -->
   <string name="template_membership_field_organization_name">Nume organizație</string>
   <string name="template_membership_field_membership_id">ID de membru</string>
   <string name="template_membership_field_member_name">Nume membru</string>
   <string name="template_membership_field_expiry_date">Data expirării</string>
   <string name="template_membership_field_tier_level">Rang/Nivel</string>
-  <string name="template_membership_field_note">Notiță</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">Nume complet</string>
   <string name="template_passport_field_passport_number">Număr pașaport</string>
@@ -312,19 +302,16 @@
   <string name="template_passport_field_expiry_date">Data expirării</string>
   <string name="template_passport_field_date_of_birth">Data nașterii</string>
   <string name="template_passport_field_issuing_authority">Autoritatea emitentă</string>
-  <string name="template_passport_field_note">Notiță</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Nume program</string>
   <string name="template_reward_program_field_member_id">ID membru</string>
   <string name="template_reward_program_field_points_balance">Balanță puncte</string>
   <string name="template_reward_program_field_expiry_date">Data expirării</string>
   <string name="template_reward_program_field_tier_status">Rang/Stare</string>
-  <string name="template_reward_program_field_note">Notiță</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">Nume complet</string>
   <string name="template_social_security_number_field_ssn">Cod numeric personal</string>
   <string name="template_social_security_number_field_issuing_country">Țara emitentă</string>
-  <string name="template_social_security_number_field_note">Notiță</string>
   <string name="template_header_technology">Tehnologie</string>
   <string name="template_header_finance">Finanțe</string>
   <string name="template_header_title_personal">Personal</string>

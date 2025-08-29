@@ -17,10 +17,10 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="select_passkey_action_title" comment="Title of the action to select a passkey. Will appear in the system passkey selector">Lựa chọn passkey khác</string>
-  <string name="select_passkey_action_subtitle" comment="Subtitle of the action to select a passkey. Will appear in the system passkey selector">Lựa chọn 1 passkey từ Proton Pass</string>
+  <string name="select_passkey_action_title" comment="Title of the action to select a passkey. Will appear in the system passkey selector">Chọn một chìa khóa truy cập khác</string>
+  <string name="select_passkey_action_subtitle" comment="Subtitle of the action to select a passkey. Will appear in the system passkey selector">Chọn một chìa khóa truy cập từ Proton Pass</string>
   <string name="passkeys_user_logged_out">Bạn đã đăng xuất. Hãy đăng nhập lại bằng cách mở lại ứng dụng.</string>
-  <string name="passkey_confirm_item_title" comment="Title of the dialog for confirming the generation of a passkey for an item">Tạo passkey</string>
-  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Bạn có chắc chắn muốn tạo passkey cho mục \'%s\' không?</string>
-  <string name="passkey_error_generating_passkey">Lỗi tạo passkey</string>
+  <string name="passkey_confirm_item_title" comment="Title of the dialog for confirming the generation of a passkey for an item">Tạo chìa khóa truy cập</string>
+  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Bạn có chắc muốn tạo chìa khóa truy cập cho mục \'%s\' không?</string>
+  <string name="passkey_error_generating_passkey">Lỗi tạo chìa khóa truy cập</string>
 </resources>

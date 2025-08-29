@@ -37,6 +37,7 @@
   <string name="tips_subtitle">Αυτές οι υποδείξεις μπορεί να σας βοηθήσουν να επιλύσετε το πρόβλημά σας ταχύτερα.</string>
   <string name="autofill_tip_restart">Δοκιμάστε να απενεργοποιήσετε και να ενεργοποιήσετε την υπηρεσία αυτόματης συμπλήρωσης.</string>
   <string name="autofill_tip_browser">Δοκιμάστε ένα άλλο πρόγραμμα περιήγησης.</string>
+  <string name="autofill_tip_another_website">Δοκιμάστε το σε άλλη ιστοσελίδα.</string>
   <string name="sharing_tip_vault_sharing_guide">Αντιμετωπίζετε προβλήματα με την κοινή χρήση κρύπτης; Ελέγξτε τον οδηγό μας.</string>
   <string name="sharing_tip_secure_links_guide">Αντιμετωπίζετε προβλήματα με ασφαλείς συνδέσμους; Ελέγξτε τον οδηγό μας.</string>
   <string name="sync_tip_force_refresh">Είναι άδεια η οθόνη σας; Δοκιμάστε να κάνετε αναγκαστικό συγχρονισμό.</string>

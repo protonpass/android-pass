@@ -37,6 +37,7 @@
   <string name="tips_subtitle">Estos consejos podrían ayudarte a resolver el problema más rápido.</string>
   <string name="autofill_tip_restart">Intenta desactivar y activar la función de relleno automático.</string>
   <string name="autofill_tip_browser">Prueba otro navegador.</string>
+  <string name="autofill_tip_another_website">Pruébalo en otro sitio web.</string>
   <string name="sharing_tip_vault_sharing_guide">¿Tiene problemas al compartir la caja fuerte? Revisa nuestra guía.</string>
   <string name="sharing_tip_secure_links_guide">¿Tienes problemas con los enlaces seguros? Revisa nuestra guía.</string>
   <string name="sync_tip_force_refresh">¿La pantalla está vacía? Intenta una sincronización forzada.</string>

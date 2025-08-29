@@ -37,6 +37,7 @@
   <string name="tips_subtitle">Disse tipsene kan bidra til å løse problemet raskere.</string>
   <string name="autofill_tip_restart">Prøv å deaktivere og aktivere autofyll-tjenesten.</string>
   <string name="autofill_tip_browser">Prøv en annen nettleser.</string>
+  <string name="autofill_tip_another_website">Prøv det i en annen nettside.</string>
   <string name="sharing_tip_vault_sharing_guide">Har du problemer med hvelvdeling? Sjekk vår guide.</string>
   <string name="sharing_tip_secure_links_guide">Har du problemer med sikre koblinger? Sjekk vår guide.</string>
   <string name="sync_tip_force_refresh">Er skjermen tom? Prøv å gjøre en tvungen synkronisering.</string>

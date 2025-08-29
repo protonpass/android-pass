@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Home -->
-  <string name="home_empty_vault_title">Kho lưu trữ của bạn trống</string>
+  <string name="home_empty_vault_title">Két sắt của bạn trống</string>
   <string name="home_empty_vault_subtitle">Bắt đầu bằng việc tạo nội dung đầu tiên của bạn.</string>
   <string name="home_empty_vault_login_title">Không tìm thấy đăng nhập nào</string>
   <string name="home_empty_vault_login_subtitle">Bắt đầu bằng cách tạo mục đăng nhập đầu tiên của bạn.</string>
@@ -22,8 +22,8 @@
   <string name="home_empty_shared_items_by_me_subtitle">Không mục nào được chia sẻ bởi bạn.</string>
   <string name="home_empty_no_vaults_title">You don\'t have any vault</string>
   <string name="home_empty_no_vaults_subtitle">Please, contact your organization support team.</string>
-  <string name="home_empty_read_only_vault_title">Kho lưu trữ này trống</string>
-  <string name="home_empty_read_only_vault_subtitle">Bạn không thể thêm nội dung vào một kho lưu trữ chỉ đọc.</string>
+  <string name="home_empty_read_only_vault_title">Két sắt này trống</string>
+  <string name="home_empty_read_only_vault_subtitle">Bạn không thể thêm nội dung vào một két sắt chỉ-được-xem.</string>
   <string name="home_empty_vault_create_login">Tạo đăng nhập</string>
   <string name="home_empty_vault_create_alias">Tạo bí danh hide-my-email</string>
   <string name="home_empty_vault_create_note">Tạo ghi chú</string>
@@ -49,7 +49,7 @@
   <string name="home_trial_banner_title">Quà tặng chào mừng của chúng tôi</string>
   <string name="home_trial_banner_text">7 ngày miễn phí để dùng thử các tính năng cao cấp. Chỉ trong tuần đầu của bạn với Proton Pass.</string>
   <string name="home_trial_banner_settings">Tìm hiểu thêm ›</string>
-  <string name="home_drawer_all_items">All items</string>
+  <string name="home_drawer_all_items">Tất cả mục</string>
   <string name="sl_sync_banner_title">Đồng bộ bí danh của bạn từ SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="other">Bạn có %d bí danh có trong SimpleLogin nhưng thiếu trong Proton Pass. Bạn có muốn đồng bộ hóa không?</item>
@@ -57,9 +57,9 @@
   <string name="sl_sync_banner_settings">Đồng bộ bí danh ›</string>
   <string name="sl_sync_banner_note">Khi đã đồng bộ, việc xóa bí danh trong Pass cũng sẽ xóa chúng trong SimpleLogin.</string>
   <string name="home_notification_permission_banner_title">Nhận thông báo quan trọng</string>
-  <string name="home_notification_permission_banner_text">Bật thông báo đẩy để biết được khi nào người khác chia sẽ kho lưu trữ với bạn.</string>
+  <string name="home_notification_permission_banner_text">Bật thông báo đẩy để biết được khi nào người khác chia sẻ két sắt với bạn.</string>
   <string name="home_notification_permission_banner_settings">Mở màn hình cấp quyền ›</string>
-  <string name="home_invite_banner_title">Kho lưu trữ được chia sẽ với bạn</string>
+  <string name="home_invite_banner_title">Két sắt được chia sẻ với bạn</string>
   <string name="home_invite_banner_subtitle">Bạn được mời vào một kho lưu trữ. Chạm vào để biết thêm thông tin.</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s muốn chia sẻ một mục với bạn.</string>
   <string name="home_item_invite_banner_subtitle">Chạm để xem chi tiết.</string>
@@ -86,16 +86,16 @@
   <plurals name="vault_drawer_vaults_item_count">
     <item quantity="other">%d nội dung</item>
   </plurals>
-  <string name="vault_drawer_create_vault">Tạo kho lưu trữ</string>
+  <string name="vault_drawer_create_vault">Tạo két sắt</string>
   <string name="vault_drawer_item_trash">Thùng rác</string>
   <!-- Vault management -->
-  <string name="vault_delete_dialog_title">Xóa kho lưu trữ</string>
+  <string name="vault_delete_dialog_title">Xóa két sắt</string>
   <string name="vault_delete_dialog_cancel_action">Hủy</string>
   <string name="vault_delete_dialog_delete_action">Xóa</string>
-  <string name="snackbar_delete_vault_success">Đã xóa kho lưu trữ</string>
-  <string name="snackbar_delete_vault_error">Kho lưu trữ chưa được xóa</string>
+  <string name="snackbar_delete_vault_success">Đã xóa két sắt</string>
+  <string name="snackbar_delete_vault_error">Két sắt chưa được xóa</string>
   <!-- Search top bar -->
-  <string name="search_topbar_placeholder_all_items">Search in all items…</string>
+  <string name="search_topbar_placeholder_all_items">Tìm trong tất cả các mục…</string>
   <string name="search_topbar_placeholder_vault">Tìm trong %s…</string>
   <string name="search_topbar_placeholder_trash">Tìm trong thùng rác…</string>
   <string name="search_topbar_placeholder_pinning">Tìm trong Đã ghim…</string>

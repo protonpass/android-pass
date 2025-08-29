@@ -41,7 +41,7 @@
   <string name="secure_links_overview_button_view_all_links">Az összes biztonságos hivatkozás megtekintése</string>
   <!--List screen-->
   <string name="secure_links_list_title">Biztonságos hivatkozások</string>
-  <string name="secure_links_list_empty_title">Nincsenek biztonságos linkek</string>
+  <string name="secure_links_list_empty_title">Nincsenek hivatkozások</string>
   <string name="secure_links_list_empty_subtitle">Biztonságos hivatkozások létrehozását egy elem részleteinek megosztási lehetőségeiből kezdheti el</string>
   <string name="secure_links_list_expiration_description">Lejár: %s</string>
   <string name="secure_links_list_expired_description">Lejárt</string>
@@ -50,7 +50,7 @@
     <item quantity="other">%d megtekintés</item>
   </plurals>
   <string name="secure_links_list_snackbar_message_links_fetch_error">Egy hiba történt a biztonságos hivatkozások lekérése során</string>
-  <string name="secure_links_list_header_title_inactive">Inaktív linkek</string>
+  <string name="secure_links_list_header_title_inactive">Inaktív hivatkozások</string>
   <!--Shared-->
   <string name="secure_links_shared_action_copy_link">Hivatkozás másolása</string>
   <string name="secure_links_shared_action_share_link">Hivatkozás megosztása</string>

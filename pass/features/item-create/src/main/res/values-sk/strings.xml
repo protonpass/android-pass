@@ -182,6 +182,7 @@
   <string name="update_identity_item_creation_error">Nepodarilo sa aktualizovať identitu</string>
   <!--  Common create items  -->
   <string name="title_create">Vytvoriť</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (skopírované)</string>
   <string name="changes_saved">Zmeny uložené</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">2FA tajný kľúč (TOTP)</string>
@@ -236,36 +237,30 @@
   <string name="template_api_credential_field_secret">Tajné</string>
   <string name="template_api_credential_field_expiry_date">Dátum exspirácie</string>
   <string name="template_api_credential_field_permissions">Oprávnenia</string>
-  <string name="template_api_credential_field_note">Poznámka</string>
   <!-- Database Fields -->
   <string name="template_database_field_host">Hostiteľ</string>
   <string name="template_database_field_port">Port</string>
   <string name="template_database_field_username">Používateľské meno</string>
   <string name="template_database_field_password">Heslo</string>
   <string name="template_database_field_database_type">Typ databázy</string>
-  <string name="template_database_field_note">Poznámka</string>
   <!-- Server Fields -->
   <string name="template_server_field_ip_address">IP adresa</string>
   <string name="template_server_field_hostname">Názov hostiteľa</string>
   <string name="template_server_field_os">Operačný systém</string>
   <string name="template_server_field_username">Používateľské meno</string>
   <string name="template_server_field_password">Heslo</string>
-  <string name="template_server_field_note">Poznámka</string>
   <!-- Software License Fields -->
   <string name="template_software_license_field_license_key">Licenčný kľúč</string>
   <string name="template_software_license_field_product">Produkt</string>
   <string name="template_software_license_field_expiry_date">Dátum exspirácie</string>
   <string name="template_software_license_field_owner">Vlastník</string>
-  <string name="template_software_license_field_note">Poznámka</string>
   <!-- SSH Key Fields -->
   <string name="template_ssh_key_field_private_key">Súkromný kľúč</string>
   <string name="template_ssh_key_field_public_key">Verejný kľúč</string>
   <string name="template_ssh_key_field_username">Používateľské meno</string>
   <string name="template_ssh_key_field_host">Hostiteľ</string>
-  <string name="template_ssh_key_field_note">Poznámka</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_name">Názov (SSID)</string>
-  <string name="template_wifi_network_field_note">Poznámka</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Názov banky</string>
   <string name="template_bank_account_field_account_number">Číslo účtu</string>
@@ -274,14 +269,12 @@
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
   <string name="template_bank_account_field_holder_name">Meno vlastníka</string>
-  <string name="template_bank_account_field_note">Poznámka</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">Názov peňaženky</string>
   <string name="template_crypto_wallet_field_address">Adresa</string>
   <string name="template_crypto_wallet_field_private_key">Súkromný kľúč</string>
   <string name="template_crypto_wallet_field_seed_phrase">Seed fráza</string>
   <string name="template_crypto_wallet_field_network">Sieť</string>
-  <string name="template_crypto_wallet_field_note">Poznámka</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">Celé meno</string>
   <string name="template_driver_license_field_license_number">Licenčné číslo</string>
@@ -289,7 +282,6 @@
   <string name="template_driver_license_field_expiry_date">Dátum exspirácie</string>
   <string name="template_driver_license_field_date_of_birth">Dátum narodenia</string>
   <string name="template_driver_license_field_class">Trieda</string>
-  <string name="template_driver_license_field_note">Poznámka</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Meno pacienta</string>
   <string name="template_medical_record_field_record_number">Číslo záznamu</string>
@@ -297,14 +289,12 @@
   <string name="template_medical_record_field_medications">Lieky</string>
   <string name="template_medical_record_field_doctor">Lekár</string>
   <string name="template_medical_record_field_hospital">Nemocnica</string>
-  <string name="template_medical_record_field_note">Poznámka</string>
   <!-- Membership Fields -->
   <string name="template_membership_field_organization_name">Názov organizácie</string>
   <string name="template_membership_field_membership_id">ID členstva</string>
   <string name="template_membership_field_member_name">Meno člena</string>
   <string name="template_membership_field_expiry_date">Dátum exspirácie</string>
   <string name="template_membership_field_tier_level">Úroveň členstva</string>
-  <string name="template_membership_field_note">Poznámka</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">Celé meno</string>
   <string name="template_passport_field_passport_number">Číslo pasu</string>
@@ -312,19 +302,16 @@
   <string name="template_passport_field_expiry_date">Dátum exspirácie</string>
   <string name="template_passport_field_date_of_birth">Dátum narodenia</string>
   <string name="template_passport_field_issuing_authority">Vydal</string>
-  <string name="template_passport_field_note">Poznámka</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Názov programu</string>
   <string name="template_reward_program_field_member_id">ID člena</string>
   <string name="template_reward_program_field_points_balance">Stav bodov</string>
   <string name="template_reward_program_field_expiry_date">Dátum exspirácie</string>
   <string name="template_reward_program_field_tier_status">Úroveň/Stav</string>
-  <string name="template_reward_program_field_note">Poznámka</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">Celé meno</string>
   <string name="template_social_security_number_field_ssn">Číslo poistenca sociálnej poisťovne</string>
   <string name="template_social_security_number_field_issuing_country">Vydávajúca krajina</string>
-  <string name="template_social_security_number_field_note">Poznámka</string>
   <string name="template_header_technology">Technológia</string>
   <string name="template_header_finance">Financie</string>
   <string name="template_header_title_personal">Osobné</string>

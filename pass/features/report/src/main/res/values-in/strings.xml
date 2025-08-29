@@ -37,6 +37,7 @@
   <string name="tips_subtitle">Tips berikut dapat membantu untuk menyelesaikan masalah Anda dengan cepat.</string>
   <string name="autofill_tip_restart">Coba menonaktifkan dan mengaktifkan kembali layanan pengisian otomatis.</string>
   <string name="autofill_tip_browser">Coba gunakan browser yang berbeda.</string>
+  <string name="autofill_tip_another_website">Try it in another website.</string>
   <string name="sharing_tip_vault_sharing_guide">Memiliki masalah dengan pembagian berkas? Rujuk panduan kami.</string>
   <string name="sharing_tip_secure_links_guide">Memiliki masalah dengan tautan aman? Rujuk panduan kami.</string>
   <string name="sync_tip_force_refresh">Apakah layar Anda kosong? Cobalah untuk melakukan sinkronisasi secara paksa.</string>

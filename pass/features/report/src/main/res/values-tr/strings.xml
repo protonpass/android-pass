@@ -37,6 +37,7 @@
   <string name="tips_subtitle">Bu ipuçları sorununuzu daha hızlı çözmenize yardımcı olabilir.</string>
   <string name="autofill_tip_restart">Otomatik doldurma hizmetini kullanımdan kaldırıp yeniden kullanıma almayı deneyin.</string>
   <string name="autofill_tip_browser">Başka bir tarayıcı kullanın.</string>
+  <string name="autofill_tip_another_website">Başka bir sitede deneyin</string>
   <string name="sharing_tip_vault_sharing_guide">Kasaları paylaşmak ile ilgili bir sorun mu yaşıyorsunuz? Rehberimize bakın.</string>
   <string name="sharing_tip_secure_links_guide">Güvenli bağlantılar ile ilgili bir sorun mu yaşıyorsunuz? Rehberimize bakın.</string>
   <string name="sync_tip_force_refresh">Ekranınız boş mu? Zorla eşitlemeyi deneyin.</string>

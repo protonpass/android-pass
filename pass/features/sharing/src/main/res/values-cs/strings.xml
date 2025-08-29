@@ -69,8 +69,8 @@
   <string name="sharing_snackbar_change_permission_error">Nepodařilo se změnit oprávnění</string>
   <string name="sharing_snackbar_remove_member_success">Člen odebrán z trezoru</string>
   <string name="sharing_snackbar_remove_member_error">Nelze odebrat z trezoru</string>
-  <string name="sharing_snackbar_fetch_member_error">Došlo k chybě při načítání členů</string>
-  <string name="sharing_snackbar_fetch_pending_invites_error">Došlo k chybě při načítání čekajících pozvánek</string>
+  <string name="sharing_snackbar_fetch_member_error">Došlo k chybě při získávání členů</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">Došlo k chybě při získávání čekajících pozvánek</string>
   <string name="share_summary_title">Prohlédnout a sdílet</string>
   <string name="share_summary_share_vault">Sdílet trezor</string>
   <string name="share_summary_share_item">Sdílet položku</string>

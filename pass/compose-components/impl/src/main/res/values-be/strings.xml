@@ -38,6 +38,7 @@
   <string name="bottomsheet_delete_permanently">Выдаліць незваротна</string>
   <string name="bottomsheet_restore">Аднавіць</string>
   <string name="bottomsheet_leave">Выйсці</string>
+  <string name="bottomsheet_duplicate">Дубліраваць</string>
   <string name="bottomsheet_no_actions">Няма даступных дзеянняў</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Адкрыць меню дзеянняў элемента</string>
@@ -378,6 +379,6 @@
   <string name="alias_create_login_from_alias">Стварыць запіс уваходу</string>
   <string name="banner_contacts_title">Ці ведалі вы што?</string>
   <string name="banner_contacts_subtitle">Новы кантакт ствараецца аўтаматычна. Гэта адбываецца кожны раз, калі ваш псеўданім атрымлівае ліст ад каго-небудзь.</string>
-  <string name="action_reveal">Паказаць</string>
+  <string name="action_reveal">Раскрыць</string>
   <string name="action_conceal">Схаваць</string>
 </resources>

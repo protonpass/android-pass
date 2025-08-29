@@ -38,6 +38,7 @@
   <string name="bottomsheet_delete_permanently">Видалити остаточно</string>
   <string name="bottomsheet_restore">Відновити</string>
   <string name="bottomsheet_leave">Покинути</string>
+  <string name="bottomsheet_duplicate">Дублювати</string>
   <string name="bottomsheet_no_actions">Немає доступних дій</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Відкрити меню дій елемента</string>
@@ -378,6 +379,6 @@
   <string name="alias_create_login_from_alias">Створити запис входу</string>
   <string name="banner_contacts_title">Чи знали ви?</string>
   <string name="banner_contacts_subtitle">Щоразу, коли ваш псевдонім отримує лист від когось, автоматично створюється новий контакт.</string>
-  <string name="action_reveal">Reveal</string>
-  <string name="action_conceal">Conceal</string>
+  <string name="action_reveal">Показати</string>
+  <string name="action_conceal">Приховати</string>
 </resources>

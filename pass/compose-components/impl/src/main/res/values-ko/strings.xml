@@ -35,6 +35,7 @@
   <string name="bottomsheet_delete_permanently">영구적으로 삭제</string>
   <string name="bottomsheet_restore">복원</string>
   <string name="bottomsheet_leave">떠나기</string>
+  <string name="bottomsheet_duplicate">복제</string>
   <string name="bottomsheet_no_actions">실행 가능한 작업 없음</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">항목을 액션 매뉴서 열기</string>

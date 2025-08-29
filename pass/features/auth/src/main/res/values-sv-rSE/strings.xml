@@ -36,7 +36,7 @@
   <string name="auth_unlock_button">Lås upp</string>
   <string name="auth_error_empty_password">Lösenord kan inte vara tomt</string>
   <string name="auth_error_pin_cannot_be_empty">PIN kan inte vara tom</string>
-  <string name="auth_extra_password_label">Ange ditt extralösenord</string>
+  <string name="auth_extra_password_label">Ange ditt extra lösenord</string>
   <string name="auth_extra_password_error">Fel vid autentisering med extralösenord</string>
   <string name="auth_extra_password_too_many_attempts">För många misslyckade inloggningsförsök. Du har loggats ut.</string>
   <string name="auth_error_wrong_password_no_attempts">Felaktigt lösenord</string>

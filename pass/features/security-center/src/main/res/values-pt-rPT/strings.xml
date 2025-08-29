@@ -62,7 +62,7 @@
   <!-- Dark web monitor -->
   <string name="security_center_dark_web_monitor_top_bar_title">Monitoramento da Dark Web</string>
   <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Última verificação: %s</string>
-  <string name="security_center_dark_web_monitor_custom_emails_title">Endereços de e-mail  personalizados</string>
+  <string name="security_center_dark_web_monitor_custom_emails_title">Endereços de e-mail personalizados</string>
   <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Não verificado</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Adicionar um novo endereço de e-mail personalizado</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">Adicionar</string>

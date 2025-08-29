@@ -19,8 +19,8 @@
 <resources>
   <string name="sync_item_empty">Caixa forta buida</string>
   <plurals name="sync_item_count">
-    <item quantity="one">%d element descarregat</item>
-    <item quantity="other">%d elements descarregats</item>
+    <item quantity="one">S\'ha baixat %d element</item>
+    <item quantity="other">S\'han baixat %d elements</item>
   </plurals>
   <plurals name="sync_finished_item_count">
     <item quantity="one">%d element sincronitzat</item>

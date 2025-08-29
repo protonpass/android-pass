@@ -17,22 +17,22 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="sync_item_empty">Empty vault</string>
+  <string name="sync_item_empty">空保管庫</string>
   <plurals name="sync_item_count">
-    <item quantity="other">Downloaded %d items</item>
+    <item quantity="other">已下載 %d 個項目</item>
   </plurals>
   <plurals name="sync_finished_item_count">
-    <item quantity="other">%d items synchronized</item>
+    <item quantity="other">%d 個項目已同步</item>
   </plurals>
-  <string name="sync_progress_item_count">Downloading %1$d of %2$d items</string>
+  <string name="sync_progress_item_count">正在下載 %2$d 個項目中的 %1$d 個</string>
   <string name="sync_dialog_title">正在同步項目……</string>
   <string name="sync_dialog_title_error">同步處理失敗</string>
   <string name="sync_dialog_title_success">同步已完成</string>
   <string name="sync_dialog_subtitle">我們正在下載並解密您的項目。這會需要幾分鐘。</string>
-  <string name="sync_dialog_subtitle_error">There was an error downloading and decrypting your items. Please try again.</string>
-  <string name="sync_dialog_subtitle_success">Your items were successfully downloaded and decrypted.</string>
+  <string name="sync_dialog_subtitle_error">下載及解密您的項目時發生錯誤。請再試一次。</string>
+  <string name="sync_dialog_subtitle_success">您的項目已成功下載並解密。</string>
   <string name="sync_item_not_started">尚未開始</string>
   <string name="sync_item_failed">同步處理失敗</string>
-  <string name="sync_dialog_title_inserting">Inserting items…</string>
-  <string name="sync_dialog_subtitle_inserting">Completing last step, almost there.</string>
+  <string name="sync_dialog_title_inserting">正在插入項目…</string>
+  <string name="sync_dialog_subtitle_inserting">正在完成最後步驟，即將完成。</string>
 </resources>

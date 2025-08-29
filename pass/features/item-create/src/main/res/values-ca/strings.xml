@@ -182,6 +182,7 @@
   <string name="update_identity_item_creation_error">No s\'ha pogut actualitzar la identitat.</string>
   <!--  Common create items  -->
   <string name="title_create">Crea</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (copiat)</string>
   <string name="changes_saved">S\'han desat els canvis.</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Clau secreta A2F (TOTP)</string>
@@ -236,36 +237,30 @@
   <string name="template_api_credential_field_secret">Secret</string>
   <string name="template_api_credential_field_expiry_date">Data d\'expiració</string>
   <string name="template_api_credential_field_permissions">Permisos</string>
-  <string name="template_api_credential_field_note">Nota</string>
   <!-- Database Fields -->
   <string name="template_database_field_host">Amfitrió</string>
   <string name="template_database_field_port">Port</string>
   <string name="template_database_field_username">Nom d\'usuari</string>
   <string name="template_database_field_password">Contrasenya</string>
   <string name="template_database_field_database_type">Tipus de base de dades</string>
-  <string name="template_database_field_note">Nota</string>
   <!-- Server Fields -->
   <string name="template_server_field_ip_address">Adreça IP</string>
   <string name="template_server_field_hostname">Nom de l\'amfitrió</string>
   <string name="template_server_field_os">Sistema operatiu</string>
   <string name="template_server_field_username">Nom d\'usuari</string>
   <string name="template_server_field_password">Contrasenya</string>
-  <string name="template_server_field_note">Nota</string>
   <!-- Software License Fields -->
   <string name="template_software_license_field_license_key">Clau de llicència</string>
   <string name="template_software_license_field_product">Producte</string>
   <string name="template_software_license_field_expiry_date">Data d\'expiració</string>
   <string name="template_software_license_field_owner">Propietari</string>
-  <string name="template_software_license_field_note">Nota</string>
   <!-- SSH Key Fields -->
   <string name="template_ssh_key_field_private_key">Clau privada</string>
   <string name="template_ssh_key_field_public_key">Clau pública</string>
   <string name="template_ssh_key_field_username">Nom d\'usuari</string>
   <string name="template_ssh_key_field_host">Amfitrió</string>
-  <string name="template_ssh_key_field_note">Nota</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_name">Nom (SSID)</string>
-  <string name="template_wifi_network_field_note">Nota</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Nom del banc</string>
   <string name="template_bank_account_field_account_number">Número de compte</string>
@@ -274,14 +269,12 @@
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
   <string name="template_bank_account_field_holder_name">Nom del titular</string>
-  <string name="template_bank_account_field_note">Nota</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">Nom de la cartera</string>
   <string name="template_crypto_wallet_field_address">Adreça</string>
   <string name="template_crypto_wallet_field_private_key">Clau privada</string>
   <string name="template_crypto_wallet_field_seed_phrase">Frase de recuperació</string>
   <string name="template_crypto_wallet_field_network">Xarxa</string>
-  <string name="template_crypto_wallet_field_note">Nota</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">Nom complet</string>
   <string name="template_driver_license_field_license_number">Número de llicència</string>
@@ -289,7 +282,6 @@
   <string name="template_driver_license_field_expiry_date">Data d\'expiració</string>
   <string name="template_driver_license_field_date_of_birth">Data de naixement</string>
   <string name="template_driver_license_field_class">Classe</string>
-  <string name="template_driver_license_field_note">Nota</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Nom del pacient</string>
   <string name="template_medical_record_field_record_number">Número de registre</string>
@@ -297,14 +289,12 @@
   <string name="template_medical_record_field_medications">Medicaments</string>
   <string name="template_medical_record_field_doctor">Doctor</string>
   <string name="template_medical_record_field_hospital">Hospital</string>
-  <string name="template_medical_record_field_note">Nota</string>
   <!-- Membership Fields -->
   <string name="template_membership_field_organization_name">Nom de l\'organització</string>
   <string name="template_membership_field_membership_id">ID de subscripció</string>
   <string name="template_membership_field_member_name">Nom del membre</string>
   <string name="template_membership_field_expiry_date">Data d\'expiració</string>
   <string name="template_membership_field_tier_level">Nivell</string>
-  <string name="template_membership_field_note">Nota</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">Nom complet</string>
   <string name="template_passport_field_passport_number">Número de passaport</string>
@@ -312,19 +302,16 @@
   <string name="template_passport_field_expiry_date">Data d\'expiració</string>
   <string name="template_passport_field_date_of_birth">Data de naixement</string>
   <string name="template_passport_field_issuing_authority">Autoritat emissora</string>
-  <string name="template_passport_field_note">Nota</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Nom del programa</string>
   <string name="template_reward_program_field_member_id">ID del membre</string>
   <string name="template_reward_program_field_points_balance">Saldo de punts</string>
   <string name="template_reward_program_field_expiry_date">Data d\'expiració</string>
   <string name="template_reward_program_field_tier_status">Nivell/Estat</string>
-  <string name="template_reward_program_field_note">Nota</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">Nom complet</string>
   <string name="template_social_security_number_field_ssn">Número de la Seguretat Social</string>
   <string name="template_social_security_number_field_issuing_country">País emissor</string>
-  <string name="template_social_security_number_field_note">Nota</string>
   <string name="template_header_technology">Tecnologia</string>
   <string name="template_header_finance">Finances</string>
   <string name="template_header_title_personal">Personal</string>

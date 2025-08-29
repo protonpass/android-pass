@@ -182,6 +182,7 @@
   <string name="update_identity_item_creation_error">无法更新身份</string>
   <!--  Common create items  -->
   <string name="title_create">创建</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (已复制)</string>
   <string name="changes_saved">更改已保存</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">2FA 密钥 (TOTP)</string>
@@ -236,36 +237,30 @@
   <string name="template_api_credential_field_secret">密钥</string>
   <string name="template_api_credential_field_expiry_date">截止日期</string>
   <string name="template_api_credential_field_permissions">权限</string>
-  <string name="template_api_credential_field_note">注释</string>
   <!-- Database Fields -->
   <string name="template_database_field_host">主机</string>
   <string name="template_database_field_port">端口</string>
   <string name="template_database_field_username">用户名</string>
   <string name="template_database_field_password">密码</string>
   <string name="template_database_field_database_type">数据库类型</string>
-  <string name="template_database_field_note">注释</string>
   <!-- Server Fields -->
   <string name="template_server_field_ip_address">IP 地址</string>
   <string name="template_server_field_hostname">主机名</string>
   <string name="template_server_field_os">操作系统</string>
   <string name="template_server_field_username">用户名</string>
   <string name="template_server_field_password">密码</string>
-  <string name="template_server_field_note">注释</string>
   <!-- Software License Fields -->
   <string name="template_software_license_field_license_key">许可证密钥</string>
   <string name="template_software_license_field_product">产品</string>
   <string name="template_software_license_field_expiry_date">截止日期</string>
   <string name="template_software_license_field_owner">所有者</string>
-  <string name="template_software_license_field_note">备注</string>
   <!-- SSH Key Fields -->
   <string name="template_ssh_key_field_private_key">私钥</string>
   <string name="template_ssh_key_field_public_key">公钥</string>
   <string name="template_ssh_key_field_username">用户名</string>
   <string name="template_ssh_key_field_host">主机</string>
-  <string name="template_ssh_key_field_note">备注</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_name">名称 (SSID)</string>
-  <string name="template_wifi_network_field_note">备注</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">银行名称</string>
   <string name="template_bank_account_field_account_number">账户号码</string>
@@ -274,14 +269,12 @@
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
   <string name="template_bank_account_field_holder_name">持有人姓名</string>
-  <string name="template_bank_account_field_note">备注</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">钱包名称</string>
   <string name="template_crypto_wallet_field_address">地址</string>
   <string name="template_crypto_wallet_field_private_key">私钥</string>
   <string name="template_crypto_wallet_field_seed_phrase">种子短语</string>
   <string name="template_crypto_wallet_field_network">网络</string>
-  <string name="template_crypto_wallet_field_note">备注</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">全名</string>
   <string name="template_driver_license_field_license_number">许可编号</string>
@@ -289,7 +282,6 @@
   <string name="template_driver_license_field_expiry_date">截止日期</string>
   <string name="template_driver_license_field_date_of_birth">出生日期</string>
   <string name="template_driver_license_field_class">类型</string>
-  <string name="template_driver_license_field_note">备注</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">患者姓名</string>
   <string name="template_medical_record_field_record_number">记录编号</string>
@@ -297,14 +289,12 @@
   <string name="template_medical_record_field_medications">药剂</string>
   <string name="template_medical_record_field_doctor">医生</string>
   <string name="template_medical_record_field_hospital">医院</string>
-  <string name="template_medical_record_field_note">备注</string>
   <!-- Membership Fields -->
   <string name="template_membership_field_organization_name">组织名称</string>
   <string name="template_membership_field_membership_id">成员编号</string>
   <string name="template_membership_field_member_name">成员名称</string>
   <string name="template_membership_field_expiry_date">截止日期</string>
   <string name="template_membership_field_tier_level">成员级别</string>
-  <string name="template_membership_field_note">备注</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">全称</string>
   <string name="template_passport_field_passport_number">护照号码</string>
@@ -312,19 +302,16 @@
   <string name="template_passport_field_expiry_date">截止日期</string>
   <string name="template_passport_field_date_of_birth">出生日期</string>
   <string name="template_passport_field_issuing_authority">签发机关</string>
-  <string name="template_passport_field_note">备注</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">程序名称</string>
   <string name="template_reward_program_field_member_id">成员编号</string>
   <string name="template_reward_program_field_points_balance">积分余额</string>
   <string name="template_reward_program_field_expiry_date">截止日期</string>
   <string name="template_reward_program_field_tier_status">级别/状态</string>
-  <string name="template_reward_program_field_note">备注</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">全称</string>
   <string name="template_social_security_number_field_ssn">社会保障号码</string>
   <string name="template_social_security_number_field_issuing_country">签发国家/地区</string>
-  <string name="template_social_security_number_field_note">备注</string>
   <string name="template_header_technology">技术</string>
   <string name="template_header_finance">金融</string>
   <string name="template_header_title_personal">私人</string>

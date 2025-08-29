@@ -20,10 +20,10 @@
   <string name="account_settings_list_item_recovery_hint_not_set">未設定</string>
   <string name="account_settings_list_item_password_hint_grace">密碼重設擱置</string>
   <string name="account_settings_list_item_password_hint_insecure">密碼重設就緒</string>
-  <string name="account_settings_list_item_extra_password_header">Extra password for Proton Pass</string>
-  <string name="account_settings_list_item_extra_password_header_set">Set extra password for Proton Pass</string>
+  <string name="account_settings_list_item_extra_password_header">Proton Pass 的第二密碼</string>
+  <string name="account_settings_list_item_extra_password_header_set">設定 Proton Pass 的第二密碼</string>
   <string name="account_settings_list_item_extra_password_active">啟用的</string>
-  <string name="account_settings_list_item_extra_password_description">The extra password will be required to use Pass. It acts as an additional password on top of your Proton password.</string>
+  <string name="account_settings_list_item_extra_password_description">使用 Pass 將需要此第二密碼。此追加密碼將為您在原有 Proton 帳號密碼之上多了一層保護。</string>
   <string name="account_settings_list_item_security_keys_hint_not_set">未設定</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">

@@ -7,5 +7,5 @@
   <string name="new_item_invite_notification_title">New item invite received</string>
   <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s muốn chia sẻ một mục với bạn.</string>
   <string name="new_vault_invite_notification_title">New vault invite received</string>
-  <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s muốn chia sẻ một kho với bạn.</string>
+  <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s muốn chia sẻ một két sắt với bạn.</string>
 </resources>

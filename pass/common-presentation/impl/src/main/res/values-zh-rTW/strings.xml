@@ -17,11 +17,11 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="open_attachments_error">Could not open attachment</string>
-  <string name="download_attachments_error">Could not download attachment</string>
-  <string name="share_attachments_error">Could not share attachment</string>
-  <string name="upload_attachments_error">Could not upload attachment</string>
-  <string name="attachment_size_exceeded_error">The selected file exceeds the size limit. Please choose a file smaller than 100MB.</string>
-  <string name="open_with">Open with:</string>
+  <string name="open_attachments_error">無法開啟附件</string>
+  <string name="download_attachments_error">無法下載附件</string>
+  <string name="share_attachments_error">無法共享附件</string>
+  <string name="upload_attachments_error">無法上傳附件</string>
+  <string name="attachment_size_exceeded_error">選取的檔案超出大小限制。請選取小於 100MB 的檔案。</string>
+  <string name="open_with">開啟方式：</string>
   <string name="share_with">請共享:</string>
 </resources>

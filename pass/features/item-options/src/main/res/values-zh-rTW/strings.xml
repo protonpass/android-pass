@@ -18,12 +18,12 @@
   -->
 <resources>
   <string name="item_options_alias_trash_dialog_title">移至垃圾桶</string>
-  <string name="item_options_alias_trash_dialog_message">Aliases in Trash will continue forwarding emails. If you want to stop receiving emails on this address, disable it instead.</string>
+  <string name="item_options_alias_trash_dialog_message">垃圾桶中的別名仍會持續轉寄電子郵件。若您不希望接收此來自此別名位址的電子郵件，請改為停用。</string>
   <string name="item_options_alias_trash_dialog_checkbox_text">不要再提醒我</string>
-  <string name="item_options_alias_trash_dialog_button_text_disable">Disable instead</string>
+  <string name="item_options_alias_trash_dialog_button_text_disable">改為停用</string>
   <string name="item_options_alias_trash_dialog_button_text_trash">移至垃圾桶</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">There was an error disabling the alias</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">停用別名時發生錯誤</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">別名已停用</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">There was an error moving the alias to trash</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">將別名移至垃圾桶時發生錯誤</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">別名已移至垃圾桶</string>
 </resources>

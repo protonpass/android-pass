@@ -37,6 +37,7 @@
   <string name="tips_subtitle">Estas dicas podem ajudá-lo a resolver mais rapidamente o seu problema.</string>
   <string name="autofill_tip_restart">Tente desativar e ativar o serviço de preenchimento automático.</string>
   <string name="autofill_tip_browser">Tente utilizar outro navegador</string>
+  <string name="autofill_tip_another_website">Tente noutro sítio web.</string>
   <string name="sharing_tip_vault_sharing_guide">Está a ter problemas com a partilha dos cofres? Consulte o nosso guia.</string>
   <string name="sharing_tip_secure_links_guide">Está a ter problemas com ligações seguras? Consulte o nosso guia.</string>
   <string name="sync_tip_force_refresh">O ecrã está vazio? Experimente fazer uma sincronização forçada.</string>

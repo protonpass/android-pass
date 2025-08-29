@@ -3,33 +3,33 @@
   <!-- Home -->
   <string name="home_empty_vault_title">您的保管庫是空的</string>
   <string name="home_empty_vault_subtitle">開始創建您第一個項目</string>
-  <string name="home_empty_vault_login_title">No logins found</string>
+  <string name="home_empty_vault_login_title">沒有找到登入</string>
   <string name="home_empty_vault_login_subtitle">開始創建您的第一個登入項目。</string>
-  <string name="home_empty_vault_aliases_title">No aliases found</string>
+  <string name="home_empty_vault_aliases_title">沒有找到別名</string>
   <string name="home_empty_vault_aliases_subtitle">開始創建您第一個別名項目</string>
-  <string name="home_empty_vault_notes_title">No notes found</string>
-  <string name="home_empty_vault_notes_subtitle">Get started by creating your first note item.</string>
-  <string name="home_empty_vault_logins_mfa_title">No logins with TOTP found</string>
-  <string name="home_empty_vault_logins_mfa_subtitle">Get started by creating your first login with TOTP.</string>
-  <string name="home_empty_vault_identity_title">No identity found</string>
-  <string name="home_empty_vault_identity_subtitle">Get started by creating your first identity item.</string>
-  <string name="home_empty_vault_custom_item_title">No custom item found</string>
-  <string name="home_empty_vault_custom_item_subtitle">Get started by creating your first custom item.</string>
-  <string name="home_empty_vault_cc_title">No credit card found</string>
-  <string name="home_empty_vault_cc_subtitle">Get started by creating your first credit card item.</string>
-  <string name="home_empty_shared_items_title">No shared items found</string>
-  <string name="home_empty_shared_items_with_me_subtitle">No items have been shared with you.</string>
-  <string name="home_empty_shared_items_by_me_subtitle">No items have been shared by you.</string>
-  <string name="home_empty_no_vaults_title">You don\'t have any vault</string>
-  <string name="home_empty_no_vaults_subtitle">Please, contact your organization support team.</string>
+  <string name="home_empty_vault_notes_title">沒有找到備註</string>
+  <string name="home_empty_vault_notes_subtitle">從建立您的第一個備註項目開始。</string>
+  <string name="home_empty_vault_logins_mfa_title">沒有找到使用 TOTP 的登入</string>
+  <string name="home_empty_vault_logins_mfa_subtitle">從建立您的第一個使用 TOTP 的登入開始。</string>
+  <string name="home_empty_vault_identity_title">沒有找到身分</string>
+  <string name="home_empty_vault_identity_subtitle">從建立您的第一個身分項目開始。</string>
+  <string name="home_empty_vault_custom_item_title">沒有找到自訂項目</string>
+  <string name="home_empty_vault_custom_item_subtitle">從建立您的第一個自訂項目開始。</string>
+  <string name="home_empty_vault_cc_title">沒有找到信用或簽帳卡</string>
+  <string name="home_empty_vault_cc_subtitle">從建立您的第一個信用或簽帳卡項目開始。</string>
+  <string name="home_empty_shared_items_title">沒有找到共享的項目</string>
+  <string name="home_empty_shared_items_with_me_subtitle">沒有項目與您共享。</string>
+  <string name="home_empty_shared_items_by_me_subtitle">沒有項目由您共享。</string>
+  <string name="home_empty_no_vaults_title">您沒有任何保管庫</string>
+  <string name="home_empty_no_vaults_subtitle">請聯絡您的組織支援服務團隊。</string>
   <string name="home_empty_read_only_vault_title">此保管庫是空的</string>
   <string name="home_empty_read_only_vault_subtitle">您無法向唯讀的保管庫添加項目。</string>
   <string name="home_empty_vault_create_login">創建登入</string>
   <string name="home_empty_vault_create_alias">創建 Hide-my-email 別名</string>
   <string name="home_empty_vault_create_note">創建備註</string>
   <string name="home_empty_vault_create_credit_card">創建一張信用卡</string>
-  <string name="home_empty_vault_create_identity">Create an identity</string>
-  <string name="home_empty_vault_create_custom_item">Create a custom item</string>
+  <string name="home_empty_vault_create_identity">建立身分</string>
+  <string name="home_empty_vault_create_custom_item">建立自訂項目</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">載入項目時發生錯誤</string>
   <string name="error_refreshing">重新整理時發生錯誤</string>
   <string name="home_snackbar_login_moved_to_trash">登入項目已移至垃圾桶</string>
@@ -37,12 +37,12 @@
   <string name="home_snackbar_note_moved_to_trash">備註已移至垃圾桶</string>
   <string name="home_snackbar_credit_card_moved_to_trash">信用卡已移至垃圾桶</string>
   <string name="home_snackbar_identity_moved_to_trash">身分移進垃圾桶</string>
-  <string name="home_snackbar_custom_moved_to_trash">Custom item moved to trash</string>
+  <string name="home_snackbar_custom_moved_to_trash">自訂項目已移至垃圾桶</string>
   <string name="home_snackbar_move_to_trash_error">項目已移動到垃圾桶</string>
   <string name="home_snackbar_items_move_to_trash_success">項目丟進垃圾桶</string>
   <string name="home_snackbar_items_move_to_trash_error">無法將項目丟進垃圾桶</string>
   <string name="home_toast_items_selected_read_only">僅供讀取的項目無法被選取</string>
-  <string name="home_toast_items_selected_shared_with_me">Items shared with you cannot be selected</string>
+  <string name="home_toast_items_selected_shared_with_me">與您共享的項目無法選取</string>
   <string name="home_autofill_banner_title">享受自動填入的神奇魔力</string>
   <string name="home_autofill_banner_text">輕輕一按，大功告成！您的使用者名稱和密碼就馬上填好。</string>
   <string name="home_autofill_banner_settings">啟用自動填滿＞</string>
@@ -52,17 +52,17 @@
   <string name="home_drawer_all_items">所有項目</string>
   <string name="sl_sync_banner_title">從 SimpleLogin 同步你的別名</string>
   <plurals name="sl_sync_banner_text">
-    <item quantity="other">You have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to sync them?</item>
+    <item quantity="other">你有 %d 個別名存在於 SimpleLogin ，但未同步到 Proton Pass 。是否需要進行同步？</item>
   </plurals>
   <string name="sl_sync_banner_settings">同步別名 ›</string>
-  <string name="sl_sync_banner_note">Once synced, deleting aliases in Pass will also delete them in SimpleLogin.</string>
+  <string name="sl_sync_banner_note">一旦同步，在Pass中刪除別名，也會在SimpleLogin中刪除它們。</string>
   <string name="home_notification_permission_banner_title">取得重要更新</string>
   <string name="home_notification_permission_banner_text">啟用推送通知，以便在其他人與您分享保管庫時收到通知。</string>
   <string name="home_notification_permission_banner_settings">啟用權限 ›</string>
   <string name="home_invite_banner_title">與您分享的保管庫</string>
   <string name="home_invite_banner_subtitle">您被邀請加入共享的保管庫。點擊以取得詳細資料。</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s 想與你分享項目</string>
-  <string name="home_item_invite_banner_subtitle">Tap for details.</string>
+  <string name="home_item_invite_banner_subtitle">輕點以查看詳細資料。</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">複製密碼</string>
   <string name="bottomsheet_copy_username">複製使用者名稱</string>
@@ -71,7 +71,7 @@
   <string name="bottomsheet_copy_cvv">複製安全防護代碼</string>
   <string name="bottomsheet_copy_note">複製備註</string>
   <string name="bottomsheet_edit">編輯</string>
-  <string name="bottomsheet_copy_full_name">Copy full name</string>
+  <string name="bottomsheet_copy_full_name">複製全名</string>
   <!-- Clipboard -->
   <string name="alias_copied_to_clipboard">已複製別名</string>
   <string name="note_copied_to_clipboard">已複製備註</string>
@@ -95,12 +95,12 @@
   <string name="snackbar_delete_vault_success">保管庫已刪除</string>
   <string name="snackbar_delete_vault_error">保管庫未刪除</string>
   <!-- Search top bar -->
-  <string name="search_topbar_placeholder_all_items">Search in all items…</string>
+  <string name="search_topbar_placeholder_all_items">在所有項目中搜尋…</string>
   <string name="search_topbar_placeholder_vault">在 %s 中搜尋</string>
   <string name="search_topbar_placeholder_trash">搜尋垃圾桶</string>
   <string name="search_topbar_placeholder_pinning">於標籤中搜尋…</string>
-  <string name="search_topbar_placeholder_shared_by_me">Search in Shared by me…</string>
-  <string name="search_topbar_placeholder_shared_with_me">Search in Shared with me…</string>
+  <string name="search_topbar_placeholder_shared_by_me">在由我共享的項目中搜尋…</string>
+  <string name="search_topbar_placeholder_shared_with_me">在與我共享的項目中搜尋…</string>
   <string name="item_type_filter_list_icon_content_description">項目類型圖示</string>
   <string name="item_type_filter_all">全部</string>
   <string name="item_type_filter_login">登入</string>
@@ -109,7 +109,7 @@
   <string name="item_type_filter_credit_card">付款卡片</string>
   <string name="item_type_filter_identity">身分</string>
   <string name="item_type_filter_custom_item">自訂</string>
-  <string name="item_type_filter_login_totp">Login with TOTP</string>
+  <string name="item_type_filter_login_totp">使用 TOTP 登入</string>
   <string name="item_type_filter_items_shared_with_me">與我共享</string>
   <string name="item_type_filter_items_shared_by_me">共享的項目</string>
   <!-- Trash -->
@@ -150,7 +150,7 @@
     <item quantity="other">您確定要將 %d 項目全數刪除嗎？請注意，此動作進行後無法復原。</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_shared_warning_message">
-    <item quantity="other">%d items are currently shared. Deleting them will remove access for all other users.</item>
+    <item quantity="other">%d 個項目目前為共享狀態。刪除它們將會移除所有其他使用者的存取權限。</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">最近搜尋</string>
@@ -163,14 +163,14 @@
   <string name="home_snackbar_items_unpinned_success">項目已成功取消標記</string>
   <string name="home_snackbar_items_unpinned_partial_success">取消標註部分項目錯誤</string>
   <string name="home_snackbar_items_unpinned_error">取消標註項目錯誤</string>
-  <string name="home_snackbar_items_alias_enabled_success">Alias enabled successfully</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
-  <string name="home_snackbar_items_alias_enabled_error">Error enabling aliases</string>
-  <string name="home_snackbar_items_alias_disabled_success">Alias disabled successfully</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
-  <string name="home_snackbar_items_alias_disabled_error">Error disabling aliases</string>
+  <string name="home_snackbar_items_alias_enabled_success">別名已成功啟用</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">啟用部分別名時出錯</string>
+  <string name="home_snackbar_items_alias_enabled_error">啟用別名時出錯</string>
+  <string name="home_snackbar_items_alias_disabled_success">別名已成功停用</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">停用部分別名時出錯</string>
+  <string name="home_snackbar_items_alias_disabled_error">停用別名時出錯</string>
   <string name="bulk_action_unpin">移除釘選</string>
   <string name="bulk_action_pin">釘選</string>
-  <string name="bulk_action_enable_alias">Enable alias</string>
+  <string name="bulk_action_enable_alias">啟用別名</string>
   <string name="bulk_action_disable_alias">停用別名</string>
 </resources>

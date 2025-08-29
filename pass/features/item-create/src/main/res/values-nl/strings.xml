@@ -182,6 +182,7 @@
   <string name="update_identity_item_creation_error">Kan identiteit niet bijwerken</string>
   <!--  Common create items  -->
   <string name="title_create">Aanmaken</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (kopie)</string>
   <string name="changes_saved">Wijzigingen opgeslagen.</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">2FA geheime sleutel (TOTP)</string>
@@ -236,36 +237,30 @@
   <string name="template_api_credential_field_secret">Geheim</string>
   <string name="template_api_credential_field_expiry_date">Vervaldatum</string>
   <string name="template_api_credential_field_permissions">Machtigingen</string>
-  <string name="template_api_credential_field_note">Notitie</string>
   <!-- Database Fields -->
   <string name="template_database_field_host">Host</string>
   <string name="template_database_field_port">Poort</string>
   <string name="template_database_field_username">Gebruikersnaam</string>
   <string name="template_database_field_password">Wachtwoord</string>
   <string name="template_database_field_database_type">Databasetype</string>
-  <string name="template_database_field_note">Notitie</string>
   <!-- Server Fields -->
   <string name="template_server_field_ip_address">IP-adres</string>
   <string name="template_server_field_hostname">Hostnaam</string>
   <string name="template_server_field_os">Besturingssysteem</string>
   <string name="template_server_field_username">Gebruikersnaam</string>
   <string name="template_server_field_password">Wachtwoord</string>
-  <string name="template_server_field_note">Notitie</string>
   <!-- Software License Fields -->
   <string name="template_software_license_field_license_key">Licentiecode</string>
   <string name="template_software_license_field_product">Product</string>
   <string name="template_software_license_field_expiry_date">Vervaldatum</string>
   <string name="template_software_license_field_owner">Eigenaar</string>
-  <string name="template_software_license_field_note">Notitie</string>
   <!-- SSH Key Fields -->
   <string name="template_ssh_key_field_private_key">Private sleutel</string>
   <string name="template_ssh_key_field_public_key">Publieke sleutel</string>
   <string name="template_ssh_key_field_username">Gebruikersnaam</string>
   <string name="template_ssh_key_field_host">Host</string>
-  <string name="template_ssh_key_field_note">Notitie</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_name">Naam (SSID)</string>
-  <string name="template_wifi_network_field_note">Notitie</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Naam bank</string>
   <string name="template_bank_account_field_account_number">Account Nummer</string>
@@ -274,14 +269,12 @@
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
   <string name="template_bank_account_field_holder_name">Naam rekeninghouder</string>
-  <string name="template_bank_account_field_note">Notitie</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">Wallet Naam</string>
   <string name="template_crypto_wallet_field_address">Adres</string>
   <string name="template_crypto_wallet_field_private_key">Private sleutel</string>
   <string name="template_crypto_wallet_field_seed_phrase">Seed Zin</string>
   <string name="template_crypto_wallet_field_network">Netwerk</string>
-  <string name="template_crypto_wallet_field_note">Notitie</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">Volledige Naam</string>
   <string name="template_driver_license_field_license_number">Nummer rijbewijs</string>
@@ -289,7 +282,6 @@
   <string name="template_driver_license_field_expiry_date">Vervaldatum</string>
   <string name="template_driver_license_field_date_of_birth">Geboortedatum</string>
   <string name="template_driver_license_field_class">Klasse</string>
-  <string name="template_driver_license_field_note">Notitie</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Naam patiënt</string>
   <string name="template_medical_record_field_record_number">Recordnummer</string>
@@ -297,14 +289,12 @@
   <string name="template_medical_record_field_medications">Geneesmiddelen</string>
   <string name="template_medical_record_field_doctor">Dokter</string>
   <string name="template_medical_record_field_hospital">Ziekenhuis</string>
-  <string name="template_medical_record_field_note">Notitie</string>
   <!-- Membership Fields -->
   <string name="template_membership_field_organization_name">Bedrijfsnaam</string>
   <string name="template_membership_field_membership_id">Lidmaatschap-ID</string>
   <string name="template_membership_field_member_name">Lid Naam</string>
   <string name="template_membership_field_expiry_date">Vervaldatum</string>
   <string name="template_membership_field_tier_level">Niveau</string>
-  <string name="template_membership_field_note">Notitie</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">Volledige Naam</string>
   <string name="template_passport_field_passport_number">Paspoortnummer</string>
@@ -312,19 +302,16 @@
   <string name="template_passport_field_expiry_date">Vervaldatum</string>
   <string name="template_passport_field_date_of_birth">Geboortedatum</string>
   <string name="template_passport_field_issuing_authority">Uitgevende autoriteit</string>
-  <string name="template_passport_field_note">Notitie</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Programmanaam</string>
   <string name="template_reward_program_field_member_id">Lid-ID</string>
   <string name="template_reward_program_field_points_balance">Puntensaldo</string>
   <string name="template_reward_program_field_expiry_date">Vervaldatum</string>
   <string name="template_reward_program_field_tier_status">Rang/Status</string>
-  <string name="template_reward_program_field_note">Notitie</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">Volledige Naam</string>
   <string name="template_social_security_number_field_ssn">Burgerservicenummer(Rijksregisternummer)</string>
   <string name="template_social_security_number_field_issuing_country">Land van uitgifte</string>
-  <string name="template_social_security_number_field_note">Notitie</string>
   <string name="template_header_technology">Technologie</string>
   <string name="template_header_finance">Financieel</string>
   <string name="template_header_title_personal">Persoonlijk</string>

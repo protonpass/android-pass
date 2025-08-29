@@ -182,6 +182,7 @@
   <string name="update_identity_item_creation_error">Identiteettiä ei voitu päivittää</string>
   <!--  Common create items  -->
   <string name="title_create">Luo</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s kopioitiin)</string>
   <string name="changes_saved">Muutokset tallennettiin</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">2FA-salaisuus (TOTP)</string>
@@ -236,36 +237,30 @@
   <string name="template_api_credential_field_secret">Salaisuus</string>
   <string name="template_api_credential_field_expiry_date">Voimassaolo päättyy</string>
   <string name="template_api_credential_field_permissions">Käyttöoikeudet</string>
-  <string name="template_api_credential_field_note">Muistiinpano</string>
   <!-- Database Fields -->
   <string name="template_database_field_host">Isäntä</string>
   <string name="template_database_field_port">Portti</string>
   <string name="template_database_field_username">Käyttäjätunnus</string>
   <string name="template_database_field_password">Salasana</string>
   <string name="template_database_field_database_type">Tietokannan tyyppi</string>
-  <string name="template_database_field_note">Muistiinpano</string>
   <!-- Server Fields -->
   <string name="template_server_field_ip_address">IP-osoite</string>
   <string name="template_server_field_hostname">Isäntänimi</string>
   <string name="template_server_field_os">Käyttöjärjestelmä</string>
   <string name="template_server_field_username">Käyttäjätunnus</string>
   <string name="template_server_field_password">Salasana</string>
-  <string name="template_server_field_note">Muistiinpano</string>
   <!-- Software License Fields -->
   <string name="template_software_license_field_license_key">Lisenssikoodi</string>
   <string name="template_software_license_field_product">Tuote</string>
   <string name="template_software_license_field_expiry_date">Voimassaolo päättyy</string>
   <string name="template_software_license_field_owner">Omistaja</string>
-  <string name="template_software_license_field_note">Muistiinpano</string>
   <!-- SSH Key Fields -->
   <string name="template_ssh_key_field_private_key">Yksityinen avain</string>
   <string name="template_ssh_key_field_public_key">Julkinen avain</string>
   <string name="template_ssh_key_field_username">Käyttäjätunnus</string>
   <string name="template_ssh_key_field_host">Isäntä</string>
-  <string name="template_ssh_key_field_note">Muistiinpano</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_name">Nimi (SSID)</string>
-  <string name="template_wifi_network_field_note">Muistiinpano</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Pankin nimi</string>
   <string name="template_bank_account_field_account_number">Tilinumero</string>
@@ -274,14 +269,12 @@
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
   <string name="template_bank_account_field_holder_name">Haltijan nimi</string>
-  <string name="template_bank_account_field_note">Muistiinpano</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">Lompakon nimi</string>
   <string name="template_crypto_wallet_field_address">Osoite</string>
   <string name="template_crypto_wallet_field_private_key">Yksityinen avain</string>
   <string name="template_crypto_wallet_field_seed_phrase">Siemenlause</string>
   <string name="template_crypto_wallet_field_network">Verkko</string>
-  <string name="template_crypto_wallet_field_note">Muistiinpano</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">Koko nimi</string>
   <string name="template_driver_license_field_license_number">Ajokortin numero</string>
@@ -289,7 +282,6 @@
   <string name="template_driver_license_field_expiry_date">Voimassaolo päättyy</string>
   <string name="template_driver_license_field_date_of_birth">Syntymäpäivä</string>
   <string name="template_driver_license_field_class">Luokka</string>
-  <string name="template_driver_license_field_note">Muistiinpano</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Potilaan nimi</string>
   <string name="template_medical_record_field_record_number">Tietueen numero</string>
@@ -297,14 +289,12 @@
   <string name="template_medical_record_field_medications">Lääkkeet</string>
   <string name="template_medical_record_field_doctor">Lääkäri</string>
   <string name="template_medical_record_field_hospital">Sairaala</string>
-  <string name="template_medical_record_field_note">Muistiinpano</string>
   <!-- Membership Fields -->
   <string name="template_membership_field_organization_name">Organisaation nimi</string>
   <string name="template_membership_field_membership_id">Jäsentunniste</string>
   <string name="template_membership_field_member_name">Jäsenen nimi</string>
   <string name="template_membership_field_expiry_date">Voimassaolo päättyy</string>
   <string name="template_membership_field_tier_level">Taso/versio</string>
-  <string name="template_membership_field_note">Muistiinpano</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">Koko nimi</string>
   <string name="template_passport_field_passport_number">Passin numero</string>
@@ -312,19 +302,16 @@
   <string name="template_passport_field_expiry_date">Voimassaolo päättyy</string>
   <string name="template_passport_field_date_of_birth">Syntymäpäivä</string>
   <string name="template_passport_field_issuing_authority">Myöntänyt viranomainen</string>
-  <string name="template_passport_field_note">Muistiinpano</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Ohjelman nimi</string>
   <string name="template_reward_program_field_member_id">Jäsentunniste</string>
   <string name="template_reward_program_field_points_balance">Pistesaldo</string>
   <string name="template_reward_program_field_expiry_date">Voimassaolo päättyy</string>
   <string name="template_reward_program_field_tier_status">Tila/versio</string>
-  <string name="template_reward_program_field_note">Muistiinpano</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">Koko nimi</string>
   <string name="template_social_security_number_field_ssn">Henkilötunnus</string>
   <string name="template_social_security_number_field_issuing_country">Myöntänyt maa</string>
-  <string name="template_social_security_number_field_note">Muistiinpano</string>
   <string name="template_header_technology">Teknologia</string>
   <string name="template_header_finance">Rahoitus</string>
   <string name="template_header_title_personal">Henkilökohtainen</string>

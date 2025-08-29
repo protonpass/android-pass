@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <plurals name="migrate_item_confirm_title_bottom_sheet">
-    <item quantity="other">Chuyển %d nội dung vào kho lưu trữ này?</item>
+    <item quantity="other">Chuyển %d mục vào két sắt này?</item>
   </plurals>
-  <string name="migrate_all_items_confirm_title_bottom_sheet">Chuyển tất cả nội dung vào kho lưu trữ trên?</string>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">Chuyển tất cả mục vào trong két sắt sau đây?</string>
   <string name="migrate_item_confirm_confirm_button">Di chuyển</string>
   <string name="migrate_item_success_snackbar">Đã di chuyển nội dung</string>
   <string name="migrate_item_error_snackbar">Lỗi khi di chuyển nội dung</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Lỗi khi di chuyển một số nội dung</string>
-  <string name="migrate_item_warning_history">Khi di chuyển nội dung giữa các kho lưu trữ, chúng tôi chỉ giữ lại 50 phiên bản gần nhất của từng nội dung.</string>
-  <string name="migrate_item_warning_secure_link">Các liên kết an toàn của mục sẽ bị xóa khi nó được chuyển sang một kho khác</string>
+  <string name="migrate_item_warning_history">Khi di chuyển nội dung giữa các két sắt, chúng tôi chỉ giữ lại 50 phiên bản gần nhất của từng nội dung.</string>
+  <string name="migrate_item_warning_secure_link">Các đường liên kết an toàn của mục sẽ bị xóa khi được chuyển sang một két sắt khác</string>
   <string name="migrate_all_items_success_snackbar">Đã chuyển tất cả nội dung</string>
-  <string name="migrate_all_items_error_snackbar">Lỗi khi chuyển tất cả nội dung trong kho lưu trữ</string>
+  <string name="migrate_all_items_error_snackbar">Lỗi khi di chuyển tất cả các mục của két sắt</string>
   <string name="migrate_init_error_snackbar">Không thể chuẩn bị màn hình chuyển</string>
-  <string name="migrate_disabled_vault_reason_no_permission">Bạn không thể tạo nội dung trong kho lưu trữ này</string>
-  <string name="migrate_disabled_vault_reason_same_vault">Bạn không thể chuyển một nội dung tới cùng kho lưu trữ</string>
+  <string name="migrate_disabled_vault_reason_no_permission">Bạn không thể tạo nội dung trong két sắt này</string>
+  <string name="migrate_disabled_vault_reason_same_vault">Bạn không thể di chuyển mục vào cùng két sắt</string>
   <plurals name="migrate_items_shared_warning_title">
     <item quantity="other">Move %d items to another vault?</item>
   </plurals>

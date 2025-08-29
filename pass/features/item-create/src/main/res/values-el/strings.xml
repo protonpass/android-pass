@@ -182,6 +182,7 @@
   <string name="update_identity_item_creation_error">Δεν ήταν δυνατή η ενημέρωση της ταυτότητας</string>
   <!--  Common create items  -->
   <string name="title_create">Δημιουργία</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (αντιγράφηκε)</string>
   <string name="changes_saved">Έχουν αποθηκευτεί οι αλλαγές</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Μυστικό κλειδί 2FA (TOTP)</string>
@@ -236,36 +237,30 @@
   <string name="template_api_credential_field_secret">Μυστικό</string>
   <string name="template_api_credential_field_expiry_date">Ημερομηνία Λήξης</string>
   <string name="template_api_credential_field_permissions">Δικαιώματα</string>
-  <string name="template_api_credential_field_note">Σημείωση</string>
   <!-- Database Fields -->
   <string name="template_database_field_host">Διακομιστής</string>
   <string name="template_database_field_port">Θύρα</string>
   <string name="template_database_field_username">Όνομα Χρήστη</string>
   <string name="template_database_field_password">Κωδικός πρόσβασης</string>
   <string name="template_database_field_database_type">Τύπος βάσης δεδομένων</string>
-  <string name="template_database_field_note">Σημείωση</string>
   <!-- Server Fields -->
   <string name="template_server_field_ip_address">Διεύθυνση IP</string>
   <string name="template_server_field_hostname">Όνομα κεντρικού υπολογιστή</string>
   <string name="template_server_field_os">Λειτουργικό Σύστημα</string>
   <string name="template_server_field_username">Όνομα Χρήστη</string>
   <string name="template_server_field_password">Κωδικός πρόσβασης</string>
-  <string name="template_server_field_note">Σημείωση</string>
   <!-- Software License Fields -->
   <string name="template_software_license_field_license_key">Κλειδί άδειας</string>
   <string name="template_software_license_field_product">Προϊόν</string>
   <string name="template_software_license_field_expiry_date">Ημερομηνία Λήξης</string>
   <string name="template_software_license_field_owner">Ιδιοκτήτης</string>
-  <string name="template_software_license_field_note">Σημείωση</string>
   <!-- SSH Key Fields -->
   <string name="template_ssh_key_field_private_key">Ιδιωτικό Κλειδί</string>
   <string name="template_ssh_key_field_public_key">Δημόσιο Κλειδί</string>
   <string name="template_ssh_key_field_username">Όνομα Χρήστη</string>
   <string name="template_ssh_key_field_host">Διακομιστής</string>
-  <string name="template_ssh_key_field_note">Σημείωση</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_name">Όνομα (SSID)</string>
-  <string name="template_wifi_network_field_note">Σημείωση</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Όνομα Τράπεζας</string>
   <string name="template_bank_account_field_account_number">Αριθμός Λογαριασμού</string>
@@ -274,14 +269,12 @@
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
   <string name="template_bank_account_field_holder_name">Όνομα Κατόχου</string>
-  <string name="template_bank_account_field_note">Σημείωση</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">Όνομα Wallet</string>
   <string name="template_crypto_wallet_field_address">Διεύθυνση</string>
   <string name="template_crypto_wallet_field_private_key">Ιδιωτικό Κλειδί</string>
   <string name="template_crypto_wallet_field_seed_phrase">Φράση Σπόρου</string>
   <string name="template_crypto_wallet_field_network">Δίκτυο</string>
-  <string name="template_crypto_wallet_field_note">Σημείωση</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">Ονοματεπώνυμο</string>
   <string name="template_driver_license_field_license_number">Αριθμός Άδειας</string>
@@ -289,7 +282,6 @@
   <string name="template_driver_license_field_expiry_date">Ημερομηνία Λήξης</string>
   <string name="template_driver_license_field_date_of_birth">Ημερομηνία Γεννήσεως</string>
   <string name="template_driver_license_field_class">Κατηγορία</string>
-  <string name="template_driver_license_field_note">Σημείωση</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Όνομα Ασθενούς</string>
   <string name="template_medical_record_field_record_number">Αριθμός Εγγραφής</string>
@@ -297,14 +289,12 @@
   <string name="template_medical_record_field_medications">Φαρμακευτικές αγωγές</string>
   <string name="template_medical_record_field_doctor">Γιατρός</string>
   <string name="template_medical_record_field_hospital">Νοσοκομείο</string>
-  <string name="template_medical_record_field_note">Σημείωση</string>
   <!-- Membership Fields -->
   <string name="template_membership_field_organization_name">Όνομα Οργανισμού</string>
   <string name="template_membership_field_membership_id">Ιδιότητα Μέλους</string>
   <string name="template_membership_field_member_name">Όνομα Μέλους</string>
   <string name="template_membership_field_expiry_date">Ημερομηνία Λήξης</string>
   <string name="template_membership_field_tier_level">Βαθμίδα/Επίπεδο</string>
-  <string name="template_membership_field_note">Σημείωση</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">Ονοματεπώνυμο</string>
   <string name="template_passport_field_passport_number">Αριθμός Διαβατηρίου</string>
@@ -312,19 +302,16 @@
   <string name="template_passport_field_expiry_date">Ημερομηνία Λήξης</string>
   <string name="template_passport_field_date_of_birth">Ημερομηνία Γεννήσεως</string>
   <string name="template_passport_field_issuing_authority">Εκδούσα Αρχή</string>
-  <string name="template_passport_field_note">Σημείωση</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Όνομα Προγράμματος</string>
   <string name="template_reward_program_field_member_id">ID Mέλους</string>
   <string name="template_reward_program_field_points_balance">Υπόλοιπο Πόντων</string>
   <string name="template_reward_program_field_expiry_date">Ημερομηνία Λήξης</string>
   <string name="template_reward_program_field_tier_status">Βαθμίδα/Κατάσταση</string>
-  <string name="template_reward_program_field_note">Σημείωση</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">Ονοματεπώνυμο</string>
   <string name="template_social_security_number_field_ssn">ΑΜΚΑ</string>
   <string name="template_social_security_number_field_issuing_country">Χώρα Έκδοσης</string>
-  <string name="template_social_security_number_field_note">Σημείωση</string>
   <string name="template_header_technology">Τεχνολογία</string>
   <string name="template_header_finance">Οικονομικά</string>
   <string name="template_header_title_personal">Προσωπικό</string>

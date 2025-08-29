@@ -3,18 +3,18 @@
   <string name="bottomsheet_delete_permanently">永久刪除</string>
   <string name="alert_confirm_delete_item_dialog_title">永久刪除？</string>
   <string name="alert_confirm_delete_item_dialog_message">此動作不可逆。</string>
-  <string name="alert_confirm_delete_item_dialog_shared_warning_message">This item is currently shared. Deleting it to will remove access for all other users.</string>
+  <string name="alert_confirm_delete_item_dialog_shared_warning_message">此項目目前為共享狀態。刪除它將會移除所有其他使用者的存取權限。</string>
   <string name="alias_dialog_move_to_trash_title">要丟進垃圾桶嗎？</string>
   <string name="alias_dialog_move_to_trash_content">若別名移至垃圾桶，將會停止轉寄電子郵件到信箱。</string>
   <string name="alias_dialog_move_to_trash_confirm">確認</string>
   <string name="delete_alias_confirm">刪除，我將不再使用</string>
   <string name="delete_alias_title">刪除 %s</string>
-  <string name="delete_alias_enabled_subtitle">"Please note once deleted, the alias can't be restored. Maybe you want to disable the alias instead? "</string>
-  <string name="delete_alias_disabled_subtitle">Please note once deleted, the alias can\'t be restored. The alias is already disabled and won’t forward emails to your mailbox.</string>
+  <string name="delete_alias_enabled_subtitle">"當信箱別名被刪除，將無法復原。可能您需要停用別名？ "</string>
+  <string name="delete_alias_disabled_subtitle">請注意，一旦刪除，此別名便無法還原。此別名已停用，且不會再轉寄電子郵件至您的電郵信箱。</string>
   <plurals name="bulk_delete_alias_title">
-    <item quantity="other">You\'re about to permanently delete %d aliases</item>
+    <item quantity="other">您即將永久刪除 %d 個別名</item>
   </plurals>
-  <string name="bulk_delete_alias_subtitle">Please note once deleted, the aliases can\'t be restored</string>
+  <string name="bulk_delete_alias_subtitle">請注意，別名一旦刪除，就無法恢復。</string>
   <string name="bulk_delete_alias_confirm">了解，我將不再需要這些項目</string>
   <string name="delete_alias_disable">停用別名</string>
 </resources>

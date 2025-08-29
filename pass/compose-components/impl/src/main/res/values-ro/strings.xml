@@ -37,6 +37,7 @@
   <string name="bottomsheet_delete_permanently">Ștergere permanentă</string>
   <string name="bottomsheet_restore">Restaurare</string>
   <string name="bottomsheet_leave">Părăsire</string>
+  <string name="bottomsheet_duplicate">Duplicare</string>
   <string name="bottomsheet_no_actions">Nu există acțiuni disponibile</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Meniu acțiune deschidere articol</string>
@@ -103,7 +104,7 @@
   </plurals>
   <!-- Confirm close dialog -->
   <string name="confirm_close_dialog_title">Renunți la modificări?</string>
-  <string name="confirm_close_dialog_message">Aveți modificări nesalvate, sigur doriți să nu le salvați?</string>
+  <string name="confirm_close_dialog_message">Aveți modificări nesalvate. Sigur nu le salvați?</string>
   <string name="confirm_close_dialog_close_button">Renunțare</string>
   <!-- Upgrade -->
   <string name="upgrade">Modificare</string>

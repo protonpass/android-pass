@@ -120,7 +120,7 @@
   <string name="bottomsheet_trash_all_items_title">Lomtár</string>
   <string name="bottomsheet_restore_all_items">Minden elem helyreállítása</string>
   <string name="bottomsheet_empty_trash">Lomtár kiürítése</string>
-  <string name="bottomsheet_select_items">Válassza ki az elemeket</string>
+  <string name="bottomsheet_select_items">Elemek kiválasztása</string>
   <string name="trash_error_clearing_trash">Hiba a lomtár kiürítésekor</string>
   <string name="trash_success_restoring_items">Elemek helyreállítva</string>
   <string name="trash_error_restoring_items">Hiba az elemek helyreállításakor</string>

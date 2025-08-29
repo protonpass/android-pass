@@ -42,7 +42,7 @@
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Thiết lập xác minh 2 bước để an toàn hơn</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Dịch vụ này hỗ trợ mã bí mật 2FA. Hãy khởi tạo nó để tăng cường bảo mật cho tài khoản của bạn.</string>
-  <string name="login_item_reused_passwords_subtitle">Các nội dung khác sử dụng cùng mật khẩu này.</string>
+  <string name="login_item_reused_passwords_subtitle">Các mục khác trong két sắt có sử dụng mật khẩu này.</string>
   <string name="field_email">Địa chỉ email</string>
   <string name="field_username">Tên người dùng</string>
   <string name="field_username_or_email">Tên đăng nhập hoặc Email</string>
@@ -71,7 +71,7 @@
   <string name="credit_card_verifcation_number_copied_to_clipboard">Đã sao chép mã bảo mật vào bộ nhớ tạm</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Chuyển vào thùng rác</string>
-  <string name="migrate_item_detail_bottom_sheet">Chuyển đến kho lưu trữ khác</string>
+  <string name="migrate_item_detail_bottom_sheet">Chuyển đến két sắt khác</string>
   <!-- More info -->
   <string name="date_today">Hôm nay %s</string>
   <string name="date_yesterday">Hôm qua %s</string>
@@ -89,16 +89,16 @@
   <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
   <string name="item_detail_cannot_perform_action_edit_title">Không thể chỉnh sửa</string>
   <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Bạn không thể chỉnh sửa nội dung này vì bạn không có đủ quyền làm điều đó.</string>
-  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Bạn chỉ có thể chỉnh sửa nội dung trong các kho lưu trữ cũ nhất của mình. Để chỉnh sửa nội dung này, vui lòng nâng cấp gói của bạn.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Bạn chỉ có thể chỉnh sửa các mục trong các két sắt cũ nhất của mình. Để chỉnh sửa mục này, vui lòng nâng cấp gói của bạn.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Bạn không thể chỉnh sửa nội dung này vì nó nằm trong thùng rác. Hãy chuyển nó ra trước khi chỉnh sửa.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Không thể chia sẽ</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Bạn không có đủ quyền để chia sẻ kho lưu trữ này.</string>
-  <string name="item_detail_cannot_perform_action_share_limit_reached">Bạn đã đạt đến giới hạn chia sẻ kho. Để chia sẻ nhiều kho hơn, vui lòng nâng cấp gói hiện tại của bạn.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Bạn đã đạt đến giới hạn chia sẻ két sắt. Để chia sẻ nhiều két hơn, vui lòng nâng cấp gói hiện tại của bạn.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Bạn không thể chỉnh sửa nội dung này vì nó nằm trong thùng rác. Hãy chuyển nó ra trước khi chỉnh sửa.</string>
   <string name="password_score_vulnerable">Dễ bị bẻ khóa</string>
   <string name="password_score_weak">Yếu</string>
   <string name="password_score_strong">Mạnh</string>
-  <string name="passkey_detail_bottomsheet_title">Khóa truy cập</string>
+  <string name="passkey_detail_bottomsheet_title">Chìa khóa truy cập</string>
   <string name="passkey_detail_bottomsheet_username">Tên người dùng</string>
   <string name="passkey_detail_bottomsheet_domain">Tên miền</string>
   <string name="passkey_detail_bottomsheet_key">Chìa khóa</string>

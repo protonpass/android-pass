@@ -36,6 +36,7 @@
   <string name="bottomsheet_delete_permanently">Végleges törlés</string>
   <string name="bottomsheet_restore">Visszaállítás</string>
   <string name="bottomsheet_leave">Elhagyás</string>
+  <string name="bottomsheet_duplicate">Megkettőzés</string>
   <string name="bottomsheet_no_actions">Nincs elérhető művelet</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Az elem művelet menüjének megnyitása</string>
@@ -197,7 +198,7 @@
   <string name="item_details_shared_section_more_info_header_title">További információk</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">Több elem az információ ikonnál</string>
   <string name="item_details_shared_section_more_info_item_id">Elem azonosító</string>
-  <string name="item_details_shared_section_more_info_vault_id">Tároló ID</string>
+  <string name="item_details_shared_section_more_info_vault_id">Tároló azonosító</string>
   <string name="item_details_shared_section_more_info_share_id">Megosztás azonosító</string>
   <string name="item_details_wifi_network_label_ssid_name">SSID neve</string>
   <string name="item_details_wifi_network_label_password">Jelszó</string>
@@ -322,7 +323,7 @@
   <string name="mfa_limit_reached">Kétlépcsős kód korlát elérve</string>
   <string name="activity_in_last_two_weeks">Tevékenység az elmúlt 14 napban</string>
   <string name="contacts">Névjegyek</string>
-  <string name="contacts_section_description">Személyes e-mail címének elrejtése érdekében létrehozhat egy álnév kapcsolatot, amely elrejti a címét.</string>
+  <string name="contacts_section_description">Személyes e-mail címének elrejtése érdekében létrehozhat egy álnév névjegyet, amely elrejti a címét.</string>
   <string name="field_detail_display_name_title">Megjelenítendő név</string>
   <string name="display_name_section_description">A megjelenített név, amikor e-mailt küld erről az álnévről.</string>
   <plurals name="alias_forwards_count">
@@ -339,7 +340,7 @@
   </plurals>
   <string name="alias_create_login_from_alias">Bejelentkezés létrehozása</string>
   <string name="banner_contacts_title">Tudta?</string>
-  <string name="banner_contacts_subtitle">Minden alkalommal, amikor az álneve e-mailt kap valakitől, automatikusan létrejön egy új kapcsolat.</string>
+  <string name="banner_contacts_subtitle">Minden alkalommal, amikor az álneve e-mailt kap valakitől, automatikusan létrejön egy új névjegy.</string>
   <string name="action_reveal">Felfed</string>
   <string name="action_conceal">Elrejt</string>
 </resources>

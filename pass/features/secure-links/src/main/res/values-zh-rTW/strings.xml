@@ -18,46 +18,46 @@
   -->
 <resources>
   <!--Create screen-->
-  <string name="secure_links_create_title">Share secure link</string>
-  <string name="secure_links_create_row_expiration_title">Link expires after</string>
+  <string name="secure_links_create_title">共享安全加密鏈結</string>
+  <string name="secure_links_create_row_expiration_title">連結於之後到期</string>
   <string name="secure_links_create_row_expiration_options_one_hour">1 小時</string>
   <string name="secure_links_create_row_expiration_options_one_day">1 天</string>
   <string name="secure_links_create_row_expiration_options_seven_days">7 天</string>
   <string name="secure_links_create_row_expiration_options_fourteen_days">14 天</string>
   <string name="secure_links_create_row_expiration_options_thirty_days">30 天</string>
-  <string name="secure_links_create_row_max_views_title">Restrict number of views</string>
-  <string name="secure_links_create_row_max_views_subtitle">Maximum views: %d</string>
-  <string name="secure_links_create_button_generate">Generate secure link</string>
-  <string name="secure_links_create_snackbar_message_error">There was an error generating secure link</string>
+  <string name="secure_links_create_row_max_views_title">限制觀看次數</string>
+  <string name="secure_links_create_row_max_views_subtitle">最大觀看次數：%d</string>
+  <string name="secure_links_create_button_generate">生成安全加密鏈結</string>
+  <string name="secure_links_create_snackbar_message_error">生成安全加密鏈結時發生錯誤</string>
   <!--Overview screen-->
-  <string name="secure_links_overview_widget_expiration_title">Expires in:</string>
-  <string name="secure_links_overview_widget_max_views_title">Can be viewed:</string>
-  <string name="secure_links_overview_widget_open_times_title">Opened:</string>
+  <string name="secure_links_overview_widget_expiration_title">於 到期:</string>
+  <string name="secure_links_overview_widget_max_views_title">可觀看：</string>
+  <string name="secure_links_overview_widget_open_times_title">已開啟:</string>
   <plurals name="secure_links_overview_widget_max_views_limited">
     <item quantity="other">%d 次</item>
   </plurals>
   <string name="secure_links_overview_widget_max_views_unlimited">吃到飽</string>
-  <string name="secure_links_overview_button_view_all_links">View all your secure links</string>
+  <string name="secure_links_overview_button_view_all_links">檢視所有您的安全加密鏈結</string>
   <!--List screen-->
-  <string name="secure_links_list_title">Secure links</string>
-  <string name="secure_links_list_empty_title">No secure links</string>
-  <string name="secure_links_list_empty_subtitle">You can start creating secure links from an item details sharing options</string>
+  <string name="secure_links_list_title">安全加密連結</string>
+  <string name="secure_links_list_empty_title">無安全加密鏈結</string>
+  <string name="secure_links_list_empty_subtitle">您可以從項目詳細資料共享選項開始建立安全加密鏈結</string>
   <string name="secure_links_list_expiration_description">於 %s 到期</string>
   <string name="secure_links_list_expired_description">已過期</string>
   <plurals name="secure_links_list_viewed_times_description">
-    <item quantity="other">%d views</item>
+    <item quantity="other">%d 次檢視</item>
   </plurals>
-  <string name="secure_links_list_snackbar_message_links_fetch_error">There was an error fetching secure links</string>
-  <string name="secure_links_list_header_title_inactive">Inactive links</string>
+  <string name="secure_links_list_snackbar_message_links_fetch_error">擷取安全加密鏈結時發生錯誤</string>
+  <string name="secure_links_list_header_title_inactive">非作用中連結</string>
   <!--Shared-->
   <string name="secure_links_shared_action_copy_link">複製連結</string>
   <string name="secure_links_shared_action_share_link">分享連結</string>
   <string name="secure_links_shared_action_delete_link">移除連結</string>
-  <string name="secure_links_shared_action_delete_link_inactive">Remove inactive link</string>
-  <string name="secure_links_shared_action_delete_links_inactive">Remove all inactive links</string>
+  <string name="secure_links_shared_action_delete_link_inactive">移除非作用中連結</string>
+  <string name="secure_links_shared_action_delete_links_inactive">移除所有非作用中連結</string>
   <string name="secure_links_shared_snackbar_message_link_copied">安全加密鏈結已複製</string>
-  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Secure link deletion was canceled</string>
-  <string name="secure_links_shared_snackbar_message_link_deletion_error">There was an error deleting secure link</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Inactive secure links deletion was canceled</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">There was an error deleting inactive secure links</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">安全加密鏈結刪除已取消</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_error">刪除安全加密鏈結時發生錯誤</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">非作用中安全加密鏈結刪除已取消</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">刪除非作用中安全加密鏈結時發生錯誤</string>
 </resources>

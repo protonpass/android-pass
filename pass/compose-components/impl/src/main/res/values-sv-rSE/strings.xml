@@ -36,6 +36,7 @@
   <string name="bottomsheet_delete_permanently">Ta bort permanent</string>
   <string name="bottomsheet_restore">Återställ</string>
   <string name="bottomsheet_leave">Lämna</string>
+  <string name="bottomsheet_duplicate">Duplicera</string>
   <string name="bottomsheet_no_actions">Inga åtgärder tillgängliga</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Öppna åtgärdsmeny för objekt</string>

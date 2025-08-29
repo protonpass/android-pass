@@ -17,7 +17,7 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="sync_item_empty">Kho rỗng</string>
+  <string name="sync_item_empty">Két sắt rỗng</string>
   <plurals name="sync_item_count">
     <item quantity="other">Đã tải %d mục</item>
   </plurals>

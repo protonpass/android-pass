@@ -11,8 +11,8 @@
   <string name="profile_option_rating">為應用程式評分</string>
   <string name="profile_option_autofill">自動填入</string>
   <string name="profile_option_autofill_subtitle">自動填入使用者名稱和密碼</string>
-  <string name="profile_option_secure_links">Secure links</string>
-  <string name="profile_option_alias_management">Alias management</string>
+  <string name="profile_option_secure_links">安全加密連結</string>
+  <string name="profile_option_alias_management">別名管理</string>
   <string name="profile_error_biometry_failed_to_start">無法使用生物特徵驗證</string>
   <string name="profile_error_biometry_failed_to_authenticate">驗證失敗</string>
   <string name="profile_fingerprint_lock_enabled">啟用指紋鎖</string>
@@ -50,9 +50,9 @@
   <string name="profile_option_change_pin_code">變更 Pin 碼</string>
   <string name="profile_passkey_support_section_title">密碼金鑰</string>
   <string name="profile_passkey_support_subtitle_supported">密碼金鑰是支援服務</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your Android version does not support passkeys.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">您的 Android 版本不支援通行密鑰。</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">你的設備不支持密碼金鑰</string>
-  <string name="profile_passkey_support_subtitle_not_supported_unknown">Could not check support for passkeys</string>
+  <string name="profile_passkey_support_subtitle_not_supported_unknown">無法檢查對通行密鑰的支援</string>
   <plurals name="profile_after_days">
     <item quantity="other">%d天後</item>
   </plurals>
@@ -69,16 +69,16 @@
   <string name="account_switcher_switch_to">切換至</string>
   <string name="account_switcher_add_account">加入帳號</string>
   <string name="account_switcher_remove">刪除</string>
-  <string name="filtered_by_logins">Filtered by logins. Trashed items aren\'t shown</string>
-  <string name="filtered_by_logins_with_mfa">Filtered by logins with TOTP. Trashed items aren\'t shown</string>
-  <string name="filtered_by_aliases">Filtered by aliases. Trashed items aren\'t shown</string>
-  <string name="filtered_by_notes">Filtered by notes. Trashed items aren\'t shown</string>
-  <string name="filtered_by_credit_cards">Filtered by credit cards. Trashed items aren\'t shown</string>
-  <string name="filtered_by_identities">Filtered by identities. Trashed items aren\'t shown</string>
-  <string name="filtered_by_custom_items">Filtered by custom items. Trashed items aren\'t shown</string>
-  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">You need to switch to %1$s in order to manage it</string>
+  <string name="filtered_by_logins">已依登入篩選。垃圾桶中的項目不會顯示。</string>
+  <string name="filtered_by_logins_with_mfa">已依啟用 TOTP 的登入篩選。垃圾桶中的項目不會顯示。</string>
+  <string name="filtered_by_aliases">已依別名篩選。垃圾桶中的項目不會顯示。</string>
+  <string name="filtered_by_notes">已依筆記篩選。垃圾桶中的項目不會顯示。</string>
+  <string name="filtered_by_credit_cards">已依信用或簽帳卡篩選。垃圾桶中的項目不會顯示。</string>
+  <string name="filtered_by_identities">已依身分篩選。垃圾桶中的項目不會顯示。</string>
+  <string name="filtered_by_custom_items">已依自訂項目篩選。垃圾桶中的項目不會顯示。</string>
+  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">您需要切換至 %1$s 才能管理它。</string>
   <string name="account_switch_confirmation_title">管理帳號</string>
-  <string name="account_switch_confirmation_confirm">Switch and manage</string>
+  <string name="account_switch_confirmation_confirm">切換並管理</string>
   <string name="profile_storage_data_title">雲端儲存</string>
   <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%2$s 中的 %1$s</string>
 </resources>

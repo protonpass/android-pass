@@ -83,6 +83,6 @@
   <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_error">There was an error cancelling mailbox email change</string>
   <string name="simple_login_sync_mailbox_cancel_email_change_message_delete_success">Cancelled mailbox email change</string>
   <!-- Shared -->
-  <string name="simple_login_sync_shared_default_vault_title">Kho SL mặc định</string>
-  <string name="simple_login_sync_shared_default_vault_description">Các bí danh SimpleLogin sẽ được nhập vào kho này.</string>
+  <string name="simple_login_sync_shared_default_vault_title">Két sắt SL mặc định</string>
+  <string name="simple_login_sync_shared_default_vault_description">Các bí danh SimpleLogin sẽ được nhập vào két sắt này.</string>
 </resources>

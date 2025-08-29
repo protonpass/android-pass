@@ -182,6 +182,7 @@
   <string name="update_identity_item_creation_error">Kimlik güncellenemedi</string>
   <!--  Common create items  -->
   <string name="title_create">Oluştur</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (kopyalandı)</string>
   <string name="changes_saved">Değişiklikler kaydedildi</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">İki adımlı doğrulama gizli anahtarı (TOTP)</string>
@@ -236,36 +237,30 @@
   <string name="template_api_credential_field_secret">Parola</string>
   <string name="template_api_credential_field_expiry_date">Geçerlilik sonu tarihi</string>
   <string name="template_api_credential_field_permissions">İzinler</string>
-  <string name="template_api_credential_field_note">Not</string>
   <!-- Database Fields -->
   <string name="template_database_field_host">Sunucu</string>
   <string name="template_database_field_port">Bağlantı noktası</string>
   <string name="template_database_field_username">Kullanıcı adı</string>
   <string name="template_database_field_password">Parola</string>
   <string name="template_database_field_database_type">Veri tabanı türü</string>
-  <string name="template_database_field_note">Not</string>
   <!-- Server Fields -->
   <string name="template_server_field_ip_address">IP adresi</string>
   <string name="template_server_field_hostname">Sunucu adı</string>
   <string name="template_server_field_os">İşletim sistemi</string>
   <string name="template_server_field_username">Kullanıcı adı</string>
   <string name="template_server_field_password">Parola</string>
-  <string name="template_server_field_note">Not</string>
   <!-- Software License Fields -->
   <string name="template_software_license_field_license_key">Lisans anahtarı</string>
   <string name="template_software_license_field_product">Ürün</string>
   <string name="template_software_license_field_expiry_date">Geçerlilik sonu tarihi</string>
   <string name="template_software_license_field_owner">Sahibi</string>
-  <string name="template_software_license_field_note">Not</string>
   <!-- SSH Key Fields -->
   <string name="template_ssh_key_field_private_key">Kişisel anahtar</string>
   <string name="template_ssh_key_field_public_key">Herkese açık anahtar</string>
   <string name="template_ssh_key_field_username">Kullanıcı adı</string>
   <string name="template_ssh_key_field_host">Sunucu</string>
-  <string name="template_ssh_key_field_note">Not</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_name">Ad (SSID)</string>
-  <string name="template_wifi_network_field_note">Not</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Banka adı</string>
   <string name="template_bank_account_field_account_number">Hesap numarası</string>
@@ -274,14 +269,12 @@
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
   <string name="template_bank_account_field_holder_name">Kart üzerindeki ad</string>
-  <string name="template_bank_account_field_note">Not</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">Cüzdan adı</string>
   <string name="template_crypto_wallet_field_address">Adres</string>
   <string name="template_crypto_wallet_field_private_key">Kişisel anahtar</string>
   <string name="template_crypto_wallet_field_seed_phrase">Tohum ifadesi</string>
   <string name="template_crypto_wallet_field_network">Ağ</string>
-  <string name="template_crypto_wallet_field_note">Not</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">Tam ad</string>
   <string name="template_driver_license_field_license_number">Ehliyet numarası</string>
@@ -289,7 +282,6 @@
   <string name="template_driver_license_field_expiry_date">Geçerlilik sonu tarihi</string>
   <string name="template_driver_license_field_date_of_birth">Doğum tarihi</string>
   <string name="template_driver_license_field_class">Sınıf</string>
-  <string name="template_driver_license_field_note">Not</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Hasta adı</string>
   <string name="template_medical_record_field_record_number">Kayıt numarası</string>
@@ -297,14 +289,12 @@
   <string name="template_medical_record_field_medications">İlaçlar</string>
   <string name="template_medical_record_field_doctor">Doktor</string>
   <string name="template_medical_record_field_hospital">Hastane</string>
-  <string name="template_medical_record_field_note">Not</string>
   <!-- Membership Fields -->
   <string name="template_membership_field_organization_name">Kuruluş adı</string>
   <string name="template_membership_field_membership_id">Üyelik kimliği</string>
   <string name="template_membership_field_member_name">Üye adı</string>
   <string name="template_membership_field_expiry_date">Geçerlilik sonu tarihi</string>
   <string name="template_membership_field_tier_level">Sınıf/Düzey</string>
-  <string name="template_membership_field_note">Not</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">Tam ad</string>
   <string name="template_passport_field_passport_number">Pasaport numarası</string>
@@ -312,19 +302,16 @@
   <string name="template_passport_field_expiry_date">Geçerlilik sonu tarihi</string>
   <string name="template_passport_field_date_of_birth">Doğum tarihi</string>
   <string name="template_passport_field_issuing_authority">Veren makam</string>
-  <string name="template_passport_field_note">Not</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Program adı</string>
   <string name="template_reward_program_field_member_id">Üye kimliği</string>
   <string name="template_reward_program_field_points_balance">Puan bakiyesi</string>
   <string name="template_reward_program_field_expiry_date">Geçerlilik sonu tarihi</string>
   <string name="template_reward_program_field_tier_status">Düzey/Durum</string>
-  <string name="template_reward_program_field_note">Not</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">Tam ad</string>
   <string name="template_social_security_number_field_ssn">Sosyal güvenlik numarası</string>
   <string name="template_social_security_number_field_issuing_country">Veren ülke</string>
-  <string name="template_social_security_number_field_note">Not</string>
   <string name="template_header_technology">Teknoloji</string>
   <string name="template_header_finance">Finans</string>
   <string name="template_header_title_personal">Kişisel</string>

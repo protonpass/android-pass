@@ -37,6 +37,7 @@
   <string name="tips_subtitle">Aquests consells podrien ajudar-us a resoldre el vostre problema més ràpid.</string>
   <string name="autofill_tip_restart">Proveu de desactivar i activar la funció d\'emplenament automàtic.</string>
   <string name="autofill_tip_browser">Proveu un altre navegador.</string>
+  <string name="autofill_tip_another_website">Proveu-ho en un altre lloc web.</string>
   <string name="sharing_tip_vault_sharing_guide">Teniu problemes amb la compartició de la caixa forta? Consulteu la nostra guia.</string>
   <string name="sharing_tip_secure_links_guide">Teniu problemes amb els enllaços segurs? Consulteu la nostra guia.</string>
   <string name="sync_tip_force_refresh">La vostra pantalla està buida? Intenteu fer una sincronització forçada.</string>

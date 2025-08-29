@@ -23,7 +23,7 @@
   <string name="settings_option_terms_of_service">Szolgáltatási feltételek</string>
   <string name="settings_privacy_section_title">Adatvédelem</string>
   <string name="settings_use_favicons_preference_title">Web ikonok használata</string>
-  <string name="settings_use_favicons_preference_subtitle">Döntse el, hogy megjelenjenek-e a web ikonok az elemeknél.</string>
+  <string name="settings_use_favicons_preference_subtitle">Azt határozza meg, hogy megjelenjenek-e a weboldalak ikonjai az elemeknél.</string>
   <string name="settings_allow_screenshots_preference_title">Képernyőkép engedélyezése</string>
   <string name="settings_allow_screenshots_preference_subtitle">Engedélyezésekor készíthet képernyőképet az alkalmazásról.</string>
   <string name="settings_clear_icon_cache_success">Ikon gyorsítótár ürítve</string>
@@ -37,8 +37,8 @@
   <string name="view_logs_title">Napló megtekintése</string>
   <string name="clipboard_bottomsheet_title">Vágólap</string>
   <string name="clipboard_option_clear_clipboard_label">Vágólap ürítése</string>
-  <string name="clipboard_option_copy_totp_code">Hitelesítés kód másolása</string>
-  <string name="clipboard_option_copy_totp_code_hint">Hitelesítés kódok automatikus másolása az automatikus kitöltés használata közben.</string>
+  <string name="clipboard_option_copy_totp_code">Hitelesítési kódok másolása</string>
+  <string name="clipboard_option_copy_totp_code_hint">Hitelesítési kódok automatikus másolása az automatikus kitöltés használata közben.</string>
   <string name="clipboard_option_clear_clipboard_never">Soha</string>
   <string name="clipboard_option_clear_clipboard_after_60_seconds">1 perc után</string>
   <string name="clipboard_option_clear_clipboard_after_180_seconds">3 perc után</string>

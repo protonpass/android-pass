@@ -182,6 +182,7 @@
   <string name="update_identity_item_creation_error">იდენტიფიკატორის განახლება შეუძლებელია</string>
   <!--  Common create items  -->
   <string name="title_create">შექმნა</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (copied)</string>
   <string name="changes_saved">ცვლილებები შენახულია</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">2FA საიდუმლო გასაღები (TOTP)</string>
@@ -236,36 +237,30 @@
   <string name="template_api_credential_field_secret">საიდუმლო</string>
   <string name="template_api_credential_field_expiry_date">ვადის ამოწურვის თარიღი</string>
   <string name="template_api_credential_field_permissions">წვდომები</string>
-  <string name="template_api_credential_field_note">შენიშვნა</string>
   <!-- Database Fields -->
   <string name="template_database_field_host">ჰოსტი</string>
   <string name="template_database_field_port">პორტი</string>
   <string name="template_database_field_username">მომხმარებლის სახელი</string>
   <string name="template_database_field_password">პაროლი</string>
   <string name="template_database_field_database_type">მონაცემთა ბაზის ტიპი</string>
-  <string name="template_database_field_note">შენიშვნა</string>
   <!-- Server Fields -->
   <string name="template_server_field_ip_address">IP მისამართი</string>
   <string name="template_server_field_hostname">ჰოსტის სახელი</string>
   <string name="template_server_field_os">ოპერაციული სისტემა</string>
   <string name="template_server_field_username">მომხმარებლის სახელი</string>
   <string name="template_server_field_password">პაროლი</string>
-  <string name="template_server_field_note">შენიშვნა</string>
   <!-- Software License Fields -->
   <string name="template_software_license_field_license_key">ლიცენზიის გასაღები</string>
   <string name="template_software_license_field_product">პროდუქტი</string>
   <string name="template_software_license_field_expiry_date">ვადის ამოწურვის თარიღი</string>
   <string name="template_software_license_field_owner">მფლობელი</string>
-  <string name="template_software_license_field_note">შენიშვნა</string>
   <!-- SSH Key Fields -->
   <string name="template_ssh_key_field_private_key">პირადი გასაღები</string>
   <string name="template_ssh_key_field_public_key">საჯარო გასაღები</string>
   <string name="template_ssh_key_field_username">მომხმარებლის სახელი</string>
   <string name="template_ssh_key_field_host">ჰოსტი</string>
-  <string name="template_ssh_key_field_note">შენიშვნა</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_name">Name (SSID)</string>
-  <string name="template_wifi_network_field_note">შენიშვნა</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">ბანკის სახელი</string>
   <string name="template_bank_account_field_account_number">ანგარიშის ნომერი</string>
@@ -274,14 +269,12 @@
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
   <string name="template_bank_account_field_holder_name">მფლობელის სახელი</string>
-  <string name="template_bank_account_field_note">შენიშვნა</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">საფულის სახელი</string>
   <string name="template_crypto_wallet_field_address">მისამართი</string>
   <string name="template_crypto_wallet_field_private_key">პირადი გასაღები</string>
   <string name="template_crypto_wallet_field_seed_phrase">Seed-ფრაზა</string>
   <string name="template_crypto_wallet_field_network">ქსელი</string>
-  <string name="template_crypto_wallet_field_note">შენიშვნა</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">სახელი და გვარი</string>
   <string name="template_driver_license_field_license_number">ლიცენზიის ნომერი</string>
@@ -289,7 +282,6 @@
   <string name="template_driver_license_field_expiry_date">ვადის ამოწურვის თარიღი</string>
   <string name="template_driver_license_field_date_of_birth">დაბადების თარიღი</string>
   <string name="template_driver_license_field_class">კლასი</string>
-  <string name="template_driver_license_field_note">შენიშვნა</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">პაციენტის სახელი</string>
   <string name="template_medical_record_field_record_number">ჩანაწერის ნომერი</string>
@@ -297,14 +289,12 @@
   <string name="template_medical_record_field_medications">მედიკამენტები</string>
   <string name="template_medical_record_field_doctor">ექიმი</string>
   <string name="template_medical_record_field_hospital">საავადმყოფო</string>
-  <string name="template_medical_record_field_note">შენიშვნა</string>
   <!-- Membership Fields -->
   <string name="template_membership_field_organization_name">ორგანიზაციის სახელი</string>
   <string name="template_membership_field_membership_id">წევრობის ID</string>
   <string name="template_membership_field_member_name">წევრის სახელი</string>
   <string name="template_membership_field_expiry_date">ვადის ამოწურვის თარიღი</string>
   <string name="template_membership_field_tier_level">დონე</string>
-  <string name="template_membership_field_note">შენიშვნა</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">სახელი და გვარი</string>
   <string name="template_passport_field_passport_number">პასპორტის ნომერი</string>
@@ -312,19 +302,16 @@
   <string name="template_passport_field_expiry_date">ვადის ამოწურვის თარიღი</string>
   <string name="template_passport_field_date_of_birth">დაბადების თარიღი</string>
   <string name="template_passport_field_issuing_authority">გამცემი ორგანო</string>
-  <string name="template_passport_field_note">შენიშვნა</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">პროგრამის სახელი</string>
   <string name="template_reward_program_field_member_id">წევრის ID</string>
   <string name="template_reward_program_field_points_balance">ქულების ბალანსი</string>
   <string name="template_reward_program_field_expiry_date">ვადის ამოწურვის თარიღი</string>
   <string name="template_reward_program_field_tier_status">დონე/სტატუსი</string>
-  <string name="template_reward_program_field_note">შენიშვნა</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">სახელი და გვარი</string>
   <string name="template_social_security_number_field_ssn">სოციალური უსაფრთხოების ნომერი</string>
   <string name="template_social_security_number_field_issuing_country">გამომცემელი ქვეყანა</string>
-  <string name="template_social_security_number_field_note">შენიშვნა</string>
   <string name="template_header_technology">ტექნოლოგია</string>
   <string name="template_header_finance">ფინანსები</string>
   <string name="template_header_title_personal">Personal</string>

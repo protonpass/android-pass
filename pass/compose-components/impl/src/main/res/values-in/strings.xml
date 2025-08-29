@@ -35,6 +35,7 @@
   <string name="bottomsheet_delete_permanently">Hapus secara permanen</string>
   <string name="bottomsheet_restore">Pulihkan</string>
   <string name="bottomsheet_leave">Keluar</string>
+  <string name="bottomsheet_duplicate">Duplicate</string>
   <string name="bottomsheet_no_actions">Tidak ada tindakan yang tersedia</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Buka menu tindakan item</string>

@@ -21,144 +21,144 @@
   <string name="security_center_home_top_bar_title">Pass 監控</string>
   <string name="security_center_home_dark_web_monitoring_title">暗網監測</string>
   <string name="security_center_home_widget_breaches_title">已偵測到外洩</string>
-  <string name="security_center_home_widget_breaches_subtitle">Your email address was leaked in at least 1 data breach.</string>
-  <string name="security_center_home_widget_no_breaches_subtitle">Get notified if your email, password or other personal data was leaked.</string>
+  <string name="security_center_home_widget_breaches_subtitle">您的電郵位址在至少 1 次資料外露事件中被外洩。</string>
+  <string name="security_center_home_widget_no_breaches_subtitle">當您的電子郵件、密碼字元或其他個人資料外洩時獲得通知。</string>
   <string name="security_center_home_row_no_data_breaches_subtitle">無偵測到外洩</string>
-  <string name="security_center_home_row_data_breaches_title">Dark Web Alert</string>
+  <string name="security_center_home_row_data_breaches_title">暗網警示</string>
   <string name="security_center_home_row_data_breaches_subtitle">已偵測到外洩</string>
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
-  <string name="security_center_home_row_sentinel_subtitle">Advanced account protection program</string>
+  <string name="security_center_home_row_sentinel_subtitle">進階帳號保護程式</string>
   <string name="security_center_home_row_insecure_passwords_title">強度不足的密碼</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">更改您的密碼</string>
   <string name="security_center_home_row_reused_passwords_title">重複使用的密碼</string>
-  <string name="security_center_home_row_reused_passwords_subtitle">Generate unique passwords</string>
+  <string name="security_center_home_row_reused_passwords_subtitle">生成獨立的密碼</string>
   <string name="security_center_home_row_missing_tfa_title">未啟用雙重驗證</string>
   <string name="security_center_home_row_missing_tfa_subtitle">設定二步驟驗證以強化帳戶安全</string>
-  <string name="security_center_home_row_excludes_items_title">Excluded from monitoring</string>
-  <string name="security_center_home_row_excludes_items_subtitle">These items remain at risk</string>
-  <string name="security_center_get_breaches_error">Could not load breaches</string>
+  <string name="security_center_home_row_excludes_items_title">已從監控中排除</string>
+  <string name="security_center_home_row_excludes_items_subtitle">這些項目仍有風險</string>
+  <string name="security_center_get_breaches_error">無法載入外露</string>
   <string name="security_center_home_section_password_health">密碼健檢</string>
   <!-- Sentinel bottom sheet -->
   <string name="security_center_sentinel_title">Proton Sentinel</string>
-  <string name="security_center_sentinel_subtitle">Proton Sentinel is an advanced account protection program powered by sophisticated AI systems and specialists working around the clock to protect you from bad actors and security threats.</string>
-  <string name="security_center_sentinel_button_enable">Enable Proton Sentinel</string>
-  <string name="security_center_sentinel_button_disable">Disable Proton Sentinel</string>
-  <string name="security_center_sentinel_snackbar_message_enable_canceled">Proton Sentinel protection activation has been canceled</string>
-  <string name="security_center_sentinel_snackbar_message_enable_error">There was an error enabling Proton Sentinel protection. Please try again.</string>
-  <string name="security_center_sentinel_snackbar_message_disable_canceled">Proton Sentinel protection deactivation has been canceled</string>
-  <string name="security_center_sentinel_snackbar_message_disable_error">There was an error disabling Proton Sentinel protection. Please try again.</string>
+  <string name="security_center_sentinel_subtitle">Proton Sentinel 是一種高級帳號保護程序，由最新的 AI 系統和全天候工作的專家提供協助，以保護您免受不良行為者與安全威脅的侵害。</string>
+  <string name="security_center_sentinel_button_enable">啟用 Proton Sentinel</string>
+  <string name="security_center_sentinel_button_disable">停用 Proton Sentinel</string>
+  <string name="security_center_sentinel_snackbar_message_enable_canceled">Proton Sentinel 保護啟用已取消</string>
+  <string name="security_center_sentinel_snackbar_message_enable_error">啟用 Proton Sentinel 保護時發生錯誤。請再試一次。</string>
+  <string name="security_center_sentinel_snackbar_message_disable_canceled">Proton Sentinel 保護停用已取消</string>
+  <string name="security_center_sentinel_snackbar_message_disable_error">停用 Proton Sentinel 保護時發生錯誤。請再試一次。</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">強度不足的密碼</string>
-  <string name="security_center_weak_pass_top_bar_subtitle">Weak passwords are easier to guess. Generate strong passwords to keep your accounts safe.</string>
+  <string name="security_center_weak_pass_top_bar_subtitle">弱密碼字元更容易猜到。產生強度高的密碼字元，以確保您的帳號安全。</string>
   <!-- Reused passwords screen -->
   <string name="security_center_reused_pass_top_bar_title">重複使用的密碼</string>
-  <string name="security_center_reused_pass_top_bar_subtitle">Generate unique passwords for each account to increase your security.</string>
+  <string name="security_center_reused_pass_top_bar_subtitle">為每個帳號產生獨特的密碼字元，以提升您的安全性。</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">接續%1$d時間</string>
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">未啟用雙重驗證</string>
-  <string name="security_center_missing_tfa_top_bar_subtitle">For added security, set up two-factor authentication on the following accounts.</string>
+  <string name="security_center_missing_tfa_top_bar_subtitle">為了加強安全性，請於以下帳號設定雙重身分驗證。</string>
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">排除的物品</string>
   <!-- Dark web monitor -->
   <string name="security_center_dark_web_monitor_top_bar_title">暗網監測</string>
-  <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Last check: %s</string>
+  <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">上次檢查：%s</string>
   <string name="security_center_dark_web_monitor_custom_emails_title">自訂電子郵件信箱</string>
-  <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Not verified</string>
-  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Add new custom email address</string>
+  <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">未驗證</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">新增自訂電郵位址</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">新增</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
-    <item quantity="other">Used in %d logins</item>
+    <item quantity="other">用於 %d 個登入</item>
   </plurals>
   <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
-    <item quantity="other">%d breaches detected</item>
+    <item quantity="other">已偵測到 %d 個外露</item>
   </plurals>
-  <string name="security_center_dark_web_monitor_custom_emails_loading_error">Error loading custom email addresses</string>
-  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Could not get email addresses</string>
+  <string name="security_center_dark_web_monitor_custom_emails_loading_error">載入自訂電郵位址時發生錯誤</string>
+  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">無法取得電郵位址</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">刪除</string>
-  <string name="security_center_dark_web_monitor_latest_breach_on">Latest breach on %s</string>
+  <string name="security_center_dark_web_monitor_latest_breach_on">最新外露於 %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
-    <item quantity="other">Found in %s breaches</item>
+    <item quantity="other">於 %s 個外露中發現</item>
   </plurals>
   <string name="security_center_dark_web_monitor_found_in_breaches">無偵測到外洩</string>
-  <string name="security_center_dark_web_monitor_proton_addresses">Proton addresses</string>
+  <string name="security_center_dark_web_monitor_proton_addresses">Proton 位址</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email 別名</string>
-  <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving Proton addresses</string>
-  <string name="security_center_dark_web_monitor_alias_addresses_error">Error retrieving Hide-my-email aliases</string>
-  <string name="security_center_dark_web_monitor_monitoring_disabled">Not monitored</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">擷取 Proton 位址時發生錯誤</string>
+  <string name="security_center_dark_web_monitor_alias_addresses_error">擷取 Hide-my-email 別名時發生錯誤</string>
+  <string name="security_center_dark_web_monitor_monitoring_disabled">未監控</string>
   <string name="security_center_dark_web_monitor_see_all">查看全部</string>
-  <string name="security_center_dark_web_monitor_no_proton_addresses">No Proton addresses</string>
-  <string name="security_center_dark_web_monitor_no_aliases">No aliases</string>
-  <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">There was an error sending the verification code. Please try again later.</string>
-  <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">There was an error removing the email. Please try again later.</string>
+  <string name="security_center_dark_web_monitor_no_proton_addresses">無 Proton 位址</string>
+  <string name="security_center_dark_web_monitor_no_aliases">沒有別名</string>
+  <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">傳送驗證碼時發生錯誤。請稍後再試。</string>
+  <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">移除電子郵件時發生錯誤。請稍後再試。</string>
   <!-- Add custom email monitoring -->
   <string name="security_center_custom_email_top_bar_title">自訂電子郵件監控</string>
   <string name="security_center_custom_email_email_address_placeholder">電子郵件位址</string>
   <string name="security_center_custom_email_invalid_address">無效的電子郵件位址</string>
   <string name="security_center_custom_email_continue">下一步</string>
   <string name="security_center_custom_email_already_verified">電子郵件已驗證</string>
-  <string name="security_center_custom_email_error_adding">Error adding the email address</string>
+  <string name="security_center_custom_email_error_adding">新增電郵位址時發生錯誤</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_email_title">確認您的電子郵件</string>
-  <string name="security_center_verify_email_subtitle">We\'ve sent a verification code to %s. Please enter it below:</string>
-  <string name="security_center_verify_email_snackbar_message_resend_code_success">A new verification has been sent, please check your inbox.</string>
-  <string name="security_center_verify_email_snackbar_message_resend_code_error">There was an error sending the verification code. Please try again later.</string>
-  <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Too many invalid verifications. Removing custom email.</string>
+  <string name="security_center_verify_email_subtitle">我們已傳送一個驗證碼到 %s。請在下方輸入：</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_success">新的驗證已傳送，請檢查您的收件匣。</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_error">傳送驗證碼時發生錯誤。請稍後再試。</string>
+  <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">無效驗證過多。正在移除自訂電郵位址。</string>
   <string name="security_center_verify_email_snackbar_message_invalid_verification_error">無效的驗證碼</string>
-  <string name="security_center_verify_email_snackbar_message_verification_error">There was an error verifying the email. Please try again later.</string>
+  <string name="security_center_verify_email_snackbar_message_verification_error">驗證電子郵件時發生錯誤。請稍後再試。</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">為已偵測到外洩</string>
-  <string name="security_center_verify_report_title_none">No breaches detected for</string>
+  <string name="security_center_verify_report_title_none">未偵測到外露</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">使用於：</string>
   <string name="security_center_email_report_breaches_header">外露</string>
   <string name="security_center_email_report_resolved_breaches_header">處理外洩</string>
   <string name="security_center_email_report_mark_as_resolved">標記為已解決</string>
-  <string name="security_center_email_report_snackbar_marked_as_resolved_success">Breach has been marked as resolved</string>
-  <string name="security_center_email_report_snackbar_marked_as_resolved_error">Could not mark as resolved</string>
-  <string name="security_center_email_report_snackbar_get_breaches_error">Could not load breaches</string>
-  <string name="security_center_email_report_options_menu">Breach report options menu</string>
+  <string name="security_center_email_report_snackbar_marked_as_resolved_success">外露已標記為已解決</string>
+  <string name="security_center_email_report_snackbar_marked_as_resolved_error">無法標記為已解決</string>
+  <string name="security_center_email_report_snackbar_get_breaches_error">無法載入外露</string>
+  <string name="security_center_email_report_options_menu">外露報告選項選單</string>
   <!-- Breach report detail-->
   <string name="security_center_report_detail_your_exposed_information">你的外﻿﻿﻿洩資料</string>
-  <string name="security_center_report_detail_subtitle">Your info was in a data breach and found on __DATE__</string>
+  <string name="security_center_report_detail_subtitle">您的資訊曾發生資料外露，並於 __DATE__ 發現</string>
   <string name="security_center_report_detail_details">詳細資訊</string>
   <string name="security_center_report_detail_password">密碼</string>
   <string name="security_center_report_detail_recommended_actions">建議行動</string>
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">被外洩的資料是來自 %s。您的 Proton 帳戶仍然保持加密且安全。</string>
   <string name="security_center_report_detail_learn_more">了解更多</string>
-  <string name="security_center_report_detail_snackbar_error">Could not load breach details</string>
-  <string name="security_center_report_detail_excluded_from_monitoring">Excluded from monitoring</string>
-  <string name="security_center_report_resolve_confirmation_dialog_title">Resolve all breaches?</string>
-  <string name="security_center_report_resolve_confirmation_dialog_message">All current breaches will be marked as resolved. In case of future data breaches, you will be notified.</string>
+  <string name="security_center_report_detail_snackbar_error">無法載入外露詳細資料</string>
+  <string name="security_center_report_detail_excluded_from_monitoring">已從監控中排除</string>
+  <string name="security_center_report_resolve_confirmation_dialog_title">解決所有外露？</string>
+  <string name="security_center_report_resolve_confirmation_dialog_message">目前資料外露都將標記為已解決。未來若發生資料外露，您將收到通知。</string>
   <!-- Proton list -->
-  <string name="security_center_proton_list_top_bar_title">Proton addresses</string>
+  <string name="security_center_proton_list_top_bar_title">Proton 位址</string>
   <string name="security_center_proton_list_no_breaches_detected">無偵測到外洩</string>
-  <string name="security_center_proton_list_excluded_from_monitoring">Excluded from monitoring</string>
-  <string name="security_center_proton_list_error">Could not load addresses</string>
-  <string name="security_center_proton_list_included_in_monitoring">Enable monitoring to get notified if your Proton addresses were leaked.</string>
-  <string name="security_center_proton_list_options_menu">Proton screen options menu</string>
-  <string name="security_center_proton_list_not_monitored">Not monitored</string>
+  <string name="security_center_proton_list_excluded_from_monitoring">已從監控中排除</string>
+  <string name="security_center_proton_list_error">無法載入位址</string>
+  <string name="security_center_proton_list_included_in_monitoring">啟用監控以在您的Proton位址外洩時收到通知。</string>
+  <string name="security_center_proton_list_options_menu">Proton 畫面選項選單</string>
+  <string name="security_center_proton_list_not_monitored">未監控</string>
   <!-- Address Bottomsheet options -->
   <string name="security_center_address_bottomsheet_disable_monitoring">暫停監控</string>
   <string name="security_center_address_bottomsheet_enable_monitoring">繼續監控</string>
-  <string name="security_center_address_bottomsheet_remove_custom_email">Remove custom email</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">There was an error pausing monitoring</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">There was an error resuming monitoring</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">Could not remove custom email</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">Monitoring successfully resumed</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">Monitoring successfully paused</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">Custom email removed</string>
+  <string name="security_center_address_bottomsheet_remove_custom_email">移除自訂電郵位址</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">暫停監控時發生錯誤</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">繼續監控時發生錯誤</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">無法移除自訂電郵位址</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">監控已成功繼續</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">監控已成功暫停</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">自訂電郵位址已移除</string>
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Hide-my-email 別名</string>
-  <string name="security_center_alias_list_excluded_from_monitoring">Excluded from monitoring</string>
-  <string name="security_center_alias_list_error">Could not load addresses</string>
-  <string name="security_center_alias_list_included_in_monitoring">Enable monitoring to get notified if your Hide-my-email aliases were leaked.</string>
-  <string name="security_center_alias_list_monitored">Monitored</string>
-  <string name="security_center_alias_list_custom_email_message">Aliases with custom domains are not monitored, please add them as a custom email for monitoring.</string>
-  <string name="security_center_alias_list_options_menu">Alias screen options menu</string>
+  <string name="security_center_alias_list_excluded_from_monitoring">已從監控中排除</string>
+  <string name="security_center_alias_list_error">無法載入位址</string>
+  <string name="security_center_alias_list_included_in_monitoring">啟用監控以在您的Hide-my-email別名外洩時收到通知。</string>
+  <string name="security_center_alias_list_monitored">已監控</string>
+  <string name="security_center_alias_list_custom_email_message">使用自訂網域的別名不會受到監控，請將它們新增為自訂電子郵件以利監控。</string>
+  <string name="security_center_alias_list_options_menu">別名畫面選項選單</string>
   <!-- Dark web help dialogs -->
-  <string name="dark_web_help_dialog_title">Data Security</string>
-  <string name="dark_web_help_dialog_subtitle">Proton never shares your information with third parties. All data comes from searches for the appearance of Proton domains on the dark web.</string>
+  <string name="dark_web_help_dialog_title">資料安全</string>
+  <string name="dark_web_help_dialog_subtitle">Proton 絕不與第三方共享您的資訊。所有資料皆來自於搜尋暗網上 Proton 網域出現的情況。</string>
   <!-- Cannot add custom emails -->
-  <string name="dark_web_cannot_add_custom_emails_dialog_title">Cannot add custom email</string>
-  <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">You have reached the limit of custom emails.</string>
+  <string name="dark_web_cannot_add_custom_emails_dialog_title">無法新增自訂電郵位址</string>
+  <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">您已達到自訂電郵位址數量上限。</string>
 </resources>

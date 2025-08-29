@@ -10,20 +10,20 @@
   <string name="action_credit_card">Bankkártya</string>
   <string name="action_password">Jelszó</string>
   <string name="action_identity">Személyazonosság</string>
-  <string name="action_more">Több</string>
+  <string name="action_more">Továbbiak</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Alkalmazás vagy weboldal bejelentkezési adatainak hozzáadása</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Új e-mail álnév létrehozása új alkalmazásokhoz</string>
-  <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Írjon fel egy PIN kódot vagy jegyzetet magának</string>
-  <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Tárolja biztonságban a fizetési információit</string>
-  <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Írja be a személyes adatait</string>
+  <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Egy PIN kód vagy jegyzet tárolása</string>
+  <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Fizetési információk biztonságos tárolása</string>
+  <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Személyes adatok tárolása</string>
   <string name="item_type_more_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Wi-Fi jelszó, útlevél, SSH mentése, vagy egyéni beállítás</string>
-  <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Hozzon létre egy biztonságos jelszót</string>
+  <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Egy biztonságos jelszó létrehozása</string>
   <!-- Create Login -->
   <string name="field_email_title">E-mail cím</string>
   <string name="field_email_hint">E-mail cím hozzáadása</string>
   <string name="field_email_error">Érvénytelen e-mail cím</string>
   <string name="field_email_tooltip_title">Felhasználónév mező hozzáadása</string>
-  <string name="field_email_tooltip_description">Érintsen ide, hogy létrehozzon egy mezőt a felhasználó névnek.</string>
+  <string name="field_email_tooltip_description">Érintse meg, egy felhasználónév mező létrehozásához.</string>
   <string name="field_username_title">Felhasználónév</string>
   <string name="field_username_hint">Felhasználónév hozzáadása</string>
   <string name="field_username_or_email_title">Felhasználónév vagy e-mail cím</string>
@@ -182,6 +182,7 @@
   <string name="update_identity_item_creation_error">A személyazonosság frissítése nem sikerült</string>
   <!--  Common create items  -->
   <string name="title_create">Létrehozás</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (másolva)</string>
   <string name="changes_saved">Változtatások mentve</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Kétlépcsős hitelesítési titok (TOTP)</string>
@@ -208,7 +209,7 @@
   <string name="banner_advanced_options_subtitle">Érintse meg a fogaskerék ikont, hogy az e-mail álnevet testre szabhassa.</string>
   <string name="banner_custom_domain_title">Tudta?</string>
   <string name="banner_custom_domain_subtitle">Domain név hozzáadásával olyan e-mail álneveket hozhat létre, mint a csalad@sajat-domain.com.</string>
-  <string name="banner_custom_domain_button">Domain név hozzáadása</string>
+  <string name="banner_custom_domain_button">Domain hozzáadása</string>
   <string name="banner_mailbox_title">Tudta?</string>
   <string name="banner_mailbox_subtitle">Ossza meg az álneveket másokkal, ha a postafiókjukat további postafiókként adja hozzá.</string>
   <string name="banner_mailbox_button">Postafiók hozzáadása</string>
@@ -236,36 +237,30 @@
   <string name="template_api_credential_field_secret">Titok</string>
   <string name="template_api_credential_field_expiry_date">Lejárati dátum</string>
   <string name="template_api_credential_field_permissions">Engedélyek</string>
-  <string name="template_api_credential_field_note">Jegyzet</string>
   <!-- Database Fields -->
   <string name="template_database_field_host">Állomás</string>
   <string name="template_database_field_port">Port</string>
   <string name="template_database_field_username">Felhasználói név</string>
   <string name="template_database_field_password">Jelszó</string>
   <string name="template_database_field_database_type">Adatbázis típusa</string>
-  <string name="template_database_field_note">Jegyzet</string>
   <!-- Server Fields -->
   <string name="template_server_field_ip_address">IP cím</string>
   <string name="template_server_field_hostname">Állomásnév</string>
   <string name="template_server_field_os">Operációs rendszer</string>
   <string name="template_server_field_username">Felhasználónév</string>
   <string name="template_server_field_password">Jelszó</string>
-  <string name="template_server_field_note">Jegyzet</string>
   <!-- Software License Fields -->
   <string name="template_software_license_field_license_key">Licenc kulcs</string>
   <string name="template_software_license_field_product">Termék</string>
   <string name="template_software_license_field_expiry_date">Lejárati dátum</string>
   <string name="template_software_license_field_owner">Tulajdonos</string>
-  <string name="template_software_license_field_note">Jegyzet</string>
   <!-- SSH Key Fields -->
   <string name="template_ssh_key_field_private_key">Privát kulcs</string>
   <string name="template_ssh_key_field_public_key">Nyilvános kulcs</string>
   <string name="template_ssh_key_field_username">Felhasználónév</string>
   <string name="template_ssh_key_field_host">Állomás</string>
-  <string name="template_ssh_key_field_note">Jegyzet</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_name">SSID neve</string>
-  <string name="template_wifi_network_field_note">Jegyzet</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Bank neve</string>
   <string name="template_bank_account_field_account_number">Számlaszám</string>
@@ -274,14 +269,12 @@
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
   <string name="template_bank_account_field_holder_name">Birtokos neve</string>
-  <string name="template_bank_account_field_note">Jegyzet</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">Wallet neve</string>
   <string name="template_crypto_wallet_field_address">Cím</string>
   <string name="template_crypto_wallet_field_private_key">Privát kulcs</string>
   <string name="template_crypto_wallet_field_seed_phrase">Forrás kifejezés</string>
   <string name="template_crypto_wallet_field_network">Hálózat</string>
-  <string name="template_crypto_wallet_field_note">Jegyzet</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">Teljes név</string>
   <string name="template_driver_license_field_license_number">Jogosítvány száma</string>
@@ -289,7 +282,6 @@
   <string name="template_driver_license_field_expiry_date">Lejárati dátum</string>
   <string name="template_driver_license_field_date_of_birth">Születési dátum</string>
   <string name="template_driver_license_field_class">Kategória</string>
-  <string name="template_driver_license_field_note">Jegyzet</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Páciens neve</string>
   <string name="template_medical_record_field_record_number">Rekord szám</string>
@@ -297,14 +289,12 @@
   <string name="template_medical_record_field_medications">Gyógyszerek</string>
   <string name="template_medical_record_field_doctor">Orvos</string>
   <string name="template_medical_record_field_hospital">Kórház</string>
-  <string name="template_medical_record_field_note">Jegyzet</string>
   <!-- Membership Fields -->
   <string name="template_membership_field_organization_name">Szervezet neve</string>
   <string name="template_membership_field_membership_id">Tagsági azonosító</string>
   <string name="template_membership_field_member_name">Tag neve</string>
   <string name="template_membership_field_expiry_date">Lejárati dátum</string>
   <string name="template_membership_field_tier_level">Fokozat/Szint</string>
-  <string name="template_membership_field_note">Jegyzet</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">Teljes név</string>
   <string name="template_passport_field_passport_number">Útlevél száma</string>
@@ -312,19 +302,16 @@
   <string name="template_passport_field_expiry_date">Lejárati dátum</string>
   <string name="template_passport_field_date_of_birth">Születési dátum</string>
   <string name="template_passport_field_issuing_authority">Kibocsátó hatóság</string>
-  <string name="template_passport_field_note">Jegyzet</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Program Név</string>
   <string name="template_reward_program_field_member_id">Tagi azonosító</string>
   <string name="template_reward_program_field_points_balance">Pont Egyenleg</string>
   <string name="template_reward_program_field_expiry_date">Lejárati dátum</string>
   <string name="template_reward_program_field_tier_status">Fokozat/Státusz</string>
-  <string name="template_reward_program_field_note">Jegyzet</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">Teljes név</string>
   <string name="template_social_security_number_field_ssn">TAJ szám</string>
   <string name="template_social_security_number_field_issuing_country">Kibocsátó ország</string>
-  <string name="template_social_security_number_field_note">Jegyzet</string>
   <string name="template_header_technology">Technológia</string>
   <string name="template_header_finance">Pénzügyek</string>
   <string name="template_header_title_personal">Személyes</string>

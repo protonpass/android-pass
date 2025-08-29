@@ -182,6 +182,7 @@
   <string name="update_identity_item_creation_error">Не удалось обновить личные данные</string>
   <!--  Common create items  -->
   <string name="title_create">Создать</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (copied)</string>
   <string name="changes_saved">Изменения сохранены</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Секретный ключ двухфакторной аутентификации (TOTP)</string>
@@ -236,36 +237,30 @@
   <string name="template_api_credential_field_secret">Секрет</string>
   <string name="template_api_credential_field_expiry_date">Срок действия</string>
   <string name="template_api_credential_field_permissions">Разрешения</string>
-  <string name="template_api_credential_field_note">Заметка</string>
   <!-- Database Fields -->
   <string name="template_database_field_host">Хост</string>
   <string name="template_database_field_port">Порт</string>
   <string name="template_database_field_username">Имя пользователя</string>
   <string name="template_database_field_password">Пароль</string>
   <string name="template_database_field_database_type">Тип базы данных</string>
-  <string name="template_database_field_note">Заметка</string>
   <!-- Server Fields -->
   <string name="template_server_field_ip_address">IP-адрес</string>
   <string name="template_server_field_hostname">Имя хоста</string>
   <string name="template_server_field_os">Операционная система</string>
   <string name="template_server_field_username">Имя пользователя</string>
   <string name="template_server_field_password">Пароль</string>
-  <string name="template_server_field_note">Заметка</string>
   <!-- Software License Fields -->
   <string name="template_software_license_field_license_key">Лицензионный ключ</string>
   <string name="template_software_license_field_product">Продукт</string>
   <string name="template_software_license_field_expiry_date">Срок действия</string>
   <string name="template_software_license_field_owner">Владелец</string>
-  <string name="template_software_license_field_note">Заметка</string>
   <!-- SSH Key Fields -->
   <string name="template_ssh_key_field_private_key">Закрытый ключ</string>
   <string name="template_ssh_key_field_public_key">Открытый ключ</string>
   <string name="template_ssh_key_field_username">Имя пользователя</string>
   <string name="template_ssh_key_field_host">Хост</string>
-  <string name="template_ssh_key_field_note">Заметка</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_name">Имя (SSID)</string>
-  <string name="template_wifi_network_field_note">Заметка</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Название банка</string>
   <string name="template_bank_account_field_account_number">Номер счета</string>
@@ -274,14 +269,12 @@
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
   <string name="template_bank_account_field_holder_name">Имя владельца</string>
-  <string name="template_bank_account_field_note">Заметка</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">Название кошелька</string>
   <string name="template_crypto_wallet_field_address">Адрес</string>
   <string name="template_crypto_wallet_field_private_key">Закрытый ключ</string>
   <string name="template_crypto_wallet_field_seed_phrase">Ключевая фраза</string>
   <string name="template_crypto_wallet_field_network">Сеть</string>
-  <string name="template_crypto_wallet_field_note">Заметка</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">Полное имя</string>
   <string name="template_driver_license_field_license_number">Номер лицензии</string>
@@ -289,7 +282,6 @@
   <string name="template_driver_license_field_expiry_date">Срок действия</string>
   <string name="template_driver_license_field_date_of_birth">Дата рождения</string>
   <string name="template_driver_license_field_class">Класс</string>
-  <string name="template_driver_license_field_note">Заметка</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Имя пациента</string>
   <string name="template_medical_record_field_record_number">Номер записи</string>
@@ -297,14 +289,12 @@
   <string name="template_medical_record_field_medications">Медикаменты</string>
   <string name="template_medical_record_field_doctor">Доктор</string>
   <string name="template_medical_record_field_hospital">Больница</string>
-  <string name="template_medical_record_field_note">Заметка</string>
   <!-- Membership Fields -->
   <string name="template_membership_field_organization_name">Название организации</string>
   <string name="template_membership_field_membership_id">ID членства</string>
   <string name="template_membership_field_member_name">Имя члена</string>
   <string name="template_membership_field_expiry_date">Срок действия</string>
   <string name="template_membership_field_tier_level">Ранг/уровень</string>
-  <string name="template_membership_field_note">Заметка</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">Полное имя</string>
   <string name="template_passport_field_passport_number">Номер паспорта</string>
@@ -312,19 +302,16 @@
   <string name="template_passport_field_expiry_date">Срок действия</string>
   <string name="template_passport_field_date_of_birth">Дата рождения</string>
   <string name="template_passport_field_issuing_authority">Выдавшая инстанция</string>
-  <string name="template_passport_field_note">Заметка</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Название программы</string>
   <string name="template_reward_program_field_member_id">ID члена</string>
   <string name="template_reward_program_field_points_balance">Баланс баллов</string>
   <string name="template_reward_program_field_expiry_date">Срок действия</string>
   <string name="template_reward_program_field_tier_status">Ранг / Статус</string>
-  <string name="template_reward_program_field_note">Заметка</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">Полное имя</string>
   <string name="template_social_security_number_field_ssn">Номер социального страхования</string>
   <string name="template_social_security_number_field_issuing_country">Выдавшая страна</string>
-  <string name="template_social_security_number_field_note">Заметка</string>
   <string name="template_header_technology">Технологии</string>
   <string name="template_header_finance">Финансы</string>
   <string name="template_header_title_personal">Личное</string>

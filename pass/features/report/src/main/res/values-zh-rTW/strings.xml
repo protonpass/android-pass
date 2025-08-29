@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="description_field_label">您遇到甚麼問題?</string>
-  <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
+  <string name="description_field_hint">請詳述問題，越詳細越好。如果出現錯誤訊息，請告訴我們內容。</string>
   <string name="email_field_label">電子郵件</string>
   <string name="email_field_hint">電子郵件</string>
   <string name="attach_image_button">附加圖片</string>
@@ -33,25 +33,26 @@
   <string name="report_reason_sync">同步</string>
   <string name="report_reason_passkeys">密碼金鑰</string>
   <string name="report_reason_other">其它</string>
-  <string name="tips_title">Quick fixes for %1$s</string>
-  <string name="tips_subtitle">These tips could help you solve your issue faster.</string>
-  <string name="autofill_tip_restart">Try disabling and enabling the autofill service.</string>
-  <string name="autofill_tip_browser">Try another browser.</string>
-  <string name="sharing_tip_vault_sharing_guide">Having issues with vault sharing? Check our guide.</string>
-  <string name="sharing_tip_secure_links_guide">Having issues with secure links? Check our guide.</string>
-  <string name="sync_tip_force_refresh">Is your screen empty? Try doing a force sync.</string>
+  <string name="tips_title">適用於 %1$s 的快速修復</string>
+  <string name="tips_subtitle">這些提示可以協助您更快地解決您的問題。</string>
+  <string name="autofill_tip_restart">嘗試停用及啟用自動填入服務。</string>
+  <string name="autofill_tip_browser">嘗試另一個瀏覽器。</string>
+  <string name="autofill_tip_another_website">在另一個網站上試試看。</string>
+  <string name="sharing_tip_vault_sharing_guide">保管庫共享遇到問題？請查看我們的指南。</string>
+  <string name="sharing_tip_secure_links_guide">安全加密鏈結遇到問題？請查看我們的指南。</string>
+  <string name="sync_tip_force_refresh">您的畫面空白嗎？嘗試強制同步。</string>
   <string name="send_logs_label">傳送日誌</string>
   <string name="report_sending_success">回報已成功傳送。</string>
-  <string name="report_sending_error">Could not send the report.</string>
-  <string name="tips_passkey_check_guide">If you have any issues check our guide.</string>
-  <string name="tips_passkey_android_not_supported">Your Android version is too low. Try upgrading your device.</string>
-  <string name="tips_passkeys_credential_manager_not_supported">The manufacturer of the device doesn\'t provide a credential manager.</string>
+  <string name="report_sending_error">無法傳送報告。</string>
+  <string name="tips_passkey_check_guide">如果您遇到任何問題，請查看我們的指南。</string>
+  <string name="tips_passkey_android_not_supported">您的 Android 版本過低。請嘗試升級您的裝置。</string>
+  <string name="tips_passkeys_credential_manager_not_supported">該裝置的製造商未提供認證管理員。</string>
   <string name="tips_passkey_supported">密碼金鑰是支援服務</string>
-  <string name="tips_passkey_not_supported">Passkeys not supported</string>
+  <string name="tips_passkey_not_supported">通行密鑰不受支援</string>
   <string name="report_steps" comment="Indicator showing report progress">第 %1$d 步，共 %2$d 步</string>
-  <string name="description_cannot_be_blank">Description cannot be blank</string>
-  <string name="description_is_too_short">Description is too short</string>
+  <string name="description_cannot_be_blank">描述不得為空白</string>
+  <string name="description_is_too_short">描述太短</string>
   <string name="description_is_too_long">描述太長</string>
-  <string name="email_cannot_be_blank">Email cannot be blank</string>
+  <string name="email_cannot_be_blank">電子郵件不得為空白</string>
   <string name="email_invalid">無效的電郵位址</string>
 </resources>

@@ -21,6 +21,6 @@
   <string name="select_passkey_action_subtitle" comment="Subtitle of the action to select a passkey. Will appear in the system passkey selector">Selectare cheie de acces din Proton Pass</string>
   <string name="passkeys_user_logged_out">V-ați deconectat. Reconectați-vă deschizând aplicația.</string>
   <string name="passkey_confirm_item_title" comment="Title of the dialog for confirming the generation of a passkey for an item">Generare cheie de acces</string>
-  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Sigur doriți să generați o cheie de acces pentru articolul „%s”?</string>
+  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Generați o cheie de acces pentru articolul „%s”?</string>
   <string name="passkey_error_generating_passkey">Nu s-a putut genera cheia de acces</string>
 </resources>

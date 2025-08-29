@@ -106,7 +106,7 @@
   <string name="passkey_detail_bottomsheet_created">Létrehozva</string>
   <string name="activity_in_last_two_weeks">Tevékenység az elmúlt 14 napban</string>
   <string name="contacts">Névjegyek</string>
-  <string name="contacts_section_description">Személyes e-mail címének elrejtése érdekében létrehozhat egy álnév kapcsolatot, amely elrejti a címét.</string>
+  <string name="contacts_section_description">Személyes e-mail címének elrejtése érdekében létrehozhat egy álnév névjegyet, amely elrejti a címét.</string>
   <string name="field_detail_display_name_title">Megjelenítendő név</string>
   <string name="display_name_section_description">A megjelenített név, amikor e-mailt küld erről az álnévről.</string>
   <plurals name="alias_forwards_count">

@@ -37,6 +37,7 @@
   <string name="tips_subtitle">Эти советы могут помочь быстрее решить вашу проблему.</string>
   <string name="autofill_tip_restart">Попробуйте отключить и включить службу автозаполнения.</string>
   <string name="autofill_tip_browser">Попробуйте использовать другой браузер.</string>
+  <string name="autofill_tip_another_website">Try it in another website.</string>
   <string name="sharing_tip_vault_sharing_guide">Возникли проблемы с совместным использованием хранилища? Посмотрите наше руководство.</string>
   <string name="sharing_tip_secure_links_guide">Возникли проблемы с защищенными ссылками? Ознакомьтесь с нашим руководством.</string>
   <string name="sync_tip_force_refresh">Ваш экран пуст? Попробуйте выполнить принудительную синхронизацию.</string>

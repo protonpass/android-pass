@@ -17,7 +17,7 @@
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">안전하게 결제 수단 정보 저장하기</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">개인 데이터 채우기</string>
   <string name="item_type_more_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">WiFi, 여권, SSH를 저장하거나 커스텀으로 설정</string>
-  <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">보안 비밀번호 생성</string>
+  <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">안전한 비밀번호 생성하기</string>
   <!-- Create Login -->
   <string name="field_email_title">이메일 주소</string>
   <string name="field_email_hint">이메일 주소 추가</string>
@@ -182,6 +182,7 @@
   <string name="update_identity_item_creation_error">신원 정보 업데이트 중 오류</string>
   <!--  Common create items  -->
   <string name="title_create">생성</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (복사됨)</string>
   <string name="changes_saved">변경 사항 저장됨</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">2단계 인증 비밀 키 (TOTP)</string>
@@ -202,7 +203,7 @@
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">\'%2$s\'에 대한 사용자 \'%1$s\'의 패스키를 삭제하려합니다. 확실한가요?</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">첨부파일</string>
-  <string name="banner_body_attachments">더 나은 조직을 위해 항목에 파일 첨부가 가능합니다.</string>
+  <string name="banner_body_attachments">더 나은 구성을 위해 항목에 파일을 첨부할 수 있어요.</string>
   <string name="open_with">열기:</string>
   <string name="banner_advanced_options_title">알고 계셨나요?</string>
   <string name="banner_advanced_options_subtitle">톱니바퀴 아이콘을 눌러 별칭을 원하는 방식으로 사용자 지정하세요.</string>
@@ -236,36 +237,30 @@
   <string name="template_api_credential_field_secret">시크릿키</string>
   <string name="template_api_credential_field_expiry_date">만료 일자</string>
   <string name="template_api_credential_field_permissions">권한</string>
-  <string name="template_api_credential_field_note">메모</string>
   <!-- Database Fields -->
   <string name="template_database_field_host">호스트</string>
   <string name="template_database_field_port">포트</string>
   <string name="template_database_field_username">사용자 이름</string>
   <string name="template_database_field_password">비밀번호</string>
   <string name="template_database_field_database_type">데이터베이스 유형</string>
-  <string name="template_database_field_note">메모</string>
   <!-- Server Fields -->
   <string name="template_server_field_ip_address">IP 주소</string>
   <string name="template_server_field_hostname">호스트 이름</string>
   <string name="template_server_field_os">운영체제</string>
   <string name="template_server_field_username">사용자 이름</string>
   <string name="template_server_field_password">비밀번호</string>
-  <string name="template_server_field_note">메모</string>
   <!-- Software License Fields -->
   <string name="template_software_license_field_license_key">라이선스 키</string>
   <string name="template_software_license_field_product">제품</string>
   <string name="template_software_license_field_expiry_date">만료 일자</string>
   <string name="template_software_license_field_owner">소유자</string>
-  <string name="template_software_license_field_note">메모</string>
   <!-- SSH Key Fields -->
   <string name="template_ssh_key_field_private_key">개인 키</string>
   <string name="template_ssh_key_field_public_key">공개 키</string>
   <string name="template_ssh_key_field_username">사용자 이름</string>
   <string name="template_ssh_key_field_host">호스트</string>
-  <string name="template_ssh_key_field_note">메모</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_name">이름 (SSID)</string>
-  <string name="template_wifi_network_field_note">메모</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">은행사</string>
   <string name="template_bank_account_field_account_number">계좌번호</string>
@@ -274,14 +269,12 @@
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
   <string name="template_bank_account_field_holder_name">예금주 이름</string>
-  <string name="template_bank_account_field_note">메모</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">지갑 이름</string>
   <string name="template_crypto_wallet_field_address">주소</string>
   <string name="template_crypto_wallet_field_private_key">개인 키</string>
   <string name="template_crypto_wallet_field_seed_phrase">시드 구문</string>
   <string name="template_crypto_wallet_field_network">네트워크</string>
-  <string name="template_crypto_wallet_field_note">메모</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">성명</string>
   <string name="template_driver_license_field_license_number">라이선스 번호</string>
@@ -289,7 +282,6 @@
   <string name="template_driver_license_field_expiry_date">만료 일자</string>
   <string name="template_driver_license_field_date_of_birth">생일</string>
   <string name="template_driver_license_field_class">학급</string>
-  <string name="template_driver_license_field_note">메모</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">환자 이름</string>
   <string name="template_medical_record_field_record_number">기록 번호</string>
@@ -297,14 +289,12 @@
   <string name="template_medical_record_field_medications">복용 약물</string>
   <string name="template_medical_record_field_doctor">의사</string>
   <string name="template_medical_record_field_hospital">병원</string>
-  <string name="template_medical_record_field_note">메모</string>
   <!-- Membership Fields -->
   <string name="template_membership_field_organization_name">조직 이름</string>
   <string name="template_membership_field_membership_id">멤버십 ID</string>
   <string name="template_membership_field_member_name">멤버 이름</string>
   <string name="template_membership_field_expiry_date">만료 일자</string>
   <string name="template_membership_field_tier_level">티어/레벨</string>
-  <string name="template_membership_field_note">메모</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">성명</string>
   <string name="template_passport_field_passport_number">여권 번호</string>
@@ -312,19 +302,16 @@
   <string name="template_passport_field_expiry_date">만료 일자</string>
   <string name="template_passport_field_date_of_birth">생일</string>
   <string name="template_passport_field_issuing_authority">발급 기관</string>
-  <string name="template_passport_field_note">메모</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">프로그램 이름</string>
   <string name="template_reward_program_field_member_id">멤버ID</string>
   <string name="template_reward_program_field_points_balance">누적 포인트</string>
   <string name="template_reward_program_field_expiry_date">만료 일자</string>
   <string name="template_reward_program_field_tier_status">티어/상태</string>
-  <string name="template_reward_program_field_note">메모</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">성명</string>
   <string name="template_social_security_number_field_ssn">주민등록번호</string>
   <string name="template_social_security_number_field_issuing_country">발행국</string>
-  <string name="template_social_security_number_field_note">메모</string>
   <string name="template_header_technology">기술</string>
   <string name="template_header_finance">금융</string>
   <string name="template_header_title_personal">개인</string>

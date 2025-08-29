@@ -37,6 +37,7 @@
   <string name="tips_subtitle">이 팁들이 문제를 더 빨리 해결하는데 도움이 될 수 있습니다.</string>
   <string name="autofill_tip_restart">자동 완성 서비스 비활성화 후 활성화를 시도하세요.</string>
   <string name="autofill_tip_browser">타 브라우저를 시도하세요.</string>
+  <string name="autofill_tip_another_website">다른 웹사이트에서 시도해보세요.</string>
   <string name="sharing_tip_vault_sharing_guide">금고 공유에 문제가 발생하나요? 가이드를 살펴보세요.</string>
   <string name="sharing_tip_secure_links_guide">안전한 링크에 문제가 발생하나요? 가이드를 살펴보세요.</string>
   <string name="sync_tip_force_refresh">화면이 비어있나요? 강제 동기화를 시도해보세요.</string>

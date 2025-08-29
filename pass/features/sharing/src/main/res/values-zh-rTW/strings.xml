@@ -31,40 +31,40 @@
     <item quantity="other">%d 位成員</item>
   </plurals>
   <string name="sharing_member_count_header">成員</string>
-  <string name="shared_via_title">Shared via</string>
-  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">Item sharing: %s</string>
-  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">Vault sharing: %s</string>
+  <string name="shared_via_title">分享</string>
+  <string name="shared_via_item_section_title" comment="The placeholder will be replaced by users count. E.g. 2 users">項目共享：%s</string>
+  <string name="shared_via_vault_section_title" comment="The placeholder will be replaced by members count. E.g. 2 members">保管庫共享：%s</string>
   <string name="share_with_title">與分享</string>
   <string name="share_with_email_hint">電子郵件位址</string>
   <string name="share_with_email_error">無效的電子郵件位址</string>
-  <string name="share_with_email_cannot_invite_outside_org">You can\'t invite people outside of your organization, contact admin for more info</string>
-  <string name="share_with_email_email_already_added">You have already added this email address</string>
+  <string name="share_with_email_cannot_invite_outside_org">您無法邀請您組織機構以外的人員，請聯絡管理員以獲取更多資訊。</string>
+  <string name="share_with_email_email_already_added">您已新增此電郵位址</string>
   <string name="share_permissions_title">設定存取層級</string>
   <string name="sharing_reject_invitation">婉拒邀請</string>
   <string name="sharing_vault_invitation_title">分享保管庫邀請函</string>
-  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s 想與您共享保管庫。</string>
   <string name="sharing_vault_invitation_accept">加入共享的保管庫</string>
-  <string name="sharing_item_invitation_title">Shared item invitation</string>
+  <string name="sharing_item_invitation_title">共享項目邀請函</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s 想與你分享項目</string>
-  <string name="sharing_item_invitation_accept">Accept and view the item</string>
-  <string name="sharing_invite_more">Invite more…</string>
+  <string name="sharing_item_invitation_accept">接受並查看項目</string>
+  <string name="sharing_invite_more">邀請更多…</string>
   <string name="sharing_snackbar_invite_accepted">邀請已接受</string>
   <string name="sharing_snackbar_invite_accept_error">婉拒邀請時發生錯誤</string>
-  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Could not accept the invite as you have reached the vault limit</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">無法接受邀請，因為您已達到保管庫限制</string>
   <string name="sharing_snackbar_invite_rejected">邀請已婉拒</string>
   <string name="sharing_snackbar_invite_reject_error">婉拒邀請時發生錯誤</string>
   <string name="sharing_snackbar_invite_sent_success">邀請函已寄送</string>
   <string name="sharing_snackbar_invite_sent_error">無法發送邀請</string>
-  <string name="sharing_snackbar_invite_new_users_error">Cannot send invites to new users</string>
-  <string name="sharing_snackbar_invite_free_user_error">Item invites are only allowed to be sent to paid users</string>
-  <string name="sharing_snackbar_invite_user_already_invited_error">Address has already been invited</string>
+  <string name="sharing_snackbar_invite_new_users_error">無法傳送邀請函給新使用者</string>
+  <string name="sharing_snackbar_invite_free_user_error">項目邀請函僅允許傳送給付費使用者</string>
+  <string name="sharing_snackbar_invite_user_already_invited_error">此位址已受邀</string>
   <string name="sharing_snackbar_get_vault_members_error">無法取得保管庫成員</string>
   <string name="sharing_snackbar_change_permission_success">權限變更</string>
   <string name="sharing_snackbar_change_permission_error">無法更新存取權限設定</string>
   <string name="sharing_snackbar_remove_member_success">從保管庫移除成員</string>
   <string name="sharing_snackbar_remove_member_error">無法從保管庫移除</string>
-  <string name="sharing_snackbar_fetch_member_error">There was an error fetching members</string>
-  <string name="sharing_snackbar_fetch_pending_invites_error">There was an error fetching pending invites</string>
+  <string name="sharing_snackbar_fetch_member_error">擷取成員時發生錯誤</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">擷取待處理的邀請函時發生錯誤</string>
   <string name="share_summary_title">審閱並分享</string>
   <string name="share_summary_share_vault">分享保險庫</string>
   <string name="share_summary_share_item">分享項目</string>
@@ -92,9 +92,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">轉移所有權</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">您無法移轉最後擁有的保管庫。</string>
   <string name="sharing_bottomsheet_remove_access">撤銷存取權</string>
-  <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
-  <string name="sharing_bottomsheet_item_viewer_subtitle">Can view this item.</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">可以授予及撤銷此項目的存取權限。</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">可以編輯及刪除此項目。</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">可以查看此項目。</string>
   <string name="sharing_bottomsheet_resend_invite">重新發送邀請</string>
   <string name="sharing_bottomsheet_cancel_invite">取消邀請</string>
   <string name="sharing_transfer_ownership_confirm_title">轉移所有權</string>
@@ -110,9 +110,9 @@
   <string name="sharing_snackbar_transfer_ownership_error">轉移所有權時發生錯誤</string>
   <string name="sharing_invites_info_dialog_title">成員限制</string>
   <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
-    <item quantity="other">This vault can have up to %1$d members. You still have %2$d invites left.</item>
+    <item quantity="other">此保管庫最多可容納 %1$d 位成員。您還剩下 %2$d 個邀請。</item>
   </plurals>
-  <string name="sharing_limit_reached">This vault has reached the member and invites limit.</string>
+  <string name="sharing_limit_reached">此保管庫已達到成員和邀請函上限。</string>
   <string name="sharing_invites_info_upgrade_text">現在升級已邀請更多。</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">共享</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">共享此保管庫</string>
@@ -122,17 +122,17 @@
   <string name="share_with_suggestions_title">建議</string>
   <string name="share_with_recents_title">最近</string>
   <string name="share_with_remove_email_content_description">移除電子郵件</string>
-  <string name="share_with_user_shared_title">With other Proton Pass users</string>
+  <string name="share_with_user_shared_title">與其他 Proton Pass 使用者共享</string>
   <string name="share_with_user_shared_description">永久共用.</string>
   <string name="share_with_manage_shared_item_title">管理存取權限</string>
   <string name="share_with_manage_shared_item_description">檢視共用對像及權限.</string>
-  <string name="share_with_secure_link_shared_title">Via a secure link</string>
-  <string name="share_with_secure_link_shared_description">For one-off sharing.</string>
+  <string name="share_with_secure_link_shared_title">透過安全加密鏈結</string>
+  <string name="share_with_secure_link_shared_description">用於一次性共享。</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">替全部成員設置存取層級</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">替%s設置存取層級</string>
   <string name="sharing_edit_permissions_remove_user">刪除使用者</string>
   <string name="sharing_error_dialog_title">未知的錯誤</string>
-  <string name="sharing_error_dialog_message">There was an error sending an invite for this vault. If the issue persists, please contact customer support service.</string>
+  <string name="sharing_error_dialog_message">傳送此保管庫的邀請時發生錯誤。如果問題持續存在，請聯絡客戶支援服務。</string>
   <string name="sharing_with_no_addresses_can_be_invited">無可邀請的地址</string>
-  <string name="sharing_with_some_addresses_cannot_be_invited">Some addresses cannot be invited</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">部分位址無法受邀</string>
 </resources>

@@ -182,6 +182,7 @@
   <string name="update_identity_item_creation_error">Kunne ikke oppdatere identitet</string>
   <!--  Common create items  -->
   <string name="title_create">Opprett</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (kopiert)</string>
   <string name="changes_saved">Endringer lagret</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">2FA-hemmelig nøkkel (TOTP)</string>
@@ -236,36 +237,30 @@
   <string name="template_api_credential_field_secret">Hemmelig</string>
   <string name="template_api_credential_field_expiry_date">Utløpsdato</string>
   <string name="template_api_credential_field_permissions">Tillatelser</string>
-  <string name="template_api_credential_field_note">Notat</string>
   <!-- Database Fields -->
   <string name="template_database_field_host">Vert</string>
   <string name="template_database_field_port">Port</string>
   <string name="template_database_field_username">Brukernavn</string>
   <string name="template_database_field_password">Passord</string>
   <string name="template_database_field_database_type">Databasetype</string>
-  <string name="template_database_field_note">Notat</string>
   <!-- Server Fields -->
   <string name="template_server_field_ip_address">IP-adresse</string>
   <string name="template_server_field_hostname">Vertsnavn</string>
   <string name="template_server_field_os">Operativsystem</string>
   <string name="template_server_field_username">Brukernavn</string>
   <string name="template_server_field_password">Passord</string>
-  <string name="template_server_field_note">Notat</string>
   <!-- Software License Fields -->
   <string name="template_software_license_field_license_key">Lisensnøkkel</string>
   <string name="template_software_license_field_product">Produkt</string>
   <string name="template_software_license_field_expiry_date">Utløpsdato</string>
   <string name="template_software_license_field_owner">Eier</string>
-  <string name="template_software_license_field_note">Notat</string>
   <!-- SSH Key Fields -->
   <string name="template_ssh_key_field_private_key">Privat nøkkel</string>
   <string name="template_ssh_key_field_public_key">Offentlig nøkkel</string>
   <string name="template_ssh_key_field_username">Brukernavn</string>
   <string name="template_ssh_key_field_host">Vert</string>
-  <string name="template_ssh_key_field_note">Notat</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_name">Navn (SSID)</string>
-  <string name="template_wifi_network_field_note">Notat</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Banknavn</string>
   <string name="template_bank_account_field_account_number">Kontonummer</string>
@@ -274,14 +269,12 @@
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
   <string name="template_bank_account_field_holder_name">Navn på innehaveren</string>
-  <string name="template_bank_account_field_note">Notat</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">Navn på lommebok</string>
   <string name="template_crypto_wallet_field_address">Adresse</string>
   <string name="template_crypto_wallet_field_private_key">Privat nøkkel</string>
   <string name="template_crypto_wallet_field_seed_phrase">Gjenopprettingsfrase</string>
   <string name="template_crypto_wallet_field_network">Nettverk</string>
-  <string name="template_crypto_wallet_field_note">Notat</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">Fullt navn</string>
   <string name="template_driver_license_field_license_number">Førerkortnummer</string>
@@ -289,7 +282,6 @@
   <string name="template_driver_license_field_expiry_date">Utløpsdato</string>
   <string name="template_driver_license_field_date_of_birth">Fødselsdato</string>
   <string name="template_driver_license_field_class">Klasse</string>
-  <string name="template_driver_license_field_note">Notat</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Pasientnavn</string>
   <string name="template_medical_record_field_record_number">Registreringsnummer</string>
@@ -297,14 +289,12 @@
   <string name="template_medical_record_field_medications">Medisiner</string>
   <string name="template_medical_record_field_doctor">Doktor</string>
   <string name="template_medical_record_field_hospital">Sykehus</string>
-  <string name="template_medical_record_field_note">Notat</string>
   <!-- Membership Fields -->
   <string name="template_membership_field_organization_name">Organisasjonsnavn</string>
   <string name="template_membership_field_membership_id">Medlemskaps-ID</string>
   <string name="template_membership_field_member_name">Medlemsnavn</string>
   <string name="template_membership_field_expiry_date">Utløpsdato</string>
   <string name="template_membership_field_tier_level">Nivå</string>
-  <string name="template_membership_field_note">Notat</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">Fullt navn</string>
   <string name="template_passport_field_passport_number">Passnummer</string>
@@ -312,19 +302,16 @@
   <string name="template_passport_field_expiry_date">Utløpsdato</string>
   <string name="template_passport_field_date_of_birth">Fødselsdato</string>
   <string name="template_passport_field_issuing_authority">Utstedende myndighet</string>
-  <string name="template_passport_field_note">Notat</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Programnavn</string>
   <string name="template_reward_program_field_member_id">Medlems-ID</string>
   <string name="template_reward_program_field_points_balance">Poengsaldo</string>
   <string name="template_reward_program_field_expiry_date">Utløpsdato</string>
   <string name="template_reward_program_field_tier_status">Nivå/status</string>
-  <string name="template_reward_program_field_note">Notat</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">Fullt navn</string>
   <string name="template_social_security_number_field_ssn">Personnummer</string>
   <string name="template_social_security_number_field_issuing_country">Utstedende land</string>
-  <string name="template_social_security_number_field_note">Notat</string>
   <string name="template_header_technology">Teknologi</string>
   <string name="template_header_finance">Finans</string>
   <string name="template_header_title_personal">Personlig</string>

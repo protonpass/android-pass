@@ -22,8 +22,8 @@
   <string name="add_attachment_choose_a_file">Вибрати файл</string>
   <string name="attachment_options_rename">Перейменувати</string>
   <string name="attachment_options_delete">Видалити</string>
-  <string name="attachment_options_download">Download</string>
-  <string name="attachment_options_share">Share</string>
+  <string name="attachment_options_download">Завантажити</string>
+  <string name="attachment_options_share">Поділитися</string>
   <string name="file_picker_open_error">Не вдалося відкрити файл-пікап</string>
   <string name="media_picker_open_error">Не вдалося відкрити медіапікап</string>
   <string name="camera_open_error">Не вдалося відкрити камеру</string>
@@ -37,6 +37,6 @@
   <string name="storage_full_body">Покращте, щоби збільшити обсяг сховища.</string>
   <string name="storage_full_upgrade">Покращити</string>
   <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s зі %2$s</string>
-  <string name="attachments_saved_to_location_success">Attachment saved to location</string>
-  <string name="attachments_saved_to_location_error">Could not save attachment to location</string>
+  <string name="attachments_saved_to_location_success">Вкладення збережено до вказаного розташування</string>
+  <string name="attachments_saved_to_location_error">Не вдалося зберегти вкладення до вказаного розташування</string>
 </resources>

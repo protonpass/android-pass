@@ -20,7 +20,7 @@
   <string name="sharing_can_view">Користувач</string>
   <string name="sharing_can_edit">Редактор</string>
   <string name="sharing_can_manage">Адміністратор</string>
-  <string name="sharing_can_manage_v2">Manager</string>
+  <string name="sharing_can_manage_v2">Менеджер</string>
   <string name="sharing_can_view_description">Може переглядати елементи в цьому сховищі.</string>
   <string name="sharing_can_edit_description">Може створювати, редагувати, видаляти й експортувати елементи в цьому сховищі.</string>
   <string name="sharing_can_manage_description">Може надавати та відкликати доступ до цього сховища.</string>
@@ -99,7 +99,7 @@
   <string name="share_role_viewer">Користувач</string>
   <string name="share_role_editor">Редактор</string>
   <string name="share_role_admin">Адміністратор</string>
-  <string name="share_role_manager">Manager</string>
+  <string name="share_role_manager">Менеджер</string>
   <string name="share_role_owner">Власник</string>
   <string name="sharing_bottomsheet_transfer_ownership">Передати право власності</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Не можна передати власність вашого останнього сховища.</string>

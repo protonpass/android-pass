@@ -22,8 +22,8 @@
   <string name="add_attachment_choose_a_file">Chọn một tệp</string>
   <string name="attachment_options_rename">Đổi tên</string>
   <string name="attachment_options_delete">Xóa</string>
-  <string name="attachment_options_download">Download</string>
-  <string name="attachment_options_share">Share</string>
+  <string name="attachment_options_download">Tải xuống</string>
+  <string name="attachment_options_share">Chia sẻ</string>
   <string name="file_picker_open_error">Không thể mở trình chọn tệp</string>
   <string name="media_picker_open_error">Không thể mở trình chọn phương tiện</string>
   <string name="camera_open_error">Không thể mở camera</string>

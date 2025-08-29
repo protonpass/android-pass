@@ -16,14 +16,14 @@
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">記下一個 PIN 碼、代碼或自己的筆記</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">安全的保存付款資料</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">填寫您的個人資訊</string>
-  <string name="item_type_more_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Save WiFi, passport, SSH, or go custom</string>
+  <string name="item_type_more_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">儲存無線網路、護照、SSH 或選擇自訂</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">生成一個安全密碼</string>
   <!-- Create Login -->
   <string name="field_email_title">電子郵件位址</string>
   <string name="field_email_hint">添加電子郵件地址</string>
   <string name="field_email_error">無效的電子郵件位址</string>
-  <string name="field_email_tooltip_title">Add username field</string>
-  <string name="field_email_tooltip_description">Tap here to add a field for a username.</string>
+  <string name="field_email_tooltip_title">新增使用者名稱欄位</string>
+  <string name="field_email_tooltip_description">輕點此處以新增使用者名稱欄位。</string>
   <string name="field_username_title">使用者名稱</string>
   <string name="field_username_hint">新增使用者名稱</string>
   <string name="field_username_or_email_title">使用者名稱或電子郵件位址</string>
@@ -39,11 +39,11 @@
   <string name="sticky_button_use_account_email" comment="Sticky button on the Create login screen. When tapped, the current user email is autofilled">使用 %s</string>
   <string name="create_login_item_creation_error">無法創建登入</string>
   <string name="create_login_item_update_error">無法更新登入</string>
-  <string name="create_login_init_error">Problem retrieving login details</string>
+  <string name="create_login_init_error">擷取登入詳細資料時發生問題</string>
   <string name="create_login_invalid_totp">雙重驗證無法驗證</string>
-  <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
-  <string name="login_link_attachments_error">Failed to link or unlink attachments to the login</string>
-  <string name="login_rename_attachments_error">Failed to rename login attachments</string>
+  <string name="update_login_attachments_init_error">擷取登入附件時發生問題</string>
+  <string name="login_link_attachments_error">無法將附件連結或取消連結至登入</string>
+  <string name="login_rename_attachments_error">無法重新命名登入附件</string>
   <string name="login_created">登入已創建</string>
   <string name="bottomsheet_modify_alias_title">變更別名</string>
   <string name="bottomsheet_custom_field_type_text">文字</string>
@@ -53,24 +53,24 @@
   <string name="bottomsheet_custom_field_option_edit">編輯名稱</string>
   <string name="bottomsheet_custom_field_option_remove">移除欄位</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">移除自訂欄位</string>
-  <string name="bottomsheet_custom_section_option_remove">Remove section</string>
+  <string name="bottomsheet_custom_section_option_remove">移除區段</string>
   <string name="custom_field_hidden_placeholder">新增隱藏文件</string>
   <string name="custom_field_hidden_icon_content_description">隱藏自訂的欄位圖示</string>
   <string name="custom_field_text_placeholder">新增文字</string>
-  <string name="custom_field_date_placeholder">Add date</string>
+  <string name="custom_field_date_placeholder">新增日期</string>
   <string name="custom_field_dialog_title">自訂欄位的名稱</string>
   <string name="custom_field_dialog_body">提供自訂欄位名稱</string>
   <string name="custom_field_dialog_placeholder">例如: 使用者ID、PIN碼</string>
-  <string name="custom_section_dialog_title">Enter a section title</string>
+  <string name="custom_section_dialog_title">輸入區段標題</string>
   <string name="custom_section_dialog_placeholder">標題</string>
   <string name="custom_field_options_content_description">自訂的選項</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">無法創建備註</string>
   <string name="create_note_item_update_error">無法更新備註</string>
-  <string name="create_note_init_error">Problem retrieving note details</string>
-  <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
-  <string name="note_link_attachments_error">Failed to link or unlink attachments to the note</string>
-  <string name="note_rename_attachments_error">Failed to rename note attachments</string>
+  <string name="create_note_init_error">擷取備註詳細資料時發生問題</string>
+  <string name="update_note_attachments_init_error">擷取備註附件時發生問題</string>
+  <string name="note_link_attachments_error">無法將附件連結或取消連結至備註</string>
+  <string name="note_rename_attachments_error">無法重新命名備註附件</string>
   <string name="note_created">已創建備註</string>
   <!-- Create Alias -->
   <string name="field_alias_title">別名位址</string>
@@ -86,18 +86,18 @@
   <string name="create_alias_email_not_validated_error">您無法於驗證電子郵件前創建別名</string>
   <string name="alias_rate_limited">近期創建太多的別名</string>
   <string name="create_alias_item_update_error">無法更新別名</string>
-  <string name="create_alias_init_error">Problem retrieving alias details</string>
-  <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
-  <string name="alias_link_attachments_error">Failed to link or unlink attachments to the alias</string>
-  <string name="alias_rename_attachments_error">Failed to rename alias attachments</string>
+  <string name="create_alias_init_error">擷取別名詳細資料時發生問題</string>
+  <string name="update_alias_attachments_init_error">擷取別名附件時發生問題</string>
+  <string name="alias_link_attachments_error">無法將附件連結或取消連結至別名</string>
+  <string name="alias_rename_attachments_error">無法重新命名別名附件</string>
   <string name="alias_created">已創建別名</string>
   <string name="cannot_retrieve_alias_options">無法提取別名選項</string>
   <string name="alias_mailbox_dialog_title">轉寄至</string>
   <string name="sl_note_info_title">什麼是SimpleLogin筆記？</string>
-  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">In Pass, an item note is encrypted with the item encryption key and only users who have access to the item can view the note.</string>
-  <string name="sl_note_info_message_part2">Not even Proton or SimpleLogin can see it.</string>
-  <string name="sl_note_info_message_part3">SimpleLogin note is stored together in the same location with alias address and while it is protected by encryption at rest, it isn\'t E2E encrypted meaning anyone who has access to SimpleLogin database can read it.</string>
-  <string name="sl_note_info_content_description">Show SL note information dialog</string>
+  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">在 Pass 中，項目備註會以項目加密金鑰加密，且只有能存取該項目的使用者才能檢視該備註。</string>
+  <string name="sl_note_info_message_part2">即使是 Proton 或 SimpleLogin 也無法查看。</string>
+  <string name="sl_note_info_message_part3">SimpleLogin 記事與別名位址一起儲存於相同位置，且雖然其靜態資料受加密保護，但它並非 E2E 加密的，這表示任何存取 SimpleLogin 資料庫的人都可以讀取它。</string>
+  <string name="sl_note_info_content_description">顯示 SL 備註資訊對話框</string>
   <!-- Create note -->
   <string name="note_hint">備註</string>
   <!-- Create Credit Card -->
@@ -114,17 +114,17 @@
   <string name="field_card_expiration_date_error">輸入標準日期 月份/年份 格式</string>
   <string name="create_credit_card_item_creation_error">無法創建信用卡</string>
   <string name="create_credit_card_item_creation_success">信用卡已創建</string>
-  <string name="credit_card_init_error">Problem retrieving credit card details</string>
-  <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
-  <string name="credit_card_link_attachments_error">Failed to link or unlink attachments to the credit card</string>
-  <string name="credit_card_rename_attachments_error">Failed to rename credit card attachments</string>
+  <string name="credit_card_init_error">擷取信用或簽帳卡詳細資料時發生問題</string>
+  <string name="update_credit_card_attachments_init_error">擷取信用或簽帳卡附件時發生問題</string>
+  <string name="credit_card_link_attachments_error">無法將附件連結或取消連結至信用或簽帳卡</string>
+  <string name="credit_card_rename_attachments_error">無法重新命名信用或簽帳卡附件</string>
   <string name="credit_card_item_update_error">無法更新信用卡</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">全名</string>
   <string name="identity_field_email_title">電子信箱</string>
   <string name="identity_field_phone_number_title">電話號碼</string>
   <string name="identity_field_organization_title">組織機構</string>
-  <string name="identity_field_street_address_title">Street address, P.O. box</string>
+  <string name="identity_field_street_address_title">街道地址、郵政信箱</string>
   <string name="identity_field_zip_or_postal_code_title">郵遞區號</string>
   <string name="identity_field_city_title">城市</string>
   <string name="identity_field_state_or_province_title">州或省</string>
@@ -133,7 +133,7 @@
   <string name="identity_field_passport_number_title">護照號碼</string>
   <string name="identity_field_license_number_title">許可證號碼</string>
   <string name="identity_field_website_title">網站</string>
-  <string name="identity_field_xhandle_title">X handle</string>
+  <string name="identity_field_xhandle_title">X 帳號</string>
   <string name="identity_field_company_title">公司</string>
   <string name="identity_field_job_title_title">職稱</string>
   <string name="identity_field_first_name_title">名</string>
@@ -147,7 +147,7 @@
   <string name="identity_field_reddit_title">Reddit使用者名稱</string>
   <string name="identity_field_facebook_title">Facebook 網址</string>
   <string name="identity_field_yahoo_title">Yahoo 使用者名稱</string>
-  <string name="identity_field_instagram_title">Instagram username</string>
+  <string name="identity_field_instagram_title">Instagram 使用者名稱</string>
   <string name="identity_field_personal_website_title">個人網站網址</string>
   <string name="identity_field_work_phone_number_title">工作電話號碼</string>
   <string name="identity_field_work_email_title">工作電子郵件</string>
@@ -162,26 +162,27 @@
   <string name="identity_add_field_reddit">Reddit使用者名稱</string>
   <string name="identity_add_field_facebook">Facebook 網址</string>
   <string name="identity_add_field_yahoo">Yahoo 使用者名稱</string>
-  <string name="identity_add_field_instagram">Instagram username</string>
+  <string name="identity_add_field_instagram">Instagram 使用者名稱</string>
   <string name="identity_add_field_personal_website">個人網站網址</string>
   <string name="identity_add_field_work_phone_number">工作電話號碼</string>
   <string name="identity_add_field_work_email_address">工作電子郵件</string>
   <string name="identity_add_field_custom_field">自訂欄位</string>
   <string name="identity_section_personal_details">個人資訊</string>
-  <string name="identity_section_address_details">Address details</string>
+  <string name="identity_section_address_details">位址詳細資料</string>
   <string name="identity_section_contact_details">聯絡人詳細資料</string>
-  <string name="identity_section_work_details">Work details</string>
+  <string name="identity_section_work_details">工作詳細資料</string>
   <string name="identity_bottomsheet_add_field">新增欄位</string>
-  <string name="create_identity_init_error">Problem retrieving identity details</string>
-  <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
-  <string name="identity_link_attachments_error">Failed to link or unlink attachments to the identity</string>
-  <string name="identity_rename_attachments_error">Failed to rename identity attachments</string>
-  <string name="create_identity_item_creation_error">Could not create identity</string>
-  <string name="create_identity_item_creation_success">Identity created</string>
-  <string name="update_identity_item_creation_success">Identity updated</string>
-  <string name="update_identity_item_creation_error">Could not update identity</string>
+  <string name="create_identity_init_error">擷取身分詳細資料時發生問題</string>
+  <string name="update_identity_attachments_init_error">擷取身分附件時發生問題</string>
+  <string name="identity_link_attachments_error">無法將附件連結或取消連結至身分</string>
+  <string name="identity_rename_attachments_error">無法重新命名身分附件</string>
+  <string name="create_identity_item_creation_error">無法建立身分</string>
+  <string name="create_identity_item_creation_success">身分已建立</string>
+  <string name="update_identity_item_creation_success">身分已更新</string>
+  <string name="update_identity_item_creation_error">無法更新身分</string>
   <!--  Common create items  -->
   <string name="title_create">創建</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (已複製)</string>
   <string name="changes_saved">更改已保存</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">雙重驗證一次性驗證碼金鑰(TOTP)</string>
@@ -199,153 +200,139 @@
   <string name="create_alias_content_limit_banner">已用鑿可供創建別名的數量。升級訂購授權即可釋放限制</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">此應用程式需要更新一編輯項目</string>
   <string name="remove_passkey_dialog_title">要移除這個密碼金鑰嗎?</string>
-  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">You are about to remove the passkey for user \'%1$s\' for \'%2$s\'. Are you sure?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">您即將移除適用於使用者「%1$s」及「%2$s」的通行密鑰。您確定嗎？</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">附件</string>
-  <string name="banner_body_attachments">You can attach files to items for a better organization</string>
-  <string name="open_with">Open with:</string>
+  <string name="banner_body_attachments">您可以將檔案附加到項目以更好地整理</string>
+  <string name="open_with">開啟方式：</string>
   <string name="banner_advanced_options_title">您知道嗎？</string>
-  <string name="banner_advanced_options_subtitle">Tap the gear icon to customize the alias the way you want.</string>
+  <string name="banner_advanced_options_subtitle">輕點選項圖示，即可依您所需自訂別名。</string>
   <string name="banner_custom_domain_title">您知道嗎？</string>
-  <string name="banner_custom_domain_subtitle">By adding your domain, you can create aliases like hi@my-domain.com.</string>
+  <string name="banner_custom_domain_subtitle">透過新增您的網域，您可以建立別名，例如 hi@my-domain.com。</string>
   <string name="banner_custom_domain_button">加入網域</string>
   <string name="banner_mailbox_title">您知道嗎？</string>
-  <string name="banner_mailbox_subtitle">Share aliases with others by adding their inbox as an additional mailbox.</string>
-  <string name="banner_mailbox_button">Add mailbox</string>
+  <string name="banner_mailbox_subtitle">透過新增他們的收件匣作為額外的電郵信箱，與他人共享別名。</string>
+  <string name="banner_mailbox_button">新增電郵信箱</string>
   <!-- Suffix -->
-  <string name="suffix_subtitle_premium_domain">Premium domain</string>
-  <string name="suffix_subtitle_public_domain">Public domain</string>
-  <string name="suffix_subtitle_private_domain">Your domain</string>
+  <string name="suffix_subtitle_premium_domain">頂級質子版網域</string>
+  <string name="suffix_subtitle_public_domain">公開網域</string>
+  <string name="suffix_subtitle_private_domain">您的網域</string>
   <!-- Templates -->
-  <string name="template_item_api_credential">API Credential</string>
-  <string name="template_item_database">Database</string>
+  <string name="template_item_api_credential">API 憑證</string>
+  <string name="template_item_database">資料庫</string>
   <string name="template_item_server">伺服器</string>
-  <string name="template_item_software_license">Software License</string>
+  <string name="template_item_software_license">軟體授權</string>
   <string name="template_item_ssh_key">SSH 金鑰</string>
-  <string name="template_item_wifi_network">WiFi Network</string>
+  <string name="template_item_wifi_network">無線網路</string>
   <string name="template_item_bank_account">銀行帳號</string>
-  <string name="template_item_crypto_wallet">Crypto Wallet</string>
+  <string name="template_item_crypto_wallet">加密錢包</string>
   <string name="template_item_driver_license">駕照</string>
-  <string name="template_item_medical_record">Medical Record</string>
-  <string name="template_item_membership">Membership</string>
+  <string name="template_item_medical_record">醫療紀錄</string>
+  <string name="template_item_membership">會員資格</string>
   <string name="template_item_passport">護照</string>
-  <string name="template_item_reward_program">Reward Program</string>
-  <string name="template_item_social_security_number">Social Security Number</string>
+  <string name="template_item_reward_program">獎勵計畫</string>
+  <string name="template_item_social_security_number">社會安全碼</string>
   <!-- API Credential Fields -->
-  <string name="template_api_credential_field_api_key">API Key</string>
-  <string name="template_api_credential_field_secret">Secret</string>
-  <string name="template_api_credential_field_expiry_date">Expiry Date</string>
+  <string name="template_api_credential_field_api_key">API 金鑰</string>
+  <string name="template_api_credential_field_secret">密碼</string>
+  <string name="template_api_credential_field_expiry_date">到期日</string>
   <string name="template_api_credential_field_permissions">權限</string>
-  <string name="template_api_credential_field_note">備注</string>
   <!-- Database Fields -->
   <string name="template_database_field_host">主機</string>
   <string name="template_database_field_port">連接埠</string>
   <string name="template_database_field_username">使用者名稱</string>
   <string name="template_database_field_password">密碼</string>
-  <string name="template_database_field_database_type">Database Type</string>
-  <string name="template_database_field_note">備注</string>
+  <string name="template_database_field_database_type">資料庫類型</string>
   <!-- Server Fields -->
   <string name="template_server_field_ip_address">IP 位址</string>
-  <string name="template_server_field_hostname">Hostname</string>
-  <string name="template_server_field_os">Operating System</string>
+  <string name="template_server_field_hostname">主機名稱</string>
+  <string name="template_server_field_os">作業系統</string>
   <string name="template_server_field_username">使用者名稱</string>
   <string name="template_server_field_password">密碼</string>
-  <string name="template_server_field_note">備注</string>
   <!-- Software License Fields -->
-  <string name="template_software_license_field_license_key">License Key</string>
+  <string name="template_software_license_field_license_key">許可證金鑰</string>
   <string name="template_software_license_field_product">產品</string>
-  <string name="template_software_license_field_expiry_date">Expiry Date</string>
+  <string name="template_software_license_field_expiry_date">到期日</string>
   <string name="template_software_license_field_owner">擁有者</string>
-  <string name="template_software_license_field_note">備注</string>
   <!-- SSH Key Fields -->
-  <string name="template_ssh_key_field_private_key">Private Key</string>
+  <string name="template_ssh_key_field_private_key">私有金鑰</string>
   <string name="template_ssh_key_field_public_key">公開金鑰</string>
   <string name="template_ssh_key_field_username">使用者名稱</string>
   <string name="template_ssh_key_field_host">主機</string>
-  <string name="template_ssh_key_field_note">備注</string>
   <!-- WiFi Network Fields -->
-  <string name="template_wifi_network_field_name">Name (SSID)</string>
-  <string name="template_wifi_network_field_note">備注</string>
+  <string name="template_wifi_network_field_name">名稱 (SSID)</string>
   <!-- Bank Account Fields -->
-  <string name="template_bank_account_field_bank_name">Bank Name</string>
-  <string name="template_bank_account_field_account_number">Account Number</string>
-  <string name="template_bank_account_field_routing_number">Routing Number</string>
+  <string name="template_bank_account_field_bank_name">銀行名</string>
+  <string name="template_bank_account_field_account_number">帳號</string>
+  <string name="template_bank_account_field_routing_number">路由號碼</string>
   <string name="template_bank_account_field_account_type">帳號類型</string>
   <string name="template_bank_account_field_iban">國際銀行帳號</string>
-  <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
-  <string name="template_bank_account_field_holder_name">Holder Name</string>
-  <string name="template_bank_account_field_note">備注</string>
+  <string name="template_bank_account_field_swift_bic">SWIFT/BIC代碼</string>
+  <string name="template_bank_account_field_holder_name">持有人姓名</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">錢包名稱</string>
   <string name="template_crypto_wallet_field_address">地址</string>
-  <string name="template_crypto_wallet_field_private_key">Private Key</string>
-  <string name="template_crypto_wallet_field_seed_phrase">Seed Phrase</string>
+  <string name="template_crypto_wallet_field_private_key">私有金鑰</string>
+  <string name="template_crypto_wallet_field_seed_phrase">種子短語</string>
   <string name="template_crypto_wallet_field_network">網路</string>
-  <string name="template_crypto_wallet_field_note">備注</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">全名</string>
-  <string name="template_driver_license_field_license_number">License Number</string>
-  <string name="template_driver_license_field_issuing_state_country">Issuing State/Country</string>
-  <string name="template_driver_license_field_expiry_date">Expiry Date</string>
+  <string name="template_driver_license_field_license_number">執照號碼</string>
+  <string name="template_driver_license_field_issuing_state_country">發行州/國家</string>
+  <string name="template_driver_license_field_expiry_date">到期日</string>
   <string name="template_driver_license_field_date_of_birth">出生日期</string>
   <string name="template_driver_license_field_class">類別</string>
-  <string name="template_driver_license_field_note">備注</string>
   <!-- Medical Record Fields -->
-  <string name="template_medical_record_field_patient_name">Patient Name</string>
-  <string name="template_medical_record_field_record_number">Record Number</string>
-  <string name="template_medical_record_field_medical_conditions">Medical Conditions</string>
-  <string name="template_medical_record_field_medications">Medications</string>
+  <string name="template_medical_record_field_patient_name">患者名稱</string>
+  <string name="template_medical_record_field_record_number">病歷號碼</string>
+  <string name="template_medical_record_field_medical_conditions">醫療狀況</string>
+  <string name="template_medical_record_field_medications">藥物</string>
   <string name="template_medical_record_field_doctor">醫生</string>
-  <string name="template_medical_record_field_hospital">Hospital</string>
-  <string name="template_medical_record_field_note">備注</string>
+  <string name="template_medical_record_field_hospital">醫院</string>
   <!-- Membership Fields -->
-  <string name="template_membership_field_organization_name">Organization Name</string>
-  <string name="template_membership_field_membership_id">Membership ID</string>
-  <string name="template_membership_field_member_name">Member Name</string>
-  <string name="template_membership_field_expiry_date">Expiry Date</string>
-  <string name="template_membership_field_tier_level">Tier/Level</string>
-  <string name="template_membership_field_note">備注</string>
+  <string name="template_membership_field_organization_name">組織機構名稱</string>
+  <string name="template_membership_field_membership_id">會員ID</string>
+  <string name="template_membership_field_member_name">成員名稱</string>
+  <string name="template_membership_field_expiry_date">到期日</string>
+  <string name="template_membership_field_tier_level">等級/級別</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">全名</string>
   <string name="template_passport_field_passport_number">護照號碼</string>
   <string name="template_passport_field_country">國家</string>
-  <string name="template_passport_field_expiry_date">Expiry Date</string>
+  <string name="template_passport_field_expiry_date">到期日</string>
   <string name="template_passport_field_date_of_birth">出生日期</string>
-  <string name="template_passport_field_issuing_authority">Issuing Authority</string>
-  <string name="template_passport_field_note">備注</string>
+  <string name="template_passport_field_issuing_authority">發行機構</string>
   <!-- Reward Program Fields -->
-  <string name="template_reward_program_field_program_name">Program Name</string>
-  <string name="template_reward_program_field_member_id">Member ID</string>
-  <string name="template_reward_program_field_points_balance">Points Balance</string>
-  <string name="template_reward_program_field_expiry_date">Expiry Date</string>
-  <string name="template_reward_program_field_tier_status">Tier/Status</string>
-  <string name="template_reward_program_field_note">備注</string>
+  <string name="template_reward_program_field_program_name">方案名稱</string>
+  <string name="template_reward_program_field_member_id">成員 ID</string>
+  <string name="template_reward_program_field_points_balance">點數餘額</string>
+  <string name="template_reward_program_field_expiry_date">到期日</string>
+  <string name="template_reward_program_field_tier_status">等級/狀態</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">全名</string>
-  <string name="template_social_security_number_field_ssn">Social Security Number</string>
-  <string name="template_social_security_number_field_issuing_country">Issuing Country</string>
-  <string name="template_social_security_number_field_note">備注</string>
+  <string name="template_social_security_number_field_ssn">社會安全碼</string>
+  <string name="template_social_security_number_field_issuing_country">發行國家</string>
   <string name="template_header_technology">技術</string>
   <string name="template_header_finance">金融</string>
   <string name="template_header_title_personal">個人</string>
-  <string name="button_start_from_scratch">Start from scratch</string>
-  <string name="select_template_title">Custom item</string>
+  <string name="button_start_from_scratch">從頭開始</string>
+  <string name="select_template_title">自訂項目</string>
   <!-- Custom item screen -->
   <string name="add_custom_field_button">新增欄位</string>
-  <string name="add_section_button">Add section</string>
+  <string name="add_section_button">加入區塊</string>
   <string name="add_public_key_placeholder">新增公鑰</string>
   <string name="add_private_key_placeholder">新增私鑰</string>
-  <string name="add_ssid_name_placeholder">Add name (SSID)</string>
-  <string name="create_custom_item_init_error">Problem retrieving custom item details</string>
-  <string name="update_custom_item_attachments_init_error">Problem retrieving custom item attachments</string>
-  <string name="custom_item_link_attachments_error">Failed to link or unlink attachments to the custom item</string>
-  <string name="custom_item_rename_attachments_error">Failed to rename custom item attachments</string>
-  <string name="create_custom_item_item_creation_error">Could not create custom item</string>
-  <string name="create_custom_item_item_creation_success">Custom item created</string>
-  <string name="update_custom_item_item_creation_success">Custom item updated</string>
-  <string name="update_custom_item_item_creation_error">Could not update custom item</string>
+  <string name="add_ssid_name_placeholder">新增名稱 (SSID)</string>
+  <string name="create_custom_item_init_error">擷取自訂項目詳細資料時發生問題</string>
+  <string name="update_custom_item_attachments_init_error">擷取自訂項目附件時發生問題</string>
+  <string name="custom_item_link_attachments_error">無法連結或取消連結附件至自訂項目</string>
+  <string name="custom_item_rename_attachments_error">無法重新命名自訂項目附件</string>
+  <string name="create_custom_item_item_creation_error">無法建立自訂項目</string>
+  <string name="create_custom_item_item_creation_success">自訂項目已建立</string>
+  <string name="update_custom_item_item_creation_success">自訂項目已更新</string>
+  <string name="update_custom_item_item_creation_error">無法更新自訂項目</string>
   <!-- Cannot create items dialog -->
-  <string name="cannot_create_items_dialog_title">Cannot create items</string>
-  <string name="cannot_create_items_dialog_message">You don\'t have any vaults with editor or admin access. Try creating one in the main app or ask your organization\'s administrator for support.</string>
-  <string name="wifi_security_type_field_label">Security type</string>
+  <string name="cannot_create_items_dialog_title">無法建立項目</string>
+  <string name="cannot_create_items_dialog_message">您沒有任何具有編輯者或管理員存取權限的保管庫。請嘗試在主應用程式中建立一個，或諮詢您組織機構的管理員以取得支援服務。</string>
+  <string name="wifi_security_type_field_label">安全性類型</string>
 </resources>

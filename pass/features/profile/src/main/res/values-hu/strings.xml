@@ -50,7 +50,7 @@
   <string name="profile_option_change_pin_code">PIN-kód megváltoztatása</string>
   <string name="profile_passkey_support_section_title">Hozzáférési kulcsok</string>
   <string name="profile_passkey_support_subtitle_supported">Hozzáférési kulcsok támogatva</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Az Ön Android verziója nem támogatja a jelkulcsokat.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">Az Ön Android verziója nem támogatja a hozzáférési kulcsokat..</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Az ön eszköze nem támogatja a hozzáférési kulcsokat</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Nem lehet ellenőrizni a hozzáférési kulcs támogatását</string>
   <plurals name="profile_after_days">

@@ -182,6 +182,7 @@
   <string name="update_identity_item_creation_error">Kunde inte uppdatera identitet</string>
   <!--  Common create items  -->
   <string name="title_create">Skapa</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (kopierat)</string>
   <string name="changes_saved">Ändringar sparade</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Hemlig nyckel för 2FA (TOTP)</string>
@@ -236,36 +237,30 @@
   <string name="template_api_credential_field_secret">Hemlig</string>
   <string name="template_api_credential_field_expiry_date">Utgångsdatum</string>
   <string name="template_api_credential_field_permissions">Behörigheter</string>
-  <string name="template_api_credential_field_note">Anteckning</string>
   <!-- Database Fields -->
   <string name="template_database_field_host">Host</string>
   <string name="template_database_field_port">Port</string>
   <string name="template_database_field_username">Användarnamn</string>
   <string name="template_database_field_password">Lösenord</string>
   <string name="template_database_field_database_type">Databastyp</string>
-  <string name="template_database_field_note">Anteckning</string>
   <!-- Server Fields -->
   <string name="template_server_field_ip_address">IP-adress</string>
   <string name="template_server_field_hostname">Hostnamn</string>
   <string name="template_server_field_os">Operativsystem</string>
   <string name="template_server_field_username">Användarnamn</string>
   <string name="template_server_field_password">Lösenord</string>
-  <string name="template_server_field_note">Anteckning</string>
   <!-- Software License Fields -->
   <string name="template_software_license_field_license_key">Licensnyckel</string>
   <string name="template_software_license_field_product">Produkt</string>
   <string name="template_software_license_field_expiry_date">Utgångsdatum</string>
   <string name="template_software_license_field_owner">Ägare</string>
-  <string name="template_software_license_field_note">Anteckning</string>
   <!-- SSH Key Fields -->
   <string name="template_ssh_key_field_private_key">Privat nyckel</string>
   <string name="template_ssh_key_field_public_key">Offentlig nyckel</string>
   <string name="template_ssh_key_field_username">Användarnamn</string>
   <string name="template_ssh_key_field_host">Host</string>
-  <string name="template_ssh_key_field_note">Anteckning</string>
   <!-- WiFi Network Fields -->
   <string name="template_wifi_network_field_name">Namn (SSID)</string>
-  <string name="template_wifi_network_field_note">Anteckning</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Banknamn</string>
   <string name="template_bank_account_field_account_number">Kontonummer</string>
@@ -274,14 +269,12 @@
   <string name="template_bank_account_field_iban">IBAN</string>
   <string name="template_bank_account_field_swift_bic">SWIFT/BIC</string>
   <string name="template_bank_account_field_holder_name">Innehavarens namn</string>
-  <string name="template_bank_account_field_note">Anteckning</string>
   <!-- Crypto Wallet Fields -->
   <string name="template_crypto_wallet_field_wallet_name">Plånboksnamn</string>
   <string name="template_crypto_wallet_field_address">Adress</string>
   <string name="template_crypto_wallet_field_private_key">Privat nyckel</string>
   <string name="template_crypto_wallet_field_seed_phrase">Säkerhetsfras</string>
   <string name="template_crypto_wallet_field_network">Nätverk</string>
-  <string name="template_crypto_wallet_field_note">Anteckning</string>
   <!-- Driver License Fields -->
   <string name="template_driver_license_field_full_name">Fullständigt namn</string>
   <string name="template_driver_license_field_license_number">Licensnummer</string>
@@ -289,7 +282,6 @@
   <string name="template_driver_license_field_expiry_date">Utgångsdatum</string>
   <string name="template_driver_license_field_date_of_birth">Födelsedatum</string>
   <string name="template_driver_license_field_class">Klass</string>
-  <string name="template_driver_license_field_note">Anteckning</string>
   <!-- Medical Record Fields -->
   <string name="template_medical_record_field_patient_name">Patientnamn</string>
   <string name="template_medical_record_field_record_number">Record Number</string>
@@ -297,14 +289,12 @@
   <string name="template_medical_record_field_medications">Mediciner</string>
   <string name="template_medical_record_field_doctor">Läkare</string>
   <string name="template_medical_record_field_hospital">Sjukhus</string>
-  <string name="template_medical_record_field_note">Anteckning</string>
   <!-- Membership Fields -->
   <string name="template_membership_field_organization_name">Organisationsnamn</string>
   <string name="template_membership_field_membership_id">Medlemskaps-ID</string>
   <string name="template_membership_field_member_name">Medlemsnamn</string>
   <string name="template_membership_field_expiry_date">Utgångsdatum</string>
   <string name="template_membership_field_tier_level">Nivå</string>
-  <string name="template_membership_field_note">Anteckning</string>
   <!-- Passport Fields -->
   <string name="template_passport_field_full_name">Fullständigt namn</string>
   <string name="template_passport_field_passport_number">Passnummer</string>
@@ -312,19 +302,16 @@
   <string name="template_passport_field_expiry_date">Utgångsdatum</string>
   <string name="template_passport_field_date_of_birth">Födelsedatum</string>
   <string name="template_passport_field_issuing_authority">Utfärdande myndighet</string>
-  <string name="template_passport_field_note">Anteckning</string>
   <!-- Reward Program Fields -->
   <string name="template_reward_program_field_program_name">Programnamn</string>
   <string name="template_reward_program_field_member_id">Medlems-ID</string>
   <string name="template_reward_program_field_points_balance">Poängsaldo</string>
   <string name="template_reward_program_field_expiry_date">Utgångsdatum</string>
   <string name="template_reward_program_field_tier_status">Nivå/status</string>
-  <string name="template_reward_program_field_note">Anteckning</string>
   <!-- Social Security Number Fields -->
   <string name="template_social_security_number_field_full_name">Fullständigt namn</string>
   <string name="template_social_security_number_field_ssn">Personnummer</string>
   <string name="template_social_security_number_field_issuing_country">Utfärdande land</string>
-  <string name="template_social_security_number_field_note">Anteckning</string>
   <string name="template_header_technology">Teknologi</string>
   <string name="template_header_finance">Finans</string>
   <string name="template_header_title_personal">Privat</string>

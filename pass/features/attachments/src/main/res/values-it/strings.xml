@@ -17,26 +17,26 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="add_attachment_take_a_photo">Scatta una foto</string>
-  <string name="add_attachment_choose_a_photo_or_video">Scegli una foto o un video</string>
-  <string name="add_attachment_choose_a_file">Scegli un file</string>
+  <string name="add_attachment_take_a_photo">Scatta una foto</string>
+  <string name="add_attachment_choose_a_photo_or_video">Scegli una foto o un video</string>
+  <string name="add_attachment_choose_a_file">Scegli un file</string>
   <string name="attachment_options_rename">Rinomina</string>
   <string name="attachment_options_delete">Elimina</string>
   <string name="attachment_options_download">Scarica</string>
   <string name="attachment_options_share">Condividi</string>
-  <string name="file_picker_open_error">Apertura del selettore file non riuscita</string>
-  <string name="media_picker_open_error">Apertura del selettore media non riuscita</string>
-  <string name="camera_open_error">Apertura della fotocamera non riuscita</string>
+  <string name="file_picker_open_error">Caricamento del selettore file non riuscito</string>
+  <string name="media_picker_open_error">Caricamento del selettore media non riuscito</string>
+  <string name="camera_open_error">Apertura della fotocamera non riuscita</string>
   <string name="camera_permission_explanation">Consenti l\'accesso alla fotocamera per usare questa funzionalità.</string>
   <string name="camera_permission_open_settings">Apri le impostazioni</string>
-  <string name="delete_all_attachments_title">Eliminare tutti gli allegati?</string>
-  <string name="delete_all_attachments_subtitle">Questa azione non può essere annullata</string>
+  <string name="delete_all_attachments_title">Elimina tutti gli allegati</string>
+  <string name="delete_all_attachments_subtitle">Sei sicuro di voler eliminare definitivamente tutti i file allegati?</string>
   <string name="delete_all_attachments_confirm">Elimina tutto</string>
-  <string name="rename_attachment_dialog_title">Rinomina il file</string>
-  <string name="storage_full_title">Spazio di archiviazione quasi pieno.</string>
-  <string name="storage_full_body">Esegui l\'upgrade per aumentare la tua capacità di archiviazione.</string>
+  <string name="rename_attachment_dialog_title">Rinomina il file</string>
+  <string name="storage_full_title">Spazio di archiviazione quasi pieno</string>
+  <string name="storage_full_body">Passa a un piano a pagamento per aumentare lo spazio di archiviazione</string>
   <string name="storage_full_upgrade">Effettua l\'upgrade</string>
-  <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s di %2$s</string>
-  <string name="attachments_saved_to_location_success">Allegato salvato nella posizione</string>
-  <string name="attachments_saved_to_location_error">Non è stato possibile salvare l\'allegato nella posizione</string>
+  <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s / %2$s</string>
+  <string name="attachments_saved_to_location_success">Allegato salvato</string>
+  <string name="attachments_saved_to_location_error">Salvataggio dell\'allegato non riuscito</string>
 </resources>

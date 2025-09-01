@@ -27,7 +27,6 @@ import javax.inject.Inject
 class PassApiClient @Inject constructor(appConfig: AppConfig) : ApiClient {
     override val appVersionHeader: String = "android-pass@${appConfig.versionName}"
     override val enableDebugLogging: Boolean = appConfig.isDebug
-    override val shouldUseDoh: Boolean = false
     override val userAgent: String = StringBuilder()
         .append("ProtonPass/${appConfig.versionName}")
         .append(" ")
@@ -38,6 +37,7 @@ class PassApiClient @Inject constructor(appConfig: AppConfig) : ApiClient {
         .append(")")
         .toString()
 
+    override suspend fun shouldUseDoh(): Boolean = false
     override fun forceUpdate(errorMessage: String) {
         PassLogger.i(TAG, errorMessage)
     }

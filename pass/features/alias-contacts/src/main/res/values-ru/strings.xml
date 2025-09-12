@@ -57,7 +57,7 @@
   <string name="snackbar_contact_block_error">Не удалось заблокировать контакт</string>
   <string name="snackbar_contact_unblock_success">Контакт разблокирован</string>
   <string name="snackbar_contact_unblock_error">Не удалось разблокировать контакт</string>
-  <string name="snackbar_delete_contact_success">Контакт удален</string>
+  <string name="snackbar_delete_contact_success">Контакт удалён</string>
   <string name="snackbar_delete_contact_error">Не удалось удалить контакт</string>
   <string name="snackbar_email_copied_success">Эл. почта скопирована в буфер обмена</string>
   <string name="contact_option_send_email">Отправить электронное письмо</string>

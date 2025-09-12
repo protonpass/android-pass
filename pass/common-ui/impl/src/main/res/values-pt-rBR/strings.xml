@@ -25,5 +25,5 @@
   <string name="snackbar_item_move_to_trash_error">Não foi possível mover para a lixeira</string>
   <string name="snackbar_item_copy_email_success">E-mail copiado para a área de transferência</string>
   <string name="snackbar_item_copy_username_success">O nome de usuário foi copiado para a área de transferência</string>
-  <string name="snackbar_item_copy_password_success">A senha foi copiada para a área de transferências.</string>
+  <string name="snackbar_item_copy_password_success">Senha copiada para a área de transferência</string>
 </resources>

@@ -55,5 +55,5 @@
     <item quantity="other">Засталося %d спроб</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Занадта шмат няўдалых спроб уводу PIN-кода. Усім вашым карыстальнікам неабходна будзе паўторна ўвайсці ў сістэму.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Занадта шмат няўдалых спроб уводу PIN.</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Занадта шмат няўдалых спроб уводу PIN</string>
 </resources>

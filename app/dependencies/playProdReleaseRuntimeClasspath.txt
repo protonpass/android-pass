@@ -11,10 +11,12 @@ androidx.arch.core:core-runtime:2.2.0
 androidx.autofill:autofill:1.1.0
 androidx.biometric:biometric:1.2.0-alpha05
 androidx.browser:browser:1.7.0
-androidx.camera:camera-camera2:1.2.1
-androidx.camera:camera-core:1.2.1
-androidx.camera:camera-lifecycle:1.2.1
-androidx.camera:camera-view:1.2.1
+androidx.camera.featurecombinationquery:featurecombinationquery:1.5.0
+androidx.camera:camera-camera2:1.5.0
+androidx.camera:camera-core:1.5.0
+androidx.camera:camera-lifecycle:1.5.0
+androidx.camera:camera-video:1.5.0
+androidx.camera:camera-view:1.5.0
 androidx.cardview:cardview:1.0.0
 androidx.collection:collection-jvm:1.4.4
 androidx.collection:collection-ktx:1.4.4
@@ -53,6 +55,7 @@ androidx.compose.ui:ui-unit:1.7.5
 androidx.compose.ui:ui-util-android:1.7.5
 androidx.compose.ui:ui-util:1.7.5
 androidx.compose.ui:ui:1.7.5
+androidx.concurrent:concurrent-futures-ktx:1.1.0
 androidx.concurrent:concurrent-futures:1.1.0
 androidx.constraintlayout:constraintlayout-core:1.0.4
 androidx.constraintlayout:constraintlayout:2.1.4
@@ -139,6 +142,7 @@ androidx.savedstate:savedstate:1.2.1
 androidx.sqlite:sqlite-framework:2.4.0
 androidx.sqlite:sqlite:2.4.0
 androidx.startup:startup-runtime:1.1.1
+androidx.tracing:tracing-ktx:1.2.0
 androidx.tracing:tracing:1.2.0
 androidx.transition:transition:1.2.0
 androidx.vectordrawable:vectordrawable-animated:1.1.0
@@ -417,6 +421,7 @@ org.jetbrains.kotlinx:kotlinx-serialization-core:1.6.3
 org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.6.3
 org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3
 org.jetbrains:annotations:23.0.0
+org.jspecify:jspecify:1.0.0
 org.minidns:minidns-core:1.0.4
 org.mobilenativefoundation.store:multicast:4.0.7
 org.mobilenativefoundation.store:store4:4.0.7

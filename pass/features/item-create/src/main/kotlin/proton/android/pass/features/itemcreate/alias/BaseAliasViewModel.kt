@@ -31,7 +31,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
@@ -170,7 +169,6 @@ abstract class BaseAliasViewModel(
         isLoadingState,
         eventWrapperState,
         hasUserEditedContentFlow,
-        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
         featureFlagsRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1),
         userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementOptions),
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
@@ -178,7 +176,7 @@ abstract class BaseAliasViewModel(
         canPerformPaidAction(),
         focusedFieldState
     ) { aliasItemValidationErrors, isLoading, eventWrapper, hasUserEditedContent,
-        isFileAttachmentEnabled, isCustomTypeEnabled, displayAdvancedOptionsBanner,
+        isCustomTypeEnabled, displayAdvancedOptionsBanner,
         displayFileAttachmentsOnboarding, attachmentsState, canPerformPaidAction, focusedField ->
         BaseAliasUiState(
             isDraft = isDraft,
@@ -191,7 +189,6 @@ abstract class BaseAliasViewModel(
             hasUserEditedContent = hasUserEditedContent,
             hasReachedAliasLimit = false,
             canUpgrade = false,
-            isFileAttachmentEnabled = isFileAttachmentEnabled,
             isCustomTypeEnabled = isCustomTypeEnabled,
             displayAdvancedOptionsBanner = displayAdvancedOptionsBanner.value,
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
@@ -266,10 +263,6 @@ abstract class BaseAliasViewModel(
             )
         }
     }
-
-    suspend fun isFileAttachmentsEnabled() = featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
-        .firstOrNull()
-        ?: false
 
     fun retryUploadDraftAttachment(metadata: FileMetadata) {
         viewModelScope.launch {

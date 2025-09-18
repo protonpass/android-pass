@@ -36,7 +36,6 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.CUSTOM_TYPE_V1
 import proton.android.pass.preferences.FeatureFlag.EXTRA_LOGGING
-import proton.android.pass.preferences.FeatureFlag.FILE_ATTACHMENTS_V1
 import proton.android.pass.preferences.FeatureFlag.FILE_ATTACHMENT_ENCRYPTION_V2
 import proton.android.pass.preferences.FeatureFlag.PASS_HIDE_SHOW_VAULT
 import proton.android.pass.preferences.FeatureFlag.RENAME_ADMIN_TO_MANAGER
@@ -63,10 +62,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             defaultValue = featureFlag.isEnabledDefault
         ) { extraLoggingEnabled.value }
 
-        FILE_ATTACHMENTS_V1 -> getFeatureFlag(
-            key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault
-        ) { fileAttachmentsV1Enabled.value }
 
         CUSTOM_TYPE_V1 -> getFeatureFlag(
             key = featureFlag.key,
@@ -98,9 +93,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             extraLoggingEnabled = boolFlagPrefProto(value)
         }
 
-        FILE_ATTACHMENTS_V1 -> setFeatureFlag {
-            fileAttachmentsV1Enabled = boolFlagPrefProto(value)
-        }
 
         CUSTOM_TYPE_V1 -> setFeatureFlag {
             customTypeV1Enabled = boolFlagPrefProto(value)
@@ -209,7 +201,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
         when (featureFlag) {
             AUTOFILL_DEBUG_MODE -> autofillDebugModeEnabled
             EXTRA_LOGGING -> extraLoggingEnabled
-            FILE_ATTACHMENTS_V1 -> fileAttachmentsV1Enabled
             CUSTOM_TYPE_V1 -> customTypeV1Enabled
             FILE_ATTACHMENT_ENCRYPTION_V2 -> fileAttachmentEncryptionV2Enabled
             RENAME_ADMIN_TO_MANAGER -> renameAdminToManagerEnabled

@@ -49,7 +49,6 @@ internal data class BaseLoginUiState(
     val totpUiState: TotpUiState,
     val focusedField: LoginField?,
     val isUsernameSplitTooltipEnabled: Boolean,
-    val isFileAttachmentsEnabled: Boolean,
     val displayFileAttachmentsOnboarding: Boolean,
     val attachmentsState: AttachmentsState
 ) {
@@ -70,7 +69,6 @@ internal data class BaseLoginUiState(
             totpUiState = TotpUiState.NotInitialised,
             focusedField = null,
             isUsernameSplitTooltipEnabled = false,
-            isFileAttachmentsEnabled = false,
             displayFileAttachmentsOnboarding = false,
             attachmentsState = AttachmentsState.Initial
         )

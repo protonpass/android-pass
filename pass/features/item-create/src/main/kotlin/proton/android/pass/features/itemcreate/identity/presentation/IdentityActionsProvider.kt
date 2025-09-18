@@ -100,7 +100,6 @@ data class IdentitySharedUiState(
     val focusedField: Option<IdentityField>,
     val canUseCustomFields: Boolean,
     val displayFileAttachmentsOnboarding: Boolean,
-    val isFileAttachmentsEnabled: Boolean,
     val attachmentsState: AttachmentsState
 ) {
 
@@ -128,8 +127,7 @@ data class IdentitySharedUiState(
         !extraFields.containsAll(setOf(PersonalWebsite, WorkPhoneNumber, WorkEmail))
     }
 
-    val showFileAttachments = isFileAttachmentsEnabled
-    val showFileAttachmentsBanner = isFileAttachmentsEnabled && displayFileAttachmentsOnboarding
+    val showFileAttachmentsBanner = displayFileAttachmentsOnboarding
 
     companion object {
         val Initial = IdentitySharedUiState(
@@ -141,7 +139,6 @@ data class IdentitySharedUiState(
             focusedField = None,
             canUseCustomFields = false,
             displayFileAttachmentsOnboarding = false,
-            isFileAttachmentsEnabled = false,
             attachmentsState = AttachmentsState.Initial
         )
     }

@@ -36,12 +36,10 @@ data class ItemSharedUiState(
     val focusedField: Option<CustomFieldIdentifier>,
     val canCreateItem: Boolean,
     val displayFileAttachmentsOnboarding: Boolean,
-    val isFileAttachmentsEnabled: Boolean,
     val attachmentsState: AttachmentsState
 ) {
 
-    val showFileAttachments = isFileAttachmentsEnabled
-    val showFileAttachmentsBanner = isFileAttachmentsEnabled && displayFileAttachmentsOnboarding
+    val showFileAttachmentsBanner = displayFileAttachmentsOnboarding
 
     companion object {
         val Initial = ItemSharedUiState(
@@ -52,7 +50,6 @@ data class ItemSharedUiState(
             focusedField = None,
             canCreateItem = false,
             displayFileAttachmentsOnboarding = false,
-            isFileAttachmentsEnabled = false,
             attachmentsState = AttachmentsState.Initial
         )
     }

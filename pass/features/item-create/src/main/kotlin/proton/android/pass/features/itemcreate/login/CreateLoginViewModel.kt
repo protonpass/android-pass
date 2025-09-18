@@ -448,9 +448,7 @@ class CreateLoginViewModel @Inject constructor(
             .onSuccess { item ->
                 snackbarDispatcher(LoginCreated)
                 runCatching {
-                    if (isFileAttachmentsEnabled()) {
-                        linkAttachmentsToItem(item.shareId, item.id, item.revision)
-                    }
+                    linkAttachmentsToItem(item.shareId, item.id, item.revision)
                 }.onFailure {
                     PassLogger.w(TAG, "Link attachment error")
                     PassLogger.w(TAG, it)
@@ -504,9 +502,7 @@ class CreateLoginViewModel @Inject constructor(
             .onSuccess { item ->
                 snackbarDispatcher(LoginCreated)
                 runCatching {
-                    if (isFileAttachmentsEnabled()) {
-                        linkAttachmentsToItem(item.shareId, item.id, item.revision)
-                    }
+                    linkAttachmentsToItem(item.shareId, item.id, item.revision)
                 }.onFailure {
                     PassLogger.w(TAG, "Link attachment error")
                     PassLogger.w(TAG, it)

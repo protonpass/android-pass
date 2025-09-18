@@ -68,7 +68,6 @@ internal fun PassLoginItemDetailSections(
     modifiedAt: Instant,
     shouldDisplayItemHistorySection: Boolean,
     shouldDisplayItemHistoryButton: Boolean,
-    shouldDisplayFileAttachments: Boolean,
     attachmentsState: AttachmentsState,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(contents) {
@@ -125,15 +124,13 @@ internal fun PassLoginItemDetailSections(
             )
         }
 
-        if (shouldDisplayFileAttachments) {
-            AttachmentSection(
-                attachmentsState = attachmentsState,
-                isDetail = true,
-                itemColors = itemColors,
-                itemDiffs = itemDiffs.attachments,
-                onEvent = { onEvent(PassItemDetailsUiEvent.OnAttachmentEvent(it)) }
-            )
-        }
+        AttachmentSection(
+            attachmentsState = attachmentsState,
+            isDetail = true,
+            itemColors = itemColors,
+            itemDiffs = itemDiffs.attachments,
+            onEvent = { onEvent(PassItemDetailsUiEvent.OnAttachmentEvent(it)) }
+        )
 
         if (shouldDisplayItemHistorySection) {
             PassItemDetailsHistorySection(

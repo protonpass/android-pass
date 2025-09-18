@@ -66,7 +66,6 @@ internal fun NoteItemForm(
     noteItemFormState: NoteItemFormState,
     canUseCustomFields: Boolean,
     focusedField: Option<NoteField>,
-    isFileAttachmentsEnabled: Boolean,
     isCustomItemEnabled: Boolean,
     displayFileAttachmentsOnboarding: Boolean,
     attachmentsState: AttachmentsState,
@@ -89,7 +88,7 @@ internal fun NoteItemForm(
 
             AnimatedVisibility(
                 modifier = Modifier.fillMaxWidth(),
-                visible = isFileAttachmentsEnabled && displayFileAttachmentsOnboarding
+                visible = displayFileAttachmentsOnboarding
             ) {
                 AttachmentBanner(modifier = Modifier.padding(vertical = Spacing.small)) {
                     onEvent(NoteContentUiEvent.DismissAttachmentBanner)
@@ -143,16 +142,14 @@ internal fun NoteItemForm(
                         onEvent = { onEvent(NoteContentUiEvent.OnCustomFieldEvent(it)) }
                     )
 
-                    if (isFileAttachmentsEnabled) {
-                        item {
-                            AttachmentSection(
-                                modifier = Modifier.padding(vertical = Spacing.extraSmall),
-                                attachmentsState = attachmentsState,
-                                isDetail = false,
-                                itemColors = passItemColors(ItemCategory.Note),
-                                onEvent = { onEvent(OnAttachmentEvent(it)) }
-                            )
-                        }
+                    item {
+                        AttachmentSection(
+                            modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                            attachmentsState = attachmentsState,
+                            isDetail = false,
+                            itemColors = passItemColors(ItemCategory.Note),
+                            onEvent = { onEvent(OnAttachmentEvent(it)) }
+                        )
                     }
                     if (isCurrentStickyVisible) {
                         item { Spacer(modifier = Modifier.height(48.dp)) }
@@ -172,9 +169,7 @@ internal fun NoteItemForm(
                         onValueChanged = { onEvent(NoteContentUiEvent.OnTitleChange(it)) }
                     )
                     val shouldApplyNoteMinHeight =
-                        remember(isFileAttachmentsEnabled, attachmentsState) {
-                            !isFileAttachmentsEnabled || !attachmentsState.hasAnyAttachment
-                        }
+                        remember(attachmentsState) { !attachmentsState.hasAnyAttachment }
                     FullNoteSection(
                         textFieldModifier = Modifier
                             .applyIf(shouldApplyNoteMinHeight, ifTrue = { defaultMinSize(minHeight = 600.dp) })
@@ -184,12 +179,10 @@ internal fun NoteItemForm(
                         onChange = { onEvent(NoteContentUiEvent.OnNoteChange(it)) }
                     )
 
-                    if (isFileAttachmentsEnabled) {
-                        AttachmentList(
-                            attachmentsState = attachmentsState,
-                            onEvent = onEvent
-                        )
-                    }
+                    AttachmentList(
+                        attachmentsState = attachmentsState,
+                        onEvent = onEvent
+                    )
                 }
             }
         }

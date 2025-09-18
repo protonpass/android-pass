@@ -13,7 +13,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
@@ -126,14 +125,12 @@ abstract class BaseCreditCardViewModel(
         validationErrorsState,
         isItemSavedState,
         canPerformPaidAction(),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
         featureFlagsRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1),
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
         attachmentsHandler.attachmentState,
         focusedFieldState
     ) { isLoading, hasUserEditedContent, validationErrors, isItemSaved, canPerformPaidAction,
-        isFileAttachmentsEnabled, isCustomTypeEnabled, displayFileAttachmentsOnboarding,
-        attachmentsState, focusedField ->
+        isCustomTypeEnabled, displayFileAttachmentsOnboarding, attachmentsState, focusedField ->
         BaseCreditCardUiState(
             isLoading = isLoading.value(),
             hasUserEditedContent = hasUserEditedContent,
@@ -141,7 +138,6 @@ abstract class BaseCreditCardViewModel(
             isItemSaved = isItemSaved,
             canPerformPaidAction = canPerformPaidAction,
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
-            isFileAttachmentsEnabled = isFileAttachmentsEnabled,
             isCustomTypeEnabled = isCustomTypeEnabled,
             attachmentsState = attachmentsState,
             focusedField = focusedField
@@ -310,10 +306,6 @@ abstract class BaseCreditCardViewModel(
             )
         }
     }
-
-    suspend fun isFileAttachmentsEnabled() = featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
-        .firstOrNull()
-        ?: false
 
     fun retryUploadDraftAttachment(metadata: FileMetadata) {
         viewModelScope.launch {

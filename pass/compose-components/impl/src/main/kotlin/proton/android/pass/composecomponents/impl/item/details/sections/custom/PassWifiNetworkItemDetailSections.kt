@@ -61,7 +61,6 @@ internal fun PassWifiNetworkItemDetailSections(
     modifiedAt: Instant,
     shouldDisplayItemHistorySection: Boolean,
     shouldDisplayItemHistoryButton: Boolean,
-    shouldDisplayFileAttachments: Boolean,
     attachmentsState: AttachmentsState,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
@@ -105,15 +104,13 @@ internal fun PassWifiNetworkItemDetailSections(
             )
         }
 
-        if (shouldDisplayFileAttachments) {
-            AttachmentSection(
-                attachmentsState = attachmentsState,
-                isDetail = true,
-                itemColors = itemColors,
-                itemDiffs = itemDiffs.attachments,
-                onEvent = { onEvent(OnAttachmentEvent(it)) }
-            )
-        }
+        AttachmentSection(
+            attachmentsState = attachmentsState,
+            isDetail = true,
+            itemColors = itemColors,
+            itemDiffs = itemDiffs.attachments,
+            onEvent = { onEvent(OnAttachmentEvent(it)) }
+        )
 
         if (shouldDisplayItemHistorySection) {
             PassItemDetailsHistorySection(

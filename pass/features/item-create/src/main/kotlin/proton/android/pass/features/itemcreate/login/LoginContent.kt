@@ -103,7 +103,7 @@ internal fun LoginContent(
             hasReachedAliasLimit = uiState.hasReachedAliasLimit,
             isUsernameSplitTooltipEnabled = uiState.isUsernameSplitTooltipEnabled,
             displayFileAttachmentsOnboarding = uiState.displayFileAttachmentsOnboarding,
-            isFileAttachmentsEnabled = uiState.isFileAttachmentsEnabled && canUseAttachments,
+            isFileAttachmentsEnabled = canUseAttachments,
             attachmentsState = uiState.attachmentsState,
             onEvent = onEvent
         )

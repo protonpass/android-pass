@@ -45,7 +45,6 @@ internal fun PassItemDetailSections(
     onEvent: (PassItemDetailsUiEvent) -> Unit,
     shouldDisplayItemHistorySection: Boolean,
     shouldDisplayItemHistoryButton: Boolean,
-    shouldDisplayFileAttachments: Boolean,
     shouldDisplayCustomItems: Boolean
 ) = with(itemDetailState) {
     when (this) {
@@ -73,8 +72,7 @@ internal fun PassItemDetailSections(
             modifiedAt = itemModifiedAt,
             attachmentsState = attachmentsState,
             shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
-            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
-            shouldDisplayFileAttachments = shouldDisplayFileAttachments
+            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
         )
 
         is ItemDetailState.CreditCard -> PassCreditCardItemDetailsSections(
@@ -94,8 +92,7 @@ internal fun PassItemDetailSections(
             modifiedAt = itemModifiedAt,
             attachmentsState = attachmentsState,
             shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
-            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
-            shouldDisplayFileAttachments = shouldDisplayFileAttachments
+            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
         )
 
         is ItemDetailState.Identity -> PassIdentityItemDetailsSections(
@@ -118,8 +115,7 @@ internal fun PassItemDetailSections(
             modifiedAt = itemModifiedAt,
             attachmentsState = attachmentsState,
             shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
-            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
-            shouldDisplayFileAttachments = shouldDisplayFileAttachments
+            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
         )
 
         is ItemDetailState.Login -> PassLoginItemDetailSections(
@@ -141,8 +137,7 @@ internal fun PassItemDetailSections(
             modifiedAt = itemModifiedAt,
             attachmentsState = attachmentsState,
             shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
-            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
-            shouldDisplayFileAttachments = shouldDisplayFileAttachments
+            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
         )
 
         is ItemDetailState.SSHKey -> PassSSHKeyItemDetailSections(
@@ -161,8 +156,7 @@ internal fun PassItemDetailSections(
             modifiedAt = itemModifiedAt,
             attachmentsState = attachmentsState,
             shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
-            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
-            shouldDisplayFileAttachments = shouldDisplayFileAttachments
+            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
         )
 
         is ItemDetailState.WifiNetwork -> PassWifiNetworkItemDetailSections(
@@ -182,8 +176,7 @@ internal fun PassItemDetailSections(
             modifiedAt = itemModifiedAt,
             attachmentsState = attachmentsState,
             shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
-            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
-            shouldDisplayFileAttachments = shouldDisplayFileAttachments
+            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
         )
 
         is ItemDetailState.Custom -> PassCustomItemDetailSections(
@@ -202,8 +195,7 @@ internal fun PassItemDetailSections(
             modifiedAt = itemModifiedAt,
             attachmentsState = attachmentsState,
             shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
-            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
-            shouldDisplayFileAttachments = shouldDisplayFileAttachments
+            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
         )
 
         is ItemDetailState.Note -> PassNoteItemDetailSections(
@@ -223,7 +215,6 @@ internal fun PassItemDetailSections(
             attachmentsState = attachmentsState,
             shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
             shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
-            shouldDisplayFileAttachments = shouldDisplayFileAttachments,
             shouldDisplayCustomItems = shouldDisplayCustomItems
         )
 

@@ -149,7 +149,7 @@ class UpdateNoteViewModel @Inject constructor(
             }
             .onSuccess { item ->
                 runCatching {
-                    if (item.hasAttachments && isFileAttachmentsEnabled()) {
+                    if (item.hasAttachments) {
                         attachmentsHandler.getAttachmentsForItem(item.shareId, item.id)
                     }
                     item
@@ -211,21 +211,19 @@ class UpdateNoteViewModel @Inject constructor(
                 }
             }.onSuccess { item ->
                 snackbarDispatcher(NoteUpdated)
-                if (isFileAttachmentsEnabled()) {
-                    runCatching {
-                        renameAttachments(item.shareId, item.id)
-                    }.onFailure {
-                        PassLogger.w(TAG, "Error renaming attachments")
-                        PassLogger.w(TAG, it)
-                        snackbarDispatcher(ItemRenameAttachmentsError)
-                    }
-                    runCatching {
-                        linkAttachmentsToItem(item.shareId, item.id, item.revision)
-                    }.onFailure {
-                        PassLogger.w(TAG, "Link attachment error")
-                        PassLogger.w(TAG, it)
-                        snackbarDispatcher(ItemLinkAttachmentsError)
-                    }
+                runCatching {
+                    renameAttachments(item.shareId, item.id)
+                }.onFailure {
+                    PassLogger.w(TAG, "Error renaming attachments")
+                    PassLogger.w(TAG, it)
+                    snackbarDispatcher(ItemRenameAttachmentsError)
+                }
+                runCatching {
+                    linkAttachmentsToItem(item.shareId, item.id, item.revision)
+                }.onFailure {
+                    PassLogger.w(TAG, "Link attachment error")
+                    PassLogger.w(TAG, it)
+                    snackbarDispatcher(ItemLinkAttachmentsError)
                 }
                 isItemSavedState.update {
                     encryptionContextProvider.withEncryptionContext {

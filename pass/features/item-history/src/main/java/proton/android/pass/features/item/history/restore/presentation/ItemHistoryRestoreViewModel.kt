@@ -197,16 +197,13 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         currentItemDetailsStateFlow,
         revisionItemDetailsStateFlow,
         eventFlow,
-        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
         featureFlagsRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1)
-    ) { currentItemDetailState, revisionItemDetailState, event, isFileAttachmentEnabled,
-        isCustomItemEnabled ->
+    ) { currentItemDetailState, revisionItemDetailState, event, isCustomItemEnabled ->
         ItemHistoryRestoreState.ItemDetails(
             itemRevision = itemRevision,
             currentItemDetailState = currentItemDetailState,
             revisionItemDetailState = revisionItemDetailState,
             event = event,
-            isFileAttachmentEnabled = isFileAttachmentEnabled,
             isCustomItemEnabled = isCustomItemEnabled
         )
     }.stateIn(

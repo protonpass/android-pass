@@ -49,7 +49,6 @@ fun PassItemDetailsContent(
     onEvent: (PassItemDetailsUiEvent) -> Unit,
     shouldDisplayItemHistorySection: Boolean,
     shouldDisplayItemHistoryButton: Boolean,
-    shouldDisplayFileAttachments: Boolean,
     shouldDisplayCustomItems: Boolean,
     extraBottomSpacing: Dp = Spacing.none
 ) {
@@ -93,7 +92,6 @@ fun PassItemDetailsContent(
                 onEvent = onEvent,
                 shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
                 shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
-                shouldDisplayFileAttachments = shouldDisplayFileAttachments,
                 shouldDisplayCustomItems = shouldDisplayCustomItems
             )
 

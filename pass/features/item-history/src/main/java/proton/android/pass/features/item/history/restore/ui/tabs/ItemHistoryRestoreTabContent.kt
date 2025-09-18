@@ -43,7 +43,6 @@ internal fun ItemHistoryRestoreTabContent(
     currentItemDetailState: ItemDetailState,
     itemColors: PassItemColors,
     revisionTime: Long,
-    isFileAttachmentsEnabled: Boolean,
     isCustomItemEnabled: Boolean,
     onEvent: (ItemHistoryRestoreUiEvent) -> Unit
 ) {
@@ -60,7 +59,6 @@ internal fun ItemHistoryRestoreTabContent(
             itemDetailState = itemDetailState,
             itemColors = itemColors,
             selection = selection,
-            isFileAttachmentsEnabled = isFileAttachmentsEnabled,
             isCustomItemEnabled = isCustomItemEnabled,
             onEvent = onEvent
         )

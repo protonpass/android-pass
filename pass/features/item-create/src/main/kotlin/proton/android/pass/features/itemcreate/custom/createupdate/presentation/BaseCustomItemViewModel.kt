@@ -73,7 +73,6 @@ import proton.android.pass.features.itemcreate.custom.createupdate.presentation.
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
-import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
@@ -679,11 +678,10 @@ abstract class BaseCustomItemViewModel(
         isItemSavedState,
         focusedFieldState,
         canPerformPaidAction(),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
         attachmentsHandler.attachmentState
     ) { isLoading, hasEdited, errors, savedState, lastAddedField, canPerformPaidAction,
-        isFileAttachmentsEnabled, displayFileAttachmentsOnboarding, attachmentsState ->
+        displayFileAttachmentsOnboarding, attachmentsState ->
         ItemSharedUiState(
             isLoadingState = isLoading,
             hasUserEditedContent = hasEdited,
@@ -692,7 +690,6 @@ abstract class BaseCustomItemViewModel(
             focusedField = lastAddedField,
             canCreateItem = canPerformPaidAction,
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
-            isFileAttachmentsEnabled = isFileAttachmentsEnabled,
             attachmentsState = attachmentsState
         )
     }

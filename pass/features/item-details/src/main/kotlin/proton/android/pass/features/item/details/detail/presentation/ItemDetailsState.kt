@@ -58,9 +58,8 @@ internal sealed interface ItemDetailsState {
         internal val canViewItemHistory: Boolean = itemFeatures.isHistoryEnabled
             .and(share.shareRole !is ShareRole.Read)
 
-        internal val isFileAttachmentsEnabled: Boolean = itemFeatures.isFileAttachmentsEnabled
 
-        internal val isCustomItemEnabled: Boolean = itemFeatures.isFileAttachmentsEnabled
+        internal val isCustomItemEnabled: Boolean = itemFeatures.isCustomItemEnabled
 
         internal val shareSharedCount: Int = share.memberCount.plus(itemDetailState.itemShareCount)
 

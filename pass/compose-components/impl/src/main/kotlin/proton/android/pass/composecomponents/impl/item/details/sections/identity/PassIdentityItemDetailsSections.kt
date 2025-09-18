@@ -58,7 +58,6 @@ internal fun PassIdentityItemDetailsSections(
     modifiedAt: Instant,
     shouldDisplayItemHistorySection: Boolean,
     shouldDisplayItemHistoryButton: Boolean,
-    shouldDisplayFileAttachments: Boolean,
     attachmentsState: AttachmentsState,
     customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, TotpState>,
     personalDetailTotps: ImmutableMap<Pair<Option<Int>, Int>, TotpState>,
@@ -121,15 +120,13 @@ internal fun PassIdentityItemDetailsSections(
             )
         }
 
-        if (shouldDisplayFileAttachments) {
-            AttachmentSection(
-                attachmentsState = attachmentsState,
-                isDetail = true,
-                itemColors = itemColors,
-                itemDiffs = itemDiffs.attachments,
-                onEvent = { onEvent(OnAttachmentEvent(it)) }
-            )
-        }
+        AttachmentSection(
+            attachmentsState = attachmentsState,
+            isDetail = true,
+            itemColors = itemColors,
+            itemDiffs = itemDiffs.attachments,
+            onEvent = { onEvent(OnAttachmentEvent(it)) }
+        )
 
         if (shouldDisplayItemHistorySection) {
             PassItemDetailsHistorySection(

@@ -206,9 +206,7 @@ class CreateNoteViewModel @Inject constructor(
                 .onSuccess { item ->
                     snackbarDispatcher(NoteCreated)
                     runCatching {
-                        if (isFileAttachmentsEnabled()) {
-                            linkAttachmentsToItem(item.shareId, item.id, item.revision)
-                        }
+                        linkAttachmentsToItem(item.shareId, item.id, item.revision)
                     }.onFailure {
                         PassLogger.w(TAG, "Link attachment error")
                         PassLogger.w(TAG, it)

@@ -172,7 +172,6 @@ fun CreateAliasBottomSheetContentPreview(@PreviewParameter(ThemePreviewProvider:
                     hasUserEditedContent = false,
                     hasReachedAliasLimit = false,
                     canUpgrade = false,
-                    isFileAttachmentEnabled = false,
                     isCustomTypeEnabled = false,
                     displayFileAttachmentsOnboarding = false,
                     displayAdvancedOptionsBanner = false,

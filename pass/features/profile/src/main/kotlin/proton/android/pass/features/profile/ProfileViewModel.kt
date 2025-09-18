@@ -244,12 +244,11 @@ class ProfileViewModel @Inject constructor(
         .distinctUntilChanged()
 
     private val dataStorageStateFlow = combine(
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
         observeUserAccessData(),
         upgradeInfoFlow
-    ) { isFileAttachmentEnabled, userAccessData, upgradeInfo ->
+    ) { userAccessData, upgradeInfo ->
         DataStorageState(
-            shouldDisplay = isFileAttachmentEnabled && userAccessData?.storageAllowed ?: false,
+            shouldDisplay = userAccessData?.storageAllowed ?: false,
             canUpgrade = upgradeInfo.getOrNull()?.isUpgradeAvailable ?: false,
             used = userAccessData?.storageUsed ?: 0,
             quota = userAccessData?.storageQuota ?: 0

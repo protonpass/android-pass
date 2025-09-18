@@ -30,7 +30,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
@@ -136,13 +135,12 @@ abstract class BaseNoteViewModel(
         isItemSavedState,
         hasUserEditedContentFlow,
         attachmentsHandler.attachmentState,
-        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
         featureFlagsRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1),
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
         canPerformPaidAction(),
         focusedFieldState
     ) { noteItemValidationErrors, isLoading, isItemSaved, hasUserEditedContent, attachmentsState,
-        isFileAttachmentsEnabled, isCustomItemEnabled, displayFileAttachmentsOnboarding,
+        isCustomItemEnabled, displayFileAttachmentsOnboarding,
         canPerformPaidAction, focusedField ->
         BaseNoteUiState(
             errorList = noteItemValidationErrors,
@@ -151,7 +149,6 @@ abstract class BaseNoteViewModel(
             hasUserEditedContent = hasUserEditedContent,
             attachmentsState = attachmentsState,
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
-            isFileAttachmentsEnabled = isFileAttachmentsEnabled,
             isCustomItemEnabled = isCustomItemEnabled,
             canPerformPaidAction = canPerformPaidAction,
             focusedField = focusedField
@@ -286,10 +283,6 @@ abstract class BaseNoteViewModel(
             focusedFieldState.update { None }
         }
     }
-
-    suspend fun isFileAttachmentsEnabled() = featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
-        .firstOrNull()
-        ?: false
 
     fun retryUploadDraftAttachment(metadata: FileMetadata) {
         viewModelScope.launch {

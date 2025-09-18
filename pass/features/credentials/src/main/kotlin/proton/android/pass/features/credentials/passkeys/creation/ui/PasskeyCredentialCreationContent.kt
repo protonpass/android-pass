@@ -34,6 +34,9 @@ import kotlinx.coroutines.Job
 import proton.android.pass.commonui.api.onBottomSheetDismissed
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.features.auth.AUTH_GRAPH
+import proton.android.pass.features.auth.AuthNavigation
+import proton.android.pass.features.auth.EnterPin
+import proton.android.pass.features.auth.authGraph
 import proton.android.pass.features.credentials.passkeys.creation.navigation.PasskeyCredentialCreationNavEvent
 import proton.android.pass.features.credentials.passkeys.creation.navigation.passkeyCredentialCreationNavGraph
 import proton.android.pass.features.credentials.passkeys.creation.presentation.PasskeyCredentialCreationEvent
@@ -49,44 +52,102 @@ internal fun PasskeyCredentialCreationContent(
     onNavigate: (PasskeyCredentialCreationNavEvent) -> Unit,
     onEvent: (PasskeyCredentialCreationEvent) -> Unit
 ) = with(state) {
-    val bottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true
-    )
-
-    val appNavigator = rememberAppNavigator(
-        bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
-    )
-
-    val startDestination = remember(key1 = isBiometricAuthRequired) {
-        if (isBiometricAuthRequired) AUTH_GRAPH else SelectItem.route
-    }
 
     val bottomSheetJob: MutableState<Job?> = remember { mutableStateOf(null) }
 
     val coroutineScope = rememberCoroutineScope()
 
-    PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {
-        NavHost(
-            modifier = modifier.defaultMinSize(minHeight = 200.dp),
-            navController = appNavigator.navController,
-            startDestination = startDestination
-        ) {
-            passkeyCredentialCreationNavGraph(
-                appNavigator = appNavigator,
-                initialCreateLoginUiState = initialCreateLoginUiState,
-                selectItemState = selectItemState,
-                onNavigate = onNavigate,
-                onEvent = onEvent,
-                dismissBottomSheet = { block ->
-                    onBottomSheetDismissed(
-                        coroutineScope = coroutineScope,
-                        modalBottomSheetState = bottomSheetState,
-                        dismissJob = bottomSheetJob,
-                        block = block
-                    )
-                }
-            )
+    if (isBiometricAuthRequired) {
+        val bottomSheetState = rememberModalBottomSheetState(
+            initialValue = ModalBottomSheetValue.Hidden,
+            skipHalfExpanded = true
+        )
+
+        val appNavigator = rememberAppNavigator(
+            bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
+        )
+
+        PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {
+            NavHost(
+                modifier = modifier.defaultMinSize(minHeight = 200.dp),
+                navController = appNavigator.navController,
+                startDestination = AUTH_GRAPH
+            ) {
+                authGraph(
+                    canLogout = false,
+                    navigation = { destination ->
+                        when (destination) {
+                            is AuthNavigation.CloseScreen,
+                            AuthNavigation.Dismissed,
+                            AuthNavigation.Failed -> onNavigate(PasskeyCredentialCreationNavEvent.Cancel)
+
+                            is AuthNavigation.Success -> onBottomSheetDismissed(
+                                coroutineScope = coroutineScope,
+                                modalBottomSheetState = bottomSheetState,
+                                dismissJob = bottomSheetJob,
+                                block = {}
+                            )
+
+                            is AuthNavigation.ForceSignOut -> {
+                                PasskeyCredentialCreationNavEvent.ForceSignOut(
+                                    userId = destination.userId
+                                ).also(onNavigate)
+                            }
+
+                            is AuthNavigation.EnterPin -> appNavigator.navigate(
+                                destination = EnterPin,
+                                route = EnterPin.buildRoute(
+                                    origin = destination.origin
+                                )
+                            )
+
+                            is AuthNavigation.SignOut,
+                            AuthNavigation.ForceSignOutAllUsers -> Unit
+
+                            AuthNavigation.CloseBottomsheet -> onBottomSheetDismissed(
+                                coroutineScope = coroutineScope,
+                                modalBottomSheetState = bottomSheetState,
+                                dismissJob = bottomSheetJob,
+                                block = {}
+                            )
+                        }
+                    }
+                )
+
+            }
+        }
+    } else {
+        val bottomSheetState = rememberModalBottomSheetState(
+            initialValue = ModalBottomSheetValue.Hidden,
+            skipHalfExpanded = true
+        )
+        val appNavigator = rememberAppNavigator(
+            bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
+        )
+
+        PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {
+            NavHost(
+                modifier = modifier.defaultMinSize(minHeight = 200.dp),
+                navController = appNavigator.navController,
+                startDestination = SelectItem.route
+            ) {
+                passkeyCredentialCreationNavGraph(
+                    appNavigator = appNavigator,
+                    initialCreateLoginUiState = initialCreateLoginUiState,
+                    selectItemState = selectItemState,
+                    onNavigate = onNavigate,
+                    onEvent = onEvent,
+                    dismissBottomSheet = { block ->
+                        onBottomSheetDismissed(
+                            coroutineScope = coroutineScope,
+                            modalBottomSheetState = bottomSheetState,
+                            dismissJob = bottomSheetJob,
+                            block = block
+                        )
+                    }
+                )
+            }
         }
     }
+
 }

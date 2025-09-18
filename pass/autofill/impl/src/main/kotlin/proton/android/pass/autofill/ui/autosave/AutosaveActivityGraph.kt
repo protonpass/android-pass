@@ -22,9 +22,6 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.autofill.entities.usernamePassword
 import proton.android.pass.common.api.None
 import proton.android.pass.commonuimodels.api.PackageInfoUi
-import proton.android.pass.features.auth.AuthNavigation
-import proton.android.pass.features.auth.EnterPin
-import proton.android.pass.features.auth.authGraph
 import proton.android.pass.features.itemcreate.alias.CreateAliasBottomSheet
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.AddCustomFieldBottomSheetNavItem
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldOptionsBottomSheetNavItem
@@ -58,32 +55,6 @@ fun NavGraphBuilder.autosaveActivityGraph(
     onNavigate: (AutosaveNavigation) -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit
 ) {
-    authGraph(
-        canLogout = false,
-        navigation = {
-            when (it) {
-                is AuthNavigation.CloseScreen -> onNavigate(AutosaveNavigation.Cancel)
-                is AuthNavigation.Success -> dismissBottomSheet {
-                    appNavigator.navigate(CreateLoginNavItem)
-                }
-                AuthNavigation.Dismissed -> onNavigate(AutosaveNavigation.Cancel)
-                AuthNavigation.Failed -> onNavigate(AutosaveNavigation.Cancel)
-                is AuthNavigation.ForceSignOut ->
-                    onNavigate(AutosaveNavigation.ForceSignOut(it.userId))
-
-                is AuthNavigation.EnterPin -> appNavigator.navigate(
-                    destination = EnterPin,
-                    route = EnterPin.buildRoute(it.origin)
-                )
-
-                is AuthNavigation.SignOut,
-                AuthNavigation.ForceSignOutAllUsers -> {
-                }
-
-                AuthNavigation.CloseBottomsheet -> dismissBottomSheet {}
-            }
-        }
-    )
     createUpdateLoginGraph(
         initialCreateLoginUiState = getInitialState(arguments),
         showCreateAliasButton = false,

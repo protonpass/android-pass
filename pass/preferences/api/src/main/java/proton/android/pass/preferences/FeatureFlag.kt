@@ -59,5 +59,11 @@ enum class FeatureFlag(
         description = "Enable Rename Admin to Manager",
         key = "PassRenameAdminToManager",
         isEnabledDefault = false
+    ),
+    PASS_HIDE_SHOW_VAULT(
+        title = "Enable Vault visibility toggling",
+        description = "Enable Vault visibility toggling",
+        key = "PassHideShowVault",
+        isEnabledDefault = false
     )
 }

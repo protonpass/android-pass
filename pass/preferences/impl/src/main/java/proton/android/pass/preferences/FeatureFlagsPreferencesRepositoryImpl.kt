@@ -38,6 +38,7 @@ import proton.android.pass.preferences.FeatureFlag.CUSTOM_TYPE_V1
 import proton.android.pass.preferences.FeatureFlag.EXTRA_LOGGING
 import proton.android.pass.preferences.FeatureFlag.FILE_ATTACHMENTS_V1
 import proton.android.pass.preferences.FeatureFlag.FILE_ATTACHMENT_ENCRYPTION_V2
+import proton.android.pass.preferences.FeatureFlag.PASS_HIDE_SHOW_VAULT
 import proton.android.pass.preferences.FeatureFlag.RENAME_ADMIN_TO_MANAGER
 import java.io.IOException
 import javax.inject.Inject
@@ -81,6 +82,11 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { renameAdminToManagerEnabled.value }
+
+        PASS_HIDE_SHOW_VAULT -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault
+        ) { passHideShowVaultEnabled.value }
     }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> = when (featureFlag) {
@@ -106,6 +112,10 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         RENAME_ADMIN_TO_MANAGER -> setFeatureFlag {
             renameAdminToManagerEnabled = boolFlagPrefProto(value)
+        }
+
+        PASS_HIDE_SHOW_VAULT -> setFeatureFlag {
+            passHideShowVaultEnabled = boolFlagPrefProto(value)
         }
     }
 
@@ -203,6 +213,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             CUSTOM_TYPE_V1 -> customTypeV1Enabled
             FILE_ATTACHMENT_ENCRYPTION_V2 -> fileAttachmentEncryptionV2Enabled
             RENAME_ADMIN_TO_MANAGER -> renameAdminToManagerEnabled
+            PASS_HIDE_SHOW_VAULT -> passHideShowVaultEnabled
         }.value
     }
 }

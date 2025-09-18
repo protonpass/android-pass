@@ -23,9 +23,6 @@ import proton.android.pass.common.api.None
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsBottomSheetNavItem
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsNavDestination
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.itemOptionsNavGraph
-import proton.android.pass.features.auth.AuthNavigation
-import proton.android.pass.features.auth.EnterPin
-import proton.android.pass.features.auth.authGraph
 import proton.android.pass.features.credentials.passkeys.creation.presentation.PasskeyCredentialCreationEvent
 import proton.android.pass.features.itemcreate.alias.AliasSelectMailboxBottomSheetNavItem
 import proton.android.pass.features.itemcreate.alias.AliasSelectSuffixBottomSheetNavItem
@@ -66,7 +63,6 @@ import proton.android.pass.features.searchoptions.SearchOptionsNavigation
 import proton.android.pass.features.searchoptions.SortingBottomsheetNavItem
 import proton.android.pass.features.searchoptions.SortingLocation
 import proton.android.pass.features.searchoptions.searchOptionsGraph
-import proton.android.pass.features.selectitem.navigation.SelectItem
 import proton.android.pass.features.selectitem.navigation.SelectItemNavigation
 import proton.android.pass.features.selectitem.navigation.SelectItemState
 import proton.android.pass.features.selectitem.navigation.selectItemGraph
@@ -100,39 +96,6 @@ internal fun NavGraphBuilder.passkeyCredentialCreationNavGraph(
             }
         }
     }
-
-    authGraph(
-        canLogout = false,
-        navigation = { destination ->
-            when (destination) {
-                is AuthNavigation.CloseScreen,
-                AuthNavigation.Dismissed,
-                AuthNavigation.Failed -> onNavigate(PasskeyCredentialCreationNavEvent.Cancel)
-
-                is AuthNavigation.Success -> dismissBottomSheet {
-                    appNavigator.navigate(SelectItem)
-                }
-
-                is AuthNavigation.ForceSignOut -> {
-                    PasskeyCredentialCreationNavEvent.ForceSignOut(
-                        userId = destination.userId
-                    ).also(onNavigate)
-                }
-
-                is AuthNavigation.EnterPin -> appNavigator.navigate(
-                    destination = EnterPin,
-                    route = EnterPin.buildRoute(
-                        origin = destination.origin
-                    )
-                )
-
-                is AuthNavigation.SignOut,
-                AuthNavigation.ForceSignOutAllUsers -> Unit
-
-                AuthNavigation.CloseBottomsheet -> dismissBottomSheet {}
-            }
-        }
-    )
 
     cannotCreateItemsNavGraph { destination ->
         when (destination) {

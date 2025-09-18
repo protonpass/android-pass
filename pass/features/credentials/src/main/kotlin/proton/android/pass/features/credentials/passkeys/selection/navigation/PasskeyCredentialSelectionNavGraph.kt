@@ -22,17 +22,12 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsBottomSheetNavItem
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsNavDestination
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.itemOptionsNavGraph
-import proton.android.pass.features.auth.AuthNavigation
-import proton.android.pass.features.auth.EnterPin
-import proton.android.pass.features.auth.authGraph
-import proton.android.pass.features.credentials.passkeys.selection.presentation.PasskeyCredentialSelectionActionAfterAuth
 import proton.android.pass.features.credentials.passkeys.selection.presentation.PasskeyCredentialSelectionEvent
 import proton.android.pass.features.passkeys.select.navigation.selectPasskeyBottomsheetGraph
 import proton.android.pass.features.searchoptions.SearchOptionsNavigation
 import proton.android.pass.features.searchoptions.SortingBottomsheetNavItem
 import proton.android.pass.features.searchoptions.SortingLocation
 import proton.android.pass.features.searchoptions.searchOptionsGraph
-import proton.android.pass.features.selectitem.navigation.SelectItem
 import proton.android.pass.features.selectitem.navigation.SelectItemNavigation
 import proton.android.pass.features.selectitem.navigation.SelectItemState
 import proton.android.pass.features.selectitem.navigation.selectItemGraph
@@ -41,59 +36,11 @@ import proton.android.pass.navigation.api.AppNavigator
 @Suppress("LongMethod", "LongParameterList", "ReturnCount", "ThrowsCount")
 internal fun NavGraphBuilder.passkeyCredentialSelectionNavGraph(
     appNavigator: AppNavigator,
-    actionAfterAuth: PasskeyCredentialSelectionActionAfterAuth,
     passkeyDomain: String,
     onNavigate: (PasskeyCredentialSelectionNavEvent) -> Unit,
     onEvent: (PasskeyCredentialSelectionEvent) -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit
 ) {
-    authGraph(
-        canLogout = false,
-        navigation = { destination ->
-            when (destination) {
-                AuthNavigation.CloseBottomsheet -> {
-                    dismissBottomSheet {}
-                }
-
-                is AuthNavigation.CloseScreen,
-                AuthNavigation.Dismissed,
-                AuthNavigation.Failed -> {
-                    onNavigate(PasskeyCredentialSelectionNavEvent.Cancel)
-                }
-
-                is AuthNavigation.EnterPin -> {
-                    appNavigator.navigate(
-                        destination = EnterPin,
-                        route = EnterPin.buildRoute(origin = destination.origin)
-                    )
-                }
-
-                is AuthNavigation.ForceSignOut -> {
-                    PasskeyCredentialSelectionNavEvent.ForceSignOut(
-                        userId = destination.userId
-                    ).also(onNavigate)
-                }
-
-                is AuthNavigation.Success -> {
-                    dismissBottomSheet {
-                        when (actionAfterAuth) {
-                            PasskeyCredentialSelectionActionAfterAuth.SelectItem -> {
-                                appNavigator.navigate(SelectItem)
-                            }
-
-                            PasskeyCredentialSelectionActionAfterAuth.EmitEvent -> {
-                                onEvent(PasskeyCredentialSelectionEvent.OnAuthPerformed)
-                            }
-                        }
-                    }
-                }
-
-                is AuthNavigation.SignOut,
-                AuthNavigation.ForceSignOutAllUsers -> Unit
-            }
-        }
-    )
-
     itemOptionsNavGraph { destination ->
         when (destination) {
             ItemOptionsNavDestination.Dismiss -> dismissBottomSheet {}

@@ -34,6 +34,9 @@ import kotlinx.coroutines.Job
 import proton.android.pass.commonui.api.onBottomSheetDismissed
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.features.auth.AUTH_GRAPH
+import proton.android.pass.features.auth.AuthNavigation
+import proton.android.pass.features.auth.EnterPin
+import proton.android.pass.features.auth.authGraph
 import proton.android.pass.features.itemcreate.login.CREATE_LOGIN_GRAPH
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
@@ -48,38 +51,85 @@ fun AutosaveAppContent(
 ) {
     val coroutineScope = rememberCoroutineScope()
 
-    val bottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true
-    )
-
-    val appNavigator = rememberAppNavigator(
-        bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
-    )
     val bottomSheetJob: MutableState<Job?> = remember { mutableStateOf(null) }
 
-    val startDestination = remember {
-        if (needsAuth) AUTH_GRAPH else CREATE_LOGIN_GRAPH
-    }
-    PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {
-        NavHost(
-            modifier = modifier.defaultMinSize(minHeight = 200.dp),
-            navController = appNavigator.navController,
-            startDestination = startDestination
-        ) {
-            autosaveActivityGraph(
-                appNavigator = appNavigator,
-                arguments = arguments,
-                onNavigate = onNavigate,
-                dismissBottomSheet = { block ->
-                    onBottomSheetDismissed(
-                        coroutineScope = coroutineScope,
-                        modalBottomSheetState = bottomSheetState,
-                        dismissJob = bottomSheetJob,
-                        block = block
-                    )
-                }
-            )
+    if (needsAuth) {
+        val bottomSheetState = rememberModalBottomSheetState(
+            initialValue = ModalBottomSheetValue.Hidden,
+            skipHalfExpanded = true
+        )
+        val appNavigator = rememberAppNavigator(
+            bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
+        )
+        PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {
+            NavHost(
+                modifier = modifier.defaultMinSize(minHeight = 200.dp),
+                navController = appNavigator.navController,
+                startDestination = AUTH_GRAPH
+            ) {
+                authGraph(
+                    canLogout = false,
+                    navigation = {
+                        when (it) {
+                            is AuthNavigation.CloseScreen -> onNavigate(AutosaveNavigation.Cancel)
+                            is AuthNavigation.Success -> onBottomSheetDismissed(
+                                coroutineScope = coroutineScope,
+                                modalBottomSheetState = bottomSheetState,
+                                dismissJob = bottomSheetJob,
+                                block = {}
+                            )
+                            AuthNavigation.Dismissed -> onNavigate(AutosaveNavigation.Cancel)
+                            AuthNavigation.Failed -> onNavigate(AutosaveNavigation.Cancel)
+                            is AuthNavigation.ForceSignOut ->
+                                onNavigate(AutosaveNavigation.ForceSignOut(it.userId))
+
+                            is AuthNavigation.EnterPin -> appNavigator.navigate(
+                                destination = EnterPin,
+                                route = EnterPin.buildRoute(it.origin)
+                            )
+
+                            is AuthNavigation.SignOut,
+                            AuthNavigation.ForceSignOutAllUsers -> Unit
+
+                            AuthNavigation.CloseBottomsheet -> onBottomSheetDismissed(
+                                coroutineScope = coroutineScope,
+                                modalBottomSheetState = bottomSheetState,
+                                dismissJob = bottomSheetJob,
+                                block = {}
+                            )
+                        }
+                    }
+                )
+            }
+        }
+    } else {
+        val bottomSheetState = rememberModalBottomSheetState(
+            initialValue = ModalBottomSheetValue.Hidden,
+            skipHalfExpanded = true
+        )
+        val appNavigator = rememberAppNavigator(
+            bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
+        )
+        PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {
+            NavHost(
+                modifier = modifier.defaultMinSize(minHeight = 200.dp),
+                navController = appNavigator.navController,
+                startDestination = CREATE_LOGIN_GRAPH
+            ) {
+                autosaveActivityGraph(
+                    appNavigator = appNavigator,
+                    arguments = arguments,
+                    onNavigate = onNavigate,
+                    dismissBottomSheet = { block ->
+                        onBottomSheetDismissed(
+                            coroutineScope = coroutineScope,
+                            modalBottomSheetState = bottomSheetState,
+                            dismissJob = bottomSheetJob,
+                            block = block
+                        )
+                    }
+                )
+            }
         }
     }
 }

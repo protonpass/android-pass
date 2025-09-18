@@ -33,4 +33,5 @@ message FeatureFlagsPreferences {
   BoolFlagPrefProto custom_type_v1_enabled = 25;
   BoolFlagPrefProto file_attachment_encryption_v2_enabled = 26;
   BoolFlagPrefProto rename_admin_to_manager_enabled = 27;
+  BoolFlagPrefProto pass_hide_show_vault_enabled = 28;
 }

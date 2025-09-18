@@ -37,7 +37,6 @@ internal data class BaseCreditCardUiState(
     val isItemSaved: ItemSavedState,
     val canPerformPaidAction: Boolean,
     val displayFileAttachmentsOnboarding: Boolean,
-    val isFileAttachmentsEnabled: Boolean,
     val isCustomTypeEnabled: Boolean,
     val attachmentsState: AttachmentsState,
     val focusedField: Option<CreditCardField>
@@ -50,7 +49,6 @@ internal data class BaseCreditCardUiState(
             isItemSaved = ItemSavedState.Unknown,
             canPerformPaidAction = false,
             displayFileAttachmentsOnboarding = false,
-            isFileAttachmentsEnabled = false,
             isCustomTypeEnabled = false,
             attachmentsState = AttachmentsState.Initial,
             focusedField = None

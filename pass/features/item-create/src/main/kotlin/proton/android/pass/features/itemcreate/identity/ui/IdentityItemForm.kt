@@ -269,7 +269,7 @@ fun IdentityItemForm(
                 }
             }
 
-            if (identityUiState.showFileAttachments() && canUseAttachments) {
+            if (canUseAttachments) {
                 AttachmentSection(
                     modifier = Modifier
                         .padding(bottom = Spacing.extraSmall)

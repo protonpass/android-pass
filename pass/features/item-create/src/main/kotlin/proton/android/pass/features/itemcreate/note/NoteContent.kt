@@ -100,7 +100,6 @@ internal fun NoteContent(
             focusedField = uiState.focusedField,
             canUseCustomFields = uiState.canPerformPaidAction,
             attachmentsState = uiState.attachmentsState,
-            isFileAttachmentsEnabled = uiState.isFileAttachmentsEnabled,
             isCustomItemEnabled = uiState.isCustomItemEnabled,
             displayFileAttachmentsOnboarding = uiState.displayFileAttachmentsOnboarding,
             customFieldValidationErrors = uiState.errorList.filterIsInstance<CustomFieldValidationError>(),

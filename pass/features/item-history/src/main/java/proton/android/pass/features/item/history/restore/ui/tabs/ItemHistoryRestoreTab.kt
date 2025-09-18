@@ -41,7 +41,6 @@ internal fun ItemHistoryRestoreTab(
     modifier: Modifier = Modifier,
     itemDetailState: ItemDetailState,
     itemColors: PassItemColors,
-    isFileAttachmentsEnabled: Boolean,
     isCustomItemEnabled: Boolean,
     onEvent: (ItemHistoryRestoreUiEvent) -> Unit,
     selection: ItemHistoryRestoreSelection
@@ -113,7 +112,6 @@ internal fun ItemHistoryRestoreTab(
         shouldDisplayItemHistorySection = false,
         shouldDisplayItemHistoryButton = false,
         shouldDisplayCustomItems = isCustomItemEnabled,
-        shouldDisplayFileAttachments = isFileAttachmentsEnabled,
         extraBottomSpacing = Spacing.extraLarge
     )
 }

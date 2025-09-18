@@ -83,10 +83,9 @@ internal fun CustomItemForm(
         itemSharedProperties.focusedField.value()?.type == CustomFieldType.Totp
     }
 
-    val shouldShowAttachmentBanner = remember(
-        key1 = itemSharedProperties.showFileAttachments,
-        key2 = itemSharedProperties.showFileAttachmentsBanner
-    ) { itemSharedProperties.showFileAttachments && itemSharedProperties.showFileAttachmentsBanner }
+    val shouldShowAttachmentBanner = remember(itemSharedProperties.showFileAttachmentsBanner) {
+        itemSharedProperties.showFileAttachmentsBanner
+    }
 
     val scope = rememberCoroutineScope()
 
@@ -230,16 +229,14 @@ internal fun CustomItemForm(
                     onChange = { onEvent(ItemContentEvent.OnFieldValueChange(FieldChange.Note, it)) }
                 )
             }
-            if (itemSharedProperties.showFileAttachments) {
-                item {
-                    AttachmentSection(
-                        modifier = Modifier.padding(horizontal = Spacing.medium).padding(vertical = Spacing.extraSmall),
-                        attachmentsState = itemSharedProperties.attachmentsState,
-                        isDetail = false,
-                        itemColors = passItemColors(ItemCategory.Custom),
-                        onEvent = { onEvent(ItemContentEvent.OnAttachmentEvent(it)) }
-                    )
-                }
+            item {
+                AttachmentSection(
+                    modifier = Modifier.padding(horizontal = Spacing.medium).padding(vertical = Spacing.extraSmall),
+                    attachmentsState = itemSharedProperties.attachmentsState,
+                    isDetail = false,
+                    itemColors = passItemColors(ItemCategory.Custom),
+                    onEvent = { onEvent(ItemContentEvent.OnAttachmentEvent(it)) }
+                )
             }
             if (isCurrentStickyVisible) {
                 item { Spacer(modifier = Modifier.height(48.dp)) }

@@ -109,9 +109,6 @@ interface ItemSharedProperties {
     val canCreateItem: Boolean
         get() = sharedState.canCreateItem
 
-    val showFileAttachments: Boolean
-        get() = sharedState.showFileAttachments
-
     val showFileAttachmentsBanner: Boolean
         get() = sharedState.showFileAttachmentsBanner
 
@@ -126,7 +123,6 @@ val EMPTY_SHARED_STATE = ItemSharedUiState(
     validationErrors = persistentSetOf(),
     canCreateItem = false,
     displayFileAttachmentsOnboarding = false,
-    isFileAttachmentsEnabled = false,
     focusedField = None,
     attachmentsState = AttachmentsState.Initial
 )

@@ -58,7 +58,7 @@ internal fun CreditCardContent(
             creditCardItemFormState = creditCardItemFormState,
             enabled = !state.isLoading,
             validationErrors = state.validationErrors,
-            isFileAttachmentsEnabled = state.isFileAttachmentsEnabled && canUseAttachments,
+            isFileAttachmentsEnabled = canUseAttachments,
             isCustomTypeEnabled = state.isCustomTypeEnabled,
             displayFileAttachmentsOnboarding = state.displayFileAttachmentsOnboarding,
             attachmentsState = state.attachmentsState,

@@ -76,7 +76,6 @@ internal fun PassAliasItemDetailSections(
     modifiedAt: Instant,
     shouldDisplayItemHistorySection: Boolean,
     shouldDisplayItemHistoryButton: Boolean,
-    shouldDisplayFileAttachments: Boolean,
     attachmentsState: AttachmentsState,
     customFieldTotps: ImmutableMap<Pair<Option<Int>, Int>, TotpState>,
     onEvent: (PassItemDetailsUiEvent) -> Unit
@@ -147,15 +146,13 @@ internal fun PassAliasItemDetailSections(
             )
         }
 
-        if (shouldDisplayFileAttachments) {
-            AttachmentSection(
-                attachmentsState = attachmentsState,
-                isDetail = true,
-                itemColors = itemColors,
-                itemDiffs = itemDiffs.attachments,
-                onEvent = { onEvent(OnAttachmentEvent(it)) }
-            )
-        }
+        AttachmentSection(
+            attachmentsState = attachmentsState,
+            isDetail = true,
+            itemColors = itemColors,
+            itemDiffs = itemDiffs.attachments,
+            onEvent = { onEvent(OnAttachmentEvent(it)) }
+        )
 
         if (shouldDisplayItemHistorySection) {
             PassItemDetailsHistorySection(

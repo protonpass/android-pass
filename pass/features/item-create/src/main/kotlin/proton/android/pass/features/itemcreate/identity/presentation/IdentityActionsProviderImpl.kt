@@ -28,7 +28,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.runningFold
@@ -79,7 +78,6 @@ import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner
-import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
@@ -691,7 +689,6 @@ class IdentityActionsProviderImpl @Inject constructor(
         focusedFieldState,
         canPerformPaidAction(),
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding().map { it.value() },
-        featureFlagsRepository[FeatureFlag.FILE_ATTACHMENTS_V1],
         attachmentsHandler.attachmentState,
         ::IdentitySharedUiState
     )
@@ -701,21 +698,19 @@ class IdentityActionsProviderImpl @Inject constructor(
     }
 
     override suspend fun onItemSavedState(item: Item) {
-        if (isFileAttachmentsEnabled()) {
-            runCatching {
-                renameAttachments(item.shareId, item.id)
-            }.onFailure {
-                PassLogger.w(TAG, "Error renaming attachments")
-                PassLogger.w(TAG, it)
-                snackbarDispatcher(ItemRenameAttachmentsError)
-            }
-            runCatching {
-                linkAttachmentsToItem(item.shareId, item.id, item.revision)
-            }.onFailure {
-                PassLogger.w(TAG, "Link attachment error")
-                PassLogger.w(TAG, it)
-                snackbarDispatcher(ItemLinkAttachmentsError)
-            }
+        runCatching {
+            renameAttachments(item.shareId, item.id)
+        }.onFailure {
+            PassLogger.w(TAG, "Error renaming attachments")
+            PassLogger.w(TAG, it)
+            snackbarDispatcher(ItemRenameAttachmentsError)
+        }
+        runCatching {
+            linkAttachmentsToItem(item.shareId, item.id, item.revision)
+        }.onFailure {
+            PassLogger.w(TAG, "Link attachment error")
+            PassLogger.w(TAG, it)
+            snackbarDispatcher(ItemLinkAttachmentsError)
         }
         val itemSavedState = encryptionContextProvider.withEncryptionContext {
             ItemSavedState.Success(
@@ -785,11 +780,7 @@ class IdentityActionsProviderImpl @Inject constructor(
 
     private suspend fun getItemAttachments(item: Item) {
         runCatching {
-            val isFileAttachmentsEnabled =
-                featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
-                    .firstOrNull()
-                    ?: false
-            if (item.hasAttachments && isFileAttachmentsEnabled) {
+            if (item.hasAttachments) {
                 attachmentsHandler.getAttachmentsForItem(item.shareId, item.id)
             }
         }.onFailure {
@@ -930,10 +921,6 @@ class IdentityActionsProviderImpl @Inject constructor(
             onUserEditedContent()
         }.launchIn(coroutineScope)
     }
-
-    suspend fun isFileAttachmentsEnabled(): Boolean = featureFlagsRepository.get<Boolean>(
-        featureFlag = FeatureFlag.FILE_ATTACHMENTS_V1
-    ).firstOrNull() == true
 
     override suspend fun retryUploadDraftAttachment(metadata: FileMetadata) {
         isLoadingState.update { IsLoadingState.Loading }

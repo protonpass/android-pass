@@ -131,12 +131,10 @@ class ItemDetailsViewModel @Inject constructor(
 
     private val itemFeaturesFlow: Flow<IdentityItemFeatures> = combine(
         getUserPlan(),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
         featureFlagsRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1)
-    ) { userPlan, isFileAttachmentsEnabled, isCustomItemEnabled ->
+    ) { userPlan, isCustomItemEnabled ->
         IdentityItemFeatures(
             isHistoryEnabled = userPlan.isPaidPlan,
-            isFileAttachmentsEnabled = isFileAttachmentsEnabled,
             isCustomItemEnabled = isCustomItemEnabled
         )
     }

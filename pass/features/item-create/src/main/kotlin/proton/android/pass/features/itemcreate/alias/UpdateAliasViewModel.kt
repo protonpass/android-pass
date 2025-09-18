@@ -165,7 +165,7 @@ class UpdateAliasViewModel @Inject constructor(
                 ).first()
             }.onSuccess { (item, aliasDetails) ->
                 runCatching {
-                    if (item.hasAttachments && isFileAttachmentsEnabled()) {
+                    if (item.hasAttachments) {
                         attachmentsHandler.getAttachmentsForItem(item.shareId, item.id)
                     }
                     item
@@ -317,25 +317,23 @@ class UpdateAliasViewModel @Inject constructor(
                     )
                 }.onSuccess { item ->
                     snackbarDispatcher(AliasUpdated)
-                    if (isFileAttachmentsEnabled()) {
-                        runCatching {
-                            renameAttachments(item.shareId, item.id)
-                        }.onFailure {
-                            PassLogger.w(TAG, "Error renaming attachments")
-                            PassLogger.w(TAG, it)
-                            snackbarDispatcher(ItemRenameAttachmentsError)
-                        }
-                        runCatching {
-                            linkAttachmentsToItem(
-                                shareId = item.shareId,
-                                itemId = item.id,
-                                revision = item.revision
-                            )
-                        }.onFailure {
-                            PassLogger.w(TAG, "Error linking attachments to item")
-                            PassLogger.w(TAG, it)
-                            snackbarDispatcher(ItemLinkAttachmentsError)
-                        }
+                    runCatching {
+                        renameAttachments(item.shareId, item.id)
+                    }.onFailure {
+                        PassLogger.w(TAG, "Error renaming attachments")
+                        PassLogger.w(TAG, it)
+                        snackbarDispatcher(ItemRenameAttachmentsError)
+                    }
+                    runCatching {
+                        linkAttachmentsToItem(
+                            shareId = item.shareId,
+                            itemId = item.id,
+                            revision = item.revision
+                        )
+                    }.onFailure {
+                        PassLogger.w(TAG, "Error linking attachments to item")
+                        PassLogger.w(TAG, it)
+                        snackbarDispatcher(ItemLinkAttachmentsError)
                     }
                     isItemSavedState.update {
                         val itemUiModel = encryptionContextProvider.withEncryptionContext {

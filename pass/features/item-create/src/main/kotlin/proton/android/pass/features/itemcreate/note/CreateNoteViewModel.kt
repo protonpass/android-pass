@@ -78,7 +78,6 @@ import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -105,7 +104,6 @@ class CreateNoteViewModel @Inject constructor(
     customFieldHandler: CustomFieldHandler,
     customFieldDraftRepository: CustomFieldDraftRepository,
     noteItemFormProcessor: NoteItemFormProcessor,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseNoteViewModel(
     clipboardManager = clipboardManager,
@@ -117,7 +115,6 @@ class CreateNoteViewModel @Inject constructor(
     customFieldDraftRepository = customFieldDraftRepository,
     noteItemFormProcessor = noteItemFormProcessor,
     encryptionContextProvider = encryptionContextProvider,
-    featureFlagsRepository = featureFlagsRepository,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
 

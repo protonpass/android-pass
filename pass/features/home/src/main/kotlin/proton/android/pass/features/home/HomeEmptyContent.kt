@@ -39,7 +39,6 @@ internal fun HomeEmptyContent(
     modifier: Modifier = Modifier,
     hasShares: Boolean,
     canCreateItems: Boolean,
-    isCustomItemEnabled: Boolean,
     inSearchMode: Boolean,
     readOnly: Boolean,
     vaultSelectionOption: VaultSelectionOption,
@@ -65,7 +64,6 @@ internal fun HomeEmptyContent(
         else -> HomeEmptyList(
             modifier = modifier.fillMaxHeight(),
             canCreateItems = canCreateItems,
-            isCustomItemEnabled = isCustomItemEnabled,
             filterType = filterType,
             onCreateLoginClick = {
                 onEvent(

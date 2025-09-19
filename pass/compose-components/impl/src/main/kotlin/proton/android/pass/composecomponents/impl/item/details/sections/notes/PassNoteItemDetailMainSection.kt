@@ -18,15 +18,10 @@
 
 package proton.android.pass.composecomponents.impl.item.details.sections.notes
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.applyIf
@@ -38,42 +33,21 @@ import proton.android.pass.domain.ItemDiffs
 internal fun PassNoteItemDetailMainSection(
     modifier: Modifier = Modifier,
     note: String,
-    shouldDisplayCustomItems: Boolean,
     itemDiffs: ItemDiffs.Note
 ) {
     if (note.isNotBlank()) {
-        if (shouldDisplayCustomItems) {
-            ExpandableText(
-                modifier = modifier.contentDiff(itemDiffs.note),
-                text = note,
-                textModifier = Modifier.applyIf(
-                    condition = itemDiffs.note == ItemDiffType.Field,
-                    ifTrue = { padding(all = Spacing.medium) }
-                ),
-                textColor = if (itemDiffs.note == ItemDiffType.Content) {
-                    PassTheme.colors.signalWarning
-                } else {
-                    Color.Unspecified
-                }
-            )
-        } else {
-            SelectionContainer(modifier = modifier.contentDiff(itemDiffs.note)) {
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .applyIf(
-                            condition = itemDiffs.note == ItemDiffType.Field,
-                            ifTrue = { padding(all = Spacing.medium) }
-                        ),
-                    text = note,
-                    style = ProtonTheme.typography.defaultNorm,
-                    color = if (itemDiffs.note == ItemDiffType.Content) {
-                        PassTheme.colors.signalWarning
-                    } else {
-                        Color.Unspecified
-                    }
-                )
+        ExpandableText(
+            modifier = modifier.contentDiff(itemDiffs.note),
+            text = note,
+            textModifier = Modifier.applyIf(
+                condition = itemDiffs.note == ItemDiffType.Field,
+                ifTrue = { padding(all = Spacing.medium) }
+            ),
+            textColor = if (itemDiffs.note == ItemDiffType.Content) {
+                PassTheme.colors.signalWarning
+            } else {
+                Color.Unspecified
             }
-        }
+        )
     }
 }

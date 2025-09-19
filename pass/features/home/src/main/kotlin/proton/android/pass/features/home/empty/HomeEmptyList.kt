@@ -45,7 +45,6 @@ import me.proton.core.presentation.R as CoreR
 internal fun HomeEmptyList(
     modifier: Modifier = Modifier,
     canCreateItems: Boolean,
-    isCustomItemEnabled: Boolean,
     filterType: SearchFilterType,
     onCreateLoginClick: () -> Unit,
     onCreateAliasClick: () -> Unit,
@@ -143,7 +142,7 @@ internal fun HomeEmptyList(
                     onClick = onCreateIdentityClick
                 )
             }
-            if (isCustomItemEnabled && SearchFilterType.Custom in visibleButtons) {
+            if (SearchFilterType.Custom in visibleButtons) {
                 HomeEmptyButton(
                     modifier = Modifier.fillMaxWidth(),
                     text = stringResource(R.string.home_empty_vault_create_custom_item),
@@ -175,7 +174,6 @@ internal fun HomeEmptyListPreview(
             HomeEmptyList(
                 filterType = input.second,
                 canCreateItems = true,
-                isCustomItemEnabled = true,
                 onCreateLoginClick = {},
                 onCreateAliasClick = {},
                 onCreateNoteClick = {},

@@ -84,7 +84,6 @@ import proton.android.pass.features.itemcreate.common.formprocessor.AliasItemFor
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -105,7 +104,6 @@ class UpdateAliasViewModel @Inject constructor(
     private val mailboxDraftRepository: MailboxDraftRepository,
     suffixDraftRepository: SuffixDraftRepository,
     userPreferencesRepository: UserPreferencesRepository,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     attachmentsHandler: AttachmentsHandler,
     customFieldHandler: CustomFieldHandler,
     customFieldDraftRepository: CustomFieldDraftRepository,
@@ -119,7 +117,6 @@ class UpdateAliasViewModel @Inject constructor(
     userPreferencesRepository = userPreferencesRepository,
     attachmentsHandler = attachmentsHandler,
     snackbarDispatcher = snackbarDispatcher,
-    featureFlagsRepository = featureFlagsRepository,
     customFieldHandler = customFieldHandler,
     customFieldDraftRepository = customFieldDraftRepository,
     canPerformPaidAction = canPerformPaidAction,

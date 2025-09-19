@@ -21,10 +21,13 @@ package proton.android.pass.features.vault.organise
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByVisibility
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,15 +35,43 @@ class OrganiseVaultsViewModel @Inject constructor(
     observeVaultsGroupedByVisibility: ObserveVaultsGroupedByVisibility
 ) : ViewModel() {
 
-    val state = observeVaultsGroupedByVisibility()
-        .map { (hidden, visible) ->
-            OrganiseVaultsUIState(hiddenVaults = hidden, visibleVaults = visible)
+    private val pendingVisibilityChangesStateFlow: MutableStateFlow<Map<ShareId, Boolean>> =
+        MutableStateFlow(emptyMap())
+
+    val state = combine(
+        observeVaultsGroupedByVisibility(),
+        pendingVisibilityChangesStateFlow
+    ) { (hidden, visible), pending ->
+        val allVaults = hidden + visible
+
+        val (finalHidden, finalVisible) = allVaults.partition { vault ->
+            when (pending[vault.vault.shareId]) {
+                true -> false
+                false -> true
+                null -> vault in hidden
+            }
         }
+
+        OrganiseVaultsUIState(
+            hiddenVaults = finalHidden,
+            visibleVaults = finalVisible
+        )
+    }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000L),
             initialValue = OrganiseVaultsUIState.Initial
         )
+
+    fun onConfirm() {
+        // To implement
+    }
+
+    fun onVisibilityChange(shareId: ShareId, selected: Boolean) {
+        pendingVisibilityChangesStateFlow.update {
+            it + (shareId to selected)
+        }
+    }
 
     companion object {
         private const val TAG = "OrganiseVaultsViewModel"

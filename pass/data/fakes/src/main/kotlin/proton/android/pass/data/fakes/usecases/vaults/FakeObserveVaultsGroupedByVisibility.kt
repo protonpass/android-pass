@@ -16,22 +16,30 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases.vaults
+package proton.android.pass.data.fakes.usecases.vaults
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.common.api.FlowUtils
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByVisibility
 import proton.android.pass.domain.VaultWithItemCount
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class ObserveVaultsGroupedByVisibilityImpl @Inject constructor(
-    private val observeVaultsWithItemCount: ObserveVaultsWithItemCount
-) : ObserveVaultsGroupedByVisibility {
+@Singleton
+class FakeObserveVaultsGroupedByVisibility @Inject constructor() :
+    ObserveVaultsGroupedByVisibility {
 
-    override fun invoke(): Flow<Pair<List<VaultWithItemCount>, List<VaultWithItemCount>>> =
-        observeVaultsWithItemCount().map { vaults ->
-            vaults.partition { it.vault.shareFlags.isHidden() }
-        }
+    private val flow =
+        FlowUtils.testFlow<Pair<List<VaultWithItemCount>, List<VaultWithItemCount>>>()
+
+    fun emit(item: Pair<List<VaultWithItemCount>, List<VaultWithItemCount>>) {
+        flow.tryEmit(item)
+    }
+
+    fun emitDefault() {
+        flow.tryEmit(Pair(emptyList(), emptyList()))
+    }
+
+    override fun invoke(): Flow<Pair<List<VaultWithItemCount>, List<VaultWithItemCount>>> = flow
 
 }

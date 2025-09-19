@@ -222,6 +222,7 @@ import proton.android.pass.data.api.usecases.simplelogin.VerifySimpleLoginAliasM
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
+import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByVisibility
 import proton.android.pass.data.api.work.WorkerLauncher
 import proton.android.pass.data.fakes.crypto.FakeGetShareAndItemKey
 import proton.android.pass.data.fakes.repositories.FakeAliasRepository
@@ -423,6 +424,7 @@ import proton.android.pass.data.fakes.usecases.simplelogin.FakeVerifySimpleLogin
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
 import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedByShareId
+import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedByVisibility
 import proton.android.pass.data.fakes.work.FakeWorkerLauncher
 import javax.inject.Singleton
 
@@ -827,6 +829,11 @@ abstract class FakesDataModule {
     abstract fun bindObserveVaultsGroupedByShareId(
         impl: FakeObserveVaultsGroupedByShareId
     ): ObserveVaultsGroupedByShareId
+
+    @Binds
+    abstract fun bindObserveVaultsGroupedByVisibility(
+        impl: FakeObserveVaultsGroupedByVisibility
+    ): ObserveVaultsGroupedByVisibility
 
     @Binds
     abstract fun bindGenerateSecureLink(impl: FakeGenerateSecureLink): GenerateSecureLink

@@ -23,6 +23,7 @@ import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiResult
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.requests.BatchHideUnhideShareRequest
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
@@ -88,6 +89,20 @@ class RemoteShareDataSourceImpl @Inject constructor(
             .invoke { leaveShare(shareId.id) }
             .valueOrThrow
     }
+
+    override suspend fun batchChangeShareVisibility(
+        userId: UserId,
+        shareVisibilityChanges: Map<ShareId, Boolean>
+    ): List<ShareResponse> = api.get<PasswordManagerApi>(userId)
+        .invoke {
+            val (toHide, toShow) = shareVisibilityChanges.entries.partition { it.value }
+            val request = BatchHideUnhideShareRequest(
+                toHide.map { it.key.id },
+                toShow.map { it.key.id }
+            )
+            changeShareVisibility(request).list
+        }
+        .valueOrThrow
 
     private companion object {
 

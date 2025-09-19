@@ -30,7 +30,7 @@ import proton.android.pass.domain.entity.PackageInfo
 value class ItemId(val id: String)
 
 @JvmInline
-value class Flags(val value: Int) {
+value class ItemFlags(val value: Int) {
     fun hasSkippedHealthCheck(): Boolean = value.hasFlag(ItemFlag.SkipHealthCheck.value)
     fun isEmailBreached(): Boolean = value.hasFlag(ItemFlag.EmailBreached.value)
     fun isAliasDisabled(): Boolean = value.hasFlag(ItemFlag.AliasDisabled.value)
@@ -55,7 +55,7 @@ data class Item(
     val lastAutofillTime: Option<Instant>,
     val isPinned: Boolean,
     val pinTime: Option<Instant>,
-    val flags: Flags,
+    val itemFlags: ItemFlags,
     val shareCount: Int,
     val shareType: ShareType
 ) {
@@ -64,10 +64,10 @@ data class Item(
         else -> false
     }
 
-    val hasSkippedHealthCheck: Boolean = flags.hasSkippedHealthCheck()
-    val isEmailBreached: Boolean = flags.isEmailBreached()
-    val hasAttachments: Boolean = flags.hasAttachments()
-    val hasHadAttachments: Boolean = flags.hasHadAttachments()
+    val hasSkippedHealthCheck: Boolean = itemFlags.hasSkippedHealthCheck()
+    val isEmailBreached: Boolean = itemFlags.isEmailBreached()
+    val hasAttachments: Boolean = itemFlags.hasAttachments()
+    val hasHadAttachments: Boolean = itemFlags.hasHadAttachments()
 
     val isShared: Boolean = shareCount > 0
 }
@@ -87,7 +87,7 @@ data class ItemEncrypted(
     val lastAutofillTime: Option<Instant>,
     val isPinned: Boolean,
     val pinTime: Option<Instant>,
-    val flags: Flags,
+    val itemFlags: ItemFlags,
     val shareCount: Int,
     val shareType: ShareType
 ) {

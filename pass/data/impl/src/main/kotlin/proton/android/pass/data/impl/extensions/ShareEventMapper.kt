@@ -40,7 +40,8 @@ fun UpdateShareEvent.toResponse(): ShareResponse = ShareResponse(
     targetMaxMembers = targetMaxMembers,
     newUserInvitesReady = newUserInvitesReady,
     pendingInvites = pendingInvites,
-    canAutofill = canAutofill
+    canAutofill = canAutofill,
+    flags = flags
 )
 
 fun ShareResponse.toDomain(): UpdateShareEvent = UpdateShareEvent(
@@ -62,5 +63,6 @@ fun ShareResponse.toDomain(): UpdateShareEvent = UpdateShareEvent(
     targetMaxMembers = targetMaxMembers,
     newUserInvitesReady = newUserInvitesReady,
     pendingInvites = pendingInvites,
-    canAutofill = canAutofill
+    canAutofill = canAutofill,
+    flags = flags
 )

@@ -278,6 +278,7 @@ import proton.android.pass.features.vault.bottomsheet.options.VaultOptionsBottom
 import proton.android.pass.features.vault.bottomsheet.select.SelectVaultBottomsheet
 import proton.android.pass.features.vault.delete.DeleteVaultDialog
 import proton.android.pass.features.vault.leave.LeaveVaultDialog
+import proton.android.pass.features.vault.organise.OrganiseVaultsNavItem
 import proton.android.pass.features.vault.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.CommonNavArgKey
@@ -538,6 +539,9 @@ fun NavGraphBuilder.appGraph(
                         ),
                         force = true
                     )
+
+                HomeNavigation.OrganiseVaults ->
+                    appNavigator.navigate(OrganiseVaultsNavItem)
             }
         }
     )

@@ -20,7 +20,7 @@ package proton.android.pass.features.home.drawer.ui
 
 import proton.android.pass.domain.ShareId
 
-internal interface HomeDrawerUiEvent {
+sealed interface HomeDrawerUiEvent {
 
     data object OnAllVaultsClick : HomeDrawerUiEvent
 

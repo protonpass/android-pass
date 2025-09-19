@@ -150,6 +150,7 @@ import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
+import proton.android.pass.data.api.usecases.capabilities.CanOrganiseVaults
 import proton.android.pass.data.api.usecases.capabilities.CanShareShare
 import proton.android.pass.data.api.usecases.credentials.passkeys.GetPasskeyCredentialItems
 import proton.android.pass.data.api.usecases.credentials.passwords.GetPasswordCredentialItems
@@ -237,6 +238,7 @@ import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.repositories.TestInviteRepository
 import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.data.fakes.repositories.TestUserAccessDataRepository
+import proton.android.pass.data.fakes.usecases.FakeCanOrganiseVaults
 import proton.android.pass.data.fakes.usecases.FakeChangeAliasStatus
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeInitialWorkerLauncher
@@ -654,6 +656,9 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindCanCreateVault(impl: TestCanCreateVault): CanCreateVault
+
+    @Binds
+    abstract fun bindCanOrganiseVaults(impl: FakeCanOrganiseVaults): CanOrganiseVaults
 
     @Binds
     abstract fun bindCanCreateItemInVault(impl: TestCanCreateItemInVault): CanCreateItemInVault

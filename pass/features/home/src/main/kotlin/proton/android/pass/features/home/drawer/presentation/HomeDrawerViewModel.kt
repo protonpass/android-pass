@@ -23,16 +23,17 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.combineN
 import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
+import proton.android.pass.data.api.usecases.capabilities.CanOrganiseVaults
 import proton.android.pass.data.api.usecases.shares.ObserveSharesItemsCount
 import proton.android.pass.domain.Share
 import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
@@ -42,6 +43,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeDrawerViewModel @Inject constructor(
     canCreateVault: CanCreateVault,
+    canOrganiseVaults: CanOrganiseVaults,
     observeAllShares: ObserveAllShares,
     observeSharesItemsCount: ObserveSharesItemsCount,
     observeItemCount: ObserveItemCount,
@@ -70,10 +72,11 @@ class HomeDrawerViewModel @Inject constructor(
     private val itemCountSummaryOptionFlow = observeItemCount(applyItemStateToSharedItems = false)
         .mapLatest(::Some)
 
-    internal val stateFlow: StateFlow<HomeDrawerState> = combine(
+    internal val stateFlow: StateFlow<HomeDrawerState> = combineN(
         vaultSharesFlow,
         vaultSharesItemsCountFlow,
         canCreateVault(),
+        canOrganiseVaults(),
         homeSearchOptionsRepository.observeVaultSelectionOption(),
         itemCountSummaryOptionFlow,
         ::HomeDrawerState

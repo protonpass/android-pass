@@ -44,4 +44,6 @@ internal interface HomeDrawerUiEvent {
 
     data object OnCreateVaultClick : HomeDrawerUiEvent
 
+    data object OnOrganiseVaultsClick : HomeDrawerUiEvent
+
 }

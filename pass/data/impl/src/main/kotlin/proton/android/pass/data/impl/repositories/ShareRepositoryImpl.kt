@@ -382,6 +382,10 @@ class ShareRepositoryImpl @Inject constructor(
     override fun observeSharedByMeIds(userId: UserId): Flow<List<ShareId>> = localShareDataSource
         .observeSharedByMeIds(userId)
 
+    override suspend fun batchChangeShareVisibility(userId: UserId, shareVisibilityChanges: Map<ShareId, Boolean>) {
+        remoteShareDataSource.batchChangeShareVisibility(userId, shareVisibilityChanges)
+    }
+
     private suspend fun onShareResponseEntity(
         userId: UserId,
         event: UpdateShareEvent,

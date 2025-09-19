@@ -19,6 +19,7 @@
 package proton.android.pass.test.domain
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.Vault
@@ -49,7 +50,8 @@ object TestVault {
             createTime = createTime,
             shared = shared,
             members = members,
-            canAutofill = canAutofill
+            canAutofill = canAutofill,
+            shareFlags = ShareFlags(0)
         )
     }
 }

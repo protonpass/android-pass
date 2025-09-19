@@ -17,6 +17,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultId
@@ -63,14 +64,16 @@ class FeatureHomeApp : Application() {
                 shareId = ShareId(SHARE_ID),
                 vaultId = VaultId("main_vault"),
                 name = "Main vault",
-                createTime = Date()
+                createTime = Date(),
+                shareFlags = ShareFlags(0)
             ),
             Vault(
                 userId = UserId(""),
                 shareId = ShareId("OtherShareID"),
                 vaultId = VaultId("other_vault"),
                 name = "Other vault",
-                createTime = Date()
+                createTime = Date(),
+                shareFlags = ShareFlags(0)
             )
         )
         val vaultsWithItemCount = vaults.map {

@@ -18,11 +18,11 @@
 
 package proton.android.pass.features.vault.organise
 
-import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultWithItemCount
 
 data class OrganiseVaultsUIState(
-    val hiddenVaults: List<Vault>,
-    val visibleVaults: List<Vault>
+    val hiddenVaults: List<VaultWithItemCount>,
+    val visibleVaults: List<VaultWithItemCount>
 ) {
     companion object {
         val Initial = OrganiseVaultsUIState(hiddenVaults = emptyList(), visibleVaults = emptyList())

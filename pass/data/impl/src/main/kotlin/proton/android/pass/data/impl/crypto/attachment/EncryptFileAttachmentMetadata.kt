@@ -19,12 +19,10 @@
 package proton.android.pass.data.impl.crypto.attachment
 
 import FileV1
-import kotlinx.coroutines.flow.first
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
-import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
@@ -50,9 +48,7 @@ class EncryptFileAttachmentMetadataImpl @Inject constructor(
 
     override suspend fun encrypt(metadata: FileV1.FileMetadata): EncryptedFileAttachmentMetadata {
         val fileKey = EncryptionKey.generate()
-        val useV2 = ffRepo.get<Boolean>(FeatureFlag.FILE_ATTACHMENT_ENCRYPTION_V2).first()
-        val version = if (useV2) { 2 } else { 1 }
-        return encrypt(metadata, fileKey, version)
+        return encrypt(metadata, fileKey, 2)
     }
 
     override suspend fun update(

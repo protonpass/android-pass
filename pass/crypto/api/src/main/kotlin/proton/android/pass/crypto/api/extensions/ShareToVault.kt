@@ -36,7 +36,8 @@ fun Share.Vault.toVault(): Vault = Vault(
     shared = shared,
     maxMembers = maxMembers,
     canAutofill = canAutofill,
-    createTime = createTime
+    createTime = createTime,
+    shareFlags = shareFlags
 )
 
 fun Share.toVault(): Option<Vault> = when (this) {

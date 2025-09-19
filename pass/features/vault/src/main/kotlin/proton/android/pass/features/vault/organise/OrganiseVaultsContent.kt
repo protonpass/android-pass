@@ -18,21 +18,42 @@
 
 package proton.android.pass.features.vault.organise
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OrganiseVaultsContent(modifier: Modifier = Modifier) {
+fun OrganiseVaultsContent(modifier: Modifier = Modifier, state: OrganiseVaultsUIState) {
     Scaffold(
         modifier = modifier,
         topBar = {
         }
     ) { padding ->
-        Column(modifier = Modifier.padding(padding)) {
-
+        LazyColumn(modifier = Modifier.padding(padding)) {
+            stickyHeader {
+                Text("Visible vaults")
+            }
+            items(state.visibleVaults.size) { index ->
+                Text(state.visibleVaults[index].name)
+            }
+            stickyHeader {
+                Column {
+                    Text("Hidden vaults")
+                    Text(
+                        "These vaults will not be accessible and their" +
+                            " content won’t be available to Search or Autofill."
+                    )
+                }
+            }
+            items(state.hiddenVaults.size) { index ->
+                Text(state.hiddenVaults[index].name)
+            }
         }
     }
 }

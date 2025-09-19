@@ -44,4 +44,8 @@ interface RemoteShareDataSource {
 
     suspend fun leaveVault(userId: UserId, shareId: ShareId)
 
+    suspend fun batchChangeShareVisibility(
+        userId: UserId,
+        shareVisibilityChanges: Map<ShareId, Boolean>
+    ): List<ShareResponse>
 }

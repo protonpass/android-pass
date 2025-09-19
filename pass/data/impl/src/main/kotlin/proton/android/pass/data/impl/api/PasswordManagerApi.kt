@@ -23,6 +23,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import proton.android.pass.data.impl.requests.AcceptInviteRequest
+import proton.android.pass.data.impl.requests.BatchHideUnhideShareRequest
 import proton.android.pass.data.impl.requests.BreachAddEmailRequest
 import proton.android.pass.data.impl.requests.BreachVerifyEmailRequest
 import proton.android.pass.data.impl.requests.ChangeAliasStatusRequest
@@ -70,6 +71,7 @@ import proton.android.pass.data.impl.requests.attachments.RestoreOldFileRequest
 import proton.android.pass.data.impl.requests.attachments.UpdateFileMetadataRequest
 import proton.android.pass.data.impl.requests.attachments.UpdatePendingFileRequest
 import proton.android.pass.data.impl.responses.AliasDetailsResponse
+import proton.android.pass.data.impl.responses.BatchHideUnhideSharesResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailsResponse
 import proton.android.pass.data.impl.responses.BreachEmailsResponse
@@ -674,4 +676,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Query("Email") email: String,
         @Query("InternalOnly") internalOnly: Int = 1
     ): GetAllKeysByAddressResponse
+
+    @GET("$PREFIX/share/hide")
+    suspend fun changeShareVisibility(@Body request: BatchHideUnhideShareRequest): BatchHideUnhideSharesResponse
 }

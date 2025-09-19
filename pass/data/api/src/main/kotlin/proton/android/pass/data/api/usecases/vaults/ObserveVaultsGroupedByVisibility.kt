@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,31 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.crypto.api.extensions
+package proton.android.pass.data.api.usecases.vaults
 
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.toOption
-import proton.android.pass.domain.Share
+import kotlinx.coroutines.flow.Flow
 import proton.android.pass.domain.Vault
 
-fun Share.Vault.toVault(): Vault = Vault(
-    shareId = id,
-    userId = userId,
-    vaultId = vaultId,
-    name = name,
-    color = color,
-    icon = icon,
-    members = memberCount,
-    isOwned = isOwner,
-    role = shareRole,
-    shared = shared,
-    maxMembers = maxMembers,
-    canAutofill = canAutofill,
-    createTime = createTime,
-    shareFlags = shareFlags
-)
+interface ObserveVaultsGroupedByVisibility {
 
-fun Share.toVault(): Option<Vault> = when (this) {
-    is Share.Item -> null
-    is Share.Vault -> this.toVault()
-}.toOption()
+    operator fun invoke(): Flow<Pair<List<Vault>, List<Vault>>>
+
+}

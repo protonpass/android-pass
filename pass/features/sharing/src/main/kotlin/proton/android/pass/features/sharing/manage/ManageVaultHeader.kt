@@ -38,6 +38,7 @@ import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
+import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultId
@@ -92,7 +93,8 @@ fun ManageVaultHeaderPreview(@PreviewParameter(ThemePreviewProvider::class) isDa
                         shareId = ShareId("123"),
                         vaultId = VaultId("123"),
                         name = "Vault name",
-                        createTime = Date()
+                        createTime = Date(),
+                        shareFlags = ShareFlags(0)
                     ),
                     activeItemCount = 3,
                     trashedItemCount = 0

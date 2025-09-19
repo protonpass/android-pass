@@ -75,9 +75,9 @@ sealed class Share {
 
     abstract val canBeUpdated: Boolean
 
-    abstract val shareFlags: ShareFlags
-
     abstract val canBeCloned: Boolean
+
+    abstract val shareFlags: ShareFlags
 
     protected abstract val permission: SharePermission
 
@@ -161,6 +161,7 @@ sealed class Share {
         override val canBeCloned: Boolean
             get() = shareRole.toPermissions().canClone()
 
+        val isHidden: Boolean = shareFlags.isHidden()
     }
 
     private val totalMembers: Int

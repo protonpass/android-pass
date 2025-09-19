@@ -21,6 +21,7 @@ package proton.android.pass.features.vault.organise
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.vault.VaultNavigation
 
 @Composable
@@ -30,7 +31,10 @@ fun OrganiseVaultsScreen(
     viewModel: OrganiseVaultsViewModel = hiltViewModel()
 ) {
 
+    val state = viewModel.state.collectAsStateWithLifecycle()
+
     OrganiseVaultsContent(
-        modifier = modifier
+        modifier = modifier,
+        state = state.value
     )
 }

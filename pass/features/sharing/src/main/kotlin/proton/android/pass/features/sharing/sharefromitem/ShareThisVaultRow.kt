@@ -48,6 +48,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
+import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultId
@@ -132,7 +133,8 @@ internal fun ShareThisVaultRowPreview(@PreviewParameter(ThemePreviewProvider::cl
                         shareId = ShareId("Share"),
                         vaultId = VaultId("123"),
                         name = "Test vault with a very very long name",
-                        createTime = Date()
+                        createTime = Date(),
+                        shareFlags = ShareFlags(0)
                     ),
                     activeItemCount = 1,
                     trashedItemCount = 1

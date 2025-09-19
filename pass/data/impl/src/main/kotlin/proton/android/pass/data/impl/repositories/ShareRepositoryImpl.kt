@@ -62,6 +62,7 @@ import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.data.impl.util.TimeUtil.toDate
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.SharePermission
 import proton.android.pass.domain.ShareRole
@@ -514,7 +515,8 @@ class ShareRepositoryImpl @Inject constructor(
             targetMaxMembers = shareResponse.targetMaxMembers,
             newUserInvitesReady = shareResponse.newUserInvitesReady,
             pendingInvites = shareResponse.pendingInvites,
-            canAutofill = shareResponse.canAutofill
+            canAutofill = shareResponse.canAutofill,
+            flags = shareResponse.flags
         )
     }
 
@@ -535,7 +537,8 @@ class ShareRepositoryImpl @Inject constructor(
                 pendingInvites = pendingInvites,
                 newUserInvitesReady = newUserInvitesReady,
                 maxMembers = targetMaxMembers,
-                canAutofill = canAutofill
+                canAutofill = canAutofill,
+                shareFlags = ShareFlags(flags)
             )
         }
 
@@ -562,7 +565,8 @@ class ShareRepositoryImpl @Inject constructor(
                             canAutofill = canAutofill,
                             name = vault.name,
                             color = vault.display.color.toDomain(),
-                            icon = vault.display.icon.toDomain()
+                            icon = vault.display.icon.toDomain(),
+                            shareFlags = ShareFlags(flags)
                         )
                     }
             } ?: throw IllegalStateException("Vault share without encrypted content")

@@ -21,11 +21,8 @@ package proton.android.pass.features.item.details.detail.presentation
 sealed interface ItemFeatures {
 
     val isHistoryEnabled: Boolean
-
-    val isCustomItemEnabled: Boolean
 }
 
 internal data class IdentityItemFeatures(
-    override val isHistoryEnabled: Boolean,
-    override val isCustomItemEnabled: Boolean
+    override val isHistoryEnabled: Boolean
 ) : ItemFeatures

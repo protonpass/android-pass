@@ -34,15 +34,11 @@ internal data class BaseNoteUiState(
     val isLoadingState: IsLoadingState,
     val itemSavedState: ItemSavedState,
     val hasUserEditedContent: Boolean,
-    val isCustomItemEnabled: Boolean,
     val displayFileAttachmentsOnboarding: Boolean,
     val canPerformPaidAction: Boolean,
     val focusedField: Option<NoteField>,
     val attachmentsState: AttachmentsState
 ) {
-
-    val canShowAttachments: Boolean = !isCustomItemEnabled &&
-        attachmentsState.canShowAttachmentSection(isDetail = false)
 
     companion object {
         val Initial = BaseNoteUiState(
@@ -50,7 +46,6 @@ internal data class BaseNoteUiState(
             isLoadingState = IsLoadingState.NotLoading,
             itemSavedState = ItemSavedState.Unknown,
             hasUserEditedContent = false,
-            isCustomItemEnabled = false,
             canPerformPaidAction = false,
             focusedField = None,
             displayFileAttachmentsOnboarding = false,

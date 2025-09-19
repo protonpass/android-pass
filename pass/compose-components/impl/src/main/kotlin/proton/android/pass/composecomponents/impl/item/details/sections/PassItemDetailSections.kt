@@ -44,8 +44,7 @@ internal fun PassItemDetailSections(
     itemColors: PassItemColors,
     onEvent: (PassItemDetailsUiEvent) -> Unit,
     shouldDisplayItemHistorySection: Boolean,
-    shouldDisplayItemHistoryButton: Boolean,
-    shouldDisplayCustomItems: Boolean
+    shouldDisplayItemHistoryButton: Boolean
 ) = with(itemDetailState) {
     when (this) {
         is ItemDetailState.Alias -> PassAliasItemDetailSections(
@@ -214,8 +213,7 @@ internal fun PassItemDetailSections(
             modifiedAt = itemModifiedAt,
             attachmentsState = attachmentsState,
             shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
-            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
-            shouldDisplayCustomItems = shouldDisplayCustomItems
+            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
         )
 
         is ItemDetailState.Unknown -> itemContents.note.let { note ->

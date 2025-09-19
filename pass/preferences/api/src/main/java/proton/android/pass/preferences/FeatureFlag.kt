@@ -36,12 +36,6 @@ enum class FeatureFlag(
         key = "PassAndroidExtraLogging",
         isEnabledDefault = false
     ),
-    CUSTOM_TYPE_V1(
-        title = "Enable custom types",
-        description = "Enable custom types",
-        key = "PassCustomTypeV1",
-        isEnabledDefault = false
-    ),
     RENAME_ADMIN_TO_MANAGER(
         title = "Rename Admin to Manager",
         description = "Enable Rename Admin to Manager",

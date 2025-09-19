@@ -48,7 +48,6 @@ import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHa
 import proton.android.pass.features.itemcreate.common.formprocessor.AliasItemFormProcessorType
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
@@ -77,8 +76,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     suffixDraftRepository: SuffixDraftRepository,
     aliasItemFormProcessor: AliasItemFormProcessorType,
     clipboardManager: ClipboardManager,
-    userPreferencesRepository: UserPreferencesRepository,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository
+    userPreferencesRepository: UserPreferencesRepository
 ) : CreateAliasViewModel(
     accountManager = accountManager,
     createAlias = createAlias,
@@ -101,8 +99,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     suffixDraftRepository = suffixDraftRepository,
     userPreferencesRepository = userPreferencesRepository,
     aliasItemFormProcessor = aliasItemFormProcessor,
-    clipboardManager = clipboardManager,
-    featureFlagsRepository = featureFlagsRepository
+    clipboardManager = clipboardManager
 ) {
 
     private val isEditMode: Boolean = savedStateHandleProvider.get()

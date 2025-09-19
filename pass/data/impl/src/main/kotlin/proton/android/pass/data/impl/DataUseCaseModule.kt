@@ -245,6 +245,7 @@ import proton.android.pass.data.api.usecases.sync.ForceSyncItems
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
+import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByVisibility
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionItemFiltererImpl
 import proton.android.pass.data.impl.autofill.SuggestionSorter
@@ -476,6 +477,7 @@ import proton.android.pass.data.impl.usecases.sync.ForceSyncItemsImpl
 import proton.android.pass.data.impl.usecases.tooltips.DisableTooltipImpl
 import proton.android.pass.data.impl.usecases.tooltips.ObserveTooltipEnabledImpl
 import proton.android.pass.data.impl.usecases.vaults.ObserveVaultsGroupedByShareIdImpl
+import proton.android.pass.data.impl.usecases.vaults.ObserveVaultsGroupedByVisibilityImpl
 import javax.inject.Singleton
 
 @Suppress("LargeClass", "TooManyFunctions")
@@ -905,6 +907,11 @@ abstract class DataUseCaseModule {
     abstract fun bindObserveVaultsGroupedByShareId(
         impl: ObserveVaultsGroupedByShareIdImpl
     ): ObserveVaultsGroupedByShareId
+
+    @[Binds Singleton]
+    abstract fun bindObserveVaultsGroupedByVisibility(
+        impl: ObserveVaultsGroupedByVisibilityImpl
+    ): ObserveVaultsGroupedByVisibility
 
     @Binds
     abstract fun bindGenerateSecureLink(impl: GenerateSecureLinkImpl): GenerateSecureLink

@@ -19,11 +19,28 @@
 package proton.android.pass.features.vault.organise
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByVisibility
 import javax.inject.Inject
 
 @HiltViewModel
-class OrganiseVaultsViewModel @Inject constructor() : ViewModel() {
+class OrganiseVaultsViewModel @Inject constructor(
+    observeVaultsGroupedByVisibility: ObserveVaultsGroupedByVisibility
+) : ViewModel() {
+
+    val state = observeVaultsGroupedByVisibility()
+        .map { (hidden, visible) ->
+            OrganiseVaultsUIState(hiddenVaults = hidden, visibleVaults = visible)
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000L),
+            initialValue = OrganiseVaultsUIState.Initial
+        )
 
     companion object {
         private const val TAG = "OrganiseVaultsViewModel"

@@ -25,6 +25,7 @@ import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.url.HostParser
 import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
+import proton.android.pass.data.api.usecases.BatchChangeShareVisibility
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CancelShareInvite
@@ -253,6 +254,7 @@ import proton.android.pass.data.impl.autofill.SuggestionSorterImpl
 import proton.android.pass.data.impl.url.HostParserImpl
 import proton.android.pass.data.impl.usecases.AcceptInviteImpl
 import proton.android.pass.data.impl.usecases.ApplyPendingEventsImpl
+import proton.android.pass.data.impl.usecases.BatchChangeShareVisibilityImpl
 import proton.android.pass.data.impl.usecases.CanDisplayTotpImpl
 import proton.android.pass.data.impl.usecases.CanPerformPaidActionImpl
 import proton.android.pass.data.impl.usecases.CancelShareInviteImpl
@@ -1241,5 +1243,8 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindGetPasskeyCredentialItems(impl: GetPasskeyCredentialItemsImpl): GetPasskeyCredentialItems
+
+    @[Binds Singleton]
+    abstract fun bindBatchChangeShareVisibility(impl: BatchChangeShareVisibilityImpl): BatchChangeShareVisibility
 
 }

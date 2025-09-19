@@ -816,6 +816,9 @@ fun HomeScreen(
                             HomeDrawerUiEvent.OnCreateVaultClick -> {
                                 onNavigateEvent(HomeNavigation.CreateVault)
                             }
+
+                            HomeDrawerUiEvent.OnOrganiseVaultsClick ->
+                                onNavigateEvent(HomeNavigation.OrganiseVaults)
                         }
                     }
                 )

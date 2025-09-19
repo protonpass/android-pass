@@ -121,6 +121,8 @@ sealed interface HomeNavigation {
 
     data object CreateVault : HomeNavigation
 
+    data object OrganiseVaults : HomeNavigation
+
     @JvmInline
     value class VaultOptions(val shareId: ShareId) : HomeNavigation
 

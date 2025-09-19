@@ -148,7 +148,8 @@ class ShareRepositoryTest {
         targetMaxMembers = maxMembers,
         newUserInvitesReady = newUserInvitesReady,
         pendingInvites = pendingInvites,
-        canAutofill = canAutofill
+        canAutofill = canAutofill,
+        flags = shareFlags.value
     )
 
     private fun Share.toEntity(): ShareEntity = ShareEntity(
@@ -173,7 +174,8 @@ class ShareRepositoryTest {
         targetMaxMembers = maxMembers,
         newUserInvitesReady = newUserInvitesReady,
         pendingInvites = pendingInvites,
-        canAutofill = canAutofill
+        canAutofill = canAutofill,
+        flags = shareFlags.value
     )
 
     companion object {

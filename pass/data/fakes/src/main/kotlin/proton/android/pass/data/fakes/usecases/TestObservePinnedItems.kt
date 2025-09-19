@@ -30,7 +30,7 @@ import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.datamodels.api.fromParsed
 import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.CreditCardType
-import proton.android.pass.domain.Flags
+import proton.android.pass.domain.ItemFlags
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -107,7 +107,7 @@ class TestObservePinnedItems @Inject constructor() : ObservePinnedItems {
                     lastAutofillTime = None,
                     isPinned = false,
                     pinTime = None,
-                    flags = Flags(0),
+                    itemFlags = ItemFlags(0),
                     shareCount = 0,
                     shareType = ShareType.Vault
                 )

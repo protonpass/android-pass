@@ -83,7 +83,7 @@ class ObserveAllBreachByUserIdImpl @Inject constructor(
                         itemId = firstAlias.id,
                         email = breachEmail.email,
                         breachCounter = breachesForAlias.size,
-                        flags = firstAlias.flags.value,
+                        flags = firstAlias.itemFlags.value,
                         lastBreachTime = parsedTime
                     )
                 }

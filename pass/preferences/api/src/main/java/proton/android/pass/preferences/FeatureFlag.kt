@@ -42,12 +42,6 @@ enum class FeatureFlag(
         key = "PassCustomTypeV1",
         isEnabledDefault = false
     ),
-    FILE_ATTACHMENT_ENCRYPTION_V2(
-        title = "File Attachment Encryption V2",
-        description = "Enable File Attachment Encryption V2",
-        key = "PassFileAttachmentEncryptionV2",
-        isEnabledDefault = false
-    ),
     RENAME_ADMIN_TO_MANAGER(
         title = "Rename Admin to Manager",
         description = "Enable Rename Admin to Manager",

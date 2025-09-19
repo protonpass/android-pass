@@ -19,10 +19,10 @@
 package proton.android.pass.data.api.usecases.vaults
 
 import kotlinx.coroutines.flow.Flow
-import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultWithItemCount
 
 interface ObserveVaultsGroupedByVisibility {
 
-    operator fun invoke(): Flow<Pair<List<Vault>, List<Vault>>>
+    operator fun invoke(): Flow<Pair<List<VaultWithItemCount>, List<VaultWithItemCount>>>
 
 }

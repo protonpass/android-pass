@@ -20,16 +20,18 @@ package proton.android.pass.data.impl.usecases.vaults
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByVisibility
-import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultWithItemCount
 import javax.inject.Inject
 
 class ObserveVaultsGroupedByVisibilityImpl @Inject constructor(
-    private val observeVaults: ObserveVaults
+    private val observeVaultsWithItemCount: ObserveVaultsWithItemCount
 ) : ObserveVaultsGroupedByVisibility {
 
-    override fun invoke(): Flow<Pair<List<Vault>, List<Vault>>> = observeVaults()
-        .map { vaults -> vaults.partition { it.shareFlags.isHidden() } }
+    override fun invoke(): Flow<Pair<List<VaultWithItemCount>, List<VaultWithItemCount>>> =
+        observeVaultsWithItemCount().map { vaults ->
+            vaults.partition { it.vault.shareFlags.isHidden() }
+        }
 
 }

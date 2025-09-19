@@ -35,6 +35,9 @@ fun OrganiseVaultsScreen(
 
     OrganiseVaultsContent(
         modifier = modifier,
-        state = state.value
+        state = state.value,
+        onClose = { onNavigate(VaultNavigation.CloseScreen) },
+        onConfirm = viewModel::onConfirm,
+        onVisibilityChange = viewModel::onVisibilityChange
     )
 }

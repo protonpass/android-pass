@@ -23,9 +23,9 @@ fun toItemContents(
     itemType: ItemType,
     title: String,
     note: String,
-    flags: Flags
+    itemFlags: ItemFlags
 ): ItemContents = when (itemType) {
-    is ItemType.Alias -> createAlias(decrypt, title, note, itemType, flags.isAliasDisabled())
+    is ItemType.Alias -> createAlias(decrypt, title, note, itemType, itemFlags.isAliasDisabled())
     is ItemType.Login -> createLogin(decrypt, title, note, itemType)
     is ItemType.Note -> createNote(decrypt, title, note, itemType)
     is ItemType.CreditCard -> createCreditCard(decrypt, title, note, itemType)
@@ -42,7 +42,7 @@ fun toItemContents(
 
 @Suppress("UNCHECKED_CAST")
 fun <T : ItemContents> Item.toItemContents(decrypt: (String) -> String): T = when (val type = this.itemType) {
-    is ItemType.Alias -> createAlias(decrypt, title, note, type, flags.isAliasDisabled())
+    is ItemType.Alias -> createAlias(decrypt, title, note, type, itemFlags.isAliasDisabled())
     is ItemType.Login -> createLogin(decrypt, title, note, type)
     is ItemType.Note -> createNote(decrypt, title, note, type)
     is ItemType.CreditCard -> createCreditCard(decrypt, title, note, type)

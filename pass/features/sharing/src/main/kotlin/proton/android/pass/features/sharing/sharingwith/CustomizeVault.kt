@@ -47,6 +47,7 @@ import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.SharePermission
@@ -120,7 +121,8 @@ internal fun CustomizeVaultPreview(@PreviewParameter(ThemePreviewProvider::class
                     maxMembers = 11,
                     pendingInvites = 0,
                     newUserInvitesReady = 0,
-                    canAutofill = true
+                    canAutofill = true,
+                    shareFlags = ShareFlags(0)
                 ),
                 onClick = {}
             )

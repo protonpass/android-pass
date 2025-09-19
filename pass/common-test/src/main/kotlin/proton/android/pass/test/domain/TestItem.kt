@@ -34,8 +34,8 @@ import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.AddressDetailsContent
 import proton.android.pass.domain.ContactDetailsContent
 import proton.android.pass.domain.CreditCardType
-import proton.android.pass.domain.Flags
 import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ItemFlags
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
@@ -79,7 +79,7 @@ object TestItem {
             lastAutofillTime = None,
             isPinned = false,
             pinTime = None,
-            flags = Flags(0),
+            itemFlags = ItemFlags(0),
             shareCount = 0,
             shareType = ShareType.Vault
         )
@@ -114,7 +114,7 @@ object TestItem {
             lastAutofillTime = None,
             isPinned = false,
             pinTime = None,
-            flags = Flags(flags),
+            itemFlags = ItemFlags(flags),
             shareCount = 0,
             shareType = ShareType.Vault
         )
@@ -296,7 +296,7 @@ object TestItem {
                 .toOption(),
             isPinned = Random.nextBoolean(),
             pinTime = pinTime?.let { Instant.fromEpochMilliseconds(it) }.toOption(),
-            flags = Flags(Random.nextInt()),
+            itemFlags = ItemFlags(Random.nextInt()),
             shareCount = Random.nextInt(),
             shareType = ShareType.from(Random.nextInt(1, 2))
         )

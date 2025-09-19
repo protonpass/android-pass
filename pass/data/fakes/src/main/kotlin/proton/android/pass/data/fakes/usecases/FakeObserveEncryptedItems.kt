@@ -33,7 +33,7 @@ import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.AddressDetailsContent
 import proton.android.pass.domain.ContactDetailsContent
 import proton.android.pass.domain.CreditCardType
-import proton.android.pass.domain.Flags
+import proton.android.pass.domain.ItemFlags
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemEncrypted
@@ -129,7 +129,7 @@ class FakeObserveEncryptedItems @Inject constructor() : ObserveEncryptedItems {
                     lastAutofillTime = None,
                     isPinned = false,
                     pinTime = None,
-                    flags = Flags(flags),
+                    itemFlags = ItemFlags(flags),
                     shareCount = 0,
                     shareType = ShareType.Vault
                 )

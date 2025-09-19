@@ -19,6 +19,7 @@
 package proton.android.pass.domain
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.util.kotlin.hasFlag
 import java.util.Date
 
 @JvmInline
@@ -26,6 +27,11 @@ value class ShareId(val id: String)
 
 @JvmInline
 value class VaultId(val id: String)
+
+@JvmInline
+value class ShareFlags(val value: Int) {
+    fun isHidden(): Boolean = value.hasFlag(ShareFlag.IsHidden.value)
+}
 
 sealed class Share {
 
@@ -69,6 +75,8 @@ sealed class Share {
 
     abstract val canBeUpdated: Boolean
 
+    abstract val shareFlags: ShareFlags
+
     abstract val canBeCloned: Boolean
 
     protected abstract val permission: SharePermission
@@ -88,7 +96,8 @@ sealed class Share {
         override val maxMembers: Int,
         override val pendingInvites: Int,
         override val newUserInvitesReady: Int,
-        override val canAutofill: Boolean
+        override val canAutofill: Boolean,
+        override val shareFlags: ShareFlags
     ) : Share() {
 
         override val shareType: ShareType = ShareType.Item
@@ -127,6 +136,7 @@ sealed class Share {
         override val pendingInvites: Int,
         override val newUserInvitesReady: Int,
         override val canAutofill: Boolean,
+        override val shareFlags: ShareFlags,
         val name: String,
         val color: ShareColor,
         val icon: ShareIcon

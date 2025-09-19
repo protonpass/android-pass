@@ -123,7 +123,8 @@ class TestRemoteInviteDataSource @Inject constructor() : RemoteInviteDataSource 
             targetMaxMembers = 2,
             newUserInvitesReady = 0,
             pendingInvites = 0,
-            canAutofill = true
+            canAutofill = true,
+            flags = 0
         )
     }
 }

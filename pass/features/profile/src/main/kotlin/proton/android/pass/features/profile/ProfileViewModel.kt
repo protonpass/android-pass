@@ -83,8 +83,6 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.passkeys.api.CheckPasskeySupport
 import proton.android.pass.preferences.AppLockTypePreference
 import proton.android.pass.preferences.BiometricSystemLockPreference
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.searchoptions.api.FilterOption
 import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
@@ -105,7 +103,6 @@ class ProfileViewModel @Inject constructor(
     private val refreshContent: RefreshContent,
     private val searchOptionsRepository: HomeSearchOptionsRepository,
     accountManager: AccountManager,
-    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeItemCount: ObserveItemCount,
     observeMFACount: ObserveMFACount,
     observeUpgradeInfo: ObserveUpgradeInfo,
@@ -164,9 +161,8 @@ class ProfileViewModel @Inject constructor(
     private val itemSummaryUiStateFlow = combine(
         observeItemCount(itemState = null).asLoadingResult(),
         observeMFACount(),
-        upgradeInfoFlow,
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1)
-    ) { itemCountResult, mfaCount, upgradeInfoResult, isCustomItemEnabled ->
+        upgradeInfoFlow
+    ) { itemCountResult, mfaCount, upgradeInfoResult ->
         val itemCount = itemCountResult.getOrNull()
         val upgradeInfo = upgradeInfoResult.getOrNull()
         val isUpgradeAvailable = upgradeInfo?.isUpgradeAvailable ?: false
@@ -188,8 +184,7 @@ class ProfileViewModel @Inject constructor(
             customItemCount = itemCount?.custom?.toInt() ?: 0,
             mfaCount = mfaCount,
             aliasLimit = aliasLimit,
-            mfaLimit = mfaLimit,
-            isCustomItemEnabled = isCustomItemEnabled
+            mfaLimit = mfaLimit
         )
     }
 

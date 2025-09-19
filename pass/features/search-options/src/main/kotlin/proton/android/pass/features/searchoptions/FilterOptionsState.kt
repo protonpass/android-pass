@@ -33,7 +33,6 @@ internal sealed interface FilterOptionsState {
     @Stable
     data class Success(
         internal val summary: ItemCountSummary,
-        internal val isCustomItemEnabled: Boolean,
         private val searchOptions: SearchOptions
     ) : FilterOptionsState {
 

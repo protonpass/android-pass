@@ -211,8 +211,7 @@ internal fun HomeContent(
                 ItemTypeFilterList(
                     selected = uiState.homeListUiState.searchFilterType,
                     itemTypeCount = itemTypeCount,
-                    onItemTypeClick = { onEvent(HomeUiEvent.ItemTypeSelected(it)) },
-                    isCustomItemEnabled = uiState.isCustomItemEnabled
+                    onItemTypeClick = { onEvent(HomeUiEvent.ItemTypeSelected(it)) }
                 )
             }
 
@@ -314,7 +313,6 @@ internal fun HomeContent(
                     HomeEmptyContent(
                         modifier = Modifier.testTag(HOME_EMPTY_TAG),
                         hasShares = uiState.hasShares,
-                        isCustomItemEnabled = uiState.isCustomItemEnabled,
                         canCreateItems = uiState.canCreateItems,
                         vaultSelectionOption = uiState.homeListUiState.homeVaultSelection,
                         inSearchMode = isPinningOrSearch,

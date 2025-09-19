@@ -71,7 +71,6 @@ internal fun CreditCardItemForm(
     validationErrors: PersistentSet<ValidationError>,
     displayFileAttachmentsOnboarding: Boolean,
     isFileAttachmentsEnabled: Boolean,
-    isCustomTypeEnabled: Boolean,
     attachmentsState: AttachmentsState,
     canUseCustomFields: Boolean,
     focusedField: CreditCardField?,
@@ -144,20 +143,18 @@ internal fun CreditCardItemForm(
                 )
             }
 
-            if (isCustomTypeEnabled) {
-                customFieldsList(
-                    modifier = Modifier.padding(vertical = Spacing.extraSmall),
-                    customFields = creditCardItemFormState.customFields,
-                    enabled = enabled,
-                    errors = customFieldValidationErrors.toPersistentSet(),
-                    isVisible = true,
-                    canCreateCustomFields = canUseCustomFields,
-                    sectionIndex = None,
-                    focusedField = (focusedField as? CreditCardField.CustomField)?.field.toOption(),
-                    itemCategory = ItemCategory.CreditCard,
-                    onEvent = { onEvent(CreditCardContentEvent.OnCustomFieldEvent(it)) }
-                )
-            }
+            customFieldsList(
+                modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                customFields = creditCardItemFormState.customFields,
+                enabled = enabled,
+                errors = customFieldValidationErrors.toPersistentSet(),
+                isVisible = true,
+                canCreateCustomFields = canUseCustomFields,
+                sectionIndex = None,
+                focusedField = (focusedField as? CreditCardField.CustomField)?.field.toOption(),
+                itemCategory = ItemCategory.CreditCard,
+                onEvent = { onEvent(CreditCardContentEvent.OnCustomFieldEvent(it)) }
+            )
 
             if (isFileAttachmentsEnabled) {
                 item {

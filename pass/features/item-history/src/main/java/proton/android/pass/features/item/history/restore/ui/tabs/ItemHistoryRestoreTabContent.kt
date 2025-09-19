@@ -43,7 +43,6 @@ internal fun ItemHistoryRestoreTabContent(
     currentItemDetailState: ItemDetailState,
     itemColors: PassItemColors,
     revisionTime: Long,
-    isCustomItemEnabled: Boolean,
     onEvent: (ItemHistoryRestoreUiEvent) -> Unit
 ) {
     var selectedTabIndex by remember { mutableIntStateOf(ITEM_HISTORY_TAB_INDEX_REVISION) }
@@ -59,7 +58,6 @@ internal fun ItemHistoryRestoreTabContent(
             itemDetailState = itemDetailState,
             itemColors = itemColors,
             selection = selection,
-            isCustomItemEnabled = isCustomItemEnabled,
             onEvent = onEvent
         )
 

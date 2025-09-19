@@ -36,8 +36,6 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.items.ObserveCanCreateItems
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.searchoptions.api.VaultSelectionOption
 import javax.inject.Inject
@@ -46,7 +44,6 @@ import javax.inject.Inject
 class CreateItemBottomSheetViewModel @Inject constructor(
     homeSearchOptionsRepository: HomeSearchOptionsRepository,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider,
     observeCanCreateItems: ObserveCanCreateItems
 ) : ViewModel() {
@@ -74,11 +71,10 @@ class CreateItemBottomSheetViewModel @Inject constructor(
 
     internal val stateFlow: StateFlow<CreateItemBottomSheetUIState> = combine(
         observeUpgradeInfo(),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1),
         selectedShareIdFlow,
         createItemModeFlow,
         observeCanCreateItems()
-    ) { upgradeInfo, isCustomEnabled, selectedShare, mode, canCreateItems ->
+    ) { upgradeInfo, selectedShare, mode, canCreateItems ->
         CreateItemBottomSheetUIState(
             shareId = selectedShare,
             mode = mode,
@@ -87,8 +83,7 @@ class CreateItemBottomSheetViewModel @Inject constructor(
                 aliasCount = upgradeInfo.totalAlias,
                 aliasLimit = upgradeInfo.plan.aliasLimit.limitOrNull() ?: 0
             ),
-            canCreateItems = canCreateItems,
-            canCreateCustom = isCustomEnabled
+            canCreateItems = canCreateItems
         )
     }
         .stateIn(
@@ -103,8 +98,7 @@ internal data class CreateItemBottomSheetUIState(
     val shareId: ShareId?,
     val mode: CreateItemBottomSheetMode?,
     val createItemAliasUIState: CreateItemAliasUIState,
-    val canCreateItems: Boolean,
-    val canCreateCustom: Boolean
+    val canCreateItems: Boolean
 ) {
 
     internal companion object {
@@ -113,8 +107,7 @@ internal data class CreateItemBottomSheetUIState(
             shareId = null,
             mode = null,
             createItemAliasUIState = CreateItemAliasUIState.Initial,
-            canCreateItems = false,
-            canCreateCustom = false
+            canCreateItems = false
         )
 
     }

@@ -58,7 +58,6 @@ internal fun ItemDetailsContent(
                 itemColors = itemColors,
                 shouldDisplayItemHistorySection = true,
                 shouldDisplayItemHistoryButton = canViewItemHistory,
-                shouldDisplayCustomItems = isCustomItemEnabled,
                 topBar = {
                     ItemDetailsTopBar(
                         isLoading = false,

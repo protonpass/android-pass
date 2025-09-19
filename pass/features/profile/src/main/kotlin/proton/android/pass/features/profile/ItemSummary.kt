@@ -90,13 +90,11 @@ internal fun ItemSummary(
             count = itemSummaryUiState.identityCount,
             onClick = { onEvent(ProfileUiEvent.OnIdentityCountClick) }
         )
-        if (itemSummaryUiState.isCustomItemEnabled) {
-            ItemTypeBox(
-                type = SummaryItemType.Custom,
-                count = itemSummaryUiState.customItemCount,
-                onClick = { onEvent(ProfileUiEvent.OnCustomItemCountClick) }
-            )
-        }
+        ItemTypeBox(
+            type = SummaryItemType.Custom,
+            count = itemSummaryUiState.customItemCount,
+            onClick = { onEvent(ProfileUiEvent.OnCustomItemCountClick) }
+        )
         ItemTypeBox(
             type = SummaryItemType.MFA,
             count = itemSummaryUiState.mfaCount,

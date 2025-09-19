@@ -60,7 +60,6 @@ import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -82,7 +81,6 @@ class CreateCreditCardViewModel @Inject constructor(
     observeVaults: ObserveVaultsWithItemCount,
     canPerformPaidAction: CanPerformPaidAction,
     observeDefaultVault: ObserveDefaultVault,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     customFieldHandler: CustomFieldHandler,
     customFieldDraftRepository: CustomFieldDraftRepository,
     creditCardItemFormProcessor: CreditCardFormProcessorType,
@@ -93,7 +91,6 @@ class CreateCreditCardViewModel @Inject constructor(
     attachmentsHandler = attachmentsHandler,
     encryptionContextProvider = encryptionContextProvider,
     canPerformPaidAction = canPerformPaidAction,
-    featureFlagsRepository = featureFlagsRepository,
     customFieldHandler = customFieldHandler,
     customFieldDraftRepository = customFieldDraftRepository,
     creditCardItemFormProcessor = creditCardItemFormProcessor,

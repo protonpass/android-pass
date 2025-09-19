@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -54,8 +55,6 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.telemetry.api.events.ItemViewed
@@ -68,7 +67,6 @@ class ItemDetailsViewModel @Inject constructor(
     getUserPlan: GetUserPlan,
     observeItemById: ObserveItemById,
     getItemById: GetItemById,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     observeShare: ObserveShare,
     telemetryManager: TelemetryManager,
     private val itemDetailsHandler: ItemDetailsHandler
@@ -129,13 +127,9 @@ class ItemDetailsViewModel @Inject constructor(
 
     private val eventFlow = MutableStateFlow<ItemDetailsEvent>(ItemDetailsEvent.Idle)
 
-    private val itemFeaturesFlow: Flow<IdentityItemFeatures> = combine(
-        getUserPlan(),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1)
-    ) { userPlan, isCustomItemEnabled ->
+    private val itemFeaturesFlow: Flow<IdentityItemFeatures> = getUserPlan().map { userPlan ->
         IdentityItemFeatures(
-            isHistoryEnabled = userPlan.isPaidPlan,
-            isCustomItemEnabled = isCustomItemEnabled
+            isHistoryEnabled = userPlan.isPaidPlan
         )
     }
 

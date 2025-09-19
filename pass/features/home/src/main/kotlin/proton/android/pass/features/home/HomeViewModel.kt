@@ -593,14 +593,6 @@ class HomeViewModel @Inject constructor(
     private val bottomSheetItemActionFlow: MutableStateFlow<BottomSheetItemAction> =
         MutableStateFlow(BottomSheetItemAction.None)
 
-    data class HomeFeatures(
-        val isCustomItemEnabled: Boolean
-    )
-
-    private val homeFeaturesFlow: Flow<HomeFeatures> =
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1)
-            .map(::HomeFeatures)
-
     internal val homeUiState: StateFlow<HomeUiState> = combineN(
         homeListUiStateFlow,
         searchUiStateFlow,
@@ -610,8 +602,7 @@ class HomeViewModel @Inject constructor(
         bottomSheetItemActionFlow,
         preferencesRepository.observeAliasTrashDialogStatusPreference(),
         observeCanCreateItems(),
-        observeHasShares(),
-        homeFeaturesFlow
+        observeHasShares()
     ) { homeListUiState,
         searchUiState,
         userPlan,
@@ -620,8 +611,7 @@ class HomeViewModel @Inject constructor(
         bottomSheetItemAction,
         aliasTrashDialogStatusPreference,
         canCreateItems,
-        hasShares,
-        homeFeatures ->
+        hasShares ->
         HomeUiState(
             homeListUiState = homeListUiState,
             searchUiState = searchUiState,
@@ -630,7 +620,6 @@ class HomeViewModel @Inject constructor(
             navEvent = navEvent,
             action = bottomSheetItemAction,
             isFreePlan = userPlan.map { plan -> plan.isFreePlan }.getOrNull() != false,
-            isCustomItemEnabled = homeFeatures.isCustomItemEnabled,
             aliasTrashDialogStatusPreference = aliasTrashDialogStatusPreference,
             canCreateItems = canCreateItems,
             hasShares = hasShares

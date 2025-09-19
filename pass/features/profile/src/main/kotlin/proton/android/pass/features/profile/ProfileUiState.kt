@@ -172,8 +172,7 @@ internal data class ItemSummaryUiState(
     val customItemCount: Int,
     val mfaCount: Int,
     val aliasLimit: Int?,
-    val mfaLimit: Int?,
-    val isCustomItemEnabled: Boolean
+    val mfaLimit: Int?
 ) {
     companion object {
         val Default = ItemSummaryUiState(
@@ -185,8 +184,7 @@ internal data class ItemSummaryUiState(
             customItemCount = 0,
             mfaCount = 0,
             aliasLimit = null,
-            mfaLimit = null,
-            isCustomItemEnabled = false
+            mfaLimit = null
         )
     }
 }

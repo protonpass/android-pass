@@ -59,8 +59,6 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 private const val TAG = "ItemHistoryRestoreViewModel"
@@ -69,7 +67,6 @@ private const val TAG = "ItemHistoryRestoreViewModel"
 class ItemHistoryRestoreViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     openItemRevision: OpenItemRevision,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     observeAllItemRevisionAttachments: ObserveAllItemRevisionAttachments,
     private val restoreItemRevision: RestoreItemRevision,
     private val restoreAttachments: RestoreAttachments,
@@ -196,15 +193,13 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     internal val state = combine(
         currentItemDetailsStateFlow,
         revisionItemDetailsStateFlow,
-        eventFlow,
-        featureFlagsRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1)
-    ) { currentItemDetailState, revisionItemDetailState, event, isCustomItemEnabled ->
+        eventFlow
+    ) { currentItemDetailState, revisionItemDetailState, event ->
         ItemHistoryRestoreState.ItemDetails(
             itemRevision = itemRevision,
             currentItemDetailState = currentItemDetailState,
             revisionItemDetailState = revisionItemDetailState,
-            event = event,
-            isCustomItemEnabled = isCustomItemEnabled
+            event = event
         )
     }.stateIn(
         scope = viewModelScope,

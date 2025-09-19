@@ -40,6 +40,7 @@ import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterReposit
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
+import proton.android.pass.data.api.usecases.BatchChangeShareVisibility
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CancelShareInvite
@@ -423,6 +424,7 @@ import proton.android.pass.data.fakes.usecases.simplelogin.FakeUpdateSimpleLogin
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeVerifySimpleLoginAliasMailbox
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
+import proton.android.pass.data.fakes.usecases.vaults.FakeBatchChangeShareVisibility
 import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedByShareId
 import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedByVisibility
 import proton.android.pass.data.fakes.work.FakeWorkerLauncher
@@ -1099,5 +1101,8 @@ abstract class FakesDataModule {
     abstract fun bindObservePromoInAppMessages(
         impl: FakeObserveDeliverablePromoInAppMessages
     ): ObserveDeliverablePromoInAppMessages
+
+    @Binds
+    abstract fun bindBatchChangeShareVisibility(impl: FakeBatchChangeShareVisibility): BatchChangeShareVisibility
 
 }

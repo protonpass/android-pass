@@ -26,7 +26,6 @@ import kotlinx.coroutines.flow.update
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.CUSTOM_TYPE_V1
 import proton.android.pass.preferences.FeatureFlag.EXTRA_LOGGING
-import proton.android.pass.preferences.FeatureFlag.FILE_ATTACHMENT_ENCRYPTION_V2
 import proton.android.pass.preferences.FeatureFlag.PASS_HIDE_SHOW_VAULT
 import proton.android.pass.preferences.FeatureFlag.RENAME_ADMIN_TO_MANAGER
 import javax.inject.Inject
@@ -45,7 +44,6 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
             AUTOFILL_DEBUG_MODE -> it.getOrDefault(AUTOFILL_DEBUG_MODE, false) as T
             EXTRA_LOGGING -> it.getOrDefault(EXTRA_LOGGING, false) as T
             CUSTOM_TYPE_V1 -> it.getOrDefault(CUSTOM_TYPE_V1, false) as T
-            FILE_ATTACHMENT_ENCRYPTION_V2 -> it.getOrDefault(FILE_ATTACHMENT_ENCRYPTION_V2, false) as T
             RENAME_ADMIN_TO_MANAGER -> it.getOrDefault(RENAME_ADMIN_TO_MANAGER, false) as T
             PASS_HIDE_SHOW_VAULT -> it.getOrDefault(PASS_HIDE_SHOW_VAULT, false) as T
         }

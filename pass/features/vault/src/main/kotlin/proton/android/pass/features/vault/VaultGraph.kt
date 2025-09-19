@@ -26,6 +26,7 @@ import proton.android.pass.features.vault.bottomsheet.options.bottomSheetVaultOp
 import proton.android.pass.features.vault.bottomsheet.select.selectVaultBottomsheetGraph
 import proton.android.pass.features.vault.delete.deleteVaultDialogGraph
 import proton.android.pass.features.vault.leave.leaveVaultDialogGraph
+import proton.android.pass.features.vault.organise.organiseVaultsGraph
 
 sealed interface VaultNavigation {
     data object Upgrade : VaultNavigation
@@ -66,4 +67,5 @@ fun NavGraphBuilder.vaultGraph(onNavigate: (VaultNavigation) -> Unit) {
     leaveVaultDialogGraph(onNavigate)
     selectVaultBottomsheetGraph(onNavigate)
     bottomSheetVaultOptionsGraph(onNavigate)
+    organiseVaultsGraph(onNavigate)
 }

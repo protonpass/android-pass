@@ -33,6 +33,7 @@ internal data class HomeDrawerState(
     internal val vaultShares: List<Share.Vault>,
     internal val vaultSharesItemsCounter: Map<ShareId, ShareItemCount>,
     internal val canCreateVaults: Boolean,
+    internal val canOrganiseVaults: Boolean,
     internal val vaultSelectionOption: VaultSelectionOption,
     private val itemCountSummaryOption: Option<ItemCountSummary>
 ) {
@@ -85,6 +86,7 @@ internal data class HomeDrawerState(
             vaultShares = emptyList(),
             vaultSharesItemsCounter = emptyMap(),
             canCreateVaults = false,
+            canOrganiseVaults = false,
             vaultSelectionOption = VaultSelectionOption.AllVaults,
             itemCountSummaryOption = None
         )

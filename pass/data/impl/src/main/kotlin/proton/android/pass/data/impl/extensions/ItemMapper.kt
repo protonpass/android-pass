@@ -26,7 +26,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.datamodels.api.fromParsed
-import proton.android.pass.domain.Flags
+import proton.android.pass.domain.ItemFlags
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemId
@@ -73,7 +73,7 @@ fun ItemEntity.toDomain(context: EncryptionContext): Item {
         lastAutofillTime = lastUsedTime.toOption().map(Instant::fromEpochSeconds),
         isPinned = isPinned,
         pinTime = pinTime.toOption().map(Instant::fromEpochSeconds),
-        flags = Flags(flags),
+        itemFlags = ItemFlags(flags),
         shareCount = shareCount,
         shareType = if (encryptedKey != null) ShareType.Vault else ShareType.Item
     )
@@ -94,7 +94,7 @@ fun ItemEntity.toEncryptedDomain(): ItemEncrypted = ItemEncrypted(
     lastAutofillTime = lastUsedTime?.let { Some(Instant.fromEpochSeconds(it)) } ?: None,
     isPinned = isPinned,
     pinTime = pinTime?.let { Some(Instant.fromEpochSeconds(it)) } ?: None,
-    flags = Flags(flags),
+    itemFlags = ItemFlags(flags),
     shareCount = shareCount,
     shareType = if (encryptedKey != null) ShareType.Vault else ShareType.Item
 )

@@ -21,6 +21,7 @@ package proton.android.pass.test.domain
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.SharePermission
@@ -72,7 +73,8 @@ object TestShare {
             maxMembers = maxMembers,
             pendingInvites = pendingInvites,
             newUserInvitesReady = newUserInvitesReady,
-            canAutofill = canAutofill
+            canAutofill = canAutofill,
+            shareFlags = ShareFlags(0)
         )
     }
 
@@ -115,7 +117,8 @@ object TestShare {
             canAutofill = canAutofill,
             name = name,
             color = color,
-            icon = icon
+            icon = icon,
+            shareFlags = ShareFlags(0)
         )
     }
 

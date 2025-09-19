@@ -68,5 +68,7 @@ data class ShareResponse(
     @SerialName("ExpireTime")
     val expirationTime: Long?,
     @SerialName("CreateTime")
-    val createTime: Long
+    val createTime: Long,
+    @SerialName("Flags")
+    val flags: Int
 )

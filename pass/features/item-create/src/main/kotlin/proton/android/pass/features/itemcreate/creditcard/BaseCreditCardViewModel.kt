@@ -51,8 +51,6 @@ import proton.android.pass.features.itemcreate.common.formprocessor.CreditCardIt
 import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import java.net.URI
@@ -60,7 +58,6 @@ import java.net.URI
 abstract class BaseCreditCardViewModel(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val attachmentsHandler: AttachmentsHandler,
-    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
     protected val customFieldHandler: CustomFieldHandler,
     private val creditCardItemFormProcessor: CreditCardFormProcessorType,
@@ -125,12 +122,11 @@ abstract class BaseCreditCardViewModel(
         validationErrorsState,
         isItemSavedState,
         canPerformPaidAction(),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1),
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
         attachmentsHandler.attachmentState,
         focusedFieldState
     ) { isLoading, hasUserEditedContent, validationErrors, isItemSaved, canPerformPaidAction,
-        isCustomTypeEnabled, displayFileAttachmentsOnboarding, attachmentsState, focusedField ->
+        displayFileAttachmentsOnboarding, attachmentsState, focusedField ->
         BaseCreditCardUiState(
             isLoading = isLoading.value(),
             hasUserEditedContent = hasUserEditedContent,
@@ -138,7 +134,6 @@ abstract class BaseCreditCardViewModel(
             isItemSaved = isItemSaved,
             canPerformPaidAction = canPerformPaidAction,
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
-            isCustomTypeEnabled = isCustomTypeEnabled,
             attachmentsState = attachmentsState,
             focusedField = focusedField
         )

@@ -41,7 +41,6 @@ internal fun ItemHistoryRestoreTab(
     modifier: Modifier = Modifier,
     itemDetailState: ItemDetailState,
     itemColors: PassItemColors,
-    isCustomItemEnabled: Boolean,
     onEvent: (ItemHistoryRestoreUiEvent) -> Unit,
     selection: ItemHistoryRestoreSelection
 ) {
@@ -111,7 +110,6 @@ internal fun ItemHistoryRestoreTab(
         },
         shouldDisplayItemHistorySection = false,
         shouldDisplayItemHistoryButton = false,
-        shouldDisplayCustomItems = isCustomItemEnabled,
         extraBottomSpacing = Spacing.extraLarge
     )
 }

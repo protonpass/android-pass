@@ -57,7 +57,6 @@ import proton.android.pass.features.itemcreate.common.formprocessor.FakeCreditCa
 import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
@@ -76,7 +75,6 @@ class CreateCreditCardViewModelTest {
     private lateinit var observeVaults: TestObserveVaultsWithItemCount
     private lateinit var telemetryManager: TestTelemetryManager
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
-    private lateinit var featureFlagsRepository: TestFeatureFlagsPreferenceRepository
     private lateinit var canPerformPaidAction: TestCanPerformPaidAction
     private lateinit var creditCardItemFormProcessor: FakeCreditCardItemFormProcessor
 
@@ -87,7 +85,6 @@ class CreateCreditCardViewModelTest {
         observeVaults = TestObserveVaultsWithItemCount()
         telemetryManager = TestTelemetryManager()
         snackbarDispatcher = TestSnackbarDispatcher()
-        featureFlagsRepository = TestFeatureFlagsPreferenceRepository()
         canPerformPaidAction = TestCanPerformPaidAction()
         creditCardItemFormProcessor = FakeCreditCardItemFormProcessor()
         instance = CreateCreditCardViewModel(
@@ -103,7 +100,6 @@ class CreateCreditCardViewModelTest {
             canPerformPaidAction = canPerformPaidAction,
             inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
             observeDefaultVault = TestObserveDefaultVault(),
-            featureFlagsRepository = featureFlagsRepository,
             linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
             attachmentsHandler = FakeAttachmentHandler(),
             userPreferencesRepository = TestPreferenceRepository(),

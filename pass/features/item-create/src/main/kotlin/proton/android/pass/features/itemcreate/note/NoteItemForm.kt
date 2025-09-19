@@ -24,15 +24,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -46,7 +43,6 @@ import proton.android.pass.common.api.none
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
@@ -66,7 +62,6 @@ internal fun NoteItemForm(
     noteItemFormState: NoteItemFormState,
     canUseCustomFields: Boolean,
     focusedField: Option<NoteField>,
-    isCustomItemEnabled: Boolean,
     displayFileAttachmentsOnboarding: Boolean,
     attachmentsState: AttachmentsState,
     enabled: Boolean,
@@ -95,94 +90,63 @@ internal fun NoteItemForm(
                 }
             }
 
-            if (isCustomItemEnabled) {
-                LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                    item {
-                        TitleSection(
-                            modifier = Modifier
-                                .padding(bottom = Spacing.small)
-                                .roundedContainerNorm()
-                                .padding(
-                                    start = Spacing.medium,
-                                    top = Spacing.medium,
-                                    end = Spacing.extraSmall,
-                                    bottom = Spacing.medium
-                                ),
-                            value = noteItemFormState.title,
-                            requestFocus = true,
-                            onTitleRequiredError = onTitleRequiredError,
-                            enabled = enabled,
-                            isRounded = true,
-                            onChange = { onEvent(NoteContentUiEvent.OnTitleChange(it)) }
-                        )
-                    }
-
-                    item {
-                        RoundedNoteSection(
-                            modifier = Modifier.padding(vertical = Spacing.extraSmall),
-                            textFieldModifier = Modifier.fillMaxWidth(),
-                            enabled = enabled,
-                            value = noteItemFormState.note,
-                            onChange = { onEvent(NoteContentUiEvent.OnNoteChange(it)) }
-                        )
-                    }
-
-                    customFieldsList(
-                        modifier = Modifier.padding(vertical = Spacing.extraSmall),
-                        customFields = noteItemFormState.customFields,
-                        enabled = enabled,
-                        errors = customFieldValidationErrors.toPersistentSet(),
-                        isVisible = true,
-                        canCreateCustomFields = canUseCustomFields,
-                        sectionIndex = None,
-                        focusedField = focusedField.flatMap {
-                            (it as? NoteField.CustomField)?.field?.some() ?: none()
-                        },
-                        itemCategory = ItemCategory.Note,
-                        onEvent = { onEvent(NoteContentUiEvent.OnCustomFieldEvent(it)) }
-                    )
-
-                    item {
-                        AttachmentSection(
-                            modifier = Modifier.padding(vertical = Spacing.extraSmall),
-                            attachmentsState = attachmentsState,
-                            isDetail = false,
-                            itemColors = passItemColors(ItemCategory.Note),
-                            onEvent = { onEvent(OnAttachmentEvent(it)) }
-                        )
-                    }
-                    if (isCurrentStickyVisible) {
-                        item { Spacer(modifier = Modifier.height(48.dp)) }
-                    }
-                }
-            } else {
-                Column(
-                    modifier = Modifier.verticalScroll(rememberScrollState()),
-                    verticalArrangement = Arrangement.spacedBy(Spacing.small)
-                ) {
-                    NoteTitle(
-                        modifier = Modifier.padding(bottom = Spacing.small),
+            LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                item {
+                    TitleSection(
+                        modifier = Modifier
+                            .padding(bottom = Spacing.small)
+                            .roundedContainerNorm()
+                            .padding(
+                                start = Spacing.medium,
+                                top = Spacing.medium,
+                                end = Spacing.extraSmall,
+                                bottom = Spacing.medium
+                            ),
                         value = noteItemFormState.title,
                         requestFocus = true,
                         onTitleRequiredError = onTitleRequiredError,
                         enabled = enabled,
-                        onValueChanged = { onEvent(NoteContentUiEvent.OnTitleChange(it)) }
+                        isRounded = true,
+                        onChange = { onEvent(NoteContentUiEvent.OnTitleChange(it)) }
                     )
-                    val shouldApplyNoteMinHeight =
-                        remember(attachmentsState) { !attachmentsState.hasAnyAttachment }
-                    FullNoteSection(
-                        textFieldModifier = Modifier
-                            .applyIf(shouldApplyNoteMinHeight, ifTrue = { defaultMinSize(minHeight = 600.dp) })
-                            .fillMaxWidth(),
+                }
+
+                item {
+                    RoundedNoteSection(
+                        modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                        textFieldModifier = Modifier.fillMaxWidth(),
                         enabled = enabled,
                         value = noteItemFormState.note,
                         onChange = { onEvent(NoteContentUiEvent.OnNoteChange(it)) }
                     )
+                }
 
-                    AttachmentList(
+                customFieldsList(
+                    modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                    customFields = noteItemFormState.customFields,
+                    enabled = enabled,
+                    errors = customFieldValidationErrors.toPersistentSet(),
+                    isVisible = true,
+                    canCreateCustomFields = canUseCustomFields,
+                    sectionIndex = None,
+                    focusedField = focusedField.flatMap {
+                        (it as? NoteField.CustomField)?.field?.some() ?: none()
+                    },
+                    itemCategory = ItemCategory.Note,
+                    onEvent = { onEvent(NoteContentUiEvent.OnCustomFieldEvent(it)) }
+                )
+
+                item {
+                    AttachmentSection(
+                        modifier = Modifier.padding(vertical = Spacing.extraSmall),
                         attachmentsState = attachmentsState,
-                        onEvent = onEvent
+                        isDetail = false,
+                        itemColors = passItemColors(ItemCategory.Note),
+                        onEvent = { onEvent(OnAttachmentEvent(it)) }
                     )
+                }
+                if (isCurrentStickyVisible) {
+                    item { Spacer(modifier = Modifier.height(48.dp)) }
                 }
             }
         }

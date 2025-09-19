@@ -69,7 +69,6 @@ import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.UpdateAp
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -94,7 +93,6 @@ class UpdateNoteViewModel @Inject constructor(
     customFieldDraftRepository: CustomFieldDraftRepository,
     noteItemFormProcessor: NoteItemFormProcessor,
     userPreferencesRepository: UserPreferencesRepository,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseNoteViewModel(
     clipboardManager = clipboardManager,
@@ -106,7 +104,6 @@ class UpdateNoteViewModel @Inject constructor(
     customFieldDraftRepository = customFieldDraftRepository,
     noteItemFormProcessor = noteItemFormProcessor,
     encryptionContextProvider = encryptionContextProvider,
-    featureFlagsRepository = featureFlagsRepository,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
 

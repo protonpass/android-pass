@@ -158,6 +158,7 @@ import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
+import proton.android.pass.data.api.usecases.capabilities.CanOrganiseVaults
 import proton.android.pass.data.api.usecases.capabilities.CanShareShare
 import proton.android.pass.data.api.usecases.credentials.passkeys.GetPasskeyCredentialItems
 import proton.android.pass.data.api.usecases.credentials.passwords.GetPasswordCredentialItems
@@ -389,6 +390,7 @@ import proton.android.pass.data.impl.usecases.capabilities.CanCreateItemInVaultI
 import proton.android.pass.data.impl.usecases.capabilities.CanCreateVaultImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanManageVaultAccessImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanMigrateVaultImpl
+import proton.android.pass.data.impl.usecases.capabilities.CanOrganiseVaultsImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanShareShareImpl
 import proton.android.pass.data.impl.usecases.credentials.passkeys.GetPasskeyCredentialItemsImpl
 import proton.android.pass.data.impl.usecases.credentials.passwords.GetPasswordCredentialItemsImpl
@@ -726,6 +728,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindCanCreateVault(impl: CanCreateVaultImpl): CanCreateVault
+
+    @Binds
+    abstract fun bindCanOrganiseVaults(impl: CanOrganiseVaultsImpl): CanOrganiseVaults
 
     @Binds
     abstract fun bindCanCreateItemInVault(impl: CanCreateItemInVaultImpl): CanCreateItemInVault

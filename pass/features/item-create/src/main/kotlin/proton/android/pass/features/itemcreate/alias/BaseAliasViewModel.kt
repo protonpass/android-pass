@@ -70,8 +70,6 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryBannerPreference
 import proton.android.pass.preferences.featurediscovery.FeatureDiscoveryFeature.AliasManagementOptions
@@ -83,7 +81,6 @@ abstract class BaseAliasViewModel(
     private val suffixDraftRepository: SuffixDraftRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val attachmentsHandler: AttachmentsHandler,
-    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
     protected val customFieldHandler: CustomFieldHandler,
     private val encryptionContextProvider: EncryptionContextProvider,
@@ -169,15 +166,14 @@ abstract class BaseAliasViewModel(
         isLoadingState,
         eventWrapperState,
         hasUserEditedContentFlow,
-        featureFlagsRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1),
         userPreferencesRepository.observeDisplayFeatureDiscoverBanner(AliasManagementOptions),
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
         attachmentsHandler.attachmentState,
         canPerformPaidAction(),
         focusedFieldState
     ) { aliasItemValidationErrors, isLoading, eventWrapper, hasUserEditedContent,
-        isCustomTypeEnabled, displayAdvancedOptionsBanner,
-        displayFileAttachmentsOnboarding, attachmentsState, canPerformPaidAction, focusedField ->
+        displayAdvancedOptionsBanner, displayFileAttachmentsOnboarding, attachmentsState,
+        canPerformPaidAction, focusedField ->
         BaseAliasUiState(
             isDraft = isDraft,
             errorList = aliasItemValidationErrors,
@@ -189,7 +185,6 @@ abstract class BaseAliasViewModel(
             hasUserEditedContent = hasUserEditedContent,
             hasReachedAliasLimit = false,
             canUpgrade = false,
-            isCustomTypeEnabled = isCustomTypeEnabled,
             displayAdvancedOptionsBanner = displayAdvancedOptionsBanner.value,
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
             attachmentsState = attachmentsState,

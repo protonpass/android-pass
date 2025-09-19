@@ -65,8 +65,6 @@ import proton.android.pass.features.itemcreate.common.formprocessor.NoteItemForm
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import java.net.URI
@@ -75,7 +73,6 @@ abstract class BaseNoteViewModel(
     private val clipboardManager: ClipboardManager,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val attachmentsHandler: AttachmentsHandler,
-    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
     protected val customFieldHandler: CustomFieldHandler,
     private val noteItemFormProcessor: NoteItemFormProcessorType,
@@ -135,13 +132,11 @@ abstract class BaseNoteViewModel(
         isItemSavedState,
         hasUserEditedContentFlow,
         attachmentsHandler.attachmentState,
-        featureFlagsRepository.get<Boolean>(FeatureFlag.CUSTOM_TYPE_V1),
         userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
         canPerformPaidAction(),
         focusedFieldState
     ) { noteItemValidationErrors, isLoading, isItemSaved, hasUserEditedContent, attachmentsState,
-        isCustomItemEnabled, displayFileAttachmentsOnboarding,
-        canPerformPaidAction, focusedField ->
+        displayFileAttachmentsOnboarding, canPerformPaidAction, focusedField ->
         BaseNoteUiState(
             errorList = noteItemValidationErrors,
             isLoadingState = isLoading,
@@ -149,7 +144,6 @@ abstract class BaseNoteViewModel(
             hasUserEditedContent = hasUserEditedContent,
             attachmentsState = attachmentsState,
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
-            isCustomItemEnabled = isCustomItemEnabled,
             canPerformPaidAction = canPerformPaidAction,
             focusedField = focusedField
         )

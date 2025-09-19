@@ -80,7 +80,6 @@ internal data class HomeUiState(
     val navEvent: HomeNavEvent,
     val action: BottomSheetItemAction,
     val isFreePlan: Boolean,
-    val isCustomItemEnabled: Boolean,
     val canCreateItems: Boolean,
     val hasShares: Boolean,
     private val aliasTrashDialogStatusPreference: AliasTrashDialogStatusPreference
@@ -135,7 +134,6 @@ internal data class HomeUiState(
             navEvent = HomeNavEvent.Unknown,
             action = BottomSheetItemAction.None,
             isFreePlan = true,
-            isCustomItemEnabled = false,
             canCreateItems = false,
             aliasTrashDialogStatusPreference = AliasTrashDialogStatusPreference.Disabled,
             hasShares = false

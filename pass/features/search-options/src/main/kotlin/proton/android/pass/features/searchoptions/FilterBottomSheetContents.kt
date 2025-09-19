@@ -100,15 +100,13 @@ internal fun FilterBottomSheetContents(
             onClick = { onSortingTypeSelected(SearchFilterType.Identity) }
         ).also(::add)
 
-        if (isCustomItemEnabled) {
-            filterRow(
-                titleResId = R.string.item_type_filter_custom_item,
-                startIconResId = CoreR.drawable.ic_proton_wrench,
-                itemCount = summary.custom,
-                isSelected = filterType == SearchFilterType.Custom,
-                onClick = { onSortingTypeSelected(SearchFilterType.Custom) }
-            ).also(::add)
-        }
+        filterRow(
+            titleResId = R.string.item_type_filter_custom_item,
+            startIconResId = CoreR.drawable.ic_proton_wrench,
+            itemCount = summary.custom,
+            isSelected = filterType == SearchFilterType.Custom,
+            onClick = { onSortingTypeSelected(SearchFilterType.Custom) }
+        ).also(::add)
 
         filterRow(
             titleResId = R.string.item_type_filter_login_mfa,
@@ -219,8 +217,7 @@ internal fun FilterBottomSheetContentsPreview(
                         sharedByMe = sharedItemsCount,
                         trashed = 0,
                         sharedWithMeTrashed = 0
-                    ),
-                    isCustomItemEnabled = true
+                    )
                 ),
                 onSortingTypeSelected = {}
             )

@@ -52,7 +52,6 @@ import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessi
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
@@ -71,7 +70,6 @@ class UpdateCreditCardViewModelTest {
     private lateinit var getItemById: TestObserveItemById
     private lateinit var updateItem: TestUpdateItem
     private lateinit var accountManager: TestAccountManager
-    private lateinit var featureFlagsRepository: TestFeatureFlagsPreferenceRepository
     private lateinit var pendingAttachmentLinkRepository: PendingAttachmentLinkRepository
     private lateinit var creditCardItemFormProcessor: FakeCreditCardItemFormProcessor
 
@@ -81,7 +79,6 @@ class UpdateCreditCardViewModelTest {
         snackbarDispatcher = TestSnackbarDispatcher()
         getItemById = TestObserveItemById()
         updateItem = TestUpdateItem()
-        featureFlagsRepository = TestFeatureFlagsPreferenceRepository()
         pendingAttachmentLinkRepository = FakePendingAttachmentLinkRepository()
         creditCardItemFormProcessor = FakeCreditCardItemFormProcessor()
         accountManager = TestAccountManager()
@@ -98,7 +95,6 @@ class UpdateCreditCardViewModelTest {
             getItemById = getItemById,
             updateItem = updateItem,
             canPerformPaidAction = TestCanPerformPaidAction().apply { setResult(true) },
-            featureFlagsRepository = featureFlagsRepository,
             attachmentsHandler = FakeAttachmentHandler(),
             linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
             renameAttachments = FakeRenameAttachments(),

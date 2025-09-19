@@ -95,11 +95,9 @@ internal fun CreateItemBottomSheetContents(
                     onClick = { onNavigate(CreateIdentity(shareId.toOption())) }
                 ).also(::add)
 
-                if (canCreateCustom) {
-                    createCustom(
-                        onClick = { onNavigate(CreateCustom(shareId.toOption())) }
-                    ).also(::add)
-                }
+                createCustom(
+                    onClick = { onNavigate(CreateCustom(shareId.toOption())) }
+                ).also(::add)
             }
         }
 

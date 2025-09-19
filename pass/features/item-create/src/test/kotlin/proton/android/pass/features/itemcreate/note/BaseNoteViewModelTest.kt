@@ -34,7 +34,6 @@ import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHa
 import proton.android.pass.features.itemcreate.common.formprocessor.FakeNoteItemFormProcessor
 import proton.android.pass.features.itemcreate.note.BaseNoteUiState.Companion.Initial
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.totp.fakes.TestTotpManager
@@ -46,7 +45,6 @@ internal class BaseNoteViewModelTest {
 
     private lateinit var canPerformPaidAction: TestCanPerformPaidAction
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
-    private lateinit var featureFlagsPreferenceRepository: TestFeatureFlagsPreferenceRepository
     private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
     private lateinit var baseNoteViewModel: BaseNoteViewModel
 
@@ -54,11 +52,9 @@ internal class BaseNoteViewModelTest {
     fun setUp() {
         snackbarDispatcher = TestSnackbarDispatcher()
         savedStateHandleProvider = TestSavedStateHandleProvider()
-        featureFlagsPreferenceRepository = TestFeatureFlagsPreferenceRepository()
         canPerformPaidAction = TestCanPerformPaidAction()
         baseNoteViewModel = object : BaseNoteViewModel(
             snackbarDispatcher = snackbarDispatcher,
-            featureFlagsRepository = featureFlagsPreferenceRepository,
             attachmentsHandler = FakeAttachmentHandler(),
             userPreferencesRepository = TestPreferenceRepository(),
             savedStateHandleProvider = savedStateHandleProvider,

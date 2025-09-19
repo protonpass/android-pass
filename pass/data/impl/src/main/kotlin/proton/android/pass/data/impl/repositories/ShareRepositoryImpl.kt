@@ -383,7 +383,8 @@ class ShareRepositoryImpl @Inject constructor(
         .observeSharedByMeIds(userId)
 
     override suspend fun batchChangeShareVisibility(userId: UserId, shareVisibilityChanges: Map<ShareId, Boolean>) {
-        remoteShareDataSource.batchChangeShareVisibility(userId, shareVisibilityChanges)
+        val response = remoteShareDataSource.batchChangeShareVisibility(userId, shareVisibilityChanges)
+        storeShares(userId, response)
     }
 
     private suspend fun onShareResponseEntity(

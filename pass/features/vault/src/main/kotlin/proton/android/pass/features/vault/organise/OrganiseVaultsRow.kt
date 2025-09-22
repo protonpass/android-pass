@@ -19,6 +19,7 @@
 package proton.android.pass.features.vault.organise
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -60,6 +61,7 @@ internal fun OrganiseVaultsRow(
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .background(PassTheme.colors.backgroundStrong)
             .padding(vertical = Spacing.mediumSmall),
         verticalAlignment = Alignment.Companion.CenterVertically
     ) {

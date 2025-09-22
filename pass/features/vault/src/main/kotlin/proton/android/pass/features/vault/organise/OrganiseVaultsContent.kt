@@ -63,9 +63,9 @@ fun OrganiseVaultsContent(
                 actions = {
                     LoadingCircleButton(
                         modifier = Modifier.padding(vertical = Spacing.small),
-                        isLoading = false,
-                        buttonEnabled = true,
-                        color = if (true) {
+                        isLoading = state.isSubmitLoading.value(),
+                        buttonEnabled = state.areTherePendingChanges && !state.isSubmitLoading.value(),
+                        color = if (!state.isSubmitLoading.value()) {
                             PassTheme.colors.interactionNormMajor1
                         } else {
                             PassTheme.colors.interactionNormMinor1

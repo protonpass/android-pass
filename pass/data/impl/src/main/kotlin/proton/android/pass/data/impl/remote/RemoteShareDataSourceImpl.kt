@@ -95,7 +95,7 @@ class RemoteShareDataSourceImpl @Inject constructor(
         shareVisibilityChanges: Map<ShareId, Boolean>
     ): List<ShareResponse> = api.get<PasswordManagerApi>(userId)
         .invoke {
-            val (toHide, toShow) = shareVisibilityChanges.entries.partition { it.value }
+            val (toShow, toHide) = shareVisibilityChanges.entries.partition { it.value }
             val request = BatchHideUnhideShareRequest(
                 toHide.map { it.key.id },
                 toShow.map { it.key.id }

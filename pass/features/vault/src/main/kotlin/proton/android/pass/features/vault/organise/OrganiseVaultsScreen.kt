@@ -19,6 +19,8 @@
 package proton.android.pass.features.vault.organise
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -31,11 +33,18 @@ fun OrganiseVaultsScreen(
     viewModel: OrganiseVaultsViewModel = hiltViewModel()
 ) {
 
-    val state = viewModel.state.collectAsStateWithLifecycle()
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
+    LaunchedEffect(state.event) {
+        when (state.event) {
+            OrganiseVaultsEvent.Close -> onNavigate(VaultNavigation.CloseScreen)
+            OrganiseVaultsEvent.Idle -> {}
+        }
+        viewModel.onConsumeEvent(state.event)
+    }
     OrganiseVaultsContent(
         modifier = modifier,
-        state = state.value,
+        state = state,
         onClose = { onNavigate(VaultNavigation.CloseScreen) },
         onConfirm = viewModel::onConfirm,
         onVisibilityChange = viewModel::onVisibilityChange

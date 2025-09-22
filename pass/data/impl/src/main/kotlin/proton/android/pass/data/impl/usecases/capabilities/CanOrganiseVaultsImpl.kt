@@ -30,7 +30,6 @@ class CanOrganiseVaultsImpl @Inject constructor(
     private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : CanOrganiseVaults {
 
-    override fun invoke(): Flow<Boolean> = featureFlagsPreferencesRepository
-        .get(FeatureFlag.PASS_HIDE_SHOW_VAULT)
+    override fun invoke(): Flow<Boolean> = featureFlagsPreferencesRepository[FeatureFlag.PASS_HIDE_SHOW_VAULT]
 
 }

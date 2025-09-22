@@ -40,6 +40,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.Vault
@@ -262,7 +263,8 @@ class SelectVaultBottomSheetTest {
                     shareId = shareIdForIndex(0),
                     vaultId = VaultId("vault-id"),
                     name = vaultNameForIndex(0),
-                    createTime = Date()
+                    createTime = Date(),
+                    shareFlags = ShareFlags(0)
                 ),
                 activeItemCount = 1,
                 trashedItemCount = 1
@@ -274,7 +276,8 @@ class SelectVaultBottomSheetTest {
                     vaultId = VaultId("vault-id-1"),
                     name = vaultNameForIndex(1),
                     role = ShareRole.Read,
-                    createTime = Date()
+                    createTime = Date(),
+                    shareFlags = ShareFlags(0)
                 ),
                 activeItemCount = 1,
                 trashedItemCount = 1
@@ -309,7 +312,8 @@ class SelectVaultBottomSheetTest {
                     shareId = shareIdForIndex(it),
                     vaultId = VaultId("vault-id-$it"),
                     name = vaultNameForIndex(it),
-                    createTime = Date()
+                    createTime = Date(),
+                    shareFlags = ShareFlags(0)
                 ),
                 activeItemCount = 1,
                 trashedItemCount = 1

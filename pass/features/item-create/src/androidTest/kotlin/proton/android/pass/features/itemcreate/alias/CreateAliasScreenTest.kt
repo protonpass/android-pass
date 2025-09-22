@@ -47,6 +47,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultId
@@ -116,7 +117,8 @@ class CreateAliasScreenTest {
                 shareId = ShareId(SHARE_ID),
                 vaultId = VaultId("vault-id"),
                 name = "Test vault",
-                createTime = Date()
+                createTime = Date(),
+                shareFlags = ShareFlags(0)
             ),
             activeItemCount = 0,
             trashedItemCount = 0

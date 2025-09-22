@@ -32,6 +32,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
+import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultId
@@ -75,14 +76,16 @@ class SettingsScreenTest {
                         shareId = ShareId("1"),
                         vaultId = VaultId("vault-id"),
                         name = "Vault 1",
-                        createTime = Date()
+                        createTime = Date(),
+                        shareFlags = ShareFlags(0)
                     ),
                     Vault(
                         userId = UserId(""),
                         shareId = ShareId("2"),
                         vaultId = VaultId("vault-id-2"),
                         name = "Vault 2",
-                        createTime = Date()
+                        createTime = Date(),
+                        shareFlags = ShareFlags(0)
                     )
                 )
             )

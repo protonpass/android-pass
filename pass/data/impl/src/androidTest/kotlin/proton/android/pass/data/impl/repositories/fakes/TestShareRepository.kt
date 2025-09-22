@@ -190,6 +190,13 @@ class TestShareRepository : ShareRepository {
     override fun observeSharedByMeIds(userId: UserId): Flow<List<ShareId>> = observeSharedByMeIds
         .map { it.getOrThrow() }
 
+    override suspend fun batchChangeShareVisibility(
+        userId: UserId,
+        shareVisibilityChanges: Map<ShareId, Boolean>
+    ) {
+
+    }
+
     data class RefreshSharePayload(
         val userId: UserId,
         val shareId: ShareId

@@ -49,6 +49,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsScreen
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
@@ -374,7 +375,6 @@ class CreditCardDetailScreenTest {
             verificationNumber = verificationNumber,
             expirationDate = expirationDate
         )
-
         val share = TestShare.Vault.create(id = SHARE_ID)
 
         observeItemById.emitValue(Result.success(item))

@@ -59,6 +59,7 @@ import proton.android.pass.data.fakes.usecases.shares.FakeObserveSharesItemsCoun
 import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
@@ -174,7 +175,8 @@ class HomeScreenTest {
                 name = "Vault canNavigateToCreateVault",
                 color = ShareColor.Color1,
                 icon = ShareIcon.Icon1,
-                createTime = Date()
+                createTime = Date(),
+                shareFlags = ShareFlags(0)
             ),
             activeItemCount = 0,
             trashedItemCount = 0

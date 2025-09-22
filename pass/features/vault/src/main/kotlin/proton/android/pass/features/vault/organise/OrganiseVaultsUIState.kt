@@ -18,13 +18,23 @@
 
 package proton.android.pass.features.vault.organise
 
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.VaultWithItemCount
 
 data class OrganiseVaultsUIState(
     val hiddenVaults: List<VaultWithItemCount>,
-    val visibleVaults: List<VaultWithItemCount>
+    val visibleVaults: List<VaultWithItemCount>,
+    val areTherePendingChanges: Boolean,
+    val isSubmitLoading: IsLoadingState,
+    val event: OrganiseVaultsEvent
 ) {
     companion object {
-        val Initial = OrganiseVaultsUIState(hiddenVaults = emptyList(), visibleVaults = emptyList())
+        val Initial = OrganiseVaultsUIState(
+            hiddenVaults = emptyList(),
+            visibleVaults = emptyList(),
+            areTherePendingChanges = false,
+            isSubmitLoading = IsLoadingState.NotLoading,
+            event = OrganiseVaultsEvent.Idle
+        )
     }
 }

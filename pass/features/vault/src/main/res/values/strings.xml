@@ -44,6 +44,9 @@
     <string name="organise_vaults_hidden_description">These vaults will not be accessible and their content won’t be available to Search or Autofill.</string>
     <string name="organise_vaults_title">Organize vaults</string>
 
+    <string name="organise_vaults_snackbar_success">Vaults organized</string>
+    <string name="organise_vaults_snackbar_error">Vaults could not be organized</string>
+
     <plurals name="organise_vaults_item_count">
         <item quantity="one">%d item</item>
         <item quantity="other">%d items</item>

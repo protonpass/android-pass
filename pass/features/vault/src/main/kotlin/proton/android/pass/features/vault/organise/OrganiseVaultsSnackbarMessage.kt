@@ -16,20 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases.capabilities
+package proton.android.pass.features.vault.organise
 
-import kotlinx.coroutines.flow.Flow
-import proton.android.pass.data.api.usecases.capabilities.CanOrganiseVaults
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
-import javax.inject.Inject
-import javax.inject.Singleton
+import androidx.annotation.StringRes
+import proton.android.pass.features.vault.R
+import proton.android.pass.notifications.api.SnackbarMessage
+import proton.android.pass.notifications.api.SnackbarType
 
-@Singleton
-class CanOrganiseVaultsImpl @Inject constructor(
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
-) : CanOrganiseVaults {
-
-    override fun invoke(): Flow<Boolean> = featureFlagsPreferencesRepository[FeatureFlag.PASS_HIDE_SHOW_VAULT]
-
+enum class OrganiseVaultsSnackbarMessage(
+    @StringRes override val id: Int,
+    override val type: SnackbarType,
+    override val isClipboard: Boolean = false
+) : SnackbarMessage.StructuredMessage {
+    OrganiseVaultsSuccess(R.string.organise_vaults_snackbar_success, SnackbarType.SUCCESS),
+    OrganiseVaultsError(R.string.organise_vaults_snackbar_error, SnackbarType.ERROR)
 }

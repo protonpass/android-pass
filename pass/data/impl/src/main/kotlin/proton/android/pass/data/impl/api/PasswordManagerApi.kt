@@ -677,6 +677,6 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Query("InternalOnly") internalOnly: Int = 1
     ): GetAllKeysByAddressResponse
 
-    @GET("$PREFIX/share/hide")
+    @PUT("$PREFIX/share/hide")
     suspend fun changeShareVisibility(@Body request: BatchHideUnhideShareRequest): BatchHideUnhideSharesResponse
 }

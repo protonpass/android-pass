@@ -45,6 +45,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultId
@@ -102,7 +103,8 @@ class CreateCreditCardScreenTest {
                 shareId = ShareId(SHARE_ID),
                 vaultId = VaultId("vault-id"),
                 name = "Test vault",
-                createTime = Date()
+                createTime = Date(),
+                shareFlags = ShareFlags(0)
             ),
             activeItemCount = 0,
             trashedItemCount = 0

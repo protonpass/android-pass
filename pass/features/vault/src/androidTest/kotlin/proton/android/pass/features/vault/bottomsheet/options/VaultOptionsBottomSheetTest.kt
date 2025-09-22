@@ -36,6 +36,7 @@ import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
 import proton.android.pass.data.fakes.usecases.TestCanManageVaultAccess
 import proton.android.pass.data.fakes.usecases.TestCanMigrateVault
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
+import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultId
@@ -119,7 +120,8 @@ class VaultOptionsBottomSheetTest {
             isOwned = true,
             members = 1,
             shared = false,
-            createTime = Date()
+            createTime = Date(),
+            shareFlags = ShareFlags(0)
         )
         val anotherVault = Vault(
             userId = UserId(""),
@@ -129,7 +131,8 @@ class VaultOptionsBottomSheetTest {
             isOwned = true,
             members = 1,
             shared = false,
-            createTime = Date()
+            createTime = Date(),
+            shareFlags = ShareFlags(0)
         )
         observeVaults.sendResult(Result.success(listOf(vaultToDelete, anotherVault)))
         runTest(R.string.bottomsheet_delete_vault) { event, checker ->
@@ -193,7 +196,8 @@ class VaultOptionsBottomSheetTest {
             isOwned = owned,
             members = if (shared) 2 else 1,
             shared = shared,
-            createTime = Date()
+            createTime = Date(),
+            shareFlags = ShareFlags(0)
         )
         observeVaults.sendResult(Result.success(listOf(vault)))
     }

@@ -58,7 +58,7 @@ class SecurityCenterReusedPassViewModel @Inject constructor(
         combine(
             observeMonitoredItems(),
             userPreferencesRepository.getUseFaviconsPreference(),
-            observeVaultsGroupedByShareId()
+            observeVaultsGroupedByShareId(includeHidden = false)
         ) { monitoredItems, useFavIconsPreference, groupedVaults ->
 
             val reusedPasswords = repeatedPasswordChecker(monitoredItems)

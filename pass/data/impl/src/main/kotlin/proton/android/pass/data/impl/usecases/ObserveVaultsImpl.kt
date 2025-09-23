@@ -33,8 +33,8 @@ class ObserveVaultsImpl @Inject constructor(
     private val observeSharesByType: ObserveSharesByType
 ) : ObserveVaults {
 
-    override fun invoke(userId: UserId?): Flow<List<Vault>> =
-        observeSharesByType(userId = userId, shareType = ShareType.Vault)
+    override fun invoke(userId: UserId?, includeHidden: Boolean): Flow<List<Vault>> =
+        observeSharesByType(userId = userId, shareType = ShareType.Vault, includeHidden = includeHidden)
             .mapLatest { vaultShares ->
                 vaultShares
                     .mapNotNull { vaultShare ->

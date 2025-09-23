@@ -22,5 +22,5 @@ import kotlinx.coroutines.flow.Flow
 import proton.android.pass.domain.VaultWithItemCount
 
 interface ObserveVaultsWithItemCount {
-    operator fun invoke(): Flow<List<VaultWithItemCount>>
+    operator fun invoke(includeHidden: Boolean): Flow<List<VaultWithItemCount>>
 }

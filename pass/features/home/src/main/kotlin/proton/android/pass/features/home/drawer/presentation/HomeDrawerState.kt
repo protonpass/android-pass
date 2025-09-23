@@ -23,15 +23,12 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.ItemCountSummary
-import proton.android.pass.data.api.repositories.ShareItemCount
-import proton.android.pass.domain.Share
-import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.searchoptions.api.VaultSelectionOption
 
 @Stable
 internal data class HomeDrawerState(
-    internal val vaultShares: List<Share.Vault>,
-    internal val vaultSharesItemsCounter: Map<ShareId, ShareItemCount>,
+    internal val vaultShares: List<VaultWithItemCount>,
     internal val canCreateVaults: Boolean,
     internal val canOrganiseVaults: Boolean,
     internal val vaultSelectionOption: VaultSelectionOption,
@@ -69,9 +66,7 @@ internal data class HomeDrawerState(
                 .toInt()
     }
 
-    internal val allItemsCount: Int = vaultSharesItemsCounter
-        .values
-        .sumOf { shareItemCount -> shareItemCount.activeItems }
+    internal val allItemsCount: Int = vaultShares.sumOf { it.activeItemCount }
         .plus(sharedWithMeActiveItemsCount)
         .toInt()
 
@@ -84,7 +79,6 @@ internal data class HomeDrawerState(
 
         internal val Initial: HomeDrawerState = HomeDrawerState(
             vaultShares = emptyList(),
-            vaultSharesItemsCounter = emptyMap(),
             canCreateVaults = false,
             canOrganiseVaults = false,
             vaultSelectionOption = VaultSelectionOption.AllVaults,

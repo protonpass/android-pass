@@ -45,7 +45,7 @@ class CanMigrateVaultImpl @Inject constructor(
      */
     @Suppress("ReturnCount")
     override suspend fun invoke(shareId: ShareId): Boolean {
-        val vaults = observeVaults().firstOrNull() ?: return false
+        val vaults = observeVaults(includeHidden = true).firstOrNull() ?: return false
         if (vaults.isEmpty()) {
             PassLogger.w(TAG, "There are no vaults")
             return false

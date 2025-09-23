@@ -57,7 +57,7 @@ class SelectVaultViewModel @Inject constructor(
     private val selected: ShareId = ShareId(savedStateHandle.get().require(SelectedVaultArg.key))
 
     val state: StateFlow<SelectVaultUiState> = combine(
-        observeVaultsWithItemCount().asLoadingResult(),
+        observeVaultsWithItemCount(includeHidden = true).asLoadingResult(),
         observeUpgradeInfo().asLoadingResult()
     ) { vaultsResult, upgradeResult ->
         when (vaultsResult) {

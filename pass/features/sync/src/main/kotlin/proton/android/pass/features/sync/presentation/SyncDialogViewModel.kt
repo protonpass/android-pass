@@ -47,7 +47,7 @@ class SyncDialogViewModel @Inject constructor(
         syncStatusRepository.observeSyncStatus(),
         syncStatusRepository.observeDownloadedItemsStatus(),
         syncStatusRepository.observeInsertedItemsStatus(),
-        observeVaults().asLoadingResult(),
+        observeVaults(includeHidden = true).asLoadingResult(),
         ::SyncDialogState
     ).stateIn(
         scope = viewModelScope,

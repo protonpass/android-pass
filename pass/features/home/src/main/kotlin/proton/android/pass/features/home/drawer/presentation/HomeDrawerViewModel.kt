@@ -21,21 +21,20 @@ package proton.android.pass.features.home.drawer.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.combineN
-import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveItemCount
+import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.capabilities.CanOrganiseVaults
-import proton.android.pass.data.api.usecases.shares.ObserveSharesItemsCount
-import proton.android.pass.domain.Share
+import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.searchoptions.api.VaultSelectionOption
 import javax.inject.Inject
@@ -44,36 +43,19 @@ import javax.inject.Inject
 class HomeDrawerViewModel @Inject constructor(
     canCreateVault: CanCreateVault,
     canOrganiseVaults: CanOrganiseVaults,
-    observeAllShares: ObserveAllShares,
-    observeSharesItemsCount: ObserveSharesItemsCount,
+    observeVaultsWithItemCount: ObserveVaultsWithItemCount,
     observeItemCount: ObserveItemCount,
     private val homeSearchOptionsRepository: HomeSearchOptionsRepository
 ) : ViewModel() {
 
-    private val vaultSharesFlow = observeAllShares()
-        .mapLatest { shares ->
-            shares
-                .filterIsInstance<Share.Vault>()
-                .sortedBy { vaultShare -> vaultShare.name.lowercase() }
-        }
-        .shareIn(
-            scope = viewModelScope,
-            started = SharingStarted.Lazily,
-            replay = 1
-        )
-
-    private val vaultSharesItemsCountFlow = vaultSharesFlow
-        .flatMapLatest { vaultShares ->
-            vaultShares
-                .map { vaultShare -> vaultShare.id }
-                .let { vaultShareIds -> observeSharesItemsCount(vaultShareIds) }
-        }
+    private val vaultSharesItemsCountFlow: Flow<List<VaultWithItemCount>> =
+        observeVaultsWithItemCount(includeHidden = false)
+            .map { list -> list.sortedBy { it.vault.name.lowercase() } }
 
     private val itemCountSummaryOptionFlow = observeItemCount(applyItemStateToSharedItems = false)
         .mapLatest(::Some)
 
-    internal val stateFlow: StateFlow<HomeDrawerState> = combineN(
-        vaultSharesFlow,
+    internal val stateFlow: StateFlow<HomeDrawerState> = combine(
         vaultSharesItemsCountFlow,
         canCreateVault(),
         canOrganiseVaults(),

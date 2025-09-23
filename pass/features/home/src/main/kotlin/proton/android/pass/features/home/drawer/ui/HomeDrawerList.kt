@@ -24,16 +24,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.ImmutableMap
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.form.PassDivider
-import proton.android.pass.data.api.repositories.ShareItemCount
-import proton.android.pass.domain.Share
-import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.features.home.R
 import proton.android.pass.searchoptions.api.VaultSelectionOption
 import me.proton.core.presentation.R as CoreR
@@ -42,8 +38,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 @Composable
 internal fun HomeDrawerList(
     modifier: Modifier = Modifier,
-    vaultShares: ImmutableList<Share.Vault>,
-    vaultSharesItemsCount: ImmutableMap<ShareId, ShareItemCount>,
+    vaultShares: List<VaultWithItemCount>,
     vaultSelectionOption: VaultSelectionOption,
     allItemsCount: Int,
     hasSharedWithMeItems: Boolean,
@@ -78,31 +73,31 @@ internal fun HomeDrawerList(
 
         items(
             items = vaultShares,
-            key = { vaultShare -> vaultShare.id.id }
+            key = { vaultShare -> vaultShare.vault.shareId.id }
         ) { vaultShare ->
             HomeDrawerRow(
-                shareIconRes = vaultShare.icon.toResource(),
-                iconColor = vaultShare.color.toColor(),
-                iconBackgroundColor = vaultShare.color.toColor(isBackground = true),
-                name = vaultShare.name,
-                itemsCount = vaultSharesItemsCount[vaultShare.id]?.activeItems?.toInt() ?: 0,
-                membersCount = vaultShare.memberCount,
-                isSelected = vaultSelectionOption == VaultSelectionOption.Vault(vaultShare.id),
+                shareIconRes = vaultShare.vault.icon.toResource(),
+                iconColor = vaultShare.vault.color.toColor(),
+                iconBackgroundColor = vaultShare.vault.color.toColor(isBackground = true),
+                name = vaultShare.vault.name,
+                itemsCount = vaultShare.activeItemCount.toInt(),
+                membersCount = vaultShare.vault.members,
+                isSelected = vaultSelectionOption == VaultSelectionOption.Vault(vaultShare.vault.shareId),
                 onClick = {
                     HomeDrawerUiEvent.OnVaultClick(
-                        shareId = vaultShare.id
+                        shareId = vaultShare.vault.shareId
                     ).also(onUiEvent)
                 },
                 onShareClick = {
-                    if (vaultShare.shared) {
-                        HomeDrawerUiEvent.OnManageVaultClick(shareId = vaultShare.id)
+                    if (vaultShare.vault.shared) {
+                        HomeDrawerUiEvent.OnManageVaultClick(shareId = vaultShare.vault.shareId)
                     } else {
-                        HomeDrawerUiEvent.OnShareVaultClick(shareId = vaultShare.id)
+                        HomeDrawerUiEvent.OnShareVaultClick(shareId = vaultShare.vault.shareId)
                     }.also(onUiEvent)
                 },
                 onMenuOptionsClick = {
                     HomeDrawerUiEvent.OnVaultOptionsClick(
-                        shareId = vaultShare.id
+                        shareId = vaultShare.vault.shareId
                     ).also(onUiEvent)
                 }
             )

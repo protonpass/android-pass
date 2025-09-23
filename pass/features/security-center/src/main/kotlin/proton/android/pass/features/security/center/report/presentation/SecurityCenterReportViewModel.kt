@@ -163,7 +163,7 @@ class SecurityCenterReportViewModel @Inject constructor(
         usedInLoginItemsFlow,
         userPreferencesRepository.getUseFaviconsPreference(),
         eventFlow,
-        observeVaultsGroupedByShareId()
+        observeVaultsGroupedByShareId(includeHidden = false)
     ) { breachEmailReportResult,
         breachesForEmailResult,
         usedInLoginItemsResult,

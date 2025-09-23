@@ -156,7 +156,7 @@ open class CreateAliasViewModel @Inject constructor(
             )
 
     private val observeAllVaultsFlow: Flow<List<VaultWithItemCount>> =
-        observeVaults().distinctUntilChanged()
+        observeVaults(includeHidden = true).distinctUntilChanged()
 
     private val shareUiState: StateFlow<ShareUiState> = getShareUiStateFlow(
         navShareIdState = flowOf(navShareId),

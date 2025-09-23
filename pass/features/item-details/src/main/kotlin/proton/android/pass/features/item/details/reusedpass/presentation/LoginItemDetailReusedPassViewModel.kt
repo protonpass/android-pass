@@ -86,7 +86,7 @@ class LoginItemDetailReusedPassViewModel @Inject constructor(
         loginItemPasswordFlow,
         duplicatedLoginItemsFlow,
         userPreferencesRepository.getUseFaviconsPreference(),
-        observeVaultsGroupedByShareId()
+        observeVaultsGroupedByShareId(includeHidden = false)
     ) { loginItemPassword, duplicatedLoginItems, useFavIconsPreference, groupedVaults ->
         LoginItemDetailReusedPassState(
             password = loginItemPassword,

@@ -30,7 +30,7 @@ class ObserveVaultsGroupedByVisibilityImpl @Inject constructor(
 ) : ObserveVaultsGroupedByVisibility {
 
     override fun invoke(): Flow<Pair<List<VaultWithItemCount>, List<VaultWithItemCount>>> =
-        observeVaultsWithItemCount().map { vaults ->
+        observeVaultsWithItemCount(includeHidden = true).map { vaults ->
             vaults.partition { it.vault.shareFlags.isHidden() }
         }
 

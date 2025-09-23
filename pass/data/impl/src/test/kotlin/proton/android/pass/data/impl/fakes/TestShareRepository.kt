@@ -153,8 +153,11 @@ class TestShareRepository : ShareRepository {
     override fun observeById(userId: UserId, shareId: ShareId): Flow<Share> =
         observeShareByIdFlow.map { it.getOrThrow() }
 
-    override fun observeSharesByType(userId: UserId, shareType: ShareType): Flow<List<Share>> =
-        observeSharesByTypeFlow.map { it.getOrThrow() }
+    override fun observeSharesByType(
+        userId: UserId,
+        shareType: ShareType,
+        includeHidden: Boolean
+    ): Flow<List<Share>> = observeSharesByTypeFlow.map { it.getOrThrow() }
 
     override suspend fun applyUpdateShareEvent(
         userId: UserId,

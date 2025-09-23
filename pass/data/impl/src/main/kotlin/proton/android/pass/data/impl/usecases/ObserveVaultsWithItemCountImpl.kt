@@ -36,8 +36,10 @@ class ObserveVaultsWithItemCountImpl @Inject constructor(
     private val itemRepository: ItemRepository
 ) : ObserveVaultsWithItemCount {
 
-    override fun invoke(): Flow<List<VaultWithItemCount>> = observeVaults()
-        .flatMapLatest { result -> observeItemCounts(result) }
+    override fun invoke(includeHidden: Boolean): Flow<List<VaultWithItemCount>> =
+        observeVaults(includeHidden = includeHidden).flatMapLatest { result ->
+            observeItemCounts(result)
+        }
 
     private fun observeItemCounts(vaultList: List<Vault>): Flow<List<VaultWithItemCount>> =
         itemRepository.observeItemCount(

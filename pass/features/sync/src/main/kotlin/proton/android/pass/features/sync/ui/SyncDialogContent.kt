@@ -24,7 +24,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
@@ -32,7 +34,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.ProtonAlertDialog
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
@@ -49,7 +53,9 @@ internal fun SyncDialogContent(
     onUiEvent: (SyncDialogUiEvent) -> Unit
 ) = with(state) {
     ProtonAlertDialog(
-        modifier = modifier,
+        modifier = modifier
+            .wrapContentHeight()
+            .heightIn(max = LocalConfiguration.current.screenHeightDp.dp * ALERT_DIALOG_HEIGHT_FRACTION),
         onDismissRequest = {},
         title = {
             val titlesResId = when {
@@ -88,6 +94,7 @@ internal fun SyncDialogContent(
                         Spacer(modifier = Modifier.height(Spacing.small))
                         CircularProgressIndicator()
                     }
+
                     else -> LazyColumn {
                         items(
                             items = syncItemsMap.entries.toList(),
@@ -135,3 +142,5 @@ internal fun SyncDialogContent(
         }
     )
 }
+
+private const val ALERT_DIALOG_HEIGHT_FRACTION = 0.9f

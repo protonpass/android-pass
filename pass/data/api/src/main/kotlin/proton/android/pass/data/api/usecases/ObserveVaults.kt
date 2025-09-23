@@ -23,5 +23,5 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.Vault
 
 interface ObserveVaults {
-    operator fun invoke(userId: UserId? = null): Flow<List<Vault>>
+    operator fun invoke(userId: UserId? = null, includeHidden: Boolean): Flow<List<Vault>>
 }

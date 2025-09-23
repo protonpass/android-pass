@@ -109,7 +109,7 @@ class CreateIdentityViewModel @Inject constructor(
     private val shareUiState: StateFlow<ShareUiState> = getShareUiStateFlow(
         navShareIdState = flowOf(navShareId),
         selectedShareIdState = selectedShareIdState,
-        observeAllVaultsFlow = observeVaults().asLoadingResult(),
+        observeAllVaultsFlow = observeVaults(includeHidden = true).asLoadingResult(),
         observeDefaultVaultFlow = observeDefaultVault().asLoadingResult(),
         viewModelScope = viewModelScope,
         tag = TAG

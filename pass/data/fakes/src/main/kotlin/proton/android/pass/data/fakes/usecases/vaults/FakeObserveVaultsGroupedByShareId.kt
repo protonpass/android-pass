@@ -39,6 +39,6 @@ class FakeObserveVaultsGroupedByShareId @Inject constructor() : ObserveVaultsGro
         flow.tryEmit(emptyMap())
     }
 
-    override fun invoke(): Flow<Map<ShareId, Vault>> = flow
+    override fun invoke(includeHidden: Boolean): Flow<Map<ShareId, Vault>> = flow
 
 }

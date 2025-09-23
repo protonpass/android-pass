@@ -71,7 +71,7 @@ class MigrateSelectVaultViewModel @Inject constructor(
         .distinctUntilChanged()
 
     internal val state: StateFlow<MigrateSelectVaultUiState> = combine(
-        observeVaults().asLoadingResult(),
+        observeVaults(includeHidden = true).asLoadingResult(),
         eventFlow,
         selectedItemsFlow
     ) { vaultResult, event, selectedItems ->

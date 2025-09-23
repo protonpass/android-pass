@@ -71,7 +71,7 @@ class SecurityCenterExcludedItemsViewModel @Inject constructor(
     internal val state: StateFlow<SecurityCenterExcludedItemsState> = combine(
         excludedLoginItemsUiModelFlow,
         userPreferencesRepository.getUseFaviconsPreference(),
-        observeVaultsGroupedByShareId()
+        observeVaultsGroupedByShareId(includeHidden = false)
     ) { excludedLoginItemsUiModels, useFavIconsPreference, groupedVaults ->
         SecurityCenterExcludedItemsState(
             excludedItemUiModels = excludedLoginItemsUiModels,

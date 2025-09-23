@@ -49,7 +49,7 @@ class CanCreateVaultImpl @Inject constructor(
         }
 
     private val canCreateVaultsByPlanFlow: Flow<Boolean> = combine(
-        observeVaults(),
+        observeVaults(includeHidden = true),
         currentUserPlan()
     ) { vaults, plan ->
         when (val vaultLimit = plan.vaultLimit) {

@@ -39,9 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.collections.immutable.toPersistentMap
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.presentation.R as CoreR
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -50,6 +48,7 @@ import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.home.R
 import proton.android.pass.features.home.drawer.presentation.HomeDrawerState
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun HomeDrawerContent(
@@ -68,7 +67,6 @@ internal fun HomeDrawerContent(
                 .fillMaxHeight()
                 .weight(weight = 1f, fill = true),
             vaultShares = vaultShares.toPersistentList(),
-            vaultSharesItemsCount = vaultSharesItemsCounter.toPersistentMap(),
             vaultSelectionOption = vaultSelectionOption,
             allItemsCount = allItemsCount,
             hasSharedWithMeItems = hasSharedWithMeItems,

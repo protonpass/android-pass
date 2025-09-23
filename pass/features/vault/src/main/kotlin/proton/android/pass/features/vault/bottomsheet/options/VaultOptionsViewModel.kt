@@ -81,7 +81,7 @@ class VaultOptionsViewModel @Inject constructor(
     )
 
     internal val state: StateFlow<VaultOptionsUiState> = combine(
-        observeVaults().asLoadingResult(),
+        observeVaults(includeHidden = true).asLoadingResult(),
         canShare,
         eventFlow,
         preferencesRepository.get<Boolean>(FeatureFlag.PASS_ALLOW_NO_VAULT)

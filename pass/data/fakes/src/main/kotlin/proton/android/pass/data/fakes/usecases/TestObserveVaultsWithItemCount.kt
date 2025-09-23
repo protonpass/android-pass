@@ -34,7 +34,7 @@ class TestObserveVaultsWithItemCount @Inject constructor() : ObserveVaultsWithIt
 
     fun sendResult(result: Result<List<VaultWithItemCount>>) = observeVaultsFlow.tryEmit(result)
 
-    override fun invoke(): Flow<List<VaultWithItemCount>> = observeVaultsFlow.map {
+    override fun invoke(includeHidden: Boolean): Flow<List<VaultWithItemCount>> = observeVaultsFlow.map {
         it.getOrThrow()
     }
 }

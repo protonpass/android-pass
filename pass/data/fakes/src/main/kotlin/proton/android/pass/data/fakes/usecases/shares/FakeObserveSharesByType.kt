@@ -37,6 +37,10 @@ class FakeObserveSharesByType @Inject constructor() : ObserveSharesByType {
         sharesFlow.tryEmit(value)
     }
 
-    override fun invoke(shareType: ShareType, userId: UserId?): Flow<List<Share>> = sharesFlow
+    override fun invoke(
+        shareType: ShareType,
+        userId: UserId?,
+        includeHidden: Boolean
+    ): Flow<List<Share>> = sharesFlow
 
 }

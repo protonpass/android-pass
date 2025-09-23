@@ -80,7 +80,7 @@ class MemberOptionsViewModel @Inject constructor(
     private val loadingOptionFlow: MutableStateFlow<LoadingOption?> =
         MutableStateFlow(null)
 
-    private val getVaultFlow: Flow<LoadingResult<VaultsInfo>> = observeVaults().map { vaults ->
+    private val getVaultFlow: Flow<LoadingResult<VaultsInfo>> = observeVaults(includeHidden = true).map { vaults ->
         val selectedVault = vaults.firstOrNull { it.shareId == vaultShareId }
         if (selectedVault == null) {
             eventFlow.update { MemberOptionsEvent.Close(refresh = false) }

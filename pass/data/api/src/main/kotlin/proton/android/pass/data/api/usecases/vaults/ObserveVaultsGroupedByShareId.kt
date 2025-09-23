@@ -24,6 +24,6 @@ import proton.android.pass.domain.Vault
 
 interface ObserveVaultsGroupedByShareId {
 
-    operator fun invoke(): Flow<Map<ShareId, Vault>>
+    operator fun invoke(includeHidden: Boolean): Flow<Map<ShareId, Vault>>
 
 }

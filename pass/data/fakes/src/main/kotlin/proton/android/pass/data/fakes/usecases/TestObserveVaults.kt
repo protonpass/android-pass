@@ -35,6 +35,6 @@ class TestObserveVaults @Inject constructor() : ObserveVaults {
 
     fun sendResult(result: Result<List<Vault>>) = observeVaultsFlow.tryEmit(result)
 
-    override fun invoke(userId: UserId?): Flow<List<Vault>> = observeVaultsFlow
+    override fun invoke(userId: UserId?, includeHidden: Boolean): Flow<List<Vault>> = observeVaultsFlow
         .map { it.getOrThrow() }
 }

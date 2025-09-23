@@ -30,7 +30,8 @@ class ObserveVaultsGroupedByShareIdImpl @Inject constructor(
     private val observeVaults: ObserveVaults
 ) : ObserveVaultsGroupedByShareId {
 
-    override fun invoke(): Flow<Map<ShareId, Vault>> = observeVaults()
-        .map { vaults -> vaults.associateBy { vault -> vault.shareId } }
+    override fun invoke(includeHidden: Boolean): Flow<Map<ShareId, Vault>> =
+        observeVaults(includeHidden = includeHidden)
+            .map { vaults -> vaults.associateBy { vault -> vault.shareId } }
 
 }

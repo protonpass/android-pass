@@ -54,7 +54,7 @@ class ObserveDefaultVaultImpl @Inject constructor(
     override fun invoke(): Flow<Option<VaultWithItemCount>> = observeCurrentUser()
         .flatMapLatest { user ->
             combine(
-                observeVaults(),
+                observeVaults(includeHidden = true),
                 preferencesRepository.getDefaultVault(user.userId).map { it.map(::ShareId) }
             ) { vaults, defaultVaultShareIdOption ->
                 determineDefaultVault(vaults, defaultVaultShareIdOption, user.userId)

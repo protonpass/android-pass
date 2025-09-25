@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -18,10 +18,19 @@
 
 package proton.android.pass.domain
 
-enum class ItemFlag(override val value: Int) : Flag {
-    SkipHealthCheck(value = 1 shl 0),
-    EmailBreached(value = 1 shl 1),
-    AliasDisabled(value = 1 shl 2),
-    HasAttachments(value = 1 shl 3),
-    HasHadAttachments(value = 1 shl 4)
+interface Flag {
+    val value: Int
+}
+
+data class FoldedFlags(
+    val set: Int,
+    val clear: Int
+)
+
+fun <F : Flag> foldFlags(flags: Map<F, Boolean>): FoldedFlags {
+    val (setFlags, clearFlags) = flags.entries.partition { it.value }
+    return FoldedFlags(
+        set = setFlags.sumOf { it.key.value },
+        clear = clearFlags.sumOf { it.key.value }
+    )
 }

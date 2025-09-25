@@ -18,6 +18,6 @@
 
 package proton.android.pass.domain
 
-enum class ShareFlag(val value: Int) {
+enum class ShareFlag(override val value: Int) : Flag {
     IsHidden(value = 1 shl 0)
 }

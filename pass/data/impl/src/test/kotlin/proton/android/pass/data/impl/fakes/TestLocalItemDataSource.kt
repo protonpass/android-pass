@@ -105,7 +105,7 @@ class TestLocalItemDataSource : LocalItemDataSource {
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): ItemEntity? {
+    ): ItemEntity {
         throw IllegalStateException("Not yet implemented")
     }
 

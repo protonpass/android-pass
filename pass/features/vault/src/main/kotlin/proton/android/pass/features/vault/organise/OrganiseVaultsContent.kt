@@ -23,6 +23,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -88,13 +89,17 @@ fun OrganiseVaultsContent(
                 .background(PassTheme.colors.backgroundStrong)
                 .padding(contentPadding)
         ) {
-            stickyHeader {
-                Text.Body2Bold(
-                    modifier = Modifier
-                        .padding(horizontal = Spacing.medium)
-                        .padding(top = Spacing.medium),
-                    text = stringResource(R.string.organise_vaults_visible_title)
-                )
+            if (state.visibleVaults.isNotEmpty()) {
+                stickyHeader {
+                    Text.Body2Bold(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(PassTheme.colors.backgroundStrong)
+                            .padding(horizontal = Spacing.medium)
+                            .padding(top = Spacing.medium),
+                        text = stringResource(R.string.organise_vaults_visible_title)
+                    )
+                }
             }
             itemsIndexed(
                 items = state.visibleVaults,
@@ -116,18 +121,21 @@ fun OrganiseVaultsContent(
                     }
                 }
             )
-            stickyHeader {
-                Column(
-                    modifier = Modifier
-                        .background(PassTheme.colors.backgroundStrong)
-                        .padding(horizontal = Spacing.medium)
-                        .padding(top = Spacing.medium),
-                    verticalArrangement = Arrangement.spacedBy(Spacing.small)
-                ) {
-                    Text.Body2Bold(stringResource(R.string.organise_vaults_hidden_title))
-                    Text.Body2Weak(
-                        stringResource(R.string.organise_vaults_hidden_description)
-                    )
+            if (state.hiddenVaults.isNotEmpty()) {
+                stickyHeader {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(PassTheme.colors.backgroundStrong)
+                            .padding(horizontal = Spacing.medium)
+                            .padding(top = Spacing.medium),
+                        verticalArrangement = Arrangement.spacedBy(Spacing.small)
+                    ) {
+                        Text.Body2Bold(stringResource(R.string.organise_vaults_hidden_title))
+                        Text.Body2Weak(
+                            stringResource(R.string.organise_vaults_hidden_description)
+                        )
+                    }
                 }
             }
             itemsIndexed(

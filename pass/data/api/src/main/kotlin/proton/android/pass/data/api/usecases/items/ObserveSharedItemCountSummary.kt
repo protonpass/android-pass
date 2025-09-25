@@ -24,6 +24,6 @@ import proton.android.pass.domain.items.ItemSharedType
 
 interface ObserveSharedItemCountSummary {
 
-    operator fun invoke(itemSharedType: ItemSharedType): Flow<ItemCountSummary>
+    operator fun invoke(itemSharedType: ItemSharedType, includeHiddenVault: Boolean): Flow<ItemCountSummary>
 
 }

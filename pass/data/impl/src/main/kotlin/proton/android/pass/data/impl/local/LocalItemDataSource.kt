@@ -26,6 +26,7 @@ import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.entities.ItemEntity
+import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
@@ -47,8 +48,7 @@ interface LocalItemDataSource {
         shareIds: List<ShareId>,
         itemState: ItemState?,
         filter: ItemTypeFilter,
-        setFlags: Int? = null,
-        clearFlags: Int? = null
+        itemFlags: Map<ItemFlag, Boolean>
     ): Flow<List<ItemEntity>>
 
     fun observePinnedItems(
@@ -83,12 +83,15 @@ interface LocalItemDataSource {
     )
 
     suspend fun getTrashedItems(userId: UserId, shareIds: List<ShareId>): List<ItemEntity>
+
     suspend fun delete(
         userId: UserId,
         shareId: ShareId,
         itemIds: List<ItemId>
     ): Boolean
+
     suspend fun hasItemsForShare(userId: UserId, shareId: ShareId): Boolean
+
     fun observeItemCountSummary(
         userId: UserId,
         shareIds: List<ShareId>,

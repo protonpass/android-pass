@@ -34,6 +34,7 @@ import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.dao.SummaryRow
 import proton.android.pass.data.impl.db.entities.ItemEntity
+import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
@@ -58,16 +59,21 @@ class LocalItemDataSourceImpl @Inject constructor(
         shareIds: List<ShareId>,
         itemState: ItemState?,
         filter: ItemTypeFilter,
-        setFlags: Int?,
-        clearFlags: Int?
-    ): Flow<List<ItemEntity>> = database.itemsDao().observeItems(
-        userId = userId.id,
-        shareIds = shareIds.map(ShareId::id),
-        itemState = itemState?.value,
-        itemTypes = filter.value(),
-        setFlags = setFlags,
-        clearFlags = clearFlags
-    )
+        itemFlags: Map<ItemFlag, Boolean>
+    ): Flow<List<ItemEntity>> {
+        val (setFlags, clearFlags) = itemFlags.entries.partition { it.value }
+        val setFolded = foldFlags(setFlags.map { it.key })
+        val clearFolded = foldFlags(clearFlags.map { it.key })
+
+        return database.itemsDao().observeItems(
+            userId = userId.id,
+            shareIds = shareIds.map(ShareId::id),
+            itemState = itemState?.value,
+            itemTypes = filter.value(),
+            setFlags = setFolded,
+            clearFlags = clearFolded
+        )
+    }
 
     override fun observePinnedItems(
         userId: UserId,
@@ -243,7 +249,7 @@ class LocalItemDataSourceImpl @Inject constructor(
         shareIds: List<ShareId>,
         itemState: ItemState?,
         applyItemStateToSharedItems: Boolean
-    ) = localShareDataSource.observeSharedWithMeIds(userId)
+    ) = localShareDataSource.observeSharedWithMeIds(userId, includeHiddenVault)
         .map { sharedWithMeShareIds ->
             sharedWithMeShareIds.filter { sharedWithMeShareId ->
                 sharedWithMeShareId.id in shareIds.map(ShareId::id)
@@ -262,7 +268,7 @@ class LocalItemDataSourceImpl @Inject constructor(
         shareIds: List<ShareId>,
         itemState: ItemState?,
         applyItemStateToSharedItems: Boolean
-    ) = localShareDataSource.observeSharedByMeIds(userId)
+    ) = localShareDataSource.observeSharedByMeIds(userId, includeHiddenVault)
         .mapLatest { sharedByMeShareIds ->
             sharedByMeShareIds.filter { sharedByMeShareId ->
                 sharedByMeShareId.id in shareIds.map(ShareId::id)
@@ -277,7 +283,7 @@ class LocalItemDataSourceImpl @Inject constructor(
         }
 
     private fun observeSharedWithMeTrashedItemCount(userId: UserId) =
-        localShareDataSource.observeSharedWithMeIds(userId)
+        localShareDataSource.observeSharedWithMeIds(userId, includeHiddenVault)
             .flatMapLatest { sharedWithMeShareIds ->
                 observeTrashedItemsCount(userId, sharedWithMeShareIds)
             }
@@ -387,6 +393,8 @@ class LocalItemDataSourceImpl @Inject constructor(
 
         ItemTypeFilter.All -> null
     }
+
+    private fun foldFlags(flags: List<ItemFlag>): Int = flags.fold(0) { acc, flag -> acc or flag.value }
 
     private companion object {
 

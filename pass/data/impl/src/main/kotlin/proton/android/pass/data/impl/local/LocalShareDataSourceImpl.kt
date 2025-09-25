@@ -93,7 +93,7 @@ class LocalShareDataSourceImpl @Inject constructor(
         isOwner = isOwner
     )
 
-    override fun observeByType(userId: UserId, shareType: ShareType): Flow<List<ShareEntity>> =
+    override fun observeByType(userId: UserId, shareType: ShareType, includeHidden: Boolean): Flow<List<ShareEntity>> =
         observeUsableShareIds(userId).flatMapLatest { shareIds ->
             database.sharesDao()
                 .observeActive(
@@ -103,7 +103,7 @@ class LocalShareDataSourceImpl @Inject constructor(
                 )
         }
 
-    override fun observeSharedWithMeIds(userId: UserId): Flow<List<ShareId>> =
+    override fun observeSharedWithMeIds(userId: UserId, includeHidden: Boolean): Flow<List<ShareId>> =
         observeUsableShareIds(userId).flatMapLatest { shareIds ->
             database.sharesDao()
                 .observeIds(
@@ -114,7 +114,7 @@ class LocalShareDataSourceImpl @Inject constructor(
                 .map { list -> list.map(::ShareId) }
         }
 
-    override fun observeSharedByMeIds(userId: UserId): Flow<List<ShareId>> =
+    override fun observeSharedByMeIds(userId: UserId, includeHidden: Boolean): Flow<List<ShareId>> =
         observeUsableShareIds(userId).flatMapLatest { shareIds ->
             database.sharesDao()
                 .observeIds(

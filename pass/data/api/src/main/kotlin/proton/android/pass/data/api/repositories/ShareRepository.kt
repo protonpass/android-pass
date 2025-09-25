@@ -72,9 +72,9 @@ interface ShareRepository {
 
     suspend fun getAddressForShareId(userId: UserId, shareId: ShareId): UserAddress
 
-    fun observeSharedWithMeIds(userId: UserId): Flow<List<ShareId>>
+    fun observeSharedWithMeIds(userId: UserId, includeHiddenVault: Boolean): Flow<List<ShareId>>
 
-    fun observeSharedByMeIds(userId: UserId): Flow<List<ShareId>>
+    fun observeSharedByMeIds(userId: UserId, includeHiddenVault: Boolean): Flow<List<ShareId>>
 
     suspend fun batchChangeShareVisibility(userId: UserId, shareVisibilityChanges: Map<ShareId, Boolean>)
 }

@@ -50,10 +50,10 @@ interface LocalShareDataSource {
         isOwner: Boolean
     )
 
-    fun observeByType(userId: UserId, shareType: ShareType): Flow<List<ShareEntity>>
+    fun observeByType(userId: UserId, shareType: ShareType, includeHidden: Boolean): Flow<List<ShareEntity>>
 
-    fun observeSharedWithMeIds(userId: UserId): Flow<List<ShareId>>
+    fun observeSharedWithMeIds(userId: UserId, includeHidden: Boolean): Flow<List<ShareId>>
 
-    fun observeSharedByMeIds(userId: UserId): Flow<List<ShareId>>
+    fun observeSharedByMeIds(userId: UserId, includeHidden: Boolean): Flow<List<ShareId>>
 
 }

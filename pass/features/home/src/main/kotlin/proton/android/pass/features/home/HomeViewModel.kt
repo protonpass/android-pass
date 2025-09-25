@@ -229,7 +229,7 @@ class HomeViewModel @Inject constructor(
                 accountManager.getPrimaryAccount()
                     .distinctUntilChanged()
                     .flatMapLatest { account ->
-                        observeItemCount()
+                        observeItemCount(includeHiddenVault = true)
                             .map { it.total }
                             .distinctUntilChanged()
                             .scan(initial = null to 0L) { previousPair: Pair<Long?, Long>, current: Long ->
@@ -372,11 +372,17 @@ class HomeViewModel @Inject constructor(
                 }
 
                 VaultSelectionOption.SharedByMe -> {
-                    observeEncryptedSharedItems(itemSharedType = ItemSharedType.SharedByMe)
+                    observeEncryptedSharedItems(
+                        itemSharedType = ItemSharedType.SharedByMe,
+                        includeHiddenVault = false
+                    )
                 }
 
                 VaultSelectionOption.SharedWithMe -> {
-                    observeEncryptedSharedItems(itemSharedType = ItemSharedType.SharedWithMe)
+                    observeEncryptedSharedItems(
+                        itemSharedType = ItemSharedType.SharedWithMe,
+                        includeHiddenVault = false
+                    )
                 }
             }.asResultWithoutLoading()
                 .map { itemResult ->

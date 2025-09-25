@@ -43,6 +43,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.VaultId
@@ -149,8 +150,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         shareSelection: ShareSelection,
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter,
-        setFlags: Int?,
-        clearFlags: Int?
+        itemFlags: Map<ItemFlag, Boolean>
     ): Flow<List<Item>> = observeItemListFlow
 
     override fun observeEncryptedItems(
@@ -158,15 +158,20 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         shareSelection: ShareSelection,
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter,
-        setFlags: Int?,
-        clearFlags: Int?
+        itemFlags: Map<ItemFlag, Boolean>
     ): Flow<List<ItemEncrypted>> = observeItemEncryptedListFlow
 
-    override fun observeSharedByMeEncryptedItems(userId: UserId, itemState: ItemState?): Flow<List<ItemEncrypted>> =
-        encryptedSharedItemsFlow
+    override fun observeSharedByMeEncryptedItems(
+        userId: UserId,
+        itemState: ItemState?,
+        shareFlags: Map<ShareFlag, Boolean>
+    ): Flow<List<ItemEncrypted>> = encryptedSharedItemsFlow
 
-    override fun observeSharedWithMeEncryptedItems(userId: UserId, itemState: ItemState?): Flow<List<ItemEncrypted>> =
-        encryptedSharedItemsFlow
+    override fun observeSharedWithMeEncryptedItems(
+        userId: UserId,
+        itemState: ItemState?,
+        shareFlags: Map<ShareFlag, Boolean>
+    ): Flow<List<ItemEncrypted>> = encryptedSharedItemsFlow
 
     override fun observePinnedItems(
         userId: UserId,
@@ -261,10 +266,11 @@ class TestItemRepository @Inject constructor() : ItemRepository {
 
     override fun observeItemCountSummary(
         userId: UserId,
-        shareIds: List<ShareId>,
+        shareIds: List<ShareId>?,
         itemState: ItemState?,
         onlyShared: Boolean,
-        applyItemStateToSharedItems: Boolean
+        applyItemStateToSharedItems: Boolean,
+        shareFlags: Map<ShareFlag, Boolean>
     ): Flow<ItemCountSummary> = testFlow()
 
     override fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>> {

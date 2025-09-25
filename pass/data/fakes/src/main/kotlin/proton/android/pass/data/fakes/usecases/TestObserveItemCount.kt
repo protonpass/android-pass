@@ -38,7 +38,8 @@ class TestObserveItemCount @Inject constructor() : ObserveItemCount {
     override fun invoke(
         itemState: ItemState?,
         selectedShareId: ShareId?,
-        applyItemStateToSharedItems: Boolean
+        applyItemStateToSharedItems: Boolean,
+        includeHiddenVault: Boolean
     ): Flow<ItemCountSummary> = observeVaultsFlow.map {
         it.getOrThrow()
     }

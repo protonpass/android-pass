@@ -28,7 +28,8 @@ interface ObserveItemCount {
     operator fun invoke(
         itemState: ItemState? = ItemState.Active,
         selectedShareId: ShareId? = null,
-        applyItemStateToSharedItems: Boolean = true
+        applyItemStateToSharedItems: Boolean = true,
+        includeHiddenVault: Boolean
     ): Flow<ItemCountSummary>
 
 }

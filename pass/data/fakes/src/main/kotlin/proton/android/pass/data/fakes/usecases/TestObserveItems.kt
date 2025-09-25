@@ -58,7 +58,8 @@ class TestObserveItems @Inject constructor() : ObserveItems {
         itemState: ItemState?,
         filter: ItemTypeFilter,
         userId: UserId?,
-        itemFlags: Map<ItemFlag, Boolean>
+        itemFlags: Map<ItemFlag, Boolean>,
+        includeHidden: Boolean
     ): Flow<List<Item>> {
         val params = Params(
             selection = selection,

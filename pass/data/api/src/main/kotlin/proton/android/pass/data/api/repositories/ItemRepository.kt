@@ -108,7 +108,8 @@ interface ItemRepository {
         shareSelection: ShareSelection,
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter = ItemTypeFilter.All,
-        itemFlags: Map<ItemFlag, Boolean>
+        itemFlags: Map<ItemFlag, Boolean>,
+        shareFlags: Map<ShareFlag, Boolean>
     ): Flow<List<Item>>
 
     fun observeEncryptedItems(
@@ -116,13 +117,15 @@ interface ItemRepository {
         shareSelection: ShareSelection,
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter = ItemTypeFilter.All,
-        itemFlags: Map<ItemFlag, Boolean>
+        itemFlags: Map<ItemFlag, Boolean>,
+        shareFlags: Map<ShareFlag, Boolean>
     ): Flow<List<ItemEncrypted>>
 
     fun observePinnedItems(
         userId: UserId,
         shareSelection: ShareSelection,
-        itemTypeFilter: ItemTypeFilter
+        itemTypeFilter: ItemTypeFilter,
+        shareFlags: Map<ShareFlag, Boolean>
     ): Flow<List<Item>>
 
     fun observeById(

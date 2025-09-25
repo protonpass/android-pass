@@ -26,6 +26,7 @@ import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareSelection
 import javax.inject.Inject
 
@@ -37,19 +38,22 @@ class ObservePinnedItemsImpl @Inject constructor(
     override fun invoke(
         userId: UserId?,
         filter: ItemTypeFilter,
-        shareSelection: ShareSelection
+        shareSelection: ShareSelection,
+        shareFlags: Map<ShareFlag, Boolean>
     ): Flow<List<Item>> = if (userId != null) {
         itemRepository.observePinnedItems(
             userId = userId,
             shareSelection = shareSelection,
-            itemTypeFilter = filter
+            itemTypeFilter = filter,
+            shareFlags = shareFlags
         )
     } else {
         observeCurrentUser().flatMapLatest {
             itemRepository.observePinnedItems(
                 userId = it.userId,
                 shareSelection = shareSelection,
-                itemTypeFilter = filter
+                itemTypeFilter = filter,
+                shareFlags = shareFlags
             )
         }
     }

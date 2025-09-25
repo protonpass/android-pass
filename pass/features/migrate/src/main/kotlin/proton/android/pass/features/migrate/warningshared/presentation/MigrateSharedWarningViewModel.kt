@@ -84,7 +84,8 @@ class MigrateSharedWarningViewModel @Inject constructor(
         is Mode.MigrateAllItems -> observeEncryptedItems(
             selection = ShareSelection.Share(mode.shareId),
             itemState = ItemState.Active,
-            filter = ItemTypeFilter.All
+            filter = ItemTypeFilter.All,
+            shareFlags = emptyMap()
         ).mapLatest { encryptedItems ->
             mapOf(mode.shareId to encryptedItems.map { it.id })
         }

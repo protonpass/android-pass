@@ -18,7 +18,7 @@
 
 package proton.android.pass.domain
 
-enum class ItemFlag(val value: Int) {
+enum class ItemFlag(override val value: Int) : Flag {
     SkipHealthCheck(value = 1 shl 0),
     EmailBreached(value = 1 shl 1),
     AliasDisabled(value = 1 shl 2),

@@ -31,6 +31,7 @@ import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.local.ItemWithTotp
 import proton.android.pass.data.impl.local.LocalItemDataSource
+import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
@@ -83,8 +84,7 @@ class TestLocalItemDataSource : LocalItemDataSource {
         shareIds: List<ShareId>,
         itemState: ItemState?,
         filter: ItemTypeFilter,
-        setFlags: Int?,
-        clearFlags: Int?
+        itemFlags: Map<ItemFlag, Boolean>
     ): Flow<List<ItemEntity>> = flowOf(memory)
 
     override fun observePinnedItems(

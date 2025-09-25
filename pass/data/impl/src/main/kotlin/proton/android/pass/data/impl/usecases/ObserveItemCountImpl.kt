@@ -25,6 +25,7 @@ import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
@@ -36,7 +37,8 @@ class ObserveItemCountImpl @Inject constructor(
     override fun invoke(
         itemState: ItemState?,
         selectedShareId: ShareId?,
-        applyItemStateToSharedItems: Boolean
+        applyItemStateToSharedItems: Boolean,
+        includeHiddenVault: Boolean
     ): Flow<ItemCountSummary> = observeCurrentUser()
         .flatMapLatest { user ->
             itemRepository.observeItemCountSummary(
@@ -44,7 +46,8 @@ class ObserveItemCountImpl @Inject constructor(
                 shareIds = listOfNotNull(selectedShareId),
                 itemState = itemState,
                 onlyShared = false,
-                applyItemStateToSharedItems = applyItemStateToSharedItems
+                applyItemStateToSharedItems = applyItemStateToSharedItems,
+                shareFlags = includeHiddenVault
             )
         }
 

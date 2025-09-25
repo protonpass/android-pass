@@ -50,22 +50,28 @@ class FilterBottomSheetViewModel @Inject constructor(
     private val summaryAndOptionsFlow = homeSearchOptionsRepository.observeSearchOptions()
         .flatMapLatest {
             when (val vault = it.vaultSelectionOption) {
-                VaultSelectionOption.AllVaults -> observeItemCount()
+                VaultSelectionOption.AllVaults -> observeItemCount(
+                    includeHiddenVault = false
+                )
 
                 VaultSelectionOption.SharedByMe -> observeSharedItemCountSummary(
-                    itemSharedType = ItemSharedType.SharedByMe
+                    itemSharedType = ItemSharedType.SharedByMe,
+                    includeHiddenVault = false
                 )
 
                 VaultSelectionOption.SharedWithMe -> observeSharedItemCountSummary(
-                    itemSharedType = ItemSharedType.SharedWithMe
+                    itemSharedType = ItemSharedType.SharedWithMe,
+                    includeHiddenVault = false
                 )
 
                 VaultSelectionOption.Trash -> observeItemCount(
-                    itemState = ItemState.Trashed
+                    itemState = ItemState.Trashed,
+                    includeHiddenVault = false
                 )
 
                 is VaultSelectionOption.Vault -> observeItemCount(
-                    selectedShareId = vault.shareId
+                    selectedShareId = vault.shareId,
+                    includeHiddenVault = false
                 )
             }.zip(flowOf(it)) { itemCount, searchOptions ->
                 itemCount to searchOptions

@@ -365,15 +365,13 @@ class ItemRepositoryImpl @Inject constructor(
         shareSelection: ShareSelection,
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter,
-        setFlags: Int?,
-        clearFlags: Int?
+        itemFlags: Map<ItemFlag, Boolean>
     ): Flow<List<Item>> = innerObserveItems(
         shareSelection,
         userId,
         itemState,
         itemTypeFilter,
-        setFlags,
-        clearFlags
+        itemFlags
     ).map { items ->
         encryptionContextProvider.withEncryptionContextSuspendable {
             items.map { item -> item.toDomain(this) }
@@ -385,27 +383,30 @@ class ItemRepositoryImpl @Inject constructor(
         shareSelection: ShareSelection,
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter,
-        setFlags: Int?,
-        clearFlags: Int?
+        itemFlags: Map<ItemFlag, Boolean>
     ): Flow<List<ItemEncrypted>> = innerObserveItems(
         shareSelection,
         userId,
         itemState,
         itemTypeFilter,
-        setFlags,
-        clearFlags
+        itemFlags
     ).map { items ->
         items.map(ItemEntity::toEncryptedDomain)
     }
 
-    override fun observeSharedByMeEncryptedItems(userId: UserId, itemState: ItemState?): Flow<List<ItemEncrypted>> =
-        shareRepository.observeSharedByMeIds(userId)
+    override fun observeSharedByMeEncryptedItems(
+        userId: UserId,
+        itemState: ItemState?,
+        includeHiddenVault: Boolean
+    ): Flow<List<ItemEncrypted>> =
+        shareRepository.observeSharedByMeIds(userId, includeHiddenVault)
             .flatMapLatest { shareIds ->
                 localItemDataSource.observeItems(
                     userId,
                     shareIds,
                     itemState,
-                    ItemTypeFilter.All
+                    ItemTypeFilter.All,
+                    emptyMap()
                 )
             }
             .map { itemEntities ->
@@ -414,14 +415,19 @@ class ItemRepositoryImpl @Inject constructor(
                     .map(ItemEntity::toEncryptedDomain)
             }
 
-    override fun observeSharedWithMeEncryptedItems(userId: UserId, itemState: ItemState?): Flow<List<ItemEncrypted>> =
-        shareRepository.observeSharedWithMeIds(userId)
+    override fun observeSharedWithMeEncryptedItems(
+        userId: UserId,
+        itemState: ItemState?,
+        includeHiddenVault: Boolean
+    ): Flow<List<ItemEncrypted>> =
+        shareRepository.observeSharedWithMeIds(userId, includeHiddenVault)
             .flatMapLatest { shareIds ->
                 localItemDataSource.observeItems(
                     userId,
                     shareIds,
                     itemState,
-                    ItemTypeFilter.All
+                    ItemTypeFilter.All,
+                    emptyMap()
                 )
             }
             .map { itemEntities ->
@@ -433,16 +439,14 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter,
-        setFlags: Int?,
-        clearFlags: Int?
+        itemFlags: Map<ItemFlag, Boolean>
     ) = when (shareSelection) {
         is ShareSelection.Share -> localItemDataSource.observeItems(
             userId = userId,
             shareIds = listOf(shareSelection.shareId),
             itemState = itemState,
             filter = itemTypeFilter,
-            setFlags = setFlags,
-            clearFlags = clearFlags
+            itemFlags = itemFlags
         )
 
         is ShareSelection.Shares -> localItemDataSource.observeItems(
@@ -450,8 +454,7 @@ class ItemRepositoryImpl @Inject constructor(
             shareIds = shareSelection.shareIds,
             itemState = itemState,
             filter = itemTypeFilter,
-            setFlags = setFlags,
-            clearFlags = clearFlags
+            itemFlags = itemFlags
         )
 
         is ShareSelection.AllShares -> shareRepository.observeAllUsableShareIds(userId)
@@ -461,8 +464,7 @@ class ItemRepositoryImpl @Inject constructor(
                     shareIds = it,
                     itemState = itemState,
                     filter = itemTypeFilter,
-                    setFlags = setFlags,
-                    clearFlags = clearFlags
+                    itemFlags = itemFlags
                 )
             }
     }
@@ -925,13 +927,15 @@ class ItemRepositoryImpl @Inject constructor(
         shareIds: List<ShareId>,
         itemState: ItemState?,
         onlyShared: Boolean,
-        applyItemStateToSharedItems: Boolean
+        applyItemStateToSharedItems: Boolean,
+        includeHiddenVault: Boolean
     ): Flow<ItemCountSummary> = localItemDataSource.observeItemCountSummary(
         userId = userId,
         shareIds = shareIds,
         itemState = itemState,
         onlyShared = onlyShared,
-        applyItemStateToSharedItems = applyItemStateToSharedItems
+        applyItemStateToSharedItems = applyItemStateToSharedItems,
+        includeHiddenVault = includeHiddenVault
     )
 
     override suspend fun updateItemLastUsed(vaultId: VaultId, itemId: ItemId) {
@@ -1029,7 +1033,8 @@ class ItemRepositoryImpl @Inject constructor(
             userId = userId,
             shareIds = listOf(source),
             itemState = ItemState.Active,
-            filter = ItemTypeFilter.All
+            filter = ItemTypeFilter.All,
+            itemFlags = emptyMap()
         ).first()
         val destinationKey = shareKeyRepository.getLatestKeyForShare(destination).first()
 
@@ -1106,7 +1111,8 @@ class ItemRepositoryImpl @Inject constructor(
             userId = userId,
             shareIds = listOf(shareId),
             itemState = null,
-            filter = ItemTypeFilter.All
+            filter = ItemTypeFilter.All,
+            itemFlags = emptyMap()
         ).first()
 
         val itemsNotPresentInRemote = localItemsForShare

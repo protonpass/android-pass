@@ -77,17 +77,11 @@ class ObserveItemsImpl @Inject constructor(
         itemState: ItemState?,
         filter: ItemTypeFilter,
         itemFlags: Map<ItemFlag, Boolean>
-    ): Flow<List<Item>> {
-        val (setFlags, clearFlags) = itemFlags.entries.partition { it.value }
-        return itemRepository.observeItems(
-            userId = userId,
-            shareSelection = selection,
-            itemState = itemState,
-            itemTypeFilter = filter,
-            setFlags = foldFlags(setFlags.map { it.key }),
-            clearFlags = foldFlags(clearFlags.map { it.key })
-        )
-    }
-
-    private fun foldFlags(flags: List<ItemFlag>): Int = flags.fold(0) { acc, flag -> acc or flag.value }
+    ): Flow<List<Item>> = itemRepository.observeItems(
+        userId = userId,
+        shareSelection = selection,
+        itemState = itemState,
+        itemTypeFilter = filter,
+        itemFlags = itemFlags
+    )
 }

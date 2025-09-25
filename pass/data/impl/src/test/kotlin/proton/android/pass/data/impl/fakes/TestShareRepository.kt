@@ -55,6 +55,7 @@ class TestShareRepository : ShareRepository {
         Result.failure(IllegalStateException("deleteSharesResult not set"))
 
     private val observeShareByIdFlow = testFlow<Result<Share>>()
+    private val observeShareByIdsFlow = testFlow<Result<List<Share>>>()
 
     private val observeSharesByTypeFlow = testFlow<Result<List<Share>>>()
 
@@ -153,6 +154,9 @@ class TestShareRepository : ShareRepository {
     override fun observeById(userId: UserId, shareId: ShareId): Flow<Share> =
         observeShareByIdFlow.map { it.getOrThrow() }
 
+    override fun observeByIds(userId: UserId, shareIds: List<ShareId>): Flow<List<Share>> =
+        observeShareByIdsFlow.map { it.getOrThrow() }
+
     override fun observeSharesByType(
         userId: UserId,
         shareType: ShareType,
@@ -174,11 +178,13 @@ class TestShareRepository : ShareRepository {
     override suspend fun getAddressForShareId(userId: UserId, shareId: ShareId): UserAddress =
         getAddressForShareIdResult.getOrThrow()
 
-    override fun observeSharedWithMeIds(userId: UserId): Flow<List<ShareId>> = observeSharedWithMeIds
-        .map { it.getOrThrow() }
+    override fun observeSharedWithMeIds(userId: UserId, shareFlags: Map<ShareFlag, Boolean>): Flow<List<ShareId>> =
+        observeSharedWithMeIds
+            .map { it.getOrThrow() }
 
-    override fun observeSharedByMeIds(userId: UserId): Flow<List<ShareId>> = observeSharedByMeIds
-        .map { it.getOrThrow() }
+    override fun observeSharedByMeIds(userId: UserId, shareFlags: Map<ShareFlag, Boolean>): Flow<List<ShareId>> =
+        observeSharedByMeIds
+            .map { it.getOrThrow() }
 
     override suspend fun batchChangeShareVisibility(userId: UserId, shareVisibilityChanges: Map<ShareId, Boolean>) {}
 

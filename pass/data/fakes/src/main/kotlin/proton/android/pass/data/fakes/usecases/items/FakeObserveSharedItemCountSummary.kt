@@ -36,7 +36,8 @@ class FakeObserveSharedItemCountSummary @Inject constructor() : ObserveSharedIte
         sharedItemCountSummaryFlow.tryEmit(Result.success(value))
     }
 
-    override fun invoke(itemSharedType: ItemSharedType): Flow<ItemCountSummary> =
-        sharedItemCountSummaryFlow.map(Result<ItemCountSummary>::getOrThrow)
+    override fun invoke(itemSharedType: ItemSharedType, includeHiddenVault: Boolean): Flow<ItemCountSummary> =
+        sharedItemCountSummaryFlow
+            .map(Result<ItemCountSummary>::getOrThrow)
 
 }

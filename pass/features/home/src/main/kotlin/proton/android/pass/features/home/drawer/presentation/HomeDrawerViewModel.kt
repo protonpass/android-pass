@@ -52,8 +52,9 @@ class HomeDrawerViewModel @Inject constructor(
         observeVaultsWithItemCount(includeHidden = false)
             .map { list -> list.sortedBy { it.vault.name.lowercase() } }
 
-    private val itemCountSummaryOptionFlow = observeItemCount(applyItemStateToSharedItems = false)
-        .mapLatest(::Some)
+    private val itemCountSummaryOptionFlow =
+        observeItemCount(applyItemStateToSharedItems = false, includeHiddenVault = false)
+            .mapLatest(::Some)
 
     internal val stateFlow: StateFlow<HomeDrawerState> = combine(
         vaultSharesItemsCountFlow,

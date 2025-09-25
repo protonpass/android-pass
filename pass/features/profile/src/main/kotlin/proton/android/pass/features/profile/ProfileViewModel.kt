@@ -160,7 +160,7 @@ class ProfileViewModel @Inject constructor(
     private val upgradeInfoFlow = observeUpgradeInfo().asLoadingResult()
 
     private val itemSummaryUiStateFlow = combine(
-        observeItemCount(itemState = null).asLoadingResult(),
+        observeItemCount(itemState = null, includeHiddenVault = false).asLoadingResult(),
         observeMFACount(),
         upgradeInfoFlow
     ) { itemCountResult, mfaCount, upgradeInfoResult ->

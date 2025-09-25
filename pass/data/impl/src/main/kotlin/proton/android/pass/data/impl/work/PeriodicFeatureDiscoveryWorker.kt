@@ -48,7 +48,7 @@ class PeriodicFeatureDiscoveryWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result = runCatching {
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
-        val summary = observeItemCount().firstOrNull()
+        val summary = observeItemCount(includeHiddenVault = true).firstOrNull()
             ?: ItemCountSummary.Initial
         processFileAttachmentsBannerDisplayLogic(summary.total)
         processAliasManagementBannerDisplayLogic(summary.alias)

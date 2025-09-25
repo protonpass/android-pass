@@ -54,7 +54,7 @@ class ObserveUpgradeInfoImpl @Inject constructor(
                         forceRefresh = forceRefresh
                     ),
                     observeMFACount(),
-                    observeItemCount(itemState = null),
+                    observeItemCount(itemState = null, includeHiddenVault = true),
                     observeVaultCount(id)
                 ) { plan, mfaCount, itemCount, vaultCount ->
                     val displayUpgrade = when {

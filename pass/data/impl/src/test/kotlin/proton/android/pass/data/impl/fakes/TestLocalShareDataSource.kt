@@ -116,15 +116,20 @@ class TestLocalShareDataSource : LocalShareDataSource {
     override fun observeById(userId: UserId, shareId: ShareId): Flow<ShareEntity?> =
         observeByIdFlow.map { it.getOrThrow() }
 
-    override fun observeByType(userId: UserId, shareType: ShareType): Flow<List<ShareEntity>> =
-        observeSharesByTypeFlow.map {
-            it.getOrThrow()
-        }
+    override fun observeByType(
+        userId: UserId,
+        shareType: ShareType,
+        includeHidden: Boolean
+    ): Flow<List<ShareEntity>> = observeSharesByTypeFlow.map { it.getOrThrow() }
 
-    override fun observeSharedWithMeIds(userId: UserId): Flow<List<ShareId>> = observeSharedWithMeIds
-        .map { it.getOrThrow() }
+    override fun observeSharedWithMeIds(
+        userId: UserId,
+        includeHidden: Boolean
+    ): Flow<List<ShareId>> = observeSharedWithMeIds.map { it.getOrThrow() }
 
-    override fun observeSharedByMeIds(userId: UserId): Flow<List<ShareId>> = observeSharedByMeIds
-        .map { it.getOrThrow() }
+    override fun observeSharedByMeIds(
+        userId: UserId,
+        includeHidden: Boolean
+    ): Flow<List<ShareId>> = observeSharedByMeIds.map { it.getOrThrow() }
 
 }

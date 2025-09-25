@@ -35,6 +35,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.VaultId
@@ -107,8 +108,7 @@ interface ItemRepository {
         shareSelection: ShareSelection,
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter = ItemTypeFilter.All,
-        setFlags: Int? = null,
-        clearFlags: Int? = null
+        itemFlags: Map<ItemFlag, Boolean>
     ): Flow<List<Item>>
 
     fun observeEncryptedItems(
@@ -116,8 +116,7 @@ interface ItemRepository {
         shareSelection: ShareSelection,
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter = ItemTypeFilter.All,
-        setFlags: Int? = null,
-        clearFlags: Int? = null
+        itemFlags: Map<ItemFlag, Boolean>
     ): Flow<List<ItemEncrypted>>
 
     fun observePinnedItems(
@@ -184,12 +183,14 @@ interface ItemRepository {
 
     suspend fun purgePendingEvent(event: ItemPendingEvent): Boolean
 
+    @Suppress("LongParameterList")
     fun observeItemCountSummary(
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?,
         onlyShared: Boolean,
-        applyItemStateToSharedItems: Boolean
+        applyItemStateToSharedItems: Boolean,
+        includeHiddenVault: Boolean
     ): Flow<ItemCountSummary>
 
     fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>>
@@ -234,9 +235,17 @@ interface ItemRepository {
         itemId: ItemId
     )
 
-    fun observeSharedByMeEncryptedItems(userId: UserId, itemState: ItemState?): Flow<List<ItemEncrypted>>
+    fun observeSharedByMeEncryptedItems(
+        userId: UserId,
+        itemState: ItemState?,
+        includeHiddenVault: Boolean
+    ): Flow<List<ItemEncrypted>>
 
-    fun observeSharedWithMeEncryptedItems(userId: UserId, itemState: ItemState?): Flow<List<ItemEncrypted>>
+    fun observeSharedWithMeEncryptedItems(
+        userId: UserId,
+        itemState: ItemState?,
+        includeHiddenVault: Boolean
+    ): Flow<List<ItemEncrypted>>
 }
 
 data class VaultProgress(

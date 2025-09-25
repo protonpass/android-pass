@@ -37,7 +37,10 @@ class FakeObserveEncryptedSharedItems @Inject constructor() : ObserveEncryptedSh
         sharedItemsFlow.tryEmit(value)
     }
 
-    override fun invoke(itemSharedType: ItemSharedType, itemState: ItemState?): Flow<List<ItemEncrypted>> =
-        sharedItemsFlow
+    override fun invoke(
+        itemSharedType: ItemSharedType,
+        itemState: ItemState?,
+        includeHiddenVault: Boolean
+    ): Flow<List<ItemEncrypted>> = sharedItemsFlow
 
 }

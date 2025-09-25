@@ -128,6 +128,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.items.ItemSharedType
@@ -351,7 +352,8 @@ class HomeViewModel @Inject constructor(
                     observeEncryptedItems(
                         selection = ShareSelection.AllShares,
                         itemState = ItemState.Active,
-                        filter = ItemTypeFilter.All
+                        filter = ItemTypeFilter.All,
+                        shareFlags = mapOf(ShareFlag.IsHidden to false)
                     )
                 }
 
@@ -359,7 +361,8 @@ class HomeViewModel @Inject constructor(
                     observeEncryptedItems(
                         selection = ShareSelection.AllShares,
                         itemState = ItemState.Trashed,
-                        filter = ItemTypeFilter.All
+                        filter = ItemTypeFilter.All,
+                        shareFlags = mapOf(ShareFlag.IsHidden to false)
                     )
                 }
 
@@ -367,7 +370,8 @@ class HomeViewModel @Inject constructor(
                     observeEncryptedItems(
                         selection = ShareSelection.Share(vaultSelectionOption.shareId),
                         itemState = ItemState.Active,
-                        filter = ItemTypeFilter.All
+                        filter = ItemTypeFilter.All,
+                        shareFlags = mapOf(ShareFlag.IsHidden to false)
                     )
                 }
 
@@ -461,7 +465,9 @@ class HomeViewModel @Inject constructor(
     }.flowOn(appDispatchers.default)
 
     private val pinningUiStateFlow = combine(
-        observePinnedItems().asLoadingResult(),
+        observePinnedItems(
+            shareFlags = mapOf(ShareFlag.IsHidden to false)
+        ).asLoadingResult(),
         searchOptionsFlow,
         isInSeeAllPinsModeState,
         debouncedSearchQueryState

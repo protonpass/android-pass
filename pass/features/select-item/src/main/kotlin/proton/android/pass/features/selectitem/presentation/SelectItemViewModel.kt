@@ -97,6 +97,7 @@ import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.features.selectitem.navigation.SelectItemState
@@ -330,7 +331,8 @@ class SelectItemViewModel @Inject constructor(
                     observePinnedItems(
                         userId = userId,
                         filter = selectItemState.value.itemTypeFilter,
-                        shareSelection = ShareSelection.Shares(usableVaults.map { it.id })
+                        shareSelection = ShareSelection.Shares(usableVaults.map { it.id }),
+                        shareFlags = mapOf(ShareFlag.IsHidden to false)
                     )
                 }
                 combine(flows) { it.toList().flatten() }

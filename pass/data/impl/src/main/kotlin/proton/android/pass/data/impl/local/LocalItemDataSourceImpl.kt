@@ -39,9 +39,11 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultId
+import proton.android.pass.domain.foldFlags
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
+import kotlin.collections.map
 
 @Suppress("TooManyFunctions")
 class LocalItemDataSourceImpl @Inject constructor(
@@ -393,8 +395,6 @@ class LocalItemDataSourceImpl @Inject constructor(
 
         ItemTypeFilter.All -> null
     }
-
-    private fun foldFlags(flags: List<ItemFlag>): Int = flags.fold(0) { acc, flag -> acc or flag.value }
 
     private companion object {
 

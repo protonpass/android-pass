@@ -150,7 +150,8 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         shareSelection: ShareSelection,
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter,
-        itemFlags: Map<ItemFlag, Boolean>
+        itemFlags: Map<ItemFlag, Boolean>,
+        shareFlags: Map<ShareFlag, Boolean>
     ): Flow<List<Item>> = observeItemListFlow
 
     override fun observeEncryptedItems(
@@ -158,7 +159,8 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         shareSelection: ShareSelection,
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter,
-        itemFlags: Map<ItemFlag, Boolean>
+        itemFlags: Map<ItemFlag, Boolean>,
+        shareFlags: Map<ShareFlag, Boolean>
     ): Flow<List<ItemEncrypted>> = observeItemEncryptedListFlow
 
     override fun observeSharedByMeEncryptedItems(
@@ -176,7 +178,8 @@ class TestItemRepository @Inject constructor() : ItemRepository {
     override fun observePinnedItems(
         userId: UserId,
         shareSelection: ShareSelection,
-        itemTypeFilter: ItemTypeFilter
+        itemTypeFilter: ItemTypeFilter,
+        shareFlags: Map<ShareFlag, Boolean>
     ): Flow<List<Item>> {
         TODO("Not yet implemented")
     }

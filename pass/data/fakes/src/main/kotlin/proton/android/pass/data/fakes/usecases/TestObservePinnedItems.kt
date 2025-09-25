@@ -37,6 +37,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.ShareType
@@ -59,7 +60,8 @@ class TestObservePinnedItems @Inject constructor() : ObservePinnedItems {
     override fun invoke(
         userId: UserId?,
         filter: ItemTypeFilter,
-        shareSelection: ShareSelection
+        shareSelection: ShareSelection,
+        shareFlags: Map<ShareFlag, Boolean>
     ): Flow<List<Item>> = flow
 
     data class DefaultValues(

@@ -41,6 +41,7 @@ import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.PersonalDetailsContent
+import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.ShareType
@@ -72,7 +73,8 @@ class FakeObserveEncryptedItems @Inject constructor() : ObserveEncryptedItems {
         itemState: ItemState?,
         filter: ItemTypeFilter,
         userId: UserId?,
-        itemFlags: Map<ItemFlag, Boolean>
+        itemFlags: Map<ItemFlag, Boolean>,
+        shareFlags: Map<ShareFlag, Boolean>
     ): Flow<List<ItemEncrypted>> {
         val params = Params(
             selection = selection,

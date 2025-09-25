@@ -76,7 +76,8 @@ class DeleteVaultViewModel @Inject constructor(
     private val sharedItemsCountFlow = observeEncryptedItems(
         selection = ShareSelection.Share(shareId),
         itemState = ItemState.Active,
-        filter = ItemTypeFilter.All
+        filter = ItemTypeFilter.All,
+        shareFlags = emptyMap()
     ).mapLatest { encryptedItems ->
         encryptedItems.filter { it.isShared }.size
     }

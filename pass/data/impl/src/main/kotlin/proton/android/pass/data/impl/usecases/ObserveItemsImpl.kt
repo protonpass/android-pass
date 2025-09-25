@@ -30,6 +30,7 @@ import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareSelection
 import javax.inject.Inject
 
@@ -44,7 +45,8 @@ class ObserveItemsImpl @Inject constructor(
         itemState: ItemState?,
         filter: ItemTypeFilter,
         userId: UserId?,
-        itemFlags: Map<ItemFlag, Boolean>
+        itemFlags: Map<ItemFlag, Boolean>,
+        shareFlags: Map<ShareFlag, Boolean>
     ): Flow<List<Item>> = syncStatusRepository.observeSyncState()
         .filter { syncState -> !syncState.isVisibleSyncing }
         .flatMapLatest {
@@ -56,7 +58,8 @@ class ObserveItemsImpl @Inject constructor(
                             selection = selection,
                             itemState = itemState,
                             filter = filter,
-                            itemFlags = itemFlags
+                            itemFlags = itemFlags,
+                            shareFlags = shareFlags
                         )
                     }
             } else {
@@ -65,7 +68,8 @@ class ObserveItemsImpl @Inject constructor(
                     selection = selection,
                     itemState = itemState,
                     filter = filter,
-                    itemFlags = itemFlags
+                    itemFlags = itemFlags,
+                    shareFlags = shareFlags
                 )
             }
         }
@@ -76,12 +80,14 @@ class ObserveItemsImpl @Inject constructor(
         selection: ShareSelection,
         itemState: ItemState?,
         filter: ItemTypeFilter,
-        itemFlags: Map<ItemFlag, Boolean>
+        itemFlags: Map<ItemFlag, Boolean>,
+        shareFlags: Map<ShareFlag, Boolean>
     ): Flow<List<Item>> = itemRepository.observeItems(
         userId = userId,
         shareSelection = selection,
         itemState = itemState,
         itemTypeFilter = filter,
-        itemFlags = itemFlags
+        itemFlags = itemFlags,
+        shareFlags = shareFlags
     )
 }

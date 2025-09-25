@@ -23,6 +23,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareSelection
 
 interface ObserveEncryptedItems {
@@ -32,7 +33,8 @@ interface ObserveEncryptedItems {
         itemState: ItemState?,
         filter: ItemTypeFilter,
         userId: UserId? = null,
-        itemFlags: Map<ItemFlag, Boolean> = emptyMap()
+        itemFlags: Map<ItemFlag, Boolean> = emptyMap(),
+        shareFlags: Map<ShareFlag, Boolean>
     ): Flow<List<ItemEncrypted>>
 
 }

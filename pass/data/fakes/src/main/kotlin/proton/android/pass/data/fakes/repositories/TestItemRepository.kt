@@ -212,11 +212,11 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun clearTrash(userId: UserId) {
+    override suspend fun clearTrash(userId: UserId, shareFlags: Map<ShareFlag, Boolean>) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun restoreItems(userId: UserId) {
+    override suspend fun restoreItems(userId: UserId, shareFlags: Map<ShareFlag, Boolean>) {
         TODO("Not yet implemented")
     }
 

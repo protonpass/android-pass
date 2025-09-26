@@ -43,7 +43,7 @@ class ObserveItemCountImpl @Inject constructor(
         .flatMapLatest { user ->
             itemRepository.observeItemCountSummary(
                 userId = user.userId,
-                shareIds = listOfNotNull(selectedShareId),
+                shareIds = selectedShareId?.let { listOf(it) },
                 itemState = itemState,
                 onlyShared = false,
                 applyItemStateToSharedItems = applyItemStateToSharedItems,

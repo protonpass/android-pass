@@ -57,37 +57,38 @@ class ObserveSecurityAnalysisImpl @Inject constructor(
 
     private val coroutineScope: CoroutineScope = CoroutineScope(dispatchers.default)
 
-    private val securityAnalysisFlow: SharedFlow<SecurityAnalysis> = observeMonitoredItems()
-        .flatMapLatest { items ->
-            combine(
-                oneShot { breachedDataChecker(items) }.asLoadingResult(),
-                oneShot { repeatedPasswordChecker(items) }.map {
-                    ReusedPasswordsResult(it.repeatedPasswordsCount)
-                }.asLoadingResult(),
-                oneShot { insecurePasswordChecker(items) }.map {
-                    InsecurePasswordsResult(it.insecurePasswordsCount)
-                }.asLoadingResult(),
-                oneShot { missing2faChecker(items) }.map {
-                    Missing2faResult(it.missing2faCount)
-                }.asLoadingResult(),
-                ::SecurityAnalysis
-            )
-        }
-        .onStart {
-            emit(
-                SecurityAnalysis(
-                    breachedData = LoadingResult.Loading,
-                    reusedPasswords = LoadingResult.Loading,
-                    insecurePasswords = LoadingResult.Loading,
-                    missing2fa = LoadingResult.Loading
+    private val securityAnalysisFlow: SharedFlow<SecurityAnalysis> =
+        observeMonitoredItems(includeHiddenVaults = false)
+            .flatMapLatest { items ->
+                combine(
+                    oneShot { breachedDataChecker(items) }.asLoadingResult(),
+                    oneShot { repeatedPasswordChecker(items) }.map {
+                        ReusedPasswordsResult(it.repeatedPasswordsCount)
+                    }.asLoadingResult(),
+                    oneShot { insecurePasswordChecker(items) }.map {
+                        InsecurePasswordsResult(it.insecurePasswordsCount)
+                    }.asLoadingResult(),
+                    oneShot { missing2faChecker(items) }.map {
+                        Missing2faResult(it.missing2faCount)
+                    }.asLoadingResult(),
+                    ::SecurityAnalysis
                 )
+            }
+            .onStart {
+                emit(
+                    SecurityAnalysis(
+                        breachedData = LoadingResult.Loading,
+                        reusedPasswords = LoadingResult.Loading,
+                        insecurePasswords = LoadingResult.Loading,
+                        missing2fa = LoadingResult.Loading
+                    )
+                )
+            }
+            .shareIn(
+                scope = coroutineScope,
+                started = SharingStarted.Lazily,
+                replay = 1
             )
-        }
-        .shareIn(
-            scope = coroutineScope,
-            started = SharingStarted.Lazily,
-            replay = 1
-        )
 
     override fun invoke(): Flow<SecurityAnalysis> = securityAnalysisFlow.distinctUntilChanged()
 

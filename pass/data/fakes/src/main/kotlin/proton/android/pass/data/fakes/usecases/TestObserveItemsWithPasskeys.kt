@@ -36,5 +36,9 @@ class TestObserveItemsWithPasskeys @Inject constructor() : ObserveItemsWithPassk
         flow.tryEmit(value)
     }
 
-    override fun invoke(userId: UserId?, shareSelection: ShareSelection): Flow<List<Item>> = flow
+    override fun invoke(
+        userId: UserId?,
+        shareSelection: ShareSelection,
+        includeHiddenVault: Boolean
+    ): Flow<List<Item>> = flow
 }

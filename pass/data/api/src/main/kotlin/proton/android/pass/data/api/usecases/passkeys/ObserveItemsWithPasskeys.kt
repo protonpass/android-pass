@@ -24,5 +24,9 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ShareSelection
 
 interface ObserveItemsWithPasskeys {
-    operator fun invoke(userId: UserId? = null, shareSelection: ShareSelection): Flow<List<Item>>
+    operator fun invoke(
+        userId: UserId? = null,
+        shareSelection: ShareSelection,
+        includeHiddenVault: Boolean
+    ): Flow<List<Item>>
 }

@@ -53,7 +53,7 @@ class ObserveUpgradeInfoImpl @Inject constructor(
                         userId = id,
                         forceRefresh = forceRefresh
                     ),
-                    observeMFACount(),
+                    observeMFACount(includeHiddenVault = true),
                     observeItemCount(itemState = null, includeHiddenVault = true),
                     observeVaultCount(id)
                 ) { plan, mfaCount, itemCount, vaultCount ->

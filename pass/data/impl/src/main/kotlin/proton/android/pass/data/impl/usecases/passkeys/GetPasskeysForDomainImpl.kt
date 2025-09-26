@@ -57,7 +57,8 @@ class GetPasskeysForDomainImpl @Inject constructor(
         val allItemsWithPasskeys = observeAutofillShares(userId = userId).flatMapLatest {
             observeItemsWithPasskeys(
                 userId = userId,
-                shareSelection = ShareSelection.Shares(it.map { share -> share.id })
+                shareSelection = ShareSelection.Shares(it.map { share -> share.id }),
+                includeHiddenVault = false
             )
         }.first()
 

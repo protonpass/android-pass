@@ -7,7 +7,7 @@
   <string name="action_login">Войти</string>
   <string name="action_alias">Псевдоним</string>
   <string name="action_note">Заметка</string>
-  <string name="action_credit_card">Кредитная карта</string>
+  <string name="action_credit_card">Банковская карта</string>
   <string name="action_password">Пароль</string>
   <string name="action_identity">Личные данные</string>
   <string name="action_more">Еще</string>
@@ -17,7 +17,7 @@
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Безопасно сохранить платежную информацию</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Заполните ваши личные данные</string>
   <string name="item_type_more_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Сохраните WiFi, паспорт, SSH или выберите свой вариант.</string>
-  <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Сгенерировать надежный пароль</string>
+  <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Сгенерировать надёжный пароль</string>
   <!-- Create Login -->
   <string name="field_email_title">Адрес эл. почты</string>
   <string name="field_email_hint">Добавить адрес электронной почты</string>
@@ -35,7 +35,7 @@
   <string name="field_website_address_hint">https://</string>
   <string name="field_website_add_another">Добавить</string>
   <string name="sticky_button_generate_password" comment="Sticky button on the Create login screen. When tapped, the Generate password bottomsheet is shown">Сгенерировать новый пароль</string>
-  <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">Скрыть мою почту</string>
+  <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">Скрыть мой адрес электронной почты</string>
   <string name="sticky_button_use_account_email" comment="Sticky button on the Create login screen. When tapped, the current user email is autofilled">Использовать %s</string>
   <string name="create_login_item_creation_error">Не могу создать логин</string>
   <string name="create_login_item_update_error">Не могу обновить логин</string>
@@ -110,10 +110,10 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Срок действия</string>
-  <string name="field_card_expiration_date_hint">MM/YY</string>
+  <string name="field_card_expiration_date_hint">ММ/ГГ</string>
   <string name="field_card_expiration_date_error">Введите действительную дату в формате ММ/ГГ</string>
   <string name="create_credit_card_item_creation_error">Не могу создать кредитную карту</string>
-  <string name="create_credit_card_item_creation_success">Кредитная карта создана</string>
+  <string name="create_credit_card_item_creation_success">Банковская карта создана</string>
   <string name="credit_card_init_error">Проблема с получением данных о кредитной карте</string>
   <string name="update_credit_card_attachments_init_error">Ошибка при получении вложений кредитной карты</string>
   <string name="credit_card_link_attachments_error">Не удалось привязать или отвязать вложения кредитной карты</string>
@@ -205,12 +205,12 @@
   <string name="banner_title_attachments">Вложения</string>
   <string name="banner_body_attachments">Вы можете прикреплять файлы к элементам для лучшей организации.</string>
   <string name="open_with">Открыть с помощью:</string>
-  <string name="banner_advanced_options_title">Вы знали?</string>
+  <string name="banner_advanced_options_title">Знаете ли вы?</string>
   <string name="banner_advanced_options_subtitle">Нажмите на значок шестеренки, чтобы настроить псевдоним так, как вам нужно.</string>
-  <string name="banner_custom_domain_title">Вы знали?</string>
+  <string name="banner_custom_domain_title">Знаете ли вы?</string>
   <string name="banner_custom_domain_subtitle">Добавляя свой домен, вы можете создавать псевдонимы, такие как hi@my-domain.com.</string>
   <string name="banner_custom_domain_button">Добавить домен</string>
-  <string name="banner_mailbox_title">Вы знали?</string>
+  <string name="banner_mailbox_title">Знаете ли вы?</string>
   <string name="banner_mailbox_subtitle">Поделитесь псевдонимами с другими людьми, добавив их почтовый ящик в качестве дополнительного.</string>
   <string name="banner_mailbox_button">Добавить почтовый ящик</string>
   <!-- Suffix -->
@@ -224,7 +224,7 @@
   <string name="template_item_software_license">Лицензия программного обеспечения</string>
   <string name="template_item_ssh_key">Ключ SSH</string>
   <string name="template_item_wifi_network">Сеть WiFi</string>
-  <string name="template_item_bank_account">Банковский счет</string>
+  <string name="template_item_bank_account">Банковский счёт</string>
   <string name="template_item_crypto_wallet">Криптокошелек</string>
   <string name="template_item_driver_license">Водительские права</string>
   <string name="template_item_medical_record">Медицинская документация</string>
@@ -263,7 +263,7 @@
   <string name="template_wifi_network_field_name">Имя (SSID)</string>
   <!-- Bank Account Fields -->
   <string name="template_bank_account_field_bank_name">Название банка</string>
-  <string name="template_bank_account_field_account_number">Номер счета</string>
+  <string name="template_bank_account_field_account_number">Номер счёта</string>
   <string name="template_bank_account_field_routing_number">Расчетный номер</string>
   <string name="template_bank_account_field_account_type">Тип аккаунта</string>
   <string name="template_bank_account_field_iban">IBAN</string>

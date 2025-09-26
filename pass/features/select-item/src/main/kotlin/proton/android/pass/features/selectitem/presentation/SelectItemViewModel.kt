@@ -230,7 +230,8 @@ class SelectItemViewModel @Inject constructor(
                             userId = userId,
                             filter = state.itemTypeFilter,
                             selection = ShareSelection.Shares(autofillShares.map(Share::id)),
-                            itemState = ItemState.Active
+                            itemState = ItemState.Active,
+                            shareFlags = mapOf(ShareFlag.IsHidden to false)
                         ).map { autofillShares to it.map(ItemData::DefaultItem) }
                     }
                 combine(flows, ItemFilterProcessor::removeDuplicates)
@@ -255,7 +256,8 @@ class SelectItemViewModel @Inject constructor(
                             userId = userId,
                             filter = state.itemTypeFilter,
                             selection = ShareSelection.Shares(autofillShares.map(Share::id)),
-                            itemState = ItemState.Active
+                            itemState = ItemState.Active,
+                            shareFlags = mapOf(ShareFlag.IsHidden to false)
                         )
                             .map { items ->
                                 encryptionContextProvider.withEncryptionContext {

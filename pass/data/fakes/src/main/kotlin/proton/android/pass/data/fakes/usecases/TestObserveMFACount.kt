@@ -32,5 +32,5 @@ class TestObserveMFACount @Inject constructor() : ObserveMFACount {
         observeMFAFlow.tryEmit(value)
     }
 
-    override fun invoke(): Flow<Int> = observeMFAFlow
+    override fun invoke(includeHiddenVault: Boolean): Flow<Int> = observeMFAFlow
 }

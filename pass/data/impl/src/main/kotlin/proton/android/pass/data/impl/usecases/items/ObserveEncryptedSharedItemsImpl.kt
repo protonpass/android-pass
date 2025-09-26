@@ -52,12 +52,7 @@ class ObserveEncryptedSharedItemsImpl @Inject constructor(
 
             ItemSharedType.SharedWithMe -> itemRepository.observeSharedWithMeEncryptedItems(
                 userId = user.userId,
-                itemState = itemState,
-                shareFlags = if (!includeHiddenVault) {
-                    mapOf(ShareFlag.IsHidden to false)
-                } else {
-                    emptyMap()
-                }
+                itemState = itemState
             )
         }
     }

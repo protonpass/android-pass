@@ -54,7 +54,7 @@ class SecurityCenterWeakPassViewModel @Inject constructor(
     }
 
     internal val state: StateFlow<SecurityCenterWeakPassState> = combine(
-        observeMonitoredItems(),
+        observeMonitoredItems(includeHiddenVaults = false),
         userPreferencesRepository.getUseFaviconsPreference(),
         observeVaultsGroupedByShareId(includeHidden = false)
     ) { monitoredItems, useFavIconsPreference, groupedVaults ->

@@ -53,7 +53,7 @@ class SecurityCenterMissingTFAViewModel @Inject constructor(
     }
 
     internal val state: StateFlow<SecurityCenterMissingTFAState> = combine(
-        observeMonitoredItems(),
+        observeMonitoredItems(includeHiddenVaults = false),
         userPreferencesRepository.getUseFaviconsPreference(),
         observeVaultsGroupedByShareId(includeHidden = false)
     ) { monitoredItems, useFavIconsPreference, groupedVaults ->

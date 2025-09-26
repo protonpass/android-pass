@@ -36,6 +36,7 @@ import proton.android.pass.data.impl.util.runConcurrently
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
 import proton.android.pass.securitycenter.api.passwords.MissingTfaChecker
@@ -70,14 +71,16 @@ class SendUserMonitorCredentialsReportImpl @Inject constructor(
                     selection = ShareSelection.Shares(shares),
                     filter = ItemTypeFilter.Logins,
                     itemState = ItemState.Active,
-                    itemFlags = mapOf(ItemFlag.SkipHealthCheck to false)
+                    itemFlags = mapOf(ItemFlag.SkipHealthCheck to false),
+                    shareFlags = mapOf(ShareFlag.IsHidden to false)
                 ).first()
                 val excludedItems = observeItems(
                     userId = userId,
                     selection = ShareSelection.Shares(shares),
                     filter = ItemTypeFilter.Logins,
                     itemState = ItemState.Active,
-                    itemFlags = mapOf(ItemFlag.SkipHealthCheck to true)
+                    itemFlags = mapOf(ItemFlag.SkipHealthCheck to true),
+                    shareFlags = mapOf(ShareFlag.IsHidden to false)
                 ).first()
                 val report = withContext(dispatchers.default) {
                     Report(

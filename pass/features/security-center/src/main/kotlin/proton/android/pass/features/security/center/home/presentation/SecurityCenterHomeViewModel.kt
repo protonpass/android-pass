@@ -36,6 +36,7 @@ import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.breach.Breach
 import proton.android.pass.features.security.center.PassMonitorDisplayHome
@@ -65,7 +66,8 @@ class SecurityCenterHomeViewModel @Inject constructor(
         selection = ShareSelection.AllShares,
         filter = ItemTypeFilter.Logins,
         itemState = ItemState.Active,
-        itemFlags = mapOf(ItemFlag.SkipHealthCheck to true)
+        itemFlags = mapOf(ItemFlag.SkipHealthCheck to true),
+        shareFlags = mapOf(ShareFlag.IsHidden to false)
     )
 
     private val observeBreachesFlow: Flow<LoadingResult<Breach>> = observeAllBreachByUserId()

@@ -32,6 +32,6 @@ class FakeObserveMonitoredItems @Inject constructor() : ObserveMonitoredItems {
         monitoredItemsFlow.tryEmit(newMonitoredItems)
     }
 
-    override fun invoke(): Flow<List<Item>> = monitoredItemsFlow
+    override fun invoke(includeHiddenVaults: Boolean): Flow<List<Item>> = monitoredItemsFlow
 
 }

@@ -23,6 +23,6 @@ import proton.android.pass.domain.Item
 
 interface ObserveMonitoredItems {
 
-    operator fun invoke(): Flow<List<Item>>
+    operator fun invoke(includeHiddenVaults: Boolean): Flow<List<Item>>
 
 }

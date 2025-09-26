@@ -48,6 +48,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.preferences.InternalSettingsRepository
@@ -169,7 +170,8 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
                     userId = userId,
                     filter = itemTypeFilter,
                     selection = ShareSelection.Shares(autofillShares.map(Share::id)),
-                    itemState = ItemState.Active
+                    itemState = ItemState.Active,
+                    shareFlags = mapOf(ShareFlag.IsHidden to false)
                 ),
                 getUrlFromPackageNameFlow(suggestion),
                 userPreferencesRepository.observeUseDigitalAssetLinksPreference().map { it.value() }

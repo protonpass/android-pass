@@ -240,7 +240,8 @@ class SelectItemViewModel @Inject constructor(
                 val flows = usersAutofillShares.map { (userId, usableVaults) ->
                     observeItemsWithPasskeys(
                         userId = userId,
-                        shareSelection = ShareSelection.Shares(usableVaults.map(Share::id))
+                        shareSelection = ShareSelection.Shares(usableVaults.map(Share::id)),
+                        includeHiddenVault = false
                     )
                 }
                 combine(flows) { it.toList().flatten().map(ItemData::DefaultItem) }

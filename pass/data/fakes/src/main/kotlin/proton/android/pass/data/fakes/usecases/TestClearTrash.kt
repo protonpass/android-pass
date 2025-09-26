@@ -32,7 +32,7 @@ class TestClearTrash @Inject constructor() : ClearTrash {
         result = value
     }
 
-    override suspend fun invoke(userId: UserId?) {
+    override suspend fun invoke(userId: UserId?, includeHiddenVault: Boolean) {
         result.getOrThrow()
     }
 }

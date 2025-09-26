@@ -149,8 +149,8 @@ interface ItemRepository {
     suspend fun trashItems(userId: UserId, items: Map<ShareId, List<ItemId>>)
     suspend fun untrashItems(userId: UserId, items: Map<ShareId, List<ItemId>>)
     suspend fun deleteItems(userId: UserId, items: Map<ShareId, List<ItemId>>)
-    suspend fun clearTrash(userId: UserId)
-    suspend fun restoreItems(userId: UserId)
+    suspend fun clearTrash(userId: UserId, shareFlags: Map<ShareFlag, Boolean>)
+    suspend fun restoreItems(userId: UserId, shareFlags: Map<ShareFlag, Boolean>)
     suspend fun addPackageAndUrlToItem(
         userId: UserId,
         shareId: ShareId,

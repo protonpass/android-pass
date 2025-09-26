@@ -25,6 +25,7 @@ import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareSelection
 import javax.inject.Inject
 
@@ -32,11 +33,16 @@ class ObserveMonitoredItemsImpl @Inject constructor(
     private val observeItems: ObserveItems
 ) : ObserveMonitoredItems {
 
-    override fun invoke(): Flow<List<Item>> = observeItems(
+    override fun invoke(includeHiddenVaults: Boolean): Flow<List<Item>> = observeItems(
         selection = ShareSelection.AllShares,
         itemState = ItemState.Active,
         filter = ItemTypeFilter.Logins,
-        itemFlags = mapOf(ItemFlag.SkipHealthCheck to false)
+        itemFlags = mapOf(ItemFlag.SkipHealthCheck to false),
+        shareFlags = if (!includeHiddenVaults) {
+            mapOf(ShareFlag.IsHidden to false)
+        } else {
+            emptyMap()
+        }
     )
 
 }

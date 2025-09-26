@@ -56,7 +56,7 @@ class SecurityCenterReusedPassViewModel @Inject constructor(
 
     internal val state: StateFlow<SecurityCenterReusedPassState> =
         combine(
-            observeMonitoredItems(),
+            observeMonitoredItems(includeHiddenVaults = false),
             userPreferencesRepository.getUseFaviconsPreference(),
             observeVaultsGroupedByShareId(includeHidden = false)
         ) { monitoredItems, useFavIconsPreference, groupedVaults ->

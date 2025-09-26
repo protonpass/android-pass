@@ -23,6 +23,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.RestoreAllItems
+import proton.android.pass.domain.ShareFlag
 import javax.inject.Inject
 
 class RestoreAllItemsImpl @Inject constructor(
@@ -30,13 +31,20 @@ class RestoreAllItemsImpl @Inject constructor(
     private val itemRepository: ItemRepository
 ) : RestoreAllItems {
 
-    override suspend fun invoke(userId: UserId?) {
+    override suspend fun invoke(userId: UserId?, includeHiddenVault: Boolean) {
         val id = if (userId == null) {
             val user = requireNotNull(observeCurrentUser().first())
             user.userId
         } else {
             userId
         }
-        itemRepository.restoreItems(id)
+        itemRepository.restoreItems(
+            userId = id,
+            shareFlags = if (!includeHiddenVault) {
+                mapOf(ShareFlag.IsHidden to false)
+            } else {
+                emptyMap()
+            }
+        )
     }
 }

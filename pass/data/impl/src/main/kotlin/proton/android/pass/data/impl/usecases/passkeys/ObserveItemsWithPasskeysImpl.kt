@@ -42,7 +42,11 @@ class ObserveItemsWithPasskeysImpl @Inject constructor(
     private val shareRepository: ShareRepository,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ObserveItemsWithPasskeys {
-    override fun invoke(userId: UserId?, shareSelection: ShareSelection): Flow<List<Item>> =
+    override fun invoke(
+        userId: UserId?,
+        shareSelection: ShareSelection,
+        includeHiddenVault: Boolean
+    ): Flow<List<Item>> =
         (userId?.let(::flowOf) ?: accountManager.getPrimaryUserId())
             .filterNotNull()
             .flatMapLatest { resolvedUserId ->

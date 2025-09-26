@@ -39,26 +39,23 @@ class ObserveSharedItemCountSummaryImpl @Inject constructor(
     override fun invoke(itemSharedType: ItemSharedType, includeHiddenVault: Boolean): Flow<ItemCountSummary> =
         observeCurrentUser()
             .flatMapLatest { user ->
+                val shareFlags = if (!includeHiddenVault) {
+                    mapOf(ShareFlag.IsHidden to false)
+                } else {
+                    emptyMap()
+                }
                 when (itemSharedType) {
                     ItemSharedType.SharedByMe -> itemRepository.observeSharedByMeEncryptedItems(
                         userId = user.userId,
                         itemState = null,
-                        shareFlags = if (!includeHiddenVault) {
-                            mapOf(ShareFlag.IsHidden to false)
-                        } else {
-                            emptyMap()
-                        }
+                        shareFlags = shareFlags
                     ).mapLatest { encryptedItemsSharedByMe ->
                         encryptedItemsSharedByMe.map { it.shareId }
                     }
 
                     ItemSharedType.SharedWithMe -> shareRepository.observeSharedWithMeIds(
                         userId = user.userId,
-                        shareFlags = if (includeHiddenVault) {
-                            mapOf(ShareFlag.IsHidden to true)
-                        } else {
-                            emptyMap()
-                        }
+                        shareFlags = shareFlags
                     )
                 }.flatMapLatest { sharedShareIds ->
                     itemRepository.observeItemCountSummary(
@@ -67,11 +64,7 @@ class ObserveSharedItemCountSummaryImpl @Inject constructor(
                         itemState = null,
                         onlyShared = true,
                         applyItemStateToSharedItems = false,
-                        shareFlags = if (!includeHiddenVault) {
-                            mapOf(ShareFlag.IsHidden to false)
-                        } else {
-                            emptyMap()
-                        }
+                        shareFlags = shareFlags
                     )
                 }
             }

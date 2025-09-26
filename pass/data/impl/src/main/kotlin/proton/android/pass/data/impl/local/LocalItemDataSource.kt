@@ -107,13 +107,19 @@ interface LocalItemDataSource {
     )
 
     fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>>
+
     suspend fun getItemByAliasEmail(userId: UserId, aliasEmail: String): ItemEntity?
 
     suspend fun getItemsPendingForTotpMigration(): List<ItemEntity>
+
     suspend fun getItemsPendingForPasskeyMigration(): List<ItemEntity>
+
     fun observeItemsWithTotp(userId: UserId, shareIds: List<ShareId>): Flow<List<ItemWithTotp>>
+
     fun countAllItemsWithTotp(userId: UserId, shareIds: List<ShareId>): Flow<Int>
+
     fun observeItemsWithPasskeys(userId: UserId, shareIds: List<ShareId>): Flow<List<ItemEntity>>
+
     suspend fun updateItemFlags(
         shareId: ShareId,
         itemId: ItemId,

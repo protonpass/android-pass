@@ -165,8 +165,11 @@ class TestShareRepository : ShareRepository {
     override fun observeById(userId: UserId, shareId: ShareId): Flow<Share> =
         observeShareByIdFlow.map { it.getOrThrow() }
 
-    override fun observeSharesByType(userId: UserId, shareType: ShareType): Flow<List<Share>> =
-        observeSharesByTypeFlow.map { it.getOrThrow() }
+    override fun observeSharesByType(
+        userId: UserId,
+        shareType: ShareType,
+        includeHidden: Boolean
+    ): Flow<List<Share>> = observeSharesByTypeFlow.map { it.getOrThrow() }
 
     override suspend fun applyUpdateShareEvent(
         userId: UserId,
@@ -183,12 +186,15 @@ class TestShareRepository : ShareRepository {
     override suspend fun getAddressForShareId(userId: UserId, shareId: ShareId): UserAddress =
         getAddressForShareIdResult.getOrThrow()
 
-    override fun observeSharedWithMeIds(userId: UserId): Flow<List<ShareId>> =
-        observeSharedWithMeIds
-            .map { it.getOrThrow() }
+    override fun observeSharedWithMeIds(
+        userId: UserId,
+        includeHiddenVault: Boolean
+    ): Flow<List<ShareId>> = observeSharedWithMeIds.map { it.getOrThrow() }
 
-    override fun observeSharedByMeIds(userId: UserId): Flow<List<ShareId>> = observeSharedByMeIds
-        .map { it.getOrThrow() }
+    override fun observeSharedByMeIds(
+        userId: UserId,
+        includeHiddenVault: Boolean
+    ): Flow<List<ShareId>> = observeSharedByMeIds.map { it.getOrThrow() }
 
     override suspend fun batchChangeShareVisibility(
         userId: UserId,

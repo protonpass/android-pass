@@ -934,7 +934,7 @@ class HomeViewModel @Inject constructor(
 
         val deletedItems = homeUiState.value.homeListUiState.items
         runCatching {
-            clearTrash.invoke()
+            clearTrash.invoke(includeHiddenVault = false)
         }.onSuccess {
             PassLogger.i(TAG, "Trash cleared successfully")
             emitDeletedItems(deletedItems)
@@ -949,7 +949,7 @@ class HomeViewModel @Inject constructor(
     fun restoreAllItems() = viewModelScope.launch {
         actionStateFlow.update { ActionState.Loading() }
         runCatching {
-            restoreAllItems.invoke()
+            restoreAllItems(includeHiddenVault = false)
         }.onSuccess {
             PassLogger.i(TAG, "Items restored successfully")
         }.onFailure {

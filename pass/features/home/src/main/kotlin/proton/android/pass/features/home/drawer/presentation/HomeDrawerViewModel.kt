@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.Some
+import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
@@ -52,7 +53,7 @@ class HomeDrawerViewModel @Inject constructor(
         observeVaultsWithItemCount(includeHidden = false)
             .map { list -> list.sortedBy { it.vault.name.lowercase() } }
 
-    private val itemCountSummaryOptionFlow =
+    private val itemCountSummaryOptionFlow: Flow<Some<ItemCountSummary>> =
         observeItemCount(applyItemStateToSharedItems = false, includeHiddenVault = false)
             .mapLatest(::Some)
 

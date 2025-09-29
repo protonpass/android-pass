@@ -79,8 +79,8 @@ fun IdentityItemForm(
     val isGroupCollapsed = rememberSaveable(saver = isCollapsedSaver()) {
         mutableStateListOf(ContactDetails, WorkDetails)
     }
-    LaunchedEffect(identityUiState.hasReceivedItem()) {
-        if (identityUiState.hasReceivedItem()) {
+    LaunchedEffect(identityUiState.performActionOnContentReceived()) {
+        if (identityUiState.performActionOnContentReceived()) {
             if (identityItemFormState.containsContactDetails()) {
                 isGroupCollapsed.remove(ContactDetails)
             }

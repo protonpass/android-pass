@@ -46,6 +46,7 @@ internal fun CreditCardOptionsBottomSheetContents(
     isRecentSearch: Boolean = false,
     isFreePlan: Boolean,
     canUpdate: Boolean,
+    canClone: Boolean,
     canViewHistory: Boolean,
     onCopyNumber: (String) -> Unit,
     onCopyCvv: (EncryptedString) -> Unit,
@@ -54,7 +55,7 @@ internal fun CreditCardOptionsBottomSheetContents(
     onUnpinned: (ShareId, ItemId) -> Unit,
     onViewHistory: (ShareId, ItemId) -> Unit,
     onEdit: (ShareId, ItemId) -> Unit,
-    onDuplicate: (ShareId, ItemId) -> Unit,
+    onClone: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit
 ) {
@@ -94,7 +95,9 @@ internal fun CreditCardOptionsBottomSheetContents(
                 add(edit(itemUiModel, onEdit))
             }
 
-            add(clone { onDuplicate(itemUiModel.shareId, itemUiModel.id) })
+            if (canClone) {
+                add(clone { onClone(itemUiModel.shareId, itemUiModel.id) })
+            }
 
             if (canUpdate) {
                 add(moveToTrash(itemUiModel, onMoveToTrash))
@@ -186,11 +189,12 @@ internal fun CreditCardOptionsBottomSheetContentsPreview(
                 onUnpinned = { _, _ -> },
                 onViewHistory = { _, _ -> },
                 onEdit = { _, _ -> },
-                onDuplicate = { _, _ -> },
+                onClone = { _, _ -> },
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },
                 isFreePlan = input.second,
                 canUpdate = true,
+                canClone = true,
                 canViewHistory = true
             )
         }

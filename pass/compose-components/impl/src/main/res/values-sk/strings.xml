@@ -38,8 +38,7 @@
   <string name="bottomsheet_delete_permanently">Odstrániť natrvalo</string>
   <string name="bottomsheet_restore">Obnoviť</string>
   <string name="bottomsheet_leave">Opustiť</string>
-  <string name="bottomsheet_duplicate">Duplikovať</string>
-  <string name="bottomsheet_no_actions">Žiadne akcie k dispozícii</string>
+    <string name="bottomsheet_no_actions">Žiadne akcie k dispozícii</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Otvoriť ponuku akcií položky</string>
   <string name="action_upgrade_now">Navýšiť teraz</string>

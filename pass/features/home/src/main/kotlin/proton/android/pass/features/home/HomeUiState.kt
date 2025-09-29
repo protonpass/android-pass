@@ -245,6 +245,8 @@ internal data class HomeListUiState(
 
     fun checkCanUpdate(shareId: ShareId): Boolean = shares[shareId]?.canBeUpdated == true
 
+    fun checkCanClone(shareId: ShareId): Boolean = shares[shareId]?.canBeCloned == true
+
     fun canViewHistory(shareId: ShareId): Boolean = shares[shareId]?.canBeHistoryViewed == true
 
     fun canBeDeleted(shareId: ShareId): Boolean = shares[shareId]?.canBeDeleted == true

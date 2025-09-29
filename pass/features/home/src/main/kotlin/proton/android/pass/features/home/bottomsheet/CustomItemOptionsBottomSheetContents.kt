@@ -55,13 +55,14 @@ internal fun CustomItemOptionsBottomSheetContents(
     itemUiModel: ItemUiModel,
     isFreePlan: Boolean,
     canUpdate: Boolean,
+    canClone: Boolean,
     canViewHistory: Boolean,
     action: BottomSheetItemAction,
     isRecentSearch: Boolean = false,
     onPinned: (ShareId, ItemId) -> Unit,
     onUnpinned: (ShareId, ItemId) -> Unit,
     onViewHistory: (ShareId, ItemId) -> Unit,
-    onDuplicate: (ShareId, ItemId) -> Unit,
+    onClone: (ShareId, ItemId) -> Unit,
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit
@@ -87,7 +88,9 @@ internal fun CustomItemOptionsBottomSheetContents(
                 add(edit(itemUiModel, onEdit))
             }
 
-            add(clone { onDuplicate(itemUiModel.shareId, itemUiModel.id) })
+            if (canClone) {
+                add(clone { onClone(itemUiModel.shareId, itemUiModel.id) })
+            }
 
             if (canUpdate) {
                 add(moveToTrash(itemUiModel, onMoveToTrash))
@@ -145,11 +148,12 @@ internal fun CustomItemOptionsContentsPreview(
                 onUnpinned = { _, _ -> },
                 onViewHistory = { _, _ -> },
                 onEdit = { _, _ -> },
-                onDuplicate = { _, _ -> },
+                onClone = { _, _ -> },
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },
                 isFreePlan = input.second,
                 canUpdate = true,
+                canClone = true,
                 canViewHistory = true
             )
         }

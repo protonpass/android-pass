@@ -69,6 +69,8 @@ sealed class Share {
 
     abstract val canBeUpdated: Boolean
 
+    abstract val canBeCloned: Boolean
+
     protected abstract val permission: SharePermission
 
     data class Item(
@@ -100,6 +102,8 @@ sealed class Share {
         override val canBeTrashed: Boolean = isOwner || isAdmin || isEditor
 
         override val canBeUpdated: Boolean = isOwner || isAdmin || isEditor
+
+        override val canBeCloned: Boolean = isOwner || isAdmin
 
         val isSharingAvailable: Boolean = isOwner || isAdmin || isEditor
 
@@ -143,6 +147,9 @@ sealed class Share {
 
         override val canBeUpdated: Boolean
             get() = shareRole.toPermissions().canUpdate()
+
+        override val canBeCloned: Boolean
+            get() = shareRole.toPermissions().canClone()
 
     }
 

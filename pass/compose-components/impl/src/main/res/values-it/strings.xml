@@ -36,8 +36,7 @@
   <string name="bottomsheet_delete_permanently">Elimina definitivamente</string>
   <string name="bottomsheet_restore">Reimposta</string>
   <string name="bottomsheet_leave">Abbandona</string>
-  <string name="bottomsheet_duplicate">Duplica</string>
-  <string name="bottomsheet_no_actions">Nessuna azione disponibile</string>
+    <string name="bottomsheet_no_actions">Nessuna azione disponibile</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Menu azioni per l\'elemento</string>
   <string name="action_upgrade_now">Effettua l\'upgrade</string>

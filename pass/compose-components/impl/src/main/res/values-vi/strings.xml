@@ -35,8 +35,7 @@
   <string name="bottomsheet_delete_permanently">Xóa vĩnh viễn</string>
   <string name="bottomsheet_restore">Khôi phục</string>
   <string name="bottomsheet_leave">Thoát</string>
-  <string name="bottomsheet_duplicate">Duplicate</string>
-  <string name="bottomsheet_no_actions">Không có hành động nào khả dụng</string>
+    <string name="bottomsheet_no_actions">Không có hành động nào khả dụng</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Mở menu hành động mục</string>
   <string name="action_upgrade_now">Nâng cấp ngay</string>

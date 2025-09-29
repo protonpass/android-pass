@@ -36,8 +36,7 @@
   <string name="bottomsheet_delete_permanently">Dauerhaft löschen</string>
   <string name="bottomsheet_restore">Wiederherstellen</string>
   <string name="bottomsheet_leave">Verlassen</string>
-  <string name="bottomsheet_duplicate">Duplizieren</string>
-  <string name="bottomsheet_no_actions">Keine Aktionen verfügbar</string>
+    <string name="bottomsheet_no_actions">Keine Aktionen verfügbar</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Aktionsmenü für Eintrag öffnen.</string>
   <string name="action_upgrade_now">Jetzt upgraden</string>

@@ -36,8 +36,7 @@
   <string name="bottomsheet_delete_permanently">Kalıcı olarak sil</string>
   <string name="bottomsheet_restore">Geri yükle</string>
   <string name="bottomsheet_leave">Bırak</string>
-  <string name="bottomsheet_duplicate">Çoğalt</string>
-  <string name="bottomsheet_no_actions">Kullanılabilecek bir işlem yok</string>
+    <string name="bottomsheet_no_actions">Kullanılabilecek bir işlem yok</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Öge işlem menüsünü aç</string>
   <string name="action_upgrade_now">Şimdi yükselt</string>

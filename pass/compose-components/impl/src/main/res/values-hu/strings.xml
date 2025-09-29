@@ -36,8 +36,7 @@
   <string name="bottomsheet_delete_permanently">Végleges törlés</string>
   <string name="bottomsheet_restore">Visszaállítás</string>
   <string name="bottomsheet_leave">Elhagyás</string>
-  <string name="bottomsheet_duplicate">Megkettőzés</string>
-  <string name="bottomsheet_no_actions">Nincs elérhető művelet</string>
+    <string name="bottomsheet_no_actions">Nincs elérhető művelet</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Az elem művelet menüjének megnyitása</string>
   <string name="action_upgrade_now">Váltás nagyobb csomagra</string>

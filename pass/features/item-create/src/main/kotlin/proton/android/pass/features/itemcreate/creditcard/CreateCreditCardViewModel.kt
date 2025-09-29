@@ -167,7 +167,7 @@ class CreateCreditCardViewModel @Inject constructor(
                 number = itemContents.number,
                 cvv = UIHiddenState.Concealed(itemContents.cvv.encrypted),
                 pin = UIHiddenState.Concealed(itemContents.pin.encrypted),
-                expirationDate = itemContents.expirationDate,
+                expirationDate = ExpirationDateProtoMapper.fromProto(itemContents.expirationDate),
                 customFields = customFieldHandler.sanitiseForEditingCustomFields(customFields)
             )
         }

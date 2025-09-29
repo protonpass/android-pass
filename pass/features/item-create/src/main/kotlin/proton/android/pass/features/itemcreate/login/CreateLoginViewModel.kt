@@ -74,6 +74,7 @@ import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.work.WorkerItem
 import proton.android.pass.data.api.work.WorkerLauncher
 import proton.android.pass.domain.CustomField
+import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
@@ -242,12 +243,17 @@ class CreateLoginViewModel @Inject constructor(
         encryptionContextProvider.withEncryptionContextSuspendable {
             val itemContents = item.toItemContents<ItemContents.Login> { decrypt(it) }
             val customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
+            val passwordHiddenState = when (val hiddenState = itemContents.password) {
+                is HiddenState.Empty -> UIHiddenState.Empty(hiddenState.encrypted)
+                is HiddenState.Concealed,
+                is HiddenState.Revealed -> UIHiddenState.Concealed(hiddenState.encrypted)
+            }
             loginItemFormMutableState = currentValue.copy(
                 title = context.getString(R.string.title_duplicate, decrypt(item.title)),
                 note = decrypt(item.note),
                 email = itemContents.itemEmail,
                 username = itemContents.itemUsername,
-                password = UIHiddenState.Concealed(itemContents.password.encrypted),
+                password = passwordHiddenState,
                 passwordStrength = passwordStrengthCalculator.calculateStrength(
                     password = decrypt(itemContents.password.encrypted)
                 ),

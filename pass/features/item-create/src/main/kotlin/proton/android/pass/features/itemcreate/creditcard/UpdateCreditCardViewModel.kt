@@ -29,7 +29,6 @@ import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.RenameAttachments
 import proton.android.pass.domain.Item
-import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.areItemContentsEqual
@@ -134,7 +133,7 @@ class UpdateCreditCardViewModel @Inject constructor(
         encryptionContextProvider.withEncryptionContextSuspendable {
             val default = CreditCardItemFormState.default(this)
             if (creditCardItemFormState.compare(default, this)) {
-                val formState = CreditCardItemFormState(item.toItemContents<ItemContents.CreditCard> { decrypt(it) })
+                val formState = CreditCardItemFormState(item.toItemContents { decrypt(it) })
                 originalCustomFields = formState.customFields
                 val expirationDate = ExpirationDateProtoMapper.fromProto(formState.expirationDate)
                 creditCardItemFormMutableState = formState.copy(

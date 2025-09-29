@@ -24,7 +24,7 @@ import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.copyNote
-import proton.android.pass.composecomponents.impl.bottomsheet.duplicate
+import proton.android.pass.composecomponents.impl.bottomsheet.clone
 import proton.android.pass.composecomponents.impl.bottomsheet.leave
 import proton.android.pass.composecomponents.impl.bottomsheet.migrate
 import proton.android.pass.composecomponents.impl.bottomsheet.monitorExclude
@@ -82,7 +82,7 @@ internal fun ItemDetailsMenuContent(
         }
 
         if (canDuplicateItem) {
-            duplicate(
+            clone(
                 onClick = { onEvent(ItemDetailsMenuUiEvent.OnCloneItemClicked) }
             ).also(::add)
         }

@@ -41,7 +41,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemLis
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemRow
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
-import proton.android.pass.composecomponents.impl.bottomsheet.duplicate
+import proton.android.pass.composecomponents.impl.bottomsheet.clone
 import proton.android.pass.composecomponents.impl.bottomsheet.noOptions
 import proton.android.pass.composecomponents.impl.bottomsheet.pin
 import proton.android.pass.composecomponents.impl.bottomsheet.unpin
@@ -124,7 +124,7 @@ internal fun LoginOptionsBottomSheetContents(
                 add(edit(itemUiModel, onEdit))
             }
 
-            add(duplicate { onDuplicate(itemUiModel.shareId, itemUiModel.id) })
+            add(clone { onDuplicate(itemUiModel.shareId, itemUiModel.id) })
 
             if (canUpdate) {
                 add(moveToTrash(itemUiModel, onMoveToTrash))

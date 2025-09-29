@@ -36,7 +36,8 @@
   <string name="bottomsheet_delete_permanently">Slett permanent</string>
   <string name="bottomsheet_restore">Gjenopprett</string>
   <string name="bottomsheet_leave">Forlat</string>
-    <string name="bottomsheet_no_actions">Ingen handlinger tilgjengelig</string>
+  <string name="bottomsheet_duplicate">Dupliser</string>
+  <string name="bottomsheet_no_actions">Ingen handlinger tilgjengelig</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Åpne elementhandlingsmenyen</string>
   <string name="action_upgrade_now">Oppgrader nå</string>

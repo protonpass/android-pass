@@ -122,7 +122,11 @@ class CreateIdentityViewModel @Inject constructor(
         when (shareUiState) {
             is ShareUiState.Error -> IdentityUiState.Error
             is ShareUiState.Loading -> IdentityUiState.Loading
-            is ShareUiState.Success -> IdentityUiState.CreateIdentity(shareUiState, sharedState)
+            is ShareUiState.Success -> IdentityUiState.CreateIdentity(
+                shareUiState = shareUiState,
+                sharedState = sharedState,
+                isCloned = navItemId.isNotEmpty()
+            )
             ShareUiState.NotInitialised -> IdentityUiState.NotInitialised
         }
     }.stateIn(

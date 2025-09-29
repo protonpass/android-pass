@@ -36,8 +36,7 @@
   <string name="bottomsheet_delete_permanently">სამუდამოდ წაშლა</string>
   <string name="bottomsheet_restore">აღდგენა</string>
   <string name="bottomsheet_leave">გასვლა</string>
-  <string name="bottomsheet_duplicate">Duplicate</string>
-  <string name="bottomsheet_no_actions">ქმედებები ხელმისაწვდომი არაა</string>
+    <string name="bottomsheet_no_actions">ქმედებები ხელმისაწვდომი არაა</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">ელემენტის ქმედების მენიუს გახსნა</string>
   <string name="action_upgrade_now">ტარიფის განახლება</string>

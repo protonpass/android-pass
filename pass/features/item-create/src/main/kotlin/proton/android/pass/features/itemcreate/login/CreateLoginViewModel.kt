@@ -253,7 +253,10 @@ class CreateLoginViewModel @Inject constructor(
                 ),
                 urls = itemContents.urls,
                 packageInfoSet = itemContents.packageInfoSet.map { PackageInfoUi(it) }.toSet(),
-                primaryTotp = UIHiddenState.Concealed(itemContents.primaryTotp.encrypted),
+                primaryTotp = UIHiddenState.Revealed(
+                    encrypted = itemContents.primaryTotp.encrypted,
+                    clearText = decrypt(itemContents.primaryTotp.encrypted)
+                ),
                 customFields = customFieldHandler.sanitiseForEditingCustomFields(customFields),
                 passkeys = itemContents.passkeys.map { UIPasskeyContent.from(it) }
             )

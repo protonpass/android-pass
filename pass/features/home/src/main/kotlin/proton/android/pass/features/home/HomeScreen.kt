@@ -273,6 +273,7 @@ fun HomeScreen(
                     LoginOptionsBottomSheetContents(
                         itemUiModel = item,
                         canUpdate = homeUiState.homeListUiState.checkCanUpdate(item.shareId),
+                        canClone = homeUiState.homeListUiState.checkCanClone(item.shareId),
                         canViewHistory = homeUiState.homeListUiState.canViewHistory(item.shareId),
                         isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
                         canLoadExternalImages = homeUiState.homeListUiState.canLoadExternalImages,
@@ -317,10 +318,10 @@ fun HomeScreen(
                                 onNavigateEvent(HomeNavigation.EditLogin(shareId, itemId))
                             }
                         },
-                        onDuplicate = remember {
+                        onClone = remember {
                             { shareId, itemId ->
                                 scope.launch { bottomSheetState.hide() }
-                                onNavigateEvent(HomeNavigation.DuplicateLogin(shareId, itemId))
+                                onNavigateEvent(HomeNavigation.CloneLogin(shareId, itemId))
                             }
                         },
                         onMoveToTrash = remember {
@@ -412,6 +413,7 @@ fun HomeScreen(
                     NoteOptionsBottomSheetContents(
                         itemUiModel = item,
                         canUpdate = homeUiState.homeListUiState.checkCanUpdate(item.shareId),
+                        canClone = homeUiState.homeListUiState.checkCanClone(item.shareId),
                         canViewHistory = homeUiState.homeListUiState.canViewHistory(item.shareId),
                         isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
                         action = homeUiState.action,
@@ -443,7 +445,7 @@ fun HomeScreen(
                                 onNavigateEvent(HomeNavigation.EditNote(shareId, itemId))
                             }
                         },
-                        onDuplicate = remember {
+                        onClone = remember {
                             { shareId, itemId ->
                                 scope.launch { bottomSheetState.hide() }
                                 onNavigateEvent(HomeNavigation.DuplicateNote(shareId, itemId))
@@ -473,6 +475,7 @@ fun HomeScreen(
                     CreditCardOptionsBottomSheetContents(
                         itemUiModel = item,
                         canUpdate = homeUiState.homeListUiState.checkCanUpdate(item.shareId),
+                        canClone = homeUiState.homeListUiState.checkCanClone(item.shareId),
                         canViewHistory = homeUiState.homeListUiState.canViewHistory(item.shareId),
                         isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
                         action = homeUiState.action,
@@ -513,7 +516,7 @@ fun HomeScreen(
                                 onNavigateEvent(HomeNavigation.EditCreditCard(shareId, itemId))
                             }
                         },
-                        onDuplicate = remember {
+                        onClone = remember {
                             { shareId, itemId ->
                                 scope.launch { bottomSheetState.hide() }
                                 onNavigateEvent(HomeNavigation.DuplicateCreditCard(shareId, itemId))
@@ -543,6 +546,7 @@ fun HomeScreen(
                     IdentityOptionsBottomSheetContents(
                         itemUiModel = item,
                         canUpdate = homeUiState.homeListUiState.checkCanUpdate(item.shareId),
+                        canClone = homeUiState.homeListUiState.checkCanClone(item.shareId),
                         canViewHistory = homeUiState.homeListUiState.canViewHistory(item.shareId),
                         isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
                         action = homeUiState.action,
@@ -567,7 +571,7 @@ fun HomeScreen(
                             scope.launch { bottomSheetState.hide() }
                             onNavigateEvent(HomeNavigation.EditIdentity(shareId, itemId))
                         },
-                        onDuplicate = { shareId, itemId ->
+                        onClone = { shareId, itemId ->
                             scope.launch { bottomSheetState.hide() }
                             onNavigateEvent(HomeNavigation.DuplicateIdentity(shareId, itemId))
                         },
@@ -588,6 +592,7 @@ fun HomeScreen(
                     CustomItemOptionsBottomSheetContents(
                         itemUiModel = item,
                         canUpdate = homeUiState.homeListUiState.checkCanUpdate(item.shareId),
+                        canClone = homeUiState.homeListUiState.checkCanClone(item.shareId),
                         canViewHistory = homeUiState.homeListUiState.canViewHistory(item.shareId),
                         isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
                         action = homeUiState.action,
@@ -608,7 +613,7 @@ fun HomeScreen(
                             scope.launch { bottomSheetState.hide() }
                             onNavigateEvent(HomeNavigation.EditCustomItem(shareId, itemId))
                         },
-                        onDuplicate = { shareId, itemId ->
+                        onClone = { shareId, itemId ->
                             scope.launch { bottomSheetState.hide() }
                             onNavigateEvent(HomeNavigation.DuplicateCustomItem(shareId, itemId))
                         },

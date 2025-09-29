@@ -36,8 +36,7 @@
   <string name="bottomsheet_delete_permanently">Slet permanent</string>
   <string name="bottomsheet_restore">Gendan</string>
   <string name="bottomsheet_leave">Forlad</string>
-  <string name="bottomsheet_duplicate">Dublet</string>
-  <string name="bottomsheet_no_actions">Ingen tilgængelige handlinger</string>
+    <string name="bottomsheet_no_actions">Ingen tilgængelige handlinger</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Åbn handlingsmenu for element</string>
   <string name="action_upgrade_now">Opgradér nu</string>

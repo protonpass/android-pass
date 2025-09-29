@@ -36,8 +36,7 @@
   <string name="bottomsheet_delete_permanently">Supprimer définitivement</string>
   <string name="bottomsheet_restore">Restaurer</string>
   <string name="bottomsheet_leave">Quitter</string>
-  <string name="bottomsheet_duplicate">Dupliquer</string>
-  <string name="bottomsheet_no_actions">Aucune action n\'est disponible.</string>
+    <string name="bottomsheet_no_actions">Aucune action n\'est disponible.</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Ouvrir le menu d\'action de l\'élément</string>
   <string name="action_upgrade_now">Changer d\'abonnement</string>

@@ -35,7 +35,8 @@
   <string name="bottomsheet_delete_permanently">完全に削除する</string>
   <string name="bottomsheet_restore">復元</string>
   <string name="bottomsheet_leave">退出</string>
-    <string name="bottomsheet_no_actions">操作は利用できません</string>
+  <string name="bottomsheet_duplicate">複製</string>
+  <string name="bottomsheet_no_actions">操作は利用できません</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">アイテム操作メニューを開く</string>
   <string name="action_upgrade_now">今すぐアップグレード</string>

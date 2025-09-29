@@ -38,7 +38,8 @@
   <string name="bottomsheet_delete_permanently">Выдаліць незваротна</string>
   <string name="bottomsheet_restore">Аднавіць</string>
   <string name="bottomsheet_leave">Выйсці</string>
-    <string name="bottomsheet_no_actions">Няма даступных дзеянняў</string>
+  <string name="bottomsheet_duplicate">Дубліраваць</string>
+  <string name="bottomsheet_no_actions">Няма даступных дзеянняў</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Адкрыць меню дзеянняў элемента</string>
   <string name="action_upgrade_now">Палепшыць</string>

@@ -45,7 +45,8 @@ sealed interface IdentityUiState {
     @Immutable
     data class CreateIdentity(
         val shareUiState: ShareUiState,
-        val sharedState: IdentitySharedUiState
+        val sharedState: IdentitySharedUiState,
+        val isCloned: Boolean
     ) : IdentityUiState
 
     @Immutable
@@ -119,7 +120,8 @@ sealed interface IdentityUiState {
         else -> false
     }
 
-    fun hasReceivedItem(): Boolean = when (this) {
+    fun performActionOnContentReceived(): Boolean = when (this) {
+        is CreateIdentity -> isCloned
         is UpdateIdentity -> hasReceivedItem
         else -> false
     }

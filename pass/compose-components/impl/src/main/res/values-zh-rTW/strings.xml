@@ -35,7 +35,8 @@
   <string name="bottomsheet_delete_permanently">永久刪除</string>
   <string name="bottomsheet_restore">還原</string>
   <string name="bottomsheet_leave">退出</string>
-    <string name="bottomsheet_no_actions">沒有可用的操作</string>
+  <string name="bottomsheet_duplicate">複製</string>
+  <string name="bottomsheet_no_actions">沒有可用的操作</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">開啟項目行為清單</string>
   <string name="action_upgrade_now">立即升級</string>

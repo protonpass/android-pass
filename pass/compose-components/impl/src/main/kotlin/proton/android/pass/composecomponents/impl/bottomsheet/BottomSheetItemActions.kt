@@ -312,7 +312,7 @@ fun leave(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
 
 fun clone(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit = {
-        BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_clone))
+        BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_duplicate))
     }
 
     override val subtitle: @Composable (() -> Unit)? = null

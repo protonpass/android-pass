@@ -36,7 +36,8 @@
   <string name="bottomsheet_delete_permanently">Permanent verwijderen</string>
   <string name="bottomsheet_restore">Herstel</string>
   <string name="bottomsheet_leave">Afsluiten</string>
-    <string name="bottomsheet_no_actions">Geen acties beschikbaar</string>
+  <string name="bottomsheet_duplicate">Dupliceer</string>
+  <string name="bottomsheet_no_actions">Geen acties beschikbaar</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Actiemenu item openen</string>
   <string name="action_upgrade_now">Nu upgraden</string>

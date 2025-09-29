@@ -347,7 +347,7 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
-                is HomeNavigation.DuplicateLogin -> {
+                is HomeNavigation.CloneLogin -> {
                     appNavigator.navigate(
                         CreateLoginNavItem,
                         CreateLoginNavItem.createNavRoute(it.shareId.some(), it.itemId.some())

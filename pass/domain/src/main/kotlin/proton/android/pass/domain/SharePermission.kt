@@ -32,6 +32,8 @@ fun SharePermission.flags(): List<SharePermissionFlag> = SharePermissionFlag.map
 
 fun SharePermission.canUpdate(): Boolean = hasFlag(SharePermissionFlag.Admin) or hasFlag(SharePermissionFlag.Update)
 
+fun SharePermission.canClone(): Boolean = hasFlag(SharePermissionFlag.Admin)
+
 fun SharePermission.canCreate(): Boolean = hasFlag(SharePermissionFlag.Admin) or hasFlag(SharePermissionFlag.Create)
 
 fun SharePermission.canDelete(): Boolean = hasFlag(SharePermissionFlag.Admin) or hasFlag(SharePermissionFlag.Delete)

@@ -264,7 +264,8 @@ class CreateLoginViewModel @Inject constructor(
                     clearText = decrypt(itemContents.primaryTotp.encrypted)
                 ),
                 customFields = customFieldHandler.sanitiseForEditingCustomFields(customFields),
-                passkeys = itemContents.passkeys.map { UIPasskeyContent.from(it) }
+                passkeys = itemContents.passkeys.map { UIPasskeyContent.from(it) },
+                isExpandedByContent = itemContents.itemEmail.isNotBlank() && itemContents.itemUsername.isNotBlank()
             )
         }
     }

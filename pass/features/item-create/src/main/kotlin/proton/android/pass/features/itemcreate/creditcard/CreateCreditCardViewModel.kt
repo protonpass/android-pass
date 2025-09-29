@@ -37,7 +37,6 @@ import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
-import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
@@ -48,8 +47,6 @@ import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
-import proton.android.pass.features.itemcreate.common.UICustomFieldContent
-import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.formprocessor.CreditCardFormProcessorType
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
@@ -155,20 +152,12 @@ class CreateCreditCardViewModel @Inject constructor(
         val itemId = navItemId.value() ?: return
         val item = getItemById(shareId = shareId, itemId = itemId)
 
-        val currentValue = creditCardItemFormState
         encryptionContextProvider.withEncryptionContextSuspendable {
-            val itemContents = item.toItemContents<ItemContents.CreditCard> { decrypt(it) }
-            val customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
-            creditCardItemFormMutableState = currentValue.copy(
+            val formState = CreditCardItemFormState(item.toItemContents { decrypt(it) })
+            creditCardItemFormMutableState = formState.copy(
                 title = context.getString(R.string.title_duplicate, decrypt(item.title)),
-                note = decrypt(item.note),
-                cardHolder = itemContents.cardHolder,
-                type = itemContents.type,
-                number = itemContents.number,
-                cvv = UIHiddenState.Concealed(itemContents.cvv.encrypted),
-                pin = UIHiddenState.Concealed(itemContents.pin.encrypted),
-                expirationDate = ExpirationDateProtoMapper.fromProto(itemContents.expirationDate),
-                customFields = customFieldHandler.sanitiseForEditingCustomFields(customFields)
+                expirationDate = ExpirationDateProtoMapper.fromProto(formState.expirationDate),
+                customFields = customFieldHandler.sanitiseForEditingCustomFields(formState.customFields)
             )
         }
     }

@@ -251,7 +251,7 @@ class CreateLoginViewModel @Inject constructor(
                 passwordStrength = passwordStrengthCalculator.calculateStrength(
                     password = decrypt(itemContents.password.encrypted)
                 ),
-                urls = itemContents.urls,
+                urls = itemContents.urls.ifEmpty { listOf("") },
                 packageInfoSet = itemContents.packageInfoSet.map { PackageInfoUi(it) }.toSet(),
                 primaryTotp = UIHiddenState.Revealed(
                     encrypted = itemContents.primaryTotp.encrypted,

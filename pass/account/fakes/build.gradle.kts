@@ -46,4 +46,8 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
 
     implementation(projects.pass.crypto.api)
+
+    implementation(libs.core.country.domain)
+    implementation(libs.core.payment.presentation)
+
 }

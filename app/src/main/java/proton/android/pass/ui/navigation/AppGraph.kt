@@ -164,6 +164,8 @@ import proton.android.pass.features.migrate.migrateGraph
 import proton.android.pass.features.migrate.warningshared.navigation.MigrateSharedWarningNavItem
 import proton.android.pass.features.onboarding.OnBoarding
 import proton.android.pass.features.onboarding.onBoardingGraph
+import proton.android.pass.features.upsell.v2.navigation.UpsellV2NavItem
+import proton.android.pass.features.upsell.v2.navigation.upsellV2NavGraph
 import proton.android.pass.features.password.GeneratePasswordBottomsheet
 import proton.android.pass.features.password.GeneratePasswordBottomsheetModeValue
 import proton.android.pass.features.password.GeneratePasswordNavigation
@@ -267,9 +269,9 @@ import proton.android.pass.features.sl.sync.shared.navigation.simpleLoginSyncNav
 import proton.android.pass.features.sync.navigation.SyncNavDestination
 import proton.android.pass.features.sync.navigation.SyncNavItem
 import proton.android.pass.features.sync.navigation.syncNavGraph
-import proton.android.pass.features.upsell.navigation.UpsellNavDestination
-import proton.android.pass.features.upsell.navigation.UpsellNavItem
-import proton.android.pass.features.upsell.navigation.upsellNavGraph
+import proton.android.pass.features.upsell.v1.navigation.UpsellNavDestination
+import proton.android.pass.features.upsell.v1.navigation.UpsellNavItem
+import proton.android.pass.features.upsell.v1.navigation.upsellNavGraph
 import proton.android.pass.features.vault.VaultNavigation
 import proton.android.pass.features.vault.bottomsheet.CreateVaultNextAction
 import proton.android.pass.features.vault.bottomsheet.CreateVaultScreen
@@ -307,8 +309,14 @@ fun NavGraphBuilder.appGraph(
                             it.shareId
                         )
 
-                        ItemTypeUiState.Note -> CreateNoteNavItem to CreateNoteNavItem.createNavRoute(it.shareId)
-                        ItemTypeUiState.Alias -> CreateAliasNavItem to CreateAliasNavItem.createNavRoute(it.shareId)
+                        ItemTypeUiState.Note -> CreateNoteNavItem to CreateNoteNavItem.createNavRoute(
+                            it.shareId
+                        )
+
+                        ItemTypeUiState.Alias -> CreateAliasNavItem to CreateAliasNavItem.createNavRoute(
+                            it.shareId
+                        )
+
                         ItemTypeUiState.Password ->
                             GeneratePasswordBottomsheet to GeneratePasswordBottomsheet.buildRoute(
                                 mode = GeneratePasswordBottomsheetModeValue.CopyAndClose
@@ -429,6 +437,7 @@ fun NavGraphBuilder.appGraph(
                     route = AcceptInviteNavItem.createRoute(it.inviteToken),
                     backDestination = HomeNavItem
                 )
+
                 is HomeNavigation.OpenGroupInvite -> appNavigator.navigate(
                     destination = AcceptInviteNavItem,
                     route = AcceptInviteNavItem.createRoute(it.inviteId),
@@ -439,6 +448,11 @@ fun NavGraphBuilder.appGraph(
                 HomeNavigation.SyncDialog -> appNavigator.navigate(
                     destination = SyncNavItem,
                     force = true
+                )
+
+                HomeNavigation.UpsellV2AndOnboarding -> appNavigator.navigate(
+                    destination = UpsellV2NavItem,
+                    route = UpsellV2NavItem.createRoute(displayOnBoardingAfter = true)
                 )
 
                 HomeNavigation.OnBoarding -> appNavigator.navigate(
@@ -927,7 +941,10 @@ fun NavGraphBuilder.appGraph(
                         if (!appNavigator.hasDestinationInStack(SecurityCenterHomeNavItem)) {
                             appNavigator.navigate(
                                 destination = ItemDetailsNavItem,
-                                route = ItemDetailsNavItem.createNavRoute(event.shareId, event.itemId),
+                                route = ItemDetailsNavItem.createNavRoute(
+                                    event.shareId,
+                                    event.itemId
+                                ),
                                 backDestination = HomeNavItem
                             )
                         } else {
@@ -1100,6 +1117,7 @@ fun NavGraphBuilder.appGraph(
                                 route = AddCustomFieldBottomSheetNavItem(prefix).buildRoute()
                             )
                         }
+
                         is CustomFieldNavigation.CustomFieldOptions -> {
                             val prefix = CustomFieldPrefix.fromNote(backDestination)
                             appNavigator.navigate(
@@ -1110,6 +1128,7 @@ fun NavGraphBuilder.appGraph(
                                 )
                             )
                         }
+
                         is CustomFieldNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
                             val prefix = CustomFieldPrefix.fromNote(backDestination)
                             appNavigator.navigate(
@@ -1121,6 +1140,7 @@ fun NavGraphBuilder.appGraph(
                                 backDestination = backDestination
                             )
                         }
+
                         is CustomFieldNavigation.EditCustomField -> dismissBottomSheet {
                             val prefix = CustomFieldPrefix.fromNote(backDestination)
                             appNavigator.navigate(
@@ -1133,8 +1153,10 @@ fun NavGraphBuilder.appGraph(
                                 backDestination = backDestination
                             )
                         }
+
                         CustomFieldNavigation.RemovedCustomField -> dismissBottomSheet {}
                     }
+
                 BaseNoteNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 is BaseNoteNavigation.OpenImagePicker -> {
                     val prefix = CustomFieldPrefix.fromNote(backDestination)
@@ -1144,6 +1166,7 @@ fun NavGraphBuilder.appGraph(
                         backDestination = backDestination
                     )
                 }
+
                 BaseNoteNavigation.TotpCancel -> appNavigator.navigateBack()
                 is BaseNoteNavigation.TotpSuccess ->
                     appNavigator.navigateBackWithResult(it.results)
@@ -1163,12 +1186,14 @@ fun NavGraphBuilder.appGraph(
                         route = SelectVaultBottomsheet.createNavRoute(cevent.shareId)
                     )
                 }
+
                 is BaseNoteNavigation.OnUpdateNoteEvent -> when (val cevent = it.event) {
                     is UpdateNoteNavigation.NoteUpdated -> appNavigator.navigate(
                         destination = ItemDetailsNavItem,
                         route = ItemDetailsNavItem.createNavRoute(cevent.shareId, cevent.itemId),
                         backDestination = HomeNavItem
                     )
+
                     is UpdateNoteNavigation.OpenAttachmentOptions -> appNavigator.navigate(
                         destination = AttachmentOptionsOnEditNavItem,
                         route = AttachmentOptionsOnEditNavItem.createNavRoute(
@@ -1199,6 +1224,7 @@ fun NavGraphBuilder.appGraph(
                         route = SelectVaultBottomsheet.createNavRoute(it.shareId)
                     )
                 }
+
                 is UpdateCreditCardNavigation -> when (it) {
                     is UpdateCreditCardNavigation.ItemUpdated -> appNavigator.navigate(
                         destination = ItemDetailsNavItem,
@@ -1206,6 +1232,7 @@ fun NavGraphBuilder.appGraph(
                         backDestination = HomeNavItem
                     )
                 }
+
                 BaseCreditCardNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 BaseCreditCardNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
                 is BaseCreditCardNavigation.OpenAttachmentOptions ->
@@ -1243,6 +1270,7 @@ fun NavGraphBuilder.appGraph(
                         route = AddCustomFieldBottomSheetNavItem(prefix).buildRoute()
                     )
                 }
+
                 is BaseCreditCardNavigation.CustomFieldOptions -> {
                     val prefix = CustomFieldPrefix.fromCreditCard(backDestination)
                     appNavigator.navigate(
@@ -1253,6 +1281,7 @@ fun NavGraphBuilder.appGraph(
                         )
                     )
                 }
+
                 is BaseCreditCardNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
                     val prefix = CustomFieldPrefix.fromCreditCard(backDestination)
                     appNavigator.navigate(
@@ -1261,6 +1290,7 @@ fun NavGraphBuilder.appGraph(
                         backDestination = backDestination
                     )
                 }
+
                 is BaseCreditCardNavigation.EditCustomField -> dismissBottomSheet {
                     val prefix = CustomFieldPrefix.fromCreditCard(backDestination)
                     appNavigator.navigate(
@@ -1282,6 +1312,7 @@ fun NavGraphBuilder.appGraph(
                         backDestination = backDestination
                     )
                 }
+
                 BaseCreditCardNavigation.RemovedCustomField -> dismissBottomSheet {}
                 BaseCreditCardNavigation.TotpCancel -> appNavigator.navigateBack()
                 is BaseCreditCardNavigation.TotpSuccess ->
@@ -1315,6 +1346,7 @@ fun NavGraphBuilder.appGraph(
                         route = SelectVaultBottomsheet.createNavRoute(event.shareId)
                     )
                 }
+
                 is BaseAliasNavigation.OnUpdateAliasEvent -> when (val event = it.event) {
                     is UpdateAliasNavigation.OpenAttachmentOptions -> appNavigator.navigate(
                         destination = AttachmentOptionsOnEditNavItem,
@@ -1324,12 +1356,14 @@ fun NavGraphBuilder.appGraph(
                             attachmentId = event.attachmentId
                         )
                     )
+
                     is UpdateAliasNavigation.Updated -> appNavigator.navigate(
                         destination = ItemDetailsNavItem,
                         route = ItemDetailsNavItem.createNavRoute(event.shareId, event.itemId),
                         backDestination = HomeNavItem
                     )
                 }
+
                 BaseAliasNavigation.CloseScreen -> appNavigator.navigateBack()
                 BaseAliasNavigation.CloseBottomsheet -> dismissBottomSheet {}
                 BaseAliasNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
@@ -1373,6 +1407,7 @@ fun NavGraphBuilder.appGraph(
                         route = AddCustomFieldBottomSheetNavItem(prefix).buildRoute()
                     )
                 }
+
                 is BaseAliasNavigation.CustomFieldOptions -> {
                     val prefix = CustomFieldPrefix.fromAlias(backDestination)
                     appNavigator.navigate(
@@ -1383,6 +1418,7 @@ fun NavGraphBuilder.appGraph(
                         )
                     )
                 }
+
                 is BaseAliasNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
                     val prefix = CustomFieldPrefix.fromAlias(backDestination)
                     appNavigator.navigate(
@@ -1391,6 +1427,7 @@ fun NavGraphBuilder.appGraph(
                         backDestination = backDestination
                     )
                 }
+
                 is BaseAliasNavigation.EditCustomField -> dismissBottomSheet {
                     val prefix = CustomFieldPrefix.fromAlias(backDestination)
                     appNavigator.navigate(
@@ -1403,6 +1440,7 @@ fun NavGraphBuilder.appGraph(
                         backDestination = backDestination
                     )
                 }
+
                 is BaseAliasNavigation.OpenImagePicker -> {
                     val prefix = CustomFieldPrefix.fromAlias(backDestination)
                     appNavigator.navigate(
@@ -1411,6 +1449,7 @@ fun NavGraphBuilder.appGraph(
                         backDestination = backDestination
                     )
                 }
+
                 BaseAliasNavigation.RemovedCustomField -> dismissBottomSheet {}
                 BaseAliasNavigation.TotpCancel -> appNavigator.navigateBack()
                 is BaseAliasNavigation.TotpSuccess ->
@@ -1567,6 +1606,7 @@ fun NavGraphBuilder.appGraph(
                             )
                     )
                 }
+
                 is BaseIdentityNavigation.OpenImagePicker -> {
                     val prefix = CustomFieldPrefix.fromIdentity(backDestination)
                     appNavigator.navigate(
@@ -2177,9 +2217,47 @@ fun NavGraphBuilder.appGraph(
             }
         }
     )
+    upsellV2NavGraph(
+        onNextScreen = { displayBoarding ->
+            if (displayBoarding) {
+                // do not pass comeFromUpsell = true here
+                // if user has paid, we don't want to go back to that screen anymore
+                appNavigator.navigate(
+                    destination = OnBoarding,
+                    route = OnBoarding.createRoute(comeFromUpsell = false),
+                    force = true
+                )
+            } else {
+                appNavigator.popUpTo(HomeNavItem)
+            }
+        },
+        onSkip = { displayBoarding ->
+            if (displayBoarding) {
+                appNavigator.navigate(
+                    destination = OnBoarding,
+                    route = OnBoarding.createRoute(comeFromUpsell = true)
+                )
+            } else {
+                appNavigator.navigateBack()
+            }
+        },
+        onNavigateBack = { displayBoarding ->
+            if (displayBoarding) {
+                onNavigate(AppNavigation.Finish)
+            } else {
+                appNavigator.navigateBack()
+            }
+        }
+    )
     onBoardingGraph(
         onOnBoardingFinished = { appNavigator.popUpTo(HomeNavItem) },
-        onNavigateBack = { onNavigate(AppNavigation.Finish) }
+        onNavigateBack = { comeFromUpsell ->
+            if (comeFromUpsell) {
+                appNavigator.navigateBack()
+            } else {
+                onNavigate(AppNavigation.Finish)
+            }
+        }
     )
     featureFlagsGraph()
     securityCenterNavGraph(

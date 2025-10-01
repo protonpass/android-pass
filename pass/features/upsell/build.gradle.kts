@@ -26,7 +26,7 @@ plugins {
 }
 
 android {
-    namespace = "proton.android.pass.features.upsell"
+    namespace = "proton.android.pass.features.upsell.v1"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
@@ -89,6 +89,11 @@ dependencies {
     implementation(libs.androidx.compose.uiToolingPreview)
     debugImplementation(libs.androidx.compose.uiTooling)
     debugImplementation(libs.androidx.compose.uiTestManifest)
+
+    implementation(projects.pass.data.api)
+    implementation(libs.androidx.compose.material.icons.core)
+    implementation(projects.pass.commonPresentation.impl)
+    implementation(libs.core.payment.presentation)
 
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.kotlinTest)

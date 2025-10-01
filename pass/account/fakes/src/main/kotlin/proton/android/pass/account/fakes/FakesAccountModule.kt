@@ -40,6 +40,7 @@ import me.proton.core.domain.entity.Product
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.network.domain.ApiClient
+import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.observability.domain.ObservabilityRepository
 import me.proton.core.observability.domain.ObservabilityWorkerManager
@@ -75,6 +76,7 @@ import proton.android.pass.account.fakes.devicemigration.FakeIsEasyDeviceMigrati
 import proton.android.pass.account.fakes.devicemigration.FakeIsEasyDeviceMigrationEnabled
 import proton.android.pass.account.fakes.domain.FakeErrorMessageContext
 import proton.android.pass.account.fakes.network.FakeApiClient
+import proton.android.pass.account.fakes.network.FakeNetworkManager
 import proton.android.pass.account.fakes.network.FakeSessionProvider
 import proton.android.pass.account.fakes.observability.FakeIsObservabilityEnabled
 import proton.android.pass.account.fakes.observability.FakeObservabilityRepository
@@ -166,6 +168,9 @@ abstract class FakesAccountModule {
 
     @Binds
     abstract fun bindFakeApiClient(impl: FakeApiClient): ApiClient
+
+    @Binds
+    abstract fun bindFakeNetworkManager(impl: FakeNetworkManager): NetworkManager
 
     @Binds
     abstract fun bindAccountWorkflowHandler(impl: FakeAccountWorkflowHandler): AccountWorkflowHandler

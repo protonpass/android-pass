@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2024 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -158,4 +158,3 @@ object OnBoardingPageTestTag {
     const val mainButton = "mainButton"
     const val skipButton = "skipButton"
 }
-

@@ -1,8 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application>
         <activity android:name="proton.android.pass.test.HiltComponentActivity" />
+        
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            
+            <!-- Disable problematic initializers for tests -->
+            <meta-data
+                android:name="me.proton.core.network.presentation.init.UnAuthSessionFetcherInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+                
+            <meta-data
+                android:name="proton.android.pass.data.impl.sync.SyncInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+                
+            <meta-data
+                android:name="proton.android.pass.telemetry.impl.startup.TelemetryInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+                
+            <meta-data
+                android:name="proton.android.pass.initializer.LoggerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+                
+            <meta-data
+                android:name="proton.android.pass.tracing.impl.SentryInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+                
+            <meta-data
+                android:name="proton.android.pass.data.impl.migration.DataMigrationInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+                
+            <meta-data
+                android:name="proton.android.pass.initializer.ThemeObserverInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+
+            <meta-data
+                android:name="me.proton.core.plan.presentation.PurchaseHandlerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+            <meta-data
+                android:name="me.proton.core.plan.presentation.UnredeemedPurchaseInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+            <meta-data
+                android:name="me.proton.core.humanverification.presentation.HumanVerificationInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+            <meta-data
+                android:name="me.proton.core.auth.presentation.MissingScopeInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+            <meta-data
+                android:name="me.proton.core.userrecovery.presentation.compose.DeviceRecoveryInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+                
+        </provider>
     </application>
 
 </manifest>

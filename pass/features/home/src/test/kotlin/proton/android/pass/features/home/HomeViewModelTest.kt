@@ -53,6 +53,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveAppNeedsUpdate
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObservePinnedItems
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
+import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestPerformSync
 import proton.android.pass.data.fakes.usecases.TestPinItems
 import proton.android.pass.data.fakes.usecases.TestRestoreAllItems
@@ -110,6 +111,7 @@ internal class HomeViewModelTest {
     private lateinit var observeCurrentUser: TestObserveCurrentUser
     private lateinit var observeCanCreateItems: FakeObserveCanCreateItems
     private lateinit var observeHasShares: FakeObserveHasShares
+    private lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
 
     @Before
     internal fun setup() {
@@ -139,6 +141,7 @@ internal class HomeViewModelTest {
         observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) }
         observeCanCreateItems = FakeObserveCanCreateItems()
         observeHasShares = FakeObserveHasShares()
+        observeUpgradeInfo = TestObserveUpgradeInfo()
         createViewModel()
     }
 
@@ -276,8 +279,8 @@ internal class HomeViewModelTest {
             observeCanCreateItems = observeCanCreateItems,
             observeHasShares = observeHasShares,
             observeDeliverableMinimizedPromoInAppMessages = FakeObserveDeliverableMinimizedPromoInAppMessage()
-                .apply { emitPromoMessage(null) }
+                .apply { emitPromoMessage(null) },
+            observeUpgradeInfo = observeUpgradeInfo
         )
     }
-
 }

@@ -42,6 +42,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.Button
+import proton.android.pass.composecomponents.impl.buttons.LongUpgradeButton
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.home.R
@@ -60,6 +61,15 @@ internal fun HomeDrawerContent(
             .statusBarsPadding()
             .padding(top = Spacing.small)
     ) {
+        if (isUpgradeAvailable) {
+            LongUpgradeButton(
+                modifier = Modifier.padding(horizontal = Spacing.medium),
+                onUpgradeClick = {
+                    onUiEvent(HomeDrawerUiEvent.OnUpgradeClick)
+                }
+            )
+        }
+
         HomeDrawerList(
             modifier = Modifier
                 .fillMaxHeight()

@@ -37,4 +37,5 @@ message FeatureFlagsPreferences {
   BoolFlagPrefProto pass_allow_no_vault = 29;
   BoolFlagPrefProto pass_user_events_v1_enabled = 30;
   BoolFlagPrefProto groups_enabled = 31;
+  BoolFlagPrefProto pass_mobile_on_boarding_V2_enabled = 32;
 }

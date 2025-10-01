@@ -22,6 +22,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.staticCompositionLocalOf
 import me.proton.core.compose.theme.ProtonColors
 import me.proton.core.compose.theme.ProtonShapes
 import me.proton.core.compose.theme.ProtonTheme
@@ -42,7 +43,8 @@ fun PassTheme(
         LocalPassColors provides passColors,
         LocalPassDimens provides passDimens,
         LocalPassShapes provides passShapes,
-        LocalPassTypography provides passTypography
+        LocalPassTypography provides passTypography,
+        LocalDark provides isDark
     ) {
         ProtonTheme(
             isDark = isDark,
@@ -83,3 +85,7 @@ object PassTheme {
         @ReadOnlyComposable
         get() = LocalPassTypography.current
 }
+
+val LocalIsScreenshotTest = staticCompositionLocalOf { false }
+
+val LocalDark = staticCompositionLocalOf { false }

@@ -20,12 +20,15 @@ package proton.android.pass.composecomponents.impl.buttons
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -42,16 +45,21 @@ fun PassOutlinedButton(
     modifier: Modifier = Modifier,
     text: String,
     color: Color = ProtonTheme.colors.brandNorm,
+    style: TextStyle = LocalTextStyle.current,
+    borderColor: Color = color,
     enabled: Boolean = true,
+    maxLines: Int = Int.MAX_VALUE,
+    backgroundColor: Color = ProtonTheme.colors.backgroundNorm,
+    shape: CornerBasedShape = ProtonTheme.shapes.medium,
     onClick: () -> Unit
 ) {
     ProtonButton(
         onClick = onClick,
         modifier = modifier,
-        shape = ProtonTheme.shapes.medium,
-        border = BorderStroke(ButtonDefaults.OutlinedBorderSize, color),
+        shape = shape,
+        border = BorderStroke(ButtonDefaults.OutlinedBorderSize, borderColor),
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = ProtonTheme.colors.backgroundNorm,
+            backgroundColor = backgroundColor,
             contentColor = color
         ),
         elevation = null,
@@ -62,7 +70,9 @@ fun PassOutlinedButton(
             text = text,
             fontWeight = FontWeight.W400,
             fontSize = 16.sp,
-            color = color
+            color = color,
+            maxLines = maxLines,
+            style = style
         )
     }
 }

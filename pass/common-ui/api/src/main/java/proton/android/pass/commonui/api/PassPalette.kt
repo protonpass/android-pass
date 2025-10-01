@@ -18,6 +18,7 @@
 
 package proton.android.pass.commonui.api
 
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 object PassPalette {
@@ -182,4 +183,38 @@ object PassPalette {
 
     val PromoYellow = Color(0xFFDBFF00)
 
+    val gradientBrushDark = Brush.linearGradient(
+        colorStops = arrayOf(
+            0f to BlossomPink,
+            GRADIENT_STEP_1 to Color(color = 0xFF4B3379),
+            GRADIENT_STEP_2 to DarkGunmetal
+        )
+    )
+
+    val gradientBrushLight = Brush.linearGradient(
+        colorStops = arrayOf(
+            0f to BlossomPink,
+            GRADIENT_STEP_1 to Color(color = 0xFFEFD2D8),
+            GRADIENT_STEP_2 to Color(color = 0xFFFBF9FE)
+        )
+    )
+
+    val welcomeGradientDark = Brush.verticalGradient(
+        colorStops = arrayOf(
+            0f to Color(color = 0xFF3B1A64),
+            0.4107f to Color(color = 0xFF2F1354),
+            0.9875f to Color(color = 0xFF250D47)
+        )
+    )
+
+    val welcomeGradientLight = Brush.verticalGradient(
+        colorStops = arrayOf(
+            0f to Color(color = 0xFFD292FF),
+            0.246f to Color(color = 0xFFE6D2EF),
+            0.5671f to Color(color = 0xFFFBF9FE)
+        )
+    )
 }
+
+private const val GRADIENT_STEP_1 = 0.2595f
+private const val GRADIENT_STEP_2 = 0.4416f

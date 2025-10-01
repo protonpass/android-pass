@@ -20,6 +20,7 @@ package proton.android.pass.screenshottests
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
 import com.airbnb.android.showkase.models.Showkase
@@ -29,6 +30,7 @@ import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import proton.android.pass.commonui.api.LocalIsScreenshotTest
 
 data class ComponentPreview(
     private val showkaseBrowserComponent: ShowkaseBrowserComponent
@@ -54,8 +56,12 @@ class PreviewScreenshotTests {
     @Test
     fun preview_tests(@TestParameter(valuesProvider = PreviewProvider::class) componentPreview: ComponentPreview) {
         rule.snapshot {
-            Box {
-                componentPreview.content()
+            CompositionLocalProvider(
+                LocalIsScreenshotTest provides true
+            ) {
+                Box {
+                    componentPreview.content()
+                }
             }
         }
     }

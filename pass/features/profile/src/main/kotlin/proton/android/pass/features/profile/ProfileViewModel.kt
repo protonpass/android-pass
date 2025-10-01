@@ -127,6 +127,7 @@ class ProfileViewModel @Inject constructor(
             AppLockTypePreference.Pin -> UserAppLockSectionState.Pin(time)
             AppLockTypePreference.None -> UserAppLockSectionState.None
         }
+
     }
 
     private val appLockSectionStateFlow: Flow<AppLockSectionState> =

@@ -172,6 +172,7 @@ class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
 
                     PrimaryExist ->
                         PassApp(
+                            supportPayment = state.supportPayment,
                             onNavigate = {
                                 when (it) {
                                     is AppNavigation.Finish -> finish()

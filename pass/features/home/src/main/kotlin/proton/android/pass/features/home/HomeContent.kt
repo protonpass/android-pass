@@ -54,6 +54,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.TestTags.HOME_EMPTY_TAG
 import proton.android.pass.commonui.api.TestTags.HOME_ITEM_LIST_TAG
+import proton.android.pass.composecomponents.impl.buttons.UpgradeIcon
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.AllVaultsIcon
@@ -167,7 +168,16 @@ internal fun HomeContent(
                                         )
                                     }
                                 )
+                            } ?: run {
+                                if (uiState.isUpgradeAvailable) {
+                                    UpgradeIcon(onUpgradeClick = {
+                                        onEvent(
+                                            HomeUiEvent.OnUpgradeClick
+                                        )
+                                    })
+                                }
                             }
+
 
                             val (backgroundColor, iconColor) =
                                 if (uiState.homeListUiState.searchFilterType != SearchFilterType.All) {

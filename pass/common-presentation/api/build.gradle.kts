@@ -42,4 +42,7 @@ dependencies {
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.totp.api)
     implementation(projects.pass.data.api)
+
+    implementation(libs.kotlinx.collections)
+    implementation(libs.core.plan.domain)
 }

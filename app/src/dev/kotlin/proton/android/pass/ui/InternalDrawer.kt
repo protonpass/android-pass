@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.DrawerDefaults.scrimColor
 import androidx.compose.material.ExperimentalMaterialApi
@@ -112,6 +113,7 @@ fun InternalDrawer(
                 elevation = 16.dp
             ) {
                 InternalDrawerContents(
+                    modifier = Modifier.statusBarsPadding(),
                     onOpenFeatureFlag = onOpenFeatureFlag,
                     onAppNavigation = onAppNavigation
                 )

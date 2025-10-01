@@ -46,4 +46,5 @@ sealed interface HomeDrawerUiEvent {
 
     data object OnOrganiseVaultsClick : HomeDrawerUiEvent
 
+    data object OnUpgradeClick : HomeDrawerUiEvent
 }

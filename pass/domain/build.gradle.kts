@@ -12,4 +12,7 @@ dependencies {
     implementation(libs.core.user.domain)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.core.accountManager.domain)
+    implementation(libs.core.plan.domain)
 }

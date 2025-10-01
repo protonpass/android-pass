@@ -20,14 +20,35 @@ package proton.android.pass.features.onboarding
 
 import androidx.activity.compose.BackHandler
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.OptionalNavArgId
 import proton.android.pass.navigation.api.composable
+import proton.android.pass.navigation.api.toPath
 
-object OnBoarding : NavItem(baseRoute = "onboarding", isTopLevel = true)
+object ComeFromUpsellArg : OptionalNavArgId {
+    override val key = "comeFromUpsell"
+    override val navType = NavType.BoolType
+}
 
-fun NavGraphBuilder.onBoardingGraph(onOnBoardingFinished: () -> Unit, onNavigateBack: () -> Unit) {
+object OnBoarding : NavItem(
+    baseRoute = "onboarding",
+    isTopLevel = false,
+    optionalArgIds = listOf(ComeFromUpsellArg)
+) {
+    fun createRoute(comeFromUpsell: Boolean = false): String = buildString {
+        append(baseRoute)
+        val params = mapOf(
+            ComeFromUpsellArg.key to comeFromUpsell
+        )
+        append(params.toPath())
+    }
+}
+
+fun NavGraphBuilder.onBoardingGraph(onOnBoardingFinished: () -> Unit, onNavigateBack: (Boolean) -> Unit) {
     composable(OnBoarding) {
-        BackHandler { onNavigateBack() }
+        val comFromUpsell = it.arguments?.getBoolean(ComeFromUpsellArg.key) ?: false
+        BackHandler { onNavigateBack(comFromUpsell) }
         OnBoardingScreen(
             onBoardingShown = onOnBoardingFinished
         )

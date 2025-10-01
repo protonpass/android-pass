@@ -65,5 +65,11 @@ enum class FeatureFlag(
         description = "Enable group sharing",
         key = "PassGroupInvitesV1",
         isEnabledDefault = false
+    ),
+    PASS_MOBILE_ON_BOARDING_V2(
+        title = "Enable new OnBoarding",
+        description = "Enable new OnBoarding",
+        key = "PassMobileOnboardingV2",
+        isEnabledDefault = false
     )
 }

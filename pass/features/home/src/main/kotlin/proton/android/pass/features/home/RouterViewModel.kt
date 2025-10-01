@@ -22,7 +22,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -30,6 +29,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.combineN
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.ObserveConfirmedInviteToken
@@ -38,6 +38,8 @@ import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverablePro
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageId
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -48,13 +50,15 @@ class RouterViewModel @Inject constructor(
     observeConfirmedInviteToken: ObserveConfirmedInviteToken,
     itemSyncStatusRepository: ItemSyncStatusRepository,
     observeDeliverableModalInAppMessages: ObserveDeliverableModalInAppMessages,
-    observeDeliverablePromoInAppMessages: ObserveDeliverablePromoInAppMessages
+    observeDeliverablePromoInAppMessages: ObserveDeliverablePromoInAppMessages,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
+
 
     internal val routerEventState = MutableSharedFlow<RouterEvent>(replay = 1)
 
     init {
-        combine(
+        combineN(
             userPreferencesRepository.getHasCompletedOnBoarding(),
             observeConfirmedInviteToken()
                 .onEach { inviteTokenOption ->
@@ -66,6 +70,8 @@ class RouterViewModel @Inject constructor(
             itemSyncStatusRepository.observeMode().distinctUntilChanged(),
             observeDeliverableModalInAppMessages(),
             observeDeliverablePromoInAppMessages(),
+            featureFlagsPreferencesRepository
+                .get<Boolean>(FeatureFlag.PASS_MOBILE_ON_BOARDING_V2),
             ::routerEvent
         )
             .distinctUntilChanged()
@@ -79,15 +85,19 @@ class RouterViewModel @Inject constructor(
         }
     }
 
+    @SuppressWarnings("LongParameterList")
     private fun routerEvent(
         hasCompletedOnBoarding: HasCompletedOnBoarding,
         inviteTokenOption: Option<InviteToken>,
         syncMode: SyncMode,
         modalOption: InAppMessage.Modal?,
-        promoOption: InAppMessage.Promo?
+        promoOption: InAppMessage.Promo?,
+        isOnBoardingV2Enabled: Boolean
     ): RouterEvent = when {
         inviteTokenOption is Some -> RouterEvent.ConfirmedInvite(inviteTokenOption.value)
-        hasCompletedOnBoarding == HasCompletedOnBoarding.NotCompleted -> RouterEvent.OnBoarding
+        hasCompletedOnBoarding == HasCompletedOnBoarding.NotCompleted -> {
+            RouterEvent.OnBoarding(isOnBoardingV2Enabled)
+        }
         syncMode == SyncMode.ShownToUser -> RouterEvent.SyncDialog
         promoOption != null ->
             RouterEvent.InAppPromo(promoOption.userId, promoOption.id)
@@ -99,7 +109,7 @@ class RouterViewModel @Inject constructor(
 
 sealed interface RouterEvent {
 
-    data object OnBoarding : RouterEvent
+    data class OnBoarding(val isOnBoardingV2Enabled: Boolean = false) : RouterEvent
 
     data object SyncDialog : RouterEvent
 

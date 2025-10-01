@@ -86,6 +86,7 @@ import proton.android.pass.features.searchoptions.FilterBottomsheetNavItem
 import proton.android.pass.features.searchoptions.SearchOptionsBottomsheetNavItem
 import proton.android.pass.features.searchoptions.SortingBottomsheetNavItem
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
+import proton.android.pass.features.upsell.v2.navigation.UpsellV2NavItem
 import proton.android.pass.inappupdates.api.InAppUpdateState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.AppNavigator
@@ -112,7 +113,8 @@ fun PassAppContent(
     onInAppMessageBannerDisplayed: (InAppMessageKey) -> Unit,
     onInAppMessageBannerCTAClicked: (InAppMessageKey) -> Unit,
     onCompleteUpdate: () -> Unit,
-    needsAuth: Boolean
+    needsAuth: Boolean,
+    supportPayment: Boolean
 ) {
     val context = LocalContext.current
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
@@ -283,7 +285,25 @@ fun PassAppContent(
                                     graph = {
                                         appGraph(
                                             appNavigator = appNavigator,
-                                            onNavigate = onNavigate,
+                                            onNavigate = {
+                                                when (it) {
+                                                    is AppNavigation.Upgrade -> {
+                                                        if (supportPayment) {
+                                                            appNavigator.navigate(
+                                                                destination = UpsellV2NavItem,
+                                                                force = true,
+                                                                route = UpsellV2NavItem.createRoute()
+                                                            )
+                                                        } else {
+                                                            onNavigate(it)
+                                                        }
+                                                    }
+
+                                                    else -> {
+                                                        onNavigate(it)
+                                                    }
+                                                }
+                                            },
                                             dismissBottomSheet = { block ->
                                                 onBottomSheetDismissed(
                                                     coroutineScope = coroutineScope,

@@ -153,6 +153,8 @@ sealed interface HomeNavigation {
 
     data object Upgrade : HomeNavigation
 
+    data object UpsellV2AndOnboarding : HomeNavigation
+
     data object UpgradeDialog : HomeNavigation
 
     data class TrashAlias(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
@@ -173,8 +175,10 @@ sealed interface HomeNavigation {
     @JvmInline
     value class LeaveItemShare(val shareId: ShareId) : HomeNavigation
 
-    data class OpenModalInAppMessage(val userId: UserId, val inAppMessageId: InAppMessageId) : HomeNavigation
+    data class OpenModalInAppMessage(val userId: UserId, val inAppMessageId: InAppMessageId) :
+        HomeNavigation
 
-    data class OpenPromoInAppMessage(val userId: UserId, val inAppMessageId: InAppMessageId) : HomeNavigation
+    data class OpenPromoInAppMessage(val userId: UserId, val inAppMessageId: InAppMessageId) :
+        HomeNavigation
 
 }

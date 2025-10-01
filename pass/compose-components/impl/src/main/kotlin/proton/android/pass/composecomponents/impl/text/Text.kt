@@ -37,10 +37,12 @@ import me.proton.core.compose.theme.headlineNorm
 import me.proton.core.compose.theme.overlineNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.asAnnotatedString
+import proton.android.pass.commonui.api.body3Bold
 import proton.android.pass.commonui.api.body3Medium
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.body3Weak
 
+@SuppressWarnings("TooManyFunctions")
 object Text {
 
     @Composable
@@ -257,6 +259,21 @@ object Text {
         Text(
             text = text,
             style = PassTheme.typography.body3Norm().copy(color = color),
+            modifier = modifier,
+            textAlign = textAlign
+        )
+    }
+
+    @Composable
+    fun Body3Bold(
+        text: String,
+        modifier: Modifier = Modifier,
+        color: Color = ProtonTheme.colors.textNorm,
+        textAlign: TextAlign = TextAlign.Start
+    ) {
+        Text(
+            text = text,
+            style = PassTheme.typography.body3Bold().copy(color = color),
             modifier = modifier,
             textAlign = textAlign
         )

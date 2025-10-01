@@ -195,6 +195,7 @@ import proton.android.pass.data.api.usecases.passwordHistoryEntry.GetPasswordHis
 import proton.android.pass.data.api.usecases.passwordHistoryEntry.ObservePasswordHistoryEntryForUser
 import proton.android.pass.data.api.usecases.passwords.ObservePasswordConfig
 import proton.android.pass.data.api.usecases.passwords.UpdatePasswordConfig
+import proton.android.pass.data.api.usecases.plan.ObservePlansWithPrice
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
@@ -413,6 +414,7 @@ import proton.android.pass.data.fakes.usecases.passwordHistoryEntry.FakeGetPassw
 import proton.android.pass.data.fakes.usecases.passwordHistoryEntry.FakeObservePasswordHistoryEntryForUser
 import proton.android.pass.data.fakes.usecases.passwords.FakeObservePasswordConfig
 import proton.android.pass.data.fakes.usecases.passwords.FakeUpdatePasswordConfig
+import proton.android.pass.data.fakes.usecases.plan.FakeObservePlanWithPrices
 import proton.android.pass.data.fakes.usecases.securelink.FakeDeleteInactiveSecureLinks
 import proton.android.pass.data.fakes.usecases.securelink.FakeDeleteSecureLink
 import proton.android.pass.data.fakes.usecases.securelink.FakeGenerateSecureLink
@@ -1178,4 +1180,6 @@ abstract class FakesDataModule {
     @Binds
     abstract fun bindObserveGroupMembersByGroup(impl: FakeObserveGroupMembersByGroup): ObserveGroupMembersByGroup
 
+    @Binds
+    abstract fun bindGetPlanWithPrices(impl: FakeObservePlanWithPrices): ObservePlansWithPrice
 }

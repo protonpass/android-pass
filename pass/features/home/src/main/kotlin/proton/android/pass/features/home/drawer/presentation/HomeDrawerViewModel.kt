@@ -24,14 +24,17 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
+import proton.android.pass.common.api.getOrNull
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.usecases.ObserveItemCount
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.capabilities.CanOrganiseVaults
@@ -47,7 +50,8 @@ class HomeDrawerViewModel @Inject constructor(
     canOrganiseVaults: CanOrganiseVaults,
     observeVaultsWithItemCount: ObserveVaultsWithItemCount,
     observeItemCount: ObserveItemCount,
-    private val homeSearchOptionsRepository: HomeSearchOptionsRepository
+    private val homeSearchOptionsRepository: HomeSearchOptionsRepository,
+    observeUpgradeInfo: ObserveUpgradeInfo
 ) : ViewModel() {
 
     private val vaultSharesItemsCountFlow: Flow<List<VaultWithItemCount>> =
@@ -61,14 +65,28 @@ class HomeDrawerViewModel @Inject constructor(
             includeHiddenVault = false
         ).mapLatest(::Some)
 
-    internal val stateFlow: StateFlow<HomeDrawerState> = combine(
+    internal val stateFlow: StateFlow<HomeDrawerState> = combineN(
         vaultSharesItemsCountFlow,
         canCreateVault(),
         canOrganiseVaults(),
         homeSearchOptionsRepository.observeVaultSelectionOption(),
         itemCountSummaryOptionFlow,
-        ::HomeDrawerState
-    ).stateIn(
+        observeUpgradeInfo().asLoadingResult()
+    ) { vaultSharesItemsCount,
+        canCreateVaults,
+        canOrganiseVaults,
+        vaultSelectionOption,
+        itemCountSummaryOption,
+        upgradeInfo ->
+        HomeDrawerState(
+            vaultShares = vaultSharesItemsCount,
+            canCreateVaults = canCreateVaults,
+            canOrganiseVaults = canOrganiseVaults,
+            vaultSelectionOption = vaultSelectionOption,
+            itemCountSummaryOption = itemCountSummaryOption,
+            isUpgradeAvailable = upgradeInfo.getOrNull()?.isUpgradeAvailable ?: false
+        )
+    }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000L),
         initialValue = HomeDrawerState.Initial

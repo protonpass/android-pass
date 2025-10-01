@@ -37,6 +37,7 @@ fun OnBoardingScreen(
     onBoardingShown: () -> Unit
 ) {
     val onBoardingUiState by viewModel.onBoardingUiState.collectAsStateWithLifecycle()
+
     LaunchedEffect(onBoardingUiState.event) {
         when (onBoardingUiState.event) {
             OnboardingEvent.OnboardingCompleted -> onBoardingShown()
@@ -45,10 +46,16 @@ fun OnBoardingScreen(
         viewModel.clearEvent()
     }
     val context = LocalContext.current
+
     OnBoardingContent(
         modifier = modifier.testTag(OnBoardingScreenTestTag.screen),
         uiState = onBoardingUiState,
-        onMainButtonClick = { viewModel.onMainButtonClick(it, context.toClassHolder()) },
+        onMainButtonClick = {
+            viewModel.onMainButtonClick(
+                it,
+                context.toClassHolder()
+            )
+        },
         onSkipButtonClick = viewModel::onSkipButtonClick,
         onSelectedPageChanged = viewModel::onSelectedPageChanged
     )
@@ -56,4 +63,5 @@ fun OnBoardingScreen(
 
 object OnBoardingScreenTestTag {
     const val screen = "OnBoardingScreen"
+    const val screenPlan = "OnBoardingScreenPlan"
 }

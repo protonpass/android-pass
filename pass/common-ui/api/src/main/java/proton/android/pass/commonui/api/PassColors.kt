@@ -20,6 +20,7 @@ package proton.android.pass.commonui.api
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 @Immutable
@@ -104,7 +105,10 @@ data class PassColors(
     val bottomSheetBackground: Color,
     val itemDetailBackground: Color,
     val loginIconBorder: Color,
-    val loginIconDisabledMask: Color
+    val loginIconDisabledMask: Color,
+
+    val backgroundBrush: Brush,
+    val backgroundWelcomeBrush: Brush
 
 ) {
     companion object {
@@ -189,7 +193,10 @@ data class PassColors(
             bottomSheetBackground = PassPalette.DarkGunmetal,
             itemDetailBackground = PassPalette.EerieBlack,
             loginIconBorder = PassPalette.White100,
-            loginIconDisabledMask = PassPalette.CharcoalSmoke
+            loginIconDisabledMask = PassPalette.CharcoalSmoke,
+
+            backgroundBrush = PassPalette.gradientBrushDark,
+            backgroundWelcomeBrush = PassPalette.welcomeGradientDark
         )
         val Light = PassColors(
             interactionNormContrast = PassPalette.SmokyBlack,
@@ -270,7 +277,10 @@ data class PassColors(
             bottomSheetBackground = PassPalette.White100,
             itemDetailBackground = PassPalette.White100,
             loginIconBorder = PassPalette.PearlWhite,
-            loginIconDisabledMask = PassPalette.SilverFog
+            loginIconDisabledMask = PassPalette.SilverFog,
+
+            backgroundBrush = PassPalette.gradientBrushLight,
+            backgroundWelcomeBrush = PassPalette.welcomeGradientLight
         )
     }
 }
@@ -344,6 +354,8 @@ val LocalPassColors = staticCompositionLocalOf {
         bottomSheetBackground = Color.Unspecified,
         itemDetailBackground = Color.Unspecified,
         loginIconBorder = Color.Unspecified,
-        loginIconDisabledMask = Color.Unspecified
+        loginIconDisabledMask = Color.Unspecified,
+        backgroundBrush = Brush.linearGradient(),
+        backgroundWelcomeBrush = Brush.linearGradient()
     )
 }

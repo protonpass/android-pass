@@ -99,6 +99,7 @@ import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveEncryptedItems
 import proton.android.pass.data.api.usecases.ObservePinnedItems
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.PinItems
@@ -204,7 +205,8 @@ class HomeViewModel @Inject constructor(
     getUserPlan: GetUserPlan,
     observeCanCreateItems: ObserveCanCreateItems,
     observeHasShares: ObserveHasShares,
-    observeDeliverableMinimizedPromoInAppMessages: ObserveDeliverableMinimizedPromoInAppMessages
+    observeDeliverableMinimizedPromoInAppMessages: ObserveDeliverableMinimizedPromoInAppMessages,
+    observeUpgradeInfo: ObserveUpgradeInfo
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -571,7 +573,8 @@ class HomeViewModel @Inject constructor(
         bottomSheetItemActionFlow,
         preferencesRepository.observeAliasTrashDialogStatusPreference(),
         observeCanCreateItems(),
-        observeHasShares(includeHidden = true)
+        observeHasShares(includeHidden = true),
+        observeUpgradeInfo().asLoadingResult()
     ) { homeListUiState,
         searchUiState,
         userPlan,
@@ -580,7 +583,8 @@ class HomeViewModel @Inject constructor(
         bottomSheetItemAction,
         aliasTrashDialogStatusPreference,
         canCreateItems,
-        hasShares ->
+        hasShares,
+        upgradeInfo ->
         HomeUiState(
             homeListUiState = homeListUiState,
             searchUiState = searchUiState,
@@ -591,14 +595,14 @@ class HomeViewModel @Inject constructor(
             isFreePlan = userPlan.map { plan -> plan.isFreePlan }.getOrNull() != false,
             aliasTrashDialogStatusPreference = aliasTrashDialogStatusPreference,
             canCreateItems = canCreateItems,
-            hasShares = hasShares
+            hasShares = hasShares,
+            isUpgradeAvailable = upgradeInfo.getOrNull()?.isUpgradeAvailable ?: false
         )
-    }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Lazily,
-            initialValue = HomeUiState.Loading
-        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Lazily,
+        initialValue = HomeUiState.Loading
+    )
 
 
     init {

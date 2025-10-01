@@ -32,6 +32,7 @@ import proton.android.pass.commonui.api.PassTheme
 @Composable
 fun PassApp(
     modifier: Modifier = Modifier,
+    supportPayment: Boolean,
     onNavigate: (AppNavigation) -> Unit,
     appViewModel: AppViewModel = hiltViewModel()
 ) {
@@ -65,6 +66,7 @@ fun PassApp(
         },
         onInAppMessageBannerCTAClicked = { inAppMessageKey ->
             appViewModel.onInAppMessageBannerCTAClicked(inAppMessageKey)
-        }
+        },
+        supportPayment = supportPayment
     )
 }

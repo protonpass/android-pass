@@ -32,11 +32,13 @@ sealed interface OnboardingEvent {
     data object OnboardingCompleted : OnboardingEvent
 }
 
+
 @Stable
 data class OnBoardingUiState(
     val selectedPage: Int,
     val enabledPages: ImmutableList<OnBoardingPageName>,
-    val event: OnboardingEvent
+    val event: OnboardingEvent,
+    val isOnBoardingV2Enable: Boolean = false
 ) {
     companion object {
         val Initial = OnBoardingUiState(
@@ -52,32 +54,37 @@ enum class OnBoardingPageName {
     Autofill, Fingerprint, Last, InvitePending
 }
 
-open class OnBoardingUiStatePreviewProvider : PreviewParameterProvider<OnBoardingUiState> {
-    override val values: Sequence<OnBoardingUiState> = sequenceOf(
-        OnBoardingUiState(
-            selectedPage = 0,
-            enabledPages = persistentListOf(Autofill),
-            event = OnboardingEvent.Unknown
-        ),
-        OnBoardingUiState(
-            selectedPage = 0,
-            enabledPages = persistentListOf(Fingerprint),
-            event = OnboardingEvent.Unknown
-        ),
-        OnBoardingUiState(
-            selectedPage = 0,
-            enabledPages = persistentListOf(Last),
-            event = OnboardingEvent.Unknown
-        ),
-        OnBoardingUiState(
-            selectedPage = 0,
-            enabledPages = persistentListOf(Autofill, Fingerprint),
-            event = OnboardingEvent.Unknown
-        ),
-        OnBoardingUiState(
-            selectedPage = 0,
-            enabledPages = persistentListOf(InvitePending),
-            event = OnboardingEvent.Unknown
-        )
+private val onBoardingMock = listOf(
+    OnBoardingUiState(
+        selectedPage = 0,
+        enabledPages = persistentListOf(Autofill),
+        event = OnboardingEvent.Unknown
+    ),
+    OnBoardingUiState(
+        selectedPage = 0,
+        enabledPages = persistentListOf(Fingerprint),
+        event = OnboardingEvent.Unknown
+    ),
+    OnBoardingUiState(
+        selectedPage = 0,
+        enabledPages = persistentListOf(Last),
+        event = OnboardingEvent.Unknown
+    ),
+    OnBoardingUiState(
+        selectedPage = 0,
+        enabledPages = persistentListOf(Autofill, Fingerprint),
+        event = OnboardingEvent.Unknown
+    ),
+    OnBoardingUiState(
+        selectedPage = 0,
+        enabledPages = persistentListOf(InvitePending),
+        event = OnboardingEvent.Unknown
     )
+)
+
+private val onBoardingMockV2 = onBoardingMock.map { it.copy(isOnBoardingV2Enable = true) }
+
+open class OnBoardingUiStatePreviewProvider : PreviewParameterProvider<OnBoardingUiState> {
+    override val values: Sequence<OnBoardingUiState> =
+        (onBoardingMock + onBoardingMockV2).asSequence()
 }

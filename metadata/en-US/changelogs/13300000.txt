@@ -1,0 +1,14 @@
+## 1.33.0 (2025-10-01)
+
+### Features :tada:
+
+- Option to duplicate item.
+
+### Fixes :bug:
+
+- Bug fixes and improvements.
+
+### Other
+
+- Updated translations.
+- Updated core libraries.

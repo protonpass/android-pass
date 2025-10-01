@@ -187,7 +187,14 @@ fun HomeScreen(
 
     DisposableEffect(routerEvent) {
         when (val event = routerEvent) {
-            RouterEvent.OnBoarding -> onNavigateEvent(HomeNavigation.OnBoarding)
+            is RouterEvent.OnBoarding -> {
+                if (event.isOnBoardingV2Enabled) {
+                    onNavigateEvent(HomeNavigation.UpsellV2AndOnboarding)
+                } else {
+                    onNavigateEvent(HomeNavigation.OnBoarding)
+                }
+            }
+
             is RouterEvent.ConfirmedInvite -> HomeNavigation.ConfirmedInvite(
                 inviteToken = event.inviteToken
             ).also(onNavigateEvent)
@@ -199,12 +206,14 @@ fun HomeScreen(
                     inAppMessageId = event.inAppMessageId
                 )
             )
+
             is RouterEvent.InAppModal -> onNavigateEvent(
                 HomeNavigation.OpenModalInAppMessage(
                     userId = event.userId,
                     inAppMessageId = event.inAppMessageId
                 )
             )
+
             RouterEvent.None -> Unit
         }
         onDispose { routerViewModel.clearEvent() }
@@ -819,6 +828,10 @@ fun HomeScreen(
 
                             HomeDrawerUiEvent.OnOrganiseVaultsClick ->
                                 onNavigateEvent(HomeNavigation.OrganiseVaults)
+
+                            HomeDrawerUiEvent.OnUpgradeClick -> {
+                                onNavigateEvent(HomeNavigation.Upgrade)
+                            }
                         }
                     }
                 )
@@ -1039,6 +1052,10 @@ fun HomeScreen(
 
                         HomeUiEvent.OnCreateVaultClick -> {
                             onNavigateEvent(HomeNavigation.CreateVault)
+                        }
+
+                        is HomeUiEvent.OnUpgradeClick -> {
+                            onNavigateEvent(HomeNavigation.Upgrade)
                         }
                     }
                 },

@@ -90,4 +90,6 @@ sealed interface HomeUiEvent {
     data class PromoInAppMessageClick(val userId: UserId, val inAppMessageId: InAppMessageId) : HomeUiEvent
 
     data object OnCreateVaultClick : HomeUiEvent
+
+    data object OnUpgradeClick : HomeUiEvent
 }

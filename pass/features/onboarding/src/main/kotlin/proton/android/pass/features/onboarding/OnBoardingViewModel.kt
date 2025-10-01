@@ -56,6 +56,8 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTypePreference
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -69,7 +71,8 @@ class OnBoardingViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val observeUserAccessData: ObserveUserAccessData,
     private val storeAuthSuccessful: StoreAuthSuccessful,
-    appConfig: AppConfig
+    appConfig: AppConfig,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
     private val isQuest = appConfig.flavor.isQuest()
@@ -77,6 +80,23 @@ class OnBoardingViewModel @Inject constructor(
     val onBoardingUiState: StateFlow<OnBoardingUiState> = _onBoardingUiState
 
     init {
+        viewModelScope.launch {
+            val isOnBoardingV2Enable = featureFlagsPreferencesRepository
+                .get<Boolean>(FeatureFlag.PASS_MOBILE_ON_BOARDING_V2)
+                .firstOrNull()
+                ?: false
+
+            _onBoardingUiState.update {
+                it.copy(
+                    isOnBoardingV2Enable = isOnBoardingV2Enable
+                )
+            }
+
+            initOnBoarding()
+        }
+    }
+
+    private fun initOnBoarding() {
         viewModelScope.launch {
             val showInvitePendingAcceptance = async { shouldShowInvitePendingAcceptance() }
             val autofillStatus = async { autofillManager.getAutofillStatus().firstOrNull() }

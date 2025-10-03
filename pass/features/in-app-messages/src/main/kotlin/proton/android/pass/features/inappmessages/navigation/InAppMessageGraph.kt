@@ -19,7 +19,6 @@
 package proton.android.pass.features.inappmessages.navigation
 
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.features.inappmessages.bottomsheet.navigation.InAppMessageModalDestination
 import proton.android.pass.features.inappmessages.bottomsheet.navigation.InAppMessageModalNavItem
 import proton.android.pass.features.inappmessages.bottomsheet.ui.InAppMessageBottomsheet
 import proton.android.pass.features.inappmessages.promo.navigation.InAppMessagePromoNavItem
@@ -27,7 +26,7 @@ import proton.android.pass.features.inappmessages.promo.ui.InAppMessagePromoScre
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 
-fun NavGraphBuilder.inAppMessageGraph(onNavigate: (InAppMessageModalDestination) -> Unit) {
+fun NavGraphBuilder.inAppMessageGraph(onNavigate: (InAppMessageDestination) -> Unit) {
 
     bottomSheet(navItem = InAppMessageModalNavItem) {
         InAppMessageBottomsheet(onNavigate = onNavigate)

@@ -22,6 +22,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
@@ -48,7 +49,7 @@ internal fun SecurityCenterHomeContent(
     state: SecurityCenterHomeState
 ) = with(state) {
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.systemBarsPadding(),
         topBar = {
             PassExtendedTopBar(
                 modifier = Modifier

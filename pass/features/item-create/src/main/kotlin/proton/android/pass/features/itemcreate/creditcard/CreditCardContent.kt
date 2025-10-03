@@ -1,6 +1,7 @@
 package proton.android.pass.features.itemcreate.creditcard
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -29,7 +30,7 @@ internal fun CreditCardContent(
     onEvent: (CreditCardContentEvent) -> Unit
 ) {
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.systemBarsPadding(),
         topBar = {
             CreateUpdateTopBar(
                 text = topBarActionName,

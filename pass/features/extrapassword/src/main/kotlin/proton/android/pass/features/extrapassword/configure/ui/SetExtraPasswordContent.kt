@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -83,7 +84,9 @@ internal fun SetExtraPasswordContent(
     onEvent: (SetExtraPasswordContentNavEvent) -> Unit
 ) {
     Scaffold(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .systemBarsPadding(),
         topBar = {
             ProtonTopAppBar(
                 backgroundColor = PassTheme.colors.backgroundStrong,

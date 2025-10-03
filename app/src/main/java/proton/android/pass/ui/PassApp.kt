@@ -20,7 +20,6 @@ package proton.android.pass.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -47,7 +46,6 @@ fun PassApp(
     PassAppContent(
         modifier = modifier
             .background(PassTheme.colors.backgroundStrong)
-            .systemBarsPadding()
             .imePadding(),
         appUiState = appUiState,
         needsAuth = needsAuth,

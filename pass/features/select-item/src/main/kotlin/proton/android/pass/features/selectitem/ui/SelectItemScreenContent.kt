@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
@@ -76,7 +77,7 @@ internal fun SelectItemScreenContent(
     }
 
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.systemBarsPadding(),
         floatingActionButton = {
             if (uiState.listUiState.displayCreateButton) {
                 PassFloatingActionButton(

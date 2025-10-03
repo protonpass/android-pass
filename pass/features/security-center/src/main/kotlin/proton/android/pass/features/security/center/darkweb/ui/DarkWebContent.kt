@@ -20,6 +20,7 @@ package proton.android.pass.features.security.center.darkweb.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -43,7 +44,7 @@ internal fun DarkWebContent(
     onEvent: (DarkWebUiEvent) -> Unit
 ) {
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.systemBarsPadding(),
         topBar = {
             val subtitle = state.lastCheckTime.value()?.let { lastCheckTime ->
                 stringResource(

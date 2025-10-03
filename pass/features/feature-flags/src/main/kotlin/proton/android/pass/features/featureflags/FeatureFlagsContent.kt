@@ -20,6 +20,7 @@ package proton.android.pass.features.featureflags
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -35,7 +36,9 @@ fun FeatureFlagsContent(
     onToggle: (FeatureFlag, Boolean) -> Unit
 ) {
     Scaffold(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .systemBarsPadding(),
         topBar = { TopAppBar { Text(text = "Feature Flags") } }
     ) { padding ->
         LazyColumn(Modifier.padding(padding)) {

@@ -68,7 +68,9 @@ data class ContentResponse(
     @SerialName("Message")
     val message: String,
     @SerialName("Cta")
-    val cta: CtaResponse?
+    val cta: CtaResponse?,
+    @SerialName("PromoContents")
+    val promoContents: NotificationPromoContentsResponse?
 )
 
 @Serializable
@@ -79,4 +81,28 @@ data class CtaResponse(
     val type: String,
     @SerialName("Ref")
     val ref: String
+)
+
+@Serializable
+data class NotificationPromoContentsResponse(
+    @SerialName("StartMinimised")
+    val startMinimised: Boolean,
+    @SerialName("ClosePromoText")
+    val closePromoText: String,
+    @SerialName("MinimizedPromoText")
+    val minimizedPromoText: String,
+    @SerialName("LightThemeContents")
+    val lightThemeContents: NotificationPromoThemedContentsResponse,
+    @SerialName("DarkThemeContents")
+    val darkThemeContents: NotificationPromoThemedContentsResponse
+)
+
+@Serializable
+data class NotificationPromoThemedContentsResponse(
+    @SerialName("BackgroundImageUrl")
+    val backgroundImageUrl: String,
+    @SerialName("ContentImageUrl")
+    val contentImageUrl: String,
+    @SerialName("ClosePromoTextColor")
+    val closePromoTextColor: String
 )

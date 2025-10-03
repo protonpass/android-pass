@@ -209,7 +209,8 @@ fun InAppBannerPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                     range = InAppMessageRange(
                         start = Instant.DISTANT_PAST,
                         end = None
-                    )
+                    ),
+                    promoContents = None
                 ),
                 onInternalCTAClick = { _, _, _, _ -> },
                 onExternalCTAClick = { _, _, _, _ -> },

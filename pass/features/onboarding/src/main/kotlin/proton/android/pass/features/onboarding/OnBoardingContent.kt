@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
@@ -66,7 +67,7 @@ fun OnBoardingContent(
     pagerState: PagerState = rememberPagerState(initialPage = 0, pageCount = { uiState.enabledPages.size })
 ) {
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize().systemBarsPadding(),
         verticalArrangement = Arrangement.Bottom
     ) {
         LaunchedEffect(

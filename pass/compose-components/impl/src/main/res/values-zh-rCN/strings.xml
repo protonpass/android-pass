@@ -35,7 +35,7 @@
   <string name="bottomsheet_delete_permanently">永久删除</string>
   <string name="bottomsheet_restore">恢复</string>
   <string name="bottomsheet_leave">退出</string>
-  <string name="bottomsheet_duplicate">复制</string>
+  <string name="bottomsheet_duplicate">Duplicate</string>
   <string name="bottomsheet_no_actions">无可用操作</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">打开操作菜单</string>

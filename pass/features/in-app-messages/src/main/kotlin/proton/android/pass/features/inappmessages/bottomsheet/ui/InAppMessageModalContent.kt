@@ -46,7 +46,7 @@ import proton.android.pass.domain.inappmessages.InAppMessageRange
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
 
 @Composable
-fun InAppMessageContent(
+fun InAppMessageModalContent(
     modifier: Modifier = Modifier,
     inAppMessage: InAppMessage,
     onInternalCTAClick: (String) -> Unit,
@@ -86,7 +86,7 @@ fun InAppMessageContent(
 fun InAppMessageContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            InAppMessageContent(
+            InAppMessageModalContent(
                 inAppMessage = InAppMessage(
                     id = InAppMessageId("q"),
                     key = InAppMessageKey(""),

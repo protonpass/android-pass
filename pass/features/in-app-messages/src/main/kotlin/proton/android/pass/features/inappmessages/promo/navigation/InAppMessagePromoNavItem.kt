@@ -16,14 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.inappmessages.bottomsheet.navigation
+package proton.android.pass.features.inappmessages.promo.navigation
 
-import androidx.navigation.NavType
-import proton.android.pass.navigation.api.NavArgId
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.inappmessages.InAppMessageId
+import proton.android.pass.features.inappmessages.navigation.InAppMessageNavArgId
+import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.NavItem
 
-private const val IN_APP_MESSAGE_KEY = "inAppMessageId"
+object InAppMessagePromoNavItem : NavItem(
+    baseRoute = "inappmessage/promo",
+    navArgIds = listOf(
+        CommonNavArgId.UserId,
+        InAppMessageNavArgId
+    )
+) {
 
-data object InAppMessageNavArgId : NavArgId {
-    override val key = IN_APP_MESSAGE_KEY
-    override val navType = NavType.StringType
+    fun createNavRoute(userId: UserId, inAppMessageId: InAppMessageId) =
+        "$baseRoute/${userId.id}/${inAppMessageId.value}"
+
 }

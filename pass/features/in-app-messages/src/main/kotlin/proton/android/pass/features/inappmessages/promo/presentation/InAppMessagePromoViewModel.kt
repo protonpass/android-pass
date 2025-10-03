@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.inappmessages.bottomsheet.presentation
+package proton.android.pass.features.inappmessages.promo.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -46,7 +46,7 @@ import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 @HiltViewModel
-class InAppMessageModalViewModel @Inject constructor(
+class InAppMessagePromoViewModel @Inject constructor(
     private val workerLauncher: WorkerLauncher,
     private val telemetryManager: TelemetryManager,
     observeInAppMessage: ObserveInAppMessage,
@@ -64,13 +64,13 @@ class InAppMessageModalViewModel @Inject constructor(
     val state = observeInAppMessage(userId, inAppMessageId)
         .asResultWithoutLoading()
         .map { result: LoadingResult<InAppMessage> ->
-            val message = result.getOrNull() ?: return@map InAppMessageModalState.Error
-            InAppMessageModalState.Success(message)
+            val message = result.getOrNull() ?: return@map InAppMessagePromoState.Error
+            InAppMessagePromoState.Success(message)
         }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = InAppMessageModalState.Loading
+            initialValue = InAppMessagePromoState.Loading
         )
 
     fun onInAppMessageDisplayed(key: InAppMessageKey) {
@@ -83,7 +83,7 @@ class InAppMessageModalViewModel @Inject constructor(
 
     override fun onCleared() {
         workerLauncher.launch(WorkerItem.MarkInAppMessageAsDismissed(userId, inAppMessageId))
-        val key = (state.value as? InAppMessageModalState.Success)?.inAppMessage?.key
+        val key = (state.value as? InAppMessagePromoState.Success)?.inAppMessage?.key
         if (key != null) {
             telemetryManager.sendEvent(InAppMessagesChange(key, InAppMessageStatus.Dismissed))
         }

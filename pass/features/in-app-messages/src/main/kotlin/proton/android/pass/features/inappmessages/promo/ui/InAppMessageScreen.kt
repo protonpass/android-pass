@@ -16,28 +16,24 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.inappmessages.bottomsheet.ui
+package proton.android.pass.features.inappmessages.promo.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.features.inappmessages.bottomsheet.navigation.InAppMessageModalDestination
 import proton.android.pass.features.inappmessages.bottomsheet.presentation.InAppMessageModalState
 import proton.android.pass.features.inappmessages.bottomsheet.presentation.InAppMessageModalViewModel
 
 @Composable
-fun InAppMessageBottomsheet(
+fun InAppMessagePromoScreen(
     modifier: Modifier = Modifier,
     viewModel: InAppMessageModalViewModel = hiltViewModel(),
     onNavigate: (InAppMessageModalDestination) -> Unit
 ) {
-
-    val context = LocalContext.current
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     when (state) {
@@ -47,17 +43,9 @@ fun InAppMessageBottomsheet(
                 viewModel.onInAppMessageDisplayed(successState.inAppMessage.key)
             }
 
-            InAppMessageModalContent(
+            InAppMessagePromoContent(
                 modifier = modifier,
                 inAppMessage = successState.inAppMessage,
-                onExternalCTAClick = {
-                    viewModel.onCTAClicked(successState.inAppMessage.key)
-                    BrowserUtils.openWebsite(context, it)
-                },
-                onInternalCTAClick = {
-                    viewModel.onCTAClicked(successState.inAppMessage.key)
-                    onNavigate(InAppMessageModalDestination.DeepLink(it))
-                },
                 onClose = {
                     onNavigate(InAppMessageModalDestination.CloseBottomsheet)
                 }

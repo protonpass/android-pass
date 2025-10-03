@@ -47,7 +47,7 @@ fun InAppMessageBottomsheet(
                 viewModel.onInAppMessageDisplayed(successState.inAppMessage.key)
             }
 
-            InAppMessageContent(
+            InAppMessageModalContent(
                 modifier = modifier,
                 inAppMessage = successState.inAppMessage,
                 onExternalCTAClick = {

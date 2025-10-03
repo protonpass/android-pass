@@ -40,7 +40,7 @@ import proton.android.pass.domain.inappmessages.InAppMessageStatus
 import proton.android.pass.features.inappmessages.InAppMessagesChange
 import proton.android.pass.features.inappmessages.InAppMessagesClick
 import proton.android.pass.features.inappmessages.InAppMessagesDisplay
-import proton.android.pass.features.inappmessages.bottomsheet.navigation.InAppMessageNavArgId
+import proton.android.pass.features.inappmessages.navigation.InAppMessageNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject

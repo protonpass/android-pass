@@ -20,6 +20,7 @@ package proton.android.pass.features.inappmessages.bottomsheet.navigation
 
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.inappmessages.InAppMessageId
+import proton.android.pass.features.inappmessages.navigation.InAppMessageNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType

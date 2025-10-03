@@ -16,17 +16,28 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.inappmessages.bottomsheet.navigation
+package proton.android.pass.features.inappmessages.promo.ui
 
-import androidx.navigation.NavGraphBuilder
-import proton.android.pass.features.inappmessages.bottomsheet.ui.InAppMessageBottomsheet
-import proton.android.pass.navigation.api.bottomSheet
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.domain.inappmessages.InAppMessage
 
+@Composable
+fun InAppMessagePromoContent(
+    modifier: Modifier = Modifier,
+    inAppMessage: InAppMessage,
+    onClose: () -> Unit
+) {
+    Column(
+        modifier = modifier
+            .background(PassTheme.colors.bottomSheetBackground),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
 
-fun NavGraphBuilder.inAppMessageGraph(onNavigate: (InAppMessageModalDestination) -> Unit) {
-
-    bottomSheet(navItem = InAppMessageModalNavItem) {
-        InAppMessageBottomsheet(onNavigate = onNavigate)
     }
 }
 

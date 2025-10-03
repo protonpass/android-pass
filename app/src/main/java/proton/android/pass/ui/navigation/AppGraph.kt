@@ -65,7 +65,7 @@ import proton.android.pass.features.home.HomeNavigation
 import proton.android.pass.features.home.HomeUpgradeDialog
 import proton.android.pass.features.home.homeGraph
 import proton.android.pass.features.inappmessages.bottomsheet.navigation.InAppMessageModalDestination
-import proton.android.pass.features.inappmessages.bottomsheet.navigation.inAppMessageGraph
+import proton.android.pass.features.inappmessages.navigation.inAppMessageGraph
 import proton.android.pass.features.item.details.detail.navigation.ItemDetailsNavItem
 import proton.android.pass.features.item.details.detailforbidden.navigation.ItemDetailsForbiddenNavItem
 import proton.android.pass.features.item.details.detailleave.navigation.ItemDetailsLeaveNavItem

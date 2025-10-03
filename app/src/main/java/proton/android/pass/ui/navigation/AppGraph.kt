@@ -64,7 +64,7 @@ import proton.android.pass.features.home.HomeNavItem
 import proton.android.pass.features.home.HomeNavigation
 import proton.android.pass.features.home.HomeUpgradeDialog
 import proton.android.pass.features.home.homeGraph
-import proton.android.pass.features.inappmessages.bottomsheet.navigation.InAppMessageModalDestination
+import proton.android.pass.features.inappmessages.navigation.InAppMessageDestination
 import proton.android.pass.features.inappmessages.navigation.inAppMessageGraph
 import proton.android.pass.features.item.details.detail.navigation.ItemDetailsNavItem
 import proton.android.pass.features.item.details.detailforbidden.navigation.ItemDetailsForbiddenNavItem
@@ -2805,9 +2805,10 @@ fun NavGraphBuilder.appGraph(
 
     inAppMessageGraph {
         when (it) {
-            InAppMessageModalDestination.CloseBottomsheet -> dismissBottomSheet {}
+            InAppMessageDestination.CloseBottomsheet -> dismissBottomSheet {}
+            InAppMessageDestination.CloseScreen -> appNavigator.navigateBack()
 
-            is InAppMessageModalDestination.DeepLink -> dismissBottomSheet {
+            is InAppMessageDestination.DeepLink -> dismissBottomSheet {
                 if (it.deepLink.isNotBlank()) {
                     appNavigator.navigateToDeeplink(deepLink = it.deepLink)
                 }

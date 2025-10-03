@@ -182,7 +182,7 @@
   <string name="update_identity_item_creation_error">Identitas tidak dapat diperbarui</string>
   <!--  Common create items  -->
   <string name="title_create">Buat</string>
-  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (copied)</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (disalin)</string>
   <string name="changes_saved">Perubahan disimpan</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Kunci rahasia 2FA (TOTP)</string>

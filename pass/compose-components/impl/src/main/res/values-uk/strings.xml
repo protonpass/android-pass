@@ -38,7 +38,7 @@
   <string name="bottomsheet_delete_permanently">Видалити остаточно</string>
   <string name="bottomsheet_restore">Відновити</string>
   <string name="bottomsheet_leave">Покинути</string>
-  <string name="bottomsheet_duplicate">Дублювати</string>
+  <string name="bottomsheet_duplicate">Duplicate</string>
   <string name="bottomsheet_no_actions">Немає доступних дій</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Відкрити меню дій елемента</string>

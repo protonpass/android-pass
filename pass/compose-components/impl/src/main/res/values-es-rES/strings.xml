@@ -36,7 +36,7 @@
   <string name="bottomsheet_delete_permanently">Eliminar permanentemente</string>
   <string name="bottomsheet_restore">Restaurar</string>
   <string name="bottomsheet_leave">Abandonar</string>
-  <string name="bottomsheet_duplicate">Duplicar</string>
+  <string name="bottomsheet_duplicate">Duplicate</string>
   <string name="bottomsheet_no_actions">No hay acciones disponibles.</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Abrir el menú de acciones del elemento</string>

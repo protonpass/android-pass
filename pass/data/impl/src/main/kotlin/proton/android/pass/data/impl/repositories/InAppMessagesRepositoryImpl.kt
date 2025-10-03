@@ -67,7 +67,18 @@ class InAppMessagesRepositoryImpl @Inject constructor(
 
                 local.storeMessages(userId, allMessages)
 
-                preloadImages(context, allMessages.mapNotNull { it.imageUrl.value() }.toSet())
+                val promoImages = allMessages
+                    .mapNotNull { it.promoContents.value() }
+                    .flatMap { promo ->
+                        listOf(
+                            promo.lightThemeContents.backgroundImageUrl,
+                            promo.lightThemeContents.contentImageUrl,
+                            promo.darkThemeContents.backgroundImageUrl,
+                            promo.darkThemeContents.contentImageUrl
+                        )
+                    }
+                val regularImages = allMessages.mapNotNull { it.imageUrl.value() }
+                preloadImages(context, (promoImages + regularImages).toSet())
             }.onFailure {
                 PassLogger.w(TAG, "Failed to fetch in-app messages for user $userId")
                 PassLogger.w(TAG, it)

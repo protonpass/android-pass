@@ -24,6 +24,7 @@ import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
 import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.impl.db.PassDatabase
@@ -34,6 +35,8 @@ import proton.android.pass.domain.inappmessages.InAppMessageCTAType
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageKey
 import proton.android.pass.domain.inappmessages.InAppMessageMode
+import proton.android.pass.domain.inappmessages.InAppMessagePromoContents
+import proton.android.pass.domain.inappmessages.InAppMessagePromoThemedContents
 import proton.android.pass.domain.inappmessages.InAppMessageRange
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
 import javax.inject.Inject
@@ -81,8 +84,42 @@ private fun InAppMessageEntity.toDomain(): InAppMessage = InAppMessage(
         start = Instant.fromEpochSeconds(rangeStart),
         end = rangeEnd?.let(Instant.Companion::fromEpochSeconds).toOption()
     ),
-    userId = UserId(userId)
+    userId = UserId(userId),
+    promoContents = toPromoContents()
 )
+
+@Suppress("ComplexCondition")
+private fun InAppMessageEntity.toPromoContents(): Option<InAppMessagePromoContents> = if (
+    promoStartMinimized != null &&
+    promoCloseText != null &&
+    promoMinimizedText != null &&
+    promoLightBackgroundUrl != null &&
+    promoLightContentUrl != null &&
+    promoLightCloseTextColor != null &&
+    promoDarkBackgroundUrl != null &&
+    promoDarkContentUrl != null &&
+    promoDarkCloseTextColor != null
+) {
+    Some(
+        InAppMessagePromoContents(
+            startMinimised = promoStartMinimized,
+            closePromoText = promoCloseText,
+            minimizedPromoText = promoMinimizedText,
+            lightThemeContents = InAppMessagePromoThemedContents(
+                backgroundImageUrl = promoLightBackgroundUrl,
+                contentImageUrl = promoLightContentUrl,
+                closePromoTextColor = promoLightCloseTextColor
+            ),
+            darkThemeContents = InAppMessagePromoThemedContents(
+                backgroundImageUrl = promoDarkBackgroundUrl,
+                contentImageUrl = promoDarkContentUrl,
+                closePromoTextColor = promoDarkCloseTextColor
+            )
+        )
+    )
+} else {
+    None
+}
 
 private fun InAppMessage.toEntity(): InAppMessageEntity = InAppMessageEntity(
     id = id.value,
@@ -98,5 +135,14 @@ private fun InAppMessage.toEntity(): InAppMessageEntity = InAppMessageEntity(
     state = state.value,
     rangeStart = range.start.epochSeconds,
     rangeEnd = range.end.map(Instant::epochSeconds).value(),
-    userId = userId.id
+    userId = userId.id,
+    promoStartMinimized = promoContents.map(InAppMessagePromoContents::startMinimised).value(),
+    promoCloseText = promoContents.map(InAppMessagePromoContents::closePromoText).value(),
+    promoMinimizedText = promoContents.map(InAppMessagePromoContents::minimizedPromoText).value(),
+    promoLightBackgroundUrl = promoContents.map { it.lightThemeContents.backgroundImageUrl }.value(),
+    promoLightContentUrl = promoContents.map { it.lightThemeContents.contentImageUrl }.value(),
+    promoLightCloseTextColor = promoContents.map { it.lightThemeContents.closePromoTextColor }.value(),
+    promoDarkBackgroundUrl = promoContents.map { it.darkThemeContents.backgroundImageUrl }.value(),
+    promoDarkContentUrl = promoContents.map { it.darkThemeContents.contentImageUrl }.value(),
+    promoDarkCloseTextColor = promoContents.map { it.darkThemeContents.closePromoTextColor }.value()
 )

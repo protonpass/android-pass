@@ -63,7 +63,26 @@ data class InAppMessageEntity(
     @ColumnInfo(name = Columns.RANGE_END)
     val rangeEnd: Long?,
     @ColumnInfo(name = Columns.USER_ID, index = true)
-    val userId: String
+    val userId: String,
+
+    @ColumnInfo(name = Columns.PROMO_START_MINIMIZED)
+    val promoStartMinimized: Boolean?,
+    @ColumnInfo(name = Columns.PROMO_CLOSE_TEXT)
+    val promoCloseText: String?,
+    @ColumnInfo(name = Columns.PROMO_MINIMIZED_TEXT)
+    val promoMinimizedText: String?,
+    @ColumnInfo(name = Columns.PROMO_LIGHT_BG_URL)
+    val promoLightBackgroundUrl: String?,
+    @ColumnInfo(name = Columns.PROMO_LIGHT_CONTENT_URL)
+    val promoLightContentUrl: String?,
+    @ColumnInfo(name = Columns.PROMO_LIGHT_CLOSE_COLOR)
+    val promoLightCloseTextColor: String?,
+    @ColumnInfo(name = Columns.PROMO_DARK_BG_URL)
+    val promoDarkBackgroundUrl: String?,
+    @ColumnInfo(name = Columns.PROMO_DARK_CONTENT_URL)
+    val promoDarkContentUrl: String?,
+    @ColumnInfo(name = Columns.PROMO_DARK_CLOSE_COLOR)
+    val promoDarkCloseTextColor: String?
 ) {
     object Columns {
         const val ID = "id"
@@ -80,6 +99,16 @@ data class InAppMessageEntity(
         const val RANGE_START = "range_start"
         const val RANGE_END = "range_end"
         const val USER_ID = "user_id"
+
+        const val PROMO_START_MINIMIZED = "promo_start_minimized"
+        const val PROMO_CLOSE_TEXT = "promo_close_text"
+        const val PROMO_MINIMIZED_TEXT = "promo_minimized_text"
+        const val PROMO_LIGHT_BG_URL = "promo_light_bg_url"
+        const val PROMO_LIGHT_CONTENT_URL = "promo_light_content_url"
+        const val PROMO_LIGHT_CLOSE_COLOR = "promo_light_close_text_color"
+        const val PROMO_DARK_BG_URL = "promo_dark_bg_url"
+        const val PROMO_DARK_CONTENT_URL = "promo_dark_content_url"
+        const val PROMO_DARK_CLOSE_COLOR = "promo_dark_close_text_color"
     }
 
     companion object {

@@ -56,7 +56,8 @@ object TestInAppMessage {
         state = state,
         range = range,
         userId = userId,
-        priority = priority
+        priority = priority,
+        promoContents = None
     )
 
     fun createInAppMessageRange(start: Instant = Clock.System.now(), end: Option<Instant> = None): InAppMessageRange =

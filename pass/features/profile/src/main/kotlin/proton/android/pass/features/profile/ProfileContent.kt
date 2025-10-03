@@ -31,6 +31,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
@@ -67,7 +68,9 @@ internal fun ProfileContent(
     var isExpanded by remember { mutableStateOf(false) }
     Box(modifier.fillMaxSize()) {
         Scaffold(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .systemBarsPadding(),
             topBar = {
                 ProtonTopAppBar(
                     backgroundColor = PassTheme.colors.backgroundStrong,

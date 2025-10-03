@@ -21,6 +21,7 @@ package proton.android.pass.features.sharing.manage
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -46,7 +47,7 @@ fun ManageVaultContent(
     onPendingInvitesClick: () -> Unit
 ) {
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.systemBarsPadding(),
         topBar = {
             BackArrowTopAppBar(
                 title = "",

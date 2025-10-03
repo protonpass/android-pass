@@ -19,6 +19,7 @@
 package proton.android.pass.features.itemcreate.custom.createupdate.ui
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -38,7 +39,7 @@ internal fun CustomContent(
     onEvent: (ItemContentEvent) -> Unit
 ) {
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.systemBarsPadding(),
         topBar = {
             CreateUpdateTopBar(
                 text = topBarActionName,

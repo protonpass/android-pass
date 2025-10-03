@@ -20,6 +20,7 @@ package proton.android.pass.features.settings
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
@@ -46,7 +47,7 @@ fun LogViewContent(
     onShareLogsClick: () -> Unit
 ) {
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.systemBarsPadding(),
         topBar = {
             BackArrowTopAppBar(
                 title = stringResource(R.string.view_logs_title),

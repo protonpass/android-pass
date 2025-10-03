@@ -20,6 +20,7 @@ package proton.android.pass.features.secure.links.create.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -54,7 +55,7 @@ internal fun SecureLinksCreateContent(
     }
 
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.systemBarsPadding(),
         topBar = {
             PassExtendedTopBar(
                 title = stringResource(id = R.string.secure_links_create_title),

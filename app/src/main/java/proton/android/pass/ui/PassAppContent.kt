@@ -81,6 +81,7 @@ import proton.android.pass.features.featureflags.FeatureFlagRoute
 import proton.android.pass.features.home.HomeNavItem
 import proton.android.pass.features.inappmessages.banner.ui.InAppMessageBanner
 import proton.android.pass.features.inappmessages.bottomsheet.navigation.InAppMessageModalNavItem
+import proton.android.pass.features.inappmessages.promo.navigation.InAppMessagePromoNavItem
 import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomSheetMode
 import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomsheetNavItem
 import proton.android.pass.features.profile.ProfileNavItem
@@ -145,24 +146,42 @@ fun PassAppContent(
         label = "BannerBottomPadding"
     )
 
-    val shouldNavigateToIAMModal = remember(appUiState.inAppMessage) {
-        appUiState.inAppMessage is Some &&
-            appUiState.inAppMessage.value.mode == InAppMessageMode.Modal &&
-            appNavigator.currentRoute == HomeNavItem.route
+    val shouldNavigateToInAppMessage = remember(appUiState.inAppMessage, appNavigator.currentRoute) {
+        if (appUiState.inAppMessage is Some) {
+            when (appUiState.inAppMessage.value.mode) {
+                InAppMessageMode.Modal,
+                InAppMessageMode.Promo -> appNavigator.currentRoute == HomeNavItem.route
+                InAppMessageMode.Banner,
+                InAppMessageMode.Unknown -> false
+            }
+        } else {
+            false
+        }
     }
-    val hasNavigatedToIAMModal = remember { mutableStateOf(false) }
+    val hasNavigatedToInAppMessage = remember { mutableStateOf(false) }
     LaunchedEffect(appUiState.inAppMessage, appNavigator.currentRoute) {
         when (val option = appUiState.inAppMessage) {
-            is Some -> if (shouldNavigateToIAMModal && !hasNavigatedToIAMModal.value) {
+            is Some -> if (shouldNavigateToInAppMessage && !hasNavigatedToInAppMessage.value) {
                 val message = option.value
-                appNavigator.navigate(
-                    InAppMessageModalNavItem,
-                    InAppMessageModalNavItem.createNavRoute(message.userId, message.id)
-                )
-                hasNavigatedToIAMModal.value = true
+                when (message.mode) {
+                    InAppMessageMode.Modal ->
+                        appNavigator.navigate(
+                            InAppMessageModalNavItem,
+                            InAppMessageModalNavItem.createNavRoute(message.userId, message.id)
+                        )
+                    InAppMessageMode.Promo ->
+                        appNavigator.navigate(
+                            InAppMessagePromoNavItem,
+                            InAppMessagePromoNavItem.createNavRoute(message.userId, message.id)
+                        )
+                    InAppMessageMode.Banner,
+                    InAppMessageMode.Unknown ->
+                        PassLogger.w(TAG, "In-app message mode not supported")
+                }
+                hasNavigatedToInAppMessage.value = true
             }
 
-            is None -> hasNavigatedToIAMModal.value = false
+            is None -> hasNavigatedToInAppMessage.value = false
         }
     }
 

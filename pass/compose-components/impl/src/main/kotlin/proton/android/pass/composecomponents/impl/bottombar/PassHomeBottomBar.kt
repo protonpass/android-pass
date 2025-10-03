@@ -18,6 +18,10 @@
 
 package proton.android.pass.composecomponents.impl.bottombar
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -68,11 +72,15 @@ fun HomeBottomBarContent(
     onEvent: (HomeBottomBarEvent) -> Unit,
     state: HomeBottomBarState
 ) = with(state) {
+    val bottomPadding = WindowInsets.navigationBars
+        .asPaddingValues()
+        .calculateBottomPadding()
     BottomNavigation(
         modifier = modifier,
         backgroundColor = PassTheme.colors.bottomBarBackground
     ) {
         BottomNavigationItem(
+            modifier = Modifier.padding(bottom = bottomPadding),
             selected = selection == BottomBarSelection.Home,
             selectedContentColor = PassTheme.colors.interactionNormMajor2,
             unselectedContentColor = PassTheme.colors.textNorm,
@@ -86,6 +94,7 @@ fun HomeBottomBarContent(
         )
 
         BottomNavigationItem(
+            modifier = Modifier.padding(bottom = bottomPadding),
             selected = selection == BottomBarSelection.ItemCreate,
             selectedContentColor = PassTheme.colors.interactionNormMajor2,
             unselectedContentColor = PassTheme.colors.textNorm,
@@ -99,6 +108,7 @@ fun HomeBottomBarContent(
         )
 
         BottomNavigationItem(
+            modifier = Modifier.padding(bottom = bottomPadding),
             selected = selection == BottomBarSelection.SecurityCenter,
             selectedContentColor = PassTheme.colors.interactionNormMajor2,
             unselectedContentColor = PassTheme.colors.textNorm,
@@ -119,7 +129,7 @@ fun HomeBottomBarContent(
             icon = {
                 ProfileBottomBarIcon(planType = planType)
             },
-            modifier = Modifier.testTag(BottomBarTestTag.PROFILE_TEST_TAG)
+            modifier = Modifier.padding(bottom = bottomPadding).testTag(BottomBarTestTag.PROFILE_TEST_TAG)
         )
     }
 }

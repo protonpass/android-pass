@@ -23,7 +23,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberModalBottomSheetState
@@ -88,7 +87,6 @@ fun EnterExtraPasswordApp(
     Scaffold(
         modifier = modifier
             .background(PassTheme.colors.backgroundStrong)
-            .systemBarsPadding()
             .imePadding()
             .padding(),
         scaffoldState = scaffoldState,

@@ -44,7 +44,7 @@ internal fun SharingPermissionsContent(
     onEvent: (SharingPermissionsUiEvent) -> Unit
 ) {
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.systemBarsPadding(),
         topBar = {
             PassExtendedTopBar(
                 backButton = PassTopBarBackButtonType.BackArrow,

@@ -20,6 +20,7 @@ package proton.android.pass.features.security.center.missingtfa.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
@@ -41,7 +42,7 @@ internal fun SecurityCenterMissingTfaContent(
     onNavigate: (SecurityCenterMissingTFADestination) -> Unit
 ) {
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.systemBarsPadding(),
         topBar = {
             PassExtendedTopBar(
                 modifier = Modifier

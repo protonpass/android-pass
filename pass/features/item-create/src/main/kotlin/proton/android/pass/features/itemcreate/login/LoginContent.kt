@@ -20,6 +20,7 @@ package proton.android.pass.features.itemcreate.login
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -53,7 +54,7 @@ internal fun LoginContent(
 ) {
     BackHandler { onEvent(LoginContentEvent.Up) }
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.systemBarsPadding(),
         topBar = {
             CreateUpdateTopBar(
                 text = topBarActionName,

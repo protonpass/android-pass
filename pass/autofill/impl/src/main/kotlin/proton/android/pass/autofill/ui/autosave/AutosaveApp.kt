@@ -21,7 +21,6 @@ package proton.android.pass.autofill.ui.autosave
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
@@ -59,7 +58,6 @@ fun AutoSaveApp(
     Scaffold(
         modifier = modifier
             .background(PassTheme.colors.backgroundStrong)
-            .systemBarsPadding()
             .imePadding(),
         snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
     ) { padding ->

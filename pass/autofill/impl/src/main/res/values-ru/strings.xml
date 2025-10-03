@@ -13,7 +13,7 @@
   <string name="autofill_user_logged_out">Был произведён выход из учётной записи. Пожалуйста, войдите снова, открыв приложение.</string>
   <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Автозаполнение данных карты</string>
   <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Автозаполнение данных карты является платной функцией. Если вы хотите, чтобы Proton Pass автоматически вводил данные вашей карты в приложениях и на веб-сайтах, улучшите тариф.</string>
-  <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Подтвердите свои действия</string>
+  <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Подтвердите действие</string>
   <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Вы собираетесь автоматически заполнить свои учетные данные на сайте, который открывается вашим текущим приложением. Приложение может получить доступ к учетным данным после автозаполнения. Делайте это, только если вы доверяете приложению.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Автозаполнение</string>
 </resources>

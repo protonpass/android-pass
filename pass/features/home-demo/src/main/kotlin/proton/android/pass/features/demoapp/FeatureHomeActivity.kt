@@ -24,7 +24,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.semantics
@@ -47,7 +46,6 @@ class FeatureHomeActivity : FragmentActivity() {
             PassTheme(isDark = isSystemInDarkTheme()) {
                 HomeScreen(
                     modifier = Modifier.background(PassTheme.colors.backgroundStrong)
-                        .systemBarsPadding()
                         .imePadding()
                         .semantics {
                             testTagsAsResourceId = true

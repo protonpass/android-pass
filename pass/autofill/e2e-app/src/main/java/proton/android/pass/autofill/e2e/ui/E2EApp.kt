@@ -21,7 +21,6 @@ package proton.android.pass.autofill.e2e.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
@@ -34,7 +33,6 @@ fun E2EApp(modifier: Modifier = Modifier) {
         E2EAppContent(
             modifier = modifier
                 .background(PassTheme.colors.backgroundStrong)
-                .systemBarsPadding()
                 .imePadding()
         )
     }

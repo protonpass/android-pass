@@ -24,21 +24,21 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.features.inappmessages.bottomsheet.navigation.InAppMessageModalDestination
-import proton.android.pass.features.inappmessages.bottomsheet.presentation.InAppMessageModalState
-import proton.android.pass.features.inappmessages.bottomsheet.presentation.InAppMessageModalViewModel
+import proton.android.pass.features.inappmessages.navigation.InAppMessageDestination
+import proton.android.pass.features.inappmessages.promo.presentation.InAppMessagePromoState
+import proton.android.pass.features.inappmessages.promo.presentation.InAppMessagePromoViewModel
 
 @Composable
 fun InAppMessagePromoScreen(
     modifier: Modifier = Modifier,
-    viewModel: InAppMessageModalViewModel = hiltViewModel(),
-    onNavigate: (InAppMessageModalDestination) -> Unit
+    viewModel: InAppMessagePromoViewModel = hiltViewModel(),
+    onNavigate: (InAppMessageDestination) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     when (state) {
-        is InAppMessageModalState.Success -> {
-            val successState = state as InAppMessageModalState.Success
+        is InAppMessagePromoState.Success -> {
+            val successState = state as InAppMessagePromoState.Success
             LaunchedEffect(Unit) {
                 viewModel.onInAppMessageDisplayed(successState.inAppMessage.key)
             }
@@ -46,15 +46,18 @@ fun InAppMessagePromoScreen(
             InAppMessagePromoContent(
                 modifier = modifier,
                 inAppMessage = successState.inAppMessage,
-                onClose = {
-                    onNavigate(InAppMessageModalDestination.CloseBottomsheet)
+                onDontShowAgain = {
+                    onNavigate(InAppMessageDestination.CloseScreen)
+                },
+                onMinimize = {
+                    onNavigate(InAppMessageDestination.CloseScreen)
                 }
             )
         }
-        is InAppMessageModalState.Loading -> {
+        is InAppMessagePromoState.Loading -> {
         }
-        is InAppMessageModalState.Error -> {
-            onNavigate(InAppMessageModalDestination.CloseBottomsheet)
+        is InAppMessagePromoState.Error -> {
+            onNavigate(InAppMessageDestination.CloseScreen)
         }
     }
 }

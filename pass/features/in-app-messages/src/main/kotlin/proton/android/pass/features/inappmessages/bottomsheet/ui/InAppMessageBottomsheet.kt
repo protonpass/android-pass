@@ -26,7 +26,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.BrowserUtils
-import proton.android.pass.features.inappmessages.bottomsheet.navigation.InAppMessageModalDestination
+import proton.android.pass.features.inappmessages.navigation.InAppMessageDestination
 import proton.android.pass.features.inappmessages.bottomsheet.presentation.InAppMessageModalState
 import proton.android.pass.features.inappmessages.bottomsheet.presentation.InAppMessageModalViewModel
 
@@ -34,7 +34,7 @@ import proton.android.pass.features.inappmessages.bottomsheet.presentation.InApp
 fun InAppMessageBottomsheet(
     modifier: Modifier = Modifier,
     viewModel: InAppMessageModalViewModel = hiltViewModel(),
-    onNavigate: (InAppMessageModalDestination) -> Unit
+    onNavigate: (InAppMessageDestination) -> Unit
 ) {
 
     val context = LocalContext.current
@@ -56,17 +56,17 @@ fun InAppMessageBottomsheet(
                 },
                 onInternalCTAClick = {
                     viewModel.onCTAClicked(successState.inAppMessage.key)
-                    onNavigate(InAppMessageModalDestination.DeepLink(it))
+                    onNavigate(InAppMessageDestination.DeepLink(it))
                 },
                 onClose = {
-                    onNavigate(InAppMessageModalDestination.CloseBottomsheet)
+                    onNavigate(InAppMessageDestination.CloseBottomsheet)
                 }
             )
         }
         is InAppMessageModalState.Loading -> {
         }
         is InAppMessageModalState.Error -> {
-            onNavigate(InAppMessageModalDestination.CloseBottomsheet)
+            onNavigate(InAppMessageDestination.CloseBottomsheet)
         }
     }
 }

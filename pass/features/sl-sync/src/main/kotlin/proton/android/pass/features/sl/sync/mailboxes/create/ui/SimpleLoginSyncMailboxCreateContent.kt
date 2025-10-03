@@ -19,6 +19,7 @@
 package proton.android.pass.features.sl.sync.mailboxes.create.ui
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -55,7 +56,7 @@ internal fun SimpleLoginSyncMailboxCreateContent(
     onUiEvent: (SimpleLoginSyncMailboxCreateUiEvent) -> Unit
 ) = with(state) {
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.systemBarsPadding(),
         topBar = {
             PassExtendedTopBar(
                 backButton = PassTopBarBackButtonType.BackArrow,

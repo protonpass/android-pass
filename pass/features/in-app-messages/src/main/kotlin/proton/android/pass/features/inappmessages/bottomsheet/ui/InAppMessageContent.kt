@@ -30,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
@@ -104,7 +105,8 @@ fun InAppMessageContentPreview(@PreviewParameter(ThemePreviewProvider::class) is
                     range = InAppMessageRange(
                         start = Instant.DISTANT_PAST,
                         end = Some(Instant.DISTANT_FUTURE)
-                    )
+                    ),
+                    promoContents = None
                 ),
                 onExternalCTAClick = {},
                 onInternalCTAClick = {},

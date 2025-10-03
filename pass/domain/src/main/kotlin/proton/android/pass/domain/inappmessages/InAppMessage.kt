@@ -21,7 +21,6 @@ package proton.android.pass.domain.inappmessages
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
 
 @JvmInline
 value class InAppMessageId(val value: String)
@@ -40,7 +39,8 @@ data class InAppMessage(
     val cta: Option<InAppMessageCTA>,
     val state: InAppMessageStatus,
     val range: InAppMessageRange,
-    val userId: UserId
+    val userId: UserId,
+    val promoContents: Option<InAppMessagePromoContents>
 )
 
 const val STATUS_UNREAD = 0
@@ -79,20 +79,12 @@ enum class InAppMessageCTAType(val value: String) {
 data class InAppMessageRange(
     val start: Instant,
     val end: Option<Instant>
-) {
-    private val isClosedRange: Boolean
-        get() = end is Some
-
-    fun inRange(now: Instant): Boolean = if (isClosedRange) {
-        now in start..(end as Some).value
-    } else {
-        now >= start
-    }
-}
+)
 
 enum class InAppMessageMode(val value: Int) {
     Banner(0),
     Modal(1),
+    Promo(2),
     Unknown(Integer.MAX_VALUE)
     ;
 
@@ -100,3 +92,17 @@ enum class InAppMessageMode(val value: Int) {
         fun fromValue(value: Int): InAppMessageMode = entries.find { it.value == value } ?: Unknown
     }
 }
+
+data class InAppMessagePromoContents(
+    val startMinimised: Boolean,
+    val closePromoText: String,
+    val minimizedPromoText: String,
+    val lightThemeContents: InAppMessagePromoThemedContents,
+    val darkThemeContents: InAppMessagePromoThemedContents
+)
+
+data class InAppMessagePromoThemedContents(
+    val backgroundImageUrl: String,
+    val contentImageUrl: String,
+    val closePromoTextColor: String
+)

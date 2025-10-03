@@ -22,6 +22,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -47,7 +48,7 @@ internal fun SecurityCenterCustomEmailContent(
     onUiEvent: (SecurityCenterCustomEmailUiEvent) -> Unit
 ) {
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.systemBarsPadding(),
         topBar = {
             PassExtendedTopBar(
                 title = stringResource(R.string.security_center_custom_email_top_bar_title),

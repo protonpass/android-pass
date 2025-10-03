@@ -19,6 +19,7 @@
 package proton.android.pass.features.itemcreate.alias
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -49,7 +50,7 @@ internal fun AliasContent(
     onEvent: (AliasContentUiEvent) -> Unit
 ) {
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.systemBarsPadding(),
         topBar = {
             CreateUpdateTopBar(
                 text = topBarActionName,

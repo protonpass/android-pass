@@ -21,6 +21,7 @@ package proton.android.pass.features.sl.sync.settings.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -41,7 +42,7 @@ internal fun SimpleLoginSyncSettingsContent(
     state: SimpleLoginSyncSettingsState
 ) = with(state) {
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.systemBarsPadding(),
         topBar = {
             SimpleLoginSyncSettingsTopBar(
                 onUpClick = {

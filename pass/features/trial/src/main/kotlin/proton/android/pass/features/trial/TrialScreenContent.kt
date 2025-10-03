@@ -21,6 +21,7 @@ package proton.android.pass.features.trial
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -38,7 +39,8 @@ fun TrialScreenContent(
     Scaffold(
         modifier = modifier
             .fillMaxSize()
-            .background(PassTheme.colors.backgroundStrong),
+            .background(PassTheme.colors.backgroundStrong)
+            .systemBarsPadding(),
         topBar = {
             ProtonTopAppBar(
                 backgroundColor = PassTheme.colors.itemDetailBackground,

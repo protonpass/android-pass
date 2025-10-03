@@ -20,8 +20,12 @@ package proton.android.pass.data.impl.extensions
 
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.impl.responses.CtaResponse
+import proton.android.pass.data.impl.responses.NotificationPromoContentsResponse
 import proton.android.pass.data.impl.responses.NotificationResponse
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageCTA
@@ -29,6 +33,8 @@ import proton.android.pass.domain.inappmessages.InAppMessageCTAType
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageKey
 import proton.android.pass.domain.inappmessages.InAppMessageMode
+import proton.android.pass.domain.inappmessages.InAppMessagePromoContents
+import proton.android.pass.domain.inappmessages.InAppMessagePromoThemedContents
 import proton.android.pass.domain.inappmessages.InAppMessageRange
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
 
@@ -48,8 +54,32 @@ fun NotificationResponse.toDomain(userId: UserId): InAppMessage = InAppMessage(
     range = InAppMessageRange(
         start = Instant.fromEpochSeconds(this.startTime),
         end = this.endTime?.let(Instant.Companion::fromEpochSeconds).toOption()
-    )
+    ),
+    promoContents = this.content.promoContents.toPromoContents()
 )
+
+private fun NotificationPromoContentsResponse?.toPromoContents(): Option<InAppMessagePromoContents> =
+    if (this != null) {
+        Some(
+            InAppMessagePromoContents(
+                startMinimised = startMinimised,
+                closePromoText = closePromoText,
+                minimizedPromoText = minimizedPromoText,
+                lightThemeContents = InAppMessagePromoThemedContents(
+                    backgroundImageUrl = lightThemeContents.backgroundImageUrl,
+                    contentImageUrl = lightThemeContents.contentImageUrl,
+                    closePromoTextColor = lightThemeContents.closePromoTextColor
+                ),
+                darkThemeContents = InAppMessagePromoThemedContents(
+                    backgroundImageUrl = darkThemeContents.backgroundImageUrl,
+                    contentImageUrl = darkThemeContents.contentImageUrl,
+                    closePromoTextColor = darkThemeContents.closePromoTextColor
+                )
+            )
+        )
+    } else {
+        None
+    }
 
 private fun CtaResponse.toDomain(): InAppMessageCTA = InAppMessageCTA(
     text = this.text,

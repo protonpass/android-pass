@@ -30,7 +30,7 @@ internal data class PasskeyCredential(
     @SerialName("rpId")
     internal val domain: String,
     @JsonNames("allowCredentials", "allowList")
-    internal val allowedCredentials: List<PasskeyAllowedCredential>?
+    internal val allowedCredentials: List<PasskeyAllowedCredential>? = null
 ) {
 
     internal val passkeySelection: PasskeySelection by lazy {

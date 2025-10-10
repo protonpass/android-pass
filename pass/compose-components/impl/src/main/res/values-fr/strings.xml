@@ -273,7 +273,7 @@
   <string name="simple_login_widget_title">Activer la synchronisation avec SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
     <item quantity="one">Nous avons détecté que vous possédez l\'alias %d qui est présent dans SimpleLogin mais manquant dans Proton Pass. Souhaitez-vous l\'importer ?</item>
-    <item quantity="other">Nous avons détecté que vous possédez %d alias qui sont présents dans SimpleLogin mais manquants dans Proton Pass. Souhaitez-vous les importer ?</item>
+    <item quantity="other">Nous avons détecté que vous avez %d alias qui sont présents dans SimpleLogin mais manquants dans Proton Pass. Souhaitez-vous les importer ?</item>
   </plurals>
   <string name="simple_login_widget_action">Synchroniser les alias</string>
   <!-- Verification codes -->

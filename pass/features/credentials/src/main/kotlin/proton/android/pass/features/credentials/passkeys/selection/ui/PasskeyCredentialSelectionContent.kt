@@ -30,6 +30,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.Job
 import proton.android.pass.commonui.api.onBottomSheetDismissed
@@ -46,7 +47,7 @@ import proton.android.pass.features.credentials.passkeys.selection.presentation.
 import proton.android.pass.features.credentials.passkeys.selection.presentation.PasskeyCredentialSelectionStateEvent
 import proton.android.pass.features.passkeys.select.navigation.SelectPasskeyBottomsheet
 import proton.android.pass.features.selectitem.navigation.SelectItem
-import proton.android.pass.navigation.api.rememberAppNavigator
+import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 
 @[Composable OptIn(ExperimentalMaterialNavigationApi::class)]
@@ -57,19 +58,19 @@ internal fun PasskeyCredentialSelectionContent(
     onEvent: (PasskeyCredentialSelectionEvent) -> Unit
 ) = with(state) {
 
-    val bottomSheetJob: MutableState<Job?> = remember { mutableStateOf(null) }
-
     val coroutineScope = rememberCoroutineScope()
 
     if (isBiometricAuthRequired) {
+        val bottomSheetJob: MutableState<Job?> = remember { mutableStateOf(null) }
         val bottomSheetState = rememberModalBottomSheetState(
             initialValue = ModalBottomSheetValue.Hidden,
             skipHalfExpanded = true
         )
-
-        val appNavigator = rememberAppNavigator(
-            bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
-        )
+        val bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
+        val navController = rememberNavController(bottomSheetNavigator)
+        val appNavigator = remember(navController, bottomSheetNavigator) {
+            AppNavigator(navController, bottomSheetNavigator)
+        }
 
         PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {
             NavHost(
@@ -111,17 +112,7 @@ internal fun PasskeyCredentialSelectionContent(
                                 coroutineScope = coroutineScope,
                                 modalBottomSheetState = bottomSheetState,
                                 dismissJob = bottomSheetJob,
-                                block = {
-                                    when (actionAfterAuth) {
-                                        PasskeyCredentialSelectionActionAfterAuth.SelectItem -> {
-                                            appNavigator.navigate(SelectItem)
-                                        }
-
-                                        PasskeyCredentialSelectionActionAfterAuth.EmitEvent -> {
-                                            onEvent(PasskeyCredentialSelectionEvent.OnAuthPerformed)
-                                        }
-                                    }
-                                }
+                                block = {}
                             )
 
                             is AuthNavigation.SignOut,
@@ -132,14 +123,21 @@ internal fun PasskeyCredentialSelectionContent(
             }
         }
     } else {
+        LaunchedEffect(actionAfterAuth) {
+            if (actionAfterAuth == PasskeyCredentialSelectionActionAfterAuth.EmitEvent) {
+                onEvent(PasskeyCredentialSelectionEvent.OnAuthPerformed)
+            }
+        }
+        val bottomSheetJob: MutableState<Job?> = remember { mutableStateOf(null) }
         val bottomSheetState = rememberModalBottomSheetState(
             initialValue = ModalBottomSheetValue.Hidden,
             skipHalfExpanded = true
         )
-
-        val appNavigator = rememberAppNavigator(
-            bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
-        )
+        val bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
+        val navController = rememberNavController(bottomSheetNavigator)
+        val appNavigator = remember(navController, bottomSheetNavigator) {
+            AppNavigator(navController, bottomSheetNavigator)
+        }
         LaunchedEffect(key1 = state.event) {
             when (val event = state.event) {
                 PasskeyCredentialSelectionStateEvent.Idle -> Unit

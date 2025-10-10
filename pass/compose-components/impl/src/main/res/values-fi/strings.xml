@@ -36,7 +36,7 @@
   <string name="bottomsheet_delete_permanently">Poista pysyvästi</string>
   <string name="bottomsheet_restore">Palauta</string>
   <string name="bottomsheet_leave">Poistu</string>
-  <string name="bottomsheet_duplicate">Duplicate</string>
+  <string name="bottomsheet_duplicate">Luo kopio</string>
   <string name="bottomsheet_no_actions">Toimintoja ei ole käytettävissä</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Avaa kohteen toimintovalikko</string>

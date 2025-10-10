@@ -81,9 +81,9 @@
   </plurals>
   <string name="security_center_dark_web_monitor_found_in_breaches">侵害は検出されませんでした</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Proton アドレス</string>
-  <string name="security_center_dark_web_monitor_hide_my_email_aliases">非ide-my-email表示メールアドレスエイリアス</string>
+  <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email エイリアス</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Protonアドレスの取得エラー</string>
-  <string name="security_center_dark_web_monitor_alias_addresses_error">メール非表示ide-my-emailエイリアスの復元エラー</string>
+  <string name="security_center_dark_web_monitor_alias_addresses_error">Hide-my-emailエイリアスの復元エラー</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">監視されていません</string>
   <string name="security_center_dark_web_monitor_see_all">すべてを見る</string>
   <string name="security_center_dark_web_monitor_no_proton_addresses">Protonアドレスがありません</string>
@@ -148,10 +148,10 @@
   <string name="security_center_address_bottomsheet_snackbar_message_disable_success">監視は正しく停止されました</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">カスタムメールが削除されました</string>
   <!-- Alias list -->
-  <string name="security_center_alias_list_top_bar_title">非ide-my-email表示メールアドレスエイリアス</string>
+  <string name="security_center_alias_list_top_bar_title">Hide-my-emailエイリアス</string>
   <string name="security_center_alias_list_excluded_from_monitoring">監視対象外</string>
   <string name="security_center_alias_list_error">アドレスが読み込めませんでした</string>
-  <string name="security_center_alias_list_included_in_monitoring">メール非表示ide-my-emailエイリアスが漏洩した場合に通知を受け取るモニタリングを有効</string>
+  <string name="security_center_alias_list_included_in_monitoring">お客様のHide-my-emailエイリアスが漏洩した場合に通知を受け取れるよう、監視を有効にしてください。</string>
   <string name="security_center_alias_list_monitored">監視済み</string>
   <string name="security_center_alias_list_custom_email_message">カスタム ドメインを持つエイリアスは監視されません。監視用のカスタムメールとして追加してください。</string>
   <string name="security_center_alias_list_options_menu">エイリアス画面オプションメニュー</string>

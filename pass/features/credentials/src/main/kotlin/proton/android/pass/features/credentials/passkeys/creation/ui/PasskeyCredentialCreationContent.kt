@@ -54,11 +54,10 @@ internal fun PasskeyCredentialCreationContent(
     onEvent: (PasskeyCredentialCreationEvent) -> Unit
 ) = with(state) {
 
-    val bottomSheetJob: MutableState<Job?> = remember { mutableStateOf(null) }
-
     val coroutineScope = rememberCoroutineScope()
 
     if (isBiometricAuthRequired) {
+        val bottomSheetJob: MutableState<Job?> = remember { mutableStateOf(null) }
         val bottomSheetState = rememberModalBottomSheetState(
             initialValue = ModalBottomSheetValue.Hidden,
             skipHalfExpanded = true
@@ -119,6 +118,7 @@ internal fun PasskeyCredentialCreationContent(
             }
         }
     } else {
+        val bottomSheetJob: MutableState<Job?> = remember { mutableStateOf(null) }
         val bottomSheetState = rememberModalBottomSheetState(
             initialValue = ModalBottomSheetValue.Hidden,
             skipHalfExpanded = true

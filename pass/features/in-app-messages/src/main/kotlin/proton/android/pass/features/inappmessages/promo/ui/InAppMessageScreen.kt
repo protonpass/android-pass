@@ -46,10 +46,11 @@ fun InAppMessagePromoScreen(
             InAppMessagePromoContent(
                 modifier = modifier,
                 inAppMessage = successState.inAppMessage,
-                onDontShowAgain = {
+                onCTAClick = {},
+                onMinimize = {
                     onNavigate(InAppMessageDestination.CloseScreen)
                 },
-                onMinimize = {
+                onDontShowAgain = {
                     onNavigate(InAppMessageDestination.CloseScreen)
                 }
             )

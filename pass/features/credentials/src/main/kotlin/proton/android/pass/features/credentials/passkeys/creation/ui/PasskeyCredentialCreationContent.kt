@@ -29,6 +29,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.Job
 import proton.android.pass.commonui.api.onBottomSheetDismissed
@@ -42,7 +43,7 @@ import proton.android.pass.features.credentials.passkeys.creation.navigation.pas
 import proton.android.pass.features.credentials.passkeys.creation.presentation.PasskeyCredentialCreationEvent
 import proton.android.pass.features.credentials.passkeys.creation.presentation.PasskeyCredentialCreationState
 import proton.android.pass.features.selectitem.navigation.SelectItem
-import proton.android.pass.navigation.api.rememberAppNavigator
+import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 
 @[Composable OptIn(ExperimentalMaterialNavigationApi::class)]
@@ -62,10 +63,11 @@ internal fun PasskeyCredentialCreationContent(
             initialValue = ModalBottomSheetValue.Hidden,
             skipHalfExpanded = true
         )
-
-        val appNavigator = rememberAppNavigator(
-            bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
-        )
+        val bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
+        val navController = rememberNavController(bottomSheetNavigator)
+        val appNavigator = remember(navController, bottomSheetNavigator) {
+            AppNavigator(navController, bottomSheetNavigator)
+        }
 
         PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {
             NavHost(
@@ -121,9 +123,11 @@ internal fun PasskeyCredentialCreationContent(
             initialValue = ModalBottomSheetValue.Hidden,
             skipHalfExpanded = true
         )
-        val appNavigator = rememberAppNavigator(
-            bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
-        )
+        val bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
+        val navController = rememberNavController(bottomSheetNavigator)
+        val appNavigator = remember(navController, bottomSheetNavigator) {
+            AppNavigator(navController, bottomSheetNavigator)
+        }
 
         PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {
             NavHost(

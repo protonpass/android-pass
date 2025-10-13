@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.33.1 (2025-10-13)
+
+### Fixes :bug:
+
+- Use Passkeys with qr.
+
 ## 1.33.0 (2025-10-01)
 
 ### Features :tada:

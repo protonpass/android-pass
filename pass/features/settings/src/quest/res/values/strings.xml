@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="settings_use_digital_asset_link_preference_subtitle">Establishes website ownership verification between a Quest app and a website.</string>
+
+</resources>

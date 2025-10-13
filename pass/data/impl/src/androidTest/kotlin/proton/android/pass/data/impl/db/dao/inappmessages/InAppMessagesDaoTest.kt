@@ -128,6 +128,15 @@ class AssetLinkDaoTest {
         state = state,
         rangeStart = start,
         rangeEnd = end,
-        userId = userId
+        userId = userId,
+        promoStartMinimized = false,
+        promoCloseText = null,
+        promoMinimizedText = null,
+        promoLightBackgroundUrl = null,
+        promoLightContentUrl = null,
+        promoLightCloseTextColor = null,
+        promoDarkBackgroundUrl = null,
+        promoDarkContentUrl = null,
+        promoDarkCloseTextColor = null,
     )
 }

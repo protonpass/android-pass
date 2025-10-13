@@ -34,6 +34,8 @@ androidx-test-junit = "1.2.1"
 androidx-test-orchestrator = "1.5.0"
 androidx-test-uiautomator = "2.3.0-alpha02"
 androidx-work = "2.8.1"
+horizonPlatformSdkVersion = "72"
+horizonBillingCompatibilitySdkVersion = "1.1.1"
 
 # CashApp
 turbine = "1.1.0"
@@ -90,6 +92,8 @@ truth = "1.4.4"
 fusion = "0.9.52"
 # Zxing
 zxing = "3.5.3"
+coreKtx = "1.17.0"
+appcompat = "1.6.1"
 
 [plugins]
 gradlePlugin-android-baselineprofile = { id = "androidx.baselineprofile", version.ref = "gradlePlugin-baselineprofile" }
@@ -113,6 +117,7 @@ gradlePlugin-proton-environmentConfig = { id = "me.proton.core.gradle-plugins.en
 gradlePlugin-sentry = { id = "io.sentry.android.gradle", version.ref = "gradlePlugin-sentry" }
 gradlePlugin-test-logger = { id = "com.adarshr.test-logger", version.ref = "gradlePlugin-test-logger" }
 gradlePlugin-test = { id = "com.android.test", version.ref = "gradlePlugin-android" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 
 [libraries]
 # Accompanist
@@ -306,6 +311,11 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 
 # SVG
 androidsvg = { module = "com.caverock:androidsvg-aar", version.ref = "androidsvg" }
+
+# Meta Horizon OS
+meta-horizon-sdk = { module = "com.meta.horizon.platform.ovr:android-platform-sdk", version.ref = "horizonPlatformSdkVersion" }
+meta-horizon-billing = { module = "com.meta.horizon.billingclient.api:horizon-billing-compatibility", version.ref = "horizonBillingCompatibilitySdkVersion" }
+
 
 # Test
 androidx-benchmark-macro = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "androidx-benchmark" }

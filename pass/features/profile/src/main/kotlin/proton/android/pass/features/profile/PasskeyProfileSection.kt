@@ -85,6 +85,7 @@ private fun ProfilePasskeySupportSection.Show.toStatus(): PasskeyStatus = when (
         icon = CompR.drawable.ic_shield_danger,
         color = PassTheme.colors.signalDanger,
         subtitle = when (support.reason) {
+            PasskeySupport.NotSupportedReason.Quest,
             PasskeySupport.NotSupportedReason.AndroidVersion -> {
                 stringResource(R.string.profile_passkey_support_subtitle_not_supported_android_version)
             }

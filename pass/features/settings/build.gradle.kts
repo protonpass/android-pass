@@ -28,6 +28,15 @@ android {
     buildFeatures {
         compose = true
     }
+
+    flavorDimensions += "version"
+    productFlavors {
+        maybeCreate("dev")
+        maybeCreate("alpha")
+        maybeCreate("play")
+        maybeCreate("fdroid")
+        maybeCreate("quest")
+    }
 }
 
 dependencies {

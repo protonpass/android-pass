@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -33,6 +34,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -40,6 +42,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
@@ -47,6 +50,7 @@ import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.commonui.api.heroWeak
@@ -106,10 +110,16 @@ fun PinConfigContent(
     ) { padding ->
         Column(
             modifier = Modifier
+                .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
                 .padding(padding)
                 .padding(Spacing.medium),
-            verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+            verticalArrangement = Arrangement.spacedBy(Spacing.medium),
+            horizontalAlignment = if (state.isQuest) {
+                Alignment.CenterHorizontally
+            } else {
+                Alignment.Start
+            }
         ) {
             Text(
                 text = stringResource(R.string.configure_pin_set_pin_code),
@@ -132,6 +142,12 @@ fun PinConfigContent(
             val focusRequester = remember { FocusRequester() }
             ProtonTextField(
                 modifier = Modifier.focusRequester(focusRequester),
+                textFieldModifier = Modifier.applyIf(
+                    condition = !state.isQuest,
+                    ifTrue = {
+                        fillMaxWidth()
+                    }
+                ),
                 value = state.pin,
                 textStyle = PassTheme.typography.heroNorm(),
                 visualTransformation = PasswordVisualTransformation(),
@@ -153,6 +169,12 @@ fun PinConfigContent(
             )
             RequestFocusLaunchedEffect(focusRequester, true)
             ProtonTextField(
+                textFieldModifier = Modifier.applyIf(
+                    condition = !state.isQuest,
+                    ifTrue = {
+                        fillMaxWidth()
+                    }
+                ),
                 value = state.repeatPin,
                 textStyle = PassTheme.typography.heroNorm(),
                 keyboardOptions = KeyboardOptions(
@@ -173,5 +195,40 @@ fun PinConfigContent(
                 onDoneClick = onSubmit
             )
         }
+    }
+}
+
+@Composable
+@Preview
+fun PinConfigContentPreview() {
+    PassTheme {
+        PinConfigContent(
+            state = PinConfigUiState(),
+            onNavigateEvent = {},
+            onPinChange = {},
+            onRepeatPinChange = {},
+            onSubmit = {}
+        )
+    }
+}
+
+@Composable
+@Preview(
+    name = "VR Headset",
+    widthDp = 2000,
+    heightDp = 1000,
+    showBackground = true
+)
+fun PinConfigContentForQuestPreview() {
+    PassTheme {
+        PinConfigContent(
+            state = PinConfigUiState(
+                isQuest = true
+            ),
+            onNavigateEvent = {},
+            onPinChange = {},
+            onRepeatPinChange = {},
+            onSubmit = {}
+        )
     }
 }

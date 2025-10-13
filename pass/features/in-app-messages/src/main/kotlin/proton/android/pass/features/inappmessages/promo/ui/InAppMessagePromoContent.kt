@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
@@ -49,6 +50,8 @@ import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.applyIf
+import proton.android.pass.commonui.api.defaultTint
 import proton.android.pass.composecomponents.impl.buttons.TransparentTextButton
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.domain.inappmessages.InAppMessage
@@ -67,7 +70,8 @@ import me.proton.core.presentation.R as CoreR
 fun InAppMessagePromoContent(
     modifier: Modifier = Modifier,
     inAppMessage: InAppMessage,
-    onCTAClick: () -> Unit,
+    onInternalCTAClick: (String) -> Unit,
+    onExternalCTAClick: (String) -> Unit,
     onMinimize: () -> Unit,
     onDontShowAgain: () -> Unit
 ) {
@@ -80,10 +84,14 @@ fun InAppMessagePromoContent(
             promo.lightThemeContents
         }
     }
+    val textColor = remember(themeContents.closePromoTextColor) {
+        runCatching { Color(themeContents.closePromoTextColor.toInt()).copy(alpha = 1f) }
+    }.fold({ it }, { defaultTint() })
+
     Box(modifier = modifier) {
         AsyncImage(
             modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Fit,
+            contentScale = ContentScale.Crop,
             model = themeContents.backgroundImageUrl,
             placeholder = if (LocalInspectionMode.current) {
                 ColorPainter(Color.Red)
@@ -93,6 +101,7 @@ fun InAppMessagePromoContent(
             contentDescription = null
         )
         Scaffold(
+            modifier = Modifier.systemBarsPadding(),
             backgroundColor = Color.Transparent,
             topBar = {
                 Row(
@@ -100,7 +109,10 @@ fun InAppMessagePromoContent(
                     horizontalArrangement = Arrangement.End
                 ) {
                     IconButton(onClick = onMinimize) {
-                        Icon.Default(id = CoreR.drawable.ic_proton_cross_circle_filled)
+                        Icon.Default(
+                            id = CoreR.drawable.ic_proton_cross_circle_filled,
+                            tint = textColor
+                        )
                     }
                 }
             }
@@ -117,7 +129,17 @@ fun InAppMessagePromoContent(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f)
-                        .clickable { onCTAClick() },
+                        .applyIf(inAppMessage.cta is Some, ifTrue = {
+                            clickable {
+                                val cta = inAppMessage.cta.value()
+                                when (cta?.type) {
+                                    InAppMessageCTAType.Internal -> onInternalCTAClick(cta.route)
+                                    InAppMessageCTAType.External -> onExternalCTAClick(cta.route)
+                                    InAppMessageCTAType.Unknown -> {}
+                                    else -> {}
+                                }
+                            }
+                        }),
                     contentScale = ContentScale.Fit,
                     model = themeContents.contentImageUrl,
                     placeholder = if (LocalInspectionMode.current) {
@@ -127,8 +149,10 @@ fun InAppMessagePromoContent(
                     },
                     contentDescription = null
                 )
+
                 TransparentTextButton(
                     text = promo.closePromoText,
+                    color = textColor,
                     onClick = onDontShowAgain
                 )
             }
@@ -176,7 +200,8 @@ fun InAppMessagePromoContentPreview(@PreviewParameter(ThemePreviewProvider::clas
                         )
                     ).some()
                 ),
-                onCTAClick = {},
+                onInternalCTAClick = {},
+                onExternalCTAClick = {},
                 onMinimize = {},
                 onDontShowAgain = {}
             )

@@ -33,10 +33,11 @@ class WorkerLauncherImpl @Inject constructor(
                 workManager.enqueue(request)
             }
 
-            is WorkerItem.MarkInAppMessageAsDismissed -> {
-                val request = MarkInAppMessageAsDismissedWorker.getRequestFor(
+            is WorkerItem.ChangeInAppMessageStatus -> {
+                val request = ChangeInAppMessageStatusWorker.getRequestFor(
                     userId = workerItem.userId,
-                    inAppMessageId = workerItem.inAppMessageId
+                    inAppMessageId = workerItem.inAppMessageId,
+                    inAppMessageStatus = workerItem.inAppMessageStatus
                 )
                 workManager.enqueue(request)
             }

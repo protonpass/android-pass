@@ -26,8 +26,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.getOrNull
+import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.inappmessages.ObserveInAppMessage
@@ -61,6 +64,8 @@ class InAppMessagePromoViewModel @Inject constructor(
         .require<String>(InAppMessageNavArgId.key)
         .let(::InAppMessageId)
 
+    private var inAppMessageStatus: Option<InAppMessageStatus> = None
+
     val state = observeInAppMessage(userId, inAppMessageId)
         .asResultWithoutLoading()
         .map { result: LoadingResult<InAppMessage> ->
@@ -81,13 +86,30 @@ class InAppMessagePromoViewModel @Inject constructor(
         telemetryManager.sendEvent(InAppMessagesClick(key))
     }
 
+    fun onClose() {
+        inAppMessageStatus = InAppMessageStatus.Read.some()
+    }
+
+    fun onDontShowAgain() {
+        inAppMessageStatus = InAppMessageStatus.Dismissed.some()
+    }
+
     override fun onCleared() {
-        workerLauncher.launch(WorkerItem.MarkInAppMessageAsDismissed(userId, inAppMessageId))
-        val key = (state.value as? InAppMessagePromoState.Success)?.inAppMessage?.key
-        if (key != null) {
-            telemetryManager.sendEvent(InAppMessagesChange(key, InAppMessageStatus.Dismissed))
+        inAppMessageStatus.value()?.let {
+            workerLauncher.launch(
+                WorkerItem.ChangeInAppMessageStatus(
+                    userId = userId,
+                    inAppMessageId = inAppMessageId,
+                    inAppMessageStatus = it
+                )
+            )
+            val key = (state.value as? InAppMessagePromoState.Success)?.inAppMessage?.key
+            if (key != null) {
+                telemetryManager.sendEvent(InAppMessagesChange(key, InAppMessageStatus.Dismissed))
+            }
         }
 
         super.onCleared()
     }
+
 }

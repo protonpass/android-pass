@@ -92,7 +92,6 @@ private fun InAppMessageEntity.toDomain(): InAppMessage = InAppMessage(
 private fun InAppMessageEntity.toPromoContents(): Option<InAppMessagePromoContents> = if (
     promoStartMinimized != null &&
     promoCloseText != null &&
-    promoMinimizedText != null &&
     promoLightBackgroundUrl != null &&
     promoLightContentUrl != null &&
     promoLightCloseTextColor != null &&
@@ -104,7 +103,6 @@ private fun InAppMessageEntity.toPromoContents(): Option<InAppMessagePromoConten
         InAppMessagePromoContents(
             startMinimised = promoStartMinimized,
             closePromoText = promoCloseText,
-            minimizedPromoText = promoMinimizedText,
             lightThemeContents = InAppMessagePromoThemedContents(
                 backgroundImageUrl = promoLightBackgroundUrl,
                 contentImageUrl = promoLightContentUrl,
@@ -138,7 +136,6 @@ private fun InAppMessage.toEntity(): InAppMessageEntity = InAppMessageEntity(
     userId = userId.id,
     promoStartMinimized = promoContents.map(InAppMessagePromoContents::startMinimised).value(),
     promoCloseText = promoContents.map(InAppMessagePromoContents::closePromoText).value(),
-    promoMinimizedText = promoContents.map(InAppMessagePromoContents::minimizedPromoText).value(),
     promoLightBackgroundUrl = promoContents.map { it.lightThemeContents.backgroundImageUrl }.value(),
     promoLightContentUrl = promoContents.map { it.lightThemeContents.contentImageUrl }.value(),
     promoLightCloseTextColor = promoContents.map { it.lightThemeContents.closePromoTextColor }.value(),

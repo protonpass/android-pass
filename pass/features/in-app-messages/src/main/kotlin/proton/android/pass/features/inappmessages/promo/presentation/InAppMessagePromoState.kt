@@ -19,9 +19,14 @@
 package proton.android.pass.features.inappmessages.promo.presentation
 
 import proton.android.pass.domain.inappmessages.InAppMessage
+import proton.android.pass.preferences.ThemePreference
 
 sealed interface InAppMessagePromoState {
-    data class Success(val inAppMessage: InAppMessage) : InAppMessagePromoState
+    data class Success(
+        val inAppMessage: InAppMessage,
+        val themePreference: ThemePreference
+    ) : InAppMessagePromoState
+
     data object Loading : InAppMessagePromoState
     data object Error : InAppMessagePromoState
 }

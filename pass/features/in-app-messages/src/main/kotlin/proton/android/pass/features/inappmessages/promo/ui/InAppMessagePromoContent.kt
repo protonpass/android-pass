@@ -164,7 +164,6 @@ fun InAppMessagePromoContentPreview(@PreviewParameter(ThemePreviewProvider::clas
                     promoContents = InAppMessagePromoContents(
                         startMinimised = false,
                         closePromoText = "Don't show this offer again",
-                        minimizedPromoText = "Close",
                         lightThemeContents = InAppMessagePromoThemedContents(
                             backgroundImageUrl = "",
                             contentImageUrl = "",

@@ -82,7 +82,13 @@ class InAppMessageModalViewModel @Inject constructor(
     }
 
     override fun onCleared() {
-        workerLauncher.launch(WorkerItem.MarkInAppMessageAsDismissed(userId, inAppMessageId))
+        workerLauncher.launch(
+            WorkerItem.ChangeInAppMessageStatus(
+                userId = userId,
+                inAppMessageId = inAppMessageId,
+                inAppMessageStatus = InAppMessageStatus.Dismissed
+            )
+        )
         val key = (state.value as? InAppMessageModalState.Success)?.inAppMessage?.key
         if (key != null) {
             telemetryManager.sendEvent(InAppMessagesChange(key, InAppMessageStatus.Dismissed))

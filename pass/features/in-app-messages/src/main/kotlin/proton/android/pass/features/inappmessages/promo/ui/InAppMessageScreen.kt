@@ -22,8 +22,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.features.inappmessages.navigation.InAppMessageDestination
 import proton.android.pass.features.inappmessages.promo.presentation.InAppMessagePromoState
 import proton.android.pass.features.inappmessages.promo.presentation.InAppMessagePromoViewModel
@@ -34,6 +36,7 @@ fun InAppMessagePromoScreen(
     viewModel: InAppMessagePromoViewModel = hiltViewModel(),
     onNavigate: (InAppMessageDestination) -> Unit
 ) {
+    val context = LocalContext.current
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     when (state) {
@@ -46,20 +49,27 @@ fun InAppMessagePromoScreen(
             InAppMessagePromoContent(
                 modifier = modifier,
                 inAppMessage = successState.inAppMessage,
-                onCTAClick = {},
+                onExternalCTAClick = {
+                    viewModel.onCTAClicked(successState.inAppMessage.key)
+                    BrowserUtils.openWebsite(context, it)
+                },
+                onInternalCTAClick = {
+                    viewModel.onCTAClicked(successState.inAppMessage.key)
+                    onNavigate(InAppMessageDestination.DeepLink(it))
+                },
                 onMinimize = {
+                    viewModel.onClose()
                     onNavigate(InAppMessageDestination.CloseScreen)
                 },
                 onDontShowAgain = {
+                    viewModel.onDontShowAgain()
                     onNavigate(InAppMessageDestination.CloseScreen)
                 }
             )
         }
         is InAppMessagePromoState.Loading -> {
         }
-        is InAppMessagePromoState.Error -> {
-            onNavigate(InAppMessageDestination.CloseScreen)
-        }
+        is InAppMessagePromoState.Error -> onNavigate(InAppMessageDestination.CloseScreen)
     }
 }
 

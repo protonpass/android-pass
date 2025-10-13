@@ -49,6 +49,7 @@ fun InAppMessagePromoScreen(
             InAppMessagePromoContent(
                 modifier = modifier,
                 inAppMessage = successState.inAppMessage,
+                themePreference = successState.themePreference,
                 onExternalCTAClick = {
                     viewModel.onCTAClicked(successState.inAppMessage.key)
                     BrowserUtils.openWebsite(context, it)

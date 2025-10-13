@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,22 +16,20 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.passkeys.api
+package proton.android.pass.ui
 
-sealed interface PasskeySupport {
-    data object Supported : PasskeySupport
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import proton.android.pass.ui.internal.InternalDrawerState
 
-    @JvmInline
-    value class NotSupported(val reason: NotSupportedReason) : PasskeySupport
-
-    enum class NotSupportedReason {
-        AndroidVersion,
-        Quest,
-        CredentialManagerUnsupported,
-        Unknown
-    }
-}
-
-interface CheckPasskeySupport {
-    operator fun invoke(): PasskeySupport
+@Suppress("UnusedPrivateMember")
+@Composable
+fun InternalDrawer(
+    modifier: Modifier = Modifier,
+    drawerState: InternalDrawerState,
+    onOpenFeatureFlag: () -> Unit,
+    onAppNavigation: (AppNavigation) -> Unit,
+    content: @Composable () -> Unit
+) {
+    content()
 }

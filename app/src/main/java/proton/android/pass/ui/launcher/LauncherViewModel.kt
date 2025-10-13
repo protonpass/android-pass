@@ -50,6 +50,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -75,6 +76,8 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.plan.presentation.onUpgradeResult
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
+import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportPayment
 import proton.android.pass.biometry.ResetAuthPreferences
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -103,7 +106,8 @@ class LauncherViewModel @Inject constructor(
     private val resetUserPreferences: ResetAuthPreferences,
     private val snackbarDispatcher: SnackbarDispatcher,
     userPreferencesRepository: UserPreferencesRepository,
-    commonLibraryVersionChecker: CommonLibraryVersionChecker
+    commonLibraryVersionChecker: CommonLibraryVersionChecker,
+    private val appConfig: AppConfig
 ) : ViewModel() {
 
     init {
@@ -118,12 +122,14 @@ class LauncherViewModel @Inject constructor(
 
     internal val state: StateFlow<LauncherState> = combine(
         accountManager.getAccounts().map { accounts -> getState(accounts) },
-        userPreferencesRepository.getThemePreference()
-    ) { accountState, themePreference ->
+        userPreferencesRepository.getThemePreference(),
+        flowOf(appConfig.flavor.supportPayment())
+    ) { accountState, themePreference, supportPayment ->
         LauncherState(
             accountState = accountState,
             themePreference = themePreference,
-            isNewLoginFlowEnabled = false
+            isNewLoginFlowEnabled = false,
+            supportPayment = supportPayment
         )
     }.stateIn(
         scope = viewModelScope,
@@ -134,7 +140,8 @@ class LauncherViewModel @Inject constructor(
             LauncherState(
                 accountState = AccountState.Processing,
                 themePreference = themePreference,
-                isNewLoginFlowEnabled = false
+                isNewLoginFlowEnabled = false,
+                supportPayment = false
             )
         }
     )
@@ -239,8 +246,8 @@ class LauncherViewModel @Inject constructor(
                         viewModelScope.launch {
                             runCatching {
                                 /*
-                                 We need to add a delay to refresh the plan since the BE
-                                 doesn't have the updated plan yet.
+                             We need to add a delay to refresh the plan since the BE
+                             doesn't have the updated plan yet.
                                  */
                                 val maxAttempts = 3
                                 val baseDelay = 2.seconds
@@ -339,5 +346,6 @@ class LauncherViewModel @Inject constructor(
 internal data class LauncherState(
     val accountState: AccountState,
     val themePreference: ThemePreference,
-    val isNewLoginFlowEnabled: Boolean
+    val isNewLoginFlowEnabled: Boolean,
+    val supportPayment: Boolean
 )

@@ -16,22 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.passkeys.api
+package proton.android.pass.ui.initializer
 
-sealed interface PasskeySupport {
-    data object Supported : PasskeySupport
+import android.content.Context
+import androidx.startup.AppInitializer
+import me.proton.core.paymentiap.presentation.GooglePurchaseHandlerInitializer
+import me.proton.core.plan.presentation.PurchaseHandlerInitializer
 
-    @JvmInline
-    value class NotSupported(val reason: NotSupportedReason) : PasskeySupport
-
-    enum class NotSupportedReason {
-        AndroidVersion,
-        Quest,
-        CredentialManagerUnsupported,
-        Unknown
-    }
-}
-
-interface CheckPasskeySupport {
-    operator fun invoke(): PasskeySupport
+fun initPurchases(context: Context) {
+    AppInitializer.getInstance(context).initializeComponent(GooglePurchaseHandlerInitializer::class.java)
+    AppInitializer.getInstance(context).initializeComponent(PurchaseHandlerInitializer::class.java)
 }

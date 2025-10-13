@@ -183,6 +183,11 @@ android {
             applicationIdSuffix = ".fdroid"
             buildConfigField("Boolean", "ALLOW_SCREENSHOTS_DEFAULT_VALUE", "false")
         }
+        create("quest") {
+            dimension = "version"
+            applicationIdSuffix = ".quest"
+            buildConfigField("Boolean", "ALLOW_SCREENSHOTS_DEFAULT_VALUE", "false")
+        }
     }
     flavorDimensions += "env"
     productFlavors {
@@ -275,10 +280,12 @@ fun DependencyHandlerScope.addFdroidSpecialLib(
     val alphaImplementation = configurations.getByName("alphaImplementation")
     val playImplementation = configurations.getByName("playImplementation")
     val fdroidImplementation = configurations.getByName("fdroidImplementation")
+    val questImplementation = configurations.getByName("questImplementation")
 
     devImplementation(default)
     alphaImplementation(default)
     playImplementation(default)
+    questImplementation(default)
 
     fdroid?.let { dep ->
         fdroidImplementation(dep)
@@ -294,12 +301,14 @@ fun DependencyHandlerScope.addDevBlackImplementation(
     val alphaImplementation = configurations.getByName("alphaImplementation")
     val playImplementation = configurations.getByName("playImplementation")
     val fdroidImplementation = configurations.getByName("fdroidImplementation")
+    val questImplementation = configurations.getByName("questImplementation")
 
     devBlackImplementation(devBlack)
     devProdImplementation(default)
     alphaImplementation(default)
     playImplementation(default)
     fdroidImplementation(default)
+    questImplementation(default)
 }
 
 dependencies {
@@ -499,6 +508,9 @@ dependencies {
     androidTestImplementation(libs.core.test.android.test.rule)
     androidTestUtil(libs.androidx.test.orchestrator)
     baselineProfile(projects.appmacrobenchmark)
+
+    "questImplementation"(libs.meta.horizon.sdk)
+    "questImplementation"(libs.meta.horizon.billing)
 }
 
 fun String?.toBuildConfigValue() = if (this != null) "\"$this\"" else "null"

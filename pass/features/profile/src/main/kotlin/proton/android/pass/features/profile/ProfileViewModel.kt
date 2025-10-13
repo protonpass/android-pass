@@ -81,6 +81,7 @@ import proton.android.pass.features.profile.accountswitcher.AccountListItem
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.passkeys.api.CheckPasskeySupport
+import proton.android.pass.passkeys.api.PasskeySupport
 import proton.android.pass.preferences.AppLockTypePreference
 import proton.android.pass.preferences.BiometricSystemLockPreference
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -191,7 +192,13 @@ class ProfileViewModel @Inject constructor(
     private val passkeySupportFlow: Flow<ProfilePasskeySupportSection> =
         oneShot<ProfilePasskeySupportSection> {
             val support = checkPasskeySupport()
-            ProfilePasskeySupportSection.Show(support)
+            if (support is PasskeySupport.NotSupported &&
+                support.reason == PasskeySupport.NotSupportedReason.Quest
+            ) {
+                ProfilePasskeySupportSection.Hide
+            } else {
+                ProfilePasskeySupportSection.Show(support)
+            }
         }.onStart {
             emit(ProfilePasskeySupportSection.Hide)
         }.distinctUntilChanged()

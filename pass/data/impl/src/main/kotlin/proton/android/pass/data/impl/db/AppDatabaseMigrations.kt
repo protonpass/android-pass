@@ -333,7 +333,7 @@ object AppDatabaseMigrations {
 
     val MIGRATION_76_77 = object : Migration(76, 77) {
         override fun migrate(db: SupportSQLiteDatabase) {
-            AccountDatabase.MIGRATION_11
+            AccountDatabase.MIGRATION_11.migrate(db)
         }
     }
 }

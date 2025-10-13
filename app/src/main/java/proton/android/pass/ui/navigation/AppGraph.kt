@@ -2806,7 +2806,7 @@ fun NavGraphBuilder.appGraph(
     inAppMessageGraph {
         when (it) {
             InAppMessageDestination.CloseBottomsheet -> dismissBottomSheet {}
-            InAppMessageDestination.CloseScreen -> appNavigator.navigateBack()
+            InAppMessageDestination.CloseScreen -> appNavigator.navigateBack(force = true)
 
             is InAppMessageDestination.DeepLink -> dismissBottomSheet {
                 if (it.deepLink.isNotBlank()) {

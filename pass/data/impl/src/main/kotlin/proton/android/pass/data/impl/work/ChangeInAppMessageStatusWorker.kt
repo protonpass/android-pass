@@ -39,7 +39,7 @@ import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.LastTimeUserHasSeenIAMPreference
 
 @HiltWorker
-class MarkInAppMessageAsDismissedWorker @AssistedInject constructor(
+class ChangeInAppMessageStatusWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted private val workerParameters: WorkerParameters,
     private val changeInAppMessageStatus: ChangeInAppMessageStatus,
@@ -49,11 +49,14 @@ class MarkInAppMessageAsDismissedWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result = runCatching {
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
-        val (userId: UserId?, inAppMessageId: InAppMessageId?) = workerParameters.inputData.let {
-            it.getString(USER_ID_KEY)?.let(::UserId) to it.getString(IN_APP_MESSAGES_KEY)?.let(::InAppMessageId)
-        }
-        if (userId != null && inAppMessageId != null) {
-            changeInAppMessageStatus(userId, inAppMessageId, InAppMessageStatus.Dismissed)
+        val userId = workerParameters.inputData.getString(USER_ID_KEY)
+            ?.let(::UserId)
+        val inAppMessageId = workerParameters.inputData.getString(IN_APP_MESSAGES_KEY)
+            ?.let(::InAppMessageId)
+        val status = workerParameters.inputData.getInt(IN_APP_MESSAGE_STATUS_KEY, -1)
+            .let { InAppMessageStatus.fromValue(it) }
+        if (userId != null && inAppMessageId != null && status != InAppMessageStatus.Unknown) {
+            changeInAppMessageStatus(userId, inAppMessageId, status)
             internalSettingsRepository.setLastTimeUserHasSeenIAM(
                 LastTimeUserHasSeenIAMPreference(userId, clock.now().epochSeconds)
             )
@@ -71,17 +74,23 @@ class MarkInAppMessageAsDismissedWorker @AssistedInject constructor(
         }
         .toWorkerResult()
 
-    companion object {
+    companion object Companion {
         private const val USER_ID_KEY = "USER_ID"
         private const val IN_APP_MESSAGES_KEY = "IN_APP_MESSAGES"
-        private const val TAG = "MarkInAppMessageAsDismissedWorker"
+        private const val IN_APP_MESSAGE_STATUS_KEY = "IN_APP_MESSAGE_STATUS"
+        private const val TAG = "ChangeInAppMessageStatusWorker"
 
-        fun getRequestFor(userId: UserId, inAppMessageId: InAppMessageId): OneTimeWorkRequest {
+        fun getRequestFor(
+            userId: UserId,
+            inAppMessageId: InAppMessageId,
+            inAppMessageStatus: InAppMessageStatus
+        ): OneTimeWorkRequest {
             val inputData = workDataOf(
                 USER_ID_KEY to userId.id,
-                IN_APP_MESSAGES_KEY to inAppMessageId.value
+                IN_APP_MESSAGES_KEY to inAppMessageId.value,
+                IN_APP_MESSAGE_STATUS_KEY to inAppMessageStatus.value
             )
-            return OneTimeWorkRequestBuilder<MarkInAppMessageAsDismissedWorker>()
+            return OneTimeWorkRequestBuilder<ChangeInAppMessageStatusWorker>()
                 .setConstraints(
                     Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
                 )

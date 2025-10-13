@@ -154,6 +154,7 @@ internal fun ReportTipsPage(
                                             )
                                         )
 
+                                    PasskeySupport.NotSupportedReason.Quest -> {}
                                     PasskeySupport.NotSupportedReason.Unknown -> {}
                                 }
                             }

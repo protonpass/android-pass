@@ -28,6 +28,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.appconfig.api.BuildFlavor
 import proton.android.pass.biometry.StoreAuthSuccessful
 import proton.android.pass.biometry.UnlockMethod
 import proton.android.pass.common.api.CommonRegex.NON_DIGIT_REGEX
@@ -48,10 +50,15 @@ class PinConfigViewModel @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val createPin: CreatePin,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val storeAuthSuccessful: StoreAuthSuccessful
+    private val storeAuthSuccessful: StoreAuthSuccessful,
+    appConfig: AppConfig
 ) : ViewModel() {
 
-    private val _state: MutableStateFlow<PinConfigUiState> = MutableStateFlow(PinConfigUiState())
+    private val _state: MutableStateFlow<PinConfigUiState> = MutableStateFlow(
+        PinConfigUiState(
+            isQuest = appConfig.flavor is BuildFlavor.Quest
+        )
+    )
     val state: StateFlow<PinConfigUiState> = _state
 
     fun onEnterPin(value: String) {
@@ -117,7 +124,8 @@ data class PinConfigUiState(
     val pin: String = "",
     val repeatPin: String = "",
     val validationErrors: ImmutableSet<PinConfigValidationErrors> = persistentSetOf(),
-    val event: PinConfigEvent = PinConfigEvent.Unknown
+    val event: PinConfigEvent = PinConfigEvent.Unknown,
+    val isQuest: Boolean = false
 )
 
 enum class PinConfigValidationErrors {

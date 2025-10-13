@@ -26,6 +26,7 @@ sealed interface PasskeySupport {
 
     enum class NotSupportedReason {
         AndroidVersion,
+        Quest,
         CredentialManagerUnsupported,
         Unknown
     }

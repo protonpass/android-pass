@@ -69,8 +69,6 @@ data class InAppMessageEntity(
     val promoStartMinimized: Boolean?,
     @ColumnInfo(name = Columns.PROMO_CLOSE_TEXT)
     val promoCloseText: String?,
-    @ColumnInfo(name = Columns.PROMO_MINIMIZED_TEXT)
-    val promoMinimizedText: String?,
     @ColumnInfo(name = Columns.PROMO_LIGHT_BG_URL)
     val promoLightBackgroundUrl: String?,
     @ColumnInfo(name = Columns.PROMO_LIGHT_CONTENT_URL)
@@ -102,7 +100,6 @@ data class InAppMessageEntity(
 
         const val PROMO_START_MINIMIZED = "promo_start_minimized"
         const val PROMO_CLOSE_TEXT = "promo_close_text"
-        const val PROMO_MINIMIZED_TEXT = "promo_minimized_text"
         const val PROMO_LIGHT_BG_URL = "promo_light_bg_url"
         const val PROMO_LIGHT_CONTENT_URL = "promo_light_content_url"
         const val PROMO_LIGHT_CLOSE_COLOR = "promo_light_close_text_color"

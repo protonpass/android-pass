@@ -96,7 +96,6 @@ enum class InAppMessageMode(val value: Int) {
 data class InAppMessagePromoContents(
     val startMinimised: Boolean,
     val closePromoText: String,
-    val minimizedPromoText: String,
     val lightThemeContents: InAppMessagePromoThemedContents,
     val darkThemeContents: InAppMessagePromoThemedContents
 )

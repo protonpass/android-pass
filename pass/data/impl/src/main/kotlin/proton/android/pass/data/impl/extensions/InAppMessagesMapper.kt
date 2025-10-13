@@ -64,7 +64,6 @@ private fun NotificationPromoContentsResponse?.toPromoContents(): Option<InAppMe
             InAppMessagePromoContents(
                 startMinimised = startMinimised,
                 closePromoText = closePromoText,
-                minimizedPromoText = minimizedPromoText,
                 lightThemeContents = InAppMessagePromoThemedContents(
                     backgroundImageUrl = lightThemeContents.backgroundImageUrl,
                     contentImageUrl = lightThemeContents.contentImageUrl,

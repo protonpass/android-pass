@@ -131,7 +131,6 @@ class AssetLinkDaoTest {
         userId = userId,
         promoStartMinimized = false,
         promoCloseText = null,
-        promoMinimizedText = null,
         promoLightBackgroundUrl = null,
         promoLightContentUrl = null,
         promoLightCloseTextColor = null,

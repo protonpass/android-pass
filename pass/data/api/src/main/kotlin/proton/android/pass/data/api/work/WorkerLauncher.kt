@@ -20,6 +20,7 @@ package proton.android.pass.data.api.work
 
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.inappmessages.InAppMessageId
+import proton.android.pass.domain.inappmessages.InAppMessageStatus
 
 interface WorkerLauncher {
     fun launch(workerItem: WorkerItem)
@@ -30,8 +31,9 @@ sealed interface WorkerItem {
     @JvmInline
     value class SingleItemAssetLink(val websites: Set<String>) : WorkerItem
 
-    data class MarkInAppMessageAsDismissed(
+    data class ChangeInAppMessageStatus(
         val userId: UserId,
-        val inAppMessageId: InAppMessageId
+        val inAppMessageId: InAppMessageId,
+        val inAppMessageStatus: InAppMessageStatus
     ) : WorkerItem
 }

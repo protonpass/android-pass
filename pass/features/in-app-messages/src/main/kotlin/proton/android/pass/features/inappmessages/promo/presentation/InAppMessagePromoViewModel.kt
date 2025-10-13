@@ -22,6 +22,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import me.proton.core.domain.entity.UserId
@@ -45,6 +47,8 @@ import proton.android.pass.features.inappmessages.InAppMessagesClick
 import proton.android.pass.features.inappmessages.InAppMessagesDisplay
 import proton.android.pass.features.inappmessages.navigation.InAppMessageNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.preferences.ThemePreference
+import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
@@ -53,6 +57,7 @@ class InAppMessagePromoViewModel @Inject constructor(
     private val workerLauncher: WorkerLauncher,
     private val telemetryManager: TelemetryManager,
     observeInAppMessage: ObserveInAppMessage,
+    userPreferencesRepository: UserPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -66,12 +71,13 @@ class InAppMessagePromoViewModel @Inject constructor(
 
     private var inAppMessageStatus: Option<InAppMessageStatus> = None
 
-    val state = observeInAppMessage(userId, inAppMessageId)
-        .asResultWithoutLoading()
-        .map { result: LoadingResult<InAppMessage> ->
-            val message = result.getOrNull() ?: return@map InAppMessagePromoState.Error
-            InAppMessagePromoState.Success(message)
-        }
+    val state: StateFlow<InAppMessagePromoState> = combine(
+        observeInAppMessage(userId, inAppMessageId).asResultWithoutLoading(),
+        userPreferencesRepository.getThemePreference()
+    ) { result: LoadingResult<InAppMessage>, themePreference: ThemePreference ->
+        val message = result.getOrNull() ?: return@combine InAppMessagePromoState.Error
+        InAppMessagePromoState.Success(message, themePreference)
+    }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),

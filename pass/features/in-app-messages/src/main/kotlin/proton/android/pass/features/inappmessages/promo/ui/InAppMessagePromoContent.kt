@@ -54,6 +54,7 @@ import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.defaultTint
 import proton.android.pass.composecomponents.impl.buttons.TransparentTextButton
 import proton.android.pass.composecomponents.impl.icon.Icon
+import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageCTA
 import proton.android.pass.domain.inappmessages.InAppMessageCTAType
@@ -64,25 +65,23 @@ import proton.android.pass.domain.inappmessages.InAppMessagePromoContents
 import proton.android.pass.domain.inappmessages.InAppMessagePromoThemedContents
 import proton.android.pass.domain.inappmessages.InAppMessageRange
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
+import proton.android.pass.preferences.ThemePreference
 import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun InAppMessagePromoContent(
     modifier: Modifier = Modifier,
     inAppMessage: InAppMessage,
+    themePreference: ThemePreference,
     onInternalCTAClick: (String) -> Unit,
     onExternalCTAClick: (String) -> Unit,
     onMinimize: () -> Unit,
     onDontShowAgain: () -> Unit
 ) {
     val promo = inAppMessage.promoContents.value() ?: return
-    val isDarkTheme = isSystemInDarkTheme()
-    val themeContents = remember(isDarkTheme) {
-        if (isDarkTheme) {
-            promo.darkThemeContents
-        } else {
-            promo.lightThemeContents
-        }
+    val isDark = isDark(themePreference)
+    val themeContents = remember(isDark) {
+        if (isDark) promo.darkThemeContents else promo.lightThemeContents
     }
     val textColor = remember(themeContents.closePromoTextColor) {
         runCatching { Color(themeContents.closePromoTextColor.toInt()).copy(alpha = 1f) }
@@ -200,6 +199,7 @@ fun InAppMessagePromoContentPreview(@PreviewParameter(ThemePreviewProvider::clas
                         )
                     ).some()
                 ),
+                themePreference = ThemePreference.System,
                 onInternalCTAClick = {},
                 onExternalCTAClick = {},
                 onMinimize = {},

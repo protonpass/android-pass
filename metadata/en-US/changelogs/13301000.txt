@@ -1,0 +1,5 @@
+## 1.33.1 (2025-10-13)
+
+### Fixes :bug:
+
+- Use Passkeys with qr.

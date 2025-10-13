@@ -34,6 +34,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.IntentSanitizer
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.FragmentActivity
@@ -51,6 +52,7 @@ import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.compose.LocalProductMetricsDelegateOwner
 import proton.android.pass.PassActivityOrchestrator
 import proton.android.pass.autofill.di.UserPreferenceEntryPoint
+import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.setSecureMode
 import proton.android.pass.composecomponents.impl.theme.SystemUIDisposableEffect
@@ -64,6 +66,8 @@ import proton.android.pass.ui.launcher.AccountState.Processing
 import proton.android.pass.ui.launcher.AccountState.StepNeeded
 import proton.android.pass.ui.launcher.LauncherViewModel
 import javax.inject.Inject
+
+private const val PROTON_UPGRADE_URL = "https://account.proton.me/pass/upgrade"
 
 @AndroidEntryPoint
 class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
@@ -109,6 +113,7 @@ class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
         passActivityOrchestrator.register(this)
 
         setContent {
+            val context = LocalContext.current
             val state by launcherViewModel.state.collectAsState()
             runCatching {
                 splashScreen.setKeepOnScreenCondition { state.accountState == Processing }
@@ -167,7 +172,17 @@ class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
                                     is AppNavigation.SignIn -> launcherViewModel.signIn(it.userId)
                                     is AppNavigation.ForceSignOut -> launcherViewModel.disable(it.userId)
                                     is AppNavigation.Subscription -> launcherViewModel.subscription()
-                                    is AppNavigation.Upgrade -> launcherViewModel.upgrade()
+                                    is AppNavigation.Upgrade -> {
+                                        if (state.supportPayment) {
+                                            launcherViewModel.upgrade()
+                                        } else {
+                                            BrowserUtils.openWebsite(
+                                                context = context,
+                                                website = PROTON_UPGRADE_URL
+                                            )
+                                        }
+                                    }
+
                                     is AppNavigation.Restart -> restartApp()
                                     is AppNavigation.PasswordManagement -> launcherViewModel.passwordManagement()
                                     is AppNavigation.RecoveryEmail -> launcherViewModel.recoveryEmail()

@@ -44,6 +44,7 @@ sealed class BuildFlavor(val env: BuildEnv) {
     class Alpha(env: BuildEnv) : BuildFlavor(env)
     class Play(env: BuildEnv) : BuildFlavor(env)
     class Fdroid(env: BuildEnv) : BuildFlavor(env)
+    class Quest(env: BuildEnv) : BuildFlavor(env)
 
     companion object {
         fun from(string: String): BuildFlavor = when (string) {
@@ -55,6 +56,8 @@ sealed class BuildFlavor(val env: BuildEnv) {
             "playProd" -> Play(BuildEnv.PROD)
             "fdroidBlack" -> Fdroid(BuildEnv.BLACK)
             "fdroidProd" -> Fdroid(BuildEnv.PROD)
+            "questBlack" -> Quest(BuildEnv.BLACK)
+            "questProd" -> Quest(BuildEnv.PROD)
             else -> throw UnsupportedOperationException("Unsupported flavour")
         }
 
@@ -63,18 +66,28 @@ sealed class BuildFlavor(val env: BuildEnv) {
                 BuildEnv.BLACK -> "devBlack"
                 BuildEnv.PROD -> "devProd"
             }
+
             is Alpha -> when (this.env) {
                 BuildEnv.BLACK -> "alphaBlack"
                 BuildEnv.PROD -> "alphaProd"
             }
+
             is Play -> when (this.env) {
                 BuildEnv.BLACK -> "playBlack"
                 BuildEnv.PROD -> "playProd"
             }
+
             is Fdroid -> when (this.env) {
                 BuildEnv.BLACK -> "fdroidBlack"
                 BuildEnv.PROD -> "fdroidProd"
             }
+
+            is Quest -> when (this.env) {
+                BuildEnv.BLACK -> "questBlack"
+                BuildEnv.PROD -> "questProd"
+            }
         }
+
+        fun BuildFlavor.supportPayment() = this !is Fdroid && this !is Quest
     }
 }

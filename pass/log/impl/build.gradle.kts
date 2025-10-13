@@ -20,6 +20,7 @@ android {
         maybeCreate("alpha")
         maybeCreate("play")
         maybeCreate("fdroid")
+        maybeCreate("quest")
     }
 
     compileOptions {
@@ -45,10 +46,12 @@ fun DependencyHandlerScope.addFdroidSpecialLib(
     val alphaImplementation = configurations.getByName("alphaImplementation")
     val playImplementation = configurations.getByName("playImplementation")
     val fdroidImplementation = configurations.getByName("fdroidImplementation")
+    val questImplementation = configurations.getByName("questImplementation")
 
     devImplementation(default)
     alphaImplementation(default)
     playImplementation(default)
+    questImplementation(default)
 
     fdroid?.let { dep ->
         fdroidImplementation(dep)

@@ -24,6 +24,7 @@ android {
         maybeCreate("alpha")
         maybeCreate("play")
         maybeCreate("fdroid")
+        maybeCreate("quest")
     }
 
     buildFeatures {

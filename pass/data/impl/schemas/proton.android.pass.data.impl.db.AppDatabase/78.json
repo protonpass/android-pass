@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 78,
-    "identityHash": "774812a6dc51eeb46fc2bf1b5210ca43",
+    "identityHash": "c1c8a207945b507df0bb3cc06b83218d",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -4360,7 +4360,7 @@
       },
       {
         "tableName": "InAppMessageEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `key` TEXT NOT NULL, `mode` INTEGER NOT NULL, `priority` INTEGER NOT NULL, `title` TEXT NOT NULL, `message` TEXT, `image_url` TEXT, `cta_text` TEXT, `cta_route` TEXT, `cta_type` TEXT, `state` INTEGER NOT NULL, `range_start` INTEGER NOT NULL, `range_end` INTEGER, `user_id` TEXT NOT NULL, `promo_start_minimized` INTEGER, `promo_close_text` TEXT, `promo_minimized_text` TEXT, `promo_light_bg_url` TEXT, `promo_light_content_url` TEXT, `promo_light_close_text_color` TEXT, `promo_dark_bg_url` TEXT, `promo_dark_content_url` TEXT, `promo_dark_close_text_color` TEXT, PRIMARY KEY(`user_id`, `id`), FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `key` TEXT NOT NULL, `mode` INTEGER NOT NULL, `priority` INTEGER NOT NULL, `title` TEXT NOT NULL, `message` TEXT, `image_url` TEXT, `cta_text` TEXT, `cta_route` TEXT, `cta_type` TEXT, `state` INTEGER NOT NULL, `range_start` INTEGER NOT NULL, `range_end` INTEGER, `user_id` TEXT NOT NULL, `promo_start_minimized` INTEGER, `promo_close_text` TEXT, `promo_light_bg_url` TEXT, `promo_light_content_url` TEXT, `promo_light_close_text_color` TEXT, `promo_dark_bg_url` TEXT, `promo_dark_content_url` TEXT, `promo_dark_close_text_color` TEXT, PRIMARY KEY(`user_id`, `id`), FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -4448,11 +4448,6 @@
           {
             "fieldPath": "promoCloseText",
             "columnName": "promo_close_text",
-            "affinity": "TEXT"
-          },
-          {
-            "fieldPath": "promoMinimizedText",
-            "columnName": "promo_minimized_text",
             "affinity": "TEXT"
           },
           {
@@ -4826,7 +4821,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '774812a6dc51eeb46fc2bf1b5210ca43')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c1c8a207945b507df0bb3cc06b83218d')"
     ]
   }
 }

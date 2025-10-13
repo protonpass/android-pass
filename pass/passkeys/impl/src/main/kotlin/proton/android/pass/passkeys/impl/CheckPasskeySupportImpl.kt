@@ -24,6 +24,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import dagger.hilt.android.qualifiers.ApplicationContext
 import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.appconfig.api.BuildFlavor
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.passkeys.api.CheckPasskeySupport
 import proton.android.pass.passkeys.api.PasskeySupport
@@ -36,11 +37,26 @@ class CheckPasskeySupportImpl @Inject constructor(
 
     @Suppress("NewApi")
     override fun invoke(): PasskeySupport = runCatching {
-        if (appConfig.androidVersion < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            PassLogger.i(TAG, "Passkey support not available on Android version ${appConfig.androidVersion}")
-            PasskeySupport.NotSupported(PasskeySupport.NotSupportedReason.AndroidVersion)
-        } else {
-            checkCredentialManager()
+        when {
+            appConfig.flavor is BuildFlavor.Quest -> {
+                PassLogger.i(
+                    TAG,
+                    "Passkey support not available on Quest"
+                )
+                PasskeySupport.NotSupported(PasskeySupport.NotSupportedReason.Quest)
+            }
+
+            appConfig.androidVersion < Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> {
+                PassLogger.i(
+                    TAG,
+                    "Passkey support not available on Android version ${appConfig.androidVersion}"
+                )
+                PasskeySupport.NotSupported(PasskeySupport.NotSupportedReason.AndroidVersion)
+            }
+
+            else -> {
+                checkCredentialManager()
+            }
         }
     }.getOrElse {
         PassLogger.w(TAG, "Error checking passkey support")

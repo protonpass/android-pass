@@ -59,6 +59,7 @@ object ApplicationModule {
         is BuildFlavor.Alpha -> AppStore.GooglePlay
         is BuildFlavor.Dev -> AppStore.GooglePlay
         is BuildFlavor.Play -> AppStore.GooglePlay
+        is BuildFlavor.Quest -> AppStore.FDroid // create a new one in ProtonLib
     }
 
     @Provides

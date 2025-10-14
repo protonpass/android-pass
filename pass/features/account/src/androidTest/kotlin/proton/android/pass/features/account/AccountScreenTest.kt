@@ -18,25 +18,18 @@
 
 package proton.android.pass.features.account
 
-import android.content.Intent
-import android.content.Intent.ACTION_VIEW
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
-import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasData
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
 import androidx.test.espresso.intent.rule.IntentsRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import org.hamcrest.CoreMatchers.allOf
-import org.hamcrest.CoreMatchers.`is`
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
@@ -69,6 +62,7 @@ class AccountScreenTest {
     fun setup() {
         hiltRule.inject()
         observeCurrentUser.sendUser(TestUser.create(email = "test@test.test", name = "test user"))
+        BrowserUtils.resetLastUrl()
     }
 
     @Test
@@ -130,23 +124,19 @@ class AccountScreenTest {
             val contentDescription = activity.getString(
                 R.string.account_delete_account_icon_content_description
             )
+            
+            // Verify the delete account button exists and is clickable
             onNodeWithContentDescription(contentDescription)
                 .performScrollTo()
+                .assertExists()
                 .performClick()
 
+            // Verify that BrowserUtils.openWebsite was called with the correct URL
+            assert(BrowserUtils.wasCalled) { "BrowserUtils.openWebsite should have been called" }
+            assert(BrowserUtils.lastAttemptedUrl == "https://account.proton.me/u/0/pass/account-password") { 
+                "Expected URL 'https://account.proton.me/u/0/pass/account-password', but got '${BrowserUtils.lastAttemptedUrl}'"
+            }
         }
-
-        intended(
-            allOf(
-                hasAction(Intent.ACTION_CHOOSER),
-                hasExtra(
-                    `is`(Intent.EXTRA_INTENT), allOf(
-                        hasAction(ACTION_VIEW),
-                        hasData("https://account.proton.me/u/0/pass/account-password")
-                    )
-                )
-            )
-        )
     }
 
     @Test

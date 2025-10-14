@@ -70,4 +70,11 @@ dependencies {
     implementation(projects.pass.domain)
     implementation(projects.pass.navigation.api)
 
+    kaptAndroidTest(libs.dagger.hilt.android.compiler)
+    androidTestImplementation(libs.kotlinTest)
+    androidTestImplementation(projects.pass.commonTest)
+    androidTestImplementation(projects.pass.commonUi.fakes)
+    androidTestImplementation(projects.pass.data.fakes)
+    androidTestImplementation(projects.pass.notifications.fakes)
+    androidTestImplementation(projects.pass.preferences.fakes)
 }

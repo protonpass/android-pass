@@ -26,7 +26,20 @@ import proton.android.pass.log.api.PassLogger
 object BrowserUtils {
     const val TAG = "BrowserUtils"
 
+    // Test-friendly variable
+    @Volatile
+    var lastAttemptedUrl: String? = null
+        private set
+
+    @Volatile
+    var wasCalled: Boolean = false
+        private set
+
     fun openWebsite(context: Context, website: String) {
+        // Track the attempt for testing
+        lastAttemptedUrl = website
+        wasCalled = true
+
         runCatching {
             val intent = Intent(Intent.ACTION_VIEW, website.toUri())
             if (intent.resolveActivity(context.packageManager) != null) {
@@ -39,5 +52,11 @@ object BrowserUtils {
             PassLogger.w(TAG, "Could not find a suitable activity")
             PassLogger.w(TAG, it)
         }
+    }
+
+    // Test helper to reset tracking
+    fun resetLastUrl() {
+        lastAttemptedUrl = null
+        wasCalled = false
     }
 }

@@ -112,4 +112,9 @@ dependencies {
     androidTestImplementation(libs.androidx.lifecycle.viewmodel.savedstate)
     androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(libs.kotlinTest)
+    androidTestImplementation(projects.pass.commonTest)
+    androidTestImplementation(projects.pass.commonUi.fakes)
+    androidTestImplementation(projects.pass.data.fakes)
+    androidTestImplementation(projects.pass.notifications.fakes)
+    androidTestImplementation(projects.pass.preferences.fakes)
 }

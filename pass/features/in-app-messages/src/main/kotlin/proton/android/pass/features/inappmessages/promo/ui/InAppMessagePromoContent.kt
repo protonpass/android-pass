@@ -81,13 +81,13 @@ fun InAppMessagePromoContent(
     val promo = inAppMessage.promoContents.value() ?: return
     val isDark = isDark(themePreference)
     val themeContents = remember(isDark) {
-        if (isDark) promo.darkThemeContents else promo.lightThemeContents
+        if (!isDark) promo.darkThemeContents else promo.lightThemeContents
     }
     val textColor = remember(themeContents.closePromoTextColor) {
         runCatching { Color("#${themeContents.closePromoTextColor}".toColorInt()).copy(alpha = 1f) }
     }.fold({ it }, { defaultTint() })
 
-    Box(modifier = modifier) {
+    Box(modifier = modifier.fillMaxSize()) {
         AsyncImage(
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop,

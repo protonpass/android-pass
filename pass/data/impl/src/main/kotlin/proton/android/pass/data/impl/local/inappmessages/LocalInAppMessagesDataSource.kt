@@ -27,6 +27,8 @@ interface LocalInAppMessagesDataSource {
 
     fun observeDeliverableUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>>
 
+    fun observePromoUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>>
+
     fun observeUserMessage(userId: UserId, id: InAppMessageId): Flow<InAppMessage>
 
     suspend fun storeMessages(userId: UserId, messages: List<InAppMessage>)

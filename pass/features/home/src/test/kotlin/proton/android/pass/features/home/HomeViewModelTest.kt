@@ -61,6 +61,7 @@ import proton.android.pass.data.fakes.usecases.TestRestoreAllItems
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestTrashItems
 import proton.android.pass.data.fakes.usecases.TestUnpinItems
+import proton.android.pass.data.fakes.usecases.inappmessages.FakeObserveDeliverablePromoInAppMessages
 import proton.android.pass.data.fakes.usecases.items.FakeObserveCanCreateItems
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveEncryptedSharedItems
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveHasShares
@@ -279,7 +280,8 @@ internal class HomeViewModelTest {
             accountManager = TestAccountManager(),
             observeEncryptedSharedItems = FakeObserveEncryptedSharedItems(),
             observeCanCreateItems = observeCanCreateItems,
-            observeHasShares = observeHasShares
+            observeHasShares = observeHasShares,
+            observeDeliverablePromoInAppMessages = FakeObserveDeliverablePromoInAppMessages()
         )
     }
 

@@ -19,7 +19,6 @@
 package proton.android.pass.features.inappmessages.promo.ui
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,6 +40,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.core.graphics.toColorInt
 import coil.compose.AsyncImage
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
@@ -67,7 +67,6 @@ import proton.android.pass.domain.inappmessages.InAppMessageRange
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
 import proton.android.pass.preferences.ThemePreference
 import me.proton.core.presentation.R as CoreR
-import androidx.core.graphics.toColorInt
 
 @Composable
 fun InAppMessagePromoContent(

@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.local.inappmessages
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
@@ -48,6 +49,14 @@ class LocalInAppMessagesDataSourceImpl @Inject constructor(
     override fun observeDeliverableUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>> =
         database.inAppMessagesDao()
             .observeDeliverableUserMessages(userId.id, currentTimestamp)
+            .map { entities ->
+                entities.map(InAppMessageEntity::toDomain)
+                    .filter { it.promoContents.value()?.startMinimised?.not() ?: true }
+            }
+
+    override fun observePromoUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>> =
+        database.inAppMessagesDao()
+            .observeDeliverablePromoUserMessages(userId.id, currentTimestamp)
             .map { entities -> entities.map(InAppMessageEntity::toDomain) }
 
     override fun observeUserMessage(userId: UserId, id: InAppMessageId): Flow<InAppMessage> =

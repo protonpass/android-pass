@@ -57,6 +57,7 @@ import proton.android.pass.commonui.api.TestTags.HOME_ITEM_LIST_TAG
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.AllVaultsIcon
+import proton.android.pass.composecomponents.impl.icon.PromoIcon
 import proton.android.pass.composecomponents.impl.icon.TrashVaultIcon
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.item.ItemsList
@@ -154,6 +155,19 @@ internal fun HomeContent(
                             )
                         },
                         actions = {
+                            uiState.homeListUiState.promoInAppMessage.value()?.let { promo ->
+                                PromoIcon(
+                                    onClick = {
+                                        onEvent(
+                                            HomeUiEvent.PromoInAppMessageClick(
+                                                userId = promo.userId,
+                                                inAppMessageId = promo.id
+                                            )
+                                        )
+                                    }
+                                )
+                            }
+
                             val (backgroundColor, iconColor) =
                                 if (uiState.homeListUiState.searchFilterType != SearchFilterType.All) {
                                     PassTheme.colors.interactionNormMajor2 to PassTheme.colors.textInvert

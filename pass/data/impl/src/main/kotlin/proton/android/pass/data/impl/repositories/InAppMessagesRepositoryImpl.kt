@@ -51,6 +51,10 @@ class InAppMessagesRepositoryImpl @Inject constructor(
             .onStart { refreshUserMessages(userId) }
             .distinctUntilChanged()
 
+    override fun observeDeliverablePromoUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>> =
+        local.observeDeliverableUserMessages(userId, currentTimestamp)
+            .distinctUntilChanged()
+
     override suspend fun refreshUserMessages(userId: UserId) {
         coroutineScope {
             val allMessages = mutableListOf<InAppMessage>()

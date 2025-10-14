@@ -24,12 +24,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.composecomponents.impl.dialogs.PassUpgradePlanDialog
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
@@ -166,5 +168,7 @@ sealed interface HomeNavigation {
 
     @JvmInline
     value class LeaveItemShare(val shareId: ShareId) : HomeNavigation
+
+    data class OpenPromoInAppMessage(val userId: UserId, val inAppMessageId: InAppMessageId) : HomeNavigation
 
 }

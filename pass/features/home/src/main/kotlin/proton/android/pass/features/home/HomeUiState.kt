@@ -39,6 +39,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.preferences.AliasTrashDialogStatusPreference
 import proton.android.pass.searchoptions.api.SearchFilterType
 import proton.android.pass.searchoptions.api.SearchSortingType
@@ -229,7 +230,8 @@ internal data class HomeListUiState(
     val searchFilterType: SearchFilterType = SearchFilterType.All,
     val sortingType: SearchSortingType = SearchSortingType.MostRecent,
     val selectionState: HomeSelectionState,
-    val showNeedsUpdate: Boolean
+    val showNeedsUpdate: Boolean,
+    val promoInAppMessage: Option<InAppMessage>
 ) {
 
     internal val selectedVaultOption: Option<Vault> = selectedShare.flatMap { share ->
@@ -261,7 +263,8 @@ internal data class HomeListUiState(
             items = persistentListOf(),
             shares = persistentMapOf(),
             selectionState = HomeSelectionState.Initial,
-            showNeedsUpdate = false
+            showNeedsUpdate = false,
+            promoInAppMessage = None
         )
 
     }

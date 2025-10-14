@@ -1007,6 +1007,13 @@ fun HomeScreen(
                                 items = homeUiState.homeListUiState.selectionState.selectedItems
                             )
                         }
+                        is HomeUiEvent.PromoInAppMessageClick ->
+                            onNavigateEvent(
+                                HomeNavigation.OpenPromoInAppMessage(
+                                    userId = homeUiEvent.userId,
+                                    inAppMessageId = homeUiEvent.inAppMessageId
+                                )
+                            )
                     }
                 }
             )

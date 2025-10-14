@@ -52,7 +52,7 @@ class InAppMessagesRepositoryImpl @Inject constructor(
             .distinctUntilChanged()
 
     override fun observeDeliverablePromoUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>> =
-        local.observeDeliverableUserMessages(userId, currentTimestamp)
+        local.observePromoUserMessages(userId, currentTimestamp)
             .distinctUntilChanged()
 
     override suspend fun refreshUserMessages(userId: UserId) {

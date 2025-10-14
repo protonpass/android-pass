@@ -172,6 +172,7 @@ import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
 import proton.android.pass.data.api.usecases.inappmessages.ChangeInAppMessageStatus
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableInAppMessages
+import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverablePromoInAppMessages
 import proton.android.pass.data.api.usecases.inappmessages.ObserveInAppMessage
 import proton.android.pass.data.api.usecases.invites.InviteToItem
 import proton.android.pass.data.api.usecases.invites.ObserveInvite
@@ -400,6 +401,7 @@ import proton.android.pass.data.impl.usecases.extrapassword.RemoveExtraPasswordI
 import proton.android.pass.data.impl.usecases.extrapassword.SetupExtraPasswordImpl
 import proton.android.pass.data.impl.usecases.inappmessages.ChangeInAppMessageStatusImpl
 import proton.android.pass.data.impl.usecases.inappmessages.ObserveDeliverableInAppMessagesImpl
+import proton.android.pass.data.impl.usecases.inappmessages.ObserveDeliverablePromoInAppMessagesImpl
 import proton.android.pass.data.impl.usecases.inappmessages.ObserveInAppMessageImpl
 import proton.android.pass.data.impl.usecases.invites.InviteToItemImpl
 import proton.android.pass.data.impl.usecases.invites.ObserveInviteImpl
@@ -1080,6 +1082,11 @@ abstract class DataUseCaseModule {
     abstract fun bindObserveDeliverableInAppMessages(
         impl: ObserveDeliverableInAppMessagesImpl
     ): ObserveDeliverableInAppMessages
+
+    @[Binds Singleton]
+    abstract fun bindObserveDeliverablePromoInAppMessages(
+        impl: ObserveDeliverablePromoInAppMessagesImpl
+    ): ObserveDeliverablePromoInAppMessages
 
     @[Binds Singleton]
     abstract fun bindObserveInAppMessage(impl: ObserveInAppMessageImpl): ObserveInAppMessage

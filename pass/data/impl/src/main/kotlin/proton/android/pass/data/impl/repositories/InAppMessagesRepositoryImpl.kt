@@ -18,11 +18,7 @@
 
 package proton.android.pass.data.impl.repositories
 
-import android.content.Context
-import coil.ImageLoader
-import coil.request.CachePolicy
-import coil.request.ImageRequest
-import dagger.hilt.android.qualifiers.ApplicationContext
+import proton.android.pass.data.impl.utils.ImagePreloader
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
@@ -43,7 +39,7 @@ import javax.inject.Inject
 class InAppMessagesRepositoryImpl @Inject constructor(
     private val remote: RemoteInAppMessagesDataSource,
     private val local: LocalInAppMessagesDataSource,
-    @ApplicationContext private val context: Context
+    private val imagePreloader: ImagePreloader
 ) : InAppMessagesRepository {
 
     override fun observeDeliverableUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>> =
@@ -82,7 +78,7 @@ class InAppMessagesRepositoryImpl @Inject constructor(
                         )
                     }
                 val regularImages = allMessages.mapNotNull { it.imageUrl.value() }
-                preloadImages(context, (promoImages + regularImages).toSet())
+                imagePreloader.preloadImages((promoImages + regularImages).toSet())
             }.onFailure {
                 PassLogger.w(TAG, "Failed to fetch in-app messages for user $userId")
                 PassLogger.w(TAG, it)
@@ -108,17 +104,6 @@ class InAppMessagesRepositoryImpl @Inject constructor(
         local.observeUserMessage(userId, inAppMessageId)
             .distinctUntilChanged()
 
-    private fun preloadImages(context: Context, imageUrls: Set<String>) {
-        val imageLoader = ImageLoader.Builder(context)
-            .diskCachePolicy(CachePolicy.ENABLED)
-            .build()
-        imageUrls.forEach { url ->
-            val request = ImageRequest.Builder(context)
-                .data(url)
-                .build()
-            imageLoader.enqueue(request)
-        }
-    }
 
     companion object {
         private const val TAG = "InAppMessagesRepositoryImpl"

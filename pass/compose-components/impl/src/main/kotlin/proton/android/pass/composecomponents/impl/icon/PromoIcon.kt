@@ -25,18 +25,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.core.graphics.toColorInt
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
@@ -45,10 +41,7 @@ import proton.android.pass.composecomponents.impl.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun PromoIcon(
-    modifier: Modifier = Modifier,
-    onClick: (() -> Unit)
-) {
+fun PromoIcon(modifier: Modifier = Modifier, onClick: (() -> Unit)) {
     ProtonTheme(isDark = false) {
         Row(
             modifier = modifier
@@ -56,12 +49,12 @@ fun PromoIcon(
                 .clip(RoundedCornerShape(10.dp))
                 .clickable(onClick = onClick)
                 .background(PassPalette.PromoYellow)
-                .padding(horizontal = Spacing.extraSmall, vertical = Spacing.small),
+                .padding(Spacing.small),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(2.dp)
         ) {
             Icon.Default(
-                modifier =  Modifier.fillMaxHeight(),
+                modifier = Modifier.fillMaxHeight(),
                 id = CoreR.drawable.ic_proton_brand_proton_pass
             )
             Icon.Default(modifier = Modifier.fillMaxHeight(), id = R.drawable.ic_percentage)

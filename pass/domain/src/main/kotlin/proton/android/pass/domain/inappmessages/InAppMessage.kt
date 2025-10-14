@@ -47,6 +47,10 @@ const val STATUS_UNREAD = 0
 const val STATUS_READ = 1
 const val STATUS_DISMISSED = 2
 
+const val MODE_BANNER = 0
+const val MODE_MODAL = 1
+const val MODE_PROMO = 2
+
 enum class InAppMessageStatus(val value: Int) {
     Unread(STATUS_UNREAD),
     Read(STATUS_READ),
@@ -82,9 +86,9 @@ data class InAppMessageRange(
 )
 
 enum class InAppMessageMode(val value: Int) {
-    Banner(0),
-    Modal(1),
-    Promo(2),
+    Banner(MODE_BANNER),
+    Modal(MODE_MODAL),
+    Promo(MODE_PROMO),
     Unknown(Integer.MAX_VALUE)
     ;
 

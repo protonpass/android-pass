@@ -161,6 +161,7 @@ import proton.android.pass.data.api.usecases.extrapassword.CheckLocalExtraPasswo
 import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
+import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverablePromoInAppMessages
 import proton.android.pass.data.api.usecases.invites.InviteToItem
 import proton.android.pass.data.api.usecases.invites.ObserveInvite
 import proton.android.pass.data.api.usecases.items.GetItemCategory
@@ -368,6 +369,7 @@ import proton.android.pass.data.fakes.usecases.breach.FakeUpdateProtonAddressMon
 import proton.android.pass.data.fakes.usecases.breach.FakeVerifyBreachCustomEmail
 import proton.android.pass.data.fakes.usecases.credentials.passkeys.FakeGetPasskeyCredentialItems
 import proton.android.pass.data.fakes.usecases.credentials.passwords.FakeGetPasswordCredentialItems
+import proton.android.pass.data.fakes.usecases.inappmessages.FakeObserveDeliverablePromoInAppMessages
 import proton.android.pass.data.fakes.usecases.invites.FakeInviteToItem
 import proton.android.pass.data.fakes.usecases.invites.FakeObserveInvite
 import proton.android.pass.data.fakes.usecases.items.FakeGetItemCategory
@@ -1071,5 +1073,10 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindGetPasskeyCredentialItems(impl: FakeGetPasskeyCredentialItems): GetPasskeyCredentialItems
+
+    @Binds
+    abstract fun bindObserveDeliverablePromoInAppMessages(
+        impl: FakeObserveDeliverablePromoInAppMessages
+    ): ObserveDeliverablePromoInAppMessages
 
 }

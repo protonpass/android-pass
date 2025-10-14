@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2024 Proton AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,22 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.local.inappmessages
+package proton.android.pass.data.api.usecases.inappmessages
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.inappmessages.InAppMessage
-import proton.android.pass.domain.inappmessages.InAppMessageId
 
-interface LocalInAppMessagesDataSource {
-
-    fun observeDeliverableUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>>
-
-    fun observePromoUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>>
-
-    fun observeUserMessage(userId: UserId, id: InAppMessageId): Flow<InAppMessage>
-
-    suspend fun storeMessages(userId: UserId, messages: List<InAppMessage>)
-
-    suspend fun updateMessage(userId: UserId, message: InAppMessage)
+interface ObserveDeliverablePromoInAppMessages {
+    operator fun invoke(userId: UserId? = null): Flow<List<InAppMessage>>
 }

@@ -28,6 +28,8 @@ interface InAppMessagesRepository {
 
     fun observeDeliverableUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>>
 
+    fun observeDeliverablePromoUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>>
+
     suspend fun refreshUserMessages(userId: UserId)
 
     suspend fun changeMessageStatus(

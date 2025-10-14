@@ -35,6 +35,9 @@ class FakeInAppMessagesRepository @Inject constructor() : InAppMessagesRepositor
     override fun observeDeliverableUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>> =
         messagesFlow.map { it[userId] ?: emptyList() }
 
+    override fun observeDeliverablePromoUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>> =
+        messagesFlow.map { it[userId] ?: emptyList() }
+
     override suspend fun refreshUserMessages(userId: UserId) {
         // no-op
     }

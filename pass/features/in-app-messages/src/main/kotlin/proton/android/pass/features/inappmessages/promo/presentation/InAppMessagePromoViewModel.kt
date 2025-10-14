@@ -24,7 +24,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
@@ -83,11 +86,23 @@ class InAppMessagePromoViewModel @Inject constructor(
             initialValue = InAppMessagePromoState.Loading
         )
 
+    init {
+        viewModelScope.launch {
+            state
+                .filterIsInstance<InAppMessagePromoState.Success>()
+                .distinctUntilChanged { old, new -> old.inAppMessage.key == new.inAppMessage.key }
+                .collect { successState ->
+                    onInAppMessageDisplayed(successState.inAppMessage.key)
+                }
+        }
+    }
+
     fun onInAppMessageDisplayed(key: InAppMessageKey) {
         telemetryManager.sendEvent(InAppMessagesDisplay(key))
     }
 
     fun onCTAClicked(key: InAppMessageKey) {
+        inAppMessageStatus = InAppMessageStatus.Dismissed.some()
         telemetryManager.sendEvent(InAppMessagesClick(key))
     }
 

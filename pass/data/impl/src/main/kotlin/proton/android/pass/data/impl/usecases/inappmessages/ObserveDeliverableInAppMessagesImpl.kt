@@ -57,7 +57,7 @@ class ObserveDeliverableInAppMessagesImpl @Inject constructor(
             }
     }
 
-    fun getUserId(userId: UserId?): Flow<UserId> = if (userId != null) {
+    private fun getUserId(userId: UserId?): Flow<UserId> = if (userId != null) {
         flowOf(userId)
     } else {
         observeCurrentUser().map { it.userId }

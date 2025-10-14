@@ -180,4 +180,6 @@ object PassPalette {
     val SlateGray = Color(0x4D88859D)
     val MistGray = Color(0x4DB8B6C4)
 
+    val PromoYellow = Color(0xFFDBFF00)
+
 }

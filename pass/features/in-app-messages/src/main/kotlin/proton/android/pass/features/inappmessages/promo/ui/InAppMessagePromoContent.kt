@@ -67,6 +67,7 @@ import proton.android.pass.domain.inappmessages.InAppMessageRange
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
 import proton.android.pass.preferences.ThemePreference
 import me.proton.core.presentation.R as CoreR
+import androidx.core.graphics.toColorInt
 
 @Composable
 fun InAppMessagePromoContent(
@@ -84,7 +85,7 @@ fun InAppMessagePromoContent(
         if (isDark) promo.darkThemeContents else promo.lightThemeContents
     }
     val textColor = remember(themeContents.closePromoTextColor) {
-        runCatching { Color(themeContents.closePromoTextColor.toInt()).copy(alpha = 1f) }
+        runCatching { Color("#${themeContents.closePromoTextColor}".toColorInt()).copy(alpha = 1f) }
     }.fold({ it }, { defaultTint() })
 
     Box(modifier = modifier) {

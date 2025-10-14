@@ -42,6 +42,10 @@ android {
     }
 }
 
+androidComponents.beforeVariants { variant ->
+    variant.enableAndroidTest = false
+}
+
 dependencies {
 
     implementation(libs.accompanist.permissions)

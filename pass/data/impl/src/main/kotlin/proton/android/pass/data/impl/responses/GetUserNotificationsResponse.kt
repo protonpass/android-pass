@@ -85,7 +85,7 @@ data class CtaResponse(
 
 @Serializable
 data class NotificationPromoContentsResponse(
-    @SerialName("StartMinimised")
+    @SerialName("StartMinimized")
     val startMinimised: Boolean,
     @SerialName("ClosePromoText")
     val closePromoText: String,

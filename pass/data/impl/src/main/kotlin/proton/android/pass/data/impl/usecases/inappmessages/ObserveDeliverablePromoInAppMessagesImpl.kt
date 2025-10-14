@@ -28,33 +28,19 @@ import proton.android.pass.data.api.repositories.InAppMessagesRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverablePromoInAppMessages
 import proton.android.pass.domain.inappmessages.InAppMessage
-import proton.android.pass.preferences.InternalSettingsRepository
 import javax.inject.Inject
-import kotlin.time.Duration.Companion.minutes
 
 class ObserveDeliverablePromoInAppMessagesImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
     private val inAppMessagesRepository: InAppMessagesRepository,
-    private val internalSettingsRepository: InternalSettingsRepository,
     private val clock: Clock
 ) : ObserveDeliverablePromoInAppMessages {
 
     override fun invoke(userId: UserId?): Flow<List<InAppMessage>> = getUserId(userId).flatMapLatest { resolvedUserId ->
-        internalSettingsRepository.getLastTimeUserHasSeenIAM(resolvedUserId)
-            .flatMapLatest { preference ->
-                val now = clock.now()
-                val lastSeenTime = preference.value()?.timestamp ?: 0L
-                val thirtyMinutesAgo = now.minus(30.minutes)
-                val shouldShowInAppMessage = lastSeenTime < thirtyMinutesAgo.epochSeconds
-                if (shouldShowInAppMessage) {
-                    inAppMessagesRepository.observeDeliverableUserMessages(
-                        userId = resolvedUserId,
-                        currentTimestamp = now.epochSeconds
-                    )
-                } else {
-                    flowOf(emptyList())
-                }
-            }
+        inAppMessagesRepository.observeDeliverablePromoUserMessages(
+            userId = resolvedUserId,
+            currentTimestamp = clock.now().epochSeconds
+        )
     }
 
     fun getUserId(userId: UserId?): Flow<UserId> = if (userId != null) {

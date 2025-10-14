@@ -19,7 +19,6 @@
 package proton.android.pass.features.inappmessages.promo.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -42,9 +41,6 @@ fun InAppMessagePromoScreen(
     when (state) {
         is InAppMessagePromoState.Success -> {
             val successState = state as InAppMessagePromoState.Success
-            LaunchedEffect(Unit) {
-                viewModel.onInAppMessageDisplayed(successState.inAppMessage.key)
-            }
 
             InAppMessagePromoContent(
                 modifier = modifier,
@@ -53,6 +49,7 @@ fun InAppMessagePromoScreen(
                 onExternalCTAClick = {
                     viewModel.onCTAClicked(successState.inAppMessage.key)
                     BrowserUtils.openWebsite(context, it)
+                    onNavigate(InAppMessageDestination.CloseScreen)
                 },
                 onInternalCTAClick = {
                     viewModel.onCTAClicked(successState.inAppMessage.key)

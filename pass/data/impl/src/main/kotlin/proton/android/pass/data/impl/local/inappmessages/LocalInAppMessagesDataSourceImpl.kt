@@ -50,8 +50,8 @@ class LocalInAppMessagesDataSourceImpl @Inject constructor(
         database.inAppMessagesDao()
             .observeDeliverableUserMessages(userId.id, currentTimestamp)
             .map { entities ->
-                entities.map(InAppMessageEntity::toDomain)
-                    .filter { it.promoContents.value()?.startMinimised?.not() ?: true }
+                entities.filter { it.promoStartMinimized?.not() ?: true }
+                    .map(InAppMessageEntity::toDomain)
             }
 
     override fun observePromoUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>> =

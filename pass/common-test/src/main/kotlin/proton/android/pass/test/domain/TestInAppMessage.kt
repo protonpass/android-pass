@@ -29,6 +29,7 @@ import proton.android.pass.domain.inappmessages.InAppMessageCTAType
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageKey
 import proton.android.pass.domain.inappmessages.InAppMessageMode
+import proton.android.pass.domain.inappmessages.InAppMessagePromoContents
 import proton.android.pass.domain.inappmessages.InAppMessageRange
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
 
@@ -44,7 +45,8 @@ object TestInAppMessage {
         state: InAppMessageStatus = InAppMessageStatus.Unread,
         range: InAppMessageRange = createInAppMessageRange(),
         userId: UserId = UserId("default-user-id"),
-        priority: Int = 1
+        priority: Int = 1,
+        promoContents: Option<InAppMessagePromoContents> = None
     ): InAppMessage = InAppMessage(
         id = InAppMessageId(id),
         key = InAppMessageKey("default-key"),
@@ -57,7 +59,7 @@ object TestInAppMessage {
         range = range,
         userId = userId,
         priority = priority,
-        promoContents = None
+        promoContents = promoContents
     )
 
     fun createInAppMessageRange(start: Instant = Clock.System.now(), end: Option<Instant> = None): InAppMessageRange =

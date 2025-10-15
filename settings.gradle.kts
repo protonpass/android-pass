@@ -21,8 +21,9 @@ data class ProtosConfig(
 
 val PROTOBUF_TAG = "1.5.2"
 
+val isCI = System.getenv("GITLAB_CI").toBoolean()
+
 fun getProtosConfig(): ProtosConfig {
-    val isCI = System.getenv("GITLAB_CI").toBoolean()
     val customProtosUrl = localProperties.getProperty("protos.url", "")
     return if (isCI) {
         val username = "gitlab-ci-token"
@@ -87,6 +88,17 @@ includeCoreBuild {
         }
 
         checkoutDirectory.set(file("./pass/protos/contents-proto-definition"))
+    }
+}
+
+buildCache {
+    local {
+        val cacheDir = if (isCI) {
+            File(rootDir, ".gradle/build-cache")
+        } else {
+            File(rootDir.parentFile, "protonpass-build-cache")
+        }
+        directory = cacheDir
     }
 }
 

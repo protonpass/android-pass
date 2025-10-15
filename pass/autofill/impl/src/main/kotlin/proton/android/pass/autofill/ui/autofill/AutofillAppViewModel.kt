@@ -312,7 +312,10 @@ class AutofillAppViewModel @Inject constructor(
 
             // From then on we are sure that there is a webDomain
             // Check if is already there, and if it is, do not ask for association
-            !webDomain.isNullOrBlank() && item.urls.contains(webDomain) -> false
+            !webDomain.isNullOrBlank() &&
+                item.urls
+                    .map { it.trimEnd('/') }
+                    .contains(webDomain.trimEnd('/')) -> false
 
             else -> true
         }

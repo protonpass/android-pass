@@ -78,6 +78,7 @@ org.cromite.webview,10000000000
 org.codeaurora.swe.browser,10000000000
 org.gnu.icecat,10000000000
 org.ironfoxoss.ironfox,10000000000
+org.ironfoxoss.ironfox.nightly,10000000000
 org.mozilla.fenix,10000000000
 org.mozilla.fenix.nightly,10000000000
 org.mozilla.fennec_aurora,10000000000

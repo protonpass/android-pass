@@ -47,5 +47,11 @@ enum class FeatureFlag(
         description = "Enable Vault visibility toggling",
         key = "PassHideShowVault",
         isEnabledDefault = false
+    ),
+    PASS_ALLOW_NO_VAULT(
+        title = "Allow No Vault",
+        description = "Allow a user to remove his last vault",
+        key = "PassAllowNoVault",
+        isEnabledDefault = false
     )
 }

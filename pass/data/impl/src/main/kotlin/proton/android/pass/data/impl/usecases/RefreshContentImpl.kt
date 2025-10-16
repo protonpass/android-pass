@@ -42,6 +42,7 @@ import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.entity.NewVault
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.InternalSettingsRepository
 import javax.inject.Inject
 
 class RefreshContentImpl @Inject constructor(
@@ -52,7 +53,8 @@ class RefreshContentImpl @Inject constructor(
     private val syncStatusRepository: ItemSyncStatusRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val createVault: CreateVault,
-    private val canCreateVault: CanCreateVault
+    private val canCreateVault: CanCreateVault,
+    private val internalSettingsRepository: InternalSettingsRepository
 ) : RefreshContent {
 
     override suspend fun invoke(userId: UserId?) {

@@ -27,6 +27,7 @@ import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.EXTRA_LOGGING
 import proton.android.pass.preferences.FeatureFlag.PASS_HIDE_SHOW_VAULT
 import proton.android.pass.preferences.FeatureFlag.RENAME_ADMIN_TO_MANAGER
+import proton.android.pass.preferences.FeatureFlag.PASS_ALLOW_NO_VAULT
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -44,6 +45,7 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
             EXTRA_LOGGING -> it.getOrDefault(EXTRA_LOGGING, false) as T
             RENAME_ADMIN_TO_MANAGER -> it.getOrDefault(RENAME_ADMIN_TO_MANAGER, false) as T
             PASS_HIDE_SHOW_VAULT -> it.getOrDefault(PASS_HIDE_SHOW_VAULT, false) as T
+            PASS_ALLOW_NO_VAULT -> it.getOrDefault(PASS_ALLOW_NO_VAULT, false) as T
         }
     }
 

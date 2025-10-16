@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
@@ -46,22 +47,30 @@ import proton.android.pass.commonui.api.applyIf
 @Composable
 fun PassCircleButton(
     modifier: Modifier = Modifier,
+    fillMaxWidth: Boolean = true,
     onClick: () -> Unit,
     text: String,
     backgroundColor: Color = PassTheme.colors.interactionNormMajor2,
     textColor: Color = PassTheme.colors.textInvert,
-    isLoading: Boolean = false
+    isLoading: Boolean = false,
+    contentHorizontalPadding: Dp = 0.dp,
+    contentVerticalPadding: Dp = Spacing.medium
 ) {
     Box(
         modifier = modifier
-            .fillMaxWidth()
+            .applyIf(
+                condition = fillMaxWidth,
+                ifTrue = {
+                    Modifier.fillMaxWidth()
+                }
+            )
             .clip(CircleShape)
             .background(color = backgroundColor)
             .applyIf(
                 condition = !isLoading,
                 ifTrue = { clickable(onClick = onClick) }
             )
-            .padding(vertical = Spacing.medium)
+            .padding(horizontal = contentHorizontalPadding, vertical = contentVerticalPadding)
     ) {
         Row(
             modifier = Modifier.align(Alignment.Center),

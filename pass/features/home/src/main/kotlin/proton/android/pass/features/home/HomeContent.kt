@@ -82,6 +82,7 @@ internal fun HomeContent(
     modifier: Modifier = Modifier,
     uiState: HomeUiState,
     shouldScrollToTop: Boolean,
+    canCreateVaults: Boolean,
     scrollableState: LazyListState,
     header: LazyListScope.() -> Unit = {},
     onEvent: (HomeUiEvent) -> Unit
@@ -329,6 +330,7 @@ internal fun HomeContent(
                         modifier = Modifier.testTag(HOME_EMPTY_TAG),
                         hasShares = uiState.hasShares,
                         canCreateItems = uiState.canCreateItems,
+                        canCreateVaults = canCreateVaults,
                         vaultSelectionOption = uiState.homeListUiState.homeVaultSelection,
                         inSearchMode = isPinningOrSearch,
                         filterType = uiState.homeListUiState.searchFilterType,

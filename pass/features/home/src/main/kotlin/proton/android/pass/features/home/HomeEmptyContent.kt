@@ -39,6 +39,7 @@ internal fun HomeEmptyContent(
     modifier: Modifier = Modifier,
     hasShares: Boolean,
     canCreateItems: Boolean,
+    canCreateVaults: Boolean,
     inSearchMode: Boolean,
     readOnly: Boolean,
     vaultSelectionOption: VaultSelectionOption,
@@ -47,7 +48,13 @@ internal fun HomeEmptyContent(
     onEvent: (HomeUiEvent) -> Unit
 ) {
     when {
-        !hasShares -> EmptyNoVaults(modifier)
+        !hasShares -> EmptyNoVaults(
+            modifier = modifier,
+            onCreateVaultsClick = {
+                onEvent(HomeUiEvent.OnCreateVaultClick)
+            },
+            canCreateVaults = canCreateVaults
+        )
         inSearchMode -> EmptySearchResults(modifier)
         vaultSelectionOption is VaultSelectionOption.Trash -> EmptyTrashContent(modifier)
         vaultSelectionOption is VaultSelectionOption.SharedByMe -> EmptySharedItems(

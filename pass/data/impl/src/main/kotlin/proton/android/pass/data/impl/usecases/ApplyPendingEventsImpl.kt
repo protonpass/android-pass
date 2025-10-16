@@ -26,6 +26,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.extension.primary
@@ -56,6 +57,7 @@ import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.entity.NewVault
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.InternalSettingsRepository
 import javax.inject.Inject
 
 private const val TRANSACTION_NAME_APPLY_PENDING_EVENTS = "ApplyPendingEvents"
@@ -71,7 +73,8 @@ class ApplyPendingEventsImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val workManager: WorkManager,
     private val itemSyncStatusRepository: ItemSyncStatusRepository,
-    private val canCreateVault: CanCreateVault
+    private val canCreateVault: CanCreateVault,
+    private val internalSettingsRepository: InternalSettingsRepository
 ) : ApplyPendingEvents {
 
     override suspend fun invoke(userId: UserId) {
@@ -108,17 +111,24 @@ class ApplyPendingEventsImpl @Inject constructor(
 
         PassLogger.i(TAG, "Received an empty list of shares, creating default vault")
 
-        runCatching { createDefaultVault(userId) }
-            .onFailure { error ->
-                PassLogger.w(TAG, "Error creating default vault")
-                PassLogger.w(TAG, error)
-                throw error
-            }
-            .onSuccess {
-                PassLogger.i(TAG, "Default vault created")
-                itemSyncStatusRepository.setMode(SyncMode.Background)
-                itemSyncStatusRepository.emit(ItemSyncStatus.SyncSuccess)
-            }
+        // only create empty vault the first time
+        if (internalSettingsRepository.hasEmptyVaultBeenCreated(userId).firstOrNull()?.not() ?: false) {
+            runCatching { createDefaultVault(userId) }
+                .onFailure { error ->
+                    PassLogger.w(TAG, "Error creating default vault")
+                    PassLogger.w(TAG, error)
+                    throw error
+                }
+                .onSuccess {
+                    PassLogger.i(TAG, "Default vault created")
+                    itemSyncStatusRepository.setMode(SyncMode.Background)
+                    itemSyncStatusRepository.emit(ItemSyncStatus.SyncSuccess)
+
+                    // Once the first default vault has been created, the user will be able to delete it
+                    // do not create it again at each startup
+                    internalSettingsRepository.setEmptyVaultHasBeenCreated(userId)
+                }
+        }
     }
 
     private suspend fun handleExistingShares(userId: UserId, refreshSharesResult: RefreshSharesResult) {

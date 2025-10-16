@@ -35,6 +35,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestUtils
 import proton.android.pass.test.domain.TestVault
@@ -340,7 +341,8 @@ class VaultOptionsViewModelTest {
             observeVaults = observeVaults,
             canShareShare = canShareVault,
             canManageVaultAccess = canManageVaultAccess,
-            observeEncryptedItems = FakeObserveEncryptedItems()
+            observeEncryptedItems = FakeObserveEncryptedItems(),
+            preferencesRepository = TestFeatureFlagsPreferenceRepository()
         )
     }
 

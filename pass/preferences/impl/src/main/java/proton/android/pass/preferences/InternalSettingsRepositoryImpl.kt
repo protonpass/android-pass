@@ -243,6 +243,18 @@ class InternalSettingsRepositoryImpl @Inject constructor(
             }
         }
 
+    override fun setEmptyVaultHasBeenCreated(userId: UserId): Result<Unit> = setPreference {
+        it.putIsEmptyVaultHasBeenCreated(userId.id, true)
+    }
+
+    override fun hasEmptyVaultBeenCreated(userId: UserId): Flow<Boolean> = getPreference {
+        if (it.isEmptyVaultHasBeenCreatedMap.containsKey(userId.id)) {
+            it.isEmptyVaultHasBeenCreatedMap[userId.id] ?: false
+        } else {
+            false
+        }
+    }
+
     override fun getPersistentUUID(): Flow<UUID> = getPreference { it.persistentUuid }
         .map { preferenceUuid ->
             if (preferenceUuid.isNullOrBlank()) {

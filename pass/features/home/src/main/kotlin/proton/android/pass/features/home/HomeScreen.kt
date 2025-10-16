@@ -276,6 +276,12 @@ fun HomeScreen(
         }
     }
 
+    LaunchedEffect(homeUiState.isDrawerAvailable) {
+        if (!homeUiState.isDrawerAvailable && drawerState.isOpen) {
+            drawerState.close()
+        }
+    }
+
     PassModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
@@ -704,6 +710,7 @@ fun HomeScreen(
                                 is ItemContents.WifiNetwork,
                                 is ItemContents.SSHKey,
                                 is ItemContents.Custom -> CustomItemIcon()
+
                                 is ItemContents.Unknown -> {}
                             }
                         }
@@ -735,6 +742,8 @@ fun HomeScreen(
             }
         }
     ) {
+        val homeDrawerState by homeDrawerViewModel.stateFlow.collectAsStateWithLifecycle()
+
         ModalDrawer(
             modifier = modifier,
             drawerState = drawerState,
@@ -742,7 +751,6 @@ fun HomeScreen(
             scrimColor = PassTheme.colors.backdrop,
             gesturesEnabled = homeUiState.isDrawerAvailable,
             drawerContent = {
-                val homeDrawerState by homeDrawerViewModel.stateFlow.collectAsStateWithLifecycle()
                 HomeDrawerContent(
                     state = homeDrawerState,
                     onUiEvent = { uiEvent ->
@@ -899,6 +907,7 @@ fun HomeScreen(
                                     is ItemContents.WifiNetwork,
                                     is ItemContents.SSHKey,
                                     is ItemContents.Custom -> CustomOptions
+
                                     is ItemContents.Unknown -> LoginOptions
                                 }
                             }
@@ -1016,6 +1025,7 @@ fun HomeScreen(
                                 items = homeUiState.homeListUiState.selectionState.selectedItems
                             )
                         }
+
                         is HomeUiEvent.PromoInAppMessageClick ->
                             onNavigateEvent(
                                 HomeNavigation.OpenPromoInAppMessage(
@@ -1023,8 +1033,13 @@ fun HomeScreen(
                                     inAppMessageId = homeUiEvent.inAppMessageId
                                 )
                             )
+
+                        HomeUiEvent.OnCreateVaultClick -> {
+                            onNavigateEvent(HomeNavigation.CreateVault)
+                        }
                     }
-                }
+                },
+                canCreateVaults = homeDrawerState.canCreateVaults
             )
 
             ConfirmRestoreAllDialog(

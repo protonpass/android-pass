@@ -37,6 +37,7 @@ import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.EXTRA_LOGGING
 import proton.android.pass.preferences.FeatureFlag.PASS_HIDE_SHOW_VAULT
 import proton.android.pass.preferences.FeatureFlag.RENAME_ADMIN_TO_MANAGER
+import proton.android.pass.preferences.FeatureFlag.PASS_ALLOW_NO_VAULT
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -69,6 +70,11 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { passHideShowVaultEnabled.value }
+
+        PASS_ALLOW_NO_VAULT -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault
+        ) { passAllowNoVault.value }
     }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> = when (featureFlag) {
@@ -86,6 +92,10 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         PASS_HIDE_SHOW_VAULT -> setFeatureFlag {
             passHideShowVaultEnabled = boolFlagPrefProto(value)
+        }
+
+        PASS_ALLOW_NO_VAULT -> setFeatureFlag {
+            passAllowNoVault = boolFlagPrefProto(value)
         }
     }
 
@@ -181,6 +191,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             EXTRA_LOGGING -> extraLoggingEnabled
             RENAME_ADMIN_TO_MANAGER -> renameAdminToManagerEnabled
             PASS_HIDE_SHOW_VAULT -> passHideShowVaultEnabled
+            PASS_ALLOW_NO_VAULT -> passAllowNoVault
         }.value
     }
 }

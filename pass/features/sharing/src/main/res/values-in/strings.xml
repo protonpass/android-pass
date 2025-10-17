@@ -41,9 +41,9 @@
   <string name="share_with_email_email_already_added">Anda telah menambahkan alamat email ini</string>
   <string name="share_permissions_title">Tentukan tingkat akses</string>
   <string name="sharing_reject_invitation">Tolak undangan</string>
-  <string name="sharing_vault_invitation_title">Undangan brankas terbagi</string>
+  <string name="sharing_vault_invitation_title">Undangan brankas yang dibagikan</string>
   <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s ingin membagikan brankas dengan Anda.</string>
-  <string name="sharing_vault_invitation_accept">Bergabung ke brankas terbagi</string>
+  <string name="sharing_vault_invitation_accept">Gabung ke brankas yang dibagikan</string>
   <string name="sharing_item_invitation_title">Undangan brankas terbagi</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s ingin membagikan item dengan Anda.</string>
   <string name="sharing_item_invitation_accept">Terima dan lihat item</string>
@@ -116,7 +116,7 @@
   <string name="sharing_invites_info_upgrade_text">Tingkatkan akun Anda sekarang juga untuk mengundang lebih banyak anggota.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Bagikan</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Bagikan brankas ini</string>
-  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Pindahkan ke brankas bersama</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Pindahkan ke brankas yang dibagikan</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Tingkatkan untuk dapat membuat lebih banyak brankas</string>
   <string name="sharing_from_item_vault_limit_reached">Anda telah mencapai batas brankas maksimal</string>
   <string name="share_with_suggestions_title">Saran</string>

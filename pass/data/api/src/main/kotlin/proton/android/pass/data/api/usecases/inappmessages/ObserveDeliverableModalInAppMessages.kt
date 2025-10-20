@@ -22,6 +22,6 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.inappmessages.InAppMessage
 
-interface ObserveDeliverableInAppMessages {
-    operator fun invoke(userId: UserId? = null): Flow<List<InAppMessage>>
+interface ObserveDeliverableModalInAppMessages {
+    operator fun invoke(userId: UserId? = null): Flow<InAppMessage.Modal?>
 }

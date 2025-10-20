@@ -28,20 +28,58 @@ value class InAppMessageId(val value: String)
 @JvmInline
 value class InAppMessageKey(val value: String)
 
-data class InAppMessage(
-    val id: InAppMessageId,
-    val key: InAppMessageKey,
-    val mode: InAppMessageMode,
-    val priority: Int,
-    val title: String,
-    val message: Option<String>,
-    val imageUrl: Option<String>,
-    val cta: Option<InAppMessageCTA>,
-    val state: InAppMessageStatus,
-    val range: InAppMessageRange,
-    val userId: UserId,
-    val promoContents: Option<InAppMessagePromoContents>
-)
+sealed class InAppMessage {
+    abstract val id: InAppMessageId
+    abstract val key: InAppMessageKey
+    abstract val priority: Int
+    abstract val title: String
+    abstract val message: Option<String>
+    abstract val imageUrl: Option<String>
+    abstract val cta: Option<InAppMessageCTA>
+    abstract val state: InAppMessageStatus
+    abstract val range: InAppMessageRange
+    abstract val userId: UserId
+
+    data class Banner(
+        override val id: InAppMessageId,
+        override val key: InAppMessageKey,
+        override val priority: Int,
+        override val title: String,
+        override val message: Option<String>,
+        override val imageUrl: Option<String>,
+        override val cta: Option<InAppMessageCTA>,
+        override val state: InAppMessageStatus,
+        override val range: InAppMessageRange,
+        override val userId: UserId
+    ) : InAppMessage()
+
+    data class Modal(
+        override val id: InAppMessageId,
+        override val key: InAppMessageKey,
+        override val priority: Int,
+        override val title: String,
+        override val message: Option<String>,
+        override val imageUrl: Option<String>,
+        override val cta: Option<InAppMessageCTA>,
+        override val state: InAppMessageStatus,
+        override val range: InAppMessageRange,
+        override val userId: UserId
+    ) : InAppMessage()
+
+    data class Promo(
+        override val id: InAppMessageId,
+        override val key: InAppMessageKey,
+        override val priority: Int,
+        override val title: String,
+        override val message: Option<String>,
+        override val imageUrl: Option<String>,
+        override val cta: Option<InAppMessageCTA>,
+        override val state: InAppMessageStatus,
+        override val range: InAppMessageRange,
+        override val userId: UserId,
+        val promoContents: InAppMessagePromoContents
+    ) : InAppMessage()
+}
 
 const val STATUS_UNREAD = 0
 const val STATUS_READ = 1
@@ -85,17 +123,6 @@ data class InAppMessageRange(
     val end: Option<Instant>
 )
 
-enum class InAppMessageMode(val value: Int) {
-    Banner(MODE_BANNER),
-    Modal(MODE_MODAL),
-    Promo(MODE_PROMO),
-    Unknown(Integer.MAX_VALUE)
-    ;
-
-    companion object {
-        fun fromValue(value: Int): InAppMessageMode = entries.find { it.value == value } ?: Unknown
-    }
-}
 
 data class InAppMessagePromoContents(
     val startMinimised: Boolean,

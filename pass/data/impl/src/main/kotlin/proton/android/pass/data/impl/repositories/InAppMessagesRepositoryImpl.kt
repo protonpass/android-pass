@@ -18,18 +18,18 @@
 
 package proton.android.pass.data.impl.repositories
 
-import proton.android.pass.data.impl.utils.ImagePreloader
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.InAppMessagesRepository
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.inappmessages.LocalInAppMessagesDataSource
 import proton.android.pass.data.impl.remote.inappmessages.RemoteInAppMessagesDataSource
+import proton.android.pass.data.impl.utils.ImagePreloader
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
@@ -42,14 +42,17 @@ class InAppMessagesRepositoryImpl @Inject constructor(
     private val imagePreloader: ImagePreloader
 ) : InAppMessagesRepository {
 
-    override fun observeDeliverableUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>> =
-        local.observeDeliverableUserMessages(userId, currentTimestamp)
-            .onStart { refreshUserMessages(userId) }
+    override fun observePromoMinimizedUserMessages(userId: UserId, currentTimestamp: Long): Flow<InAppMessage.Promo?> =
+        local.observePromoMinimizedUserMessages(userId, currentTimestamp)
             .distinctUntilChanged()
 
-    override fun observeDeliverablePromoUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>> =
-        local.observePromoUserMessages(userId, currentTimestamp)
-            .distinctUntilChanged()
+    override fun observeTopDeliverableUserMessage(
+        userId: UserId,
+        currentTimestamp: Long,
+        refreshOnStart: Boolean
+    ): Flow<InAppMessage?> = local.observeTopDeliverableUserMessage(userId, currentTimestamp)
+        .onStart { if (refreshOnStart) refreshUserMessages(userId) }
+        .distinctUntilChanged()
 
     override suspend fun refreshUserMessages(userId: UserId) {
         coroutineScope {
@@ -68,16 +71,22 @@ class InAppMessagesRepositoryImpl @Inject constructor(
                 local.storeMessages(userId, allMessages)
 
                 val promoImages = allMessages
-                    .mapNotNull { it.promoContents.value() }
+                    .filterIsInstance<InAppMessage.Promo>()
                     .flatMap { promo ->
                         listOf(
-                            promo.lightThemeContents.backgroundImageUrl,
-                            promo.lightThemeContents.contentImageUrl,
-                            promo.darkThemeContents.backgroundImageUrl,
-                            promo.darkThemeContents.contentImageUrl
+                            promo.promoContents.lightThemeContents.backgroundImageUrl,
+                            promo.promoContents.lightThemeContents.contentImageUrl,
+                            promo.promoContents.darkThemeContents.backgroundImageUrl,
+                            promo.promoContents.darkThemeContents.contentImageUrl
                         )
                     }
-                val regularImages = allMessages.mapNotNull { it.imageUrl.value() }
+                val regularImages = allMessages.mapNotNull { message ->
+                    when (message) {
+                        is InAppMessage.Banner -> message.imageUrl.value()
+                        is InAppMessage.Modal -> message.imageUrl.value()
+                        is InAppMessage.Promo -> message.imageUrl.value()
+                    }
+                }
                 imagePreloader.preloadImages((promoImages + regularImages).toSet())
             }.onFailure {
                 PassLogger.w(TAG, "Failed to fetch in-app messages for user $userId")
@@ -94,8 +103,12 @@ class InAppMessagesRepositoryImpl @Inject constructor(
     ) {
         remote.changeMessageStatus(userId, messageId, status)
 
-        val updatedMessage = local.observeUserMessage(userId, messageId).first()
-            .copy(state = status)
+        val originalMessage = local.observeUserMessage(userId, messageId).first()
+        val updatedMessage = when (originalMessage) {
+            is InAppMessage.Banner -> originalMessage.copy(state = status)
+            is InAppMessage.Modal -> originalMessage.copy(state = status)
+            is InAppMessage.Promo -> originalMessage.copy(state = status)
+        }
 
         local.updateMessage(userId, updatedMessage)
     }

@@ -32,11 +32,12 @@ import proton.android.pass.preferences.TestInternalSettingsRepository
 import proton.android.pass.test.domain.TestInAppMessage
 import proton.android.pass.test.domain.TestUser
 import kotlin.test.Test
+import kotlin.test.assertNull
 import kotlin.time.Duration.Companion.minutes
 
-internal class ObserveDeliverableInAppMessagesImplTest {
+internal class ObserveDeliverableBannerInAppMessagesImplTest {
 
-    private lateinit var instance: ObserveDeliverableInAppMessagesImpl
+    private lateinit var instance: ObserveDeliverableBannerInAppMessagesImpl
     private lateinit var observeCurrentUser: TestObserveCurrentUser
     private lateinit var inAppMessagesRepository: FakeInAppMessagesRepository
     private lateinit var internalSettingsRepository: TestInternalSettingsRepository
@@ -52,7 +53,7 @@ internal class ObserveDeliverableInAppMessagesImplTest {
         inAppMessagesRepository = FakeInAppMessagesRepository()
         internalSettingsRepository = TestInternalSettingsRepository()
         clock = Clock.System
-        instance = ObserveDeliverableInAppMessagesImpl(
+        instance = ObserveDeliverableBannerInAppMessagesImpl(
             observeCurrentUser = observeCurrentUser,
             inAppMessagesRepository = inAppMessagesRepository,
             internalSettingsRepository = internalSettingsRepository,
@@ -64,7 +65,7 @@ internal class ObserveDeliverableInAppMessagesImplTest {
     @Test
     fun `test no unread messages returns empty list`() = runTest {
         instance(userId).test {
-            awaitItem().isEmpty()
+            assertNull(awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -75,13 +76,13 @@ internal class ObserveDeliverableInAppMessagesImplTest {
         internalSettingsRepository.setLastTimeUserHasSeenIAM(
             LastTimeUserHasSeenIAMPreference(userId, now.minus(29.minutes).epochSeconds)
         )
-        val message = TestInAppMessage.create(
+        val message = TestInAppMessage.createBanner(
             state = InAppMessageStatus.Unread,
             range = TestInAppMessage.createInAppMessageRange()
         )
         inAppMessagesRepository.addMessage(userId, message)
         instance(userId).test {
-            awaitItem().isEmpty()
+            assertNull(awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -92,15 +93,14 @@ internal class ObserveDeliverableInAppMessagesImplTest {
         internalSettingsRepository.setLastTimeUserHasSeenIAM(
             LastTimeUserHasSeenIAMPreference(userId, now.minus(31.minutes).epochSeconds)
         )
-        val message = TestInAppMessage.create(
+        val message = TestInAppMessage.createBanner(
             state = InAppMessageStatus.Unread,
             range = TestInAppMessage.createInAppMessageRange()
         )
         inAppMessagesRepository.addMessage(userId, message)
         instance(userId).test {
             val item = awaitItem()
-            assertThat(item).hasSize(1)
-            assertThat(item.first()).isEqualTo(message)
+            assertThat(item).isEqualTo(message)
             cancelAndIgnoreRemainingEvents()
         }
     }

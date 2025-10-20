@@ -19,8 +19,6 @@
 package proton.android.pass.data.impl.usecases.inappmessages
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
@@ -28,24 +26,26 @@ import proton.android.pass.data.api.repositories.InAppMessagesRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverablePromoInAppMessages
 import proton.android.pass.domain.inappmessages.InAppMessage
+import proton.android.pass.preferences.InternalSettingsRepository
 import javax.inject.Inject
 
 class ObserveDeliverablePromoInAppMessagesImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
     private val inAppMessagesRepository: InAppMessagesRepository,
+    private val internalSettingsRepository: InternalSettingsRepository,
     private val clock: Clock
 ) : ObserveDeliverablePromoInAppMessages {
 
-    override fun invoke(userId: UserId?): Flow<List<InAppMessage>> = getUserId(userId).flatMapLatest { resolvedUserId ->
-        inAppMessagesRepository.observeDeliverablePromoUserMessages(
-            userId = resolvedUserId,
-            currentTimestamp = clock.now().epochSeconds
-        )
-    }
-
-    private fun getUserId(userId: UserId?): Flow<UserId> = if (userId != null) {
-        flowOf(userId)
-    } else {
-        observeCurrentUser().map { it.userId }
-    }
+    override fun invoke(userId: UserId?): Flow<InAppMessage.Promo?> = InAppMessageUtils.observeDeliverableMessages(
+        userId = userId,
+        observeCurrentUser = observeCurrentUser,
+        internalSettingsRepository = internalSettingsRepository,
+        clock = clock,
+        getMessage = { resolvedUserId, currentTimestamp ->
+            inAppMessagesRepository.observeTopDeliverableUserMessage(
+                userId = resolvedUserId,
+                currentTimestamp = currentTimestamp
+            ).map { entity -> entity as? InAppMessage.Promo }
+        }
+    )
 }

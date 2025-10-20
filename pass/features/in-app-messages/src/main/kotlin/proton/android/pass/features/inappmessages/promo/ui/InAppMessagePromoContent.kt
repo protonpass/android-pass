@@ -60,7 +60,6 @@ import proton.android.pass.domain.inappmessages.InAppMessageCTA
 import proton.android.pass.domain.inappmessages.InAppMessageCTAType
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageKey
-import proton.android.pass.domain.inappmessages.InAppMessageMode
 import proton.android.pass.domain.inappmessages.InAppMessagePromoContents
 import proton.android.pass.domain.inappmessages.InAppMessagePromoThemedContents
 import proton.android.pass.domain.inappmessages.InAppMessageRange
@@ -71,17 +70,20 @@ import me.proton.core.presentation.R as CoreR
 @Composable
 fun InAppMessagePromoContent(
     modifier: Modifier = Modifier,
-    inAppMessage: InAppMessage,
+    inAppMessage: InAppMessage.Promo,
     themePreference: ThemePreference,
     onInternalCTAClick: (String) -> Unit,
     onExternalCTAClick: (String) -> Unit,
     onMinimize: () -> Unit,
     onDontShowAgain: () -> Unit
 ) {
-    val promo = inAppMessage.promoContents.value() ?: return
     val isDark = isDark(themePreference)
     val themeContents = remember(isDark) {
-        if (isDark) promo.darkThemeContents else promo.lightThemeContents
+        if (isDark) {
+            inAppMessage.promoContents.darkThemeContents
+        } else {
+            inAppMessage.promoContents.lightThemeContents
+        }
     }
     val textColor = remember(themeContents.closePromoTextColor) {
         runCatching { Color("#${themeContents.closePromoTextColor}".toColorInt()).copy(alpha = 1f) }
@@ -150,7 +152,7 @@ fun InAppMessagePromoContent(
                 )
 
                 TransparentTextButton(
-                    text = promo.closePromoText,
+                    text = inAppMessage.promoContents.closePromoText,
                     color = textColor,
                     onClick = onDontShowAgain
                 )
@@ -165,14 +167,13 @@ fun InAppMessagePromoContentPreview(@PreviewParameter(ThemePreviewProvider::clas
     PassTheme(isDark = isDark) {
         Surface {
             InAppMessagePromoContent(
-                inAppMessage = InAppMessage(
+                inAppMessage = InAppMessage.Promo(
                     id = InAppMessageId("q"),
                     key = InAppMessageKey(""),
                     userId = UserId(""),
                     title = "",
                     message = None,
                     imageUrl = None,
-                    mode = InAppMessageMode.Promo,
                     cta = InAppMessageCTA(
                         text = "Upgrade",
                         route = "pass://upgrade",
@@ -197,7 +198,7 @@ fun InAppMessagePromoContentPreview(@PreviewParameter(ThemePreviewProvider::clas
                             contentImageUrl = "",
                             closePromoTextColor = ""
                         )
-                    ).some()
+                    )
                 ),
                 themePreference = ThemePreference.System,
                 onInternalCTAClick = {},

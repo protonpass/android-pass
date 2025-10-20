@@ -32,11 +32,16 @@ class FakeInAppMessagesRepository @Inject constructor() : InAppMessagesRepositor
 
     private val messagesFlow = MutableStateFlow<Map<UserId, List<InAppMessage>>>(emptyMap())
 
-    override fun observeDeliverableUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>> =
-        messagesFlow.map { it[userId] ?: emptyList() }
+    override fun observePromoMinimizedUserMessages(userId: UserId, currentTimestamp: Long): Flow<InAppMessage.Promo?> =
+        messagesFlow.map {
+            it[userId]?.filterIsInstance<InAppMessage.Promo>()?.firstOrNull()
+        }
 
-    override fun observeDeliverablePromoUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>> =
-        messagesFlow.map { it[userId] ?: emptyList() }
+    override fun observeTopDeliverableUserMessage(
+        userId: UserId,
+        currentTimestamp: Long,
+        refreshOnStart: Boolean
+    ): Flow<InAppMessage?> = messagesFlow.map { it[userId]?.firstOrNull() }
 
     override suspend fun refreshUserMessages(userId: UserId) {
         // no-op
@@ -50,7 +55,11 @@ class FakeInAppMessagesRepository @Inject constructor() : InAppMessagesRepositor
         messagesFlow.value = messagesFlow.value.toMutableMap().apply {
             this[userId] = this[userId]?.map { message ->
                 if (message.id == messageId) {
-                    message.copy(state = status)
+                    when (message) {
+                        is InAppMessage.Banner -> message.copy(state = status)
+                        is InAppMessage.Modal -> message.copy(state = status)
+                        is InAppMessage.Promo -> message.copy(state = status)
+                    }
                 } else {
                     message
                 }

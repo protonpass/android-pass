@@ -19,7 +19,6 @@
 package proton.android.pass.data.impl.local.inappmessages
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
@@ -27,6 +26,7 @@ import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.getOrElse
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.InAppMessageEntity
@@ -35,33 +35,43 @@ import proton.android.pass.domain.inappmessages.InAppMessageCTA
 import proton.android.pass.domain.inappmessages.InAppMessageCTAType
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageKey
-import proton.android.pass.domain.inappmessages.InAppMessageMode
 import proton.android.pass.domain.inappmessages.InAppMessagePromoContents
 import proton.android.pass.domain.inappmessages.InAppMessagePromoThemedContents
 import proton.android.pass.domain.inappmessages.InAppMessageRange
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
+import proton.android.pass.domain.inappmessages.MODE_BANNER
+import proton.android.pass.domain.inappmessages.MODE_MODAL
+import proton.android.pass.domain.inappmessages.MODE_PROMO
+import proton.android.pass.domain.inappmessages.STATUS_DISMISSED
 import javax.inject.Inject
 
 class LocalInAppMessagesDataSourceImpl @Inject constructor(
     private val database: PassDatabase
 ) : LocalInAppMessagesDataSource {
 
-    override fun observeDeliverableUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>> =
+    override fun observePromoMinimizedUserMessages(userId: UserId, currentTimestamp: Long): Flow<InAppMessage.Promo?> =
         database.inAppMessagesDao()
-            .observeDeliverableUserMessages(userId.id, currentTimestamp)
-            .map { entities ->
-                entities.filter { it.promoStartMinimized?.not() ?: true }
-                    .map(InAppMessageEntity::toDomain)
-            }
-
-    override fun observePromoUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>> =
-        database.inAppMessagesDao()
-            .observeDeliverablePromoUserMessages(userId.id, currentTimestamp)
-            .map { entities -> entities.map(InAppMessageEntity::toDomain) }
+            .observeDeliverableMessagesWithNotStatus(
+                userId = userId.id,
+                mode = MODE_PROMO,
+                status = STATUS_DISMISSED,
+                currentTimestamp = currentTimestamp
+            )
+            .map { entity -> entity?.toDomain()?.let { it as? InAppMessage.Promo } }
 
     override fun observeUserMessage(userId: UserId, id: InAppMessageId): Flow<InAppMessage> =
         database.inAppMessagesDao().observeUserMessage(userId.id, id.value)
             .map(InAppMessageEntity::toDomain)
+
+    override fun observeTopDeliverableUserMessage(userId: UserId, currentTimestamp: Long): Flow<InAppMessage?> =
+        database.inAppMessagesDao()
+            .observeDeliverableMessagesWithNotStatus(
+                userId = userId.id,
+                mode = null, // No mode filter for top message
+                status = STATUS_DISMISSED,
+                currentTimestamp = currentTimestamp
+            )
+            .map { entity -> entity?.toDomain() }
 
     override suspend fun storeMessages(userId: UserId, messages: List<InAppMessage>) {
         database.inTransaction(name = "storeMessages") {
@@ -75,26 +85,63 @@ class LocalInAppMessagesDataSourceImpl @Inject constructor(
     }
 }
 
-private fun InAppMessageEntity.toDomain(): InAppMessage = InAppMessage(
-    id = InAppMessageId(id),
-    key = InAppMessageKey(key),
-    mode = InAppMessageMode.fromValue(mode),
-    priority = priority,
-    title = title,
-    message = message.toOption(),
-    imageUrl = imageUrl?.takeIfNotBlank().toOption(),
-    cta = if (ctaText != null && ctaRoute != null && ctaType != null) {
-        Some(InAppMessageCTA(ctaText, ctaRoute, InAppMessageCTAType.fromValue(ctaType)))
-    } else {
-        None
-    },
-    state = InAppMessageStatus.fromValue(state),
-    range = InAppMessageRange(
-        start = Instant.fromEpochSeconds(rangeStart),
-        end = rangeEnd?.let(Instant.Companion::fromEpochSeconds).toOption()
-    ),
-    userId = UserId(userId),
-    promoContents = toPromoContents()
+private fun InAppMessageEntity.toDomain(): InAppMessage {
+    val baseMessage = BaseMessageData(
+        id = InAppMessageId(id),
+        key = InAppMessageKey(key),
+        priority = priority,
+        title = title,
+        message = message.toOption(),
+        imageUrl = imageUrl?.takeIfNotBlank().toOption(),
+        cta = if (ctaText != null && ctaRoute != null && ctaType != null) {
+            Some(InAppMessageCTA(ctaText, ctaRoute, InAppMessageCTAType.fromValue(ctaType)))
+        } else {
+            None
+        },
+        state = InAppMessageStatus.fromValue(state),
+        range = InAppMessageRange(
+            start = Instant.fromEpochSeconds(rangeStart),
+            end = rangeEnd?.let(Instant.Companion::fromEpochSeconds).toOption()
+        ),
+        userId = UserId(userId)
+    )
+
+    return when (mode) {
+        MODE_BANNER -> InAppMessage.Banner(
+            baseMessage.id, baseMessage.key, baseMessage.priority, baseMessage.title,
+            baseMessage.message, baseMessage.imageUrl, baseMessage.cta, baseMessage.state,
+            baseMessage.range, baseMessage.userId
+        )
+        MODE_MODAL -> InAppMessage.Modal(
+            baseMessage.id, baseMessage.key, baseMessage.priority, baseMessage.title,
+            baseMessage.message, baseMessage.imageUrl, baseMessage.cta, baseMessage.state,
+            baseMessage.range, baseMessage.userId
+        )
+        MODE_PROMO -> {
+            val promoContents = toPromoContents().getOrElse {
+                throw IllegalArgumentException("PromoContents is required for Promo mode")
+            }
+            InAppMessage.Promo(
+                baseMessage.id, baseMessage.key, baseMessage.priority, baseMessage.title,
+                baseMessage.message, baseMessage.imageUrl, baseMessage.cta, baseMessage.state,
+                baseMessage.range, baseMessage.userId, promoContents
+            )
+        }
+        else -> throw IllegalArgumentException("Unknown mode: $mode")
+    }
+}
+
+private data class BaseMessageData(
+    val id: InAppMessageId,
+    val key: InAppMessageKey,
+    val priority: Int,
+    val title: String,
+    val message: Option<String>,
+    val imageUrl: Option<String>,
+    val cta: Option<InAppMessageCTA>,
+    val state: InAppMessageStatus,
+    val range: InAppMessageRange,
+    val userId: UserId
 )
 
 @Suppress("ComplexCondition")
@@ -128,27 +175,78 @@ private fun InAppMessageEntity.toPromoContents(): Option<InAppMessagePromoConten
     None
 }
 
-private fun InAppMessage.toEntity(): InAppMessageEntity = InAppMessageEntity(
-    id = id.value,
-    key = key.value,
-    mode = mode.value,
-    priority = priority,
-    title = title,
-    message = message.value(),
-    imageUrl = imageUrl.value(),
-    ctaText = cta.map(InAppMessageCTA::text).value(),
-    ctaRoute = cta.map(InAppMessageCTA::route).value(),
-    ctaType = cta.map(InAppMessageCTA::type).map(InAppMessageCTAType::value).value(),
-    state = state.value,
-    rangeStart = range.start.epochSeconds,
-    rangeEnd = range.end.map(Instant::epochSeconds).value(),
-    userId = userId.id,
-    promoStartMinimized = promoContents.map(InAppMessagePromoContents::startMinimised).value(),
-    promoCloseText = promoContents.map(InAppMessagePromoContents::closePromoText).value(),
-    promoLightBackgroundUrl = promoContents.map { it.lightThemeContents.backgroundImageUrl }.value(),
-    promoLightContentUrl = promoContents.map { it.lightThemeContents.contentImageUrl }.value(),
-    promoLightCloseTextColor = promoContents.map { it.lightThemeContents.closePromoTextColor }.value(),
-    promoDarkBackgroundUrl = promoContents.map { it.darkThemeContents.backgroundImageUrl }.value(),
-    promoDarkContentUrl = promoContents.map { it.darkThemeContents.contentImageUrl }.value(),
-    promoDarkCloseTextColor = promoContents.map { it.darkThemeContents.closePromoTextColor }.value()
-)
+@Suppress("LongMethod")
+private fun InAppMessage.toEntity(): InAppMessageEntity = when (this) {
+    is InAppMessage.Banner -> InAppMessageEntity(
+        id = id.value,
+        key = key.value,
+        mode = MODE_BANNER,
+        priority = priority,
+        title = title,
+        message = message.value(),
+        imageUrl = imageUrl.value(),
+        ctaText = cta.map(InAppMessageCTA::text).value(),
+        ctaRoute = cta.map(InAppMessageCTA::route).value(),
+        ctaType = cta.map(InAppMessageCTA::type).map(InAppMessageCTAType::value).value(),
+        state = state.value,
+        rangeStart = range.start.epochSeconds,
+        rangeEnd = range.end.map(Instant::epochSeconds).value(),
+        userId = userId.id,
+        promoStartMinimized = null,
+        promoCloseText = null,
+        promoLightBackgroundUrl = null,
+        promoLightContentUrl = null,
+        promoLightCloseTextColor = null,
+        promoDarkBackgroundUrl = null,
+        promoDarkContentUrl = null,
+        promoDarkCloseTextColor = null
+    )
+    is InAppMessage.Modal -> InAppMessageEntity(
+        id = id.value,
+        key = key.value,
+        mode = MODE_MODAL,
+        priority = priority,
+        title = title,
+        message = message.value(),
+        imageUrl = imageUrl.value(),
+        ctaText = cta.map(InAppMessageCTA::text).value(),
+        ctaRoute = cta.map(InAppMessageCTA::route).value(),
+        ctaType = cta.map(InAppMessageCTA::type).map(InAppMessageCTAType::value).value(),
+        state = state.value,
+        rangeStart = range.start.epochSeconds,
+        rangeEnd = range.end.map(Instant::epochSeconds).value(),
+        userId = userId.id,
+        promoStartMinimized = null,
+        promoCloseText = null,
+        promoLightBackgroundUrl = null,
+        promoLightContentUrl = null,
+        promoLightCloseTextColor = null,
+        promoDarkBackgroundUrl = null,
+        promoDarkContentUrl = null,
+        promoDarkCloseTextColor = null
+    )
+    is InAppMessage.Promo -> InAppMessageEntity(
+        id = id.value,
+        key = key.value,
+        mode = MODE_PROMO,
+        priority = priority,
+        title = title,
+        message = message.value(),
+        imageUrl = imageUrl.value(),
+        ctaText = cta.map(InAppMessageCTA::text).value(),
+        ctaRoute = cta.map(InAppMessageCTA::route).value(),
+        ctaType = cta.map(InAppMessageCTA::type).map(InAppMessageCTAType::value).value(),
+        state = state.value,
+        rangeStart = range.start.epochSeconds,
+        rangeEnd = range.end.map(Instant::epochSeconds).value(),
+        userId = userId.id,
+        promoStartMinimized = promoContents.startMinimised,
+        promoCloseText = promoContents.closePromoText,
+        promoLightBackgroundUrl = promoContents.lightThemeContents.backgroundImageUrl,
+        promoLightContentUrl = promoContents.lightThemeContents.contentImageUrl,
+        promoLightCloseTextColor = promoContents.lightThemeContents.closePromoTextColor,
+        promoDarkBackgroundUrl = promoContents.darkThemeContents.backgroundImageUrl,
+        promoDarkContentUrl = promoContents.darkThemeContents.contentImageUrl,
+        promoDarkCloseTextColor = promoContents.darkThemeContents.closePromoTextColor
+    )
+}

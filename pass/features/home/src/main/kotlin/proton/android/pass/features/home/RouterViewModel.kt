@@ -27,12 +27,17 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.ObserveConfirmedInviteToken
+import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableModalInAppMessages
+import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverablePromoInAppMessages
 import proton.android.pass.domain.InviteToken
+import proton.android.pass.domain.inappmessages.InAppMessage
+import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -41,7 +46,9 @@ import javax.inject.Inject
 class RouterViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository,
     observeConfirmedInviteToken: ObserveConfirmedInviteToken,
-    itemSyncStatusRepository: ItemSyncStatusRepository
+    itemSyncStatusRepository: ItemSyncStatusRepository,
+    observeDeliverableModalInAppMessages: ObserveDeliverableModalInAppMessages,
+    observeDeliverablePromoInAppMessages: ObserveDeliverablePromoInAppMessages
 ) : ViewModel() {
 
     internal val routerEventState = MutableSharedFlow<RouterEvent>(replay = 1)
@@ -57,6 +64,8 @@ class RouterViewModel @Inject constructor(
                 }
                 .distinctUntilChanged(),
             itemSyncStatusRepository.observeMode().distinctUntilChanged(),
+            observeDeliverableModalInAppMessages(),
+            observeDeliverablePromoInAppMessages(),
             ::routerEvent
         )
             .distinctUntilChanged()
@@ -73,11 +82,17 @@ class RouterViewModel @Inject constructor(
     private fun routerEvent(
         hasCompletedOnBoarding: HasCompletedOnBoarding,
         inviteTokenOption: Option<InviteToken>,
-        syncMode: SyncMode
+        syncMode: SyncMode,
+        modalOption: InAppMessage.Modal?,
+        promoOption: InAppMessage.Promo?
     ): RouterEvent = when {
         inviteTokenOption is Some -> RouterEvent.ConfirmedInvite(inviteTokenOption.value)
         hasCompletedOnBoarding == HasCompletedOnBoarding.NotCompleted -> RouterEvent.OnBoarding
         syncMode == SyncMode.ShownToUser -> RouterEvent.SyncDialog
+        promoOption != null ->
+            RouterEvent.InAppPromo(promoOption.userId, promoOption.id)
+        modalOption != null ->
+            RouterEvent.InAppModal(modalOption.userId, modalOption.id)
         else -> RouterEvent.None
     }
 }
@@ -90,6 +105,10 @@ sealed interface RouterEvent {
 
     @JvmInline
     value class ConfirmedInvite(val inviteToken: InviteToken) : RouterEvent
+
+    data class InAppPromo(val userId: UserId, val inAppMessageId: InAppMessageId) : RouterEvent
+
+    data class InAppModal(val userId: UserId, val inAppMessageId: InAppMessageId) : RouterEvent
 
     data object None : RouterEvent
 

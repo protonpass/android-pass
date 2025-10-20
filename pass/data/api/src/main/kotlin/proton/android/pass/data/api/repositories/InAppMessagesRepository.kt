@@ -26,9 +26,15 @@ import proton.android.pass.domain.inappmessages.InAppMessageStatus
 
 interface InAppMessagesRepository {
 
-    fun observeDeliverableUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>>
+    fun observePromoMinimizedUserMessages(userId: UserId, currentTimestamp: Long): Flow<InAppMessage.Promo?>
 
-    fun observeDeliverablePromoUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>>
+    fun observeTopDeliverableUserMessage(
+        userId: UserId,
+        currentTimestamp: Long,
+        refreshOnStart: Boolean = false
+    ): Flow<InAppMessage?>
+
+    fun observeUserMessage(userId: UserId, inAppMessageId: InAppMessageId): Flow<InAppMessage>
 
     suspend fun refreshUserMessages(userId: UserId)
 
@@ -37,6 +43,4 @@ interface InAppMessagesRepository {
         messageId: InAppMessageId,
         status: InAppMessageStatus
     )
-
-    fun observeUserMessage(userId: UserId, inAppMessageId: InAppMessageId): Flow<InAppMessage>
 }

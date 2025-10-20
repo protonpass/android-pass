@@ -28,16 +28,60 @@ import proton.android.pass.domain.inappmessages.InAppMessageCTA
 import proton.android.pass.domain.inappmessages.InAppMessageCTAType
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageKey
-import proton.android.pass.domain.inappmessages.InAppMessageMode
 import proton.android.pass.domain.inappmessages.InAppMessagePromoContents
 import proton.android.pass.domain.inappmessages.InAppMessageRange
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
 
 object TestInAppMessage {
 
-    fun create(
+    fun createBanner(
         id: String = "default-id",
-        mode: InAppMessageMode = InAppMessageMode.Banner,
+        title: String = "Default Title",
+        message: Option<String> = None,
+        imageUrl: Option<String> = None,
+        cta: Option<InAppMessageCTA> = None,
+        state: InAppMessageStatus = InAppMessageStatus.Unread,
+        range: InAppMessageRange = createInAppMessageRange(),
+        userId: UserId = UserId("default-user-id"),
+        priority: Int = 1
+    ): InAppMessage.Banner = InAppMessage.Banner(
+        id = InAppMessageId(id),
+        key = InAppMessageKey("default-key"),
+        title = title,
+        message = message,
+        imageUrl = imageUrl,
+        cta = cta,
+        state = state,
+        range = range,
+        userId = userId,
+        priority = priority
+    )
+
+    fun createModal(
+        id: String = "default-id",
+        title: String = "Default Title",
+        message: Option<String> = None,
+        imageUrl: Option<String> = None,
+        cta: Option<InAppMessageCTA> = None,
+        state: InAppMessageStatus = InAppMessageStatus.Unread,
+        range: InAppMessageRange = createInAppMessageRange(),
+        userId: UserId = UserId("default-user-id"),
+        priority: Int = 1
+    ): InAppMessage.Modal = InAppMessage.Modal(
+        id = InAppMessageId(id),
+        key = InAppMessageKey("default-key"),
+        title = title,
+        message = message,
+        imageUrl = imageUrl,
+        cta = cta,
+        state = state,
+        range = range,
+        userId = userId,
+        priority = priority
+    )
+
+    fun createPromo(
+        id: String = "default-id",
         title: String = "Default Title",
         message: Option<String> = None,
         imageUrl: Option<String> = None,
@@ -46,11 +90,10 @@ object TestInAppMessage {
         range: InAppMessageRange = createInAppMessageRange(),
         userId: UserId = UserId("default-user-id"),
         priority: Int = 1,
-        promoContents: Option<InAppMessagePromoContents> = None
-    ): InAppMessage = InAppMessage(
+        promoContents: InAppMessagePromoContents
+    ): InAppMessage.Promo = InAppMessage.Promo(
         id = InAppMessageId(id),
         key = InAppMessageKey("default-key"),
-        mode = mode,
         title = title,
         message = message,
         imageUrl = imageUrl,

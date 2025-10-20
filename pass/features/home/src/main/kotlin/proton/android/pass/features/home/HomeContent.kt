@@ -155,7 +155,7 @@ internal fun HomeContent(
                             )
                         },
                         actions = {
-                            uiState.homeListUiState.promoInAppMessage.value()?.let { promo ->
+                            uiState.homeListUiState.promoInAppMessage?.let { promo ->
                                 PromoIcon(
                                     onClick = {
                                         onEvent(

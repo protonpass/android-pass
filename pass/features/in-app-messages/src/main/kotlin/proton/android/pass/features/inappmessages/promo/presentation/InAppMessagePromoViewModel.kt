@@ -77,8 +77,10 @@ class InAppMessagePromoViewModel @Inject constructor(
         observeInAppMessage(userId, inAppMessageId).asResultWithoutLoading(),
         userPreferencesRepository.getThemePreference()
     ) { result: LoadingResult<InAppMessage>, themePreference: ThemePreference ->
-        val message = result.getOrNull() ?: return@combine InAppMessagePromoState.Error
-        InAppMessagePromoState.Success(message, themePreference)
+        when (val message = result.getOrNull()) {
+            is InAppMessage.Promo -> InAppMessagePromoState.Success(message, themePreference)
+            else -> InAppMessagePromoState.Error
+        }
     }
         .stateIn(
             scope = viewModelScope,

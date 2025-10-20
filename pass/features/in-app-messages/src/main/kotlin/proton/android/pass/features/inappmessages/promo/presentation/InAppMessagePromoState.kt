@@ -23,7 +23,7 @@ import proton.android.pass.preferences.ThemePreference
 
 sealed interface InAppMessagePromoState {
     data class Success(
-        val inAppMessage: InAppMessage,
+        val inAppMessage: InAppMessage.Promo,
         val themePreference: ThemePreference
     ) : InAppMessagePromoState
 

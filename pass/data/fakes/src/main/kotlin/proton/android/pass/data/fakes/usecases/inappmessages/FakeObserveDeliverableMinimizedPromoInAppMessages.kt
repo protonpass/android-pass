@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2024 Proton AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,22 +16,25 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.local.inappmessages
+package proton.android.pass.data.fakes.usecases.inappmessages
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.FlowUtils.testFlow
+import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableMinimizedPromoInAppMessages
 import proton.android.pass.domain.inappmessages.InAppMessage
-import proton.android.pass.domain.inappmessages.InAppMessageId
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface LocalInAppMessagesDataSource {
+@Singleton
+class FakeObserveDeliverableMinimizedPromoInAppMessage
+@Inject constructor() : ObserveDeliverableMinimizedPromoInAppMessages {
 
-    fun observePromoMinimizedUserMessages(userId: UserId, currentTimestamp: Long): Flow<InAppMessage.Promo?>
+    private val promoMessagesFlow = testFlow<InAppMessage.Promo?>()
 
-    fun observeUserMessage(userId: UserId, id: InAppMessageId): Flow<InAppMessage>
+    fun emitPromoMessage(message: InAppMessage.Promo?) {
+        promoMessagesFlow.tryEmit(message)
+    }
 
-    fun observeTopDeliverableUserMessage(userId: UserId, currentTimestamp: Long): Flow<InAppMessage?>
-
-    suspend fun storeMessages(userId: UserId, messages: List<InAppMessage>)
-
-    suspend fun updateMessage(userId: UserId, message: InAppMessage)
+    override fun invoke(userId: UserId?): Flow<InAppMessage.Promo?> = promoMessagesFlow
 }

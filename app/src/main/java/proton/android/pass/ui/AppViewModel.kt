@@ -27,21 +27,17 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.biometry.NeedsBiometricAuth
-import proton.android.pass.common.api.asResultWithoutLoading
-import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.runCatching
-import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.usecases.inappmessages.ChangeInAppMessageStatus
-import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableInAppMessages
+import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableBannerInAppMessages
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageKey
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
@@ -68,7 +64,7 @@ class AppViewModel @Inject constructor(
     private val internalSettingsRepository: InternalSettingsRepository,
     private val clock: Clock,
     networkMonitor: NetworkMonitor,
-    observeDeliverableInAppMessages: ObserveDeliverableInAppMessages
+    observeDeliverableBannerInAppMessages: ObserveDeliverableBannerInAppMessages
 ) : ViewModel() {
 
     private val networkStatus: Flow<NetworkStatus> = networkMonitor
@@ -82,15 +78,11 @@ class AppViewModel @Inject constructor(
             initialValue = runBlocking { needsBiometricAuth().first() }
         )
 
-    private val inAppMessageFlow = observeDeliverableInAppMessages()
-        .asResultWithoutLoading()
-        .map { it.getOrNull()?.firstOrNull().toOption() }
-
     val appUiState: StateFlow<AppUiState> = combine(
         snackbarDispatcher.snackbarMessage,
         networkStatus,
         inAppUpdatesManager.observeInAppUpdateState(),
-        inAppMessageFlow
+        observeDeliverableBannerInAppMessages(refresh = true)
     ) { snackbarMessage, networkStatus, inAppUpdateState, inAppMessage ->
         AppUiState(
             snackbarMessage = snackbarMessage,

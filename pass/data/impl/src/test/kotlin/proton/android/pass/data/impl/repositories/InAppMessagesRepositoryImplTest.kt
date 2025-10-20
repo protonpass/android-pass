@@ -37,7 +37,6 @@ import proton.android.pass.data.impl.responses.NotificationResponse
 import proton.android.pass.data.impl.responses.NotificationsResponse
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageId
-import proton.android.pass.domain.inappmessages.InAppMessageMode
 import proton.android.pass.domain.inappmessages.InAppMessagePromoContents
 import proton.android.pass.domain.inappmessages.InAppMessagePromoThemedContents
 import proton.android.pass.domain.inappmessages.InAppMessageRange
@@ -65,26 +64,29 @@ internal class InAppMessagesRepositoryImplTest {
     }
 
     @Test
-    fun `observeDeliverableUserMessages returns messages from local data source`() = runTest {
+    fun `observeTopDeliverableUserMessage returns banner messages from local data source`() = runTest {
         val currentTimestamp = Clock.System.now().epochSeconds
-        val messages = listOf(TestInAppMessage.create(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE_1))
+        val bannerMessage = TestInAppMessage.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE_1)
 
-        local.emitDeliverableMessages(messages)
+        local.emitTopMessage(bannerMessage)
 
-        val result = instance.observeDeliverableUserMessages(TEST_USER_ID, currentTimestamp).first()
+        val result = instance.observeTopDeliverableUserMessage(
+            userId = TEST_USER_ID,
+            currentTimestamp = currentTimestamp
+        ).first()
 
-        assertThat(result).isEqualTo(messages)
+        assertThat(result).isEqualTo(bannerMessage)
     }
 
     @Test
-    fun `observeDeliverableUserMessages triggers refresh on start`() = runTest {
+    fun `observeTopDeliverableUserMessage triggers refresh when refresh flag is true`() = runTest {
         val currentTimestamp = Clock.System.now().epochSeconds
-        val messages = listOf(TestInAppMessage.create(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE_1))
+        val bannerMessage = TestInAppMessage.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE_1)
 
-        remote.setFetchResult(Result.success(createNotificationsResponse(messages)))
-        local.emitDeliverableMessages(messages)
+        remote.setFetchResult(Result.success(createNotificationsResponse(listOf(bannerMessage))))
+        local.emitTopMessage(bannerMessage)
 
-        instance.observeDeliverableUserMessages(TEST_USER_ID, currentTimestamp).first()
+        instance.observeTopDeliverableUserMessage(TEST_USER_ID, currentTimestamp).first()
 
         // Verify that refresh was triggered by checking if remote was called
         // The refresh is triggered by onStart, which is implicit in the flow behavior
@@ -92,21 +94,38 @@ internal class InAppMessagesRepositoryImplTest {
     }
 
     @Test
-    fun `observeDeliverablePromoUserMessages returns promo messages from local data source`() = runTest {
+    fun `observePromoMinimizedUserMessages returns promo messages from local data source`() = runTest {
         val currentTimestamp = Clock.System.now().epochSeconds
-        val promoMessage = TestInAppMessage.create(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE_PROMO)
+        val promoMessage = TestInAppMessage.createPromo(
+            id = TEST_MESSAGE_ID.value,
+            title = TEST_MESSAGE_TITLE_PROMO,
+            promoContents = InAppMessagePromoContents(
+                startMinimised = false,
+                closePromoText = TEST_CLOSE_PROMO_TEXT,
+                lightThemeContents = InAppMessagePromoThemedContents(
+                    backgroundImageUrl = TEST_LIGHT_BG_URL,
+                    contentImageUrl = TEST_LIGHT_CONTENT_URL,
+                    closePromoTextColor = TEST_LIGHT_COLOR
+                ),
+                darkThemeContents = InAppMessagePromoThemedContents(
+                    backgroundImageUrl = TEST_DARK_BG_URL,
+                    contentImageUrl = TEST_DARK_CONTENT_URL,
+                    closePromoTextColor = TEST_DARK_COLOR
+                )
+            )
+        )
 
-        local.emitPromoMessages(listOf(promoMessage))
+        local.emitPromoMessages(promoMessage)
 
-        val result = instance.observeDeliverablePromoUserMessages(TEST_USER_ID, currentTimestamp).first()
+        val result = instance.observePromoMinimizedUserMessages(TEST_USER_ID, currentTimestamp).first()
 
-        assertThat(result).containsExactly(promoMessage)
+        assertThat(result).isEqualTo(promoMessage)
     }
 
     @Test
     fun `refreshUserMessages fetches and stores messages from remote`() = runTest {
-        val messages = listOf(TestInAppMessage.create(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE_1))
-        val response = createNotificationsResponse(messages)
+        val bannerMessage = TestInAppMessage.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE_1)
+        val response = createNotificationsResponse(listOf(bannerMessage))
 
         remote.setFetchResult(Result.success(response))
 
@@ -119,8 +138,8 @@ internal class InAppMessagesRepositoryImplTest {
     @Test
     fun `refreshUserMessages handles pagination correctly`() = runTest {
         val messages = listOf(
-            TestInAppMessage.create(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE_MESSAGE_1),
-            TestInAppMessage.create(id = TEST_MESSAGE_ID_2.value, title = TEST_MESSAGE_TITLE_MESSAGE_2)
+            TestInAppMessage.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE_MESSAGE_1),
+            TestInAppMessage.createBanner(id = TEST_MESSAGE_ID_2.value, title = TEST_MESSAGE_TITLE_MESSAGE_2)
         )
 
         // Mock remote to return a single response (simplified pagination test)
@@ -144,14 +163,13 @@ internal class InAppMessagesRepositoryImplTest {
 
     @Test
     fun `refreshUserMessages preloads images from messages`() = runTest {
-        val messageWithImage = TestInAppMessage.create(
+        val messageWithImage = TestInAppMessage.createBanner(
             id = TEST_MESSAGE_ID.value,
             title = TEST_MESSAGE_TITLE_WITH_IMAGE,
             imageUrl = Some(TEST_IMAGE_URL)
         )
-        val promoMessage = TestInAppMessage.create(
+        val promoMessage = TestInAppMessage.createPromo(
             id = TEST_MESSAGE_ID_2.value,
-            mode = InAppMessageMode.Promo,
             title = TEST_MESSAGE_TITLE_PROMO_WITH_IMAGES,
             message = Some(TEST_PROMO_MESSAGE_CONTENT),
             imageUrl = None,
@@ -163,20 +181,18 @@ internal class InAppMessagesRepositoryImplTest {
             ),
             userId = TEST_USER_ID,
             priority = 2,
-            promoContents = Some(
-                InAppMessagePromoContents(
-                    startMinimised = false,
-                    closePromoText = TEST_CLOSE_PROMO_TEXT,
-                    lightThemeContents = InAppMessagePromoThemedContents(
-                        backgroundImageUrl = TEST_LIGHT_BG_URL,
-                        contentImageUrl = TEST_LIGHT_CONTENT_URL,
-                        closePromoTextColor = TEST_LIGHT_COLOR
-                    ),
-                    darkThemeContents = InAppMessagePromoThemedContents(
-                        backgroundImageUrl = TEST_DARK_BG_URL,
-                        contentImageUrl = TEST_DARK_CONTENT_URL,
-                        closePromoTextColor = TEST_DARK_COLOR
-                    )
+            promoContents = InAppMessagePromoContents(
+                startMinimised = false,
+                closePromoText = TEST_CLOSE_PROMO_TEXT,
+                lightThemeContents = InAppMessagePromoThemedContents(
+                    backgroundImageUrl = TEST_LIGHT_BG_URL,
+                    contentImageUrl = TEST_LIGHT_CONTENT_URL,
+                    closePromoTextColor = TEST_LIGHT_COLOR
+                ),
+                darkThemeContents = InAppMessagePromoThemedContents(
+                    backgroundImageUrl = TEST_DARK_BG_URL,
+                    contentImageUrl = TEST_DARK_CONTENT_URL,
+                    closePromoTextColor = TEST_DARK_COLOR
                 )
             )
         )
@@ -199,7 +215,7 @@ internal class InAppMessagesRepositoryImplTest {
     @Test
     fun `changeMessageStatus updates message status remotely and locally`() = runTest {
         val newStatus = InAppMessageStatus.Read
-        val originalMessage = TestInAppMessage.create(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE)
+        val originalMessage = TestInAppMessage.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE)
         val updatedMessage = originalMessage.copy(state = newStatus)
 
         local.emitUserMessage(originalMessage)
@@ -230,7 +246,7 @@ internal class InAppMessagesRepositoryImplTest {
         val error = RuntimeException(TEST_ERROR_LOCAL)
 
         // Set up a message in the fake so observeUserMessage returns something
-        val message = TestInAppMessage.create(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE)
+        val message = TestInAppMessage.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE)
         local.emitUserMessage(message)
 
         // Set up the fake to throw error when updateMessage is called
@@ -246,7 +262,7 @@ internal class InAppMessagesRepositoryImplTest {
 
     @Test
     fun `observeUserMessage returns message from local data source`() = runTest {
-        val message = TestInAppMessage.create(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE)
+        val message = TestInAppMessage.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE)
 
         local.emitUserMessage(message)
 
@@ -257,7 +273,7 @@ internal class InAppMessagesRepositoryImplTest {
 
     @Test
     fun `observeUserMessage returns distinct values only`() = runTest {
-        val message = TestInAppMessage.create(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE)
+        val message = TestInAppMessage.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE)
 
         local.emitUserMessage(message)
         local.emitUserMessage(message) // Same message
@@ -268,29 +284,49 @@ internal class InAppMessagesRepositoryImplTest {
     }
 
     @Test
-    fun `observeDeliverableUserMessages returns distinct values only`() = runTest {
+    fun `observeTopDeliverableUserMessage returns distinct values only`() = runTest {
         val currentTimestamp = Clock.System.now().epochSeconds
-        val messages = listOf(TestInAppMessage.create(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE))
+        val bannerMessage = TestInAppMessage.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE)
 
-        local.emitDeliverableMessages(messages)
-        local.emitDeliverableMessages(messages) // Same messages
+        local.emitTopMessage(bannerMessage)
+        local.emitTopMessage(bannerMessage) // Same messages
 
-        val result = instance.observeDeliverableUserMessages(TEST_USER_ID, currentTimestamp).first()
+        val result = instance.observeTopDeliverableUserMessage(
+            userId = TEST_USER_ID,
+            currentTimestamp = currentTimestamp
+        ).first()
 
-        assertThat(result).isEqualTo(messages)
+        assertThat(result).isEqualTo(bannerMessage)
     }
 
     @Test
-    fun `observeDeliverablePromoUserMessages returns distinct values only`() = runTest {
+    fun `observePromoMinimizedUserMessages returns distinct values only`() = runTest {
         val currentTimestamp = Clock.System.now().epochSeconds
-        val messages = listOf(TestInAppMessage.create(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE_PROMO))
+        val promoMessage = TestInAppMessage.createPromo(
+            id = TEST_MESSAGE_ID.value,
+            title = TEST_MESSAGE_TITLE_PROMO,
+            promoContents = InAppMessagePromoContents(
+                startMinimised = false,
+                closePromoText = TEST_CLOSE_PROMO_TEXT,
+                lightThemeContents = InAppMessagePromoThemedContents(
+                    backgroundImageUrl = TEST_LIGHT_BG_URL,
+                    contentImageUrl = TEST_LIGHT_CONTENT_URL,
+                    closePromoTextColor = TEST_LIGHT_COLOR
+                ),
+                darkThemeContents = InAppMessagePromoThemedContents(
+                    backgroundImageUrl = TEST_DARK_BG_URL,
+                    contentImageUrl = TEST_DARK_CONTENT_URL,
+                    closePromoTextColor = TEST_DARK_COLOR
+                )
+            )
+        )
 
-        local.emitPromoMessages(messages)
-        local.emitPromoMessages(messages) // Same messages
+        local.emitPromoMessages(promoMessage)
+        local.emitPromoMessages(promoMessage) // Same messages
 
-        val result = instance.observeDeliverablePromoUserMessages(TEST_USER_ID, currentTimestamp).first()
+        val result = instance.observePromoMinimizedUserMessages(TEST_USER_ID, currentTimestamp).first()
 
-        assertThat(result).isEqualTo(messages)
+        assertThat(result).isEqualTo(promoMessage)
     }
 
     @Test
@@ -312,7 +348,7 @@ internal class InAppMessagesRepositoryImplTest {
 
     @Test
     fun `refreshUserMessages handles store messages failure`() = runTest {
-        val messages = listOf(TestInAppMessage.create(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE))
+        val messages = listOf(TestInAppMessage.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE))
         val response = createNotificationsResponse(messages)
         val error = RuntimeException(TEST_ERROR_STORAGE)
 
@@ -326,8 +362,8 @@ internal class InAppMessagesRepositoryImplTest {
     @Test
     fun `refreshUserMessages handles multiple pages correctly`() = runTest {
         val messages = listOf(
-            TestInAppMessage.create(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE_MESSAGE_1),
-            TestInAppMessage.create(id = TEST_MESSAGE_ID_2.value, title = TEST_MESSAGE_TITLE_MESSAGE_2)
+            TestInAppMessage.createBanner(id = TEST_MESSAGE_ID.value, title = TEST_MESSAGE_TITLE_MESSAGE_1),
+            TestInAppMessage.createBanner(id = TEST_MESSAGE_ID_2.value, title = TEST_MESSAGE_TITLE_MESSAGE_2)
         )
 
         // Mock remote to return all messages in one response (simplified for testing)
@@ -341,12 +377,12 @@ internal class InAppMessagesRepositoryImplTest {
 
     @Test
     fun `refreshUserMessages preloads only unique images`() = runTest {
-        val message1 = TestInAppMessage.create(
+        val message1 = TestInAppMessage.createBanner(
             id = TEST_MESSAGE_ID.value,
             title = TEST_MESSAGE_TITLE_MESSAGE_1,
             imageUrl = Some(TEST_IMAGE_URL_SAME)
         )
-        val message2 = TestInAppMessage.create(
+        val message2 = TestInAppMessage.createBanner(
             id = TEST_MESSAGE_ID_2.value,
             title = TEST_MESSAGE_TITLE_MESSAGE_2,
             imageUrl = Some(TEST_IMAGE_URL_SAME)
@@ -365,7 +401,7 @@ internal class InAppMessagesRepositoryImplTest {
 
     @Test
     fun `refreshUserMessages handles messages with no images`() = runTest {
-        val messageWithoutImage = TestInAppMessage.create(
+        val messageWithoutImage = TestInAppMessage.createBanner(
             id = TEST_MESSAGE_ID.value,
             title = TEST_MESSAGE_TITLE_WITHOUT_IMAGE
         )
@@ -426,14 +462,14 @@ internal class InAppMessagesRepositoryImplTest {
     }
 
     @Test
-    fun `observeDeliverableUserMessages handles local failure gracefully`() = runTest {
+    fun `observeTopDeliverableUserMessage handles local failure gracefully`() = runTest {
         val currentTimestamp = Clock.System.now().epochSeconds
         val error = RuntimeException(TEST_ERROR_LOCAL)
 
-        local.setObserveDeliverableMessagesResult(Result.failure(error))
+        local.setObserveTopMessageResult(Result.failure(error))
 
         try {
-            instance.observeDeliverableUserMessages(TEST_USER_ID, currentTimestamp).first()
+            instance.observeTopDeliverableUserMessage(TEST_USER_ID, currentTimestamp).first()
             assert(false) { "Expected exception to be thrown" }
         } catch (e: RuntimeException) {
             assertThat(e).isEqualTo(error)
@@ -441,14 +477,14 @@ internal class InAppMessagesRepositoryImplTest {
     }
 
     @Test
-    fun `observeDeliverablePromoUserMessages handles local failure gracefully`() = runTest {
+    fun `observePromoMinimizedUserMessages handles local failure gracefully`() = runTest {
         val currentTimestamp = Clock.System.now().epochSeconds
         val error = RuntimeException(TEST_ERROR_LOCAL)
 
         local.setObservePromoMessagesResult(Result.failure(error))
 
         try {
-            instance.observeDeliverablePromoUserMessages(TEST_USER_ID, currentTimestamp).first()
+            instance.observePromoMinimizedUserMessages(TEST_USER_ID, currentTimestamp).first()
             assert(false) { "Expected exception to be thrown" }
         } catch (e: RuntimeException) {
             assertThat(e).isEqualTo(error)
@@ -465,7 +501,11 @@ internal class InAppMessagesRepositoryImplTest {
         priority = message.priority,
         content = proton.android.pass.data.impl.responses.ContentResponse(
             imageUrl = message.imageUrl.value(),
-            displayType = message.mode.value,
+            displayType = when (message) {
+                is InAppMessage.Banner -> 0
+                is InAppMessage.Modal -> 1
+                is InAppMessage.Promo -> 2
+            },
             title = message.title,
             message = message.message.value() ?: "",
             cta = message.cta.value()?.let { cta ->
@@ -475,7 +515,7 @@ internal class InAppMessagesRepositoryImplTest {
                     ref = cta.route
                 )
             },
-            promoContents = message.promoContents.value()?.let { promo ->
+            promoContents = (message as? InAppMessage.Promo)?.promoContents?.let { promo ->
                 NotificationPromoContentsResponse(
                     startMinimised = promo.startMinimised,
                     closePromoText = promo.closePromoText,

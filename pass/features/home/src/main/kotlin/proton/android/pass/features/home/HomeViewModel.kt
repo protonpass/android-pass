@@ -115,7 +115,7 @@ import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.UnpinItems
-import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverablePromoInAppMessages
+import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableMinimizedPromoInAppMessages
 import proton.android.pass.data.api.usecases.items.ObserveCanCreateItems
 import proton.android.pass.data.api.usecases.items.ObserveEncryptedSharedItems
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
@@ -217,7 +217,7 @@ class HomeViewModel @Inject constructor(
     accountManager: AccountManager,
     observeCanCreateItems: ObserveCanCreateItems,
     observeHasShares: ObserveHasShares,
-    observeDeliverablePromoInAppMessages: ObserveDeliverablePromoInAppMessages
+    observeDeliverableMinimizedPromoInAppMessages: ObserveDeliverableMinimizedPromoInAppMessages
 ) : ViewModel() {
 
     init {
@@ -551,7 +551,7 @@ class HomeViewModel @Inject constructor(
         preferencesRepository.getUseFaviconsPreference(),
         selectionState,
         appNeedsUpdateFlow,
-        observeDeliverablePromoInAppMessages()
+        observeDeliverableMinimizedPromoInAppMessages()
     ) { itemsResult,
         refreshingLoading,
         shouldScrollToTop,
@@ -591,7 +591,7 @@ class HomeViewModel @Inject constructor(
                 isTrash = searchOptions.vaultSelectionOption == VaultSelectionOption.Trash
             ),
             showNeedsUpdate = appNeedsUpdate.getOrNull() == true,
-            promoInAppMessage = promoInAppMessages.firstOrNull().toOption()
+            promoInAppMessage = promoInAppMessages
         )
     }
 

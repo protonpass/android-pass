@@ -193,6 +193,18 @@ fun HomeScreen(
             ).also(onNavigateEvent)
 
             RouterEvent.SyncDialog -> onNavigateEvent(HomeNavigation.SyncDialog)
+            is RouterEvent.InAppPromo -> onNavigateEvent(
+                HomeNavigation.OpenPromoInAppMessage(
+                    userId = event.userId,
+                    inAppMessageId = event.inAppMessageId
+                )
+            )
+            is RouterEvent.InAppModal -> onNavigateEvent(
+                HomeNavigation.OpenModalInAppMessage(
+                    userId = event.userId,
+                    inAppMessageId = event.inAppMessageId
+                )
+            )
             RouterEvent.None -> Unit
         }
         onDispose { routerViewModel.clearEvent() }

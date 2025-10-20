@@ -161,6 +161,8 @@ import proton.android.pass.data.api.usecases.extrapassword.CheckLocalExtraPasswo
 import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
+import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableMinimizedPromoInAppMessages
+import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableModalInAppMessages
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverablePromoInAppMessages
 import proton.android.pass.data.api.usecases.invites.InviteToItem
 import proton.android.pass.data.api.usecases.invites.ObserveInvite
@@ -369,6 +371,8 @@ import proton.android.pass.data.fakes.usecases.breach.FakeUpdateProtonAddressMon
 import proton.android.pass.data.fakes.usecases.breach.FakeVerifyBreachCustomEmail
 import proton.android.pass.data.fakes.usecases.credentials.passkeys.FakeGetPasskeyCredentialItems
 import proton.android.pass.data.fakes.usecases.credentials.passwords.FakeGetPasswordCredentialItems
+import proton.android.pass.data.fakes.usecases.inappmessages.FakeObserveDeliverableMinimizedPromoInAppMessage
+import proton.android.pass.data.fakes.usecases.inappmessages.FakeObserveDeliverableModalInAppMessages
 import proton.android.pass.data.fakes.usecases.inappmessages.FakeObserveDeliverablePromoInAppMessages
 import proton.android.pass.data.fakes.usecases.invites.FakeInviteToItem
 import proton.android.pass.data.fakes.usecases.invites.FakeObserveInvite
@@ -1075,7 +1079,17 @@ abstract class FakesDataModule {
     abstract fun bindGetPasskeyCredentialItems(impl: FakeGetPasskeyCredentialItems): GetPasskeyCredentialItems
 
     @Binds
-    abstract fun bindObserveDeliverablePromoInAppMessages(
+    abstract fun bindObserveMinimizedPromoInAppMessages(
+        impl: FakeObserveDeliverableMinimizedPromoInAppMessage
+    ): ObserveDeliverableMinimizedPromoInAppMessages
+
+    @Binds
+    abstract fun bindObserveModalInAppMessages(
+        impl: FakeObserveDeliverableModalInAppMessages
+    ): ObserveDeliverableModalInAppMessages
+
+    @Binds
+    abstract fun bindObservePromoInAppMessages(
         impl: FakeObserveDeliverablePromoInAppMessages
     ): ObserveDeliverablePromoInAppMessages
 

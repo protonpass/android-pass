@@ -169,6 +169,8 @@ sealed interface HomeNavigation {
     @JvmInline
     value class LeaveItemShare(val shareId: ShareId) : HomeNavigation
 
+    data class OpenModalInAppMessage(val userId: UserId, val inAppMessageId: InAppMessageId) : HomeNavigation
+
     data class OpenPromoInAppMessage(val userId: UserId, val inAppMessageId: InAppMessageId) : HomeNavigation
 
 }

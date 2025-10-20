@@ -23,5 +23,5 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.inappmessages.InAppMessage
 
 interface ObserveDeliverablePromoInAppMessages {
-    operator fun invoke(userId: UserId? = null): Flow<List<InAppMessage>>
+    operator fun invoke(userId: UserId? = null): Flow<InAppMessage.Promo?>
 }

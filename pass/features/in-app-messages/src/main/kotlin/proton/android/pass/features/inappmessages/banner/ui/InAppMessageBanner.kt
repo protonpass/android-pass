@@ -62,7 +62,6 @@ import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageCTAType
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageKey
-import proton.android.pass.domain.inappmessages.InAppMessageMode
 import proton.android.pass.domain.inappmessages.InAppMessageRange
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
 import me.proton.core.presentation.R as CoreR
@@ -195,11 +194,10 @@ fun InAppBannerPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
     PassTheme(isDark = isDark) {
         Surface {
             InAppMessageBanner(
-                inAppMessage = InAppMessage(
+                inAppMessage = InAppMessage.Banner(
                     id = InAppMessageId("1"),
                     key = InAppMessageKey(""),
                     userId = UserId(""),
-                    mode = InAppMessageMode.Banner,
                     title = "Title",
                     message = Some("Message"),
                     imageUrl = None,
@@ -209,8 +207,7 @@ fun InAppBannerPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                     range = InAppMessageRange(
                         start = Instant.DISTANT_PAST,
                         end = None
-                    ),
-                    promoContents = None
+                    )
                 ),
                 onInternalCTAClick = { _, _, _, _ -> },
                 onExternalCTAClick = { _, _, _, _ -> },

@@ -64,6 +64,7 @@ import proton.android.pass.features.home.HomeNavItem
 import proton.android.pass.features.home.HomeNavigation
 import proton.android.pass.features.home.HomeUpgradeDialog
 import proton.android.pass.features.home.homeGraph
+import proton.android.pass.features.inappmessages.bottomsheet.navigation.InAppMessageModalNavItem
 import proton.android.pass.features.inappmessages.navigation.InAppMessageDestination
 import proton.android.pass.features.inappmessages.navigation.inAppMessageGraph
 import proton.android.pass.features.inappmessages.promo.navigation.InAppMessagePromoNavItem
@@ -521,6 +522,12 @@ fun NavGraphBuilder.appGraph(
                         )
                     )
                 }
+
+                is HomeNavigation.OpenModalInAppMessage ->
+                    appNavigator.navigate(
+                        InAppMessageModalNavItem,
+                        InAppMessageModalNavItem.createNavRoute(it.userId, it.inAppMessageId)
+                    )
 
                 is HomeNavigation.OpenPromoInAppMessage ->
                     appNavigator.navigate(

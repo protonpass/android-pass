@@ -34,7 +34,7 @@ import proton.android.pass.data.impl.db.entities.InAppMessageEntity
 import kotlin.time.Duration.Companion.days
 
 @RunWith(AndroidJUnit4::class)
-class AssetLinkDaoTest {
+class InAppMessagesDaoTest {
 
     private lateinit var db: AppDatabase
     private lateinit var inAppMessagesDao: InAppMessagesDao
@@ -61,9 +61,8 @@ class AssetLinkDaoTest {
         val message1 = createEntity("1", userId, 0, now.minus(1.days).epochSeconds)
         val message2 = createEntity("2", userId, 1, now.minus(1.days).epochSeconds)
         inAppMessagesDao.insertOrIgnore(message1, message2)
-        val messages = inAppMessagesDao.observeDeliverableUserMessages(userId, now.epochSeconds).first()
-        assertEquals(1, messages.size)
-        assertEquals("1", messages[0].id)
+        val message = inAppMessagesDao.observeDeliverableMessagesWithNotStatus(userId, 0, 1, now.epochSeconds).first()
+        assertEquals("1", message?.id)
     }
 
     @Test
@@ -73,9 +72,8 @@ class AssetLinkDaoTest {
         val message1 = createEntity("1", userId, 0, now.minus(1.days).epochSeconds, now.plus(1.days).epochSeconds)
         val message2 = createEntity("2", userId, 0, now.minus(2.days).epochSeconds, now.minus(1.days).epochSeconds)
         inAppMessagesDao.insertOrIgnore(message1, message2)
-        val messages = inAppMessagesDao.observeDeliverableUserMessages(userId, now.epochSeconds).first()
-        assertEquals(1, messages.size)
-        assertEquals("1", messages[0].id)
+        val message = inAppMessagesDao.observeDeliverableMessagesWithNotStatus(userId, 0, 1, now.epochSeconds).first()
+        assertEquals("1", message?.id)
     }
 
     @Test
@@ -87,12 +85,9 @@ class AssetLinkDaoTest {
         val message3 = createEntity("3", userId, 0, now.minus(1.days).epochSeconds, priority = 2)
         val message4 = createEntity("4", userId, 0, now.minus(3.days).epochSeconds, priority = 2)
         inAppMessagesDao.insertOrIgnore(message1, message2, message3, message4)
-        val messages = inAppMessagesDao.observeDeliverableUserMessages(userId, now.epochSeconds).first()
-        assertEquals(4, messages.size)
-        assertEquals("4", messages[0].id)
-        assertEquals("3", messages[1].id)
-        assertEquals("1", messages[2].id)
-        assertEquals("2", messages[3].id)
+        val message = inAppMessagesDao.observeDeliverableMessagesWithNotStatus(userId, 0, 1, now.epochSeconds).first()
+        // Should return the highest priority message (priority 2) with earliest start time
+        assertEquals("4", message?.id)
     }
 
     @Test
@@ -102,9 +97,8 @@ class AssetLinkDaoTest {
         val message1 = createEntity("1", userId, 0, now.minus(1.days).epochSeconds)
         val message2 = createEntity("2", "otherUserId", 0, now.minus(1.days).epochSeconds)
         inAppMessagesDao.insertOrIgnore(message1, message2)
-        val messages = inAppMessagesDao.observeDeliverableUserMessages(userId, now.epochSeconds).first()
-        assertEquals(1, messages.size)
-        assertEquals("1", messages[0].id)
+        val message = inAppMessagesDao.observeDeliverableMessagesWithNotStatus(userId, 0, 1, now.epochSeconds).first()
+        assertEquals("1", message?.id)
     }
 
     private fun createEntity(

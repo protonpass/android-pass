@@ -24,22 +24,19 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.repositories.InAppMessagesRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableInAppMessages
-import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.preferences.InternalSettingsRepository
-import javax.inject.Inject
 import kotlin.time.Duration.Companion.minutes
 
-class ObserveDeliverableInAppMessagesImpl @Inject constructor(
-    private val observeCurrentUser: ObserveCurrentUser,
-    private val inAppMessagesRepository: InAppMessagesRepository,
-    private val internalSettingsRepository: InternalSettingsRepository,
-    private val clock: Clock
-) : ObserveDeliverableInAppMessages {
+object InAppMessageUtils {
 
-    override fun invoke(userId: UserId?): Flow<List<InAppMessage>> = getUserId(userId).flatMapLatest { resolvedUserId ->
+    fun <T> observeDeliverableMessages(
+        userId: UserId?,
+        observeCurrentUser: ObserveCurrentUser,
+        internalSettingsRepository: InternalSettingsRepository,
+        clock: Clock,
+        getMessage: (UserId, Long) -> Flow<T?>
+    ): Flow<T?> = getUserId(userId, observeCurrentUser).flatMapLatest { resolvedUserId ->
         internalSettingsRepository.getLastTimeUserHasSeenIAM(resolvedUserId)
             .flatMapLatest { preference ->
                 val now = clock.now()
@@ -47,17 +44,14 @@ class ObserveDeliverableInAppMessagesImpl @Inject constructor(
                 val thirtyMinutesAgo = now.minus(30.minutes)
                 val shouldShowInAppMessage = lastSeenTime < thirtyMinutesAgo.epochSeconds
                 if (shouldShowInAppMessage) {
-                    inAppMessagesRepository.observeDeliverableUserMessages(
-                        userId = resolvedUserId,
-                        currentTimestamp = now.epochSeconds
-                    )
+                    getMessage(resolvedUserId, now.epochSeconds)
                 } else {
-                    flowOf(emptyList())
+                    flowOf(null)
                 }
             }
     }
 
-    private fun getUserId(userId: UserId?): Flow<UserId> = if (userId != null) {
+    fun getUserId(userId: UserId?, observeCurrentUser: ObserveCurrentUser): Flow<UserId> = if (userId != null) {
         flowOf(userId)
     } else {
         observeCurrentUser().map { it.userId }

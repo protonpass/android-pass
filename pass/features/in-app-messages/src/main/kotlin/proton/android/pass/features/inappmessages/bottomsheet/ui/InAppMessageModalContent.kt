@@ -30,7 +30,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
@@ -41,7 +40,6 @@ import proton.android.pass.domain.inappmessages.InAppMessageCTA
 import proton.android.pass.domain.inappmessages.InAppMessageCTAType
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageKey
-import proton.android.pass.domain.inappmessages.InAppMessageMode
 import proton.android.pass.domain.inappmessages.InAppMessageRange
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
 
@@ -87,14 +85,13 @@ fun InAppMessageContentPreview(@PreviewParameter(ThemePreviewProvider::class) is
     PassTheme(isDark = isDark) {
         Surface {
             InAppMessageModalContent(
-                inAppMessage = InAppMessage(
+                inAppMessage = InAppMessage.Modal(
                     id = InAppMessageId("q"),
                     key = InAppMessageKey(""),
                     userId = UserId(""),
                     title = "Upgrade to Pass Plus",
                     message = "Get access to all features".some(),
                     imageUrl = "url".some(),
-                    mode = InAppMessageMode.Modal,
                     cta = InAppMessageCTA(
                         text = "Upgrade",
                         route = "pass://upgrade",
@@ -105,8 +102,7 @@ fun InAppMessageContentPreview(@PreviewParameter(ThemePreviewProvider::class) is
                     range = InAppMessageRange(
                         start = Instant.DISTANT_PAST,
                         end = Some(Instant.DISTANT_FUTURE)
-                    ),
-                    promoContents = None
+                    )
                 ),
                 onExternalCTAClick = {},
                 onInternalCTAClick = {},

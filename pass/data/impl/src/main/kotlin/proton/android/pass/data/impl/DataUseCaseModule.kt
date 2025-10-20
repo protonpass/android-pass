@@ -171,7 +171,9 @@ import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
 import proton.android.pass.data.api.usecases.inappmessages.ChangeInAppMessageStatus
-import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableInAppMessages
+import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableBannerInAppMessages
+import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableModalInAppMessages
+import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableMinimizedPromoInAppMessages
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverablePromoInAppMessages
 import proton.android.pass.data.api.usecases.inappmessages.ObserveInAppMessage
 import proton.android.pass.data.api.usecases.invites.InviteToItem
@@ -400,7 +402,9 @@ import proton.android.pass.data.impl.usecases.extrapassword.HasExtraPasswordImpl
 import proton.android.pass.data.impl.usecases.extrapassword.RemoveExtraPasswordImpl
 import proton.android.pass.data.impl.usecases.extrapassword.SetupExtraPasswordImpl
 import proton.android.pass.data.impl.usecases.inappmessages.ChangeInAppMessageStatusImpl
-import proton.android.pass.data.impl.usecases.inappmessages.ObserveDeliverableInAppMessagesImpl
+import proton.android.pass.data.impl.usecases.inappmessages.ObserveDeliverableBannerInAppMessagesImpl
+import proton.android.pass.data.impl.usecases.inappmessages.ObserveDeliverableModalInAppMessagesImpl
+import proton.android.pass.data.impl.usecases.inappmessages.ObserveDeliverableMinimizedPromoInAppMessagesImpl
 import proton.android.pass.data.impl.usecases.inappmessages.ObserveDeliverablePromoInAppMessagesImpl
 import proton.android.pass.data.impl.usecases.inappmessages.ObserveInAppMessageImpl
 import proton.android.pass.data.impl.usecases.invites.InviteToItemImpl
@@ -1079,14 +1083,25 @@ abstract class DataUseCaseModule {
     abstract fun bindChangeInAppMessageStatus(impl: ChangeInAppMessageStatusImpl): ChangeInAppMessageStatus
 
     @[Binds Singleton]
-    abstract fun bindObserveDeliverableInAppMessages(
-        impl: ObserveDeliverableInAppMessagesImpl
-    ): ObserveDeliverableInAppMessages
+    abstract fun bindDeliverableBannerInAppMessages(
+        impl: ObserveDeliverableBannerInAppMessagesImpl
+    ): ObserveDeliverableBannerInAppMessages
 
     @[Binds Singleton]
-    abstract fun bindObserveDeliverablePromoInAppMessages(
+    abstract fun bindDeliverableModalInAppMessages(
+        impl: ObserveDeliverableModalInAppMessagesImpl
+    ): ObserveDeliverableModalInAppMessages
+
+    @[Binds Singleton]
+    abstract fun bindDeliverablePromoInAppMessages(
         impl: ObserveDeliverablePromoInAppMessagesImpl
     ): ObserveDeliverablePromoInAppMessages
+
+    @[Binds Singleton]
+    abstract fun bindMinimizedPromoInAppMessages(
+        impl: ObserveDeliverableMinimizedPromoInAppMessagesImpl
+    ): ObserveDeliverableMinimizedPromoInAppMessages
+
 
     @[Binds Singleton]
     abstract fun bindObserveInAppMessage(impl: ObserveInAppMessageImpl): ObserveInAppMessage

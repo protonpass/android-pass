@@ -23,7 +23,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.DrawerValue
@@ -803,9 +802,7 @@ fun HomeScreen(
             }
         ) {
             HomeContent(
-                modifier = Modifier
-                    .background(PassTheme.colors.backgroundStrong)
-                    .systemBarsPadding(),
+                modifier = Modifier.background(PassTheme.colors.backgroundStrong),
                 uiState = homeUiState,
                 scrollableState = scrollableState,
                 shouldScrollToTop = homeUiState.homeListUiState.shouldScrollToTop,

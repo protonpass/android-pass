@@ -231,7 +231,7 @@ internal data class HomeListUiState(
     val sortingType: SearchSortingType = SearchSortingType.MostRecent,
     val selectionState: HomeSelectionState,
     val showNeedsUpdate: Boolean,
-    val promoInAppMessage: Option<InAppMessage>
+    val promoInAppMessage: InAppMessage?
 ) {
 
     internal val selectedVaultOption: Option<Vault> = selectedShare.flatMap { share ->
@@ -264,7 +264,7 @@ internal data class HomeListUiState(
             shares = persistentMapOf(),
             selectionState = HomeSelectionState.Initial,
             showNeedsUpdate = false,
-            promoInAppMessage = None
+            promoInAppMessage = null
         )
 
     }

@@ -31,7 +31,7 @@ data class AppUiState(
     val snackbarMessage: Option<SnackbarMessage>,
     val networkStatus: NetworkStatus,
     val inAppUpdateState: InAppUpdateState,
-    val inAppMessage: Option<InAppMessage>
+    val inAppMessage: InAppMessage.Banner?
 ) {
 
     companion object {
@@ -39,7 +39,7 @@ data class AppUiState(
             snackbarMessage = None,
             networkStatus = NetworkStatus.Online,
             inAppUpdateState = InAppUpdateState.Idle,
-            inAppMessage = None
+            inAppMessage = null
         )
     }
 }

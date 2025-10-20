@@ -60,8 +60,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.R
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Some
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.BottomBarSelection
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarEvent
 import proton.android.pass.commonui.api.BrowserUtils
@@ -75,13 +73,10 @@ import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarH
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageKey
-import proton.android.pass.domain.inappmessages.InAppMessageMode
 import proton.android.pass.features.auth.AuthOrigin
 import proton.android.pass.features.featureflags.FeatureFlagRoute
 import proton.android.pass.features.home.HomeNavItem
 import proton.android.pass.features.inappmessages.banner.ui.InAppMessageBanner
-import proton.android.pass.features.inappmessages.bottomsheet.navigation.InAppMessageModalNavItem
-import proton.android.pass.features.inappmessages.promo.navigation.InAppMessagePromoNavItem
 import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomSheetMode
 import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomsheetNavItem
 import proton.android.pass.features.profile.ProfileNavItem
@@ -145,45 +140,6 @@ fun PassAppContent(
         animationSpec = tween(),
         label = "BannerBottomPadding"
     )
-
-    val shouldNavigateToInAppMessage = remember(appUiState.inAppMessage, appNavigator.currentRoute) {
-        if (appUiState.inAppMessage is Some) {
-            when (appUiState.inAppMessage.value.mode) {
-                InAppMessageMode.Modal,
-                InAppMessageMode.Promo -> appNavigator.currentRoute == HomeNavItem.route
-                InAppMessageMode.Banner,
-                InAppMessageMode.Unknown -> false
-            }
-        } else {
-            false
-        }
-    }
-    val hasNavigatedToInAppMessage = remember { mutableStateOf(false) }
-    LaunchedEffect(appUiState.inAppMessage, appNavigator.currentRoute) {
-        when (val option = appUiState.inAppMessage) {
-            is Some -> if (shouldNavigateToInAppMessage && !hasNavigatedToInAppMessage.value) {
-                val message = option.value
-                when (message.mode) {
-                    InAppMessageMode.Modal ->
-                        appNavigator.navigate(
-                            InAppMessageModalNavItem,
-                            InAppMessageModalNavItem.createNavRoute(message.userId, message.id)
-                        )
-                    InAppMessageMode.Promo ->
-                        appNavigator.navigate(
-                            InAppMessagePromoNavItem,
-                            InAppMessagePromoNavItem.createNavRoute(message.userId, message.id)
-                        )
-                    InAppMessageMode.Banner,
-                    InAppMessageMode.Unknown ->
-                        PassLogger.w(TAG, "In-app message mode not supported")
-                }
-                hasNavigatedToInAppMessage.value = true
-            }
-
-            is None -> hasNavigatedToInAppMessage.value = false
-        }
-    }
 
     SnackBarLaunchedEffect(
         appUiState.snackbarMessage.value(),
@@ -333,8 +289,7 @@ fun PassAppContent(
 
                     var isBannerVisible by remember { mutableStateOf(false) }
                     LaunchedEffect(appUiState.inAppMessage, appNavigator.currentRoute) {
-                        isBannerVisible = appUiState.inAppMessage is Some &&
-                            appUiState.inAppMessage.value.mode == InAppMessageMode.Banner &&
+                        isBannerVisible = appUiState.inAppMessage != null &&
                             appNavigator.currentRoute == HomeNavItem.route
                     }
                     AnimatedVisibility(
@@ -343,10 +298,10 @@ fun PassAppContent(
                         enter = slideInVertically { it } + fadeIn(),
                         exit = slideOutVertically { it } + fadeOut()
                     ) {
-                        if (appUiState.inAppMessage !is Some) return@AnimatedVisibility
+                        if (appUiState.inAppMessage == null) return@AnimatedVisibility
                         InAppMessageBanner(
                             modifier = Modifier.padding(bottom = bannerBottomPadding),
-                            inAppMessage = appUiState.inAppMessage.value,
+                            inAppMessage = appUiState.inAppMessage,
                             onDismiss = { userId, id, key ->
                                 onInAppMessageBannerRead(userId, id, key)
                                 isBannerVisible = false

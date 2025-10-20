@@ -25,11 +25,11 @@ import proton.android.pass.domain.inappmessages.InAppMessageId
 
 interface LocalInAppMessagesDataSource {
 
-    fun observeDeliverableUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>>
-
-    fun observePromoUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>>
+    fun observePromoMinimizedUserMessages(userId: UserId, currentTimestamp: Long): Flow<InAppMessage.Promo?>
 
     fun observeUserMessage(userId: UserId, id: InAppMessageId): Flow<InAppMessage>
+
+    fun observeTopDeliverableUserMessage(userId: UserId, currentTimestamp: Long): Flow<InAppMessage?>
 
     suspend fun storeMessages(userId: UserId, messages: List<InAppMessage>)
 

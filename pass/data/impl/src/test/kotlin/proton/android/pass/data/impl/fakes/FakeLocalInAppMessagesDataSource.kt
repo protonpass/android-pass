@@ -27,26 +27,27 @@ import proton.android.pass.domain.inappmessages.InAppMessageId
 
 class FakeLocalInAppMessagesDataSource : LocalInAppMessagesDataSource {
 
-    private val deliverableMessagesFlow = testFlow<List<InAppMessage>>()
-    private val promoMessagesFlow = testFlow<List<InAppMessage>>()
+    private val promoMessagesFlow = testFlow<InAppMessage.Promo?>()
     private val userMessageFlow = testFlow<InAppMessage>()
+    private val topMessageFlow = testFlow<InAppMessage?>()
     private var storeMessagesResult: Result<Unit> = Result.success(Unit)
     private var updateMessageResult: Result<Unit> = Result.success(Unit)
-    private var observeDeliverableMessagesResult: Result<Unit> = Result.success(Unit)
     private var observePromoMessagesResult: Result<Unit> = Result.success(Unit)
     private var observeUserMessageResult: Result<Unit> = Result.success(Unit)
+    private var observeTopMessageResult: Result<Unit> = Result.success(Unit)
     private var storedMessages: List<InAppMessage> = emptyList()
 
-    fun emitDeliverableMessages(messages: List<InAppMessage>) {
-        deliverableMessagesFlow.tryEmit(messages)
-    }
 
-    fun emitPromoMessages(messages: List<InAppMessage>) {
-        promoMessagesFlow.tryEmit(messages)
+    fun emitPromoMessages(message: InAppMessage.Promo?) {
+        promoMessagesFlow.tryEmit(message)
     }
 
     fun emitUserMessage(message: InAppMessage) {
         userMessageFlow.tryEmit(message)
+    }
+
+    fun emitTopMessage(message: InAppMessage?) {
+        topMessageFlow.tryEmit(message)
     }
 
     fun setStoreMessagesResult(result: Result<Unit>) {
@@ -57,10 +58,6 @@ class FakeLocalInAppMessagesDataSource : LocalInAppMessagesDataSource {
         updateMessageResult = result
     }
 
-    fun setObserveDeliverableMessagesResult(result: Result<Unit>) {
-        observeDeliverableMessagesResult = result
-    }
-
     fun setObservePromoMessagesResult(result: Result<Unit>) {
         observePromoMessagesResult = result
     }
@@ -69,14 +66,13 @@ class FakeLocalInAppMessagesDataSource : LocalInAppMessagesDataSource {
         observeUserMessageResult = result
     }
 
-    fun getStoredMessages(): List<InAppMessage> = storedMessages
-
-    override fun observeDeliverableUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>> {
-        observeDeliverableMessagesResult.getOrThrow()
-        return deliverableMessagesFlow
+    fun setObserveTopMessageResult(result: Result<Unit>) {
+        observeTopMessageResult = result
     }
 
-    override fun observePromoUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>> {
+    fun getStoredMessages(): List<InAppMessage> = storedMessages
+
+    override fun observePromoMinimizedUserMessages(userId: UserId, currentTimestamp: Long): Flow<InAppMessage.Promo?> {
         observePromoMessagesResult.getOrThrow()
         return promoMessagesFlow
     }
@@ -84,6 +80,11 @@ class FakeLocalInAppMessagesDataSource : LocalInAppMessagesDataSource {
     override fun observeUserMessage(userId: UserId, id: InAppMessageId): Flow<InAppMessage> {
         observeUserMessageResult.getOrThrow()
         return userMessageFlow
+    }
+
+    override fun observeTopDeliverableUserMessage(userId: UserId, currentTimestamp: Long): Flow<InAppMessage?> {
+        observeTopMessageResult.getOrThrow()
+        return topMessageFlow
     }
 
     override suspend fun storeMessages(userId: UserId, messages: List<InAppMessage>) {

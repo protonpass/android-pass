@@ -52,6 +52,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveItemCount
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.TestTrashItems
+import proton.android.pass.data.fakes.usecases.inappmessages.FakeObserveDeliverableMinimizedPromoInAppMessage
 import proton.android.pass.data.fakes.usecases.items.FakeObserveCanCreateItems
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveHasShares
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveSharesItemsCount
@@ -119,6 +120,9 @@ class HomeScreenTest {
 
     @Inject
     lateinit var observeItemCount: TestObserveItemCount
+
+    @Inject
+    lateinit var observeDeliverableMinimizedPromoInAppMessage: FakeObserveDeliverableMinimizedPromoInAppMessage
 
     @Before
     fun setup() {
@@ -280,6 +284,7 @@ class HomeScreenTest {
         observeHasShares.emit(hasShares = true)
         observeSharesItemsCount.emitValue(emptyMap())
         observeItemCount.sendResult(Result.success(ItemCountSummary.Initial))
+        observeDeliverableMinimizedPromoInAppMessage.emitPromoMessage(null)
     }
 
     @Module

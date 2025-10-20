@@ -19,8 +19,8 @@
 package proton.android.pass.data.fakes.usecases.inappmessages
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverablePromoInAppMessages
 import proton.android.pass.domain.inappmessages.InAppMessage
 import javax.inject.Inject
@@ -28,5 +28,12 @@ import javax.inject.Singleton
 
 @Singleton
 class FakeObserveDeliverablePromoInAppMessages @Inject constructor() : ObserveDeliverablePromoInAppMessages {
-    override fun invoke(userId: UserId?): Flow<List<InAppMessage>> = flowOf(listOf())
+
+    private val promoMessagesFlow = testFlow<InAppMessage.Promo?>()
+
+    fun emitPromoMessage(message: InAppMessage.Promo?) {
+        promoMessagesFlow.tryEmit(message)
+    }
+
+    override fun invoke(userId: UserId?): Flow<InAppMessage.Promo?> = promoMessagesFlow
 }

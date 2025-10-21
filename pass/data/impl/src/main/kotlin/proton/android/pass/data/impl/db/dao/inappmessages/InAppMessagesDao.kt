@@ -33,16 +33,16 @@ abstract class InAppMessagesDao : BaseDao<InAppMessageEntity>() {
         FROM ${InAppMessageEntity.TABLE} 
         WHERE ${InAppMessageEntity.Columns.USER_ID} = :userId
         AND (:mode IS NULL OR ${InAppMessageEntity.Columns.MODE} = :mode)
-        AND ${InAppMessageEntity.Columns.STATE} != :status
+        AND ${InAppMessageEntity.Columns.STATE} IN (:statuses)
         AND ${InAppMessageEntity.Columns.RANGE_START} <= :currentTimestamp
         AND (${InAppMessageEntity.Columns.RANGE_END} IS NULL OR ${InAppMessageEntity.Columns.RANGE_END} >= :currentTimestamp)
         ORDER BY ${InAppMessageEntity.Columns.PRIORITY} DESC, ${InAppMessageEntity.Columns.RANGE_START} ASC
         """
     )
-    abstract fun observeDeliverableMessagesWithNotStatus(
+    abstract fun observeDeliverableMessages(
         userId: String,
         mode: Int?,
-        status: Int,
+        statuses: List<Int>,
         currentTimestamp: Long
     ): Flow<List<InAppMessageEntity>>
 

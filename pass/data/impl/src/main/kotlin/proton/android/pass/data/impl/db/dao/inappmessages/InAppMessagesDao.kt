@@ -37,7 +37,6 @@ abstract class InAppMessagesDao : BaseDao<InAppMessageEntity>() {
         AND ${InAppMessageEntity.Columns.RANGE_START} <= :currentTimestamp
         AND (${InAppMessageEntity.Columns.RANGE_END} IS NULL OR ${InAppMessageEntity.Columns.RANGE_END} >= :currentTimestamp)
         ORDER BY ${InAppMessageEntity.Columns.PRIORITY} DESC, ${InAppMessageEntity.Columns.RANGE_START} ASC
-        LIMIT 1
         """
     )
     abstract fun observeDeliverableMessagesWithNotStatus(
@@ -45,7 +44,7 @@ abstract class InAppMessagesDao : BaseDao<InAppMessageEntity>() {
         mode: Int?,
         status: Int,
         currentTimestamp: Long
-    ): Flow<InAppMessageEntity?>
+    ): Flow<List<InAppMessageEntity>>
 
     @Query(
         """

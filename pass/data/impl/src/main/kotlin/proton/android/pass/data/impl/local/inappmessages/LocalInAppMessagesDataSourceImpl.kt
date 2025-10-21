@@ -57,7 +57,9 @@ class LocalInAppMessagesDataSourceImpl @Inject constructor(
                 status = STATUS_DISMISSED,
                 currentTimestamp = currentTimestamp
             )
-            .map { entity -> entity?.toDomain()?.let { it as? InAppMessage.Promo } }
+            .map { entities ->
+                entities.firstOrNull()?.toDomain() as? InAppMessage.Promo
+            }
 
     override fun observeUserMessage(userId: UserId, id: InAppMessageId): Flow<InAppMessage> =
         database.inAppMessagesDao().observeUserMessage(userId.id, id.value)
@@ -71,7 +73,16 @@ class LocalInAppMessagesDataSourceImpl @Inject constructor(
                 status = STATUS_DISMISSED,
                 currentTimestamp = currentTimestamp
             )
-            .map { entity -> entity?.toDomain() }
+            .map { entities ->
+                entities
+                    .firstOrNull { entity ->
+                        when (entity.mode) {
+                            MODE_PROMO -> entity.promoStartMinimized?.not() ?: false
+                            else -> true
+                        }
+                    }
+                    ?.toDomain()
+            }
 
     override suspend fun storeMessages(userId: UserId, messages: List<InAppMessage>) {
         database.inTransaction(name = "storeMessages") {
@@ -112,11 +123,13 @@ private fun InAppMessageEntity.toDomain(): InAppMessage {
             baseMessage.message, baseMessage.imageUrl, baseMessage.cta, baseMessage.state,
             baseMessage.range, baseMessage.userId
         )
+
         MODE_MODAL -> InAppMessage.Modal(
             baseMessage.id, baseMessage.key, baseMessage.priority, baseMessage.title,
             baseMessage.message, baseMessage.imageUrl, baseMessage.cta, baseMessage.state,
             baseMessage.range, baseMessage.userId
         )
+
         MODE_PROMO -> {
             val promoContents = toPromoContents().getOrElse {
                 throw IllegalArgumentException("PromoContents is required for Promo mode")
@@ -127,6 +140,7 @@ private fun InAppMessageEntity.toDomain(): InAppMessage {
                 baseMessage.range, baseMessage.userId, promoContents
             )
         }
+
         else -> throw IllegalArgumentException("Unknown mode: $mode")
     }
 }
@@ -201,6 +215,7 @@ private fun InAppMessage.toEntity(): InAppMessageEntity = when (this) {
         promoDarkContentUrl = null,
         promoDarkCloseTextColor = null
     )
+
     is InAppMessage.Modal -> InAppMessageEntity(
         id = id.value,
         key = key.value,
@@ -225,6 +240,7 @@ private fun InAppMessage.toEntity(): InAppMessageEntity = when (this) {
         promoDarkContentUrl = null,
         promoDarkCloseTextColor = null
     )
+
     is InAppMessage.Promo -> InAppMessageEntity(
         id = id.value,
         key = key.value,

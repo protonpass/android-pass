@@ -531,8 +531,12 @@ fun NavGraphBuilder.appGraph(
 
                 is HomeNavigation.OpenPromoInAppMessage ->
                     appNavigator.navigate(
-                        InAppMessagePromoNavItem,
-                        InAppMessagePromoNavItem.createNavRoute(it.userId, it.inAppMessageId)
+                        destination = InAppMessagePromoNavItem,
+                        route = InAppMessagePromoNavItem.createNavRoute(
+                            userId = it.userId,
+                            inAppMessageId = it.inAppMessageId
+                        ),
+                        force = true
                     )
             }
         }

@@ -42,7 +42,8 @@ import proton.android.pass.domain.inappmessages.InAppMessageStatus
 import proton.android.pass.domain.inappmessages.MODE_BANNER
 import proton.android.pass.domain.inappmessages.MODE_MODAL
 import proton.android.pass.domain.inappmessages.MODE_PROMO
-import proton.android.pass.domain.inappmessages.STATUS_DISMISSED
+import proton.android.pass.domain.inappmessages.STATUS_READ
+import proton.android.pass.domain.inappmessages.STATUS_UNREAD
 import javax.inject.Inject
 
 class LocalInAppMessagesDataSourceImpl @Inject constructor(
@@ -51,10 +52,10 @@ class LocalInAppMessagesDataSourceImpl @Inject constructor(
 
     override fun observePromoMinimizedUserMessages(userId: UserId, currentTimestamp: Long): Flow<InAppMessage.Promo?> =
         database.inAppMessagesDao()
-            .observeDeliverableMessagesWithNotStatus(
+            .observeDeliverableMessages(
                 userId = userId.id,
                 mode = MODE_PROMO,
-                status = STATUS_DISMISSED,
+                statuses = listOf(STATUS_UNREAD, STATUS_READ),
                 currentTimestamp = currentTimestamp
             )
             .map { entities ->
@@ -67,10 +68,10 @@ class LocalInAppMessagesDataSourceImpl @Inject constructor(
 
     override fun observeTopDeliverableUserMessage(userId: UserId, currentTimestamp: Long): Flow<InAppMessage?> =
         database.inAppMessagesDao()
-            .observeDeliverableMessagesWithNotStatus(
+            .observeDeliverableMessages(
                 userId = userId.id,
                 mode = null, // No mode filter for top message
-                status = STATUS_DISMISSED,
+                statuses = listOf(STATUS_UNREAD),
                 currentTimestamp = currentTimestamp
             )
             .map { entities ->

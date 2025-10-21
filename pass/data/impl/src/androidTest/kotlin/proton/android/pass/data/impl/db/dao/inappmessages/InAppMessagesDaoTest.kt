@@ -61,8 +61,8 @@ class InAppMessagesDaoTest {
         val message1 = createEntity("1", userId, 0, now.minus(1.days).epochSeconds)
         val message2 = createEntity("2", userId, 1, now.minus(1.days).epochSeconds)
         inAppMessagesDao.insertOrIgnore(message1, message2)
-        val message = inAppMessagesDao.observeDeliverableMessagesWithNotStatus(userId, 0, 1, now.epochSeconds).first()
-        assertEquals("1", message?.id)
+        val message = inAppMessagesDao.observeDeliverableMessages(userId, 0, listOf(0), now.epochSeconds).first()
+        assertEquals("1", message.first().id)
     }
 
     @Test
@@ -72,8 +72,8 @@ class InAppMessagesDaoTest {
         val message1 = createEntity("1", userId, 0, now.minus(1.days).epochSeconds, now.plus(1.days).epochSeconds)
         val message2 = createEntity("2", userId, 0, now.minus(2.days).epochSeconds, now.minus(1.days).epochSeconds)
         inAppMessagesDao.insertOrIgnore(message1, message2)
-        val message = inAppMessagesDao.observeDeliverableMessagesWithNotStatus(userId, 0, 1, now.epochSeconds).first()
-        assertEquals("1", message?.id)
+        val message = inAppMessagesDao.observeDeliverableMessages(userId, 0, listOf(0), now.epochSeconds).first()
+        assertEquals("1", message.first().id)
     }
 
     @Test
@@ -85,9 +85,9 @@ class InAppMessagesDaoTest {
         val message3 = createEntity("3", userId, 0, now.minus(1.days).epochSeconds, priority = 2)
         val message4 = createEntity("4", userId, 0, now.minus(3.days).epochSeconds, priority = 2)
         inAppMessagesDao.insertOrIgnore(message1, message2, message3, message4)
-        val message = inAppMessagesDao.observeDeliverableMessagesWithNotStatus(userId, 0, 1, now.epochSeconds).first()
+        val message = inAppMessagesDao.observeDeliverableMessages(userId, 0, listOf(0), now.epochSeconds).first()
         // Should return the highest priority message (priority 2) with earliest start time
-        assertEquals("4", message?.id)
+        assertEquals("4", message.first().id)
     }
 
     @Test
@@ -97,8 +97,8 @@ class InAppMessagesDaoTest {
         val message1 = createEntity("1", userId, 0, now.minus(1.days).epochSeconds)
         val message2 = createEntity("2", "otherUserId", 0, now.minus(1.days).epochSeconds)
         inAppMessagesDao.insertOrIgnore(message1, message2)
-        val message = inAppMessagesDao.observeDeliverableMessagesWithNotStatus(userId, 0, 1, now.epochSeconds).first()
-        assertEquals("1", message?.id)
+        val message = inAppMessagesDao.observeDeliverableMessages(userId, 0, listOf(0), now.epochSeconds).first()
+        assertEquals("1", message.first().id)
     }
 
     private fun createEntity(

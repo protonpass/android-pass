@@ -22,8 +22,8 @@ import android.content.Context
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
@@ -41,9 +41,11 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.RenameAttachments
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
@@ -56,12 +58,15 @@ import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIExtraSection
+import proton.android.pass.features.itemcreate.common.canDisplaySharedItemWarningDialogFlow
+import proton.android.pass.features.itemcreate.common.canDisplayVaultSharedWarningDialogFlow
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.formprocessor.CustomItemFormProcessor
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -88,7 +93,10 @@ class UpdateCustomItemViewModel @Inject constructor(
     customFieldDraftRepository: CustomFieldDraftRepository,
     clipboardManager: ClipboardManager,
     appDispatchers: AppDispatchers,
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
+    observeShare: ObserveShare,
+    observeItemById: ObserveItemById,
+    private val settingsRepository: InternalSettingsRepository
 ) : BaseCustomItemViewModel(
     canPerformPaidAction = canPerformPaidAction,
     linkAttachmentsToItem = linkAttachmentsToItem,
@@ -116,17 +124,41 @@ class UpdateCustomItemViewModel @Inject constructor(
     private var originalCustomFields: List<UICustomFieldContent> = emptyList()
     private var originalSections: List<UIExtraSection> = emptyList()
 
+    private val canDisplayVaultSharedWarningDialogFlow =
+        canDisplayVaultSharedWarningDialogFlow(
+            settingsRepository = settingsRepository,
+            observeShare = observeShare,
+            shareId = navShareId
+        )
+
+    private val canDisplaySharedItemWarningDialogFlow =
+        canDisplaySharedItemWarningDialogFlow(
+            settingsRepository = settingsRepository,
+            observeItemById = observeItemById,
+            shareId = navShareId,
+            itemId = navItemId
+        )
+
     init {
         processIntent(UpdateSpecificIntent.LoadInitialData)
     }
 
-    val state = observeSharedState()
-        .map { CustomItemState.UpdateCustomItemState(navShareId.some(), it) }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = CustomItemState.NotInitialised
+    val state = combine(
+        observeSharedState(),
+        canDisplayVaultSharedWarningDialogFlow,
+        canDisplaySharedItemWarningDialogFlow
+    ) { sharedState, canDisplayVaultSharedWarningDialog, canDisplaySharedItemWarningDialog ->
+        CustomItemState.UpdateCustomItemState(
+            navShareId.some(),
+            sharedState,
+            canDisplayVaultSharedWarningDialog,
+            canDisplaySharedItemWarningDialog
         )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = CustomItemState.NotInitialised
+    )
 
     fun processIntent(intent: BaseItemFormIntent) {
         when (intent) {
@@ -145,6 +177,10 @@ class UpdateCustomItemViewModel @Inject constructor(
         }
     }
 
+    internal fun doNotDisplayWarningDialog() {
+        settingsRepository.setHasShownItemInSharedVaultWarning(true)
+    }
+
     private fun onSubmitUpdate() {
         viewModelScope.launch {
             if (!isFormStateValid(originalCustomFields, originalSections)) return@launch
@@ -155,13 +191,14 @@ class UpdateCustomItemViewModel @Inject constructor(
                 val item = receivedItem.value()
                     ?: throw IllegalStateException("Item is null")
                 val updatedContents: ItemContents = itemFormState.toItemContents()
-                val hasContentsChanged = encryptionContextProvider.withEncryptionContextSuspendable {
-                    !areItemContentsEqual(
-                        a = item.toItemContents { decrypt(it) },
-                        b = updatedContents,
-                        decrypt = { decrypt(it) }
-                    )
-                }
+                val hasContentsChanged =
+                    encryptionContextProvider.withEncryptionContextSuspendable {
+                        !areItemContentsEqual(
+                            a = item.toItemContents { decrypt(it) },
+                            b = updatedContents,
+                            decrypt = { decrypt(it) }
+                        )
+                    }
                 val hasPendingAttachments =
                     pendingAttachmentLinkRepository.getAllToLink().isNotEmpty() ||
                         pendingAttachmentLinkRepository.getAllToUnLink().isNotEmpty()
@@ -219,10 +256,13 @@ class UpdateCustomItemViewModel @Inject constructor(
             val formState = when (item.itemType) {
                 is ItemType.Custom ->
                     ItemFormState(item.toItemContents<ItemContents.Custom> { decrypt(it) })
+
                 is ItemType.SSHKey ->
                     ItemFormState(item.toItemContents<ItemContents.SSHKey> { decrypt(it) })
+
                 is ItemType.WifiNetwork ->
                     ItemFormState(item.toItemContents<ItemContents.WifiNetwork> { decrypt(it) })
+
                 else -> throw IllegalStateException("Unsupported item type")
             }
 

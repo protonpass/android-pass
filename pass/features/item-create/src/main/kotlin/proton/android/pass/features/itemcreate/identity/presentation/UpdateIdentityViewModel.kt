@@ -38,7 +38,9 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.UpdateItem
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -49,12 +51,15 @@ import proton.android.pass.domain.toItemContents
 import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIExtraSection
+import proton.android.pass.features.itemcreate.common.canDisplaySharedItemWarningDialogFlow
+import proton.android.pass.features.itemcreate.common.canDisplayVaultSharedWarningDialogFlow
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.InitError
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.ItemUpdateError
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.ItemUpdated
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
@@ -69,7 +74,10 @@ class UpdateIdentityViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
+    observeShare: ObserveShare,
+    observeItemById: ObserveItemById,
+    private val settingsRepository: InternalSettingsRepository
 ) : ViewModel(), IdentityActionsProvider by identityActionsProvider {
 
     private val navShareId: ShareId =
@@ -85,6 +93,21 @@ class UpdateIdentityViewModel @Inject constructor(
     var originalWorkCustomFields: List<UICustomFieldContent> = emptyList()
     var originalSections: List<UIExtraSection> = emptyList()
 
+    private val canDisplayVaultSharedWarningDialogFlow =
+        canDisplayVaultSharedWarningDialogFlow(
+            settingsRepository = settingsRepository,
+            observeShare = observeShare,
+            shareId = navShareId
+        )
+
+    private val canDisplaySharedItemWarningDialogFlow =
+        canDisplaySharedItemWarningDialogFlow(
+            settingsRepository = settingsRepository,
+            observeItemById = observeItemById,
+            shareId = navShareId,
+            itemId = navItemId
+        )
+
     init {
         viewModelScope.launch {
             identityActionsProvider.observeActions(this)
@@ -94,12 +117,17 @@ class UpdateIdentityViewModel @Inject constructor(
 
     val state: StateFlow<IdentityUiState> = combine(
         identityActionsProvider.observeSharedState(),
-        identityActionsProvider.observeReceivedItem().map { it is Some }
-    ) { sharedState: IdentitySharedUiState, hasReceivedItem ->
+        identityActionsProvider.observeReceivedItem().map { it is Some },
+        canDisplayVaultSharedWarningDialogFlow,
+        canDisplaySharedItemWarningDialogFlow
+    ) { sharedState: IdentitySharedUiState, hasReceivedItem,
+        canDisplayVaultSharedWarningDialog, canDisplaySharedItemWarningDialog ->
         IdentityUiState.UpdateIdentity(
             navShareId,
             sharedState,
-            hasReceivedItem
+            hasReceivedItem,
+            canDisplayVaultSharedWarningDialog,
+            canDisplaySharedItemWarningDialog
         )
     }
         .stateIn(
@@ -126,6 +154,10 @@ class UpdateIdentityViewModel @Inject constructor(
                 snackbarDispatcher(InitError)
             }
         identityActionsProvider.updateLoadingState(IsLoadingState.NotLoading)
+    }
+
+    internal fun doNotDisplayWarningDialog() {
+        settingsRepository.setHasShownItemInSharedVaultWarning(true)
     }
 
     fun onSubmit(shareId: ShareId) = viewModelScope.launch {

@@ -69,6 +69,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.work.WorkerItem
@@ -94,6 +95,7 @@ import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
+import proton.android.pass.features.itemcreate.common.canDisplayWarningMessageForCreationFlow
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.formprocessor.LoginItemFormProcessorType
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
@@ -109,6 +111,7 @@ import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.passkeys.api.GeneratePasskey
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -146,7 +149,9 @@ class CreateLoginViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository,
     customFieldDraftRepository: CustomFieldDraftRepository,
     loginItemFormProcessor: LoginItemFormProcessorType,
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
+    observeShare: ObserveShare,
+    private val settingsRepository: InternalSettingsRepository
 ) : BaseLoginViewModel(
     accountManager = accountManager,
     snackbarDispatcher = snackbarDispatcher,
@@ -207,6 +212,14 @@ class CreateLoginViewModel @Inject constructor(
                 initialValue = None
             )
 
+    private val canDisplayWarningVaultSharedDialogFlow =
+        canDisplayWarningMessageForCreationFlow(
+            selectedShareIdMutableState = selectedShareIdMutableState,
+            observeShare = observeShare,
+            navShareId = navShareId,
+            settingsRepository = settingsRepository
+        )
+
     private val observeAllVaultsFlow: Flow<List<VaultWithItemCount>> =
         observeVaults(includeHidden = true).distinctUntilChanged()
 
@@ -223,6 +236,7 @@ class CreateLoginViewModel @Inject constructor(
         shareUiState,
         baseLoginUiState,
         createPasskeyStateFlow,
+        canDisplayWarningVaultSharedDialogFlow,
         ::CreateLoginUiState
     ).stateIn(
         scope = viewModelScope,
@@ -355,6 +369,10 @@ class CreateLoginViewModel @Inject constructor(
             customFields = customFields,
             passkeys = emptyList()
         )
+    }
+
+    internal fun doNotDisplayWarningDialog() {
+        settingsRepository.setHasShownItemInSharedVaultWarning(true)
     }
 
     internal fun createItem() = viewModelScope.launch(coroutineExceptionHandler) {

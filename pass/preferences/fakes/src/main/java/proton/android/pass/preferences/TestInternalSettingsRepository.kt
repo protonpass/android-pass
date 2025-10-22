@@ -59,7 +59,9 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
         MutableStateFlow(None)
     private val hasShownAliasContactsOnboardingFlow = MutableStateFlow(false)
     private val persistentUUIDFlow = MutableStateFlow(UUID.randomUUID())
+    private val hasShownItemInSharedVaultWarning = MutableStateFlow(false)
     private val isEmptyVaultHasBeenCreated = MutableStateFlow(false)
+
 
     override fun setLastUnlockedTime(time: Long): Result<Unit> {
         lastUnlockedTimeFlow.update { Some(time) }
@@ -201,4 +203,10 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     override fun getPersistentUUID(): Flow<UUID> = persistentUUIDFlow
 
     override fun clearSettings(): Result<Unit> = Result.success(Unit)
+    override fun setHasShownItemInSharedVaultWarning(value: Boolean): Result<Unit> {
+        hasShownItemInSharedVaultWarning.update { value }
+        return Result.success(Unit)
+    }
+
+    override fun hasShownItemInSharedVaultWarning(): Flow<Boolean> = hasShownItemInSharedVaultWarning
 }

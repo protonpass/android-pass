@@ -48,6 +48,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
 import proton.android.pass.data.fakes.work.FakeWorkerLauncher
@@ -74,6 +75,7 @@ import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.passkeys.fakes.TestGeneratePasskey
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
+import proton.android.pass.preferences.TestInternalSettingsRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
@@ -101,6 +103,8 @@ internal class CreateLoginNavItemViewModelTest {
     private lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
     private lateinit var encryptionContextProvider: EncryptionContextProvider
     private lateinit var loginItemFormProcessor: FakeLoginItemFormProcessor
+    private lateinit var observeShare: FakeObserveShare
+    private lateinit var settingsRepository: TestInternalSettingsRepository
 
     @Before
     fun setUp() {
@@ -115,6 +119,8 @@ internal class CreateLoginNavItemViewModelTest {
         observeUpgradeInfo = TestObserveUpgradeInfo()
         encryptionContextProvider = TestEncryptionContextProvider()
         loginItemFormProcessor = FakeLoginItemFormProcessor()
+        observeShare = FakeObserveShare()
+        settingsRepository = TestInternalSettingsRepository()
         instance = CreateLoginViewModel(
             accountManager = accountManager,
             createItem = createItem,
@@ -144,7 +150,9 @@ internal class CreateLoginNavItemViewModelTest {
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
             customFieldHandler = CustomFieldHandlerImpl(TestTotpManager(), encryptionContextProvider),
             loginItemFormProcessor = loginItemFormProcessor,
-            getItemById = FakeGetItemById()
+            getItemById = FakeGetItemById(),
+            observeShare = observeShare,
+            settingsRepository = settingsRepository
         )
     }
 

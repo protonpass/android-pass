@@ -424,6 +424,7 @@ abstract class BaseLoginViewModel(
                 loginItemValidationErrorsState.update { result.errors }
                 false
             }
+
             is FormProcessingResult.Success -> {
                 loginItemFormMutableState = result.sanitized
                 true
@@ -470,7 +471,8 @@ abstract class BaseLoginViewModel(
                 withContext(Dispatchers.Main) {
                     when (val field = focusedFieldFlow.value.value()) {
                         is LoginField.CustomField -> {
-                            val customFieldTOTP = field.field.takeIf { it.type == CustomFieldType.Totp }
+                            val customFieldTOTP =
+                                field.field.takeIf { it.type == CustomFieldType.Totp }
                             val customFields = loginItemFormState.customFields
                             if (customFieldTOTP != null && customFields.size - 1 >= customFieldTOTP.index) {
                                 val updatedCustomFields = customFields.toMutableList()

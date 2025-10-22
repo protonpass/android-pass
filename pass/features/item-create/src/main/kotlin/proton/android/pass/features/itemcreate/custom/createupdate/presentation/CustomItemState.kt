@@ -52,7 +52,8 @@ sealed interface CustomItemState : ItemSharedProperties {
     @Immutable
     data class CreateCustomItemState(
         val shareUiState: ShareUiState,
-        override val sharedState: ItemSharedUiState
+        override val sharedState: ItemSharedUiState,
+        override val canDisplayVaultSharedWarningDialog: Boolean
     ) : CustomItemState {
 
         override val shouldShowVaultSelector: Boolean
@@ -72,7 +73,9 @@ sealed interface CustomItemState : ItemSharedProperties {
     @Immutable
     data class UpdateCustomItemState(
         override val selectedShareId: Option<ShareId>,
-        override val sharedState: ItemSharedUiState
+        override val sharedState: ItemSharedUiState,
+        override val canDisplayVaultSharedWarningDialog: Boolean,
+        override val canDisplaySharedItemWarningDialog: Boolean
     ) : CustomItemState
 }
 
@@ -90,6 +93,12 @@ interface ItemSharedProperties {
 
     val selectedShareId: Option<ShareId>
         get() = None
+
+    val canDisplayVaultSharedWarningDialog: Boolean
+        get() = false
+
+    val canDisplaySharedItemWarningDialog: Boolean
+        get() = false
 
     val itemSavedState: ItemSavedState
         get() = sharedState.isItemSaved

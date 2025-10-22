@@ -21,9 +21,12 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
+import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
+import proton.android.pass.features.itemcreate.common.DialogWarningType
+import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
@@ -65,6 +68,8 @@ fun UpdateCreditCardScreen(
     )
 
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    var warningSharedDialog by rememberSaveable { mutableStateOf(DialogWarningType.None) }
 
     when (val uiState = state) {
         UpdateCreditCardUiState.Error -> LaunchedEffect(Unit) {
@@ -116,7 +121,23 @@ fun UpdateCreditCardScreen(
                             is CreditCardContentEvent.OnPinChange ->
                                 viewModel.onPinChanged(it.value)
 
-                            is CreditCardContentEvent.Submit -> viewModel.update()
+                            is CreditCardContentEvent.Submit -> {
+                                when {
+                                    uiState.canDisplaySharedItemWarningDialog -> {
+                                        warningSharedDialog = DialogWarningType.SharedItem
+                                    }
+
+                                    uiState.canDisplayVaultSharedWarningDialog -> {
+                                        warningSharedDialog = DialogWarningType.SharedVault
+                                    }
+
+                                    else -> {
+                                        warningSharedDialog = DialogWarningType.None
+                                        viewModel.update()
+                                    }
+                                }
+                            }
+
                             CreditCardContentEvent.Up -> onExit()
                             CreditCardContentEvent.Upgrade ->
                                 actionAfterKeyboardHide = { onNavigate(Upgrade) }
@@ -213,6 +234,7 @@ fun UpdateCreditCardScreen(
                                         CustomFieldType.Date -> {
                                             showDatePickerForField = Some(event.field)
                                         }
+
                                         else -> throw IllegalStateException("Unhandled action")
                                     }
                                 }
@@ -220,6 +242,7 @@ fun UpdateCreditCardScreen(
                             is CreditCardContentEvent.OnScanTotp ->
                                 actionAfterKeyboardHide =
                                     { onNavigate(BaseCreditCardNavigation.ScanTotp(it.index)) }
+
                             CreditCardContentEvent.PasteTotp -> viewModel.onPasteTotp()
                         }
                     }
@@ -260,5 +283,30 @@ fun UpdateCreditCardScreen(
                 triggerCondition = uiState.baseState.isItemSaved is ItemSavedState.Success
             )
         }
+    }
+
+    if (warningSharedDialog != DialogWarningType.None) {
+        WarningSharedItemDialog(
+            title = when (warningSharedDialog) {
+                DialogWarningType.SharedVault -> CompR.string.warning_dialog_item_shared_vault_title
+                DialogWarningType.SharedItem -> CompR.string.warning_dialog_item_shared_title
+                else -> throw IllegalStateException("Unhandled case")
+            },
+            description = when (warningSharedDialog) {
+                DialogWarningType.SharedVault -> CompR.string.warning_dialog_item_shared_vault_updating
+                DialogWarningType.SharedItem -> CompR.string.warning_dialog_item_shared_updating
+                else -> throw IllegalStateException("Unhandled case")
+            },
+            onOkClick = { reminderCheck ->
+                warningSharedDialog = DialogWarningType.None
+                if (reminderCheck) {
+                    viewModel.doNotDisplayWarningDialog()
+                }
+                viewModel.update()
+            },
+            onCancelClick = {
+                warningSharedDialog = DialogWarningType.None
+            }
+        )
     }
 }

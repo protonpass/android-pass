@@ -46,15 +46,32 @@ sealed interface IdentityUiState {
     data class CreateIdentity(
         val shareUiState: ShareUiState,
         val sharedState: IdentitySharedUiState,
-        val isCloned: Boolean
+        val isCloned: Boolean,
+        val canDisplayVaultSharedWarningDialog: Boolean
     ) : IdentityUiState
 
     @Immutable
     data class UpdateIdentity(
         val selectedShareId: ShareId,
         val sharedState: IdentitySharedUiState,
-        val hasReceivedItem: Boolean
+        val hasReceivedItem: Boolean,
+        val canDisplayWarningVaultSharedDialog: Boolean,
+        val canDisplaySharedItemWarningDialog: Boolean
     ) : IdentityUiState
+
+    val canDisplayWarningVaultSharedDialogLocal: Boolean
+        get() = when (this) {
+            is CreateIdentity -> this.canDisplayVaultSharedWarningDialog
+            is UpdateIdentity -> this.canDisplayWarningVaultSharedDialog
+            else -> false
+        }
+
+    val canDisplaySharedItemWarningDialogLocal: Boolean
+        get() = when (this) {
+            is CreateIdentity -> false
+            is UpdateIdentity -> this.canDisplaySharedItemWarningDialog
+            else -> false
+        }
 
     val hasUserEdited: Boolean
         get() = when (this) {

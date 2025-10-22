@@ -37,10 +37,13 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.toClassHolder
+import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
+import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.R
+import proton.android.pass.features.itemcreate.common.DialogWarningType
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.custom.createupdate.ui.DatePickerModal
@@ -94,6 +97,7 @@ fun UpdateIdentityScreen(
             actionAfterKeyboardHide = { onNavigate(BaseIdentityNavigation.CloseScreen) }
         }
     }
+    var warningSharedDialog by rememberSaveable { mutableStateOf(DialogWarningType.None) }
     BackHandler(onBack = onExit)
     Box(modifier = modifier.fillMaxSize()) {
         IdentityContent(
@@ -106,7 +110,23 @@ fun UpdateIdentityScreen(
                     is IdentityContentEvent.OnVaultSelect ->
                         actionAfterKeyboardHide = { onNavigate(SelectVault(it.shareId)) }
 
-                    is IdentityContentEvent.Submit -> viewModel.onSubmit(it.shareId)
+                    is IdentityContentEvent.Submit -> {
+                        when {
+                            state.canDisplaySharedItemWarningDialogLocal -> {
+                                warningSharedDialog = DialogWarningType.SharedItem
+                            }
+
+                            state.canDisplayWarningVaultSharedDialogLocal -> {
+                                warningSharedDialog = DialogWarningType.SharedVault
+                            }
+
+                            else -> {
+                                warningSharedDialog = DialogWarningType.None
+                                viewModel.onSubmit(it.shareId)
+                            }
+                        }
+                    }
+
                     IdentityContentEvent.Up -> onExit()
 
                     is IdentityContentEvent.OnFieldChange ->
@@ -204,12 +224,14 @@ fun UpdateIdentityScreen(
                         CustomFieldType.Date -> {
                             showDatePickerForField = Some(it.field to it.index)
                         }
+
                         else -> throw IllegalStateException("Unhandled action")
                     }
 
                     is IdentityContentEvent.OnScanTotp ->
                         actionAfterKeyboardHide =
                             { onNavigate(BaseIdentityNavigation.ScanTotp(it.section, it.index)) }
+
                     IdentityContentEvent.PasteTotp -> viewModel.onPasteTotp()
                 }
             }
@@ -229,12 +251,16 @@ fun UpdateIdentityScreen(
             val field = when (customField.sectionType) {
                 is IdentitySectionType.AddressDetails ->
                     viewModel.getFormState().uiAddressDetails.customFields
+
                 is IdentitySectionType.ContactDetails ->
                     viewModel.getFormState().uiContactDetails.customFields
+
                 is IdentitySectionType.ExtraSection ->
                     viewModel.getFormState().uiExtraSections[customField.index].customFields
+
                 is IdentitySectionType.PersonalDetails ->
                     viewModel.getFormState().uiPersonalDetails.customFields
+
                 is IdentitySectionType.WorkDetails ->
                     viewModel.getFormState().uiWorkDetails.customFields
             }[index] as UICustomFieldContent.Date
@@ -262,4 +288,31 @@ fun UpdateIdentityScreen(
             }
         }
     )
+
+    state.getSelectedShareId().value()?.let {
+        if (warningSharedDialog != DialogWarningType.None) {
+            WarningSharedItemDialog(
+                title = when (warningSharedDialog) {
+                    DialogWarningType.SharedVault -> CompR.string.warning_dialog_item_shared_vault_title
+                    DialogWarningType.SharedItem -> CompR.string.warning_dialog_item_shared_title
+                    else -> throw IllegalStateException("Unhandled case")
+                },
+                description = when (warningSharedDialog) {
+                    DialogWarningType.SharedVault -> CompR.string.warning_dialog_item_shared_vault_updating
+                    DialogWarningType.SharedItem -> CompR.string.warning_dialog_item_shared_updating
+                    else -> throw IllegalStateException("Unhandled case")
+                },
+                onOkClick = { reminderCheck ->
+                    warningSharedDialog = DialogWarningType.None
+                    if (reminderCheck) {
+                        viewModel.doNotDisplayWarningDialog()
+                    }
+                    viewModel.onSubmit(shareId = it)
+                },
+                onCancelClick = {
+                    warningSharedDialog = DialogWarningType.None
+                }
+            )
+        }
+    }
 }

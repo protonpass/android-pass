@@ -21,10 +21,12 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
+import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
+import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.common.ShareError.EmptyShareList
 import proton.android.pass.features.itemcreate.common.ShareError.SharesNotAvailable
@@ -90,6 +92,9 @@ fun CreateCreditCardScreen(
         }
 
         is CreateCreditCardUiState.Success -> {
+
+            var showWarningVaultSharedDialog by rememberSaveable { mutableStateOf(false) }
+
             var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
             val onExit = {
                 if (uiState.baseState.hasUserEditedContent) {
@@ -144,7 +149,14 @@ fun CreateCreditCardScreen(
                             is CreditCardContentEvent.OnPinChange ->
                                 viewModel.onPinChanged(it.value)
 
-                            is CreditCardContentEvent.Submit -> viewModel.createItem()
+                            is CreditCardContentEvent.Submit -> {
+                                if (uiState.canDisplayWarningVaultSharedDialog) {
+                                    showWarningVaultSharedDialog = true
+                                } else {
+                                    viewModel.createItem()
+                                }
+                            }
+
                             CreditCardContentEvent.Up -> onExit()
                             CreditCardContentEvent.Upgrade -> onNavigate(Upgrade)
                             is CreditCardContentEvent.OnCVVFocusChange ->
@@ -239,6 +251,7 @@ fun CreateCreditCardScreen(
                                         CustomFieldType.Date -> {
                                             showDatePickerForField = Some(event.field)
                                         }
+
                                         else -> throw IllegalStateException("Unhandled action")
                                     }
                                 }
@@ -246,6 +259,7 @@ fun CreateCreditCardScreen(
                             is CreditCardContentEvent.OnScanTotp ->
                                 actionAfterKeyboardHide =
                                     { onNavigate(BaseCreditCardNavigation.ScanTotp(it.index)) }
+
                             CreditCardContentEvent.PasteTotp -> viewModel.onPasteTotp()
                         }
                     }
@@ -285,6 +299,22 @@ fun CreateCreditCardScreen(
             InAppReviewTriggerLaunchedEffect(
                 triggerCondition = uiState.baseState.isItemSaved is ItemSavedState.Success
             )
+
+            if (showWarningVaultSharedDialog) {
+                WarningSharedItemDialog(
+                    description = CompR.string.warning_dialog_item_shared_vault_creating,
+                    onOkClick = { reminderCheck ->
+                        showWarningVaultSharedDialog = false
+                        if (reminderCheck) {
+                            viewModel.doNotDisplayWarningDialog()
+                        }
+                        viewModel.createItem()
+                    },
+                    onCancelClick = {
+                        showWarningVaultSharedDialog = false
+                    }
+                )
+            }
         }
     }
 }

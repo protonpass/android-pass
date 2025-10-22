@@ -41,10 +41,12 @@ import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestUpdateItem
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.data.fakes.usecases.attachments.FakeRenameAttachments
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
 import proton.android.pass.data.fakes.work.FakeWorkerLauncher
@@ -59,6 +61,7 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
+import proton.android.pass.preferences.TestInternalSettingsRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
@@ -79,6 +82,9 @@ class UpdateLoginViewModelTest {
     private lateinit var updateItem: TestUpdateItem
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var encryptionContextProvider: EncryptionContextProvider
+    private lateinit var observeShare: FakeObserveShare
+    private lateinit var observeItemById: TestObserveItemById
+    private lateinit var settingsRepository: TestInternalSettingsRepository
 
     @Before
     fun setup() {
@@ -87,6 +93,9 @@ class UpdateLoginViewModelTest {
         updateItem = TestUpdateItem()
         snackbarDispatcher = TestSnackbarDispatcher()
         encryptionContextProvider = TestEncryptionContextProvider()
+        observeShare = FakeObserveShare()
+        observeItemById = TestObserveItemById()
+        settingsRepository = TestInternalSettingsRepository()
     }
 
     private fun createInstance(): UpdateLoginViewModel = UpdateLoginViewModel(
@@ -121,7 +130,10 @@ class UpdateLoginViewModelTest {
         customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
         pendingAttachmentLinkRepository = FakePendingAttachmentLinkRepository(),
         customFieldHandler = CustomFieldHandlerImpl(TestTotpManager(), encryptionContextProvider),
-        loginItemFormProcessor = FakeLoginItemFormProcessor()
+        loginItemFormProcessor = FakeLoginItemFormProcessor(),
+        observeShare = observeShare,
+        settingsRepository = settingsRepository,
+        observeItemById = observeItemById
     )
 
     @Test

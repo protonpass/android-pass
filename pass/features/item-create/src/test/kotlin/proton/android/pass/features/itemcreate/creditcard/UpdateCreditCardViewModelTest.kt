@@ -38,9 +38,11 @@ import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.fakes.repositories.FakePendingAttachmentLinkRepository
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
+import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestUpdateItem
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.data.fakes.usecases.attachments.FakeRenameAttachments
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.ItemUpdate
 import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
@@ -51,6 +53,7 @@ import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessi
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.TestInternalSettingsRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
@@ -72,6 +75,9 @@ class UpdateCreditCardViewModelTest {
     private lateinit var accountManager: TestAccountManager
     private lateinit var pendingAttachmentLinkRepository: PendingAttachmentLinkRepository
     private lateinit var creditCardItemFormProcessor: FakeCreditCardItemFormProcessor
+    private lateinit var observeShare: FakeObserveShare
+    private lateinit var observeItemById: TestObserveItemById
+    private lateinit var settingsRepository: TestInternalSettingsRepository
 
     @Before
     fun setup() {
@@ -83,6 +89,9 @@ class UpdateCreditCardViewModelTest {
         creditCardItemFormProcessor = FakeCreditCardItemFormProcessor()
         accountManager = TestAccountManager()
         accountManager.sendPrimaryUserId(UserId("user-id"))
+        observeShare = FakeObserveShare()
+        observeItemById = TestObserveItemById()
+        settingsRepository = TestInternalSettingsRepository()
     }
 
     private fun createInstance(): UpdateCreditCardViewModel = UpdateCreditCardViewModel(
@@ -108,7 +117,10 @@ class UpdateCreditCardViewModelTest {
         ),
         customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
         creditCardItemFormProcessor = creditCardItemFormProcessor,
-        clipboardManager = TestClipboardManager()
+        clipboardManager = TestClipboardManager(),
+        observeShare = observeShare,
+        observeItemById = observeItemById,
+        settingsRepository = settingsRepository
     )
 
     @Test

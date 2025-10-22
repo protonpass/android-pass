@@ -71,12 +71,14 @@ internal data class BaseAliasUiState(
 @Immutable
 internal data class CreateAliasUiState(
     val shareUiState: ShareUiState,
-    val baseAliasUiState: BaseAliasUiState
+    val baseAliasUiState: BaseAliasUiState,
+    val canDisplayWarningVaultSharedDialog: Boolean
 ) {
     companion object {
         val Initial = CreateAliasUiState(
             shareUiState = ShareUiState.NotInitialised,
-            baseAliasUiState = BaseAliasUiState.Initial
+            baseAliasUiState = BaseAliasUiState.Initial,
+            canDisplayWarningVaultSharedDialog = false
         )
     }
 }
@@ -85,13 +87,17 @@ internal data class CreateAliasUiState(
 internal data class UpdateAliasUiState(
     val selectedShareId: ShareId?,
     val canModify: Boolean,
-    val baseAliasUiState: BaseAliasUiState
+    val baseAliasUiState: BaseAliasUiState,
+    val canDisplayVaultSharedWarningDialog: Boolean,
+    val canDisplaySharedItemWarningDialog: Boolean
 ) {
     companion object {
         val Initial = UpdateAliasUiState(
             selectedShareId = null,
             canModify = false,
-            baseAliasUiState = BaseAliasUiState.Initial
+            baseAliasUiState = BaseAliasUiState.Initial,
+            canDisplayVaultSharedWarningDialog = false,
+            canDisplaySharedItemWarningDialog = false
         )
     }
 }

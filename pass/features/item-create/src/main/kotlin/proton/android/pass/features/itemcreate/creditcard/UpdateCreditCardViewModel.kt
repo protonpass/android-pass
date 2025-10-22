@@ -25,9 +25,11 @@ import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.RenameAttachments
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -37,6 +39,8 @@ import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.ItemUpdate
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
+import proton.android.pass.features.itemcreate.common.canDisplaySharedItemWarningDialogFlow
+import proton.android.pass.features.itemcreate.common.canDisplayVaultSharedWarningDialogFlow
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.formprocessor.CreditCardFormProcessorType
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.AttachmentsInitError
@@ -48,6 +52,7 @@ import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMess
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -72,7 +77,10 @@ class UpdateCreditCardViewModel @Inject constructor(
     customFieldDraftRepository: CustomFieldDraftRepository,
     creditCardItemFormProcessor: CreditCardFormProcessorType,
     clipboardManager: ClipboardManager,
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
+    observeShare: ObserveShare,
+    observeItemById: ObserveItemById,
+    private val settingsRepository: InternalSettingsRepository
 ) : BaseCreditCardViewModel(
     userPreferencesRepository = userPreferencesRepository,
     attachmentsHandler = attachmentsHandler,
@@ -91,6 +99,21 @@ class UpdateCreditCardViewModel @Inject constructor(
     )
     private var itemOption: Option<Item> = None
     private var originalCustomFields: List<UICustomFieldContent> = emptyList()
+
+    private val canDisplayVaultSharedWarningDialogFlow =
+        canDisplayVaultSharedWarningDialogFlow(
+            settingsRepository = settingsRepository,
+            observeShare = observeShare,
+            shareId = navShareId
+        )
+
+    private val canDisplaySharedItemWarningDialogFlow =
+        canDisplaySharedItemWarningDialogFlow(
+            settingsRepository = settingsRepository,
+            observeItemById = observeItemById,
+            shareId = navShareId,
+            itemId = navItemId
+        )
 
     init {
         viewModelScope.launch {
@@ -121,6 +144,8 @@ class UpdateCreditCardViewModel @Inject constructor(
     internal val state: StateFlow<UpdateCreditCardUiState> = combine(
         flowOf(navShareId),
         baseState,
+        canDisplayVaultSharedWarningDialogFlow,
+        canDisplaySharedItemWarningDialogFlow,
         UpdateCreditCardUiState::Success
     ).stateIn(
         scope = viewModelScope,
@@ -142,6 +167,10 @@ class UpdateCreditCardViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    internal fun doNotDisplayWarningDialog() {
+        settingsRepository.setHasShownItemInSharedVaultWarning(true)
     }
 
     @Suppress("LongMethod")

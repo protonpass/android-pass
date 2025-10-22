@@ -53,6 +53,7 @@ import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
@@ -67,6 +68,7 @@ import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIExtraSection
 import proton.android.pass.features.itemcreate.common.UIHiddenState
+import proton.android.pass.features.itemcreate.common.canDisplayWarningMessageForCreationFlow
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.formprocessor.CustomItemFormProcessor
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
@@ -80,6 +82,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -107,7 +110,9 @@ class CreateCustomItemViewModel @Inject constructor(
     clipboardManager: ClipboardManager,
     customItemFormProcessor: CustomItemFormProcessor,
     appDispatchers: AppDispatchers,
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
+    observeShare: ObserveShare,
+    private val settingsRepository: InternalSettingsRepository
 ) : BaseCustomItemViewModel(
     canPerformPaidAction = canPerformPaidAction,
     linkAttachmentsToItem = linkAttachmentsToItem,
@@ -138,7 +143,9 @@ class CreateCustomItemViewModel @Inject constructor(
         savedStateHandleProvider.get().require<Int>(TemplateTypeNavArgId.key)
             .let { if (it > 0) TemplateType.fromId(it).some() else None }
 
-    init { processIntent(PrefillTemplate) }
+    init {
+        processIntent(PrefillTemplate)
+    }
 
     @OptIn(SavedStateHandleSaveableApi::class)
     private var selectedShareIdMutableState: Option<ShareId> by savedStateHandleProvider.get()
@@ -161,15 +168,28 @@ class CreateCustomItemViewModel @Inject constructor(
         tag = TAG
     )
 
+    private val canDisplayWarningVaultSharedDialogFlow =
+        canDisplayWarningMessageForCreationFlow(
+            selectedShareIdMutableState = selectedShareIdMutableState,
+            observeShare = observeShare,
+            navShareId = navShareId,
+            settingsRepository = settingsRepository
+        )
+
     val state = combine(
         shareUiState,
-        observeSharedState()
-    ) { shareUiState, sharedState ->
+        observeSharedState(),
+        canDisplayWarningVaultSharedDialogFlow
+    ) { shareUiState, sharedState, canDisplayWarningVaultSharedDialog ->
         when (shareUiState) {
             is ShareUiState.Error -> CustomItemState.Error
             is ShareUiState.Loading -> CustomItemState.Loading
             is ShareUiState.Success ->
-                CustomItemState.CreateCustomItemState(shareUiState, sharedState)
+                CustomItemState.CreateCustomItemState(
+                    shareUiState,
+                    sharedState,
+                    canDisplayWarningVaultSharedDialog
+                )
 
             ShareUiState.NotInitialised -> CustomItemState.NotInitialised
         }
@@ -211,11 +231,13 @@ class CreateCustomItemViewModel @Inject constructor(
                     publicKey = "",
                     privateKey = UIHiddenState.Empty(encrypt(""))
                 )
+
                 TemplateType.WIFI_NETWORK -> ItemStaticFields.WifiNetwork(
                     ssid = "",
                     password = UIHiddenState.Empty(encrypt("")),
                     wifiSecurityType = WifiSecurityType.Unknown
                 )
+
                 else -> ItemStaticFields.Custom
             }
             fields to staticFields
@@ -258,6 +280,11 @@ class CreateCustomItemViewModel @Inject constructor(
         selectedShareIdMutableState = Some(shareId)
     }
 
+
+    internal fun doNotDisplayWarningDialog() {
+        settingsRepository.setHasShownItemInSharedVaultWarning(true)
+    }
+
     suspend fun duplicateContents() {
         val shareId = navShareId.value() ?: return
         val itemId = navItemId.value() ?: return
@@ -276,7 +303,8 @@ class CreateCustomItemViewModel @Inject constructor(
                         wifiSecurityType = type.wifiSecurityType
                     )
                     val itemContents = item.toItemContents<ItemContents.WifiNetwork> { decrypt(it) }
-                    customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
+                    customFields =
+                        itemContents.customFields.map(UICustomFieldContent.Companion::from)
                     extraSections = itemContents.sectionContentList.map { UIExtraSection(it) }
                 }
 
@@ -286,16 +314,19 @@ class CreateCustomItemViewModel @Inject constructor(
                         privateKey = UIHiddenState.Concealed(type.privateKey)
                     )
                     val itemContents = item.toItemContents<ItemContents.SSHKey> { decrypt(it) }
-                    customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
+                    customFields =
+                        itemContents.customFields.map(UICustomFieldContent.Companion::from)
                     extraSections = itemContents.sectionContentList.map { UIExtraSection(it) }
                 }
 
                 is ItemType.Custom -> {
                     staticFields = ItemStaticFields.Custom
                     val itemContents = item.toItemContents<ItemContents.Custom> { decrypt(it) }
-                    customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
+                    customFields =
+                        itemContents.customFields.map(UICustomFieldContent.Companion::from)
                     extraSections = itemContents.sectionContentList.map { UIExtraSection(it) }
                 }
+
                 else -> throw IllegalStateException("Not a custom item type")
             }
             itemFormState = itemFormState.copy(

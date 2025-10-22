@@ -80,7 +80,8 @@ internal data class BaseLoginUiState(
 internal data class CreateLoginUiState(
     val shareUiState: ShareUiState,
     val baseLoginUiState: BaseLoginUiState,
-    val passkeyState: Option<CreatePasskeyState> = None
+    val passkeyState: Option<CreatePasskeyState> = None,
+    val canDisplayWarningVaultSharedDialog: Boolean = false
 ) {
     internal companion object {
 
@@ -108,7 +109,9 @@ internal sealed interface UpdateUiEvent {
 internal data class UpdateLoginUiState(
     val selectedShareId: ShareId?,
     val baseLoginUiState: BaseLoginUiState,
-    val uiEvent: UpdateUiEvent = UpdateUiEvent.Idle
+    val uiEvent: UpdateUiEvent = UpdateUiEvent.Idle,
+    val canDisplayVaultSharedWarningDialog: Boolean = false,
+    val canDisplaySharedItemWarningDialog: Boolean = false
 ) {
     companion object {
 

@@ -40,9 +40,12 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
+import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
+import proton.android.pass.features.itemcreate.common.DialogWarningType
+import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
@@ -91,6 +94,8 @@ fun UpdateNote(
         onExit()
     }
 
+    var warningSharedDialog by rememberSaveable { mutableStateOf(DialogWarningType.None) }
+
     Box(modifier = modifier.fillMaxSize()) {
         NoteContent(
             topBarActionName = stringResource(R.string.action_save),
@@ -105,10 +110,27 @@ fun UpdateNote(
                     NoteContentUiEvent.Upgrade ->
                         actionAfterKeyboardHide =
                             { onNavigate(BaseNoteNavigation.Upgrade) }
+
                     is NoteContentUiEvent.OnNoteChange -> viewModel.onNoteChange(it.note)
                     is NoteContentUiEvent.OnTitleChange -> viewModel.onTitleChange(it.title)
                     is NoteContentUiEvent.OnVaultSelect -> {}
-                    is NoteContentUiEvent.Submit -> viewModel.updateItem(it.shareId)
+                    is NoteContentUiEvent.Submit -> {
+                        when {
+                            noteUiState.canDisplaySharedItemWarningDialog -> {
+                                warningSharedDialog = DialogWarningType.SharedItem
+                            }
+
+                            noteUiState.canDisplayVaultSharedWarningDialog -> {
+                                warningSharedDialog = DialogWarningType.SharedVault
+                            }
+
+                            else -> {
+                                warningSharedDialog = DialogWarningType.None
+                                viewModel.updateItem(it.shareId)
+                            }
+                        }
+                    }
+
                     is NoteContentUiEvent.OnAttachmentEvent ->
                         actionAfterKeyboardHide =
                             {
@@ -159,6 +181,7 @@ fun UpdateNote(
                                         onNavigate(BaseNoteNavigation.UpsellAttachments)
                                 }
                             }
+
                     is NoteContentUiEvent.OnCustomFieldEvent -> {
                         when (val cevent = it.event) {
                             is CustomFieldEvent.OnAddField -> {
@@ -200,6 +223,7 @@ fun UpdateNote(
                                 CustomFieldType.Date -> {
                                     showDatePickerForField = Some(cevent.field)
                                 }
+
                                 else -> throw IllegalStateException("Unhandled action")
                             }
                         }
@@ -211,6 +235,7 @@ fun UpdateNote(
                     is NoteContentUiEvent.OnScanTotp ->
                         actionAfterKeyboardHide =
                             { onNavigate(BaseNoteNavigation.ScanTotp(it.index)) }
+
                     NoteContentUiEvent.PasteTotp -> viewModel.onPasteTotp()
                 }
             }
@@ -251,4 +276,31 @@ fun UpdateNote(
     InAppReviewTriggerLaunchedEffect(
         triggerCondition = noteUiState.baseNoteUiState.itemSavedState is ItemSavedState.Success
     )
+
+    noteUiState.selectedShareId?.let {
+        if (warningSharedDialog != DialogWarningType.None) {
+            WarningSharedItemDialog(
+                title = when (warningSharedDialog) {
+                    DialogWarningType.SharedVault -> CompR.string.warning_dialog_item_shared_vault_title
+                    DialogWarningType.SharedItem -> CompR.string.warning_dialog_item_shared_title
+                    else -> throw IllegalStateException("Unhandled case")
+                },
+                description = when (warningSharedDialog) {
+                    DialogWarningType.SharedVault -> CompR.string.warning_dialog_item_shared_vault_updating
+                    DialogWarningType.SharedItem -> CompR.string.warning_dialog_item_shared_updating
+                    else -> throw IllegalStateException("Unhandled case")
+                },
+                onOkClick = { reminderCheck ->
+                    warningSharedDialog = DialogWarningType.None
+                    if (reminderCheck) {
+                        viewModel.doNotDisplayWarningDialog()
+                    }
+                    viewModel.updateItem(shareId = it)
+                },
+                onCancelClick = {
+                    warningSharedDialog = DialogWarningType.None
+                }
+            )
+        }
+    }
 }

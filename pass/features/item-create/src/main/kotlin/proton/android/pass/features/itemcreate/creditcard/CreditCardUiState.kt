@@ -67,7 +67,8 @@ internal sealed interface CreateCreditCardUiState {
     @Immutable
     data class Success(
         val shareUiState: ShareUiState,
-        val baseState: BaseCreditCardUiState
+        val baseState: BaseCreditCardUiState,
+        val canDisplayWarningVaultSharedDialog: Boolean
     ) : CreateCreditCardUiState
 }
 
@@ -84,6 +85,8 @@ internal sealed interface UpdateCreditCardUiState {
     @Immutable
     data class Success(
         val selectedShareId: ShareId?,
-        val baseState: BaseCreditCardUiState
+        val baseState: BaseCreditCardUiState,
+        val canDisplayVaultSharedWarningDialog: Boolean,
+        val canDisplaySharedItemWarningDialog: Boolean
     ) : UpdateCreditCardUiState
 }

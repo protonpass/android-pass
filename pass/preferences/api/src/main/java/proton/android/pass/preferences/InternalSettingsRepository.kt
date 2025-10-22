@@ -87,4 +87,7 @@ interface InternalSettingsRepository {
     fun getPersistentUUID(): Flow<UUID>
 
     fun clearSettings(): Result<Unit>
+
+    fun setHasShownItemInSharedVaultWarning(value: Boolean): Result<Unit>
+    fun hasShownItemInSharedVaultWarning(): Flow<Boolean>
 }

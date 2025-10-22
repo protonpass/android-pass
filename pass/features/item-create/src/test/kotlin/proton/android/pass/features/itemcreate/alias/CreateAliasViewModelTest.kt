@@ -41,6 +41,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.AliasOptions
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
@@ -55,6 +56,7 @@ import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.TestInternalSettingsRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
@@ -81,6 +83,8 @@ class CreateAliasViewModelTest {
     private lateinit var canPerformPaidAction: TestCanPerformPaidAction
     private lateinit var draftRepository: TestDraftRepository
     private lateinit var inAppReviewTriggerMetrics: TestInAppReviewTriggerMetrics
+    private lateinit var observeShare: FakeObserveShare
+    private lateinit var settingsRepository: TestInternalSettingsRepository
 
     @Before
     fun setUp() {
@@ -96,6 +100,8 @@ class CreateAliasViewModelTest {
         observeUpgradeInfo = TestObserveUpgradeInfo()
         canPerformPaidAction = TestCanPerformPaidAction()
         inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics()
+        observeShare = FakeObserveShare()
+        settingsRepository = TestInternalSettingsRepository()
     }
 
 
@@ -267,7 +273,9 @@ class CreateAliasViewModelTest {
         customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
         canPerformPaidAction = TestCanPerformPaidAction(),
         aliasItemFormProcessor = FakeAliasItemFormProcessor(),
-        clipboardManager = TestClipboardManager()
+        clipboardManager = TestClipboardManager(),
+        observeShare = observeShare,
+        settingsRepository = settingsRepository
     ).apply {
         setDraftStatus(isDraft)
     }
@@ -302,6 +310,7 @@ class CreateAliasViewModelTest {
     }
 
     companion object {
+        private val SHARE_ID = ShareId("123")
         private const val TEST_ALIAS_TITLE = "title"
         private const val TEST_ALIAS_PREFIX = "prefix"
     }

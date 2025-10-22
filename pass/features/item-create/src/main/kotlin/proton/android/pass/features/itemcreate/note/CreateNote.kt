@@ -40,10 +40,12 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
+import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
+import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.common.ShareError.EmptyShareList
 import proton.android.pass.features.itemcreate.common.ShareError.SharesNotAvailable
@@ -126,6 +128,9 @@ fun CreateNoteScreen(
 
         is ShareUiState.Success -> (shares.vaultList.size > 1) to shares.currentVault
     }
+
+    var showWarningVaultSharedDialog by rememberSaveable { mutableStateOf(false) }
+
     Box(
         modifier = modifier.fillMaxSize()
     ) {
@@ -141,7 +146,15 @@ fun CreateNoteScreen(
                     NoteContentUiEvent.Back -> onExit()
                     NoteContentUiEvent.Upgrade ->
                         actionAfterKeyboardHide = { onNavigate(BaseNoteNavigation.Upgrade) }
-                    is NoteContentUiEvent.Submit -> viewModel.createNote(event.shareId)
+
+                    is NoteContentUiEvent.Submit -> {
+                        if (uiState.canDisplayWarningVaultSharedDialog) {
+                            showWarningVaultSharedDialog = true
+                        } else {
+                            viewModel.createNote(event.shareId)
+                        }
+                    }
+
                     is NoteContentUiEvent.OnVaultSelect ->
                         actionAfterKeyboardHide = {
                             onNavigate(
@@ -234,6 +247,7 @@ fun CreateNoteScreen(
                                 CustomFieldType.Date -> {
                                     showDatePickerForField = Some(cevent.field)
                                 }
+
                                 else -> throw IllegalStateException("Unhandled action")
                             }
                         }
@@ -241,6 +255,7 @@ fun CreateNoteScreen(
                     is NoteContentUiEvent.OnScanTotp ->
                         actionAfterKeyboardHide =
                             { onNavigate(BaseNoteNavigation.ScanTotp(event.index)) }
+
                     NoteContentUiEvent.PasteTotp -> viewModel.onPasteTotp()
                 }
             }
@@ -282,4 +297,22 @@ fun CreateNoteScreen(
     InAppReviewTriggerLaunchedEffect(
         triggerCondition = uiState.baseNoteUiState.itemSavedState is ItemSavedState.Success
     )
+
+    selectedVault?.vault?.shareId?.let {
+        if (showWarningVaultSharedDialog) {
+            WarningSharedItemDialog(
+                description = CompR.string.warning_dialog_item_shared_vault_creating,
+                onOkClick = { reminderCheck ->
+                    showWarningVaultSharedDialog = false
+                    if (reminderCheck) {
+                        viewModel.doNotDisplayWarningDialog()
+                    }
+                    viewModel.createNote(it)
+                },
+                onCancelClick = {
+                    showWarningVaultSharedDialog = false
+                }
+            )
+        }
+    }
 }

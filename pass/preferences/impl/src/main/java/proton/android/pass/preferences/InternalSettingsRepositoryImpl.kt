@@ -268,6 +268,12 @@ class InternalSettingsRepositoryImpl @Inject constructor(
 
     override fun clearSettings(): Result<Unit> = setPreference { it.clear() }
 
+    override fun setHasShownItemInSharedVaultWarning(value: Boolean): Result<Unit> =
+        setPreference { it.setHasShownItemInSharedVaultWarning(value) }
+
+    override fun hasShownItemInSharedVaultWarning(): Flow<Boolean> =
+        getPreference { it.hasShownItemInSharedVaultWarning }
+
     private fun setPreference(mapper: (InternalSettings.Builder) -> InternalSettings.Builder): Result<Unit> =
         runCatching {
             runBlocking(Dispatchers.IO) {

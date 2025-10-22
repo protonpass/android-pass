@@ -57,12 +57,14 @@ internal data class BaseNoteUiState(
 @Immutable
 internal data class CreateNoteUiState(
     val shareUiState: ShareUiState,
-    val baseNoteUiState: BaseNoteUiState
+    val baseNoteUiState: BaseNoteUiState,
+    val canDisplayWarningVaultSharedDialog: Boolean
 ) {
     companion object {
         val Initial = CreateNoteUiState(
             shareUiState = ShareUiState.NotInitialised,
-            baseNoteUiState = BaseNoteUiState.Initial
+            baseNoteUiState = BaseNoteUiState.Initial,
+            canDisplayWarningVaultSharedDialog = false
         )
     }
 }
@@ -70,12 +72,16 @@ internal data class CreateNoteUiState(
 @Immutable
 internal data class UpdateNoteUiState(
     val selectedShareId: ShareId?,
-    val baseNoteUiState: BaseNoteUiState
+    val baseNoteUiState: BaseNoteUiState,
+    val canDisplayVaultSharedWarningDialog: Boolean,
+    val canDisplaySharedItemWarningDialog: Boolean
 ) {
     companion object {
         val Initial = UpdateNoteUiState(
             selectedShareId = null,
-            baseNoteUiState = BaseNoteUiState.Initial
+            baseNoteUiState = BaseNoteUiState.Initial,
+            canDisplayVaultSharedWarningDialog = false,
+            canDisplaySharedItemWarningDialog = false
         )
     }
 }

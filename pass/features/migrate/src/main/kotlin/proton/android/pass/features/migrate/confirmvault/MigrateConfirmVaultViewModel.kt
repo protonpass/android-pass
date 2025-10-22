@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -38,6 +39,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
@@ -50,6 +52,7 @@ import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.MigrateItems
 import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.api.usecases.securelink.ObserveHasAssociatedSecureLinks
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.migrate.MigrateModeArg
 import proton.android.pass.features.migrate.MigrateModeValue
@@ -58,6 +61,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.DestinationShareNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.InternalSettingsRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -68,7 +72,9 @@ class MigrateConfirmVaultViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     private val observeHasAssociatedSecureLinks: ObserveHasAssociatedSecureLinks,
-    getVaultById: GetVaultWithItemCountById
+    getVaultById: GetVaultWithItemCountById,
+    observeShare: ObserveShare,
+    private val settingsRepository: InternalSettingsRepository
 ) : ViewModel() {
 
     private val mode = getMode()
@@ -101,13 +107,22 @@ class MigrateConfirmVaultViewModel @Inject constructor(
             }
         }
 
-    internal val state: StateFlow<MigrateConfirmVaultUiState> = combine(
+    private val shareId = ShareId(savedStateHandle.require(DestinationShareNavArgId.key))
+    private val canDisplayWarningVaultSharedDialogFlow = combine(
+        settingsRepository.hasShownItemInSharedVaultWarning(),
+        observeShare(shareId)
+    ) { hasShownItemInSharedVaultWarning, share ->
+        !hasShownItemInSharedVaultWarning && share.shared
+    }.onStart { emit(false) }
+
+    internal val state: StateFlow<MigrateConfirmVaultUiState> = combineN(
         isLoadingFlow,
         getVaultFlow,
         eventFlow,
         selectedItemsFlow,
-        hasAssociatedSecureLinksFlow
-    ) { isLoading, vaultRes, event, selectedItems, hasAssociatedSecureLinks ->
+        hasAssociatedSecureLinksFlow,
+        canDisplayWarningVaultSharedDialogFlow
+    ) { isLoading, vaultRes, event, selectedItems, hasAssociatedSecureLinks, canDisplayWarningVaultSharedDialog ->
         val loading = isLoading is IsLoadingState.Loading || vaultRes is LoadingResult.Loading
         val vault = vaultRes.getOrNull().toOption()
         val itemCount = selectedItems.map { entries -> entries.values.sumOf { it.size } }
@@ -116,7 +131,8 @@ class MigrateConfirmVaultViewModel @Inject constructor(
             vault = vault,
             event = event,
             mode = mode.migrateMode(itemCount),
-            hasAssociatedSecureLinks = hasAssociatedSecureLinks
+            hasAssociatedSecureLinks = hasAssociatedSecureLinks,
+            canDisplayWarningVaultSharedDialog = canDisplayWarningVaultSharedDialog
         )
 
     }.stateIn(
@@ -124,6 +140,10 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = MigrateConfirmVaultUiState.initial(mode.migrateMode(None))
     )
+
+    internal fun doNotDisplayWarningDialog() {
+        settingsRepository.setHasShownItemInSharedVaultWarning(true)
+    }
 
     internal fun onConfirm() {
         viewModelScope.launch {

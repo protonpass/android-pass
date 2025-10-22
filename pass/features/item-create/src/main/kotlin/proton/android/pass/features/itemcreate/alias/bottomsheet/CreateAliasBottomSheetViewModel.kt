@@ -37,6 +37,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.features.itemcreate.alias.AliasDraftSavedState
 import proton.android.pass.features.itemcreate.alias.AliasItemFormState
 import proton.android.pass.features.itemcreate.alias.CreateAliasViewModel
@@ -48,6 +49,7 @@ import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHa
 import proton.android.pass.features.itemcreate.common.formprocessor.AliasItemFormProcessorType
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
@@ -76,7 +78,9 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     suffixDraftRepository: SuffixDraftRepository,
     aliasItemFormProcessor: AliasItemFormProcessorType,
     clipboardManager: ClipboardManager,
-    userPreferencesRepository: UserPreferencesRepository
+    userPreferencesRepository: UserPreferencesRepository,
+    observeShare: ObserveShare,
+    private val settingsRepository: InternalSettingsRepository
 ) : CreateAliasViewModel(
     accountManager = accountManager,
     createAlias = createAlias,
@@ -99,7 +103,9 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     suffixDraftRepository = suffixDraftRepository,
     userPreferencesRepository = userPreferencesRepository,
     aliasItemFormProcessor = aliasItemFormProcessor,
-    clipboardManager = clipboardManager
+    clipboardManager = clipboardManager,
+    observeShare = observeShare,
+    settingsRepository = settingsRepository
 ) {
 
     private val isEditMode: Boolean = savedStateHandleProvider.get()

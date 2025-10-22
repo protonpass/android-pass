@@ -40,6 +40,7 @@ import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
+import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
@@ -64,6 +65,7 @@ import proton.android.pass.features.itemcreate.identity.presentation.CreateIdent
 import proton.android.pass.features.itemcreate.identity.presentation.IdentityField
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 fun CreateIdentityScreen(
@@ -108,6 +110,11 @@ fun CreateIdentityScreen(
             actionAfterKeyboardHide = { onNavigate(BaseIdentityNavigation.CloseScreen) }
         }
     }
+
+
+    var showWarningVaultSharedDialog by rememberSaveable { mutableStateOf(false) }
+
+
     BackHandler(onBack = onExit)
     Box(modifier = modifier.fillMaxSize()) {
         IdentityContent(
@@ -120,7 +127,13 @@ fun CreateIdentityScreen(
                     is IdentityContentEvent.OnVaultSelect ->
                         actionAfterKeyboardHide = { onNavigate(SelectVault(it.shareId)) }
 
-                    is IdentityContentEvent.Submit -> viewModel.onSubmit(it.shareId)
+                    is IdentityContentEvent.Submit -> {
+                        if (state.canDisplayWarningVaultSharedDialogLocal) {
+                            showWarningVaultSharedDialog = true
+                        } else {
+                            viewModel.onSubmit(it.shareId)
+                        }
+                    }
                     IdentityContentEvent.Up -> onExit()
 
                     is IdentityContentEvent.OnFieldChange ->
@@ -283,4 +296,22 @@ fun CreateIdentityScreen(
     InAppReviewTriggerLaunchedEffect(
         triggerCondition = state.getItemSavedState() is ItemSavedState.Success
     )
+
+    state.getSelectedShareId().value()?.let {
+        if (showWarningVaultSharedDialog) {
+            WarningSharedItemDialog(
+                description = CompR.string.warning_dialog_item_shared_vault_creating,
+                onOkClick = { reminderCheck ->
+                    showWarningVaultSharedDialog = false
+                    if (reminderCheck) {
+                        viewModel.doNotDisplayWarningDialog()
+                    }
+                    viewModel.onSubmit(it)
+                },
+                onCancelClick = {
+                    showWarningVaultSharedDialog = false
+                }
+            )
+        }
+    }
 }

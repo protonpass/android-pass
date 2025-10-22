@@ -54,7 +54,8 @@ internal data class MigrateConfirmVaultUiState(
     val event: Option<ConfirmMigrateEvent>,
     val vault: Option<VaultWithItemCount>,
     val mode: MigrateMode,
-    val hasAssociatedSecureLinks: Boolean
+    val hasAssociatedSecureLinks: Boolean,
+    val canDisplayWarningVaultSharedDialog: Boolean
 ) {
 
     internal companion object {
@@ -64,7 +65,8 @@ internal data class MigrateConfirmVaultUiState(
             event = None,
             vault = None,
             mode = mode,
-            hasAssociatedSecureLinks = false
+            hasAssociatedSecureLinks = false,
+            canDisplayWarningVaultSharedDialog = false
         )
 
     }

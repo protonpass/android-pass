@@ -44,6 +44,7 @@ import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
+import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.common.ShareError.EmptyShareList
 import proton.android.pass.features.itemcreate.common.ShareError.SharesNotAvailable
@@ -52,6 +53,7 @@ import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
 import proton.android.pass.features.itemcreate.custom.createupdate.ui.DatePickerModal
+import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.AddAttachment
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.CustomFieldOptions
@@ -132,6 +134,10 @@ fun CreateLoginScreen(
 
         is ShareUiState.Success -> (shares.vaultList.size > 1) to shares.currentVault
     }
+
+
+    var showWarningVaultSharedDialog by rememberSaveable { mutableStateOf(false) }
+
     Box(modifier = modifier.fillMaxSize()) {
         LoginContent(
             uiState = uiState.baseLoginUiState,
@@ -147,7 +153,14 @@ fun CreateLoginScreen(
             onEvent = {
                 when (it) {
                     LoginContentEvent.Up -> onExit()
-                    is LoginContentEvent.Submit -> viewModel.createItem()
+                    is LoginContentEvent.Submit -> {
+                        if (uiState.canDisplayWarningVaultSharedDialog) {
+                            showWarningVaultSharedDialog = true
+                        } else {
+                            viewModel.createItem()
+                        }
+                    }
+
                     is LoginContentEvent.OnEmailChanged -> viewModel.onEmailChanged(it.email)
                     is LoginContentEvent.OnUsernameChanged -> viewModel.onUsernameChanged(it.username)
                     is LoginContentEvent.OnPasswordChange -> viewModel.onPasswordChange(it.password)
@@ -202,6 +215,7 @@ fun CreateLoginScreen(
                                 CustomFieldType.Date -> {
                                     showDatePickerForField = Some(event.field)
                                 }
+
                                 else -> throw IllegalStateException("Unhandled action")
                             }
                         }
@@ -348,4 +362,20 @@ fun CreateLoginScreen(
     InAppReviewTriggerLaunchedEffect(
         triggerCondition = uiState.baseLoginUiState.isItemSaved is ItemSavedState.Success
     )
+
+    if (showWarningVaultSharedDialog) {
+        WarningSharedItemDialog(
+            description = CompR.string.warning_dialog_item_shared_vault_creating,
+            onOkClick = { reminderCheck ->
+                showWarningVaultSharedDialog = false
+                if (reminderCheck) {
+                    viewModel.doNotDisplayWarningDialog()
+                }
+                viewModel.createItem()
+            },
+            onCancelClick = {
+                showWarningVaultSharedDialog = false
+            }
+        )
+    }
 }

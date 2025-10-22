@@ -62,6 +62,8 @@ dependencies {
     implementation(libs.androidx.compose.uiToolingPreview)
     debugImplementation(libs.androidx.compose.uiTestManifest)
 
+    implementation(projects.pass.preferences.api)
+
     testImplementation(libs.turbine)
     testImplementation(libs.truth)
     testImplementation(libs.kotlinTest)
@@ -72,4 +74,5 @@ dependencies {
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.notifications.fakes)
+    testImplementation(projects.pass.preferences.fakes)
 }

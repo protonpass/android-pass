@@ -66,6 +66,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.AliasOptions
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
@@ -82,6 +83,7 @@ import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
+import proton.android.pass.features.itemcreate.common.canDisplayWarningMessageForCreationFlow
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.formprocessor.AliasItemFormProcessorType
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
@@ -89,6 +91,7 @@ import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -118,7 +121,9 @@ open class CreateAliasViewModel @Inject constructor(
     canPerformPaidAction: CanPerformPaidAction,
     aliasItemFormProcessor: AliasItemFormProcessorType,
     clipboardManager: ClipboardManager,
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
+    observeShare: ObserveShare,
+    private val settingsRepository: InternalSettingsRepository
 ) : BaseAliasViewModel(
     mailboxDraftRepository = mailboxDraftRepository,
     suffixDraftRepository = suffixDraftRepository,
@@ -210,15 +215,25 @@ open class CreateAliasViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
+    private val canDisplayWarningVaultSharedDialogFlow =
+        canDisplayWarningMessageForCreationFlow(
+            selectedShareIdMutableState = selectedShareIdMutableState,
+            observeShare = observeShare,
+            navShareId = navShareId,
+            settingsRepository = settingsRepository
+        )
+
+
     internal val createAliasUiState: StateFlow<CreateAliasUiState> = combineN(
         baseAliasUiState,
         shareUiState,
         aliasOptionsState,
         mailboxDraftRepository.getSelectedMailboxFlow(),
         suffixDraftRepository.getSelectedSuffixFlow(),
-        observeUpgradeInfo().asLoadingResult()
+        observeUpgradeInfo().asLoadingResult(),
+        canDisplayWarningVaultSharedDialogFlow
     ) { aliasUiState, shareUiState, aliasOptionsResult, selectedMailboxes,
-        selectedSuffix, upgradeInfoResult ->
+        selectedSuffix, upgradeInfoResult, canDisplayWarningVaultSharedDialog ->
         val hasReachedAliasLimit = upgradeInfoResult.getOrNull()?.hasReachedAliasLimit() ?: false
         val canUpgrade = upgradeInfoResult.getOrNull()?.isUpgradeAvailable ?: false
 
@@ -251,7 +266,8 @@ open class CreateAliasViewModel @Inject constructor(
                         upgradeInfoResult is LoadingResult.Loading
                 )
             ),
-            shareUiState = shareUiState
+            shareUiState = shareUiState,
+            canDisplayWarningVaultSharedDialog = canDisplayWarningVaultSharedDialog
         )
     }.stateIn(
         scope = viewModelScope,
@@ -308,6 +324,10 @@ open class CreateAliasViewModel @Inject constructor(
                 }
         }
         titlePrefixInSync = false
+    }
+
+    internal fun doNotDisplayWarningDialog() {
+        settingsRepository.setHasShownItemInSharedVaultWarning(true)
     }
 
     fun createAlias(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {

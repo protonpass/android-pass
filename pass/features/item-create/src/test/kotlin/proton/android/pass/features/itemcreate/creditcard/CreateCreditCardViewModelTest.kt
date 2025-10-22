@@ -41,6 +41,7 @@ import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
@@ -56,6 +57,7 @@ import proton.android.pass.features.itemcreate.common.formprocessor.FakeCreditCa
 import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessingResult
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.TestInternalSettingsRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
@@ -77,6 +79,8 @@ class CreateCreditCardViewModelTest {
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var canPerformPaidAction: TestCanPerformPaidAction
     private lateinit var creditCardItemFormProcessor: FakeCreditCardItemFormProcessor
+    private lateinit var observeShare: FakeObserveShare
+    private lateinit var settingsRepository: TestInternalSettingsRepository
 
     @Before
     fun setUp() {
@@ -87,6 +91,8 @@ class CreateCreditCardViewModelTest {
         snackbarDispatcher = TestSnackbarDispatcher()
         canPerformPaidAction = TestCanPerformPaidAction()
         creditCardItemFormProcessor = FakeCreditCardItemFormProcessor()
+        observeShare = FakeObserveShare()
+        settingsRepository = TestInternalSettingsRepository()
         instance = CreateCreditCardViewModel(
             accountManager = TestAccountManager().apply {
                 sendPrimaryUserId(UserId("user-id"))
@@ -107,7 +113,9 @@ class CreateCreditCardViewModelTest {
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
             creditCardItemFormProcessor = creditCardItemFormProcessor,
             clipboardManager = TestClipboardManager(),
-            getItemById = FakeGetItemById()
+            getItemById = FakeGetItemById(),
+            observeShare = observeShare,
+            settingsRepository = settingsRepository
         )
     }
 
@@ -131,7 +139,8 @@ class CreateCreditCardViewModelTest {
                 vaultList = listOf(vaultWithItemCount),
                 currentVault = vaultWithItemCount
             ),
-            baseState = BaseCreditCardUiState.Initial
+            baseState = BaseCreditCardUiState.Initial,
+            canDisplayWarningVaultSharedDialog = false
         )
 
         instance.state.test {
@@ -156,7 +165,8 @@ class CreateCreditCardViewModelTest {
                 vaultList = listOf(vault),
                 currentVault = vault
             ),
-            baseState = BaseCreditCardUiState.Initial
+            baseState = BaseCreditCardUiState.Initial,
+            canDisplayWarningVaultSharedDialog = false
         )
         val titleInput = "Title input"
         instance.onTitleChange(titleInput)

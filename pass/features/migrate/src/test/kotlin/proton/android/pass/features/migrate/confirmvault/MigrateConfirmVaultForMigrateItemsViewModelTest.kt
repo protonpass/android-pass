@@ -34,6 +34,7 @@ import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
 import proton.android.pass.data.fakes.usecases.TestMigrateItems
 import proton.android.pass.data.fakes.usecases.TestMigrateVault
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveHasAssociatedSecureLinks
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
@@ -42,6 +43,7 @@ import proton.android.pass.features.migrate.MigrateModeValue
 import proton.android.pass.features.migrate.MigrateSnackbarMessage
 import proton.android.pass.navigation.api.DestinationShareNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.TestInternalSettingsRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.domain.TestItem
@@ -59,6 +61,8 @@ class MigrateConfirmVaultForMigrateItemsViewModelTest {
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var bulkMoveToVaultRepository: TestBulkMoveToVaultRepository
     private lateinit var observeHasAssociatedSecureLinks: FakeObserveHasAssociatedSecureLinks
+    private lateinit var observeShare: FakeObserveShare
+    private lateinit var settingsRepository: TestInternalSettingsRepository
 
     @Before
     fun setup() {
@@ -70,6 +74,8 @@ class MigrateConfirmVaultForMigrateItemsViewModelTest {
             runBlocking { save(mapOf(SHARE_ID to listOf(ITEM_ID))) }
         }
         observeHasAssociatedSecureLinks = FakeObserveHasAssociatedSecureLinks()
+        observeShare = FakeObserveShare()
+        settingsRepository = TestInternalSettingsRepository()
 
         instance = MigrateConfirmVaultViewModel(
             migrateItems = migrateItem,
@@ -81,7 +87,9 @@ class MigrateConfirmVaultForMigrateItemsViewModelTest {
             savedStateHandle = TestSavedStateHandle.create().apply {
                 set(DestinationShareNavArgId.key, DESTINATION_SHARE_ID.id)
                 set(MigrateModeArg.key, MODE.name)
-            }
+            },
+            observeShare = observeShare,
+            settingsRepository = settingsRepository
         )
     }
 

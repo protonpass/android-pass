@@ -46,6 +46,7 @@ import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.FileMetadata
@@ -53,6 +54,7 @@ import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
+import proton.android.pass.features.itemcreate.common.canDisplayWarningMessageForCreationFlow
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.ItemCreated
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.ItemCreationError
@@ -60,6 +62,7 @@ import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
@@ -75,7 +78,9 @@ class CreateIdentityViewModel @Inject constructor(
     private val getItemById: GetItemById,
     observeVaults: ObserveVaultsWithItemCount,
     observeDefaultVault: ObserveDefaultVault,
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
+    observeShare: ObserveShare,
+    private val settingsRepository: InternalSettingsRepository
 ) : ViewModel(), IdentityActionsProvider by identityActionsProvider {
 
     private val navShareId: Option<ShareId> =
@@ -106,6 +111,14 @@ class CreateIdentityViewModel @Inject constructor(
                 initialValue = None
             )
 
+    private val canDisplayWarningVaultSharedDialogFlow =
+        canDisplayWarningMessageForCreationFlow(
+            selectedShareIdMutableState = selectedShareIdMutableState,
+            observeShare = observeShare,
+            navShareId = navShareId,
+            settingsRepository = settingsRepository
+        )
+
     private val shareUiState: StateFlow<ShareUiState> = getShareUiStateFlow(
         navShareIdState = flowOf(navShareId),
         selectedShareIdState = selectedShareIdState,
@@ -117,16 +130,19 @@ class CreateIdentityViewModel @Inject constructor(
 
     val state: StateFlow<IdentityUiState> = combine(
         shareUiState,
-        identityActionsProvider.observeSharedState()
-    ) { shareUiState, sharedState ->
+        identityActionsProvider.observeSharedState(),
+        canDisplayWarningVaultSharedDialogFlow
+    ) { shareUiState, sharedState, canDisplayWarningVaultSharedDialog ->
         when (shareUiState) {
             is ShareUiState.Error -> IdentityUiState.Error
             is ShareUiState.Loading -> IdentityUiState.Loading
             is ShareUiState.Success -> IdentityUiState.CreateIdentity(
                 shareUiState = shareUiState,
                 sharedState = sharedState,
-                isCloned = navItemId.isNotEmpty()
+                isCloned = navItemId.isNotEmpty(),
+                canDisplayVaultSharedWarningDialog = canDisplayWarningVaultSharedDialog
             )
+
             ShareUiState.NotInitialised -> IdentityUiState.NotInitialised
         }
     }.stateIn(
@@ -148,6 +164,10 @@ class CreateIdentityViewModel @Inject constructor(
             return@withEncryptionContextSuspendable encrypt(decryptedTitle)
         }
         identityActionsProvider.onItemReceivedState(item.copy(title = encryptedTitle))
+    }
+
+    internal fun doNotDisplayWarningDialog() {
+        settingsRepository.setHasShownItemInSharedVaultWarning(true)
     }
 
     fun onSubmit(shareId: ShareId) = viewModelScope.launch {

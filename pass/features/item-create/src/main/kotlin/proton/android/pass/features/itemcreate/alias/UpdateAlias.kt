@@ -43,10 +43,12 @@ import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.dialogs.PassInfoDialog
+import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
+import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.features.itemcreate.alias.AliasField.CustomField
 import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation.AddCustomField
 import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation.CustomFieldOptions
@@ -56,6 +58,7 @@ import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation.OpenDra
 import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation.Upgrade
 import proton.android.pass.features.itemcreate.alias.UpdateAliasNavigation.OpenAttachmentOptions
 import proton.android.pass.features.itemcreate.alias.UpdateAliasNavigation.Updated
+import proton.android.pass.features.itemcreate.common.DialogWarningType
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
@@ -109,6 +112,8 @@ fun UpdateAlias(
         }
     }
 
+    var warningSharedDialog by rememberSaveable { mutableStateOf(DialogWarningType.None) }
+
     Box(
         modifier = modifier.fillMaxSize()
     ) {
@@ -135,7 +140,23 @@ fun UpdateAlias(
                     AliasContentUiEvent.OnUpgrade ->
                         actionAfterKeyboardHide = { onNavigate(Upgrade) }
 
-                    is AliasContentUiEvent.Submit -> viewModel.updateAlias()
+                    is AliasContentUiEvent.Submit -> {
+                        when {
+                            uiState.canDisplaySharedItemWarningDialog -> {
+                                warningSharedDialog = DialogWarningType.SharedItem
+                            }
+
+                            uiState.canDisplayVaultSharedWarningDialog -> {
+                                warningSharedDialog = DialogWarningType.SharedVault
+                            }
+
+                            else -> {
+                                warningSharedDialog = DialogWarningType.None
+                                viewModel.updateAlias()
+                            }
+                        }
+                    }
+
                     is AliasContentUiEvent.OnPrefixChange,
                     is AliasContentUiEvent.OnSuffixSelect,
                     is AliasContentUiEvent.OnVaultSelect -> {
@@ -236,6 +257,7 @@ fun UpdateAlias(
                                 CustomFieldType.Date -> {
                                     showDatePickerForField = Some(event.field)
                                 }
+
                                 else -> throw IllegalStateException("Unhandled action")
                             }
                         }
@@ -243,6 +265,7 @@ fun UpdateAlias(
                     is AliasContentUiEvent.OnScanTotp ->
                         actionAfterKeyboardHide =
                             { onNavigate(BaseAliasNavigation.ScanTotp(it.index)) }
+
                     AliasContentUiEvent.PasteTotp -> viewModel.onPasteTotp()
                 }
             }
@@ -294,6 +317,31 @@ fun UpdateAlias(
                 stringResource(id = R.string.sl_note_info_message_part3)
             ).joinToString(separator = SpecialCharacters.SPACE.toString()),
             onDismiss = { showSLNoteInfoDialog = false }
+        )
+    }
+
+    if (warningSharedDialog != DialogWarningType.None) {
+        WarningSharedItemDialog(
+            title = when (warningSharedDialog) {
+                DialogWarningType.SharedVault -> CompR.string.warning_dialog_item_shared_vault_title
+                DialogWarningType.SharedItem -> CompR.string.warning_dialog_item_shared_title
+                else -> throw IllegalStateException("Unhandled case")
+            },
+            description = when (warningSharedDialog) {
+                DialogWarningType.SharedVault -> CompR.string.warning_dialog_item_shared_vault_updating
+                DialogWarningType.SharedItem -> CompR.string.warning_dialog_item_shared_updating
+                else -> throw IllegalStateException("Unhandled case")
+            },
+            onOkClick = { reminderCheck ->
+                warningSharedDialog = DialogWarningType.None
+                if (reminderCheck) {
+                    viewModel.doNotDisplayWarningDialog()
+                }
+                viewModel.updateAlias()
+            },
+            onCancelClick = {
+                warningSharedDialog = DialogWarningType.None
+            }
         )
     }
 }

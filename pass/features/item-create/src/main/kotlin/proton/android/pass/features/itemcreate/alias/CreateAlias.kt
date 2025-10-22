@@ -39,12 +39,14 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
+import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
+import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.features.itemcreate.alias.AliasField.CustomField
 import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation.AddCustomField
 import proton.android.pass.features.itemcreate.alias.BaseAliasNavigation.CustomFieldOptions
@@ -129,6 +131,9 @@ fun CreateAliasScreen(
 
         is ShareUiState.Success -> (shares.vaultList.size > 1) to shares.currentVault
     }
+
+    var showWarningVaultSharedDialog by rememberSaveable { mutableStateOf(false) }
+
     Box(
         modifier = modifier.fillMaxSize()
     ) {
@@ -146,7 +151,13 @@ fun CreateAliasScreen(
             onEvent = { event ->
                 when (event) {
                     is AliasContentUiEvent.Back -> onExit()
-                    is AliasContentUiEvent.Submit -> viewModel.createAlias(event.shareId)
+                    is AliasContentUiEvent.Submit -> {
+                        if (uiState.canDisplayWarningVaultSharedDialog) {
+                            showWarningVaultSharedDialog = true
+                        } else {
+                            viewModel.createAlias(event.shareId)
+                        }
+                    }
                     is AliasContentUiEvent.OnNoteChange -> viewModel.onNoteChange(event.note)
                     is AliasContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
                     is AliasContentUiEvent.OnVaultSelect ->
@@ -284,4 +295,22 @@ fun CreateAliasScreen(
     InAppReviewTriggerLaunchedEffect(
         triggerCondition = uiState.baseAliasUiState.itemSavedState is ItemSavedState.Success
     )
+
+    selectedVault?.vault?.shareId?.let {
+        if (showWarningVaultSharedDialog) {
+            WarningSharedItemDialog(
+                description = CompR.string.warning_dialog_item_shared_vault_creating,
+                onOkClick = { reminderCheck ->
+                    showWarningVaultSharedDialog = false
+                    if (reminderCheck) {
+                        viewModel.doNotDisplayWarningDialog()
+                    }
+                    viewModel.createAlias(it)
+                },
+                onCancelClick = {
+                    showWarningVaultSharedDialog = false
+                }
+            )
+        }
+    }
 }

@@ -55,10 +55,12 @@ import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.RenameAttachments
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.work.WorkerItem
@@ -82,6 +84,8 @@ import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
+import proton.android.pass.features.itemcreate.common.canDisplaySharedItemWarningDialogFlow
+import proton.android.pass.features.itemcreate.common.canDisplayVaultSharedWarningDialogFlow
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.formprocessor.LoginItemFormProcessorType
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.AttachmentsInitError
@@ -94,6 +98,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -128,7 +133,10 @@ class UpdateLoginViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository,
     customFieldDraftRepository: CustomFieldDraftRepository,
     loginItemFormProcessor: LoginItemFormProcessorType,
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
+    observeShare: ObserveShare,
+    observeItemById: ObserveItemById,
+    private val settingsRepository: InternalSettingsRepository
 ) : BaseLoginViewModel(
     accountManager = accountManager,
     snackbarDispatcher = snackbarDispatcher,
@@ -168,6 +176,21 @@ class UpdateLoginViewModel @Inject constructor(
     private var itemOption: Option<Item> = None
     private var originalTotpCustomFields: List<UICustomFieldContent.Totp> = emptyList()
 
+    private val canDisplayVaultSharedWarningDialogFlow =
+        canDisplayVaultSharedWarningDialogFlow(
+            settingsRepository = settingsRepository,
+            observeShare = observeShare,
+            shareId = navShareId
+        )
+
+    private val canDisplaySharedItemWarningDialogFlow =
+        canDisplaySharedItemWarningDialogFlow(
+            settingsRepository = settingsRepository,
+            observeItemById = observeItemById,
+            shareId = navShareId,
+            itemId = navItemId
+        )
+
     init {
         viewModelScope.launch(coroutineExceptionHandler) {
             if (itemOption != None) return@launch
@@ -200,6 +223,8 @@ class UpdateLoginViewModel @Inject constructor(
         flowOf(navShareId),
         baseLoginUiState,
         updateEventFlow,
+        canDisplayVaultSharedWarningDialogFlow,
+        canDisplaySharedItemWarningDialogFlow,
         ::UpdateLoginUiState
     ).stateIn(
         scope = viewModelScope,
@@ -218,10 +243,15 @@ class UpdateLoginViewModel @Inject constructor(
         )
     }
 
+    internal fun doNotDisplayWarningDialog() {
+        settingsRepository.setHasShownItemInSharedVaultWarning(true)
+    }
+
     internal fun updateItem(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
         val currentItem = itemOption.value() ?: return@launch
-        val originalPrimaryTotp = UIHiddenState.Concealed((currentItem.itemType as ItemType.Login).primaryTotp)
-            .some()
+        val originalPrimaryTotp =
+            UIHiddenState.Concealed((currentItem.itemType as ItemType.Login).primaryTotp)
+                .some()
         if (!isFormStateValid(originalPrimaryTotp, originalTotpCustomFields)) return@launch
         isLoadingState.update { IsLoadingState.Loading }
         val loginItem = loginItemFormState.toItemContents(emailValidator = emailValidator)
@@ -278,8 +308,10 @@ class UpdateLoginViewModel @Inject constructor(
                     is HiddenState.Revealed -> UIHiddenState.Concealed(hiddenState.encrypted)
                 }
 
-                val customFields = itemContents.customFields.map(UICustomFieldContent.Companion::from)
-                originalTotpCustomFields = customFields.filterIsInstance<UICustomFieldContent.Totp>()
+                val customFields =
+                    itemContents.customFields.map(UICustomFieldContent.Companion::from)
+                originalTotpCustomFields =
+                    customFields.filterIsInstance<UICustomFieldContent.Totp>()
 
                 loginItemFormMutableState = loginItemFormState.copy(
                     title = itemContents.title,

@@ -43,12 +43,15 @@ import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
+import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.features.itemcreate.alias.AliasItemFormState
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldEvent
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldIdentifier
 import proton.android.pass.features.itemcreate.custom.createupdate.ui.DatePickerModal
+import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
+import proton.android.pass.features.itemcreate.common.DialogWarningType
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.AddAttachment
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.AddCustomField
@@ -118,6 +121,8 @@ internal fun UpdateLogin(
         }
     }
 
+    var warningSharedDialog by rememberSaveable { mutableStateOf(DialogWarningType.None) }
+
     Box(
         modifier = modifier.fillMaxSize()
     ) {
@@ -135,7 +140,23 @@ internal fun UpdateLogin(
             onEvent = {
                 when (it) {
                     LoginContentEvent.Up -> onExit()
-                    is LoginContentEvent.Submit -> viewModel.updateItem(it.shareId)
+                    is LoginContentEvent.Submit -> {
+                        when {
+                            uiState.canDisplaySharedItemWarningDialog -> {
+                                warningSharedDialog = DialogWarningType.SharedItem
+                            }
+
+                            uiState.canDisplayVaultSharedWarningDialog -> {
+                                warningSharedDialog = DialogWarningType.SharedVault
+                            }
+
+                            else -> {
+                                warningSharedDialog = DialogWarningType.None
+                                viewModel.updateItem(it.shareId)
+                            }
+                        }
+                    }
+
                     is LoginContentEvent.OnEmailChanged -> viewModel.onEmailChanged(it.email)
                     is LoginContentEvent.OnUsernameChanged -> viewModel.onUsernameChanged(it.username)
                     is LoginContentEvent.OnPasswordChange -> viewModel.onPasswordChange(it.password)
@@ -188,6 +209,7 @@ internal fun UpdateLogin(
                                 CustomFieldType.Date -> {
                                     showDatePickerForField = Some(event.field)
                                 }
+
                                 else -> throw IllegalStateException("Unhandled action")
                             }
                         }
@@ -343,4 +365,31 @@ internal fun UpdateLogin(
     InAppReviewTriggerLaunchedEffect(
         triggerCondition = uiState.baseLoginUiState.isItemSaved is ItemSavedState.Success
     )
+
+    uiState.selectedShareId?.let {
+        if (warningSharedDialog != DialogWarningType.None) {
+            WarningSharedItemDialog(
+                title = when (warningSharedDialog) {
+                    DialogWarningType.SharedVault -> CompR.string.warning_dialog_item_shared_vault_title
+                    DialogWarningType.SharedItem -> CompR.string.warning_dialog_item_shared_title
+                    else -> throw IllegalStateException("Unhandled case")
+                },
+                description = when (warningSharedDialog) {
+                    DialogWarningType.SharedVault -> CompR.string.warning_dialog_item_shared_vault_updating
+                    DialogWarningType.SharedItem -> CompR.string.warning_dialog_item_shared_updating
+                    else -> throw IllegalStateException("Unhandled case")
+                },
+                onOkClick = { reminderCheck ->
+                    warningSharedDialog = DialogWarningType.None
+                    if (reminderCheck) {
+                        viewModel.doNotDisplayWarningDialog()
+                    }
+                    viewModel.updateItem(shareId = it)
+                },
+                onCancelClick = {
+                    warningSharedDialog = DialogWarningType.None
+                }
+            )
+        }
+    }
 }

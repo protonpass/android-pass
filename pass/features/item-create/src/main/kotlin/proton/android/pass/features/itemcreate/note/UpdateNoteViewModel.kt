@@ -45,9 +45,11 @@ import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.RenameAttachments
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -57,6 +59,8 @@ import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.ItemUpdate
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
+import proton.android.pass.features.itemcreate.common.canDisplaySharedItemWarningDialogFlow
+import proton.android.pass.features.itemcreate.common.canDisplayVaultSharedWarningDialogFlow
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.formprocessor.NoteItemFormProcessor
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.AttachmentsInitError
@@ -69,6 +73,7 @@ import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.UpdateAp
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -93,7 +98,10 @@ class UpdateNoteViewModel @Inject constructor(
     customFieldDraftRepository: CustomFieldDraftRepository,
     noteItemFormProcessor: NoteItemFormProcessor,
     userPreferencesRepository: UserPreferencesRepository,
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
+    observeShare: ObserveShare,
+    observeItemById: ObserveItemById,
+    private val settingsRepository: InternalSettingsRepository
 ) : BaseNoteViewModel(
     clipboardManager = clipboardManager,
     canPerformPaidAction = canPerformPaidAction,
@@ -119,15 +127,33 @@ class UpdateNoteViewModel @Inject constructor(
     private var itemOption: Option<Item> = None
     private var originalCustomFields: List<UICustomFieldContent> = emptyList()
 
+    private val canDisplayVaultSharedWarningDialogFlow =
+        canDisplayVaultSharedWarningDialogFlow(
+            settingsRepository = settingsRepository,
+            observeShare = observeShare,
+            shareId = navShareId
+        )
+
+    private val canDisplaySharedItemWarningDialogFlow =
+        canDisplaySharedItemWarningDialogFlow(
+            settingsRepository = settingsRepository,
+            observeItemById = observeItemById,
+            shareId = navShareId,
+            itemId = navItemId
+        )
+
     init {
         viewModelScope.launch(coroutineExceptionHandler) {
             setupInitialState()
         }
     }
 
+
     internal val updateNoteUiState: StateFlow<UpdateNoteUiState> = combine(
         flowOf(navShareId),
         baseNoteUiState,
+        canDisplayVaultSharedWarningDialogFlow,
+        canDisplaySharedItemWarningDialogFlow,
         ::UpdateNoteUiState
     ).stateIn(
         scope = viewModelScope,
@@ -174,6 +200,10 @@ class UpdateNoteViewModel @Inject constructor(
         }
     }
 
+    internal fun doNotDisplayWarningDialog() {
+        settingsRepository.setHasShownItemInSharedVaultWarning(true)
+    }
+
     @Suppress("LongMethod")
     fun updateItem(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
         val initialItem = itemOption
@@ -186,13 +216,14 @@ class UpdateNoteViewModel @Inject constructor(
         if (userId != null && initialItem is Some) {
             val contents = noteItemFormMutableState.toItemContents()
             runCatching {
-                val hasContentsChanged = encryptionContextProvider.withEncryptionContextSuspendable {
-                    !areItemContentsEqual(
-                        a = initialItem.value.toItemContents { decrypt(it) },
-                        b = contents,
-                        decrypt = { decrypt(it) }
-                    )
-                }
+                val hasContentsChanged =
+                    encryptionContextProvider.withEncryptionContextSuspendable {
+                        !areItemContentsEqual(
+                            a = initialItem.value.toItemContents { decrypt(it) },
+                            b = contents,
+                            decrypt = { decrypt(it) }
+                        )
+                    }
                 val hasPendingAttachments =
                     pendingAttachmentLinkRepository.getAllToLink().isNotEmpty() ||
                         pendingAttachmentLinkRepository.getAllToUnLink().isNotEmpty()

@@ -42,6 +42,7 @@ import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonpresentation.api.attachments.AttachmentsHandler
@@ -55,10 +56,12 @@ import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
+import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasContent
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.RenameAttachments
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -79,11 +82,14 @@ import proton.android.pass.features.itemcreate.alias.draftrepositories.SuffixDra
 import proton.android.pass.features.itemcreate.common.CommonFieldValidationError
 import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
+import proton.android.pass.features.itemcreate.common.canDisplaySharedItemWarningDialogFlow
+import proton.android.pass.features.itemcreate.common.canDisplayVaultSharedWarningDialogFlow
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.formprocessor.AliasItemFormProcessorType
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -110,7 +116,10 @@ class UpdateAliasViewModel @Inject constructor(
     canPerformPaidAction: CanPerformPaidAction,
     aliasItemFormProcessor: AliasItemFormProcessorType,
     clipboardManager: ClipboardManager,
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
+    observeShare: ObserveShare,
+    observeItemById: ObserveItemById,
+    private val settingsRepository: InternalSettingsRepository
 ) : BaseAliasViewModel(
     mailboxDraftRepository = mailboxDraftRepository,
     suffixDraftRepository = suffixDraftRepository,
@@ -146,6 +155,21 @@ class UpdateAliasViewModel @Inject constructor(
     private var isDisplayNameChanged = false
 
     private val canModifyAliasStateFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
+
+    private val canDisplayVaultSharedWarningDialogFlow =
+        canDisplayVaultSharedWarningDialogFlow(
+            settingsRepository = settingsRepository,
+            observeShare = observeShare,
+            shareId = shareId
+        )
+
+    private val canDisplaySharedItemWarningDialogFlow =
+        canDisplaySharedItemWarningDialogFlow(
+            settingsRepository = settingsRepository,
+            observeItemById = observeItemById,
+            shareId = shareId,
+            itemId = itemId
+        )
 
     init {
         viewModelScope.launch(coroutineExceptionHandler) {
@@ -188,12 +212,16 @@ class UpdateAliasViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    internal val updateAliasUiState: StateFlow<UpdateAliasUiState> = combine(
+    internal val updateAliasUiState: StateFlow<UpdateAliasUiState> = combineN(
         flowOf(shareId),
         baseAliasUiState,
-        mailboxDraftRepository.getSelectedMailboxFlow().map { it.map(::AliasMailboxUiModel).toSet() },
-        canModifyAliasStateFlow
-    ) { shareId, aliasUiState, selectedMailboxes, canModify ->
+        mailboxDraftRepository.getSelectedMailboxFlow()
+            .map { it.map(::AliasMailboxUiModel).toSet() },
+        canModifyAliasStateFlow,
+        canDisplayVaultSharedWarningDialogFlow,
+        canDisplaySharedItemWarningDialogFlow
+    ) { shareId, aliasUiState, selectedMailboxes, canModify,
+        canDisplayVaultSharedWarningDialog, canDisplaySharedItemWarningDialog ->
         aliasItemFormMutableState = aliasItemFormState.copy(
             selectedMailboxes = selectedMailboxes
         )
@@ -201,7 +229,9 @@ class UpdateAliasViewModel @Inject constructor(
         UpdateAliasUiState(
             selectedShareId = shareId,
             canModify = canModify,
-            baseAliasUiState = aliasUiState
+            baseAliasUiState = aliasUiState,
+            canDisplayVaultSharedWarningDialog = canDisplayVaultSharedWarningDialog,
+            canDisplaySharedItemWarningDialog = canDisplaySharedItemWarningDialog
         )
     }.stateIn(
         scope = viewModelScope,
@@ -242,9 +272,10 @@ class UpdateAliasViewModel @Inject constructor(
             mailboxDraftRepository.toggleMailboxById(it.id)
         }
         val details = AliasDetailsUiModel(aliasDetails)
-        val contents: ItemContents.Alias = encryptionContextProvider.withEncryptionContextSuspendable {
-            item.toItemContents { decrypt(it) }
-        }
+        val contents: ItemContents.Alias =
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                item.toItemContents { decrypt(it) }
+            }
 
         val (prefix, suffix) = AliasUtils.extractPrefixSuffix(contents.aliasEmail)
         val selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, false, "")
@@ -290,6 +321,10 @@ class UpdateAliasViewModel @Inject constructor(
         cause?.let { PassLogger.w(TAG, it) }
         snackbarDispatcher(snackbarMessage)
         mutableCloseScreenEventFlow.update { CloseScreenEvent.Close }
+    }
+
+    internal fun doNotDisplayWarningDialog() {
+        settingsRepository.setHasShownItemInSharedVaultWarning(true)
     }
 
     @Suppress("LongMethod")

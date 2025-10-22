@@ -56,6 +56,7 @@ import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -68,6 +69,7 @@ import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
+import proton.android.pass.features.itemcreate.common.canDisplayWarningMessageForCreationFlow
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandler
 import proton.android.pass.features.itemcreate.common.formprocessor.NoteItemFormProcessor
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
@@ -78,6 +80,7 @@ import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -104,7 +107,9 @@ class CreateNoteViewModel @Inject constructor(
     customFieldHandler: CustomFieldHandler,
     customFieldDraftRepository: CustomFieldDraftRepository,
     noteItemFormProcessor: NoteItemFormProcessor,
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
+    observeShare: ObserveShare,
+    private val settingsRepository: InternalSettingsRepository
 ) : BaseNoteViewModel(
     clipboardManager = clipboardManager,
     canPerformPaidAction = canPerformPaidAction,
@@ -147,6 +152,14 @@ class CreateNoteViewModel @Inject constructor(
     private val observeAllVaultsFlow: Flow<List<VaultWithItemCount>> =
         observeVaults(includeHidden = true).distinctUntilChanged()
 
+    private val canDisplayWarningVaultSharedDialogFlow =
+        canDisplayWarningMessageForCreationFlow(
+            selectedShareIdMutableState = selectedShareIdMutableState,
+            observeShare = observeShare,
+            navShareId = navShareId,
+            settingsRepository = settingsRepository
+        )
+
     private val shareUiState: StateFlow<ShareUiState> = getShareUiStateFlow(
         navShareIdState = flowOf(navShareId),
         selectedShareIdState = selectedShareIdState,
@@ -159,6 +172,7 @@ class CreateNoteViewModel @Inject constructor(
     internal val createNoteUiState: StateFlow<CreateNoteUiState> = combine(
         shareUiState,
         baseNoteUiState,
+        canDisplayWarningVaultSharedDialogFlow,
         ::CreateNoteUiState
     ).stateIn(
         scope = viewModelScope,
@@ -181,6 +195,10 @@ class CreateNoteViewModel @Inject constructor(
                 customFields = customFieldHandler.sanitiseForEditingCustomFields(customFields)
             )
         }
+    }
+
+    internal fun doNotDisplayWarningDialog() {
+        settingsRepository.setHasShownItemInSharedVaultWarning(true)
     }
 
     fun createNote(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {

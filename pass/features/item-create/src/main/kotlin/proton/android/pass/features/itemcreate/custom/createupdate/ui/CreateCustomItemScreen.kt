@@ -37,8 +37,10 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.toClassHolder
+import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
+import proton.android.pass.composecomponents.impl.dialogs.WarningSharedItemDialog
 import proton.android.pass.domain.CustomFieldType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.WifiSecurityType
@@ -122,6 +124,9 @@ fun CreateCustomItemScreen(
         }
     }
     BackHandler(onBack = onExit)
+    var showWarningVaultSharedDialog by rememberSaveable { mutableStateOf(false) }
+
+
     Box(modifier = modifier.fillMaxSize()) {
         CustomContent(
             itemFormState = viewModel.itemFormState,
@@ -274,8 +279,13 @@ fun CreateCustomItemScreen(
                             onNavigate(CreateCustomItemNavigation.SelectVault(it.shareId))
                         }
 
-                    is ItemContentEvent.Submit ->
-                        viewModel.processIntent(CreateSpecificIntent.SubmitCreate(it.shareId))
+                    is ItemContentEvent.Submit -> {
+                        if (state.canDisplayVaultSharedWarningDialog) {
+                            showWarningVaultSharedDialog = true
+                        } else {
+                            viewModel.processIntent(CreateSpecificIntent.SubmitCreate(it.shareId))
+                        }
+                    }
 
                     ItemContentEvent.DismissAttachmentBanner ->
                         viewModel.processIntent(BaseCustomItemCommonIntent.DismissFileAttachmentsBanner)
@@ -332,4 +342,22 @@ fun CreateCustomItemScreen(
     InAppReviewTriggerLaunchedEffect(
         triggerCondition = state.itemSavedState is ItemSavedState.Success
     )
+
+    state.selectedShareId.value()?.let {
+        if (showWarningVaultSharedDialog) {
+            WarningSharedItemDialog(
+                description = CompR.string.warning_dialog_item_shared_vault_creating,
+                onOkClick = { reminderCheck ->
+                    showWarningVaultSharedDialog = false
+                    if (reminderCheck) {
+                        viewModel.doNotDisplayWarningDialog()
+                    }
+                    viewModel.processIntent(CreateSpecificIntent.SubmitCreate(it))
+                },
+                onCancelClick = {
+                    showWarningVaultSharedDialog = false
+                }
+            )
+        }
+    }
 }

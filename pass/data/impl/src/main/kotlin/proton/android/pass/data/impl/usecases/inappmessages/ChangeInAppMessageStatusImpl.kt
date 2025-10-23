@@ -18,15 +18,20 @@
 
 package proton.android.pass.data.impl.usecases.inappmessages
 
+import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.InAppMessagesRepository
 import proton.android.pass.data.api.usecases.inappmessages.ChangeInAppMessageStatus
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
+import proton.android.pass.preferences.InternalSettingsRepository
+import proton.android.pass.preferences.LastTimeUserHasSeenIAMPreference
 import javax.inject.Inject
 
 class ChangeInAppMessageStatusImpl @Inject constructor(
-    private val inAppMessagesRepository: InAppMessagesRepository
+    private val inAppMessagesRepository: InAppMessagesRepository,
+    private val internalSettingsRepository: InternalSettingsRepository,
+    private val clock: Clock
 ) : ChangeInAppMessageStatus {
 
     override suspend fun invoke(
@@ -35,5 +40,8 @@ class ChangeInAppMessageStatusImpl @Inject constructor(
         status: InAppMessageStatus
     ) {
         inAppMessagesRepository.changeMessageStatus(userId, messageId, status)
+        internalSettingsRepository.setLastTimeUserHasSeenIAM(
+            LastTimeUserHasSeenIAMPreference(userId, clock.now().epochSeconds)
+        )
     }
 }

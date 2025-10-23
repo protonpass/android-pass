@@ -29,7 +29,8 @@ object InAppMessagePromoNavItem : NavItem(
     navArgIds = listOf(
         CommonNavArgId.UserId,
         InAppMessageNavArgId
-    )
+    ),
+    noHistory = true
 ) {
 
     fun createNavRoute(userId: UserId, inAppMessageId: InAppMessageId) =

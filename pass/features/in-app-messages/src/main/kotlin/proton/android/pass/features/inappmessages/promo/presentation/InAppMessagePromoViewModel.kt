@@ -21,25 +21,24 @@ package proton.android.pass.features.inappmessages.promo.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.getOrNull
-import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.usecases.inappmessages.ChangeInAppMessageStatus
 import proton.android.pass.data.api.usecases.inappmessages.ObserveInAppMessage
-import proton.android.pass.data.api.work.WorkerItem
-import proton.android.pass.data.api.work.WorkerLauncher
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageKey
@@ -56,11 +55,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class InAppMessagePromoViewModel @Inject constructor(
-    private val workerLauncher: WorkerLauncher,
     private val telemetryManager: TelemetryManager,
     observeInAppMessage: ObserveInAppMessage,
     userPreferencesRepository: UserPreferencesRepository,
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
+    private val changeInAppMessageStatus: ChangeInAppMessageStatus
 ) : ViewModel() {
 
     private val userId: UserId = savedStateHandleProvider.get()
@@ -71,14 +70,15 @@ class InAppMessagePromoViewModel @Inject constructor(
         .require<String>(InAppMessageNavArgId.key)
         .let(::InAppMessageId)
 
-    private var inAppMessageStatus: Option<InAppMessageStatus> = None
+    private val eventFlow = MutableStateFlow<InAppMessagePromoEvent>(InAppMessagePromoEvent.Idle)
 
     val state: StateFlow<InAppMessagePromoState> = combine(
-        observeInAppMessage(userId, inAppMessageId).asResultWithoutLoading(),
-        userPreferencesRepository.getThemePreference()
-    ) { result: LoadingResult<InAppMessage>, themePreference: ThemePreference ->
+        observeInAppMessage(userId, inAppMessageId).asResultWithoutLoading().take(1),
+        userPreferencesRepository.getThemePreference(),
+        eventFlow
+    ) { result: LoadingResult<InAppMessage>, themePreference: ThemePreference, event: InAppMessagePromoEvent ->
         when (val message = result.getOrNull()) {
-            is InAppMessage.Promo -> InAppMessagePromoState.Success(message, themePreference)
+            is InAppMessage.Promo -> InAppMessagePromoState.Success(message, themePreference, event)
             else -> InAppMessagePromoState.Error
         }
     }
@@ -103,35 +103,56 @@ class InAppMessagePromoViewModel @Inject constructor(
         telemetryManager.sendEvent(InAppMessagesDisplay(key))
     }
 
-    fun onCTAClicked(key: InAppMessageKey) {
-        inAppMessageStatus = InAppMessageStatus.Dismissed.some()
+    fun onCTAClicked(key: InAppMessageKey, website: String) {
         telemetryManager.sendEvent(InAppMessagesClick(key))
-    }
+        telemetryManager.sendEvent(InAppMessagesChange(key, InAppMessageStatus.Dismissed))
 
-    fun onClose() {
-        inAppMessageStatus = InAppMessageStatus.Read.some()
-    }
-
-    fun onDontShowAgain() {
-        inAppMessageStatus = InAppMessageStatus.Dismissed.some()
-    }
-
-    override fun onCleared() {
-        inAppMessageStatus.value()?.let {
-            workerLauncher.launch(
-                WorkerItem.ChangeInAppMessageStatus(
-                    userId = userId,
-                    inAppMessageId = inAppMessageId,
-                    inAppMessageStatus = it
-                )
-            )
-            val key = (state.value as? InAppMessagePromoState.Success)?.inAppMessage?.key
-            if (key != null) {
-                telemetryManager.sendEvent(InAppMessagesChange(key, InAppMessageStatus.Dismissed))
+        viewModelScope.launch {
+            runCatching {
+                changeInAppMessageStatus(userId, inAppMessageId, InAppMessageStatus.Dismissed)
             }
+            eventFlow.update { InAppMessagePromoEvent.OnCTAClicked(website) }
         }
+    }
 
-        super.onCleared()
+    fun onInternalCTAClicked(key: InAppMessageKey, deepLink: String) {
+        telemetryManager.sendEvent(InAppMessagesClick(key))
+        telemetryManager.sendEvent(InAppMessagesChange(key, InAppMessageStatus.Dismissed))
+
+        viewModelScope.launch {
+            runCatching {
+                changeInAppMessageStatus(userId, inAppMessageId, InAppMessageStatus.Dismissed)
+            }
+            eventFlow.update { InAppMessagePromoEvent.OnInternalCTAClicked(deepLink) }
+        }
+    }
+
+    fun onClose(key: InAppMessageKey) {
+        telemetryManager.sendEvent(InAppMessagesChange(key, InAppMessageStatus.Read))
+        viewModelScope.launch {
+            runCatching {
+                changeInAppMessageStatus(userId, inAppMessageId, InAppMessageStatus.Read)
+            }
+            emitCloseEvent()
+        }
+    }
+
+    fun onDontShowAgain(key: InAppMessageKey) {
+        telemetryManager.sendEvent(InAppMessagesChange(key, InAppMessageStatus.Dismissed))
+        viewModelScope.launch {
+            runCatching {
+                changeInAppMessageStatus(userId, inAppMessageId, InAppMessageStatus.Dismissed)
+            }
+            emitCloseEvent()
+        }
+    }
+
+    fun onConsumeEvent(event: InAppMessagePromoEvent) {
+        eventFlow.compareAndSet(event, InAppMessagePromoEvent.Idle)
+    }
+
+    private fun emitCloseEvent() {
+        eventFlow.update { InAppMessagePromoEvent.OnClose }
     }
 
 }

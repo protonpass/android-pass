@@ -2826,9 +2826,18 @@ fun NavGraphBuilder.appGraph(
             InAppMessageDestination.CloseBottomsheet -> dismissBottomSheet {}
             InAppMessageDestination.CloseScreen -> appNavigator.navigateBack(force = true)
 
-            is InAppMessageDestination.DeepLink -> dismissBottomSheet {
-                if (it.deepLink.isNotBlank()) {
-                    appNavigator.navigateToDeeplink(deepLink = it.deepLink)
+            is InAppMessageDestination.DeepLink -> {
+                if (it.comesFromBottomsheet) {
+                    dismissBottomSheet {
+                        if (it.deepLink.isNotBlank()) {
+                            appNavigator.navigateToDeeplink(deepLink = it.deepLink)
+                        }
+                    }
+                } else {
+                    if (it.deepLink.isNotBlank()) {
+                        appNavigator.navigateBack()
+                        appNavigator.navigateToDeeplink(deepLink = it.deepLink)
+                    }
                 }
             }
         }

@@ -22,8 +22,9 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.InAppMessagesRepository
 import proton.android.pass.data.impl.extensions.toDomain
@@ -50,9 +51,14 @@ class InAppMessagesRepositoryImpl @Inject constructor(
         userId: UserId,
         currentTimestamp: Long,
         refreshOnStart: Boolean
-    ): Flow<InAppMessage?> = local.observeTopDeliverableUserMessage(userId, currentTimestamp)
-        .onStart { if (refreshOnStart) refreshUserMessages(userId) }
-        .distinctUntilChanged()
+    ): Flow<InAppMessage?> = flow {
+        if (refreshOnStart) {
+            refreshUserMessages(userId)
+        }
+        emit(Unit)
+    }.flatMapLatest {
+        local.observeTopDeliverableUserMessage(userId, currentTimestamp)
+    }.distinctUntilChanged()
 
     override suspend fun refreshUserMessages(userId: UserId) {
         coroutineScope {

@@ -18,16 +18,14 @@
 
 package proton.android.pass.features.inappmessages.promo.presentation
 
-import proton.android.pass.domain.inappmessages.InAppMessage
-import proton.android.pass.preferences.ThemePreference
+sealed interface InAppMessagePromoEvent {
 
-sealed interface InAppMessagePromoState {
-    data class Success(
-        val inAppMessage: InAppMessage.Promo,
-        val themePreference: ThemePreference,
-        val event: InAppMessagePromoEvent
-    ) : InAppMessagePromoState
+    data object Idle : InAppMessagePromoEvent
 
-    data object Loading : InAppMessagePromoState
-    data object Error : InAppMessagePromoState
+    data class OnCTAClicked(val website: String) : InAppMessagePromoEvent
+
+    data class OnInternalCTAClicked(val deepLink: String) : InAppMessagePromoEvent
+
+    data object OnClose : InAppMessagePromoEvent
+
 }

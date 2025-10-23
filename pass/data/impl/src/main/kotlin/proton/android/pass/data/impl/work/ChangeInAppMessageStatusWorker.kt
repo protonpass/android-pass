@@ -29,22 +29,17 @@ import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.inappmessages.ChangeInAppMessageStatus
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.InternalSettingsRepository
-import proton.android.pass.preferences.LastTimeUserHasSeenIAMPreference
 
 @HiltWorker
 class ChangeInAppMessageStatusWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted private val workerParameters: WorkerParameters,
-    private val changeInAppMessageStatus: ChangeInAppMessageStatus,
-    private val internalSettingsRepository: InternalSettingsRepository,
-    private val clock: Clock
+    private val changeInAppMessageStatus: ChangeInAppMessageStatus
 ) : CoroutineWorker(appContext, workerParameters) {
 
     override suspend fun doWork(): Result = runCatching {
@@ -57,9 +52,6 @@ class ChangeInAppMessageStatusWorker @AssistedInject constructor(
             .let { InAppMessageStatus.fromValue(it) }
         if (userId != null && inAppMessageId != null && status != InAppMessageStatus.Unknown) {
             changeInAppMessageStatus(userId, inAppMessageId, status)
-            internalSettingsRepository.setLastTimeUserHasSeenIAM(
-                LastTimeUserHasSeenIAMPreference(userId, clock.now().epochSeconds)
-            )
         } else {
             PassLogger.w(TAG, "Failed to get userId or inAppMessageId")
             return Result.failure()

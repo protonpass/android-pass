@@ -30,7 +30,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.onError
@@ -49,8 +48,6 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.network.api.NetworkMonitor
 import proton.android.pass.network.api.NetworkStatus
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.InternalSettingsRepository
-import proton.android.pass.preferences.LastTimeUserHasSeenIAMPreference
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
@@ -61,8 +58,6 @@ class AppViewModel @Inject constructor(
     private val inAppUpdatesManager: InAppUpdatesManager,
     private val changeInAppMessageStatus: ChangeInAppMessageStatus,
     private val telemetryManager: TelemetryManager,
-    private val internalSettingsRepository: InternalSettingsRepository,
-    private val clock: Clock,
     networkMonitor: NetworkMonitor,
     observeDeliverableBannerInAppMessages: ObserveDeliverableBannerInAppMessages
 ) : ViewModel() {
@@ -124,9 +119,6 @@ class AppViewModel @Inject constructor(
                 changeInAppMessageStatus(userId, inAppMessageId, InAppMessageStatus.Read)
             }
                 .onSuccess {
-                    internalSettingsRepository.setLastTimeUserHasSeenIAM(
-                        LastTimeUserHasSeenIAMPreference(userId, clock.now().epochSeconds)
-                    )
                     telemetryManager.sendEvent(InAppMessagesChange(inAppMessageKey, InAppMessageStatus.Read))
                     PassLogger.i(TAG, "In-app message read")
                 }

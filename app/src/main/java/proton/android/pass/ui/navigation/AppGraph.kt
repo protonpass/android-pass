@@ -2835,7 +2835,6 @@ fun NavGraphBuilder.appGraph(
                     }
                 } else {
                     if (it.deepLink.isNotBlank()) {
-                        appNavigator.navigateBack()
                         appNavigator.navigateToDeeplink(deepLink = it.deepLink)
                     }
                 }

@@ -56,7 +56,7 @@ fun InAppMessageBottomsheet(
                 },
                 onInternalCTAClick = {
                     viewModel.onCTAClicked(successState.inAppMessage.key)
-                    onNavigate(InAppMessageDestination.DeepLink(it))
+                    onNavigate(InAppMessageDestination.DeepLink(it, true))
                 },
                 onClose = {
                     onNavigate(InAppMessageDestination.CloseBottomsheet)

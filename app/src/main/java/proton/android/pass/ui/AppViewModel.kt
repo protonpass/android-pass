@@ -82,7 +82,7 @@ class AppViewModel @Inject constructor(
         snackbarDispatcher.snackbarMessage,
         networkStatus,
         inAppUpdatesManager.observeInAppUpdateState(),
-        observeDeliverableBannerInAppMessages(refresh = true)
+        observeDeliverableBannerInAppMessages()
     ) { snackbarMessage, networkStatus, inAppUpdateState, inAppMessage ->
         AppUiState(
             snackbarMessage = snackbarMessage,

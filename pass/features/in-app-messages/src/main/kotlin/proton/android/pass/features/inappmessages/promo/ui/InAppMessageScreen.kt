@@ -53,7 +53,7 @@ fun InAppMessagePromoScreen(
                 },
                 onInternalCTAClick = {
                     viewModel.onCTAClicked(successState.inAppMessage.key)
-                    onNavigate(InAppMessageDestination.DeepLink(it))
+                    onNavigate(InAppMessageDestination.DeepLink(it, false))
                 },
                 onMinimize = {
                     viewModel.onClose()

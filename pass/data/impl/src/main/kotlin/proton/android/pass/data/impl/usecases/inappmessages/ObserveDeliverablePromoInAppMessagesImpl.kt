@@ -39,7 +39,8 @@ class ObserveDeliverablePromoInAppMessagesImpl @Inject constructor(
         InAppMessageUtils.getUserId(userId, observeCurrentUser).flatMapLatest { resolvedUserId ->
             inAppMessagesRepository.observeTopDeliverableUserMessage(
                 userId = resolvedUserId,
-                currentTimestamp = clock.now().epochSeconds
+                currentTimestamp = clock.now().epochSeconds,
+                refreshOnStart = true
             ).map { entity -> entity as? InAppMessage.Promo }
         }
 }

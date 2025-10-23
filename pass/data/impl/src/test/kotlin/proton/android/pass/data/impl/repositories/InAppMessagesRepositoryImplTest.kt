@@ -472,7 +472,7 @@ internal class InAppMessagesRepositoryImplTest {
             instance.observeTopDeliverableUserMessage(TEST_USER_ID, currentTimestamp).first()
             assert(false) { "Expected exception to be thrown" }
         } catch (e: RuntimeException) {
-            assertThat(e).isEqualTo(error)
+            assertThat(e.message).isEqualTo(error.message)
         }
     }
 

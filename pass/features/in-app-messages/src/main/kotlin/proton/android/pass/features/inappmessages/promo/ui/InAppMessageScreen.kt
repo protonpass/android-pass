@@ -19,6 +19,7 @@
 package proton.android.pass.features.inappmessages.promo.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -26,6 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.features.inappmessages.navigation.InAppMessageDestination
+import proton.android.pass.features.inappmessages.promo.presentation.InAppMessagePromoEvent
 import proton.android.pass.features.inappmessages.promo.presentation.InAppMessagePromoState
 import proton.android.pass.features.inappmessages.promo.presentation.InAppMessagePromoViewModel
 
@@ -38,6 +40,24 @@ fun InAppMessagePromoScreen(
     val context = LocalContext.current
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    val event = (state as? InAppMessagePromoState.Success)?.event
+    LaunchedEffect(event) {
+        when (event) {
+            is InAppMessagePromoEvent.OnCTAClicked -> {
+                BrowserUtils.openWebsite(context, event.website)
+                onNavigate(InAppMessageDestination.CloseScreen)
+            }
+            is InAppMessagePromoEvent.OnInternalCTAClicked ->
+                onNavigate(InAppMessageDestination.DeepLink(event.deepLink, false))
+            InAppMessagePromoEvent.OnClose ->
+                onNavigate(InAppMessageDestination.CloseScreen)
+
+            InAppMessagePromoEvent.Idle,
+            null -> Unit
+        }
+        event?.let { viewModel.onConsumeEvent(it) }
+    }
+
     when (state) {
         is InAppMessagePromoState.Success -> {
             val successState = state as InAppMessagePromoState.Success
@@ -47,26 +67,23 @@ fun InAppMessagePromoScreen(
                 inAppMessage = successState.inAppMessage,
                 themePreference = successState.themePreference,
                 onExternalCTAClick = {
-                    viewModel.onCTAClicked(successState.inAppMessage.key)
-                    BrowserUtils.openWebsite(context, it)
-                    onNavigate(InAppMessageDestination.CloseScreen)
+                    viewModel.onCTAClicked(successState.inAppMessage.key, it)
                 },
                 onInternalCTAClick = {
-                    viewModel.onCTAClicked(successState.inAppMessage.key)
-                    onNavigate(InAppMessageDestination.DeepLink(it, false))
+                    viewModel.onInternalCTAClicked(successState.inAppMessage.key, it)
                 },
                 onMinimize = {
-                    viewModel.onClose()
-                    onNavigate(InAppMessageDestination.CloseScreen)
+                    viewModel.onClose(successState.inAppMessage.key)
                 },
                 onDontShowAgain = {
-                    viewModel.onDontShowAgain()
-                    onNavigate(InAppMessageDestination.CloseScreen)
+                    viewModel.onDontShowAgain(successState.inAppMessage.key)
                 }
             )
         }
+
         is InAppMessagePromoState.Loading -> {
         }
+
         is InAppMessagePromoState.Error -> onNavigate(InAppMessageDestination.CloseScreen)
     }
 }

@@ -6,6 +6,14 @@
 
 ### Other
 
+## 1.33.1 (2025-10-24)
+
+### Other
+
+- Support new promo messages.
+- Improved passkeys compatibility and support for PRF.
+- Updated translations.
+
 ## 1.33.1 (2025-10-13)
 
 ### Fixes :bug:

@@ -316,7 +316,7 @@
   <string name="attachment_title">Priponke</string>
   <string name="attachment_no_files">Upload files from your device</string>
   <string name="attachment_add_file">Pripni datoteko</string>
-  <string name="attachment_row_upload_failed">Upload failed</string>
+  <string name="attachment_row_upload_failed">Nalaganje ni bilo uspešno</string>
   <string name="attachment_row_retry">Poskusi znova</string>
   <string name="options_menu_content_description">Options menu</string>
   <!-- Items -->
@@ -339,8 +339,8 @@
     <item quantity="other">%d članov</item>
   </plurals>
   <string name="show_network_qr_code">Pokaži QR kodo omrežja</string>
-  <string name="expand_collpased_text">more</string>
-  <string name="collapse_expanded_text">less</string>
+  <string name="expand_collpased_text">več</string>
+  <string name="collapse_expanded_text">manj</string>
   <string name="login_item_monitor_widget_weak_pass_title">Šibko geslo</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Ta račun je ranljiv, obiščite storitev in spremenite geslo.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
@@ -377,8 +377,8 @@
     <item quantity="other">%1$s blocks</item>
   </plurals>
   <string name="alias_create_login_from_alias">Ustvarite prijavo</string>
-  <string name="banner_contacts_title">Did you know?</string>
+  <string name="banner_contacts_title">Ali ste vedeli?</string>
   <string name="banner_contacts_subtitle">Every time your alias receives an email from someone, a new contact is automatically created.</string>
-  <string name="action_reveal">Reveal</string>
-  <string name="action_conceal">Conceal</string>
+  <string name="action_reveal">Pokaži</string>
+  <string name="action_conceal">Skrij</string>
 </resources>

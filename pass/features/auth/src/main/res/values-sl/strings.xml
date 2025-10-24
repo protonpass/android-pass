@@ -40,7 +40,7 @@
   <string name="auth_error_pin_cannot_be_empty">PIN vnos ne sme biti prazen.</string>
   <string name="auth_extra_password_label">Vnesite dodatno geslo</string>
   <string name="auth_extra_password_error">Napaka pri preverjanju pristnosti z dodatnim geslom</string>
-  <string name="auth_extra_password_too_many_attempts">Too many failed login attempts. You have been logged out.</string>
+  <string name="auth_extra_password_too_many_attempts">Preveč neuspešnih poskusov prijave. Bili ste odjavljeni.</string>
   <string name="auth_error_wrong_password_no_attempts">Napačno geslo</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Napačno geslo. Še %d poskus</item>
@@ -54,6 +54,6 @@
     <item quantity="few">Še %d poskusi</item>
     <item quantity="other">Še %d poskusov</item>
   </plurals>
-  <string name="auth_pin_too_many_attempts">Too many failed pin attempts. All your users are being logged out.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
+  <string name="auth_pin_too_many_attempts">Preveč neuspešnih poskusov PIN kode. Vsi vaši uporabniki so odjavljeni.</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Preveč neuspešnih poskusov s PIN kodo</string>
 </resources>

@@ -26,6 +26,7 @@ import proton.android.pass.data.impl.db.dao.LiveTelemetryDao
 import proton.android.pass.data.impl.db.dao.PassDataMigrationDao
 import proton.android.pass.data.impl.db.dao.PassEventsDao
 import proton.android.pass.data.impl.db.dao.PassOrganizationSettingsDao
+import proton.android.pass.data.impl.db.dao.PasswordHistoryDao
 import proton.android.pass.data.impl.db.dao.PlanDao
 import proton.android.pass.data.impl.db.dao.SearchEntryDao
 import proton.android.pass.data.impl.db.dao.ShareKeysDao
@@ -119,6 +120,10 @@ internal class TestPassDatabase : PassDatabase {
     }
 
     override fun liveTelemetryDao(): LiveTelemetryDao {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun passwordHistoryDao(): PasswordHistoryDao {
         throw IllegalStateException("This method should not be called")
     }
 

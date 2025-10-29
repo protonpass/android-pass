@@ -174,8 +174,8 @@ import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
 import proton.android.pass.data.api.usecases.inappmessages.ChangeInAppMessageStatus
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableBannerInAppMessages
-import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableModalInAppMessages
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableMinimizedPromoInAppMessages
+import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableModalInAppMessages
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverablePromoInAppMessages
 import proton.android.pass.data.api.usecases.inappmessages.ObserveInAppMessage
 import proton.android.pass.data.api.usecases.invites.InviteToItem
@@ -202,6 +202,12 @@ import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeysForDomain
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.data.api.usecases.passkeys.StorePasskey
+import proton.android.pass.data.api.usecases.passwordHistoryEntry.AddOnePasswordHistoryEntryToUser
+import proton.android.pass.data.api.usecases.passwordHistoryEntry.DeleteOldPasswordHistoryEntry
+import proton.android.pass.data.api.usecases.passwordHistoryEntry.DeleteOnePasswordHistoryEntryForUser
+import proton.android.pass.data.api.usecases.passwordHistoryEntry.DeletePasswordHistoryEntryForUser
+import proton.android.pass.data.api.usecases.passwordHistoryEntry.GetPasswordHistoryEntryForUser
+import proton.android.pass.data.api.usecases.passwordHistoryEntry.ObservePasswordHistoryEntryForUser
 import proton.android.pass.data.api.usecases.passwords.ObservePasswordConfig
 import proton.android.pass.data.api.usecases.passwords.UpdatePasswordConfig
 import proton.android.pass.data.api.usecases.report.SendReport
@@ -272,8 +278,8 @@ import proton.android.pass.data.impl.usecases.ClearTrashImpl
 import proton.android.pass.data.impl.usecases.ClearUserDataImpl
 import proton.android.pass.data.impl.usecases.ConfirmNewUserInviteImpl
 import proton.android.pass.data.impl.usecases.CreateAliasImpl
-import proton.android.pass.data.impl.usecases.CreateLoginAndAliasImpl
 import proton.android.pass.data.impl.usecases.CreateItemImpl
+import proton.android.pass.data.impl.usecases.CreateLoginAndAliasImpl
 import proton.android.pass.data.impl.usecases.CreatePinImpl
 import proton.android.pass.data.impl.usecases.CreateVaultImpl
 import proton.android.pass.data.impl.usecases.DeleteItemsImpl
@@ -408,8 +414,8 @@ import proton.android.pass.data.impl.usecases.extrapassword.RemoveExtraPasswordI
 import proton.android.pass.data.impl.usecases.extrapassword.SetupExtraPasswordImpl
 import proton.android.pass.data.impl.usecases.inappmessages.ChangeInAppMessageStatusImpl
 import proton.android.pass.data.impl.usecases.inappmessages.ObserveDeliverableBannerInAppMessagesImpl
-import proton.android.pass.data.impl.usecases.inappmessages.ObserveDeliverableModalInAppMessagesImpl
 import proton.android.pass.data.impl.usecases.inappmessages.ObserveDeliverableMinimizedPromoInAppMessagesImpl
+import proton.android.pass.data.impl.usecases.inappmessages.ObserveDeliverableModalInAppMessagesImpl
 import proton.android.pass.data.impl.usecases.inappmessages.ObserveDeliverablePromoInAppMessagesImpl
 import proton.android.pass.data.impl.usecases.inappmessages.ObserveInAppMessageImpl
 import proton.android.pass.data.impl.usecases.invites.InviteToItemImpl
@@ -436,6 +442,12 @@ import proton.android.pass.data.impl.usecases.passkeys.GetPasskeyByIdImpl
 import proton.android.pass.data.impl.usecases.passkeys.GetPasskeysForDomainImpl
 import proton.android.pass.data.impl.usecases.passkeys.ObserveItemsWithPasskeysImpl
 import proton.android.pass.data.impl.usecases.passkeys.StorePasskeyImpl
+import proton.android.pass.data.impl.usecases.passwordHistoryEntry.AddOnePasswordHistoryEntryToUserImpl
+import proton.android.pass.data.impl.usecases.passwordHistoryEntry.DeleteOldPasswordHistoryEntryImpl
+import proton.android.pass.data.impl.usecases.passwordHistoryEntry.DeleteOnePasswordHistoryEntryForUserImpl
+import proton.android.pass.data.impl.usecases.passwordHistoryEntry.DeletePasswordHistoryEntryForUserImpl
+import proton.android.pass.data.impl.usecases.passwordHistoryEntry.GetPasswordHistoryEntryForUserImpl
+import proton.android.pass.data.impl.usecases.passwordHistoryEntry.ObservePasswordHistoryEntryForUserImpl
 import proton.android.pass.data.impl.usecases.passwords.ObservePasswordConfigImpl
 import proton.android.pass.data.impl.usecases.passwords.UpdatePasswordConfigImpl
 import proton.android.pass.data.impl.usecases.report.SendReportImpl
@@ -1249,6 +1261,35 @@ abstract class DataUseCaseModule {
     @[Binds Singleton]
     abstract fun bindGetPasskeyCredentialItems(impl: GetPasskeyCredentialItemsImpl): GetPasskeyCredentialItems
 
+    @[Binds Singleton]
+    abstract fun bindAddOnePasswordHistoryEntryToUser(
+        impl: AddOnePasswordHistoryEntryToUserImpl
+    ): AddOnePasswordHistoryEntryToUser
+
+    @[Binds Singleton]
+    abstract fun bindDeletePasswordEntryHistoryForUser(
+        impl: DeletePasswordHistoryEntryForUserImpl
+    ): DeletePasswordHistoryEntryForUser
+
+    @[Binds Singleton]
+    abstract fun bindDeleteOnePasswordHistoryEntryForUser(
+        impl: DeleteOnePasswordHistoryEntryForUserImpl
+    ): DeleteOnePasswordHistoryEntryForUser
+
+    @[Binds Singleton]
+    abstract fun bindGetPasswordHistoryEntryForUser(
+        impl: GetPasswordHistoryEntryForUserImpl
+    ): GetPasswordHistoryEntryForUser
+
+    @[Binds Singleton]
+    abstract fun bindObservePasswordHistoryEntryForUser(
+        impl: ObservePasswordHistoryEntryForUserImpl
+    ): ObservePasswordHistoryEntryForUser
+
+    @[Binds Singleton]
+    abstract fun bindDeleteOldPasswordHistoryEntry(
+        impl: DeleteOldPasswordHistoryEntryImpl
+    ): DeleteOldPasswordHistoryEntry
     @[Binds Singleton]
     abstract fun bindBatchChangeShareVisibility(impl: BatchChangeShareVisibilityImpl): BatchChangeShareVisibility
 

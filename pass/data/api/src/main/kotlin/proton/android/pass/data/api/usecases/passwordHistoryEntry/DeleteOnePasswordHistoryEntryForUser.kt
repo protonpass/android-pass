@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,19 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases
+package proton.android.pass.data.api.usecases.passwordHistoryEntry
 
-interface InitialWorkerLauncher {
-    fun start()
-    fun cancel()
-    fun cancelFeature(feature: WorkerFeature)
-}
+import proton.android.pass.domain.PasswordHistoryEntryId
 
-enum class WorkerFeature {
-    USER_ACCESS,
-    CLEANUP,
-    FEATURE_DISCOVERY,
-    REPORT,
-    ASSET_LINKS,
-    PASSWORD_HISTORY
+interface DeleteOnePasswordHistoryEntryForUser {
+    suspend operator fun invoke(passwordHistoryEntryId: PasswordHistoryEntryId)
 }

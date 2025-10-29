@@ -39,6 +39,7 @@ import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.LiveTelemetryRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.repositories.OrganizationSettingsRepository
+import proton.android.pass.data.api.repositories.PasswordHistoryEntryRepository
 import proton.android.pass.data.api.repositories.ReportRepository
 import proton.android.pass.data.api.repositories.SearchEntryRepository
 import proton.android.pass.data.api.repositories.ShareInvitesRepository
@@ -74,6 +75,7 @@ import proton.android.pass.data.impl.repositories.OnMemoryDraftRepository
 import proton.android.pass.data.impl.repositories.OrganizationSettingsRepositoryImpl
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
+import proton.android.pass.data.impl.repositories.PasswordHistoryEntryRepositoryImpl
 import proton.android.pass.data.impl.repositories.PendingAttachmentLinkRepositoryImpl
 import proton.android.pass.data.impl.repositories.PendingAttachmentUpdaterRepositoryImpl
 import proton.android.pass.data.impl.repositories.PlanRepository
@@ -207,4 +209,6 @@ abstract class DataRepositoryModule {
     @[Binds Singleton]
     abstract fun bindShareInvitesRepository(impl: ShareInvitesRepositoryImpl): ShareInvitesRepository
 
+    @[Binds Singleton]
+    abstract fun bindPasswordHistoryRepository(impl: PasswordHistoryEntryRepositoryImpl): PasswordHistoryEntryRepository
 }

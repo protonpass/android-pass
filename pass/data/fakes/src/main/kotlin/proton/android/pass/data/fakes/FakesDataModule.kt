@@ -35,6 +35,7 @@ import proton.android.pass.data.api.repositories.InviteRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
+import proton.android.pass.data.api.repositories.PasswordHistoryEntryRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
@@ -182,6 +183,12 @@ import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSet
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSharingPolicy
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
+import proton.android.pass.data.api.usecases.passwordHistoryEntry.AddOnePasswordHistoryEntryToUser
+import proton.android.pass.data.api.usecases.passwordHistoryEntry.DeleteOldPasswordHistoryEntry
+import proton.android.pass.data.api.usecases.passwordHistoryEntry.DeleteOnePasswordHistoryEntryForUser
+import proton.android.pass.data.api.usecases.passwordHistoryEntry.DeletePasswordHistoryEntryForUser
+import proton.android.pass.data.api.usecases.passwordHistoryEntry.GetPasswordHistoryEntryForUser
+import proton.android.pass.data.api.usecases.passwordHistoryEntry.ObservePasswordHistoryEntryForUser
 import proton.android.pass.data.api.usecases.passwords.ObservePasswordConfig
 import proton.android.pass.data.api.usecases.passwords.UpdatePasswordConfig
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
@@ -231,6 +238,7 @@ import proton.android.pass.data.fakes.repositories.FakeAssetLinkRepository
 import proton.android.pass.data.fakes.repositories.FakeDraftAttachmentRepository
 import proton.android.pass.data.fakes.repositories.FakeInAppMessagesRepository
 import proton.android.pass.data.fakes.repositories.FakeMetadataResolver
+import proton.android.pass.data.fakes.repositories.FakePasswordHistoryEntryRepository
 import proton.android.pass.data.fakes.repositories.FakePendingAttachmentLinkRepository
 import proton.android.pass.data.fakes.repositories.FakePendingAttachmentUpdaterRepository
 import proton.android.pass.data.fakes.repositories.FakeSentinelRepository
@@ -388,6 +396,12 @@ import proton.android.pass.data.fakes.usecases.items.FakeObserveSharedItemCountS
 import proton.android.pass.data.fakes.usecases.items.FakeOpenItemRevision
 import proton.android.pass.data.fakes.usecases.items.FakeUpdateItemFlag
 import proton.android.pass.data.fakes.usecases.organizations.FakeObserveOrganizationSharingPolicy
+import proton.android.pass.data.fakes.usecases.passwordHistoryEntry.FakeAddOnePasswordHistoryEntryToUser
+import proton.android.pass.data.fakes.usecases.passwordHistoryEntry.FakeDeleteOldPasswordHistoryEntry
+import proton.android.pass.data.fakes.usecases.passwordHistoryEntry.FakeDeleteOnePasswordHistoryEntryForUser
+import proton.android.pass.data.fakes.usecases.passwordHistoryEntry.FakeDeletePasswordHistoryEntryForUser
+import proton.android.pass.data.fakes.usecases.passwordHistoryEntry.FakeGetPasswordHistoryEntryForUser
+import proton.android.pass.data.fakes.usecases.passwordHistoryEntry.FakeObservePasswordHistoryEntryForUser
 import proton.android.pass.data.fakes.usecases.passwords.FakeObservePasswordConfig
 import proton.android.pass.data.fakes.usecases.passwords.FakeUpdatePasswordConfig
 import proton.android.pass.data.fakes.usecases.securelink.FakeDeleteInactiveSecureLinks
@@ -1101,6 +1115,40 @@ abstract class FakesDataModule {
     abstract fun bindObservePromoInAppMessages(
         impl: FakeObserveDeliverablePromoInAppMessages
     ): ObserveDeliverablePromoInAppMessages
+
+
+    @Binds
+    abstract fun bindPasswordHistoryRepository(impl: FakePasswordHistoryEntryRepository): PasswordHistoryEntryRepository
+
+    @Binds
+    abstract fun bindAddOnePasswordHistoryEntryToUser(
+        impl: FakeAddOnePasswordHistoryEntryToUser
+    ): AddOnePasswordHistoryEntryToUser
+
+    @Binds
+    abstract fun bindDeletePasswordEntryHistoryForUser(
+        impl: FakeDeletePasswordHistoryEntryForUser
+    ): DeletePasswordHistoryEntryForUser
+
+    @Binds
+    abstract fun bindDeleteOnePasswordHistoryEntryForUser(
+        impl: FakeDeleteOnePasswordHistoryEntryForUser
+    ): DeleteOnePasswordHistoryEntryForUser
+
+    @Binds
+    abstract fun bindGetPasswordHistoryEntryForUser(
+        impl: FakeGetPasswordHistoryEntryForUser
+    ): GetPasswordHistoryEntryForUser
+
+    @Binds
+    abstract fun bindObservePasswordHistoryEntryForUser(
+        impl: FakeObservePasswordHistoryEntryForUser
+    ): ObservePasswordHistoryEntryForUser
+
+    @Binds
+    abstract fun bindDeleteOldPasswordHistoryEntry(
+        impl: FakeDeleteOldPasswordHistoryEntry
+    ): DeleteOldPasswordHistoryEntry
 
     @Binds
     abstract fun bindBatchChangeShareVisibility(impl: FakeBatchChangeShareVisibility): BatchChangeShareVisibility

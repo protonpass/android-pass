@@ -77,6 +77,10 @@ dependencies {
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.preferences.api)
 
+    implementation(projects.pass.domain)
+    implementation(libs.kotlinx.datetime)
+    implementation(projects.pass.features.itemCreate)
+
     testImplementation(libs.truth)
     testImplementation(libs.kotlinTest)
     testImplementation(libs.coroutines.test)

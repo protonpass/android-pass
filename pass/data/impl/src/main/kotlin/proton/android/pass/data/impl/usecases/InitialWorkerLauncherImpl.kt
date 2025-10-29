@@ -32,6 +32,7 @@ import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.data.api.usecases.InitialWorkerLauncher
 import proton.android.pass.data.api.usecases.WorkerFeature
+import proton.android.pass.data.impl.work.ClearPasswordHistoryWorker
 import proton.android.pass.data.impl.work.PeriodicAssetLinkWorker
 import proton.android.pass.data.impl.work.PeriodicCleanupWorker
 import proton.android.pass.data.impl.work.PeriodicFeatureDiscoveryWorker
@@ -56,7 +57,8 @@ class InitialWorkerLauncherImpl @Inject constructor(
         WorkerFeature.CLEANUP to ::launchCleanupWorker,
         WorkerFeature.FEATURE_DISCOVERY to ::launchFeatureDiscoveryWorker,
         WorkerFeature.REPORT to ::launchReportWorker,
-        WorkerFeature.ASSET_LINKS to ::launchAssetLinkWorkers
+        WorkerFeature.ASSET_LINKS to ::launchAssetLinkWorkers,
+        WorkerFeature.PASSWORD_HISTORY to ::launchPasswordHistoryWorker
     )
 
     private val featureToWorkersMap: Map<WorkerFeature, List<String>> = mapOf(
@@ -67,7 +69,8 @@ class InitialWorkerLauncherImpl @Inject constructor(
         WorkerFeature.ASSET_LINKS to listOf(
             PeriodicAssetLinkWorker.WORKER_UNIQUE_NAME,
             PeriodicIgnoredAssetLinkWorker.WORKER_UNIQUE_NAME
-        )
+        ),
+        WorkerFeature.PASSWORD_HISTORY to listOf(ClearPasswordHistoryWorker.WORKER_UNIQUE_NAME)
     )
 
     override fun start() {
@@ -76,6 +79,7 @@ class InitialWorkerLauncherImpl @Inject constructor(
         launchFeature(WorkerFeature.CLEANUP)
         launchFeature(WorkerFeature.FEATURE_DISCOVERY)
         launchFeature(WorkerFeature.REPORT)
+        launchFeature(WorkerFeature.PASSWORD_HISTORY)
 
         CoroutineScope(appDispatchers.io).launch {
             if (isDALEnabled()) {
@@ -156,6 +160,14 @@ class InitialWorkerLauncherImpl @Inject constructor(
             PeriodicIgnoredAssetLinkWorker.WORKER_UNIQUE_NAME,
             ExistingPeriodicWorkPolicy.KEEP,
             PeriodicIgnoredAssetLinkWorker.getRequestFor()
+        )
+    }
+
+    private fun launchPasswordHistoryWorker() {
+        workManager.enqueueUniquePeriodicWork(
+            ClearPasswordHistoryWorker.WORKER_UNIQUE_NAME,
+            ExistingPeriodicWorkPolicy.KEEP,
+            ClearPasswordHistoryWorker.getRequestFor()
         )
     }
 

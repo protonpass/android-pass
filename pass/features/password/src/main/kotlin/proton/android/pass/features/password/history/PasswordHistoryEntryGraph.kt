@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,19 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases
+package proton.android.pass.features.password.history
 
-interface InitialWorkerLauncher {
-    fun start()
-    fun cancel()
-    fun cancelFeature(feature: WorkerFeature)
+import androidx.navigation.NavGraphBuilder
+import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.composable
+
+data object PassWordHistoryNavItem : NavItem(baseRoute = "password/history") {
+    fun buildRoute() = baseRoute
 }
 
-enum class WorkerFeature {
-    USER_ACCESS,
-    CLEANUP,
-    FEATURE_DISCOVERY,
-    REPORT,
-    ASSET_LINKS,
-    PASSWORD_HISTORY
+
+fun NavGraphBuilder.passwordHistoryGraph(onBackClick: () -> Unit) {
+    composable(navItem = PassWordHistoryNavItem) {
+        PassHistoryEntry(
+            onBackClick = onBackClick
+        )
+    }
 }
+
+

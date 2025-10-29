@@ -32,11 +32,13 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
+import proton.android.pass.data.fakes.usecases.passwordHistoryEntry.FakeAddOnePasswordHistoryEntryToUser
 import proton.android.pass.data.fakes.usecases.passwords.FakeObservePasswordConfig
 import proton.android.pass.data.fakes.usecases.passwords.FakeUpdatePasswordConfig
 import proton.android.pass.features.password.GeneratePasswordBottomsheetMode
 import proton.android.pass.features.password.GeneratePasswordBottomsheetModeValue
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.test.FixedClock
 import proton.android.pass.test.MainDispatcherRule
 
 internal class GeneratePasswordViewModelTest {
@@ -65,7 +67,9 @@ internal class GeneratePasswordViewModelTest {
             encryptionContextProvider = TestEncryptionContextProvider(),
             passwordGenerator = FakePasswordGenerator(),
             observePasswordConfig = FakeObservePasswordConfig(),
-            updatePasswordConfig = FakeUpdatePasswordConfig()
+            updatePasswordConfig = FakeUpdatePasswordConfig(),
+            addOnePasswordHistoryEntryToUser = FakeAddOnePasswordHistoryEntryToUser(),
+            clock = FixedClock()
         )
     }
 

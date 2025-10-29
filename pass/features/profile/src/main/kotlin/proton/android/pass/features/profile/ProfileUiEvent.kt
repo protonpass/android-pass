@@ -52,6 +52,8 @@ sealed interface ProfileUiEvent {
 
     data object OnAliasesClicked : ProfileUiEvent
 
+    data object OnGeneratedPasswordsClicked : ProfileUiEvent
+
     data object OnLoginCountClick : ProfileUiEvent
 
     data object OnAliasCountClick : ProfileUiEvent

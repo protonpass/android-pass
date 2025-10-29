@@ -27,6 +27,7 @@ import proton.android.pass.data.impl.db.dao.PassDataMigrationDao
 import proton.android.pass.data.impl.db.dao.PassEventsDao
 import proton.android.pass.data.impl.db.dao.UserEventsDao
 import proton.android.pass.data.impl.db.dao.PassOrganizationSettingsDao
+import proton.android.pass.data.impl.db.dao.PasswordHistoryDao
 import proton.android.pass.data.impl.db.dao.PlanDao
 import proton.android.pass.data.impl.db.dao.SearchEntryDao
 import proton.android.pass.data.impl.db.dao.ShareKeysDao
@@ -83,6 +84,8 @@ interface PassDatabase : Database {
     fun attachmentDao(): AttachmentDao
 
     fun chunkDao(): ChunkDao
+
+    fun passwordHistoryDao(): PasswordHistoryDao
 
     suspend fun <R> inTransaction(name: String, block: suspend () -> R): R {
         PassLogger.i(TAG, "$name transaction started")

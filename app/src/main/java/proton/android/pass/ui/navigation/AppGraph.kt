@@ -170,6 +170,8 @@ import proton.android.pass.features.password.GeneratePasswordNavigation
 import proton.android.pass.features.password.dialog.mode.PasswordModeDialog
 import proton.android.pass.features.password.dialog.separator.WordSeparatorDialog
 import proton.android.pass.features.password.generatePasswordBottomsheetGraph
+import proton.android.pass.features.password.history.PassWordHistoryNavItem
+import proton.android.pass.features.password.history.passwordHistoryGraph
 import proton.android.pass.features.profile.AppLockTimeBottomsheet
 import proton.android.pass.features.profile.AppLockTypeBottomsheet
 import proton.android.pass.features.profile.ENTER_PIN_PARAMETER_KEY
@@ -837,6 +839,10 @@ fun NavGraphBuilder.appGraph(
 
                 ProfileNavigation.AliasesSyncManagement -> appNavigator.navigate(
                     destination = SimpleLoginSyncManagementNavItem
+                )
+
+                ProfileNavigation.GeneratedPasswords -> appNavigator.navigate(
+                    destination = PassWordHistoryNavItem
                 )
 
                 is ProfileNavigation.AliasesSyncSettings -> appNavigator.navigate(
@@ -2895,4 +2901,10 @@ fun NavGraphBuilder.appGraph(
             }
         }
     }
+
+    passwordHistoryGraph(
+        onBackClick = {
+            appNavigator.navigateBack()
+        }
+    )
 }

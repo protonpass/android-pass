@@ -36,6 +36,8 @@ fun BackArrowTopAppBar(
     modifier: Modifier = Modifier,
     title: String? = null,
     backgroundColor: Color = PassTheme.colors.backgroundStrong,
+    arrowColor: Color = PassTheme.colors.interactionNormMajor2,
+    backgroundArrowColor: Color = PassTheme.colors.interactionNormMinor1,
     actions: (@Composable RowScope.() -> Unit)? = null,
     onUpClick: () -> Unit
 ) {
@@ -50,8 +52,8 @@ fun BackArrowTopAppBar(
                     horizontal = Spacing.medium - Spacing.extraSmall,
                     vertical = Spacing.extraSmall
                 ),
-                color = PassTheme.colors.interactionNormMajor2,
-                backgroundColor = PassTheme.colors.interactionNormMinor1,
+                color = arrowColor,
+                backgroundColor = backgroundArrowColor,
                 onUpClick = onUpClick
             )
         }

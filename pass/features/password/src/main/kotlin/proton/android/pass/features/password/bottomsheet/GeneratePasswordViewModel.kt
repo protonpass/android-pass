@@ -33,6 +33,7 @@ import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.commonrust.api.passwords.PasswordConfig
 import proton.android.pass.commonrust.api.passwords.PasswordGenerator
@@ -42,8 +43,11 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.DRAFT_PASSWORD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.usecases.passwordHistoryEntry.AddOnePasswordHistoryEntryToUser
 import proton.android.pass.data.api.usecases.passwords.ObservePasswordConfig
 import proton.android.pass.data.api.usecases.passwords.UpdatePasswordConfig
+import proton.android.pass.domain.PasswordHistoryEntry
+import proton.android.pass.domain.PasswordHistoryEntryId
 import proton.android.pass.features.password.GeneratePasswordBottomsheetMode
 import proton.android.pass.features.password.GeneratePasswordBottomsheetModeValue
 import proton.android.pass.features.password.GeneratePasswordSnackbarMessage
@@ -60,7 +64,9 @@ class GeneratePasswordViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val clipboardManager: ClipboardManager,
     private val draftRepository: DraftRepository,
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val addOnePasswordHistoryEntryToUser: AddOnePasswordHistoryEntryToUser,
+    private val clock: Clock
 ) : ViewModel() {
 
     private val mode = stateHandleProvider.get()
@@ -146,11 +152,21 @@ class GeneratePasswordViewModel @Inject constructor(
 
     internal fun onCopyPassword() {
         clipboardManager.copyToClipboard(stateFlow.value.password, isSecure = true)
-
         viewModelScope.launch {
             snackbarDispatcher(GeneratePasswordSnackbarMessage.CopiedToClipboard)
             eventFlow.update { GeneratePasswordEvent.OnPasswordCopied }
+
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                encrypt(stateFlow.value.password)
+            }.also { encryptedPassword ->
+                addOnePasswordHistoryEntryToUser(
+                    PasswordHistoryEntry(
+                        encrypted = encryptedPassword,
+                        createdTime = clock.now().epochSeconds,
+                        passwordHistoryEntryId = PasswordHistoryEntryId(id = 0) // auto-generated
+                    )
+                )
+            }
         }
     }
-
 }

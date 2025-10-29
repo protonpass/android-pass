@@ -149,6 +149,10 @@ internal fun ProfileContent(
                         onclick = { onEvent(ProfileUiEvent.OnAliasesClicked) }
                     )
 
+                    PasswordHistorySection(
+                        onclick = { onEvent(ProfileUiEvent.OnGeneratedPasswordsClicked) }
+                    )
+
                     if (state.passkeySupport is ProfilePasskeySupportSection.Show) {
                         PasskeyProfileSection(
                             support = state.passkeySupport

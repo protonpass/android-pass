@@ -113,6 +113,10 @@ fun ProfileScreen(
                 ProfileUiEvent.OnAliasesClicked ->
                     onNavigateEvent(ProfileNavigation.AliasesSyncManagement)
 
+                ProfileUiEvent.OnGeneratedPasswordsClicked ->
+                    onNavigateEvent(ProfileNavigation.GeneratedPasswords)
+
+
                 AccountSwitchEvent.OnAddAccount -> onNavigateEvent(ProfileNavigation.OnAddAccount)
                 is AccountSwitchEvent.OnRemoveAccount -> onNavigateEvent(ProfileNavigation.OnRemoveAccount(it.userId))
                 is AccountSwitchEvent.OnSignIn -> onNavigateEvent(ProfileNavigation.OnSignIn(it.userId))

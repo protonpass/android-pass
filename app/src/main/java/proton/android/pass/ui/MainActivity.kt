@@ -188,7 +188,9 @@ class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
                                     is AppNavigation.RecoveryEmail -> launcherViewModel.recoveryEmail()
                                     is AppNavigation.AddAccount -> launcherViewModel.signIn()
                                     is AppNavigation.RemoveAccount -> launcherViewModel.remove(it.userId)
-                                    is AppNavigation.SwitchAccount -> launcherViewModel.switch(it.userId)
+                                    is AppNavigation.SwitchAccount -> {
+                                        launcherViewModel.switch(it.userId)
+                                    }
                                     is AppNavigation.SecurityKeys -> launcherViewModel.securityKeys()
                                     is AppNavigation.ForceSignOutAllUsers -> launcherViewModel.disableAll()
                                 }

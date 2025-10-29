@@ -83,6 +83,7 @@ import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.InitialWorkerLauncher
 import proton.android.pass.data.api.usecases.RefreshPlan
+import proton.android.pass.data.api.usecases.passwordHistoryEntry.DeletePasswordHistoryEntryForUser
 import proton.android.pass.domain.Plan
 import proton.android.pass.inappupdates.api.InAppUpdatesManager
 import proton.android.pass.log.api.PassLogger
@@ -107,6 +108,7 @@ class LauncherViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     userPreferencesRepository: UserPreferencesRepository,
     commonLibraryVersionChecker: CommonLibraryVersionChecker,
+    private val deletePasswordHistoryEntryForUser: DeletePasswordHistoryEntryForUser,
     private val appConfig: AppConfig
 ) : ViewModel() {
 
@@ -221,6 +223,9 @@ class LauncherViewModel @Inject constructor(
 
     internal fun switch(userId: UserId) = viewModelScope.launch {
         val account = getAccountOrNull(userId) ?: return@launch
+
+        deletePasswordHistoryEntryForUser(userId)
+
         when {
             account.isDisabled() -> signIn(userId)
             account.isReady() -> setAsPrimary(userId)

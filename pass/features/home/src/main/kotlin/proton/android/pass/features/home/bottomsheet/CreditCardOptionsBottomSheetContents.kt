@@ -61,7 +61,7 @@ internal fun CreditCardOptionsBottomSheetContents(
 ) {
     val contents = itemUiModel.contents as ItemContents.CreditCard
 
-    Column(modifier.bottomSheet()) {
+    Column(modifier.bottomSheet(shouldApplyNavPadding = false)) {
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = contents.title) },
             subtitle = if (contents.cardHolder.isEmpty()) {

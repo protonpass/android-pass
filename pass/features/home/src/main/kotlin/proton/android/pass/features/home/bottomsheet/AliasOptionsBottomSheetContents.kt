@@ -73,7 +73,7 @@ internal fun AliasOptionsBottomSheetContents(
 ) {
     val contents = itemUiModel.contents as ItemContents.Alias
 
-    Column(modifier.bottomSheet()) {
+    Column(modifier.bottomSheet(shouldApplyNavPadding = false)) {
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = contents.title) },
             subtitle = if (contents.aliasEmail.isEmpty()) {

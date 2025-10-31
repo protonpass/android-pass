@@ -20,6 +20,7 @@ package proton.android.pass.features.item.history.restore.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -110,7 +111,7 @@ private fun ItemHistoryRestoreDetails(
     }
 
     ItemHistoryRestoreTabContent(
-        modifier = modifier,
+        modifier = modifier.systemBarsPadding(),
         revisionItemDetailState = revisionItemDetailState,
         currentItemDetailState = currentItemDetailState,
         itemColors = passItemColors(itemCategory = revisionItemDetailState.itemCategory),

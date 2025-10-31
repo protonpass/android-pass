@@ -22,7 +22,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -43,7 +43,7 @@ internal fun HomeDrawerContent(
     Column(
         modifier = modifier
             .background(color = PassTheme.colors.backgroundWeak)
-            .systemBarsPadding()
+            .statusBarsPadding()
             .padding(top = Spacing.small)
     ) {
         HomeDrawerList(

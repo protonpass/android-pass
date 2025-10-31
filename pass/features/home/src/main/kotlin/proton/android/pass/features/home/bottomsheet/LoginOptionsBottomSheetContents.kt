@@ -80,7 +80,7 @@ internal fun LoginOptionsBottomSheetContents(
 ) {
     val contents = itemUiModel.contents as ItemContents.Login
 
-    Column(modifier.bottomSheet()) {
+    Column(modifier.bottomSheet(shouldApplyNavPadding = false)) {
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = contents.title) },
             subtitle = {

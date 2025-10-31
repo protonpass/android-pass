@@ -138,7 +138,7 @@ internal fun FilterBottomSheetContents(
     }
 }.let { items ->
     BottomSheetItemList(
-        modifier = modifier.bottomSheet(),
+        modifier = modifier.bottomSheet(shouldApplyNavPadding = false),
         items = items
             .withDividers()
             .toPersistentList()

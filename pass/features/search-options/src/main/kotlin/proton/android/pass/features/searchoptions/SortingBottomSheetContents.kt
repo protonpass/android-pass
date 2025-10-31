@@ -52,7 +52,7 @@ fun SortingBottomSheetContents(
     onSortingTypeSelected: (SearchSortingType) -> Unit
 ) {
     BottomSheetItemList(
-        modifier = modifier.bottomSheet(),
+        modifier = modifier.bottomSheet(shouldApplyNavPadding = false),
         items = sortingItemList(sortingType, onSortingTypeSelected)
             .withDividers()
             .toPersistentList()

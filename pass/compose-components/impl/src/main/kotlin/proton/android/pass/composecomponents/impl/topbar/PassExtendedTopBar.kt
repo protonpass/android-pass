@@ -71,11 +71,16 @@ fun PassExtendedTopBar(
         ) {
             title?.let { topBarTitle ->
                 Text(
+                    modifier = Modifier.weight(1f),
                     text = topBarTitle,
                     style = PassTheme.typography.heroNorm()
                 )
             }
             titleIcon()
+
+            if (onUpClick == null) {
+                actions()
+            }
         }
 
         subtitle?.let { topBarSubtitle ->

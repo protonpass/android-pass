@@ -75,7 +75,7 @@ internal fun NoteOptionsBottomSheetContents(
 ) {
     val contents = itemUiModel.contents as ItemContents.Note
 
-    Column(modifier.bottomSheet()) {
+    Column(modifier.bottomSheet(shouldApplyNavPadding = false)) {
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = contents.title) },
             subtitle = if (contents.note.isEmpty()) {

@@ -31,6 +31,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
@@ -44,17 +45,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
-import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.features.profile.accountswitcher.AccountSwitcherList
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -69,19 +69,14 @@ internal fun ProfileContent(
         modifier = modifier.fillMaxSize()
     ) {
         Scaffold(
+            modifier = modifier.statusBarsPadding(),
             topBar = {
-                ProtonTopAppBar(
-                    backgroundColor = PassTheme.colors.backgroundStrong,
-                    title = {
-                        Text(
-                            text = stringResource(R.string.profile_screen_title),
-                            style = PassTheme.typography.heroNorm()
-                        )
-                    },
+                PassExtendedTopBar(
+                    modifier = Modifier.padding(top = Spacing.medium),
+                    title = stringResource(R.string.profile_screen_title),
                     actions = {
                         if (state.showUpgradeButton) {
                             UpgradeButton(
-                                modifier = Modifier.padding(horizontal = Spacing.mediumSmall),
                                 onUpgradeClick = { onEvent(ProfileUiEvent.OnUpgradeClick) }
                             )
                         }
@@ -94,6 +89,7 @@ internal fun ProfileContent(
                     .verticalScroll(rememberScrollState())
                     .background(PassTheme.colors.backgroundStrong)
                     .padding(padding)
+                    .padding(top = Spacing.medium)
             ) {
                 if (state.accounts.isNotEmpty()) {
                     Text(

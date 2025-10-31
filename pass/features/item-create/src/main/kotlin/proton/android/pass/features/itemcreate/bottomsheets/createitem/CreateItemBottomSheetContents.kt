@@ -133,7 +133,9 @@ internal fun CreateItemBottomSheetContents(
         null -> emptyList()
     }.let { items ->
         BottomSheetItemList(
-            modifier = modifier.bottomSheet(),
+            modifier = modifier.bottomSheet(
+                shouldApplyNavPadding = mode != CreateItemBottomSheetMode.HomeFull
+            ),
             items = items.withDividers().toPersistentList()
         )
     }

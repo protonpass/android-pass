@@ -67,7 +67,7 @@ internal fun CustomItemOptionsBottomSheetContents(
     onMoveToTrash: (ItemUiModel) -> Unit,
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit
 ) {
-    Column(modifier.bottomSheet()) {
+    Column(modifier.bottomSheet(shouldApplyNavPadding = false)) {
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = itemUiModel.contents.title) },
             leftIcon = { CustomItemIcon() }

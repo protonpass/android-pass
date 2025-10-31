@@ -51,7 +51,7 @@ fun TrashAllBottomSheetContents(
     onRestoreAll: () -> Unit
 ) {
     Column(
-        modifier = modifier.bottomSheet(),
+        modifier = modifier.bottomSheet(shouldApplyNavPadding = false),
         verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
         BottomSheetTitle(

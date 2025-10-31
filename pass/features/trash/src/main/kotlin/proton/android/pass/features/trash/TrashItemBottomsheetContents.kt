@@ -59,7 +59,7 @@ fun TrashItemBottomSheetContents(
     onDeleteItem: (ItemUiModel) -> Unit,
     icon: @Composable () -> Unit
 ) {
-    Column(modifier.bottomSheet()) {
+    Column(modifier.bottomSheet(shouldApplyNavPadding = false)) {
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = itemUiModel.contents.title) },
             subtitle = {

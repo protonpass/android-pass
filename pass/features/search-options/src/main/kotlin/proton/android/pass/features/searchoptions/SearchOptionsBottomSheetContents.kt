@@ -58,7 +58,7 @@ fun SearchOptionsBottomSheetContents(
         items.add(resetSearchOptions(onResetSearchOptions))
     }
     BottomSheetItemList(
-        modifier = modifier.bottomSheet(),
+        modifier = modifier.bottomSheet(shouldApplyNavPadding = false),
         items = items.withDividers().toPersistentList()
     )
 }

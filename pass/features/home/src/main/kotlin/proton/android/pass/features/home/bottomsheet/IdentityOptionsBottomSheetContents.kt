@@ -79,7 +79,7 @@ internal fun IdentityOptionsBottomSheetContents(
 ) {
     val contents = itemUiModel.contents as ItemContents.Identity
 
-    Column(modifier.bottomSheet()) {
+    Column(modifier.bottomSheet(shouldApplyNavPadding = false)) {
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = contents.title) },
             subtitle = {

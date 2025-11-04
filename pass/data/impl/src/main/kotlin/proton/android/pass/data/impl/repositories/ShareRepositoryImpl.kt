@@ -139,7 +139,7 @@ class ShareRepositoryImpl @Inject constructor(
 
     override suspend fun deleteVault(userId: UserId, shareId: ShareId) {
         remoteShareDataSource.deleteVault(userId, shareId)
-        localShareDataSource.deleteShares(setOf(shareId))
+        localShareDataSource.deleteShares(userId, setOf(shareId))
         refreshDefaultShareIfNeeded(userId, setOf(shareId))
     }
 
@@ -176,7 +176,7 @@ class ShareRepositoryImpl @Inject constructor(
         }
         val hadLocalSharesOnStart = localShares.isNotEmpty()
 
-        val remoteShares = remoteShareDataSource.getShares(userId)
+        val remoteShares = remoteShareDataSource.retrieveShares(userId)
         val remoteSharesMap = remoteShares.associateBy { remoteShareResponse ->
             ShareId(remoteShareResponse.shareId)
         }
@@ -204,7 +204,7 @@ class ShareRepositoryImpl @Inject constructor(
                 }
                 if (toDelete.isNotEmpty()) {
                     PassLogger.i(TAG, "Deleting ${toDelete.size} shares")
-                    val deletedShareResult = localShareDataSource.deleteShares(toDelete)
+                    val deletedShareResult = localShareDataSource.deleteShares(userId, toDelete)
                     PassLogger.i(TAG, "Deleted $deletedShareResult shares")
                 }
             }
@@ -249,7 +249,7 @@ class ShareRepositoryImpl @Inject constructor(
     }
 
     override suspend fun refreshShare(userId: UserId, shareId: ShareId) {
-        val shareResponse = remoteShareDataSource.fetchShareById(userId, shareId)
+        val shareResponse = remoteShareDataSource.retrieveShareById(userId, shareId)
             ?: run {
                 PassLogger.w(TAG, "Error fetching share from remote [shareId=${shareId.id}]")
                 throw ShareNotAvailableError()
@@ -270,7 +270,7 @@ class ShareRepositoryImpl @Inject constructor(
         var shareEntity: ShareEntity? = localShareDataSource.getById(userId, shareId)
         if (shareEntity == null) {
             // Check remote
-            val fetchedShare = remoteShareDataSource.fetchShareById(userId, shareId)
+            val fetchedShare = remoteShareDataSource.retrieveShareById(userId, shareId)
             val shareResponse = fetchedShare ?: run {
                 PassLogger.w(TAG, "Error fetching share from remote [shareId=${shareId.id}]")
                 throw ShareNotAvailableError()
@@ -343,7 +343,7 @@ class ShareRepositoryImpl @Inject constructor(
 
     override suspend fun leaveVault(userId: UserId, shareId: ShareId) {
         remoteShareDataSource.leaveVault(userId, shareId)
-        localShareDataSource.deleteShares(setOf(shareId))
+        localShareDataSource.deleteShares(userId, setOf(shareId))
     }
 
     override suspend fun applyUpdateShareEvent(

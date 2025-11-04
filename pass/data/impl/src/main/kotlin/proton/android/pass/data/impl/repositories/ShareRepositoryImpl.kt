@@ -170,7 +170,7 @@ class ShareRepositoryImpl @Inject constructor(
     override suspend fun refreshShares(userId: UserId): RefreshSharesResult = coroutineScope {
         PassLogger.i(TAG, "Refreshing shares")
 
-        val localShares = localShareDataSource.getAllSharesForUser(userId).first()
+        val localShares = localShareDataSource.observeAllSharesForUser(userId).first()
         val localSharesMap = localShares.associateBy { localShareEntity ->
             ShareId(localShareEntity.id)
         }

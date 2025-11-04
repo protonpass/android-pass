@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.fakes
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.local.LocalShareDataSource
@@ -36,8 +35,6 @@ class TestLocalShareDataSource : LocalShareDataSource {
         Result.failure(IllegalStateException("getById not set"))
     private var deleteSharesResponse: Result<Boolean> =
         Result.failure(IllegalStateException("deleteShares not set"))
-    private var hasSharesResponse: Result<Boolean> =
-        Result.failure(IllegalStateException("hasShares not set"))
     private var deleteSharesForUserResult: Result<Unit> = Result.success(Unit)
     private var updateOwnershipStatusResult: Result<Unit> = Result.success(Unit)
 
@@ -70,10 +67,6 @@ class TestLocalShareDataSource : LocalShareDataSource {
         deleteSharesResponse = value
     }
 
-    fun setHasSharesResponse(value: Result<Boolean>) {
-        hasSharesResponse = value
-    }
-
     fun emitAllSharesForUser(value: List<ShareEntity>) {
         getAllSharesForUserFlow.tryEmit(value)
     }
@@ -93,19 +86,15 @@ class TestLocalShareDataSource : LocalShareDataSource {
 
     override suspend fun getById(userId: UserId, shareId: ShareId): ShareEntity? = getByIdResponse.getOrThrow()
 
-    override fun getAllSharesForUser(userId: UserId): Flow<List<ShareEntity>> = getAllSharesForUserFlow
+    override fun observeAllSharesForUser(userId: UserId): Flow<List<ShareEntity>> = getAllSharesForUserFlow
 
     override fun observeAllActiveSharesForUser(userId: UserId): Flow<List<ShareEntity>> =
         getAllSharesForUserFlow.map { shares -> shares.filter { it.isActive } }
 
-    override fun getAllSharesForAddress(addressId: AddressId): Flow<List<ShareEntity>> = getAllSharesForAddressFlow
-
-    override suspend fun deleteShares(shareIds: Set<ShareId>): Boolean {
+    override suspend fun deleteShares(userId: UserId, shareIds: Set<ShareId>): Boolean {
         deleteMemory.add(shareIds)
         return deleteSharesResponse.getOrThrow()
     }
-
-    override suspend fun hasShares(userId: UserId): Boolean = hasSharesResponse.getOrThrow()
 
     override suspend fun deleteSharesForUser(userId: UserId) {
         deleteSharesForUserResult.getOrThrow()

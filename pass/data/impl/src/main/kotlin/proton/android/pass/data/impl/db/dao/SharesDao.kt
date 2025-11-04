@@ -20,23 +20,14 @@ package proton.android.pass.data.impl.db.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.room.db.BaseDao
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.db.entities.ShareEntity
 
 private const val SHARE_TYPE_VAULT = 1
 
 @Dao
 abstract class SharesDao : BaseDao<ShareEntity>() {
-    @Query(
-        """
-        SELECT * FROM ${ShareEntity.TABLE} 
-        WHERE ${ShareEntity.Columns.ADDRESS_ID} = :addressId
-        """
-    )
-    abstract fun observeAllForAddress(addressId: String): Flow<List<ShareEntity>>
 
     @Query(
         """
@@ -52,43 +43,31 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
         """
         SELECT * FROM ${ShareEntity.TABLE} 
         WHERE ${ShareEntity.Columns.USER_ID} = :userId
+          AND (:shareType IS NULL OR ${ShareEntity.Columns.SHARE_TYPE} = :shareType)
+          AND (:isActive IS NULL OR ${ShareEntity.Columns.IS_ACTIVE} = :isActive)
         """
     )
-    abstract fun observeAllForUser(userId: String): Flow<List<ShareEntity>>
+    abstract fun observe(
+        userId: String,
+        shareType: Int? = null,
+        isActive: Boolean? = null
+    ): Flow<List<ShareEntity>>
 
     @Query(
         """
-        SELECT * FROM ${ShareEntity.TABLE} 
+        SELECT ${ShareEntity.Columns.ID} FROM ${ShareEntity.TABLE} 
         WHERE ${ShareEntity.Columns.USER_ID} = :userId
-          AND ${ShareEntity.Columns.IS_ACTIVE} = 1
-        """
+          AND (:shareType IS NULL OR ${ShareEntity.Columns.SHARE_TYPE} = :shareType)
+          AND (:shareRole IS NULL OR ${ShareEntity.Columns.SHARE_ROLE_ID} = :shareRole)
+          AND (:isActive IS NULL OR ${ShareEntity.Columns.IS_ACTIVE} = :isActive)
+    """
     )
-    abstract fun observeAllActiveForUser(userId: String): Flow<List<ShareEntity>>
-
-    @Query(
-        """
-        SELECT * FROM ${ShareEntity.TABLE} 
-        WHERE ${ShareEntity.Columns.USER_ID} = :userId
-        """
-    )
-    abstract fun getAllForUser(userId: String): List<ShareEntity>
-
-    @Query(
-        """
-        DELETE FROM ${ShareEntity.TABLE} 
-        WHERE ${ShareEntity.Columns.ID} IN (:shareIdList)
-        """
-    )
-    abstract suspend fun delete(shareIdList: Array<String>): Int
-
-    @Query(
-        """
-        SELECT COUNT(*) 
-        FROM ${ShareEntity.TABLE}
-        WHERE ${ShareEntity.Columns.USER_ID} = :userId
-        """
-    )
-    abstract suspend fun countShares(userId: String): Int
+    abstract fun observeSharedIds(
+        userId: String,
+        shareType: Int? = null,
+        shareRole: String? = null,
+        isActive: Boolean? = null
+    ): Flow<List<String>>
 
     @Query(
         """
@@ -103,11 +82,12 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
 
     @Query(
         """
-        DELETE FROM ${ShareEntity.TABLE} 
+        DELETE FROM ${ShareEntity.TABLE}
         WHERE ${ShareEntity.Columns.USER_ID} = :userId
+          AND (:shareIds IS NULL OR ${ShareEntity.Columns.ID} IN (:shareIds))
         """
     )
-    abstract suspend fun deleteSharesForUser(userId: String)
+    abstract suspend fun deleteShares(userId: String, shareIds: List<String>? = null): Int
 
     @Query(
         """
@@ -122,45 +102,6 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
         shareId: String,
         isOwner: Boolean
     )
-
-    @Query(
-        """
-        SELECT * FROM ${ShareEntity.TABLE} 
-        WHERE ${ShareEntity.Columns.USER_ID} = :userId
-          AND ${ShareEntity.Columns.SHARE_TYPE} = :shareType
-          AND (:isActive IS NULL OR ${ShareEntity.Columns.IS_ACTIVE} = :isActive)
-        """
-    )
-    abstract fun observeByType(
-        userId: String,
-        shareType: Int,
-        isActive: Boolean?
-    ): Flow<List<ShareEntity>>
-
-    @Query(
-        """
-        SELECT ${ShareEntity.Columns.ID} FROM ${ShareEntity.TABLE} 
-        WHERE ${ShareEntity.Columns.USER_ID} = :userId
-          AND (:shareType IS NULL OR ${ShareEntity.Columns.SHARE_TYPE} = :shareType)
-          AND (:shareRole IS NULL OR ${ShareEntity.Columns.SHARE_ROLE_ID} = :shareRole)
-          AND ${ShareEntity.Columns.IS_ACTIVE} = 1
-    """
-    )
-    abstract fun observeSharedIds(
-        userId: String,
-        shareType: Int?,
-        shareRole: String?
-    ): Flow<List<String>>
-
-    @Transaction
-    open suspend fun evictAndUpsertShares(userId: UserId, vararg entities: ShareEntity) {
-        val insertOrUpdateShares = entities.asList().map { it.id }
-        val toDelete = getAllForUser(userId.id)
-            .filterNot { insertOrUpdateShares.contains(it.id) }
-        delete(*toDelete.toTypedArray())
-        update(*entities)
-        insertOrIgnore(*entities)
-    }
 
     @Query(
         """

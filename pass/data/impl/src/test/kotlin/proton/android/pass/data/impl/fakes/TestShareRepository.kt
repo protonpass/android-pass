@@ -50,7 +50,8 @@ class TestShareRepository : ShareRepository {
     private var updateVaultResult: Result<Share> =
         Result.failure(IllegalStateException("UpdateVaultResult not set"))
 
-    private var deleteSharesResult: Result<Unit> = Result.success(Unit)
+    private var deleteSharesResult: Result<Boolean> =
+        Result.failure(IllegalStateException("deleteSharesResult not set"))
 
     private val observeShareByIdFlow = testFlow<Result<Share>>()
 
@@ -101,7 +102,7 @@ class TestShareRepository : ShareRepository {
         updateVaultResult = value
     }
 
-    fun setDeleteSharesResult(value: Result<Unit>) {
+    fun setDeleteSharesResult(value: Result<Boolean>) {
         deleteSharesResult = value
     }
 
@@ -135,7 +136,7 @@ class TestShareRepository : ShareRepository {
         vault: NewVault
     ): Share = updateVaultResult.getOrThrow()
 
-    override suspend fun deleteSharesForUser(userId: UserId) = deleteSharesResult.getOrThrow()
+    override suspend fun deleteSharesForUser(userId: UserId): Boolean = deleteSharesResult.getOrThrow()
 
     override suspend fun leaveVault(userId: UserId, shareId: ShareId) {
 

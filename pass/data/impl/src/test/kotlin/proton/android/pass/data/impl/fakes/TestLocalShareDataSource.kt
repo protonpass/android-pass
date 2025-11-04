@@ -35,7 +35,8 @@ class TestLocalShareDataSource : LocalShareDataSource {
         Result.failure(IllegalStateException("getById not set"))
     private var deleteSharesResponse: Result<Boolean> =
         Result.failure(IllegalStateException("deleteShares not set"))
-    private var deleteSharesForUserResult: Result<Unit> = Result.success(Unit)
+    private var deleteSharesForUserResult: Result<Boolean> =
+        Result.failure(IllegalStateException("deleteSharesForUserResult not set"))
     private var updateOwnershipStatusResult: Result<Unit> = Result.success(Unit)
 
     private val getAllSharesForUserFlow = testFlow<List<ShareEntity>>()
@@ -75,7 +76,7 @@ class TestLocalShareDataSource : LocalShareDataSource {
         getAllSharesForAddressFlow.tryEmit(value)
     }
 
-    fun setDeleteSharesForUserResult(value: Result<Unit>) {
+    fun setDeleteSharesForUserResult(value: Result<Boolean>) {
         deleteSharesForUserResult = value
     }
 
@@ -96,9 +97,7 @@ class TestLocalShareDataSource : LocalShareDataSource {
         return deleteSharesResponse.getOrThrow()
     }
 
-    override suspend fun deleteSharesForUser(userId: UserId) {
-        deleteSharesForUserResult.getOrThrow()
-    }
+    override suspend fun deleteSharesForUser(userId: UserId): Boolean = deleteSharesForUserResult.getOrThrow()
 
     override fun observeActiveVaultCount(userId: UserId): Flow<Int> = getShareCountFlow
         .map { it.getOrThrow() }

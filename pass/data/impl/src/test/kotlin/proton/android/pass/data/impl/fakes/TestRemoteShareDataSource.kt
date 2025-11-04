@@ -80,9 +80,9 @@ class TestRemoteShareDataSource : RemoteShareDataSource {
 
     override suspend fun deleteVault(userId: UserId, shareId: ShareId) = deleteVaultResponse.getOrThrow()
 
-    override suspend fun getShares(userId: UserId): List<ShareResponse> = getSharesResponse.getOrThrow()
+    override suspend fun retrieveShares(userId: UserId): List<ShareResponse> = getSharesResponse.getOrThrow()
 
-    override suspend fun fetchShareById(userId: UserId, shareId: ShareId): ShareResponse =
+    override suspend fun retrieveShareById(userId: UserId, shareId: ShareId): ShareResponse =
         getShareByIdResponse.getOrThrow()
 
     override suspend fun markAsPrimary(userId: UserId, shareId: ShareId) {

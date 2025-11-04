@@ -20,6 +20,7 @@ package proton.android.pass.data.impl.local
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ShareEntity
@@ -53,9 +54,7 @@ class LocalShareDataSourceImpl @Inject constructor(
     override suspend fun deleteShares(userId: UserId, shareIds: Set<ShareId>): Boolean =
         database.sharesDao().deleteShares(userId.id, shareIds.map { it.id }) > 0
 
-    override suspend fun deleteSharesForUser(userId: UserId) {
-        database.sharesDao().deleteShares(userId.id)
-    }
+    override suspend fun deleteSharesForUser(userId: UserId): Boolean = database.sharesDao().deleteShares(userId.id) > 0
 
     override fun observeActiveVaultCount(userId: UserId): Flow<Int> =
         database.sharesDao().observeActiveVaultCount(userId.id)

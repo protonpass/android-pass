@@ -78,7 +78,7 @@ class TestLocalItemDataSource : LocalItemDataSource {
         memory.addAll(items)
     }
 
-    override fun observeItemsForShares(
+    override fun observeItems(
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?,
@@ -87,24 +87,10 @@ class TestLocalItemDataSource : LocalItemDataSource {
         clearFlags: Int?
     ): Flow<List<ItemEntity>> = flowOf(memory)
 
-    override fun observeItems(
+    override fun observePinnedItems(
         userId: UserId,
-        itemState: ItemState?,
-        filter: ItemTypeFilter,
-        setFlags: Int?,
-        clearFlags: Int?
-    ): Flow<List<ItemEntity>> {
-        throw IllegalStateException("Not yet implemented")
-    }
-
-    override fun observePinnedItems(userId: UserId, filter: ItemTypeFilter): Flow<List<ItemEntity>> {
-        throw IllegalStateException("Not yet implemented")
-    }
-
-    override fun observeAllPinnedItemsForShares(
-        userId: UserId,
-        filter: ItemTypeFilter,
-        shareIds: List<ShareId>
+        shareIds: List<ShareId>,
+        filter: ItemTypeFilter
     ): Flow<List<ItemEntity>> {
         throw IllegalStateException("Not yet implemented")
     }
@@ -140,7 +126,7 @@ class TestLocalItemDataSource : LocalItemDataSource {
         throw IllegalStateException("Not yet implemented")
     }
 
-    override suspend fun getTrashedItems(userId: UserId): List<ItemEntity> {
+    override suspend fun getTrashedItems(userId: UserId, shareIds: List<ShareId>): List<ItemEntity> {
         throw IllegalStateException("Not yet implemented")
     }
 
@@ -164,7 +150,7 @@ class TestLocalItemDataSource : LocalItemDataSource {
         throw IllegalStateException("Not yet implemented")
     }
 
-    override suspend fun getItemByAliasEmail(userId: UserId, aliasEmail: String): ItemEntity? {
+    override suspend fun getItemByAliasEmail(userId: UserId, aliasEmail: String): ItemEntity {
         throw IllegalStateException("Not yet implemented")
     }
 
@@ -174,10 +160,7 @@ class TestLocalItemDataSource : LocalItemDataSource {
         throw IllegalStateException("Not yet implemented")
     }
 
-    override fun observeAllItemsWithTotp(userId: UserId): Flow<List<ItemWithTotp>> =
-        itemsWithTotpFlow.map { it.getOrThrow() }
-
-    override fun observeItemsWithTotpForShare(userId: UserId, shareId: ShareId): Flow<List<ItemWithTotp>> =
+    override fun observeItemsWithTotp(userId: UserId, shareIds: List<ShareId>): Flow<List<ItemWithTotp>> =
         itemsWithTotpFlow.map { it.getOrThrow() }
 
     override fun countAllItemsWithTotp(userId: UserId): Flow<Int> = itemsWithTotpFlow.map { it.getOrThrow().count() }
@@ -207,10 +190,6 @@ class TestLocalItemDataSource : LocalItemDataSource {
     }
 
     override suspend fun getItemsPendingForPasskeyMigration(): List<ItemEntity> {
-        throw IllegalStateException("Not yet implemented")
-    }
-
-    override fun observeAllItemsWithPasskeys(userId: UserId): Flow<List<ItemEntity>> {
         throw IllegalStateException("Not yet implemented")
     }
 

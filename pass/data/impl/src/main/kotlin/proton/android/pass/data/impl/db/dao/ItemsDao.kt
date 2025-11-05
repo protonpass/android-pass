@@ -52,8 +52,8 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         """
         SELECT * FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
           AND (:itemIds IS NULL OR ${ItemEntity.Columns.ID} IN (:itemIds))
-          AND (:shareIds IS NULL OR ${ItemEntity.Columns.SHARE_ID} IN (:shareIds))
           AND (:itemTypes IS NULL OR ${ItemEntity.Columns.ITEM_TYPE} IN (:itemTypes))
           AND (:itemState IS NULL OR ${ItemEntity.Columns.STATE} = :itemState)
           AND (:setFlags IS NULL OR (flags & :setFlags) == :setFlags)
@@ -66,8 +66,8 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
     )
     abstract fun observeItems(
         userId: String,
+        shareIds: List<String>,
         itemIds: List<String>? = null,
-        shareIds: List<String>? = null,
         itemState: Int? = null,
         itemTypes: List<Int>? = null,
         isPinned: Boolean? = null,

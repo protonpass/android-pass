@@ -401,7 +401,7 @@ class ItemRepositoryImpl @Inject constructor(
     override fun observeSharedByMeEncryptedItems(userId: UserId, itemState: ItemState?): Flow<List<ItemEncrypted>> =
         shareRepository.observeSharedByMeIds(userId)
             .flatMapLatest { shareIds ->
-                localItemDataSource.observeItemsForShares(
+                localItemDataSource.observeItems(
                     userId,
                     shareIds,
                     itemState,
@@ -417,7 +417,7 @@ class ItemRepositoryImpl @Inject constructor(
     override fun observeSharedWithMeEncryptedItems(userId: UserId, itemState: ItemState?): Flow<List<ItemEncrypted>> =
         shareRepository.observeSharedWithMeIds(userId)
             .flatMapLatest { shareIds ->
-                localItemDataSource.observeItemsForShares(
+                localItemDataSource.observeItems(
                     userId,
                     shareIds,
                     itemState,
@@ -436,7 +436,7 @@ class ItemRepositoryImpl @Inject constructor(
         setFlags: Int?,
         clearFlags: Int?
     ) = when (shareSelection) {
-        is ShareSelection.Share -> localItemDataSource.observeItemsForShares(
+        is ShareSelection.Share -> localItemDataSource.observeItems(
             userId = userId,
             shareIds = listOf(shareSelection.shareId),
             itemState = itemState,
@@ -445,7 +445,7 @@ class ItemRepositoryImpl @Inject constructor(
             clearFlags = clearFlags
         )
 
-        is ShareSelection.Shares -> localItemDataSource.observeItemsForShares(
+        is ShareSelection.Shares -> localItemDataSource.observeItems(
             userId = userId,
             shareIds = shareSelection.shareIds,
             itemState = itemState,
@@ -454,13 +454,17 @@ class ItemRepositoryImpl @Inject constructor(
             clearFlags = clearFlags
         )
 
-        is ShareSelection.AllShares -> localItemDataSource.observeItems(
-            userId = userId,
-            itemState = itemState,
-            filter = itemTypeFilter,
-            setFlags = setFlags,
-            clearFlags = clearFlags
-        )
+        is ShareSelection.AllShares -> shareRepository.observeAllUsableShareIds(userId)
+            .flatMapLatest {
+                localItemDataSource.observeItems(
+                    userId = userId,
+                    shareIds = it,
+                    itemState = itemState,
+                    filter = itemTypeFilter,
+                    setFlags = setFlags,
+                    clearFlags = clearFlags
+                )
+            }
     }
 
     override fun observePinnedItems(
@@ -468,22 +472,26 @@ class ItemRepositoryImpl @Inject constructor(
         shareSelection: ShareSelection,
         itemTypeFilter: ItemTypeFilter
     ): Flow<List<Item>> = when (shareSelection) {
-        is ShareSelection.Share -> localItemDataSource.observeAllPinnedItemsForShares(
+        is ShareSelection.Share -> localItemDataSource.observePinnedItems(
             userId = userId,
             shareIds = listOf(shareSelection.shareId),
             filter = itemTypeFilter
         )
 
-        is ShareSelection.Shares -> localItemDataSource.observeAllPinnedItemsForShares(
+        is ShareSelection.Shares -> localItemDataSource.observePinnedItems(
             userId = userId,
             shareIds = shareSelection.shareIds,
             filter = itemTypeFilter
         )
 
-        is ShareSelection.AllShares -> localItemDataSource.observePinnedItems(
-            userId = userId,
-            filter = itemTypeFilter
-        )
+        is ShareSelection.AllShares -> shareRepository.observeAllUsableShareIds(userId)
+            .flatMapLatest {
+                localItemDataSource.observePinnedItems(
+                    userId = userId,
+                    shareIds = it,
+                    filter = itemTypeFilter
+                )
+            }
     }.map { items ->
         encryptionContextProvider.withEncryptionContextSuspendable {
             items.map { item -> item.toDomain(this) }
@@ -519,14 +527,12 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemIds: List<ItemId>
-    ): List<Item> {
-        return localItemDataSource.getByIdList(userId, shareId, itemIds)
-            .let { itemEntities ->
-                encryptionContextProvider.withEncryptionContextSuspendable {
-                    itemEntities.map { itemEntity -> itemEntity.toDomain(this) }
-                }
+    ): List<Item> = localItemDataSource.getByIdList(userId, shareId, itemIds)
+        .let { itemEntities ->
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                itemEntities.map { itemEntity -> itemEntity.toDomain(this) }
             }
-    }
+        }
 
     override suspend fun trashItems(userId: UserId, items: Map<ShareId, List<ItemId>>) {
         coroutineScope {
@@ -626,7 +632,9 @@ class ItemRepositoryImpl @Inject constructor(
 
     override suspend fun clearTrash(userId: UserId) {
         coroutineScope {
-            val trashedItems = localItemDataSource.getTrashedItems(userId)
+            val shareIds = shareRepository.observeAllUsableShareIds(userId).firstOrNull()
+                ?: emptyList()
+            val trashedItems = localItemDataSource.getTrashedItems(userId, shareIds)
             val trashedPerShare = trashedItems.groupBy { it.shareId }
             val results = trashedPerShare
                 .map { entry ->
@@ -649,7 +657,9 @@ class ItemRepositoryImpl @Inject constructor(
 
     override suspend fun restoreItems(userId: UserId) {
         coroutineScope {
-            val trashedItems = localItemDataSource.getTrashedItems(userId)
+            val shareIds = shareRepository.observeAllUsableShareIds(userId).firstOrNull()
+                ?: emptyList()
+            val trashedItems = localItemDataSource.getTrashedItems(userId, shareIds)
             val trashedPerShare = trashedItems.groupBy { it.shareId }
             val results = trashedPerShare
                 .map { entry ->
@@ -1015,7 +1025,7 @@ class ItemRepositoryImpl @Inject constructor(
         source: ShareId,
         destination: ShareId
     ) {
-        val items = localItemDataSource.observeItemsForShares(
+        val items = localItemDataSource.observeItems(
             userId = userId,
             shareIds = listOf(source),
             itemState = ItemState.Active,
@@ -1092,7 +1102,7 @@ class ItemRepositoryImpl @Inject constructor(
     ) = runCatching {
         val share = shareRepository.getById(userId, shareId)
         val address = shareRepository.getAddressForShareId(userId, shareId)
-        val localItemsForShare = localItemDataSource.observeItemsForShares(
+        val localItemsForShare = localItemDataSource.observeItems(
             userId = userId,
             shareIds = listOf(shareId),
             itemState = null,

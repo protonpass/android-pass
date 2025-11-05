@@ -28,6 +28,7 @@ import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.impl.fakes.TestLocalItemDataSource
+import proton.android.pass.data.impl.fakes.TestShareRepository
 import proton.android.pass.data.impl.local.ItemWithTotp
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Plan
@@ -42,14 +43,19 @@ internal class CanDisplayTotpImplTest {
     private lateinit var instance: CanDisplayTotpImpl
     private lateinit var getUserPlan: TestGetUserPlan
     private lateinit var dataSource: TestLocalItemDataSource
+    private lateinit var shareRepository: TestShareRepository
 
     @Before
     fun setup() {
         getUserPlan = TestGetUserPlan()
         dataSource = TestLocalItemDataSource()
+        shareRepository = TestShareRepository().apply {
+            setUsableShareIdsResult(Result.success(emptyList()))
+        }
         instance = CanDisplayTotpImpl(
             getUserPlan = getUserPlan,
             localItemDataSource = dataSource,
+            shareRepository = shareRepository,
             accountManager = TestAccountManager().apply { sendPrimaryUserId(USER_ID) }
         )
     }

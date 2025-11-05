@@ -42,6 +42,7 @@ import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
+import kotlin.collections.map
 
 @Suppress("TooManyFunctions")
 class LocalItemDataSourceImpl @Inject constructor(
@@ -54,7 +55,7 @@ class LocalItemDataSourceImpl @Inject constructor(
     override suspend fun upsertItems(items: List<ItemEntity>) =
         database.itemsDao().insertOrUpdate(*items.toTypedArray())
 
-    override fun observeItemsForShares(
+    override fun observeItems(
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?,
@@ -63,43 +64,22 @@ class LocalItemDataSourceImpl @Inject constructor(
         clearFlags: Int?
     ): Flow<List<ItemEntity>> = database.itemsDao().observeItems(
         userId = userId.id,
-        shareIds = shareIds.map { it.id },
+        shareIds = shareIds.map(ShareId::id),
         itemState = itemState?.value,
         itemTypes = filter.value(),
         setFlags = setFlags,
         clearFlags = clearFlags
     )
 
-    override fun observeItems(
+    override fun observePinnedItems(
         userId: UserId,
-        itemState: ItemState?,
-        filter: ItemTypeFilter,
-        setFlags: Int?,
-        clearFlags: Int?
+        shareIds: List<ShareId>,
+        filter: ItemTypeFilter
     ): Flow<List<ItemEntity>> = database.itemsDao().observeItems(
         userId = userId.id,
-        itemState = itemState?.value,
-        itemTypes = filter.value(),
-        setFlags = setFlags,
-        clearFlags = clearFlags
-    )
-
-    override fun observePinnedItems(userId: UserId, filter: ItemTypeFilter): Flow<List<ItemEntity>> =
-        database.itemsDao().observeItems(
-            userId = userId.id,
-            isPinned = true,
-            itemTypes = filter.value()
-        )
-
-    override fun observeAllPinnedItemsForShares(
-        userId: UserId,
-        filter: ItemTypeFilter,
-        shareIds: List<ShareId>
-    ): Flow<List<ItemEntity>> = database.itemsDao().observeItems(
-        userId = userId.id,
+        shareIds = shareIds.map(ShareId::id),
         isPinned = true,
-        itemTypes = filter.value(),
-        shareIds = shareIds.map { it.id }
+        itemTypes = filter.value()
     )
 
     override fun observeItem(
@@ -146,11 +126,13 @@ class LocalItemDataSourceImpl @Inject constructor(
         state = itemState.value
     )
 
-    override suspend fun getTrashedItems(userId: UserId): List<ItemEntity> = database.itemsDao().observeItems(
-        userId = userId.id,
-        itemState = ItemState.Trashed.value
-    ).firstOrNull()
-        ?: emptyList()
+    override suspend fun getTrashedItems(userId: UserId, shareIds: List<ShareId>): List<ItemEntity> =
+        database.itemsDao().observeItems(
+            userId = userId.id,
+            shareIds = shareIds.map(ShareId::id),
+            itemState = ItemState.Trashed.value
+        ).firstOrNull()
+            ?: emptyList()
 
     override suspend fun delete(
         userId: UserId,
@@ -354,38 +336,26 @@ class LocalItemDataSourceImpl @Inject constructor(
     override suspend fun getItemsPendingForPasskeyMigration(): List<ItemEntity> =
         database.itemsDao().getItemsPendingForPasskeyMigration()
 
-    override fun observeAllItemsWithTotp(userId: UserId): Flow<List<ItemWithTotp>> = database.itemsDao()
-        .observeItems(
-            userId = userId.id,
-            hasTotp = true
-        )
-        .map { items -> items.map { it.toItemWithTotp() } }
-
     override fun countAllItemsWithTotp(userId: UserId): Flow<Int> = observeItemsWithTotpCount(
         userId = userId,
         itemState = null,
         shareIds = null
     )
 
-    override fun observeItemsWithTotpForShare(userId: UserId, shareId: ShareId): Flow<List<ItemWithTotp>> =
+    override fun observeItemsWithTotp(userId: UserId, shareIds: List<ShareId>): Flow<List<ItemWithTotp>> =
         database.itemsDao()
             .observeItems(
                 userId = userId.id,
-                shareIds = listOf(shareId.id),
+                shareIds = shareIds.map(ShareId::id),
                 hasTotp = true
             )
             .map { items -> items.map { it.toItemWithTotp() } }
 
-    override fun observeAllItemsWithPasskeys(userId: UserId): Flow<List<ItemEntity>> = database.itemsDao().observeItems(
-        userId = userId.id,
-        hasPasskeys = true
-    )
-
     override fun observeItemsWithPasskeys(userId: UserId, shareIds: List<ShareId>): Flow<List<ItemEntity>> =
         database.itemsDao().observeItems(
             userId = userId.id,
-            hasPasskeys = true,
-            shareIds = shareIds.map(ShareId::id)
+            shareIds = shareIds.map(ShareId::id),
+            hasPasskeys = true
         )
 
     override suspend fun updateItemFlags(

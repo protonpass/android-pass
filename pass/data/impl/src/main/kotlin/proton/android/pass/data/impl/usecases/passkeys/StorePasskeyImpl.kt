@@ -40,8 +40,7 @@ class StorePasskeyImpl @Inject constructor(
         passkey: Passkey
     ) {
         val userId = requireNotNull(accountManager.getPrimaryUserId().first())
-
-        val item = itemRepository.getById(shareId, itemId)
+        val item = itemRepository.getById(userId, shareId, itemId)
         val itemType = item.itemType
         if (itemType is ItemType.Login) {
             val passkeys = itemType.passkeys.toMutableList()

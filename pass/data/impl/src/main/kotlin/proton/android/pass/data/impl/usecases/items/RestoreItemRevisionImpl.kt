@@ -46,7 +46,7 @@ class RestoreItemRevisionImpl @Inject constructor(
             updateItem(
                 userId = userId,
                 shareId = shareId,
-                item = itemRepository.getById(shareId, itemId),
+                item = itemRepository.getById(userId, shareId, itemId),
                 contents = itemContents
             ).revision
         }

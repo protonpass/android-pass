@@ -88,7 +88,6 @@ import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
 import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.ObserveItemById
-import proton.android.pass.data.api.usecases.ObserveItemByIdWithVault
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveMFACount
@@ -302,7 +301,6 @@ import proton.android.pass.data.fakes.usecases.TestObserveCurrentUserSettings
 import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.TestObserveInvites
 import proton.android.pass.data.fakes.usecases.TestObserveItemById
-import proton.android.pass.data.fakes.usecases.TestObserveItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestObserveItemCount
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveItemsWithPasskeys
@@ -551,9 +549,6 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindItemSyncStatusRepository(impl: TestItemSyncStatusRepository): ItemSyncStatusRepository
-
-    @Binds
-    abstract fun bindObserveItemByIdWithVault(impl: TestObserveItemByIdWithVault): ObserveItemByIdWithVault
 
     @Binds
     abstract fun bindClearUserData(impl: TestClearUserData): ClearUserData

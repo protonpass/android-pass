@@ -24,6 +24,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
@@ -80,6 +81,7 @@ class SecureLinksOverviewViewModel @Inject constructor(
 
     private val itemUiModelFlow = secureLinkFlow.flatMapLatest { secureLink ->
         observeItemById(shareId = secureLink.shareId, itemId = secureLink.itemId)
+            .filterNotNull()
     }.map { item ->
         encryptionContextProvider.withEncryptionContext {
             item.toUiModel(this@withEncryptionContext).copy(isPinned = false)

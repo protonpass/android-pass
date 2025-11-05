@@ -39,7 +39,6 @@ import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
-import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.domain.ItemState
@@ -61,6 +60,7 @@ import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestVault
 import proton.android.pass.totp.fakes.TestTotpManager
 
@@ -149,7 +149,7 @@ class CreateCreditCardViewModelTest {
     fun `given valid data when a create item event should return a success event`() = runTest {
         canPerformPaidAction.setResult(false)
 
-        val item = TestObserveItems.createCreditCard()
+        val item = TestItem.createCreditCard()
         val vault = sendInitialVault(item.shareId)
         val initialState = CreateCreditCardUiState.Success(
             shareUiState = ShareUiState.Success(

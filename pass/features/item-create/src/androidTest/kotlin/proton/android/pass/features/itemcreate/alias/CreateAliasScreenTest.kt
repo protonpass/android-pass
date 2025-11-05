@@ -39,7 +39,6 @@ import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
-import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
@@ -57,6 +56,7 @@ import proton.android.pass.features.itemcreate.R
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.test.waitUntilExists
 import proton.android.pass.test.writeTextAndWait
@@ -138,7 +138,7 @@ class CreateAliasScreenTest {
         val expectedPrefix = "test-alias"
         val note = "A note"
 
-        createAlias.setResult(Result.success(TestObserveItems.createAlias()))
+        createAlias.setResult(Result.success(TestItem.createAlias()))
 
         val checker = CallChecker<Unit>()
         composeTestRule.apply {

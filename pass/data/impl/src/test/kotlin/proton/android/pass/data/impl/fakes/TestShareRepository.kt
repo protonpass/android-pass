@@ -40,6 +40,7 @@ class TestShareRepository : ShareRepository {
         RefreshSharesResult(emptySet(), emptySet(), wasFirstSync = false)
     private var refreshShareResult: Result<Unit> = Result.success(Unit)
     private val observeSharesFlow = testFlow<Result<List<Share>>>()
+    private val observeUsableShareIdsFlow = testFlow<Result<List<ShareId>>>()
     private val observeVaultCountFlow = testFlow<Result<Int>>()
 
     private var deleteVault: Result<Unit> =
@@ -106,6 +107,10 @@ class TestShareRepository : ShareRepository {
         deleteSharesResult = value
     }
 
+    fun setUsableShareIdsResult(value: Result<List<ShareId>>) {
+        observeUsableShareIdsFlow.tryEmit(value)
+    }
+
     fun setGetAddressForShareIdResult(value: Result<UserAddress>) {
         getAddressForShareIdResult = value
     }
@@ -125,6 +130,9 @@ class TestShareRepository : ShareRepository {
     }
 
     override fun observeAllShares(userId: SessionUserId): Flow<List<Share>> = observeSharesFlow.map { it.getOrThrow() }
+
+    override fun observeAllUsableShareIds(userId: UserId): Flow<List<ShareId>> =
+        observeUsableShareIdsFlow.map { it.getOrThrow() }
 
     override fun observeVaultCount(userId: UserId): Flow<Int> = observeVaultCountFlow.map { it.getOrThrow() }
 

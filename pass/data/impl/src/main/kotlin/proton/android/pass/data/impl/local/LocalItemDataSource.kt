@@ -42,7 +42,7 @@ interface LocalItemDataSource {
     suspend fun upsertItem(item: ItemEntity)
     suspend fun upsertItems(items: List<ItemEntity>)
 
-    fun observeItemsForShares(
+    fun observeItems(
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?,
@@ -51,20 +51,10 @@ interface LocalItemDataSource {
         clearFlags: Int? = null
     ): Flow<List<ItemEntity>>
 
-    fun observeItems(
+    fun observePinnedItems(
         userId: UserId,
-        itemState: ItemState?,
-        filter: ItemTypeFilter,
-        setFlags: Int? = null,
-        clearFlags: Int? = null
-    ): Flow<List<ItemEntity>>
-
-    fun observePinnedItems(userId: UserId, filter: ItemTypeFilter): Flow<List<ItemEntity>>
-
-    fun observeAllPinnedItemsForShares(
-        userId: UserId,
-        filter: ItemTypeFilter,
-        shareIds: List<ShareId>
+        shareIds: List<ShareId>,
+        filter: ItemTypeFilter
     ): Flow<List<ItemEntity>>
 
     fun observeItem(
@@ -92,7 +82,7 @@ interface LocalItemDataSource {
         itemState: ItemState
     )
 
-    suspend fun getTrashedItems(userId: UserId): List<ItemEntity>
+    suspend fun getTrashedItems(userId: UserId, shareIds: List<ShareId>): List<ItemEntity>
     suspend fun delete(
         userId: UserId,
         shareId: ShareId,
@@ -118,10 +108,8 @@ interface LocalItemDataSource {
 
     suspend fun getItemsPendingForTotpMigration(): List<ItemEntity>
     suspend fun getItemsPendingForPasskeyMigration(): List<ItemEntity>
-    fun observeAllItemsWithTotp(userId: UserId): Flow<List<ItemWithTotp>>
-    fun observeItemsWithTotpForShare(userId: UserId, shareId: ShareId): Flow<List<ItemWithTotp>>
+    fun observeItemsWithTotp(userId: UserId, shareIds: List<ShareId>): Flow<List<ItemWithTotp>>
     fun countAllItemsWithTotp(userId: UserId): Flow<Int>
-    fun observeAllItemsWithPasskeys(userId: UserId): Flow<List<ItemEntity>>
     fun observeItemsWithPasskeys(userId: UserId, shareIds: List<ShareId>): Flow<List<ItemEntity>>
     suspend fun updateItemFlags(
         shareId: ShareId,

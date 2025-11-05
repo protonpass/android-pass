@@ -258,7 +258,7 @@ class ItemRepositoryImpl @Inject constructor(
         item: Item,
         contents: ItemContents
     ): Item {
-        val localEntity = localItemDataSource.getById(share.id, item.id)
+        val localEntity = localItemDataSource.getById(userId, share.id, item.id)
             ?: throw IllegalStateException("Item not found in local database")
 
         val decryptedProto = encryptionContextProvider.withEncryptionContextSuspendable {
@@ -319,12 +319,13 @@ class ItemRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateLocalItemFlags(
+        userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
         flag: ItemFlag,
         isFlagEnabled: Boolean
     ) {
-        val item: ItemEntity = localItemDataSource.getById(shareId, itemId)
+        val item: ItemEntity = localItemDataSource.getById(userId, shareId, itemId)
             ?: throw ItemNotFoundError(itemId, shareId)
         val updatedFlags = if (isFlagEnabled) {
             item.flags or flag.value // set the flag
@@ -335,13 +336,14 @@ class ItemRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateLocalItemsFlags(
+        userId: UserId,
         items: List<Pair<ShareId, ItemId>>,
         flag: ItemFlag,
         isFlagEnabled: Boolean
     ) {
         items.groupBy { it.first }
             .map { (shareId, itemIds) ->
-                localItemDataSource.getByIdList(shareId, itemIds.map { it.second })
+                localItemDataSource.getByIdList(userId, shareId, itemIds.map { it.second })
             }
             .flatten()
             .forEach {
@@ -488,15 +490,24 @@ class ItemRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun observeById(shareId: ShareId, itemId: ItemId): Flow<Item> =
-        localItemDataSource.observeItem(shareId, itemId).map { itemEntity ->
+    override fun observeById(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): Flow<Item?> = localItemDataSource.observeItem(userId, shareId, itemId).map { itemEntity ->
+        itemEntity?.let {
             encryptionContextProvider.withEncryptionContextSuspendable {
-                itemEntity.toDomain(this)
+                it.toDomain(this)
             }
         }
+    }
 
-    override suspend fun getById(shareId: ShareId, itemId: ItemId): Item {
-        val localItem = localItemDataSource.getById(shareId, itemId)
+    override suspend fun getById(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): Item {
+        val localItem = localItemDataSource.getById(userId, shareId, itemId)
             ?: throw IllegalStateException("Item not found [shareId=${shareId.id}] [itemId=${itemId.id}]")
 
         return encryptionContextProvider.withEncryptionContextSuspendable {
@@ -504,8 +515,12 @@ class ItemRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getByIds(shareId: ShareId, itemIds: List<ItemId>): List<Item> {
-        return localItemDataSource.getByIdList(shareId, itemIds)
+    override suspend fun getByIds(
+        userId: UserId,
+        shareId: ShareId,
+        itemIds: List<ItemId>
+    ): List<Item> {
+        return localItemDataSource.getByIdList(userId, shareId, itemIds)
             .let { itemEntities ->
                 encryptionContextProvider.withEncryptionContextSuspendable {
                     itemEntities.map { itemEntity -> itemEntity.toDomain(this) }
@@ -531,7 +546,7 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemIds: List<ItemId>
-    ): Result<Unit> = localItemDataSource.getByIdList(shareId, itemIds)
+    ): Result<Unit> = localItemDataSource.getByIdList(userId, shareId, itemIds)
         .chunked(MAX_BATCH_ITEMS_PER_REQUEST)
         .map { items ->
             val body = TrashItemsRequest(
@@ -566,7 +581,7 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemIds: List<ItemId>
-    ): Result<Unit> = localItemDataSource.getByIdList(shareId, itemIds)
+    ): Result<Unit> = localItemDataSource.getByIdList(userId, shareId, itemIds)
         .chunked(MAX_BATCH_ITEMS_PER_REQUEST)
         .map { items ->
             val body = TrashItemsRequest(
@@ -671,7 +686,7 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemIds: List<ItemId>
-    ): Result<Unit> = localItemDataSource.getByIdList(shareId, itemIds)
+    ): Result<Unit> = localItemDataSource.getByIdList(userId, shareId, itemIds)
         .chunked(MAX_BATCH_ITEMS_PER_REQUEST)
         .map { items ->
             val body = TrashItemsRequest(
@@ -680,7 +695,7 @@ class ItemRepositoryImpl @Inject constructor(
 
             runCatching { remoteItemDataSource.delete(userId, shareId, body) }
                 .onSuccess {
-                    localItemDataSource.deleteList(shareId, items.map { ItemId(it.id) })
+                    localItemDataSource.delete(userId, shareId, items.map { ItemId(it.id) })
                 }
                 .onFailure {
                     PassLogger.w(TAG, "Error deleting item")
@@ -698,7 +713,7 @@ class ItemRepositoryImpl @Inject constructor(
         packageInfo: Option<PackageInfo>,
         url: Option<String>
     ): Item {
-        val itemEntity = localItemDataSource.getById(shareId, itemId)
+        val itemEntity = localItemDataSource.getById(userId, shareId, itemId)
             ?: throw ItemNotFoundError(itemId, shareId)
 
         val (item, itemProto) = encryptionContextProvider.withEncryptionContextSuspendable {
@@ -789,7 +804,8 @@ class ItemRepositoryImpl @Inject constructor(
         if (updateAsEntities.isNotEmpty() && events.deletedItemIds.isNotEmpty()) {
             database.inTransaction("applyEvents") {
                 localItemDataSource.upsertItems(updateAsEntities)
-                localItemDataSource.deleteList(
+                localItemDataSource.delete(
+                    userId,
                     shareId,
                     events.deletedItemIds.map(::ItemId)
                 )
@@ -803,7 +819,8 @@ class ItemRepositoryImpl @Inject constructor(
         }
 
         if (events.deletedItemIds.isNotEmpty()) {
-            localItemDataSource.deleteList(
+            localItemDataSource.delete(
+                userId,
                 shareId,
                 events.deletedItemIds.map(::ItemId)
             )
@@ -860,7 +877,7 @@ class ItemRepositoryImpl @Inject constructor(
 
         database.inTransaction("setShareItems delete") {
             itemsToDelete.forEach { (shareId, toDelete) ->
-                localItemDataSource.deleteList(shareId, toDelete)
+                localItemDataSource.delete(userId, shareId, toDelete)
             }
         }
     }
@@ -890,7 +907,7 @@ class ItemRepositoryImpl @Inject constructor(
     override suspend fun purgePendingEvent(event: ItemPendingEvent) = with(event) {
         if (!hasDeletedItemIds) return false
 
-        localItemDataSource.deleteList(shareId, deletedItemIds)
+        localItemDataSource.delete(userId, shareId, deletedItemIds)
     }
 
     override fun observeItemCountSummary(
@@ -938,7 +955,7 @@ class ItemRepositoryImpl @Inject constructor(
         val migratedRevisions: List<Result<List<ItemEntity>>> = items.map { (shareId, items) ->
             async {
                 runCatching {
-                    val shareItems = localItemDataSource.getByIdList(shareId, items)
+                    val shareItems = localItemDataSource.getByIdList(userId, shareId, items)
                     migrateItemsForShare(
                         userId = userId,
                         source = shareId,
@@ -1036,7 +1053,7 @@ class ItemRepositoryImpl @Inject constructor(
         passkey: Passkey
     ) {
         val share = shareRepository.getById(userId, shareId)
-        val itemEntity = localItemDataSource.getById(shareId, itemId)
+        val itemEntity = localItemDataSource.getById(userId, shareId, itemId)
             ?: throw ItemNotFoundError(itemId, shareId)
 
         val (itemContents, item) = encryptionContextProvider.withEncryptionContextSuspendable {
@@ -1295,7 +1312,7 @@ class ItemRepositoryImpl @Inject constructor(
         val itemIdsToDelete = chunk.map { ItemId(it.id) }
         database.inTransaction("migrateChunk") {
             localItemDataSource.upsertItems(resAsEntities)
-            localItemDataSource.deleteList(source, itemIdsToDelete)
+            localItemDataSource.delete(userId, source, itemIdsToDelete)
         }
 
         return resAsEntities
@@ -1341,7 +1358,8 @@ class ItemRepositoryImpl @Inject constructor(
 
         runCatching { remoteItemDataSource.delete(userId, shareId, body) }
             .onSuccess {
-                localItemDataSource.deleteList(
+                localItemDataSource.delete(
+                    userId,
                     shareId,
                     items.map { ItemId(it.id) }
                 )

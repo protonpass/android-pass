@@ -24,7 +24,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
-import proton.android.pass.data.api.usecases.ObserveItemById
+import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.RenameAttachments
@@ -56,7 +56,7 @@ import javax.inject.Inject
 @Suppress("LongParameterList")
 @HiltViewModel
 class UpdateCreditCardViewModel @Inject constructor(
-    private val getItemById: ObserveItemById,
+    private val getItemById: GetItemById,
     private val updateItem: UpdateItem,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -95,7 +95,7 @@ class UpdateCreditCardViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             isLoadingState.update { IsLoadingState.Loading }
-            runCatching { getItemById(navShareId, navItemId).first() }
+            runCatching { getItemById(navShareId, navItemId) }
                 .onSuccess { item ->
                     runCatching {
                         if (item.hasAttachments) {

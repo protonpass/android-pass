@@ -86,7 +86,7 @@ class SecureLinkRepositoryImpl @Inject constructor(
         itemId: ItemId,
         options: SecureLinkOptions
     ): SecureLinkId {
-        val item = localItemDataSource.getById(shareId, itemId) ?: throw IllegalStateException(
+        val item = localItemDataSource.getById(userId, shareId, itemId) ?: throw IllegalStateException(
             "Item not found [shareId=${shareId.id}] [itemId=${itemId.id}]"
         )
 

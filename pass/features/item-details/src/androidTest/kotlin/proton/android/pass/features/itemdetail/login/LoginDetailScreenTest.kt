@@ -38,10 +38,8 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
-import proton.android.pass.data.api.usecases.ItemWithVaultInfo
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestObserveItemById
-import proton.android.pass.data.fakes.usecases.TestObserveItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
@@ -56,6 +54,7 @@ import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNa
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestShare
 import proton.android.pass.test.domain.TestUserAccessData
 import proton.android.pass.test.waitUntilExists
@@ -82,9 +81,6 @@ class LoginDetailScreenTest {
 
     @Inject
     lateinit var getItemById: FakeGetItemById
-
-    @Inject
-    lateinit var observeItemByIdWithVault: TestObserveItemByIdWithVault
 
     @Inject
     lateinit var clipboardManager: TestClipboardManager
@@ -278,7 +274,7 @@ class LoginDetailScreenTest {
         primaryTotp: String = "",
         vaultName: String = "vault"
     ): String {
-        val item = TestObserveItems.createItem(
+        val item = TestItem.create(
             shareId = ShareId(SHARE_ID),
             itemId = ItemId(ITEM_ID),
             itemContents = ItemContents.Login(
@@ -297,22 +293,8 @@ class LoginDetailScreenTest {
                 passkeys = emptyList()
             )
         )
-
-        val withVault = ItemWithVaultInfo(
-            item = item,
-            vaults = listOf(
-                Vault(
-                    userId = UserId(""),
-                    shareId = ShareId(SHARE_ID),
-                    vaultId = VaultId("vault-id"),
-                    name = vaultName,
-                    createTime = Date()
-                )
-            )
-        )
         val share = TestShare.Vault.create(id = SHARE_ID)
 
-        observeItemByIdWithVault.emitValue(Result.success(withVault))
         observeItemById.emitValue(Result.success(item))
         getItemById.emit(Result.success(item))
         observeShare.emitValue(share)

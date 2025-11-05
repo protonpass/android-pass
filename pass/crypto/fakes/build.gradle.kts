@@ -40,7 +40,6 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
 
-    implementation(projects.pass.commonTest)
     implementation(projects.pass.domain)
     implementation(projects.pass.protos)
     implementation(projects.pass.account.fakes)

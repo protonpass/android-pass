@@ -81,7 +81,6 @@ import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
 import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.ObserveItemById
-import proton.android.pass.data.api.usecases.ObserveItemByIdWithVault
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveMFACount
@@ -309,7 +308,6 @@ import proton.android.pass.data.impl.usecases.ObserveGlobalMonitorStateImpl
 import proton.android.pass.data.impl.usecases.ObserveInviteRecommendationsImpl
 import proton.android.pass.data.impl.usecases.ObserveInvitesImpl
 import proton.android.pass.data.impl.usecases.ObserveItemByIdImpl
-import proton.android.pass.data.impl.usecases.ObserveItemByIdWithVaultImpl
 import proton.android.pass.data.impl.usecases.ObserveItemCountImpl
 import proton.android.pass.data.impl.usecases.ObserveItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveMFACountImpl
@@ -629,9 +627,6 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveSearchEntry(impl: ObserveSearchEntryImpl): ObserveSearchEntry
-
-    @Binds
-    abstract fun bindObserveItemByIdWithVault(impl: ObserveItemByIdWithVaultImpl): ObserveItemByIdWithVault
 
     @Binds
     abstract fun bindClearUserData(impl: ClearUserDataImpl): ClearUserData

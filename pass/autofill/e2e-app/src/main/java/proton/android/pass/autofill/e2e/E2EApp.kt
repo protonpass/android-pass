@@ -42,6 +42,7 @@ import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestShare
 import proton.android.pass.test.domain.TestUser
 import timber.log.Timber
@@ -96,14 +97,14 @@ class E2EApp : Application() {
 
     private fun setupLogins() {
         val logins = listOf(
-            TestObserveItems.createLogin(
+            TestItem.createLogin(
                 shareId = VAULT_SHARE_ID,
                 itemId = ItemId("item1"),
                 title = "Item1",
                 username = "user1",
                 password = "pass1"
             ),
-            TestObserveItems.createLogin(
+            TestItem.createLogin(
                 shareId = VAULT_SHARE_ID,
                 itemId = ItemId("item2"),
                 title = "Item2",
@@ -120,7 +121,7 @@ class E2EApp : Application() {
 
     private fun setupCreditCards() {
         val creditCards = listOf(
-            TestObserveItems.createCreditCard(
+            TestItem.createCreditCard(
                 shareId = VAULT_SHARE_ID,
                 itemId = ItemId("ccItem1"),
                 holder = "FirstName LastName",
@@ -129,7 +130,7 @@ class E2EApp : Application() {
                 expirationDate = "2025-12",
                 title = "First CreditCard"
             ),
-            TestObserveItems.createCreditCard(
+            TestItem.createCreditCard(
                 shareId = VAULT_SHARE_ID,
                 itemId = ItemId("ccItem2"),
                 holder = "SecondName SecondLast",
@@ -148,12 +149,12 @@ class E2EApp : Application() {
 
     private fun setupIdentities() {
         val identities = listOf(
-            TestObserveItems.createIdentity(
+            TestItem.createIdentity(
                 shareId = VAULT_SHARE_ID,
                 itemId = ItemId("identity1"),
                 fullName = "Peter Parker"
             ),
-            TestObserveItems.createIdentity(
+            TestItem.createIdentity(
                 shareId = VAULT_SHARE_ID,
                 itemId = ItemId("identity2"),
                 fullName = "Tony Stark"

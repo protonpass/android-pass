@@ -67,6 +67,7 @@ import proton.android.pass.searchoptions.impl.SearchOptionsModule
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.TestConstants
+import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestShare
 import proton.android.pass.test.waitUntilExists
 import javax.inject.Inject
@@ -355,7 +356,7 @@ class SelectItemScreenTest {
 
         val shareId = vaultShares.first().id
         val suggestionsList = (0 until suggestions).map {
-            val item = TestObserveItems.createItem(
+            val item = TestItem.create(
                 shareId = shareId,
                 itemId = ItemId("itemid-suggestion-$it"),
                 itemContents = ItemContents.Login(
@@ -381,7 +382,7 @@ class SelectItemScreenTest {
         )
 
         val otherItemsList = (0 until otherItems).map {
-            TestObserveItems.createItem(
+            TestItem.create(
                 shareId = shareId,
                 itemId = ItemId("itemid-other-$it"),
                 itemContents = ItemContents.Login(

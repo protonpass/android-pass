@@ -146,7 +146,7 @@ class ItemRepositoryImplTest {
 
         // Assert all items are stored
         contents.forEach { (shareId, items) ->
-            val storedItems = database.itemsDao().countItems(USER_ID.id, shareId.id)
+            val storedItems = database.itemsDao().countItems(USER_ID.id, listOf(shareId.id))
             assertEquals(items.size, storedItems)
         }
     }

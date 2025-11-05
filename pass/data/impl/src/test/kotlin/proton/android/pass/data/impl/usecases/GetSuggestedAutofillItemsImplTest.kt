@@ -208,7 +208,7 @@ class GetSuggestedAutofillItemsImplTest {
         val vaultShare = TestShare.Vault.create(userId = userId.id, id = shareId.id)
         accountManager.setAccounts(listOf(TestAccountManager.DEFAULT_ACCOUNT.copy(userId = userId)))
         getUserPlan.setResult(Result.success(buildPlan(PlanType.Free("", ""))), userId)
-        observeItems.emitValue(listOf(TestObserveItems.createCreditCard(shareId = shareId)))
+        observeItems.emitValue(listOf(TestItem.createCreditCard(shareId = shareId)))
         observeAutofillShares.setValue(listOf(vaultShare), userId)
 
         filter.setFilter { true }
@@ -261,8 +261,8 @@ class GetSuggestedAutofillItemsImplTest {
         )
         val freeShareId = ShareId("free-share-id")
         val paidShareId = ShareId("paid-share-id")
-        val freeCCItem = TestObserveItems.createCreditCard(shareId = freeShareId)
-        val paidCCItem = TestObserveItems.createCreditCard(shareId = paidShareId)
+        val freeCCItem = TestItem.createCreditCard(shareId = freeShareId)
+        val paidCCItem = TestItem.createCreditCard(shareId = paidShareId)
         observeItems.emit(
             TestObserveItems.Params(
                 userId = freeUserId,

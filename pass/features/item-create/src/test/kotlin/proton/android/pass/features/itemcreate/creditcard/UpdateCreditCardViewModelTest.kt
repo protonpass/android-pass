@@ -36,9 +36,8 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.fakes.repositories.FakePendingAttachmentLinkRepository
+import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
-import proton.android.pass.data.fakes.usecases.TestObserveItemById
-import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestUpdateItem
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.data.fakes.usecases.attachments.FakeRenameAttachments
@@ -56,6 +55,7 @@ import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.domain.TestItem
 import proton.android.pass.totp.fakes.TestTotpManager
 
 class UpdateCreditCardViewModelTest {
@@ -67,7 +67,7 @@ class UpdateCreditCardViewModelTest {
 
     private lateinit var telemetryManager: TestTelemetryManager
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
-    private lateinit var getItemById: TestObserveItemById
+    private lateinit var getItemById: FakeGetItemById
     private lateinit var updateItem: TestUpdateItem
     private lateinit var accountManager: TestAccountManager
     private lateinit var pendingAttachmentLinkRepository: PendingAttachmentLinkRepository
@@ -77,40 +77,45 @@ class UpdateCreditCardViewModelTest {
     fun setup() {
         telemetryManager = TestTelemetryManager()
         snackbarDispatcher = TestSnackbarDispatcher()
-        getItemById = TestObserveItemById()
+        getItemById = FakeGetItemById()
         updateItem = TestUpdateItem()
         pendingAttachmentLinkRepository = FakePendingAttachmentLinkRepository()
         creditCardItemFormProcessor = FakeCreditCardItemFormProcessor()
         accountManager = TestAccountManager()
         accountManager.sendPrimaryUserId(UserId("user-id"))
-        instance = UpdateCreditCardViewModel(
-            accountManager = accountManager,
-            snackbarDispatcher = snackbarDispatcher,
-            savedStateHandleProvider = TestSavedStateHandleProvider().apply {
-                get()[CommonOptionalNavArgId.ShareId.key] = SHARE_ID
-                get()[CommonNavArgId.ItemId.key] = ITEM_ID
-            },
-            encryptionContextProvider = TestEncryptionContextProvider(),
-            telemetryManager = telemetryManager,
-            getItemById = getItemById,
-            updateItem = updateItem,
-            canPerformPaidAction = TestCanPerformPaidAction().apply { setResult(true) },
-            attachmentsHandler = FakeAttachmentHandler(),
-            linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
-            renameAttachments = FakeRenameAttachments(),
-            userPreferencesRepository = TestPreferenceRepository(),
-            pendingAttachmentLinkRepository = pendingAttachmentLinkRepository,
-            customFieldHandler = CustomFieldHandlerImpl(TestTotpManager(), TestEncryptionContextProvider()),
-            customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
-            creditCardItemFormProcessor = creditCardItemFormProcessor,
-            clipboardManager = TestClipboardManager()
-        )
     }
+
+    private fun createInstance(): UpdateCreditCardViewModel = UpdateCreditCardViewModel(
+        accountManager = accountManager,
+        snackbarDispatcher = snackbarDispatcher,
+        savedStateHandleProvider = TestSavedStateHandleProvider().apply {
+            get()[CommonOptionalNavArgId.ShareId.key] = SHARE_ID
+            get()[CommonNavArgId.ItemId.key] = ITEM_ID
+        },
+        encryptionContextProvider = TestEncryptionContextProvider(),
+        telemetryManager = telemetryManager,
+        getItemById = getItemById,
+        updateItem = updateItem,
+        canPerformPaidAction = TestCanPerformPaidAction().apply { setResult(true) },
+        attachmentsHandler = FakeAttachmentHandler(),
+        linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
+        renameAttachments = FakeRenameAttachments(),
+        userPreferencesRepository = TestPreferenceRepository(),
+        pendingAttachmentLinkRepository = pendingAttachmentLinkRepository,
+        customFieldHandler = CustomFieldHandlerImpl(
+            TestTotpManager(),
+            TestEncryptionContextProvider()
+        ),
+        customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
+        creditCardItemFormProcessor = creditCardItemFormProcessor,
+        clipboardManager = TestClipboardManager()
+    )
 
     @Test
     fun `update item without title should return a BlankTitle validation error`() = runTest {
-        val item = TestObserveItems.createCreditCard(title = "")
-        getItemById.emitValue(Result.success(item))
+        val item = TestItem.createCreditCard(title = "")
+        getItemById.emit(Result.success(item))
+        instance = createInstance()
         creditCardItemFormProcessor.setResult(
             FormProcessingResult.Error(setOf(CommonFieldValidationError.BlankTitle))
         )
@@ -127,8 +132,9 @@ class UpdateCreditCardViewModelTest {
 
     @Test
     fun `can update with valid contents`() = runTest {
-        val item = TestObserveItems.createCreditCard(title = "title")
-        getItemById.emitValue(Result.success(item))
+        val item = TestItem.createCreditCard(title = "title")
+        getItemById.emit(Result.success(item))
+        instance = createInstance()
         instance.onTitleChange("TitleChanged") // there needs to be a change to trigger an update
         updateItem.setResult(Result.success(item))
 
@@ -174,8 +180,9 @@ class UpdateCreditCardViewModelTest {
     }
 
     private suspend fun runTestError(exception: Throwable) {
-        val item = TestObserveItems.createCreditCard(title = "title")
-        getItemById.emitValue(Result.success(item))
+        val item = TestItem.createCreditCard(title = "title")
+        getItemById.emit(Result.success(item))
+        instance = createInstance()
         instance.onTitleChange("TitleChanged") // there needs to be a change to trigger an update
         updateItem.setResult(Result.failure(exception))
 

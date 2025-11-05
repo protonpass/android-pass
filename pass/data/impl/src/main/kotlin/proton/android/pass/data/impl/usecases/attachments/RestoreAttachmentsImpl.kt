@@ -56,6 +56,7 @@ class RestoreAttachmentsImpl @Inject constructor(
             }
         )
         itemRepository.updateLocalItemFlags(
+            userId = userId,
             shareId = shareId,
             itemId = itemId,
             flag = ItemFlag.HasAttachments,

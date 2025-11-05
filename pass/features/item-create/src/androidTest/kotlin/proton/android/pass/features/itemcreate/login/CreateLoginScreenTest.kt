@@ -49,7 +49,6 @@ import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestCreateLoginAndAlias
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
-import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
@@ -75,6 +74,7 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.TestConstants
+import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.test.waitUntilExists
 import proton.android.pass.test.writeTextAndWait
@@ -173,7 +173,7 @@ class CreateLoginScreenTest {
         val website2Full = "https://$website2"
         val note = "some note"
 
-        val item = TestObserveItems.createLogin(
+        val item = TestItem.createLogin(
             title = title,
             username = email,
             note = note,
@@ -280,7 +280,7 @@ class CreateLoginScreenTest {
         val totpCustomFieldLabel = "TOTP custom field"
         val totpCustomFieldValue = "TOTPSECRET"
 
-        createItem.sendItem(Result.success(TestObserveItems.createLogin()))
+        createItem.sendItem(Result.success(TestItem.createLogin()))
         totpManager.addSanitisedSaveResult(Result.success(totpCustomFieldValue))
 
         val textCustomField = CustomFieldContent.Text(
@@ -616,7 +616,7 @@ class CreateLoginScreenTest {
         )
 
         draftRepository.save(CreateAliasViewModel.KEY_DRAFT_ALIAS, aliasItemFormState)
-        createItemAndAlias.setResult(Result.success(TestObserveItems.createLogin()))
+        createItemAndAlias.setResult(Result.success(TestItem.createLogin()))
 
         composeTestRule.apply {
             setContent {

@@ -68,6 +68,7 @@ class LinkAttachmentsToItemImpl @Inject constructor(
         )
         if (toLink.isNotEmpty()) {
             itemRepository.updateLocalItemFlags(
+                userId = userId,
                 shareId = shareId,
                 itemId = itemId,
                 flag = ItemFlag.HasAttachments,

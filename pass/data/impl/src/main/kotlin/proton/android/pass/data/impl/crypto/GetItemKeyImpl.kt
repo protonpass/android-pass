@@ -52,7 +52,7 @@ class GetItemKeyImpl @Inject constructor(
                 )
             }
 
-        is Share.Vault -> localItemDataSource.getById(shareId, itemId)
+        is Share.Vault -> localItemDataSource.getById(userId, shareId, itemId)
             .let { item ->
                 item ?: throw IllegalArgumentException("Item not found")
                 item.key ?: throw ItemKeyNotAvailableError()

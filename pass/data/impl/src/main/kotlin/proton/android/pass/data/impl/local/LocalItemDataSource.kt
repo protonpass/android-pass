@@ -67,25 +67,37 @@ interface LocalItemDataSource {
         shareIds: List<ShareId>
     ): Flow<List<ItemEntity>>
 
-    fun observeItem(shareId: ShareId, itemId: ItemId): Flow<ItemEntity>
-
-    suspend fun getById(shareId: ShareId, itemId: ItemId): ItemEntity?
-    suspend fun getByIdList(shareId: ShareId, itemIds: List<ItemId>): List<ItemEntity>
-    suspend fun setItemState(
+    fun observeItem(
+        userId: UserId,
         shareId: ShareId,
-        itemId: ItemId,
-        itemState: ItemState
-    )
+        itemId: ItemId
+    ): Flow<ItemEntity?>
+
+    suspend fun getById(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): ItemEntity?
+
+    suspend fun getByIdList(
+        userId: UserId,
+        shareId: ShareId,
+        itemIds: List<ItemId>
+    ): List<ItemEntity>
 
     suspend fun setItemStates(
+        userId: UserId,
         shareId: ShareId,
         itemIds: List<ItemId>,
         itemState: ItemState
     )
 
     suspend fun getTrashedItems(userId: UserId): List<ItemEntity>
-    suspend fun delete(shareId: ShareId, itemId: ItemId): Boolean
-    suspend fun deleteList(shareId: ShareId, itemIds: List<ItemId>): Boolean
+    suspend fun delete(
+        userId: UserId,
+        shareId: ShareId,
+        itemIds: List<ItemId>
+    ): Boolean
     suspend fun hasItemsForShare(userId: UserId, shareId: ShareId): Boolean
     fun observeItemCountSummary(
         userId: UserId,

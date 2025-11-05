@@ -53,8 +53,8 @@ import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.usecases.CreateAlias
+import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
@@ -102,7 +102,7 @@ import javax.inject.Inject
 
 @[HiltViewModel Suppress("LongParameterList")]
 class UpdateLoginViewModel @Inject constructor(
-    private val getItemById: ObserveItemById,
+    private val getItemById: GetItemById,
     private val updateItem: UpdateItem,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
@@ -173,7 +173,7 @@ class UpdateLoginViewModel @Inject constructor(
             if (itemOption != None) return@launch
 
             isLoadingState.update { IsLoadingState.Loading }
-            runCatching { getItemById.invoke(navShareId, navItemId).first() }
+            runCatching { getItemById(navShareId, navItemId) }
                 .onFailure {
                     PassLogger.i(TAG, it, "Get by id error")
                     snackbarDispatcher(InitError)

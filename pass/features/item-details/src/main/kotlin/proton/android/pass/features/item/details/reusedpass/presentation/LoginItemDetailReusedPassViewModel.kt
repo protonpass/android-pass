@@ -25,6 +25,7 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -42,7 +43,6 @@ import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.securitycenter.api.passwords.DuplicatedPasswordChecker
 import javax.inject.Inject
-import kotlin.collections.map
 
 @HiltViewModel
 class LoginItemDetailReusedPassViewModel @Inject constructor(
@@ -63,6 +63,7 @@ class LoginItemDetailReusedPassViewModel @Inject constructor(
         .let(::ItemId)
 
     private val loginItemPasswordFlow = observeItemById(shareId, itemId)
+        .filterNotNull()
         .map { loginItem ->
             encryptionContextProvider.withEncryptionContext {
                 decrypt((loginItem.itemType as ItemType.Login).password)
@@ -70,6 +71,7 @@ class LoginItemDetailReusedPassViewModel @Inject constructor(
         }
 
     private val duplicatedLoginItemsFlow = observeItemById(shareId, itemId)
+        .filterNotNull()
         .map { loginItem ->
             duplicatedPasswordChecker(loginItem).let { duplicatedPasswordReport ->
                 encryptionContextProvider.withEncryptionContext {

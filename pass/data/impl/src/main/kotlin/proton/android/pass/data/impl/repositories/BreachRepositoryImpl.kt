@@ -34,6 +34,7 @@ import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.api.errors.CustomEmailDoesNotExistException
+import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.impl.local.LocalBreachesDataSource
@@ -140,7 +141,10 @@ class BreachRepositoryImpl @Inject constructor(
     }
 
     override fun observeAliasEmail(userId: UserId, aliasEmailId: AliasEmailId): Flow<BreachEmailReport.Alias> = combine(
-        observeItemById(aliasEmailId.shareId, aliasEmailId.itemId),
+        observeItemById(aliasEmailId.shareId, aliasEmailId.itemId)
+            .map { item ->
+                item ?: throw ItemNotFoundError(aliasEmailId.itemId, aliasEmailId.shareId)
+            },
         localBreachesDataSource.observeAliasEmailBreaches(userId, aliasEmailId)
             .onStart { refreshAliasEmailBreachesIfNeeded(userId, aliasEmailId) }
     ) { aliasItem, aliasEmailBreaches ->

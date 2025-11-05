@@ -36,7 +36,6 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.components.SingletonComponent
 import kotlinx.datetime.Clock
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -44,27 +43,22 @@ import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.R
-import proton.android.pass.data.api.usecases.ItemWithVaultInfo
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestObserveItemById
-import proton.android.pass.data.fakes.usecases.TestObserveItemByIdWithVault
-import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
-import proton.android.pass.domain.VaultId
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsScreen
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestShare
 import proton.android.pass.test.domain.TestUserAccessData
 import proton.android.pass.test.waitUntilExists
-import java.util.Date
 import javax.inject.Inject
 import kotlin.test.assertEquals
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -80,9 +74,6 @@ class CreditCardDetailScreenTest {
 
     @Inject
     lateinit var savedStateHandle: TestSavedStateHandleProvider
-
-    @Inject
-    lateinit var observeItemByIdWithVault: TestObserveItemByIdWithVault
 
     @Inject
     lateinit var observeItemById: TestObserveItemById
@@ -372,7 +363,7 @@ class CreditCardDetailScreenTest {
         expirationDate: String = "2060-01",
         vaultName: String = "vault"
     ): String {
-        val item = TestObserveItems.createCreditCard(
+        val item = TestItem.createCreditCard(
             shareId = ShareId(SHARE_ID),
             itemId = ItemId(ITEM_ID),
             title = title,
@@ -384,23 +375,9 @@ class CreditCardDetailScreenTest {
             expirationDate = expirationDate
         )
 
-        val withVault = ItemWithVaultInfo(
-            item = item,
-            vaults = listOf(
-                Vault(
-                    userId = UserId(""),
-                    shareId = ShareId(SHARE_ID),
-                    vaultId = VaultId("vault-id"),
-                    name = vaultName,
-                    createTime = Date()
-                )
-            )
-        )
-
         val share = TestShare.Vault.create(id = SHARE_ID)
 
         observeItemById.emitValue(Result.success(item))
-        observeItemByIdWithVault.emitValue(Result.success(withVault))
         getItemById.emit(Result.success(item))
         observeShare.emitValue(share)
         observeUserAccessData.sendValue(TestUserAccessData.random())

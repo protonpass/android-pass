@@ -33,7 +33,7 @@ import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.Constants
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
-import proton.android.pass.crypto.fakes.utils.TestUtils
+import proton.android.pass.test.TestUtils
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 

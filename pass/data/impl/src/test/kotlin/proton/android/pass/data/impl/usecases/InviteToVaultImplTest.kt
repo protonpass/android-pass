@@ -29,7 +29,6 @@ import me.proton.core.user.domain.entity.UserAddressKey
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
-import proton.android.pass.crypto.fakes.utils.TestUtils
 import proton.android.pass.data.api.repositories.AddressPermission
 import proton.android.pass.data.api.usecases.InviteUserMode
 import proton.android.pass.data.fakes.usecases.TestGetInviteUserMode
@@ -40,6 +39,7 @@ import proton.android.pass.data.impl.fakes.TestShareKeyRepository
 import proton.android.pass.data.impl.fakes.TestShareRepository
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
+import proton.android.pass.test.TestUtils
 import proton.android.pass.test.domain.TestShare
 
 class InviteToVaultImplTest {

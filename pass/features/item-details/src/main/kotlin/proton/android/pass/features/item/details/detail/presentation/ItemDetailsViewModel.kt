@@ -96,6 +96,7 @@ class ItemDetailsViewModel @Inject constructor(
     }
 
     private val itemFlow = observeItemById(shareId, itemId)
+        .map { item -> item ?: throw ItemNotFoundError(itemId, shareId) }
         .catch { error ->
             if (error is ItemNotFoundError) {
                 eventFlow.update { ItemDetailsEvent.OnItemNotFound }

@@ -24,9 +24,9 @@ import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
-import proton.android.pass.crypto.fakes.utils.TestUtils
 import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.test.TestUtils
 import proton_pass_item_v1.ItemV1
 import kotlin.random.Random
 import kotlin.test.assertEquals
@@ -42,8 +42,8 @@ class UpdateItemImplTest {
 
         val (itemKey, decryptedItemKey) = TestUtils.createItemKey()
         val contents = ItemContents.Note(
-            title = proton.android.pass.test.TestUtils.randomString(),
-            note = proton.android.pass.test.TestUtils.randomString(),
+            title = TestUtils.randomString(),
+            note = TestUtils.randomString(),
             customFields = emptyList()
         )
         val body = instance.createRequest(

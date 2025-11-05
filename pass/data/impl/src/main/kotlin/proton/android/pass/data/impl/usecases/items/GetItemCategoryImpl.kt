@@ -18,7 +18,10 @@
 
 package proton.android.pass.data.impl.usecases.items
 
+import kotlinx.coroutines.flow.firstOrNull
+import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.items.GetItemCategory
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -26,10 +29,14 @@ import proton.android.pass.domain.items.ItemCategory
 import javax.inject.Inject
 
 class GetItemCategoryImpl @Inject constructor(
+    private val observeCurrentUser: ObserveCurrentUser,
     private val itemRepository: ItemRepository
 ) : GetItemCategory {
 
-    override suspend fun invoke(shareId: ShareId, itemId: ItemId): ItemCategory =
-        itemRepository.getById(shareId, itemId).itemType.category
+    override suspend fun invoke(shareId: ShareId, itemId: ItemId): ItemCategory {
+        val user = observeCurrentUser().firstOrNull()
+            ?: throw UserIdNotAvailableError()
+        return itemRepository.getById(user.userId, shareId, itemId).itemType.category
+    }
 
 }

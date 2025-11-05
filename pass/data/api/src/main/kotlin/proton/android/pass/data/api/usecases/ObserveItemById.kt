@@ -24,5 +24,5 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
 interface ObserveItemById {
-    operator fun invoke(shareId: ShareId, itemId: ItemId): Flow<Item>
+    operator fun invoke(shareId: ShareId, itemId: ItemId): Flow<Item?>
 }

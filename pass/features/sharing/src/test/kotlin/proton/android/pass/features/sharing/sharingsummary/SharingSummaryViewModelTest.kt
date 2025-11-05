@@ -36,7 +36,6 @@ import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
 import proton.android.pass.data.fakes.usecases.TestInviteToVault
 import proton.android.pass.data.fakes.usecases.TestObserveItemById
-import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.invites.FakeInviteToItem
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
@@ -53,6 +52,7 @@ import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestVault
 
 internal class SharingSummaryViewModelTest {
@@ -180,7 +180,7 @@ internal class SharingSummaryViewModelTest {
     @Test
     fun `GIVEN item is sharing WHEN there are no addresses to share with THEN navigate home`() = runTest {
         val viewModel = createViewModel(isItemSharing = true)
-        val item = TestObserveItems.createItem(
+        val item = TestItem.create(
             itemContents = ItemContents.Note(
                 title = "item",
                 note = "note",
@@ -218,7 +218,7 @@ internal class SharingSummaryViewModelTest {
         savedStateHandleProvider.apply {
             get()[CommonOptionalNavArgId.ItemId.key] = TEST_ITEM_ID
         }
-        val item = TestObserveItems.createItem(
+        val item = TestItem.create(
             itemContents = ItemContents.Note(
                 title = "item",
                 note = "note",

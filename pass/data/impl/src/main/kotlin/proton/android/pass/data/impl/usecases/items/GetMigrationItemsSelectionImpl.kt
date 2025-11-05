@@ -21,6 +21,9 @@ package proton.android.pass.data.impl.usecases.items
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.firstOrNull
+import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.items.GetMigrationItemsSelection
 import proton.android.pass.domain.ItemId
@@ -29,14 +32,15 @@ import proton.android.pass.domain.items.MigrationItemsSelection
 import javax.inject.Inject
 
 class GetMigrationItemsSelectionImpl @Inject constructor(
+    private val accountManager: AccountManager,
     private val itemRepository: ItemRepository
 ) : GetMigrationItemsSelection {
 
     override suspend fun invoke(selectedItems: Map<ShareId, List<ItemId>>): MigrationItemsSelection = coroutineScope {
+        val userId = accountManager.getPrimaryUserId().firstOrNull()
+            ?: throw UserIdNotAvailableError()
         selectedItems.map { (shareId, itemIds) ->
-            async {
-                itemRepository.getByIds(shareId, itemIds)
-            }
+            async { itemRepository.getByIds(userId, shareId, itemIds) }
         }
     }
         .awaitAll()

@@ -23,21 +23,27 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.fakes.repositories.TestItemRepository
+import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.test.domain.TestItem
+import proton.android.pass.test.domain.TestUser
 import proton.android.pass.test.domain.items.ItemIdMother
 import proton.android.pass.test.domain.shares.ShareIdMother
 
 internal class GetItemCategoryImplTest {
 
     private lateinit var itemRepository: TestItemRepository
+    private lateinit var observeCurrentUser: TestObserveCurrentUser
 
     private lateinit var getItemCategoryImpl: GetItemCategoryImpl
 
     @Before
     internal fun setUp() {
         itemRepository = TestItemRepository()
+        observeCurrentUser = TestObserveCurrentUser().apply {
+            sendUser(TestUser.create(""))
+        }
 
-        getItemCategoryImpl = GetItemCategoryImpl(itemRepository)
+        getItemCategoryImpl = GetItemCategoryImpl(observeCurrentUser, itemRepository)
     }
 
     @Test

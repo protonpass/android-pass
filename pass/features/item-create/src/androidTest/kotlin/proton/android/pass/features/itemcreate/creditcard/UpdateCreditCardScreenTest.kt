@@ -53,6 +53,7 @@ import proton.android.pass.features.itemcreate.R
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.waitUntilExists
 import proton.android.pass.test.writeTextAndWait
 import javax.inject.Inject
@@ -98,7 +99,7 @@ class UpdateCreditCardScreenTest {
             set(CommonNavArgId.ItemId.key, ITEM_ID)
         }
 
-        initialItem = TestObserveItems.createCreditCard(
+        initialItem = TestItem.createCreditCard(
             shareId = ShareId(SHARE_ID),
             title = DEFAULT_TITLE,
             note = DEFAULT_NOTE,

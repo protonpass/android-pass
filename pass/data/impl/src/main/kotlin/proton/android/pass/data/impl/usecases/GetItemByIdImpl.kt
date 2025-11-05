@@ -18,17 +18,25 @@
 
 package proton.android.pass.data.impl.usecases
 
+import kotlinx.coroutines.flow.firstOrNull
+import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class GetItemByIdImpl @Inject constructor(
+    private val observeCurrentUser: ObserveCurrentUser,
     private val itemRepository: ItemRepository
 ) : GetItemById {
 
-    override suspend fun invoke(shareId: ShareId, itemId: ItemId): Item = itemRepository.getById(shareId, itemId)
+    override suspend fun invoke(shareId: ShareId, itemId: ItemId): Item {
+        val user = observeCurrentUser().firstOrNull()
+            ?: throw UserIdNotAvailableError()
+        return itemRepository.getById(user.userId, shareId, itemId)
+    }
 }
 

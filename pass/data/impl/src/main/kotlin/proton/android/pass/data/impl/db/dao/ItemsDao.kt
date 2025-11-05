@@ -46,187 +46,62 @@ data class ShareIdCountRow(
 @Dao
 @Suppress("TooManyFunctions")
 abstract class ItemsDao : BaseDao<ItemEntity>() {
-    @Query(
-        """
-        SELECT * FROM ${ItemEntity.TABLE} 
-        WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND (${ItemEntity.Columns.STATE} = :itemState OR :itemState IS NULL)
-          AND (:setFlags IS NULL OR (flags & :setFlags) == :setFlags)
-          AND (:clearFlags IS NULL OR (flags & :clearFlags) == 0)
-        ORDER BY ${ItemEntity.Columns.CREATE_TIME} DESC
-        """
-    )
-    abstract fun observeAllForAddress(
-        userId: String,
-        itemState: Int?,
-        setFlags: Int?,
-        clearFlags: Int?
-    ): Flow<List<ItemEntity>>
-
-    @Query(
-        """
-        SELECT * FROM ${ItemEntity.TABLE} 
-        WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND (${ItemEntity.Columns.STATE} = :itemState OR :itemState IS NULL)
-          AND ${ItemEntity.Columns.ITEM_TYPE} IN (:itemTypes)
-          AND (:setFlags IS NULL OR (flags & :setFlags) == :setFlags)
-          AND (:clearFlags IS NULL OR (flags & :clearFlags) == 0)
-        ORDER BY ${ItemEntity.Columns.CREATE_TIME} DESC
-        """
-    )
-    abstract fun observeAllForAddress(
-        userId: String,
-        itemState: Int?,
-        itemTypes: List<Int>,
-        setFlags: Int?,
-        clearFlags: Int?
-    ): Flow<List<ItemEntity>>
-
-    @Query(
-        """
-        SELECT * FROM ${ItemEntity.TABLE} 
-        WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
-          AND (${ItemEntity.Columns.STATE} = :itemState OR :itemState IS NULL)
-          AND (:setFlags IS NULL OR (flags & :setFlags) == :setFlags)
-          AND (:clearFlags IS NULL OR (flags & :clearFlags) == 0)
-        ORDER BY ${ItemEntity.Columns.CREATE_TIME} DESC
-        """
-    )
-    abstract fun observeAllForShares(
-        userId: String,
-        shareIds: List<String>,
-        itemState: Int?,
-        setFlags: Int?,
-        clearFlags: Int?
-    ): Flow<List<ItemEntity>>
 
     @Suppress("LongParameterList")
     @Query(
         """
-        SELECT * FROM ${ItemEntity.TABLE} 
+        SELECT * FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
-          AND (${ItemEntity.Columns.STATE} = :itemState OR :itemState IS NULL)
-          AND ${ItemEntity.Columns.ITEM_TYPE} IN (:itemTypes)
+          AND (:itemIds IS NULL OR ${ItemEntity.Columns.ID} IN (:itemIds))
+          AND (:shareIds IS NULL OR ${ItemEntity.Columns.SHARE_ID} IN (:shareIds))
+          AND (:itemTypes IS NULL OR ${ItemEntity.Columns.ITEM_TYPE} IN (:itemTypes))
+          AND (:itemState IS NULL OR ${ItemEntity.Columns.STATE} = :itemState)
           AND (:setFlags IS NULL OR (flags & :setFlags) == :setFlags)
           AND (:clearFlags IS NULL OR (flags & :clearFlags) == 0)
+          AND (:isPinned IS NULL OR ${ItemEntity.Columns.IS_PINNED} = :isPinned)
+          AND (:hasTotp IS NULL OR ${ItemEntity.Columns.HAS_TOTP} = :hasTotp)
+          AND (:hasPasskeys IS NULL OR ${ItemEntity.Columns.HAS_PASSKEYS} = :hasPasskeys)
         ORDER BY ${ItemEntity.Columns.CREATE_TIME} DESC
         """
     )
-    abstract fun observeAllForShare(
+    abstract fun observeItems(
         userId: String,
-        shareIds: List<String>,
-        itemState: Int?,
-        itemTypes: List<Int>,
-        setFlags: Int?,
-        clearFlags: Int?
+        itemIds: List<String>? = null,
+        shareIds: List<String>? = null,
+        itemState: Int? = null,
+        itemTypes: List<Int>? = null,
+        isPinned: Boolean? = null,
+        hasTotp: Boolean? = null,
+        hasPasskeys: Boolean? = null,
+        setFlags: Int? = null,
+        clearFlags: Int? = null
     ): Flow<List<ItemEntity>>
 
     @Query(
         """
-        SELECT * FROM ${ItemEntity.TABLE} 
+        SELECT * FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND ${ItemEntity.Columns.IS_PINNED} = 1
-          AND ${ItemEntity.Columns.ITEM_TYPE} IN (:itemTypes)
+          AND ${ItemEntity.Columns.SHARE_ID} = :shareId
+          AND ${ItemEntity.Columns.ID} = :itemId
         """
     )
-    abstract fun observeAllPinnedItems(userId: String, itemTypes: List<Int>): Flow<List<ItemEntity>>
-
-    @Query(
-        """
-        SELECT * FROM ${ItemEntity.TABLE} 
-        WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND ${ItemEntity.Columns.IS_PINNED} = 1
-          AND ${ItemEntity.Columns.ITEM_TYPE} IN (:itemTypes)
-          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
-        """
-    )
-    abstract fun observeAllPinnedItemsForShares(
+    abstract fun observeById(
         userId: String,
-        itemTypes: List<Int>,
-        shareIds: List<String>
-    ): Flow<List<ItemEntity>>
-
-    @Query(
-        """
-        SELECT * FROM ${ItemEntity.TABLE} 
-        WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND ${ItemEntity.Columns.IS_PINNED} = 1
-          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
-        """
-    )
-    abstract fun observeAllPinnedItemsForShares(userId: String, shareIds: List<String>): Flow<List<ItemEntity>>
-
-    @Query(
-        """
-        SELECT * FROM ${ItemEntity.TABLE} 
-        WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND ${ItemEntity.Columns.IS_PINNED} = 1
-        """
-    )
-    abstract fun observeAllPinnedItems(userId: String): Flow<List<ItemEntity>>
-
-    @Query(
-        """
-        SELECT * FROM ${ItemEntity.TABLE}
-        WHERE ${ItemEntity.Columns.SHARE_ID} = :shareId
-          AND ${ItemEntity.Columns.ID} = :itemId
-        """
-    )
-    abstract fun observeById(shareId: String, itemId: String): Flow<ItemEntity>
-
-    @Query(
-        """
-        SELECT * FROM ${ItemEntity.TABLE}
-        WHERE ${ItemEntity.Columns.SHARE_ID} = :shareId
-          AND ${ItemEntity.Columns.ID} = :itemId
-        """
-    )
-    abstract suspend fun getById(shareId: String, itemId: String): ItemEntity?
-
-    @Query(
-        """
-        SELECT * FROM ${ItemEntity.TABLE}
-        WHERE ${ItemEntity.Columns.SHARE_ID} = :shareId
-          AND ${ItemEntity.Columns.ID} IN (:itemIds)
-        """
-    )
-    abstract suspend fun getByIdList(shareId: String, itemIds: List<String>): List<ItemEntity>
-
-    @Query(
-        """
-        SELECT * FROM ${ItemEntity.TABLE}
-        WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND ${ItemEntity.Columns.STATE} = :state
-        ORDER BY ${ItemEntity.Columns.CREATE_TIME} DESC
-        """
-    )
-    abstract suspend fun getItemsWithState(userId: String, state: Int): List<ItemEntity>
+        shareId: String,
+        itemId: String
+    ): Flow<ItemEntity?>
 
     @Query(
         """
         UPDATE ${ItemEntity.TABLE}
         SET ${ItemEntity.Columns.STATE} = :state
-        WHERE ${ItemEntity.Columns.SHARE_ID} = :shareId
-          AND ${ItemEntity.Columns.ID} = :itemId
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.SHARE_ID} = :shareId
+          AND ${ItemEntity.Columns.ID} IN (:itemIds)
         """
     )
     abstract suspend fun setItemState(
-        shareId: String,
-        itemId: String,
-        state: Int
-    )
-
-    @Query(
-        """
-        UPDATE ${ItemEntity.TABLE}
-        SET ${ItemEntity.Columns.STATE} = :state
-        WHERE ${ItemEntity.Columns.SHARE_ID} = :shareId
-          AND ${ItemEntity.Columns.ID} IN (:itemIds)
-        """
-    )
-    abstract suspend fun setItemStates(
+        userId: String,
         shareId: String,
         itemIds: List<String>,
         state: Int
@@ -235,30 +110,16 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
     @Query(
         """
         DELETE FROM ${ItemEntity.TABLE} 
-        WHERE ${ItemEntity.Columns.SHARE_ID} = :shareId
-          AND ${ItemEntity.Columns.ID} = :itemId
-        """
-    )
-    abstract suspend fun delete(shareId: String, itemId: String): Int
-
-    @Query(
-        """
-        DELETE FROM ${ItemEntity.TABLE} 
-        WHERE ${ItemEntity.Columns.SHARE_ID} = :shareId
+        WHERE  ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.SHARE_ID} = :shareId
           AND ${ItemEntity.Columns.ID} IN (:itemIds)
         """
     )
-    abstract suspend fun deleteList(shareId: String, itemIds: List<String>): Int
-
-    @Query(
-        """
-        SELECT COUNT(*)
-        FROM ${ItemEntity.TABLE}
-        WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND ${ItemEntity.Columns.SHARE_ID} = :shareId
-        """
-    )
-    abstract suspend fun countItems(userId: String, shareId: String): Int
+    abstract suspend fun delete(
+        userId: String,
+        shareId: String,
+        itemIds: List<String>
+    ): Int
 
     @Query(
         """
@@ -342,16 +203,6 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
 
     @Query(
         """
-        SELECT * FROM ${ItemEntity.TABLE}
-        WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND ${ItemEntity.Columns.HAS_TOTP} = 1
-        ORDER BY ${ItemEntity.Columns.CREATE_TIME} ASC
-        """
-    )
-    abstract fun observeAllItemsWithTotp(userId: String): Flow<List<ItemEntity>>
-
-    @Query(
-        """
         SELECT 
           ${ItemEntity.Columns.SHARE_ID} as shareId,
           COUNT(${ItemEntity.Columns.ITEM_TYPE}) as itemCount
@@ -363,40 +214,6 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         """
     )
     abstract fun countItemsWithTotp(userId: String, itemState: Int?): Flow<List<ShareIdCountRow>>
-
-    @Query(
-        """
-        SELECT * FROM ${ItemEntity.TABLE}
-        WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND ${ItemEntity.Columns.HAS_PASSKEYS} = 1
-          AND ${ItemEntity.Columns.STATE} = ${ItemStateValues.ACTIVE}
-        ORDER BY ${ItemEntity.Columns.CREATE_TIME} ASC
-        """
-    )
-    abstract fun observeAllItemsWithPasskeys(userId: String): Flow<List<ItemEntity>>
-
-    @Query(
-        """
-        SELECT * FROM ${ItemEntity.TABLE}
-        WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND ${ItemEntity.Columns.HAS_PASSKEYS} = 1
-          AND ${ItemEntity.Columns.STATE} = ${ItemStateValues.ACTIVE}
-          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
-        ORDER BY ${ItemEntity.Columns.CREATE_TIME} ASC
-        """
-    )
-    abstract fun observeItemsWithPasskeys(userId: String, shareIds: List<String>): Flow<List<ItemEntity>>
-
-    @Query(
-        """
-        SELECT * FROM ${ItemEntity.TABLE}
-        WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND ${ItemEntity.Columns.SHARE_ID} = :shareId 
-          AND ${ItemEntity.Columns.HAS_TOTP} = 1
-        ORDER BY ${ItemEntity.Columns.CREATE_TIME} ASC
-        """
-    )
-    abstract fun observeItemsWithTotpForShare(userId: String, shareId: String): Flow<List<ItemEntity>>
 
     @Query(
         """

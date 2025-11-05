@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.mapLatest
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.LocalItemDataSource
@@ -38,24 +39,29 @@ import javax.inject.Singleton
 class ObserveItemsWithPasskeysImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val localItemDataSource: LocalItemDataSource,
+    private val shareRepository: ShareRepository,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ObserveItemsWithPasskeys {
     override fun invoke(userId: UserId?, shareSelection: ShareSelection): Flow<List<Item>> =
         (userId?.let(::flowOf) ?: accountManager.getPrimaryUserId())
             .filterNotNull()
-            .flatMapLatest {
+            .flatMapLatest { resolvedUserId ->
                 when (shareSelection) {
                     is ShareSelection.Share -> localItemDataSource.observeItemsWithPasskeys(
-                        userId = it,
+                        userId = resolvedUserId,
                         shareIds = listOf(shareSelection.shareId)
                     )
 
                     is ShareSelection.Shares -> localItemDataSource.observeItemsWithPasskeys(
-                        userId = it,
+                        userId = resolvedUserId,
                         shareIds = shareSelection.shareIds
                     )
 
-                    ShareSelection.AllShares -> localItemDataSource.observeAllItemsWithPasskeys(it)
+                    ShareSelection.AllShares ->
+                        shareRepository.observeAllUsableShareIds(resolvedUserId)
+                            .flatMapLatest { list ->
+                                localItemDataSource.observeItemsWithPasskeys(resolvedUserId, list)
+                            }
                 }
             }
             .mapLatest { items ->

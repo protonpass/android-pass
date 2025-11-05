@@ -153,6 +153,10 @@ class ShareRepositoryImpl @Inject constructor(
                 }
             }
 
+    override fun observeAllUsableShareIds(userId: UserId): Flow<List<ShareId>> =
+        localShareDataSource.observeAllActiveSharesForUser(userId)
+            .map { shares -> shares.map { ShareId(it.id) } }
+
     override fun observeSharesByType(
         userId: UserId,
         shareType: ShareType,

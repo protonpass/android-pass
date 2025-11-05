@@ -31,6 +31,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachProtonEmails
 import proton.android.pass.data.impl.usecases.breach.ObserveCustomEmailSuggestionsImpl
 import proton.android.pass.domain.breach.BreachProtonEmail
+import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestUser
 
 internal class ObserveCustomEmailSuggestionsImplTest {
@@ -69,16 +70,16 @@ internal class ObserveCustomEmailSuggestionsImplTest {
         val email3 = "yetanother@email.lol"
 
         val logins = listOf(
-            TestObserveItems.createLogin(email = email1),
-            TestObserveItems.createLogin(email = email1),
-            TestObserveItems.createLogin(email = email1),
-            TestObserveItems.createLogin(email = email2),
-            TestObserveItems.createLogin(email = email2),
-            TestObserveItems.createLogin(email = email3)
+            TestItem.createLogin(email = email1),
+            TestItem.createLogin(email = email1),
+            TestItem.createLogin(email = email1),
+            TestItem.createLogin(email = email2),
+            TestItem.createLogin(email = email2),
+            TestItem.createLogin(email = email3)
         )
         val aliases = listOf(
-            TestObserveItems.createAlias(alias = email3),
-            TestObserveItems.createAlias(alias = "this@isnot.alogin")
+            TestItem.createAlias(alias = email3),
+            TestItem.createAlias(alias = "this@isnot.alogin")
         )
         val items = logins + aliases
         observeItems.emitValue(items)
@@ -98,10 +99,10 @@ internal class ObserveCustomEmailSuggestionsImplTest {
         val second = "second@email.test"
 
         val logins = listOf(
-            TestObserveItems.createLogin(email = second),
-            TestObserveItems.createLogin(email = first),
-            TestObserveItems.createLogin(email = first),
-            TestObserveItems.createLogin(email = second)
+            TestItem.createLogin(email = second),
+            TestItem.createLogin(email = first),
+            TestItem.createLogin(email = first),
+            TestItem.createLogin(email = second)
         )
         observeItems.emitValue(logins)
 
@@ -119,9 +120,9 @@ internal class ObserveCustomEmailSuggestionsImplTest {
         val email = "first@email.test"
 
         val logins = listOf(
-            TestObserveItems.createLogin(email = email),
-            TestObserveItems.createLogin(email = email),
-            TestObserveItems.createLogin(email = USER_PROTON_ADDRESS)
+            TestItem.createLogin(email = email),
+            TestItem.createLogin(email = email),
+            TestItem.createLogin(email = USER_PROTON_ADDRESS)
         )
         observeItems.emitValue(logins)
         observeBreachProtonEmails.emit(

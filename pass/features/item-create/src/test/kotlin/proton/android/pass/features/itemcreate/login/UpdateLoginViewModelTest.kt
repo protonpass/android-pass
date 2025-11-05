@@ -38,10 +38,9 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.fakes.repositories.FakePendingAttachmentLinkRepository
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
+import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
-import proton.android.pass.data.fakes.usecases.TestObserveItemById
-import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestUpdateItem
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
@@ -63,6 +62,7 @@ import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.api.TotpSpec
 import proton.android.pass.totp.fakes.TestTotpManager
@@ -74,7 +74,7 @@ class UpdateLoginViewModelTest {
 
     private lateinit var instance: UpdateLoginViewModel
 
-    private lateinit var getItemById: TestObserveItemById
+    private lateinit var getItemById: FakeGetItemById
     private lateinit var totpManager: TestTotpManager
     private lateinit var updateItem: TestUpdateItem
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
@@ -82,54 +82,54 @@ class UpdateLoginViewModelTest {
 
     @Before
     fun setup() {
-        getItemById = TestObserveItemById()
+        getItemById = FakeGetItemById()
         totpManager = TestTotpManager()
         updateItem = TestUpdateItem()
         snackbarDispatcher = TestSnackbarDispatcher()
         encryptionContextProvider = TestEncryptionContextProvider()
-
-        instance = UpdateLoginViewModel(
-            getItemById = getItemById,
-            accountManager = TestAccountManager().apply {
-                sendPrimaryUserId(UserId("UserId"))
-            },
-            clipboardManager = TestClipboardManager(),
-            totpManager = totpManager,
-            snackbarDispatcher = snackbarDispatcher,
-            savedStateHandleProvider = TestSavedStateHandleProvider().apply {
-                get()[CommonOptionalNavArgId.ShareId.key] = SHARE_ID
-                get()[CommonNavArgId.ItemId.key] = ITEM_ID
-            },
-            encryptionContextProvider = encryptionContextProvider,
-            passwordStrengthCalculator = TestPasswordStrengthCalculator(),
-            observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) },
-            telemetryManager = TestTelemetryManager(),
-            draftRepository = TestDraftRepository(),
-            observeUpgradeInfo = TestObserveUpgradeInfo(),
-            updateItem = updateItem,
-            createAlias = TestCreateAlias(),
-            featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
-            emailValidator = TestEmailValidator(),
-            observeTooltipEnabled = FakeObserveTooltipEnabled(),
-            disableTooltip = FakeDisableTooltip(),
-            userPreferencesRepository = TestPreferenceRepository(),
-            workerLauncher = FakeWorkerLauncher(),
-            attachmentsHandler = FakeAttachmentHandler(),
-            linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
-            renameAttachments = FakeRenameAttachments(),
-            customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
-            pendingAttachmentLinkRepository = FakePendingAttachmentLinkRepository(),
-            customFieldHandler = CustomFieldHandlerImpl(TestTotpManager(), encryptionContextProvider),
-            loginItemFormProcessor = FakeLoginItemFormProcessor()
-        )
     }
+
+    private fun createInstance(): UpdateLoginViewModel = UpdateLoginViewModel(
+        getItemById = getItemById,
+        accountManager = TestAccountManager().apply {
+            sendPrimaryUserId(UserId("UserId"))
+        },
+        clipboardManager = TestClipboardManager(),
+        totpManager = totpManager,
+        snackbarDispatcher = snackbarDispatcher,
+        savedStateHandleProvider = TestSavedStateHandleProvider().apply {
+            get()[CommonOptionalNavArgId.ShareId.key] = SHARE_ID
+            get()[CommonNavArgId.ItemId.key] = ITEM_ID
+        },
+        encryptionContextProvider = encryptionContextProvider,
+        passwordStrengthCalculator = TestPasswordStrengthCalculator(),
+        observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) },
+        telemetryManager = TestTelemetryManager(),
+        draftRepository = TestDraftRepository(),
+        observeUpgradeInfo = TestObserveUpgradeInfo(),
+        updateItem = updateItem,
+        createAlias = TestCreateAlias(),
+        featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
+        emailValidator = TestEmailValidator(),
+        observeTooltipEnabled = FakeObserveTooltipEnabled(),
+        disableTooltip = FakeDisableTooltip(),
+        userPreferencesRepository = TestPreferenceRepository(),
+        workerLauncher = FakeWorkerLauncher(),
+        attachmentsHandler = FakeAttachmentHandler(),
+        linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
+        renameAttachments = FakeRenameAttachments(),
+        customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
+        pendingAttachmentLinkRepository = FakePendingAttachmentLinkRepository(),
+        customFieldHandler = CustomFieldHandlerImpl(TestTotpManager(), encryptionContextProvider),
+        loginItemFormProcessor = FakeLoginItemFormProcessor()
+    )
 
     @Test
     fun `item with totp using default parameters shows only secret`() = runTest {
         val secret = "secret"
         val uri = "otpauth://totp/label?secret=$secret&algorithm=SHA1&period=30&digits=6"
         val primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(uri), uri)
-        val item = TestObserveItems.createItem(
+        val item = TestItem.create(
             itemContents = ItemContents.Login(
                 title = "item",
                 note = "note",
@@ -145,7 +145,8 @@ class UpdateLoginViewModelTest {
         )
         totpManager.setSanitisedEditResult(Result.success(secret))
         totpManager.setParseResult(Result.success(TotpSpec(secret = secret, label = "label".some())))
-        getItemById.emitValue(Result.success(item))
+        getItemById.emit(Result.success(item))
+        instance = createInstance()
 
         assertThat(instance.loginItemFormState.primaryTotp)
             .isEqualTo(UIHiddenState.Revealed(TestEncryptionContext.encrypt(secret), secret))
@@ -156,7 +157,7 @@ class UpdateLoginViewModelTest {
         val secret = "secret"
         val uri = "otpauth://totp/label?secret=$secret&algorithm=SHA256&period=10&digits=8"
         val primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(uri), uri)
-        val item = TestObserveItems.createItem(
+        val item = TestItem.create(
             itemContents = ItemContents.Login(
                 title = "item",
                 note = "note",
@@ -171,7 +172,8 @@ class UpdateLoginViewModelTest {
             )
         )
         totpManager.setSanitisedEditResult(Result.success(uri))
-        getItemById.emitValue(Result.success(item))
+        getItemById.emit(Result.success(item))
+        instance = createInstance()
 
         assertThat(instance.loginItemFormState.primaryTotp).isEqualTo(UIHiddenState.from(primaryTotp))
     }
@@ -180,8 +182,9 @@ class UpdateLoginViewModelTest {
     fun `if error is InvalidContentFormatVersionError shows right snackbar message`() = runTest {
         updateItem.setResult(Result.failure(InvalidContentFormatVersionError()))
 
-        val item = TestObserveItems.createLogin(shareId = ShareId(SHARE_ID))
-        getItemById.emitValue(Result.success(item))
+        val item = TestItem.createLogin(shareId = ShareId(SHARE_ID))
+        getItemById.emit(Result.success(item))
+        instance = createInstance()
 
         instance.updateItem(ShareId(SHARE_ID))
 

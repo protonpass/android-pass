@@ -45,7 +45,6 @@ import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestCreateLoginAndAlias
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
-import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
@@ -80,6 +79,7 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestUtils
+import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.test.domain.TestVault
 import proton.android.pass.totp.fakes.TestTotpManager
@@ -178,7 +178,7 @@ internal class CreateLoginNavItemViewModelTest {
 
     @Test
     fun `given valid data when a create item event should return a success event`() = runTest {
-        val item = TestObserveItems.createLogin(primaryTotp = "secret")
+        val item = TestItem.createLogin(primaryTotp = "secret")
         val vault = sendInitialVault(item.shareId)
         val baseState = CreateLoginUiState.Initial
 

@@ -88,6 +88,7 @@ interface ItemRepository {
     ): Item
 
     suspend fun updateLocalItemFlags(
+        userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
         flag: ItemFlag,
@@ -95,6 +96,7 @@ interface ItemRepository {
     )
 
     suspend fun updateLocalItemsFlags(
+        userId: UserId,
         items: List<Pair<ShareId, ItemId>>,
         flag: ItemFlag,
         isFlagEnabled: Boolean
@@ -124,10 +126,24 @@ interface ItemRepository {
         itemTypeFilter: ItemTypeFilter
     ): Flow<List<Item>>
 
-    fun observeById(shareId: ShareId, itemId: ItemId): Flow<Item>
+    fun observeById(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): Flow<Item?>
 
-    suspend fun getById(shareId: ShareId, itemId: ItemId): Item
-    suspend fun getByIds(shareId: ShareId, itemIds: List<ItemId>): List<Item>
+    suspend fun getById(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): Item
+
+    suspend fun getByIds(
+        userId: UserId,
+        shareId: ShareId,
+        itemIds: List<ItemId>
+    ): List<Item>
+
     suspend fun trashItems(userId: UserId, items: Map<ShareId, List<ItemId>>)
     suspend fun untrashItems(userId: UserId, items: Map<ShareId, List<ItemId>>)
     suspend fun deleteItems(userId: UserId, items: Map<ShareId, List<ItemId>>)

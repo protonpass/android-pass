@@ -109,25 +109,30 @@ class TestLocalItemDataSource : LocalItemDataSource {
         throw IllegalStateException("Not yet implemented")
     }
 
-    override fun observeItem(shareId: ShareId, itemId: ItemId): Flow<ItemEntity> = itemEntityFlow
-
-    override suspend fun getById(shareId: ShareId, itemId: ItemId): ItemEntity? {
-        throw IllegalStateException("Not yet implemented")
-    }
-
-    override suspend fun getByIdList(shareId: ShareId, itemIds: List<ItemId>): List<ItemEntity> {
-        throw IllegalStateException("Not yet implemented")
-    }
-
-    override suspend fun setItemState(
+    override fun observeItem(
+        userId: UserId,
         shareId: ShareId,
-        itemId: ItemId,
-        itemState: ItemState
-    ) {
+        itemId: ItemId
+    ): Flow<ItemEntity?> = itemEntityFlow
+
+    override suspend fun getById(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): ItemEntity? {
+        throw IllegalStateException("Not yet implemented")
+    }
+
+    override suspend fun getByIdList(
+        userId: UserId,
+        shareId: ShareId,
+        itemIds: List<ItemId>
+    ): List<ItemEntity> {
         throw IllegalStateException("Not yet implemented")
     }
 
     override suspend fun setItemStates(
+        userId: UserId,
         shareId: ShareId,
         itemIds: List<ItemId>,
         itemState: ItemState
@@ -139,11 +144,11 @@ class TestLocalItemDataSource : LocalItemDataSource {
         throw IllegalStateException("Not yet implemented")
     }
 
-    override suspend fun delete(shareId: ShareId, itemId: ItemId): Boolean {
-        throw IllegalStateException("Not yet implemented")
-    }
-
-    override suspend fun deleteList(shareId: ShareId, itemIds: List<ItemId>): Boolean {
+    override suspend fun delete(
+        userId: UserId,
+        shareId: ShareId,
+        itemIds: List<ItemId>
+    ): Boolean {
         throw IllegalStateException("Not yet implemented")
     }
 

@@ -126,6 +126,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
     }
 
     override suspend fun updateLocalItemFlags(
+        userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
         flag: ItemFlag,
@@ -135,6 +136,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
     }
 
     override suspend fun updateLocalItemsFlags(
+        userId: UserId,
         items: List<Pair<ShareId, ItemId>>,
         flag: ItemFlag,
         isFlagEnabled: Boolean
@@ -174,13 +176,25 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         TODO("Not yet implemented")
     }
 
-    override fun observeById(shareId: ShareId, itemId: ItemId): Flow<Item> = itemFlow
+    override fun observeById(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): Flow<Item> = itemFlow
 
-    override suspend fun getById(shareId: ShareId, itemId: ItemId): Item = item ?: throw IllegalStateException(
+    override suspend fun getById(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): Item = item ?: throw IllegalStateException(
         "Item cannot be null, did you forget to invoke setItem()?"
     )
 
-    override suspend fun getByIds(shareId: ShareId, itemIds: List<ItemId>): List<Item> = emptyList()
+    override suspend fun getByIds(
+        userId: UserId,
+        shareId: ShareId,
+        itemIds: List<ItemId>
+    ): List<Item> = emptyList()
 
     override suspend fun trashItems(userId: UserId, items: Map<ShareId, List<ItemId>>) {
         TODO("Not yet implemented")

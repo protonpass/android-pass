@@ -19,7 +19,6 @@
 package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.domain.Share
@@ -29,25 +28,26 @@ import proton.android.pass.domain.entity.NewVault
 
 @Suppress("ComplexInterface", "TooManyFunctions")
 interface ShareRepository {
-    suspend fun createVault(userId: SessionUserId, vault: NewVault): Share
+
+    suspend fun createVault(userId: UserId, vault: NewVault): Share
 
     suspend fun deleteVault(userId: UserId, shareId: ShareId)
 
     suspend fun refreshShares(userId: UserId): RefreshSharesResult
+
     suspend fun refreshShare(userId: UserId, shareId: ShareId)
 
     fun observeAllShares(userId: UserId): Flow<List<Share>>
+
     fun observeAllUsableShareIds(userId: UserId): Flow<List<ShareId>>
+
     fun observeVaultCount(userId: UserId): Flow<Int>
 
     suspend fun getById(userId: UserId, shareId: ShareId): Share
+
     fun observeById(userId: UserId, shareId: ShareId): Flow<Share>
 
-    fun observeSharesByType(
-        userId: UserId,
-        shareType: ShareType,
-        isActive: Boolean?
-    ): Flow<List<Share>>
+    fun observeSharesByType(userId: UserId, shareType: ShareType): Flow<List<Share>>
 
     suspend fun updateVault(
         userId: UserId,
@@ -56,7 +56,9 @@ interface ShareRepository {
     ): Share
 
     suspend fun deleteSharesForUser(userId: UserId): Boolean
+
     suspend fun leaveVault(userId: UserId, shareId: ShareId)
+
     suspend fun applyUpdateShareEvent(
         userId: UserId,
         shareId: ShareId,
@@ -66,6 +68,7 @@ interface ShareRepository {
     suspend fun applyPendingShareEvent(userId: UserId, event: UpdateShareEvent)
 
     suspend fun applyPendingShareEventKeys(userId: UserId, event: UpdateShareEvent)
+
     suspend fun getAddressForShareId(userId: UserId, shareId: ShareId): UserAddress
 
     fun observeSharedWithMeIds(userId: UserId): Flow<List<ShareId>>

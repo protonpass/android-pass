@@ -42,6 +42,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.account.fakes.TestUserAddressRepository
+import proton.android.pass.commonrust.api.UsableShareFilter
+import proton.android.pass.commonrust.api.UsableShareKey
 import proton.android.pass.crypto.api.usecases.OpenItemOutput
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.crypto.fakes.usecases.TestCreateItem
@@ -98,7 +100,10 @@ class ItemRepositoryImplTest {
         }
 
         database = runBlocking { setupDatabase() }
-        localShareDataSource = LocalShareDataSourceImpl(database)
+        localShareDataSource = LocalShareDataSourceImpl(
+            database = database,
+            usableShareFilter = { list -> list.map { ShareId(it.shareId) } }
+        )
 
         instance = ItemRepositoryImpl(
             database = database,

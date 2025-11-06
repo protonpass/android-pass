@@ -32,6 +32,7 @@ import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.FileTypeDetector
 import proton.android.pass.commonrust.api.NewUserInviteSignatureBodyCreator
 import proton.android.pass.commonrust.api.PasswordScorer
+import proton.android.pass.commonrust.api.UsableShareFilter
 import proton.android.pass.commonrust.api.WifiNetworkQRGenerator
 import proton.android.pass.commonrust.api.passwords.PasswordGenerator
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
@@ -74,6 +75,9 @@ abstract class CommonRustModule {
 
     @[Binds Singleton]
     abstract fun bindWifiNetworkQRGenerator(impl: WifiNetworkQRGeneratorImpl): WifiNetworkQRGenerator
+
+    @[Binds Singleton]
+    abstract fun bindUsableShareFilter(impl: UsableShareFilterImpl): UsableShareFilter
 
     companion object {
 

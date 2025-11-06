@@ -25,28 +25,35 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
 
 interface LocalShareDataSource {
+
     suspend fun upsertShares(shares: List<ShareEntity>)
+
     suspend fun getById(userId: UserId, shareId: ShareId): ShareEntity?
+
     fun observeById(userId: UserId, shareId: ShareId): Flow<ShareEntity?>
-    fun observeAllSharesForUser(userId: UserId): Flow<List<ShareEntity>>
+
+    fun observeAllIncludingInactive(userId: UserId): Flow<List<ShareEntity>>
+
     fun observeAllActiveSharesForUser(userId: UserId): Flow<List<ShareEntity>>
+
+    fun observeUsableShareIds(userId: UserId): Flow<List<ShareId>>
+
     fun observeActiveVaultCount(userId: UserId): Flow<Int>
+
     suspend fun deleteShares(userId: UserId, shareIds: Set<ShareId>): Boolean
+
     suspend fun deleteSharesForUser(userId: UserId): Boolean
+
     suspend fun updateOwnershipStatus(
         userId: UserId,
         shareId: ShareId,
         isOwner: Boolean
     )
 
-    fun observeByType(
-        userId: UserId,
-        shareType: ShareType,
-        isActive: Boolean?
-    ): Flow<List<ShareEntity>>
+    fun observeByType(userId: UserId, shareType: ShareType): Flow<List<ShareEntity>>
 
-    fun observeSharedWithMeIds(userId: UserId): Flow<List<String>>
+    fun observeSharedWithMeIds(userId: UserId): Flow<List<ShareId>>
 
-    fun observeSharedByMeIds(userId: UserId): Flow<List<String>>
+    fun observeSharedByMeIds(userId: UserId): Flow<List<ShareId>>
 
 }

@@ -40,15 +40,16 @@ class TestLocalShareDataSource : LocalShareDataSource {
     private var updateOwnershipStatusResult: Result<Unit> = Result.success(Unit)
 
     private val getAllSharesForUserFlow = testFlow<List<ShareEntity>>()
+    private val usableShareIdsFlow = testFlow<List<ShareId>>()
     private val getAllSharesForAddressFlow = testFlow<List<ShareEntity>>()
     private val getShareCountFlow = testFlow<Result<Int>>()
     private val observeByIdFlow = testFlow<Result<ShareEntity?>>()
 
     private val observeSharesByTypeFlow = testFlow<Result<List<ShareEntity>>>()
 
-    private val observeSharedWithMeIds = testFlow<Result<List<String>>>()
+    private val observeSharedWithMeIds = testFlow<Result<List<ShareId>>>()
 
-    private val observeSharedByMeIds = testFlow<Result<List<String>>>()
+    private val observeSharedByMeIds = testFlow<Result<List<ShareId>>>()
 
     private var deleteMemory: MutableList<Set<ShareId>> = mutableListOf()
     private var upsertMemory: MutableList<List<ShareEntity>> = mutableListOf()
@@ -87,10 +88,12 @@ class TestLocalShareDataSource : LocalShareDataSource {
 
     override suspend fun getById(userId: UserId, shareId: ShareId): ShareEntity? = getByIdResponse.getOrThrow()
 
-    override fun observeAllSharesForUser(userId: UserId): Flow<List<ShareEntity>> = getAllSharesForUserFlow
+    override fun observeAllIncludingInactive(userId: UserId): Flow<List<ShareEntity>> = getAllSharesForUserFlow
 
     override fun observeAllActiveSharesForUser(userId: UserId): Flow<List<ShareEntity>> =
         getAllSharesForUserFlow.map { shares -> shares.filter { it.isActive } }
+
+    override fun observeUsableShareIds(userId: UserId): Flow<List<ShareId>> = usableShareIdsFlow
 
     override suspend fun deleteShares(userId: UserId, shareIds: Set<ShareId>): Boolean {
         deleteMemory.add(shareIds)
@@ -113,16 +116,15 @@ class TestLocalShareDataSource : LocalShareDataSource {
     override fun observeById(userId: UserId, shareId: ShareId): Flow<ShareEntity?> =
         observeByIdFlow.map { it.getOrThrow() }
 
-    override fun observeByType(
-        userId: UserId,
-        shareType: ShareType,
-        isActive: Boolean?
-    ): Flow<List<ShareEntity>> = observeSharesByTypeFlow.map { it.getOrThrow() }
+    override fun observeByType(userId: UserId, shareType: ShareType): Flow<List<ShareEntity>> =
+        observeSharesByTypeFlow.map {
+            it.getOrThrow()
+        }
 
-    override fun observeSharedWithMeIds(userId: UserId): Flow<List<String>> = observeSharedWithMeIds
+    override fun observeSharedWithMeIds(userId: UserId): Flow<List<ShareId>> = observeSharedWithMeIds
         .map { it.getOrThrow() }
 
-    override fun observeSharedByMeIds(userId: UserId): Flow<List<String>> = observeSharedByMeIds
+    override fun observeSharedByMeIds(userId: UserId): Flow<List<ShareId>> = observeSharedByMeIds
         .map { it.getOrThrow() }
 
 }

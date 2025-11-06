@@ -169,8 +169,6 @@ co.touchlab:stately-isolate:2.0.6
 co.touchlab:stately-strict-jvm:2.0.6
 co.touchlab:stately-strict:2.0.6
 com.airbnb.android:lottie:4.1.0
-com.android.billingclient:billing-ktx:7.1.1
-com.android.billingclient:billing:7.1.1
 com.appmattus.certificatetransparency:certificatetransparency-android:2.5.71
 com.appmattus.certificatetransparency:certificatetransparency:2.5.71
 com.caverock:androidsvg-aar:1.4
@@ -180,15 +178,6 @@ com.google.accompanist:accompanist-pager-indicators:0.34.0
 com.google.accompanist:accompanist-pager:0.34.0
 com.google.accompanist:accompanist-permissions:0.37.2
 com.google.accompanist:accompanist-placeholder:0.34.0
-com.google.android.datatransport:transport-api:3.0.0
-com.google.android.datatransport:transport-backend-cct:3.1.8
-com.google.android.datatransport:transport-runtime:3.1.8
-com.google.android.gms:play-services-base:18.5.0
-com.google.android.gms:play-services-basement:18.5.0
-com.google.android.gms:play-services-fido:21.2.0
-com.google.android.gms:play-services-location:19.0.0
-com.google.android.gms:play-services-places-placereport:17.0.0
-com.google.android.gms:play-services-tasks:18.2.0
 com.google.android.material:material:1.7.0
 com.google.auto.value:auto-value-annotations:1.6.3
 com.google.auto:auto-common:1.2.1
@@ -199,9 +188,6 @@ com.google.dagger:hilt-android:2.53.1
 com.google.dagger:hilt-core:2.53.1
 com.google.devtools.ksp:symbol-processing-api:2.0.10-1.0.24
 com.google.errorprone:error_prone_annotations:2.26.1
-com.google.firebase:firebase-encoders-json:18.0.0
-com.google.firebase:firebase-encoders-proto:16.0.0
-com.google.firebase:firebase-encoders:17.0.0
 com.google.guava:failureaccess:1.0.2
 com.google.guava:guava:33.2.1-jre
 com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
@@ -262,7 +248,6 @@ me.proton.core:auth-data:35.0.0
 me.proton.core:auth-domain:35.0.0
 me.proton.core:auth-fido-dagger:35.0.0
 me.proton.core:auth-fido-domain:35.0.0
-me.proton.core:auth-fido-play:35.0.0
 me.proton.core:auth-presentation-compose:35.0.0
 me.proton.core:auth-presentation:35.0.0
 me.proton.core:auth:35.0.0
@@ -346,11 +331,6 @@ me.proton.core:pass-validator:35.0.0
 me.proton.core:payment-dagger:35.0.0
 me.proton.core:payment-data:35.0.0
 me.proton.core:payment-domain:35.0.0
-me.proton.core:payment-iap-dagger:35.0.0
-me.proton.core:payment-iap-data:35.0.0
-me.proton.core:payment-iap-domain:35.0.0
-me.proton.core:payment-iap-presentation:35.0.0
-me.proton.core:payment-iap:35.0.0
 me.proton.core:payment-presentation:35.0.0
 me.proton.core:payment:35.0.0
 me.proton.core:plan-dagger:35.0.0

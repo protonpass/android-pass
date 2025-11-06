@@ -25,10 +25,6 @@ import proton.android.pass.domain.ShareType
 
 interface ObserveSharesByType {
 
-    operator fun invoke(
-        shareType: ShareType,
-        userId: UserId? = null,
-        isActive: Boolean? = null
-    ): Flow<List<Share>>
+    operator fun invoke(shareType: ShareType, userId: UserId? = null): Flow<List<Share>>
 
 }

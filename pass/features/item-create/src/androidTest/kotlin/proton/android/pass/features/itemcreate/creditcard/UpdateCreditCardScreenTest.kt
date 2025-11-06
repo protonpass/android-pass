@@ -39,6 +39,7 @@ import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
+import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveItems
@@ -80,7 +81,7 @@ class UpdateCreditCardScreenTest {
     lateinit var savedStateHandle: TestSavedStateHandleProvider
 
     @Inject
-    lateinit var getItemById: TestObserveItemById
+    lateinit var getItemById: FakeGetItemById
 
     @Inject
     lateinit var canPerformPaidAction: TestCanPerformPaidAction
@@ -109,7 +110,7 @@ class UpdateCreditCardScreenTest {
             verificationNumber = DEFAULT_VERIFICATION_NUMBER,
             expirationDate = ITEM_EXPIRATION_DATE,
         )
-        getItemById.emitValue(Result.success(initialItem))
+        getItemById.emit(Result.success(initialItem))
         updateItem.setResult(Result.success(initialItem))
         canPerformPaidAction.setResult(true)
         observeUserAccessData.sendValue(null)

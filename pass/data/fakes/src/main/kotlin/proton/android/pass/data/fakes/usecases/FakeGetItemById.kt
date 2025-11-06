@@ -23,7 +23,9 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class FakeGetItemById @Inject constructor() : GetItemById {
 
     private var fallbackResult: Result<Item> = Result.failure(IllegalStateException("Result not set"))

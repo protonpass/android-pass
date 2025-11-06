@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,15 +16,20 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.shares
+package proton.android.pass.commonrust.api
 
-import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.domain.Share
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
 
-interface ObserveSharesByType {
+data class UsableShareKey(
+    val shareId: String,
+    val vaultId: String,
+    val targetType: ShareType,
+    val targetId: String,
+    val roleId: String,
+    val permissions: Int
+)
 
-    operator fun invoke(shareType: ShareType, userId: UserId? = null): Flow<List<Share>>
-
+fun interface UsableShareFilter {
+    fun filter(list: List<UsableShareKey>): List<ShareId>
 }

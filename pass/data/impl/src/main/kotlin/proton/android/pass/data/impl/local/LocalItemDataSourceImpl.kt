@@ -159,8 +159,7 @@ class LocalItemDataSourceImpl @Inject constructor(
         itemState: ItemState?,
         onlyShared: Boolean,
         applyItemStateToSharedItems: Boolean
-    ): Flow<ItemCountSummary> = shareIds.map { shareId -> shareId.id }
-        .takeIfNotEmpty()
+    ): Flow<ItemCountSummary> = shareIds.takeIfNotEmpty()
         .let { shareIdValues ->
             combineN(
                 observeItemSummary(
@@ -219,13 +218,13 @@ class LocalItemDataSourceImpl @Inject constructor(
     private fun observeItemSummary(
         userId: UserId,
         itemState: ItemState?,
-        shareIds: List<String>?,
+        shareIds: List<ShareId>?,
         onlyShared: Boolean
     ): Flow<List<SummaryRow>> = database.itemsDao()
         .itemSummary(userId.id, itemState?.value, onlyShared)
         .map { summaryRows ->
             if (shareIds == null) summaryRows
-            else summaryRows.filter { it.shareId in shareIds }
+            else summaryRows.filter { it.shareId in shareIds.map(ShareId::id) }
         }
 
     private fun List<SummaryRow>.getCount(itemCategory: ItemCategory): Long = filter {
@@ -235,12 +234,12 @@ class LocalItemDataSourceImpl @Inject constructor(
     private fun observeItemsWithTotpCount(
         userId: UserId,
         itemState: ItemState?,
-        shareIds: List<String>?
+        shareIds: List<ShareId>?
     ) = database.itemsDao().countItemsWithTotp(userId.id, itemState?.value)
         .map { rows ->
             rows.filter {
                 if (shareIds == null) true
-                else it.shareId in shareIds
+                else it.shareId in shareIds.map(ShareId::id)
             }.sumOf {
                 it.itemCount
             }
@@ -248,40 +247,40 @@ class LocalItemDataSourceImpl @Inject constructor(
 
     private fun observeSharedWithMeItemCount(
         userId: UserId,
-        shareIds: List<String>?,
+        shareIds: List<ShareId>?,
         itemState: ItemState?,
         applyItemStateToSharedItems: Boolean
     ) = localShareDataSource.observeSharedWithMeIds(userId)
         .map { sharedWithMeShareIds ->
             sharedWithMeShareIds.filter { sharedWithMeShareId ->
                 if (shareIds == null) true
-                else sharedWithMeShareId in shareIds
+                else sharedWithMeShareId.id in shareIds.map(ShareId::id)
             }
         }
         .flatMapLatest { sharedWithMeShareIds ->
             database.itemsDao().countSharedItems(
                 userId = userId.id,
-                shareIds = sharedWithMeShareIds,
+                shareIds = sharedWithMeShareIds.map(ShareId::id),
                 itemState = itemState?.value.takeIf { applyItemStateToSharedItems }
             )
         }
 
     private fun observeSharedByMeItemCount(
         userId: UserId,
-        shareIds: List<String>?,
+        shareIds: List<ShareId>?,
         itemState: ItemState?,
         applyItemStateToSharedItems: Boolean
     ) = localShareDataSource.observeSharedByMeIds(userId)
         .mapLatest { sharedByMeShareIds ->
             sharedByMeShareIds.filter { sharedByMeShareId ->
                 if (shareIds == null) true
-                else sharedByMeShareId in shareIds
+                else sharedByMeShareId.id in shareIds.map(ShareId::id)
             }
         }
         .flatMapLatest { sharedByMeShareIds ->
             database.itemsDao().countSharedItems(
                 userId = userId.id,
-                shareIds = sharedByMeShareIds,
+                shareIds = sharedByMeShareIds.map(ShareId::id),
                 itemState = itemState?.value.takeIf { applyItemStateToSharedItems }
             )
         }
@@ -292,12 +291,12 @@ class LocalItemDataSourceImpl @Inject constructor(
                 observeTrashedItemsCount(userId, sharedWithMeShareIds)
             }
 
-    private fun observeTrashedItemsCount(userId: UserId, shareIds: List<String>?) = database.itemsDao()
+    private fun observeTrashedItemsCount(userId: UserId, shareIds: List<ShareId>?) = database.itemsDao()
         .countTrashedItems(userId.id)
         .map { rows ->
             rows.filter {
                 if (shareIds == null) true
-                else it.shareId in shareIds
+                else it.shareId in shareIds.map(ShareId::id)
             }.sumOf {
                 it.itemCount
             }

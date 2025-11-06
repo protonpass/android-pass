@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,15 +16,21 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.shares
+package proton.android.pass.data.impl.db.entities
 
-import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.domain.Share
-import proton.android.pass.domain.ShareType
+import androidx.room.ColumnInfo
 
-interface ObserveSharesByType {
-
-    operator fun invoke(shareType: ShareType, userId: UserId? = null): Flow<List<Share>>
-
-}
+data class ShareKeyView(
+    @ColumnInfo(name = ShareEntity.Columns.ID)
+    val shareId: String,
+    @ColumnInfo(name = ShareEntity.Columns.VAULT_ID)
+    val vaultId: String,
+    @ColumnInfo(name = ShareEntity.Columns.SHARE_TYPE)
+    val targetType: Int,
+    @ColumnInfo(name = ShareEntity.Columns.TARGET_ID)
+    val targetId: String,
+    @ColumnInfo(name = ShareEntity.Columns.SHARE_ROLE_ID)
+    val roleId: String,
+    @ColumnInfo(name = ShareEntity.Columns.PERMISSION)
+    val permissions: Int
+)

@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.extension.primary
 import me.proton.core.user.domain.entity.AddressId
@@ -90,7 +89,7 @@ class ShareRepositoryImpl @Inject constructor(
     private val userAccessDataRepository: UserAccessDataRepository
 ) : ShareRepository {
 
-    override suspend fun createVault(userId: SessionUserId, vault: NewVault): Share {
+    override suspend fun createVault(userId: UserId, vault: NewVault): Share {
         val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
         val user = requireNotNull(userRepository.getUser(userId))
         val userPrimaryKey = requireNotNull(user.keys.primary()?.keyId?.id)
@@ -143,7 +142,7 @@ class ShareRepositoryImpl @Inject constructor(
         refreshDefaultShareIfNeeded(userId, setOf(shareId))
     }
 
-    override fun observeAllShares(userId: SessionUserId): Flow<List<Share>> =
+    override fun observeAllShares(userId: UserId): Flow<List<Share>> =
         localShareDataSource.observeAllActiveSharesForUser(userId)
             .map { shares ->
                 encryptionContextProvider.withEncryptionContextSuspendable {
@@ -154,27 +153,23 @@ class ShareRepositoryImpl @Inject constructor(
             }
 
     override fun observeAllUsableShareIds(userId: UserId): Flow<List<ShareId>> =
-        localShareDataSource.observeAllActiveSharesForUser(userId)
-            .map { shares -> shares.map { ShareId(it.id) } }
+        localShareDataSource.observeUsableShareIds(userId)
 
-    override fun observeSharesByType(
-        userId: UserId,
-        shareType: ShareType,
-        isActive: Boolean?
-    ): Flow<List<Share>> = localShareDataSource.observeByType(userId, shareType, isActive)
-        .map { shares ->
-            encryptionContextProvider.withEncryptionContextSuspendable {
-                shares.map { share ->
-                    share.toDomain(this@withEncryptionContextSuspendable)
+    override fun observeSharesByType(userId: UserId, shareType: ShareType): Flow<List<Share>> =
+        localShareDataSource.observeByType(userId, shareType)
+            .map { shares ->
+                encryptionContextProvider.withEncryptionContextSuspendable {
+                    shares.map { share ->
+                        share.toDomain(this@withEncryptionContextSuspendable)
+                    }
                 }
             }
-        }
 
     @Suppress("LongMethod")
     override suspend fun refreshShares(userId: UserId): RefreshSharesResult = coroutineScope {
         PassLogger.i(TAG, "Refreshing shares")
 
-        val localShares = localShareDataSource.observeAllSharesForUser(userId).first()
+        val localShares = localShareDataSource.observeAllIncludingInactive(userId).first()
         val localSharesMap = localShares.associateBy { localShareEntity ->
             ShareId(localShareEntity.id)
         }
@@ -313,7 +308,7 @@ class ShareRepositoryImpl @Inject constructor(
         val shareKey = shareKeyRepository.getLatestKeyForShare(shareId).first()
         val body = newVaultToBody(vault)
         val request = updateVault.createUpdateVaultRequest(shareKey, body).toRequest()
-        val response = kotlin.runCatching {
+        val response = runCatching {
             remoteShareDataSource.updateVault(userId, shareId, request)
         }.fold(
             onSuccess = { it },
@@ -382,11 +377,9 @@ class ShareRepositoryImpl @Inject constructor(
 
     override fun observeSharedWithMeIds(userId: UserId): Flow<List<ShareId>> = localShareDataSource
         .observeSharedWithMeIds(userId)
-        .map { shares -> shares.map(::ShareId) }
 
     override fun observeSharedByMeIds(userId: UserId): Flow<List<ShareId>> = localShareDataSource
         .observeSharedByMeIds(userId)
-        .map { shares -> shares.map(::ShareId) }
 
     private suspend fun onShareResponseEntity(
         userId: UserId,

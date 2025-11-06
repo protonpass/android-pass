@@ -23,8 +23,7 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.room.db.BaseDao
 import proton.android.pass.data.impl.db.entities.ShareEntity
-
-private const val SHARE_TYPE_VAULT = 1
+import proton.android.pass.data.impl.db.entities.ShareKeyView
 
 @Dao
 abstract class SharesDao : BaseDao<ShareEntity>() {
@@ -41,44 +40,76 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
 
     @Query(
         """
-        SELECT * FROM ${ShareEntity.TABLE} 
-        WHERE ${ShareEntity.Columns.USER_ID} = :userId
-          AND (:shareType IS NULL OR ${ShareEntity.Columns.SHARE_TYPE} = :shareType)
-          AND (:isActive IS NULL OR ${ShareEntity.Columns.IS_ACTIVE} = :isActive)
-        """
-    )
-    abstract fun observe(
-        userId: String,
-        shareType: Int? = null,
-        isActive: Boolean? = null
-    ): Flow<List<ShareEntity>>
-
-    @Query(
-        """
         SELECT ${ShareEntity.Columns.ID} FROM ${ShareEntity.TABLE} 
         WHERE ${ShareEntity.Columns.USER_ID} = :userId
+          AND ${ShareEntity.Columns.ID} IN (:shareIds)
           AND (:shareType IS NULL OR ${ShareEntity.Columns.SHARE_TYPE} = :shareType)
           AND (:shareRole IS NULL OR ${ShareEntity.Columns.SHARE_ROLE_ID} = :shareRole)
-          AND (:isActive IS NULL OR ${ShareEntity.Columns.IS_ACTIVE} = :isActive)
-    """
+          AND ${ShareEntity.Columns.IS_ACTIVE} = 1
+        """
     )
-    abstract fun observeSharedIds(
+    abstract fun observeIds(
         userId: String,
+        shareIds: List<String>,
         shareType: Int? = null,
-        shareRole: String? = null,
-        isActive: Boolean? = null
+        shareRole: String? = null
     ): Flow<List<String>>
 
     @Query(
         """
-        SELECT COUNT(*) 
-        FROM ${ShareEntity.TABLE}
+        SELECT * FROM ${ShareEntity.TABLE} 
         WHERE ${ShareEntity.Columns.USER_ID} = :userId
-          AND ${ShareEntity.Columns.SHARE_TYPE} = $SHARE_TYPE_VAULT
+        """
+    )
+    abstract fun observeAllIncludingInactive(userId: String): Flow<List<ShareEntity>>
+
+    @Query(
+        """
+        SELECT * FROM ${ShareEntity.TABLE} 
+        WHERE ${ShareEntity.Columns.USER_ID} = :userId
+          AND ${ShareEntity.Columns.ID} IN (:shareIds)
+          AND (:shareType IS NULL OR ${ShareEntity.Columns.SHARE_TYPE} = :shareType)
+          AND (:shareRole IS NULL OR ${ShareEntity.Columns.SHARE_ROLE_ID} = :shareRole)
           AND ${ShareEntity.Columns.IS_ACTIVE} = 1
         """
     )
-    abstract fun observeActiveVaultCount(userId: String): Flow<Int>
+    abstract fun observeActive(
+        userId: String,
+        shareIds: List<String>,
+        shareType: Int? = null,
+        shareRole: String? = null
+    ): Flow<List<ShareEntity>>
+
+    @Query(
+        """
+        SELECT COUNT(*) FROM ${ShareEntity.TABLE} 
+        WHERE ${ShareEntity.Columns.USER_ID} = :userId
+          AND ${ShareEntity.Columns.ID} IN (:shareIds)
+          AND (:shareType IS NULL OR ${ShareEntity.Columns.SHARE_TYPE} = :shareType)
+          AND ${ShareEntity.Columns.IS_ACTIVE} = 1
+        """
+    )
+    abstract fun observeCount(
+        userId: String,
+        shareIds: List<String>,
+        shareType: Int? = null
+    ): Flow<Int>
+
+    @Query(
+        """
+        SELECT
+            ${ShareEntity.Columns.ID},
+            ${ShareEntity.Columns.VAULT_ID},
+            ${ShareEntity.Columns.SHARE_TYPE},
+            ${ShareEntity.Columns.TARGET_ID},
+            ${ShareEntity.Columns.SHARE_ROLE_ID},
+            ${ShareEntity.Columns.PERMISSION}
+        FROM ${ShareEntity.TABLE}
+        WHERE ${ShareEntity.Columns.USER_ID} = :userId
+          AND ${ShareEntity.Columns.IS_ACTIVE} = 1
+        """
+    )
+    abstract fun observeShareKeyView(userId: String): Flow<List<ShareKeyView>>
 
     @Query(
         """

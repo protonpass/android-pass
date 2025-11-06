@@ -37,24 +37,18 @@ androidComponents.beforeVariants { variant ->
     variant.enableAndroidTest = false
 }
 
-fun DependencyHandlerScope.addFdroidSpecialLib(
+fun DependencyHandlerScope.addSpecialLib(
     default: Any,
-    fdroid: Any?
+    overrides: Map<String, Any?> = emptyMap()
 ) {
+    val variants = listOf("dev", "alpha", "play", "quest", "fdroid")
 
-    val devImplementation = configurations.getByName("devImplementation")
-    val alphaImplementation = configurations.getByName("alphaImplementation")
-    val playImplementation = configurations.getByName("playImplementation")
-    val fdroidImplementation = configurations.getByName("fdroidImplementation")
-    val questImplementation = configurations.getByName("questImplementation")
-
-    devImplementation(default)
-    alphaImplementation(default)
-    playImplementation(default)
-    questImplementation(default)
-
-    fdroid?.let { dep ->
-        fdroidImplementation(dep)
+    variants.forEach { variant ->
+        val dependency = overrides[variant] ?: default
+        dependency.let {
+            val config = configurations.getByName("${variant}Implementation")
+            config(it)
+        }
     }
 }
 
@@ -63,9 +57,11 @@ dependencies {
     
     implementation(projects.pass.common.api)
 
-    addFdroidSpecialLib(
+    addSpecialLib(
         default = projects.pass.tracing.impl,
-        fdroid = projects.pass.tracing.fdroid
+        overrides = mapOf(
+            "fdroid" to projects.pass.tracing.noOp
+        )
     )
 
     implementation(projects.pass.appConfig.api)

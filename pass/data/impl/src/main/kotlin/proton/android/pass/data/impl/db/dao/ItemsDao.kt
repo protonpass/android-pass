@@ -291,10 +291,11 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
           COUNT(${ItemEntity.Columns.ITEM_TYPE}) as itemCount
         FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
           AND ${ItemEntity.Columns.STATE} = ${ItemStateValues.TRASHED}
         GROUP BY ${ItemEntity.Columns.SHARE_ID}
         """
     )
-    abstract fun countTrashedItems(userId: String): Flow<List<ShareIdCountRow>>
+    abstract fun countTrashedItems(userId: String, shareIds: List<String>): Flow<List<ShareIdCountRow>>
 
 }

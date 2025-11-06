@@ -163,7 +163,8 @@ class TestLocalItemDataSource : LocalItemDataSource {
     override fun observeItemsWithTotp(userId: UserId, shareIds: List<ShareId>): Flow<List<ItemWithTotp>> =
         itemsWithTotpFlow.map { it.getOrThrow() }
 
-    override fun countAllItemsWithTotp(userId: UserId): Flow<Int> = itemsWithTotpFlow.map { it.getOrThrow().count() }
+    override fun countAllItemsWithTotp(userId: UserId, shareIds: List<ShareId>): Flow<Int> =
+        itemsWithTotpFlow.map { it.getOrThrow().count() }
 
     override fun observeItemsWithPasskeys(userId: UserId, shareIds: List<ShareId>): Flow<List<ItemEntity>> {
         throw IllegalStateException("Not yet implemented")

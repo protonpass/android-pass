@@ -211,6 +211,8 @@ com.google.zxing:core:3.5.3
 com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0
 com.jakewharton.timber:timber:5.0.1
 com.journeyapps:zxing-android-embedded:4.3.0
+com.meta.horizon.billingclient.api:horizon-billing-compatibility:1.1.1
+com.meta.horizon.platform.ovr:android-platform-sdk:72
 com.squareup.curtains:curtains:1.2.4
 com.squareup.leakcanary:leakcanary-android-utils:2.14
 com.squareup.leakcanary:plumber-android-core:2.14
@@ -238,6 +240,8 @@ io.matthewnelson.encoding:base32-jvm:2.3.1
 io.matthewnelson.encoding:base32:2.3.1
 io.matthewnelson.encoding:core-jvm:2.3.1
 io.matthewnelson.encoding:core:2.3.1
+io.sentry:sentry-android-core:7.21.0
+io.sentry:sentry:7.21.0
 io.swagger.core.v3:swagger-annotations:2.2.7
 jakarta.inject:jakarta.inject-api:2.0.1
 javax.inject:javax.inject:1
@@ -391,6 +395,7 @@ me.proton.core:user:35.0.0
 me.proton.core:util-android-dagger:35.0.0
 me.proton.core:util-android-datetime:35.0.0
 me.proton.core:util-android-device:35.0.0
+me.proton.core:util-android-sentry:35.0.0
 me.proton.core:util-android-shared-preferences:35.0.0
 me.proton.core:util-kotlin:35.0.0
 me.proton.pass.common:lib:0.26.0

@@ -272,23 +272,18 @@ configurations {
     implementation.get().exclude(mapOf("group" to "org.intellij", "module" to "annotations"))
 }
 
-fun DependencyHandlerScope.addFdroidSpecialLib(
+fun DependencyHandlerScope.addSpecialLib(
     default: Any,
-    fdroid: Any?
+    overrides: Map<String, Any?> = emptyMap()
 ) {
-    val devImplementation = configurations.getByName("devImplementation")
-    val alphaImplementation = configurations.getByName("alphaImplementation")
-    val playImplementation = configurations.getByName("playImplementation")
-    val fdroidImplementation = configurations.getByName("fdroidImplementation")
-    val questImplementation = configurations.getByName("questImplementation")
+    val variants = listOf("dev", "alpha", "play", "quest", "fdroid")
 
-    devImplementation(default)
-    alphaImplementation(default)
-    playImplementation(default)
-    questImplementation(default)
-
-    fdroid?.let { dep ->
-        fdroidImplementation(dep)
+    variants.forEach { variant ->
+        val dependency = overrides[variant] ?: default
+        dependency.let {
+            val config = configurations.getByName("${variant}Implementation")
+            config(it)
+        }
     }
 }
 
@@ -356,18 +351,18 @@ dependencies {
     implementation(libs.core.observability)
     implementation(libs.core.userRecovery)
 
-    addFdroidSpecialLib(
+    addSpecialLib(
         default = libs.core.payment,
-        fdroid = null
+        overrides = mapOf("fdroid" to null, "quest" to null)
     )
 
-    addFdroidSpecialLib(
+    addSpecialLib(
         default = libs.core.paymentIap,
-        fdroid = null
+        overrides = mapOf("fdroid" to null, "quest" to null)
     )
-    addFdroidSpecialLib(
+    addSpecialLib(
         default = libs.core.authFidoPlay,
-        fdroid = null
+        overrides = mapOf("fdroid" to null, "quest" to null)
     )
 
     implementation(libs.core.plan)
@@ -424,15 +419,21 @@ dependencies {
     implementation(projects.pass.image.impl)
 
     implementation(projects.pass.inAppUpdates.api)
-    addFdroidSpecialLib(
+    addSpecialLib(
         default = projects.pass.inAppUpdates.impl,
-        fdroid = projects.pass.inAppUpdates.fdroid
+        overrides = mapOf(
+            "fdroid" to projects.pass.inAppUpdates.noOp,
+            "quest" to projects.pass.inAppUpdates.noOp
+        )
     )
 
     implementation(projects.pass.inAppReview.api)
-    addFdroidSpecialLib(
+    addSpecialLib(
         default = projects.pass.inAppReview.impl,
-        fdroid = projects.pass.inAppReview.fdroid
+        overrides = mapOf(
+            "fdroid" to projects.pass.inAppReview.noOp,
+            "quest" to projects.pass.inAppReview.noOp
+        )
     )
 
     implementation(projects.pass.features.account)
@@ -486,9 +487,9 @@ dependencies {
     implementation(projects.pass.files.api)
     implementation(projects.pass.files.impl)
 
-    addFdroidSpecialLib(
+    addSpecialLib(
         default = projects.pass.tracing.impl,
-        fdroid = projects.pass.tracing.fdroid
+        overrides = mapOf("fdroid" to projects.pass.tracing.noOp)
     )
 
     debugImplementation(libs.leakCanary)
@@ -563,6 +564,17 @@ dependencyGuard {
             !it.contains("com.google.android.gms")
             !it.contains("com.google.android.play")
             !it.contains("io.sentry")
+        }
+    }
+    configuration("questProdReleaseRuntimeClasspath") {
+        artifacts = true
+        modules = false
+
+        allowedFilter = {
+            !it.contains("junit")
+            !it.contains("com.android.billingclient")
+            !it.contains("com.google.android.gms")
+            !it.contains("com.google.android.play")
         }
     }
 }

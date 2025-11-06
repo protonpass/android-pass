@@ -42,12 +42,13 @@ fun DependencyHandlerScope.addSpecialLib(
     overrides: Map<String, Any?> = emptyMap()
 ) {
     val variants = listOf("dev", "alpha", "play", "quest", "fdroid")
-
     variants.forEach { variant ->
-        val dependency = overrides[variant] ?: default
-        dependency.let {
-            val config = configurations.getByName("${variant}Implementation")
-            config(it)
+        val dep = overrides[variant].let { override ->
+            if (override != null || variant in overrides) override else default
+        }
+
+        dep?.let {
+            configurations.getByName("${variant}Implementation")(it)
         }
     }
 }

@@ -29,9 +29,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UsableShareFilterImpl @Inject constructor() : UsableShareFilter {
-
-    private val shareOverrideCalculator by lazy { ShareOverrideCalculator() }
+class UsableShareFilterImpl @Inject constructor(
+    private val shareOverrideCalculator: ShareOverrideCalculator
+) : UsableShareFilter {
 
     override fun filter(list: List<UsableShareKey>): List<ShareId> = shareOverrideCalculator.getVisibleShares(
         list.map {

@@ -20,8 +20,8 @@
   <string name="home_empty_shared_items_title">Jaettuja kohteita ei löytynyt</string>
   <string name="home_empty_shared_items_with_me_subtitle">Sinulle ei ole jaettu kohteita.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Et ole jakanut kohteita.</string>
-  <string name="home_empty_no_vaults_title">Sinulla ei ole holveja</string>
-  <string name="home_empty_no_vaults_subtitle">Ole yhteydessä organisaatiosi tukeen.</string>
+  <string name="home_empty_no_vaults_title">You don\'t have any vaults</string>
+  <string name="home_empty_no_vaults_subtitle">Please contact your administrator.</string>
   <string name="home_empty_read_only_vault_title">Tämä holvi on tyhjä</string>
   <string name="home_empty_read_only_vault_subtitle">Et voi lisätä kohteita holviin, johon on vain lukuoikeus.</string>
   <string name="home_empty_vault_create_login">Luo kirjautumistieto</string>

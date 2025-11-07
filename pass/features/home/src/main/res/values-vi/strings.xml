@@ -20,8 +20,8 @@
   <string name="home_empty_shared_items_title">Không mục chia sẻ nào được tìm thấy</string>
   <string name="home_empty_shared_items_with_me_subtitle">Không mục nào được chia sẻ với bạn.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Không mục nào được chia sẻ bởi bạn.</string>
-  <string name="home_empty_no_vaults_title">You don\'t have any vault</string>
-  <string name="home_empty_no_vaults_subtitle">Please, contact your organization support team.</string>
+  <string name="home_empty_no_vaults_title">You don\'t have any vaults</string>
+  <string name="home_empty_no_vaults_subtitle">Please contact your administrator.</string>
   <string name="home_empty_read_only_vault_title">Két sắt này trống</string>
   <string name="home_empty_read_only_vault_subtitle">Bạn không thể thêm nội dung vào một két sắt chỉ-được-xem.</string>
   <string name="home_empty_vault_create_login">Tạo đăng nhập</string>

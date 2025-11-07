@@ -147,7 +147,7 @@ class VaultOptionsViewModel @Inject constructor(
                 selection = ShareSelection.Share(navShareId),
                 itemState = ItemState.Active,
                 filter = ItemTypeFilter.All,
-                shareFlags = emptyMap()
+                includeHidden = true
             )
                 .first()
                 .any { itemEncrypted -> itemEncrypted.isShared }

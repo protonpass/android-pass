@@ -102,7 +102,7 @@ class ItemRepositoryImplTest {
         database = runBlocking { setupDatabase() }
         localShareDataSource = LocalShareDataSourceImpl(
             database = database,
-            usableShareFilter = { list -> list.map { ShareId(it.shareId) } }
+            usableShareFilter = { list, _ -> list.map { ShareId(it.shareId) } }
         )
 
         instance = ItemRepositoryImpl(

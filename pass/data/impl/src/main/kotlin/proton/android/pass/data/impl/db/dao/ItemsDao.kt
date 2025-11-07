@@ -139,6 +139,7 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
             COUNT(${ItemEntity.Columns.ITEM_TYPE}) as itemCount
         FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
           AND (:itemState IS NULL OR ${ItemEntity.Columns.STATE} = :itemState)
           AND (:onlyShared = 0 OR ${ItemEntity.Columns.SHARE_COUNT} > 0) 
         GROUP BY ${ItemEntity.Columns.SHARE_ID}, ${ItemEntity.Columns.ITEM_TYPE}
@@ -146,6 +147,7 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
     )
     abstract fun itemSummary(
         userId: String,
+        shareIds: List<String>,
         itemState: Int?,
         onlyShared: Boolean
     ): Flow<List<SummaryRow>>
@@ -208,12 +210,17 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
           COUNT(${ItemEntity.Columns.ITEM_TYPE}) as itemCount
         FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
           AND ${ItemEntity.Columns.HAS_TOTP} = 1
           AND (:itemState IS NULL OR ${ItemEntity.Columns.STATE} = :itemState)
         GROUP BY ${ItemEntity.Columns.SHARE_ID}
         """
     )
-    abstract fun countItemsWithTotp(userId: String, itemState: Int?): Flow<List<ShareIdCountRow>>
+    abstract fun countItemsWithTotp(
+        userId: String,
+        shareIds: List<String>,
+        itemState: Int?
+    ): Flow<List<ShareIdCountRow>>
 
     @Query(
         """

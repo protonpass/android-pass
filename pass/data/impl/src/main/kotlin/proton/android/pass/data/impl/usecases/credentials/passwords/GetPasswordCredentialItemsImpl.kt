@@ -34,7 +34,6 @@ import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
-import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.credentials.PasswordCredentialItem
 import proton.android.pass.domain.toItemContents
@@ -63,7 +62,7 @@ class GetPasswordCredentialItemsImpl @Inject constructor(
                         selection = ShareSelection.Shares(shareIds),
                         itemState = ItemState.Active,
                         filter = ItemTypeFilter.Logins,
-                        shareFlags = mapOf(ShareFlag.IsHidden to false)
+                        includeHidden = false
                     )
                 }
                 .first()

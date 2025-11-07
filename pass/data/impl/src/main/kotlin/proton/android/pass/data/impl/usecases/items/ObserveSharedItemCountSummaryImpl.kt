@@ -26,7 +26,6 @@ import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.items.ObserveSharedItemCountSummary
-import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.items.ItemSharedType
 import javax.inject.Inject
 
@@ -39,22 +38,18 @@ class ObserveSharedItemCountSummaryImpl @Inject constructor(
     override fun invoke(itemSharedType: ItemSharedType, includeHiddenVault: Boolean): Flow<ItemCountSummary> =
         observeCurrentUser()
             .flatMapLatest { user ->
-                val shareFlags = if (!includeHiddenVault) {
-                    mapOf(ShareFlag.IsHidden to false)
-                } else {
-                    emptyMap()
-                }
                 when (itemSharedType) {
                     ItemSharedType.SharedByMe -> itemRepository.observeSharedByMeEncryptedItems(
                         userId = user.userId,
                         itemState = null,
-                        shareFlags = shareFlags
+                        includeHiddenVault = includeHiddenVault
                     ).mapLatest { encryptedItemsSharedByMe ->
                         encryptedItemsSharedByMe.map { it.shareId }
                     }
 
                     ItemSharedType.SharedWithMe -> shareRepository.observeSharedWithMeIds(
-                        userId = user.userId
+                        userId = user.userId,
+                        includeHiddenVault = includeHiddenVault
                     )
                 }.flatMapLatest { sharedShareIds ->
                     itemRepository.observeItemCountSummary(
@@ -63,7 +58,7 @@ class ObserveSharedItemCountSummaryImpl @Inject constructor(
                         itemState = null,
                         onlyShared = true,
                         applyItemStateToSharedItems = false,
-                        shareFlags = shareFlags
+                        includeHiddenVault = includeHiddenVault
                     )
                 }
             }

@@ -55,27 +55,28 @@ class LocalShareDataSourceImpl @Inject constructor(
     override fun observeAllIncludingInactive(userId: UserId): Flow<List<ShareEntity>> =
         database.sharesDao().observeAllIncludingInactive(userId = userId.id)
 
-    override fun observeAllActiveSharesForUser(userId: UserId): Flow<List<ShareEntity>> =
-        observeUsableShareIds(userId).flatMapLatest { shareIds ->
+    override fun observeAllActiveSharesForUser(userId: UserId, includeHidden: Boolean): Flow<List<ShareEntity>> =
+        observeUsableShareIds(userId, includeHidden).flatMapLatest { shareIds ->
             database.sharesDao().observeActive(
                 userId = userId.id,
                 shareIds = shareIds.map(ShareId::id)
             )
         }
 
-    override fun observeUsableShareIds(userId: UserId): Flow<List<ShareId>> = database.sharesDao()
-        .observeShareKeyView(userId.id)
-        .map { mapToUsableShareKeys(it) }
-        .map { usableShareFilter.filter(it) }
-        .distinctUntilChanged()
+    override fun observeUsableShareIds(userId: UserId, includeHidden: Boolean): Flow<List<ShareId>> =
+        database.sharesDao()
+            .observeShareKeyView(userId.id)
+            .map { mapToUsableShareKeys(it) }
+            .map { usableShareFilter.filter(it, includeHidden) }
+            .distinctUntilChanged()
 
     override suspend fun deleteShares(userId: UserId, shareIds: Set<ShareId>): Boolean =
         database.sharesDao().deleteShares(userId.id, shareIds.map { it.id }) > 0
 
     override suspend fun deleteSharesForUser(userId: UserId): Boolean = database.sharesDao().deleteShares(userId.id) > 0
 
-    override fun observeActiveVaultCount(userId: UserId): Flow<Int> =
-        observeUsableShareIds(userId).flatMapLatest { shareIds ->
+    override fun observeActiveVaultCount(userId: UserId, includeHidden: Boolean): Flow<Int> =
+        observeUsableShareIds(userId, includeHidden).flatMapLatest { shareIds ->
             database.sharesDao().observeCount(
                 userId = userId.id,
                 shareIds = shareIds.map(ShareId::id),
@@ -93,8 +94,12 @@ class LocalShareDataSourceImpl @Inject constructor(
         isOwner = isOwner
     )
 
-    override fun observeByType(userId: UserId, shareType: ShareType, includeHidden: Boolean): Flow<List<ShareEntity>> =
-        observeUsableShareIds(userId).flatMapLatest { shareIds ->
+    override fun observeByType(
+        userId: UserId,
+        shareType: ShareType,
+        includeHidden: Boolean
+    ): Flow<List<ShareEntity>> = observeUsableShareIds(userId, includeHidden)
+        .flatMapLatest { shareIds ->
             database.sharesDao()
                 .observeActive(
                     userId = userId.id,
@@ -104,18 +109,19 @@ class LocalShareDataSourceImpl @Inject constructor(
         }
 
     override fun observeSharedWithMeIds(userId: UserId, includeHidden: Boolean): Flow<List<ShareId>> =
-        observeUsableShareIds(userId).flatMapLatest { shareIds ->
-            database.sharesDao()
-                .observeIds(
-                    userId = userId.id,
-                    shareIds = shareIds.map(ShareId::id),
-                    shareType = ShareType.Item.value
-                )
-                .map { list -> list.map(::ShareId) }
-        }
+        observeUsableShareIds(userId, includeHidden)
+            .flatMapLatest { shareIds ->
+                database.sharesDao()
+                    .observeIds(
+                        userId = userId.id,
+                        shareIds = shareIds.map(ShareId::id),
+                        shareType = ShareType.Item.value
+                    )
+                    .map { list -> list.map(::ShareId) }
+            }
 
     override fun observeSharedByMeIds(userId: UserId, includeHidden: Boolean): Flow<List<ShareId>> =
-        observeUsableShareIds(userId).flatMapLatest { shareIds ->
+        observeUsableShareIds(userId, includeHidden).flatMapLatest { shareIds ->
             database.sharesDao()
                 .observeIds(
                     userId = userId.id,
@@ -132,7 +138,8 @@ class LocalShareDataSourceImpl @Inject constructor(
             targetType = ShareType.from(it.targetType),
             targetId = it.targetId,
             roleId = it.roleId,
-            permissions = it.permissions
+            permissions = it.permissions,
+            flags = it.flags
         )
     }
 

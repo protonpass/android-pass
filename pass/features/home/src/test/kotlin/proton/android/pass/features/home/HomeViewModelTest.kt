@@ -28,7 +28,6 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.common.fakes.TestAppDispatchers
 import proton.android.pass.commonui.api.DateFormatUtils
@@ -52,7 +51,6 @@ import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveAllShares
 import proton.android.pass.data.fakes.usecases.TestObserveAppNeedsUpdate
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
-import proton.android.pass.data.fakes.usecases.TestObserveItemCount
 import proton.android.pass.data.fakes.usecases.TestObservePinnedItems
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.TestPerformSync
@@ -69,7 +67,6 @@ import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ShareId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.notifications.fakes.TestToastManager
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.searchoptions.api.VaultSelectionOption
@@ -273,11 +270,8 @@ internal class HomeViewModelTest {
             unpinItems = TestUnpinItems(),
             observeAppNeedsUpdate = TestObserveAppNeedsUpdate(),
             appDispatchers = TestAppDispatchers(),
-            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository(),
             observeCurrentUser = observeCurrentUser,
             changeAliasStatus = FakeChangeAliasStatus(),
-            observeItemCount = TestObserveItemCount(),
-            accountManager = TestAccountManager(),
             observeEncryptedSharedItems = FakeObserveEncryptedSharedItems(),
             observeCanCreateItems = observeCanCreateItems,
             observeHasShares = observeHasShares,

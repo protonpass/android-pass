@@ -30,7 +30,7 @@ class ObserveAutofillSharesImpl @Inject constructor(
     private val observeAllShares: ObserveAllShares
 ) : ObserveAutofillShares {
 
-    override fun invoke(userId: UserId?): Flow<List<Share>> = observeAllShares(userId)
+    override fun invoke(userId: UserId?): Flow<List<Share>> = observeAllShares(userId, includeHidden = false)
         .mapLatest { shares ->
             shares.filter { share -> share.canAutofill }
         }

@@ -129,7 +129,8 @@ class VaultOptionsViewModel @Inject constructor(
             showLeave = canLeave,
             showManageAccess = showManageAccess,
             showViewMembers = showViewMembers,
-            event = event
+            event = event,
+            isLastVault = vaultResult.data.size == 1
         )
     }.stateIn(
         scope = viewModelScope,

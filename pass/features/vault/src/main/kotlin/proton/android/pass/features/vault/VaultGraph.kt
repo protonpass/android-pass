@@ -45,8 +45,7 @@ sealed interface VaultNavigation {
     @JvmInline
     value class VaultEdit(val shareId: ShareId) : VaultNavigation
 
-    @JvmInline
-    value class VaultRemove(val shareId: ShareId) : VaultNavigation
+    data class VaultRemove(val shareId: ShareId, val isLastVault: Boolean) : VaultNavigation
 
     data class VaultShare(
         val shareId: ShareId,

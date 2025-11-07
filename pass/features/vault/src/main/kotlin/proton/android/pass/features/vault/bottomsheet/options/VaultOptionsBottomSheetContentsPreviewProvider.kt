@@ -34,7 +34,8 @@ internal class VaultOptionsBottomSheetContentsPreviewProvider :
             showLeave = true,
             showManageAccess = true,
             showViewMembers = true,
-            event = VaultOptionsEvent.Idle
+            event = VaultOptionsEvent.Idle,
+            isLastVault = false
         )
     )
 

@@ -191,12 +191,12 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     override fun getLastTimeUserHasSeenIAM(userId: UserId): Flow<Option<LastTimeUserHasSeenIAMPreference>> =
         lastTimeUserHasSeenIAMPreferenceFlow
 
-    override fun setEmptyVaultHasBeenCreated(userId: UserId): Result<Unit> {
+    override fun setDefaultVaultHasBeenCreated(userId: UserId): Result<Unit> {
         isEmptyVaultHasBeenCreated.update { true }
         return Result.success(Unit)
     }
 
-    override fun hasEmptyVaultBeenCreated(userId: UserId): Flow<Boolean> = isEmptyVaultHasBeenCreated
+    override fun hasDefaultVaultBeenCreated(userId: UserId): Flow<Boolean> = isEmptyVaultHasBeenCreated
 
     override fun getPersistentUUID(): Flow<UUID> = persistentUUIDFlow
 

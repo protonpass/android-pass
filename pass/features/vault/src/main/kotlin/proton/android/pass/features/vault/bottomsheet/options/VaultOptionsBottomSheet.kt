@@ -74,7 +74,7 @@ fun VaultOptionsBottomSheet(
                     }
 
                     VaultOptionsUserEvent.OnRemove -> {
-                        onNavigate(VaultNavigation.VaultRemove(state.shareId))
+                        onNavigate(VaultNavigation.VaultRemove(state.shareId, state.isLastVault))
                     }
 
                     VaultOptionsUserEvent.OnShare -> {

@@ -243,13 +243,13 @@ class InternalSettingsRepositoryImpl @Inject constructor(
             }
         }
 
-    override fun setEmptyVaultHasBeenCreated(userId: UserId): Result<Unit> = setPreference {
-        it.putIsEmptyVaultHasBeenCreated(userId.id, true)
+    override fun setDefaultVaultHasBeenCreated(userId: UserId): Result<Unit> = setPreference {
+        it.putIsDefaultVaultHasBeenCreated(userId.id, true)
     }
 
-    override fun hasEmptyVaultBeenCreated(userId: UserId): Flow<Boolean> = getPreference {
-        if (it.isEmptyVaultHasBeenCreatedMap.containsKey(userId.id)) {
-            it.isEmptyVaultHasBeenCreatedMap[userId.id] ?: false
+    override fun hasDefaultVaultBeenCreated(userId: UserId): Flow<Boolean> = getPreference {
+        if (it.isDefaultVaultHasBeenCreatedMap.containsKey(userId.id)) {
+            it.isDefaultVaultHasBeenCreatedMap[userId.id] ?: false
         } else {
             false
         }

@@ -80,6 +80,11 @@ object ShowUpgradeNavArgId : NavArgId {
     override val navType: NavType<*> = NavType.StringType
 }
 
+object IsLastVault : NavArgId {
+    override val key: String = "isLastVault"
+    override val navType: NavType<*> = NavType.BoolType
+}
+
 interface OptionalNavArgId : NavArgId
 
 enum class CommonOptionalNavArgId : OptionalNavArgId {

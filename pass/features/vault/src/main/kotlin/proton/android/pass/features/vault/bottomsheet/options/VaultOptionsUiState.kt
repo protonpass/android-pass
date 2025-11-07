@@ -41,6 +41,7 @@ internal sealed interface VaultOptionsUiState {
 
     data class Success(
         val shareId: ShareId,
+        val isLastVault: Boolean,
         val showEdit: Boolean,
         val showMigrate: Boolean,
         val showDelete: Boolean,

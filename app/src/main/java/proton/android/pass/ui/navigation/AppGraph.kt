@@ -672,7 +672,7 @@ fun NavGraphBuilder.appGraph(
                 is VaultNavigation.VaultRemove -> dismissBottomSheet {
                     appNavigator.navigate(
                         destination = DeleteVaultDialog,
-                        route = DeleteVaultDialog.createNavRoute(it.shareId),
+                        route = DeleteVaultDialog.createNavRoute(it.shareId, it.isLastVault),
                         backDestination = HomeNavItem
                     )
                 }

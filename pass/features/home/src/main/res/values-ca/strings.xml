@@ -20,8 +20,8 @@
   <string name="home_empty_shared_items_title">No s\'han trobat elements compartits.</string>
   <string name="home_empty_shared_items_with_me_subtitle">No heu rebut cap element compartit.</string>
   <string name="home_empty_shared_items_by_me_subtitle">No heu compartit cap element.</string>
-  <string name="home_empty_no_vaults_title">No teniu cap caixa forta.</string>
-  <string name="home_empty_no_vaults_subtitle">Poseu-vos en contacte amb l\'equip d\'assistència de l\'organització.</string>
+  <string name="home_empty_no_vaults_title">No teniu cap caixa forta</string>
+  <string name="home_empty_no_vaults_subtitle">Poseu-vos en contacte amb el vostre administrador.</string>
   <string name="home_empty_read_only_vault_title">Aquesta caixa forta està buida.</string>
   <string name="home_empty_read_only_vault_subtitle">No podeu afegir elements a una caixa forta de només lectura.</string>
   <string name="home_empty_vault_create_login">Crea un inici de sessió</string>

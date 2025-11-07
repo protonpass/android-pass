@@ -21,7 +21,7 @@
   <string name="home_empty_shared_items_with_me_subtitle">Nenhum item foi compartilhado com você.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Nenhuns itens foram compartilhados por você.</string>
   <string name="home_empty_no_vaults_title">Você não tem nenhum cofre</string>
-  <string name="home_empty_no_vaults_subtitle">Entre em contato com a equipe de suporte da sua organização.</string>
+  <string name="home_empty_no_vaults_subtitle">Entre em contato com seu administrador.</string>
   <string name="home_empty_read_only_vault_title">O cofre está vazio</string>
   <string name="home_empty_read_only_vault_subtitle">Você não pode adicionar itens em um cofre somente leitura.</string>
   <string name="home_empty_vault_create_login">Criar um início de sessão</string>

@@ -20,8 +20,8 @@
   <string name="home_empty_shared_items_title">공유된 항목 찾을 수 없음</string>
   <string name="home_empty_shared_items_with_me_subtitle">나와 공유된 항목이 없습니다.</string>
   <string name="home_empty_shared_items_by_me_subtitle">내가 공유한 항목이 없습니다.</string>
-  <string name="home_empty_no_vaults_title">금고가 아무 것도 없네요</string>
-  <string name="home_empty_no_vaults_subtitle">조직 지원 팀에 문의하시기 바랍니다.</string>
+  <string name="home_empty_no_vaults_title">You don\'t have any vaults</string>
+  <string name="home_empty_no_vaults_subtitle">Please contact your administrator.</string>
   <string name="home_empty_read_only_vault_title">이 금고는 비어 있습니다.</string>
   <string name="home_empty_read_only_vault_subtitle">읽기 전용 금고에서는 항목 생성이 불가합니다.</string>
   <string name="home_empty_vault_create_login">로그인 생성</string>

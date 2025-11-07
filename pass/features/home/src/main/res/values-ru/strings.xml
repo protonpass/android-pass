@@ -20,8 +20,8 @@
   <string name="home_empty_shared_items_title">Общие элементы не найдены</string>
   <string name="home_empty_shared_items_with_me_subtitle">Никто не предоставлял вам общий доступ к элементам.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Вы никому не предоставляли общий доступ к элементам</string>
-  <string name="home_empty_no_vaults_title">У вас нет хранилища</string>
-  <string name="home_empty_no_vaults_subtitle">Пожалуйста, свяжитесь со службой поддержки вашей организации.</string>
+  <string name="home_empty_no_vaults_title">You don\'t have any vaults</string>
+  <string name="home_empty_no_vaults_subtitle">Please contact your administrator.</string>
   <string name="home_empty_read_only_vault_title">Это хранилище пусто</string>
   <string name="home_empty_read_only_vault_subtitle">Вы не можете добавлять элементы в хранилище, доступное только для чтения.</string>
   <string name="home_empty_vault_create_login">Создать логин</string>

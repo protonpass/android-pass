@@ -20,8 +20,8 @@
   <string name="home_empty_shared_items_title">Ingen delte elementer funnet</string>
   <string name="home_empty_shared_items_with_me_subtitle">Ingen elementer er delt med deg.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Ingen elementer er delt av deg.</string>
-  <string name="home_empty_no_vaults_title">Du har ikke noe hvelv</string>
-  <string name="home_empty_no_vaults_subtitle">Ta kontakt med organisasjonens støtteteam.</string>
+  <string name="home_empty_no_vaults_title">You don\'t have any vaults</string>
+  <string name="home_empty_no_vaults_subtitle">Please contact your administrator.</string>
   <string name="home_empty_read_only_vault_title">Dette hvelvet er tomt</string>
   <string name="home_empty_read_only_vault_subtitle">Du kan ikke legge til elementer i et skrivebeskyttet hvelv.</string>
   <string name="home_empty_vault_create_login">Opprett en pålogging</string>

@@ -20,8 +20,8 @@
   <string name="home_empty_shared_items_title">Δεν βρέθηκαν στοιχεία σε κοινή χρήση</string>
   <string name="home_empty_shared_items_with_me_subtitle">Δεν υπάρχουν στοιχεία σε κοινή χρήση με εσάς.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Δεν έχετε κοινοποιήσει κανένα στοιχείο.</string>
-  <string name="home_empty_no_vaults_title">Δεν έχετε καμία κρύπτη</string>
-  <string name="home_empty_no_vaults_subtitle">Παρακαλούμε, επικοινωνήστε με την ομάδα υποστήριξης του οργανισμού σας.</string>
+  <string name="home_empty_no_vaults_title">Δεν έχετε κρύπτες</string>
+  <string name="home_empty_no_vaults_subtitle">Παρακαλούμε επικοινωνήστε με τον διαχειριστή σας.</string>
   <string name="home_empty_read_only_vault_title">Αυτή η κρύπτη είναι άδεια</string>
   <string name="home_empty_read_only_vault_subtitle">Δεν μπορείτε να προσθέσετε στοιχεία σε κρύπτη ορισμένη μόνο για ανάγνωση.</string>
   <string name="home_empty_vault_create_login">Δημιουργία σύνδεσης</string>

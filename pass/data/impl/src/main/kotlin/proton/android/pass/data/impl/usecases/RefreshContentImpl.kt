@@ -42,6 +42,8 @@ import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.entity.NewVault
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
 import javax.inject.Inject
 
@@ -54,7 +56,8 @@ class RefreshContentImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val createVault: CreateVault,
     private val canCreateVault: CanCreateVault,
-    private val internalSettingsRepository: InternalSettingsRepository
+    private val internalSettingsRepository: InternalSettingsRepository,
+    private val preferencesRepository: FeatureFlagsPreferencesRepository
 ) : RefreshContent {
 
     override suspend fun invoke(userId: UserId?) {
@@ -92,27 +95,48 @@ class RefreshContentImpl @Inject constructor(
         }
 
         PassLogger.i(TAG, "Received an empty list of shares, creating default vault")
-        runCatching {
-            val vault = encryptionContextProvider.withEncryptionContextSuspendable {
-                NewVault(
-                    name = encrypt(context.getString(R.string.vault_name)),
-                    description = encrypt(context.getString(R.string.vault_description)),
-                    icon = ShareIcon.Icon1,
-                    color = ShareColor.Color1
-                )
+
+        val allowNoVault = preferencesRepository
+            .get<Boolean>(FeatureFlag.PASS_ALLOW_NO_VAULT)
+            .firstOrNull()
+            ?: false
+        val hasDefaultVaultBeenCreated =
+            internalSettingsRepository.hasDefaultVaultBeenCreated(userId).firstOrNull() ?: false
+
+        // Create a default vault if:
+        // - the "no vault" feature flag is disabled, OR
+        // - the flag is enabled but no default vault has been created yet
+        if (!allowNoVault || !hasDefaultVaultBeenCreated) {
+            runCatching {
+                val vault = encryptionContextProvider.withEncryptionContextSuspendable {
+                    NewVault(
+                        name = encrypt(context.getString(R.string.vault_name)),
+                        description = encrypt(context.getString(R.string.vault_description)),
+                        icon = ShareIcon.Icon1,
+                        color = ShareColor.Color1
+                    )
+                }
+                createVault(userId, vault)
             }
-            createVault(userId, vault)
+                .onFailure { error ->
+                    PassLogger.w(TAG, "Error creating default vault")
+                    PassLogger.w(TAG, error)
+                    throw error
+                }
+                .onSuccess {
+                    PassLogger.i(TAG, "Default vault created")
+                    syncStatusRepository.setMode(SyncMode.Background)
+                    syncStatusRepository.emit(ItemSyncStatus.SyncSuccess)
+
+                    // Once the first default vault has been created, the user will be able to delete it
+                    // do not create it again at each sync
+                    internalSettingsRepository.setDefaultVaultHasBeenCreated(userId)
+                }
+        } else {
+            PassLogger.i(TAG, "Default vault has already been created in the past")
+            syncStatusRepository.setMode(SyncMode.Background)
+            syncStatusRepository.emit(ItemSyncStatus.SyncSuccess)
         }
-            .onFailure { error ->
-                PassLogger.w(TAG, "Error creating default vault")
-                PassLogger.w(TAG, error)
-                throw error
-            }
-            .onSuccess {
-                PassLogger.i(TAG, "Default vault created")
-                syncStatusRepository.setMode(SyncMode.Background)
-                syncStatusRepository.emit(ItemSyncStatus.SyncSuccess)
-            }
     }
 
     private fun handleExistingShares(userId: UserId, refreshSharesResult: RefreshSharesResult) {

@@ -27,10 +27,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonui.api.require
@@ -46,7 +48,9 @@ import proton.android.pass.domain.ShareSelection
 import proton.android.pass.features.vault.VaultSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.IsLastVault
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.InternalSettingsRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -55,12 +59,19 @@ class DeleteVaultViewModel @Inject constructor(
     observeEncryptedItems: ObserveEncryptedItems,
     private val getVaultByShareId: GetVaultByShareId,
     private val deleteVault: DeleteVault,
-    private val snackbarDispatcher: SnackbarDispatcher
+    private val snackbarDispatcher: SnackbarDispatcher,
+    private val internalSettingsRepository: InternalSettingsRepository,
+    accountManager: AccountManager
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandle
         .require<String>(CommonNavArgId.ShareId.key)
         .let(::ShareId)
+
+    private val isLastVault: Boolean = savedStateHandle
+        .require(IsLastVault.key)
+
+    private val primaryUserId = accountManager.getPrimaryUserId()
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
@@ -145,6 +156,15 @@ class DeleteVaultViewModel @Inject constructor(
 
             runCatching { deleteVault.invoke(shareId) }
                 .onSuccess {
+                    // 1) Set this to true because ApplyPendingEventsImpl::invoke may run right
+                    // after deleting the last vault, and we don’t want to recreate a default vault.
+                    // 2) No need to check PASS_ALLOW_NO_VAULT, since deleting the last vault
+                    // is only possible when it's enabled.
+                    if (isLastVault) {
+                        primaryUserId.firstOrNull()?.let {
+                            internalSettingsRepository.setDefaultVaultHasBeenCreated(it)
+                        }
+                    }
                     snackbarDispatcher(VaultSnackbarMessage.DeleteVaultSuccess)
                     eventFlow.update { DeleteVaultEvent.Deleted }
                 }

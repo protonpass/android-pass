@@ -81,8 +81,8 @@ interface InternalSettingsRepository {
     fun setLastTimeUserHasSeenIAM(value: LastTimeUserHasSeenIAMPreference): Result<Unit>
     fun getLastTimeUserHasSeenIAM(userId: UserId): Flow<Option<LastTimeUserHasSeenIAMPreference>>
 
-    fun setEmptyVaultHasBeenCreated(userId: UserId): Result<Unit>
-    fun hasEmptyVaultBeenCreated(userId: UserId): Flow<Boolean>
+    fun setDefaultVaultHasBeenCreated(userId: UserId): Result<Unit>
+    fun hasDefaultVaultBeenCreated(userId: UserId): Flow<Boolean>
 
     fun getPersistentUUID(): Flow<UUID>
 

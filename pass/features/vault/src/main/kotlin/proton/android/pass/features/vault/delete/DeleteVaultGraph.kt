@@ -25,13 +25,14 @@ import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.dialog
 import proton.android.pass.domain.ShareId
+import proton.android.pass.navigation.api.IsLastVault
 
 object DeleteVaultDialog : NavItem(
     baseRoute = "vault/delete/dialog",
-    navArgIds = listOf(CommonNavArgId.ShareId),
+    navArgIds = listOf(CommonNavArgId.ShareId, IsLastVault),
     navItemType = NavItemType.Dialog
 ) {
-    fun createNavRoute(shareId: ShareId): String = "$baseRoute/${shareId.id}"
+    fun createNavRoute(shareId: ShareId, isLastVault: Boolean): String = "$baseRoute/${shareId.id}/$isLastVault"
 }
 
 fun NavGraphBuilder.deleteVaultDialogGraph(onNavigate: (VaultNavigation) -> Unit) {

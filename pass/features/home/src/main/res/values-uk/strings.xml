@@ -20,8 +20,8 @@
   <string name="home_empty_shared_items_title">Не знайдено спільних елементів</string>
   <string name="home_empty_shared_items_with_me_subtitle">З вами не поділились жодним елементом.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Ви не поділилися жодним елементом.</string>
-  <string name="home_empty_no_vaults_title">У вас немає жодного сховища</string>
-  <string name="home_empty_no_vaults_subtitle">Зверніться до вашої команди підтримки.</string>
+  <string name="home_empty_no_vaults_title">You don\'t have any vaults</string>
+  <string name="home_empty_no_vaults_subtitle">Please contact your administrator.</string>
   <string name="home_empty_read_only_vault_title">Ваше сховище порожнє</string>
   <string name="home_empty_read_only_vault_subtitle">Ви не можете додавати елементи до сховища, доступні лише для читання.</string>
   <string name="home_empty_vault_create_login">Створити запис входу</string>

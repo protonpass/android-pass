@@ -20,8 +20,8 @@
   <string name="home_empty_shared_items_title">Geen gedeelde items gevonden</string>
   <string name="home_empty_shared_items_with_me_subtitle">Geen items gevonden die gedeeld werden met jou</string>
   <string name="home_empty_shared_items_by_me_subtitle">Geen items gevonden die gedeeld werden door jou</string>
-  <string name="home_empty_no_vaults_title">U hebt geen kluis</string>
-  <string name="home_empty_no_vaults_subtitle">Neem contact op met het ondersteuningsteam van uw organisatie.</string>
+  <string name="home_empty_no_vaults_title">U heeft geen kluizen</string>
+  <string name="home_empty_no_vaults_subtitle">Neem contact op met uw beheerder.</string>
   <string name="home_empty_read_only_vault_title">Deze kluis is leeg</string>
   <string name="home_empty_read_only_vault_subtitle">U kunt geen items toevoegen aan een alleen-lezen kluis.</string>
   <string name="home_empty_vault_create_login">Login aanmaken</string>

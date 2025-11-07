@@ -20,8 +20,8 @@
   <string name="home_empty_shared_items_title">沒有找到共享的項目</string>
   <string name="home_empty_shared_items_with_me_subtitle">沒有項目與您共享。</string>
   <string name="home_empty_shared_items_by_me_subtitle">沒有項目由您共享。</string>
-  <string name="home_empty_no_vaults_title">您沒有任何保管庫</string>
-  <string name="home_empty_no_vaults_subtitle">請聯絡您的組織支援服務團隊。</string>
+  <string name="home_empty_no_vaults_title">You don\'t have any vaults</string>
+  <string name="home_empty_no_vaults_subtitle">Please contact your administrator.</string>
   <string name="home_empty_read_only_vault_title">此保管庫是空的</string>
   <string name="home_empty_read_only_vault_subtitle">您無法向唯讀的保管庫添加項目。</string>
   <string name="home_empty_vault_create_login">創建登入</string>

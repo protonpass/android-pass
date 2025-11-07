@@ -20,8 +20,8 @@
   <string name="home_empty_shared_items_title">Keine geteilten Elemente gefunden.</string>
   <string name="home_empty_shared_items_with_me_subtitle">Es wurden keine Elemente mit dir geteilt.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Es wurden keine Elemente von dir geteilt.</string>
-  <string name="home_empty_no_vaults_title">Es wurde noch kein Tresor angelegt</string>
-  <string name="home_empty_no_vaults_subtitle">Bitte wende dich an das Support-Team deiner Organisation.</string>
+  <string name="home_empty_no_vaults_title">Du hast keine Tresore</string>
+  <string name="home_empty_no_vaults_subtitle">Bitte kontaktiere deinen Administrator.</string>
   <string name="home_empty_read_only_vault_title">Dieser Tresor ist leer</string>
   <string name="home_empty_read_only_vault_subtitle">Einem schreibgeschützten Tresor kannst du keine Einträge hinzufügen.</string>
   <string name="home_empty_vault_create_login">Login erstellen</string>

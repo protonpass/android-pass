@@ -21,7 +21,7 @@
   <string name="home_empty_shared_items_with_me_subtitle">No se ha compartido ningún elemento contigo.</string>
   <string name="home_empty_shared_items_by_me_subtitle">No has compartido ningún elemento.</string>
   <string name="home_empty_no_vaults_title">No tienes ninguna caja fuerte.</string>
-  <string name="home_empty_no_vaults_subtitle">Póngate en contacto con el equipo de soporte de tu organización.</string>
+  <string name="home_empty_no_vaults_subtitle">Contacta con tu administrador.</string>
   <string name="home_empty_read_only_vault_title">Esta caja fuerte está vacía.</string>
   <string name="home_empty_read_only_vault_subtitle">No puedes añadir elementos a una caja fuerte de solo lectura.</string>
   <string name="home_empty_vault_create_login">Crear un inicio de sesión</string>

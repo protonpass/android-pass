@@ -20,8 +20,8 @@
   <string name="home_empty_shared_items_title">Paylaşılan bir öge yok</string>
   <string name="home_empty_shared_items_with_me_subtitle">Sizinle paylaşılmış bir öge yok.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Sizin paylaştığınız bir öge yok.</string>
-  <string name="home_empty_no_vaults_title">Henüz bir kasanız yok</string>
-  <string name="home_empty_no_vaults_subtitle">Lütfen kuruluşunuzun destek ekibiyle görüşün.</string>
+  <string name="home_empty_no_vaults_title">You don\'t have any vaults</string>
+  <string name="home_empty_no_vaults_subtitle">Please contact your administrator.</string>
   <string name="home_empty_read_only_vault_title">Bu kasa boş</string>
   <string name="home_empty_read_only_vault_subtitle">Salt okunur bir kasaya ögeler ekleyemezsiniz.</string>
   <string name="home_empty_vault_create_login">Oturum açma kaydı oluştur</string>

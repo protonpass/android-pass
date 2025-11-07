@@ -36,7 +36,7 @@ class ObserveMFACountImpl @Inject constructor(
     override fun invoke(includeHiddenVault: Boolean): Flow<Int> = accountManager.getPrimaryUserId()
         .filterNotNull()
         .flatMapLatest { userId ->
-            shareRepository.observeAllUsableShareIds(userId)
+            shareRepository.observeAllUsableShareIds(userId, includeHiddenVault)
                 .flatMapLatest { shareIds ->
                     localItemDataSource.countAllItemsWithTotp(userId, shareIds)
                 }

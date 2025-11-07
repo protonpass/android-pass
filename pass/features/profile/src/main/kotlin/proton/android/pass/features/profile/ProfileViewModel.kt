@@ -68,6 +68,7 @@ import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEnforcedLock
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
 import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.ShareSelection
 import proton.android.pass.features.profile.ProfileSnackbarMessage.AppVersionCopied
 import proton.android.pass.features.profile.ProfileSnackbarMessage.FilteredByAliases
 import proton.android.pass.features.profile.ProfileSnackbarMessage.FilteredByCreditCards
@@ -160,7 +161,11 @@ class ProfileViewModel @Inject constructor(
     private val upgradeInfoFlow = observeUpgradeInfo().asLoadingResult()
 
     private val itemSummaryUiStateFlow = combine(
-        observeItemCount(itemState = null, includeHiddenVault = false).asLoadingResult(),
+        observeItemCount(
+            itemState = null,
+            shareSelection = ShareSelection.AllShares,
+            includeHiddenVault = false
+        ).asLoadingResult(),
         observeMFACount(includeHiddenVault = false),
         upgradeInfoFlow
     ) { itemCountResult, mfaCount, upgradeInfoResult ->

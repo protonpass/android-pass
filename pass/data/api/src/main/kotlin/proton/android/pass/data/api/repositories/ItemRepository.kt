@@ -35,7 +35,6 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.Share
-import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.VaultId
@@ -109,7 +108,7 @@ interface ItemRepository {
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter = ItemTypeFilter.All,
         itemFlags: Map<ItemFlag, Boolean>,
-        shareFlags: Map<ShareFlag, Boolean>
+        includeHidden: Boolean
     ): Flow<List<Item>>
 
     fun observeEncryptedItems(
@@ -118,14 +117,14 @@ interface ItemRepository {
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter = ItemTypeFilter.All,
         itemFlags: Map<ItemFlag, Boolean>,
-        shareFlags: Map<ShareFlag, Boolean>
+        includeHidden: Boolean
     ): Flow<List<ItemEncrypted>>
 
     fun observePinnedItems(
         userId: UserId,
         shareSelection: ShareSelection,
         itemTypeFilter: ItemTypeFilter,
-        shareFlags: Map<ShareFlag, Boolean>
+        includeHidden: Boolean
     ): Flow<List<Item>>
 
     fun observeById(
@@ -149,8 +148,8 @@ interface ItemRepository {
     suspend fun trashItems(userId: UserId, items: Map<ShareId, List<ItemId>>)
     suspend fun untrashItems(userId: UserId, items: Map<ShareId, List<ItemId>>)
     suspend fun deleteItems(userId: UserId, items: Map<ShareId, List<ItemId>>)
-    suspend fun clearTrash(userId: UserId, shareFlags: Map<ShareFlag, Boolean>)
-    suspend fun restoreItems(userId: UserId, shareFlags: Map<ShareFlag, Boolean>)
+    suspend fun clearTrash(userId: UserId, includeHidden: Boolean)
+    suspend fun restoreItems(userId: UserId, includeHidden: Boolean)
     suspend fun addPackageAndUrlToItem(
         userId: UserId,
         shareId: ShareId,

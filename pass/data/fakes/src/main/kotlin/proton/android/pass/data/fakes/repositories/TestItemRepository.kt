@@ -43,7 +43,6 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.Share
-import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.VaultId
@@ -151,7 +150,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter,
         itemFlags: Map<ItemFlag, Boolean>,
-        shareFlags: Map<ShareFlag, Boolean>
+        includeHidden: Boolean
     ): Flow<List<Item>> = observeItemListFlow
 
     override fun observeEncryptedItems(
@@ -160,23 +159,26 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter,
         itemFlags: Map<ItemFlag, Boolean>,
-        shareFlags: Map<ShareFlag, Boolean>
+        includeHidden: Boolean
     ): Flow<List<ItemEncrypted>> = observeItemEncryptedListFlow
 
     override fun observeSharedByMeEncryptedItems(
         userId: UserId,
         itemState: ItemState?,
-        shareFlags: Map<ShareFlag, Boolean>
+        includeHiddenVault: Boolean
     ): Flow<List<ItemEncrypted>> = encryptedSharedItemsFlow
 
-    override fun observeSharedWithMeEncryptedItems(userId: UserId, itemState: ItemState?): Flow<List<ItemEncrypted>> =
-        encryptedSharedItemsFlow
+    override fun observeSharedWithMeEncryptedItems(
+        userId: UserId,
+        itemState: ItemState?,
+        includeHiddenVault: Boolean
+    ): Flow<List<ItemEncrypted>> = encryptedSharedItemsFlow
 
     override fun observePinnedItems(
         userId: UserId,
         shareSelection: ShareSelection,
         itemTypeFilter: ItemTypeFilter,
-        shareFlags: Map<ShareFlag, Boolean>
+        includeHidden: Boolean
     ): Flow<List<Item>> {
         TODO("Not yet implemented")
     }
@@ -209,11 +211,11 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun clearTrash(userId: UserId, shareFlags: Map<ShareFlag, Boolean>) {
+    override suspend fun clearTrash(userId: UserId, includeHidden: Boolean) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun restoreItems(userId: UserId, shareFlags: Map<ShareFlag, Boolean>) {
+    override suspend fun restoreItems(userId: UserId, includeHidden: Boolean) {
         TODO("Not yet implemented")
     }
 
@@ -266,11 +268,11 @@ class TestItemRepository @Inject constructor() : ItemRepository {
 
     override fun observeItemCountSummary(
         userId: UserId,
-        shareIds: List<ShareId>?,
+        shareIds: List<ShareId>,
         itemState: ItemState?,
         onlyShared: Boolean,
         applyItemStateToSharedItems: Boolean,
-        shareFlags: Map<ShareFlag, Boolean>
+        includeHiddenVault: Boolean
     ): Flow<ItemCountSummary> = testFlow()
 
     override fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>> {

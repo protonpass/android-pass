@@ -81,7 +81,7 @@ class PeriodicAssetLinkWorker @AssistedInject constructor(
                     itemState = ItemState.Active,
                     filter = ItemTypeFilter.Logins,
                     userId = user.userId,
-                    shareFlags = emptyMap()
+                    includeHidden = false
                 )
             }
             combine(flows) { it.toList().flatten() }

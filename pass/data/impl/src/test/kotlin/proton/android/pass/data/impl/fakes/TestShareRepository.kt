@@ -55,7 +55,6 @@ class TestShareRepository : ShareRepository {
         Result.failure(IllegalStateException("deleteSharesResult not set"))
 
     private val observeShareByIdFlow = testFlow<Result<Share>>()
-    private val observeShareByIdsFlow = testFlow<Result<List<Share>>>()
 
     private val observeSharesByTypeFlow = testFlow<Result<List<Share>>>()
 
@@ -130,12 +129,16 @@ class TestShareRepository : ShareRepository {
         refreshShareResult.getOrThrow()
     }
 
-    override fun observeAllShares(userId: SessionUserId): Flow<List<Share>> = observeSharesFlow.map { it.getOrThrow() }
+    override fun observeAllShares(userId: UserId, includeHidden: Boolean): Flow<List<Share>> = observeSharesFlow.map {
+        it.getOrThrow()
+    }
 
-    override fun observeAllUsableShareIds(userId: UserId): Flow<List<ShareId>> =
+    override fun observeAllUsableShareIds(userId: UserId, includeHidden: Boolean): Flow<List<ShareId>> =
         observeUsableShareIdsFlow.map { it.getOrThrow() }
 
-    override fun observeVaultCount(userId: UserId): Flow<Int> = observeVaultCountFlow.map { it.getOrThrow() }
+    override fun observeVaultCount(userId: UserId, includeHidden: Boolean): Flow<Int> = observeVaultCountFlow.map {
+        it.getOrThrow()
+    }
 
     override suspend fun getById(userId: UserId, shareId: ShareId): Share = getByIdResult.getOrThrow()
 
@@ -153,9 +156,6 @@ class TestShareRepository : ShareRepository {
 
     override fun observeById(userId: UserId, shareId: ShareId): Flow<Share> =
         observeShareByIdFlow.map { it.getOrThrow() }
-
-    override fun observeByIds(userId: UserId, shareIds: List<ShareId>): Flow<List<Share>> =
-        observeShareByIdsFlow.map { it.getOrThrow() }
 
     override fun observeSharesByType(
         userId: UserId,
@@ -178,10 +178,10 @@ class TestShareRepository : ShareRepository {
     override suspend fun getAddressForShareId(userId: UserId, shareId: ShareId): UserAddress =
         getAddressForShareIdResult.getOrThrow()
 
-    override fun observeSharedWithMeIds(userId: UserId): Flow<List<ShareId>> =
+    override fun observeSharedWithMeIds(userId: UserId, includeHiddenVault: Boolean): Flow<List<ShareId>> =
         observeSharedWithMeIds.map { it.getOrThrow() }
 
-    override fun observeSharedByMeIds(userId: UserId, shareFlags: Map<ShareFlag, Boolean>): Flow<List<ShareId>> =
+    override fun observeSharedByMeIds(userId: UserId, includeHiddenVault: Boolean): Flow<List<ShareId>> =
         observeSharedByMeIds
             .map { it.getOrThrow() }
 

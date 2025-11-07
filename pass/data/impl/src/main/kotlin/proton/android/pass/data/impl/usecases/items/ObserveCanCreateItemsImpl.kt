@@ -40,7 +40,11 @@ class ObserveCanCreateItemsImpl @Inject constructor(
     } else {
         flowOf(userId)
     }.flatMapLatest { userId ->
-        shareRepository.observeSharesByType(userId = userId, shareType = ShareType.Vault)
+        shareRepository.observeSharesByType(
+            userId = userId,
+            shareType = ShareType.Vault,
+            includeHidden = false
+        )
     }.map { vaultShares ->
         vaultShares.any { vaultShare ->
             vaultShare.canBeCreated

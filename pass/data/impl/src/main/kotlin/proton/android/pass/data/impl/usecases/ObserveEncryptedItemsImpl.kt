@@ -30,7 +30,6 @@ import proton.android.pass.data.api.usecases.ObserveEncryptedItems
 import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
-import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareSelection
 import javax.inject.Inject
 
@@ -46,7 +45,7 @@ class ObserveEncryptedItemsImpl @Inject constructor(
         filter: ItemTypeFilter,
         userId: UserId?,
         itemFlags: Map<ItemFlag, Boolean>,
-        shareFlags: Map<ShareFlag, Boolean>
+        includeHidden: Boolean
     ): Flow<List<ItemEncrypted>> = syncStatusRepository.observeSyncState()
         .filter { syncState -> !syncState.isVisibleSyncing }
         .flatMapLatest {
@@ -59,7 +58,7 @@ class ObserveEncryptedItemsImpl @Inject constructor(
                             itemState = itemState,
                             filter = filter,
                             itemFlags = itemFlags,
-                            shareFlags = shareFlags
+                            includeHidden = includeHidden
                         )
                     }
             } else {
@@ -69,7 +68,7 @@ class ObserveEncryptedItemsImpl @Inject constructor(
                     itemState = itemState,
                     filter = filter,
                     itemFlags = itemFlags,
-                    shareFlags = shareFlags
+                    includeHidden = includeHidden
                 )
             }
         }
@@ -81,13 +80,13 @@ class ObserveEncryptedItemsImpl @Inject constructor(
         itemState: ItemState?,
         filter: ItemTypeFilter,
         itemFlags: Map<ItemFlag, Boolean>,
-        shareFlags: Map<ShareFlag, Boolean>
+        includeHidden: Boolean
     ): Flow<List<ItemEncrypted>> = itemRepository.observeEncryptedItems(
         userId = userId,
         shareSelection = selection,
         itemState = itemState,
         itemTypeFilter = filter,
         itemFlags = itemFlags,
-        shareFlags = shareFlags
+        includeHidden = includeHidden
     )
 }

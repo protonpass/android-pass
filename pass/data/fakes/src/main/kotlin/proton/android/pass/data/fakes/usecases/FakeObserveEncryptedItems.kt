@@ -33,15 +33,14 @@ import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.AddressDetailsContent
 import proton.android.pass.domain.ContactDetailsContent
 import proton.android.pass.domain.CreditCardType
-import proton.android.pass.domain.ItemFlags
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemFlag
+import proton.android.pass.domain.ItemFlags
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.PersonalDetailsContent
-import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.ShareType
@@ -74,7 +73,7 @@ class FakeObserveEncryptedItems @Inject constructor() : ObserveEncryptedItems {
         filter: ItemTypeFilter,
         userId: UserId?,
         itemFlags: Map<ItemFlag, Boolean>,
-        shareFlags: Map<ShareFlag, Boolean>
+        includeHidden: Boolean
     ): Flow<List<ItemEncrypted>> {
         val params = Params(
             selection = selection,

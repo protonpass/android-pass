@@ -40,25 +40,18 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import me.proton.core.account.domain.entity.Account
-import me.proton.core.account.domain.entity.isReady
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.AppDispatchers
@@ -105,7 +98,6 @@ import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveEncryptedItems
-import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.PinItem
@@ -128,7 +120,6 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
-import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.items.ItemSharedType
@@ -163,8 +154,6 @@ import proton.android.pass.features.home.HomeSnackbarMessage.RestoreItemsSuccess
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.notifications.api.ToastManager
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.searchoptions.api.FilterOption
@@ -213,45 +202,10 @@ class HomeViewModel @Inject constructor(
     observeAppNeedsUpdate: ObserveAppNeedsUpdate,
     appDispatchers: AppDispatchers,
     getUserPlan: GetUserPlan,
-    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
-    observeItemCount: ObserveItemCount,
-    accountManager: AccountManager,
     observeCanCreateItems: ObserveCanCreateItems,
     observeHasShares: ObserveHasShares,
     observeDeliverableMinimizedPromoInAppMessages: ObserveDeliverableMinimizedPromoInAppMessages
 ) : ViewModel() {
-
-    init {
-        viewModelScope.launch {
-            val isExtraLoggingEnabled =
-                featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.EXTRA_LOGGING)
-                    .firstOrNull() == true
-            if (isExtraLoggingEnabled) {
-                accountManager.getPrimaryAccount()
-                    .distinctUntilChanged()
-                    .flatMapLatest { account ->
-                        observeItemCount(includeHiddenVault = true)
-                            .map { it.total }
-                            .distinctUntilChanged()
-                            .scan(initial = null to 0L) { previousPair: Pair<Long?, Long>, current: Long ->
-                                previousPair.second to current
-                            }
-                            .filter { (previous, _) -> previous != null }
-                            .map { account to it }
-                    }
-                    .map { (account, data): Pair<Account?, Pair<Long?, Long>> ->
-                        val (previous, current) = data
-                        val isAccountReady = account?.isReady() == true
-                        val itemsDisappeared =
-                            previous != null && previous > ITEM_DELETED_THRESHOLD && current == 0L
-                        if (isAccountReady && itemsDisappeared) {
-                            PassLogger.e(TAG, "All items have been deleted!")
-                        }
-                    }
-                    .launchIn(this)
-            }
-        }
-    }
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.w(TAG, throwable)
@@ -287,7 +241,7 @@ class HomeViewModel @Inject constructor(
 
     private val shareListWrapperFlow: Flow<ShareListWrapper> = combine(
         searchOptionsFlow,
-        observeAllShares().asLoadingResult()
+        observeAllShares(includeHidden = false).asLoadingResult()
     ) { searchOptions, sharesResult ->
         val shares: List<Share> = sharesResult.getOrNull().orEmpty()
         val selectedShare: Option<Share> = searchOptions.vaultSelectionOption
@@ -353,7 +307,7 @@ class HomeViewModel @Inject constructor(
                         selection = ShareSelection.AllShares,
                         itemState = ItemState.Active,
                         filter = ItemTypeFilter.All,
-                        shareFlags = mapOf(ShareFlag.IsHidden to false)
+                        includeHidden = false
                     )
                 }
 
@@ -362,7 +316,7 @@ class HomeViewModel @Inject constructor(
                         selection = ShareSelection.AllShares,
                         itemState = ItemState.Trashed,
                         filter = ItemTypeFilter.All,
-                        shareFlags = mapOf(ShareFlag.IsHidden to false)
+                        includeHidden = false
                     )
                 }
 
@@ -371,7 +325,7 @@ class HomeViewModel @Inject constructor(
                         selection = ShareSelection.Share(vaultSelectionOption.shareId),
                         itemState = ItemState.Active,
                         filter = ItemTypeFilter.All,
-                        shareFlags = mapOf(ShareFlag.IsHidden to false)
+                        includeHidden = false
                     )
                 }
 
@@ -465,9 +419,7 @@ class HomeViewModel @Inject constructor(
     }.flowOn(appDispatchers.default)
 
     private val pinningUiStateFlow = combine(
-        observePinnedItems(
-            shareFlags = mapOf(ShareFlag.IsHidden to false)
-        ).asLoadingResult(),
+        observePinnedItems(includeHidden = false).asLoadingResult(),
         searchOptionsFlow,
         isInSeeAllPinsModeState,
         debouncedSearchQueryState
@@ -619,7 +571,7 @@ class HomeViewModel @Inject constructor(
         bottomSheetItemActionFlow,
         preferencesRepository.observeAliasTrashDialogStatusPreference(),
         observeCanCreateItems(),
-        observeHasShares()
+        observeHasShares(includeHidden = false)
     ) { homeListUiState,
         searchUiState,
         userPlan,

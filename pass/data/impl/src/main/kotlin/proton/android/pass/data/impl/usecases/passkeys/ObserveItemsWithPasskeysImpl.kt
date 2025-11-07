@@ -46,31 +46,30 @@ class ObserveItemsWithPasskeysImpl @Inject constructor(
         userId: UserId?,
         shareSelection: ShareSelection,
         includeHiddenVault: Boolean
-    ): Flow<List<Item>> =
-        (userId?.let(::flowOf) ?: accountManager.getPrimaryUserId())
-            .filterNotNull()
-            .flatMapLatest { resolvedUserId ->
-                when (shareSelection) {
-                    is ShareSelection.Share -> localItemDataSource.observeItemsWithPasskeys(
-                        userId = resolvedUserId,
-                        shareIds = listOf(shareSelection.shareId)
-                    )
+    ): Flow<List<Item>> = (userId?.let(::flowOf) ?: accountManager.getPrimaryUserId())
+        .filterNotNull()
+        .flatMapLatest { resolvedUserId ->
+            when (shareSelection) {
+                is ShareSelection.Share -> localItemDataSource.observeItemsWithPasskeys(
+                    userId = resolvedUserId,
+                    shareIds = listOf(shareSelection.shareId)
+                )
 
-                    is ShareSelection.Shares -> localItemDataSource.observeItemsWithPasskeys(
-                        userId = resolvedUserId,
-                        shareIds = shareSelection.shareIds
-                    )
+                is ShareSelection.Shares -> localItemDataSource.observeItemsWithPasskeys(
+                    userId = resolvedUserId,
+                    shareIds = shareSelection.shareIds
+                )
 
-                    ShareSelection.AllShares ->
-                        shareRepository.observeAllUsableShareIds(resolvedUserId)
-                            .flatMapLatest { list ->
-                                localItemDataSource.observeItemsWithPasskeys(resolvedUserId, list)
-                            }
-                }
+                ShareSelection.AllShares ->
+                    shareRepository.observeAllUsableShareIds(resolvedUserId, includeHiddenVault)
+                        .flatMapLatest { list ->
+                            localItemDataSource.observeItemsWithPasskeys(resolvedUserId, list)
+                        }
             }
-            .mapLatest { items ->
-                encryptionContextProvider.withEncryptionContext {
-                    items.map { it.toDomain(this@withEncryptionContext) }
-                }
+        }
+        .mapLatest { items ->
+            encryptionContextProvider.withEncryptionContext {
+                items.map { it.toDomain(this@withEncryptionContext) }
             }
+        }
 }

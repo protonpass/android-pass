@@ -32,7 +32,7 @@ class TestObserveAllShares @Inject constructor() : ObserveAllShares {
 
     private val observeAllSharesFlow = testFlow<Result<List<Share>>>()
 
-    override fun invoke(userId: UserId?): Flow<List<Share>> = observeAllSharesFlow
+    override fun invoke(userId: UserId?, includeHidden: Boolean): Flow<List<Share>> = observeAllSharesFlow
         .map { it.getOrThrow() }
 
     fun sendResult(result: Result<List<Share>>) = observeAllSharesFlow.tryEmit(result)

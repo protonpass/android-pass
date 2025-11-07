@@ -97,7 +97,6 @@ import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.Share
-import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.features.selectitem.navigation.SelectItemState
@@ -231,7 +230,7 @@ class SelectItemViewModel @Inject constructor(
                             filter = state.itemTypeFilter,
                             selection = ShareSelection.Shares(autofillShares.map(Share::id)),
                             itemState = ItemState.Active,
-                            shareFlags = mapOf(ShareFlag.IsHidden to false)
+                            includeHidden = false
                         ).map { autofillShares to it.map(ItemData::DefaultItem) }
                     }
                 combine(flows, ItemFilterProcessor::removeDuplicates)
@@ -257,7 +256,7 @@ class SelectItemViewModel @Inject constructor(
                             filter = state.itemTypeFilter,
                             selection = ShareSelection.Shares(autofillShares.map(Share::id)),
                             itemState = ItemState.Active,
-                            shareFlags = mapOf(ShareFlag.IsHidden to false)
+                            includeHidden = false
                         )
                             .map { items ->
                                 encryptionContextProvider.withEncryptionContext {
@@ -335,7 +334,7 @@ class SelectItemViewModel @Inject constructor(
                         userId = userId,
                         filter = selectItemState.value.itemTypeFilter,
                         shareSelection = ShareSelection.Shares(usableVaults.map { it.id }),
-                        shareFlags = mapOf(ShareFlag.IsHidden to false)
+                        includeHidden = false
                     )
                 }
                 combine(flows) { it.toList().flatten() }

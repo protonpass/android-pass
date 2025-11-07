@@ -27,9 +27,10 @@ data class UsableShareKey(
     val targetType: ShareType,
     val targetId: String,
     val roleId: String,
-    val permissions: Int
+    val permissions: Int,
+    val flags: Int
 )
 
 fun interface UsableShareFilter {
-    fun filter(list: List<UsableShareKey>): List<ShareId>
+    fun filter(list: List<UsableShareKey>, includeHidden: Boolean): List<ShareId>
 }

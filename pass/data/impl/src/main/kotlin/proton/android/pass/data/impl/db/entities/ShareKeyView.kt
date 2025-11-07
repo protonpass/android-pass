@@ -32,5 +32,7 @@ data class ShareKeyView(
     @ColumnInfo(name = ShareEntity.Columns.SHARE_ROLE_ID)
     val roleId: String,
     @ColumnInfo(name = ShareEntity.Columns.PERMISSION)
-    val permissions: Int
+    val permissions: Int,
+    @ColumnInfo(name = ShareEntity.Columns.FLAGS)
+    val flags: Int
 )

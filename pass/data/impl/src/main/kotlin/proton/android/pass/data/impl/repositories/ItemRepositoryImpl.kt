@@ -365,13 +365,15 @@ class ItemRepositoryImpl @Inject constructor(
         shareSelection: ShareSelection,
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter,
-        itemFlags: Map<ItemFlag, Boolean>
+        itemFlags: Map<ItemFlag, Boolean>,
+        includeHidden: Boolean
     ): Flow<List<Item>> = innerObserveItems(
         shareSelection,
         userId,
         itemState,
         itemTypeFilter,
-        itemFlags
+        itemFlags,
+        includeHidden
     ).map { items ->
         encryptionContextProvider.withEncryptionContextSuspendable {
             items.map { item -> item.toDomain(this) }
@@ -383,13 +385,15 @@ class ItemRepositoryImpl @Inject constructor(
         shareSelection: ShareSelection,
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter,
-        itemFlags: Map<ItemFlag, Boolean>
+        itemFlags: Map<ItemFlag, Boolean>,
+        includeHidden: Boolean
     ): Flow<List<ItemEncrypted>> = innerObserveItems(
         shareSelection,
         userId,
         itemState,
         itemTypeFilter,
-        itemFlags
+        itemFlags,
+        includeHidden
     ).map { items ->
         items.map(ItemEntity::toEncryptedDomain)
     }
@@ -398,48 +402,47 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         itemState: ItemState?,
         includeHiddenVault: Boolean
-    ): Flow<List<ItemEncrypted>> =
-        shareRepository.observeSharedByMeIds(userId, includeHiddenVault)
-            .flatMapLatest { shareIds ->
-                localItemDataSource.observeItems(
-                    userId,
-                    shareIds,
-                    itemState,
-                    ItemTypeFilter.All,
-                    emptyMap()
-                )
-            }
-            .map { itemEntities ->
-                itemEntities
-                    .filter { it.shareCount > 0 }
-                    .map(ItemEntity::toEncryptedDomain)
-            }
+    ): Flow<List<ItemEncrypted>> = shareRepository.observeSharedByMeIds(userId, includeHiddenVault)
+        .flatMapLatest { shareIds ->
+            localItemDataSource.observeItems(
+                userId,
+                shareIds,
+                itemState,
+                ItemTypeFilter.All,
+                emptyMap()
+            )
+        }
+        .map { itemEntities ->
+            itemEntities
+                .filter { it.shareCount > 0 }
+                .map(ItemEntity::toEncryptedDomain)
+        }
 
     override fun observeSharedWithMeEncryptedItems(
         userId: UserId,
         itemState: ItemState?,
         includeHiddenVault: Boolean
-    ): Flow<List<ItemEncrypted>> =
-        shareRepository.observeSharedWithMeIds(userId, includeHiddenVault)
-            .flatMapLatest { shareIds ->
-                localItemDataSource.observeItems(
-                    userId,
-                    shareIds,
-                    itemState,
-                    ItemTypeFilter.All,
-                    emptyMap()
-                )
-            }
-            .map { itemEntities ->
-                itemEntities.map(ItemEntity::toEncryptedDomain)
-            }
+    ): Flow<List<ItemEncrypted>> = shareRepository.observeSharedWithMeIds(userId, includeHiddenVault)
+        .flatMapLatest { shareIds ->
+            localItemDataSource.observeItems(
+                userId,
+                shareIds,
+                itemState,
+                ItemTypeFilter.All,
+                emptyMap()
+            )
+        }
+        .map { itemEntities ->
+            itemEntities.map(ItemEntity::toEncryptedDomain)
+        }
 
     private fun innerObserveItems(
         shareSelection: ShareSelection,
         userId: UserId,
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter,
-        itemFlags: Map<ItemFlag, Boolean>
+        itemFlags: Map<ItemFlag, Boolean>,
+        includeHidden: Boolean
     ) = when (shareSelection) {
         is ShareSelection.Share -> localItemDataSource.observeItems(
             userId = userId,
@@ -457,7 +460,7 @@ class ItemRepositoryImpl @Inject constructor(
             itemFlags = itemFlags
         )
 
-        is ShareSelection.AllShares -> shareRepository.observeAllUsableShareIds(userId)
+        is ShareSelection.AllShares -> shareRepository.observeAllUsableShareIds(userId, includeHidden)
             .flatMapLatest {
                 localItemDataSource.observeItems(
                     userId = userId,
@@ -472,7 +475,8 @@ class ItemRepositoryImpl @Inject constructor(
     override fun observePinnedItems(
         userId: UserId,
         shareSelection: ShareSelection,
-        itemTypeFilter: ItemTypeFilter
+        itemTypeFilter: ItemTypeFilter,
+        includeHidden: Boolean
     ): Flow<List<Item>> = when (shareSelection) {
         is ShareSelection.Share -> localItemDataSource.observePinnedItems(
             userId = userId,
@@ -486,7 +490,7 @@ class ItemRepositoryImpl @Inject constructor(
             filter = itemTypeFilter
         )
 
-        is ShareSelection.AllShares -> shareRepository.observeAllUsableShareIds(userId)
+        is ShareSelection.AllShares -> shareRepository.observeAllUsableShareIds(userId, includeHidden)
             .flatMapLatest {
                 localItemDataSource.observePinnedItems(
                     userId = userId,
@@ -632,9 +636,9 @@ class ItemRepositoryImpl @Inject constructor(
             }
     }
 
-    override suspend fun clearTrash(userId: UserId) {
+    override suspend fun clearTrash(userId: UserId, includeHidden: Boolean) {
         coroutineScope {
-            val shareIds = shareRepository.observeAllUsableShareIds(userId).firstOrNull()
+            val shareIds = shareRepository.observeAllUsableShareIds(userId, includeHidden).firstOrNull()
                 ?: emptyList()
             val trashedItems = localItemDataSource.getTrashedItems(userId, shareIds)
             val trashedPerShare = trashedItems.groupBy { it.shareId }
@@ -657,9 +661,9 @@ class ItemRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun restoreItems(userId: UserId) {
+    override suspend fun restoreItems(userId: UserId, includeHidden: Boolean) {
         coroutineScope {
-            val shareIds = shareRepository.observeAllUsableShareIds(userId).firstOrNull()
+            val shareIds = shareRepository.observeAllUsableShareIds(userId, includeHidden).firstOrNull()
                 ?: emptyList()
             val trashedItems = localItemDataSource.getTrashedItems(userId, shareIds)
             val trashedPerShare = trashedItems.groupBy { it.shareId }

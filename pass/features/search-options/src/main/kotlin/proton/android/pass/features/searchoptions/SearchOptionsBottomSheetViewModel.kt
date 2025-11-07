@@ -36,6 +36,7 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.items.ObserveSharedItemCountSummary
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.items.ItemSharedType
 import proton.android.pass.searchoptions.api.FilterOption
 import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
@@ -64,6 +65,7 @@ class SearchOptionsBottomSheetViewModel @Inject constructor(
         .flatMapLatest {
             when (val vault = it.vaultSelectionOption) {
                 VaultSelectionOption.AllVaults -> observeItemCount(
+                    shareSelection = ShareSelection.AllShares,
                     includeHiddenVault = false
                 )
 
@@ -79,11 +81,12 @@ class SearchOptionsBottomSheetViewModel @Inject constructor(
 
                 VaultSelectionOption.Trash -> observeItemCount(
                     itemState = ItemState.Trashed,
+                    shareSelection = ShareSelection.AllShares,
                     includeHiddenVault = false
                 )
 
                 is VaultSelectionOption.Vault -> observeItemCount(
-                    selectedShareId = vault.shareId,
+                    shareSelection = ShareSelection.Share(vault.shareId),
                     includeHiddenVault = false
                 )
             }.zip(flowOf(it)) { itemCount, searchOptions ->

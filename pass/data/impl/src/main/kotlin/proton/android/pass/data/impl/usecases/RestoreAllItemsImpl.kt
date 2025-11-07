@@ -23,7 +23,6 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.RestoreAllItems
-import proton.android.pass.domain.ShareFlag
 import javax.inject.Inject
 
 class RestoreAllItemsImpl @Inject constructor(
@@ -38,13 +37,6 @@ class RestoreAllItemsImpl @Inject constructor(
         } else {
             userId
         }
-        itemRepository.restoreItems(
-            userId = id,
-            shareFlags = if (!includeHiddenVault) {
-                mapOf(ShareFlag.IsHidden to false)
-            } else {
-                emptyMap()
-            }
-        )
+        itemRepository.restoreItems(id, includeHiddenVault)
     }
 }

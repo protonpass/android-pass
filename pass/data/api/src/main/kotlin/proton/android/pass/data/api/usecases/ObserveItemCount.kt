@@ -21,13 +21,13 @@ package proton.android.pass.data.api.usecases
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.domain.ItemState
-import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareSelection
 
 interface ObserveItemCount {
 
     operator fun invoke(
         itemState: ItemState? = ItemState.Active,
-        selectedShareId: ShareId? = null,
+        shareSelection: ShareSelection,
         applyItemStateToSharedItems: Boolean = true,
         includeHiddenVault: Boolean
     ): Flow<ItemCountSummary>

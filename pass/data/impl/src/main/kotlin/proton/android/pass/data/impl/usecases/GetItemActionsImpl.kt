@@ -55,7 +55,7 @@ class GetItemActionsImpl @Inject constructor(
         oneShot { observeShare(shareId).first() },
         oneShot { getItemById(shareId, itemId) },
         observeUserPlan(),
-        observeAllShares()
+        observeAllShares(includeHidden = false)
     ) { share, item, userPlan, shares ->
         val isItemTrashed = item.state == ItemState.Trashed.value
 

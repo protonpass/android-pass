@@ -78,13 +78,14 @@ class CanDisplayTotpImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId,
         limit: Int
-    ): Flow<Boolean> = shareRepository.observeAllUsableShareIds(userId).flatMapLatest { list ->
-        localItemDataSource.observeItemsWithTotp(userId = userId, shareIds = list)
-            .map { itemsWithTotp ->
-                val allowedItems = itemsWithTotp.take(limit)
-                allowedItems.any { it.shareId == shareId && it.itemId == itemId }
-            }
-    }
+    ): Flow<Boolean> = shareRepository.observeAllUsableShareIds(userId, includeHidden = true)
+        .flatMapLatest { list ->
+            localItemDataSource.observeItemsWithTotp(userId = userId, shareIds = list)
+                .map { itemsWithTotp ->
+                    val allowedItems = itemsWithTotp.take(limit)
+                    allowedItems.any { it.shareId == shareId && it.itemId == itemId }
+                }
+        }
 
     private suspend fun getUserId(userId: UserId?): UserId = userId
         ?: accountManager.getPrimaryUserId().first()

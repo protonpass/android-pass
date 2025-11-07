@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.domain.Share
-import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.entity.NewVault
@@ -38,17 +37,21 @@ interface ShareRepository {
 
     suspend fun refreshShare(userId: UserId, shareId: ShareId)
 
-    fun observeAllShares(userId: UserId): Flow<List<Share>>
+    fun observeAllShares(userId: UserId, includeHidden: Boolean): Flow<List<Share>>
 
-    fun observeAllUsableShareIds(userId: UserId): Flow<List<ShareId>>
+    fun observeAllUsableShareIds(userId: UserId, includeHidden: Boolean): Flow<List<ShareId>>
 
-    fun observeVaultCount(userId: UserId): Flow<Int>
+    fun observeVaultCount(userId: UserId, includeHidden: Boolean): Flow<Int>
 
     suspend fun getById(userId: UserId, shareId: ShareId): Share
 
     fun observeById(userId: UserId, shareId: ShareId): Flow<Share>
 
-    fun observeSharesByType(userId: UserId, shareType: ShareType, includeHidden: Boolean): Flow<List<Share>>
+    fun observeSharesByType(
+        userId: UserId,
+        shareType: ShareType,
+        includeHidden: Boolean
+    ): Flow<List<Share>>
 
     suspend fun updateVault(
         userId: UserId,

@@ -23,5 +23,5 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.Share
 
 interface ObserveAllShares {
-    operator fun invoke(userId: UserId? = null): Flow<List<Share>>
+    operator fun invoke(userId: UserId? = null, includeHidden: Boolean): Flow<List<Share>>
 }

@@ -138,13 +138,16 @@ class TestShareRepository : ShareRepository {
         refreshShareResult.getOrThrow()
     }
 
-    override fun observeAllShares(userId: SessionUserId): Flow<List<Share>> =
+    override fun observeAllShares(userId: UserId, includeHidden: Boolean): Flow<List<Share>> =
         observeSharesFlow.map { it.getOrThrow() }
 
-    override fun observeAllUsableShareIds(userId: UserId): Flow<List<ShareId>> =
+    override fun observeAllUsableShareIds(
+        userId: UserId,
+        includeHidden: Boolean
+    ): Flow<List<ShareId>> =
         observeUsableShareIdsFlow.map { it.getOrThrow() }
 
-    override fun observeVaultCount(userId: UserId): Flow<Int> =
+    override fun observeVaultCount(userId: UserId, includeHidden: Boolean): Flow<Int> =
         observeVaultCountFlow.map { it.getOrThrow() }
 
     override suspend fun getById(userId: UserId, shareId: ShareId): Share =

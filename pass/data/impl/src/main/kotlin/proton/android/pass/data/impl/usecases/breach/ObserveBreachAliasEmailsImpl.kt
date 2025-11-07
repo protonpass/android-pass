@@ -31,7 +31,6 @@ import proton.android.pass.data.api.usecases.breach.ObserveBreachAliasEmails
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
-import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.breach.AliasData
 import proton.android.pass.domain.breach.AliasKeyId
@@ -46,7 +45,7 @@ class ObserveBreachAliasEmailsImpl @Inject constructor(
         selection = ShareSelection.AllShares,
         itemState = ItemState.Active,
         filter = ItemTypeFilter.Aliases,
-        shareFlags = mapOf(ShareFlag.IsHidden to false)
+        includeHidden = false
     )
         .flatMapLatest { list ->
             list

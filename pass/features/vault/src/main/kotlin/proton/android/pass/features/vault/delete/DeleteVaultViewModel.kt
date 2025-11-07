@@ -77,7 +77,7 @@ class DeleteVaultViewModel @Inject constructor(
         selection = ShareSelection.Share(shareId),
         itemState = ItemState.Active,
         filter = ItemTypeFilter.All,
-        shareFlags = emptyMap()
+        includeHidden = false
     ).mapLatest { encryptedItems ->
         encryptedItems.filter { it.isShared }.size
     }

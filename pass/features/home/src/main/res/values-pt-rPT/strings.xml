@@ -20,8 +20,8 @@
   <string name="home_empty_shared_items_title">Nenhum item partilhado foi encontrado.</string>
   <string name="home_empty_shared_items_with_me_subtitle">Nenhum item foi partilhado consigo.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Nenhum item foi partilhado por si.</string>
-  <string name="home_empty_no_vaults_title">Não tem nenhum cofre.</string>
-  <string name="home_empty_no_vaults_subtitle">Entre em contacto com a equipa de suporte da sua organização.</string>
+  <string name="home_empty_no_vaults_title">You don\'t have any vaults</string>
+  <string name="home_empty_no_vaults_subtitle">Please contact your administrator.</string>
   <string name="home_empty_read_only_vault_title">Este cofre está vazio</string>
   <string name="home_empty_read_only_vault_subtitle">Não pode adicionar itens a um cofre só de leitura.</string>
   <string name="home_empty_vault_create_login">Criar um acesso</string>

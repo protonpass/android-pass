@@ -20,8 +20,8 @@
   <string name="home_empty_shared_items_title">Ni predmetov v skupni rabi</string>
   <string name="home_empty_shared_items_with_me_subtitle">Noben predmet ni bil v skupni rabi z vami.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Nobenega predmeta niste dali v skupno rabo.</string>
-  <string name="home_empty_no_vaults_title">You don\'t have any vault</string>
-  <string name="home_empty_no_vaults_subtitle">Please, contact your organization support team.</string>
+  <string name="home_empty_no_vaults_title">You don\'t have any vaults</string>
+  <string name="home_empty_no_vaults_subtitle">Please contact your administrator.</string>
   <string name="home_empty_read_only_vault_title">Ta trezor je prazen</string>
   <string name="home_empty_read_only_vault_subtitle">Predmetov ne morete dodati v trezor, ki je določen samo za branje.</string>
   <string name="home_empty_vault_create_login">Ustvarite prijavo</string>

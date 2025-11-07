@@ -20,8 +20,8 @@
   <string name="home_empty_shared_items_title">Nu s-au găsit articole partajate</string>
   <string name="home_empty_shared_items_with_me_subtitle">Nu vi s-a partajat niciun articol.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Nu ați partajat niciun articol.</string>
-  <string name="home_empty_no_vaults_title">Nu aveți seifuri</string>
-  <string name="home_empty_no_vaults_subtitle">Contactați echipa organizației proprii.</string>
+  <string name="home_empty_no_vaults_title">You don\'t have any vaults</string>
+  <string name="home_empty_no_vaults_subtitle">Please contact your administrator.</string>
   <string name="home_empty_read_only_vault_title">Acest seif este gol</string>
   <string name="home_empty_read_only_vault_subtitle">Nu puteți adăuga articole într-un seif în mod doar citire.</string>
   <string name="home_empty_vault_create_login">Creare autentificare</string>

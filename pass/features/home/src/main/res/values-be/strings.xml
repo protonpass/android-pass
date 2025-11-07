@@ -20,8 +20,8 @@
   <string name="home_empty_shared_items_title">Абагуленых элементаў не знойдзена</string>
   <string name="home_empty_shared_items_with_me_subtitle">З вамі не абагулена ніякіх элементаў.</string>
   <string name="home_empty_shared_items_by_me_subtitle">Вы не абагульвалі ніякія элементы.</string>
-  <string name="home_empty_no_vaults_title">У вас няма сховішчаў</string>
-  <string name="home_empty_no_vaults_subtitle">Звяжыцеся з камандай падтрымкі ў сваёй арганізацыі.</string>
+  <string name="home_empty_no_vaults_title">You don\'t have any vaults</string>
+  <string name="home_empty_no_vaults_subtitle">Please contact your administrator.</string>
   <string name="home_empty_read_only_vault_title">Гэта сховішча нічога не змяшчае</string>
   <string name="home_empty_read_only_vault_subtitle">Нельга дадаваць элементы ў сховішча з правамі толькі на чытанне.</string>
   <string name="home_empty_vault_create_login">Стварыць запіс уваходу</string>

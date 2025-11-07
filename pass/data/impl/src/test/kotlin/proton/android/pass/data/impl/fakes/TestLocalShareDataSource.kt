@@ -90,10 +90,10 @@ class TestLocalShareDataSource : LocalShareDataSource {
 
     override fun observeAllIncludingInactive(userId: UserId): Flow<List<ShareEntity>> = getAllSharesForUserFlow
 
-    override fun observeAllActiveSharesForUser(userId: UserId): Flow<List<ShareEntity>> =
+    override fun observeAllActiveSharesForUser(userId: UserId, includeHidden: Boolean): Flow<List<ShareEntity>> =
         getAllSharesForUserFlow.map { shares -> shares.filter { it.isActive } }
 
-    override fun observeUsableShareIds(userId: UserId): Flow<List<ShareId>> = usableShareIdsFlow
+    override fun observeUsableShareIds(userId: UserId, includeHidden: Boolean): Flow<List<ShareId>> = usableShareIdsFlow
 
     override suspend fun deleteShares(userId: UserId, shareIds: Set<ShareId>): Boolean {
         deleteMemory.add(shareIds)
@@ -102,7 +102,7 @@ class TestLocalShareDataSource : LocalShareDataSource {
 
     override suspend fun deleteSharesForUser(userId: UserId): Boolean = deleteSharesForUserResult.getOrThrow()
 
-    override fun observeActiveVaultCount(userId: UserId): Flow<Int> = getShareCountFlow
+    override fun observeActiveVaultCount(userId: UserId, includeHidden: Boolean): Flow<Int> = getShareCountFlow
         .map { it.getOrThrow() }
 
     override suspend fun updateOwnershipStatus(
@@ -122,14 +122,10 @@ class TestLocalShareDataSource : LocalShareDataSource {
         includeHidden: Boolean
     ): Flow<List<ShareEntity>> = observeSharesByTypeFlow.map { it.getOrThrow() }
 
-    override fun observeSharedWithMeIds(
-        userId: UserId,
-        includeHidden: Boolean
-    ): Flow<List<ShareId>> = observeSharedWithMeIds.map { it.getOrThrow() }
+    override fun observeSharedWithMeIds(userId: UserId, includeHidden: Boolean): Flow<List<ShareId>> =
+        observeSharedWithMeIds.map { it.getOrThrow() }
 
-    override fun observeSharedByMeIds(
-        userId: UserId,
-        includeHidden: Boolean
-    ): Flow<List<ShareId>> = observeSharedByMeIds.map { it.getOrThrow() }
+    override fun observeSharedByMeIds(userId: UserId, includeHidden: Boolean): Flow<List<ShareId>> =
+        observeSharedByMeIds.map { it.getOrThrow() }
 
 }

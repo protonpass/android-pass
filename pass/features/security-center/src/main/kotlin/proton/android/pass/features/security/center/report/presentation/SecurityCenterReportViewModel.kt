@@ -51,7 +51,6 @@ import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareI
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
-import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.breach.BreachEmailId
@@ -133,7 +132,7 @@ class SecurityCenterReportViewModel @Inject constructor(
         selection = ShareSelection.AllShares,
         itemState = ItemState.Active,
         filter = ItemTypeFilter.Logins,
-        shareFlags = mapOf(ShareFlag.IsHidden to false)
+        includeHidden = false
     ).map { loginItems ->
         loginItems
             .filter { loginItem ->

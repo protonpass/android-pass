@@ -33,6 +33,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultCount
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.impl.repositories.PlanRepository
+import proton.android.pass.domain.ShareSelection
 import javax.inject.Inject
 
 class ObserveUpgradeInfoImpl @Inject constructor(
@@ -54,8 +55,12 @@ class ObserveUpgradeInfoImpl @Inject constructor(
                         forceRefresh = forceRefresh
                     ),
                     observeMFACount(includeHiddenVault = true),
-                    observeItemCount(itemState = null, includeHiddenVault = true),
-                    observeVaultCount(id)
+                    observeItemCount(
+                        itemState = null,
+                        shareSelection = ShareSelection.AllShares,
+                        includeHiddenVault = true
+                    ),
+                    observeVaultCount(id, includeHidden = true)
                 ) { plan, mfaCount, itemCount, vaultCount ->
                     val displayUpgrade = when {
                         plan.hideUpgrade -> false

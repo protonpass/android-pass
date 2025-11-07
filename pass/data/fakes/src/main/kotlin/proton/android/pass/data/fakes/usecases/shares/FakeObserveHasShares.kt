@@ -33,6 +33,6 @@ class FakeObserveHasShares @Inject constructor() : ObserveHasShares {
         hasSharesFlow.tryEmit(hasShares)
     }
 
-    override fun invoke(): Flow<Boolean> = hasSharesFlow
+    override fun invoke(includeHidden: Boolean): Flow<Boolean> = hasSharesFlow
 
 }

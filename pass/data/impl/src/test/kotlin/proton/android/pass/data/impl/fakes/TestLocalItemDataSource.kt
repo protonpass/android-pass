@@ -199,7 +199,8 @@ class TestLocalItemDataSource : LocalItemDataSource {
         shareIds: List<ShareId>,
         itemState: ItemState?,
         onlyShared: Boolean,
-        applyItemStateToSharedItems: Boolean
+        applyItemStateToSharedItems: Boolean,
+        includeHiddenVault: Boolean
     ): Flow<ItemCountSummary> = summary
 
 }

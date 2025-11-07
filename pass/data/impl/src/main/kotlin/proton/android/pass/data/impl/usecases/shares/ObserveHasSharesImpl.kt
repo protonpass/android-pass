@@ -31,8 +31,8 @@ class ObserveHasSharesImpl @Inject constructor(
     private val shareRepository: ShareRepository
 ) : ObserveHasShares {
 
-    override fun invoke(): Flow<Boolean> = observeCurrentUser().map { user ->
-        shareRepository.observeAllShares(userId = user.userId)
+    override fun invoke(includeHidden: Boolean): Flow<Boolean> = observeCurrentUser().map { user ->
+        shareRepository.observeAllShares(userId = user.userId, includeHidden)
     }.flatMapLatest { sharesFlow ->
         sharesFlow.map { shares -> shares.isNotEmpty() }
     }

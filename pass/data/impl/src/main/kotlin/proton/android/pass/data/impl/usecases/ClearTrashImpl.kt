@@ -23,7 +23,6 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.android.pass.domain.ShareFlag
 import javax.inject.Inject
 
 class ClearTrashImpl @Inject constructor(
@@ -40,11 +39,7 @@ class ClearTrashImpl @Inject constructor(
         }
         itemRepository.clearTrash(
             userId = id,
-            shareFlags = if (!includeHiddenVault) {
-                mapOf(ShareFlag.IsHidden to false)
-            } else {
-                emptyMap()
-            }
+            includeHidden = includeHiddenVault
         )
     }
 }

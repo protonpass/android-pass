@@ -63,17 +63,14 @@ class LocalItemDataSourceImpl @Inject constructor(
         filter: ItemTypeFilter,
         itemFlags: Map<ItemFlag, Boolean>
     ): Flow<List<ItemEntity>> {
-        val (setFlags, clearFlags) = itemFlags.entries.partition { it.value }
-        val setFolded = foldFlags(setFlags.map { it.key })
-        val clearFolded = foldFlags(clearFlags.map { it.key })
-
+        val (setFlags, clearFlags) = foldFlags(itemFlags)
         return database.itemsDao().observeItems(
             userId = userId.id,
             shareIds = shareIds.map(ShareId::id),
             itemState = itemState?.value,
             itemTypes = filter.value(),
-            setFlags = setFolded,
-            clearFlags = clearFolded
+            setFlags = setFlags,
+            clearFlags = clearFlags
         )
     }
 
@@ -164,7 +161,8 @@ class LocalItemDataSourceImpl @Inject constructor(
         shareIds: List<ShareId>,
         itemState: ItemState?,
         onlyShared: Boolean,
-        applyItemStateToSharedItems: Boolean
+        applyItemStateToSharedItems: Boolean,
+        includeHiddenVault: Boolean
     ): Flow<ItemCountSummary> = combineN(
         observeItemSummary(
             userId = userId,
@@ -181,19 +179,25 @@ class LocalItemDataSourceImpl @Inject constructor(
             userId = userId,
             shareIds = shareIds,
             itemState = itemState,
-            applyItemStateToSharedItems = applyItemStateToSharedItems
+            applyItemStateToSharedItems = applyItemStateToSharedItems,
+            includeHiddenVault = includeHiddenVault
         ),
         observeSharedByMeItemCount(
             userId = userId,
             shareIds = shareIds,
             itemState = itemState,
-            applyItemStateToSharedItems = applyItemStateToSharedItems
+            applyItemStateToSharedItems = applyItemStateToSharedItems,
+            includeHiddenVault = includeHiddenVault
         ),
         observeTrashedItemsCount(
             userId = userId,
             shareIds = shareIds
         ),
-        observeSharedWithMeTrashedItemCount(userId = userId)
+        observeSharedWithMeTrashedItemCount(
+            userId = userId,
+            shareIds = shareIds,
+            includeHiddenVault = includeHiddenVault
+        )
     ) { values: List<SummaryRow>,
         totpCount,
         sharedWithMeItemCount,
@@ -224,10 +228,8 @@ class LocalItemDataSourceImpl @Inject constructor(
         itemState: ItemState?,
         onlyShared: Boolean
     ): Flow<List<SummaryRow>> = database.itemsDao()
-        .itemSummary(userId.id, itemState?.value, onlyShared)
-        .map { summaryRows ->
-            summaryRows.filter { it.shareId in shareIds.map(ShareId::id) }
-        }
+        .itemSummary(userId.id, shareIds.map { it.id }, itemState?.value, onlyShared)
+
 
     private fun List<SummaryRow>.getCount(itemCategory: ItemCategory): Long = filter {
         it.itemKind == itemCategory.value
@@ -237,20 +239,15 @@ class LocalItemDataSourceImpl @Inject constructor(
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?
-    ) = database.itemsDao().countItemsWithTotp(userId.id, itemState?.value)
-        .map { rows ->
-            rows.filter {
-                it.shareId in shareIds.map(ShareId::id)
-            }.sumOf {
-                it.itemCount
-            }
-        }
+    ) = database.itemsDao().countItemsWithTotp(userId.id, shareIds.map { it.id }, itemState?.value)
+        .map { rows -> rows.sumOf { it.itemCount } }
 
     private fun observeSharedWithMeItemCount(
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?,
-        applyItemStateToSharedItems: Boolean
+        applyItemStateToSharedItems: Boolean,
+        includeHiddenVault: Boolean
     ) = localShareDataSource.observeSharedWithMeIds(userId, includeHiddenVault)
         .map { sharedWithMeShareIds ->
             sharedWithMeShareIds.filter { sharedWithMeShareId ->
@@ -269,7 +266,8 @@ class LocalItemDataSourceImpl @Inject constructor(
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?,
-        applyItemStateToSharedItems: Boolean
+        applyItemStateToSharedItems: Boolean,
+        includeHiddenVault: Boolean
     ) = localShareDataSource.observeSharedByMeIds(userId, includeHiddenVault)
         .mapLatest { sharedByMeShareIds ->
             sharedByMeShareIds.filter { sharedByMeShareId ->
@@ -284,21 +282,23 @@ class LocalItemDataSourceImpl @Inject constructor(
             )
         }
 
-    private fun observeSharedWithMeTrashedItemCount(userId: UserId) =
-        localShareDataSource.observeSharedWithMeIds(userId, includeHiddenVault)
-            .flatMapLatest { sharedWithMeShareIds ->
-                observeTrashedItemsCount(userId, sharedWithMeShareIds)
+    private fun observeSharedWithMeTrashedItemCount(
+        userId: UserId,
+        shareIds: List<ShareId>,
+        includeHiddenVault: Boolean
+    ) = localShareDataSource.observeSharedWithMeIds(userId, includeHiddenVault)
+        .mapLatest { sharedByMeShareIds ->
+            sharedByMeShareIds.filter { sharedByMeShareId ->
+                sharedByMeShareId.id in shareIds.map(ShareId::id)
             }
+        }
+        .flatMapLatest { sharedWithMeShareIds ->
+            observeTrashedItemsCount(userId, sharedWithMeShareIds)
+        }
 
     private fun observeTrashedItemsCount(userId: UserId, shareIds: List<ShareId>) = database.itemsDao()
         .countTrashedItems(userId.id, shareIds.map { it.id })
-        .map { rows ->
-            rows.filter {
-                it.shareId in shareIds.map(ShareId::id)
-            }.sumOf {
-                it.itemCount
-            }
-        }
+        .map { rows -> rows.sumOf { it.itemCount } }
 
     override suspend fun updateLastUsedTime(
         shareId: ShareId,

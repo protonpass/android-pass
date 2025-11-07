@@ -25,6 +25,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.commonrust.PassphraseGenerator
 import proton.android.pass.commonrust.RandomPasswordGenerator
+import proton.android.pass.commonrust.ShareOverrideCalculator
 import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
 import proton.android.pass.commonrust.api.DomainManager
@@ -86,6 +87,9 @@ abstract class CommonRustModule {
 
         @[Provides Singleton]
         fun providePassphraseGenerator() = PassphraseGenerator()
+
+        @[Provides Singleton]
+        fun provideShareOverrideCalculator() = ShareOverrideCalculator()
 
     }
 

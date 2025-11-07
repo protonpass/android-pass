@@ -25,7 +25,6 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.items.ObserveEncryptedSharedItems
 import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemState
-import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.items.ItemSharedType
 import javax.inject.Inject
 
@@ -43,16 +42,13 @@ class ObserveEncryptedSharedItemsImpl @Inject constructor(
             ItemSharedType.SharedByMe -> itemRepository.observeSharedByMeEncryptedItems(
                 userId = user.userId,
                 itemState = itemState,
-                shareFlags = if (!includeHiddenVault) {
-                    mapOf(ShareFlag.IsHidden to false)
-                } else {
-                    emptyMap()
-                }
+                includeHiddenVault = includeHiddenVault
             )
 
             ItemSharedType.SharedWithMe -> itemRepository.observeSharedWithMeEncryptedItems(
                 userId = user.userId,
-                itemState = itemState
+                itemState = itemState,
+                includeHiddenVault = includeHiddenVault
             )
         }
     }

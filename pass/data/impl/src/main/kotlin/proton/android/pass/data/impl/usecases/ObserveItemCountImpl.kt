@@ -22,33 +22,60 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.domain.ItemState
-import proton.android.pass.domain.ShareFlag
-import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareSelection
 import javax.inject.Inject
 
 class ObserveItemCountImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
-    private val itemRepository: ItemRepository
+    private val itemRepository: ItemRepository,
+    private val shareRepository: ShareRepository
 ) : ObserveItemCount {
 
     override fun invoke(
         itemState: ItemState?,
-        selectedShareId: ShareId?,
+        shareSelection: ShareSelection,
         applyItemStateToSharedItems: Boolean,
         includeHiddenVault: Boolean
     ): Flow<ItemCountSummary> = observeCurrentUser()
         .flatMapLatest { user ->
-            itemRepository.observeItemCountSummary(
-                userId = user.userId,
-                shareIds = selectedShareId?.let { listOf(it) },
-                itemState = itemState,
-                onlyShared = false,
-                applyItemStateToSharedItems = applyItemStateToSharedItems,
-                shareFlags = includeHiddenVault
-            )
+            when (shareSelection) {
+                ShareSelection.AllShares -> shareRepository.observeAllUsableShareIds(
+                    userId = user.userId,
+                    includeHidden = includeHiddenVault
+                ).flatMapLatest {
+                    itemRepository.observeItemCountSummary(
+                        userId = user.userId,
+                        shareIds = it,
+                        itemState = itemState,
+                        onlyShared = false,
+                        applyItemStateToSharedItems = applyItemStateToSharedItems,
+                        includeHiddenVault = includeHiddenVault
+                    )
+                }
+
+                is ShareSelection.Share -> itemRepository.observeItemCountSummary(
+                    userId = user.userId,
+                    shareIds = listOf(shareSelection.shareId),
+                    itemState = itemState,
+                    onlyShared = false,
+                    applyItemStateToSharedItems = applyItemStateToSharedItems,
+                    includeHiddenVault = includeHiddenVault
+                )
+
+                is ShareSelection.Shares -> itemRepository.observeItemCountSummary(
+                    userId = user.userId,
+                    shareIds = shareSelection.shareIds,
+                    itemState = itemState,
+                    onlyShared = false,
+                    applyItemStateToSharedItems = applyItemStateToSharedItems,
+                    includeHiddenVault = includeHiddenVault
+                )
+            }
+
         }
 
 }

@@ -92,12 +92,14 @@ interface LocalItemDataSource {
 
     suspend fun hasItemsForShare(userId: UserId, shareId: ShareId): Boolean
 
+    @Suppress("LongParameterList")
     fun observeItemCountSummary(
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?,
         onlyShared: Boolean,
-        applyItemStateToSharedItems: Boolean
+        applyItemStateToSharedItems: Boolean,
+        includeHiddenVault: Boolean
     ): Flow<ItemCountSummary>
 
     suspend fun updateLastUsedTime(

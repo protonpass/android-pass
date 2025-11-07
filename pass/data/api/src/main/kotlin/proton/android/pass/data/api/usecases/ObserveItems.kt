@@ -23,7 +23,6 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
-import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareSelection
 
 interface ObserveItems {

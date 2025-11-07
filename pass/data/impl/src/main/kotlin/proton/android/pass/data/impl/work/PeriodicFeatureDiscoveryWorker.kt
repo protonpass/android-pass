@@ -31,6 +31,7 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.firstOrNull
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.usecases.ObserveItemCount
+import proton.android.pass.domain.ShareSelection
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -48,7 +49,10 @@ class PeriodicFeatureDiscoveryWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result = runCatching {
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
-        val summary = observeItemCount(includeHiddenVault = true).firstOrNull()
+        val summary = observeItemCount(
+            shareSelection = ShareSelection.AllShares,
+            includeHiddenVault = true
+        ).firstOrNull()
             ?: ItemCountSummary.Initial
         processFileAttachmentsBannerDisplayLogic(summary.total)
         processAliasManagementBannerDisplayLogic(summary.alias)

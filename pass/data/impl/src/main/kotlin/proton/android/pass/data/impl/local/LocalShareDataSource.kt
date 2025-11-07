@@ -34,11 +34,11 @@ interface LocalShareDataSource {
 
     fun observeAllIncludingInactive(userId: UserId): Flow<List<ShareEntity>>
 
-    fun observeAllActiveSharesForUser(userId: UserId): Flow<List<ShareEntity>>
+    fun observeAllActiveSharesForUser(userId: UserId, includeHidden: Boolean): Flow<List<ShareEntity>>
 
-    fun observeUsableShareIds(userId: UserId): Flow<List<ShareId>>
+    fun observeUsableShareIds(userId: UserId, includeHidden: Boolean): Flow<List<ShareId>>
 
-    fun observeActiveVaultCount(userId: UserId): Flow<Int>
+    fun observeActiveVaultCount(userId: UserId, includeHidden: Boolean): Flow<Int>
 
     suspend fun deleteShares(userId: UserId, shareIds: Set<ShareId>): Boolean
 
@@ -50,7 +50,11 @@ interface LocalShareDataSource {
         isOwner: Boolean
     )
 
-    fun observeByType(userId: UserId, shareType: ShareType, includeHidden: Boolean): Flow<List<ShareEntity>>
+    fun observeByType(
+        userId: UserId,
+        shareType: ShareType,
+        includeHidden: Boolean
+    ): Flow<List<ShareEntity>>
 
     fun observeSharedWithMeIds(userId: UserId, includeHidden: Boolean): Flow<List<ShareId>>
 

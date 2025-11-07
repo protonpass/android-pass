@@ -33,10 +33,10 @@ class ObserveVaultCountImpl @Inject constructor(
     private val shareRepository: ShareRepository
 ) : ObserveVaultCount {
 
-    override fun invoke(userId: UserId?): Flow<Int> = flow {
+    override fun invoke(userId: UserId?, includeHidden: Boolean): Flow<Int> = flow {
         val id = userId ?: requireNotNull(accountManager.getPrimaryUserId().first())
         emit(id)
     }.flatMapLatest {
-        shareRepository.observeVaultCount(it)
+        shareRepository.observeVaultCount(it, includeHidden)
     }
 }

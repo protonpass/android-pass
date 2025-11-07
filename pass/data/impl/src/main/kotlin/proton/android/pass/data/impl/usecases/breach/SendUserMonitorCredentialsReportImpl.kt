@@ -36,7 +36,6 @@ import proton.android.pass.data.impl.util.runConcurrently
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
-import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
 import proton.android.pass.securitycenter.api.passwords.MissingTfaChecker
@@ -62,7 +61,7 @@ class SendUserMonitorCredentialsReportImpl @Inject constructor(
             }
             .filter { (_, plan) -> plan.isBusinessPlan }
             .associate { (userId, _) ->
-                val shares = observeAllShares(userId)
+                val shares = observeAllShares(userId, includeHidden = false)
                     .map { it.filter(Share::isOwner).map(Share::id) }
                     .firstOrNull()
                     .orEmpty()
@@ -72,7 +71,7 @@ class SendUserMonitorCredentialsReportImpl @Inject constructor(
                     filter = ItemTypeFilter.Logins,
                     itemState = ItemState.Active,
                     itemFlags = mapOf(ItemFlag.SkipHealthCheck to false),
-                    shareFlags = mapOf(ShareFlag.IsHidden to false)
+                    includeHidden = false
                 ).first()
                 val excludedItems = observeItems(
                     userId = userId,
@@ -80,7 +79,7 @@ class SendUserMonitorCredentialsReportImpl @Inject constructor(
                     filter = ItemTypeFilter.Logins,
                     itemState = ItemState.Active,
                     itemFlags = mapOf(ItemFlag.SkipHealthCheck to true),
-                    shareFlags = mapOf(ShareFlag.IsHidden to false)
+                    includeHidden = false
                 ).first()
                 val report = withContext(dispatchers.default) {
                     Report(

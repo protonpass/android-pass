@@ -33,19 +33,22 @@ class UsableShareFilterImpl @Inject constructor(
     private val shareOverrideCalculator: ShareOverrideCalculator
 ) : UsableShareFilter {
 
-    override fun filter(list: List<UsableShareKey>): List<ShareId> = shareOverrideCalculator.getVisibleShares(
-        list.map {
-            Share(
-                shareId = it.shareId,
-                vaultId = it.vaultId,
-                targetType = when (it.targetType) {
-                    ShareType.Vault -> TargetType.VAULT
-                    ShareType.Item -> TargetType.ITEM
-                },
-                targetId = it.targetId,
-                roleId = it.roleId,
-                permissions = it.permissions.toUShort()
-            )
-        }
-    ).map(::ShareId)
+    override fun filter(list: List<UsableShareKey>, includeHidden: Boolean): List<ShareId> =
+        shareOverrideCalculator.getVisibleShares(
+            list.map {
+                Share(
+                    shareId = it.shareId,
+                    vaultId = it.vaultId,
+                    targetType = when (it.targetType) {
+                        ShareType.Vault -> TargetType.VAULT
+                        ShareType.Item -> TargetType.ITEM
+                    },
+                    targetId = it.targetId,
+                    roleId = it.roleId,
+                    permissions = it.permissions.toUShort(),
+                    flags = it.flags.toUShort()
+                )
+            },
+            !includeHidden
+        ).map(::ShareId)
 }

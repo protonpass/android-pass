@@ -30,14 +30,13 @@ import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.datamodels.api.fromParsed
 import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.CreditCardType
-import proton.android.pass.domain.ItemFlags
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemFlags
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
-import proton.android.pass.domain.ShareFlag
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.ShareType
@@ -61,7 +60,7 @@ class TestObservePinnedItems @Inject constructor() : ObservePinnedItems {
         userId: UserId?,
         filter: ItemTypeFilter,
         shareSelection: ShareSelection,
-        shareFlags: Map<ShareFlag, Boolean>
+        includeHidden: Boolean
     ): Flow<List<Item>> = flow
 
     data class DefaultValues(

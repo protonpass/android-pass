@@ -35,6 +35,7 @@ import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.capabilities.CanOrganiseVaults
+import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.searchoptions.api.VaultSelectionOption
@@ -54,8 +55,11 @@ class HomeDrawerViewModel @Inject constructor(
             .map { list -> list.sortedBy { it.vault.name.lowercase() } }
 
     private val itemCountSummaryOptionFlow: Flow<Some<ItemCountSummary>> =
-        observeItemCount(applyItemStateToSharedItems = false, includeHiddenVault = false)
-            .mapLatest(::Some)
+        observeItemCount(
+            applyItemStateToSharedItems = false,
+            shareSelection = ShareSelection.AllShares,
+            includeHiddenVault = false
+        ).mapLatest(::Some)
 
     internal val stateFlow: StateFlow<HomeDrawerState> = combine(
         vaultSharesItemsCountFlow,

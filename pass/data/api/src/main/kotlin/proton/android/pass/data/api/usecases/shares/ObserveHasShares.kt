@@ -22,6 +22,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface ObserveHasShares {
 
-    operator fun invoke(): Flow<Boolean>
+    operator fun invoke(includeHidden: Boolean): Flow<Boolean>
 
 }

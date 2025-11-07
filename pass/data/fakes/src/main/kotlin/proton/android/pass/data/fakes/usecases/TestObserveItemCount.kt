@@ -24,7 +24,7 @@ import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.domain.ItemState
-import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareSelection
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -37,7 +37,7 @@ class TestObserveItemCount @Inject constructor() : ObserveItemCount {
 
     override fun invoke(
         itemState: ItemState?,
-        selectedShareId: ShareId?,
+        shareSelection: ShareSelection,
         applyItemStateToSharedItems: Boolean,
         includeHiddenVault: Boolean
     ): Flow<ItemCountSummary> = observeVaultsFlow.map {

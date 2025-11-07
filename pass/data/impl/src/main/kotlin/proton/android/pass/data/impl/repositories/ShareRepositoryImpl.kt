@@ -143,8 +143,8 @@ class ShareRepositoryImpl @Inject constructor(
         refreshDefaultShareIfNeeded(userId, setOf(shareId))
     }
 
-    override fun observeAllShares(userId: UserId): Flow<List<Share>> =
-        localShareDataSource.observeAllActiveSharesForUser(userId)
+    override fun observeAllShares(userId: UserId, includeHidden: Boolean): Flow<List<Share>> =
+        localShareDataSource.observeAllActiveSharesForUser(userId, includeHidden)
             .map { shares ->
                 encryptionContextProvider.withEncryptionContextSuspendable {
                     shares.map { share ->
@@ -153,22 +153,21 @@ class ShareRepositoryImpl @Inject constructor(
                 }
             }
 
-    override fun observeAllUsableShareIds(userId: UserId): Flow<List<ShareId>> =
-        localShareDataSource.observeUsableShareIds(userId)
+    override fun observeAllUsableShareIds(userId: UserId, includeHidden: Boolean): Flow<List<ShareId>> =
+        localShareDataSource.observeUsableShareIds(userId, includeHidden)
 
     override fun observeSharesByType(
         userId: UserId,
         shareType: ShareType,
         includeHidden: Boolean
-    ): Flow<List<Share>> =
-        localShareDataSource.observeByType(userId, shareType, includeHidden)
-            .map { shares ->
-                encryptionContextProvider.withEncryptionContextSuspendable {
-                    shares.map { share ->
-                        share.toDomain(this@withEncryptionContextSuspendable)
-                    }
+    ): Flow<List<Share>> = localShareDataSource.observeByType(userId, shareType, includeHidden)
+        .map { shares ->
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                shares.map { share ->
+                    share.toDomain(this@withEncryptionContextSuspendable)
                 }
             }
+        }
 
     @Suppress("LongMethod")
     override suspend fun refreshShares(userId: UserId): RefreshSharesResult = coroutineScope {
@@ -343,7 +342,8 @@ class ShareRepositoryImpl @Inject constructor(
         localShareDataSource.deleteSharesForUser(userId)
     }
 
-    override fun observeVaultCount(userId: UserId): Flow<Int> = localShareDataSource.observeActiveVaultCount(userId)
+    override fun observeVaultCount(userId: UserId, includeHidden: Boolean): Flow<Int> =
+        localShareDataSource.observeActiveVaultCount(userId, includeHidden)
 
     override suspend fun leaveVault(userId: UserId, shareId: ShareId) {
         remoteShareDataSource.leaveVault(userId, shareId)
@@ -380,17 +380,11 @@ class ShareRepositoryImpl @Inject constructor(
         return address
     }
 
-    override fun observeSharedWithMeIds(
-        userId: UserId,
-        includeHiddenVault: Boolean
-    ): Flow<List<ShareId>> = localShareDataSource
-        .observeSharedWithMeIds(userId, includeHiddenVault)
+    override fun observeSharedWithMeIds(userId: UserId, includeHiddenVault: Boolean): Flow<List<ShareId>> =
+        localShareDataSource.observeSharedWithMeIds(userId, includeHiddenVault)
 
-    override fun observeSharedByMeIds(
-        userId: UserId,
-        includeHiddenVault: Boolean
-    ): Flow<List<ShareId>> = localShareDataSource
-        .observeSharedByMeIds(userId, includeHiddenVault)
+    override fun observeSharedByMeIds(userId: UserId, includeHiddenVault: Boolean): Flow<List<ShareId>> =
+        localShareDataSource.observeSharedByMeIds(userId, includeHiddenVault)
 
     override suspend fun batchChangeShareVisibility(userId: UserId, shareVisibilityChanges: Map<ShareId, Boolean>) {
         val response = remoteShareDataSource.batchChangeShareVisibility(userId, shareVisibilityChanges)

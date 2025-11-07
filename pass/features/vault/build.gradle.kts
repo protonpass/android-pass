@@ -39,6 +39,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
+    implementation(libs.core.accountManager.domain)
     implementation(libs.kotlinx.collections)
 
     debugImplementation(libs.showkase)
@@ -79,6 +80,7 @@ dependencies {
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.notifications.fakes)
     testImplementation(projects.pass.preferences.fakes)
+    testImplementation(projects.pass.account.fakes)
 
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.kotlinTest)

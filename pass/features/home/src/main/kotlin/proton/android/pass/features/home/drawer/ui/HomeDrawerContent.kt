@@ -21,16 +21,14 @@ package proton.android.pass.features.home.drawer.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Surface
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -85,21 +83,22 @@ internal fun HomeDrawerContent(
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun HomeDrawerFooter(
     canCreateVaults: Boolean,
     canOrganiseVaults: Boolean,
     onUiEvent: (HomeDrawerUiEvent) -> Unit
 ) {
-    FlowRow(
-        modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.Center,
-        horizontalArrangement = Arrangement.Center
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = Spacing.medium, vertical = Spacing.small),
+        verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (canCreateVaults) {
             Button.Circular(
-                modifier = Modifier.padding(Spacing.small),
+                modifier = Modifier.fillMaxWidth(),
                 color = PassTheme.colors.interactionNormMinor1,
                 contentPadding = PaddingValues(Spacing.mediumSmall),
                 onClick = {
@@ -124,7 +123,7 @@ internal fun HomeDrawerFooter(
         }
         if (canOrganiseVaults) {
             Button.Circular(
-                modifier = Modifier.padding(Spacing.small),
+                modifier = Modifier.fillMaxWidth(),
                 color = PassTheme.colors.interactionNormMinor1,
                 contentPadding = PaddingValues(Spacing.mediumSmall),
                 onClick = {
@@ -157,9 +156,8 @@ fun FooterPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
         Surface {
             HomeDrawerFooter(
                 canCreateVaults = true,
-                canOrganiseVaults = true,
-                {}
-            )
+                canOrganiseVaults = true
+            ) {}
         }
     }
 }

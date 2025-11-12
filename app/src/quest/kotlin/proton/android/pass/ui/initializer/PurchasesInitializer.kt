@@ -20,10 +20,8 @@ package proton.android.pass.ui.initializer
 
 import android.content.Context
 import androidx.startup.AppInitializer
-import me.proton.core.paymentiap.presentation.GooglePurchaseHandlerInitializer
 import me.proton.core.plan.presentation.PurchaseHandlerInitializer
 
 fun initPurchases(context: Context) {
-    AppInitializer.getInstance(context).initializeComponent(GooglePurchaseHandlerInitializer::class.java)
     AppInitializer.getInstance(context).initializeComponent(PurchaseHandlerInitializer::class.java)
 }

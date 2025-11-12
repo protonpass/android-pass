@@ -1,0 +1,5 @@
+## 1.34.1 (2025-11-12)
+
+### Other
+
+- Add Meta Quest support.

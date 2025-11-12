@@ -26,6 +26,8 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.PaymentManager
+import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportPayment
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveMFACount
@@ -36,6 +38,7 @@ import proton.android.pass.data.impl.repositories.PlanRepository
 import javax.inject.Inject
 
 class ObserveUpgradeInfoImpl @Inject constructor(
+    private val appConfig: AppConfig,
     private val observeCurrentUser: ObserveCurrentUser,
     private val observeMFACount: ObserveMFACount,
     private val observeItemCount: ObserveItemCount,
@@ -46,8 +49,13 @@ class ObserveUpgradeInfoImpl @Inject constructor(
     override fun invoke(userId: UserId?, forceRefresh: Boolean): Flow<UpgradeInfo> =
         (userId?.let(::flowOf) ?: observeCurrentUser().map { it.userId })
             .flatMapLatest { id ->
-                val isSubscriptionAvailable = paymentManager.isSubscriptionAvailable(id)
-                val isUpgradeAvailable = paymentManager.isUpgradeAvailable()
+                val supportsPayments = appConfig.flavor.supportPayment()
+                val (isSubscriptionAvailable, isUpgradeAvailable) = if (supportsPayments) {
+                    paymentManager.isSubscriptionAvailable(id) to paymentManager.isUpgradeAvailable()
+                } else {
+                    true to true
+                }
+
                 combine(
                     planRepository.observePlan(
                         userId = id,

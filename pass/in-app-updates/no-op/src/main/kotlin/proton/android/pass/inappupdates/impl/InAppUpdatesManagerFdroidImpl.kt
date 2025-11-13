@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.inappupdates.noop
+package proton.android.pass.inappupdates.impl
 
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest

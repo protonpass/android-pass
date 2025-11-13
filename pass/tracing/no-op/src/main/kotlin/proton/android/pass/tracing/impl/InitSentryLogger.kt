@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.tracing.noop
+package proton.android.pass.tracing.impl
 
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.Logger

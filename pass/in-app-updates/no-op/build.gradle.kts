@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "proton.android.pass.inappupdates.noop"
+    namespace = "proton.android.pass.inappupdates.impl"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

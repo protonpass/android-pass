@@ -34,27 +34,53 @@ object AndroidUtils {
     private const val TAG = "AndroidUtils"
 
     @Suppress("DEPRECATION")
-    fun getApplicationName(context: Context, packageName: String): Option<String> = try {
-        val packageManager = context.packageManager
-        val appInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            packageManager.getApplicationInfo(
-                packageName,
-                PackageManager.ApplicationInfoFlags.of(PackageManager.GET_META_DATA.toLong())
-            )
-        } else {
-            packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
+    fun getApplicationName(context: Context, packageName: String): Option<String> {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val hasPermission = context.checkSelfPermission(
+                android.Manifest.permission.QUERY_ALL_PACKAGES
+            ) == PackageManager.PERMISSION_GRANTED
+            if (!hasPermission) {
+                PassLogger.i(TAG, "QUERY_ALL_PACKAGES permission not granted, returning None")
+                return None
+            }
         }
-        packageManager.getApplicationLabel(appInfo).toString().toOption()
-    } catch (e: PackageManager.NameNotFoundException) {
-        PassLogger.d(TAG, e, "Package name not found")
-        None
+
+        return runCatching {
+            val packageManager = context.packageManager
+            val appInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                packageManager.getApplicationInfo(
+                    packageName,
+                    PackageManager.ApplicationInfoFlags.of(PackageManager.GET_META_DATA.toLong())
+                )
+            } else {
+                packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
+            }
+            packageManager.getApplicationLabel(appInfo).toString().toOption()
+        }.getOrElse { throwable ->
+            PassLogger.w(TAG, throwable)
+            PassLogger.w(TAG, "Failed to get application name")
+            None
+        }
     }
 
-    fun getApplicationIcon(context: Context, packageName: String): Option<Drawable> = try {
-        context.packageManager.getApplicationIcon(packageName).toOption()
-    } catch (e: PackageManager.NameNotFoundException) {
-        PassLogger.d(TAG, e, "Package name not found")
-        None
+    fun getApplicationIcon(context: Context, packageName: String): Option<Drawable> {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val hasPermission = context.checkSelfPermission(
+                android.Manifest.permission.QUERY_ALL_PACKAGES
+            ) == PackageManager.PERMISSION_GRANTED
+            if (!hasPermission) {
+                PassLogger.i(TAG, "QUERY_ALL_PACKAGES permission not granted, returning None")
+                return None
+            }
+        }
+
+        return runCatching {
+            context.packageManager.getApplicationIcon(packageName).toOption()
+        }.getOrElse { throwable ->
+            PassLogger.w(TAG, throwable)
+            PassLogger.w(TAG, "Failed to get application icon")
+            None
+        }
     }
 
     fun shareTextWithThirdParties(

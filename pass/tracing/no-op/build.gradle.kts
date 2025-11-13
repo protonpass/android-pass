@@ -24,7 +24,7 @@ plugins {
 }
 
 android {
-    namespace = "proton.android.pass.tracing.noop"
+    namespace = "proton.android.pass.tracing.impl"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

@@ -1,4 +1,4 @@
-package proton.android.pass.inappreview.noop
+package proton.android.pass.inappreview.impl
 
 import android.app.Activity
 import kotlinx.coroutines.flow.Flow

@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.34.2 (2025-11-13)
+
+### Other
+
+- Remove not supported permissions from Quest.
+
 ## 1.34.1 (2025-11-12)
 
 ### Other

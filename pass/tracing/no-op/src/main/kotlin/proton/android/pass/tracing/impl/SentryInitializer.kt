@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2024 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,18 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.inappupdates.noop
+package proton.android.pass.tracing.impl
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import proton.android.pass.inappupdates.api.InAppUpdatesManager
+import android.content.Context
+import androidx.startup.Initializer
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class InAppUpdatesFdroidModule {
+class SentryInitializer : Initializer<Unit> {
 
-    @Binds
-    abstract fun bindInAppUpdatesManager(impl: InAppUpdatesManagerFdroidImpl): InAppUpdatesManager
+    override fun create(context: Context) {
+
+    }
+
+    override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
 }

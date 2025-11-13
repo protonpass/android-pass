@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,16 +16,22 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.tracing.noop
+package proton.android.pass.inappreview.impl
 
-import android.content.Context
-import androidx.startup.Initializer
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import proton.android.pass.inappreview.api.InAppReviewManager
+import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 
-class SentryInitializer : Initializer<Unit> {
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class InAppReviewFdroidModule {
 
-    override fun create(context: Context) {
+    @Binds
+    abstract fun bindInAppReviewManager(impl: InAppReviewManagerFdroidImpl): InAppReviewManager
 
-    }
-
-    override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
+    @Binds
+    abstract fun bindInAppReviewTriggerMetrics(impl: InAppReviewTriggerMetricsFdroidImpl): InAppReviewTriggerMetrics
 }

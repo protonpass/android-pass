@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2024 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,22 +16,21 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.inappreview.noop
+package proton.android.pass.inappreview.impl
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import proton.android.pass.inappreview.api.InAppReviewManager
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
+import javax.inject.Inject
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class InAppReviewFdroidModule {
+class InAppReviewTriggerMetricsFdroidImpl @Inject constructor() : InAppReviewTriggerMetrics {
+    override suspend fun incrementItemCreatedCount() {
 
-    @Binds
-    abstract fun bindInAppReviewManager(impl: InAppReviewManagerFdroidImpl): InAppReviewManager
+    }
 
-    @Binds
-    abstract fun bindInAppReviewTriggerMetrics(impl: InAppReviewTriggerMetricsFdroidImpl): InAppReviewTriggerMetrics
+    override suspend fun incrementItemAutofillCount() {
+
+    }
+
+    override suspend fun incrementAppLaunchStreakCount() {
+
+    }
 }

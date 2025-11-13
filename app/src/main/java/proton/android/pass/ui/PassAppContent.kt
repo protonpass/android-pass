@@ -30,6 +30,7 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.ModalBottomSheetState
@@ -64,6 +65,7 @@ import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarEvent
 import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.onBottomSheetDismissed
 import proton.android.pass.composecomponents.impl.bottombar.PassHomeBottomBar
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
@@ -174,7 +176,17 @@ fun PassAppContent(
     Scaffold(
         modifier = modifier,
         scaffoldState = scaffoldState,
-        snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) },
+        snackbarHost = {
+            PassSnackbarHost(
+                modifier = Modifier.applyIf(
+                    condition = !shouldShowBottomBar,
+                    ifTrue = {
+                        Modifier.navigationBarsPadding()
+                    }
+                ),
+                snackbarHostState = passSnackbarHostState
+            )
+        },
         bottomBar = {
             AnimatedVisibility(
                 visible = shouldShowBottomBar,
@@ -387,7 +399,11 @@ private fun navigateWithDismiss(
         dismissJob = bottomSheetJob
     ) {
         val backDestination = if (destination == CreateItemBottomsheetNavItem) {
-            appNavigator.findCloserDestination(HomeNavItem, ProfileNavItem, SecurityCenterHomeNavItem)
+            appNavigator.findCloserDestination(
+                HomeNavItem,
+                ProfileNavItem,
+                SecurityCenterHomeNavItem
+            )
         } else null
 
         appNavigator.navigate(destination, route, backDestination)

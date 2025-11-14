@@ -38,4 +38,16 @@
   <string name="bottomsheet_select_vault_read_only">Můžete pouze zobrazovat</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">Položky můžete vytvářet pouze v nejstarších trezorech</string>
   <string name="vault_title">Trezor</string>
+  <string name="organise_vaults_visible_title">Viditelné trezory</string>
+  <string name="organise_vaults_hidden_title">Skryté trezory</string>
+  <string name="organise_vaults_hidden_description">Tyto trezory nebudou přístupné a jejich obsah nebude k dispozici pro vyhledávání ani automatické vyplňování.</string>
+  <string name="organise_vaults_title">Organizovat trezory</string>
+  <string name="organise_vaults_snackbar_success">Trezory zorganizovány</string>
+  <string name="organise_vaults_snackbar_error">Trezory nebylo možné zorganizovat</string>
+  <plurals name="organise_vaults_item_count">
+    <item quantity="one">%d položka</item>
+    <item quantity="few">%d položky</item>
+    <item quantity="many">%d položek</item>
+    <item quantity="other">%d položek</item>
+  </plurals>
 </resources>

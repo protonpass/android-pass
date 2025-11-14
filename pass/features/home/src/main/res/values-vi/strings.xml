@@ -173,4 +173,5 @@
   <string name="bulk_action_pin">Ghim</string>
   <string name="bulk_action_enable_alias">Bật bí danh</string>
   <string name="bulk_action_disable_alias">Tắt bí danh</string>
+  <string name="vault_drawer_organise_vaults">Organize vaults</string>
 </resources>

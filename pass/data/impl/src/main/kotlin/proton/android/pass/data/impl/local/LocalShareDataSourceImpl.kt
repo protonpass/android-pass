@@ -59,7 +59,9 @@ class LocalShareDataSourceImpl @Inject constructor(
         observeUsableShareIds(userId, includeHidden).flatMapLatest { shareIds ->
             database.sharesDao().observeActive(
                 userId = userId.id,
-                shareIds = shareIds.map(ShareId::id)
+                shareIds = shareIds.map(ShareId::id),
+                shareType = null,
+                shareRole = null
             )
         }
 
@@ -71,9 +73,17 @@ class LocalShareDataSourceImpl @Inject constructor(
             .distinctUntilChanged()
 
     override suspend fun deleteShares(userId: UserId, shareIds: Set<ShareId>): Boolean =
-        database.sharesDao().deleteShares(userId.id, shareIds.map { it.id }) > 0
+        database.sharesDao().deleteShares(
+            userId = userId.id,
+            shareIds = shareIds.map { it.id },
+            applyShareIds = true
+        ) > 0
 
-    override suspend fun deleteSharesForUser(userId: UserId): Boolean = database.sharesDao().deleteShares(userId.id) > 0
+    override suspend fun deleteSharesForUser(userId: UserId): Boolean = database.sharesDao().deleteShares(
+        userId = userId.id,
+        shareIds = null,
+        applyShareIds = false
+    ) > 0
 
     override fun observeActiveVaultCount(userId: UserId, includeHidden: Boolean): Flow<Int> =
         observeUsableShareIds(userId, includeHidden).flatMapLatest { shareIds ->
@@ -104,7 +114,8 @@ class LocalShareDataSourceImpl @Inject constructor(
                 .observeActive(
                     userId = userId.id,
                     shareIds = shareIds.map(ShareId::id),
-                    shareType = shareType.value
+                    shareType = shareType.value,
+                    shareRole = null
                 )
         }
 
@@ -115,7 +126,8 @@ class LocalShareDataSourceImpl @Inject constructor(
                     .observeIds(
                         userId = userId.id,
                         shareIds = shareIds.map(ShareId::id),
-                        shareType = ShareType.Item.value
+                        shareType = ShareType.Item.value,
+                        shareRole = null
                     )
                     .map { list -> list.map(::ShareId) }
             }
@@ -126,6 +138,7 @@ class LocalShareDataSourceImpl @Inject constructor(
                 .observeIds(
                     userId = userId.id,
                     shareIds = shareIds.map(ShareId::id),
+                    shareType = null,
                     shareRole = ShareRole.SHARE_ROLE_ADMIN
                 )
                 .map { list -> list.map(::ShareId) }

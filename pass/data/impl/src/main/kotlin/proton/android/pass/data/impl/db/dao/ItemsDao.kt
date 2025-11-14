@@ -53,8 +53,8 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         SELECT * FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
-          AND (:itemIds IS NULL OR ${ItemEntity.Columns.ID} IN (:itemIds))
-          AND (:itemTypes IS NULL OR ${ItemEntity.Columns.ITEM_TYPE} IN (:itemTypes))
+          AND (NOT :applyItemIds OR ${ItemEntity.Columns.ID} IN (:itemIds))
+          AND (NOT :applyItemTypes OR ${ItemEntity.Columns.ITEM_TYPE} IN (:itemTypes))
           AND (:itemState IS NULL OR ${ItemEntity.Columns.STATE} = :itemState)
           AND (:setFlags IS NULL OR (flags & :setFlags) == :setFlags)
           AND (:clearFlags IS NULL OR (flags & :clearFlags) == 0)
@@ -67,14 +67,16 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
     abstract fun observeItems(
         userId: String,
         shareIds: List<String>,
-        itemIds: List<String>? = null,
-        itemState: Int? = null,
-        itemTypes: List<Int>? = null,
-        isPinned: Boolean? = null,
-        hasTotp: Boolean? = null,
-        hasPasskeys: Boolean? = null,
-        setFlags: Int? = null,
-        clearFlags: Int? = null
+        itemIds: List<String>?,
+        applyItemIds: Boolean,
+        itemTypes: List<Int>?,
+        applyItemTypes: Boolean,
+        itemState: Int?,
+        isPinned: Boolean?,
+        hasTotp: Boolean?,
+        hasPasskeys: Boolean?,
+        setFlags: Int?,
+        clearFlags: Int?
     ): Flow<List<ItemEntity>>
 
     @Query(

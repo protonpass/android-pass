@@ -64,11 +64,18 @@ class LocalItemDataSourceImpl @Inject constructor(
         itemFlags: Map<ItemFlag, Boolean>
     ): Flow<List<ItemEntity>> {
         val (setFlags, clearFlags) = foldFlags(itemFlags)
+        val itemTypes = filter.value()
         return database.itemsDao().observeItems(
             userId = userId.id,
             shareIds = shareIds.map(ShareId::id),
+            itemIds = null,
+            applyItemIds = false,
+            itemTypes = itemTypes,
+            applyItemTypes = itemTypes != null,
             itemState = itemState?.value,
-            itemTypes = filter.value(),
+            isPinned = null,
+            hasTotp = null,
+            hasPasskeys = null,
             setFlags = setFlags,
             clearFlags = clearFlags
         )
@@ -78,12 +85,23 @@ class LocalItemDataSourceImpl @Inject constructor(
         userId: UserId,
         shareIds: List<ShareId>,
         filter: ItemTypeFilter
-    ): Flow<List<ItemEntity>> = database.itemsDao().observeItems(
-        userId = userId.id,
-        shareIds = shareIds.map(ShareId::id),
-        isPinned = true,
-        itemTypes = filter.value()
-    )
+    ): Flow<List<ItemEntity>> {
+        val itemTypes = filter.value()
+        return database.itemsDao().observeItems(
+            userId = userId.id,
+            shareIds = shareIds.map(ShareId::id),
+            itemIds = null,
+            applyItemIds = false,
+            itemTypes = itemTypes,
+            applyItemTypes = itemTypes != null,
+            itemState = null,
+            isPinned = true,
+            hasTotp = null,
+            hasPasskeys = null,
+            setFlags = null,
+            clearFlags = null
+        )
+    }
 
     override fun observeItem(
         userId: UserId,
@@ -113,7 +131,16 @@ class LocalItemDataSourceImpl @Inject constructor(
     ): List<ItemEntity> = database.itemsDao().observeItems(
         userId = userId.id,
         shareIds = listOf(shareId.id),
-        itemIds = itemIds.map { it.id }
+        itemIds = itemIds.map { it.id },
+        applyItemIds = true,
+        itemTypes = null,
+        applyItemTypes = false,
+        itemState = null,
+        isPinned = null,
+        hasTotp = null,
+        hasPasskeys = null,
+        setFlags = null,
+        clearFlags = null
     ).firstOrNull()
         ?: emptyList()
 
@@ -133,7 +160,16 @@ class LocalItemDataSourceImpl @Inject constructor(
         database.itemsDao().observeItems(
             userId = userId.id,
             shareIds = shareIds.map(ShareId::id),
-            itemState = ItemState.Trashed.value
+            itemIds = null,
+            applyItemIds = false,
+            itemTypes = null,
+            applyItemTypes = false,
+            itemState = ItemState.Trashed.value,
+            isPinned = null,
+            hasTotp = null,
+            hasPasskeys = null,
+            setFlags = null,
+            clearFlags = null
         ).firstOrNull()
             ?: emptyList()
 
@@ -344,7 +380,16 @@ class LocalItemDataSourceImpl @Inject constructor(
             .observeItems(
                 userId = userId.id,
                 shareIds = shareIds.map(ShareId::id),
-                hasTotp = true
+                itemIds = null,
+                applyItemIds = false,
+                itemTypes = null,
+                applyItemTypes = false,
+                itemState = null,
+                isPinned = null,
+                hasTotp = true,
+                hasPasskeys = null,
+                setFlags = null,
+                clearFlags = null
             )
             .map { items -> items.map { it.toItemWithTotp() } }
 
@@ -352,7 +397,16 @@ class LocalItemDataSourceImpl @Inject constructor(
         database.itemsDao().observeItems(
             userId = userId.id,
             shareIds = shareIds.map(ShareId::id),
-            hasPasskeys = true
+            itemIds = null,
+            applyItemIds = false,
+            itemTypes = null,
+            applyItemTypes = false,
+            itemState = null,
+            isPinned = null,
+            hasTotp = null,
+            hasPasskeys = true,
+            setFlags = null,
+            clearFlags = null
         )
 
     override suspend fun updateItemFlags(

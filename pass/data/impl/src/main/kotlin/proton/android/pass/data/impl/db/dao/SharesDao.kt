@@ -51,8 +51,8 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
     abstract fun observeIds(
         userId: String,
         shareIds: List<String>,
-        shareType: Int? = null,
-        shareRole: String? = null
+        shareType: Int?,
+        shareRole: String?
     ): Flow<List<String>>
 
     @Query(
@@ -76,8 +76,8 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
     abstract fun observeActive(
         userId: String,
         shareIds: List<String>,
-        shareType: Int? = null,
-        shareRole: String? = null
+        shareType: Int?,
+        shareRole: String?
     ): Flow<List<ShareEntity>>
 
     @Query(
@@ -92,7 +92,7 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
     abstract fun observeCount(
         userId: String,
         shareIds: List<String>,
-        shareType: Int? = null
+        shareType: Int?
     ): Flow<Int>
 
     @Query(
@@ -116,10 +116,14 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
         """
         DELETE FROM ${ShareEntity.TABLE}
         WHERE ${ShareEntity.Columns.USER_ID} = :userId
-          AND (:shareIds IS NULL OR ${ShareEntity.Columns.ID} IN (:shareIds))
+          AND (NOT :applyShareIds OR ${ShareEntity.Columns.ID} IN (:shareIds))
         """
     )
-    abstract suspend fun deleteShares(userId: String, shareIds: List<String>? = null): Int
+    abstract suspend fun deleteShares(
+        userId: String,
+        shareIds: List<String>?,
+        applyShareIds: Boolean
+    ): Int
 
     @Query(
         """

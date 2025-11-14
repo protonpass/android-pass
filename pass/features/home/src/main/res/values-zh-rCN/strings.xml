@@ -173,4 +173,5 @@
   <string name="bulk_action_pin">固定</string>
   <string name="bulk_action_enable_alias">启用别名</string>
   <string name="bulk_action_disable_alias">禁用别名</string>
+  <string name="vault_drawer_organise_vaults">Organize vaults</string>
 </resources>

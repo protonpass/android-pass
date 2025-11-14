@@ -182,4 +182,5 @@
   <string name="bulk_action_pin">Anclar</string>
   <string name="bulk_action_enable_alias">Activar el alias</string>
   <string name="bulk_action_disable_alias">Desactivar el alias</string>
+  <string name="vault_drawer_organise_vaults">Organizar bóvedas</string>
 </resources>

@@ -182,4 +182,5 @@
   <string name="bulk_action_pin">Fixa</string>
   <string name="bulk_action_enable_alias">Activa l\'àlies</string>
   <string name="bulk_action_disable_alias">Desactiva l\'àlies</string>
+  <string name="vault_drawer_organise_vaults">Organitzeu les caixes fortes</string>
 </resources>

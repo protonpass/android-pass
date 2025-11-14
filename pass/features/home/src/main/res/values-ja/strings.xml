@@ -7,7 +7,7 @@
   <string name="home_empty_vault_login_subtitle">最初のログインアイテムを作成して始めましょう</string>
   <string name="home_empty_vault_aliases_title">エイリアスが見つかりません</string>
   <string name="home_empty_vault_aliases_subtitle">最初のエイリアスを作成して始めましょう</string>
-  <string name="home_empty_vault_notes_title">メモが見つかりません</string>
+  <string name="home_empty_vault_notes_title">メモはありません</string>
   <string name="home_empty_vault_notes_subtitle">最初のメモを作成して始めましょう</string>
   <string name="home_empty_vault_logins_mfa_title">TOTPでのログインが見つかりません</string>
   <string name="home_empty_vault_logins_mfa_subtitle">最初のTOTPログインを作成して始めましょう</string>
@@ -20,8 +20,8 @@
   <string name="home_empty_shared_items_title">共有アイテムが見つかりません</string>
   <string name="home_empty_shared_items_with_me_subtitle">あなたと共有されたアイテムはありません。</string>
   <string name="home_empty_shared_items_by_me_subtitle">あなたが共有したアイテムはありません。</string>
-  <string name="home_empty_no_vaults_title">You don\'t have any vaults</string>
-  <string name="home_empty_no_vaults_subtitle">Please contact your administrator.</string>
+  <string name="home_empty_no_vaults_title">保管庫はありません</string>
+  <string name="home_empty_no_vaults_subtitle">管理者に連絡してください。</string>
   <string name="home_empty_read_only_vault_title">この保管庫は空です</string>
   <string name="home_empty_read_only_vault_subtitle">読み取り専用の保管庫にアイテムを追加することはできません。</string>
   <string name="home_empty_vault_create_login">ログイン情報を作成</string>
@@ -173,4 +173,5 @@
   <string name="bulk_action_pin">ピン留めする</string>
   <string name="bulk_action_enable_alias">エイリアスを有効化</string>
   <string name="bulk_action_disable_alias">エイリアスを無効化</string>
+  <string name="vault_drawer_organise_vaults">保管庫を整理</string>
 </resources>

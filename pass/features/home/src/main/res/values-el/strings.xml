@@ -182,4 +182,5 @@
   <string name="bulk_action_pin">Καρφίτσωμα</string>
   <string name="bulk_action_enable_alias">Ενεργοποίηση ψευδωνύμου</string>
   <string name="bulk_action_disable_alias">Απενεργοποίηση ψευδωνύμου</string>
+  <string name="vault_drawer_organise_vaults">Οργάνωση κρυπτών</string>
 </resources>

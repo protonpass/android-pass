@@ -343,4 +343,11 @@
   <string name="banner_contacts_subtitle">Chaque fois que votre alias reçoit un e-mail, un contact est automatiquement créé.</string>
   <string name="action_reveal">Afficher</string>
   <string name="action_conceal">Masquer</string>
+  <string name="warning_dialog_item_shared_vault_title">Élément dans un coffre-fort partagé</string>
+  <string name="warning_dialog_item_shared_title">Élément partagé</string>
+  <string name="warning_dialog_item_shared_vault_creating">Vous créez un élément dans un coffre-fort partagé et les membres auront immédiatement accès à cet élément.</string>
+  <string name="warning_dialog_item_shared_vault_moving">Vous déplacez un élément vers un coffre-fort partagé et les membres auront immédiatement accès à cet élément.</string>
+  <string name="warning_dialog_item_shared_vault_updating">Vous modifiez un élément dans un coffre-fort partagé et les membres auront immédiatement accès à cet élément.</string>
+  <string name="warning_dialog_item_shared_updating">Vous êtes en train de modifier un élément partagé. Les modifications seront visibles immédiatement par toutes les personnes avec lesquelles il est partagé.</string>
+  <string name="warning_dialog_item_shared_vault_reminder">Ne plus me le rappeler</string>
 </resources>

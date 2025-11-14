@@ -23,7 +23,7 @@
   <string name="onboarding_slide_3_title">最新情報を入手</string>
   <string name="onboarding_slide_4_title">安全な共有</string>
   <string name="onboarding_slide_1_subtitle">安全な場所で、プライバシー保護で最も信頼されている企業によって保護されています。</string>
-  <string name="onboarding_slide_2_subtitle">フィッシングの脅威に対して、メール非表示エイリアスを使用します。</string>
+  <string name="onboarding_slide_2_subtitle">フィッシング脅威から身を守るため、Hide My Email エイリアスを使いましょう。</string>
   <string name="onboarding_slide_3_subtitle">パスワードや機密情報を安全かつ簡単に共有できます。</string>
   <string name="onboarding_slide_4_subtitle">ダークウェブ上でメールが見つかったときにアラートを受け取る。</string>
   <string name="create_an_account_button">アカウントを作成</string>

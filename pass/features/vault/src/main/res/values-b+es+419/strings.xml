@@ -38,4 +38,14 @@
   <string name="bottomsheet_select_vault_read_only">Sólo puede leer</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">Sólo puede crear elementos en su bóvedas antiguas</string>
   <string name="vault_title">Bóveda</string>
+  <string name="organise_vaults_visible_title">Bóvedas visibles</string>
+  <string name="organise_vaults_hidden_title">Bóvedas ocultas</string>
+  <string name="organise_vaults_hidden_description">Estas bóvedas no serán accesibles y sus contenidos no estarán disponibles para búsqueda y completado automático.</string>
+  <string name="organise_vaults_title">Organizar bóvedas</string>
+  <string name="organise_vaults_snackbar_success">Bóvedas organizadas</string>
+  <string name="organise_vaults_snackbar_error">No se pudieron organizar las bóvedas</string>
+  <plurals name="organise_vaults_item_count">
+    <item quantity="one">%d elemento</item>
+    <item quantity="other">%d elementos</item>
+  </plurals>
 </resources>

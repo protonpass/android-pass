@@ -38,4 +38,14 @@
   <string name="bottomsheet_select_vault_read_only">Csak megnézni tudja</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">Csak a legrégebbi tárolóiban hozhat létre elemeket</string>
   <string name="vault_title">Tároló</string>
+  <string name="organise_vaults_visible_title">Visible vaults</string>
+  <string name="organise_vaults_hidden_title">Hidden vaults</string>
+  <string name="organise_vaults_hidden_description">These vaults will not be accessible and their content won’t be available to Search or Autofill.</string>
+  <string name="organise_vaults_title">Organize vaults</string>
+  <string name="organise_vaults_snackbar_success">Vaults organized</string>
+  <string name="organise_vaults_snackbar_error">Vaults could not be organized</string>
+  <plurals name="organise_vaults_item_count">
+    <item quantity="one">%d item</item>
+    <item quantity="other">%d items</item>
+  </plurals>
 </resources>

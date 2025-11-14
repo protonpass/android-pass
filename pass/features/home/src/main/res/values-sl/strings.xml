@@ -200,4 +200,5 @@
   <string name="bulk_action_pin">Pripni</string>
   <string name="bulk_action_enable_alias">Omogoči vzdevek</string>
   <string name="bulk_action_disable_alias">Onemogoči vzdevek</string>
+  <string name="vault_drawer_organise_vaults">Organize vaults</string>
 </resources>

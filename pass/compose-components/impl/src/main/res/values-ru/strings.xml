@@ -13,7 +13,7 @@
   <string name="item_list_header_logins_totp_type">Имена пользователей с TOTP</string>
   <string name="item_list_header_aliases_type">Псевдонимы</string>
   <string name="item_list_header_notes_type">Примечания</string>
-  <string name="item_list_header_credit_cards_type">Кредитные карты</string>
+  <string name="item_list_header_credit_cards_type">Банковские карты</string>
   <plurals name="item_list_header_results">
     <item quantity="one">результат</item>
     <item quantity="few">результата</item>
@@ -193,7 +193,7 @@
   <string name="item_details_identity_section_work_occupation_title">Род занятий</string>
   <string name="item_details_identity_section_work_email_title">Рабочий адрес электронной почты</string>
   <string name="item_details_identity_section_work_phone_number_title">Рабочий номер телефона</string>
-  <string name="item_details_identity_section_work_personal_website_title">Личный сайт</string>
+  <string name="item_details_identity_section_work_personal_website_title">Личный веб-сайт</string>
   <string name="item_details_shared_section_note_title">Заметка</string>
   <string name="item_details_shared_section_item_history_last_autofill_title">Последнее автозаполнение</string>
   <string name="item_details_shared_section_item_history_created_title">Создано</string>
@@ -209,11 +209,11 @@
   <string name="item_details_wifi_network_label_security">Безопасность</string>
   <string name="item_details_ssh_key_label_public_key">Открытый ключ</string>
   <string name="item_details_ssh_key_label_private_key">Закрытый ключ</string>
-  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Версия приложения больше не поддерживается, пожалуйста, обновите приложение.</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Версия приложения больше не поддерживается, обновите приложение.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Ключ доступа</string>
   <!-- Upgrade -->
-  <string name="dialog_upgrade_plan_title">Улучшить план?</string>
+  <string name="dialog_upgrade_plan_title">Улучшить тариф?</string>
   <string name="dialog_upgrade_plan_message">Эта функция недоступна пользователям бесплатного тарифа. Если вы хотите воспользоваться этой функцией, а также другими классными возможностями, перейдите на новый тариф и попробуйте!</string>
   <string name="dialog_upgrade_plan_action_confirm">Повысить</string>
   <string name="dialog_upgrade_plan_action_cancel">Не сейчас</string>
@@ -279,15 +279,15 @@
   <string name="snack_bar_message_item_monitor_excluded_error">Произошла ошибка при исключении элемента из мониторинга</string>
   <string name="snack_bar_message_item_monitor_included_success">Элемент успешно включен в мониторинг</string>
   <string name="snack_bar_message_item_monitor_included_error">Произошла ошибка при включении элемента в мониторинг</string>
-  <string name="snack_bar_message_item_pinned_success">Элемент закреплен</string>
+  <string name="snack_bar_message_item_pinned_success">Элемент успешно закреплён</string>
   <string name="snack_bar_message_item_pinned_error">При закреплении элемента произошла ошибка</string>
-  <string name="snack_bar_message_item_unpinned_success">Элемент откреплен</string>
+  <string name="snack_bar_message_item_unpinned_success">Элемент успешно откреплён</string>
   <string name="snack_bar_message_item_unpinned_error">При откреплении элемента произошла ошибка</string>
   <string name="snack_bar_message_item_trashed_success">Элемент успешно помещен в корзину</string>
   <string name="snack_bar_message_item_trashed_error">Произошла ошибка при удалении этого элемента в корзину</string>
   <string name="snack_bar_message_item_restore_success">Элемент успешно восстановлен</string>
   <string name="snack_bar_message_item_restore_error">Произошла ошибка при восстановлении этого элемента</string>
-  <string name="snack_bar_message_item_delete_success">Элемент успешно удален.</string>
+  <string name="snack_bar_message_item_delete_success">Элемент успешно удалён</string>
   <string name="snack_bar_message_item_delete_error">Произошла ошибка при удалении этого элемента</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Включить синхронизацию SimpleLogin</string>
@@ -381,4 +381,11 @@
   <string name="banner_contacts_subtitle">Каждый раз, когда ваш псевдоним получает письмо от кого-то, новый контакт создается автоматически.</string>
   <string name="action_reveal">Показать</string>
   <string name="action_conceal">Скрыть</string>
+  <string name="warning_dialog_item_shared_vault_title">Item in a shared vault</string>
+  <string name="warning_dialog_item_shared_title">Shared item</string>
+  <string name="warning_dialog_item_shared_vault_creating">You are creating an item in a shared vault and members will immediately gain access to this item.</string>
+  <string name="warning_dialog_item_shared_vault_moving">You are moving an item to a shared vault and members will immediately gain access to this item.</string>
+  <string name="warning_dialog_item_shared_vault_updating">You are editing an item in a shared vault and members will immediately gain access to this item.</string>
+  <string name="warning_dialog_item_shared_updating">You are editing a shared item. Changes will be visible to everyone it\'s shared with immediately.</string>
+  <string name="warning_dialog_item_shared_vault_reminder">Don\'t remind me again</string>
 </resources>

@@ -151,7 +151,7 @@
   <string name="security_center_alias_list_top_bar_title">Hide-my-emailエイリアス</string>
   <string name="security_center_alias_list_excluded_from_monitoring">監視対象外</string>
   <string name="security_center_alias_list_error">アドレスが読み込めませんでした</string>
-  <string name="security_center_alias_list_included_in_monitoring">お客様のHide-my-emailエイリアスが漏洩した場合に通知を受け取れるよう、監視を有効にしてください。</string>
+  <string name="security_center_alias_list_included_in_monitoring">あなたのHide-my-emailエイリアスが漏洩した場合に通知されるよう、監視をオンにしましょう。</string>
   <string name="security_center_alias_list_monitored">監視済み</string>
   <string name="security_center_alias_list_custom_email_message">カスタム ドメインを持つエイリアスは監視されません。監視用のカスタムメールとして追加してください。</string>
   <string name="security_center_alias_list_options_menu">エイリアス画面オプションメニュー</string>

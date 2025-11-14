@@ -343,4 +343,11 @@
   <string name="banner_contacts_subtitle">Jedes Mal, wenn dein Alias eine E-Mail von einer Person erhält, wird automatisch ein neuer Kontakt erstellt.</string>
   <string name="action_reveal">Anzeigen</string>
   <string name="action_conceal">Ausblenden</string>
+  <string name="warning_dialog_item_shared_vault_title">Eintrag in einem gemeinsam genutzten Tresor</string>
+  <string name="warning_dialog_item_shared_title">Geteiltes Eintrag</string>
+  <string name="warning_dialog_item_shared_vault_creating">Du hast einen Eintrag in einem gemeinsam genutzten Tresor erstellt, und die Mitglieder erhalten sofort Zugriff auf diesen Eintrag.</string>
+  <string name="warning_dialog_item_shared_vault_moving">Du hast einen Eintrag in einen gemeinsam genutzten Tresor verschoben und die Mitglieder erhalten sofort Zugriff auf diesen Eintrag.</string>
+  <string name="warning_dialog_item_shared_vault_updating">Du hast einen Eintrag in einem gemeinsam genutzten Tresor bearbeitet und die Mitglieder erhalten sofort Zugriff auf diesen Eintrag.</string>
+  <string name="warning_dialog_item_shared_updating">Du hast einen freigegebenen Eintrag bearbeitet. Die Änderungen werden sofort für alle sichtbar, mit denen er geteilt wurde.</string>
+  <string name="warning_dialog_item_shared_vault_reminder">Nicht erneut erinnern</string>
 </resources>

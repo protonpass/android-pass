@@ -45,8 +45,8 @@
     <item quantity="other">La contrasenya és incorrecta. Us queden %d intents.</item>
   </plurals>
   <plurals name="auth_attempts_remaining">
-    <item quantity="one">Us queda %d intent.</item>
-    <item quantity="other">Us queden %d intents.</item>
+    <item quantity="one">%d intent restant</item>
+    <item quantity="other">%d intents restants</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Hi ha hagut massa intents fallits del codi PIN. S\'està tancant la sessió de tots els vostres usuaris.</string>
   <string name="auth_pin_too_many_attempts_dismiss">Hi ha hagut massa intents incorrectes del codi PIN</string>

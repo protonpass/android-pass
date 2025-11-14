@@ -18,14 +18,19 @@
 
 package proton.android.pass.composecomponents.impl.counter
 
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
-import proton.android.pass.composecomponents.impl.container.Circle
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.container.Pill
 
 @Composable
 fun CounterText(
@@ -35,7 +40,7 @@ fun CounterText(
     textColor: Color,
     textStyle: TextStyle = ProtonTheme.typography.defaultNorm
 ) {
-    Circle(
+    Pill(
         modifier = modifier,
         backgroundColor = backgroundColor
     ) {
@@ -44,5 +49,19 @@ fun CounterText(
             color = textColor,
             style = textStyle
         )
+    }
+}
+
+@Preview
+@Composable
+fun CounterTextPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            CounterText(
+                text = "123456",
+                backgroundColor = PassTheme.colors.passwordInteractionNormMajor2,
+                textColor = PassTheme.colors.passwordInteractionNormMinor1
+            )
+        }
     }
 }

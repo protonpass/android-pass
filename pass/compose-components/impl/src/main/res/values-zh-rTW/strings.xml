@@ -324,4 +324,11 @@
   <string name="banner_contacts_subtitle">每當您的別名從某人收到一封電子郵件時，就會自動建立一個新的聯絡人。</string>
   <string name="action_reveal">顯示</string>
   <string name="action_conceal">隱藏</string>
+  <string name="warning_dialog_item_shared_vault_title">Item in a shared vault</string>
+  <string name="warning_dialog_item_shared_title">Shared item</string>
+  <string name="warning_dialog_item_shared_vault_creating">You are creating an item in a shared vault and members will immediately gain access to this item.</string>
+  <string name="warning_dialog_item_shared_vault_moving">You are moving an item to a shared vault and members will immediately gain access to this item.</string>
+  <string name="warning_dialog_item_shared_vault_updating">You are editing an item in a shared vault and members will immediately gain access to this item.</string>
+  <string name="warning_dialog_item_shared_updating">You are editing a shared item. Changes will be visible to everyone it\'s shared with immediately.</string>
+  <string name="warning_dialog_item_shared_vault_reminder">Don\'t remind me again</string>
 </resources>

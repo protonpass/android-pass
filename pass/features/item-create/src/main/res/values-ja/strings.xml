@@ -94,7 +94,7 @@
   <string name="cannot_retrieve_alias_options">エイリアス オプションを取得できません</string>
   <string name="alias_mailbox_dialog_title">転送先</string>
   <string name="sl_note_info_title">SimpleLogin のメモとは？</string>
-  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">Passでは、アイテムのメモはアイテム暗号化キーで暗号化され、メモを閲覧することができるのはアクセス権を持っているユーザーだけです。</string>
+  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">Passでは、アイテムのメモはアイテムの暗号鍵で暗号化され、メモを見ることができるのはアクセス権を持っているユーザーだけです。</string>
   <string name="sl_note_info_message_part2">ProtonやSimpleLoginでさえ、閲覧することはできません。</string>
   <string name="sl_note_info_message_part3">SimpleLoginのメモはエイリアスアドレスと同じ場所に保存されており、保存時の暗号化によって保護されていますが、エンドツーエンドの暗号化はされていません。つまり、SimpleLoginのデータベースにアクセスできる人は誰でもそれを読むことができます。</string>
   <string name="sl_note_info_content_description">SLノートの情報ダイアログを表示</string>

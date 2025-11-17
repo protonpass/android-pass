@@ -32,6 +32,7 @@ import proton.android.pass.data.impl.responses.CreateItemAliasBundle
 import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.events.EventToken
 
 interface RemoteItemDataSource {
 
@@ -67,9 +68,17 @@ interface RemoteItemDataSource {
         body: UpdateItemFlagsRequest
     ): ItemRevision
 
-    suspend fun getItems(userId: UserId, shareId: ShareId): List<ItemRevision>
+    suspend fun getItems(
+        userId: UserId,
+        shareId: ShareId,
+        eventToken: EventToken? = null
+    ): List<ItemRevision>
 
-    fun observeItems(userId: UserId, shareId: ShareId): Flow<ItemTotal>
+    fun observeItems(
+        userId: UserId,
+        shareId: ShareId,
+        eventToken: EventToken? = null
+    ): Flow<ItemTotal>
 
     suspend fun sendToTrash(
         userId: UserId,

@@ -44,6 +44,7 @@ import proton.android.pass.data.impl.responses.CreateItemAliasBundle
 import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.events.EventToken
 import javax.inject.Inject
 
 const val CODE_INVALID_CONTENT = 2001
@@ -148,30 +149,38 @@ class RemoteItemDataSourceImpl @Inject constructor(
             }
         }
 
-    override suspend fun getItems(userId: UserId, shareId: ShareId): List<ItemRevision> =
-        api.get<PasswordManagerApi>(userId)
-            .invoke {
-                var sinceToken: String? = null
-                val items = mutableListOf<ItemRevision>()
-                while (true) {
-                    val response = getItems(
-                        shareId = shareId.id,
-                        sinceToken = sinceToken,
-                        pageSize = PAGE_SIZE
-                    )
+    override suspend fun getItems(
+        userId: UserId,
+        shareId: ShareId,
+        eventToken: EventToken?
+    ): List<ItemRevision> = api.get<PasswordManagerApi>(userId)
+        .invoke {
+            var sinceToken: String? = null
+            val items = mutableListOf<ItemRevision>()
+            while (true) {
+                val response = getItems(
+                    shareId = shareId.id,
+                    sinceToken = sinceToken,
+                    pageSize = PAGE_SIZE,
+                    eventToken = eventToken?.token
+                )
 
-                    val pageItems = response.items.revisions.toDomain()
-                    items.addAll(pageItems)
-                    if (pageItems.size < PAGE_SIZE || response.items.lastToken == null) {
-                        break
-                    }
-                    sinceToken = response.items.lastToken
+                val pageItems = response.items.revisions.toDomain()
+                items.addAll(pageItems)
+                if (pageItems.size < PAGE_SIZE || response.items.lastToken == null) {
+                    break
                 }
-                items
+                sinceToken = response.items.lastToken
             }
-            .valueOrThrow
+            items
+        }
+        .valueOrThrow
 
-    override fun observeItems(userId: UserId, shareId: ShareId): Flow<ItemTotal> = flow {
+    override fun observeItems(
+        userId: UserId,
+        shareId: ShareId,
+        eventToken: EventToken?
+    ): Flow<ItemTotal> = flow {
         api.get<PasswordManagerApi>(userId)
             .invoke {
                 var sinceToken: String? = null
@@ -181,7 +190,8 @@ class RemoteItemDataSourceImpl @Inject constructor(
                     val response = getItems(
                         shareId = shareId.id,
                         sinceToken = sinceToken,
-                        pageSize = PAGE_SIZE
+                        pageSize = PAGE_SIZE,
+                        eventToken = eventToken?.token
                     )
 
                     val total = response.items.total

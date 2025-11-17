@@ -38,6 +38,7 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemStateValues
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.events.EventToken
 import proton.android.pass.test.domain.TestItem
 
 class TestRemoteItemDataSource : RemoteItemDataSource {
@@ -96,11 +97,11 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         itemId = itemId
     ).let(::createItemRevision)
 
-    override suspend fun getItems(userId: UserId, shareId: ShareId): List<ItemRevision> {
+    override suspend fun getItems(userId: UserId, shareId: ShareId, eventToken: EventToken?): List<ItemRevision> {
         throw IllegalStateException("Not yet implemented")
     }
 
-    override fun observeItems(userId: UserId, shareId: ShareId): Flow<ItemTotal> {
+    override fun observeItems(userId: UserId, shareId: ShareId, eventToken: EventToken?): Flow<ItemTotal> {
         throw IllegalStateException("Not yet implemented")
     }
 

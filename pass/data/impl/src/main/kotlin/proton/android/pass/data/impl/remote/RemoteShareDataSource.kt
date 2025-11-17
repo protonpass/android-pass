@@ -37,12 +37,12 @@ interface RemoteShareDataSource {
 
     suspend fun deleteVault(userId: UserId, shareId: ShareId)
 
-    suspend fun retrieveShares(userId: UserId, eventToken: EventToken? = null): List<ShareResponse>
+    suspend fun retrieveShares(userId: UserId, eventToken: EventToken?): List<ShareResponse>
 
     suspend fun retrieveShareById(
         userId: UserId,
         shareId: ShareId,
-        eventToken: EventToken? = null
+        eventToken: EventToken?
     ): ShareResponse?
 
     suspend fun markAsPrimary(userId: UserId, shareId: ShareId)

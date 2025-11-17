@@ -21,11 +21,9 @@ package proton.android.pass.data.api.repositories
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.Serializable
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.ItemPendingEvent
-import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -40,6 +38,7 @@ import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.domain.entity.PackageInfo
+import proton.android.pass.domain.events.EventToken
 
 data class ShareItemCount(
     val activeItems: Long,
@@ -158,22 +157,12 @@ interface ItemRepository {
         url: Option<String>
     ): Item
 
-    suspend fun refreshItems(userId: UserId, share: Share): List<Item>
-
-    suspend fun refreshItems(userId: UserId, shareId: ShareId): List<Item>
-
     suspend fun downloadItemsAndObserveProgress(
         userId: UserId,
         shareId: ShareId,
+        eventToken: EventToken? = null,
         onProgress: suspend (VaultProgress) -> Unit
     ): List<ItemRevision>
-
-    suspend fun applyEvents(
-        userId: UserId,
-        addressId: AddressId,
-        shareId: ShareId,
-        events: PendingEventList
-    )
 
     suspend fun setShareItems(
         userId: UserId,

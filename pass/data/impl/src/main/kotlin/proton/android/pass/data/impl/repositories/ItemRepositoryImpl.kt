@@ -23,7 +23,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
@@ -33,7 +32,6 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.common.api.None
@@ -50,7 +48,6 @@ import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.api.usecases.UpdateItem
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.ItemPendingEvent
-import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.crypto.GetShareAndItemKey
 import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.repositories.ItemRepository
@@ -101,6 +98,7 @@ import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.domain.entity.PackageInfo
+import proton.android.pass.domain.events.EventToken
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.log.api.PassLogger
 import proton_pass_item_v1.ItemV1
@@ -759,88 +757,48 @@ class ItemRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun refreshItems(userId: UserId, share: Share): List<Item> {
-        val address = shareRepository.getAddressForShareId(userId, share.id)
-        val items = remoteItemDataSource.getItems(address.userId, share.id)
-        return decryptItems(address, share, items)
-    }
-
-    override suspend fun refreshItems(userId: UserId, shareId: ShareId): List<Item> {
-        val share = shareRepository.getById(userId, shareId)
-        return refreshItems(userId, share)
-    }
-
     override suspend fun downloadItemsAndObserveProgress(
         userId: UserId,
         shareId: ShareId,
+        eventToken: EventToken?,
         onProgress: suspend (VaultProgress) -> Unit
     ): List<ItemRevision> {
         val items = mutableListOf<ItemRevision>()
-        remoteItemDataSource.observeItems(userId, shareId)
-            .catch { error ->
-                PassLogger.w(TAG, "Error refreshing and observing items sync progress")
-                PassLogger.w(TAG, error)
-                throw error
-            }
-            .collect { itemTotal ->
-                items.addAll(itemTotal.items)
+        var sinceToken: String? = null
+        var itemsRetrieved = 0
+
+        runCatching {
+            while (true) {
+                val page = remoteItemDataSource.getItemsPage(
+                    userId = userId,
+                    shareId = shareId,
+                    sinceToken = sinceToken,
+                    eventToken = eventToken
+                )
+
+                items.addAll(page.items)
+                itemsRetrieved += page.items.size
+
                 onProgress(
                     VaultProgress(
-                        total = itemTotal.total,
-                        current = itemTotal.created
+                        total = page.total,
+                        current = itemsRetrieved
                     )
                 )
+
+                if (page.lastToken == null) {
+                    break
+                }
+
+                sinceToken = page.lastToken
             }
+        }.onFailure { error ->
+            PassLogger.w(TAG, "Error refreshing and observing items sync progress")
+            PassLogger.w(TAG, error)
+            throw error
+        }
 
         return items
-    }
-
-    override suspend fun applyEvents(
-        userId: UserId,
-        addressId: AddressId,
-        shareId: ShareId,
-        events: PendingEventList
-    ) {
-        val userAddress = requireNotNull(userAddressRepository.getAddress(userId, addressId))
-        val share = shareRepository.getById(userId, shareId)
-        val shareKeys = shareKeyRepository.getShareKeys(userId, addressId, shareId).first()
-
-        val updateAsEntities = encryptionContextProvider.withEncryptionContextSuspendable {
-            events.updatedItems.map {
-                itemResponseToEntity(
-                    userAddress = userAddress,
-                    itemRevision = it.toItemRevision().toDomain(),
-                    share = share,
-                    shareKeys = shareKeys,
-                    encryptionContext = this
-                )
-            }
-        }
-
-        if (updateAsEntities.isNotEmpty() && events.deletedItemIds.isNotEmpty()) {
-            database.inTransaction("applyEvents") {
-                localItemDataSource.upsertItems(updateAsEntities)
-                localItemDataSource.delete(
-                    userId,
-                    shareId,
-                    events.deletedItemIds.map(::ItemId)
-                )
-            }
-            return
-        }
-
-        if (updateAsEntities.isNotEmpty()) {
-            localItemDataSource.upsertItems(updateAsEntities)
-            return
-        }
-
-        if (events.deletedItemIds.isNotEmpty()) {
-            localItemDataSource.delete(
-                userId,
-                shareId,
-                events.deletedItemIds.map(::ItemId)
-            )
-        }
     }
 
     override suspend fun setShareItems(
@@ -1478,53 +1436,6 @@ class ItemRepositoryImpl @Inject constructor(
         encryptionContextProvider.withEncryptionContextSuspendable {
             entity.toDomain(this)
         }
-    }
-
-    private suspend fun decryptItems(
-        userAddress: UserAddress,
-        share: Share,
-        items: List<ItemRevision>
-    ): List<Item> {
-        val shareKeys = shareKeyRepository
-            .getShareKeys(userAddress.userId, userAddress.addressId, share.id)
-            .first()
-        val itemsEntities = encryptionContextProvider.withEncryptionContextSuspendable {
-            val encryptionContext = this
-            withContext(Dispatchers.Default) {
-                items.map { item ->
-                    async {
-                        decryptItem(
-                            encryptionContext = encryptionContext,
-                            userAddress = userAddress,
-                            share = share,
-                            item = item,
-                            shareKeys = shareKeys
-                        )
-                    }
-                }.awaitAll()
-            }
-        }
-
-        val entities = itemsEntities.map { it.second }
-        localItemDataSource.upsertItems(entities)
-
-        return itemsEntities.map { it.first }
-    }
-
-    private suspend fun decryptItem(
-        encryptionContext: EncryptionContext,
-        userAddress: UserAddress,
-        share: Share,
-        item: ItemRevision,
-        shareKeys: List<ShareKey>
-    ): Pair<Item, ItemEntity> {
-        val entity = itemResponseToEntity(
-            userAddress = userAddress,
-            itemRevision = item,
-            share = share,
-            shareKeys = shareKeys
-        )
-        return entity.toDomain(encryptionContext) to entity
     }
 
     private suspend fun itemResponseToEntity(

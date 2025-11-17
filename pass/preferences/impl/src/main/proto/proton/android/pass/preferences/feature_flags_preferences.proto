@@ -35,4 +35,5 @@ message FeatureFlagsPreferences {
   BoolFlagPrefProto rename_admin_to_manager_enabled = 27;
   BoolFlagPrefProto pass_hide_show_vault_enabled = 28;
   BoolFlagPrefProto pass_allow_no_vault = 29;
+  BoolFlagPrefProto pass_user_events_v1_enabled = 30;
 }

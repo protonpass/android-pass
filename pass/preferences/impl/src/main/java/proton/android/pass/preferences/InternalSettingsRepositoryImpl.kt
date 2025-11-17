@@ -274,6 +274,11 @@ class InternalSettingsRepositoryImpl @Inject constructor(
     override fun hasShownItemInSharedVaultWarning(): Flow<Boolean> =
         getPreference { it.hasShownItemInSharedVaultWarning }
 
+    override fun setHasShownReloadAppWarning(value: Boolean): Result<Unit> =
+        setPreference { it.setHasShownReloadAppWarning(value) }
+
+    override fun hasShownReloadAppWarning(): Flow<Boolean> = getPreference { it.hasShownReloadAppWarning }
+
     private fun setPreference(mapper: (InternalSettings.Builder) -> InternalSettings.Builder): Result<Unit> =
         runCatching {
             runBlocking(Dispatchers.IO) {

@@ -31,12 +31,18 @@ import proton.android.pass.features.attachments.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun AddAttachmentContent(modifier: Modifier = Modifier, onEvent: (AddAttachmentEvent) -> Unit) {
-    val list = listOf(
-        takeAPhoto { onEvent(AddAttachmentEvent.TakeAPhoto) },
-        chooseAPhotoOrVideo { onEvent(AddAttachmentEvent.ChooseAPhotoOrVideo) },
-        chooseAFile { onEvent(AddAttachmentEvent.ChooseAFile) }
-    ).withDividers().toPersistentList()
+fun AddAttachmentContent(
+    modifier: Modifier = Modifier,
+    displayTakeAPhoto: Boolean,
+    onEvent: (AddAttachmentEvent) -> Unit
+) {
+    val list = buildList {
+        if (displayTakeAPhoto) {
+            add(takeAPhoto { onEvent(AddAttachmentEvent.TakeAPhoto) })
+        }
+        add(chooseAPhotoOrVideo { onEvent(AddAttachmentEvent.ChooseAPhotoOrVideo) })
+        add(chooseAFile { onEvent(AddAttachmentEvent.ChooseAFile) })
+    }.withDividers().toPersistentList()
     BottomSheetItemList(
         modifier = modifier,
         items = list

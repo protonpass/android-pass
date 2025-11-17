@@ -53,5 +53,11 @@ enum class FeatureFlag(
         description = "Allow a user to remove his last vault",
         key = "PassAllowNoVault",
         isEnabledDefault = false
+    ),
+    PASS_USER_EVENTS_V1(
+        title = "User Events V1",
+        description = "Enable user events",
+        key = "PassUserEventsV1",
+        isEnabledDefault = false
     )
 }

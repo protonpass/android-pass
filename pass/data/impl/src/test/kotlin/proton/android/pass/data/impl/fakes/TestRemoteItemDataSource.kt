@@ -18,11 +18,10 @@
 
 package proton.android.pass.data.impl.fakes
 
-import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.data.api.repositories.ItemRevision
-import proton.android.pass.data.impl.remote.ItemTotal
+import proton.android.pass.data.impl.remote.ItemsPage
 import proton.android.pass.data.impl.remote.RemoteItemDataSource
 import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemAliasRequest
@@ -105,11 +104,12 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         throw IllegalStateException("Not yet implemented")
     }
 
-    override fun observeItems(
+    override suspend fun getItemsPage(
         userId: UserId,
         shareId: ShareId,
+        sinceToken: String?,
         eventToken: EventToken?
-    ): Flow<ItemTotal> {
+    ): ItemsPage {
         throw IllegalStateException("Not yet implemented")
     }
 

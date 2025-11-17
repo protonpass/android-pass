@@ -1298,7 +1298,6 @@ class HomeViewModel @Inject constructor(
     }
 
     companion object {
-        private const val ITEM_DELETED_THRESHOLD = 5
         private const val DEBOUNCE_TIMEOUT = 300L
         private const val TAG = "HomeViewModel"
         private const val MAX_CLIPBOARD_LENGTH = 2500

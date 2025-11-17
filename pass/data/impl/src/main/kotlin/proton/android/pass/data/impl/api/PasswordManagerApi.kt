@@ -149,13 +149,10 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun deleteVault(@Path("shareId") shareId: String): DeleteVaultResponse
 
     @GET("$PREFIX/share")
-    suspend fun getShares(@Query("EventToken") eventToken: String? = null): GetSharesResponse
+    suspend fun getShares(@Query("EventToken") eventToken: String?): GetSharesResponse
 
     @GET("$PREFIX/share/{shareId}")
-    suspend fun getShare(
-        @Path("shareId") shareId: String,
-        @Query("EventToken") eventToken: String? = null
-    ): GetShareResponse
+    suspend fun getShare(@Path("shareId") shareId: String, @Query("EventToken") eventToken: String?): GetShareResponse
 
     @DELETE("$PREFIX/share/{shareId}")
     suspend fun leaveShare(@Path("shareId") shareId: String): CodeOnlyResponse
@@ -177,7 +174,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("shareId") shareId: String,
         @Query("Since") sinceToken: String?,
         @Query("PageSize") pageSize: Int,
-        @Query("EventToken") eventToken: String? = null
+        @Query("EventToken") eventToken: String?
     ): GetItemsResponse
 
     @POST("$PREFIX/share/{shareId}/item")

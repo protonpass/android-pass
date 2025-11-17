@@ -88,6 +88,7 @@ import proton.android.pass.domain.Plan
 import proton.android.pass.inappupdates.api.InAppUpdatesManager
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -109,7 +110,8 @@ class LauncherViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository,
     commonLibraryVersionChecker: CommonLibraryVersionChecker,
     private val deletePasswordHistoryEntryForUser: DeletePasswordHistoryEntryForUser,
-    private val appConfig: AppConfig
+    private val appConfig: AppConfig,
+    private val settingsRepository: InternalSettingsRepository
 ) : ViewModel() {
 
     init {
@@ -125,13 +127,15 @@ class LauncherViewModel @Inject constructor(
     internal val state: StateFlow<LauncherState> = combine(
         accountManager.getAccounts().map { accounts -> getState(accounts) },
         userPreferencesRepository.getThemePreference(),
-        flowOf(appConfig.flavor.supportPayment())
-    ) { accountState, themePreference, supportPayment ->
+        flowOf(appConfig.flavor.supportPayment()),
+        settingsRepository.hasShownReloadAppWarning()
+    ) { accountState, themePreference, supportPayment, hasShownReloadAppWarning ->
         LauncherState(
             accountState = accountState,
             themePreference = themePreference,
             isNewLoginFlowEnabled = false,
-            supportPayment = supportPayment
+            supportPayment = supportPayment,
+            canShowWarningReloadApp = !hasShownReloadAppWarning
         )
     }.stateIn(
         scope = viewModelScope,
@@ -143,7 +147,8 @@ class LauncherViewModel @Inject constructor(
                 accountState = AccountState.Processing,
                 themePreference = themePreference,
                 isNewLoginFlowEnabled = false,
-                supportPayment = false
+                supportPayment = false,
+                canShowWarningReloadApp = false
             )
         }
     )
@@ -294,6 +299,10 @@ class LauncherViewModel @Inject constructor(
         }
     }
 
+    internal fun doNotDisplayReloadAppWarningDialog() {
+        settingsRepository.setHasShownReloadAppWarning(true)
+    }
+
     private fun getState(accounts: List<Account>): AccountState = when {
         accounts.isEmpty() -> {
             PassLogger.i(TAG, "Account needed: no accounts found")
@@ -352,5 +361,6 @@ internal data class LauncherState(
     val accountState: AccountState,
     val themePreference: ThemePreference,
     val isNewLoginFlowEnabled: Boolean,
-    val supportPayment: Boolean
+    val supportPayment: Boolean,
+    val canShowWarningReloadApp: Boolean
 )

@@ -45,7 +45,7 @@ fun PassApp(
     )
     PassAppContent(
         modifier = modifier
-            .background(PassTheme.colors.backgroundStrong)
+            .background(color = PassTheme.colors.backgroundStrong)
             .imePadding(),
         appUiState = appUiState,
         needsAuth = needsAuth,

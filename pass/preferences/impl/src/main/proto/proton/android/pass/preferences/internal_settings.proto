@@ -30,4 +30,5 @@ message InternalSettings {
   string persistent_uuid = 20;
   map<string, bool> is_default_vault_has_been_created = 21;
   bool has_shown_item_in_shared_vault_warning = 22;
+  bool has_shown_reload_app_warning = 23;
 }

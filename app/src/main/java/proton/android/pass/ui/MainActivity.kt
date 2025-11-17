@@ -32,6 +32,9 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.IntentSanitizer
@@ -59,6 +62,7 @@ import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.features.welcome.WelcomeScreen
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.AllowScreenshotsPreference
+import proton.android.pass.ui.internal.WarningReloadAppDialog
 import proton.android.pass.ui.launcher.AccountState.AccountNeeded
 import proton.android.pass.ui.launcher.AccountState.PrimaryExist
 import proton.android.pass.ui.launcher.AccountState.Processing
@@ -140,6 +144,8 @@ class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
 
             val isDark = isDark(state.themePreference)
             PassTheme(isDark = isDark) {
+                var showWarningReloadAppDialog by rememberSaveable { mutableStateOf(false) }
+
                 when (state.accountState) {
                     Processing,
                     StepNeeded -> ProtonCenteredProgress(Modifier.fillMaxSize())
@@ -169,13 +175,20 @@ class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
                                     is AppNavigation.ForceSignOut -> launcherViewModel.disable(it.userId)
                                     is AppNavigation.Subscription -> launcherViewModel.subscription()
                                     is AppNavigation.Upgrade -> {
-                                        if (state.supportPayment) {
-                                            launcherViewModel.upgrade()
-                                        } else {
-                                            BrowserUtils.openWebsite(
-                                                context = context,
-                                                website = PROTON_UPGRADE_URL
-                                            )
+                                        when {
+                                            state.supportPayment -> {
+                                                launcherViewModel.upgrade()
+                                            }
+                                            !state.supportPayment &&
+                                                state.canShowWarningReloadApp -> {
+                                                showWarningReloadAppDialog = true
+                                            }
+                                            else -> {
+                                                BrowserUtils.openWebsite(
+                                                    context = context,
+                                                    website = PROTON_UPGRADE_URL
+                                                )
+                                            }
                                         }
                                     }
 
@@ -192,6 +205,24 @@ class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
                                 }
                             }
                         )
+                }
+
+                if (showWarningReloadAppDialog) {
+                    WarningReloadAppDialog(
+                        onOkClick = { reminderCheck ->
+                            showWarningReloadAppDialog = false
+                            if (reminderCheck) {
+                                launcherViewModel.doNotDisplayReloadAppWarningDialog()
+                            }
+                            BrowserUtils.openWebsite(
+                                context = context,
+                                website = PROTON_UPGRADE_URL
+                            )
+                        },
+                        onCancelClick = {
+                            showWarningReloadAppDialog = false
+                        }
+                    )
                 }
             }
         }

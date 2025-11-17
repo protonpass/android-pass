@@ -90,4 +90,7 @@ interface InternalSettingsRepository {
 
     fun setHasShownItemInSharedVaultWarning(value: Boolean): Result<Unit>
     fun hasShownItemInSharedVaultWarning(): Flow<Boolean>
+
+    fun setHasShownReloadAppWarning(value: Boolean): Result<Unit>
+    fun hasShownReloadAppWarning(): Flow<Boolean>
 }

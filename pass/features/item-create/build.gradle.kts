@@ -91,6 +91,7 @@ dependencies {
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.telemetry.api)
     implementation(projects.pass.totp.api)
+    implementation(projects.pass.appConfig.api)
 
     debugImplementation(libs.showkase)
     kspDebug(libs.showkaseProcessor)
@@ -137,4 +138,5 @@ dependencies {
     androidTestImplementation(projects.pass.telemetry.fakes)
     androidTestImplementation(projects.pass.totp.fakes)
     androidTestImplementation(projects.pass.securityCenter.fakes)
+    androidTestImplementation(projects.pass.appConfig.fakes)
 }

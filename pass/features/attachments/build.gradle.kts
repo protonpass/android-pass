@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.datetime)
+    implementation(projects.pass.appConfig.api)
 
     debugImplementation(libs.androidx.compose.uiTooling)
     implementation(libs.androidx.compose.uiToolingPreview)

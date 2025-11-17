@@ -1,8 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <application>
         <meta-data
             android:name="com.oculus.supportedDevices"
             android:value="quest2|quest3|quest3s" />
+
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.AuthHelpActivity"
+            android:screenOrientation="landscape"
+            tools:replace="android:screenOrientation"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.AddAccountActivity"
+            android:screenOrientation="landscape"
+            tools:replace="android:screenOrientation"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.ChooseAddressActivity"
+            android:screenOrientation="landscape"
+            tools:replace="android:screenOrientation"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.DeviceSecretActivity"
+            android:screenOrientation="landscape"
+            tools:replace="android:screenOrientation"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.DeviceApprovalActivity"
+            android:screenOrientation="landscape"
+            tools:replace="android:screenOrientation"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.LoginActivity"
+            android:screenOrientation="landscape"
+            tools:replace="android:screenOrientation"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.LoginTwoStepActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            tools:replace="android:screenOrientation"
+            android:launchMode="singleInstance"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:host="*" />
+                <data android:scheme="@string/core_app_scheme" />
+                <data android:path="/sso/login" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.LoginSsoActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            tools:replace="android:screenOrientation"
+            android:launchMode="singleInstance"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:host="*" />
+                <data android:scheme="@string/core_app_scheme" />
+                <data android:path="/sso/login" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.SecondFactorActivity"
+            android:screenOrientation="landscape"
+            tools:replace="android:screenOrientation"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.TwoPassModeActivity"
+            android:screenOrientation="landscape"
+            tools:replace="android:screenOrientation"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.signup.SignupActivity"
+            android:screenOrientation="landscape"
+            tools:replace="android:screenOrientation"
+            android:windowSoftInputMode="adjustResize" />
+
     </application>
 </manifest>

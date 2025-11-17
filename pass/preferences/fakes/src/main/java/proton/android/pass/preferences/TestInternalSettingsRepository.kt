@@ -62,6 +62,8 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     private val hasShownItemInSharedVaultWarning = MutableStateFlow(false)
     private val isEmptyVaultHasBeenCreated = MutableStateFlow(false)
 
+    private val hasShownReloadAppWarning = MutableStateFlow(false)
+
 
     override fun setLastUnlockedTime(time: Long): Result<Unit> {
         lastUnlockedTimeFlow.update { Some(time) }
@@ -209,4 +211,10 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     }
 
     override fun hasShownItemInSharedVaultWarning(): Flow<Boolean> = hasShownItemInSharedVaultWarning
+    override fun setHasShownReloadAppWarning(value: Boolean): Result<Unit> {
+        hasShownReloadAppWarning.update { value }
+        return Result.success(Unit)
+    }
+
+    override fun hasShownReloadAppWarning(): Flow<Boolean> = hasShownReloadAppWarning
 }

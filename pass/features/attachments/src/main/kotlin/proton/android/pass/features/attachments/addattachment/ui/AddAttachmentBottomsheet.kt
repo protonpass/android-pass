@@ -23,21 +23,43 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.hilt.navigation.compose.hiltViewModel
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
+import proton.android.pass.features.attachments.addattachment.models.AddAttachmentBottomsheetViewModel
 import proton.android.pass.features.attachments.addattachment.navigation.AddAttachmentNavigation
 
 @Composable
-fun AddAttachmentBottomsheet(modifier: Modifier = Modifier, onNavigate: (AddAttachmentNavigation) -> Unit) {
+fun AddAttachmentBottomsheet(
+    modifier: Modifier = Modifier,
+    onNavigate: (AddAttachmentNavigation) -> Unit,
+    viewModel: AddAttachmentBottomsheetViewModel = hiltViewModel()
+) {
+    InternalAddAttachmentBottomsheet(
+        modifier = modifier,
+        displayTakeAPhoto = viewModel.displayTakeAPhoto(),
+        onNavigate = onNavigate
+    )
+}
+
+@Composable
+private fun InternalAddAttachmentBottomsheet(
+    modifier: Modifier = Modifier,
+    displayTakeAPhoto: Boolean,
+    onNavigate: (AddAttachmentNavigation) -> Unit
+) {
     AddAttachmentContent(
         modifier = modifier.bottomSheet(),
+        displayTakeAPhoto = displayTakeAPhoto,
         onEvent = {
             when (it) {
                 AddAttachmentEvent.ChooseAFile ->
                     onNavigate(AddAttachmentNavigation.OpenFilePicker)
+
                 AddAttachmentEvent.ChooseAPhotoOrVideo ->
                     onNavigate(AddAttachmentNavigation.OpenMediaPicker)
+
                 AddAttachmentEvent.TakeAPhoto ->
                     onNavigate(AddAttachmentNavigation.OpenCamera)
             }
@@ -51,7 +73,8 @@ fun AddAttachmentBottomsheet(modifier: Modifier = Modifier, onNavigate: (AddAtta
 fun AttachmentOptionsBottomsheetPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            AddAttachmentBottomsheet(
+            InternalAddAttachmentBottomsheet(
+                displayTakeAPhoto = true,
                 onNavigate = {}
             )
         }

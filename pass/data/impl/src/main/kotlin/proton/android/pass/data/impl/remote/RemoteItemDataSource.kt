@@ -18,7 +18,6 @@
 
 package proton.android.pass.data.impl.remote
 
-import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.impl.requests.CreateAliasRequest
@@ -71,14 +70,15 @@ interface RemoteItemDataSource {
     suspend fun getItems(
         userId: UserId,
         shareId: ShareId,
-        eventToken: EventToken? = null
+        eventToken: EventToken?
     ): List<ItemRevision>
 
-    fun observeItems(
+    suspend fun getItemsPage(
         userId: UserId,
         shareId: ShareId,
-        eventToken: EventToken? = null
-    ): Flow<ItemTotal>
+        sinceToken: String?,
+        eventToken: EventToken?
+    ): ItemsPage
 
     suspend fun sendToTrash(
         userId: UserId,
@@ -136,8 +136,8 @@ interface RemoteItemDataSource {
     ): ItemRevision
 }
 
-data class ItemTotal(
+data class ItemsPage(
     val total: Int,
-    val created: Int,
-    val items: List<ItemRevision>
+    val items: List<ItemRevision>,
+    val lastToken: String?
 )

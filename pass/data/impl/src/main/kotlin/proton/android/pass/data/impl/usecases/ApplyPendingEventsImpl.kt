@@ -65,7 +65,7 @@ import javax.inject.Inject
 private const val TRANSACTION_NAME_APPLY_PENDING_EVENTS = "ApplyPendingEvents"
 
 class ApplyPendingEventsImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
     private val database: PassDatabase,
     private val eventRepository: EventRepository,
     private val addressRepository: UserAddressRepository,

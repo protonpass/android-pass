@@ -31,6 +31,7 @@ import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.entity.NewVault
+import proton.android.pass.domain.events.EventToken
 
 class TestShareRepository : ShareRepository {
 
@@ -122,9 +123,14 @@ class TestShareRepository : ShareRepository {
         deleteVault.getOrThrow()
     }
 
-    override suspend fun refreshShares(userId: UserId): RefreshSharesResult = refreshSharesResult
+    override suspend fun refreshShares(userId: UserId, eventToken: EventToken?): RefreshSharesResult =
+        refreshSharesResult
 
-    override suspend fun refreshShare(userId: UserId, shareId: ShareId) {
+    override suspend fun refreshShare(
+        userId: UserId,
+        shareId: ShareId,
+        eventToken: EventToken?
+    ) {
         refreshShareMemory.add(RefreshSharePayload(userId, shareId))
         refreshShareResult.getOrThrow()
     }
@@ -162,14 +168,6 @@ class TestShareRepository : ShareRepository {
         shareType: ShareType,
         includeHidden: Boolean
     ): Flow<List<Share>> = observeSharesByTypeFlow.map { it.getOrThrow() }
-
-    override suspend fun applyUpdateShareEvent(
-        userId: UserId,
-        shareId: ShareId,
-        event: UpdateShareEvent
-    ) {
-
-    }
 
     override suspend fun applyPendingShareEvent(userId: UserId, event: UpdateShareEvent) {}
 

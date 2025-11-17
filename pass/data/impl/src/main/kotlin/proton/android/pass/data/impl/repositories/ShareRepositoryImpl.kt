@@ -69,6 +69,7 @@ import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.entity.NewVault
+import proton.android.pass.domain.events.EventToken
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.log.api.PassLogger
 import proton_pass_vault_v1.VaultV1
@@ -170,7 +171,7 @@ class ShareRepositoryImpl @Inject constructor(
         }
 
     @Suppress("LongMethod")
-    override suspend fun refreshShares(userId: UserId): RefreshSharesResult = coroutineScope {
+    override suspend fun refreshShares(userId: UserId, eventToken: EventToken?): RefreshSharesResult = coroutineScope {
         PassLogger.i(TAG, "Refreshing shares")
 
         val localShares = localShareDataSource.observeAllIncludingInactive(userId).first()
@@ -179,7 +180,7 @@ class ShareRepositoryImpl @Inject constructor(
         }
         val hadLocalSharesOnStart = localShares.isNotEmpty()
 
-        val remoteShares = remoteShareDataSource.retrieveShares(userId)
+        val remoteShares = remoteShareDataSource.retrieveShares(userId, eventToken)
         val remoteSharesMap = remoteShares.associateBy { remoteShareResponse ->
             ShareId(remoteShareResponse.shareId)
         }
@@ -251,8 +252,12 @@ class ShareRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun refreshShare(userId: UserId, shareId: ShareId) {
-        val shareResponse = remoteShareDataSource.retrieveShareById(userId, shareId)
+    override suspend fun refreshShare(
+        userId: UserId,
+        shareId: ShareId,
+        eventToken: EventToken?
+    ) {
+        val shareResponse = remoteShareDataSource.retrieveShareById(userId, shareId, eventToken)
             ?: run {
                 PassLogger.w(TAG, "Error fetching share from remote [shareId=${shareId.id}]")
                 throw ShareNotAvailableError()
@@ -267,28 +272,12 @@ class ShareRepositoryImpl @Inject constructor(
         localShareDataSource.upsertShares(listOf(updated))
     }
 
-    @Suppress("ReturnCount")
-    override suspend fun getById(userId: UserId, shareId: ShareId): Share {
-        // Check local
-        var shareEntity: ShareEntity? = localShareDataSource.getById(userId, shareId)
-        if (shareEntity == null) {
-            // Check remote
-            val fetchedShare = remoteShareDataSource.retrieveShareById(userId, shareId)
-            val shareResponse = fetchedShare ?: run {
-                PassLogger.w(TAG, "Error fetching share from remote [shareId=${shareId.id}]")
-                throw ShareNotAvailableError()
+    override suspend fun getById(userId: UserId, shareId: ShareId): Share =
+        localShareDataSource.getById(userId, shareId)?.let { entity ->
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                entity.toDomain(this@withEncryptionContextSuspendable)
             }
-            val storedShares: List<ShareEntity> = storeShares(
-                userId = userId,
-                shares = listOf(shareResponse)
-            )
-            shareEntity = storedShares.first()
-        }
-
-        return encryptionContextProvider.withEncryptionContextSuspendable {
-            shareEntity.toDomain(this@withEncryptionContextSuspendable)
-        }
-    }
+        } ?: throw ShareNotAvailableError()
 
     override fun observeById(userId: UserId, shareId: ShareId): Flow<Share> =
         localShareDataSource.observeById(userId, shareId)
@@ -348,16 +337,6 @@ class ShareRepositoryImpl @Inject constructor(
     override suspend fun leaveVault(userId: UserId, shareId: ShareId) {
         remoteShareDataSource.leaveVault(userId, shareId)
         localShareDataSource.deleteShares(userId, setOf(shareId))
-    }
-
-    override suspend fun applyUpdateShareEvent(
-        userId: UserId,
-        shareId: ShareId,
-        event: UpdateShareEvent
-    ) {
-        val asResponse = event.toResponse()
-
-        storeShares(userId, listOf(asResponse))
     }
 
     override suspend fun applyPendingShareEvent(userId: UserId, event: UpdateShareEvent) {

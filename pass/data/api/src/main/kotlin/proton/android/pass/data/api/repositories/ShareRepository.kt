@@ -25,6 +25,7 @@ import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.entity.NewVault
+import proton.android.pass.domain.events.EventToken
 
 @Suppress("ComplexInterface", "TooManyFunctions")
 interface ShareRepository {
@@ -33,9 +34,13 @@ interface ShareRepository {
 
     suspend fun deleteVault(userId: UserId, shareId: ShareId)
 
-    suspend fun refreshShares(userId: UserId): RefreshSharesResult
+    suspend fun refreshShares(userId: UserId, eventToken: EventToken? = null): RefreshSharesResult
 
-    suspend fun refreshShare(userId: UserId, shareId: ShareId)
+    suspend fun refreshShare(
+        userId: UserId,
+        shareId: ShareId,
+        eventToken: EventToken? = null
+    )
 
     fun observeAllShares(userId: UserId, includeHidden: Boolean): Flow<List<Share>>
 
@@ -62,12 +67,6 @@ interface ShareRepository {
     suspend fun deleteSharesForUser(userId: UserId): Boolean
 
     suspend fun leaveVault(userId: UserId, shareId: ShareId)
-
-    suspend fun applyUpdateShareEvent(
-        userId: UserId,
-        shareId: ShareId,
-        event: UpdateShareEvent
-    )
 
     suspend fun applyPendingShareEvent(userId: UserId, event: UpdateShareEvent)
 

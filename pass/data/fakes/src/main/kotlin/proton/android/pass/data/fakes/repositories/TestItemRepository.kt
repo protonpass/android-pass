@@ -22,12 +22,10 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.ItemPendingEvent
-import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.repositories.MigrateItemsResult
@@ -48,6 +46,7 @@ import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.domain.entity.PackageInfo
+import proton.android.pass.domain.events.EventToken
 import javax.inject.Inject
 
 @Suppress("NotImplementedDeclaration", "TooManyFunctions")
@@ -229,17 +228,10 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun refreshItems(userId: UserId, share: Share): List<Item> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun refreshItems(userId: UserId, shareId: ShareId): List<Item> {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun downloadItemsAndObserveProgress(
         userId: UserId,
         shareId: ShareId,
+        eventToken: EventToken?,
         onProgress: suspend (VaultProgress) -> Unit
     ): List<ItemRevision> {
         TODO("Not yet implemented")
@@ -249,15 +241,6 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         userId: UserId,
         items: Map<ShareId, List<ItemRevision>>,
         onProgress: suspend (VaultProgress) -> Unit
-    ) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun applyEvents(
-        userId: UserId,
-        addressId: AddressId,
-        shareId: ShareId,
-        events: PendingEventList
     ) {
         TODO("Not yet implemented")
     }

@@ -97,6 +97,7 @@ import proton.android.pass.data.impl.db.entities.LiveTelemetryEntity
 import proton.android.pass.data.impl.db.entities.PassDataMigrationEntity
 import proton.android.pass.data.impl.db.entities.PassEventEntity
 import proton.android.pass.data.impl.db.entities.PassOrganizationSettingsEntity
+import proton.android.pass.data.impl.db.entities.UserEventEntity
 import proton.android.pass.data.impl.db.entities.PlanEntity
 import proton.android.pass.data.impl.db.entities.SearchEntryEntity
 import proton.android.pass.data.impl.db.entities.ShareEntity
@@ -147,6 +148,7 @@ import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
         ShareEntity::class,
         ShareKeyEntity::class,
         PassEventEntity::class,
+        UserEventEntity::class,
         TelemetryEntity::class,
         SearchEntryEntity::class,
         PlanEntity::class,
@@ -215,7 +217,8 @@ import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
         AutoMigration(from = 73, to = 74),
         AutoMigration(from = 76, to = 77),
         AutoMigration(from = 77, to = 78),
-        AutoMigration(from = 78, to = 79)
+        AutoMigration(from = 78, to = 79),
+        AutoMigration(from = 79, to = 80)
     ],
     version = AppDatabase.VERSION,
     exportSchema = true
@@ -259,7 +262,7 @@ abstract class AppDatabase :
     AuthDatabase {
 
     companion object {
-        const val VERSION = 79
+        const val VERSION = 80
 
         const val DB_NAME = "db-passkey"
 

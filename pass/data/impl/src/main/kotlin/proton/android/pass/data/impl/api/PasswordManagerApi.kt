@@ -115,6 +115,7 @@ import proton.android.pass.data.impl.responses.UpdateGlobalMonitorStateResponse
 import proton.android.pass.data.impl.responses.UpdateLastUsedTimeResponse
 import proton.android.pass.data.impl.responses.UpdateMonitorAddressStateRequest
 import proton.android.pass.data.impl.responses.UserAccessResponse
+import proton.android.pass.data.impl.responses.UserSyncEventsResponse
 import proton.android.pass.data.impl.responses.aliascontacts.CreateAliasContactResponse
 import proton.android.pass.data.impl.responses.aliascontacts.GetAliasContactResponse
 import proton.android.pass.data.impl.responses.aliascontacts.GetAliasContactsResponse
@@ -335,6 +336,12 @@ interface PasswordManagerApi : BaseRetrofitApi {
     // User access
     @GET("$PREFIX/user/access")
     suspend fun userAccess(): UserAccessResponse
+
+    @GET("$PREFIX/user/sync_event")
+    suspend fun getLatestUserEventId(): LastEventIdResponse
+
+    @GET("$PREFIX/user/sync_event/{lastEventId}")
+    suspend fun getUserSyncEvents(@Path("lastEventId") lastEventId: String): UserSyncEventsResponse
 
     // Telemetry
     @POST("/data/v1/stats/multiple")

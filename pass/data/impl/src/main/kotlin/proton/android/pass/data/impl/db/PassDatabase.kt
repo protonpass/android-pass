@@ -25,6 +25,7 @@ import proton.android.pass.data.impl.db.dao.ItemsDao
 import proton.android.pass.data.impl.db.dao.LiveTelemetryDao
 import proton.android.pass.data.impl.db.dao.PassDataMigrationDao
 import proton.android.pass.data.impl.db.dao.PassEventsDao
+import proton.android.pass.data.impl.db.dao.UserEventsDao
 import proton.android.pass.data.impl.db.dao.PassOrganizationSettingsDao
 import proton.android.pass.data.impl.db.dao.PlanDao
 import proton.android.pass.data.impl.db.dao.SearchEntryDao
@@ -40,6 +41,7 @@ import proton.android.pass.data.impl.db.dao.inappmessages.InAppMessagesDao
 import proton.android.pass.data.impl.db.dao.securelinks.SecureLinksDao
 import proton.android.pass.log.api.PassLogger
 
+@Suppress("ComplexInterface", "TooManyFunctions")
 interface PassDatabase : Database {
 
     fun sharesDao(): SharesDao
@@ -49,6 +51,8 @@ interface PassDatabase : Database {
     fun shareKeysDao(): ShareKeysDao
 
     fun passEventsDao(): PassEventsDao
+
+    fun userEventsDao(): UserEventsDao
 
     fun telemetryEventsDao(): TelemetryDao
 

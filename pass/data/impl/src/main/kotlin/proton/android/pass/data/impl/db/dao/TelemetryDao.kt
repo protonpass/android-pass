@@ -46,9 +46,14 @@ abstract class TelemetryDao : BaseDao<TelemetryEntity>() {
     @Query(
         """
         DELETE FROM ${TelemetryEntity.TABLE} 
-        WHERE ${TelemetryEntity.Columns.ID} >= :min
+        WHERE ${TelemetryEntity.Columns.USER_ID} = :userId
+          AND ${TelemetryEntity.Columns.ID} >= :min
           AND ${TelemetryEntity.Columns.ID} <= :max
         """
     )
-    abstract suspend fun deleteInRange(min: Long, max: Long)
+    abstract suspend fun deleteInRange(
+        userId: String,
+        min: Long,
+        max: Long
+    )
 }

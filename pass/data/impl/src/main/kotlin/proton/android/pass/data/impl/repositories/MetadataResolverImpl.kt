@@ -37,7 +37,7 @@ import java.net.URI
 import javax.inject.Inject
 
 class MetadataResolverImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
     private val appDispatchers: AppDispatchers,
     private val fileTypeDetector: FileTypeDetector
 ) : MetadataResolver {

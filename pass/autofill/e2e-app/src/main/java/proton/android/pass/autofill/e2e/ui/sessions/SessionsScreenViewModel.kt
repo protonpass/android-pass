@@ -58,7 +58,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SessionsScreenViewModel @Inject constructor(
-    @ApplicationContext private val context: Context
+    @param:ApplicationContext private val context: Context
 ) : ViewModel() {
 
     private val isLoadingFlow: MutableStateFlow<IsLoadingState> =

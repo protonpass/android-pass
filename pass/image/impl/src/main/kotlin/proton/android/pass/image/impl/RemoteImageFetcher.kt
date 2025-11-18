@@ -47,7 +47,7 @@ import kotlin.random.Random
 @Singleton
 class RemoteImageFetcherFactory @Inject constructor(
     private val requestImage: RequestImage,
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
     private val clock: Clock
 ) : Fetcher.Factory<WebsiteUrl> {
     override fun create(

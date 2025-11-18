@@ -28,7 +28,7 @@ import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 
 class ClearClipboardScheduler @Inject constructor(
-    @ApplicationContext private val applicationContext: Context,
+    @param:ApplicationContext private val applicationContext: Context,
     private val encryptionContextProvider: EncryptionContextProvider
 ) {
 

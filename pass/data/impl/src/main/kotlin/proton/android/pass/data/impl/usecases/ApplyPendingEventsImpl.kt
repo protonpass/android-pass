@@ -18,66 +18,43 @@
 
 package proton.android.pass.data.impl.usecases
 
-import android.content.Context
-import androidx.work.ExistingWorkPolicy
-import androidx.work.WorkManager
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
-import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.ItemPendingEvent
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.errors.ShareNotAvailableError
 import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
-import proton.android.pass.data.api.repositories.RefreshSharesResult
 import proton.android.pass.data.api.repositories.ShareRepository
-import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.repositories.UpdateShareEvent
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
-import proton.android.pass.data.api.usecases.CreateVault
-import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
-import proton.android.pass.data.impl.R
+import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
+import proton.android.pass.data.api.usecases.RefreshSharesResult
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.extensions.toPendingEvent
 import proton.android.pass.data.impl.repositories.EventRepository
 import proton.android.pass.data.impl.responses.EventList
-import proton.android.pass.data.impl.work.FetchItemsWorker
-import proton.android.pass.domain.ShareColor
-import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.entity.NewVault
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
-import proton.android.pass.preferences.InternalSettingsRepository
-import proton.android.pass.preferences.FeatureFlag
 import javax.inject.Inject
 
 private const val TRANSACTION_NAME_APPLY_PENDING_EVENTS = "ApplyPendingEvents"
 
 class ApplyPendingEventsImpl @Inject constructor(
-    @param:ApplicationContext private val context: Context,
     private val database: PassDatabase,
     private val eventRepository: EventRepository,
     private val addressRepository: UserAddressRepository,
     private val itemRepository: ItemRepository,
     private val shareRepository: ShareRepository,
-    private val createVault: CreateVault,
-    private val encryptionContextProvider: EncryptionContextProvider,
-    private val workManager: WorkManager,
     private val itemSyncStatusRepository: ItemSyncStatusRepository,
-    private val canCreateVault: CanCreateVault,
-    private val internalSettingsRepository: InternalSettingsRepository,
-    private val preferencesRepository: FeatureFlagsPreferencesRepository
+    private val refreshSharesAndEnqueueSync: RefreshSharesAndEnqueueSync
 ) : ApplyPendingEvents {
 
     override suspend fun invoke(userId: UserId) {
@@ -86,77 +63,21 @@ class ApplyPendingEventsImpl @Inject constructor(
             PassLogger.i(TAG, "Sync in progress, skipping")
             return
         }
-
-        runCatching { shareRepository.refreshShares(userId) }
-            .onFailure { error ->
-                PassLogger.w(TAG, "Error refreshing shares")
-                PassLogger.w(TAG, error)
-                throw error
-            }
-            .onSuccess { refreshSharesResult ->
-                PassLogger.i(TAG, "Shares for user: $userId refreshed")
-                if (refreshSharesResult.allShareIds.isEmpty()) {
-                    handleSharesWhenEmpty(userId)
-                } else {
-                    handleExistingShares(userId, refreshSharesResult)
-                }
-            }
-    }
-
-    private suspend fun handleSharesWhenEmpty(userId: UserId) {
-        if (!canCreateVault().first()) {
-            PassLogger.i(TAG, "Received an empty list of shares, skipping default vault creation")
-
-            itemSyncStatusRepository.setMode(SyncMode.Background)
-            itemSyncStatusRepository.emit(ItemSyncStatus.SyncSuccess)
-            return
-        }
-
-        PassLogger.i(TAG, "Received an empty list of shares, creating default vault")
-
-        val allowNoVault = preferencesRepository
-            .get<Boolean>(FeatureFlag.PASS_ALLOW_NO_VAULT)
-            .firstOrNull()
-            ?: false
-        val hasDefaultVaultBeenCreated =
-            internalSettingsRepository.hasDefaultVaultBeenCreated(userId).firstOrNull() ?: false
-
-        // Create a default vault if:
-        // - the "no vault" feature flag is disabled, OR
-        // - the flag is enabled but no default vault has been created yet
-        if (!allowNoVault || !hasDefaultVaultBeenCreated) {
-            runCatching { createDefaultVault(userId) }
-                .onFailure { error ->
-                    PassLogger.w(TAG, "Error creating default vault")
-                    PassLogger.w(TAG, error)
-                    throw error
-                }
-                .onSuccess {
-                    PassLogger.i(TAG, "Default vault created")
-                    itemSyncStatusRepository.setMode(SyncMode.Background)
-                    itemSyncStatusRepository.emit(ItemSyncStatus.SyncSuccess)
-
-                    // Once the first default vault has been created, the user will be able to delete it
-                    // do not create it again at each startup
-                    internalSettingsRepository.setDefaultVaultHasBeenCreated(userId)
-                }
-        } else {
-            PassLogger.i(TAG, "Default vault has already been created in the past")
-            itemSyncStatusRepository.setMode(SyncMode.Background)
-            itemSyncStatusRepository.emit(ItemSyncStatus.SyncSuccess)
-        }
-    }
-
-    private suspend fun handleExistingShares(userId: UserId, refreshSharesResult: RefreshSharesResult) {
-        PassLogger.i(TAG, "Received a list of shares, applying pending events")
-        enqueueRefreshItems(
+        val result = refreshSharesAndEnqueueSync(
             userId = userId,
-            shares = refreshSharesResult.newShareIds,
-            wasFirstSync = refreshSharesResult.wasFirstSync
+            syncType = RefreshSharesAndEnqueueSync.SyncType.INCREMENTAL
         )
+        when (result) {
+            RefreshSharesResult.NoSharesVaultCreated,
+            RefreshSharesResult.NoSharesSkipped -> return
+            is RefreshSharesResult.SharesFound -> {
+                PassLogger.i(TAG, "Received a list of shares, applying pending events")
+                applyPendingEventsForShares(userId, result.shareIds)
+            }
+        }
+    }
 
-        val existingShareIds = refreshSharesResult.allShareIds
-            .subtract(refreshSharesResult.newShareIds)
+    private suspend fun applyPendingEventsForShares(userId: UserId, existingShareIds: Set<ShareId>) {
 
         val address = requireNotNull(
             addressRepository.getAddresses(userId).primary()
@@ -198,18 +119,6 @@ class ApplyPendingEventsImpl @Inject constructor(
             PassLogger.w(TAG, error)
             throw error
         }
-    }
-
-    private suspend fun createDefaultVault(userId: UserId) {
-        val vault = encryptionContextProvider.withEncryptionContextSuspendable {
-            NewVault(
-                name = encrypt(context.getString(R.string.vault_name)),
-                description = encrypt(context.getString(R.string.vault_description)),
-                icon = ShareIcon.Icon1,
-                color = ShareColor.Color1
-            )
-        }
-        createVault(userId, vault)
     }
 
     private suspend fun fetchItemPendingEvent(
@@ -268,32 +177,6 @@ class ApplyPendingEventsImpl @Inject constructor(
                 )
             }
         }
-    }
-
-    private fun enqueueRefreshItems(
-        userId: UserId,
-        shares: Set<ShareId>,
-        wasFirstSync: Boolean
-    ) {
-        if (shares.isEmpty()) return
-
-        val source = if (wasFirstSync) {
-            FetchItemsWorker.FetchSource.FirstSync
-        } else {
-            FetchItemsWorker.FetchSource.NewShare
-        }
-        val request = FetchItemsWorker.getRequestFor(
-            source = source,
-            userId = userId,
-            shareIds = shares.toList()
-        )
-
-        PassLogger.i(TAG, "Enqueuing FetchItemsWorker")
-        workManager.enqueueUniqueWork(
-            FetchItemsWorker.getOneTimeUniqueWorkName(userId),
-            ExistingWorkPolicy.REPLACE,
-            request
-        )
     }
 
     private fun EventList.toDomain(): PendingEventList = PendingEventList(

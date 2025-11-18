@@ -494,7 +494,7 @@ dependencies {
         overrides = mapOf("fdroid" to projects.pass.tracing.noOp)
     )
 
-    debugImplementation(libs.leakCanary)
+    // debugImplementation(libs.leakCanary)
     debugImplementation(libs.androidx.compose.uiTooling)
 
     implementation(libs.dagger.hilt.android)

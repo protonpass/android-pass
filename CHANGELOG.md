@@ -6,6 +6,17 @@
 
 ### Other
 
+## 1.35.0 (2025-11-18)
+
+### Fixes :bug:
+
+- Bug fixes and improvements.
+
+### Other
+
+- Show warning when a user creates/edits an item in a shared vault or move an item to a shared vault.
+- Updated translations.
+
 ## 1.34.2 (2025-11-13)
 
 ### Other

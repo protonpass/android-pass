@@ -27,7 +27,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class GetPublicSuffixListImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @param:ApplicationContext private val context: Context
 ) : GetPublicSuffixList {
 
     private var suffixes: Set<String> = emptySet()

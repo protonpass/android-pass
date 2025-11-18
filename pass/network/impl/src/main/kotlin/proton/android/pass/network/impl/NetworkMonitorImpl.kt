@@ -34,7 +34,7 @@ import proton.android.pass.network.api.NetworkStatus
 import javax.inject.Inject
 
 class NetworkMonitorImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @param:ApplicationContext private val context: Context
 ) : NetworkMonitor {
     override val connectivity: Flow<NetworkStatus> = callbackFlow {
         val connectivityManager = context.getSystemService<ConnectivityManager>()

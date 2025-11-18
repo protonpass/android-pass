@@ -91,7 +91,7 @@ import javax.inject.Inject
 @Suppress("LongParameterList")
 @HiltViewModel
 class CreateCustomItemViewModel @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
     private val createItem: CreateItem,
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,

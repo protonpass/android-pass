@@ -101,6 +101,7 @@ import proton.android.pass.data.api.usecases.RefreshInvites
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.RejectInvite
 import proton.android.pass.data.api.usecases.RemoveShareMember
+import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
 import proton.android.pass.data.api.usecases.RequestImage
 import proton.android.pass.data.api.usecases.ResendShareInvite
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
@@ -337,6 +338,7 @@ import proton.android.pass.data.impl.usecases.ResetAppToDefaultsImpl
 import proton.android.pass.data.impl.usecases.RestoreAllItemsImpl
 import proton.android.pass.data.impl.usecases.RestoreItemImpl
 import proton.android.pass.data.impl.usecases.SendUserAccessRequest
+import proton.android.pass.data.impl.usecases.RefreshSharesAndEnqueueSyncImpl
 import proton.android.pass.data.impl.usecases.SendUserAccessRequestImpl
 import proton.android.pass.data.impl.usecases.TransferVaultOwnershipImpl
 import proton.android.pass.data.impl.usecases.TrashItemImpl
@@ -564,6 +566,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindApplyPendingEvents(impl: ApplyPendingEventsImpl): ApplyPendingEvents
+
+    @Binds
+    abstract fun bindRefreshSharesAndEnqueueSync(impl: RefreshSharesAndEnqueueSyncImpl): RefreshSharesAndEnqueueSync
 
     @Binds
     abstract fun bindGetPublicSuffixList(impl: GetPublicSuffixListImpl): GetPublicSuffixList

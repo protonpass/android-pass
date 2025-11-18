@@ -16,21 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.repositories
+package proton.android.pass.data.api.usecases
 
-import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.domain.UserEventId
-import proton.android.pass.domain.events.UserEventList
+import proton.android.pass.domain.ShareId
 
-interface UserEventRepository {
+interface RefreshSharesAndEnqueueSync {
+    suspend operator fun invoke(userId: UserId, syncType: SyncType): RefreshSharesResult
 
-    suspend fun fetchLatestEventId(userId: UserId): UserEventId
+    enum class SyncType {
+        INCREMENTAL,
+        FULL
+    }
+}
 
-    suspend fun getUserEvents(userId: UserId, eventId: UserEventId): UserEventList
-
-    fun getLatestEventId(userId: UserId): Flow<UserEventId?>
-
-    suspend fun storeLatestEventId(userId: UserId, eventId: UserEventId)
-
+sealed interface RefreshSharesResult {
+    @JvmInline
+    value class SharesFound(val shareIds: Set<ShareId>) : RefreshSharesResult
+    data object NoSharesVaultCreated : RefreshSharesResult
+    data object NoSharesSkipped : RefreshSharesResult
 }

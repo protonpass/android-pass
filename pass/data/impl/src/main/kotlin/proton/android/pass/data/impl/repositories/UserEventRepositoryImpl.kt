@@ -33,11 +33,11 @@ class UserEventRepositoryImpl @Inject constructor(
     private val remoteUserEventDataSource: RemoteUserEventDataSource
 ) : UserEventRepository {
 
-    override suspend fun fetchLatestUserEventId(userId: UserId): UserEventId =
+    override suspend fun fetchLatestEventId(userId: UserId): UserEventId =
         remoteUserEventDataSource.fetchLatestUserEventId(userId)
 
-    override suspend fun getUserEvents(lastEventId: UserEventId, userId: UserId): UserEventList =
-        remoteUserEventDataSource.getUserEvents(userId, lastEventId).toDomain()
+    override suspend fun getUserEvents(userId: UserId, eventId: UserEventId): UserEventList =
+        remoteUserEventDataSource.getUserEvents(userId, eventId).toDomain()
 
     override fun getLatestEventId(userId: UserId): Flow<UserEventId?> =
         localUserEventDataSource.getLatestEventId(userId)

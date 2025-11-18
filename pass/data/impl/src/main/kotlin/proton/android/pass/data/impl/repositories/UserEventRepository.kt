@@ -25,9 +25,9 @@ import proton.android.pass.domain.events.UserEventList
 
 interface UserEventRepository {
 
-    suspend fun fetchLatestUserEventId(userId: UserId): UserEventId
+    suspend fun fetchLatestEventId(userId: UserId): UserEventId
 
-    suspend fun getUserEvents(lastEventId: UserEventId, userId: UserId): UserEventList
+    suspend fun getUserEvents(userId: UserId, eventId: UserEventId): UserEventList
 
     fun getLatestEventId(userId: UserId): Flow<UserEventId?>
 

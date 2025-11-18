@@ -36,7 +36,7 @@ import javax.inject.Singleton
 
 @Singleton
 class CheckIfAttachmentExistsLocallyImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
     private val accountManager: AccountManager,
     private val attachmentRepository: AttachmentRepository,
     private val appDispatchers: AppDispatchers

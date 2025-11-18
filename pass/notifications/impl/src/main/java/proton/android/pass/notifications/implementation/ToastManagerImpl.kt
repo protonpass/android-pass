@@ -25,7 +25,7 @@ import proton.android.pass.notifications.api.ToastManager
 import javax.inject.Inject
 
 class ToastManagerImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @param:ApplicationContext private val context: Context
 ) : ToastManager {
 
     override fun showToast(message: String) {

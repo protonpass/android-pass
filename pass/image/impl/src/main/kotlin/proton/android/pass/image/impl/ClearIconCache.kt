@@ -27,7 +27,7 @@ import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class ClearIconCacheImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @param:ApplicationContext private val context: Context
 ) : ClearIconCache {
     override suspend fun invoke() = withContext(Dispatchers.IO) {
         PassLogger.i(TAG, "Removing icon cache")

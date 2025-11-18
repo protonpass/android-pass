@@ -35,7 +35,7 @@ import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 
 class FileUriGeneratorImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
     private val appDispatchers: AppDispatchers
 ) : FileUriGenerator {
 

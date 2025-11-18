@@ -40,7 +40,7 @@ import kotlin.time.Duration.Companion.minutes
 import android.content.ClipboardManager as AndroidClipboardManager
 
 class ClipboardManagerImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
     preferencesRepository: UserPreferencesRepository,
     private val scheduler: ClearClipboardScheduler
 ) : ClipboardManager {

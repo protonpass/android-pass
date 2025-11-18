@@ -52,7 +52,7 @@ import javax.inject.Inject
 import kotlin.math.min
 
 class AutofillServiceManager @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
     private val getSuggestedAutofillItems: GetSuggestedAutofillItems,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val needsBiometricAuth: NeedsBiometricAuth,

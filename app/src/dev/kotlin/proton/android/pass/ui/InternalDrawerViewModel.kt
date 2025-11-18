@@ -52,7 +52,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class InternalDrawerViewModel @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
     private val appDispatchers: AppDispatchers,
     private val preferenceRepository: UserPreferencesRepository,
     private val internalSettingsRepository: InternalSettingsRepository,

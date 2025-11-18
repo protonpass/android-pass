@@ -86,7 +86,7 @@ import kotlin.math.ceil
 import kotlin.math.max
 
 class AttachmentRepositoryImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
     private val appDispatchers: AppDispatchers,
     private val remote: RemoteAttachmentsDataSource,
     private val local: LocalAttachmentsDataSource,

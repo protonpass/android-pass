@@ -36,7 +36,7 @@ import android.app.NotificationManager as AndroidNotificationManager
 import me.proton.core.presentation.R as CoreR
 
 class NotificationManagerImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
     @MainActivityAnnotation private val mainActivityClass: Class<*>,
     private val notificationManagerCompat: NotificationManagerCompat
 ) : NotificationManager {

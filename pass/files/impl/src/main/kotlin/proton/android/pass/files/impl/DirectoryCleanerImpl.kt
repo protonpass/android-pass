@@ -43,7 +43,7 @@ import java.io.File
 import javax.inject.Inject
 
 class DirectoryCleanerImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
     private val appDispatchers: AppDispatchers,
     private val checkIfUserExists: CheckIfUserExists,
     private val checkIfShareExists: CheckIfShareExists,

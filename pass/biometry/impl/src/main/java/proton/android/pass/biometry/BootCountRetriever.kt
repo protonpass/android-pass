@@ -29,7 +29,7 @@ interface BootCountRetriever {
 }
 
 class BootCountRetrieverImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @param:ApplicationContext private val context: Context
 ) : BootCountRetriever {
 
     override fun get() = runCatching {

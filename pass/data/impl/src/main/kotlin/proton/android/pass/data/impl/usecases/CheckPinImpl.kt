@@ -33,7 +33,7 @@ import javax.inject.Singleton
 
 @Singleton
 class CheckPinImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : CheckPin {
     override suspend fun invoke(pin: ByteArray): Boolean = withContext(Dispatchers.IO) {

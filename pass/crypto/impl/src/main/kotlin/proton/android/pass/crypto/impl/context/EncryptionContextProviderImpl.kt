@@ -38,7 +38,7 @@ import kotlin.experimental.xor
 
 @Singleton
 class EncryptionContextProviderImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
     private val keyStoreCrypto: KeyStoreCrypto,
     private val appDispatchers: AppDispatchers
 ) : EncryptionContextProvider {

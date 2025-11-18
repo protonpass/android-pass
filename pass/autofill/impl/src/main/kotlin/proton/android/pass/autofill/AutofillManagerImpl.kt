@@ -48,7 +48,7 @@ import android.view.autofill.AutofillManager as AndroidAutofillManager
 
 @Singleton
 class AutofillManagerImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @param:ApplicationContext private val context: Context
 ) : AutofillManager {
 
     private val autofillManager: AndroidAutofillManager? =

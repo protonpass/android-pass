@@ -39,7 +39,7 @@ interface ExtraPasswordRepository {
 
 class ExtraPasswordRepositoryImpl @Inject constructor(
     private val appDispatchers: AppDispatchers,
-    @ApplicationContext private val appContext: Context,
+    @param:ApplicationContext private val appContext: Context,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ExtraPasswordRepository {
     override suspend fun storeAccessKeyForUser(userId: UserId, extraPassword: EncryptedString) =

@@ -30,7 +30,7 @@ import proton.android.pass.data.api.usecases.GetDefaultBrowser
 import javax.inject.Inject
 
 class GetDefaultBrowserImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @param:ApplicationContext private val context: Context
 ) : GetDefaultBrowser {
 
     @Suppress("Deprecation")

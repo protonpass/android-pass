@@ -65,7 +65,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ReportViewModel @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
     savedStateHandleProvider: SavedStateHandleProvider,
     accountManager: AccountManager,
     userManager: UserManager,

@@ -39,7 +39,7 @@ import javax.inject.Inject
 class AssetLinkRepositoryImpl @Inject constructor(
     private val remoteAssetLinkDataSource: RemoteAssetLinkDataSource,
     private val localAssetLinkDataSource: LocalAssetLinkDataSource,
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
     private val clock: Clock
 ) : AssetLinkRepository {
 

@@ -31,7 +31,7 @@ import proton.android.pass.passkeys.api.PasskeySupport
 import javax.inject.Inject
 
 class CheckPasskeySupportImpl @Inject constructor(
-    @ApplicationContext private val appContext: Context,
+    @param:ApplicationContext private val appContext: Context,
     private val appConfig: AppConfig
 ) : CheckPasskeySupport {
 

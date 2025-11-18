@@ -31,7 +31,7 @@ import javax.inject.Singleton
 
 @Singleton
 class ClearPinImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @param:ApplicationContext private val context: Context
 ) : ClearPin {
     override suspend fun invoke() {
         withContext(Dispatchers.IO) {

@@ -101,6 +101,13 @@ interface ItemRepository {
         isFlagEnabled: Boolean
     )
 
+    suspend fun refreshItem(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        eventToken: EventToken
+    )
+
     fun observeItems(
         userId: UserId,
         shareSelection: ShareSelection,
@@ -147,6 +154,7 @@ interface ItemRepository {
     suspend fun trashItems(userId: UserId, items: Map<ShareId, List<ItemId>>)
     suspend fun untrashItems(userId: UserId, items: Map<ShareId, List<ItemId>>)
     suspend fun deleteItems(userId: UserId, items: Map<ShareId, List<ItemId>>)
+    suspend fun deleteLocalItems(userId: UserId, items: Map<ShareId, List<ItemId>>)
     suspend fun clearTrash(userId: UserId, includeHidden: Boolean)
     suspend fun restoreItems(userId: UserId, includeHidden: Boolean)
     suspend fun addPackageAndUrlToItem(

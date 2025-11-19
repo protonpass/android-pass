@@ -334,9 +334,12 @@ class ShareRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteSharesForUser(userId: UserId) = withContext(Dispatchers.IO) {
+    override suspend fun deleteLocalSharesForUser(userId: UserId) = withContext(Dispatchers.IO) {
         localShareDataSource.deleteSharesForUser(userId)
     }
+
+    override suspend fun deleteLocalShares(userId: UserId, list: List<ShareId>): Boolean =
+        localShareDataSource.deleteShares(userId, list.toSet())
 
     override fun observeVaultCount(userId: UserId, includeHidden: Boolean): Flow<Int> =
         localShareDataSource.observeActiveVaultCount(userId, includeHidden)

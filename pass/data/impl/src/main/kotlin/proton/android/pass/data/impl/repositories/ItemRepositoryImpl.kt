@@ -360,6 +360,39 @@ class ItemRepositoryImpl @Inject constructor(
             }
     }
 
+    override suspend fun refreshItem(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        eventToken: EventToken
+    ) {
+        val itemRevision = remoteItemDataSource.getItem(
+            userId = userId,
+            shareId = shareId,
+            itemId = itemId,
+            eventToken = eventToken
+        )
+        val share = shareRepository.getById(userId, shareId)
+        val userAddress = shareRepository.getAddressForShareId(userId, shareId)
+        val shareKeys = shareKeyRepository.getShareKeys(
+            userId = userId,
+            addressId = userAddress.addressId,
+            shareId = shareId
+        ).first()
+
+        val itemEntity = encryptionContextProvider.withEncryptionContextSuspendable {
+            itemResponseToEntity(
+                userAddress = userAddress,
+                itemRevision = itemRevision,
+                share = share,
+                shareKeys = shareKeys,
+                encryptionContext = this
+            )
+        }
+
+        localItemDataSource.upsertItem(itemEntity)
+    }
+
     override fun observeItems(
         userId: UserId,
         shareSelection: ShareSelection,
@@ -694,6 +727,14 @@ class ItemRepositoryImpl @Inject constructor(
 
             results.onFailure {
                 throw it
+            }
+        }
+    }
+
+    override suspend fun deleteLocalItems(userId: UserId, items: Map<ShareId, List<ItemId>>) {
+        database.inTransaction("deleteLocalItems") {
+            items.forEach { (shareId, list) ->
+                localItemDataSource.delete(userId, shareId, list)
             }
         }
     }

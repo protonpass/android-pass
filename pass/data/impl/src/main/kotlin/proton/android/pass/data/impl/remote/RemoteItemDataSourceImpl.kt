@@ -196,6 +196,23 @@ class RemoteItemDataSourceImpl @Inject constructor(
         }
         .valueOrThrow
 
+    override suspend fun getItem(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        eventToken: EventToken?
+    ): ItemRevision = api.get<PasswordManagerApi>(userId)
+        .invoke {
+            val response = getItem(
+                shareId = shareId.id,
+                itemId = itemId.id,
+                eventToken = eventToken?.token
+            )
+            response.items.revisions.firstOrNull()?.toDomain()
+                ?: throw IllegalStateException("Item not found in response")
+        }
+        .valueOrThrow
+
     override suspend fun sendToTrash(
         userId: UserId,
         shareId: ShareId,

@@ -96,6 +96,8 @@ import proton.android.pass.data.impl.repositories.ShareRepositoryImpl
 import proton.android.pass.data.impl.repositories.SimpleLoginRepositoryImpl
 import proton.android.pass.data.impl.repositories.TelemetryRepositoryImpl
 import proton.android.pass.data.impl.repositories.UserAccessDataRepositoryImpl
+import proton.android.pass.data.impl.repositories.UserEventRepository
+import proton.android.pass.data.impl.repositories.UserEventRepositoryImpl
 import proton.android.pass.data.impl.repositories.UserInviteRepositoryImpl
 import proton.android.pass.domain.repositories.OrganizationKeyRepository
 import javax.inject.Singleton
@@ -217,6 +219,9 @@ abstract class DataRepositoryModule {
 
     @[Binds Singleton]
     abstract fun bindShareInvitesRepository(impl: ShareInvitesRepositoryImpl): ShareInvitesRepository
+
+    @[Binds Singleton]
+    abstract fun bindUserEventRepository(impl: UserEventRepositoryImpl): UserEventRepository
 
     @[Binds Singleton]
     abstract fun bindPasswordHistoryRepository(impl: PasswordHistoryEntryRepositoryImpl): PasswordHistoryEntryRepository

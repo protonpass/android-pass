@@ -182,6 +182,13 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Query("EventToken") eventToken: String?
     ): GetItemsResponse
 
+    @GET("$PREFIX/share/{shareId}/item/{itemId}")
+    suspend fun getItem(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String,
+        @Query("EventToken") eventToken: String?
+    ): GetItemsResponse
+
     @POST("$PREFIX/share/{shareId}/item")
     suspend fun createItem(@Path("shareId") shareId: String, @Body request: CreateItemRequest): ItemRevisionResponse
 

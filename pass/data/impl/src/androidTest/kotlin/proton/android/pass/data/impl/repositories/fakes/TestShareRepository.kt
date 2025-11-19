@@ -163,7 +163,12 @@ class TestShareRepository : ShareRepository {
         vault: NewVault
     ): Share = updateVaultResult.getOrThrow()
 
-    override suspend fun deleteSharesForUser(userId: UserId): Boolean = deleteSharesResult.getOrThrow()
+    override suspend fun deleteLocalSharesForUser(userId: UserId): Boolean = deleteSharesResult.getOrThrow()
+
+    override suspend fun deleteLocalShares(
+        userId: UserId,
+        list: List<ShareId>
+    ): Boolean = true
 
     override suspend fun leaveVault(userId: UserId, shareId: ShareId) {
 

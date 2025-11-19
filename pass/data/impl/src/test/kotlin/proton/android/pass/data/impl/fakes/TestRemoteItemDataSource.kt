@@ -113,6 +113,15 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         throw IllegalStateException("Not yet implemented")
     }
 
+    override suspend fun getItem(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        eventToken: EventToken?
+    ): ItemRevision {
+        throw IllegalStateException("Not yet implemented")
+    }
+
     override suspend fun sendToTrash(
         userId: UserId,
         shareId: ShareId,

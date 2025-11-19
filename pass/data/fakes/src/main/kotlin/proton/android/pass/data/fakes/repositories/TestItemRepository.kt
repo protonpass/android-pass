@@ -143,6 +143,19 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         TODO("Not yet implemented")
     }
 
+    override suspend fun deleteLocalItems(userId: UserId, items: Map<ShareId, List<ItemId>>) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun refreshItem(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        eventToken: EventToken
+    ) {
+        TODO("Not yet implemented")
+    }
+
     override fun observeItems(
         userId: UserId,
         shareSelection: ShareSelection,

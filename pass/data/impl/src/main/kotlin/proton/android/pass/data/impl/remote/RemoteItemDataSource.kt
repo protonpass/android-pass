@@ -80,6 +80,13 @@ interface RemoteItemDataSource {
         eventToken: EventToken?
     ): ItemsPage
 
+    suspend fun getItem(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        eventToken: EventToken?
+    ): ItemRevision
+
     suspend fun sendToTrash(
         userId: UserId,
         shareId: ShareId,

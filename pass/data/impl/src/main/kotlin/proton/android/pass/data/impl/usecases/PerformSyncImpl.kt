@@ -21,13 +21,14 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withTimeout
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.RefreshGroupInvites
 import proton.android.pass.data.api.usecases.RefreshUserInvites
+import proton.android.pass.data.api.usecases.SyncUserEvents
 import proton.android.pass.data.api.usecases.simplelogin.SyncSimpleLoginPendingAliases
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
@@ -40,6 +41,7 @@ class PerformSyncImpl @Inject constructor(
     private val refreshUserInvites: RefreshUserInvites,
     private val refreshGroupInvites: RefreshGroupInvites,
     private val syncPendingAliases: SyncSimpleLoginPendingAliases,
+    private val syncUserEvents: SyncUserEvents,
     private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : PerformSync {
 
@@ -52,17 +54,23 @@ class PerformSyncImpl @Inject constructor(
     }
 
     private suspend fun performSyncWithPendingEvents(userId: UserId) = coroutineScope {
+        val isUserEventsEnabled: Boolean =
+            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_USER_EVENTS_V1).first()
         val isGroupSharingEnabled =
-            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_GROUP_SHARE)
-                .firstOrNull()
-                ?: false
-        val tasks = buildList {
-            add(async { performPendingEvents(userId) })
-            add(async { performUserRefreshInvites(userId) })
-            if (isGroupSharingEnabled) {
-                async { performGroupRefreshInvites(userId) }
+            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_GROUP_SHARE).first()
+        val tasks = if (isUserEventsEnabled) {
+            listOf(
+                async { performSyncUserEvents(userId) }
+            )
+        } else {
+            buildList {
+                add(async { performPendingEvents(userId) })
+                add(async { performUserRefreshInvites(userId) })
+                if (isGroupSharingEnabled) {
+                    async { performGroupRefreshInvites(userId) }
+                }
+                add(async { syncPendingSlAliases(userId) })
             }
-            add(async { syncPendingSlAliases(userId) })
         }
 
         val results = awaitAll(*tasks.toTypedArray())
@@ -108,6 +116,15 @@ class PerformSyncImpl @Inject constructor(
         }
     }.onFailure { error ->
         PassLogger.w(TAG, "Pending SL aliases sync for $userId error: ${error.message}")
+    }
+
+    private suspend fun performSyncUserEvents(userId: UserId): Result<Unit> = runCatching {
+        withTimeout(2.minutes) {
+            syncUserEvents(userId)
+            PassLogger.i(TAG, "User events sync for $userId finished")
+        }
+    }.onFailure { error ->
+        PassLogger.w(TAG, "User events sync for $userId error: ${error.message}")
     }
 
     private companion object {

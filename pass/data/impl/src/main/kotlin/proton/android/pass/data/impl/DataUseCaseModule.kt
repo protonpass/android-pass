@@ -101,6 +101,7 @@ import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshGroupInvites
 import proton.android.pass.data.api.usecases.RefreshUserInvites
 import proton.android.pass.data.api.usecases.RefreshPlan
+import proton.android.pass.data.api.usecases.SyncUserEvents
 import proton.android.pass.data.api.usecases.RejectInvite
 import proton.android.pass.data.api.usecases.RemoveShareMember
 import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
@@ -340,6 +341,7 @@ import proton.android.pass.data.impl.usecases.RefreshContentImpl
 import proton.android.pass.data.impl.usecases.RefreshGroupInvitesImpl
 import proton.android.pass.data.impl.usecases.RefreshUserInvitesImpl
 import proton.android.pass.data.impl.usecases.RefreshPlanImpl
+import proton.android.pass.data.impl.usecases.SyncUserEventsImpl
 import proton.android.pass.data.impl.usecases.RejectInviteImpl
 import proton.android.pass.data.impl.usecases.RemoveShareMemberImpl
 import proton.android.pass.data.impl.usecases.RequestImageImpl
@@ -709,6 +711,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindRefreshGroupInvites(impl: RefreshGroupInvitesImpl): RefreshGroupInvites
+
+    @Binds
+    abstract fun bindSyncUserEvents(impl: SyncUserEventsImpl): SyncUserEvents
 
     @Binds
     abstract fun bindPerformSync(impl: PerformSyncImpl): PerformSync

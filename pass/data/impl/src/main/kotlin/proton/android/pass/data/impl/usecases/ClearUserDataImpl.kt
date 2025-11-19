@@ -32,7 +32,7 @@ class ClearUserDataImpl @Inject constructor(
 ) : ClearUserData {
 
     override suspend fun invoke(userId: UserId) = withContext(Dispatchers.IO) {
-        shareRepository.deleteSharesForUser(userId)
+        shareRepository.deleteLocalSharesForUser(userId)
         extraPasswordRepository.removeLocalExtraPasswordForUser(userId)
     }
 

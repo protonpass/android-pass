@@ -64,7 +64,9 @@ interface ShareRepository {
         vault: NewVault
     ): Share
 
-    suspend fun deleteSharesForUser(userId: UserId): Boolean
+    suspend fun deleteLocalSharesForUser(userId: UserId): Boolean
+
+    suspend fun deleteLocalShares(userId: UserId, list: List<ShareId>): Boolean
 
     suspend fun leaveVault(userId: UserId, shareId: ShareId)
 

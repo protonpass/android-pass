@@ -22,7 +22,6 @@ import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
@@ -54,8 +53,8 @@ import proton.android.pass.PassActivityOrchestrator
 import proton.android.pass.autofill.di.UserPreferenceEntryPoint
 import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.enableEdgeToEdgeProtonPass
 import proton.android.pass.commonui.api.setSecureMode
-import proton.android.pass.composecomponents.impl.theme.SystemUIDisposableEffect
 import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.features.welcome.WelcomeScreen
 import proton.android.pass.log.api.PassLogger
@@ -101,12 +100,10 @@ class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
     override fun onCreate(savedInstanceState: Bundle?) {
         setSecureMode()
         val splashScreen = installSplashScreen()
-
         super.onCreate(savedInstanceState)
 
         deeplinkManager.onActivityCreate(this, savedInstanceState)
-
-        enableEdgeToEdge()
+        enableEdgeToEdgeProtonPass()
 
         // Register activities for result.
         launcherViewModel.register(this)
@@ -142,7 +139,6 @@ class MainActivity : FragmentActivity(), ProductMetricsDelegateOwner {
             }
 
             val isDark = isDark(state.themePreference)
-            SystemUIDisposableEffect(isDark)
             PassTheme(isDark = isDark) {
                 when (state.accountState) {
                     Processing,

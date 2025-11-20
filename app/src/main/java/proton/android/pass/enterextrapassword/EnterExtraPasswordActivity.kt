@@ -20,7 +20,6 @@ package proton.android.pass.enterextrapassword
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.getValue
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -29,7 +28,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.composecomponents.impl.theme.SystemUIDisposableEffect
+import proton.android.pass.commonui.api.enableEdgeToEdgeProtonPass
 import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -50,7 +49,7 @@ class EnterExtraPasswordActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        enableEdgeToEdge()
+        enableEdgeToEdgeProtonPass()
 
         val userId = intent.getStringExtra(EXTRA_USER_ID)?.let { UserId(it) } ?: run {
             PassLogger.w(TAG, "Missing user id")
@@ -67,7 +66,6 @@ class EnterExtraPasswordActivity : FragmentActivity() {
                     }
                 )
             val isDark = isDark(themePreference)
-            SystemUIDisposableEffect(isDark)
             PassTheme(isDark = isDark) {
                 EnterExtraPasswordApp(
                     userId = userId,

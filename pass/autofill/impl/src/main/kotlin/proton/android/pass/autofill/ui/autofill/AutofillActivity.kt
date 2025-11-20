@@ -24,7 +24,6 @@ import android.os.Bundle
 import android.view.autofill.AutofillManager
 import android.widget.RemoteViews
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
@@ -47,8 +46,8 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.enableEdgeToEdgeProtonPass
 import proton.android.pass.commonui.api.setSecureMode
-import proton.android.pass.composecomponents.impl.theme.SystemUIDisposableEffect
 import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.AllowScreenshotsPreference
@@ -85,10 +84,9 @@ class AutofillActivity : FragmentActivity() {
             }
 
             is AutofillUiState.StartAutofillUiState -> {
-                enableEdgeToEdge()
+                enableEdgeToEdgeProtonPass()
                 setContent {
                     val isDark = isDark(ThemePreference.from(autofillUiState.themePreference))
-                    SystemUIDisposableEffect(isDark)
                     PassTheme(isDark = isDark) {
                         AutofillApp(
                             autofillUiState = autofillUiState,

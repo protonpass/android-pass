@@ -20,7 +20,6 @@ package proton.android.pass.features.demoapp
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.imePadding
@@ -31,6 +30,7 @@ import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.fragment.app.FragmentActivity
 import dagger.hilt.android.AndroidEntryPoint
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.enableEdgeToEdgeProtonPass
 import proton.android.pass.features.home.HomeScreen
 
 @AndroidEntryPoint
@@ -40,8 +40,7 @@ class FeatureHomeActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        enableEdgeToEdge()
-
+        enableEdgeToEdgeProtonPass()
         setContent {
             PassTheme(isDark = isSystemInDarkTheme()) {
                 HomeScreen(

@@ -16,30 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.composecomponents.impl.theme
+package proton.android.pass.commonui.api
 
-import android.graphics.Color
+import android.os.Build
 import androidx.activity.ComponentActivity
-import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.ui.graphics.toArgb
-import proton.android.pass.commonui.api.PassPalette
 
-@Composable
-fun ComponentActivity.SystemUIDisposableEffect(isDark: Boolean) {
-    DisposableEffect(isDark) {
-        enableEdgeToEdge(
-            statusBarStyle = SystemBarStyle.auto(
-                Color.TRANSPARENT,
-                Color.TRANSPARENT
-            ) { isDark },
-            navigationBarStyle = SystemBarStyle.auto(
-                PassPalette.White90.toArgb(),
-                PassPalette.Black32.toArgb()
-            ) { isDark }
-        )
-        onDispose {}
+fun ComponentActivity.enableEdgeToEdgeProtonPass() {
+    enableEdgeToEdge()
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        window?.setNavigationBarContrastEnforced(false)
     }
 }

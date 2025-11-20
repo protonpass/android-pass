@@ -22,7 +22,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
 import androidx.fragment.app.FragmentActivity
@@ -42,8 +41,8 @@ import proton.android.pass.autofill.extensions.deserializeParcelable
 import proton.android.pass.autofill.extensions.marshalParcelable
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.enableEdgeToEdgeProtonPass
 import proton.android.pass.commonui.api.setSecureMode
-import proton.android.pass.composecomponents.impl.theme.SystemUIDisposableEffect
 import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.preferences.AllowScreenshotsPreference
 
@@ -68,12 +67,10 @@ class AutoSaveActivity : FragmentActivity() {
             return
         }
 
-        enableEdgeToEdge()
-
+        enableEdgeToEdgeProtonPass()
         setContent {
             val themePreference by viewModel.themePreferenceState.collectAsStateWithLifecycle()
             val isDark = isDark(themePreference)
-            SystemUIDisposableEffect(isDark)
             PassTheme(isDark = isDark) {
                 AutoSaveApp(
                     arguments = arguments,
@@ -99,7 +96,8 @@ class AutoSaveActivity : FragmentActivity() {
 
     private fun getArguments(): AutoSaveArguments? = intent?.extras?.let {
         AutoSaveArguments(
-            saveInformation = it.getByteArray(ARG_SAVE_INFORMATION)?.deserializeParcelable() ?: return null,
+            saveInformation = it.getByteArray(ARG_SAVE_INFORMATION)?.deserializeParcelable()
+                ?: return null,
             linkedAppInfo = it.getByteArray(ARG_LINKED_APP)?.deserializeParcelable(),
             title = it.getString(ARG_TITLE) ?: return null,
             website = it.getString(ARG_WEBSITE)
@@ -111,7 +109,8 @@ class AutoSaveActivity : FragmentActivity() {
     }
 
     private fun setSecureMode() {
-        val factory = EntryPointAccessors.fromApplication(this, UserPreferenceEntryPoint::class.java)
+        val factory =
+            EntryPointAccessors.fromApplication(this, UserPreferenceEntryPoint::class.java)
         val repository = factory.getRepository()
         val setting = runBlocking {
             repository.getAllowScreenshotsPreference()

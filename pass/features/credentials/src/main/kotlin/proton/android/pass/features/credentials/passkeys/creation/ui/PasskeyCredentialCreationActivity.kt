@@ -22,7 +22,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.credentials.CreatePublicKeyCredentialRequest
@@ -36,7 +35,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.composecomponents.impl.theme.SystemUIDisposableEffect
+import proton.android.pass.commonui.api.enableEdgeToEdgeProtonPass
 import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.features.credentials.passkeys.creation.navigation.PasskeyCredentialCreationNavEvent
 import proton.android.pass.features.credentials.passkeys.creation.presentation.PasskeyCredentialCreationEvent
@@ -86,13 +85,9 @@ internal class PasskeyCredentialCreationActivity : FragmentActivity() {
     }
 
     private fun setContent(state: PasskeyCredentialCreationState.Ready) {
-        enableEdgeToEdge()
-
+        enableEdgeToEdgeProtonPass()
         setContent {
             val isDark = isDark(state.themePreference)
-
-            SystemUIDisposableEffect(isDark)
-
             PassTheme(isDark = isDark) {
                 PasskeyCredentialCreationScreen(
                     state = state,

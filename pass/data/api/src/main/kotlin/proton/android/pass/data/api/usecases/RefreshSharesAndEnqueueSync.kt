@@ -31,8 +31,10 @@ interface RefreshSharesAndEnqueueSync {
 }
 
 sealed interface RefreshSharesResult {
-    @JvmInline
-    value class SharesFound(val shareIds: Set<ShareId>) : RefreshSharesResult
+    data class SharesFound(
+        val shareIds: Set<ShareId>,
+        val isWorkerEnqueued: Boolean
+    ) : RefreshSharesResult
     data object NoSharesVaultCreated : RefreshSharesResult
     data object NoSharesSkipped : RefreshSharesResult
 }

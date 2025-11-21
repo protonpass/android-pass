@@ -25,6 +25,7 @@ import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.AliasOptions
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.events.EventToken
 
 interface AliasRepository {
 
@@ -33,7 +34,8 @@ interface AliasRepository {
     fun observeAliasDetails(
         userId: UserId,
         shareId: ShareId,
-        itemId: ItemId
+        itemId: ItemId,
+        eventToken: EventToken? = null
     ): Flow<AliasDetails>
 
     fun updateAliasMailboxes(

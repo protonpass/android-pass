@@ -62,6 +62,7 @@ import proton.android.pass.domain.RecommendedItem
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareInvite
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.events.EventToken
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
@@ -101,10 +102,10 @@ class UserInviteRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun refreshInvites(userId: UserId): Boolean = coroutineScope {
+    override suspend fun refreshInvites(userId: UserId, eventToken: EventToken?): Boolean = coroutineScope {
         PassLogger.i(TAG, "Refresh invites started")
         val deferredRemoteInvites: Deferred<List<PendingUserInviteResponse>> =
-            async { remoteDataSource.fetchInvites(userId) }
+            async { remoteDataSource.fetchInvites(userId, eventToken) }
         deferredRemoteInvites.invokeOnCompletion {
             if (it != null) {
                 PassLogger.w(TAG, it)

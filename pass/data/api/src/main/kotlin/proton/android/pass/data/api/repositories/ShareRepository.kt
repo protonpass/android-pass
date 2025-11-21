@@ -64,6 +64,8 @@ interface ShareRepository {
         vault: NewVault
     ): Share
 
+    suspend fun recreateShare(userId: UserId, shareId: ShareId, eventToken: EventToken)
+
     suspend fun deleteLocalSharesForUser(userId: UserId): Boolean
 
     suspend fun deleteLocalShares(userId: UserId, list: List<ShareId>): Boolean

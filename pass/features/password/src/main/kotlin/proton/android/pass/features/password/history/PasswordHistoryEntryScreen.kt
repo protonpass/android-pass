@@ -48,7 +48,8 @@ internal fun PassHistoryEntry(viewModel: PasswordHistoryEntryViewModel = hiltVie
         onHideItem = viewModel::onHideItem,
         onRevealItem = viewModel::onRevealItem,
         onClearHistory = viewModel::onClearHistory,
-        onClearItem = viewModel::onClearItem
+        onClearItem = viewModel::onClearItem,
+        onCopyPassword = viewModel::onCopyPassword
     )
 }
 
@@ -67,6 +68,7 @@ val PasswordHistoryEntryIdSaver = Saver<PasswordHistoryEntryId?, Long>(
 internal fun PasswordHistoryEntryScreen(
     state: PasswordHistoryUiState,
     onBackClick: () -> Unit,
+    onCopyPassword: (PasswordHistoryEntryId) -> Unit,
     onHideItem: (PasswordHistoryEntryId) -> Unit,
     onRevealItem: (PasswordHistoryEntryId) -> Unit,
     onClearHistory: () -> Unit,
@@ -126,6 +128,7 @@ internal fun PasswordHistoryEntryScreen(
                 onBackClick = onBackClick,
                 onHideItem = onHideItem,
                 onRevealItem = onRevealItem,
+                onCopyPassword = onCopyPassword,
                 onMainThreeDotsMenuButtonClick = {
                     bottomSheetToShow = BottomSheetToShow.BottomSheetClearHistory
                     scope.launch {

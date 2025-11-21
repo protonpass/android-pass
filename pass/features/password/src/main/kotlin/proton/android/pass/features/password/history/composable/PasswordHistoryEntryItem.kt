@@ -22,10 +22,13 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
@@ -55,11 +58,12 @@ private const val PASSWORD_CONCEALED_LENGTH = 15
 fun PasswordHistoryItem(
     modifier: Modifier = Modifier,
     item: PasswordHistoryItemUiState,
+    onPasswordClick: () -> Unit,
     onThreeDotsClick: () -> Unit,
     onChangeVisibility: (Boolean) -> Unit
 ) {
     val isPasswordVisible by remember(item.value) {
-        mutableStateOf(item.value is UIHiddenState.Concealed)
+        mutableStateOf(item.value is UIHiddenState.Revealed)
     }
 
     val password by remember(item.value) {
@@ -92,10 +96,15 @@ fun PasswordHistoryItem(
                 }
             ) { pass ->
                 Text.Body1Regular(
+                    modifier = Modifier.clickable {
+                        onPasswordClick()
+                    },
                     text = pass,
                     color = PassTheme.colors.textWeak
                 )
             }
+
+            Spacer(modifier = Modifier.height(height = Spacing.small))
 
             Text.Body1Regular(
                 text = item.date,
@@ -147,7 +156,8 @@ internal fun PasswordHistoryItemShowPreview(@PreviewParameter(ThemePreviewProvid
                     passwordHistoryEntryId = PasswordHistoryEntryId(0)
                 ),
                 onThreeDotsClick = {},
-                onChangeVisibility = {}
+                onChangeVisibility = {},
+                onPasswordClick = {}
             )
         }
     }
@@ -168,7 +178,8 @@ internal fun PasswordHistoryItemHidePreview(@PreviewParameter(ThemePreviewProvid
                     passwordHistoryEntryId = PasswordHistoryEntryId(0)
                 ),
                 onThreeDotsClick = {},
-                onChangeVisibility = {}
+                onChangeVisibility = {},
+                onPasswordClick = {}
             )
         }
     }

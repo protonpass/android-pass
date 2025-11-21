@@ -83,11 +83,15 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
         val existingShareIds = repositoryResult.allShareIds - repositoryResult.newShareIds
         val (sharesToFetch, fetchSource) = getSharesAndSource(repositoryResult, syncType)
 
-        if (sharesToFetch.isNotEmpty()) {
+        val shouldEnqueueWorker = sharesToFetch.isNotEmpty()
+        if (shouldEnqueueWorker) {
             enqueueWorker(userId, sharesToFetch, fetchSource)
         }
 
-        return RefreshSharesResult.SharesFound(shareIds = existingShareIds)
+        return RefreshSharesResult.SharesFound(
+            shareIds = existingShareIds,
+            isWorkerEnqueued = shouldEnqueueWorker
+        )
     }
 
     private fun getSharesAndSource(

@@ -18,16 +18,16 @@
 
 package proton.android.pass.data.impl.usecases
 
+import androidx.lifecycle.asFlow
 import androidx.work.WorkManager
-import androidx.work.await
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.currentCoroutineContext
-import kotlinx.coroutines.isActive
+import kotlinx.coroutines.flow.mapNotNull
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
+import proton.android.pass.data.api.usecases.RefreshSharesResult
 import proton.android.pass.data.api.usecases.SyncUserEvents
 import proton.android.pass.data.impl.repositories.UserEventRepository
 import proton.android.pass.data.impl.work.FetchItemsWorker
@@ -42,13 +42,13 @@ class SyncUserEventsImpl @Inject constructor(
     private val shareRepository: ShareRepository,
     private val itemRepository: ItemRepository,
     private val refreshSharesAndEnqueueSync: RefreshSharesAndEnqueueSync,
-    private val workManager: WorkManager
+    private val workManager: WorkManager,
+    private val refreshPlan: RefreshPlan
 ) : SyncUserEvents {
 
     override suspend fun invoke(userId: UserId) {
         PassLogger.d(TAG, "Syncing user events for $userId started")
 
-        // Get latest event ID from local storage
         val localEventId: UserEventId? = userEventRepository.getLatestEventId(userId).first()
 
         if (localEventId == null) fullRefresh(userId)
@@ -70,28 +70,32 @@ class SyncUserEventsImpl @Inject constructor(
                 PassLogger.i(TAG, "Processing events for $userId")
 
                 if (eventList.planChanged) {
-                    PassLogger.d(TAG, "Plan")
+                    refreshPlan(userId)
                 }
-                if (eventList.sharesDeleted.isNotEmpty()) {
-                    val sharesToDelete = eventList.sharesDeleted.map(SyncEventShare::shareId)
-                    shareRepository.deleteLocalShares(userId, sharesToDelete)
-                }
+
                 if (eventList.sharesUpdated.isNotEmpty()) {
                     eventList.sharesUpdated.forEach { (shareId, token) ->
                         shareRepository.refreshShare(userId, shareId, token)
                     }
-                }
-                if (eventList.itemsDeleted.isNotEmpty()) {
-                    val itemsToDelete = eventList.itemsDeleted
-                        .groupBy { it.shareId }
-                        .mapValues { values -> values.value.map(SyncEventShareItem::itemId) }
-                    itemRepository.deleteLocalItems(userId, itemsToDelete)
                 }
                 if (eventList.itemsUpdated.isNotEmpty()) {
                     eventList.itemsUpdated.forEach { (shareId, itemId, token) ->
                         itemRepository.refreshItem(userId, shareId, itemId, token)
                     }
                 }
+
+                if (eventList.sharesDeleted.isNotEmpty()) {
+                    val sharesToDelete = eventList.sharesDeleted.map(SyncEventShare::shareId)
+                    shareRepository.deleteLocalShares(userId, sharesToDelete)
+                }
+
+                if (eventList.itemsDeleted.isNotEmpty()) {
+                    val itemsToDelete = eventList.itemsDeleted
+                        .groupBy { it.shareId }
+                        .mapValues { values -> values.value.map(SyncEventShareItem::itemId) }
+                    itemRepository.deleteLocalItems(userId, itemsToDelete)
+                }
+
                 if (eventList.sharesWithInvitesToCreate.isNotEmpty()) {
                     PassLogger.d(TAG, "Invites")
                 }
@@ -115,27 +119,36 @@ class SyncUserEventsImpl @Inject constructor(
     }
 
     private suspend fun fullRefresh(userId: UserId) {
-        refreshSharesAndEnqueueSync(
+        val result = refreshSharesAndEnqueueSync(
             userId = userId,
             syncType = RefreshSharesAndEnqueueSync.SyncType.FULL
         )
-        waitForFetchItemsWorker(userId)
+        when (result) {
+            is RefreshSharesResult.SharesFound -> if (result.isWorkerEnqueued) {
+                waitForFetchItemsWorker(userId)
+            }
+            RefreshSharesResult.NoSharesSkipped,
+            RefreshSharesResult.NoSharesVaultCreated -> {}
+        }
+
     }
 
-    /**
-     * Waits until the FetchItemsWorker unique work for the given user finishes.
-     */
     private suspend fun waitForFetchItemsWorker(userId: UserId) {
         val uniqueName = FetchItemsWorker.getOneTimeUniqueWorkName(userId)
-        while (currentCoroutineContext().isActive) {
-            val states = workManager.getWorkInfosForUniqueWork(uniqueName).await().map { it.state }
-            if (states.isEmpty() || states.all { it.isFinished }) return
-            delay(WORK_CHECK_DELAY_MS)
-        }
+        workManager.awaitUniqueWorkFinished(uniqueName)
+    }
+
+    suspend fun WorkManager.awaitUniqueWorkFinished(name: String) {
+        getWorkInfosForUniqueWorkLiveData(name)
+            .asFlow()
+            .mapNotNull { infos ->
+                if (infos.isEmpty()) null
+                else infos.first().state
+            }
+            .first { it.isFinished }
     }
 
     private companion object {
         private const val TAG = "SyncUserEventsImpl"
-        private const val WORK_CHECK_DELAY_MS = 200L
     }
 }

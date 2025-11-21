@@ -31,6 +31,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareInvite
+import proton.android.pass.domain.events.EventToken
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -74,7 +75,7 @@ class TestUserInviteRepository @Inject constructor() : UserInviteRepository {
 
     override fun observeInvites(userId: UserId): Flow<List<PendingInvite>> = invitesFlow
 
-    override suspend fun refreshInvites(userId: UserId) = refreshResult.getOrThrow()
+    override suspend fun refreshInvites(userId: UserId, eventToken: EventToken?) = refreshResult.getOrThrow()
 
     override suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken): ShareInvite = acceptResult.getOrThrow()
 

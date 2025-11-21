@@ -334,6 +334,20 @@ class ShareRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun recreateShare(
+        userId: UserId,
+        shareId: ShareId,
+        eventToken: EventToken
+    ) {
+        val shareResponse = remoteShareDataSource.retrieveShareById(userId, shareId, eventToken)
+            ?: run {
+                PassLogger.w(TAG, "Error fetching share from remote [shareId=${shareId.id}]")
+                throw ShareNotAvailableError()
+            }
+        localShareDataSource.deleteShares(userId, setOf(shareId))
+        storeShares(userId, listOf(shareResponse))
+    }
+
     override suspend fun deleteLocalSharesForUser(userId: UserId) = withContext(Dispatchers.IO) {
         localShareDataSource.deleteSharesForUser(userId)
     }

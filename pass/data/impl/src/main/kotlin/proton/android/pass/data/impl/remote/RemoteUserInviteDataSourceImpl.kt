@@ -40,6 +40,7 @@ import proton.android.pass.data.impl.responses.PendingUserInviteResponse
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.events.EventToken
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
@@ -97,11 +98,9 @@ class RemoteUserInviteDataSourceImpl @Inject constructor(
         results.forEach { it.getOrThrow() }
     }
 
-    override suspend fun fetchInvites(userId: UserId): List<PendingUserInviteResponse> =
+    override suspend fun fetchInvites(userId: UserId, eventToken: EventToken?): List<PendingUserInviteResponse> =
         apiProvider.get<PasswordManagerApi>(userId)
-            .invoke {
-                fetchUserInvites()
-            }
+            .invoke { fetchUserInvites(eventToken?.token) }
             .valueOrThrow
             .invites
 

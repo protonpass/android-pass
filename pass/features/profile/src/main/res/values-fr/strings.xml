@@ -13,6 +13,7 @@
   <string name="profile_option_autofill_subtitle">Vos noms d\'utilisateur et vos mots de passe sont automatiquement complétés.</string>
   <string name="profile_option_secure_links">Liens sécurisés</string>
   <string name="profile_option_alias_management">Gestion des alias</string>
+  <string name="profile_option_generated_passwords">Mots de passe générés</string>
   <string name="profile_error_biometry_failed_to_start">Impossible de lancer l\'authentification biométrique</string>
   <string name="profile_error_biometry_failed_to_authenticate">L\'authentification n\'a pas abouti.</string>
   <string name="profile_fingerprint_lock_enabled">Le verrouillage biométrique est activé.</string>

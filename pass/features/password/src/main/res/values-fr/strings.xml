@@ -29,4 +29,12 @@
   <string name="password_mode_random">Mot de passe aléatoire</string>
   <string name="password_mode_icon">Icône mode mot de passe</string>
   <string name="password_words_separator_icon">Séparateur de mots pour mot de passe</string>
+  <string name="password_history_title">Mots de passe générés</string>
+  <string name="password_history_empty">Pas d’historique</string>
+  <string name="password_history_description">Les mots de passe générés seront stockés pendant une période de 2 semaines.</string>
+  <string name="password_history_today">Aujourd\'hui, %s</string>
+  <string name="password_history_yesterday">Hier, %s</string>
+  <string name="password_history_before_yesterday">There are %d days, %s</string>
+  <string name="password_history_clear_history">Effacer l\'historique</string>
+  <string name="password_history_remove_from_history">Retirer de l’historique</string>
 </resources>

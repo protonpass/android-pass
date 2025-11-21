@@ -29,4 +29,12 @@
   <string name="password_mode_random">Tilfeldig passord</string>
   <string name="password_mode_icon">Ikon for passordmodus</string>
   <string name="password_words_separator_icon">Ordskiller for passord</string>
+  <string name="password_history_title">Genererte passord</string>
+  <string name="password_history_empty">Ingen historikk</string>
+  <string name="password_history_description">Genererte passord vil bli lagret i en periode på 2 uker.</string>
+  <string name="password_history_today">I dag, %s</string>
+  <string name="password_history_yesterday">I går, %s</string>
+  <string name="password_history_before_yesterday">Det er %d dager, %s</string>
+  <string name="password_history_clear_history">Tøm historikk</string>
+  <string name="password_history_remove_from_history">Fjern fra historikk</string>
 </resources>

@@ -13,6 +13,7 @@
   <string name="profile_option_autofill_subtitle">A felhasználónevek és jelszavak automatikus kitöltése.</string>
   <string name="profile_option_secure_links">Biztonságos hivatkozások</string>
   <string name="profile_option_alias_management">E-mail álnév kezelés</string>
+  <string name="profile_option_generated_passwords">Generated passwords</string>
   <string name="profile_error_biometry_failed_to_start">Biometrikus hitelesítés indítása nem sikerült</string>
   <string name="profile_error_biometry_failed_to_authenticate">Hitelesítés sikertelen</string>
   <string name="profile_fingerprint_lock_enabled">Ujjlenyomatos feloldás bekapcsolva</string>

@@ -29,4 +29,12 @@
   <string name="password_mode_random">Tilfældig adgangskode</string>
   <string name="password_mode_icon">Ikon for adgangskode-tilstand</string>
   <string name="password_words_separator_icon">Adgangskode-ordskiller</string>
+  <string name="password_history_title">Generated passwords</string>
+  <string name="password_history_empty">No history</string>
+  <string name="password_history_description">Generated passwords will be stored for a period of 2 weeks.</string>
+  <string name="password_history_today">Today, %s</string>
+  <string name="password_history_yesterday">Yesterday, %s</string>
+  <string name="password_history_before_yesterday">There are %d days, %s</string>
+  <string name="password_history_clear_history">Clear history</string>
+  <string name="password_history_remove_from_history">Remove from history</string>
 </resources>

@@ -13,6 +13,7 @@
   <string name="profile_option_autofill_subtitle">Tự động điền tên người dùng và mật khẩu của bạn.</string>
   <string name="profile_option_secure_links">Các liên kết bảo mật</string>
   <string name="profile_option_alias_management">Quản lý bí danh</string>
+  <string name="profile_option_generated_passwords">Generated passwords</string>
   <string name="profile_error_biometry_failed_to_start">Không thể bắt đầu xác thực sinh trắc học</string>
   <string name="profile_error_biometry_failed_to_authenticate">Xác thực thất bại</string>
   <string name="profile_fingerprint_lock_enabled">Đã bật mở khóa bằng vân tay</string>

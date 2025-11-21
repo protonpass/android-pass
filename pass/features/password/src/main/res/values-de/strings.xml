@@ -29,4 +29,12 @@
   <string name="password_mode_random">Zufälliges Passwort</string>
   <string name="password_mode_icon">Passwortmodus-Symbol</string>
   <string name="password_words_separator_icon">Passwort-Worttrennzeichen</string>
+  <string name="password_history_title">Generierte Passwörter</string>
+  <string name="password_history_empty">Kein Verlauf</string>
+  <string name="password_history_description">Generierte Passwörter werden für einen Zeitraum von 2 Wochen gespeichert.</string>
+  <string name="password_history_today">Heute, %s</string>
+  <string name="password_history_yesterday">Gestern, %s</string>
+  <string name="password_history_before_yesterday">Es sind noch %d Tage, %s</string>
+  <string name="password_history_clear_history">Verlauf leeren</string>
+  <string name="password_history_remove_from_history">Aus Verlauf entfernen</string>
 </resources>

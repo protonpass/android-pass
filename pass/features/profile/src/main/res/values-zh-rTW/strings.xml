@@ -13,6 +13,7 @@
   <string name="profile_option_autofill_subtitle">自動填入使用者名稱和密碼</string>
   <string name="profile_option_secure_links">安全加密連結</string>
   <string name="profile_option_alias_management">別名管理</string>
+  <string name="profile_option_generated_passwords">Generated passwords</string>
   <string name="profile_error_biometry_failed_to_start">無法使用生物特徵驗證</string>
   <string name="profile_error_biometry_failed_to_authenticate">驗證失敗</string>
   <string name="profile_fingerprint_lock_enabled">啟用指紋鎖</string>

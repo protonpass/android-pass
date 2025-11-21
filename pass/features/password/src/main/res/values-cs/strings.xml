@@ -33,4 +33,12 @@
   <string name="password_mode_random">Náhodné heslo</string>
   <string name="password_mode_icon">Ikona režimu hesla</string>
   <string name="password_words_separator_icon">Oddělovač slov hesla</string>
+  <string name="password_history_title">Generovaná hesla</string>
+  <string name="password_history_empty">Žádná historie</string>
+  <string name="password_history_description">Generovaná hesla budou uložena po dobu 2 týdnů.</string>
+  <string name="password_history_today">Dnes, %s</string>
+  <string name="password_history_yesterday">Včera, %s</string>
+  <string name="password_history_before_yesterday">Zbývá %d dní, %s</string>
+  <string name="password_history_clear_history">Vymazat historii</string>
+  <string name="password_history_remove_from_history">Odebrat z historie</string>
 </resources>

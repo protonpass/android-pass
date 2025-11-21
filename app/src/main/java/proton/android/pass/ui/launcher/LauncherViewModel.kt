@@ -264,7 +264,12 @@ class LauncherViewModel @Inject constructor(
                                 val previousPlan: Plan? = getUserPlan(userId).firstOrNull()
                                 repeat(maxAttempts) { attempt ->
                                     delay(baseDelay * (attempt + 1))
-                                    refreshPlan(userId)
+                                    runCatching { refreshPlan(userId) }
+                                        .onSuccess { PassLogger.i(TAG, "Plan refreshed") }
+                                        .onFailure {
+                                            PassLogger.w(TAG, "Error refreshing plan")
+                                            PassLogger.w(TAG, it)
+                                        }
                                     val currentPlan: Plan? = getUserPlan(userId).firstOrNull()
                                     if (previousPlan?.internalName != currentPlan?.internalName) {
                                         return@launch

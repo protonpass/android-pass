@@ -13,6 +13,7 @@
   <string name="profile_option_autofill_subtitle">Isi nama pengguna dan kata sandi Anda secara otomatis.</string>
   <string name="profile_option_secure_links">Tautan aman</string>
   <string name="profile_option_alias_management">Pengelolaan alias</string>
+  <string name="profile_option_generated_passwords">Kata sandi yang dihasilkan</string>
   <string name="profile_error_biometry_failed_to_start">Autentikasi biometrik tidak dapat dimulai</string>
   <string name="profile_error_biometry_failed_to_authenticate">Gagal mengautentikasi</string>
   <string name="profile_fingerprint_lock_enabled">Kunci sidik jari diaktifkan</string>

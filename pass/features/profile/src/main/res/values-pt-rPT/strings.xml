@@ -13,6 +13,7 @@
   <string name="profile_option_autofill_subtitle">Preencha automaticamente os seus nomes de utilizador e palavras-passe.</string>
   <string name="profile_option_secure_links">Ligação segura</string>
   <string name="profile_option_alias_management">Gestão de alias</string>
+  <string name="profile_option_generated_passwords">Generated passwords</string>
   <string name="profile_error_biometry_failed_to_start">Não foi possível iniciar a autenticação biométrica.</string>
   <string name="profile_error_biometry_failed_to_authenticate">Erro ao autenticar</string>
   <string name="profile_fingerprint_lock_enabled">O bloqueio por impressão digital foi ativado.</string>

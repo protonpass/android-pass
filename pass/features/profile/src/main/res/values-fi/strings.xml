@@ -13,6 +13,7 @@
   <string name="profile_option_autofill_subtitle">Täytä käyttäjätunnukset ja salasanat automaattisesti.</string>
   <string name="profile_option_secure_links">Suojatut linkit</string>
   <string name="profile_option_alias_management">Aliashallinta</string>
+  <string name="profile_option_generated_passwords">Generated passwords</string>
   <string name="profile_error_biometry_failed_to_start">Biometristä todennusta ei voitu käynnistää</string>
   <string name="profile_error_biometry_failed_to_authenticate">Todennus epäonnistui</string>
   <string name="profile_fingerprint_lock_enabled">Sormenjälkilukitus otettiin käyttöön</string>

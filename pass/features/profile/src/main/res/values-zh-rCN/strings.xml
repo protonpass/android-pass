@@ -13,6 +13,7 @@
   <string name="profile_option_autofill_subtitle">自动填写您的用户名和密码。</string>
   <string name="profile_option_secure_links">安全链接</string>
   <string name="profile_option_alias_management">别名管理</string>
+  <string name="profile_option_generated_passwords">Generated passwords</string>
   <string name="profile_error_biometry_failed_to_start">无法启动生物识别身份验证</string>
   <string name="profile_error_biometry_failed_to_authenticate">身份验证失败</string>
   <string name="profile_fingerprint_lock_enabled">启用指纹锁</string>

@@ -59,7 +59,7 @@
   <string name="item_details_snackbar_message_phone_number_copied">S\'ha copiat el número de telèfon.</string>
   <string name="item_details_snackbar_message_pin_copied">S\'ha copiat el codi PIN</string>
   <string name="item_details_snackbar_message_reddit_copied">S\'ha copiat el compte Reddit.</string>
-  <string name="item_details_snackbar_message_social_security_number_copied">S\'ha copiat el número de la seguretat social.</string>
+  <string name="item_details_snackbar_message_social_security_number_copied">S\'ha copiat el número de la Seguretat Social.</string>
   <string name="item_details_snackbar_message_state_or_province_copied">S\'ha copiat l\'estat o la província.</string>
   <string name="item_details_snackbar_message_street_address_copied">S\'ha copiat l\'adreça postal.</string>
   <string name="item_details_snackbar_message_totp_copied">TOTP copiat</string>

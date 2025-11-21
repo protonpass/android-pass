@@ -27,4 +27,12 @@
   <string name="password_mode_random">ランダムなパスワード</string>
   <string name="password_mode_icon">パスワードモードアイコン</string>
   <string name="password_words_separator_icon">パスワード区切り文字</string>
+  <string name="password_history_title">生成されたパスワード</string>
+  <string name="password_history_empty">履歴なし</string>
+  <string name="password_history_description">生成されたパスワードは2週間保存されます。</string>
+  <string name="password_history_today">本日 %s</string>
+  <string name="password_history_yesterday">昨日 %s</string>
+  <string name="password_history_before_yesterday">%d日前 %s</string>
+  <string name="password_history_clear_history">履歴を消去</string>
+  <string name="password_history_remove_from_history">履歴から削除</string>
 </resources>

@@ -18,8 +18,8 @@
   -->
 <resources>
   <string name="bottomsheet_copy_email">Скопировать эл. почту</string>
-  <string name="bottomsheet_copy_password">Скопировать пароль</string>
-  <string name="bottomsheet_copy_username">Скопировать имя пользователя</string>
+  <string name="bottomsheet_copy_password">Копировать пароль</string>
+  <string name="bottomsheet_copy_username">Копировать имя пользователя</string>
   <string name="bottomsheet_no_actions">Нет доступных действий</string>
   <string name="snackbar_item_move_to_trash_success">Элемент перемещён в Корзину</string>
   <string name="snackbar_item_move_to_trash_error">Не могу переместить в корзину</string>

@@ -29,4 +29,12 @@
   <string name="password_mode_random">Τυχαίος κωδικός πρόσβασης</string>
   <string name="password_mode_icon">Εικονίδιο λειτουργίας κωδικού πρόσβασης</string>
   <string name="password_words_separator_icon">Διαχωριστικό λέξεων κωδικού πρόσβασης</string>
+  <string name="password_history_title">Δημιουργημένοι κωδικοί πρόσβασης</string>
+  <string name="password_history_empty">Δεν υπάρχει ιστορικό</string>
+  <string name="password_history_description">Οι δημιουργημένοι κωδικοί θα αποθηκεύονται για μια περίοδο 2 εβδομάδων.</string>
+  <string name="password_history_today">Σήμερα, %s</string>
+  <string name="password_history_yesterday">Χθες, %s</string>
+  <string name="password_history_before_yesterday">Υπάρχουν %d ημέρες, %s</string>
+  <string name="password_history_clear_history">Καθαρισμός ιστορικού</string>
+  <string name="password_history_remove_from_history">Αφαίρεση από το ιστορικό</string>
 </resources>

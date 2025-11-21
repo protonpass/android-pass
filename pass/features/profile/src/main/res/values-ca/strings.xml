@@ -13,6 +13,7 @@
   <string name="profile_option_autofill_subtitle">Empleneu automàticament els vostres noms d\'usuari i contrasenyes.</string>
   <string name="profile_option_secure_links">Enllaços segurs</string>
   <string name="profile_option_alias_management">Gestió dels àlies</string>
+  <string name="profile_option_generated_passwords">Contrasenyes generades</string>
   <string name="profile_error_biometry_failed_to_start">No s\'ha pogut iniciar l\'autenticació biomètrica</string>
   <string name="profile_error_biometry_failed_to_authenticate">No s’ha pogut autenticar</string>
   <string name="profile_fingerprint_lock_enabled">S\'ha activat el bloqueig per empremta digital.</string>

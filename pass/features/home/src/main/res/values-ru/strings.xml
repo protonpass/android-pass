@@ -35,7 +35,7 @@
   <string name="home_snackbar_login_moved_to_trash">Логин перемещён в корзину</string>
   <string name="home_snackbar_alias_moved_to_trash">Псевдоним перемещен в корзину</string>
   <string name="home_snackbar_note_moved_to_trash">Заметка перемещена в корзину</string>
-  <string name="home_snackbar_credit_card_moved_to_trash">Кредитная карта перемещена в корзину</string>
+  <string name="home_snackbar_credit_card_moved_to_trash">Банковская карта перемещена в корзину</string>
   <string name="home_snackbar_identity_moved_to_trash">Личные данные перемещены в корзину</string>
   <string name="home_snackbar_custom_moved_to_trash">Пользовательский элемент перемещен в корзину</string>
   <string name="home_snackbar_move_to_trash_error">Элемент не может быть перемещен в корзину</string>
@@ -67,14 +67,14 @@
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s хочет поделиться с вами элементом.</string>
   <string name="home_item_invite_banner_subtitle">Нажмите, чтобы узнать подробности.</string>
   <!-- Common bottomsheet -->
-  <string name="bottomsheet_copy_password">Скопировать пароль</string>
-  <string name="bottomsheet_copy_username">Скопировать имя пользователя</string>
+  <string name="bottomsheet_copy_password">Копировать пароль</string>
+  <string name="bottomsheet_copy_username">Копировать имя пользователя</string>
   <string name="bottomsheet_copy_email">Копировать адрес эл. почты</string>
-  <string name="bottomsheet_copy_number">Скопировать номер</string>
-  <string name="bottomsheet_copy_cvv">Скопировать код безопасности</string>
+  <string name="bottomsheet_copy_number">Копировать номер</string>
+  <string name="bottomsheet_copy_cvv">Копировать код безопасности</string>
   <string name="bottomsheet_copy_note">Скопировать заметку</string>
   <string name="bottomsheet_edit">Редактировать</string>
-  <string name="bottomsheet_copy_full_name">Скопировать полное имя</string>
+  <string name="bottomsheet_copy_full_name">Копировать полное имя</string>
   <!-- Clipboard -->
   <string name="alias_copied_to_clipboard">Псевдоним скопирован</string>
   <string name="note_copied_to_clipboard">Заметка скопирована</string>
@@ -82,7 +82,7 @@
   <string name="email_copied_to_clipboard">Адрес электронной почты скопирован</string>
   <string name="username_copied_to_clipboard">Имя пользователя скопировано</string>
   <string name="password_copied_to_clipboard">Пароль скопирован</string>
-  <string name="credit_card_number_copied_to_clipboard">Номер кредитной карты скопирован</string>
+  <string name="credit_card_number_copied_to_clipboard">Номер банковской карты скопирован</string>
   <string name="credit_card_cvv_copied_to_clipboard">Код безопасности скопирован</string>
   <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">Содержимое было слишком длинным, в буфер обмена скопирована только часть</string>
   <!-- Vault drawer -->
@@ -129,7 +129,7 @@
   <string name="trash_success_restoring_items">Элементы восстановлены</string>
   <string name="trash_error_restoring_items">Ошибка восстановления элементов</string>
   <string name="trash_error_deleting_item">Ошибка удаления элемента</string>
-  <string name="trash_success_deleting_item">Элемент удален</string>
+  <string name="trash_success_deleting_item">Элемент удалён</string>
   <string name="trash_deleting_items_error">Ошибка при удалении элемента.</string>
   <string name="trash_deleting_items_success">Элементы удалены</string>
   <!-- Alerts -->

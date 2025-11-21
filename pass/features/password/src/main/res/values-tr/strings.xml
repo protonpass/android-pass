@@ -29,4 +29,12 @@
   <string name="password_mode_random">Rastgele parola</string>
   <string name="password_mode_icon">Parola kipi simgesi</string>
   <string name="password_words_separator_icon">Parola sözcükleri ayracı</string>
+  <string name="password_history_title">Oluşturulmuş parolalar</string>
+  <string name="password_history_empty">Geçmiş yok</string>
+  <string name="password_history_description">Oluşturulmuş parolalar 2 hafta süreyle saklanır.</string>
+  <string name="password_history_today">Bugün, %s</string>
+  <string name="password_history_yesterday">Dün, %s</string>
+  <string name="password_history_before_yesterday">%d gün var, %s</string>
+  <string name="password_history_clear_history">Geçmişi temizle</string>
+  <string name="password_history_remove_from_history">Geçmişten kaldır</string>
 </resources>

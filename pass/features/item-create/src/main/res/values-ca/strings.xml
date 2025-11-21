@@ -332,7 +332,7 @@
   <string name="update_custom_item_item_creation_success">S\'ha actualitzat l\'element personalitzat</string>
   <string name="update_custom_item_item_creation_error">No s\'ha pogut actualitzar l\'element personalitzat</string>
   <!-- Cannot create items dialog -->
-  <string name="cannot_create_items_dialog_title">No es pot crear els elements.</string>
+  <string name="cannot_create_items_dialog_title">No es poden crear elements</string>
   <string name="cannot_create_items_dialog_message">No teniu cap caixa forta amb permisos d\'editor o administrador. Creeu una a l\'aplicació principal o demaneu assistència a l\'administrador de la vostra organització.</string>
   <string name="wifi_security_type_field_label">Tipus de seguretat</string>
 </resources>

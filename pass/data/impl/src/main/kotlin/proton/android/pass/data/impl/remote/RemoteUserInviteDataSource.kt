@@ -28,6 +28,7 @@ import proton.android.pass.data.impl.responses.PendingUserInviteResponse
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.events.EventToken
 
 interface RemoteUserInviteDataSource {
     suspend fun sendInvites(
@@ -37,7 +38,7 @@ interface RemoteUserInviteDataSource {
         newUserRequests: CreateNewUserInvitesRequest
     )
 
-    suspend fun fetchInvites(userId: UserId): List<PendingUserInviteResponse>
+    suspend fun fetchInvites(userId: UserId, eventToken: EventToken?): List<PendingUserInviteResponse>
     suspend fun acceptInvite(
         userId: UserId,
         inviteToken: InviteToken,

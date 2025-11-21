@@ -19,7 +19,8 @@
 package proton.android.pass.data.api.usecases
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.events.EventToken
 
 interface RefreshUserInvites {
-    suspend operator fun invoke(userId: UserId? = null)
+    suspend operator fun invoke(userId: UserId? = null, eventToken: EventToken? = null)
 }

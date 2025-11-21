@@ -26,6 +26,7 @@ import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareInvite
+import proton.android.pass.domain.events.EventToken
 
 interface UserInviteRepository {
 
@@ -33,7 +34,7 @@ interface UserInviteRepository {
 
     fun observeInvites(userId: UserId): Flow<List<PendingInvite>>
 
-    suspend fun refreshInvites(userId: UserId): Boolean
+    suspend fun refreshInvites(userId: UserId, eventToken: EventToken?): Boolean
 
     suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken): ShareInvite
 

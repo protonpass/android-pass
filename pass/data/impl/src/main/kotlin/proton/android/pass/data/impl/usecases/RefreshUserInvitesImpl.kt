@@ -24,6 +24,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.UserInviteRepository
 import proton.android.pass.data.api.usecases.RefreshUserInvites
+import proton.android.pass.domain.events.EventToken
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.NotificationManager
 import javax.inject.Inject
@@ -34,7 +35,7 @@ class RefreshUserInvitesImpl @Inject constructor(
     private val notificationManager: NotificationManager
 ) : RefreshUserInvites {
 
-    override suspend fun invoke(userId: UserId?) {
+    override suspend fun invoke(userId: UserId?, eventToken: EventToken?) {
         PassLogger.i(TAG, "Refreshing user invites started")
 
         runCatching {
@@ -42,7 +43,7 @@ class RefreshUserInvitesImpl @Inject constructor(
                 .filterNotNull()
                 .first()
 
-            if (userInviteRepository.refreshInvites(currentUserId)) {
+            if (userInviteRepository.refreshInvites(currentUserId, eventToken)) {
                 userInviteRepository.observeInvites(currentUserId)
                     .first()
                     .lastOrNull()

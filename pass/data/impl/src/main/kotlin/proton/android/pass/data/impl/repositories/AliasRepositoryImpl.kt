@@ -43,6 +43,7 @@ import proton.android.pass.domain.AliasOptions
 import proton.android.pass.domain.AliasStats
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.events.EventToken
 import javax.inject.Inject
 
 class AliasRepositoryImpl @Inject constructor(
@@ -57,9 +58,10 @@ class AliasRepositoryImpl @Inject constructor(
     override fun observeAliasDetails(
         userId: UserId,
         shareId: ShareId,
-        itemId: ItemId
+        itemId: ItemId,
+        eventToken: EventToken?
     ): Flow<AliasDetails> = oneShot {
-        val response = remoteDataSource.fetchAliasDetails(userId, shareId, itemId)
+        val response = remoteDataSource.fetchAliasDetails(userId, shareId, itemId, eventToken)
         AliasDetails(
             email = response.email,
             canModify = response.modify,

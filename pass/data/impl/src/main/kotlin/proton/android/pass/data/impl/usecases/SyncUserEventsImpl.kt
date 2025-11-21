@@ -25,15 +25,19 @@ import kotlinx.coroutines.flow.mapNotNull
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.usecases.RefreshInvites
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
 import proton.android.pass.data.api.usecases.RefreshSharesResult
 import proton.android.pass.data.api.usecases.SyncUserEvents
+import proton.android.pass.data.api.usecases.simplelogin.SyncSimpleLoginPendingAliases
 import proton.android.pass.data.impl.repositories.UserEventRepository
 import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.domain.UserEventId
+import proton.android.pass.domain.events.SyncEventInvitesChanged
 import proton.android.pass.domain.events.SyncEventShare
 import proton.android.pass.domain.events.SyncEventShareItem
+import proton.android.pass.domain.events.UserEventList
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
@@ -43,16 +47,15 @@ class SyncUserEventsImpl @Inject constructor(
     private val itemRepository: ItemRepository,
     private val refreshSharesAndEnqueueSync: RefreshSharesAndEnqueueSync,
     private val workManager: WorkManager,
-    private val refreshPlan: RefreshPlan
-) : SyncUserEvents {
+    private val refreshPlan: RefreshPlan,
+    private val refreshInvites: RefreshInvites,
+    private val syncPendingAliases: SyncSimpleLoginPendingAliases,
+    ) : SyncUserEvents {
 
     override suspend fun invoke(userId: UserId) {
         PassLogger.d(TAG, "Syncing user events for $userId started")
 
-        val localEventId: UserEventId? = userEventRepository.getLatestEventId(userId).first()
-
-        if (localEventId == null) fullRefresh(userId)
-
+        val localEventId = getLocalEventId(userId)
         val remoteLatestEventId = userEventRepository.fetchLatestEventId(userId)
 
         if (localEventId == remoteLatestEventId) {
@@ -60,62 +63,124 @@ class SyncUserEventsImpl @Inject constructor(
             return
         }
 
-        var currentEventId = localEventId ?: remoteLatestEventId
+        processUserEvents(userId, localEventId ?: remoteLatestEventId)
+
+        PassLogger.i(TAG, "Syncing user events for $userId finished")
+    }
+
+    private suspend fun getLocalEventId(userId: UserId): UserEventId? {
+        val localEventId = userEventRepository.getLatestEventId(userId).first()
+        if (localEventId == null) fullRefresh(userId)
+        return localEventId
+    }
+
+    private suspend fun processUserEvents(userId: UserId, initialEventId: UserEventId) {
+        var currentEventId = initialEventId
 
         do {
             val eventList = userEventRepository.getUserEvents(userId, currentEventId)
             if (eventList.fullRefresh) {
                 fullRefresh(userId)
             } else {
-                PassLogger.i(TAG, "Processing events for $userId")
-
-                if (eventList.planChanged) {
-                    refreshPlan(userId)
-                }
-
-                if (eventList.sharesUpdated.isNotEmpty()) {
-                    eventList.sharesUpdated.forEach { (shareId, token) ->
-                        shareRepository.refreshShare(userId, shareId, token)
-                    }
-                }
-                if (eventList.itemsUpdated.isNotEmpty()) {
-                    eventList.itemsUpdated.forEach { (shareId, itemId, token) ->
-                        itemRepository.refreshItem(userId, shareId, itemId, token)
-                    }
-                }
-
-                if (eventList.sharesDeleted.isNotEmpty()) {
-                    val sharesToDelete = eventList.sharesDeleted.map(SyncEventShare::shareId)
-                    shareRepository.deleteLocalShares(userId, sharesToDelete)
-                }
-
-                if (eventList.itemsDeleted.isNotEmpty()) {
-                    val itemsToDelete = eventList.itemsDeleted
-                        .groupBy { it.shareId }
-                        .mapValues { values -> values.value.map(SyncEventShareItem::itemId) }
-                    itemRepository.deleteLocalItems(userId, itemsToDelete)
-                }
-
-                if (eventList.sharesWithInvitesToCreate.isNotEmpty()) {
-                    PassLogger.d(TAG, "Invites")
-                }
-                if (eventList.aliasNoteChanged.isNotEmpty()) {
-                    PassLogger.d(TAG, "Note")
-                }
-                if (eventList.groupInvitesChanged != null) {
-                    PassLogger.d(TAG, "Group")
-                }
-                if (eventList.invitesChanged != null) {
-                    PassLogger.d(TAG, "Invites")
-                }
+                processIncrementalEvents(userId, eventList)
             }
 
             userEventRepository.storeLatestEventId(userId, eventList.lastEventId)
             PassLogger.i(TAG, "Fetched user events, eventsPending: ${eventList.eventsPending}")
             currentEventId = eventList.lastEventId
         } while (eventList.eventsPending)
+    }
 
-        PassLogger.i(TAG, "Syncing user events for $userId finished")
+    private suspend fun processIncrementalEvents(userId: UserId, eventList: UserEventList) {
+        PassLogger.i(TAG, "Processing events for $userId")
+
+        if (eventList.planChanged) {
+            refreshPlan(userId)
+        }
+
+        processSharesCreated(userId, eventList.sharesCreated)
+        processSharesUpdated(userId, eventList.sharesUpdated)
+        processSharesDeleted(userId, eventList.sharesDeleted)
+        processItemsUpdated(userId, eventList.itemsUpdated)
+        processItemsDeleted(userId, eventList.itemsDeleted)
+        processInvitesChanged(userId, eventList.invitesChanged)
+        processGroupInvitesChanged(userId, eventList.groupInvitesChanged)
+        processPendingAliasToCreateChanged(userId, eventList.pendingAliasToCreateChanged)
+        processNewUserInvitesChanged(userId, eventList.sharesWithInvitesToCreate)
+    }
+
+    private suspend fun processSharesCreated(userId: UserId, sharesCreated: List<SyncEventShare>) {
+        sharesCreated.forEach { (shareId, token) ->
+            shareRepository.recreateShare(userId, shareId, token)
+        }
+    }
+
+    private suspend fun processSharesUpdated(userId: UserId, sharesUpdated: List<SyncEventShare>) {
+        sharesUpdated.forEach { (shareId, token) ->
+            shareRepository.refreshShare(userId, shareId, token)
+        }
+    }
+
+    private suspend fun processItemsUpdated(
+        userId: UserId,
+        itemsUpdated: List<SyncEventShareItem>
+    ) {
+        itemsUpdated.forEach { (shareId, itemId, token) ->
+            itemRepository.refreshItem(userId, shareId, itemId, token)
+        }
+    }
+
+    private suspend fun processSharesDeleted(userId: UserId, sharesDeleted: List<SyncEventShare>) {
+        if (sharesDeleted.isNotEmpty()) {
+            val sharesToDelete = sharesDeleted.map(SyncEventShare::shareId)
+            shareRepository.deleteLocalShares(userId, sharesToDelete)
+        }
+    }
+
+    private suspend fun processItemsDeleted(
+        userId: UserId,
+        itemsDeleted: List<SyncEventShareItem>
+    ) {
+        if (itemsDeleted.isNotEmpty()) {
+            val itemsToDelete = itemsDeleted
+                .groupBy { it.shareId }
+                .mapValues { values -> values.value.map(SyncEventShareItem::itemId) }
+            itemRepository.deleteLocalItems(userId, itemsToDelete)
+        }
+    }
+
+    private suspend fun processInvitesChanged(
+        userId: UserId,
+        invitesChanged: SyncEventInvitesChanged?
+    ) {
+        invitesChanged?.let { refreshInvites(userId, it.eventToken) }
+    }
+
+    private fun processGroupInvitesChanged(
+        userId: UserId,
+        invitesChanged: SyncEventInvitesChanged?
+    ) {
+        invitesChanged?.let {
+            // refresh group invites
+        }
+    }
+
+    private suspend fun processPendingAliasToCreateChanged(
+        userId: UserId,
+        invitesChanged: SyncEventInvitesChanged?
+    ) {
+        invitesChanged?.let { syncPendingAliases(userId) }
+    }
+
+    private fun processNewUserInvitesChanged(
+        userId: UserId,
+        sharesWithInvitesToCreate: List<SyncEventShare>
+    ) {
+        if (sharesWithInvitesToCreate.isNotEmpty()) {
+            sharesWithInvitesToCreate.forEach { (shareId, token) ->
+
+            }
+        }
     }
 
     private suspend fun fullRefresh(userId: UserId) {
@@ -127,10 +192,10 @@ class SyncUserEventsImpl @Inject constructor(
             is RefreshSharesResult.SharesFound -> if (result.isWorkerEnqueued) {
                 waitForFetchItemsWorker(userId)
             }
-            RefreshSharesResult.NoSharesSkipped,
-            RefreshSharesResult.NoSharesVaultCreated -> {}
-        }
 
+            RefreshSharesResult.NoSharesSkipped,
+            RefreshSharesResult.NoSharesVaultCreated -> Unit
+        }
     }
 
     private suspend fun waitForFetchItemsWorker(userId: UserId) {

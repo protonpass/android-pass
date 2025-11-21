@@ -29,11 +29,9 @@ import proton.android.pass.data.impl.requests.ChangeAliasStatusRequest
 import proton.android.pass.data.impl.requests.ChangeNotificationStatusRequest
 import proton.android.pass.data.impl.requests.CheckAddressesCanBeInvitedRequest
 import proton.android.pass.data.impl.requests.CreateAliasRequest
-import proton.android.pass.data.impl.requests.CreateInviteRequest
 import proton.android.pass.data.impl.requests.CreateInvitesRequest
 import proton.android.pass.data.impl.requests.CreateItemAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemRequest
-import proton.android.pass.data.impl.requests.CreateNewUserInviteRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest
 import proton.android.pass.data.impl.requests.CreateSecureLinkRequest
 import proton.android.pass.data.impl.requests.CreateVaultRequest
@@ -264,7 +262,11 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun getAliasOptions(@Path("shareId") shareId: String): GetAliasOptionsResponse
 
     @GET("$PREFIX/share/{shareId}/alias/{itemId}")
-    suspend fun getAliasDetails(@Path("shareId") shareId: String, @Path("itemId") itemId: String): AliasDetailsResponse
+    suspend fun getAliasDetails(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String,
+        @Query("EventToken") eventToken: String?
+    ): AliasDetailsResponse
 
     @POST("$PREFIX/share/{shareId}/alias/{itemId}/mailbox")
     suspend fun updateAliasMailboxes(
@@ -364,17 +366,8 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun sendItemReadEvent(@Path("shareId") shareId: String, @Body request: ItemReadRequest): CodeOnlyResponse
 
     // Sharing
-    @POST("$PREFIX/share/{shareId}/invite")
-    suspend fun inviteUser(@Path("shareId") shareId: String, @Body request: CreateInviteRequest): CodeOnlyResponse
-
     @POST("$PREFIX/share/{shareId}/invite/batch")
     suspend fun inviteUsers(@Path("shareId") shareId: String, @Body request: CreateInvitesRequest): CodeOnlyResponse
-
-    @POST("$PREFIX/share/{shareId}/invite/new_user")
-    suspend fun inviteNewUser(
-        @Path("shareId") shareId: String,
-        @Body request: CreateNewUserInviteRequest
-    ): CodeOnlyResponse
 
     @POST("$PREFIX/share/{shareId}/invite/new_user/batch")
     suspend fun inviteNewUsers(
@@ -383,7 +376,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
     ): CodeOnlyResponse
 
     @GET("$PREFIX/invite")
-    suspend fun fetchUserInvites(): PendingUserInvitesResponse
+    suspend fun fetchUserInvites(@Query("EventToken") eventToken: String?): PendingUserInvitesResponse
 
     @POST("$PREFIX/invite/{inviteId}")
     suspend fun acceptInvite(@Path("inviteId") inviteId: String, @Body request: AcceptInviteRequest): GetShareResponse

@@ -27,6 +27,7 @@ import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.AliasOptions
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.events.EventToken
 import javax.inject.Inject
 
 @Suppress("NotImplementedDeclaration")
@@ -39,7 +40,8 @@ class FakeAliasRepository @Inject constructor() : AliasRepository {
     override fun observeAliasDetails(
         userId: UserId,
         shareId: ShareId,
-        itemId: ItemId
+        itemId: ItemId,
+        eventToken: EventToken?
     ): Flow<AliasDetails> {
         TODO("Not yet implemented")
     }

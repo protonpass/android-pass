@@ -48,7 +48,7 @@
   <string name="bottomsheet_modify_alias_title">Изменить псевдоним</string>
   <string name="bottomsheet_custom_field_type_text">Текст</string>
   <string name="bottomsheet_custom_field_type_hidden">Скрыто</string>
-  <string name="bottomsheet_custom_field_type_totp">Секретный ключ двухфакторной аутентификации (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_totp">Секретный ключ 2FA (TOTP)</string>
   <string name="bottomsheet_custom_field_type_date">Дата</string>
   <string name="bottomsheet_custom_field_option_edit">Изменить имя</string>
   <string name="bottomsheet_custom_field_option_remove">Удалить поле</string>

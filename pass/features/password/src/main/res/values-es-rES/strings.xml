@@ -29,4 +29,12 @@
   <string name="password_mode_random">Contraseña aleatoria</string>
   <string name="password_mode_icon">Icono de modo de contraseña</string>
   <string name="password_words_separator_icon">Separador de palabras de contraseña</string>
+  <string name="password_history_title">Contraseñas generadas</string>
+  <string name="password_history_empty">Sin historial</string>
+  <string name="password_history_description">Las contraseñas generadas se almacenarán durante un periodo de 2 semanas.</string>
+  <string name="password_history_today">Hoy, %s</string>
+  <string name="password_history_yesterday">Ayer, %s</string>
+  <string name="password_history_before_yesterday">Hace %d días, %s</string>
+  <string name="password_history_clear_history">Borrar historial</string>
+  <string name="password_history_remove_from_history">Eliminar del historial</string>
 </resources>

@@ -70,7 +70,7 @@
   <string name="simple_login_sync_domain_select_description_none">Без дамена</string>
   <string name="simple_login_sync_domain_select_description_custom">Ваш дамен</string>
   <string name="simple_login_sync_domain_select_description_free">Публічны дамен</string>
-  <string name="simple_login_sync_domain_select_description_premium">Прэміяльны дамен</string>
+  <string name="simple_login_sync_domain_select_description_premium">прэміяльны дамен</string>
   <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">Адбылася памылка падчас атрымання даменаў псеўданіма SL</string>
   <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">Адбылася памылка падчас абнаўлення дамена псеўданіма SL</string>
   <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">Дамен псеўданіма SL паспяхова абноўлены</string>

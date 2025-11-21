@@ -29,4 +29,12 @@
   <string name="password_mode_random">Slumpmässigt lösenord</string>
   <string name="password_mode_icon">Ikon för “Lösenordsläge“</string>
   <string name="password_words_separator_icon">Lösenordsavgränsare</string>
+  <string name="password_history_title">Genererade lösenord</string>
+  <string name="password_history_empty">Ingen historik</string>
+  <string name="password_history_description">Genererade lösenord kommer att lagras under en period av 2 veckor.</string>
+  <string name="password_history_today">Idag, %s</string>
+  <string name="password_history_yesterday">Igår, %s</string>
+  <string name="password_history_before_yesterday">There are %d days, %s</string>
+  <string name="password_history_clear_history">Rensa historik</string>
+  <string name="password_history_remove_from_history">Ta bort från historik</string>
 </resources>

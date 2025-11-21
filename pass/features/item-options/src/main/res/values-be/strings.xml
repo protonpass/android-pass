@@ -17,7 +17,7 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="item_options_alias_trash_dialog_title">Перамясціць у Сметніцу</string>
+  <string name="item_options_alias_trash_dialog_title">Перамясціць у сметніцу</string>
   <string name="item_options_alias_trash_dialog_message">Псеўданімы перамешчаныя ў Сметніцу працягнуць перасылаць лісты. Спачатку адключыце псеўданім, калі хочаце спыніць атрыманне лістоў на гэты адрас.</string>
   <string name="item_options_alias_trash_dialog_checkbox_text">Больш не нагадваць</string>
   <string name="item_options_alias_trash_dialog_button_text_disable">Адключыць</string>

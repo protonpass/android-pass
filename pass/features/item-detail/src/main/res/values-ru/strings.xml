@@ -51,7 +51,7 @@
   <string name="field_username_or_email">Имя пользователя или адрес электронной почты</string>
   <string name="field_password">Пароль</string>
   <string name="websites_section_title">Веб-сайты</string>
-  <string name="totp_section_title">Токен 2ФА (TOTP)</string>
+  <string name="totp_section_title">Токен 2FA (TOTP)</string>
   <string name="action_reveal_password">Показать пароль</string>
   <string name="action_conceal_password">Скрыть пароль</string>
   <string name="action_reveal_number">Показать номер</string>
@@ -64,7 +64,7 @@
   <string name="custom_field_hidden_icon_description">Скрытое настраиваемое поле</string>
   <string name="custom_field_totp_icon_description">Настраиваемое поле 2FA</string>
   <!-- Credit card details -->
-  <string name="credit_card_cardholder_field_name">Имя на карте</string>
+  <string name="credit_card_cardholder_field_name">Имя держателя карты</string>
   <string name="credit_card_number_field_name">Номер карты</string>
   <string name="credit_card_cvv_field_name">Код безопасности</string>
   <string name="credit_card_pin_field_name">PIN-код</string>

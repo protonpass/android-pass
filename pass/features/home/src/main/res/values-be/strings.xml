@@ -156,10 +156,10 @@
     <item quantity="other">Перамясціць %d элементаў у сметніцу?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">Вы ўпэўнены, што хочаце перамясціць элемент у сметніцу?</item>
-    <item quantity="few">Вы ўпэўнены, што хочаце перамясціць %d элементы ў сметніцу?</item>
-    <item quantity="many">Вы ўпэўнены, што хочаце перамясціць %d элементаў у сметніцу?</item>
-    <item quantity="other">Вы ўпэўнены, што хочаце перамясціць %d элементаў у сметніцу?</item>
+    <item quantity="one">Вы сапраўды хочаце перамясціць элемент у сметніцу?</item>
+    <item quantity="few">Вы сапраўды хочаце перамясціць %d элементы ў сметніцу?</item>
+    <item quantity="many">Вы сапраўды хочаце перамясціць %d элементаў у сметніцу?</item>
+    <item quantity="other">Вы сапраўды хочаце перамясціць %d элементаў у сметніцу?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="one">Незваротна выдаліць %d элемент?</item>

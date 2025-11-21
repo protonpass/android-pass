@@ -29,4 +29,12 @@
   <string name="password_mode_random">Contrasenya aleatòria</string>
   <string name="password_mode_icon">Icona de mode de contrasenya</string>
   <string name="password_words_separator_icon">Separador de paraules de contrasenya</string>
+  <string name="password_history_title">Contrasenyes generades</string>
+  <string name="password_history_empty">Sense historial</string>
+  <string name="password_history_description">Les contrasenyes generades s\'emmagatzemaran durant un període de 2 setmanes.</string>
+  <string name="password_history_today">Avui, %s</string>
+  <string name="password_history_yesterday">Ahir, %s</string>
+  <string name="password_history_before_yesterday">Hi ha %d dies, %s</string>
+  <string name="password_history_clear_history">Neteja l\'historial</string>
+  <string name="password_history_remove_from_history">Esborra de l\'historial</string>
 </resources>

@@ -13,6 +13,7 @@
   <string name="profile_option_autofill_subtitle">Automatycznie uzupełniaj nazwy użytkowników i hasła.</string>
   <string name="profile_option_secure_links">Linki</string>
   <string name="profile_option_alias_management">Zarządzanie aliasami</string>
+  <string name="profile_option_generated_passwords">Generated passwords</string>
   <string name="profile_error_biometry_failed_to_start">Nie można rozpocząć uwierzytelniania biometrycznego</string>
   <string name="profile_error_biometry_failed_to_authenticate">Nie udało się uwierzytelnić</string>
   <string name="profile_fingerprint_lock_enabled">Blokada odciskiem palca została włączona</string>

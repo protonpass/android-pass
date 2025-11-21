@@ -34,6 +34,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
+import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.commonrust.api.passwords.PasswordConfig
 import proton.android.pass.commonrust.api.passwords.PasswordGenerator
@@ -146,6 +147,10 @@ class GeneratePasswordViewModel @Inject constructor(
             }.also { encryptedPassword ->
                 draftRepository.save(DRAFT_PASSWORD_KEY, encryptedPassword)
                 eventFlow.update { GeneratePasswordEvent.OnPasswordConfirmed }
+
+                addPasswordToHistoryEntry(
+                    encryptedPassword = encryptedPassword
+                )
             }
         }
     }
@@ -159,14 +164,20 @@ class GeneratePasswordViewModel @Inject constructor(
             encryptionContextProvider.withEncryptionContextSuspendable {
                 encrypt(stateFlow.value.password)
             }.also { encryptedPassword ->
-                addOnePasswordHistoryEntryToUser(
-                    PasswordHistoryEntry(
-                        encrypted = encryptedPassword,
-                        createdTime = clock.now().epochSeconds,
-                        passwordHistoryEntryId = PasswordHistoryEntryId(id = 0) // auto-generated
-                    )
+                addPasswordToHistoryEntry(
+                    encryptedPassword = encryptedPassword
                 )
             }
         }
+    }
+
+    private suspend fun addPasswordToHistoryEntry(encryptedPassword: EncryptedString) {
+        addOnePasswordHistoryEntryToUser(
+            PasswordHistoryEntry(
+                encrypted = encryptedPassword,
+                createdTime = clock.now().epochSeconds,
+                passwordHistoryEntryId = PasswordHistoryEntryId(id = 0) // auto-generated
+            )
+        )
     }
 }

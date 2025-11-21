@@ -19,10 +19,8 @@
 package proton.android.pass.features.password.history.composable
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,11 +31,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -64,130 +62,138 @@ import proton.android.pass.features.password.history.model.PasswordHistoryUiStat
 internal fun PasswordHistoryEntryContent(
     state: PasswordHistoryUiState,
     onBackClick: () -> Unit,
+    onCopyPassword: (PasswordHistoryEntryId) -> Unit,
     onHideItem: (PasswordHistoryEntryId) -> Unit,
     onRevealItem: (PasswordHistoryEntryId) -> Unit,
     onMainThreeDotsMenuButtonClick: () -> Unit,
     onThreeDotsMenuButtonClick: (PasswordHistoryEntryId) -> Unit
 ) {
-    Column(
+    Scaffold(
         modifier = Modifier
-            .fillMaxSize()
-            .background(
-                color = MaterialTheme.colors.background
+            .systemBarsPadding()
+            .fillMaxSize(),
+        topBar = {
+            BackArrowTopAppBar(
+                modifier = Modifier,
+                onUpClick = onBackClick,
+                arrowColor = PassTheme.colors.passwordInteractionNormMajor2,
+                backgroundArrowColor = PassTheme.colors.passwordInteractionNormMinor1,
+                actions = {
+                    ThreeDotsMenuButton(
+                        modifier = Modifier.size(size = 40.dp),
+                        onClick = onMainThreeDotsMenuButtonClick,
+                        backgroundColor = PassTheme.colors.passwordInteractionNormMinor1,
+                        dotsColor = PassTheme.colors.passwordInteractionNormMajor2
+                    )
+                }
             )
+        }
     ) {
-        BackArrowTopAppBar(
-            modifier = Modifier.statusBarsPadding(),
-            onUpClick = onBackClick,
-            arrowColor = PassTheme.colors.passwordInteractionNormMajor2,
-            backgroundArrowColor = PassTheme.colors.passwordInteractionNormMinor1,
-            actions = {
-                ThreeDotsMenuButton(
-                    modifier = Modifier.size(size = 40.dp),
-                    onClick = onMainThreeDotsMenuButtonClick,
-                    backgroundColor = PassTheme.colors.passwordInteractionNormMinor1,
-                    dotsColor = PassTheme.colors.passwordInteractionNormMajor2
-                )
-            }
-        )
-
-        Spacer(modifier = Modifier.height(Spacing.medium))
-
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = Spacing.medium)
+            modifier = Modifier.fillMaxSize()
         ) {
-            Text.Hero(
-                text = stringResource(R.string.password_history_title)
-            )
+            Spacer(modifier = Modifier.height(Spacing.medium))
 
-            AnimatedVisibility(
-                visible = !state.isLoading && state.items.isEmpty(),
-                modifier = Modifier.fillMaxSize(),
-                enter = fadeIn(),
-                exit = fadeOut()
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = Spacing.medium)
             ) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
+                Text.Hero(
+                    text = stringResource(R.string.password_history_title)
+                )
+
+                AnimatedVisibility(
+                    visible = !state.isLoading && state.items.isEmpty(),
+                    enter = fadeIn(),
+                    exit = fadeOut()
                 ) {
-                    Column(
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text.Headline(
+                                text = stringResource(R.string.password_history_empty),
+                                color = PassTheme.colors.textWeak,
+                                textAlign = TextAlign.Center
+                            )
+
+                            Spacer(modifier = Modifier.height(Spacing.medium))
+
+                            Text.Body1Regular(
+                                text = stringResource(R.string.password_history_description),
+                                color = PassTheme.colors.textWeak,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
+                }
+
+                AnimatedVisibility(
+                    visible = !state.isLoading && state.items.isNotEmpty(),
+                    enter = fadeIn(),
+                    exit = fadeOut()
+                ) {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        contentPadding = PaddingValues(top = Spacing.medium),
+                        verticalArrangement = Arrangement.spacedBy(space = Spacing.mediumSmall),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text.Headline(
-                            text = stringResource(R.string.password_history_empty),
-                            color = PassTheme.colors.textWeak,
-                            textAlign = TextAlign.Center
-                        )
-
-                        Spacer(modifier = Modifier.height(Spacing.medium))
-
-                        Text.Body1Regular(
-                            text = stringResource(R.string.password_history_description),
-                            color = PassTheme.colors.textWeak,
-                            textAlign = TextAlign.Center
-                        )
-                    }
-                }
-            }
-
-            AnimatedVisibility(
-                visible = !state.isLoading && state.items.isNotEmpty(),
-                enter = fadeIn(),
-                exit = fadeOut()
-            ) {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .animateContentSize(),
-                    contentPadding = PaddingValues(top = Spacing.medium),
-                    verticalArrangement = Arrangement.spacedBy(space = Spacing.mediumSmall),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    items(
-                        items = state.items,
-                        key = { it.passwordHistoryEntryId.id }
-                    ) { item ->
-                        PasswordHistoryItem(
-                            modifier = Modifier.fillMaxWidth(),
-                            item = item,
-                            onChangeVisibility = {
-                                if (it) {
-                                    onHideItem(item.passwordHistoryEntryId)
-                                } else {
-                                    onRevealItem(item.passwordHistoryEntryId)
+                        items(
+                            items = state.items,
+                            key = { it.passwordHistoryEntryId.id }
+                        ) { item ->
+                            PasswordHistoryItem(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .animateItem(),
+                                item = item,
+                                onChangeVisibility = { mustReveal ->
+                                    if (mustReveal) {
+                                        onRevealItem(item.passwordHistoryEntryId)
+                                    } else {
+                                        onHideItem(item.passwordHistoryEntryId)
+                                    }
+                                },
+                                onThreeDotsClick = {
+                                    onThreeDotsMenuButtonClick(item.passwordHistoryEntryId)
+                                },
+                                onPasswordClick = {
+                                    onCopyPassword(item.passwordHistoryEntryId)
                                 }
-                            },
-                            onThreeDotsClick = {
-                                onThreeDotsMenuButtonClick(item.passwordHistoryEntryId)
-                            }
-                        )
-                    }
+                            )
+                        }
 
 
-                    item {
-                        Text.Body1Regular(
-                            text = stringResource(R.string.password_history_description),
-                            color = PassTheme.colors.textWeak,
-                            textAlign = TextAlign.Center
-                        )
+                        item {
+                            Text.Body1Regular(
+                                modifier = Modifier.animateItem(),
+                                text = stringResource(R.string.password_history_description),
+                                color = PassTheme.colors.textWeak,
+                                textAlign = TextAlign.Center
+                            )
+                        }
                     }
                 }
-            }
 
 
-            AnimatedVisibility(
-                visible = state.isLoading,
-                modifier = Modifier.fillMaxSize(),
-                enter = fadeIn(),
-                exit = fadeOut()
-            ) {
-                Box(
+                AnimatedVisibility(
+                    visible = state.isLoading,
                     modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
+                    enter = fadeIn(),
+                    exit = fadeOut()
                 ) {
-                    CircularProgressIndicator()
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
                 }
             }
         }
@@ -223,7 +229,8 @@ internal fun PasswordHistoryEntryScreenPreview(@PreviewParameter(ThemePreviewPro
                 onHideItem = {},
                 onRevealItem = {},
                 onMainThreeDotsMenuButtonClick = {},
-                onThreeDotsMenuButtonClick = {}
+                onThreeDotsMenuButtonClick = {},
+                onCopyPassword = {}
             )
         }
     }
@@ -243,7 +250,8 @@ internal fun PasswordHistoryEntryScreenEmptyPreview(@PreviewParameter(ThemePrevi
                 onHideItem = {},
                 onRevealItem = {},
                 onMainThreeDotsMenuButtonClick = {},
-                onThreeDotsMenuButtonClick = {}
+                onThreeDotsMenuButtonClick = {},
+                onCopyPassword = {}
             )
         }
     }
@@ -263,7 +271,8 @@ internal fun PasswordHistoryEntryScreenLoadingPreview(@PreviewParameter(ThemePre
                 onHideItem = {},
                 onRevealItem = {},
                 onMainThreeDotsMenuButtonClick = {},
-                onThreeDotsMenuButtonClick = {}
+                onThreeDotsMenuButtonClick = {},
+                onCopyPassword = {}
             )
         }
     }

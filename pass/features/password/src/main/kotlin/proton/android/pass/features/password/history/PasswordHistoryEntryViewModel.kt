@@ -33,15 +33,18 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
+import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.passwordHistoryEntry.DeleteOnePasswordHistoryEntryForUser
 import proton.android.pass.data.api.usecases.passwordHistoryEntry.DeletePasswordHistoryEntryForUser
 import proton.android.pass.data.api.usecases.passwordHistoryEntry.ObservePasswordHistoryEntryForUser
 import proton.android.pass.domain.PasswordHistoryEntryId
 import proton.android.pass.features.itemcreate.common.UIHiddenState
+import proton.android.pass.features.password.GeneratePasswordSnackbarMessage
 import proton.android.pass.features.password.history.model.PasswordHistoryItemUiState
 import proton.android.pass.features.password.history.model.PasswordHistoryUiState
 import proton.android.pass.features.password.history.model.toUiModel
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
@@ -51,7 +54,9 @@ class PasswordHistoryEntryViewModel @Inject constructor(
     private val clock: Clock,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val deletePasswordHistoryEntryForUser: DeletePasswordHistoryEntryForUser,
-    private val deleteOnePasswordHistoryEntryForUser: DeleteOnePasswordHistoryEntryForUser
+    private val deleteOnePasswordHistoryEntryForUser: DeleteOnePasswordHistoryEntryForUser,
+    private val clipboardManager: ClipboardManager,
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val _passwords: MutableStateFlow<PersistentList<PasswordHistoryItemUiState>> =
@@ -146,6 +151,32 @@ class PasswordHistoryEntryViewModel @Inject constructor(
             }
             if (index >= 0) {
                 deleteOnePasswordHistoryEntryForUser(_passwords.value[index].passwordHistoryEntryId)
+            }
+        }
+    }
+
+    fun onCopyPassword(passwordHistoryEntryId: PasswordHistoryEntryId) {
+        viewModelScope.launch {
+            val index =
+                _passwords.value.indexOfFirst { it.passwordHistoryEntryId == passwordHistoryEntryId }
+            if (index >= 0) {
+                val item = _passwords.value[index]
+
+                if (item.value is UIHiddenState.Revealed) {
+                    clipboardManager.copyToClipboard(
+                        item.value.clearText,
+                        isSecure = true
+                    )
+                } else if (item.value is UIHiddenState.Concealed) {
+                    encryptionContextProvider.withEncryptionContextSuspendable {
+                        clipboardManager.copyToClipboard(
+                            decrypt(item.value.encrypted),
+                            isSecure = true
+                        )
+                    }
+                }
+
+                snackbarDispatcher(GeneratePasswordSnackbarMessage.CopiedToClipboard)
             }
         }
     }

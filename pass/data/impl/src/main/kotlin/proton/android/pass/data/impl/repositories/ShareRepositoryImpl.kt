@@ -598,6 +598,7 @@ class ShareRepositoryImpl @Inject constructor(
         localShare.pendingInvites != remoteShare.pendingInvites -> true
         localShare.newUserInvitesReady != remoteShare.newUserInvitesReady -> true
         localShare.canAutofill != remoteShare.canAutofill -> true
+        localShare.flags != remoteShare.flags -> true
 
         else -> false
     }
@@ -611,7 +612,8 @@ class ShareRepositoryImpl @Inject constructor(
         targetMaxMembers = response.targetMaxMembers,
         expirationTime = response.expirationTime,
         newUserInvitesReady = response.newUserInvitesReady,
-        pendingInvites = response.pendingInvites
+        pendingInvites = response.pendingInvites,
+        flags = response.flags
     )
 
     private suspend fun refreshDefaultShareIfNeeded(userId: UserId, toDelete: Set<ShareId>) {

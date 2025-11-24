@@ -93,7 +93,7 @@ fun OrganiseVaultsContent(
                 .padding(contentPadding)
         ) {
             if (state.visibleVaults.isNotEmpty()) {
-                stickyHeader {
+                stickyHeader(key = "visible_vaults") {
                     Text.Body2Bold(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -106,7 +106,7 @@ fun OrganiseVaultsContent(
             }
             itemsIndexed(
                 items = state.visibleVaults,
-                key = { index, vault -> vault.vault.shareId.id },
+                key = { _, vault -> vault.vault.shareId.id },
                 itemContent = { index, (vault, itemCount) ->
                     OrganiseVaultsRow(
                         modifier = Modifier.animateItem(),
@@ -125,7 +125,7 @@ fun OrganiseVaultsContent(
                 }
             )
             if (state.hiddenVaults.isNotEmpty()) {
-                stickyHeader {
+                stickyHeader(key = "hidden_vaults") {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -143,7 +143,7 @@ fun OrganiseVaultsContent(
             }
             itemsIndexed(
                 items = state.hiddenVaults,
-                key = { index, vault -> vault.vault.shareId.id },
+                key = { _, vault -> vault.vault.shareId.id },
                 itemContent = { index, (vault, itemCount) ->
                     OrganiseVaultsRow(
                         modifier = Modifier.animateItem(),

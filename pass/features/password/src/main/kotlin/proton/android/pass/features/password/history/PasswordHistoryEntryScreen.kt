@@ -19,7 +19,7 @@
 package proton.android.pass.features.password.history
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue.Hidden
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -32,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
+import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.domain.PasswordHistoryEntryId
 import proton.android.pass.features.password.history.composable.ClearHistoryBottomSheet
 import proton.android.pass.features.password.history.composable.ClearOneItemBottomSheet
@@ -64,6 +65,7 @@ val PasswordHistoryEntryIdSaver = Saver<PasswordHistoryEntryId?, Long>(
     restore = { it.let(::PasswordHistoryEntryId) }
 )
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun PasswordHistoryEntryScreen(
     state: PasswordHistoryUiState,
@@ -97,7 +99,7 @@ internal fun PasswordHistoryEntryScreen(
         }
     }
 
-    ModalBottomSheetLayout(
+    PassModalBottomSheetLayout(
         sheetContent = {
             when (bottomSheetToShow) {
                 BottomSheetToShow.BottomSheetClearHistory -> {

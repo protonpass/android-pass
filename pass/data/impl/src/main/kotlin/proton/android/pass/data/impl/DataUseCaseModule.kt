@@ -97,6 +97,7 @@ import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.PinItems
+import proton.android.pass.data.api.usecases.PromoteNewInviteToInvite
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshGroupInvites
 import proton.android.pass.data.api.usecases.RefreshPlan
@@ -337,6 +338,7 @@ import proton.android.pass.data.impl.usecases.ObserveVaultsWithItemCountImpl
 import proton.android.pass.data.impl.usecases.PerformSyncImpl
 import proton.android.pass.data.impl.usecases.PinItemImpl
 import proton.android.pass.data.impl.usecases.PinItemsImpl
+import proton.android.pass.data.impl.usecases.PromoteNewInviteToInviteImpl
 import proton.android.pass.data.impl.usecases.RefreshContentImpl
 import proton.android.pass.data.impl.usecases.RefreshGroupInvitesImpl
 import proton.android.pass.data.impl.usecases.RefreshPlanImpl
@@ -1300,7 +1302,11 @@ abstract class DataUseCaseModule {
     abstract fun bindDeleteOldPasswordHistoryEntry(
         impl: DeleteOldPasswordHistoryEntryImpl
     ): DeleteOldPasswordHistoryEntry
+
     @[Binds Singleton]
     abstract fun bindBatchChangeShareVisibility(impl: BatchChangeShareVisibilityImpl): BatchChangeShareVisibility
+
+    @[Binds Singleton]
+    abstract fun bindPromoteNewInviteToInvite(impl: PromoteNewInviteToInviteImpl): PromoteNewInviteToInvite
 
 }

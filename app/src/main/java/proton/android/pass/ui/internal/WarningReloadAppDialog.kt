@@ -28,19 +28,15 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Checkbox
 import androidx.compose.material.CheckboxDefaults
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.R
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.dialogs.DialogCancelConfirmSection
 import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog
 import proton.android.pass.composecomponents.impl.text.Text
@@ -108,21 +104,3 @@ fun WarningReloadAppDialog(
         }
     }
 }
-
-@[Preview Composable]
-internal fun ItemOptionsAliasTrashDialogPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
-    val (isDark, isRemindMeEnabled) = input
-
-    PassTheme(isDark = isDark) {
-        Surface {
-            WarningReloadAppDialog(
-                defaultCheck = isRemindMeEnabled,
-                onOkClick = {},
-                onCancelClick = {}
-            )
-        }
-    }
-}
-

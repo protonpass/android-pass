@@ -43,7 +43,7 @@ class ObserveCanCreateItemsImpl @Inject constructor(
         shareRepository.observeSharesByType(
             userId = userId,
             shareType = ShareType.Vault,
-            includeHidden = false
+            includeHidden = true
         )
     }.map { vaultShares ->
         vaultShares.any { vaultShare ->

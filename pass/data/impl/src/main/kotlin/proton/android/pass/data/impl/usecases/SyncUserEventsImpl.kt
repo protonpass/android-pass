@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.mapNotNull
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.usecases.PromoteNewInviteToInvite
 import proton.android.pass.data.api.usecases.RefreshInvites
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
@@ -50,7 +51,8 @@ class SyncUserEventsImpl @Inject constructor(
     private val refreshPlan: RefreshPlan,
     private val refreshInvites: RefreshInvites,
     private val syncPendingAliases: SyncSimpleLoginPendingAliases,
-    ) : SyncUserEvents {
+    private val promoteNewInviteToInvite: PromoteNewInviteToInvite
+) : SyncUserEvents {
 
     override suspend fun invoke(userId: UserId) {
         PassLogger.d(TAG, "Syncing user events for $userId started")
@@ -121,10 +123,7 @@ class SyncUserEventsImpl @Inject constructor(
         }
     }
 
-    private suspend fun processItemsUpdated(
-        userId: UserId,
-        itemsUpdated: List<SyncEventShareItem>
-    ) {
+    private suspend fun processItemsUpdated(userId: UserId, itemsUpdated: List<SyncEventShareItem>) {
         itemsUpdated.forEach { (shareId, itemId, token) ->
             itemRepository.refreshItem(userId, shareId, itemId, token)
         }
@@ -137,10 +136,7 @@ class SyncUserEventsImpl @Inject constructor(
         }
     }
 
-    private suspend fun processItemsDeleted(
-        userId: UserId,
-        itemsDeleted: List<SyncEventShareItem>
-    ) {
+    private suspend fun processItemsDeleted(userId: UserId, itemsDeleted: List<SyncEventShareItem>) {
         if (itemsDeleted.isNotEmpty()) {
             val itemsToDelete = itemsDeleted
                 .groupBy { it.shareId }
@@ -149,36 +145,24 @@ class SyncUserEventsImpl @Inject constructor(
         }
     }
 
-    private suspend fun processInvitesChanged(
-        userId: UserId,
-        invitesChanged: SyncEventInvitesChanged?
-    ) {
+    private suspend fun processInvitesChanged(userId: UserId, invitesChanged: SyncEventInvitesChanged?) {
         invitesChanged?.let { refreshInvites(userId, it.eventToken) }
     }
 
-    private fun processGroupInvitesChanged(
-        userId: UserId,
-        invitesChanged: SyncEventInvitesChanged?
-    ) {
+    private fun processGroupInvitesChanged(userId: UserId, invitesChanged: SyncEventInvitesChanged?) {
         invitesChanged?.let {
             // refresh group invites
         }
     }
 
-    private suspend fun processPendingAliasToCreateChanged(
-        userId: UserId,
-        invitesChanged: SyncEventInvitesChanged?
-    ) {
+    private suspend fun processPendingAliasToCreateChanged(userId: UserId, invitesChanged: SyncEventInvitesChanged?) {
         invitesChanged?.let { syncPendingAliases(userId) }
     }
 
-    private fun processNewUserInvitesChanged(
-        userId: UserId,
-        sharesWithInvitesToCreate: List<SyncEventShare>
-    ) {
+    private suspend fun processNewUserInvitesChanged(userId: UserId, sharesWithInvitesToCreate: List<SyncEventShare>) {
         if (sharesWithInvitesToCreate.isNotEmpty()) {
             sharesWithInvitesToCreate.forEach { (shareId, token) ->
-
+                promoteNewInviteToInvite(userId, shareId)
             }
         }
     }

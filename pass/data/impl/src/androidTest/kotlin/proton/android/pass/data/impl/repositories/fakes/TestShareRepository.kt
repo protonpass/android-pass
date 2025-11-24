@@ -163,6 +163,14 @@ class TestShareRepository : ShareRepository {
         vault: NewVault
     ): Share = updateVaultResult.getOrThrow()
 
+    override suspend fun recreateShare(
+        userId: UserId,
+        shareId: ShareId,
+        eventToken: EventToken
+    ) {
+
+    }
+
     override suspend fun deleteLocalSharesForUser(userId: UserId): Boolean = deleteSharesResult.getOrThrow()
 
     override suspend fun deleteLocalShares(

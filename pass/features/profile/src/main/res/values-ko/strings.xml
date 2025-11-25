@@ -13,7 +13,7 @@
   <string name="profile_option_autofill_subtitle">사용자 이름 및 비밀번호를 자동으로 채웁니다.</string>
   <string name="profile_option_secure_links">안전한 링크</string>
   <string name="profile_option_alias_management">별칭 관리</string>
-  <string name="profile_option_generated_passwords">Generated passwords</string>
+  <string name="profile_option_generated_passwords">생성된 비밀번호</string>
   <string name="profile_error_biometry_failed_to_start">생체 인증을 시작할 수 없습니다</string>
   <string name="profile_error_biometry_failed_to_authenticate">인증 실패</string>
   <string name="profile_fingerprint_lock_enabled">지문 잠금 활성화됨</string>

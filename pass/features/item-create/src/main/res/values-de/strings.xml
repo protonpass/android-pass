@@ -335,4 +335,5 @@
   <string name="cannot_create_items_dialog_title">Kann keine Einträge erstellen</string>
   <string name="cannot_create_items_dialog_message">Du hast keine Tresore mit Bearbeitungs- oder Admin-Zugang. Versuche, einen in der Hauptanwendung zu erstellen, oder bitte den Administrator deiner Organisation um Unterstützung.</string>
   <string name="wifi_security_type_field_label">Sicherheitstyp</string>
+  <string name="functionality_not_available">Diese Funktion ist für Ihr Gerät nicht verfügbar.</string>
 </resources>

@@ -335,4 +335,5 @@
   <string name="cannot_create_items_dialog_title">Tidak dapat membuat item</string>
   <string name="cannot_create_items_dialog_message">Anda tidak memiliki brankas dengan akses editor atau admin. Cobalah untuk membuat brankas baru pada aplikasi utama atau mintalah dukungan kepada administrator organisasi Anda.</string>
   <string name="wifi_security_type_field_label">Jenis keamanan</string>
+  <string name="functionality_not_available">This functionality is not available for your device.</string>
 </resources>

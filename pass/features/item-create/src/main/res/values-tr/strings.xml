@@ -335,4 +335,5 @@
   <string name="cannot_create_items_dialog_title">Ögeler oluşturulamadı</string>
   <string name="cannot_create_items_dialog_message">Düzenleyicisi veya yöneticisi olduğunuz herhangi bir kasa yok. Ana uygulamadan bir kasa oluşturmayı deneyin veya kuruluşunuzun yöneticisinden destek isteyin.</string>
   <string name="wifi_security_type_field_label">Güvenlik türü</string>
+  <string name="functionality_not_available">Bu işlevsellik aygıtınızda kullanılamamaktadır.</string>
 </resources>

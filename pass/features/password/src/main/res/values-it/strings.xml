@@ -29,12 +29,12 @@
   <string name="password_mode_random">Password casuale</string>
   <string name="password_mode_icon">Icona modalità password</string>
   <string name="password_words_separator_icon">Separatore parole della password</string>
-  <string name="password_history_title">Generated passwords</string>
-  <string name="password_history_empty">No history</string>
-  <string name="password_history_description">Generated passwords will be stored for a period of 2 weeks.</string>
-  <string name="password_history_today">Today, %s</string>
-  <string name="password_history_yesterday">Yesterday, %s</string>
-  <string name="password_history_before_yesterday">There are %d days, %s</string>
-  <string name="password_history_clear_history">Clear history</string>
-  <string name="password_history_remove_from_history">Remove from history</string>
+  <string name="password_history_title">Password generate</string>
+  <string name="password_history_empty">Nessuna cronologia</string>
+  <string name="password_history_description">Le password generate saranno archiviate per un periodo di 2 settimane.</string>
+  <string name="password_history_today">Oggi, %s</string>
+  <string name="password_history_yesterday">Ieri alle %s</string>
+  <string name="password_history_before_yesterday">Ci sono %d giorni, %s</string>
+  <string name="password_history_clear_history">Cancella la cronologia</string>
+  <string name="password_history_remove_from_history">Rimuovi dalla cronologia</string>
 </resources>

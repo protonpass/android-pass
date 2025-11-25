@@ -335,4 +335,5 @@
   <string name="cannot_create_items_dialog_title">Nu se pot crea articole</string>
   <string name="cannot_create_items_dialog_message">Nu aveți seifuri cu acces de editor sau de administrator. Încercați să creați unul în aplicația principală sau solicitați asistență administratorului organizației proprii.</string>
   <string name="wifi_security_type_field_label">Tip de securitate</string>
+  <string name="functionality_not_available">Această funcționalitate nu este disponibilă pentru dispozitivul utilizat.</string>
 </resources>

@@ -10,4 +10,6 @@
   <string name="no_session_found">No s\'ha trobat cap sessió.</string>
   <string name="auth_with_extra_password_failed">L\'autenticació amb contrasenya addicional no ha funcionat.</string>
   <string name="auth_only_1_proton_account_failed">Només es permet 1 compte Proton gratuït.</string>
+  <string name="warning_dialog_reload_app_after_purchase_description">Esteu a punt de ser redirigit al nostre lloc web. Si compreu un pla, reinicieu l\'aplicació.</string>
+  <string name="warning_dialog_reload_app_after_purchase_reminder">No m\'ho torneu a recordar</string>
 </resources>

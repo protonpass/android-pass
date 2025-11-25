@@ -335,4 +335,5 @@
   <string name="cannot_create_items_dialog_title">Impossibile creare elementi</string>
   <string name="cannot_create_items_dialog_message">Non hai alcuna cassaforte con accesso da editor o amministratore. Prova a crearne una nell\'app principale o chiedi supporto all\'amministratore della tua organizzazione.</string>
   <string name="wifi_security_type_field_label">Sicurezza Wi-Fi</string>
+  <string name="functionality_not_available">Questa funzionalità non è disponibile per il tuo dispositivo.</string>
 </resources>

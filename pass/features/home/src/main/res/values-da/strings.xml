@@ -71,7 +71,7 @@
   <string name="bottomsheet_copy_number">Kopiér nummer</string>
   <string name="bottomsheet_copy_cvv">Kopiér sikkerhedskode</string>
   <string name="bottomsheet_copy_note">Kopiér note</string>
-  <string name="bottomsheet_edit">Redigér</string>
+  <string name="bottomsheet_edit">Rediger</string>
   <string name="bottomsheet_copy_full_name">Kopier fulde navn</string>
   <!-- Clipboard -->
   <string name="alias_copied_to_clipboard">Alias kopieret</string>

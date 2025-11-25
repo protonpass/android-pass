@@ -10,4 +10,6 @@
   <string name="no_session_found">Ingen session hittades</string>
   <string name="auth_with_extra_password_failed">Autentisering med extralösenord misslyckades</string>
   <string name="auth_only_1_proton_account_failed">Endast 1 gratis Proton-konto är tillåtet.</string>
+  <string name="warning_dialog_reload_app_after_purchase_description">Du kommer att omdirigeras till vår webbplats. Om du köper ett paket, starta om appen.</string>
+  <string name="warning_dialog_reload_app_after_purchase_reminder">Påminn mig inte igen</string>
 </resources>

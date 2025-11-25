@@ -10,4 +10,6 @@
   <string name="no_session_found">Δεν βρέθηκε συνεδρία</string>
   <string name="auth_with_extra_password_failed">Ο έλεγχος ταυτότητας με επιπλέον κωδικό πρόσβασης απέτυχε</string>
   <string name="auth_only_1_proton_account_failed">Επιτρέπεται μόνο 1 δωρεάν λογαριασμός Proton.</string>
+  <string name="warning_dialog_reload_app_after_purchase_description">Πρόκειται να ανακατευθυνθείτε στην ιστοσελίδα μας. Εάν αγοράσετε ένα πλάνο, παρακαλούμε επανεκκινήστε την εφαρμογή.</string>
+  <string name="warning_dialog_reload_app_after_purchase_reminder">Μην μου υπενθυμίσεις ξανά</string>
 </resources>

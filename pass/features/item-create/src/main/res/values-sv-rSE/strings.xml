@@ -335,4 +335,5 @@
   <string name="cannot_create_items_dialog_title">Kan inte skapa objekt</string>
   <string name="cannot_create_items_dialog_message">Du har inga valv med redigerings- eller administratörsåtkomst. Prova skapa ett i huvudappen eller be din organisations administratör om support.</string>
   <string name="wifi_security_type_field_label">Säkerhetstyp</string>
+  <string name="functionality_not_available">Denna funktionalitet är inte tillgänglig för din enhet.</string>
 </resources>

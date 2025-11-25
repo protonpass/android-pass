@@ -10,4 +10,6 @@
   <string name="no_session_found">Nenašla sa žiadna relácia</string>
   <string name="auth_with_extra_password_failed">Autorizácia pomocou dodatočného hesla zlyhala</string>
   <string name="auth_only_1_proton_account_failed">Je povolený iba 1 bezplatný účet Proton.</string>
+  <string name="warning_dialog_reload_app_after_purchase_description">Presmerujeme vás na našu webovú stránku. Ak si zakúpite balík, reštartujte aplikáciu.</string>
+  <string name="warning_dialog_reload_app_after_purchase_reminder">Už nepripomínať</string>
 </resources>

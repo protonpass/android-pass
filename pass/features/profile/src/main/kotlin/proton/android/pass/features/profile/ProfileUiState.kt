@@ -106,11 +106,6 @@ internal sealed interface PlanInfo {
     }
 
     @Stable
-    data object Trial : PlanInfo {
-        override val accountType = AccountType.Trial
-    }
-
-    @Stable
     data class Unlimited(
         val planName: String,
         override val accountType: AccountType = AccountType.Unlimited

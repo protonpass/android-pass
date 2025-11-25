@@ -46,10 +46,7 @@
   <string name="home_autofill_banner_title">Geniet van de magie van Automatisch aanvullen</string>
   <string name="home_autofill_banner_text">Eén keer tikken en uw gebruikersnaam en wachtwoord zijn direct ingevuld.</string>
   <string name="home_autofill_banner_settings">Automatisch aanvullen inschakelen ›</string>
-  <string name="home_trial_banner_title">Ons welkomstgeschenk voor u</string>
-  <string name="home_trial_banner_text">7 dagen om premium functies gratis te proberen. Enkel tijdens uw eerste week van Proton Pass.</string>
-  <string name="home_trial_banner_settings">Meer informatie ›</string>
-  <string name="home_drawer_all_items">Alle items</string>
+    <string name="home_drawer_all_items">Alle items</string>
   <string name="sl_sync_banner_title">Synchroniseer uw aliassen van SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">U heeft %d alias die aanwezig is in SimpleLogin, maar ontbreekt in Proton pass. Wilt u deze synchroniseren?</item>

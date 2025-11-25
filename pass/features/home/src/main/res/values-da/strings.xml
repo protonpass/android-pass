@@ -46,10 +46,7 @@
   <string name="home_autofill_banner_title">Nyd magien ved autofyld</string>
   <string name="home_autofill_banner_text">Ét tryk, og dit brugernavn og din adgangskode udfyldes øjeblikkeligt.</string>
   <string name="home_autofill_banner_settings">Slå autofyld til ›</string>
-  <string name="home_trial_banner_title">Vores velkomstgave til dig</string>
-  <string name="home_trial_banner_text">7 dage til at prøve premium-funktioner gratis. Kun i din første uge med Proton Pass.</string>
-  <string name="home_trial_banner_settings">Få mere at vide ›</string>
-  <string name="home_drawer_all_items">Alle elementer</string>
+    <string name="home_drawer_all_items">Alle elementer</string>
   <string name="sl_sync_banner_title">Synkroniser dine aliasser fra SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">Du har %d alias, som findes i SimpleLogin, men som mangler i Proton Pass. Ønsker du at synkronisere det?</item>

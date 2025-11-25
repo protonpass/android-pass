@@ -102,8 +102,7 @@ internal data class SecurityCenterHomeState(
         is PlanType.Free,
         is PlanType.Unknown -> true
 
-        is PlanType.Paid,
-        is PlanType.Trial -> false
+        is PlanType.Paid -> false
     }
 
     internal val isExcludedItemsPaidFeature: Boolean = false
@@ -123,7 +122,6 @@ internal data class SecurityCenterHomeState(
             else -> SecurityCenterHomeDarkWebMonitoring.FreeNoDataBreaches
         }
 
-        is PlanType.Trial,
         is PlanType.Paid -> when {
             breachLoadingResult is LoadingResult.Loading ->
                 SecurityCenterHomeDarkWebMonitoring.PaidLoading

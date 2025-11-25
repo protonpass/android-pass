@@ -27,8 +27,7 @@
   <string name="bottomsheet_edit_vault_button">Desa</string>
   <string name="bottomsheet_cannot_create_more_vaults">Heu assolit el límit de caixes fortes que podeu crear. Creeu un nombre il·limitat de caixes fortes en millorar la vostra subscripció.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Per a interactuar amb les vostres altres caixes fortes, heu de millorar el vostre compte.</string>
-  <string name="bottomsheet_upgrade_now">Millora ara</string>
-  <string name="bottomsheet_edit">Edita</string>
+    <string name="bottomsheet_edit">Edita</string>
   <string name="bottomsheet_migrate">Mou tots els elements a una altra caixa forta</string>
   <string name="bottomsheet_delete_vault">Elimina la caixa forta</string>
   <string name="bottomsheet_share_vault">Comparteix</string>

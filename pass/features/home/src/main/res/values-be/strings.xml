@@ -46,10 +46,7 @@
   <string name="home_autofill_banner_title">Атрымлівайце асалоду ад магіі аўтазапаўнення</string>
   <string name="home_autofill_banner_text">Ваша імя карыстальніка і пароль запаўняюцца імгненна.</string>
   <string name="home_autofill_banner_settings">Уключыць аўтазапаўненне ›</string>
-  <string name="home_trial_banner_title">Наш прывітальны падарунак для вас</string>
-  <string name="home_trial_banner_text">Паспрабуйце прэміяльныя функцыі праграмы 7 дзён бясплатна. Толькі на працягу першага тыдня выкарыстання Proton Pass.</string>
-  <string name="home_trial_banner_settings">Даведацца больш ›</string>
-  <string name="home_drawer_all_items">Усе элементы</string>
+    <string name="home_drawer_all_items">Усе элементы</string>
   <string name="sl_sync_banner_title">Сінхранізуйце свае псеўданімы з SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">У вас ёсць %d псеўданім, які прысутнічае ў SimpleLogin, але адсутнічае ў Proton Pass. Хочаце сінхранізаваць яго?</item>

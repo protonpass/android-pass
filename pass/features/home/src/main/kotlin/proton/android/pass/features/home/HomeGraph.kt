@@ -128,8 +128,6 @@ sealed interface HomeNavigation {
 
     data object SortingBottomsheet : HomeNavigation
 
-    data object TrialInfo : HomeNavigation
-
     @JvmInline
     value class OpenInvite(val inviteToken: InviteToken) : HomeNavigation
 

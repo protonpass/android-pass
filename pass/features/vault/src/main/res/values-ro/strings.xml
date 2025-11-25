@@ -27,8 +27,7 @@
   <string name="bottomsheet_edit_vault_button">Salvare</string>
   <string name="bottomsheet_cannot_create_more_vaults">Ați atins limita seifurilor pe care le puteți crea. Puteți crea seifuri nelimitate dacă vă modificați abonamentul.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Pentru a interacționa cu celelalte seifuri, trebuie să vă modificați contul.</string>
-  <string name="bottomsheet_upgrade_now">Modificare</string>
-  <string name="bottomsheet_edit">Editare</string>
+    <string name="bottomsheet_edit">Editare</string>
   <string name="bottomsheet_migrate">Mutare toate articolele în alt seif</string>
   <string name="bottomsheet_delete_vault">Ștergere seif</string>
   <string name="bottomsheet_share_vault">Partajare</string>

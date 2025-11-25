@@ -29,8 +29,7 @@
   <string name="app_lock_ten_minutes">Efter 10 minutter</string>
   <string name="app_lock_one_hour">Efter 1 time</string>
   <string name="app_lock_four_hours">Efter 4 timer</string>
-  <string name="profile_account_plan_name_trial">Pass Plus prøveversion</string>
-  <string name="app_lock_config_none">Ingen</string>
+    <string name="app_lock_config_none">Ingen</string>
   <string name="app_lock_config_biometric">Biometri</string>
   <string name="app_lock_config_pin_code">Pinkode</string>
   <string name="app_lock_config_app_lock_time">Automatisk lås</string>

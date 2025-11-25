@@ -94,7 +94,6 @@ import proton.android.pass.features.itemcreate.common.formprocessor.LoginItemFor
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.totp.api.TotpManager
@@ -114,7 +113,6 @@ abstract class BaseLoginViewModel(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val attachmentsHandler: AttachmentsHandler,
     protected val customFieldHandler: CustomFieldHandler,
-    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val customFieldDraftRepository: CustomFieldDraftRepository,
     private val loginItemFormProcessor: LoginItemFormProcessorType,
     observeCurrentUser: ObserveCurrentUser,
@@ -256,7 +254,7 @@ abstract class BaseLoginViewModel(
             isLoadingState = isLoading,
             isItemSaved = userInteraction.events.itemSavedState,
             openScanState = userInteraction.events.openScanState,
-            canUseCustomFields = userPlan?.isPaidPlan == true || userPlan?.isTrialPlan == true,
+            canUseCustomFields = userPlan?.isPaidPlan == true,
             focusLastWebsite = userInteraction.focusLastWebsite,
             canUpdateUsername = userInteraction.canUpdateUsername,
             primaryEmail = primaryEmail,

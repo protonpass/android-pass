@@ -343,9 +343,7 @@ import proton.android.pass.data.impl.usecases.ResendShareInviteImpl
 import proton.android.pass.data.impl.usecases.ResetAppToDefaultsImpl
 import proton.android.pass.data.impl.usecases.RestoreAllItemsImpl
 import proton.android.pass.data.impl.usecases.RestoreItemImpl
-import proton.android.pass.data.impl.usecases.SendUserAccessRequest
 import proton.android.pass.data.impl.usecases.RefreshSharesAndEnqueueSyncImpl
-import proton.android.pass.data.impl.usecases.SendUserAccessRequestImpl
 import proton.android.pass.data.impl.usecases.TransferVaultOwnershipImpl
 import proton.android.pass.data.impl.usecases.TrashItemImpl
 import proton.android.pass.data.impl.usecases.UnpinItemImpl
@@ -611,9 +609,6 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindWorkerLauncher(impl: InitialWorkerLauncherImpl): InitialWorkerLauncher
-
-    @Binds
-    abstract fun bindSendUserAccessRequest(impl: SendUserAccessRequestImpl): SendUserAccessRequest
 
     @Binds
     abstract fun bindRestoreItem(impl: RestoreItemImpl): RestoreItems

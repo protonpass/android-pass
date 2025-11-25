@@ -27,8 +27,7 @@
   <string name="bottomsheet_edit_vault_button">儲存</string>
   <string name="bottomsheet_cannot_create_more_vaults">你已達到保管庫創建上限。升級訂購授權已創建無限保管庫</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">若需使用您其他保管庫，需升級您的帳號</string>
-  <string name="bottomsheet_upgrade_now">立即升級</string>
-  <string name="bottomsheet_edit">編輯</string>
+    <string name="bottomsheet_edit">編輯</string>
   <string name="bottomsheet_migrate">將全部項目移至保管庫</string>
   <string name="bottomsheet_delete_vault">刪除保管庫</string>
   <string name="bottomsheet_share_vault">分享</string>

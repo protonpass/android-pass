@@ -335,4 +335,5 @@
   <string name="cannot_create_items_dialog_title">No es poden crear elements</string>
   <string name="cannot_create_items_dialog_message">No teniu cap caixa forta amb permisos d\'editor o administrador. Creeu una a l\'aplicació principal o demaneu assistència a l\'administrador de la vostra organització.</string>
   <string name="wifi_security_type_field_label">Tipus de seguretat</string>
+  <string name="functionality_not_available">Aquesta funcionalitat no està disponible per al vostre dispositiu.</string>
 </resources>

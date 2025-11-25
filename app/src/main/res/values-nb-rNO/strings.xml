@@ -10,4 +10,6 @@
   <string name="no_session_found">Ingen økt funnet</string>
   <string name="auth_with_extra_password_failed">Autentisering med ekstra passord mislyktes</string>
   <string name="auth_only_1_proton_account_failed">Kun 1 gratis Proton-konto er tillatt.</string>
+  <string name="warning_dialog_reload_app_after_purchase_description">You are about to be redirected to our website. If you purchase a plan, please restart the app.</string>
+  <string name="warning_dialog_reload_app_after_purchase_reminder">Don\'t remind me again</string>
 </resources>

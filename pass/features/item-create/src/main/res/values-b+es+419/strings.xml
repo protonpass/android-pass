@@ -335,4 +335,5 @@
   <string name="cannot_create_items_dialog_title">No se pueden crear los elementos</string>
   <string name="cannot_create_items_dialog_message">No tiene bóvedas con acceso a editor o administrador. Cree una en la aplicación principal o pida ayuda al administrador de su organización.</string>
   <string name="wifi_security_type_field_label">Tipo de seguridad</string>
+  <string name="functionality_not_available">Esta funcionalidad no está disponible para su dispositivo.</string>
 </resources>

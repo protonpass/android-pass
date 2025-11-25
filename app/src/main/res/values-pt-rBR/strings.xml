@@ -10,4 +10,6 @@
   <string name="no_session_found">Nenhuma sessão encontrada</string>
   <string name="auth_with_extra_password_failed">Erro ao autenticar com a senha adicional</string>
   <string name="auth_only_1_proton_account_failed">Apenas uma conta da Proton gratuita é permitida.</string>
+  <string name="warning_dialog_reload_app_after_purchase_description">Você será redirecionado para nosso site. Se você adquirir um plano, por favor, reinicie o aplicativo.</string>
+  <string name="warning_dialog_reload_app_after_purchase_reminder">Não lembrar novamente</string>
 </resources>

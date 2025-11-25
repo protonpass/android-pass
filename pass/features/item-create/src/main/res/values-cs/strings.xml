@@ -335,4 +335,5 @@
   <string name="cannot_create_items_dialog_title">Nelze vytvářet položky</string>
   <string name="cannot_create_items_dialog_message">Nemáte žádné trezory s přístupem editora nebo správce. Zkuste vytvořit trezor v hlavní aplikaci nebo požádejte vašeho správce organizace o podporu.</string>
   <string name="wifi_security_type_field_label">Typ zabezpečení</string>
+  <string name="functionality_not_available">Tato funkce není dostupná pro vaše zařízení</string>
 </resources>

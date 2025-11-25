@@ -4,7 +4,7 @@
   <string name="action_copy">Kopiér</string>
   <!-- Detail -->
   <string name="detail_init_error">Problem med at hente elementoplysninger</string>
-  <string name="top_bar_edit_button_text">Redigér</string>
+  <string name="top_bar_edit_button_text">Rediger</string>
   <!-- Alias details -->
   <string name="field_alias_title">Alias-adresse</string>
   <string name="field_alias_disabled_title">Alias-adresse (deaktiveret)</string>

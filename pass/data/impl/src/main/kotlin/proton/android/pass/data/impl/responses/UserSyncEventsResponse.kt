@@ -73,6 +73,8 @@ data class UserEventListApiModel(
     val itemsDeleted: List<SyncEventShareItemApiModel>,
     @SerialName("AliasNoteChanged")
     val aliasNoteChanged: List<SyncEventShareItemApiModel>,
+    @SerialName("SharesCreated")
+    val sharesCreated: List<SyncEventShareApiModel>,
     @SerialName("SharesUpdated")
     val sharesUpdated: List<SyncEventShareApiModel>,
     @SerialName("SharesDeleted")
@@ -82,9 +84,11 @@ data class UserEventListApiModel(
     @SerialName("FoldersDeleted")
     val foldersDeleted: List<SyncEventShareFolderApiModel>,
     @SerialName("InvitesChanged")
-    val invitesChanged: SyncEventInvitesChangedApiModel?,
+    val invitesChanged: SyncEventInvitesChangedApiModel? = null,
     @SerialName("GroupInvitesChanged")
-    val groupInvitesChanged: SyncEventInvitesChangedApiModel?,
+    val groupInvitesChanged: SyncEventInvitesChangedApiModel? = null,
+    @SerialName("PendingAliasToCreateChanged")
+    val pendingAliasToCreateChanged: SyncEventInvitesChangedApiModel? = null,
     @SerialName("SharesWithInvitesToCreate")
     val sharesWithInvitesToCreate: List<SyncEventShareApiModel>,
     @SerialName("PlanChanged")

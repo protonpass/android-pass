@@ -51,15 +51,6 @@ fun ProfileBottomBarIcon(modifier: Modifier = Modifier, planType: PlanType) {
                 )
             }
 
-            is PlanType.Trial -> {
-                Icon(
-                    modifier = Modifier.align(Alignment.TopEnd),
-                    painter = painterResource(R.drawable.account_trial_indicator),
-                    contentDescription = stringResource(R.string.bottom_bar_profile_icon_content_description),
-                    tint = Color.Unspecified
-                )
-            }
-
             is PlanType.Free,
             is PlanType.Unknown -> {
             }
@@ -79,22 +70,6 @@ fun ProfileBottomBarIconFreePreview(@PreviewParameter(ThemePreviewProvider::clas
     PassTheme(isDark = isDark) {
         Surface {
             ProfileBottomBarIcon(planType = PlanType.Free(name = "", displayName = ""))
-        }
-    }
-}
-
-@Preview
-@Composable
-fun ProfileBottomBarIconTrialPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
-    PassTheme(isDark = isDark) {
-        Surface {
-            ProfileBottomBarIcon(
-                planType = PlanType.Trial(
-                    name = "",
-                    displayName = "",
-                    remainingDays = 1
-                )
-            )
         }
     }
 }

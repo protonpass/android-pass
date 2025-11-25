@@ -46,10 +46,7 @@
   <string name="home_autofill_banner_title">Nikmati keajaiban Isi Otomatis</string>
   <string name="home_autofill_banner_text">Satu ketukan saja dan—presto!—nama pengguna dan kata sandi Anda akan diisi secara instan.</string>
   <string name="home_autofill_banner_settings">Aktifkan Isi Otomatis ›</string>
-  <string name="home_trial_banner_title">Hadiah selamat datang kami kepada Anda</string>
-  <string name="home_trial_banner_text">7 hari untuk mencoba berbagai fitur premium secara cuma-cuma. Hanya tersedia pada minggu pertama pemakaian Proton Pass Anda.</string>
-  <string name="home_trial_banner_settings">Pelajari lebih lanjut ›</string>
-  <string name="home_drawer_all_items">Semua item</string>
+    <string name="home_drawer_all_items">Semua item</string>
   <string name="sl_sync_banner_title">Sinkronkan alias Anda dari SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="other">Anda memiliki %d alias yang terdapat pada SimpleLogin namun tidak ada pada Proton Pass. Apakah Anda ingin menyinkronkan alias ini?</item>

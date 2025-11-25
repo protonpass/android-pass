@@ -88,12 +88,6 @@ fun AccountSwitcherRow(
                         backgroundColor = PassTheme.colors.noteInteractionNormMajor2
                     )
 
-                    is PlanInfo.Trial -> CircledBadge(
-                        icon = CompR.drawable.account_trial_indicator,
-                        iconColor = PassTheme.colors.inputBackgroundNorm,
-                        backgroundColor = PassTheme.colors.interactionNormMajor2
-                    )
-
                     PlanInfo.Hide -> {
                         // No badge
                     }

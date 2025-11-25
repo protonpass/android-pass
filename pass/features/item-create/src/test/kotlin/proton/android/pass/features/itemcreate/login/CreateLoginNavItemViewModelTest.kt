@@ -74,7 +74,6 @@ import proton.android.pass.features.itemcreate.common.formprocessor.FormProcessi
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.passkeys.fakes.TestGeneratePasskey
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestInternalSettingsRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
@@ -139,7 +138,6 @@ internal class CreateLoginNavItemViewModelTest {
             inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
             observeDefaultVault = TestObserveDefaultVault(),
             generatePasskey = TestGeneratePasskey(),
-            featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
             emailValidator = TestEmailValidator(),
             observeTooltipEnabled = FakeObserveTooltipEnabled(),
             disableTooltip = FakeDisableTooltip(),

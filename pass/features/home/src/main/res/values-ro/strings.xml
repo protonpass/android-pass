@@ -46,10 +46,7 @@
   <string name="home_autofill_banner_title">Bucurați-vă de magia autocompletării</string>
   <string name="home_autofill_banner_text">O apăsare și gata - numele de utilizator și parola sunt completate instant.</string>
   <string name="home_autofill_banner_settings">Activare autocompletare ›</string>
-  <string name="home_trial_banner_title">Cadoul nostru de bun venit</string>
-  <string name="home_trial_banner_text">Aveți 7 zile de încercare gratuită a funcțiilor premium. Valabil doar pentru prima săptămână de utilizare a Proton Pass.</string>
-  <string name="home_trial_banner_settings">Detalii ›</string>
-  <string name="home_drawer_all_items">Toate articolele</string>
+    <string name="home_drawer_all_items">Toate articolele</string>
   <string name="sl_sync_banner_title">Sincronizați-vă aliasurile din SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">Aveți %d alias care există în SimpleLogin, dar lipsește în Proton Pass. Doriți să-l sincronizați?</item>

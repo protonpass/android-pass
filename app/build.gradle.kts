@@ -457,7 +457,6 @@ dependencies {
     implementation(projects.pass.features.selectItem)
     implementation(projects.pass.features.sharing)
     implementation(projects.pass.features.sync)
-    implementation(projects.pass.features.trial)
     implementation(projects.pass.features.vault)
     implementation(projects.pass.features.accountSelector)
     implementation(projects.pass.features.extrapassword)

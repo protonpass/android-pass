@@ -29,8 +29,7 @@
   <string name="app_lock_ten_minutes">10 分钟后</string>
   <string name="app_lock_one_hour">1小时后</string>
   <string name="app_lock_four_hours">4小时后</string>
-  <string name="profile_account_plan_name_trial">Pass Plus 试用</string>
-  <string name="app_lock_config_none">无</string>
+    <string name="app_lock_config_none">无</string>
   <string name="app_lock_config_biometric">生物识别</string>
   <string name="app_lock_config_pin_code">PIN 码</string>
   <string name="app_lock_config_app_lock_time">自动锁定</string>

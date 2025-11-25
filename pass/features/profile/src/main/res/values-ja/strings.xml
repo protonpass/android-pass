@@ -29,8 +29,7 @@
   <string name="app_lock_ten_minutes">10 分後</string>
   <string name="app_lock_one_hour">1 時間後</string>
   <string name="app_lock_four_hours">4 時間後</string>
-  <string name="profile_account_plan_name_trial">Pass Plus のトライアル</string>
-  <string name="app_lock_config_none">なし</string>
+    <string name="app_lock_config_none">なし</string>
   <string name="app_lock_config_biometric">生体認証</string>
   <string name="app_lock_config_pin_code">PIN コード</string>
   <string name="app_lock_config_app_lock_time">自動ロック</string>

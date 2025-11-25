@@ -171,50 +171,6 @@ class ProfileScreenTest {
     }
 
     @Test
-    fun showsUpgradeButtonIfPlanIsTrialAndUpgradeIsAvailable() {
-        setupPlan(PlanType.Trial("", "", 1), true)
-
-        val checker = CallChecker<Unit>()
-        composeTestRule.apply {
-            setContent {
-                PassTheme(isDark = true) {
-                    ProfileScreen(
-                        onNavigateEvent = {
-                            if (it == ProfileNavigation.Upgrade) {
-                                checker.call()
-                            }
-                        },
-                        enterPinSuccess = false,
-                        onClearPinSuccess = {}
-                    )
-                }
-            }
-            waitUntilExists(hasText(activity.getString(R.string.profile_screen_title)))
-            onNodeWithText(activity.getString(CompR.string.upgrade)).assertExists().performClick()
-
-            waitUntil { checker.isCalled }
-        }
-    }
-
-    @Test
-    fun doesNotShowUpgradeButtonIfPlanIsTrialAndUpgradeIsNotAvailable() {
-        setupPlan(PlanType.Trial("", "", 1), false)
-        composeTestRule.apply {
-            setContent {
-                PassTheme(isDark = true) {
-                    ProfileScreen(
-                        onNavigateEvent = {},
-                        enterPinSuccess = false,
-                        onClearPinSuccess = {}
-                    )
-                }
-            }
-
-            onNodeWithText(activity.getString(CompR.string.upgrade)).assertDoesNotExist()
-        }
-    }
-
-    @Test
     fun doesNotShowUpgradeButtonIfPlanIsPaidAndUpgradeIsAvailable() {
         setupPlan(PlanType.Paid.Plus("", ""), true)
         composeTestRule.apply {

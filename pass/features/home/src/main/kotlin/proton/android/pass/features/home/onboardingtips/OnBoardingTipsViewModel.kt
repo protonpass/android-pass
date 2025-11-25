@@ -38,24 +38,19 @@ import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.common.api.asLoadingResult
-import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.toOption
-import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
 import proton.android.pass.domain.PendingInvite
-import proton.android.pass.domain.PlanType
 import proton.android.pass.features.home.onboardingtips.OnBoardingTipPage.Autofill
 import proton.android.pass.features.home.onboardingtips.OnBoardingTipPage.Invite
 import proton.android.pass.features.home.onboardingtips.OnBoardingTipPage.NotificationPermission
 import proton.android.pass.features.home.onboardingtips.OnBoardingTipPage.SLSync
-import proton.android.pass.features.home.onboardingtips.OnBoardingTipPage.Trial
 import proton.android.pass.notifications.api.NotificationManager
 import proton.android.pass.preferences.HasDismissedAutofillBanner
 import proton.android.pass.preferences.HasDismissedNotificationBanner
 import proton.android.pass.preferences.HasDismissedSLSyncBanner
-import proton.android.pass.preferences.HasDismissedTrialBanner
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
@@ -65,7 +60,6 @@ class OnBoardingTipsViewModel @Inject constructor(
     private val preferencesRepository: UserPreferencesRepository,
     private val appConfig: AppConfig,
     observeInvites: ObserveInvites,
-    getUserPlan: GetUserPlan,
     notificationManager: NotificationManager,
     observeSimpleLoginSyncStatus: ObserveSimpleLoginSyncStatus
 ) : ViewModel() {
@@ -98,16 +92,6 @@ class OnBoardingTipsViewModel @Inject constructor(
         }
     }.distinctUntilChanged()
 
-    private val shouldShowTrialFlow: Flow<Boolean> = combine(
-        preferencesRepository.getHasDismissedTrialBanner(),
-        getUserPlan()
-    ) { pref, userPlan ->
-        when (pref) {
-            HasDismissedTrialBanner.Dismissed -> false
-            HasDismissedTrialBanner.NotDismissed -> true
-        } && userPlan.planType is PlanType.Trial
-    }.distinctUntilChanged()
-
     private val simpleLoginSyncStatusResultFlow = observeSimpleLoginSyncStatus()
         .asLoadingResult()
 
@@ -123,18 +107,16 @@ class OnBoardingTipsViewModel @Inject constructor(
         }
     }.distinctUntilChanged()
 
-    private val onboardingTipPageOptionFlow = combineN(
+    private val onboardingTipPageOptionFlow = combine(
         pendingInviteFlow,
         shouldShowNotificationPermissionFlow,
-        shouldShowTrialFlow,
         shouldShowAutofillFlow,
         shouldShowSLSyncFlow,
         simpleLoginSyncStatusResultFlow
-    ) { pendingInvite, showNotificationPermission, showTrial, showAutofill, showSLSync, slSyncStatusResult ->
+    ) { pendingInvite, showNotificationPermission, showAutofill, showSLSync, slSyncStatusResult ->
         when {
             pendingInvite != null -> Invite(pendingInvite)
             showNotificationPermission -> NotificationPermission
-            showTrial -> Trial
             showAutofill -> Autofill
             showSLSync -> slSyncStatusResult.getOrNull()?.let { syncStatus ->
                 SLSync(
@@ -167,7 +149,6 @@ class OnBoardingTipsViewModel @Inject constructor(
     internal fun onClick(onBoardingTipPage: OnBoardingTipPage) {
         when (onBoardingTipPage) {
             Autofill -> autofillManager.openAutofillSelector()
-            Trial -> eventFlow.update { OnBoardingTipsEvent.OpenTrialScreen }
             is Invite -> eventFlow.update {
                 OnBoardingTipsEvent.OpenInviteScreen(onBoardingTipPage.pendingInvite.inviteToken)
             }
@@ -185,9 +166,6 @@ class OnBoardingTipsViewModel @Inject constructor(
             when (onBoardingTipPage) {
                 Autofill ->
                     preferencesRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.Dismissed)
-
-                Trial ->
-                    preferencesRepository.setHasDismissedTrialBanner(HasDismissedTrialBanner.Dismissed)
 
                 is Invite -> Unit // Invites cannot be dismissed
                 NotificationPermission ->

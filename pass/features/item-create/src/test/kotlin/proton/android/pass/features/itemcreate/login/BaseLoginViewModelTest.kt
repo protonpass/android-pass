@@ -45,7 +45,6 @@ import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.customfields.CustomFieldHandlerImpl
 import proton.android.pass.features.itemcreate.common.formprocessor.FakeLoginItemFormProcessor
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestUtils
@@ -65,7 +64,6 @@ internal class BaseLoginViewModelTest {
     private lateinit var draftRepository: DraftRepository
     private lateinit var passwordStrengthCalculator: TestPasswordStrengthCalculator
     private lateinit var emailValidator: TestEmailValidator
-    private lateinit var featureFlagsPreferenceRepository: TestFeatureFlagsPreferenceRepository
 
     @Before
     fun setUp() {
@@ -76,7 +74,6 @@ internal class BaseLoginViewModelTest {
         encryptionContextProvider = TestEncryptionContextProvider()
         passwordStrengthCalculator = TestPasswordStrengthCalculator()
         emailValidator = TestEmailValidator()
-        featureFlagsPreferenceRepository = TestFeatureFlagsPreferenceRepository()
         baseLoginViewModel = object : BaseLoginViewModel(
             accountManager = TestAccountManager(),
             snackbarDispatcher = TestSnackbarDispatcher(),
@@ -92,7 +89,6 @@ internal class BaseLoginViewModelTest {
             observeTooltipEnabled = FakeObserveTooltipEnabled(),
             disableTooltip = FakeDisableTooltip(),
             userPreferencesRepository = TestPreferenceRepository(),
-            featureFlagsRepository = featureFlagsPreferenceRepository,
             attachmentsHandler = FakeAttachmentHandler(),
             customFieldDraftRepository = CustomFieldDraftRepositoryImpl(),
             customFieldHandler = CustomFieldHandlerImpl(totpManager, encryptionContextProvider),

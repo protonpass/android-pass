@@ -102,16 +102,6 @@ fun AccountSwitcherMenuContentPreview(@PreviewParameter(ThemePreviewProvider::cl
                     )
                 ),
                 other = persistentListOf(
-                    AccountListItem.Ready(
-                        accountItem = AccountItem(
-                            userId = UserId("2"),
-                            state = AccountState.Ready,
-                            name = "Jane Doe",
-                            email = "jane.doe@proton.me",
-                            initials = "J",
-                            planInfo = PlanInfo.Trial
-                        )
-                    ),
                     AccountListItem.Disabled(
                         accountItem = AccountItem(
                             userId = UserId("3"),

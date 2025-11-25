@@ -27,8 +27,7 @@
   <string name="bottomsheet_edit_vault_button">Zapisz</string>
   <string name="bottomsheet_cannot_create_more_vaults">Osiągnięto maksymalną liczbę sejfów, które możesz utworzyć. Ulepsz subskrypcję, aby utworzyć nieograniczoną liczbę sejfów.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Ulepsz konto, aby móc używać innych sejfów.</string>
-  <string name="bottomsheet_upgrade_now">Ulepsz teraz</string>
-  <string name="bottomsheet_edit">Edytuj</string>
+    <string name="bottomsheet_edit">Edytuj</string>
   <string name="bottomsheet_migrate">Przenieś wszystkie elementy do innego sejfu</string>
   <string name="bottomsheet_delete_vault">Usuń sejf</string>
   <string name="bottomsheet_share_vault">Udostępnij</string>

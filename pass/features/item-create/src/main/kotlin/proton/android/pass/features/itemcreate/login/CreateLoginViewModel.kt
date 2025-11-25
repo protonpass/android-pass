@@ -110,7 +110,6 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.passkeys.api.GeneratePasskey
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
@@ -132,7 +131,6 @@ class CreateLoginViewModel @Inject constructor(
     private val workerLauncher: WorkerLauncher,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
     private val getItemById: GetItemById,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     passwordStrengthCalculator: PasswordStrengthCalculator,
     accountManager: AccountManager,
     clipboardManager: ClipboardManager,
@@ -168,7 +166,6 @@ class CreateLoginViewModel @Inject constructor(
     userPreferencesRepository = userPreferencesRepository,
     attachmentsHandler = attachmentsHandler,
     customFieldHandler = customFieldHandler,
-    featureFlagsRepository = featureFlagsRepository,
     customFieldDraftRepository = customFieldDraftRepository,
     loginItemFormProcessor = loginItemFormProcessor,
     savedStateHandleProvider = savedStateHandleProvider

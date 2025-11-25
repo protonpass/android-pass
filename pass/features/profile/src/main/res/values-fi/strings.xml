@@ -29,8 +29,7 @@
   <string name="app_lock_ten_minutes">10 minuutin kuluttua</string>
   <string name="app_lock_one_hour">Tunnin kuluttua</string>
   <string name="app_lock_four_hours">4 tunnin kuluttua</string>
-  <string name="profile_account_plan_name_trial">Pass Plus -kokeilu</string>
-  <string name="app_lock_config_none">Ei määritetty</string>
+    <string name="app_lock_config_none">Ei määritetty</string>
   <string name="app_lock_config_biometric">Biometrinen</string>
   <string name="app_lock_config_pin_code">PIN-koodi</string>
   <string name="app_lock_config_app_lock_time">Lukitse automaattisesti</string>

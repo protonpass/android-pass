@@ -39,7 +39,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
@@ -76,19 +76,12 @@ internal fun AccountSetting(
 
 @Preview
 @Composable
-internal fun AccountSettingPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
-    val info = if (input.second) {
-        PlanInfo.Trial
-    } else {
-        PlanInfo.Unlimited(planName = "Example plan")
-    }
+internal fun AccountSettingPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
 
-    PassTheme(isDark = input.first) {
+    PassTheme(isDark = isDark) {
         Surface {
             AccountSetting(
-                planInfo = info,
+                planInfo = PlanInfo.Unlimited(planName = "Example plan"),
                 onClick = {}
             )
         }

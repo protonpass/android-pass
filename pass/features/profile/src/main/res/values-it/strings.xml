@@ -29,8 +29,7 @@
   <string name="app_lock_ten_minutes">10 minuti</string>
   <string name="app_lock_one_hour">1 ora</string>
   <string name="app_lock_four_hours">4 ore</string>
-  <string name="profile_account_plan_name_trial">Prova di Pass Plus</string>
-  <string name="app_lock_config_none">Nessuno</string>
+    <string name="app_lock_config_none">Nessuno</string>
   <string name="app_lock_config_biometric">Biometria</string>
   <string name="app_lock_config_pin_code">Codice PIN</string>
   <string name="app_lock_config_app_lock_time">Blocco automatico</string>

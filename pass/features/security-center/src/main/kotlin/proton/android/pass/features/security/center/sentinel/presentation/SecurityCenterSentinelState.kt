@@ -35,8 +35,7 @@ internal data class SecurityCenterSentinelState(
         is PlanType.Free,
         is PlanType.Unknown -> true
 
-        is PlanType.Paid,
-        is PlanType.Trial -> false
+        is PlanType.Paid -> false
     }
 
     internal companion object {

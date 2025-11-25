@@ -47,7 +47,7 @@ class ObserveUpgradeInfoImpl @Inject constructor(
     private val planRepository: PlanRepository,
     private val observeVaultCount: ObserveVaultCount
 ) : ObserveUpgradeInfo {
-    override fun invoke(userId: UserId?, forceRefresh: Boolean): Flow<UpgradeInfo> =
+    override fun invoke(userId: UserId?): Flow<UpgradeInfo> =
         (userId?.let(::flowOf) ?: observeCurrentUser().map { it.userId })
             .flatMapLatest { id ->
                 val supportsPayments = appConfig.flavor.supportPayment()
@@ -58,10 +58,7 @@ class ObserveUpgradeInfoImpl @Inject constructor(
                 }
 
                 combine(
-                    planRepository.observePlan(
-                        userId = id,
-                        forceRefresh = forceRefresh
-                    ),
+                    planRepository.observePlan(userId = id),
                     observeMFACount(includeHiddenVault = true),
                     observeItemCount(
                         itemState = null,

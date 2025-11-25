@@ -46,10 +46,7 @@
   <string name="home_autofill_banner_title">Gaudiu de la màgia de l\'emplenament automàtic</string>
   <string name="home_autofill_banner_text">Un toc i —heus aquí!— el vostre nom d\'usuari i contrasenya s\'emplenen a l\'instant.</string>
   <string name="home_autofill_banner_settings">Activa l\'emplenament automàtic</string>
-  <string name="home_trial_banner_title">El nostre regal de benvinguda.</string>
-  <string name="home_trial_banner_text">Teniu 7 dies per provar les funcions prèmium de manera gratuïta. Només durant la primera setmana de Proton Pass.</string>
-  <string name="home_trial_banner_settings">Més informació ›</string>
-  <string name="home_drawer_all_items">Tots els elements</string>
+    <string name="home_drawer_all_items">Tots els elements</string>
   <string name="sl_sync_banner_title">Sincronitzeu els vostres àlies de SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">Teniu %d àlies a SimpleLogin que no apareix a Proton Pass. Voleu sincronitzar-los?</item>

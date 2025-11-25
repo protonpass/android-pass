@@ -39,7 +39,7 @@ class TestObserveUpgradeInfo @Inject constructor() : ObserveUpgradeInfo {
         upgradeInfo.tryEmit(value)
     }
 
-    override fun invoke(userId: UserId?, forceRefresh: Boolean): Flow<UpgradeInfo> = upgradeInfo
+    override fun invoke(userId: UserId?): Flow<UpgradeInfo> = upgradeInfo
 
     companion object {
         val DEFAULT = UpgradeInfo(

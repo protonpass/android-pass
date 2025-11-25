@@ -29,8 +29,7 @@
   <string name="app_lock_ten_minutes">Через 10 хвилин</string>
   <string name="app_lock_one_hour">Через 1 годину</string>
   <string name="app_lock_four_hours">Через 4 години</string>
-  <string name="profile_account_plan_name_trial">Пробна версія Pass Plus</string>
-  <string name="app_lock_config_none">Без блокування</string>
+    <string name="app_lock_config_none">Без блокування</string>
   <string name="app_lock_config_biometric">Біометрія</string>
   <string name="app_lock_config_pin_code">PIN-код</string>
   <string name="app_lock_config_app_lock_time">Автоматичне блокування</string>

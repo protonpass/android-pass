@@ -448,7 +448,6 @@ class SelectItemViewModel @Inject constructor(
                 }
 
                 is PlanType.Paid,
-                is PlanType.Trial,
                 is PlanType.Unknown -> false
             }
         }

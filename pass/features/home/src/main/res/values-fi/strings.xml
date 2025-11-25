@@ -46,10 +46,7 @@
   <string name="home_autofill_banner_title">Nauti automaattitäytön taiasta</string>
   <string name="home_autofill_banner_text">Vain yksi napautus ja käyttäjätunnuksesi ja salasanasi on täytetty.</string>
   <string name="home_autofill_banner_settings">Ota automaattitäyttö käyttöön ›</string>
-  <string name="home_trial_banner_title">Tervetuliaislahjamme sinulle</string>
-  <string name="home_trial_banner_text">7 päivää aikaa kokeilla premium-ominaisuuksia ilmaiseksi. Voimassa vain ensimmäisen Proton Pass -viikkosi ajan.</string>
-  <string name="home_trial_banner_settings">Lue lisää ›</string>
-  <string name="home_drawer_all_items">Kaikki kohteet</string>
+    <string name="home_drawer_all_items">Kaikki kohteet</string>
   <string name="sl_sync_banner_title">Synkronoi aliaksesi SimpleLoginista</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">Sinulla on SimpleLoginissa %d Proton Passista puuttuva alias. Haluatko synkronoida sen?</item>

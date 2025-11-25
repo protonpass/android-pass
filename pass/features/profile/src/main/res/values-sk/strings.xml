@@ -29,8 +29,7 @@
   <string name="app_lock_ten_minutes">Po 10 minútach</string>
   <string name="app_lock_one_hour">Po 1 hodine</string>
   <string name="app_lock_four_hours">Po 4 hodinách</string>
-  <string name="profile_account_plan_name_trial">Skúšobná verzia Pass Plus</string>
-  <string name="app_lock_config_none">Žiadny</string>
+    <string name="app_lock_config_none">Žiadny</string>
   <string name="app_lock_config_biometric">Biometria</string>
   <string name="app_lock_config_pin_code">PIN kód</string>
   <string name="app_lock_config_app_lock_time">Automatické uzamknutie</string>

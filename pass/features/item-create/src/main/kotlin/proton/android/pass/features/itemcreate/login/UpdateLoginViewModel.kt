@@ -97,7 +97,6 @@ import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.Updat
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
@@ -119,7 +118,6 @@ class UpdateLoginViewModel @Inject constructor(
     private val renameAttachments: RenameAttachments,
     private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
     passwordStrengthCalculator: PasswordStrengthCalculator,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     accountManager: AccountManager,
     clipboardManager: ClipboardManager,
     observeCurrentUser: ObserveCurrentUser,
@@ -153,7 +151,6 @@ class UpdateLoginViewModel @Inject constructor(
     attachmentsHandler = attachmentsHandler,
     customFieldHandler = customFieldHandler,
     userPreferencesRepository = userPreferencesRepository,
-    featureFlagsRepository = featureFlagsRepository,
     customFieldDraftRepository = customFieldDraftRepository,
     loginItemFormProcessor = loginItemFormProcessor,
     savedStateHandleProvider = savedStateHandleProvider

@@ -29,8 +29,7 @@
   <string name="app_lock_ten_minutes">Čez 10 minut</string>
   <string name="app_lock_one_hour">Po 1 uri</string>
   <string name="app_lock_four_hours">Po 4 urah</string>
-  <string name="profile_account_plan_name_trial">Pass Plus preizkus</string>
-  <string name="app_lock_config_none">Brez</string>
+    <string name="app_lock_config_none">Brez</string>
   <string name="app_lock_config_biometric">Biometrični</string>
   <string name="app_lock_config_pin_code">PIN koda</string>
   <string name="app_lock_config_app_lock_time">Samodejno zaklepanje</string>

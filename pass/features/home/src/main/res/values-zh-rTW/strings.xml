@@ -46,10 +46,7 @@
   <string name="home_autofill_banner_title">享受自動填入的神奇魔力</string>
   <string name="home_autofill_banner_text">輕輕一按，大功告成！您的使用者名稱和密碼就馬上填好。</string>
   <string name="home_autofill_banner_settings">啟用自動填滿＞</string>
-  <string name="home_trial_banner_title">我們為您準備的迎賓禮</string>
-  <string name="home_trial_banner_text">為期 7 天完全免費體驗頂級質子版功能。Proton Pass 授權後首週七天內皆可額外享用。</string>
-  <string name="home_trial_banner_settings">瞭解更多 ›</string>
-  <string name="home_drawer_all_items">所有項目</string>
+    <string name="home_drawer_all_items">所有項目</string>
   <string name="sl_sync_banner_title">從 SimpleLogin 同步你的別名</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="other">你有 %d 個別名存在於 SimpleLogin ，但未同步到 Proton Pass 。是否需要進行同步？</item>

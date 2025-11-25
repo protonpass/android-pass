@@ -54,9 +54,7 @@ class CanDisplayTotpImpl @Inject constructor(
     }.flatMapLatest { id ->
         getUserPlan(id).flatMapLatest { plan ->
             when (plan.planType) {
-                is PlanType.Paid,
-                is PlanType.Trial -> flowOf(true)
-
+                is PlanType.Paid -> flowOf(true)
                 is PlanType.Free,
                 is PlanType.Unknown -> when (val limit = plan.totpLimit) {
                     PlanLimit.Unlimited -> flowOf(true)

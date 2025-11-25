@@ -25,8 +25,6 @@ sealed interface OnBoardingTipPage {
 
     data object Autofill : OnBoardingTipPage
 
-    data object Trial : OnBoardingTipPage
-
     @JvmInline
     value class Invite(val pendingInvite: PendingInvite) : OnBoardingTipPage
 

@@ -28,8 +28,6 @@ sealed interface OnBoardingTipsEvent {
 
     data object Unknown : OnBoardingTipsEvent
 
-    data object OpenTrialScreen : OnBoardingTipsEvent
-
     @JvmInline
     value class OpenInviteScreen(val inviteToken: InviteToken) : OnBoardingTipsEvent
 

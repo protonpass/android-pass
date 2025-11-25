@@ -23,5 +23,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.Plan
 
 interface PlanRepository {
-    fun observePlan(userId: UserId, forceRefresh: Boolean = false): Flow<Plan>
+    fun observePlan(userId: UserId): Flow<Plan>
+
+    suspend fun refreshPlan(userId: UserId)
 }

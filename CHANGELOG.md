@@ -6,6 +6,16 @@
 
 ### Other
 
+## 1.36.0 (2025-11-25)
+
+### Features :tada:
+
+- Password history
+
+### Fixes :bug:
+
+- Bug fixes and improvements.
+
 ## 1.35.1 (2025-11-21)
 
 ### Fixes :bug:

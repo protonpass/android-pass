@@ -27,8 +27,7 @@
   <string name="bottomsheet_edit_vault_button">Захаваць</string>
   <string name="bottomsheet_cannot_create_more_vaults">Вы дасягнулі абмежавання па колькасці сховішчаў, якія вы можаце стварыць. Стварэнне неабмежаванай колькасці сховішчаў стане даступна пасля паляпшэння падпіскі.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Палепшыце падпіску свайго ўліковага запісу, каб мець магчымасць узаемадзейнічаць з іншымі сховішчамі.</string>
-  <string name="bottomsheet_upgrade_now">Палепшыць</string>
-  <string name="bottomsheet_edit">Рэдагаваць</string>
+    <string name="bottomsheet_edit">Рэдагаваць</string>
   <string name="bottomsheet_migrate">Перамясціць усе элементы ў іншае сховішча</string>
   <string name="bottomsheet_delete_vault">Выдаліць сховішча</string>
   <string name="bottomsheet_share_vault">Абагуліць</string>

@@ -46,10 +46,7 @@
   <string name="home_autofill_banner_title">自動入力マジックをお楽しみください</string>
   <string name="home_autofill_banner_text">ワンタップでユーザー名とパスワードが即座に入力されます。</string>
   <string name="home_autofill_banner_settings">自動入力を有効にする ›</string>
-  <string name="home_trial_banner_title">無料トライアルをお楽しみください</string>
-  <string name="home_trial_banner_text">期間限定で利用可能なすべての限定機能をチェックする</string>
-  <string name="home_trial_banner_settings">もっと詳しく ›</string>
-  <string name="home_drawer_all_items">すべてのアイテム</string>
+    <string name="home_drawer_all_items">すべてのアイテム</string>
   <string name="sl_sync_banner_title">SimpleLoginからエイリアスを同期</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="other">SimpleLogin に存在し Proton Pass に存在しないエイリアスが、%d 件あります。インポートしますか？</item>

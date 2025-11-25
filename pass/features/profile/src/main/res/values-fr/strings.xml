@@ -29,8 +29,7 @@
   <string name="app_lock_ten_minutes">Après 10 minutes</string>
   <string name="app_lock_one_hour">Après 1 heure</string>
   <string name="app_lock_four_hours">Après 4 heures</string>
-  <string name="profile_account_plan_name_trial">Version d\'essai de Proton Pass Plus</string>
-  <string name="app_lock_config_none">Aucun verrouillage</string>
+    <string name="app_lock_config_none">Aucun verrouillage</string>
   <string name="app_lock_config_biometric">Biométrie</string>
   <string name="app_lock_config_pin_code">Code PIN</string>
   <string name="app_lock_config_app_lock_time">Verrouillage automatique</string>

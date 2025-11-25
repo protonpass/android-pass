@@ -68,9 +68,7 @@ class ShareFromItemViewModel @Inject constructor(
     private val canUsePaidFeaturesFlow = getUserPlan()
         .map { userPlan ->
             when (userPlan.planType) {
-                is PlanType.Paid,
-                is PlanType.Trial -> true
-
+                is PlanType.Paid -> true
                 is PlanType.Free,
                 is PlanType.Unknown -> false
             }

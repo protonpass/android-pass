@@ -27,8 +27,7 @@
   <string name="bottomsheet_edit_vault_button">Сохранить</string>
   <string name="bottomsheet_cannot_create_more_vaults">Вы достигли лимита на количество хранилищ, которые можно создать. Создавайте неограниченное количество хранилищ, улучшив свою подписку.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Чтобы взаимодействовать с другими хранилищами, вам нужно улучшить свой аккаунт.</string>
-  <string name="bottomsheet_upgrade_now">Улучшить сейчас</string>
-  <string name="bottomsheet_edit">Редактировать</string>
+    <string name="bottomsheet_edit">Редактировать</string>
   <string name="bottomsheet_migrate">Переместить все элементы в другое хранилище</string>
   <string name="bottomsheet_delete_vault">Удалить хранилище</string>
   <string name="bottomsheet_share_vault">Поделиться</string>

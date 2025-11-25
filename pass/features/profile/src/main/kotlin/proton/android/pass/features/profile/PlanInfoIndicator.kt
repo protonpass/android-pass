@@ -29,12 +29,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.R as CompR
 
@@ -42,13 +41,6 @@ import proton.android.pass.composecomponents.impl.R as CompR
 internal fun PlanInfoIndicator(modifier: Modifier = Modifier, planInfo: PlanInfo) {
     val resources = when (planInfo) {
         PlanInfo.Hide -> null
-        is PlanInfo.Trial -> {
-            PlanResources(
-                icon = CompR.drawable.account_trial_indicator,
-                color = PassTheme.colors.interactionNormMajor2,
-                text = stringResource(R.string.profile_account_plan_name_trial)
-            )
-        }
 
         is PlanInfo.Unlimited -> {
             PlanResources(
@@ -88,17 +80,10 @@ private data class PlanResources(
 
 @Preview
 @Composable
-internal fun PlanInfoIndicatorPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
-    val info = if (input.second) {
-        PlanInfo.Trial
-    } else {
-        PlanInfo.Unlimited(planName = "Example plan")
-    }
-    PassTheme(isDark = input.first) {
+internal fun PlanInfoIndicatorPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
         Surface {
-            PlanInfoIndicator(planInfo = info)
+            PlanInfoIndicator(planInfo = PlanInfo.Unlimited(planName = "Example plan"))
         }
     }
 }

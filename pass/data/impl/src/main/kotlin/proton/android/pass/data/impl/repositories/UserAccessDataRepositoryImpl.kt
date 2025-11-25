@@ -21,18 +21,24 @@ package proton.android.pass.data.impl.repositories
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
+import proton.android.pass.data.impl.db.entities.PlanEntity
 import proton.android.pass.data.impl.db.entities.UserAccessDataEntity
+import proton.android.pass.data.impl.local.LocalPlanDataSource
 import proton.android.pass.data.impl.local.LocalUserAccessDataDataSource
 import proton.android.pass.data.impl.remote.accessdata.RemoteUserAccessDataDataSource
+import proton.android.pass.data.impl.responses.PlanResponse
 import proton.android.pass.data.impl.responses.UserAccessResponse
 import proton.android.pass.domain.UserAccessData
 import javax.inject.Inject
 
 class UserAccessDataRepositoryImpl @Inject constructor(
     private val remoteUserAccessDataDataSource: RemoteUserAccessDataDataSource,
-    private val localUserAccessDataDataSource: LocalUserAccessDataDataSource
+    private val localUserAccessDataDataSource: LocalUserAccessDataDataSource,
+    private val localPlanDataSource: LocalPlanDataSource,
+    private val clock: Clock
 ) : UserAccessDataRepository {
 
     override fun observe(userId: UserId): Flow<UserAccessData?> = localUserAccessDataDataSource.observe(userId)
@@ -46,10 +52,10 @@ class UserAccessDataRepositoryImpl @Inject constructor(
     }
 
     override suspend fun refresh(userId: UserId) {
-        val userAccessDataResponse = remoteUserAccessDataDataSource.getUserAccessData(userId)
+        val userAccessDataResponse = remoteUserAccessDataDataSource.retrieveUserAccessData(userId)
         val userAccessData = observe(userId).first()
 
-        when {
+        val response = when {
             userAccessData == null -> userAccessDataResponse
             userAccessData.isSimpleLoginSyncEnabled -> userAccessDataResponse
             else -> userAccessDataResponse.copy(
@@ -59,8 +65,28 @@ class UserAccessDataRepositoryImpl @Inject constructor(
                     )
                 )
             )
-        }.also { response -> localUserAccessDataDataSource.store(response.toEntity(userId)) }
+        }
+        val userAccessDataEntity = response.toEntity(userId)
+        val planEntity = userAccessDataResponse.accessResponse.planResponse.toEntity(
+            userId,
+            clock.now().epochSeconds
+        )
+        localPlanDataSource.storePlan(planEntity)
+        localUserAccessDataDataSource.store(userAccessDataEntity)
     }
+
+    private fun PlanResponse.toEntity(userId: UserId, epochSeconds: Long): PlanEntity = PlanEntity(
+        userId = userId.id,
+        vaultLimit = vaultLimit ?: -1,
+        aliasLimit = aliasLimit ?: -1,
+        totpLimit = totpLimit ?: -1,
+        type = type,
+        internalName = internalName,
+        displayName = displayName,
+        hideUpgrade = hideUpgrade,
+        trialEnd = trialEnd,
+        updatedAt = epochSeconds
+    )
 
     private fun UserAccessResponse.toEntity(userId: UserId) = UserAccessDataEntity(
         userId = userId.id,

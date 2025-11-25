@@ -16,10 +16,7 @@
   <string name="home_autofill_banner_title">Gled deg over magien med AutoFyll</string>
   <string name="home_autofill_banner_text">Ett trykk, og – vips! – fylles brukernavnet og passordet ditt ut umiddelbart.</string>
   <string name="home_autofill_banner_settings">Slå på Autofyll ›</string>
-  <string name="home_trial_banner_title">Vår velkomstgave til deg</string>
-  <string name="home_trial_banner_text">7 dager for å prøve premiumfunksjoner gratis. Bare i løpet av den første uken med Proton Pass.</string>
-  <string name="home_trial_banner_settings">Lær mer ›</string>
-  <string name="home_notification_permission_banner_title">Få viktige oppdateringer</string>
+    <string name="home_notification_permission_banner_title">Få viktige oppdateringer</string>
   <string name="home_notification_permission_banner_text">Aktiver push-varsler for å bli informert når andre deler et hvelv med deg.</string>
   <string name="home_notification_permission_banner_settings">Aktiver rettighet ›</string>
   <string name="home_invite_banner_title">Hvelv delt med deg</string>

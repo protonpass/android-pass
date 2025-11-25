@@ -24,7 +24,7 @@ import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 
 interface ObserveUpgradeInfo {
-    operator fun invoke(userId: UserId? = null, forceRefresh: Boolean = false): Flow<UpgradeInfo>
+    operator fun invoke(userId: UserId? = null): Flow<UpgradeInfo>
 }
 
 data class UpgradeInfo(

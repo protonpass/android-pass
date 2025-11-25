@@ -266,9 +266,6 @@ import proton.android.pass.features.sl.sync.shared.navigation.simpleLoginSyncNav
 import proton.android.pass.features.sync.navigation.SyncNavDestination
 import proton.android.pass.features.sync.navigation.SyncNavItem
 import proton.android.pass.features.sync.navigation.syncNavGraph
-import proton.android.pass.features.trial.TrialNavigation
-import proton.android.pass.features.trial.TrialScreen
-import proton.android.pass.features.trial.trialGraph
 import proton.android.pass.features.upsell.navigation.UpsellNavDestination
 import proton.android.pass.features.upsell.navigation.UpsellNavItem
 import proton.android.pass.features.upsell.navigation.upsellNavGraph
@@ -2180,13 +2177,6 @@ fun NavGraphBuilder.appGraph(
         onNavigateBack = { onNavigate(AppNavigation.Finish) }
     )
     featureFlagsGraph()
-    trialGraph {
-        when (it) {
-            TrialNavigation.CloseScreen -> appNavigator.navigateBack()
-            TrialNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
-        }
-    }
-
     securityCenterNavGraph(
         onNavigated = { destination ->
             when (destination) {

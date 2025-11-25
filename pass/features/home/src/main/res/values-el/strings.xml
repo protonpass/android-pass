@@ -46,10 +46,7 @@
   <string name="home_autofill_banner_title">Απολαύστε τη μαγεία της Αυτόματης Συμπλήρωσης</string>
   <string name="home_autofill_banner_text">Ένα πάτημα και—presto!—το όνομα χρήστη και ο κωδικός πρόσβασής σας συμπληρώνονται αμέσως.</string>
   <string name="home_autofill_banner_settings">Ενεργοποίηση Αυτόματης Συμπλήρωσης ›</string>
-  <string name="home_trial_banner_title">Το δώρο μας καλωσορίσματος σας</string>
-  <string name="home_trial_banner_text">7 ημέρες για να δοκιμάσετε δωρεάν premium χαρακτηριστικά. Μόνο κατά την πρώτη εβδομάδα χρησιμοποιώντας το Proton Pass.</string>
-  <string name="home_trial_banner_settings">Μάθετε περισσότερα ›</string>
-  <string name="home_drawer_all_items">Ολα τα αντικείμενα</string>
+    <string name="home_drawer_all_items">Ολα τα αντικείμενα</string>
   <string name="sl_sync_banner_title">Συγχρονίστε τα ψευδώνυμά σας από το SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">Έχετε %d ψευδώνυμο που υπάρχει στο SimpleLogin αλλά λείπει στο Proton Pass. Θέλετε να το συγχρονίσετε;</item>

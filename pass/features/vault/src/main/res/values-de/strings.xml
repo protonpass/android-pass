@@ -27,8 +27,7 @@
   <string name="bottomsheet_edit_vault_button">Speichern</string>
   <string name="bottomsheet_cannot_create_more_vaults">Du hast das Limit an Tresoren erreicht, die du erstellen kannst. Ein Upgrade deines Abonnements ermöglicht dir das Erstellen von unbegrenzten Tresoren.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Um mit deinen anderen Tresoren zu interagieren, musst du dein Konto upgraden.</string>
-  <string name="bottomsheet_upgrade_now">Jetzt upgraden</string>
-  <string name="bottomsheet_edit">Bearbeiten</string>
+    <string name="bottomsheet_edit">Bearbeiten</string>
   <string name="bottomsheet_migrate">Alle Einträge in einen anderen Tresor verschieben</string>
   <string name="bottomsheet_delete_vault">Tresor löschen</string>
   <string name="bottomsheet_share_vault">Teilen</string>

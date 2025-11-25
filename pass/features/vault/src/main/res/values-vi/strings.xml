@@ -27,8 +27,7 @@
   <string name="bottomsheet_edit_vault_button">Lưu</string>
   <string name="bottomsheet_cannot_create_more_vaults">Bạn đã đạt giới hạn số két sắt được phép tạo. Để tạo két sắt vô giới hạn, bạn hãy nâng cấp gói đăng ký của mình.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Để tương tác với các két sắt khác, bạn cần phải nâng cấp tài khoản của mình.</string>
-  <string name="bottomsheet_upgrade_now">Nâng cấp ngay</string>
-  <string name="bottomsheet_edit">Sửa</string>
+    <string name="bottomsheet_edit">Sửa</string>
   <string name="bottomsheet_migrate">Chuyển tất cả mục sang két sắt khác</string>
   <string name="bottomsheet_delete_vault">Xóa két sắt</string>
   <string name="bottomsheet_share_vault">Chia sẽ</string>

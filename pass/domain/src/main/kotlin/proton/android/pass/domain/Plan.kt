@@ -34,9 +34,7 @@ data class Plan(
 
     val isPaidPlan: Boolean = planType is PlanType.Paid
 
-    val isTrialPlan: Boolean = planType is PlanType.Trial
-
-    val hasPlanWithAccess = planType is PlanType.Paid || planType is PlanType.Trial
+    val hasPlanWithAccess = planType is PlanType.Paid
 
     val internalName: String = planType.internalName
 }
@@ -74,16 +72,6 @@ sealed class PlanType(
     data class Unknown(
         private val name: String = "Unknown",
         private val displayName: String = "Unknown"
-    ) : PlanType(
-        internalName = name,
-        humanReadableName = displayName
-    )
-
-    @Stable
-    data class Trial(
-        private val name: String,
-        private val displayName: String,
-        val remainingDays: Int
     ) : PlanType(
         internalName = name,
         humanReadableName = displayName

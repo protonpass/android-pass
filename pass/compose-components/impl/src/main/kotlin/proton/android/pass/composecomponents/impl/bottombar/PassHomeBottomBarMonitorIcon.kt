@@ -59,8 +59,7 @@ fun PassHomeBottomBarMonitorIcon(
             }
         }
 
-        is PlanType.Paid,
-        is PlanType.Trial -> {
+        is PlanType.Paid -> {
             when (monitorStatus) {
                 MonitorStatusPreference.BreachIssues -> {
                     CompR.drawable.ic_shield_monitor_warning_monitoring_badge to true

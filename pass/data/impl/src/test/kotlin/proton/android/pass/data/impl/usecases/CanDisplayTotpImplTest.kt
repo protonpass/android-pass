@@ -72,17 +72,6 @@ internal class CanDisplayTotpImplTest {
     }
 
     @Test
-    fun `trial plan can display all totps`() = runTest {
-        setupWithPlan(TRIAL_PLAN, totpLimit = 1)
-
-        val items = setupWithItems(10)
-        items.forEach {
-            val canDisplay = instance.invoke(shareId = it.shareId, itemId = it.itemId).first()
-            assertThat(canDisplay).isTrue()
-        }
-    }
-
-    @Test
     fun `free plan can display first N totps`() = runTest {
         setupWithPlan(TestConstants.FreePlanType, totpLimit = 3)
 
@@ -131,7 +120,6 @@ internal class CanDisplayTotpImplTest {
     companion object {
         private val USER_ID = UserId("123")
         private val PAID_PLAN = PlanType.Paid.Plus("", "")
-        private val TRIAL_PLAN = PlanType.Trial("", "", 1)
     }
 
 }

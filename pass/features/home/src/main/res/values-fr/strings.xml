@@ -46,10 +46,7 @@
   <string name="home_autofill_banner_title">Profitez du confort du remplissage automatique</string>
   <string name="home_autofill_banner_text">Il vous suffit d\'appuyer pour que votre nom d\'utilisateur et votre mot de passe soient immédiatement renseignés.</string>
   <string name="home_autofill_banner_settings">Activer le remplissage automatique ›</string>
-  <string name="home_trial_banner_title">Notre cadeau de bienvenue</string>
-  <string name="home_trial_banner_text">7 jours pour essayer gratuitement les fonctionnalités premium, lors de votre première semaine d\'utilisation de Proton Pass.</string>
-  <string name="home_trial_banner_settings">En savoir plus ›</string>
-  <string name="home_drawer_all_items">Tous les éléments</string>
+    <string name="home_drawer_all_items">Tous les éléments</string>
   <string name="sl_sync_banner_title">Synchronisez vos alias depuis SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">Vous avez %d alias dans SimpleLogin mais absent de Proton Pass. Souhaitez-vous le synchroniser ?</item>

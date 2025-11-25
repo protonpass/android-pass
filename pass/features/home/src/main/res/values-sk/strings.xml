@@ -46,10 +46,7 @@
   <string name="home_autofill_banner_title">Vychutnajte si čaro automatického vypĺňania</string>
   <string name="home_autofill_banner_text">Jedno ťuknutie a hotovo! Vaše používateľské meno a heslo bude automaticky vyplnené.</string>
   <string name="home_autofill_banner_settings">Zapnúť automatické vypĺňanie ›</string>
-  <string name="home_trial_banner_title">Náš uvítací darček pre vás</string>
-  <string name="home_trial_banner_text">7 dní na bezplatné vyskúšanie prémiových funkcií. Len počas vášho prvého týždňa s Proton Pass.</string>
-  <string name="home_trial_banner_settings">Zistiť viac ›</string>
-  <string name="home_drawer_all_items">Všetky položky</string>
+    <string name="home_drawer_all_items">Všetky položky</string>
   <string name="sl_sync_banner_title">Synchronizujte svoje aliasy z aplikácie SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">Máte %d alias, ktorý sa nachádza v SimpleLogin, ale chýba v Proton Pass. Chcete ho synchronizovať?</item>

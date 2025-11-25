@@ -29,8 +29,7 @@
   <string name="app_lock_ten_minutes">Sau 10 phút</string>
   <string name="app_lock_one_hour">Sau 1 giờ</string>
   <string name="app_lock_four_hours">Sau 4 giờ</string>
-  <string name="profile_account_plan_name_trial">Dùng thử Pass Plus</string>
-  <string name="app_lock_config_none">Không</string>
+    <string name="app_lock_config_none">Không</string>
   <string name="app_lock_config_biometric">Sinh trắc học</string>
   <string name="app_lock_config_pin_code">Mã PIN</string>
   <string name="app_lock_config_app_lock_time">Khóa tự động</string>

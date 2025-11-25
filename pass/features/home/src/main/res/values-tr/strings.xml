@@ -46,10 +46,7 @@
   <string name="home_autofill_banner_title">Otomatik doldurmanın tadını çıkarın</string>
   <string name="home_autofill_banner_text">Bir dokunuşla tamam. Kullanıcı adınız ve parolanız anında doldurulur.</string>
   <string name="home_autofill_banner_settings">Otomatik doldurmayı aç ›</string>
-  <string name="home_trial_banner_title">Karşılama hediyemiz</string>
-  <string name="home_trial_banner_text">7 gün boyunca ücretli özellikleri ücretsiz olarak deneyin. Yalnızca Proton Pass ile ilk haftanızda.</string>
-  <string name="home_trial_banner_settings">Ayrıntılı bilgi alın ›</string>
-  <string name="home_drawer_all_items">Tüm ögeler</string>
+    <string name="home_drawer_all_items">Tüm ögeler</string>
   <string name="sl_sync_banner_title">Takma adlarınızı SimpleLogin ile eşitleyin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">SimpleLogin üzerinde bulunan ancak Proton Pass üzerinde bulunmayan %d takma adınız var. Bunu eşitlemek ister misiniz?</item>

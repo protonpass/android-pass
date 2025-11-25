@@ -75,7 +75,7 @@ class AccountViewModel @Inject constructor(
     private val currentUserFlow = observeCurrentUser().take(1)
 
     private val upgradeInfoFlow = currentUserFlow
-        .flatMapLatest { user -> observeUpgradeInfo(userId = user.userId, forceRefresh = true) }
+        .flatMapLatest { user -> observeUpgradeInfo(userId = user.userId) }
         .distinctUntilChanged()
 
     val state: StateFlow<AccountUiState> = combine(

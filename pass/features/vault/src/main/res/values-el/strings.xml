@@ -27,8 +27,7 @@
   <string name="bottomsheet_edit_vault_button">Αποθήκευση</string>
   <string name="bottomsheet_cannot_create_more_vaults">Έχετε φτάσει στο όριο των κρυπτών που μπορείτε να δημιουργήσετε. Δημιουργήστε απεριόριστο αριθμό κρυπτών κατά την αναβάθμιση της συνδρομής σας.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Για να αλληλεπιδράσετε με τις κρύπτες, πρέπει να αναβαθμίσετε τον λογαριασμό σας.</string>
-  <string name="bottomsheet_upgrade_now">Αναβάθμιση τώρα</string>
-  <string name="bottomsheet_edit">Επεξεργασία</string>
+    <string name="bottomsheet_edit">Επεξεργασία</string>
   <string name="bottomsheet_migrate">Μετακίνηση όλων των στοιχείων σε άλλη κρύπτη</string>
   <string name="bottomsheet_delete_vault">Διαγραφή κρύπτης</string>
   <string name="bottomsheet_share_vault">Κοινοποίηση</string>

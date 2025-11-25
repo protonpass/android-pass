@@ -23,6 +23,6 @@ import proton.android.pass.data.impl.responses.UserAccessResponse
 
 interface RemoteUserAccessDataDataSource {
 
-    suspend fun getUserAccessData(userId: UserId): UserAccessResponse
+    suspend fun retrieveUserAccessData(userId: UserId): UserAccessResponse
 
 }

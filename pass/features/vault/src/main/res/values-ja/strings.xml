@@ -27,8 +27,7 @@
   <string name="bottomsheet_edit_vault_button">保存</string>
   <string name="bottomsheet_cannot_create_more_vaults">作成できる保管庫の上限に達しました。サブスクリプションをアップグレードすると、保管庫を無制限に作成できます。</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">他の保管庫とやり取りするには、アカウントをアップグレードする必要があります。</string>
-  <string name="bottomsheet_upgrade_now">今すぐアップグレード</string>
-  <string name="bottomsheet_edit">編集</string>
+    <string name="bottomsheet_edit">編集</string>
   <string name="bottomsheet_migrate">すべてのアイテムを別の保管庫に移動</string>
   <string name="bottomsheet_delete_vault">保管庫を削除</string>
   <string name="bottomsheet_share_vault">共有</string>

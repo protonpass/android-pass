@@ -23,7 +23,6 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.impl.db.entities.PlanEntity
 import proton.android.pass.data.impl.local.LocalPlanDataSource
-import proton.android.pass.data.impl.responses.PlanResponse
 
 class TestLocalPlanDataSource : LocalPlanDataSource {
 
@@ -40,7 +39,7 @@ class TestLocalPlanDataSource : LocalPlanDataSource {
 
     override fun observePlan(userId: UserId): Flow<PlanEntity?> = planFlow
 
-    override suspend fun storePlan(userId: UserId, planResponse: PlanResponse) {
+    override suspend fun storePlan(planEntity: PlanEntity) {
         storePlanResult.getOrThrow()
     }
 }

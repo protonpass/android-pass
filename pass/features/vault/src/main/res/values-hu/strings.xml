@@ -27,8 +27,7 @@
   <string name="bottomsheet_edit_vault_button">Mentés</string>
   <string name="bottomsheet_cannot_create_more_vaults">Elérte a létrehozható tárolók számát. Előfizetésének módosításakor korlátlan számú tárolót hozhat létre.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">A többi tároló kezeléséhez nagyobb csomagra kell váltania.</string>
-  <string name="bottomsheet_upgrade_now">Váltás nagyobb csomagra</string>
-  <string name="bottomsheet_edit">Szerkesztés</string>
+    <string name="bottomsheet_edit">Szerkesztés</string>
   <string name="bottomsheet_migrate">Összes elem áthelyezése egy másik tárolóba</string>
   <string name="bottomsheet_delete_vault">Tároló törlése</string>
   <string name="bottomsheet_share_vault">Megosztás</string>

@@ -207,25 +207,6 @@ class SelectVaultBottomSheetTest {
     }
 
     @Test
-    fun upgradeIsNotShownInTrialPlan() {
-        setupPlan(true, PlanType.Trial("", "", remainingDays = 1))
-        setupVaults(1)
-
-        composeTestRule.apply {
-            setContent {
-                PassTheme {
-                    SelectVaultBottomsheet(
-                        onNavigate = {}
-                    )
-                }
-            }
-
-            val text = activity.getString(R.string.bottomsheet_upgrade_now)
-            onNodeWithText(text).assertDoesNotExist()
-        }
-    }
-
-    @Test
     fun canSelectOtherVaultInPaidPlan() {
         setupPlan(true, PlanType.Paid.Plus("", ""))
         setupVaults(3, primaryIndex = 1)

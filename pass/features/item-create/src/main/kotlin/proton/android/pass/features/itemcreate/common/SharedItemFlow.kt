@@ -34,7 +34,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.preferences.InternalSettingsRepository
 
 fun canDisplayWarningMessageForCreationFlow(
-    selectedShareIdMutableState: Option<ShareId>,
+    selectedShareIdMutableState: Option<ShareId>?,
     observeShare: ObserveShare,
     navShareId: Option<ShareId>,
     settingsRepository: InternalSettingsRepository

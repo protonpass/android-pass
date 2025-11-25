@@ -335,4 +335,5 @@
   <string name="cannot_create_items_dialog_title">无法创建项目</string>
   <string name="cannot_create_items_dialog_message">您没有任何具有编辑或管理员权限的保险库。请尝试在主应用程序中创建一个，或向您组织的管理员寻求支持。</string>
   <string name="wifi_security_type_field_label">安全类型</string>
+  <string name="functionality_not_available">This functionality is not available for your device.</string>
 </resources>

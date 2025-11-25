@@ -10,4 +10,6 @@
   <string name="no_session_found">Istuntoa ei löytynyt</string>
   <string name="auth_with_extra_password_failed">Tunnistautuminen lisäsalasanalla epäonnistui</string>
   <string name="auth_only_1_proton_account_failed">Vain yksi ilmainen Proton-tili sallitaan.</string>
+  <string name="warning_dialog_reload_app_after_purchase_description">Teidät ohjataan pian verkkosivustollemme. Jos ostat tilauksen, käynnistä sovellus uudelleen.</string>
+  <string name="warning_dialog_reload_app_after_purchase_reminder">Älä muistuta uudelleen</string>
 </resources>

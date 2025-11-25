@@ -335,4 +335,5 @@
   <string name="cannot_create_items_dialog_title">Kan ikke opprette elementer</string>
   <string name="cannot_create_items_dialog_message">Du har ingen hvelv med redigerings- eller administratortilgang. Prøv å opprette en i hovedappen, eller be organisasjonens administrator om støtte.</string>
   <string name="wifi_security_type_field_label">Sikkerhetstype</string>
+  <string name="functionality_not_available">This functionality is not available for your device.</string>
 </resources>

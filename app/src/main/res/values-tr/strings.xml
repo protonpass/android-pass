@@ -10,4 +10,6 @@
   <string name="no_session_found">Herhangi bir oturum bulunamadı</string>
   <string name="auth_with_extra_password_failed">Ek parola ile kimlik doğrulanamadı</string>
   <string name="auth_only_1_proton_account_failed">Yalnızca bir ücretsiz Proton hesabına izin verilir.</string>
+  <string name="warning_dialog_reload_app_after_purchase_description">Sitemize yönlendirilmek üzeresiniz. Bir tarife satın alırsanız lütfen uygulamayı yeniden başlatın.</string>
+  <string name="warning_dialog_reload_app_after_purchase_reminder">Bir daha hatırlatma</string>
 </resources>

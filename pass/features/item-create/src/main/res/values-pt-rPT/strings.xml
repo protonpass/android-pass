@@ -335,4 +335,5 @@
   <string name="cannot_create_items_dialog_title">Não é possível criar itens.</string>
   <string name="cannot_create_items_dialog_message">Não tem cofres com acesso de editor ou de administrador. Tente criar um cofre na aplicação principal ou peça ajuda ao administrador da sua organização.</string>
   <string name="wifi_security_type_field_label">Tipo de segurança</string>
+  <string name="functionality_not_available">This functionality is not available for your device.</string>
 </resources>

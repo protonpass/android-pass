@@ -33,9 +33,9 @@
   <string name="password_mode_random">Выпадковы пароль</string>
   <string name="password_mode_icon">Значок рэжыму пароля</string>
   <string name="password_words_separator_icon">Раздзяляльнік слоў для пароля</string>
-  <string name="password_history_title">Згенераваныя паролі</string>
+  <string name="password_history_title">Згенерыраваныя паролі</string>
   <string name="password_history_empty">Няма гісторыі</string>
-  <string name="password_history_description">Згенераваныя паролі будуць захоўвацца на працягу 2 тыдняў.</string>
+  <string name="password_history_description">Згенерыраваныя паролі будуць захоўвацца на працягу 2 тыдняў.</string>
   <string name="password_history_today">Сёння, %s</string>
   <string name="password_history_yesterday">Учора, %s</string>
   <string name="password_history_before_yesterday">Ёсць %d дзён, %s</string>

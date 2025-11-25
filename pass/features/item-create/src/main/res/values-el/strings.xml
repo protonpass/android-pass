@@ -335,4 +335,5 @@
   <string name="cannot_create_items_dialog_title">Δεν είναι δυνατή η δημιουργία στοιχείων</string>
   <string name="cannot_create_items_dialog_message">Δεν έχετε κρύπτες με πρόσβαση συντάκτη ή διαχειριστή. Δοκιμάστε να δημιουργήσετε μία στην κύρια εφαρμογή ή ζητήστε υποστήριξη από τον διαχειριστή του οργανισμού σας.</string>
   <string name="wifi_security_type_field_label">Τύπος ασφάλειας</string>
+  <string name="functionality_not_available">Αυτή η λειτουργία δεν είναι διαθέσιμη για τη συσκευή σας.</string>
 </resources>

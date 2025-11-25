@@ -28,7 +28,7 @@
   <string name="bottomsheet_cannot_create_more_vaults">Du har nået grænsen for, hvor mange bokse du kan oprette. Opret et ubegrænset antal bokse, når du opgraderer dit abonnement.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Hvis du vil interagere med dine andre bokse, skal du opgradere din konto.</string>
   <string name="bottomsheet_upgrade_now">Opgradér nu</string>
-  <string name="bottomsheet_edit">Redigér</string>
+  <string name="bottomsheet_edit">Rediger</string>
   <string name="bottomsheet_migrate">Flyt alle elementer til en anden boks</string>
   <string name="bottomsheet_delete_vault">Slet boks</string>
   <string name="bottomsheet_share_vault">Del</string>

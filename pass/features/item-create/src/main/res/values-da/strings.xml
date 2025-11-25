@@ -144,9 +144,9 @@
   <string name="identity_field_floor_title">Etage</string>
   <string name="identity_field_county_title">Land</string>
   <string name="identity_field_linkedin_title">LinkedIn</string>
-  <string name="identity_field_reddit_title">Reddit - brugernavn</string>
+  <string name="identity_field_reddit_title">Reddit-brugernavn</string>
   <string name="identity_field_facebook_title">Facebook-adresse</string>
-  <string name="identity_field_yahoo_title">Yahoo - brugernavn</string>
+  <string name="identity_field_yahoo_title">Yahoo-brugernavn</string>
   <string name="identity_field_instagram_title">Instagram-brugernavn</string>
   <string name="identity_field_personal_website_title">Personlig webstedsadresse</string>
   <string name="identity_field_work_phone_number_title">Arbejdstelefonnummer</string>
@@ -335,4 +335,5 @@
   <string name="cannot_create_items_dialog_title">Kan ikke oprette elementer</string>
   <string name="cannot_create_items_dialog_message">Du har ikke nogen bokse med redaktør- eller administratoradgang. Prøv at oprette en i hovedappen, eller spørg din organisations administrator om hjælp.</string>
   <string name="wifi_security_type_field_label">Sikkerhedstype</string>
+  <string name="functionality_not_available">Denne funktionalitet er ikke tilgængelig på din enhed.</string>
 </resources>

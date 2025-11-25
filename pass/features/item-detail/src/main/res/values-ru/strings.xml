@@ -7,7 +7,7 @@
   <string name="top_bar_edit_button_text">Редактировать</string>
   <!-- Alias details -->
   <string name="field_alias_title">Адрес псевдонима</string>
-  <string name="field_alias_disabled_title">Адрес псевдонима (отключен)</string>
+  <string name="field_alias_disabled_title">Адрес псевдонима (отключён)</string>
   <string name="alias_copied_to_clipboard">Псевдоним скопирован</string>
   <string name="alias_detail_field_mailboxes_title">Пересылка на</string>
   <string name="alias_create_login_from_alias">Создать логин</string>

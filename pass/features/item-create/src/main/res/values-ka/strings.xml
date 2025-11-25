@@ -335,4 +335,5 @@
   <string name="cannot_create_items_dialog_title">ელემენტების შექმნა შეუძლებელია</string>
   <string name="cannot_create_items_dialog_message">You don\'t have any vaults with editor or admin access. Try creating one in the main app or ask your organization\'s administrator for support.</string>
   <string name="wifi_security_type_field_label">Security type</string>
+  <string name="functionality_not_available">This functionality is not available for your device.</string>
 </resources>

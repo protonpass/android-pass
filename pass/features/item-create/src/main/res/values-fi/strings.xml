@@ -335,4 +335,5 @@
   <string name="cannot_create_items_dialog_title">Kohteiden luonti ei onnistu</string>
   <string name="cannot_create_items_dialog_message">Sinulla ei ole holveja muokkaus- tai hallintaoikeuksilla. Yritä luoda holvi pääsovellukseen tai ole yhteydessä organisatiosi tukeen.</string>
   <string name="wifi_security_type_field_label">Suojauksen tyyppi</string>
+  <string name="functionality_not_available">Tämä toiminnallisuus ei ole käytettävissä laitteellesi.</string>
 </resources>

@@ -50,7 +50,7 @@
   <string name="action_cancel">Annuller</string>
   <string name="action_continue">Fortsæt</string>
   <string name="action_retry">Prøv igen</string>
-  <string name="action_edit">Redigér</string>
+  <string name="action_edit">Rediger</string>
   <string name="action_add">Tilføj</string>
   <string name="action_delete">Slet</string>
   <string name="action_make_default">Brug som standard</string>

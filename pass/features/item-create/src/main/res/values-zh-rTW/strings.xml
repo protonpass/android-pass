@@ -335,4 +335,5 @@
   <string name="cannot_create_items_dialog_title">無法建立項目</string>
   <string name="cannot_create_items_dialog_message">您沒有任何具有編輯者或管理員存取權限的保管庫。請嘗試在主應用程式中建立一個，或諮詢您組織機構的管理員以取得支援服務。</string>
   <string name="wifi_security_type_field_label">安全性類型</string>
+  <string name="functionality_not_available">This functionality is not available for your device.</string>
 </resources>

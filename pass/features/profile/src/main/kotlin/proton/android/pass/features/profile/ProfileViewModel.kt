@@ -314,7 +314,6 @@ class ProfileViewModel @Inject constructor(
                     accountType = AccountType.Unlimited
                 ) to false
 
-                is PlanType.Trial -> PlanInfo.Trial to info.isUpgradeAvailable
                 is PlanType.Unknown -> PlanInfo.Hide to info.isUpgradeAvailable
             }
         }

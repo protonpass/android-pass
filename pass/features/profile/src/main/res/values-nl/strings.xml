@@ -29,8 +29,7 @@
   <string name="app_lock_ten_minutes">Na 10 minuten</string>
   <string name="app_lock_one_hour">Na 1 uur</string>
   <string name="app_lock_four_hours">Na 4 uur</string>
-  <string name="profile_account_plan_name_trial">Proton Pass Plus-proefversie</string>
-  <string name="app_lock_config_none">Geen</string>
+    <string name="app_lock_config_none">Geen</string>
   <string name="app_lock_config_biometric">Biometrie</string>
   <string name="app_lock_config_pin_code">Pincode</string>
   <string name="app_lock_config_app_lock_time">Automatisch slot</string>

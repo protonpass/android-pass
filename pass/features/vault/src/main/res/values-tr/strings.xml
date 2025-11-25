@@ -27,8 +27,7 @@
   <string name="bottomsheet_edit_vault_button">Kaydet</string>
   <string name="bottomsheet_cannot_create_more_vaults">Oluşturabileceğiniz kasa sayısı sınırına ulaştınız. Abonelik tarifenizi yükselterek sınırsız sayıda kasa oluşturabilirsiniz.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Diğer kasalarla etkileşime geçebilmek için abonelik tarifenizi yükseltmelisiniz.</string>
-  <string name="bottomsheet_upgrade_now">Şimdi yükseltin</string>
-  <string name="bottomsheet_edit">Düzenle</string>
+    <string name="bottomsheet_edit">Düzenle</string>
   <string name="bottomsheet_migrate">Tüm ögeleri başka bir kasaya taşı</string>
   <string name="bottomsheet_delete_vault">Kasayı sil</string>
   <string name="bottomsheet_share_vault">Paylaş</string>

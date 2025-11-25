@@ -29,8 +29,7 @@
   <string name="app_lock_ten_minutes">Després de 10 minuts</string>
   <string name="app_lock_one_hour">Després d\'1 hora</string>
   <string name="app_lock_four_hours">Després de 4 hores</string>
-  <string name="profile_account_plan_name_trial">Prova de Pass Plus</string>
-  <string name="app_lock_config_none">Cap</string>
+    <string name="app_lock_config_none">Cap</string>
   <string name="app_lock_config_biometric">Biomètric</string>
   <string name="app_lock_config_pin_code">Codi PIN</string>
   <string name="app_lock_config_app_lock_time">Bloqueig automàtic</string>

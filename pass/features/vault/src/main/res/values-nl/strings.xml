@@ -27,8 +27,7 @@
   <string name="bottomsheet_edit_vault_button">Opslaan</string>
   <string name="bottomsheet_cannot_create_more_vaults">U heeft de limiet bereikt van kluizen die u kunt maken. Creëer onbeperkte kluizen wanneer u uw abonnement upgradet.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">Om te communiceren met uw andere kluizen, moet u uw account upgraden.</string>
-  <string name="bottomsheet_upgrade_now">Nu upgraden</string>
-  <string name="bottomsheet_edit">Bewerken</string>
+    <string name="bottomsheet_edit">Bewerken</string>
   <string name="bottomsheet_migrate">Verplaats alle items naar een andere kluis</string>
   <string name="bottomsheet_delete_vault">Kluis verwijderen</string>
   <string name="bottomsheet_share_vault">Delen</string>

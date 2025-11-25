@@ -37,7 +37,6 @@ import proton.android.pass.features.home.onboardingtips.OnBoardingTipPage.Autofi
 import proton.android.pass.features.home.onboardingtips.OnBoardingTipPage.Invite
 import proton.android.pass.features.home.onboardingtips.OnBoardingTipPage.NotificationPermission
 import proton.android.pass.features.home.onboardingtips.OnBoardingTipPage.SLSync
-import proton.android.pass.features.home.onboardingtips.OnBoardingTipPage.Trial
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -65,34 +64,6 @@ fun OnBoardingTipContent(
                 )
                 SwipeToDismiss(state = dismissState, background = {}) {
                     AutofillCard(
-                        onClick = { onClick(tipPage) },
-                        onDismiss = {
-                            scope.launch {
-                                dismissState.dismiss(DismissDirection.EndToStart)
-                                onDismiss(tipPage)
-                            }
-                        }
-                    )
-                }
-            }
-        }
-
-        AnimatedVisibility(
-            visible = tipPage == Trial,
-            enter = expandVertically(),
-            exit = shrinkVertically()
-        ) {
-            Box(modifier = Modifier.padding(Spacing.medium)) {
-                val dismissState = rememberDismissState(
-                    confirmStateChange = {
-                        if (it != DismissValue.Default) {
-                            onDismiss(tipPage)
-                        }
-                        true
-                    }
-                )
-                SwipeToDismiss(state = dismissState, background = {}) {
-                    TrialCard(
                         onClick = { onClick(tipPage) },
                         onDismiss = {
                             scope.launch {

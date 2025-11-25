@@ -42,20 +42,14 @@ class RefreshPlanImpl @Inject constructor(
 ) : RefreshPlan {
 
     override suspend fun invoke(userId: UserId) {
-        runCatching {
-            val oldPlan: Plan? = planRepository.observePlan(userId).firstOrNull()
-            val newPlan: Plan = planRepository.observePlan(userId, true)
-                .first()
-            val isOldPlanPaid = oldPlan?.isPaidPlan ?: false
-            if (isOldPlanPaid && newPlan.isFreePlan) {
-                val list = getAllActivePlans()
-                disableAllFreeAccountsButOne(list)
-            }
-        }.onSuccess {
-            PassLogger.i(TAG, "Plan refreshed")
-        }.onFailure {
-            PassLogger.w(TAG, "Error refreshing plan")
-            PassLogger.w(TAG, it)
+        PassLogger.i(TAG, "Refreshing plan for $userId")
+        val oldPlan: Plan? = planRepository.observePlan(userId).firstOrNull()
+        planRepository.refreshPlan(userId)
+        val newPlan: Plan = planRepository.observePlan(userId).first()
+        val isOldPlanPaid = oldPlan?.isPaidPlan ?: false
+        if (isOldPlanPaid && newPlan.isFreePlan) {
+            val list = getAllActivePlans()
+            disableAllFreeAccountsButOne(list)
         }
     }
 

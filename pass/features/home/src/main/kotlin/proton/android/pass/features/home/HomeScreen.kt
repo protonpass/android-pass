@@ -218,7 +218,6 @@ fun HomeScreen(
 
     LaunchedEffect(onBoardingTipsUiState.event) {
         val homeNavigationEvent = when (val event = onBoardingTipsUiState.event) {
-            OnBoardingTipsEvent.OpenTrialScreen -> HomeNavigation.TrialInfo
             is OnBoardingTipsEvent.OpenInviteScreen -> HomeNavigation.OpenInvite(event.inviteToken)
             is OnBoardingTipsEvent.OpenSLSyncSettingsScreen -> HomeNavigation.SLSyncSettings(event.shareId)
             OnBoardingTipsEvent.RequestNotificationPermission,

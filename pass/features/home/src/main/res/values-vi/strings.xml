@@ -46,10 +46,7 @@
   <string name="home_autofill_banner_title">Tận hưởng ma thuật của Tự động Điền</string>
   <string name="home_autofill_banner_text">Chỉ một chạm và—pốc!—tên đăng nhập và mật khẩu của bạn được điền vào ngay lập tức.</string>
   <string name="home_autofill_banner_settings">Bật Tự đồng Điền</string>
-  <string name="home_trial_banner_title">Quà tặng chào mừng của chúng tôi</string>
-  <string name="home_trial_banner_text">7 ngày miễn phí để dùng thử các tính năng cao cấp. Chỉ trong tuần đầu của bạn với Proton Pass.</string>
-  <string name="home_trial_banner_settings">Tìm hiểu thêm ›</string>
-  <string name="home_drawer_all_items">Tất cả mục</string>
+    <string name="home_drawer_all_items">Tất cả mục</string>
   <string name="sl_sync_banner_title">Đồng bộ bí danh của bạn từ SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="other">Bạn có %d bí danh có trong SimpleLogin nhưng thiếu trong Proton Pass. Bạn có muốn đồng bộ hóa không?</item>

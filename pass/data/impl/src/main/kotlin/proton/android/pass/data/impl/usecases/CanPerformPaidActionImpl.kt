@@ -31,6 +31,6 @@ class CanPerformPaidActionImpl @Inject constructor(
 ) : CanPerformPaidAction {
 
     override fun invoke(): Flow<Boolean> = getUserPlan()
-        .map { userPlan -> userPlan.isPaidPlan || userPlan.isTrialPlan }
+        .map { userPlan -> userPlan.isPaidPlan }
 
 }

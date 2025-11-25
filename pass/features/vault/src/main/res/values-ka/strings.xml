@@ -27,8 +27,7 @@
   <string name="bottomsheet_edit_vault_button">შენახვა</string>
   <string name="bottomsheet_cannot_create_more_vaults">მიაღწიეთ შესაძლო საცავების რაოდენობს ზღვარს. სატარიფო გეგმის აწევის შემთხვევაში საცავების რაოდენობა უსაზღვროა.</string>
   <string name="bottomsheet_cannot_select_not_primary_vault">სხვა საცავებთან ურთიერთობისთვის ტარიფის აწევა გჭირდებათ.</string>
-  <string name="bottomsheet_upgrade_now">ტარიფის განახლება</string>
-  <string name="bottomsheet_edit">ჩასწორება</string>
+    <string name="bottomsheet_edit">ჩასწორება</string>
   <string name="bottomsheet_migrate">ყველა ელემენტის სხვა საცავში გადატანა</string>
   <string name="bottomsheet_delete_vault">საცავის წაშლა</string>
   <string name="bottomsheet_share_vault">გაზიარება</string>

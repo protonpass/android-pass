@@ -28,7 +28,7 @@ class RemoteUserAccessDataDataSourceImpl @Inject constructor(
     private val apiProvider: ApiProvider
 ) : RemoteUserAccessDataDataSource {
 
-    override suspend fun getUserAccessData(userId: UserId): UserAccessResponse = apiProvider
+    override suspend fun retrieveUserAccessData(userId: UserId): UserAccessResponse = apiProvider
         .get<PasswordManagerApi>(userId)
         .invoke { userAccess() }
         .valueOrThrow

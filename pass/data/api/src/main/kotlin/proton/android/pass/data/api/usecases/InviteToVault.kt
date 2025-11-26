@@ -19,7 +19,7 @@
 package proton.android.pass.data.api.usecases
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.repositories.AddressPermission
+import proton.android.pass.data.api.repositories.InviteTarget
 import proton.android.pass.domain.ShareId
 
 interface InviteToVault {
@@ -27,7 +27,7 @@ interface InviteToVault {
     suspend operator fun invoke(
         userId: UserId? = null,
         shareId: ShareId,
-        inviteAddresses: List<AddressPermission>
+        inviteTargets: List<InviteTarget>
     ): Result<Unit>
 
 }

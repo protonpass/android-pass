@@ -47,8 +47,8 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.FreeUserInviteError
 import proton.android.pass.data.api.errors.NewUsersInviteError
 import proton.android.pass.data.api.errors.UserAlreadyInviteError
-import proton.android.pass.data.api.repositories.AddressPermission
 import proton.android.pass.data.api.repositories.BulkInviteRepository
+import proton.android.pass.data.api.repositories.InviteTarget
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.InviteToVault
@@ -99,10 +99,10 @@ class SharingSummaryViewModel @Inject constructor(
         value = SharingSummaryEvent.Idle
     )
 
-    private val addressesFlow: Flow<List<AddressPermission>> = bulkInviteRepository
-        .observeAddresses()
-        .onEach { addressPermissions ->
-            if (addressPermissions.isEmpty()) {
+    private val inviteTargetsFlow: Flow<List<InviteTarget>> = bulkInviteRepository
+        .observeInvites()
+        .onEach { inviteTargets ->
+            if (inviteTargets.isEmpty()) {
                 eventFlow.update { SharingSummaryEvent.OnGoHome }
             }
         }
@@ -112,9 +112,9 @@ class SharingSummaryViewModel @Inject constructor(
         None -> {
             combine(
                 eventFlow,
-                addressesFlow,
+                inviteTargetsFlow,
                 isLoadingStateFlow,
-                featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.RENAME_ADMIN_TO_MANAGER),
+                featureFlagsPreferencesRepository[FeatureFlag.RENAME_ADMIN_TO_MANAGER],
                 getVaultWithItemCountById(shareId = shareId),
                 SharingSummaryState::ShareVault
             )
@@ -131,9 +131,9 @@ class SharingSummaryViewModel @Inject constructor(
                 .let { itemUiModelFlow ->
                     combineN(
                         eventFlow,
-                        addressesFlow,
+                        inviteTargetsFlow,
                         isLoadingStateFlow,
-                        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.RENAME_ADMIN_TO_MANAGER),
+                        featureFlagsPreferencesRepository[FeatureFlag.RENAME_ADMIN_TO_MANAGER],
                         itemUiModelFlow,
                         userPreferencesRepository.getUseFaviconsPreference(),
                         SharingSummaryState::ShareItem
@@ -158,7 +158,7 @@ class SharingSummaryViewModel @Inject constructor(
                 inviteToItem(
                     shareId = shareId,
                     itemId = itemId,
-                    inviteAddresses = stateFlow.value.addressPermissions
+                    inviteTargets = stateFlow.value.inviteTargets
                 )
             }.onFailure { error ->
                 PassLogger.w(TAG, "Error sending item invite")
@@ -166,7 +166,7 @@ class SharingSummaryViewModel @Inject constructor(
 
                 when (error) {
                     is NewUsersInviteError -> {
-                        val invalidAddresses = error.newUsersAddresses.map { it.address }
+                        val invalidAddresses = error.newUsersAddresses.map { it.first }
                         bulkInviteRepository.updateInvalidAddresses(invalidAddresses)
                         eventFlow.update { SharingSummaryEvent.OnSharingItemNewUsersError }
                         SharingSnackbarMessage.NewUsersInviteError
@@ -193,7 +193,7 @@ class SharingSummaryViewModel @Inject constructor(
             isLoadingStateFlow.update { IsLoadingState.Loading }
 
             inviteToVault(
-                inviteAddresses = stateFlow.value.addressPermissions,
+                inviteTargets = stateFlow.value.inviteTargets,
                 shareId = shareId
             ).onSuccess {
                 bulkInviteRepository.clear()

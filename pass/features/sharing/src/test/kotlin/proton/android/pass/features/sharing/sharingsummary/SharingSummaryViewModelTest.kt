@@ -30,7 +30,7 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
-import proton.android.pass.data.api.repositories.AddressPermission
+import proton.android.pass.data.api.repositories.UserTarget
 import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
@@ -76,7 +76,7 @@ internal class SharingSummaryViewModelTest {
         inviteToVault = TestInviteToVault()
         snackbarDispatcher = TestSnackbarDispatcher()
         bulkInviteRepository = TestBulkInviteRepository().apply {
-            runBlocking { storeAddresses(listOf(TEST_EMAIL)) }
+            runBlocking { storeInvites(listOf(UserTarget(TEST_EMAIL, ShareRole.Read))) }
         }
 
         savedStateHandleProvider = TestSavedStateHandleProvider().apply {
@@ -106,12 +106,7 @@ internal class SharingSummaryViewModelTest {
         val vaultData = createVaultWithItemCount()
         val expectedState = SharingSummaryState.ShareVault(
             event = SharingSummaryEvent.Idle,
-            addressPermissions = listOf(
-                AddressPermission(
-                    address = TEST_EMAIL,
-                    shareRole = ShareRole.Read
-                )
-            ),
+            inviteTargets = listOf(UserTarget(TEST_EMAIL, ShareRole.Read)),
             isLoadingState = IsLoadingState.NotLoading,
             vaultWithItemCount = vaultData,
             isRenameAdminToManagerEnabled = false
@@ -229,12 +224,7 @@ internal class SharingSummaryViewModelTest {
 
         val expectedState = SharingSummaryState.ShareItem(
             event = SharingSummaryEvent.Idle,
-            addressPermissions = listOf(
-                AddressPermission(
-                    address = TEST_EMAIL,
-                    shareRole = ShareRole.Read
-                )
-            ),
+            inviteTargets = listOf(UserTarget(TEST_EMAIL, ShareRole.Read)),
             isLoadingState = IsLoadingState.NotLoading,
             itemUiModel = encryptionContextProvider.withEncryptionContext {
                 item.toUiModel(this@withEncryptionContext)

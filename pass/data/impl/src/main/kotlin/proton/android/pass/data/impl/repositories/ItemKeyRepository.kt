@@ -31,6 +31,7 @@ interface ItemKeyRepository {
         userId: UserId,
         addressId: AddressId,
         shareId: ShareId,
+        groupEmail: String?,
         itemId: ItemId
     ): Flow<Pair<ShareKey, ItemKey>>
 }

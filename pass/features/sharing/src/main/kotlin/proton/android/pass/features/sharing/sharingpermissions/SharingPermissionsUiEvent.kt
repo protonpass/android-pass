@@ -18,7 +18,7 @@
 
 package proton.android.pass.features.sharing.sharingpermissions
 
-import proton.android.pass.features.sharing.common.AddressPermissionUiState
+import proton.android.pass.features.sharing.common.InviteTargetUiState
 
 internal sealed interface SharingPermissionsUiEvent {
 
@@ -30,7 +30,7 @@ internal sealed interface SharingPermissionsUiEvent {
 
     @JvmInline
     value class OnPermissionChangeClick(
-        val address: AddressPermissionUiState
+        val inviteTarget: InviteTargetUiState
     ) : SharingPermissionsUiEvent
 
 }

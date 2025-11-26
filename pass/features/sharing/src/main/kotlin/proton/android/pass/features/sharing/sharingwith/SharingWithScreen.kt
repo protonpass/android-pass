@@ -55,11 +55,19 @@ fun SharingWithScreen(
             when (uiEvent) {
                 SharingWithUiEvent.ContinueClick -> onContinueClick()
                 is SharingWithUiEvent.EmailChange -> onEmailChange(uiEvent.content)
-                is SharingWithUiEvent.EmailClick -> onEmailClick(uiEvent.index)
+                is SharingWithUiEvent.ChipEmailClick -> onChipEmailClick(uiEvent.index)
+                is SharingWithUiEvent.ChipGroupClick -> onNavigateEvent(SharingNavigation.GroupMembers(uiEvent.groupId))
+                is SharingWithUiEvent.GroupSuggestionMembersClick -> onNavigateEvent(
+                    SharingNavigation.GroupMembers(uiEvent.groupId)
+                )
                 SharingWithUiEvent.EmailSubmit -> onEmailSubmit()
                 is SharingWithUiEvent.InviteSuggestionToggle -> onItemToggle(
                     email = uiEvent.email,
                     checked = uiEvent.value
+                )
+                is SharingWithUiEvent.GroupSuggestionToggle -> viewModel.onGroupToggle(
+                    groupId = uiEvent.groupId,
+                    isSelected = uiEvent.isSelected
                 )
 
                 SharingWithUiEvent.OnScrolledToBottom -> onScrolledToBottom()

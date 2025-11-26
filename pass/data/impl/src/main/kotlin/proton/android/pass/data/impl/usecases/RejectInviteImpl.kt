@@ -18,28 +18,46 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
-import proton.android.pass.data.api.repositories.InviteRepository
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import proton.android.pass.data.api.repositories.GroupInviteRepository
+import proton.android.pass.data.api.repositories.UserInviteRepository
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.RejectInvite
+import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.notifications.api.NotificationManager
 import javax.inject.Inject
 
 class RejectInviteImpl @Inject constructor(
-    private val accountManager: AccountManager,
-    private val inviteRepository: InviteRepository,
+    private val observeCurrentUser: ObserveCurrentUser,
+    private val userInviteRepository: UserInviteRepository,
+    private val groupInviteRepository: GroupInviteRepository,
     private val notificationManager: NotificationManager
 ) : RejectInvite {
 
     override suspend fun invoke(inviteToken: InviteToken) {
-        val userId = accountManager.getPrimaryUserId().filterNotNull().first()
+        val user = observeCurrentUser().first()
 
-        inviteRepository.getInvite(userId, inviteToken).value()
+        userInviteRepository.getInvite(user.userId, inviteToken).value()
             ?.let { pendingInvite ->
-                inviteRepository.rejectInvite(userId, inviteToken)
+                userInviteRepository.rejectInvite(user.userId, inviteToken)
                 notificationManager.removeReceivedInviteNotification(pendingInvite)
             }
+    }
+
+    override suspend fun invoke(inviteId: InviteId) {
+        val (userId, pendingInvite) = observeCurrentUser()
+            .flatMapLatest { user ->
+                groupInviteRepository.observePendingGroupInvite(user.userId, inviteId)
+                    .map { user.userId to it }
+            }
+            .first()
+        if (pendingInvite != null) {
+            groupInviteRepository.rejectGroupInvite(userId, pendingInvite.inviteToken)
+        } else {
+            error("No pending invite found")
+        }
     }
 }

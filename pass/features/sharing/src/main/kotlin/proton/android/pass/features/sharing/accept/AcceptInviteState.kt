@@ -22,6 +22,7 @@ import androidx.compose.runtime.Stable
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.VaultInfo
 
 @Stable
 internal sealed interface AcceptInviteState {
@@ -43,7 +44,7 @@ internal sealed interface AcceptInviteState {
     data class ItemInvite(
         override val progress: AcceptInviteProgress,
         override val event: AcceptInviteEvent,
-        private val pendingItemInvite: PendingInvite.Item
+        private val pendingItemInvite: PendingInvite
     ) : AcceptInviteState {
 
         internal val inviterEmail: String = pendingItemInvite.inviterEmail
@@ -54,20 +55,20 @@ internal sealed interface AcceptInviteState {
     data class VaultInvite(
         override val progress: AcceptInviteProgress,
         override val event: AcceptInviteEvent,
-        private val pendingVaultInvite: PendingInvite.Vault
+        private val pendingVaultInvite: PendingInvite
     ) : AcceptInviteState {
 
         internal val inviterEmail: String = pendingVaultInvite.inviterEmail
 
-        internal val name: String = pendingVaultInvite.name
+        internal val name: String = (pendingVaultInvite as VaultInfo).name
 
-        internal val itemCount: Int = pendingVaultInvite.itemCount
+        internal val itemCount: Int = (pendingVaultInvite as VaultInfo).itemCount
 
-        internal val memberCount: Int = pendingVaultInvite.memberCount
+        internal val memberCount: Int = (pendingVaultInvite as VaultInfo).memberCount
 
-        internal val icon: ShareIcon = pendingVaultInvite.icon
+        internal val icon: ShareIcon = (pendingVaultInvite as VaultInfo).icon
 
-        internal val color: ShareColor = pendingVaultInvite.color
+        internal val color: ShareColor = (pendingVaultInvite as VaultInfo).color
 
     }
 

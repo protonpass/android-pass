@@ -21,6 +21,7 @@ package proton.android.pass.features.home.onboardingtips
 import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.ShareId
 
@@ -29,7 +30,10 @@ sealed interface OnBoardingTipsEvent {
     data object Unknown : OnBoardingTipsEvent
 
     @JvmInline
-    value class OpenInviteScreen(val inviteToken: InviteToken) : OnBoardingTipsEvent
+    value class OpenUserInviteScreen(val inviteToken: InviteToken) : OnBoardingTipsEvent
+
+    @JvmInline
+    value class OpenGroupInviteScreen(val inviteId: InviteId) : OnBoardingTipsEvent
 
     @JvmInline
     value class OpenSLSyncSettingsScreen(val shareId: ShareId?) : OnBoardingTipsEvent

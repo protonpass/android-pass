@@ -45,11 +45,18 @@ class OpenItemRevisionImpl @Inject constructor(
     ): Item {
         val userId = requireNotNull(accountManager.getPrimaryUserId().first())
         val addressId = shareRepository.getAddressForShareId(userId, shareId).addressId
+        val share = shareRepository.getById(userId, shareId)
+        val shareKeys = shareKeyRepository.getShareKeys(
+            userId = userId,
+            addressId = addressId,
+            shareId = shareId,
+            groupEmail = share.groupEmail
+        ).first()
 
         return openItem.open(
             response = itemRevision.toCrypto(),
-            share = shareRepository.getById(userId, shareId),
-            shareKeys = shareKeyRepository.getShareKeys(userId, addressId, shareId).first(),
+            share = share,
+            shareKeys = shareKeys,
             encryptionContext = encryptionContext
         ).item
     }

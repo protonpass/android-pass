@@ -33,8 +33,8 @@ import proton.android.pass.data.impl.crypto.EncryptShareKeysForUser
 import proton.android.pass.data.impl.crypto.NewUserInviteSignatureManager
 import proton.android.pass.data.impl.local.LocalShareDataSource
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
-import proton.android.pass.data.impl.requests.ConfirmInviteRequest
-import proton.android.pass.data.impl.requests.InviteKeyRotation
+import proton.android.pass.data.impl.requests.invites.ConfirmInviteRequest
+import proton.android.pass.data.impl.requests.invites.InviteKeyRotation
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -113,6 +113,7 @@ class ConfirmNewUserInviteImpl @Inject constructor(
             userId = inviterUserAddress.userId,
             addressId = inviterUserAddress.addressId,
             shareId = shareId,
+            groupEmail = share.groupEmail,
             forceRefresh = true
         ).first()
 

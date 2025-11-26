@@ -27,33 +27,79 @@ value class InviteId(val value: String)
 @JvmInline
 value class NewUserInviteId(val value: String)
 
+interface ItemInfo
+
+interface VaultInfo {
+    val memberCount: Int
+    val itemCount: Int
+    val name: String
+    val icon: ShareIcon
+    val color: ShareColor
+}
+
+interface PendingUserInvite {
+    val isFromNewUser: Boolean
+}
+
+interface PendingGroupInvite {
+    val inviteId: InviteId
+    val inviterUserId: String
+    val invitedGroupId: String
+    val invitedEmail: String
+    val targetId: String
+    val remindersSent: Int
+}
+
 sealed interface PendingInvite {
-
     val inviteToken: InviteToken
-
     val inviterEmail: String
-
     val invitedAddressId: String
 
-    val isFromNewUser: Boolean
-
-    data class Item(
+    data class UserItem(
         override val inviteToken: InviteToken,
         override val inviterEmail: String,
         override val invitedAddressId: String,
         override val isFromNewUser: Boolean
-    ) : PendingInvite
+    ) : PendingInvite, PendingUserInvite, ItemInfo
 
-    data class Vault(
+    data class UserVault(
         override val inviteToken: InviteToken,
         override val inviterEmail: String,
         override val invitedAddressId: String,
         override val isFromNewUser: Boolean,
-        val memberCount: Int,
-        val itemCount: Int,
-        val name: String,
-        val icon: ShareIcon,
-        val color: ShareColor
-    ) : PendingInvite
+        override val memberCount: Int,
+        override val itemCount: Int,
+        override val name: String,
+        override val icon: ShareIcon,
+        override val color: ShareColor
+    ) : PendingInvite, PendingUserInvite, VaultInfo
 
+    data class GroupItem(
+        override val inviteToken: InviteToken,
+        override val inviterEmail: String,
+        override val invitedAddressId: String,
+        override val inviteId: InviteId,
+        override val inviterUserId: String,
+        override val invitedGroupId: String,
+        override val invitedEmail: String,
+        override val targetId: String,
+        override val remindersSent: Int
+    ) : PendingInvite, PendingGroupInvite, ItemInfo
+
+    data class GroupVault(
+        override val inviteToken: InviteToken,
+        override val inviterEmail: String,
+        override val invitedAddressId: String,
+        override val inviteId: InviteId,
+        override val inviterUserId: String,
+        override val invitedGroupId: String,
+        override val invitedEmail: String,
+        override val targetId: String,
+        override val remindersSent: Int,
+        override val memberCount: Int,
+        override val itemCount: Int,
+        override val name: String,
+        override val icon: ShareIcon,
+        override val color: ShareColor
+    ) : PendingInvite, PendingGroupInvite, VaultInfo
 }

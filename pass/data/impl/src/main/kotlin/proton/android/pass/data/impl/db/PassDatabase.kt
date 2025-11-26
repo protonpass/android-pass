@@ -19,8 +19,10 @@
 package proton.android.pass.data.impl.db
 
 import me.proton.core.data.room.db.Database
-import proton.android.pass.data.impl.db.dao.InviteDao
-import proton.android.pass.data.impl.db.dao.InviteKeyDao
+import proton.android.pass.data.impl.db.dao.GroupInviteDao
+import proton.android.pass.data.impl.db.dao.GroupInviteKeyDao
+import proton.android.pass.data.impl.db.dao.UserInviteDao
+import proton.android.pass.data.impl.db.dao.UserInviteKeyDao
 import proton.android.pass.data.impl.db.dao.ItemsDao
 import proton.android.pass.data.impl.db.dao.LiveTelemetryDao
 import proton.android.pass.data.impl.db.dao.PassDataMigrationDao
@@ -63,9 +65,13 @@ interface PassDatabase : Database {
 
     fun dataMigrationDao(): PassDataMigrationDao
 
-    fun inviteDao(): InviteDao
+    fun userInviteDao(): UserInviteDao
 
-    fun inviteKeyDao(): InviteKeyDao
+    fun userInviteKeyDao(): UserInviteKeyDao
+
+    fun groupInviteDao(): GroupInviteDao
+
+    fun groupInviteKeyDao(): GroupInviteKeyDao
 
     fun userAccessDataDao(): UserAccessDataDao
 

@@ -21,8 +21,8 @@ package proton.android.pass.data.impl.crypto
 import kotlinx.coroutines.flow.first
 import me.proton.core.key.domain.extension.primary
 import me.proton.core.user.domain.entity.UserAddress
-import proton.android.pass.crypto.api.usecases.EncryptInviteKeys
-import proton.android.pass.crypto.api.usecases.EncryptedInviteShareKeyList
+import proton.android.pass.crypto.api.usecases.invites.EncryptInviteKeys
+import proton.android.pass.crypto.api.usecases.invites.EncryptedInviteShareKeyList
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.domain.ShareId
@@ -35,6 +35,7 @@ interface EncryptShareKeysForUser {
     suspend operator fun invoke(
         userAddress: UserAddress,
         shareId: ShareId,
+        groupEmail: String?,
         targetEmail: String
     ): Result<EncryptedInviteShareKeyList>
 
@@ -57,12 +58,14 @@ class EncryptShareKeysForUserImpl @Inject constructor(
     override suspend fun invoke(
         userAddress: UserAddress,
         shareId: ShareId,
+        groupEmail: String?,
         targetEmail: String
     ): Result<EncryptedInviteShareKeyList> {
         val shareKeys = shareKeyRepository.getShareKeys(
             userId = userAddress.userId,
             addressId = userAddress.addressId,
             shareId = shareId,
+            groupEmail = groupEmail,
             forceRefresh = true
         ).first()
 

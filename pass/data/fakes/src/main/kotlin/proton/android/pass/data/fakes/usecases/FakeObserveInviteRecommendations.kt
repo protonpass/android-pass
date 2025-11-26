@@ -32,10 +32,9 @@ class FakeObserveInviteRecommendations @Inject constructor() : ObserveInviteReco
 
     private val invitesFlow: MutableStateFlow<InviteRecommendations> = MutableStateFlow(
         InviteRecommendations(
-            recommendedEmails = emptyList(),
-            planInternalName = "",
+            recommendedItems = emptyList(),
             groupDisplayName = "",
-            planRecommendedEmails = emptyList()
+            organizationItems = emptyList()
         )
     )
 

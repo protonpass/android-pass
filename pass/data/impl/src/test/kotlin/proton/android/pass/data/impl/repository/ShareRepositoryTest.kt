@@ -27,6 +27,7 @@ import proton.android.pass.account.fakes.TestUserAddressRepository
 import proton.android.pass.account.fakes.TestUserRepository
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.crypto.fakes.usecases.TestCreateVault
+import proton.android.pass.data.fakes.repositories.FakeGroupRepository
 import proton.android.pass.data.fakes.repositories.TestUserAccessDataRepository
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.fakes.TestLocalShareDataSource
@@ -73,7 +74,8 @@ class ShareRepositoryTest {
             },
             userAccessDataRepository = TestUserAccessDataRepository().apply {
                 sendValue(null)
-            }
+            },
+            groupRepository = FakeGroupRepository()
         )
     }
 
@@ -132,6 +134,7 @@ class ShareRepositoryTest {
     private fun Share.toResponse(): ShareResponse = ShareResponse(
         shareId = id.id,
         vaultId = vaultId.id,
+        groupId = groupId?.id,
         addressId = "addressid-123",
         targetType = 1,
         targetId = vaultId.id,
@@ -157,6 +160,8 @@ class ShareRepositoryTest {
         userId = USER_ID,
         addressId = "addressid-123",
         vaultId = vaultId.id,
+        groupId = groupId?.id,
+        groupEmail = groupEmail,
         targetType = 1,
         targetId = vaultId.id,
         permission = 1,

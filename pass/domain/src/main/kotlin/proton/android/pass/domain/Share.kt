@@ -29,6 +29,9 @@ value class ShareId(val id: String)
 value class VaultId(val id: String)
 
 @JvmInline
+value class GroupId(val id: String)
+
+@JvmInline
 value class ShareFlags(val value: Int) {
     fun isHidden(): Boolean = value.hasFlag(ShareFlag.IsHidden.value)
 }
@@ -44,6 +47,8 @@ sealed class Share {
     abstract val targetId: String
 
     abstract val vaultId: VaultId
+
+    abstract val groupId: GroupId?
 
     abstract val expirationTime: Date?
 
@@ -62,6 +67,8 @@ sealed class Share {
     abstract val pendingInvites: Int
 
     abstract val newUserInvitesReady: Int
+
+    abstract val groupEmail: String?
 
     abstract val canAutofill: Boolean
 
@@ -87,6 +94,8 @@ sealed class Share {
         override val targetId: String,
         override val permission: SharePermission,
         override val vaultId: VaultId,
+        override val groupId: GroupId?,
+        override val groupEmail: String?,
         override val expirationTime: Date?,
         override val createTime: Date,
         override val shareRole: ShareRole,
@@ -126,6 +135,8 @@ sealed class Share {
         override val targetId: String,
         override val permission: SharePermission,
         override val vaultId: VaultId,
+        override val groupId: GroupId?,
+        override val groupEmail: String?,
         override val expirationTime: Date?,
         override val createTime: Date,
         override val shareRole: ShareRole,

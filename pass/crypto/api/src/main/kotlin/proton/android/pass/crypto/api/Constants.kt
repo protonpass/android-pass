@@ -21,4 +21,5 @@ package proton.android.pass.crypto.api
 object Constants {
     const val SIGNATURE_CONTEXT_EXISTING_USER = "pass.invite.vault.existing-user"
     const val SIGNATURE_CONTEXT_NEW_USER = "pass.invite.vault.new-user"
+    const val SIGNATURE_CONTEXT_ORG_KEY_TOKEN = "account.key-token.organization"
 }

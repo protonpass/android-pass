@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.sharing.sharingwith
 
+import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.ShareId
 
 internal sealed interface SharingWithUiEvent {
@@ -32,12 +33,20 @@ internal sealed interface SharingWithUiEvent {
 
     data class InviteSuggestionToggle(val email: String, val value: Boolean) : SharingWithUiEvent
 
+    data class GroupSuggestionToggle(val groupId: GroupId, val isSelected: Boolean) : SharingWithUiEvent
+
     data object EmailSubmit : SharingWithUiEvent
 
     data object ContinueClick : SharingWithUiEvent
 
     @JvmInline
-    value class EmailClick(val index: Int) : SharingWithUiEvent
+    value class ChipEmailClick(val index: Int) : SharingWithUiEvent
+
+    @JvmInline
+    value class ChipGroupClick(val groupId: GroupId) : SharingWithUiEvent
+
+    @JvmInline
+    value class GroupSuggestionMembersClick(val groupId: GroupId) : SharingWithUiEvent
 
     data object OnScrolledToBottom : SharingWithUiEvent
 

@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.Option
-import proton.android.pass.data.api.repositories.InviteRepository
+import proton.android.pass.data.api.repositories.UserInviteRepository
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
 import proton.android.pass.domain.InviteRecommendations
 import proton.android.pass.domain.ShareId
@@ -31,14 +31,14 @@ import javax.inject.Inject
 
 class ObserveInviteRecommendationsImpl @Inject constructor(
     private val accountManager: AccountManager,
-    private val inviteRepository: InviteRepository
+    private val userInviteRepository: UserInviteRepository
 ) : ObserveInviteRecommendations {
 
     override fun invoke(shareId: ShareId, startsWith: Option<String>): Flow<InviteRecommendations> =
         accountManager.getPrimaryUserId()
             .filterNotNull()
             .flatMapLatest {
-                inviteRepository.observeInviteRecommendations(
+                userInviteRepository.observeInviteRecommendations(
                     userId = it,
                     shareId = shareId,
                     startsWith = startsWith.value()

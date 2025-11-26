@@ -30,6 +30,7 @@ interface ShareKeyRepository {
         userId: UserId,
         addressId: AddressId,
         shareId: ShareId,
+        groupEmail: String?,
         forceRefresh: Boolean = false,
         shouldStoreLocally: Boolean = true
     ): Flow<List<ShareKey>>
@@ -39,6 +40,7 @@ interface ShareKeyRepository {
         userId: UserId,
         addressId: AddressId,
         shareId: ShareId,
+        groupEmail: String?,
         keyRotation: Long
     ): Flow<ShareKey?>
 

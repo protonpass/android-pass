@@ -35,6 +35,7 @@ import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.EXTRA_LOGGING
+import proton.android.pass.preferences.FeatureFlag.PASS_GROUP_SHARE
 import proton.android.pass.preferences.FeatureFlag.PASS_HIDE_SHOW_VAULT
 import proton.android.pass.preferences.FeatureFlag.RENAME_ADMIN_TO_MANAGER
 import proton.android.pass.preferences.FeatureFlag.PASS_ALLOW_NO_VAULT
@@ -81,6 +82,11 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { passUserEventsV1Enabled.value }
+
+        PASS_GROUP_SHARE -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault
+        ) { groupsEnabled.value }
     }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> = when (featureFlag) {
@@ -106,6 +112,10 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         PASS_USER_EVENTS_V1 -> setFeatureFlag {
             passUserEventsV1Enabled = boolFlagPrefProto(value)
+        }
+
+        PASS_GROUP_SHARE -> setFeatureFlag {
+            groupsEnabled = boolFlagPrefProto(value)
         }
     }
 
@@ -203,6 +213,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             PASS_HIDE_SHOW_VAULT -> passHideShowVaultEnabled
             PASS_ALLOW_NO_VAULT -> passAllowNoVault
             PASS_USER_EVENTS_V1 -> passUserEventsV1Enabled
+            PASS_GROUP_SHARE -> groupsEnabled
         }.value
     }
 }

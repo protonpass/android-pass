@@ -19,7 +19,7 @@
 package proton.android.pass.data.impl.fakes
 
 import me.proton.core.user.domain.entity.UserAddress
-import proton.android.pass.crypto.api.usecases.EncryptedInviteShareKeyList
+import proton.android.pass.crypto.api.usecases.invites.EncryptedInviteShareKeyList
 import proton.android.pass.data.impl.crypto.EncryptShareKeysForUser
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.key.ShareKey
@@ -49,8 +49,9 @@ class TestEncryptShareKeysForUser : EncryptShareKeysForUser {
     override suspend fun invoke(
         userAddress: UserAddress,
         shareId: ShareId,
+        groupEmail: String?,
         targetEmail: String
-    ) = invoke(userAddress, shareId, targetEmail, emptyList())
+    ): Result<EncryptedInviteShareKeyList> = invoke(userAddress, shareId, targetEmail, emptyList())
 
     data class Payload(
         val userAddress: UserAddress,

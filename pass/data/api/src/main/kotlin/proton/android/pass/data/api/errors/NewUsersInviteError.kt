@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.api.errors
 
-import proton.android.pass.data.api.repositories.AddressPermission
+import proton.android.pass.domain.ShareRole
 
 class NewUsersInviteError(
-    val newUsersAddresses: List<AddressPermission>
+    val newUsersAddresses: List<Pair<String, ShareRole>>
 ) : Throwable("New users invites are not allowed for item invites")

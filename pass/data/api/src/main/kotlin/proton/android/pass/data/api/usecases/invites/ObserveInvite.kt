@@ -20,11 +20,14 @@ package proton.android.pass.data.api.usecases.invites
 
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.common.api.Option
+import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingInvite
 
 interface ObserveInvite {
 
     operator fun invoke(inviteToken: InviteToken): Flow<Option<PendingInvite>>
+
+    operator fun invoke(inviteId: InviteId): Flow<Option<PendingInvite>>
 
 }

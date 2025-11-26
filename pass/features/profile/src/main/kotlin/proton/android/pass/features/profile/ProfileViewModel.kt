@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onStart
@@ -49,6 +50,7 @@ import me.proton.core.user.domain.extension.getInitials
 import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.clipboard.api.ClipboardManager
@@ -271,9 +273,10 @@ class ProfileViewModel @Inject constructor(
         passkeySupportFlow,
         observeSecureLinksCount(),
         dataStorageStateFlow,
-        accountsFlow
+        accountsFlow,
+        flowOf(appConfig.flavor.isQuest())
     ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event,
-        passkey, secureLinksCount, dataStorage, accounts ->
+        passkey, secureLinksCount, dataStorage, accounts, isQuest ->
 
         val (accountType, showUpgradeButton) = processUpgradeInfo(upgradeInfo)
         ProfileUiState(
@@ -287,7 +290,8 @@ class ProfileViewModel @Inject constructor(
             passkeySupport = passkey,
             secureLinksCount = secureLinksCount,
             accounts = accounts,
-            dataStorageState = dataStorage
+            dataStorageState = dataStorage,
+            canDisplaySignInToAnotherDeviceSection = !isQuest
         )
     }.stateIn(
         scope = viewModelScope,

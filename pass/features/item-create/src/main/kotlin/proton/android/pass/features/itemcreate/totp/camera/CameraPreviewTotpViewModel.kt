@@ -21,12 +21,12 @@ package proton.android.pass.features.itemcreate.totp.camera
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import proton.android.pass.appconfig.api.AppConfig
-import proton.android.pass.appconfig.api.BuildFlavor
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
 import javax.inject.Inject
 
 @HiltViewModel
 class CameraPreviewTotpViewModel @Inject constructor(
     appConfig: AppConfig
 ) : ViewModel() {
-    val isQuest = appConfig.flavor is BuildFlavor.Quest
+    val isQuest = appConfig.flavor.isQuest()
 }

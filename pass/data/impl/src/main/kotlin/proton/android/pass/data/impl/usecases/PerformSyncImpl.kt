@@ -81,7 +81,7 @@ class PerformSyncImpl @Inject constructor(
 
     private suspend fun syncPendingSlAliases(userId: UserId): Result<Unit> = runCatching {
         withTimeout(2.minutes) {
-            syncPendingAliases(userId)
+            syncPendingAliases(userId, true)
             PassLogger.i(TAG, "Pending SL aliases sync for $userId finished")
         }
     }.onFailure { error ->

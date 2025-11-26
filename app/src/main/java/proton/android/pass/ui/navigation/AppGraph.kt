@@ -423,7 +423,6 @@ fun NavGraphBuilder.appGraph(
                     VaultOptionsBottomSheet.createNavRoute(it.shareId)
                 )
 
-                HomeNavigation.TrialInfo -> appNavigator.navigate(TrialScreen)
                 is HomeNavigation.OpenInvite -> appNavigator.navigate(
                     destination = AcceptInvite,
                     route = AcceptInvite.createRoute(it.inviteToken),

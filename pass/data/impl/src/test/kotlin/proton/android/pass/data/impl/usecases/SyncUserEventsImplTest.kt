@@ -95,7 +95,6 @@ internal class SyncUserEventsImplTest {
 
         instance.invoke(USER_ID)
 
-        // Verify no events were fetched
         assertThat(userEventRepository.getStoreLatestEventIdMemory()).isEmpty()
     }
 
@@ -115,8 +114,6 @@ internal class SyncUserEventsImplTest {
 
         instance.invoke(USER_ID)
 
-        // Verify full refresh was called (refreshSharesAndEnqueueSync should be invoked)
-        // We can't directly verify this, but we can verify that events were processed
         assertThat(userEventRepository.getStoreLatestEventIdMemory()).isNotEmpty()
     }
 
@@ -134,7 +131,6 @@ internal class SyncUserEventsImplTest {
 
         instance.invoke(USER_ID)
 
-        // Verify event was stored
         assertThat(userEventRepository.getStoreLatestEventIdMemory()).isNotEmpty()
     }
 
@@ -155,7 +151,6 @@ internal class SyncUserEventsImplTest {
 
         instance.invoke(USER_ID)
 
-        // Verify shares were recreated (we can check shareRepository calls if needed)
         assertThat(userEventRepository.getStoreLatestEventIdMemory()).isNotEmpty()
     }
 
@@ -406,11 +401,8 @@ internal class SyncUserEventsImplTest {
             )
         )
 
-        // We need to simulate multiple calls
-        // For simplicity, we'll just verify the pattern works
         instance.invoke(USER_ID)
 
-        // Verify multiple event IDs were stored
         val storedEvents = userEventRepository.getStoreLatestEventIdMemory()
         assertThat(storedEvents).isNotEmpty()
     }
@@ -471,9 +463,7 @@ internal class SyncUserEventsImplTest {
 
         instance.invoke(USER_ID)
 
-        // Verify events were processed and stored
         assertThat(userEventRepository.getStoreLatestEventIdMemory()).isNotEmpty()
-        // Verify no work manager was awaited (since no full refresh with worker enqueued)
         assertThat(workManagerFacade.getAwaitedWorkNames()).isEmpty()
     }
 
@@ -501,7 +491,6 @@ internal class SyncUserEventsImplTest {
     }
 
     private fun setupBasicSync(initialEventId: UserEventId) {
-        // Set local event ID to be different from remote to ensure sync happens
         val localEventId = UserEventId("${initialEventId.id}-local")
         val remoteEventId = UserEventId("${initialEventId.id}-remote")
         userEventRepository.setGetLatestEventIdFlow(localEventId)

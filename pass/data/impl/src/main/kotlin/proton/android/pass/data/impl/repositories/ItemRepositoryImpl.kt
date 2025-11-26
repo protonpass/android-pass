@@ -377,7 +377,8 @@ class ItemRepositoryImpl @Inject constructor(
         val shareKeys = shareKeyRepository.getShareKeys(
             userId = userId,
             addressId = userAddress.addressId,
-            shareId = shareId
+            shareId = shareId,
+            groupEmail = share.groupEmail
         ).first()
 
         val itemEntity = encryptionContextProvider.withEncryptionContextSuspendable {

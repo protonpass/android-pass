@@ -26,10 +26,11 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.PromoteNewInviteToInvite
-import proton.android.pass.data.api.usecases.RefreshInvites
+import proton.android.pass.data.api.usecases.RefreshGroupInvites
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
 import proton.android.pass.data.api.usecases.RefreshSharesResult
+import proton.android.pass.data.api.usecases.RefreshUserInvites
 import proton.android.pass.data.api.usecases.SyncUserEvents
 import proton.android.pass.data.api.usecases.simplelogin.SyncSimpleLoginPendingAliases
 import proton.android.pass.data.impl.repositories.UserEventRepository
@@ -49,7 +50,8 @@ class SyncUserEventsImpl @Inject constructor(
     private val refreshSharesAndEnqueueSync: RefreshSharesAndEnqueueSync,
     private val workManager: WorkManager,
     private val refreshPlan: RefreshPlan,
-    private val refreshInvites: RefreshInvites,
+    private val refreshUserInvites: RefreshUserInvites,
+    private val refreshGroupInvites: RefreshGroupInvites,
     private val syncPendingAliases: SyncSimpleLoginPendingAliases,
     private val promoteNewInviteToInvite: PromoteNewInviteToInvite
 ) : SyncUserEvents {
@@ -146,17 +148,15 @@ class SyncUserEventsImpl @Inject constructor(
     }
 
     private suspend fun processInvitesChanged(userId: UserId, invitesChanged: SyncEventInvitesChanged?) {
-        invitesChanged?.let { refreshInvites(userId, it.eventToken) }
+        invitesChanged?.let { refreshUserInvites(userId, it.eventToken) }
     }
 
-    private fun processGroupInvitesChanged(userId: UserId, invitesChanged: SyncEventInvitesChanged?) {
-        invitesChanged?.let {
-            // refresh group invites
-        }
+    private suspend fun processGroupInvitesChanged(userId: UserId, invitesChanged: SyncEventInvitesChanged?) {
+        invitesChanged?.let { refreshGroupInvites(userId) }
     }
 
     private suspend fun processPendingAliasToCreateChanged(userId: UserId, invitesChanged: SyncEventInvitesChanged?) {
-        invitesChanged?.let { syncPendingAliases(userId) }
+        invitesChanged?.let { syncPendingAliases(userId, false) }
     }
 
     private suspend fun processNewUserInvitesChanged(userId: UserId, sharesWithInvitesToCreate: List<SyncEventShare>) {

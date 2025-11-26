@@ -25,7 +25,6 @@ interface InitialWorkerLauncher {
 }
 
 enum class WorkerFeature {
-    USER_ACCESS,
     CLEANUP,
     FEATURE_DISCOVERY,
     REPORT,

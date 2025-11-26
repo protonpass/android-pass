@@ -30,7 +30,7 @@ import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 
 interface SimpleLoginRepository {
 
-    fun observeSyncStatus(userId: UserId): Flow<SimpleLoginSyncStatus>
+    fun observeSyncStatus(userId: UserId, forceRefresh: Boolean): Flow<SimpleLoginSyncStatus>
 
     fun disableSyncPreference()
 

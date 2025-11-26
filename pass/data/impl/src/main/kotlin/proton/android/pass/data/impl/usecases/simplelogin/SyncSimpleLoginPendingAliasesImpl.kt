@@ -35,8 +35,8 @@ class SyncSimpleLoginPendingAliasesImpl @Inject constructor(
     private val shareKeyRepository: ShareKeyRepository
 ) : SyncSimpleLoginPendingAliases {
 
-    override suspend fun invoke(userId: UserId) {
-        val syncStatus = repository.observeSyncStatus(userId).first()
+    override suspend fun invoke(userId: UserId, forceRefresh: Boolean) {
+        val syncStatus = repository.observeSyncStatus(userId, forceRefresh).first()
 
         if (!syncStatus.isSyncEnabled) {
             return

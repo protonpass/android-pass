@@ -22,6 +22,6 @@ import me.proton.core.domain.entity.UserId
 
 interface SyncSimpleLoginPendingAliases {
 
-    suspend operator fun invoke(userId: UserId)
+    suspend operator fun invoke(userId: UserId, forceRefresh: Boolean)
 
 }

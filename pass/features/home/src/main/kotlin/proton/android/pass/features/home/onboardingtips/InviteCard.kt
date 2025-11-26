@@ -33,9 +33,11 @@ import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.domain.InviteToken
+import proton.android.pass.domain.ItemInfo
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.VaultInfo
 import proton.android.pass.features.home.R
 
 @Composable
@@ -46,13 +48,14 @@ internal fun InviteCard(
 ) {
     val (titleResId, bodyResId) = remember(pendingInvite) {
         when (pendingInvite) {
-            is PendingInvite.Item -> {
+            is ItemInfo -> {
                 R.string.home_item_invite_banner_title to R.string.home_item_invite_banner_subtitle
             }
 
-            is PendingInvite.Vault -> {
+            is VaultInfo -> {
                 R.string.home_invite_banner_title to R.string.home_invite_banner_subtitle
             }
+            else -> throw IllegalStateException("Type not supported")
         }
     }
 
@@ -81,7 +84,7 @@ internal fun InviteCardPreview(@PreviewParameter(ThemePreviewProvider::class) is
     PassTheme(isDark = isDark) {
         Surface {
             InviteCard(
-                pendingInvite = PendingInvite.Vault(
+                pendingInvite = PendingInvite.UserVault(
                     inviteToken = InviteToken(""),
                     inviterEmail = "inviter@email.com",
                     invitedAddressId = "invitedAddressId",

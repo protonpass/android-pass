@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.sharing.sharingpermissions
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
@@ -37,15 +39,19 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
 import proton.android.pass.composecomponents.impl.text.Text
-import proton.android.pass.features.sharing.common.AddressPermissionUiState
+import proton.android.pass.domain.GroupId
+import proton.android.pass.features.sharing.common.GroupTargetUiState
+import proton.android.pass.features.sharing.common.InviteTargetUiState
 import proton.android.pass.features.sharing.extensions.toStringResource
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun SharingPermissionItem(
     modifier: Modifier = Modifier,
-    address: AddressPermissionUiState,
+    inviteTarget: InviteTargetUiState,
     isRenameAdminToManagerEnabled: Boolean,
-    onPermissionChangeClick: () -> Unit
+    onPermissionChangeClick: () -> Unit,
+    onGroupMembersClick: (groupId: GroupId) -> Unit
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -53,7 +59,7 @@ internal fun SharingPermissionItem(
         horizontalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
         CircleTextIcon(
-            text = address.address,
+            text = inviteTarget.email,
             backgroundColor = PassTheme.colors.interactionNormMinor1,
             textColor = PassTheme.colors.interactionNormMajor2,
             shape = PassTheme.shapes.squircleMediumShape
@@ -63,12 +69,44 @@ internal fun SharingPermissionItem(
             modifier = Modifier.weight(1f),
             verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
         ) {
-            Text.Body2Regular(
-                text = address.address
-            )
+            when (inviteTarget) {
+                is GroupTargetUiState -> {
+                    if (inviteTarget.memberCount > 0) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
+                        ) {
+                            Text.Body2Regular(
+                                text = inviteTarget.displayName
+                            )
+                            val label = pluralStringResource(
+                                CompR.plurals.members_count,
+                                inviteTarget.memberCount,
+                                inviteTarget.memberCount
+                            )
+                            Text.Body2Regular(
+                                text = "($label)",
+                                color = PassTheme.colors.interactionNormMajor2,
+                                modifier = Modifier.clickable {
+                                    onGroupMembersClick(inviteTarget.groupId)
+                                }
+                            )
+                        }
+                    } else {
+                        Text.Body2Regular(
+                            text = inviteTarget.displayName
+                        )
+                    }
+                }
+                else -> {
+                    Text.Body2Regular(
+                        text = inviteTarget.displayName
+                    )
+                }
+            }
 
             Text.Body2Regular(
-                text = stringResource(address.permission.toStringResource(isRenameAdminToManagerEnabled)),
+                text = stringResource(inviteTarget.permission.toStringResource(isRenameAdminToManagerEnabled)),
                 color = PassTheme.colors.textWeak
             )
         }

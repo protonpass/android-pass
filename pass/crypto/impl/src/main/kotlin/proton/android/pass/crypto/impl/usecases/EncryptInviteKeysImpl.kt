@@ -30,9 +30,9 @@ import me.proton.core.key.domain.publicKey
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.Constants
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.crypto.api.usecases.EncryptInviteKeys
-import proton.android.pass.crypto.api.usecases.EncryptedInviteKey
-import proton.android.pass.crypto.api.usecases.EncryptedInviteShareKeyList
+import proton.android.pass.crypto.api.usecases.invites.EncryptInviteKeys
+import proton.android.pass.crypto.api.usecases.invites.EncryptedInviteKey
+import proton.android.pass.crypto.api.usecases.invites.EncryptedInviteShareKeyList
 import proton.android.pass.domain.key.InviteKey
 import javax.inject.Inject
 

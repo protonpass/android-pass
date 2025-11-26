@@ -29,12 +29,12 @@ import me.proton.core.user.domain.entity.UserAddressKey
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
-import proton.android.pass.data.api.repositories.AddressPermission
+import proton.android.pass.data.api.repositories.UserTarget
 import proton.android.pass.data.api.usecases.InviteUserMode
 import proton.android.pass.data.fakes.usecases.TestGetInviteUserMode
 import proton.android.pass.data.impl.fakes.TestCreateNewUserInviteSignature
 import proton.android.pass.data.impl.fakes.TestEncryptShareKeysForUser
-import proton.android.pass.data.impl.fakes.TestRemoteInviteDataSource
+import proton.android.pass.data.impl.fakes.TestRemoteUserInviteDataSource
 import proton.android.pass.data.impl.fakes.TestShareKeyRepository
 import proton.android.pass.data.impl.fakes.TestShareRepository
 import proton.android.pass.domain.ShareId
@@ -46,7 +46,7 @@ class InviteToVaultImplTest {
 
     private lateinit var instance: InviteToVaultImpl
 
-    private lateinit var remoteDataSource: TestRemoteInviteDataSource
+    private lateinit var remoteDataSource: TestRemoteUserInviteDataSource
     private lateinit var accountManager: TestAccountManager
     private lateinit var shareRepository: TestShareRepository
     private lateinit var createNewUserInviteSignature: TestCreateNewUserInviteSignature
@@ -55,7 +55,7 @@ class InviteToVaultImplTest {
 
     @Before
     fun setup() {
-        remoteDataSource = TestRemoteInviteDataSource()
+        remoteDataSource = TestRemoteUserInviteDataSource()
         accountManager = TestAccountManager()
         createNewUserInviteSignature = TestCreateNewUserInviteSignature()
         encryptShareKeysForUser = TestEncryptShareKeysForUser()
@@ -74,7 +74,7 @@ class InviteToVaultImplTest {
             shareKeyRepository = TestShareKeyRepository().apply {
                 emitGetShareKeys(listOf(TestUtils.createShareKey().first))
             },
-            remoteInviteDataSource = remoteDataSource,
+            remoteUserInviteDataSource = remoteDataSource,
             shareRepository = shareRepository,
             newUserInviteSignatureManager = createNewUserInviteSignature,
             getInviteUserMode = getInviteUserMode
@@ -90,7 +90,7 @@ class InviteToVaultImplTest {
         val shareRole = ShareRole.Admin
         val res = instance.invoke(
             shareId = shareId,
-            inviteAddresses = listOf(AddressPermission(INVITED_ADDRESS, shareRole))
+            inviteTargets = listOf(UserTarget(INVITED_ADDRESS, shareRole))
         )
         assertThat(res.isSuccess).isTrue()
 
@@ -125,7 +125,7 @@ class InviteToVaultImplTest {
 
         val res = instance.invoke(
             shareId = ShareId(SHARE_ID),
-            inviteAddresses = listOf(AddressPermission(INVITED_ADDRESS, ShareRole.Admin))
+            inviteTargets = listOf(UserTarget(INVITED_ADDRESS, ShareRole.Admin))
         )
         assertThat(res.isFailure).isTrue()
     }
@@ -138,7 +138,7 @@ class InviteToVaultImplTest {
 
         val res = instance.invoke(
             shareId = ShareId(SHARE_ID),
-            inviteAddresses = listOf(AddressPermission(INVITED_ADDRESS, ShareRole.Admin))
+            inviteTargets = listOf(UserTarget(INVITED_ADDRESS, ShareRole.Admin))
         )
         assertThat(res.isFailure).isTrue()
     }
@@ -150,7 +150,7 @@ class InviteToVaultImplTest {
 
         val res = instance.invoke(
             shareId = ShareId(SHARE_ID),
-            inviteAddresses = listOf(AddressPermission(INVITED_ADDRESS, ShareRole.Admin))
+            inviteTargets = listOf(UserTarget(INVITED_ADDRESS, ShareRole.Admin))
         )
         assertThat(res.isFailure).isTrue()
     }
@@ -165,7 +165,7 @@ class InviteToVaultImplTest {
         val shareRole = ShareRole.Admin
         val res = instance.invoke(
             shareId = shareId,
-            inviteAddresses = listOf(AddressPermission(INVITED_ADDRESS, shareRole))
+            inviteTargets = listOf(UserTarget(INVITED_ADDRESS, shareRole))
         )
         assertThat(res.isSuccess).isTrue()
 
@@ -196,7 +196,7 @@ class InviteToVaultImplTest {
         val shareRole = ShareRole.Admin
         val res = instance.invoke(
             shareId = shareId,
-            inviteAddresses = listOf(AddressPermission(INVITED_ADDRESS, shareRole))
+            inviteTargets = listOf(UserTarget(INVITED_ADDRESS, shareRole))
         )
         assertThat(res.isSuccess).isTrue()
 

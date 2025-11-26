@@ -232,7 +232,8 @@ import proton.android.pass.features.settings.Settings
 import proton.android.pass.features.settings.SettingsNavigation
 import proton.android.pass.features.settings.ThemeSelector
 import proton.android.pass.features.settings.settingsGraph
-import proton.android.pass.features.sharing.AcceptInvite
+import proton.android.pass.features.sharing.AcceptInviteNavItem
+import proton.android.pass.features.sharing.GroupMembersNavItem
 import proton.android.pass.features.sharing.InvitesErrorDialog
 import proton.android.pass.features.sharing.InvitesInfoDialog
 import proton.android.pass.features.sharing.ManageVault
@@ -423,9 +424,14 @@ fun NavGraphBuilder.appGraph(
                     VaultOptionsBottomSheet.createNavRoute(it.shareId)
                 )
 
-                is HomeNavigation.OpenInvite -> appNavigator.navigate(
-                    destination = AcceptInvite,
-                    route = AcceptInvite.createRoute(it.inviteToken),
+                is HomeNavigation.OpenUserInvite -> appNavigator.navigate(
+                    destination = AcceptInviteNavItem,
+                    route = AcceptInviteNavItem.createRoute(it.inviteToken),
+                    backDestination = HomeNavItem
+                )
+                is HomeNavigation.OpenGroupInvite -> appNavigator.navigate(
+                    destination = AcceptInviteNavItem,
+                    route = AcceptInviteNavItem.createRoute(it.inviteId),
                     backDestination = HomeNavItem
                 )
 
@@ -441,8 +447,8 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 is HomeNavigation.ConfirmedInvite -> appNavigator.navigate(
-                    destination = AcceptInvite,
-                    route = AcceptInvite.createRoute(it.inviteToken)
+                    destination = AcceptInviteNavItem,
+                    route = AcceptInviteNavItem.createRoute(it.inviteToken)
                 )
 
                 is HomeNavigation.SearchOptions -> appNavigator.navigate(
@@ -2618,6 +2624,11 @@ fun NavGraphBuilder.appGraph(
 
             SharingNavigation.ShareItemNewUsersError -> appNavigator.popUpTo(
                 destination = SharingWith
+            )
+
+            is SharingNavigation.GroupMembers -> appNavigator.navigate(
+                destination = GroupMembersNavItem,
+                route = GroupMembersNavItem.createRoute(it.groupId)
             )
         }
     }

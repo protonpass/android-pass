@@ -31,7 +31,7 @@ import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.repositories.InAppMessagesRepository
-import proton.android.pass.data.api.repositories.InviteRepository
+import proton.android.pass.data.api.repositories.UserInviteRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
@@ -62,6 +62,7 @@ import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.data.api.usecases.GetDefaultBrowser
+import proton.android.pass.data.api.usecases.ObserveGroupMembersByGroup
 import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
@@ -104,7 +105,8 @@ import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.PinItems
 import proton.android.pass.data.api.usecases.RefreshContent
-import proton.android.pass.data.api.usecases.RefreshInvites
+import proton.android.pass.data.api.usecases.RefreshGroupInvites
+import proton.android.pass.data.api.usecases.RefreshUserInvites
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.RejectInvite
 import proton.android.pass.data.api.usecases.RemoveShareMember
@@ -245,17 +247,19 @@ import proton.android.pass.data.fakes.repositories.FakeSentinelRepository
 import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
 import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
-import proton.android.pass.data.fakes.repositories.TestInviteRepository
+import proton.android.pass.data.fakes.repositories.TestUserInviteRepository
 import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.data.fakes.repositories.TestUserAccessDataRepository
 import proton.android.pass.data.fakes.usecases.FakeCanOrganiseVaults
 import proton.android.pass.data.fakes.usecases.FakeChangeAliasStatus
+import proton.android.pass.data.fakes.usecases.FakeObserveGroupMembersByGroup
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeInitialWorkerLauncher
 import proton.android.pass.data.fakes.usecases.FakeObserveAddressesByUserId
 import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
 import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
 import proton.android.pass.data.fakes.usecases.FakePinItem
+import proton.android.pass.data.fakes.usecases.FakeRefreshGroupInvites
 import proton.android.pass.data.fakes.usecases.FakeUnpinItem
 import proton.android.pass.data.fakes.usecases.FakeUpdateAliasName
 import proton.android.pass.data.fakes.usecases.TestAcceptInvite
@@ -329,7 +333,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.TestPerformSync
 import proton.android.pass.data.fakes.usecases.TestPinItems
 import proton.android.pass.data.fakes.usecases.TestRefreshContent
-import proton.android.pass.data.fakes.usecases.TestRefreshInvites
+import proton.android.pass.data.fakes.usecases.FakeRefreshUserInvites
 import proton.android.pass.data.fakes.usecases.TestRefreshPlan
 import proton.android.pass.data.fakes.usecases.TestRejectInvite
 import proton.android.pass.data.fakes.usecases.TestRemoveShareMember
@@ -622,7 +626,7 @@ abstract class FakesDataModule {
     abstract fun bindInviteToVault(impl: TestInviteToVault): InviteToVault
 
     @Binds
-    abstract fun bindInviteRepository(impl: TestInviteRepository): InviteRepository
+    abstract fun bindUserInviteRepository(impl: TestUserInviteRepository): UserInviteRepository
 
     @Binds
     abstract fun bindObserveInvites(impl: TestObserveInvites): ObserveInvites
@@ -631,7 +635,10 @@ abstract class FakesDataModule {
     abstract fun bindObserveInviteRecommendations(impl: FakeObserveInviteRecommendations): ObserveInviteRecommendations
 
     @Binds
-    abstract fun bindRefreshInvites(impl: TestRefreshInvites): RefreshInvites
+    abstract fun bindRefreshUserInvites(impl: FakeRefreshUserInvites): RefreshUserInvites
+
+    @Binds
+    abstract fun bindRefreshGroupInvites(impl: FakeRefreshGroupInvites): RefreshGroupInvites
 
     @Binds
     abstract fun bindPerformSync(impl: TestPerformSync): PerformSync
@@ -1152,5 +1159,8 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindBatchChangeShareVisibility(impl: FakeBatchChangeShareVisibility): BatchChangeShareVisibility
+
+    @Binds
+    abstract fun bindObserveGroupMembersByGroup(impl: FakeObserveGroupMembersByGroup): ObserveGroupMembersByGroup
 
 }

@@ -38,6 +38,7 @@ private const val ADDRESS_ID_KEY = "AddressID"
 private const val USER_ID_KEY = "UserID"
 private const val EMAIL_KEY = "Email"
 private const val INVITE_TOKEN_KEY = "InviteToken"
+private const val INVITE_ID_KEY = "InviteId"
 private const val URI_KEY = "Uri"
 private const val ATTACHMENT_ID_KEY = "Attachment"
 private const val ATTACHMENT_LIST_ID_KEY = "AttachmentList"
@@ -67,6 +68,10 @@ enum class CommonNavArgId : NavArgId {
     },
     InviteToken {
         override val key: String = INVITE_TOKEN_KEY
+        override val navType: NavType<*> = NavType.StringType
+    },
+    InviteId {
+        override val key: String = INVITE_ID_KEY
         override val navType: NavType<*> = NavType.StringType
     }
 }
@@ -108,6 +113,14 @@ enum class CommonOptionalNavArgId : OptionalNavArgId {
     AttachmentIdList {
         override val key: String = ATTACHMENT_LIST_ID_KEY
         override val navType: NavType<*> = NavType.StringArrayType
+    },
+    InviteToken {
+        override val key: String = INVITE_TOKEN_KEY
+        override val navType: NavType<*> = NavType.StringType
+    },
+    InviteId {
+        override val key: String = INVITE_ID_KEY
+        override val navType: NavType<*> = NavType.StringType
     }
 }
 

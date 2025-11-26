@@ -29,7 +29,7 @@ import org.junit.Test
 import proton.android.pass.common.api.None
 import proton.android.pass.commonrust.fakes.TestEmailValidator
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
-import proton.android.pass.data.api.repositories.AddressPermission
+import proton.android.pass.data.api.repositories.UserTarget
 import proton.android.pass.data.api.usecases.CanAddressesBeInvitedResult
 import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
 import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
@@ -37,6 +37,7 @@ import proton.android.pass.data.fakes.usecases.TestCheckAddressesCanBeInvited
 import proton.android.pass.data.fakes.usecases.TestObserveOrganizationSettings
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.InviteRecommendations
+import proton.android.pass.domain.RecommendedEmail
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.features.sharing.ShowEditVaultArgId
@@ -108,7 +109,7 @@ class SharingWithViewModelTest {
         viewModel.onEmailSubmit()
         viewModel.stateFlow.test {
             val stateEmails = awaitItem().enteredEmails
-            val expected = EnteredEmailState(email = email, isError = false)
+            val expected = EnteredEmailUiModel(email = email, isError = false)
             assertThat(stateEmails).isEqualTo(listOf(expected))
         }
         assertThat(viewModel.editingEmail).isEmpty()
@@ -123,8 +124,8 @@ class SharingWithViewModelTest {
         viewModel.onEmailSubmit()
         viewModel.onContinueClick()
 
-        val memory = bulkInviteRepository.observeAddresses().first()
-        assertThat(memory).isEqualTo(listOf(AddressPermission(email, ShareRole.Read)))
+        val memory = bulkInviteRepository.observeInvites().first()
+        assertThat(memory).isEqualTo(listOf(UserTarget(email, ShareRole.Read)))
     }
 
     @Test
@@ -161,9 +162,9 @@ class SharingWithViewModelTest {
             )
         }
 
-        val addresses = bulkInviteRepository.observeAddresses().first()
-        assertThat(addresses.size).isEqualTo(1)
-        assertThat(addresses[0].address).isEqualTo(invitedEmail)
+        val invites = bulkInviteRepository.observeInvites().first()
+        assertThat(invites.size).isEqualTo(1)
+        assertThat((invites[0] as UserTarget).email).isEqualTo(invitedEmail)
     }
 
     @Test
@@ -171,12 +172,13 @@ class SharingWithViewModelTest {
         val email1 = "test@email.test"
         val email2 = "another@email.test"
         val recommendations = InviteRecommendations(
-            recommendedEmails = listOf(email1, email2),
-            planInternalName = "",
+            recommendedItems = listOf(RecommendedEmail(email1), RecommendedEmail(email2)),
             groupDisplayName = "",
-            planRecommendedEmails = emptyList()
+            organizationItems = emptyList()
         )
-        val result = CanAddressesBeInvitedResult.All(recommendations.recommendedEmails)
+        val result = CanAddressesBeInvitedResult.All(
+            recommendations.recommendedItems.map { it.email }
+        )
         checkAddressesCanBeInvited.setResult(Result.success(result))
         observeInviteRecommendations.emitInvites(recommendations)
 
@@ -184,21 +186,22 @@ class SharingWithViewModelTest {
 
         viewModel.stateFlow.test {
             val state = awaitItem()
-            val expectedEnteredEmails = listOf(EnteredEmailState(email = email1, isError = false))
+            val expectedEnteredEmails = listOf(EnteredEmailUiModel(email = email1, isError = false))
             assertThat(state.enteredEmails).isEqualTo(expectedEnteredEmails)
 
             val suggestionsState = state.suggestionsUIState
             assertThat(suggestionsState).isInstanceOf(SuggestionsUIState.Content::class.java)
 
             val content = suggestionsState as SuggestionsUIState.Content
-            assertThat(content.recentEmails.size).isEqualTo(2)
+            val recentEmails = content.recentSortedItems.filterIsInstance<EmailUiModel>()
+            assertThat(recentEmails.size).isEqualTo(2)
 
-            assertThat(content.recentEmails).contains(email1 to true)
-            assertThat(content.recentEmails).contains(email2 to false)
+            assertThat(recentEmails[0]).isEqualTo(EmailUiModel(email2, false))
+            assertThat(recentEmails[1]).isEqualTo(EmailUiModel(email1, true))
         }
 
-        viewModel.onEmailClick(0)
-        viewModel.onEmailClick(0)
+        viewModel.onChipEmailClick(0)
+        viewModel.onChipEmailClick(0)
 
         viewModel.stateFlow.test {
             val state = awaitItem()
@@ -208,9 +211,10 @@ class SharingWithViewModelTest {
             assertThat(suggestionsState).isInstanceOf(SuggestionsUIState.Content::class.java)
 
             val content = suggestionsState as SuggestionsUIState.Content
-            assertThat(content.recentEmails.size).isEqualTo(2)
-            assertThat(content.recentEmails).contains(email1 to false)
-            assertThat(content.recentEmails).contains(email2 to false)
+            val recentEmails = content.recentSortedItems.filterIsInstance<EmailUiModel>()
+            assertThat(recentEmails.size).isEqualTo(2)
+            assertThat(recentEmails[0]).isEqualTo(EmailUiModel(email2, false))
+            assertThat(recentEmails[1]).isEqualTo(EmailUiModel(email1, false))
         }
     }
 
@@ -240,15 +244,15 @@ class SharingWithViewModelTest {
             assertThat(item.errorMessage).isEqualTo(ErrorMessage.SomeAddressesCannotBeInvited)
 
             val expectedEmails = persistentListOf(
-                EnteredEmailState(email = email1, isError = false),
-                EnteredEmailState(email = email2, isError = true)
+                EnteredEmailUiModel(email = email1, isError = false),
+                EnteredEmailUiModel(email = email2, isError = true)
             )
             assertThat(item.enteredEmails).isEqualTo(expectedEmails)
         }
 
         // Assert it has not gone through
-        val addresses = bulkInviteRepository.observeAddresses().first()
-        assertThat(addresses).isEmpty()
+        val invites = bulkInviteRepository.observeInvites().first()
+        assertThat(invites).isEmpty()
     }
 
     @Test

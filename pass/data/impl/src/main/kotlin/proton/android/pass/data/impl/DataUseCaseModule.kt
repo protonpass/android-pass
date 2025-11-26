@@ -52,6 +52,7 @@ import proton.android.pass.data.api.usecases.GetAddressById
 import proton.android.pass.data.api.usecases.GetAddressesForUserId
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.data.api.usecases.GetDefaultBrowser
+import proton.android.pass.data.api.usecases.ObserveGroupMembersByGroup
 import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
@@ -97,7 +98,8 @@ import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.PinItems
 import proton.android.pass.data.api.usecases.RefreshContent
-import proton.android.pass.data.api.usecases.RefreshInvites
+import proton.android.pass.data.api.usecases.RefreshGroupInvites
+import proton.android.pass.data.api.usecases.RefreshUserInvites
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.RejectInvite
 import proton.android.pass.data.api.usecases.RemoveShareMember
@@ -288,6 +290,7 @@ import proton.android.pass.data.impl.usecases.GetAddressByIdImpl
 import proton.android.pass.data.impl.usecases.GetAddressesForUserIdImpl
 import proton.android.pass.data.impl.usecases.GetAllKeysByAddressImpl
 import proton.android.pass.data.impl.usecases.GetDefaultBrowserImpl
+import proton.android.pass.data.impl.usecases.ObserveGroupMembersByGroupImpl
 import proton.android.pass.data.impl.usecases.GetInviteUserModeImpl
 import proton.android.pass.data.impl.usecases.GetItemActionsImpl
 import proton.android.pass.data.impl.usecases.GetItemByAliasEmailImpl
@@ -334,7 +337,8 @@ import proton.android.pass.data.impl.usecases.PerformSyncImpl
 import proton.android.pass.data.impl.usecases.PinItemImpl
 import proton.android.pass.data.impl.usecases.PinItemsImpl
 import proton.android.pass.data.impl.usecases.RefreshContentImpl
-import proton.android.pass.data.impl.usecases.RefreshInvitesImpl
+import proton.android.pass.data.impl.usecases.RefreshGroupInvitesImpl
+import proton.android.pass.data.impl.usecases.RefreshUserInvitesImpl
 import proton.android.pass.data.impl.usecases.RefreshPlanImpl
 import proton.android.pass.data.impl.usecases.RejectInviteImpl
 import proton.android.pass.data.impl.usecases.RemoveShareMemberImpl
@@ -701,7 +705,10 @@ abstract class DataUseCaseModule {
     abstract fun bindObserveInviteRecommendations(impl: ObserveInviteRecommendationsImpl): ObserveInviteRecommendations
 
     @Binds
-    abstract fun bindRefreshInvites(impl: RefreshInvitesImpl): RefreshInvites
+    abstract fun bindRefreshUserInvites(impl: RefreshUserInvitesImpl): RefreshUserInvites
+
+    @Binds
+    abstract fun bindRefreshGroupInvites(impl: RefreshGroupInvitesImpl): RefreshGroupInvites
 
     @Binds
     abstract fun bindPerformSync(impl: PerformSyncImpl): PerformSync
@@ -723,6 +730,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindCanManageVaultAccess(impl: CanManageVaultAccessImpl): CanManageVaultAccess
+
+    @Binds
+    abstract fun bindObserveGroupMembersByGroup(impl: ObserveGroupMembersByGroupImpl): ObserveGroupMembersByGroup
 
     @Binds
     abstract fun bindGetVaultMembers(impl: GetVaultMembersImpl): GetVaultMembers

@@ -19,6 +19,7 @@
 package proton.android.pass.data.fakes.usecases
 
 import proton.android.pass.data.api.usecases.RejectInvite
+import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.InviteToken
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -27,16 +28,23 @@ import javax.inject.Singleton
 class TestRejectInvite @Inject constructor() : RejectInvite {
 
     private var result: Result<Unit> = Result.success(Unit)
-    private val memory: MutableList<InviteToken> = mutableListOf()
+    private val memoryToken: MutableList<InviteToken> = mutableListOf()
+    private val memoryId: MutableList<InviteId> = mutableListOf()
 
-    fun getMemory(): List<InviteToken> = memory
+    fun getMemoryToken(): List<InviteToken> = memoryToken
+    fun getMemoryId(): List<InviteId> = memoryId
 
     fun setResult(value: Result<Unit>) {
         result = value
     }
 
     override suspend fun invoke(inviteToken: InviteToken) {
-        memory.add(inviteToken)
+        memoryToken.add(inviteToken)
+        result.getOrThrow()
+    }
+
+    override suspend fun invoke(inviteId: InviteId) {
+        memoryId.add(inviteId)
         result.getOrThrow()
     }
 

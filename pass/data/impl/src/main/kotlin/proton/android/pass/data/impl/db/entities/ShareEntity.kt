@@ -53,6 +53,8 @@ data class ShareEntity(
     val addressId: String,
     @ColumnInfo(name = Columns.VAULT_ID)
     val vaultId: String,
+    @ColumnInfo(name = Columns.GROUP_ID)
+    val groupId: String?,
     @ColumnInfo(name = Columns.SHARE_TYPE)
     val targetType: Int,
     @ColumnInfo(name = Columns.TARGET_ID)
@@ -93,7 +95,9 @@ data class ShareEntity(
     @ColumnInfo(name = Columns.CAN_AUTOFILL, defaultValue = "1")
     val canAutofill: Boolean,
     @ColumnInfo(name = Columns.FLAGS, defaultValue = "0")
-    val flags: Int
+    val flags: Int,
+    @ColumnInfo(name = Columns.GROUP_EMAIL)
+    val groupEmail: String?
 ) {
     object Columns {
         const val ID = "id"
@@ -104,6 +108,8 @@ data class ShareEntity(
         const val PERMISSION = "permission"
         const val IS_PRIMARY = "is_primary"
         const val VAULT_ID = "vault_id"
+        const val GROUP_ID = "group_id"
+        const val GROUP_EMAIL = "group_email"
         const val CONTENT = "content"
         const val CONTENT_KEY_ROTATION = "content_key_rotation"
         const val CONTENT_FORMAT_VERSION = "content_format_version"

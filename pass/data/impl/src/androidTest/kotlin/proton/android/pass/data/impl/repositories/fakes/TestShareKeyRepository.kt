@@ -49,6 +49,7 @@ class TestShareKeyRepository : ShareKeyRepository {
         userId: UserId,
         addressId: AddressId,
         shareId: ShareId,
+        groupEmail: String?,
         forceRefresh: Boolean,
         shouldStoreLocally: Boolean
     ): Flow<List<ShareKey>> = getShareKeysFlow
@@ -59,6 +60,7 @@ class TestShareKeyRepository : ShareKeyRepository {
         userId: UserId,
         addressId: AddressId,
         shareId: ShareId,
+        groupEmail: String?,
         keyRotation: Long
     ): Flow<ShareKey?> = getShareKeyForRotationFlow
 

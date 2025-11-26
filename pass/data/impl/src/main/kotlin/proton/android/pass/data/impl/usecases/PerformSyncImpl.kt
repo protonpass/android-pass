@@ -21,20 +21,26 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withTimeout
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.PerformSync
-import proton.android.pass.data.api.usecases.RefreshInvites
+import proton.android.pass.data.api.usecases.RefreshGroupInvites
+import proton.android.pass.data.api.usecases.RefreshUserInvites
 import proton.android.pass.data.api.usecases.simplelogin.SyncSimpleLoginPendingAliases
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.minutes
 
 class PerformSyncImpl @Inject constructor(
     private val applyPendingEvents: ApplyPendingEvents,
-    private val refreshInvites: RefreshInvites,
-    private val syncPendingAliases: SyncSimpleLoginPendingAliases
+    private val refreshUserInvites: RefreshUserInvites,
+    private val refreshGroupInvites: RefreshGroupInvites,
+    private val syncPendingAliases: SyncSimpleLoginPendingAliases,
+    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : PerformSync {
 
     override suspend fun invoke(userId: UserId) {
@@ -46,11 +52,18 @@ class PerformSyncImpl @Inject constructor(
     }
 
     private suspend fun performSyncWithPendingEvents(userId: UserId) = coroutineScope {
-        val tasks = listOf(
-            async { performPendingEvents(userId) },
-            async { performRefreshInvites(userId) },
-            async { syncPendingSlAliases(userId) }
-        )
+        val isGroupSharingEnabled =
+            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_GROUP_SHARE)
+                .firstOrNull()
+                ?: false
+        val tasks = buildList {
+            add(async { performPendingEvents(userId) })
+            add(async { performUserRefreshInvites(userId) })
+            if (isGroupSharingEnabled) {
+                async { performGroupRefreshInvites(userId) }
+            }
+            add(async { syncPendingSlAliases(userId) })
+        }
 
         val results = awaitAll(*tasks.toTypedArray())
 
@@ -70,13 +83,22 @@ class PerformSyncImpl @Inject constructor(
         PassLogger.w(TAG, "Pending events for $userId error: ${error.message}")
     }
 
-    private suspend fun performRefreshInvites(userId: UserId): Result<Unit> = runCatching {
+    private suspend fun performUserRefreshInvites(userId: UserId): Result<Unit> = runCatching {
         withTimeout(2.minutes) {
-            refreshInvites(userId)
-            PassLogger.i(TAG, "Refresh invites for $userId finished")
+            refreshUserInvites(userId)
+            PassLogger.i(TAG, "Refresh user invites for $userId finished")
         }
     }.onFailure { error ->
-        PassLogger.w(TAG, "Refresh invites for $userId error: ${error.message}")
+        PassLogger.w(TAG, "Refresh user invites for $userId error: ${error.message}")
+    }
+
+    private suspend fun performGroupRefreshInvites(userId: UserId): Result<Unit> = runCatching {
+        withTimeout(2.minutes) {
+            refreshGroupInvites(userId)
+            PassLogger.i(TAG, "Refresh group invites for $userId finished")
+        }
+    }.onFailure { error ->
+        PassLogger.w(TAG, "Refresh group invites for $userId error: ${error.message}")
     }
 
     private suspend fun syncPendingSlAliases(userId: UserId): Result<Unit> = runCatching {

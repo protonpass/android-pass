@@ -21,8 +21,10 @@ package proton.android.pass.data.fakes.repositories
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
-import proton.android.pass.data.api.repositories.AddressPermission
 import proton.android.pass.data.api.repositories.BulkInviteRepository
+import proton.android.pass.data.api.repositories.GroupTarget
+import proton.android.pass.data.api.repositories.InviteTarget
+import proton.android.pass.data.api.repositories.UserTarget
 import proton.android.pass.domain.ShareRole
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,44 +32,57 @@ import javax.inject.Singleton
 @Singleton
 class TestBulkInviteRepository @Inject constructor() : BulkInviteRepository {
 
-    private val addressesFlow: MutableStateFlow<List<AddressPermission>> =
+    private val invitesFlow: MutableStateFlow<List<InviteTarget>> =
         MutableStateFlow(emptyList())
 
     private val invalidAddressesFlow: MutableStateFlow<Set<String>> = MutableStateFlow(emptySet())
 
-    override fun storeAddresses(addresses: List<String>) {
-        addressesFlow.update {
-            addresses.map { AddressPermission(it, ShareRole.Read) }
-        }
+    override fun storeInvites(inviteTargets: List<InviteTarget>) {
+        invitesFlow.update { inviteTargets }
     }
 
-    override fun setPermission(address: String, permission: ShareRole) {
-        addressesFlow.update { state ->
-            val newList = state.toMutableList()
-            val index = newList.indexOfFirst { it.address == address }
-            newList[index] = newList[index].copy(shareRole = permission)
-            newList
-        }
-    }
-
-    override fun removeAddress(address: String) {
-        addressesFlow.update { state ->
-            val newList = state.toMutableList()
-            newList.removeIf { it.address == address }
-            newList
+    override fun setIndividualPermission(email: String, permission: ShareRole) {
+        invitesFlow.update { state ->
+            state.map { invite ->
+                if (invite.email == email) {
+                    when (invite) {
+                        is UserTarget -> invite.copy(shareRole = permission)
+                        is GroupTarget -> invite.copy(shareRole = permission)
+                    }
+                } else invite
+            }
         }
     }
 
     override fun setAllPermissions(permission: ShareRole) {
-        addressesFlow.update { state ->
-            state.map { it.copy(shareRole = permission) }
+        invitesFlow.update { state ->
+            state.map { invite ->
+                when (invite) {
+                    is UserTarget -> invite.copy(shareRole = permission)
+                    is GroupTarget -> invite.copy(shareRole = permission)
+                }
+            }
         }
     }
 
-    override fun observeAddresses(): Flow<List<AddressPermission>> = addressesFlow
+    override fun removeInvite(inviteTarget: InviteTarget) {
+        invitesFlow.update { state ->
+            state.filter { existingInvite ->
+                when {
+                    existingInvite is UserTarget && inviteTarget is UserTarget ->
+                        existingInvite.email != inviteTarget.email
+                    existingInvite is GroupTarget && inviteTarget is GroupTarget ->
+                        existingInvite.groupId != inviteTarget.groupId
+                    else -> true
+                }
+            }
+        }
+    }
+
+    override fun observeInvites(): Flow<List<InviteTarget>> = invitesFlow
 
     override fun clear() {
-        addressesFlow.update { emptyList() }
+        invitesFlow.update { emptyList() }
     }
 
     override fun updateInvalidAddresses(addresses: List<String>) {

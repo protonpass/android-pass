@@ -25,7 +25,7 @@ import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.masks.TextMask
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.repositories.AddressPermission
+import proton.android.pass.data.api.repositories.InviteTarget
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -33,7 +33,7 @@ import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.domain.items.ItemCategory
-import proton.android.pass.features.sharing.common.AddressPermissionUiState
+import proton.android.pass.features.sharing.common.InviteTargetUiState
 import proton.android.pass.features.sharing.common.toUiState
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.preferences.value
@@ -61,7 +61,7 @@ internal sealed class SharingSummaryState {
 
     internal abstract val event: SharingSummaryEvent
 
-    internal abstract val addressPermissions: List<AddressPermission>
+    internal abstract val inviteTargets: List<InviteTarget>
 
     internal abstract val shareType: ShareType
 
@@ -69,9 +69,9 @@ internal sealed class SharingSummaryState {
 
     internal abstract val isRenameAdminToManagerEnabled: Boolean
 
-    internal val addresses: ImmutableList<AddressPermissionUiState>
-        get() = addressPermissions
-            .map(AddressPermission::toUiState)
+    internal val addresses: ImmutableList<InviteTargetUiState>
+        get() = inviteTargets
+            .map(InviteTarget::toUiState)
             .toPersistentList()
 
     internal val isLoading: Boolean
@@ -79,7 +79,7 @@ internal sealed class SharingSummaryState {
 
     data object Initial : SharingSummaryState() {
 
-        override val addressPermissions: List<AddressPermission> = emptyList()
+        override val inviteTargets: List<InviteTarget> = emptyList()
 
         override val isLoadingState: IsLoadingState = IsLoadingState.NotLoading
 
@@ -92,7 +92,7 @@ internal sealed class SharingSummaryState {
 
     data class ShareItem(
         override val event: SharingSummaryEvent,
-        override val addressPermissions: List<AddressPermission>,
+        override val inviteTargets: List<InviteTarget>,
         override val isLoadingState: IsLoadingState,
         override val isRenameAdminToManagerEnabled: Boolean,
         private val itemUiModel: ItemUiModel,
@@ -128,7 +128,7 @@ internal sealed class SharingSummaryState {
 
     data class ShareVault(
         override val event: SharingSummaryEvent,
-        override val addressPermissions: List<AddressPermission>,
+        override val inviteTargets: List<InviteTarget>,
         override val isLoadingState: IsLoadingState,
         override val isRenameAdminToManagerEnabled: Boolean,
         private val vaultWithItemCount: VaultWithItemCount

@@ -24,8 +24,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.crypto.GetItemKey
 import proton.android.pass.data.api.crypto.GetShareAndItemKey
-import proton.android.pass.data.impl.crypto.EncryptInviteKeys
-import proton.android.pass.data.impl.crypto.EncryptInviteKeysImpl
+import proton.android.pass.data.impl.crypto.EncryptGroupInviteKeys
+import proton.android.pass.data.impl.crypto.EncryptGroupInviteKeysImpl
+import proton.android.pass.data.impl.crypto.EncryptUserInviteKeys
+import proton.android.pass.data.impl.crypto.EncryptUserInviteKeysImpl
 import proton.android.pass.data.impl.crypto.EncryptItemsKeysForUser
 import proton.android.pass.data.impl.crypto.EncryptItemsKeysForUserImpl
 import proton.android.pass.data.impl.crypto.EncryptShareKeysForUser
@@ -34,8 +36,10 @@ import proton.android.pass.data.impl.crypto.GetItemKeyImpl
 import proton.android.pass.data.impl.crypto.GetShareAndItemKeyImpl
 import proton.android.pass.data.impl.crypto.NewUserInviteSignatureManager
 import proton.android.pass.data.impl.crypto.NewUserInviteSignatureManagerImpl
-import proton.android.pass.data.impl.crypto.ReencryptInviteContents
-import proton.android.pass.data.impl.crypto.ReencryptInviteContentsImpl
+import proton.android.pass.data.impl.crypto.ReencryptGroupInviteContents
+import proton.android.pass.data.impl.crypto.ReencryptGroupInviteContentsImpl
+import proton.android.pass.data.impl.crypto.ReencryptUserInviteContents
+import proton.android.pass.data.impl.crypto.ReencryptUserInviteContentsImpl
 import proton.android.pass.data.impl.crypto.ReencryptShareContents
 import proton.android.pass.data.impl.crypto.ReencryptShareContentsImpl
 import proton.android.pass.data.impl.crypto.ReencryptShareKey
@@ -61,10 +65,16 @@ abstract class DataCryptoModule {
     abstract fun bindReencryptShareKey(impl: ReencryptShareKeyImpl): ReencryptShareKey
 
     @Binds
-    abstract fun bindReencryptInviteContents(impl: ReencryptInviteContentsImpl): ReencryptInviteContents
+    abstract fun bindReencryptInviteContents(impl: ReencryptUserInviteContentsImpl): ReencryptUserInviteContents
 
     @Binds
-    abstract fun bindEncryptInviteKeys(impl: EncryptInviteKeysImpl): EncryptInviteKeys
+    abstract fun bindReencryptGroupInviteContents(impl: ReencryptGroupInviteContentsImpl): ReencryptGroupInviteContents
+
+    @Binds
+    abstract fun bindEncryptUserInviteKeys(impl: EncryptUserInviteKeysImpl): EncryptUserInviteKeys
+
+    @Binds
+    abstract fun bindEncryptGroupInviteKeys(impl: EncryptGroupInviteKeysImpl): EncryptGroupInviteKeys
 
     @Binds
     abstract fun bindCreateNewUserInviteSignature(

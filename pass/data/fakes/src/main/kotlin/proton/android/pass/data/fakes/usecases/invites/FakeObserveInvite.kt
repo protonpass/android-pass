@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.usecases.invites.ObserveInvite
+import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingInvite
 import javax.inject.Inject
@@ -38,5 +39,6 @@ class FakeObserveInvite @Inject constructor() : ObserveInvite {
     }
 
     override fun invoke(inviteToken: InviteToken): Flow<Option<PendingInvite>> = inviteFlow
+    override fun invoke(inviteId: InviteId): Flow<Option<PendingInvite>> = inviteFlow
 
 }

@@ -78,6 +78,9 @@ fun SharingSummaryScreen(
                     onShareVault()
                 }
             }
+        },
+        onGroupMembersClick = { groupId ->
+            onNavigateEvent(SharingNavigation.GroupMembers(groupId))
         }
     )
 }

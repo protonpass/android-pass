@@ -111,7 +111,9 @@ internal fun ProfileContent(
                                 isExpanded = false
                             }
                         )
-                        SignInToAnotherDeviceSection()
+                        if (state.canDisplaySignInToAnotherDeviceSection) {
+                            SignInToAnotherDeviceSection()
+                        }
                     }
                 }
 

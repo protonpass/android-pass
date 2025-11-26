@@ -29,7 +29,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.appconfig.api.AppConfig
-import proton.android.pass.appconfig.api.BuildFlavor
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
 import proton.android.pass.biometry.StoreAuthSuccessful
 import proton.android.pass.biometry.UnlockMethod
 import proton.android.pass.common.api.CommonRegex.NON_DIGIT_REGEX
@@ -56,7 +56,7 @@ class PinConfigViewModel @Inject constructor(
 
     private val _state: MutableStateFlow<PinConfigUiState> = MutableStateFlow(
         PinConfigUiState(
-            isQuest = appConfig.flavor is BuildFlavor.Quest
+            isQuest = appConfig.flavor.isQuest()
         )
     )
     val state: StateFlow<PinConfigUiState> = _state

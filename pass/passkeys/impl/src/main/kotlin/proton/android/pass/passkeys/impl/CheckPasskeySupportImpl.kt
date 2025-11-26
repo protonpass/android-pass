@@ -24,7 +24,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import dagger.hilt.android.qualifiers.ApplicationContext
 import proton.android.pass.appconfig.api.AppConfig
-import proton.android.pass.appconfig.api.BuildFlavor
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.passkeys.api.CheckPasskeySupport
 import proton.android.pass.passkeys.api.PasskeySupport
@@ -38,7 +38,7 @@ class CheckPasskeySupportImpl @Inject constructor(
     @Suppress("NewApi")
     override fun invoke(): PasskeySupport = runCatching {
         when {
-            appConfig.flavor is BuildFlavor.Quest -> {
+            appConfig.flavor.isQuest() -> {
                 PassLogger.i(
                     TAG,
                     "Passkey support not available on Quest"

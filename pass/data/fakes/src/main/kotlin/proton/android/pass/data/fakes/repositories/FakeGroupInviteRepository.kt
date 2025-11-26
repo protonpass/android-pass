@@ -25,11 +25,15 @@ import proton.android.pass.data.api.repositories.GroupInviteRepository
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingInvite
+import proton.android.pass.domain.events.EventToken
 import javax.inject.Inject
 
 class FakeGroupInviteRepository @Inject constructor() : GroupInviteRepository {
-    override fun observePendingGroupInvites(userId: UserId, forceRefresh: Boolean): Flow<List<PendingInvite>> =
-        flowOf(emptyList())
+    override fun observePendingGroupInvites(
+        userId: UserId,
+        forceRefresh: Boolean,
+        eventToken: EventToken?
+    ): Flow<List<PendingInvite>> = flowOf(emptyList())
 
     override fun observePendingGroupInvite(userId: UserId, inviteId: InviteId): Flow<PendingInvite?> = flowOf(null)
 

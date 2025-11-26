@@ -22,7 +22,9 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.data.api.work.WorkManagerFacade
 import proton.android.pass.data.api.work.WorkerLauncher
+import proton.android.pass.data.impl.work.WorkManagerFacadeImpl
 import proton.android.pass.data.impl.work.WorkerLauncherImpl
 
 @Module
@@ -31,4 +33,7 @@ abstract class DataWorkModule {
 
     @Binds
     abstract fun bindWorkerLauncher(impl: WorkerLauncherImpl): WorkerLauncher
+
+    @Binds
+    abstract fun bindWorkManagerFacade(impl: WorkManagerFacadeImpl): WorkManagerFacade
 }

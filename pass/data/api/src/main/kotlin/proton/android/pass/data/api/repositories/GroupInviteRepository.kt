@@ -23,10 +23,15 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingInvite
+import proton.android.pass.domain.events.EventToken
 
 interface GroupInviteRepository {
 
-    fun observePendingGroupInvites(userId: UserId, forceRefresh: Boolean = false): Flow<List<PendingInvite>>
+    fun observePendingGroupInvites(
+        userId: UserId,
+        forceRefresh: Boolean = false,
+        eventToken: EventToken? = null
+    ): Flow<List<PendingInvite>>
 
     fun observePendingGroupInvite(userId: UserId, inviteId: InviteId): Flow<PendingInvite?>
 

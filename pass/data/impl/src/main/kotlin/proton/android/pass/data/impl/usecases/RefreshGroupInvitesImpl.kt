@@ -26,6 +26,7 @@ import me.proton.core.user.domain.extension.isOrganizationAdmin
 import me.proton.core.user.domain.repository.UserRepository
 import proton.android.pass.data.api.repositories.GroupInviteRepository
 import proton.android.pass.data.api.usecases.RefreshGroupInvites
+import proton.android.pass.domain.events.EventToken
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.NotificationManager
 import javax.inject.Inject
@@ -37,7 +38,7 @@ class RefreshGroupInvitesImpl @Inject constructor(
     private val notificationManager: NotificationManager
 ) : RefreshGroupInvites {
 
-    override suspend fun invoke(userId: UserId?) {
+    override suspend fun invoke(userId: UserId?, eventToken: EventToken?) {
         PassLogger.i(TAG, "Refreshing group invites started")
 
         runCatching {
@@ -48,7 +49,8 @@ class RefreshGroupInvitesImpl @Inject constructor(
             if (currentUser.isOrganizationAdmin()) {
                 groupInviteRepository.observePendingGroupInvites(
                     userId = currentUserId,
-                    forceRefresh = true
+                    forceRefresh = true,
+                    eventToken = eventToken
                 ).first().lastOrNull()
             } else {
                 null

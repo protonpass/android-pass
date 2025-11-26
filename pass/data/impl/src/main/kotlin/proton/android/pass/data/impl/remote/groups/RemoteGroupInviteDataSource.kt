@@ -22,10 +22,15 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.requests.invites.InviteKeyRotation
 import proton.android.pass.data.impl.responses.invites.GroupInvitesApiModel
 import proton.android.pass.domain.InviteToken
+import proton.android.pass.domain.events.EventToken
 
 interface RemoteGroupInviteDataSource {
 
-    suspend fun retrievePendingGroupInvites(userId: UserId, lastToken: String?): GroupInvitesApiModel
+    suspend fun retrievePendingGroupInvites(
+        userId: UserId,
+        lastToken: String?,
+        eventToken: EventToken?
+    ): GroupInvitesApiModel
 
     suspend fun acceptGroupInvite(
         userId: UserId,

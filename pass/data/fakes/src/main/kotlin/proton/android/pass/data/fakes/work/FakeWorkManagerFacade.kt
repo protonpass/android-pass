@@ -16,24 +16,25 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl
+package proton.android.pass.data.fakes.work
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.work.WorkManagerFacade
-import proton.android.pass.data.api.work.WorkerLauncher
-import proton.android.pass.data.impl.work.WorkManagerFacadeImpl
-import proton.android.pass.data.impl.work.WorkerLauncherImpl
+import javax.inject.Inject
+import javax.inject.Singleton
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class DataWorkModule {
+@Singleton
+class FakeWorkManagerFacade @Inject constructor() : WorkManagerFacade {
 
-    @Binds
-    abstract fun bindWorkerLauncher(impl: WorkerLauncherImpl): WorkerLauncher
+    private val awaitedWorkNames: MutableList<String> = mutableListOf()
 
-    @Binds
-    abstract fun bindWorkManagerFacade(impl: WorkManagerFacadeImpl): WorkManagerFacade
+    fun getAwaitedWorkNames(): List<String> = awaitedWorkNames.toList()
+
+    fun clearAwaitedWorkNames() {
+        awaitedWorkNames.clear()
+    }
+
+    override suspend fun awaitUniqueWorkFinished(name: String) {
+        awaitedWorkNames.add(name)
+        // In tests, we can simulate immediate completion or configure behavior
+    }
 }

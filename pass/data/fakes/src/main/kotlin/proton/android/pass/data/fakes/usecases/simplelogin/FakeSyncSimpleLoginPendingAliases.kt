@@ -26,6 +26,6 @@ import javax.inject.Singleton
 @Singleton
 class FakeSyncSimpleLoginPendingAliases @Inject constructor() : SyncSimpleLoginPendingAliases {
 
-    override suspend fun invoke(userId: UserId) = Unit
+    override suspend fun invoke(userId: UserId, forceRefresh: Boolean) = Unit
 
 }

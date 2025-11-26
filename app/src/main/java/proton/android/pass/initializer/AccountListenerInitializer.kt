@@ -121,7 +121,14 @@ class AccountListenerInitializer : Initializer<Unit> {
     ) {
         PassLogger.i(TAG, "Account ready : ${account.userId}")
         refreshOrganizationSettings(account.userId)
-        refreshPlan(account.userId)
+        runCatching {
+            refreshPlan(account.userId)
+        }.onSuccess {
+            PassLogger.i(TAG, "Plan refreshed for ${account.userId}")
+        }.onFailure {
+            PassLogger.w(TAG, "Refresh plan errored for ${account.userId}")
+            PassLogger.w(TAG, it)
+        }
     }
 
     override fun dependencies(): List<Class<out Initializer<*>?>> = emptyList()

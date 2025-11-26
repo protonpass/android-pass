@@ -45,6 +45,7 @@ import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.events.EventToken
 import proton.android.pass.log.api.PassLogger
 import proton_pass_vault_v1.VaultV1
 import javax.inject.Inject
@@ -57,18 +58,21 @@ class GroupInviteRepositoryImpl @Inject constructor(
     private val encryptGroupInviteKeys: EncryptGroupInviteKeys
 ) : GroupInviteRepository {
 
-    override fun observePendingGroupInvites(userId: UserId, forceRefresh: Boolean): Flow<List<PendingInvite>> =
-        localGroupInviteDataSource.observeAllInvites(userId)
-            .onStart {
-                if (forceRefresh) {
-                    refreshInvites(userId)
-                }
+    override fun observePendingGroupInvites(
+        userId: UserId,
+        forceRefresh: Boolean,
+        eventToken: EventToken?
+    ): Flow<List<PendingInvite>> = localGroupInviteDataSource.observeAllInvites(userId)
+        .onStart {
+            if (forceRefresh) {
+                refreshInvites(userId, eventToken)
             }
-            .map { entities ->
-                encryptionContextProvider.withEncryptionContextSuspendable {
-                    entities.map { it.toDomain(this) }
-                }
+        }
+        .map { entities ->
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                entities.map { it.toDomain(this) }
             }
+        }
 
     override fun observePendingGroupInvite(userId: UserId, inviteId: InviteId): Flow<PendingInvite?> =
         localGroupInviteDataSource.observeInvite(userId, inviteId)
@@ -100,10 +104,10 @@ class GroupInviteRepositoryImpl @Inject constructor(
         remoteGroupInviteDataSource.rejectGroupInvite(userId, inviteToken)
     }
 
-    private suspend fun refreshInvites(userId: UserId): Boolean = coroutineScope {
+    private suspend fun refreshInvites(userId: UserId, eventToken: EventToken?): Boolean = coroutineScope {
         PassLogger.i(TAG, "Refresh invites started")
         val deferredRemoteInvites: Deferred<List<GroupInviteApiModel>> =
-            async { fetchAllRemoteInvites(userId) }
+            async { fetchAllRemoteInvites(userId, eventToken) }
         deferredRemoteInvites.invokeOnCompletion {
             if (it != null) {
                 PassLogger.w(TAG, it)
@@ -152,13 +156,13 @@ class GroupInviteRepositoryImpl @Inject constructor(
         hasNewInvites
     }
 
-    private suspend fun fetchAllRemoteInvites(userId: UserId): List<GroupInviteApiModel> {
+    private suspend fun fetchAllRemoteInvites(userId: UserId, eventToken: EventToken?): List<GroupInviteApiModel> {
         val allInvites = mutableListOf<GroupInviteApiModel>()
         var lastToken: String? = null
 
         do {
             val response =
-                remoteGroupInviteDataSource.retrievePendingGroupInvites(userId, lastToken)
+                remoteGroupInviteDataSource.retrievePendingGroupInvites(userId, lastToken, eventToken)
             allInvites.addAll(response.invites)
             lastToken = response.lastId
         } while (lastToken != null)

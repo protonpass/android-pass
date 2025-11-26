@@ -20,6 +20,7 @@ package proton.android.pass.data.fakes.usecases
 
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.RefreshGroupInvites
+import proton.android.pass.domain.events.EventToken
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -32,7 +33,7 @@ class FakeRefreshGroupInvites @Inject constructor() : RefreshGroupInvites {
         refreshResult = value
     }
 
-    override suspend fun invoke(userId: UserId?) {
+    override suspend fun invoke(userId: UserId?, eventToken: EventToken?) {
         refreshResult.getOrThrow()
     }
 }

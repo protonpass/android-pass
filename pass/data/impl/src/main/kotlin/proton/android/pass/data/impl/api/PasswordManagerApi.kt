@@ -692,7 +692,10 @@ interface PasswordManagerApi : BaseRetrofitApi {
 
     // Group invites
     @GET("$PREFIX/invite/group")
-    suspend fun retrievePendingGroupInvites(@Query("Since") lastToken: String?): RetrieveGroupInvitesResponse
+    suspend fun retrievePendingGroupInvites(
+        @Query("Since") lastToken: String?,
+        @Query("EventToken") eventToken: String?
+    ): RetrieveGroupInvitesResponse
 
     @POST("$PREFIX/invite/group/{inviteToken}")
     suspend fun acceptGroupInvite(

@@ -18,10 +18,7 @@
 
 package proton.android.pass.data.impl.usecases
 
-import androidx.lifecycle.asFlow
-import androidx.work.WorkManager
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.mapNotNull
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareRepository
@@ -33,6 +30,7 @@ import proton.android.pass.data.api.usecases.RefreshSharesResult
 import proton.android.pass.data.api.usecases.RefreshUserInvites
 import proton.android.pass.data.api.usecases.SyncUserEvents
 import proton.android.pass.data.api.usecases.simplelogin.SyncSimpleLoginPendingAliases
+import proton.android.pass.data.api.work.WorkManagerFacade
 import proton.android.pass.data.impl.repositories.UserEventRepository
 import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.domain.UserEventId
@@ -48,7 +46,7 @@ class SyncUserEventsImpl @Inject constructor(
     private val shareRepository: ShareRepository,
     private val itemRepository: ItemRepository,
     private val refreshSharesAndEnqueueSync: RefreshSharesAndEnqueueSync,
-    private val workManager: WorkManager,
+    private val workManagerFacade: WorkManagerFacade,
     private val refreshPlan: RefreshPlan,
     private val refreshUserInvites: RefreshUserInvites,
     private val refreshGroupInvites: RefreshGroupInvites,
@@ -152,7 +150,7 @@ class SyncUserEventsImpl @Inject constructor(
     }
 
     private suspend fun processGroupInvitesChanged(userId: UserId, invitesChanged: SyncEventInvitesChanged?) {
-        invitesChanged?.let { refreshGroupInvites(userId) }
+        invitesChanged?.let { refreshGroupInvites(userId, it.eventToken) }
     }
 
     private suspend fun processPendingAliasToCreateChanged(userId: UserId, invitesChanged: SyncEventInvitesChanged?) {
@@ -184,17 +182,7 @@ class SyncUserEventsImpl @Inject constructor(
 
     private suspend fun waitForFetchItemsWorker(userId: UserId) {
         val uniqueName = FetchItemsWorker.getOneTimeUniqueWorkName(userId)
-        workManager.awaitUniqueWorkFinished(uniqueName)
-    }
-
-    suspend fun WorkManager.awaitUniqueWorkFinished(name: String) {
-        getWorkInfosForUniqueWorkLiveData(name)
-            .asFlow()
-            .mapNotNull { infos ->
-                if (infos.isEmpty()) null
-                else infos.first().state
-            }
-            .first { it.isFinished }
+        workManagerFacade.awaitUniqueWorkFinished(uniqueName)
     }
 
     private companion object {

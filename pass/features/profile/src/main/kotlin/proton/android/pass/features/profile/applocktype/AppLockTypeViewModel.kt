@@ -31,6 +31,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
 import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryResult
@@ -61,7 +63,8 @@ class AppLockTypeViewModel @Inject constructor(
     private val biometryManager: BiometryManager,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val clearPin: ClearPin,
-    observeAnyAccountHasEnforcedLock: ObserveAnyAccountHasEnforcedLock
+    observeAnyAccountHasEnforcedLock: ObserveAnyAccountHasEnforcedLock,
+    private val appConfig: AppConfig
 ) : ViewModel() {
     private val eventState: MutableStateFlow<AppLockTypeEvent> =
         MutableStateFlow(AppLockTypeEvent.Unknown)
@@ -91,7 +94,7 @@ class AppLockTypeViewModel @Inject constructor(
 
     private fun appLockTypePreferences(biometryStatus: BiometryStatus): MutableList<AppLockTypePreference> {
         val preferences = mutableListOf(None, Pin)
-        if (biometryStatus is BiometryStatus.CanAuthenticate) {
+        if (biometryStatus is BiometryStatus.CanAuthenticate && !appConfig.flavor.isQuest()) {
             preferences.add(Biometrics)
         }
         return preferences

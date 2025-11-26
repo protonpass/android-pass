@@ -537,7 +537,7 @@ internal class SyncUserEventsImplTest {
             groupInvitesChanged = groupInvitesChanged,
             pendingAliasToCreateChanged = pendingAliasToCreateChanged,
             sharesWithInvitesToCreate = sharesWithInvitesToCreate,
-            planChanged = planChanged,
+            refreshUser = planChanged,
             eventsPending = eventsPending,
             fullRefresh = fullRefresh
         )

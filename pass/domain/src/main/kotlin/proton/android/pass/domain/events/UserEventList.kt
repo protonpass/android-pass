@@ -58,7 +58,7 @@ data class UserEventList(
     val groupInvitesChanged: SyncEventInvitesChanged?,
     val pendingAliasToCreateChanged: SyncEventInvitesChanged?,
     val sharesWithInvitesToCreate: List<SyncEventShare>,
-    val planChanged: Boolean,
+    val refreshUser: Boolean,
     val eventsPending: Boolean,
     val fullRefresh: Boolean
 )

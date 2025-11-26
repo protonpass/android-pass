@@ -96,7 +96,7 @@ class SyncUserEventsImpl @Inject constructor(
     private suspend fun processIncrementalEvents(userId: UserId, eventList: UserEventList) {
         PassLogger.i(TAG, "Processing events for $userId")
 
-        if (eventList.planChanged) {
+        if (eventList.refreshUser) {
             refreshPlan(userId)
         }
 

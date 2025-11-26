@@ -89,5 +89,7 @@ sealed class BuildFlavor(val env: BuildEnv) {
         }
 
         fun BuildFlavor.supportPayment() = this !is Fdroid && this !is Quest
+
+        fun BuildFlavor.isQuest() = this is Quest
     }
 }

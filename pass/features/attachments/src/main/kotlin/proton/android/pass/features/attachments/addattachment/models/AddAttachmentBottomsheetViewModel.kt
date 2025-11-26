@@ -21,12 +21,12 @@ package proton.android.pass.features.attachments.addattachment.models
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import proton.android.pass.appconfig.api.AppConfig
-import proton.android.pass.appconfig.api.BuildFlavor
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
 import javax.inject.Inject
 
 @HiltViewModel
 class AddAttachmentBottomsheetViewModel @Inject constructor(
     private val appConfig: AppConfig
 ) : ViewModel() {
-    fun displayTakeAPhoto() = appConfig.flavor !is BuildFlavor.Quest
+    fun displayTakeAPhoto() = !appConfig.flavor.isQuest()
 }

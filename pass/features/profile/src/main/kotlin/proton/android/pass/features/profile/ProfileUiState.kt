@@ -73,7 +73,8 @@ internal data class ProfileUiState(
     val passkeySupport: ProfilePasskeySupportSection,
     val secureLinksCount: Int,
     val accounts: ImmutableList<AccountListItem>,
-    val dataStorageState: DataStorageState
+    val dataStorageState: DataStorageState,
+    val canDisplaySignInToAnotherDeviceSection: Boolean
 ) {
 
     internal companion object {
@@ -89,7 +90,8 @@ internal data class ProfileUiState(
             passkeySupport = ProfilePasskeySupportSection.Hide,
             secureLinksCount = 0,
             accounts = persistentListOf(),
-            dataStorageState = DataStorageState.Initial
+            dataStorageState = DataStorageState.Initial,
+            canDisplaySignInToAnotherDeviceSection = false
         )
 
     }

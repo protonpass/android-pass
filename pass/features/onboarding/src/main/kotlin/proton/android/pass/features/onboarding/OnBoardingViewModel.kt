@@ -32,6 +32,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
@@ -67,9 +69,11 @@ class OnBoardingViewModel @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val observeUserAccessData: ObserveUserAccessData,
-    private val storeAuthSuccessful: StoreAuthSuccessful
+    private val storeAuthSuccessful: StoreAuthSuccessful,
+    appConfig: AppConfig
 ) : ViewModel() {
 
+    private val isQuest = appConfig.flavor.isQuest()
     private val _onBoardingUiState = MutableStateFlow(OnBoardingUiState.Initial)
     val onBoardingUiState: StateFlow<OnBoardingUiState> = _onBoardingUiState
 
@@ -111,7 +115,7 @@ class OnBoardingViewModel @Inject constructor(
     }
 
     private fun shouldShowFingerprint(biometryStatus: BiometryStatus): Boolean = when (biometryStatus) {
-        BiometryStatus.CanAuthenticate -> true
+        BiometryStatus.CanAuthenticate -> !isQuest
         BiometryStatus.NotAvailable,
         BiometryStatus.NotEnrolled -> false
     }

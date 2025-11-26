@@ -86,9 +86,14 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         .filterNotNull()
         .distinctUntilChanged()
 
-    override fun observeSyncStatus(userId: UserId): Flow<SimpleLoginSyncStatus> = syncStatusForUser(userId)
-        .filterNotNull()
-        .onStart { refreshSyncStatus(userId) }
+    override fun observeSyncStatus(userId: UserId, forceRefresh: Boolean): Flow<SimpleLoginSyncStatus> =
+        syncStatusForUser(userId)
+            .filterNotNull()
+            .onStart {
+                if (forceRefresh) {
+                    refreshSyncStatus(userId)
+                }
+            }
 
     override fun disableSyncPreference() {
         localSimpleLoginDataSource.disableSyncPreference()

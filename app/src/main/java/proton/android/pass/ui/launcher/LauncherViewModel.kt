@@ -107,11 +107,11 @@ class LauncherViewModel @Inject constructor(
     private val inAppUpdatesManager: InAppUpdatesManager,
     private val resetUserPreferences: ResetAuthPreferences,
     private val snackbarDispatcher: SnackbarDispatcher,
+    private val deletePasswordHistoryEntryForUser: DeletePasswordHistoryEntryForUser,
+    private val settingsRepository: InternalSettingsRepository,
     userPreferencesRepository: UserPreferencesRepository,
     commonLibraryVersionChecker: CommonLibraryVersionChecker,
-    private val deletePasswordHistoryEntryForUser: DeletePasswordHistoryEntryForUser,
-    private val appConfig: AppConfig,
-    private val settingsRepository: InternalSettingsRepository
+    appConfig: AppConfig
 ) : ViewModel() {
 
     init {

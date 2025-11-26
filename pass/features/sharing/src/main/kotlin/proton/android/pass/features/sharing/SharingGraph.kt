@@ -24,6 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import proton.android.pass.common.api.Option
+import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.ItemId
@@ -34,6 +35,7 @@ import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.domain.shares.SharePendingInvite
 import proton.android.pass.features.sharing.accept.AcceptInviteBottomSheet
+import proton.android.pass.features.sharing.groupmembers.GroupMembersBottomSheet
 import proton.android.pass.features.sharing.invitesinfo.InvitesErrorDialog
 import proton.android.pass.features.sharing.invitesinfo.InvitesInfoDialog
 import proton.android.pass.features.sharing.manage.ManageVaultScreen
@@ -62,6 +64,11 @@ import proton.android.pass.navigation.api.toPath
 object ShowEditVaultArgId : NavArgId {
     override val key: String = "show_edit_vault"
     override val navType: NavType<*> = NavType.BoolType
+}
+
+object GroupIdArgId : NavArgId {
+    override val key: String = "GroupId"
+    override val navType: NavType<*> = NavType.StringType
 }
 
 object SharingWith : NavItem(
@@ -100,14 +107,30 @@ object SharingPermissions : NavItem(
     }
 }
 
-object AcceptInvite : NavItem(
+object AcceptInviteNavItem : NavItem(
     baseRoute = "sharing/accept",
-    navArgIds = listOf(CommonNavArgId.InviteToken),
+    optionalArgIds = listOf(CommonOptionalNavArgId.InviteToken, CommonOptionalNavArgId.InviteId),
     navItemType = NavItemType.Bottomsheet
 ) {
 
-    fun createRoute(inviteToken: InviteToken) = "$baseRoute/${inviteToken.value}"
+    fun createRoute(inviteToken: InviteToken) = buildString {
+        append(baseRoute)
+        append(mapOf(CommonOptionalNavArgId.InviteToken.key to inviteToken.value).toPath())
+    }
 
+    fun createRoute(inviteId: InviteId) = buildString {
+        append(baseRoute)
+        append(mapOf(CommonOptionalNavArgId.InviteId.key to inviteId.value).toPath())
+    }
+
+}
+
+object GroupMembersNavItem : NavItem(
+    baseRoute = "sharing/group-members",
+    navArgIds = listOf(GroupIdArgId),
+    navItemType = NavItemType.Bottomsheet
+) {
+    fun createRoute(groupId: GroupId) = "$baseRoute/${groupId.id}"
 }
 
 object SharingSummary : NavItem(
@@ -262,6 +285,9 @@ sealed interface SharingNavigation {
         val itemId: ItemId,
         val itemCategory: ItemCategory
     ) : SharingNavigation
+
+    @JvmInline
+    value class GroupMembers(val groupId: GroupId) : SharingNavigation
 }
 
 fun NavGraphBuilder.sharingGraph(onNavigateEvent: (SharingNavigation) -> Unit) {
@@ -277,9 +303,14 @@ fun NavGraphBuilder.sharingGraph(onNavigateEvent: (SharingNavigation) -> Unit) {
         SharingSummaryScreen(onNavigateEvent = onNavigateEvent)
     }
 
-    bottomSheet(AcceptInvite) {
+    bottomSheet(AcceptInviteNavItem) {
         BackHandler { onNavigateEvent(SharingNavigation.BackToHome) }
         AcceptInviteBottomSheet(onNavigateEvent = onNavigateEvent)
+    }
+
+    bottomSheet(GroupMembersNavItem) {
+        BackHandler { onNavigateEvent(SharingNavigation.CloseBottomSheet(false)) }
+        GroupMembersBottomSheet()
     }
 
     composable(ManageVault) {

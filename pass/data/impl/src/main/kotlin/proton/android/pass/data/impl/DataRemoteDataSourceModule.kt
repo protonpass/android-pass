@@ -36,8 +36,8 @@ import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSource
 import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteImageFetcher
 import proton.android.pass.data.impl.remote.RemoteImageFetcherImpl
-import proton.android.pass.data.impl.remote.RemoteInviteDataSource
-import proton.android.pass.data.impl.remote.RemoteInviteDataSourceImpl
+import proton.android.pass.data.impl.remote.RemoteUserInviteDataSource
+import proton.android.pass.data.impl.remote.RemoteUserInviteDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteItemDataSource
 import proton.android.pass.data.impl.remote.RemoteItemDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteItemKeyDataSource
@@ -46,6 +46,8 @@ import proton.android.pass.data.impl.remote.RemoteLiveTelemetryDataSource
 import proton.android.pass.data.impl.remote.RemoteLiveTelemetryDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteOrganizationReportDataSource
 import proton.android.pass.data.impl.remote.RemoteOrganizationReportDataSourceImpl
+import proton.android.pass.data.impl.remote.RemoteOrganizationKeyDataSource
+import proton.android.pass.data.impl.remote.RemoteOrganizationKeyDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteOrganizationSettingsDataSource
 import proton.android.pass.data.impl.remote.RemoteOrganizationSettingsDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteSecureLinkDataSource
@@ -62,6 +64,10 @@ import proton.android.pass.data.impl.remote.assetlink.RemoteAssetLinkDataSource
 import proton.android.pass.data.impl.remote.assetlink.RemoteAssetLinkDataSourceImpl
 import proton.android.pass.data.impl.remote.attachments.RemoteAttachmentsDataSource
 import proton.android.pass.data.impl.remote.attachments.RemoteAttachmentsDataSourceImpl
+import proton.android.pass.data.impl.remote.groups.RemoteGroupInviteDataSource
+import proton.android.pass.data.impl.remote.groups.RemoteGroupInviteDataSourceImpl
+import proton.android.pass.data.impl.remote.groups.RemoteGroupsDataSource
+import proton.android.pass.data.impl.remote.groups.RemoteGroupsDataSourceImpl
 import proton.android.pass.data.impl.remote.inappmessages.RemoteInAppMessagesDataSource
 import proton.android.pass.data.impl.remote.inappmessages.RemoteInAppMessagesDataSourceImpl
 import proton.android.pass.data.impl.remote.shares.RemoteShareInvitesDataSource
@@ -72,6 +78,7 @@ import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSou
 import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSourceImpl
 import javax.inject.Singleton
 
+@Suppress("TooManyFunctions")
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class DataRemoteDataSourceModule {
@@ -101,7 +108,12 @@ abstract class DataRemoteDataSourceModule {
     abstract fun bindRemoteTelemetryDataSource(impl: RemoteTelemetryDataSourceImpl): RemoteTelemetryDataSource
 
     @Binds
-    abstract fun bindRemoteInviteDataSource(impl: RemoteInviteDataSourceImpl): RemoteInviteDataSource
+    abstract fun bindRemoteUserInviteDataSource(impl: RemoteUserInviteDataSourceImpl): RemoteUserInviteDataSource
+
+    @Binds
+    abstract fun bindRemoteOrganizationKeyDataSource(
+        impl: RemoteOrganizationKeyDataSourceImpl
+    ): RemoteOrganizationKeyDataSource
 
     @Binds
     abstract fun bindRemoteOrganizationSettingsDataSource(
@@ -159,6 +171,12 @@ abstract class DataRemoteDataSourceModule {
     abstract fun bindRemoteOrganizationReportDataSource(
         impl: RemoteOrganizationReportDataSourceImpl
     ): RemoteOrganizationReportDataSource
+
+    @[Binds Singleton]
+    abstract fun bindRemoteGroupsDataSource(impl: RemoteGroupsDataSourceImpl): RemoteGroupsDataSource
+
+    @[Binds Singleton]
+    abstract fun bindRemoteGroupInviteDataSource(impl: RemoteGroupInviteDataSourceImpl): RemoteGroupInviteDataSource
 
 }
 

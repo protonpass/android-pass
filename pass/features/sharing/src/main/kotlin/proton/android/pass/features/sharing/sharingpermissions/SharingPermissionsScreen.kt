@@ -62,8 +62,8 @@ fun SharingPermissionsScreen(
                 is SharingPermissionsUiEvent.OnPermissionChangeClick -> {
                     SharingNavigation.InviteToShareEditPermissions(
                         itemIdOption = state.itemIdOption,
-                        email = uiEvent.address.address,
-                        permission = uiEvent.address.permission.toShareRole()
+                        email = uiEvent.inviteTarget.email,
+                        permission = uiEvent.inviteTarget.permission.toShareRole()
                     ).also(onNavigateEvent)
                 }
 
@@ -77,6 +77,9 @@ fun SharingPermissionsScreen(
                     onPermissionsSubmit()
                 }
             }
+        },
+        onGroupMembersClick = { groupId ->
+            onNavigateEvent(SharingNavigation.GroupMembers(groupId))
         }
     )
 }

@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import proton.android.pass.common.api.Option
@@ -66,19 +67,21 @@ class SharingPermissionsViewModel @Inject constructor(
         MutableStateFlow(SharingPermissionsEvents.Idle)
 
     internal val stateFlow: StateFlow<SharingPermissionsUIState> = combine(
-        bulkInviteRepository.observeAddresses(),
+        bulkInviteRepository.observeInvites().map { invites ->
+            invites.map { it.toUiState() }
+        },
         getVaultByShareId(shareId = shareId).asLoadingResult(),
         eventState,
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.RENAME_ADMIN_TO_MANAGER)
-    ) { addresses, vault, event, isRenameAdminToManagerEnabled ->
-        val uiEvent = if (event == SharingPermissionsEvents.Idle && addresses.isEmpty()) {
+    ) { inviteTargets, vault, event, isRenameAdminToManagerEnabled ->
+        val uiEvent = if (event == SharingPermissionsEvents.Idle && inviteTargets.isEmpty()) {
             SharingPermissionsEvents.BackToHome
         } else {
             event
         }
         SharingPermissionsUIState(
             itemIdOption = itemIdOption,
-            addresses = addresses.map { it.toUiState() }.toImmutableList(),
+            inviteTargets = inviteTargets.toImmutableList(),
             vaultName = vault.getOrNull()?.name,
             isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled,
             event = uiEvent

@@ -24,11 +24,17 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
+import me.proton.core.key.domain.entity.key.PublicKeyRing
+import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.entity.UserAddress
+import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.impl.crypto.ReencryptGroupKeyInput
+import proton.android.pass.data.impl.crypto.ReencryptKeyInput
 import proton.android.pass.data.impl.crypto.ReencryptShareKey
 import proton.android.pass.data.impl.crypto.ReencryptShareKeyInput
 import proton.android.pass.data.impl.db.entities.ShareKeyEntity
@@ -45,19 +51,22 @@ class ShareKeyRepositoryImpl @Inject constructor(
     private val userRepository: UserRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val localDataSource: LocalShareKeyDataSource,
-    private val remoteDataSource: RemoteShareKeyDataSource
+    private val remoteDataSource: RemoteShareKeyDataSource,
+    private val userAddressRepository: UserAddressRepository,
+    private val publicAddressRepository: PublicAddressRepository
 ) : ShareKeyRepository {
 
     override fun getShareKeys(
         userId: UserId,
         addressId: AddressId,
         shareId: ShareId,
+        groupEmail: String?,
         forceRefresh: Boolean,
         shouldStoreLocally: Boolean
     ): Flow<List<ShareKey>> = flow {
         if (!forceRefresh) {
             val localKeys = localDataSource.getAllShareKeysForShare(userId, shareId).first()
-            val readyKeys = tryToReencryptLocalKeys(userId, localKeys)
+            val readyKeys = tryToReencryptLocalKeys(userId, localKeys, groupEmail)
 
             if (readyKeys.isNotEmpty()) {
                 emit(readyKeys.map(::entityToDomain))
@@ -65,7 +74,7 @@ class ShareKeyRepositoryImpl @Inject constructor(
             }
         }
 
-        val keys = requestRemoteKeys(userId, addressId, shareId)
+        val keys = requestRemoteKeys(userId, addressId, shareId, groupEmail)
         if (shouldStoreLocally) {
             localDataSource.storeShareKeys(keys)
         }
@@ -84,6 +93,7 @@ class ShareKeyRepositoryImpl @Inject constructor(
         userId: UserId,
         addressId: AddressId,
         shareId: ShareId,
+        groupEmail: String?,
         keyRotation: Long
     ): Flow<ShareKey?> = flow {
         val localKeys = localDataSource.getAllShareKeysForShare(userId, shareId).first()
@@ -95,7 +105,7 @@ class ShareKeyRepositoryImpl @Inject constructor(
         }
 
         // Key was not present, force a refresh
-        val retrievedKeys = requestRemoteKeys(userId, addressId, shareId)
+        val retrievedKeys = requestRemoteKeys(userId, addressId, shareId, groupEmail)
         localDataSource.storeShareKeys(retrievedKeys)
 
         val retrievedKey = retrievedKeys.firstOrNull { it.rotation == keyRotation }
@@ -110,20 +120,31 @@ class ShareKeyRepositoryImpl @Inject constructor(
     private suspend fun requestRemoteKeys(
         userId: UserId,
         addressId: AddressId,
-        shareId: ShareId
+        shareId: ShareId,
+        groupEmail: String?
     ): List<ShareKeyEntity> {
         val remoteKeys = remoteDataSource.getShareKeys(userId, shareId).first()
         val user = userRepository.getUser(userId)
-
         return encryptionContextProvider.withEncryptionContextSuspendable {
             remoteKeys.map { response ->
+                val input = if (groupEmail == null) {
+                    ReencryptShareKeyInput(
+                        key = response.key,
+                        userKeyId = response.userKeyId,
+                        addressId = addressId.id
+                    )
+                } else {
+                    createReencryptGroupKeyInput(
+                        user = user,
+                        key = response.key,
+                        addressId = addressId,
+                        groupEmail = groupEmail
+                    )
+                }
                 val keyData = reencryptKey(
                     context = this,
                     user = user,
-                    input = ReencryptShareKeyInput(
-                        key = response.key,
-                        userKeyId = response.userKeyId
-                    )
+                    input = input
                 )
 
                 ShareKeyEntity(
@@ -141,7 +162,11 @@ class ShareKeyRepositoryImpl @Inject constructor(
         }
     }
 
-    private suspend fun tryToReencryptLocalKeys(userId: UserId, keys: List<ShareKeyEntity>): List<ShareKeyEntity> {
+    private suspend fun tryToReencryptLocalKeys(
+        userId: UserId,
+        keys: List<ShareKeyEntity>,
+        groupEmail: String?
+    ): List<ShareKeyEntity> {
 
         // Separate active keys from inactive keys
         val activeKeys = keys.filter { it.isActive }
@@ -155,13 +180,24 @@ class ShareKeyRepositoryImpl @Inject constructor(
         val user = userRepository.getUser(userId)
         val reencryptedKeyResults = encryptionContextProvider.withEncryptionContextSuspendable {
             inactiveKeys.map {
+                val input = if (groupEmail == null) {
+                    ReencryptShareKeyInput(
+                        key = it.key,
+                        userKeyId = it.userKeyId,
+                        addressId = it.addressId
+                    )
+                } else {
+                    createReencryptGroupKeyInput(
+                        user = user,
+                        key = it.key,
+                        addressId = AddressId(it.addressId),
+                        groupEmail = groupEmail
+                    )
+                }
                 val output = reencryptKey(
                     context = this,
                     user = user,
-                    input = ReencryptShareKeyInput(
-                        key = it.key,
-                        userKeyId = it.userKeyId
-                    )
+                    input = input
                 )
 
                 if (output.isActive) {
@@ -185,10 +221,32 @@ class ShareKeyRepositoryImpl @Inject constructor(
         return activeKeys + reencryptedKeys
     }
 
+    private suspend fun createReencryptGroupKeyInput(
+        user: User,
+        key: String,
+        addressId: AddressId,
+        groupEmail: String
+    ): ReencryptGroupKeyInput {
+        val invitedAddress: UserAddress = userAddressRepository.getAddress(user.userId, addressId)
+            ?: throw IllegalStateException("Invited address not found")
+        val groupPublicKeys = publicAddressRepository.getPublicAddressInfo(
+            sessionUserId = user.userId,
+            email = groupEmail,
+            internalOnly = false
+        )
+        return ReencryptGroupKeyInput(
+            key = key,
+            invitedAddress = invitedAddress,
+            publicKeyRing = PublicKeyRing(
+                keys = groupPublicKeys.address.keys.map { it.publicKey }
+            )
+        )
+    }
+
     private fun reencryptKey(
         context: EncryptionContext,
         user: User,
-        input: ReencryptShareKeyInput
+        input: ReencryptKeyInput
     ): ReencryptedKeyData = runCatching {
         reencryptShareKey(
             encryptionContext = context,
@@ -198,6 +256,8 @@ class ShareKeyRepositoryImpl @Inject constructor(
     }.fold(
         onSuccess = { ReencryptedKeyData(it, true) },
         onFailure = {
+            PassLogger.w(TAG, "Error reencrypting key")
+            PassLogger.w(TAG, it)
             if (it is UserKeyNotActive) {
                 ReencryptedKeyData(EncryptedByteArray(byteArrayOf()), false)
             } else {

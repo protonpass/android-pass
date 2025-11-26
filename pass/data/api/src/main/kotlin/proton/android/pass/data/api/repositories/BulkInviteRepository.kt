@@ -21,29 +21,24 @@ package proton.android.pass.data.api.repositories
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.domain.ShareRole
 
-data class AddressPermission(
-    val address: String,
-    val shareRole: ShareRole
-)
-
 interface BulkInviteRepository {
 
-    fun storeAddresses(addresses: List<String>)
+    fun storeInvites(inviteTargets: List<InviteTarget>)
 
-    fun setPermission(address: String, permission: ShareRole)
+    fun setIndividualPermission(email: String, permission: ShareRole)
 
     fun setAllPermissions(permission: ShareRole)
 
-    fun removeAddress(address: String)
+    fun removeInvite(inviteTarget: InviteTarget)
 
-    fun observeAddresses(): Flow<List<AddressPermission>>
+    fun observeInvites(): Flow<List<InviteTarget>>
+
+    fun clear()
 
     fun updateInvalidAddresses(addresses: List<String>)
 
     fun observeInvalidAddresses(): Flow<Set<String>>
 
     fun clearInvalidAddresses()
-
-    fun clear()
 
 }

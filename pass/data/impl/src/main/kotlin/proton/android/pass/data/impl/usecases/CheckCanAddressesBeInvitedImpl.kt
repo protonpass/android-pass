@@ -68,13 +68,13 @@ class CheckCanAddressesBeInvitedImpl @Inject constructor(
             )
 
             is Some -> when (val settings = settingsOption.value) {
-                OrganizationSettings.NotAnOrganization -> CanAddressesBeInvitedResult.All(addresses)
+                OrganizationSettings.NotAnOrganization ->
+                    CanAddressesBeInvitedResult.All(addresses)
                 is OrganizationSettings.Organization -> when (settings.shareMode) {
-                    OrganizationShareMode.Unrestricted -> CanAddressesBeInvitedResult.All(addresses)
-                    OrganizationShareMode.OrganizationOnly -> checkAddressesCanBeInvited(
-                        shareId,
-                        addresses
-                    )
+                    OrganizationShareMode.Unrestricted ->
+                        CanAddressesBeInvitedResult.All(addresses)
+                    OrganizationShareMode.OrganizationOnly ->
+                        checkAddressesCanBeInvited(shareId, addresses)
                 }
             }
         }

@@ -33,7 +33,9 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.repositories.BulkInviteRepository
+import proton.android.pass.data.api.repositories.UserTarget
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareRole
 import proton.android.pass.features.sharing.extensions.toShareRole
 import proton.android.pass.features.sharing.sharingpermissions.SharingType
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -60,17 +62,15 @@ class SharingPermissionsBottomSheetViewModel @Inject constructor(
 
     internal val state: StateFlow<SharingPermissionsBottomSheetUiState> = combine(
         eventFlow,
-        bulkInviteRepository.observeAddresses(),
+        bulkInviteRepository.observeInvites(),
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.RENAME_ADMIN_TO_MANAGER)
-    ) { event, addresses, isRenameAdminToManagerEnabled ->
+    ) { event, invites, isRenameAdminToManagerEnabled ->
         SharingPermissionsBottomSheetUiState(
             event = event,
             mode = mode.toUi(),
             displayRemove = when (mode) {
                 is SharingPermissionMode.SetAll -> false
-                is SharingPermissionMode.SetOne -> {
-                    addresses.size > 1
-                }
+                is SharingPermissionMode.SetOne -> invites.size > 1
             },
             itemIdOption = itemIdOption,
             isRenameAdminToManagerEnabled = isRenameAdminToManagerEnabled
@@ -92,8 +92,8 @@ class SharingPermissionsBottomSheetViewModel @Inject constructor(
                 }
 
                 is SharingPermissionMode.SetOne -> {
-                    bulkInviteRepository.setPermission(
-                        address = mode.email,
+                    bulkInviteRepository.setIndividualPermission(
+                        email = mode.email,
                         permission = sharingType.toShareRole()
                     )
                 }
@@ -111,7 +111,7 @@ class SharingPermissionsBottomSheetViewModel @Inject constructor(
                 }
 
                 is SharingPermissionMode.SetOne -> {
-                    bulkInviteRepository.removeAddress(mode.email)
+                    bulkInviteRepository.removeInvite(UserTarget(mode.email, ShareRole.Read))
                 }
             }
 

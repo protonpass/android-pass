@@ -26,10 +26,12 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.data.api.repositories.UserTarget
 import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
 import proton.android.pass.data.fakes.usecases.TestGetVaultByShareId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.features.sharing.common.AddressPermissionUiState
+import proton.android.pass.domain.ShareRole
+import proton.android.pass.features.sharing.common.UserTargetUiState
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
@@ -48,7 +50,7 @@ class SharingPermissionsViewModelTest {
     fun setUp() {
         getVaultById = TestGetVaultByShareId()
         bulkInviteRepository = TestBulkInviteRepository().apply {
-            runBlocking { storeAddresses(listOf(TEST_EMAIL)) }
+            runBlocking { storeInvites(listOf(UserTarget(TEST_EMAIL, ShareRole.Read))) }
         }
         savedStateHandleProvider = TestSavedStateHandleProvider().apply {
             get()[CommonNavArgId.ShareId.key] = TEST_SHARE_ID
@@ -69,11 +71,8 @@ class SharingPermissionsViewModelTest {
             assertThat(initialState.vaultName).isNull()
             assertThat(initialState.event).isEqualTo(SharingPermissionsEvents.Idle)
 
-            val expected = AddressPermissionUiState(
-                address = TEST_EMAIL,
-                permission = SharingType.Read
-            )
-            assertThat(initialState.addresses).isEqualTo(listOf(expected))
+            val expected = UserTargetUiState(TEST_EMAIL, TEST_EMAIL, SharingType.Read)
+            assertThat(initialState.inviteTargets).isEqualTo(listOf(expected))
         }
     }
 

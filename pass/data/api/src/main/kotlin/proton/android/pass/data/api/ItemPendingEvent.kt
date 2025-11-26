@@ -55,4 +55,7 @@ data class ItemPendingEvent(
         hasDeletedItemIds ||
         updateShareEvent != null
 
+    val hasPendingChangesAndIsGroup: Boolean =
+        hasPendingChanges && updateShareEvent?.groupId != null
+
 }

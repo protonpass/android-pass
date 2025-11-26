@@ -22,14 +22,12 @@ import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
-import proton.android.pass.data.impl.requests.AcceptInviteRequest
 import proton.android.pass.data.impl.requests.BatchHideUnhideShareRequest
 import proton.android.pass.data.impl.requests.BreachAddEmailRequest
 import proton.android.pass.data.impl.requests.BreachVerifyEmailRequest
 import proton.android.pass.data.impl.requests.ChangeAliasStatusRequest
 import proton.android.pass.data.impl.requests.ChangeNotificationStatusRequest
 import proton.android.pass.data.impl.requests.CheckAddressesCanBeInvitedRequest
-import proton.android.pass.data.impl.requests.ConfirmInviteRequest
 import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateInviteRequest
 import proton.android.pass.data.impl.requests.CreateInvitesRequest
@@ -70,6 +68,8 @@ import proton.android.pass.data.impl.requests.attachments.LinkPendingFilesReques
 import proton.android.pass.data.impl.requests.attachments.RestoreOldFileRequest
 import proton.android.pass.data.impl.requests.attachments.UpdateFileMetadataRequest
 import proton.android.pass.data.impl.requests.attachments.UpdatePendingFileRequest
+import proton.android.pass.data.impl.requests.invites.AcceptInviteRequest
+import proton.android.pass.data.impl.requests.invites.ConfirmInviteRequest
 import proton.android.pass.data.impl.responses.AliasDetailsResponse
 import proton.android.pass.data.impl.responses.BatchHideUnhideSharesResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailResponse
@@ -97,12 +97,14 @@ import proton.android.pass.data.impl.responses.GetSharePendingInvitesResponse
 import proton.android.pass.data.impl.responses.GetShareResponse
 import proton.android.pass.data.impl.responses.GetSharesResponse
 import proton.android.pass.data.impl.responses.GetUserNotificationsResponse
-import proton.android.pass.data.impl.responses.InviteRecommendationsResponse
+import proton.android.pass.data.impl.responses.InviteRecommendationsOrganizationResponse
+import proton.android.pass.data.impl.responses.InviteRecommendationsSuggestedResponse
 import proton.android.pass.data.impl.responses.ItemRevisionResponse
 import proton.android.pass.data.impl.responses.LastEventIdResponse
 import proton.android.pass.data.impl.responses.MigrateItemsResponse
 import proton.android.pass.data.impl.responses.OrganizationGetResponse
-import proton.android.pass.data.impl.responses.PendingInvitesResponse
+import proton.android.pass.data.impl.responses.OrganizationKeyApiModel
+import proton.android.pass.data.impl.responses.PendingUserInvitesResponse
 import proton.android.pass.data.impl.responses.SimpleLoginAliasDomainsResponse
 import proton.android.pass.data.impl.responses.SimpleLoginAliasMailboxResponse
 import proton.android.pass.data.impl.responses.SimpleLoginAliasMailboxesResponse
@@ -124,6 +126,9 @@ import proton.android.pass.data.impl.responses.attachments.PendingFileResponse
 import proton.android.pass.data.impl.responses.attachments.RestoreOldFileResponse
 import proton.android.pass.data.impl.responses.attachments.RetrieveFilesResponse
 import proton.android.pass.data.impl.responses.attachments.UpdateFileMetadataResponse
+import proton.android.pass.data.impl.responses.invites.RetrieveGroupInvitesResponse
+import proton.android.pass.data.impl.responses.invites.RetrieveGroupMembersResponse
+import proton.android.pass.data.impl.responses.invites.RetrieveGroupsResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -371,7 +376,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
     ): CodeOnlyResponse
 
     @GET("$PREFIX/invite")
-    suspend fun fetchInvites(): PendingInvitesResponse
+    suspend fun fetchUserInvites(): PendingUserInvitesResponse
 
     @POST("$PREFIX/invite/{inviteId}")
     suspend fun acceptInvite(@Path("inviteId") inviteId: String, @Body request: AcceptInviteRequest): GetShareResponse
@@ -386,12 +391,19 @@ interface PasswordManagerApi : BaseRetrofitApi {
     @DELETE("$PREFIX/invite/{inviteId}")
     suspend fun rejectInvite(@Path("inviteId") inviteId: String): CodeOnlyResponse
 
-    @GET("$PREFIX/share/{shareId}/invite/recommended_emails")
-    suspend fun inviteRecommendations(
+    @GET("$PREFIX/share/{shareId}/invite/recommended_emails/suggested")
+    suspend fun inviteRecommendationsSuggested(
         @Path("shareId") shareId: String,
-        @Query("PlanSince") lastToken: String?,
         @Query("StartsWith") startsWith: String?
-    ): InviteRecommendationsResponse
+    ): InviteRecommendationsSuggestedResponse
+
+    @GET("$PREFIX/share/{shareId}/invite/recommended_emails/organization")
+    suspend fun inviteRecommendationsOrganization(
+        @Path("shareId") shareId: String,
+        @Query("Since") since: String?,
+        @Query("PageSize") pageSize: Int?,
+        @Query("StartsWith") startsWith: String?
+    ): InviteRecommendationsOrganizationResponse
 
     @GET("$PREFIX/share/{shareId}/user")
     suspend fun getShareMembers(@Path("shareId") shareId: String): GetShareMembersResponse
@@ -678,6 +690,30 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("chunkId") chunkId: String
     ): retrofit2.Response<ResponseBody>
 
+    // Group invites
+    @GET("$PREFIX/invite/group")
+    suspend fun retrievePendingGroupInvites(@Query("Since") lastToken: String?): RetrieveGroupInvitesResponse
+
+    @POST("$PREFIX/invite/group/{inviteToken}")
+    suspend fun acceptGroupInvite(
+        @Path("inviteToken") inviteToken: String,
+        @Body request: AcceptInviteRequest
+    ): CodeOnlyResponse
+
+    @DELETE("$PREFIX/invite/group/{inviteToken}")
+    suspend fun rejectGroupInvite(@Path("inviteToken") inviteToken: String): CodeOnlyResponse
+
+    // Core group invites
+    @GET("core/v4/groups")
+    suspend fun retrieveGroups(): RetrieveGroupsResponse
+
+    @GET("core/v4/groups/{groupEncId}/members")
+    suspend fun retrieveGroupMembers(
+        @Path("groupEncId") groupEncId: String,
+        @Query("PageSize") pageSize: Int = 1000,
+        @Query("Page") page: Int = 0
+    ): RetrieveGroupMembersResponse
+
     // Core
     @GET("core/v4/keys/all")
     suspend fun getAllKeysByAddress(
@@ -687,4 +723,8 @@ interface PasswordManagerApi : BaseRetrofitApi {
 
     @PUT("$PREFIX/share/hide")
     suspend fun changeShareVisibility(@Body request: BatchHideUnhideShareRequest): BatchHideUnhideSharesResponse
+
+    // Organization Keys
+    @GET("core/v4/organizations/keys")
+    suspend fun retrieveOrganizationKeys(): OrganizationKeyApiModel
 }

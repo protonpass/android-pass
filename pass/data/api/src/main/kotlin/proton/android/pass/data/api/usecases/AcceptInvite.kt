@@ -19,6 +19,7 @@
 package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
+import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -29,11 +30,13 @@ sealed interface AcceptInviteStatus {
 
     data class DownloadingItems(val downloaded: Int, val total: Int) : AcceptInviteStatus
 
-    data class Done(
+    data class UserInviteDone(
         val items: Int,
         val shareId: ShareId,
         val itemId: ItemId
     ) : AcceptInviteStatus
+
+    data object GroupInviteDone : AcceptInviteStatus
 
     data object Error : AcceptInviteStatus
 
@@ -42,5 +45,7 @@ sealed interface AcceptInviteStatus {
 interface AcceptInvite {
 
     operator fun invoke(inviteToken: InviteToken): Flow<AcceptInviteStatus>
+
+    operator fun invoke(inviteId: InviteId): Flow<AcceptInviteStatus>
 
 }

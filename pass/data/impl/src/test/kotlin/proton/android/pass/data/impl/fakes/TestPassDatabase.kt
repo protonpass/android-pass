@@ -19,8 +19,10 @@
 package proton.android.pass.data.impl.fakes
 
 import proton.android.pass.data.impl.db.PassDatabase
-import proton.android.pass.data.impl.db.dao.InviteDao
-import proton.android.pass.data.impl.db.dao.InviteKeyDao
+import proton.android.pass.data.impl.db.dao.GroupInviteDao
+import proton.android.pass.data.impl.db.dao.GroupInviteKeyDao
+import proton.android.pass.data.impl.db.dao.UserInviteDao
+import proton.android.pass.data.impl.db.dao.UserInviteKeyDao
 import proton.android.pass.data.impl.db.dao.ItemsDao
 import proton.android.pass.data.impl.db.dao.LiveTelemetryDao
 import proton.android.pass.data.impl.db.dao.PassDataMigrationDao
@@ -79,11 +81,19 @@ internal class TestPassDatabase : PassDatabase {
         throw IllegalStateException("This method should not be called")
     }
 
-    override fun inviteDao(): InviteDao {
+    override fun userInviteDao(): UserInviteDao {
         throw IllegalStateException("This method should not be called")
     }
 
-    override fun inviteKeyDao(): InviteKeyDao {
+    override fun userInviteKeyDao(): UserInviteKeyDao {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun groupInviteDao(): GroupInviteDao {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun groupInviteKeyDao(): GroupInviteKeyDao {
         throw IllegalStateException("This method should not be called")
     }
 

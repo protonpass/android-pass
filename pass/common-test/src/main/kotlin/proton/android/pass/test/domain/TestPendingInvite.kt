@@ -34,7 +34,7 @@ object TestPendingInvite {
             inviterEmail: String = TestUtils.randomString(),
             invitedAddressId: String = TestUtils.randomString(),
             isFromNewUser: Boolean = Random.nextBoolean()
-        ) = PendingInvite.Item(
+        ) = PendingInvite.UserItem(
             inviteToken = InviteToken(inviteToken),
             inviterEmail = inviterEmail,
             invitedAddressId = invitedAddressId,
@@ -45,7 +45,7 @@ object TestPendingInvite {
 
     object Vault {
 
-        fun create(token: String = "some-token", name: String = "invite-name") = PendingInvite.Vault(
+        fun create(token: String = "some-token", name: String = "invite-name") = PendingInvite.UserVault(
             inviteToken = InviteToken(token),
             inviterEmail = "inviter@email",
             invitedAddressId = "invitedAddressId",

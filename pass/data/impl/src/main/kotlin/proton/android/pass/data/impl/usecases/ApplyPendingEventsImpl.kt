@@ -29,6 +29,7 @@ import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.data.api.ItemPendingEvent
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.errors.ShareNotAvailableError
+import proton.android.pass.data.api.repositories.GroupRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.ShareRepository
@@ -53,6 +54,7 @@ class ApplyPendingEventsImpl @Inject constructor(
     private val addressRepository: UserAddressRepository,
     private val itemRepository: ItemRepository,
     private val shareRepository: ShareRepository,
+    private val groupRepository: GroupRepository,
     private val itemSyncStatusRepository: ItemSyncStatusRepository,
     private val refreshSharesAndEnqueueSync: RefreshSharesAndEnqueueSync
 ) : ApplyPendingEvents {
@@ -126,6 +128,7 @@ class ApplyPendingEventsImpl @Inject constructor(
         shareId: ShareId,
         addressId: AddressId
     ): ItemPendingEvent {
+        val share = shareRepository.getById(userId, shareId)
         val pendingEventLists = mutableSetOf<PendingEventList>()
         var updateShareEvent: UpdateShareEvent? = null
         var lastEventId = eventRepository.getLatestEventId(userId, shareId)
@@ -135,7 +138,7 @@ class ApplyPendingEventsImpl @Inject constructor(
             lastEventId = eventList.latestEventId
             pendingEventLists.add(eventList.toDomain())
             eventList.shareResponse?.let { shareResponse ->
-                updateShareEvent = shareResponse.toDomain()
+                updateShareEvent = shareResponse.toDomain(share.groupEmail)
             }
         } while (eventList.eventsPending)
 

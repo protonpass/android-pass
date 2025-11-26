@@ -20,8 +20,8 @@ package proton.android.pass.data.impl.crypto
 
 import me.proton.core.key.domain.extension.primary
 import me.proton.core.user.domain.entity.UserAddress
-import proton.android.pass.crypto.api.usecases.EncryptInviteKeys
-import proton.android.pass.crypto.api.usecases.EncryptedInviteShareKeyList
+import proton.android.pass.crypto.api.usecases.invites.EncryptInviteKeys
+import proton.android.pass.crypto.api.usecases.invites.EncryptedInviteShareKeyList
 import proton.android.pass.data.api.crypto.GetShareAndItemKey
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.domain.ItemId

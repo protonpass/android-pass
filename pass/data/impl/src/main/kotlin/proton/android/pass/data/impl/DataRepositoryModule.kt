@@ -32,14 +32,17 @@ import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.repositories.GroupInviteRepository
+import proton.android.pass.data.api.repositories.GroupRepository
 import proton.android.pass.data.api.repositories.InAppMessagesRepository
-import proton.android.pass.data.api.repositories.InviteRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.LiveTelemetryRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.repositories.OrganizationSettingsRepository
 import proton.android.pass.data.api.repositories.PasswordHistoryEntryRepository
+import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
+import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
 import proton.android.pass.data.api.repositories.ReportRepository
 import proton.android.pass.data.api.repositories.SearchEntryRepository
 import proton.android.pass.data.api.repositories.ShareInvitesRepository
@@ -48,6 +51,7 @@ import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.SimpleLoginRepository
 import proton.android.pass.data.api.repositories.TelemetryRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
+import proton.android.pass.data.api.repositories.UserInviteRepository
 import proton.android.pass.data.impl.core.repositories.SentinelRepositoryImpl
 import proton.android.pass.data.impl.repositories.AliasContactsRepositoryImpl
 import proton.android.pass.data.impl.repositories.AliasRepositoryImpl
@@ -63,8 +67,9 @@ import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
 import proton.android.pass.data.impl.repositories.ExtraPasswordRepositoryImpl
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepository
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepositoryImpl
+import proton.android.pass.data.impl.repositories.GroupInviteRepositoryImpl
+import proton.android.pass.data.impl.repositories.GroupRepositoryImpl
 import proton.android.pass.data.impl.repositories.InAppMessagesRepositoryImpl
-import proton.android.pass.data.impl.repositories.InviteRepositoryImpl
 import proton.android.pass.data.impl.repositories.ItemKeyRepository
 import proton.android.pass.data.impl.repositories.ItemKeyRepositoryImpl
 import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
@@ -72,9 +77,8 @@ import proton.android.pass.data.impl.repositories.ItemSyncStatusRepositoryImpl
 import proton.android.pass.data.impl.repositories.LiveTelemetryRepositoryImpl
 import proton.android.pass.data.impl.repositories.MetadataResolverImpl
 import proton.android.pass.data.impl.repositories.OnMemoryDraftRepository
+import proton.android.pass.data.impl.repositories.OrganizationKeyRepositoryImpl
 import proton.android.pass.data.impl.repositories.OrganizationSettingsRepositoryImpl
-import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
-import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
 import proton.android.pass.data.impl.repositories.PasswordHistoryEntryRepositoryImpl
 import proton.android.pass.data.impl.repositories.PendingAttachmentLinkRepositoryImpl
 import proton.android.pass.data.impl.repositories.PendingAttachmentUpdaterRepositoryImpl
@@ -92,6 +96,8 @@ import proton.android.pass.data.impl.repositories.ShareRepositoryImpl
 import proton.android.pass.data.impl.repositories.SimpleLoginRepositoryImpl
 import proton.android.pass.data.impl.repositories.TelemetryRepositoryImpl
 import proton.android.pass.data.impl.repositories.UserAccessDataRepositoryImpl
+import proton.android.pass.data.impl.repositories.UserInviteRepositoryImpl
+import proton.android.pass.domain.repositories.OrganizationKeyRepository
 import javax.inject.Singleton
 
 @Suppress("TooManyFunctions")
@@ -133,7 +139,7 @@ abstract class DataRepositoryModule {
     abstract fun bindPlanRepository(impl: PlanRepositoryImpl): PlanRepository
 
     @Binds
-    abstract fun bindInviteRepository(impl: InviteRepositoryImpl): InviteRepository
+    abstract fun bindInviteRepository(impl: UserInviteRepositoryImpl): UserInviteRepository
 
     @Binds
     abstract fun bindFetchShareItemStatusRepository(
@@ -153,6 +159,9 @@ abstract class DataRepositoryModule {
     abstract fun bindOrganizationSettingsRepository(
         impl: OrganizationSettingsRepositoryImpl
     ): OrganizationSettingsRepository
+
+    @Binds
+    abstract fun bindOrganizationKeyRepository(impl: OrganizationKeyRepositoryImpl): OrganizationKeyRepository
 
     @[Binds Singleton]
     abstract fun bindSentinelRepository(impl: SentinelRepositoryImpl): SentinelRepository
@@ -211,4 +220,11 @@ abstract class DataRepositoryModule {
 
     @[Binds Singleton]
     abstract fun bindPasswordHistoryRepository(impl: PasswordHistoryEntryRepositoryImpl): PasswordHistoryEntryRepository
+
+    @[Binds Singleton]
+    abstract fun bindGroupRepository(impl: GroupRepositoryImpl): GroupRepository
+
+    @[Binds Singleton]
+    abstract fun bindGroupInviteRepository(impl: GroupInviteRepositoryImpl): GroupInviteRepository
+
 }

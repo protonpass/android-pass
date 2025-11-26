@@ -131,7 +131,7 @@ class ItemRepositoryImplTest {
             },
             migrateItem = TestMigrateItem(),
             encryptionContextProvider = TestEncryptionContextProvider(),
-            getShareAndItemKey = FakeGetShareAndItemKey(),
+            getShareAndItemKey = FakeGetShareAndItemKey()
         )
     }
 
@@ -262,6 +262,8 @@ class ItemRepositoryImplTest {
                 userId = USER_ID.id,
                 addressId = ADDRESS_ID.id,
                 vaultId = shareId,
+                groupId = null,
+                groupEmail = null,
                 targetType = 1,
                 targetId = shareId,
                 permission = 1,

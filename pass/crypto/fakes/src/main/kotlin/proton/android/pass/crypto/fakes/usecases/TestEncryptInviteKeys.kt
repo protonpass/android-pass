@@ -20,8 +20,8 @@ package proton.android.pass.crypto.fakes.usecases
 
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PublicKey
-import proton.android.pass.crypto.api.usecases.EncryptInviteKeys
-import proton.android.pass.crypto.api.usecases.EncryptedInviteShareKeyList
+import proton.android.pass.crypto.api.usecases.invites.EncryptInviteKeys
+import proton.android.pass.crypto.api.usecases.invites.EncryptedInviteShareKeyList
 import proton.android.pass.domain.key.InviteKey
 import javax.inject.Inject
 

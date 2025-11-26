@@ -20,10 +20,12 @@ package proton.android.pass.data.fakes.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.AcceptInviteStatus
+import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -36,7 +38,7 @@ class TestAcceptInvite @Inject constructor() : AcceptInvite {
     private var result: MutableStateFlow<Result<AcceptInviteStatus>> =
         MutableStateFlow(
             Result.success(
-                AcceptInviteStatus.Done(
+                AcceptInviteStatus.UserInviteDone(
                     items = 0,
                     shareId = ShareId(DEFAULT_SHARE_ID),
                     itemId = ItemId(DEFAULT_ITEM_ID)
@@ -55,6 +57,8 @@ class TestAcceptInvite @Inject constructor() : AcceptInvite {
         memory.add(inviteToken)
         return result.map { it.getOrThrow() }
     }
+
+    override fun invoke(inviteId: InviteId): Flow<AcceptInviteStatus> = flowOf(AcceptInviteStatus.GroupInviteDone)
 
     companion object {
 

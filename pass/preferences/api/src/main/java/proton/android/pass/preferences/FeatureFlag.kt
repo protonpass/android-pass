@@ -59,5 +59,11 @@ enum class FeatureFlag(
         description = "Enable user events",
         key = "PassUserEventsV1",
         isEnabledDefault = false
+    ),
+    PASS_GROUP_SHARE(
+        title = "Enable group sharing",
+        description = "Enable group sharing",
+        key = "PassGroupInvitesV1",
+        isEnabledDefault = false
     )
 }

@@ -41,13 +41,15 @@ import proton.android.pass.composecomponents.impl.icon.PassItemIcon
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
+import proton.android.pass.domain.GroupId
 import proton.android.pass.features.sharing.R
 
 @Composable
 internal fun SharingSummaryContent(
     modifier: Modifier = Modifier,
     state: SharingSummaryState,
-    onUiEvent: (SharingSummaryUiEvent) -> Unit
+    onUiEvent: (SharingSummaryUiEvent) -> Unit,
+    onGroupMembersClick: (groupId: GroupId) -> Unit
 ) {
     val actionTextRes = remember(state) {
         when (state) {
@@ -155,11 +157,12 @@ internal fun SharingSummaryContent(
                 )
             }
 
-            items(items = state.addresses, key = { it.address }) { address ->
+            items(items = state.addresses, key = { it.email }) { inviteTarget ->
                 AddressRowSection(
                     modifier = Modifier.padding(vertical = Spacing.small),
-                    address = address,
-                    isRenameAdminToManagerEnabled = state.isRenameAdminToManagerEnabled
+                    inviteTarget = inviteTarget,
+                    isRenameAdminToManagerEnabled = state.isRenameAdminToManagerEnabled,
+                    onGroupMembersClick = onGroupMembersClick
                 )
             }
 

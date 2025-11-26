@@ -28,7 +28,7 @@ internal object AcceptInviteStateMother {
         internal fun create(
             progress: AcceptInviteProgress = AcceptInviteProgress.Pending,
             event: AcceptInviteEvent = AcceptInviteEvent.Idle,
-            pendingItemInvite: PendingInvite.Item = TestPendingInvite.Item.create()
+            pendingItemInvite: PendingInvite.UserItem = TestPendingInvite.Item.create()
         ) = AcceptInviteState.ItemInvite(
             progress = progress,
             event = event,
@@ -42,7 +42,7 @@ internal object AcceptInviteStateMother {
         internal fun create(
             progress: AcceptInviteProgress = AcceptInviteProgress.Pending,
             event: AcceptInviteEvent = AcceptInviteEvent.Idle,
-            pendingVaultInvite: PendingInvite.Vault = TestPendingInvite.Vault.create()
+            pendingVaultInvite: PendingInvite.UserVault = TestPendingInvite.Vault.create()
         ) = AcceptInviteState.VaultInvite(
             progress = progress,
             event = event,

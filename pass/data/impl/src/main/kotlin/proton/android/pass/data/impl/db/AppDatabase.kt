@@ -87,11 +87,13 @@ import me.proton.core.usersettings.data.entity.OrganizationEntity
 import me.proton.core.usersettings.data.entity.OrganizationKeysEntity
 import me.proton.core.usersettings.data.entity.UserSettingsEntity
 import proton.android.pass.data.impl.db.entities.AssetLinkEntity
+import proton.android.pass.data.impl.db.entities.GroupInviteEntity
+import proton.android.pass.data.impl.db.entities.GroupInviteKeyEntity
 import proton.android.pass.data.impl.db.entities.IgnoredAssetLinkEntity
 import proton.android.pass.data.impl.db.entities.InAppMessageEntity
 import proton.android.pass.data.impl.db.entities.InstantConverter
-import proton.android.pass.data.impl.db.entities.InviteEntity
-import proton.android.pass.data.impl.db.entities.InviteKeyEntity
+import proton.android.pass.data.impl.db.entities.UserInviteEntity
+import proton.android.pass.data.impl.db.entities.UserInviteKeyEntity
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.db.entities.LiveTelemetryEntity
 import proton.android.pass.data.impl.db.entities.PassDataMigrationEntity
@@ -154,8 +156,10 @@ import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
         SearchEntryEntity::class,
         PlanEntity::class,
         PassDataMigrationEntity::class,
-        InviteEntity::class,
-        InviteKeyEntity::class,
+        UserInviteEntity::class,
+        UserInviteKeyEntity::class,
+        GroupInviteEntity::class,
+        GroupInviteKeyEntity::class,
         UserAccessDataEntity::class,
         PassOrganizationSettingsEntity::class,
         SecureLinkEntity::class,
@@ -217,7 +221,6 @@ import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
         AutoMigration(from = 71, to = 72),
         AutoMigration(from = 72, to = 73),
         AutoMigration(from = 73, to = 74),
-        AutoMigration(from = 76, to = 77),
         AutoMigration(from = 77, to = 78),
         AutoMigration(from = 78, to = 79),
         AutoMigration(from = 79, to = 80),

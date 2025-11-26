@@ -32,8 +32,8 @@ import me.proton.core.user.domain.entity.UserAddressKey
 import org.junit.Test
 import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.crypto.api.Base64
-import proton.android.pass.crypto.api.usecases.EncryptedInviteAcceptKey
-import proton.android.pass.crypto.api.usecases.EncryptedInviteKey
+import proton.android.pass.crypto.api.usecases.invites.EncryptedInviteAcceptKey
+import proton.android.pass.crypto.api.usecases.invites.EncryptedInviteKey
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.domain.key.ShareKey
@@ -49,7 +49,7 @@ class AcceptInviteImplTest {
 
     @Test
     fun canAcceptInvite() {
-        val instance = AcceptInviteImpl(cryptoContext, TestEncryptionContextProvider())
+        val instance = AcceptUserInviteImpl(cryptoContext, TestEncryptionContextProvider())
         val inviterAddressKey = TestUtils.createUserAddressKey(cryptoContext, AddressId("Inviter"))
         val invited = TestUtils.createUser()
         val invitedUserAddressKey = TestUtils.createUserAddressKey(cryptoContext, AddressId("Invited"))

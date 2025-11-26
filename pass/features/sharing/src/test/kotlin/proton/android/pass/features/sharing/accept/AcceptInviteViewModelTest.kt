@@ -142,7 +142,7 @@ internal class AcceptInviteViewModelTest {
     @Test
     fun `GIVEN item pending invite WHEN invite accept is done THEN shows success message`() = runTest {
         val pendingItemInvite = TestPendingInvite.Item.create()
-        val acceptInviteStatus = AcceptInviteStatus.Done(
+        val acceptInviteStatus = AcceptInviteStatus.UserInviteDone(
             shareId = ShareId(""),
             itemId = ItemId(""),
             items = 1
@@ -216,7 +216,7 @@ internal class AcceptInviteViewModelTest {
     @Test
     fun `GIVEN item pending invite WHEN invite accept is done THEN emits done state`() = runTest {
         val pendingItemInvite = TestPendingInvite.Item.create()
-        val acceptInviteStatus = AcceptInviteStatus.Done(
+        val acceptInviteStatus = AcceptInviteStatus.UserInviteDone(
             shareId = ShareId(""),
             itemId = ItemId(""),
             items = 1
@@ -279,7 +279,7 @@ internal class AcceptInviteViewModelTest {
     @Test
     fun `GIVEN vault pending invite WHEN invite accept is done THEN shows success message`() = runTest {
         val pendingVaultInvite = TestPendingInvite.Vault.create()
-        val acceptInviteStatus = AcceptInviteStatus.Done(
+        val acceptInviteStatus = AcceptInviteStatus.UserInviteDone(
             shareId = ShareId(""),
             itemId = ItemId(""),
             items = 1
@@ -298,7 +298,7 @@ internal class AcceptInviteViewModelTest {
     @Test
     fun `GIVEN vault pending invite WHEN invite accept is done THEN emits done state`() = runTest {
         val pendingVaultInvite = TestPendingInvite.Vault.create()
-        val acceptInviteStatus = AcceptInviteStatus.Done(
+        val acceptInviteStatus = AcceptInviteStatus.UserInviteDone(
             shareId = ShareId(""),
             itemId = ItemId(""),
             items = 1

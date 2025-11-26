@@ -22,8 +22,11 @@ import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.key.domain.decryptAndVerifyData
+import me.proton.core.key.domain.entity.key.PublicKeyRing
 import me.proton.core.key.domain.getArmored
+import me.proton.core.key.domain.useKeys
 import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.error.InvalidSignature
@@ -31,16 +34,25 @@ import proton.android.pass.data.impl.exception.UserKeyNotActive
 import proton.android.pass.data.impl.extensions.tryUseKeys
 import javax.inject.Inject
 
+sealed interface ReencryptKeyInput
+
 data class ReencryptShareKeyInput(
     val key: String,
-    val userKeyId: String
-)
+    val userKeyId: String,
+    val addressId: String
+) : ReencryptKeyInput
+
+data class ReencryptGroupKeyInput(
+    val key: String,
+    val publicKeyRing: PublicKeyRing,
+    val invitedAddress: UserAddress
+) : ReencryptKeyInput
 
 interface ReencryptShareKey {
     operator fun invoke(
         encryptionContext: EncryptionContext,
         user: User,
-        input: ReencryptShareKeyInput
+        input: ReencryptKeyInput
     ): EncryptedByteArray
 }
 
@@ -48,6 +60,15 @@ class ReencryptShareKeyImpl @Inject constructor(
     private val cryptoContext: CryptoContext
 ) : ReencryptShareKey {
     override fun invoke(
+        encryptionContext: EncryptionContext,
+        user: User,
+        input: ReencryptKeyInput
+    ): EncryptedByteArray = when (input) {
+        is ReencryptGroupKeyInput -> reencryptGroupKey(encryptionContext, input)
+        is ReencryptShareKeyInput -> reencryptShareKey(encryptionContext, user, input)
+    }
+
+    private fun reencryptShareKey(
         encryptionContext: EncryptionContext,
         user: User,
         input: ReencryptShareKeyInput
@@ -71,5 +92,18 @@ class ReencryptShareKeyImpl @Inject constructor(
         }
 
         return encryptionContext.encrypt(decrypted.data)
+    }
+
+    fun reencryptGroupKey(encryptionContext: EncryptionContext, input: ReencryptGroupKeyInput): EncryptedByteArray {
+        val decryptedShareKey = input.invitedAddress.useKeys(cryptoContext) {
+            decryptAndVerifyData(
+                message = getArmored(Base64.decodeBase64(input.key)),
+                verifyKeyRing = input.publicKeyRing
+            )
+        }
+        if (decryptedShareKey.status != VerificationStatus.Success) {
+            throw InvalidSignature("ShareKey signature did not match")
+        }
+        return encryptionContext.encrypt(decryptedShareKey.data)
     }
 }

@@ -18,9 +18,23 @@
 
 package proton.android.pass.domain
 
+sealed interface RecommendedItem {
+    val email: String
+}
+
+data class RecommendedEmail(
+    override val email: String
+) : RecommendedItem
+
+data class RecommendedGroup(
+    val groupId: GroupId,
+    override val email: String,
+    val name: String,
+    val memberCount: Int
+) : RecommendedItem
+
 data class InviteRecommendations(
-    val recommendedEmails: List<String>,
-    val planInternalName: String,
+    val recommendedItems: List<RecommendedItem>,
     val groupDisplayName: String,
-    val planRecommendedEmails: List<String>
+    val organizationItems: List<RecommendedItem>
 )

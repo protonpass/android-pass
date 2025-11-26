@@ -44,6 +44,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.usecases.CreateVault
 import proton.android.pass.crypto.api.usecases.UpdateVault
 import proton.android.pass.data.api.errors.ShareNotAvailableError
+import proton.android.pass.data.api.repositories.GroupRepository
 import proton.android.pass.data.api.repositories.RefreshSharesResult
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.UpdateShareEvent
@@ -61,6 +62,7 @@ import proton.android.pass.data.impl.remote.RemoteShareDataSource
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.data.impl.util.TimeUtil.toDate
+import proton.android.pass.domain.GroupId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareFlags
 import proton.android.pass.domain.ShareId
@@ -88,7 +90,8 @@ class ShareRepositoryImpl @Inject constructor(
     private val updateVault: UpdateVault,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val shareKeyRepository: ShareKeyRepository,
-    private val userAccessDataRepository: UserAccessDataRepository
+    private val userAccessDataRepository: UserAccessDataRepository,
+    private val groupRepository: GroupRepository
 ) : ShareRepository {
 
     override suspend fun createVault(userId: UserId, vault: NewVault): Share {
@@ -111,10 +114,16 @@ class ShareRepositoryImpl @Inject constructor(
         val symmetricallyEncryptedKey = encryptionContextProvider.withEncryptionContextSuspendable {
             encrypt(shareKey.value())
         }
+        val groupEmail = createVaultResponse.groupId?.let {
+            groupRepository.retrieveGroup(userId, GroupId(it))
+                ?.groupEmail
+                ?: throw IllegalStateException("Group not found on vault create")
+        }
         val responseAsEntity = shareResponseToEntity(
             userAddress = userAddress,
             shareResponse = createVaultResponse,
-            key = EncryptionKeyStatus.Found(shareKey)
+            key = EncryptionKeyStatus.Found(shareKey),
+            groupEmail = groupEmail
         )
 
         val shareKeyEntity = ShareKeyEntity(
@@ -221,11 +230,8 @@ class ShareRepositoryImpl @Inject constructor(
 
         val inactiveLocalShares = localShares.filter { !it.isActive }.map { ShareId(it.id) }
         val remoteSharesToSave = remoteShares.filter {
-            sharesNotInLocal.contains(ShareId(it.shareId)) || inactiveLocalShares.contains(
-                ShareId(
-                    it.shareId
-                )
-            )
+            sharesNotInLocal.contains(ShareId(it.shareId)) ||
+                inactiveLocalShares.contains(ShareId(it.shareId))
         }
 
         val storedShares = storeShares(userId, remoteSharesToSave)
@@ -297,10 +303,10 @@ class ShareRepositoryImpl @Inject constructor(
         vault: NewVault
     ): Share {
         val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
-
         val shareKey = shareKeyRepository.getLatestKeyForShare(shareId).first()
         val body = newVaultToBody(vault)
         val request = updateVault.createUpdateVaultRequest(shareKey, body).toRequest()
+        val share = localShareDataSource.getById(userId, shareId)
         val response = runCatching {
             remoteShareDataSource.updateVault(userId, shareId, request)
         }.fold(
@@ -318,7 +324,8 @@ class ShareRepositoryImpl @Inject constructor(
         val shareEntity = shareResponseToEntity(
             userAddress = userAddress,
             shareResponse = response,
-            key = EncryptionKeyStatus.Found(shareKeyAsEncryptionkey)
+            key = EncryptionKeyStatus.Found(shareKeyAsEncryptionkey),
+            groupEmail = share?.groupEmail
         )
         localShareDataSource.upsertShares(listOf(shareEntity))
 
@@ -375,15 +382,22 @@ class ShareRepositoryImpl @Inject constructor(
         event: UpdateShareEvent,
         block: suspend (ShareResponseEntity) -> Unit
     ) {
-        block(createShareResponseEntity(event.toResponse(), userId))
+        block(createShareResponseEntity(event.toResponse(), userId, event.groupEmail))
     }
 
     private suspend fun storeShares(userId: UserId, shares: List<ShareResponse>): List<ShareEntity> = coroutineScope {
         if (shares.isEmpty()) return@coroutineScope emptyList()
-
         PassLogger.i(TAG, "Fetching ShareKeys for ${shares.size} shares")
+        val groups = if (shares.any { it.groupId != null }) {
+            groupRepository.retrieveGroups(userId, forceRefresh = true)
+        } else null
         val entities: List<ShareResponseEntity> = shares.map { response ->
-            async { createShareResponseEntity(response, userId) }
+            val groupEmail = if (response.groupId != null) {
+                groups?.find { it.id.id == response.groupId }
+                    ?.groupEmail
+                    ?: throw IllegalStateException("Group not found on storing shares")
+            } else null
+            async { createShareResponseEntity(response, userId, groupEmail) }
         }.awaitAll()
 
         val shareEntities = entities.map { shareResponseEntity -> shareResponseEntity.entity }
@@ -409,7 +423,11 @@ class ShareRepositoryImpl @Inject constructor(
         shareEntities
     }
 
-    private suspend fun createShareResponseEntity(shareResponse: ShareResponse, userId: UserId): ShareResponseEntity {
+    private suspend fun createShareResponseEntity(
+        shareResponse: ShareResponse,
+        userId: UserId,
+        groupEmail: String?
+    ): ShareResponseEntity {
         val userAddress = userAddressRepository.getAddresses(userId).primary()
             ?: throw IllegalStateException("Could not find PrimaryAddress")
         PassLogger.i(TAG, "Found primary user address")
@@ -421,6 +439,7 @@ class ShareRepositoryImpl @Inject constructor(
             userId = userAddress.userId,
             addressId = userAddress.addressId,
             shareId = shareId,
+            groupEmail = groupEmail,
             forceRefresh = false,
             shouldStoreLocally = false
         ).first()
@@ -431,9 +450,10 @@ class ShareRepositoryImpl @Inject constructor(
         return ShareResponseEntity(
             response = shareResponse,
             entity = shareResponseToEntity(
-                userAddress,
-                shareResponse,
-                encryptionKey
+                userAddress = userAddress,
+                shareResponse = shareResponse,
+                key = encryptionKey,
+                groupEmail = groupEmail
             ),
             keys = shareKeys.map { shareKey ->
                 ShareKeyEntity(
@@ -470,9 +490,9 @@ class ShareRepositoryImpl @Inject constructor(
     private fun shareResponseToEntity(
         userAddress: UserAddress,
         shareResponse: ShareResponse,
-        key: EncryptionKeyStatus
+        key: EncryptionKeyStatus,
+        groupEmail: String?
     ): ShareEntity {
-
         val (encryptedContent, isActive) = when (key) {
             EncryptionKeyStatus.NotFound -> null to true
             is EncryptionKeyStatus.Found -> {
@@ -486,6 +506,7 @@ class ShareRepositoryImpl @Inject constructor(
             userId = userAddress.userId.id,
             addressId = userAddress.addressId.id,
             vaultId = shareResponse.vaultId,
+            groupId = shareResponse.groupId,
             targetType = shareResponse.targetType,
             targetId = shareResponse.targetId,
             permission = shareResponse.permission,
@@ -504,6 +525,7 @@ class ShareRepositoryImpl @Inject constructor(
             newUserInvitesReady = shareResponse.newUserInvitesReady,
             pendingInvites = shareResponse.pendingInvites,
             canAutofill = shareResponse.canAutofill,
+            groupEmail = groupEmail,
             flags = shareResponse.flags
         )
     }
@@ -516,6 +538,7 @@ class ShareRepositoryImpl @Inject constructor(
                 targetId = targetId,
                 permission = SharePermission(permission),
                 vaultId = VaultId(vaultId),
+                groupId = groupId?.let(::GroupId),
                 expirationTime = expirationTime?.let { Date(it) },
                 createTime = createTime.toDate(),
                 shareRole = ShareRole.fromValue(shareRoleId),
@@ -526,7 +549,8 @@ class ShareRepositoryImpl @Inject constructor(
                 newUserInvitesReady = newUserInvitesReady,
                 maxMembers = targetMaxMembers,
                 canAutofill = canAutofill,
-                shareFlags = ShareFlags(flags)
+                shareFlags = ShareFlags(flags),
+                groupEmail = groupEmail
             )
         }
 
@@ -541,6 +565,8 @@ class ShareRepositoryImpl @Inject constructor(
                             targetId = targetId,
                             permission = SharePermission(permission),
                             vaultId = VaultId(vaultId),
+                            groupId = groupId?.let(::GroupId),
+                            groupEmail = groupEmail,
                             expirationTime = expirationTime?.let { Date(it) },
                             createTime = createTime.toDate(),
                             shareRole = ShareRole.fromValue(shareRoleId),
@@ -589,6 +615,7 @@ class ShareRepositoryImpl @Inject constructor(
 
     private fun localShareNeedsUpdate(localShare: ShareEntity, remoteShare: ShareResponse): Boolean = when {
         localShare.owner != remoteShare.owner -> true
+        localShare.groupId != remoteShare.groupId -> true
         localShare.shareRoleId != remoteShare.shareRoleId -> true
         localShare.permission != remoteShare.permission -> true
         localShare.targetMembers != remoteShare.targetMembers -> true
@@ -605,6 +632,7 @@ class ShareRepositoryImpl @Inject constructor(
 
     private fun updateEntityWithResponse(entity: ShareEntity, response: ShareResponse): ShareEntity = entity.copy(
         owner = response.owner,
+        groupId = response.groupId,
         shareRoleId = response.shareRoleId,
         targetMembers = response.targetMembers,
         shared = response.shared,

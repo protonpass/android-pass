@@ -107,6 +107,8 @@ internal fun CustomizeVaultPreview(@PreviewParameter(ThemePreviewProvider::class
                     userId = UserId(id = ""),
                     id = ShareId("1234"),
                     vaultId = VaultId("123"),
+                    groupId = null,
+                    groupEmail = null,
                     name = "Vault name",
                     createTime = Date(),
                     targetId = "target-id",
